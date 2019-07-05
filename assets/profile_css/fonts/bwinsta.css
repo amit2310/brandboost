@@ -1,0 +1,74 @@
+
+@font-face {
+    font-family: 'bw_nista_geo';
+    src: url('bwnistageo-th-webfont.woff2') format('woff2'),
+         url('bwnistageo-th-webfont.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'bw_nista_geo';
+    src: url('bwnistageo-lt-webfont.woff2') format('woff2'),
+         url('bwnistageo-lt-webfont.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'bw_nista_geo';
+    src: url('bwnistageo-rg-webfont.woff2') format('woff2'),
+         url('bwnistageo-rg-webfont.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'bw_nista_geo';
+    src: url('bwnistageo-md-webfont.woff2') format('woff2'),
+         url('bwnistageo-md-webfont.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+
+}
+
+
+
+@font-face {
+    font-family: 'bw_nista_geo';
+    src: url('bwnistageo-bd-webfont.woff2') format('woff2'),
+         url('bwnistageo-bd-webfont.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'bw_nista_geo';
+    src: url('bwnistageo-bk-webfont.woff2') format('woff2'),
+         url('bwnistageo-bk-webfont.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+
+
+@font-face {
+    font-family: 'bw_nista_geo';
+    src: url('bwnistageo-xbd-webfont.woff2') format('woff2'),
+         url('bwnistageo-xbd-webfont.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+
+}

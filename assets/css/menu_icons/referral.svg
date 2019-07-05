@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="13px" viewBox="0 0 14 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>1BCA4FF7-8687-498D-98E4-70245736B7D7</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="-3.8376015%" y1="95.0409171%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#6468A0" offset="0%"></stop>
+            <stop stop-color="#8989C1" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="3.36790373%" y1="87.950164%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-2">
+            <stop stop-color="#525378" offset="0%"></stop>
+            <stop stop-color="#9292B4" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-845.000000, -1132.000000)">
+            <g id="🈲/Menu/Referral/Default-Copy-2" transform="translate(845.000000, 1132.000000)">
+                <g id="notification-2">
+                    <circle id="Oval" fill="url(#linearGradient-1)" opacity="0.254855" cx="2.99862259" cy="9.36225895" r="2.99862259"></circle>
+                    <circle id="Oval-Copy" fill="url(#linearGradient-1)" opacity="0.254855" cx="10.6349862" cy="9.36225895" r="2.99862259"></circle>
+                    <circle id="Oval-Copy-2" fill="url(#linearGradient-2)" cx="6.81680441" cy="2.99862259" r="2.99862259"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="13px" viewBox="0 0 14 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>D9B6CF9E-4F05-42FE-A61A-ACF6EC8740A7</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="-3.8376015%" y1="95.0409171%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#6468A0" offset="0%"></stop>
+            <stop stop-color="#8989C1" offset="100%"></stop>
+        </linearGradient>
+        <path d="M2.99862259,12.3608815 C1.34252906,12.3608815 0,11.0183525 0,9.36225895 C0,7.70616543 1.34252906,6.36363636 2.99862259,6.36363636 C4.65471612,6.36363636 5.99724518,7.70616543 5.99724518,9.36225895 C5.99724518,11.0183525 4.65471612,12.3608815 2.99862259,12.3608815 Z M10.6349862,12.3608815 C8.9788927,12.3608815 7.63636364,11.0183525 7.63636364,9.36225895 C7.63636364,7.70616543 8.9788927,6.36363636 10.6349862,6.36363636 C12.2910798,6.36363636 13.6336088,7.70616543 13.6336088,9.36225895 C13.6336088,11.0183525 12.2910798,12.3608815 10.6349862,12.3608815 Z M6.81680441,5.99724518 C5.16071088,5.99724518 3.81818182,4.65471612 3.81818182,2.99862259 C3.81818182,1.34252906 5.16071088,0 6.81680441,0 C8.47289793,0 9.815427,1.34252906 9.815427,2.99862259 C9.815427,4.65471612 8.47289793,5.99724518 6.81680441,5.99724518 Z" id="path-2"></path>
+        <linearGradient x1="100%" y1="0%" x2="0%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#28ADC5" offset="0%"></stop>
+            <stop stop-color="#237AAB" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-845.000000, -1245.000000)">
+            <g id="🈲/Menu/Referral/Default-Copy-3" transform="translate(845.000000, 1245.000000)">
+                <g id="notification-2">
+                    <g id="*️⃣/🎨-Color/Product/4/Gradient---">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <use id="Mask" fill="url(#linearGradient-1)" opacity="0.254855" xlink:href="#path-2"></use>
+                        <g id="*️⃣/🎨-Color/Product/04-Analytics/Gradient-------" mask="url(#mask-3)" fill="url(#linearGradient-4)" fill-rule="nonzero">
+                            <g transform="translate(-1.000000, -2.000000)" id="Rectangle-24">
+                                <rect x="0" y="0" width="16" height="16"></rect>
+                            </g>
+                        </g>
+                        <circle id="Oval-path-Copy-2" fill-opacity="0.2" fill="#0A003A" style="mix-blend-mode: multiply;" mask="url(#mask-3)" cx="2.99862259" cy="9.36225895" r="2.99862259"></circle>
+                        <circle id="Oval-path-Copy" fill-opacity="0.2" fill="#0A003A" style="mix-blend-mode: multiply;" mask="url(#mask-3)" cx="10.6349862" cy="9.36225895" r="2.99862259"></circle>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

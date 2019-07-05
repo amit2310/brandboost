@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="14px" viewBox="0 0 12 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>53DCAF43-849C-4C20-817D-F1B8F665E7F3</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="3.36790373%" y1="87.950164%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#525378" offset="0%"></stop>
+            <stop stop-color="#9292B4" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="11.6666667" height="14"></rect>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-678.000000, -1131.000000)">
+            <g id="🈲/Menu/Sms/Default-Copy" transform="translate(678.000000, 1131.000000)">
+                <g id="email-24px">
+                    <g id="Rectangle">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                        <rect id="Rectangle-2" fill-opacity="0.2" fill="#0A003A" style="mix-blend-mode: multiply;" mask="url(#mask-3)" x="-6.07514039e-13" y="0" width="11.6666667" height="9.33333333"></rect>
+                        <circle id="Oval" fill-opacity="0.6" fill="#0A003A" style="mix-blend-mode: multiply;" mask="url(#mask-3)" cx="5.83333333" cy="11.6666667" r="1.16666667"></circle>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

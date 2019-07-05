@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>People_Color</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
+            <stop stop-color="#5869EB" offset="0%"></stop>
+            <stop stop-color="#6190FA" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0.5" y="0" width="14" height="14" rx="4"></rect>
+        <path d="M7.5,6.2 C8.3836556,6.2 9.1,5.4836556 9.1,4.6 C9.1,3.7163444 8.3836556,3 7.5,3 C6.6163444,3 5.9,3.7163444 5.9,4.6 C5.9,5.4836556 6.6163444,6.2 7.5,6.2 Z M3.50028964,10.5996028 C3.49090589,10.72959 3.71187207,11 3.82333432,11 C7.0709888,11 9.51827728,11 11.1652,11 C11.499073,11 11.5042613,10.697737 11.499073,10.6 C11.3688372,8.1465964 9.62054064,7 7.49259616,7 C5.39418326,7 3.67255934,8.21325792 3.50028964,10.5996028 Z" id="path-4"></path>
+        <filter x="-3.1%" y="-3.1%" width="106.2%" height="112.5%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="People_Color" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(0.500000, 1.000000)">
+            <g id="*️⃣/🎨-Color/Product/14/Gradient-">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+            </g>
+            <g id="Combined-Shape">
+                <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-4"></use>
+            </g>
+        </g>
+    </g>
+</svg>

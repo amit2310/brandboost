@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('admin/login','Admin\Login@index');
+Route::post('admin/login','Admin\Login@index');

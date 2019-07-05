@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="12px" viewBox="0 0 14 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>4B56357F-5067-4B5E-84A6-511D05405F64</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="-3.8376015%" y1="95.0409171%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#6468A0" offset="0%"></stop>
+            <stop stop-color="#8989C1" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="14" height="12"></rect>
+        <linearGradient x1="100%" y1="0%" x2="0%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#2EB4DD" offset="0%"></stop>
+            <stop stop-color="#2779DC" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-619.000000, -1244.000000)">
+            <g id="🈲/Menu/Email/Color-Copy" transform="translate(619.000000, 1244.000000)">
+                <g id="email-24px">
+                    <g id="Rectangle">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                        <rect id="Rectangle-2" fill-opacity="0.3" fill="#0A003A" style="mix-blend-mode: multiply;" mask="url(#mask-3)" x="0" y="0" width="15" height="13"></rect>
+                        <g id="*️⃣/🎨-Color/Product/08-Email/Gradient-------" mask="url(#mask-3)" fill="url(#linearGradient-4)">
+                            <g transform="translate(-1.000000, -2.000000)" id="Rectangle-24">
+                                <rect x="0" y="0" width="16" height="16"></rect>
+                            </g>
+                        </g>
+                        <path d="M6.93998479,-9.5 L16.7126331,-1.01471863 L9.56246851,5.1935431 C8.05811145,6.49972874 5.82185813,6.49972874 4.31750108,5.1935431 L-2.8326635,-1.01471863 L6.93998479,-9.5 Z" fill="#FFFFFF" opacity="0.7" style="mix-blend-mode: soft-light;" mask="url(#mask-3)"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
