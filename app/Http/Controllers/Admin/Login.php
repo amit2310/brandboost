@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\LoginModel;
 use Cookie;
+use Session;
 use App\Libraries\Custom\Mobile_Detect;
 
 require 'aws/aws-autoloader.php';
@@ -22,6 +23,7 @@ class Login extends Controller {
      * @return display login page and redirect to dashboard page after authorization
      */
     public function index(Request $request) {
+        //echo phpinfo();
         $detect = new Mobile_Detect;
         if ($detect->isMobile()) {
             $platform_device = "Mobile";

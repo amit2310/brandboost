@@ -3,6 +3,9 @@
 namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
+use Cookie;
+use Session;
 
 class LoginModel extends Model {
 
@@ -16,6 +19,7 @@ class LoginModel extends Model {
      * @return User object 
      */
     public function verifyAdminUser($loginid, $password, $remember) {
+        
         $response = false;
         $password_hash = 'Umair';
         $siteSalt = 'Rahul';
@@ -68,16 +72,16 @@ class LoginModel extends Model {
                 ->where('password', $pwd)
                 ->where('deleted_status', 0)
                 ->first();
-
+        
         if (!empty($user)) {
-            Session::set('admin_user_id', $user->id);
-            Session::set('current_user_id', $user->id);
+            Session::put('admin_user_id', $user->id);
+            Session::put('current_user_id', $user->id);
             if ($user->user_role == 1) {
-                Session::set('current_user_role', 1);
+                Session::put('current_user_role', 1);
             } else if ($user->user_role == 2) {
-                Session::set('current_user_role', 2);
+                Session::put('current_user_role', 2);
             } else if ($user->user_role == 3) {
-                Session::set('current_user_role', 3);
+                Session::put('current_user_role', 3);
             } else {
                 //do nothing
             }
@@ -110,20 +114,20 @@ class LoginModel extends Model {
                             ->where('id', $parentUserID)
                             ->first();
                     if (!empty($client)) {
-                        Session::set('admin_user_id', $client->id);
-                        Session::set('current_user_id', $client->id);
+                        Session::put('admin_user_id', $client->id);
+                        Session::put('current_user_id', $client->id);
                         if ($client->user_role == 1) {
-                            Session::set('current_user_role', 1);
+                            Session::put('current_user_role', 1);
                         } else if ($client->user_role == 2) {
-                            Session::set('current_user_role', 2);
+                            Session::put('current_user_role', 2);
                         } else if ($client->user_role == 3) {
-                            Session::set('current_user_role', 3);
+                            Session::put('current_user_role', 3);
                         } else {
                             //nothing
                         }
                     }
                     //All Set. Now set the session for team member
-                    Session::set('team_user_id', $user->id);
+                    Session::put('team_user_id', $user->id);
                     return $client;
                 }
             }
@@ -182,7 +186,7 @@ class LoginModel extends Model {
      */
     public function checkS3server() {
 
-        $userid = Session::set('customer_user_id');
+        $userid = Session::put('customer_user_id');
         if (!empty($userid)) {
             $user = DB::table('tbl_users')
                     ->where('id', $userid)
@@ -203,7 +207,7 @@ class LoginModel extends Model {
     
     public function updateS3server() {
 
-        $userid = Session::set('customer_user_id');
+        $userid = Session::put('customer_user_id');
         if (!empty($userid)) {
             $data = [
                 's3_bucket' => '1',
