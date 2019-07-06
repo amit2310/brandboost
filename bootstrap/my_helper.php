@@ -7,6 +7,42 @@ require_once 'vendor/autoload.php'; // Loads the library
 
 use Twilio\Rest\Client;
 
+/**
+ * Used to check where or not user logged in and if yes then return complete user information
+ * @param type $redirect
+ * @return type
+ */
+function getLoggedUser($redirect = true) {
+
+    $oUser = array();
+
+    if (Session::get('admin_user_id') > 0) {
+        $userID = Session::get('admin_user_id');
+    } else if (Session::get('customer_user_id') > 0) {
+        $userID = Session::get('customer_user_id');
+    } else if (Session::get('user_user_id') > 0) {
+        $userID = Session::get('user_user_id');
+    } else {
+        $userID = 0;
+    }
+
+    if ($userID > 0) {
+        $oUser = \App\Models\Admin\UsersModel::getUserInfo($userID);
+    } else {
+
+        Session::put('admin_redirect_url', \Request::fullUrl());
+        if ($redirect == true) {
+            return redirect('/admin/login');
+        }
+    }
+    return $oUser;
+}
+
+function base_url() {
+    return URL::to('/');
+    
+}
+
 if (!function_exists('pre')) {
 
     function pre($data) {
@@ -532,11 +568,11 @@ if (!function_exists('random_strings')) {
 
     function random_strings($length_of_string) {
 
-        // String of all alphanumeric character 
+// String of all alphanumeric character 
         $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-        // Shufle the $str_result and returns substring 
-        // of specified length 
+// Shufle the $str_result and returns substring 
+// of specified length 
         return substr(str_shuffle($str_result), 0, $length_of_string);
     }
 
@@ -557,7 +593,7 @@ if (!function_exists('getTeamAssignDataHelper')) {
 
     function getTeamAssignDataHelper($teamId) {
         $CI = & get_instance();  //get instance, access the CI superobject
-        //$CI->load->model("admin/Chat_model", "mChat");
+//$CI->load->model("admin/Chat_model", "mChat");
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $result = $CI->mSubscriber->getTeamAssignData($teamId);
         return $result;
@@ -608,7 +644,7 @@ if (!function_exists('getTeamUnAssignDataHelper')) {
 
     function getTeamUnAssignDataHelper() {
         $CI = & get_instance();  //get instance, access the CI superobject
-        //$CI->load->model("admin/Chat_model", "mChat");
+//$CI->load->model("admin/Chat_model", "mChat");
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $result = $CI->mSubscriber->getTeamAssignData(0);
         return $result;
@@ -748,37 +784,6 @@ if (!function_exists('userRoleAdmin')) {
         if ($userRole == 2) {
             redirect('user/profile');
         }
-    }
-
-}
-
-if (!function_exists('getLoggedUser')) {
-
-    function getLoggedUser($redirect = true) {
-
-        $aUser = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Users_model", "mmUser");
-
-        if ($CI->session->userdata('admin_user_id') > 0) {
-            $userID = $CI->session->userdata('admin_user_id');
-        } else if ($CI->session->userdata('customer_user_id') > 0) {
-            $userID = $CI->session->userdata('customer_user_id');
-        } else if ($CI->session->userdata('user_user_id') > 0) {
-            $userID = $CI->session->userdata('user_user_id');
-        } else {
-            $userID = 0;
-        }
-        if ($userID > 0) {
-            $aUser = $CI->mmUser->getUserInfo($userID);
-        } else {
-            $CI->session->set_userdata('admin_redirect_url', current_url());
-            if ($redirect == true) {
-                $CI = & get_instance();
-                redirect($CI->uri->segment(1) . '/login');
-            }
-        }
-        return $aUser;
     }
 
 }
@@ -1006,7 +1011,7 @@ if (!function_exists('get_notifications')) {
             
         }
 
-        //$userId = $isLoggedInCustomer == '' ? $isLoggedInAdmin : $isLoggedInCustomer;
+//$userId = $isLoggedInCustomer == '' ? $isLoggedInAdmin : $isLoggedInCustomer;
 
         $CI->load->model("admin/Notifications_model", "rNotifications");
         if ($userId != '') {
@@ -1070,7 +1075,7 @@ if (!function_exists('checkPermissionentry')) {
             } else {
                 return false;
             }
-            //return $aTags;
+//return $aTags;
         }
     }
 
@@ -1084,7 +1089,7 @@ if (!function_exists('add_notifications')) {
 
     function add_notifications($aData, $eventName = '', $ownerID = '', $notifyAdminAlso = false) {
 
-        // event_type :- user_registration, change_password, create_order, added_text_review, added_video_review
+// event_type :- user_registration, change_password, create_order, added_text_review, added_video_review
         $CI = & get_instance();
 
         $CI->load->model("admin/Notifications_model", "mNotifications");
@@ -1120,7 +1125,7 @@ if (!function_exists('add_notifications')) {
 
 
 
-            //+++++++++++++ CLIENT AREA +++++++++++++++
+//+++++++++++++ CLIENT AREA +++++++++++++++
 
             if ($eventName == 's3_storage_alert') {
                 $bSaved = $CI->mNotifications->addNotification($aData);
@@ -1151,11 +1156,11 @@ if (!function_exists('add_notifications')) {
                 updateCreditUsage($aUsage);
             }
 
-            //+++++++++++++ CLIENT AREA +++++++++++++++
-            //+++++++++++++ ADMIN AREA +++++++++++++++
+//+++++++++++++ CLIENT AREA +++++++++++++++
+//+++++++++++++ ADMIN AREA +++++++++++++++
 
             if ($slugDetails->admin == 1 && $slugDetails->system == 1) {
-                //$bSaved = $CI->mNotifications->addNotification($aData);
+//$bSaved = $CI->mNotifications->addNotification($aData);
             }
 
             if ($slugDetails->admin == 1 && $slugDetails->email == 1) {
@@ -1168,7 +1173,7 @@ if (!function_exists('add_notifications')) {
                 sendAdminSMS($AdminUser->mobile, $slugDetails->admin_sms_content);
             }
 
-            //+++++++++++++ ADMIN AREA +++++++++++++++
+//+++++++++++++ ADMIN AREA +++++++++++++++
         }
 
 
@@ -1199,7 +1204,7 @@ if (!function_exists('sendEmailPreview')) {
 
         $newTemp = str_replace($tag, $changeTo, $messageBody);
 
-        //$emailFooter = $CI->config->item('emailFooter');
+//$emailFooter = $CI->config->item('emailFooter');
         $aFooterTags = array('{{MODULENAME}}', '{{MODULEUNITID}}', '{{SUBSCRIBERID}}', '{{GLOBALSUBSCRIBERID}}');
         $aFooterTagValues = array($moduleName, $moduleUnitID, $subscriberID, $globalSubscriberID);
         $footerSrc = getDefaultEmailFooter();
@@ -1264,13 +1269,13 @@ if (!function_exists('sendEmailPreview')) {
 }
 
 function convertHtmlToPlain($html) {
-    //Step-1 Remove All Images
+//Step-1 Remove All Images
     $plainText = preg_replace("/<img[^>]+\>/i", "\r\n", $html);
-    //Step-2 Remove All anchor tags
+//Step-2 Remove All anchor tags
     $plainText = preg_replace("<a[^>]*>(.*?)</a>", "\r\n", $plainText);
-    //Step-3 Remove all style 
+//Step-3 Remove all style 
     $plainText = preg_replace("/<style\\b[^>]*>(.*?)<\\/style>/s", "\r\n", $plainText);
-    //Step-4 Now remove all html tags
+//Step-4 Now remove all html tags
     $plainText = htmlspecialchars(trim(strip_tags($plainText)));
 
     return $plainText;
@@ -1288,9 +1293,9 @@ if (!function_exists('sendEmail')) {
         $sandgriduser = $CI->config->item('sandgriduser');
         $sandgridpass = $CI->config->item('sandgridpass');
         $url = $CI->config->item('api_url');
-        //Generate Text Version of email
+//Generate Text Version of email
         $str = 'PHPZAG PHP <a href="https://www.phpzag.com/" title="PHP">TUTORIALS</a> AND ARTICLES.';
-        //Remove Image
+//Remove Image
         $plainText = convertHtmlToPlain($messageBody);
 
 
@@ -1340,7 +1345,7 @@ if (!function_exists('sendSMS')) {
             'body' => $message,
                 )
         );
-        //pre($res);
+//pre($res);
     }
 
 }
@@ -1373,7 +1378,7 @@ if (!function_exists('sendClientSMS')) {
             'body' => $message,
                 )
         );
-        //pre($res);
+//pre($res);
     }
 
 }
@@ -1393,7 +1398,7 @@ if (!function_exists('sendAdminSMS')) {
             'body' => $message,
                 )
         );
-        //pre($res);
+//pre($res);
     }
 
 }
@@ -1415,16 +1420,16 @@ if (!function_exists('sendClinetMMS')) {
                     $aRequest['statusCallback'] = $trackURL;
                 }
                 if ($toNum != '' && $msg != '') {
-                    //echo 'testing data';
+//echo 'testing data';
                     $res = $client->messages->create($toNum, $aRequest);
-                    //pre($res);
+//pre($res);
                     return $res;
                 } else {
                     return false;
                 }
             }
         } catch (Exception $ex) {
-            //echo 'Message: ' .$ex->getMessage();
+//echo 'Message: ' .$ex->getMessage();
             return false;
         }
 
@@ -1477,7 +1482,7 @@ if (!function_exists('sendClinetSMS')) {
                 }
             }
         } catch (Exception $ex) {
-            //echo 'Message: ' .$ex->getMessage();
+//echo 'Message: ' .$ex->getMessage();
             return false;
         }
 
@@ -1514,7 +1519,7 @@ if (!function_exists('getTwilioPNByAreaCodeTeam')) {
         $TwilioData = currentUserTwilioData($aUser->id);
 
         $contryName = $contryName == '' ? 'US' : strtoupper($contryName);
-        //$areacode = $areacode == '' ? 510 : $areacode;
+//$areacode = $areacode == '' ? 510 : $areacode;
         if (!empty($areacode)) {
 
             $sid = $TwilioData->account_sid;
@@ -1532,7 +1537,7 @@ if (!function_exists('getTwilioPNByAreaCodeTeam')) {
                 $cnt = 0;
                 foreach ($numbers as $key => $numberData) {
                     if ($key < 10) {
-                        //$options .= '<div class="radio"><label><div class="choice"><span class=""><input id="twilioMobileNo" name="twilioMobileNo" type="radio" class="styled" value="'.$numberData->phoneNumber.'"></span></div>' . $numberData->phoneNumber.'</label></div>';
+//$options .= '<div class="radio"><label><div class="choice"><span class=""><input id="twilioMobileNo" name="twilioMobileNo" type="radio" class="styled" value="'.$numberData->phoneNumber.'"></span></div>' . $numberData->phoneNumber.'</label></div>';
                         $options .= '<div class="radio"><input id="twilioMobileNo" name="twilioMobileNo" type="radio" value="' . $numberData->phoneNumber . '"><label>' . $numberData->phoneNumber . '</label></div>';
                         $cnt++;
                     }
@@ -1574,7 +1579,7 @@ if (!function_exists('getTwilioPNByAreaCode')) {
             $options = '';
             foreach ($numbers as $key => $numberData) {
                 if ($key < 10) {
-                    //$options .= '<div class="radio"><label><div class="choice"><span class=""><input id="twilioMobileNo" name="twilioMobileNo" type="radio" class="styled" value="'.$numberData->phoneNumber.'"></span></div>' . $numberData->phoneNumber.'</label></div>';
+//$options .= '<div class="radio"><label><div class="choice"><span class=""><input id="twilioMobileNo" name="twilioMobileNo" type="radio" class="styled" value="'.$numberData->phoneNumber.'"></span></div>' . $numberData->phoneNumber.'</label></div>';
                     $options .= '<div class="radio"><input id="twilioMobileNo" name="twilioMobileNo" type="radio" value="' . $numberData->phoneNumber . '"><label>' . $numberData->phoneNumber . '</label></div>';
                 }
             }
@@ -1599,7 +1604,7 @@ if (!function_exists('createTwilioCNTeam')) {
 
         $client = new Client($sid, $token);
 
-        // Purchase the first number on the list.
+// Purchase the first number on the list.
         $number = $client->incomingPhoneNumbers->create(
                 array(
                     "phoneNumber" => $phoneNumber,
@@ -1626,7 +1631,7 @@ if (!function_exists('createTwilioCN')) {
 
         $client = new Client($accountSid, $accountToken);
 
-        // Purchase the first number on the list.
+// Purchase the first number on the list.
         $number = $client->incomingPhoneNumbers->create(
                 array(
                     "phoneNumber" => $phoneNumber
@@ -1800,7 +1805,7 @@ if (!function_exists('createWhitelabelLink')) {
         pre($response);
         curl_close($curl);
 
-        //return $response;
+//return $response;
     }
 
 }
@@ -1883,7 +1888,7 @@ if (!function_exists('sendClientEmail')) {
             $response = curl_exec($session);
             curl_close($session);
 
-            //pre($response);
+//pre($response);
             return $response;
         }
     }
@@ -2563,7 +2568,7 @@ if (!function_exists('getBrowserN')) {
         $platform = 'Unknown';
         $version = "";
 
-        //First get the platform?
+//First get the platform?
         if (preg_match('/linux/i', $u_agent)) {
             $platform = 'linux';
         } elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
@@ -2572,7 +2577,7 @@ if (!function_exists('getBrowserN')) {
             $platform = 'windows';
         }
 
-        // Next get the name of the useragent yes seperately and for good reason
+// Next get the name of the useragent yes seperately and for good reason
         if (preg_match('/MSIE/i', $u_agent) && !preg_match('/Opera/i', $u_agent)) {
             $bname = 'Internet Explorer';
             $ub = "MSIE";
@@ -2593,19 +2598,19 @@ if (!function_exists('getBrowserN')) {
             $ub = "Netscape";
         }
 
-        // finally get the correct version number
+// finally get the correct version number
         $known = array('Version', $ub, 'other');
         $pattern = '#(?<browser>' . join('|', $known) .
                 ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
         if (!preg_match_all($pattern, $u_agent, $matches)) {
-            // we have no matching number just continue
+// we have no matching number just continue
         }
 
-        // see how many we have
+// see how many we have
         $i = count($matches['browser']);
         if ($i != 1) {
-            //we will have two since we are not using 'other' argument yet
-            //see if version is before or after the name
+//we will have two since we are not using 'other' argument yet
+//see if version is before or after the name
             if (strripos($u_agent, "Version") < strripos($u_agent, $ub)) {
                 $version = $matches['version'][0];
             } else {
@@ -2615,7 +2620,7 @@ if (!function_exists('getBrowserN')) {
             $version = $matches['version'][0];
         }
 
-        // check if we have a number
+// check if we have a number
         if ($version == null || $version == "") {
             $version = "?";
         }
@@ -2641,7 +2646,7 @@ if (!function_exists('ratingView')) {
         } else if ($rating == 3) {
             $smilyImage = '<div class="media-left media-middle"> <img src="' . base_url('assets/images/smiley_grey2.png') . '" class="img-circle" width="26" alt=""> </div><div class="media-left"><div class=""><span class="text-default text-semibold">' . number_format($rating, 1) . '</span> </div><div class="text-muted text-size-small">Neutral</div></div>';
         } else if ($rating < 1) {
-            //$smilyImage = '<div class="media-middle" style="padding-left:18px;"><span class="text-muted text-size-small">'.displayNoData().'</span></div>';
+//$smilyImage = '<div class="media-middle" style="padding-left:18px;"><span class="text-muted text-size-small">'.displayNoData().'</span></div>';
             $smilyImage = displayNoData(true);
         } else {
             $smilyImage = '<div class="media-left media-middle"> <img src="' . base_url('assets/images/smiley_red.png') . '" class="img-circle" width="26" alt=""> </div><div class="media-left"><div class=""><span class="text-default text-semibold">' . number_format($rating, 1) . '</span> </div><div class="text-muted text-size-small">Negative</div></div>';
@@ -2683,7 +2688,7 @@ function base64_url_decode($input) {
 }
 
 function getDefaultEmailFooter() {
-    //$src = '<hr><br<br><div style="width:100%;">This email is sent from <a href="'.base_url().'">Brandboost Community</a>. You can also change email settings or <a href="'.base_url().'/preferences/unsubscribe?m={{MODULENAME}}&mid={{MODULEUNITID}}&sid={{SUBSCRIBERID}}&gid={{GLOBALSUBSCRIBERID}}">Click here</a> to unsubscribe</div>';
+//$src = '<hr><br<br><div style="width:100%;">This email is sent from <a href="'.base_url().'">Brandboost Community</a>. You can also change email settings or <a href="'.base_url().'/preferences/unsubscribe?m={{MODULENAME}}&mid={{MODULEUNITID}}&sid={{SUBSCRIBERID}}&gid={{GLOBALSUBSCRIBERID}}">Click here</a> to unsubscribe</div>';
     $src = '<hr><br<br><div style="width:100%;">This email is sent from <a href="' . base_url() . '">Brandboost Community</a>. You can also change email settings or <a href="' . base_url() . 'preferences/unsubscribe?gid={{GLOBALSUBSCRIBERID}}">Click here</a> to unsubscribe</div>';
     return $src;
 }
@@ -2692,7 +2697,7 @@ function mobileNoFormat($mobileNo) {
     if (!isset($mobileNo{3})) {
         return '';
     }
-    // note: strip out everything but numbers 
+// note: strip out everything but numbers 
     $mobileNo = preg_replace("/[^0-9]/", "", $mobileNo);
     $length = strlen($mobileNo);
     switch ($length) {
@@ -2748,14 +2753,14 @@ function showUserAvtar($userImg = '', $firstName = '', $lastName = '', $width = 
 
 function dataFormat($dataValue = '') {
     $timeStamp = (!empty($dataValue)) ? strtotime($dataValue) : time();
-    //$gmt_date = strtotime(gmdate('Y-m-d H:i:s', $timeStamp));
+//$gmt_date = strtotime(gmdate('Y-m-d H:i:s', $timeStamp));
     $estTime = date("F dS Y", ($timeStamp - 14400));
     return $estTime;
 }
 
 function usaDate($dataValue = '') {
     $timeStamp = (!empty($dataValue)) ? strtotime($dataValue) : time();
-    //$gmt_date = strtotime(gmdate('Y-m-d H:i:s', $timeStamp));
+//$gmt_date = strtotime(gmdate('Y-m-d H:i:s', $timeStamp));
 
     $estTime = date("Y-m-d H:i:s", ($timeStamp - 14400));
 
@@ -2772,7 +2777,7 @@ function usaDate($dataValue = '') {
 
 function dataFormatHours($dataValue = '') {
     $timeStamp = (!empty($dataValue)) ? strtotime($dataValue) : time();
-    //$gmt_date = strtotime(gmdate('Y-m-d H:i:s', $timeStamp));
+//$gmt_date = strtotime(gmdate('Y-m-d H:i:s', $timeStamp));
     $estTime = date("h:i A", ($timeStamp - 14400));
     return $estTime;
 }
@@ -2788,13 +2793,13 @@ function dataFormat_old($dataValue = '') {
 function getPlatformImg($platformName) {
     $platformImg = '';
     if ($platformName == 'linux') {
-        //$platformImg = '<img src="'.base_url().'assets/images/linux.png" alt="Linux" title="Linux" width="40">';
+//$platformImg = '<img src="'.base_url().'assets/images/linux.png" alt="Linux" title="Linux" width="40">';
         $platformImg = '<i class="fa fa-linux txt_dark"></i>';
     } else if ($platformName == 'windows') {
-        //$platformImg = '<img src="'.base_url().'assets/images/window.png" alt="Window" title="Window" width="40">';
+//$platformImg = '<img src="'.base_url().'assets/images/window.png" alt="Window" title="Window" width="40">';
         $platformImg = '<i class="icon-windows txt_blue_sky2"></i>';
     } else if ($platformName == 'mac') {
-        //$platformImg = '<img src="'.base_url().'assets/images/mac.png" alt="Mac" title="Mac" width="40">';
+//$platformImg = '<img src="'.base_url().'assets/images/mac.png" alt="Mac" title="Mac" width="40">';
         $platformImg = '<i class="icon-apple2"></i>';
     } else {
         $platformImg = $platformName;
@@ -2805,18 +2810,18 @@ function getPlatformImg($platformName) {
 function getBrowserImg($browserName) {
     $browserImg = '';
     if ($browserName == 'Mozilla Firefox') {
-        //$browserImg = '<img src="'.base_url().'assets/images/ff.png" alt="Mozilla Firefox" title="Mozilla Firefox" width="30">';
+//$browserImg = '<img src="'.base_url().'assets/images/ff.png" alt="Mozilla Firefox" title="Mozilla Firefox" width="30">';
         $browserImg = '<i class="icon-firefox txt_orange"></i>';
     } else if ($browserName == 'Google Chrome') {
-        //$browserImg = '<img src="'.base_url().'assets/images/chrome.png" alt="Google Chrome" title="Google Chrome" width="30">';
+//$browserImg = '<img src="'.base_url().'assets/images/chrome.png" alt="Google Chrome" title="Google Chrome" width="30">';
         $browserImg = '<i class="icon-chrome txt_red"></i>';
     } else if ($browserName == 'Safari' || $browserName == 'Apple Safari') {
-        //$browserImg = '<img src="'.base_url().'assets/images/safari.png" alt="Safari" title="Safari" width="30">';
+//$browserImg = '<img src="'.base_url().'assets/images/safari.png" alt="Safari" title="Safari" width="30">';
         $browserImg = '<i class="icon-safari txt_dark"></i>';
     } else if ($browserName == 'Opera') {
         $browserImg = '<img src="' . base_url() . 'assets/images/opera.png" alt="Opera" title="Opera" width="30">';
     } else if ($browserName == 'IE') {
-        //$browserImg = '<img src="'.base_url().'assets/images/ie.png" alt="IE" title="Internet Explorer" width="30">';
+//$browserImg = '<img src="'.base_url().'assets/images/ie.png" alt="IE" title="Internet Explorer" width="30">';
         $browserImg = '<i class="fa fa-internet-explorer txt_blue_sky2"></i>';
     } else {
         $browserImg = $browserName;
@@ -2826,11 +2831,11 @@ function getBrowserImg($browserName) {
 
 function getRemoteFileSize($file_url) {
     $head = array_change_key_case(get_headers($file_url, 1));
-    // content-length of download (in bytes), read from Content-Length: field
+// content-length of download (in bytes), read from Content-Length: field
 
     $clen = isset($head['content-length']) ? $head['content-length'] : 0;
 
-    // cannot retrieve file size, return "-1"
+// cannot retrieve file size, return "-1"
     if (!$clen) {
         return -1;
     }
@@ -2852,7 +2857,7 @@ function getRemoteFileSize($file_url) {
     }
 
     return $size;
-    // return formatted size
+// return formatted size
 }
 
 function displayNoData($avatar = false) {
@@ -3224,13 +3229,13 @@ if (!function_exists('getNotificationLang')) {
         $CI->load->model("admin/Notifications_model", "mNotifications");
         $oNotificationLang = $CI->mNotifications->getNotificationLang($eventType);
         if ($userRole == 1) {
-            // Admin
+// Admin
             $getNotiLang = $oNotificationLang->tag_language_admin;
         } else if ($userRole == 3) {
-            // Client
+// Client
             $getNotiLang = $oNotificationLang->tag_language;
         } else {
-            // User
+// User
             $getNotiLang = $oNotificationLang->tag_language_user;
         }
         $getNotiLang = base64_decode($getNotiLang);
