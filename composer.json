@@ -41,7 +41,8 @@
             "database/factories"
         ],
         "files": [
-            "bootstrap/my_helper.php" 
+            "bootstrap/my_helper.php",
+            "bootstrap/brandboost_helper.php"
         ]
     },
     "autoload-dev": {

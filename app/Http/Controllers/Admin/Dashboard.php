@@ -30,7 +30,8 @@ class Dashboard extends Controller {
             'userDetail' => $oUser
             
         );
-        redirect('admin.dashboard', $aData);
+        return view('admin.dashboard');
+        //redirect('admin.dashboard', $aData);
         die;
 
         $bbStatsData = $this->mmBrandboost->getBBStatsByIdAndUserId($userID, $bbId = '');

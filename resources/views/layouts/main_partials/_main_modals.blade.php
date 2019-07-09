@@ -45,7 +45,7 @@
 
             <div class="modal-body ptb80 mt-20 mb-20">
                 <div class="row">
-                    <div class="col-md-6 text-center"><img src="<?php echo base_url(); ?>assets/images/upgrade1.jpg"/>
+                    <div class="col-md-6 text-center"><img src="{{ URL::asset('assets/images/upgrade1.jpg') }}"/>
                     </div>
 
                     <div class="col-md-6">
@@ -216,7 +216,7 @@
             <div class="modal-footer pt-20" style="background: #ffffff; border-top: 1px solid #eee;">
                 <div class="row">
                     <div class="col-md-9 pt-10 text-left">
-                        <img src="<?php echo base_url(); ?>assets/images/moneybackgurantee.jpg"/>
+                        <img src="{{ URL::asset('assets/images/moneybackgurantee.jpg') }}"/>
                     </div>
                     <div class="col-md-3 pt-10 text-center">
                         <button type="button" class="btn btn-primary mb-10" data-toggle="modal" data-target="#confirm_level_upgrade" id="confirmAnnualUpgrade"><i class="icon-cart"></i> &nbsp; Confirm Upgrade</button>
@@ -307,8 +307,8 @@
                 <div class="modal-body">
 
                     <div class="alert-danger" style="margin-bottom:10px;">
-                        <?php echo $this->session->userdata('error_message'); ?>
-                        <?php echo validation_errors(); ?>
+                        <?php echo Session::get('error_message'); ?>
+                        <?php //echo validation_errors(); ?>
                     </div>
 
                     <div class="col-md-12">
@@ -373,7 +373,7 @@
                             <div class="carousel-inner">
                                 <div class="item tutorials active">
                                     <div class="row">
-                                        <div class="col-xs-3"><img src="<?php echo base_url(); ?>assets/images/tutorials_icon.png"/>
+                                        <div class="col-xs-3"><img src="{{ URL::asset('assets/images/tutorials_icon.png') }}"/>
                                         </div>
                                         <div class="col-xs-9 pl0">
                                             <p><strong>Tutorial 1 : Manage you reviews</strong>
@@ -384,7 +384,7 @@
                                 </div>
                                 <div class="item tutorials">
                                     <div class="row">
-                                        <div class="col-xs-3"><img src="<?php echo base_url(); ?>assets/images/tutorials_icon.png"/>
+                                        <div class="col-xs-3"><img src="{{ URL::asset('assets/images/tutorials_icon.png') }}"/>
                                         </div>
                                         <div class="col-xs-9 pl0">
                                             <p><strong>Tutorial 2 : Manage you reviews</strong>
@@ -395,7 +395,7 @@
                                 </div>
                                 <div class="item tutorials">
                                     <div class="row">
-                                        <div class="col-xs-3"><img src="<?php echo base_url(); ?>assets/images/tutorials_icon.png"/>
+                                        <div class="col-xs-3"><img src="{{ URL::asset('assets/images/tutorials_icon.png') }}"/>
                                         </div>
                                         <div class="col-xs-9 pl0">
                                             <p><strong>Tutorial 3 : Manage you reviews</strong>
@@ -406,7 +406,7 @@
                                 </div>
                                 <div class="item tutorials">
                                     <div class="row">
-                                        <div class="col-xs-3"><img src="<?php echo base_url(); ?>assets/images/tutorials_icon.png"/>
+                                        <div class="col-xs-3"><img src="{{ URL::asset('assets/images/tutorials_icon.png') }}"/>
                                         </div>
                                         <div class="col-xs-9 pl0">
                                             <p><strong>Tutorial 4 : Manage you reviews</strong>
@@ -417,7 +417,7 @@
                                 </div>
                                 <div class="item tutorials">
                                     <div class="row">
-                                        <div class="col-xs-3"><img src="<?php echo base_url(); ?>assets/images/tutorials_icon.png"/>
+                                        <div class="col-xs-3"><img src="{{ URL::asset('assets/images/tutorials_icon.png') }}"/>
                                         </div>
                                         <div class="col-xs-9 pl0">
                                             <p><strong>Tutorial 5 : Manage you reviews</strong>
@@ -447,7 +447,7 @@
             <form method="post" class="form-horizontal" id="addCentralSubscriberData">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo site_url('assets/images/menu_icons/People_Color.svg'); ?>"/> Add new contact &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ URL::asset('assets/images/menu_icons/People_Color.svg') }}"/> Add new contact &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -608,7 +608,7 @@
                 <input type="hidden" id="avatarFinder" value="">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title"><img src="<?php echo site_url('assets/images/menu_icons/People_Color.svg'); ?>"/> Update Contact &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ URL::asset('assets/images/menu_icons/People_Color.svg') }}"/> Update Contact &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
 
                 </div>
                 <div class="modal-body">
@@ -775,7 +775,7 @@
                 <input type="hidden" id="avatarFinder_main_web" value="">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title"><img src="<?php echo site_url('assets/images/menu_icons/People_Color.svg'); ?>"/> Update Contact &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ URL::asset('assets/images/menu_icons/People_Color.svg') }}"/> Update Contact &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
 
                 </div>
                 <div class="modal-body">
@@ -941,7 +941,7 @@
             <form method="post" class="form-horizontal" id="updateCentralSubscriberData">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title"><img src="<?php echo site_url('assets/images/menu_icons/People_Color.svg'); ?>"/> Update Contact &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ URL::asset('assets/images/menu_icons/People_Color.svg') }}"/> Update Contact &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
 
                 </div>
                 <div class="modal-body">
@@ -1109,8 +1109,8 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-                        <?php echo validation_errors(); ?></div>
+                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?>
+                        <?php //echo validation_errors(); ?></div>
 
                     <!-- <div class="form-group">
                        <label class="control-label col-lg-3">Import CSV</label>
@@ -1156,12 +1156,12 @@
             <form method="post" >
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo site_url('new_pages/assets/images/delete_icon.jpg'); ?>">Delete</h5>
+                    <h5 class="modal-title"><img src="{{ URL::asset('assets/images/delete_icon.jpg') }}">Delete</h5>
                 </div>
                 <div class="modal-body p40 text-center">
                     <p class="txt_dark">Are you sure you want to delete it?</p>
                     <p class="txt_grey mb30" id="changeDeleteText">This profile will delete immediately.<br>
-                        You can&apos;t undo this action.</p>
+                        You can't undo this action.</p>
                     <div class="mb20 deletebuttonShow">
                         <button id="deleteConfirm" type="button" class="btn dark_btn bkg_sblue fsize14 h52"> Delete</button>
                         <button data-toggle="modal" id="deleteCancle" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
@@ -1188,7 +1188,7 @@
             <form method="post" class="form-horizontal">
                 <div class="modal-header bkg_white">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title txt_dark"><img src="<?php echo base_url(); ?>assets/images/delete_icon.png"> Are you want to move it to archive? <span class="grey" id="changeArchiveText">This profile will delete immediately.<br>You can't undo this action.</span></h5>
+                    <h5 class="modal-title txt_dark"><img src="{{ URL::asset('assets/images/delete_icon.png') }}"> Are you want to move it to archive? <span class="grey" id="changeArchiveText">This profile will delete immediately.<br>You can't undo this action.</span></h5>
                 </div>
 
                 <div class="modal-footer p40">
@@ -1214,7 +1214,7 @@
     <div class="flag_notifications">
         <a style="cursor: pointer;" class="fn_close" name="cancel"><i class="icon-cross2 txt_green"></i></a>
         <div class="row">
-            <div class="col-xs-2"><img width="40" src="<?php echo base_url(); ?>assets/images/notification_green.png"/></div>
+            <div class="col-xs-2"><img width="40" src="{{ URL::asset('assets/images/notification_green.png') }}"/></div>
             <div class="col-xs-10">
                 <p class="notification_success_msg_heading" style="font-weight:600;">Success!</p>
                 <p class="mb-15 notification_success_msg_des">Your data have been updated successfully!</p>
@@ -1227,7 +1227,7 @@
     <div class="flag_notifications">
         <a style="cursor: pointer;" class="fn_close" name="cancel"><i class="icon-cross2 txt_red"></i></a>
         <div class="row">
-            <div class="col-xs-2"><img width="40" src="<?php echo base_url(); ?>assets/images/notification_red.png"/></div>
+            <div class="col-xs-2"><img width="40" src="{{ URL::asset('assets/images/notification_red.png') }}"/></div>
             <div class="col-xs-10">
                 <p class="notification_success_msg_heading" style="font-weight:600;">OOPS!</p>
                 <p class="mb-15 notification_success_msg_des">Your changes has been not updated. Please try again!</p>
@@ -1244,8 +1244,8 @@
         <div class="">
             <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
             <div class="logout_notifications p25" id="logout1">
-                <a style="cursor: pointer" class="close_no close" data-dismiss="modal"><img src="<?php echo base_url(); ?>assets/images/cross_icon_10.png"/></a> 
-                <div class="media-left pr-15"><img src="<?php echo base_url(); ?>assets/images/logout_icon1.png"/></div>
+                <a style="cursor: pointer" class="close_no close" data-dismiss="modal"><img src="{{ URL::asset('assets/images/cross_icon_10.png') }}"/></a> 
+                <div class="media-left pr-15"><img src="{{ URL::asset('assets/images/logout_icon1.png') }}"/></div>
                 <div class="media-left pr0">
                     <p class="txt_dark fw400">No Activity For <?php echo $inactivity_length; ?> Minutes</p>
                     <p class="txt_grey fw300">Do you want to remain logged<br> in Brand Boost?</p>
@@ -1263,8 +1263,8 @@
         <div class="">
             <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
             <div class="logout_notifications p25" id="logout2">
-                <a style="cursor: pointer" id="close2" class="close_no close" data-dismiss="modal"><img src="<?php echo base_url(); ?>assets/images/cross_icon_10.png"/></a> 
-                <div class="media-left pr-15"><img src="<?php echo base_url(); ?>assets/images/logout_icon2.png"/></div>
+                <a style="cursor: pointer" id="close2" class="close_no close" data-dismiss="modal"><img src="{{ URL::asset('assets/images/cross_icon_10.png') }}"/></a> 
+                <div class="media-left pr-15"><img src="{{ URL::asset('assets/images/logout_icon2.png') }}"/></div>
                 <div class="media-left pr0">
                     <p class="txt_dark fw400">Are you still there?</p>
                     <p class="txt_grey fw300">You’ve been gone for a while,<br> so we logged you out.</p>
@@ -1284,7 +1284,7 @@
             <form method="post" class="form-horizontal" id="frmShortListModal">
                 <div class="modal-header">
                     <button type="button" class="close BoxClose" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/images/menu_icons/Chat_Color.svg"> Add new shortcut &nbsp; <!--<i class="icon-info22 fsize12 txt_grey"></i>--></h5>
+                    <h5 class="modal-title"><img src="{{ URL::asset('assets/images/menu_icons/Chat_Color.svg') }}"> Add new shortcut &nbsp; <!--<i class="icon-info22 fsize12 txt_grey"></i>--></h5>
                     <p class="fsize12 txt_grey mt10 mb10" style="max-width: 370px;">Create a new shortcut. Give it a ! symbol, and write a message for this shortcut. Then, use conversations to quickly answer 
                         to visitors using the shortcut ! symbol. </p>
                 </div>

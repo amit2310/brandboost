@@ -38,10 +38,110 @@ function getLoggedUser($redirect = true) {
     return $oUser;
 }
 
-function base_url() {
-    return URL::to('/');
-    
+/**
+ * Get logged user notifications
+ */
+if (!function_exists('get_notifications')) {
+
+    function get_notifications() {
+        $allNotifications = array();
+
+        $isLoggedInAdmin = Session::get('admin_user_id');
+
+        $isLoggedInCustomer = Session::get('customer_user_id');
+
+        $isLoggedInUser = Session::get('user_user_id');
+
+        if (!empty($isLoggedInAdmin)) {
+
+            $userId = $isLoggedInAdmin;
+        } else if (!empty($isLoggedInCustomer)) {
+
+            $userId = $isLoggedInCustomer;
+        } else if (!empty($isLoggedInUser)) {
+
+            $userId = $isLoggedInUser;
+        } else {
+            
+        }
+
+        $allNotifications = \App\Models\Admin\NotificationModel::getNotifications($userId);
+
+        return $allNotifications;
+    }
+
 }
+
+/**
+ * Get Notification Tags
+ */
+if (!function_exists('get_notification_tags')) {
+
+    function get_notification_tags() {
+        $aTags = array();
+        $oTemplates = \App\Models\Admin\SettingsModel::getSystemNotificationTemplates();
+        if (!empty($oTemplates)) {
+            foreach ($oTemplates as $oTemplate) {
+                $aTags[$oTemplate->template_tag] = $oTemplate;
+            }
+        }
+        return $aTags;
+    }
+
+}
+
+/**
+ * Redirect to the User section if user role belongs to user(Not Admin, client or team member)
+ */
+if (!function_exists('userRoleAdmin')) {
+
+    function userRoleAdmin($userRole) {
+        if ($userRole == 2) {
+            redirect('user/profile');
+        }
+    }
+
+}
+
+
+/**
+ * Authorized if client account
+ */
+if (!function_exists('admin_account')) {
+
+    function admin_account() {
+        $isLoggedInAdmin = Session::get('admin_user_id');
+        $isLoggedInCustomer = Session::get('customer_user_id');
+        $isLoggedInUser = Session::get('user_user_id');
+        if ($isLoggedInAdmin) {
+            return true;
+        } else if ($isLoggedInCustomer) {
+            return true;
+        } else if ($isLoggedInUser) {
+            return true;
+        } else {
+            Session::flash('error_message', 'You are not authenticated user');
+            redirect('admin/login');
+        }
+    }
+
+}
+
+/**
+ * Get Base URL
+ * @return type
+ */
+if (!function_exists('base_url')) {
+
+    function base_url() {
+        return URL::to('/');
+    }
+
+}
+
+/**
+ * Used to display pre formatted data
+ */
 
 if (!function_exists('pre')) {
 
@@ -53,6 +153,143 @@ if (!function_exists('pre')) {
     }
 
 }
+
+/**
+ * Authorizes page access
+ */
+if (!function_exists('page_auth')) {
+
+    function page_auth() {
+
+        $uriSegment = \Request::segment(2);
+        
+        $isLoggedInAdmin = Session::get('admin_user_id');
+        $isLoggedInCustomer = Session::get('customer_user_id');
+        $isLoggedInUser = Session::get('user_user_id');
+
+        /* $admin_pages = array('profile', 'users', 'membership', 'offsite', 'invoice', 'subscriptions', 'order', 'dashboard', 'upgrades', 'email_template', 'allusertopup', 'qualifiedusertopup', 'notifications', 'brandboost', 'reviews', 'change_password', 'lists', 'automations', 'comments', 'offsitebrandboost', 'questions', 'rewards', 'feedback', 'twiliodetail', 'invoices', 'emailtemplate', 'autoresponder', 'settings', 'popupsettings', 'tracking', 'r', 'questions'); */
+
+        /* $customer_pages = array('profile', 'users', 'dashboard', 'allusertopup', 'qualifiedusertopup', 'order', 'invoice', 'invoices', 'upgrades', 'notifications', 'brandboost', 'reviews', 'change_password', 'lists', 'automations', 'comments', 'rewards', 'feedback', 'twiliodetail', 'autoresponder', 'settings', 'r', 'questions');
+
+          $reviewer_pages = array('profile', 'dashboard', 'reviews', 'change_password', 'notifications', 'comments', 'r'); */
+
+        /* if (!empty($isLoggedInAdmin)) {
+          if (in_array($uriSegment, $admin_pages)) {
+
+          }
+          } */
+        /* if (!empty($isLoggedInCustomer)) {
+          if (in_array($uriSegment, $customer_pages)) {
+
+          } else if (in_array($uriSegment, $admin_pages)) {
+          echo "Sorry, You are not authenticate for this page.";
+          exit;
+          } else {
+
+          }
+          }
+          if (!empty($isLoggedInUser)) {
+          if (in_array($uriSegment, $reviewer_pages)) {
+
+          } else if (in_array($uriSegment, $admin_pages)) {
+          echo "Sorry, You are not authenticate for this page.";
+          exit;
+          } else {
+
+          }
+          } */
+    }
+
+}
+
+
+/**
+ * Get active membership data
+ */
+if (!function_exists('getAllActiveMembership')) {
+
+    function getAllActiveMembership() {
+        $oMembership = \App\Models\Admin\MembershipModel::getActiveMembership();
+        return $oMembership;
+    }
+
+}
+
+
+/**
+ * Get list of all membership levels
+ */
+if (!function_exists('getMembershipLevelUpgrades')) {
+
+    function getMembershipLevelUpgrades($oData, $planID) {
+        $oUpsells = \App\Models\Admin\MembershipModel::getLevelUpgrade($oData, $planID);
+        return $oUpsells;
+    }
+
+}
+
+/**
+ * Get list of all annual membership levels
+ */
+if (!function_exists('getMembershipAnnualUpgrades')) {
+
+    function getMembershipAnnualUpgrades($oData, $planID) {
+        $oUpsells = \App\Models\Admin\MembershipModel::getAnnualUpgrade($oData, $planID);
+        return $oUpsells;
+    }
+
+}
+
+/**
+ * Get global Subscriber data
+ */
+if (!function_exists('getAllGlobalSubscribers')) {
+
+    function getAllGlobalSubscribers($userID) {
+        $subscribersData = \App\Models\Admin\SubscriberModel::getGlobalSubscribers($userID);
+        return $subscribersData;
+    }
+
+}
+
+
+/**
+ * Used to get Notification setting data
+ */
+if (!function_exists('userSetting')) {
+
+    function userSetting($userId) {
+        $oSettings = \App\Models\Admin\SettingsModel::getNotificationSettings($userId);
+        return $oSettings;
+    }
+
+}
+
+
+/**
+ * Check member chat permission
+ */
+if (!function_exists('getMemberchatpermission')) {
+
+    function getMemberchatpermission($MemberID) {
+        $teamData = \App\Models\Admin\TeamModel::Chatpermission($MemberID);
+        return $teamData;
+    }
+
+}
+
+/**
+ * Get Country list
+ */
+if (!function_exists('getCountriesList')) {
+
+    function getCountriesList() {        
+        $oCountryData = \App\Models\Admin\CountryModel::getCountriesList();
+        return $oCountryData;
+    }
+
+}
+
 
 
 
@@ -346,18 +583,7 @@ if (!function_exists('updateCreditUsageOLD')) {
 
 }
 
-if (!function_exists('getCountriesList')) {
 
-    function getCountriesList() {
-
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Country_model", "mmCountry");
-        $oCountryData = $CI->mmCountry->getCountriesList();
-        return $oCountryData;
-    }
-
-}
 
 
 
@@ -731,62 +957,9 @@ if (!function_exists('getMembershipUpsell')) {
 
 }
 
-if (!function_exists('getMembershipLevelUpgrades')) {
-
-    function getMembershipLevelUpgrades($oData, $planID) {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/Membership_model", "hMembership");
-        $oUpsells = $CI->hMembership->getLevelUpgrade($oData, $planID);
-        return $oUpsells;
-    }
-
-}
-
-if (!function_exists('getMembershipAnnualUpgrades')) {
-
-    function getMembershipAnnualUpgrades($oData, $planID) {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/Membership_model", "hhMembership");
-        $oUpsells = $CI->hhMembership->getAnnualUpgrade($oData, $planID);
-        return $oUpsells;
-    }
-
-}
 
 
 
-
-if (!function_exists('admin_account')) {
-
-    function admin_account() {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $isLoggedInAdmin = $CI->session->userdata('admin_user_id');
-        $isLoggedInCustomer = $CI->session->userdata('customer_user_id');
-        $isLoggedInUser = $CI->session->userdata('user_user_id');
-        if ($isLoggedInAdmin) {
-            return TRUE;
-        } else if ($isLoggedInCustomer) {
-            return TRUE;
-        } else if ($isLoggedInUser) {
-            return TRUE;
-        } else {
-
-            $CI->session->set_flashdata('authenticate', 'You are not authenticate.');
-            redirect('admin/login');
-        }
-    }
-
-}
-
-if (!function_exists('userRoleAdmin')) {
-
-    function userRoleAdmin($userRole) {
-        if ($userRole == 2) {
-            redirect('user/profile');
-        }
-    }
-
-}
 
 function getUserDetailsByUserID($userId) {
 
@@ -816,52 +989,6 @@ if (!function_exists('user_account')) {
     }
 
 }
-
-if (!function_exists('page_auth')) {
-
-    function page_auth() {
-
-        $CI = & get_instance();
-        $uriSegment = $CI->uri->segment(2);
-        $isLoggedInAdmin = $CI->session->userdata('admin_user_id');
-        $isLoggedInCustomer = $CI->session->userdata('customer_user_id');
-        $isLoggedInUser = $CI->session->userdata('user_user_id');
-
-        /* $admin_pages = array('profile', 'users', 'membership', 'offsite', 'invoice', 'subscriptions', 'order', 'dashboard', 'upgrades', 'email_template', 'allusertopup', 'qualifiedusertopup', 'notifications', 'brandboost', 'reviews', 'change_password', 'lists', 'automations', 'comments', 'offsitebrandboost', 'questions', 'rewards', 'feedback', 'twiliodetail', 'invoices', 'emailtemplate', 'autoresponder', 'settings', 'popupsettings', 'tracking', 'r', 'questions'); */
-
-        /* $customer_pages = array('profile', 'users', 'dashboard', 'allusertopup', 'qualifiedusertopup', 'order', 'invoice', 'invoices', 'upgrades', 'notifications', 'brandboost', 'reviews', 'change_password', 'lists', 'automations', 'comments', 'rewards', 'feedback', 'twiliodetail', 'autoresponder', 'settings', 'r', 'questions');
-
-          $reviewer_pages = array('profile', 'dashboard', 'reviews', 'change_password', 'notifications', 'comments', 'r'); */
-
-        /* if (!empty($isLoggedInAdmin)) {
-          if (in_array($uriSegment, $admin_pages)) {
-
-          }
-          } */
-        /* if (!empty($isLoggedInCustomer)) {
-          if (in_array($uriSegment, $customer_pages)) {
-
-          } else if (in_array($uriSegment, $admin_pages)) {
-          echo "Sorry, You are not authenticate for this page.";
-          exit;
-          } else {
-
-          }
-          }
-          if (!empty($isLoggedInUser)) {
-          if (in_array($uriSegment, $reviewer_pages)) {
-
-          } else if (in_array($uriSegment, $admin_pages)) {
-          echo "Sorry, You are not authenticate for this page.";
-          exit;
-          } else {
-
-          }
-          } */
-    }
-
-}
-
 
 if (!function_exists('emailTemplate')) {
 
@@ -986,60 +1113,7 @@ if (!function_exists('sendEmailTemplate')) {
 }
 
 
-if (!function_exists('get_notifications')) {
 
-    function get_notifications() {
-        $allNotifications = array();
-        $CI = & get_instance();
-
-        $isLoggedInAdmin = $CI->session->userdata('admin_user_id');
-
-        $isLoggedInCustomer = $CI->session->userdata('customer_user_id');
-
-        $isLoggedInUser = $CI->session->userdata('user_user_id');
-
-        if (!empty($isLoggedInAdmin)) {
-
-            $userId = $isLoggedInAdmin;
-        } else if (!empty($isLoggedInCustomer)) {
-
-            $userId = $isLoggedInCustomer;
-        } else if (!empty($isLoggedInUser)) {
-
-            $userId = $isLoggedInUser;
-        } else {
-            
-        }
-
-//$userId = $isLoggedInCustomer == '' ? $isLoggedInAdmin : $isLoggedInCustomer;
-
-        $CI->load->model("admin/Notifications_model", "rNotifications");
-        if ($userId != '') {
-            $allNotifications = $CI->rNotifications->getNotifications($userId);
-        }
-        return $allNotifications;
-    }
-
-}
-
-if (!function_exists('get_notification_tags')) {
-
-    function get_notification_tags() {
-        $aTags = array();
-        $CI = & get_instance();
-
-        $CI->load->model("admin/Settings_model", "mSettings");
-
-        $oTemplates = $CI->mSettings->getSystemNotificationTemplates();
-        if (!empty($oTemplates)) {
-            foreach ($oTemplates as $oTemplate) {
-                $aTags[$oTemplate->template_tag] = $oTemplate;
-            }
-        }
-        return $aTags;
-    }
-
-}
 
 if (!function_exists('get_email_notification_tags')) {
 
@@ -2107,33 +2181,11 @@ if (!function_exists('getCharUserList')) {
 }
 
 
-if (!function_exists('getMemberchatpermission')) {
-
-    function getMemberchatpermission($MemberID) {
-
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Team_model", "mTeam");
-        $teamData = $CI->mTeam->Chatpermission($MemberID);
-        return $teamData;
-    }
-
-}
 
 
 
-if (!function_exists('getGlobalSubscribers')) {
 
-    function getAllGlobalSubscribers($userID) {
 
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->getGlobalSubscribers($userID);
-        return $subscribersData;
-    }
-
-}
 
 if (!function_exists('webchatUsers')) {
 
@@ -3205,18 +3257,6 @@ function notificationBackgroundColor($notificatioStatus) {
         $background_color = '#ffffff';
     }
     return $background_color;
-}
-
-if (!function_exists('userSetting')) {
-
-    function userSetting($userId) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Settings_model", "mSetting");
-        $oSettings = $CI->mSetting->getNotificationSettings($userId);
-        return $oSettings;
-    }
-
 }
 
 

@@ -22,6 +22,7 @@ class ComposerStaticInit253330274de5331ca94d987c3c947891
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
         '9b9d87e689170639df1d344d46c591b0' => __DIR__ . '/../..' . '/bootstrap/my_helper.php',
+        '7c2d744bf1c05478e06e247c5c9d7c27' => __DIR__ . '/../..' . '/bootstrap/brandboost_helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -412,6 +413,7 @@ class ComposerStaticInit253330274de5331ca94d987c3c947891
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\Admin\\Dashboard' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Dashboard.php',
         'App\\Http\\Controllers\\Admin\\Login' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Login.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
@@ -428,7 +430,14 @@ class ComposerStaticInit253330274de5331ca94d987c3c947891
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Libraries\\Custom\\Mobile_Detect' => __DIR__ . '/../..' . '/app/Libraries/Custom/Mobile_Detect.php',
+        'App\\Models\\Admin\\DashboardModel' => __DIR__ . '/../..' . '/app/Models/Admin/DashboardModel.php',
         'App\\Models\\Admin\\LoginModel' => __DIR__ . '/../..' . '/app/Models/Admin/LoginModel.php',
+        'App\\Models\\Admin\\MembershipModel' => __DIR__ . '/../..' . '/app/Models/Admin/MembershipModel.php',
+        'App\\Models\\Admin\\NotificationModel' => __DIR__ . '/../..' . '/app/Models/Admin/NotificationModel.php',
+        'App\\Models\\Admin\\SettingsModel' => __DIR__ . '/../..' . '/app/Models/Admin/SettingsModel.php',
+        'App\\Models\\Admin\\SubscriberModel' => __DIR__ . '/../..' . '/app/Models/Admin/SubscriberModel.php',
+        'App\\Models\\Admin\\TeamModel' => __DIR__ . '/../..' . '/app/Models/Admin/TeamModel.php',
+        'App\\Models\\Admin\\UsersModel' => __DIR__ . '/../..' . '/app/Models/Admin/UsersModel.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
