@@ -1,23 +1,24 @@
-<?php //pre($oCurrentPlanData); die; ?>
+<?php //pre($oCurrentPlanData); die;   ?>
 
-<div class="row monthly_pricing_plan" <?php if(!empty($oCurrentPlanData) && !(($oCurrentPlanData->subs_cycle == 'month' || $oCurrentPlanData->subs_cycle == 'monthly') && ($oCurrentPlanData->level_name != 'Pro'))):?> style="display:none;"<?php endif;?>> 
+<div class="row monthly_pricing_plan" <?php if (!empty($oCurrentPlanData) && !(($oCurrentPlanData->subs_cycle == 'month' || $oCurrentPlanData->subs_cycle == 'monthly') && ($oCurrentPlanData->level_name != 'Pro'))): ?> style="display:none;"<?php endif; ?>> 
     <?php if (!empty($oMemberships)): $isMembershipActive = false; ?>
         <?php foreach ($oMemberships as $oMembership): ?>
             <?php if (($oMembership->type == 'membership') && ($oMembership->subs_cycle == 'monthly' || $oMembership->subs_cycle == 'month')): ?>
                 <!-- Pricing -->
+                <?php
+                if ($oMembership->level_name == 'Starter') {
+                    $planiconup = 'starter_icon.png';
+                } else if ($oMembership->level_name == 'Business') {
+                    $planiconup = 'business_icon.png';
+                } else if ($oMembership->level_name == 'Pro') {
+                    $planiconup = 'pro_icon.png';
+                } else {
+                    $planiconup = 'pro_icon.png';
+                }
+                ?>
                 <div class="col-xs-4">
                     <div class="price_plan">
-                        <div class="imgicon"><img src="<?php echo base_url(); ?>assets/images/<?php
-                            if ($oMembership->level_name == 'Starter') {
-                                echo 'starter_icon.png';
-                            } else if ($oMembership->level_name == 'Business') {
-                                echo 'business_icon.png';
-                            } else if ($oMembership->level_name == 'Pro') {
-                                echo 'pro_icon.png';
-                            } else {
-                                echo 'pro_icon.png';
-                            }
-                            ?>"/></div>
+                        <div class="imgicon"><img src="{{ URL::asset('assets/images/'.$planiconup) }}"/></div>
                         <div class="bbot p30 text-center">
                             <p class="txt_purple fsize16 mt-5"><?php echo $oMembership->level_name; ?></p>	
                             <h3 class="mt-5 mb0">$<?php echo $oMembership->price; ?><span>/mo</span></h3>
@@ -45,7 +46,7 @@
                                 ?>
                                 <button type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
                             <?php } else { ?>
-                                <button type="button" type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" plan_id="<?php echo $oMembership->plan_id; ?>" plan_name="<?php echo $oMembership->level_name; ?>"><span><?php if(empty($oCurrentPlanData)):?>Buy<?php elseif ($isMembershipActive): ?>Upgrade<?php else: ?>Downgrade<?php endif; ?></span> </button>
+                                <button type="button" type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" plan_id="<?php echo $oMembership->plan_id; ?>" plan_name="<?php echo $oMembership->level_name; ?>"><span><?php if (empty($oCurrentPlanData)): ?>Buy<?php elseif ($isMembershipActive): ?>Upgrade<?php else: ?>Downgrade<?php endif; ?></span> </button>
                             <?php } ?>
                         </div>
                     </div>
@@ -56,24 +57,25 @@
     <!--//End Pricing --> 
 </div>
 
-<div class="row yearly_pricing_plan" <?php if(!(($oCurrentPlanData->subs_cycle == 'yearly' || $oCurrentPlanData->subs_cycle == 'year') || ($oCurrentPlanData->level_name == 'Pro'))):?> style="display:none;"<?php endif;?>> 
+<div class="row yearly_pricing_plan" <?php if (!(($oCurrentPlanData->subs_cycle == 'yearly' || $oCurrentPlanData->subs_cycle == 'year') || ($oCurrentPlanData->level_name == 'Pro'))): ?> style="display:none;"<?php endif; ?>> 
     <?php if (!empty($oMemberships)): $isMembershipActive = false; ?>
         <?php foreach ($oMemberships as $oMembership): ?>
             <?php if (($oMembership->type == 'membership') && ($oMembership->subs_cycle == 'yearly' || $oMembership->subs_cycle == 'year')): ?>
                 <!-- Pricing -->
+                <?php
+                if ($oMembership->level_name == 'Starter Yearly') {
+                    $planiconup2 = 'starter_icon.png';
+                } else if ($oMembership->level_name == 'Business Yearly') {
+                    $planiconup2 = 'business_icon.png';
+                } else if ($oMembership->level_name == 'Pro Yearly') {
+                    $planiconup2 = 'pro_icon.png';
+                } else {
+                    $planiconup2 = 'pro_icon.png';
+                }
+                ?>
                 <div class="col-xs-4">
                     <div class="price_plan">
-                        <div class="imgicon"><img src="<?php echo base_url(); ?>assets/images/<?php
-                            if ($oMembership->level_name == 'Starter Yearly') {
-                                echo 'starter_icon.png';
-                            } else if ($oMembership->level_name == 'Business Yearly') {
-                                echo 'business_icon.png';
-                            } else if ($oMembership->level_name == 'Pro Yearly') {
-                                echo 'pro_icon.png';
-                            } else {
-                                echo 'pro_icon.png';
-                            }
-                            ?>"/></div>
+                        <div class="imgicon"><img src="{{ URL::asset('assets/images/'.$planiconup2) }}"/></div>
                         <div class="bbot p30 text-center">
                             <p class="txt_purple fsize16 mt-5"><?php echo $oMembership->level_name; ?></p>	
                             <h3 class="mt-5 mb0">$<?php echo $oMembership->price; ?><span>/yr</span></h3>
@@ -96,9 +98,9 @@
                                 <li <?php if ($oMembership->level_name != 'Pro Yearly'): ?> class="disabled"<?php endif; ?>><i class="<?php if ($oMembership->level_name != 'Pro Yearly'): ?>icon-cancel-circle2<?php else: ?>icon-checkmark-circle<?php endif; ?>"></i> Analytics</li>
                             </ul>
                             <?php
-                            if($oCurrentPlanData->level_name == 'Pro'){
+                            if ($oCurrentPlanData->level_name == 'Pro') {
                                 $bForceDisplay = true;
-                            }else{
+                            } else {
                                 $bForceDisplay = false;
                             }
                             if ($oUser->plan_id == $oMembership->plan_id) {

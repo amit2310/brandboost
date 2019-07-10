@@ -6,17 +6,17 @@
                     <a href="javascript:void(0);" class="dispUpgradePlan" data-cycle="yearly">Annual</a>
                     <a href="javascript:void(0);" class="month_btn dispUpgradePlan" data-cycle="monthly">Monthly</a>
                 </div>
-                <h5 class="modal-title"><img src="<?php echo base_url("assets/images/upgrade_icon.png"); ?>">Upgrade your subscription<span>Pick an account plan that fits your workflow. Add a credits<br> plan to any project when it's ready to go live.</span></h5>
+                <h5 class="modal-title"><img src="{{ URL::asset('assets/images/upgrade_icon.png') }}">Upgrade your subscription<span>Pick an account plan that fits your workflow. Add a credits<br> plan to any project when it's ready to go live.</span></h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
 
             <div class="modal-body pricing_modal pb30 pt60">
-                <?php $this->load->view("admin/modals/upgrade/partial/plan_list.php"); ?>
+                @include('admin.modals.upgrade.partial.plan_list')
             </div>
             <div class="modal-footer pt-20">
                 <div class="row">
-                    <div class="col-md-12 text-center"> <img src="<?php echo base_url("assets/images/moneybackgurantee2.jpg"); ?>" /> </div>
+                    <div class="col-md-12 text-center"> <img src="{{ URL::asset('assets/images/moneybackgurantee2.jpg') }}" /> </div>
 
                 </div>
             </div>

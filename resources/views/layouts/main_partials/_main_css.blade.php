@@ -1,6 +1,5 @@
 <!-- Global stylesheets -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6448636/7432192/css/fonts.css"/>
 <link href="{{ URL::asset('assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ URL::asset('assets/css/bootstrap.css') }}"  rel="stylesheet" type="text/css">
 <link href="{{ URL::asset('assets/css/core.css') }}" rel="stylesheet" type="text/css">

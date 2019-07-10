@@ -819,21 +819,21 @@
 </style>
 <!-- ********* Chat application start *********** -->
 
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/js/dist-emoji/emojionearea.min.css" media="screen">
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/loading-bar.css" media="screen">
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/notifIt.css" media="screen">
-<script src="<?php echo base_url(); ?>node_modules/socket.io-client/dist/socket.io.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.slimscroll.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/dist-emoji/emojionearea.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/notifIt.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/js/dist-emoji/emojionearea.min.css') }}" media="screen">
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/loading-bar.css') }}" media="screen">
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/notifIt.css') }}" media="screen">
+<script src="{{ URL::asset('node_modules/socket.io-client/dist/socket.io.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/jquery.slimscroll.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/dist-emoji/emojionearea.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/notifIt.js') }}"></script>
 <audio id="audio" src="https://www.soundjay.com/button/sounds/button-09.mp3" autostart="false" ></audio>
-<audio id="widget_audio" src="<?php echo base_url(); ?>chatSound/chat_request.mp3" autostart="false" ></audio>
+<audio id="widget_audio" src="{{ URL::asset('assets/sound/chat_request.mp3') }}" autostart="false" ></audio>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/loading-bar.js"></script>
-<script type='text/javascript' src='<?php echo base_url(); ?>assets/js/highlight.js'></script>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/js/slick.css">
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/js/slick-theme.css">
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.timeago.js"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/loading-bar.js') }}"></script>
+<script type='text/javascript' src="{{ URL::asset('assets/js/highlight.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/js/slick.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/js/slick-theme.css') }}">
+<script type="text/javascript" src="{{ URL::asset('assets/js/jquery.timeago.js') }}"></script>
 <style type="text/css">
 	.user_img_sec.slider{padding: 0!important}
 	.user_img_sec.slider figure{float: left; display: inline-block; width: 28px!important; }
@@ -844,7 +844,7 @@
 	.slick-slide {display: none;float: left;height: 100%;min-height: 1px;}
 	.slick-track{float: left!important; display: inline-block;}
 </style>
-<script src="<?php echo base_url(); ?>assets/js/slick.min_v1.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ URL::asset('assets/js/slick.min_v1.js') }}" type="text/javascript" charset="utf-8"></script>
 
 <style type="text/css">
 	
@@ -873,48 +873,38 @@
 <?php $loginUserData = getLoggedUser(); ?>
 <?php
 if (empty($loginUserData->avatar)) {
-$currentUserImg = '/assets/images/default_avt.jpeg'; 
+    $currentUserImg = '/assets/images/default_avt.jpeg';
 } else {
-$currentUserImg = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $loginUserData->avatar;
+    $currentUserImg = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $loginUserData->avatar;
 } ?>
 
 <?php
-
-$CI = & get_instance();
-$CI->load->model("admin/Team_model", "mmT");
 $aUInfo = getLoggedUser();
-$isLoggedInTeam = $this->session->userdata("team_user_id");
+$isLoggedInTeam = Session::get("team_user_id");
 if ($isLoggedInTeam) {
-    $aTeamInfo = $CI->mmT->getTeamMember($isLoggedInTeam, $aUInfo->id);
-    $teamMemberName = $aTeamInfo->firstname.' '.$aTeamInfo->lastname;
+    $aTeamInfo = \App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
+    $teamMemberName = $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname;
     $teamMemberId = $aTeamInfo->id;
     $teamLogin_id = $aTeamInfo->id;
+} else {
+    $teamMemberName = '';
+    $teamMemberId = '';
+    $teamLogin_id = $loginUserData->id;
 }
-else {
-	$teamMemberName = '';
-	$teamMemberId = '';
-	$teamLogin_id = $loginUserData->id;
+if (!empty($isLoggedInTeam)) {
+    $hasweb_access = getMemberchatpermission($isLoggedInTeam);
 }
-
-$hasweb_access = getMemberchatpermission($isLoggedInTeam);
 $aTwilioAc = getTwilioAccountCustom($loginUserData->id);
-
-
-if($hasweb_access>0 && $hasweb_access->sms_chat == 1)
-{
-if($hasweb_access->bb_number!="")
-{
-$loginUserData->mobile = phone_display_custom_helper($hasweb_access->bb_number);
-}
-else
-{
-$loginUserData->mobile = phone_display_custom_helper($aTwilioAc->contact_no);
-}
-
-}
-else
-{
-$loginUserData->mobile = phone_display_custom_helper($aTwilioAc->contact_no);
+if (!empty($hasweb_access)) {
+    if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
+        if ($hasweb_access->bb_number != "") {
+            $loginUserData->mobile = phone_display_custom_helper($hasweb_access->bb_number);
+        } else {
+            $loginUserData->mobile = phone_display_custom_helper($aTwilioAc->contact_no);
+        }
+    }
+} else {
+    $loginUserData->mobile = phone_display_custom_helper($aTwilioAc->contact_no);
 }
 ?>
 <script>
@@ -923,7 +913,7 @@ $loginUserData->mobile = phone_display_custom_helper($aTwilioAc->contact_no);
 	{
 		
 		$.ajax({
-			url: '<?php echo base_url('admin/Chat/setWebReadstatus'); ?>',
+			url: "{{ url('admin/Chat/setWebReadstatus') }}",
 			type: "POST",
 			data: {'RwebId' : RwebId},
 			dataType: "html",
@@ -1186,17 +1176,17 @@ $loginUserData->mobile = phone_display_custom_helper($aTwilioAc->contact_no);
 		return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
 	}
 	$(function () {
-		var site_url = "<?php echo base_url(); ?>";
+		var site_url = "{{ URL::to('/') }}";
 		site_url = site_url.replace(/\/$/, '');
 		var socket = io(site_url+':3000');
 		var currentUser = "<?php echo $loginUserData->id; ?>";
 		var currentUserName = "<?php echo $loginUserData->firstname . ' ' . $loginUserData->lastname; ?>";
-		var avatar = "<?php echo $aUser->avatar; ?>";
+		var avatar = "<?php echo $aUInfo->avatar; ?>";
 		if(avatar != ' '){
-			avatar = "<?php echo 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aUser->avatar; ?>";
+			avatar = "<?php echo 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aUInfo->avatar; ?>";
 		}
 		else {
-			avatar = "<?php echo base_url('admin_new/images/userp.png'); ?>";
+			avatar = "{{ URL::asset('admin_new/images/userp.png') }}";
 		}
 		var arr = [];
 		var where = 'in';
@@ -1255,19 +1245,19 @@ $loginUserData->mobile = phone_display_custom_helper($aTwilioAc->contact_no);
 			{
 				// ajax to manage the chat popup stats // 
 				$.ajax({
-                   //url: '<?php echo base_url('admin/Chat/setChatboxstatus'); ?>',
+                   //url: "{{ url('admin/Chat/setChatboxstatus') }}",
                     type: "POST",
                     data: {userID:userID, currentUser:currentUser,type:'smschat'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'ok') {
 							
-							$('#CurrentSMSUserListing').html(' <figure><img style="width:16px!important; height:11px!important" id="theImg" src="<?php echo base_url(); ?>assets/images/ajax-loader.gif" /> </figure>');
+							$('#CurrentSMSUserListing').html(' <figure><img style="width:16px!important; height:11px!important" id="theImg" src="{{ URL::asset('assets/images/ajax-loader.gif') }}" /> </figure>');
 							
 							$('#CurrentSMSUserListing').removeClass("slick-initialized slick-slider");
 							// ajax to list // 
 							$.ajax({
-								url: '<?php echo base_url('admin/Chat/getCurrentActivechat/smschat'); ?>',
+								url: "{{ url('admin/Chat/getCurrentActivechat/smschat') }}",
 								type: "POST",
 								data: {userID:userID, currentUser:currentUser},
 								dataType: "html",
@@ -1590,7 +1580,7 @@ function SMSChatData(userId="",SubscriberPhone,clickvalue="" )
 {
 
 $.ajax({
-url: '<?php echo base_url('admin/smschat/showSmsThreads'); ?>',
+url: "{{ url('admin/smschat/showSmsThreads') }}",
 type: "POST",
 data: {'userId':userId,'SubscriberPhone':SubscriberPhone},
 dataType: "html",
@@ -1615,7 +1605,7 @@ var userid =  userPhoneNo;
 	if(e.keyCode == 191)
 	{
 	$.ajax({
-	url: '<?php echo base_url('admin/smschat/small_shortcutListing_sms'); ?>',
+	url: "{{ url('admin/smschat/small_shortcutListing_sms') }}",
 	data:{'boxid':userid},
 	type: "POST",
 	dataType: "html",
@@ -1662,7 +1652,7 @@ for(var i=0; i<messageSmilies.length; i++) {
 var messageSmiley = messageSmilies[i],
 messageSmileyLower = messageSmiley.toLowerCase();
 if(smiliesMap[messageSmileyLower]) {
-messageText = messageText.replace(messageSmiley,"<img style='width:auto; height:auto;' src='<?php echo base_url(); ?>assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif' alt='smiley' />");
+messageText = messageText.replace(messageSmiley,"<img style='width:auto; height:auto;' src='/assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif'  alt='smiley' />");
 }
 }
 
@@ -1717,7 +1707,7 @@ var newToken = aToken+'n'+sToken;
 	        $('.activeChat').prepend('<div class="activityShow sms_twr_' + userPhoneNo + ' media chatbox_new bkg_white mb10 ' + userPhoneNo + '" style="box-shadow:0 2px 4px 0 rgba(1, 21, 64,0.06)!important; border-radius:0 0 5px 5px"><a href="javascript:void(0);" class="media-link bbot  getChatDetails " subscriberId="" phone_no=' + userPhoneNo + '><div class="media-left"><span class="icons fl_letters_gray s32" style="width:28px!important;height:28px!important;line-height:28px;font-size:12px;">NA</span><span class="favouriteSMSUser" style="display:none" subscriberId="" phone_no=' + userPhoneNo + '><i class="fa fa-star star_icon "></i></span></div><div class="media-body"> <span class="fsize12 txt_dark">' + userPhoneNo + '</span> <span id=unMsg_' + userPhoneNo + ' class="slider-phone contacts text-size-small" style="margin:0px">' + messageContentDynamic.substring(0, 20) + '...</span><span class="fsize12 txt_dark"></span> </div><div class="media-right"><span class="date_time txt_grey fsize12">just now</span></div></a> </div>');
 	        $('.SmallSmschat .a_list').prepend('<div phone_no_format=' + userPhoneNo + ' id="sidebar_Sms_box_' + userPhoneNo + '" class="sms_user sms_twr_' + userPhoneNo + '" incsmswid="" rewid="" phone_no=' + userPhoneNo + ' user_id="146"><span style="display: none;" class="slider-image img"><?php echo $currentUserImg; ?></span><div class="avatarImage"><span class="icons fl_letters_gray s32" style="width:28px!important;height:28px!important;line-height:28px;font-size:11px;">NA</span></div><span style="display:none" id="fav_star_"><a style="cursor: pointer;" class="favourite" status="1" user_id=""><i class="icon-star-full2 text-muted sidechatstar"></i></a></span><span class="slider-username contacts">' + userPhoneNo + '</span> <span class="slider-phone contacts txt_dark" style="margin:0px;color:#6a7995!important; font-weight:bold;padding-left:40px; font-size:12px!important">' +messageContentDynamic.substring(0, 20) + '...</span><span class="user_status">Just Now</span></div>');
 	        $.ajax({
-	           url: '<?php echo base_url('admin/subscriber/add_contact'); ?>',
+	           url: "{{ url('admin/subscriber/add_contact') }}",
 	            type: "POST",
 	            data: {
 	                'firstname': 'NA',
@@ -1769,7 +1759,7 @@ $('#msg_input_sms_'+userPhoneNo).attr('userimage','<?php echo $currentUserImg; ?
 		
 
 $.ajax({
-url: '<?php echo base_url('admin/smschat/sendMsg'); ?>',
+url: "{{ url('admin/smschat/sendMsg') }}",
 type: "POST",
 data: {'phoneNo' : userPhoneNo, 'messageContent' : messageContent, 'smstoken': newToken, 'moduleName' : 'chat', 'media_type': '', 'videoUrl': ''},
 dataType: "html",
@@ -1816,19 +1806,19 @@ var NotesTo  =  $( this ).attr( "user_id" );
 webNoteslisting(NotesTo);
 // ajax to manage the chat popup stats // 
 $.ajax({
-url: '<?php echo base_url('admin/Chat/setChatboxstatus'); ?>',
+url: "{{ url('admin/Chat/setChatboxstatus') }}",
 type: "POST",
 data: {userID:userID, currentUser:currentUser,type:'webchat'},
 dataType: "json",
 success: function (data) {
 if (data.status == 'ok') {
 
-$('#CurrentUserListing').html(' <figure style="margin:15px 0;"><img style="width:16px!important; height:11px!important" id="theImg" src="<?php echo base_url(); ?>assets/images/ajax-loader.gif" /> </figure>');
+$('#CurrentUserListing').html(' <figure style="margin:15px 0;"><img style="width:16px!important; height:11px!important" id="theImg" src="{{ URL::asset('assets/images/ajax-loader.gif') }}" /> </figure>');
 $('#CurrentUserListing').removeClass("slick-initialized slick-slider");
 
 // ajax to list // 
 $.ajax({
-url: '<?php echo base_url('admin/Chat/getCurrentActivechat/webchat'); ?>',
+url: "{{ url('admin/Chat/getCurrentActivechat/webchat') }}",
 type: "POST",
 data: {userID:userID, currentUser:currentUser},
 dataType: "html",
@@ -1892,7 +1882,7 @@ var newToken = aToken+'n'+sToken;
 //console.log(newToken, 'get new token');
 var strTime = getTime();
 $.ajax({
-url: '<?php echo base_url('admin/Chat/getMessages'); ?>',
+url: "{{ url('admin/Chat/getMessages') }}",
 type: "POST",
 data: {room:newToken, offset:'0'},
 dataType: "json",
@@ -1961,7 +1951,7 @@ $( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
 });
 
 $.ajax({
-url: '<?php echo base_url('admin/Chat/readMessages'); ?>',
+url: "{{ url('admin/Chat/readMessages') }}",
 type: "POST",
 data: {userID:userID, currentUser:currentUser},
 dataType: "json",
@@ -2248,13 +2238,13 @@ $( '[rel="' + chatbox + '"] .msg_wrap' ).slideToggle( "slow",function() {
 
 if ($(this).is(':visible'))
 { 
-$('#minus_img_'+chatbox).attr('src','<?php echo base_url(); ?>/new_pages/assets/images/grey_minus.png');
-$('#close_img_'+chatbox).attr('src','<?php echo base_url(); ?>/new_pages/assets/images/close_red_20.png');
+$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/grey_minus.png') }}";
+$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
 }
 else
 {
-$('#minus_img_'+chatbox).attr('src','<?php echo base_url(); ?>/new_pages/assets/images/icon_maximize.png');
-$('#close_img_'+chatbox).attr('src','<?php echo base_url(); ?>/new_pages/assets/images/close_red_20.png');
+$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/icon_maximize.png') }}";
+$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
 
 }
 
@@ -2275,7 +2265,7 @@ var sToken = Number(currentUser) - Number(chatbox);
 var newToken = aToken+'n'+sToken;
 var strTime = getTime();
 $.ajax({
-url: '<?php echo base_url('admin/Chat/getUnreadMessages'); ?>',
+url: "{{ url('admin/Chat/getUnreadMessages') }}",
 type: "POST",
 data: {room:newToken, offset:'0'},
 dataType: "json",
@@ -2311,7 +2301,7 @@ $( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
 });
 
 $.ajax({
-url: '<?php echo base_url('admin/Chat/readMessages'); ?>',
+url: "{{ url('admin/Chat/readMessages') }}",
 type: "POST",
 data: {userID:chatbox, currentUser:currentUser},
 dataType: "json",
@@ -2355,7 +2345,7 @@ var chatBoxType = $( this ).attr( "box-close-type" );
 
 // ajax to manage the chat popup stats // 
 $.ajax({
-url: '<?php echo base_url('admin/Chat/removeBoxStatus'); ?>',
+url: "{{ url('admin/Chat/removeBoxStatus') }}",
 type: "POST",
 data: {userID:userID, currentUser:currentUser},
 dataType: "json",
@@ -2364,11 +2354,11 @@ success: function (data) {
 if (data.status == 'ok') 
 {
 	if(chatBoxType == 'webchat'){
-		$('#CurrentUserListing').html(' <figure style="margin:15px 0;"><img style="width:16px!important; height:11px!important" id="theImg" src="<?php echo base_url(); ?>assets/images/ajax-loader.gif" /> </figure>');
+		$('#CurrentUserListing').html(' <figure style="margin:15px 0;"><img style="width:16px!important; height:11px!important" id="theImg" src="{{ URL::asset('assets/images/ajax-loader.gif') }}" /> </figure>');
 		$('#CurrentUserListing').removeClass("slick-initialized slick-slider");
 		// ajax to list // 
 		$.ajax({
-			url: '<?php echo base_url('admin/Chat/getCurrentActivechat/webchat'); ?>',
+			url: "{{ url('admin/Chat/getCurrentActivechat/webchat') }}",
 			type: "POST",
 			data: {userID:userID, currentUser:currentUser},
 			dataType: "html",
@@ -2395,7 +2385,7 @@ if (data.status == 'ok')
 		$('#CurrentSMSUserListing').removeClass("slick-initialized slick-slider");
 		// ajax to list // 
 		$.ajax({
-			url: '<?php echo base_url('admin/Chat/getCurrentActivechat/smschat'); ?>',
+			url: "{{ url('admin/Chat/getCurrentActivechat/smschat') }}",
 			type: "POST",
 			data: {userID:userID, currentUser:currentUser},
 			dataType: "html",
@@ -2585,7 +2575,7 @@ if(window_witdh > 1600)
 		avatar = "<?php echo base_url('admin_new/images/userp.png'); ?>";
 		}
 		
-		var currentUserName = '<?php echo $loginUserData->firstname." ".  $loginUserData->lastname; ?>';
+		var currentUserName = '<?php echo $loginUserData->firstname . " " . $loginUserData->lastname; ?>';
 		const files = document.querySelector('[id=preview_image_sms').files;
 		
 		const formData = new FormData();
@@ -2595,7 +2585,7 @@ if(window_witdh > 1600)
 		formData.append('files[]', file);
 		}
 		
-		fetch('<?php echo base_url("/dropzone/upload_s3_attachment/".$loginUserData->id."/smschat"); ?>', { 
+		fetch('<?php echo base_url("/dropzone/upload_s3_attachment/" . $loginUserData->id . "/smschat"); ?>', { 
 		method: 'POST',
 		body: formData // This is your file object
 		}).then(
@@ -2614,7 +2604,7 @@ if(window_witdh > 1600)
 				if(fileext[0] == 'mp4' || fileext[0] == 'webm' || fileext[0] == 'ogg') {
 					$.ajax({
 					
-					url: '<?php echo base_url('admin/smschat/sendMsg'); ?>',
+					url: "{{ url('admin/smschat/sendMsg') }}",
 					
 					type: "POST",
 					data: {'phoneNo' : userPhoneNo, 'messageContent' : msg,'smstoken': newToken, 'moduleName' : 'chat', 'media_type': 'video', 'videoUrl': 'send'},
@@ -2632,7 +2622,7 @@ if(window_witdh > 1600)
 				else {
 					$.ajax({
 					
-					url: '<?php echo base_url('admin/smschat/sendMMS'); ?>',
+					url: "{{ url('admin/smschat/sendMMS') }}",
 					
 					type: "POST",
 					data: {'phoneNo' : userPhoneNo, 'messageContent' : msg,'smstoken': newToken, 'moduleName' : 'chat', 'media_type': 'image', 'videoUrl':''},
@@ -2702,7 +2692,7 @@ if(window_witdh > 1600)
 			avatar = "<?php echo base_url('admin_new/images/userp.png'); ?>";
 			}
 			
-			var currentUserName = '<?php echo $loginUserData->firstname." ".  $loginUserData->lastname; ?>';
+			var currentUserName = '<?php echo $loginUserData->firstname . " " . $loginUserData->lastname; ?>';
 			const files = document.querySelector('[id=preview_image_web').files;
 			
 			const formData = new FormData();
@@ -2712,7 +2702,7 @@ if(window_witdh > 1600)
 			formData.append('files[]', file);
 			}
 			
-			fetch('<?php echo base_url("/dropzone/upload_s3_attachment/".$loginUserData->id."/webchat"); ?>', { 
+			fetch('<?php echo base_url("/dropzone/upload_s3_attachment/" . $loginUserData->id . "/webchat"); ?>', { 
 			method: 'POST',
 			body: formData // This is your file object
 			}).then(
@@ -2745,7 +2735,7 @@ if(window_witdh > 1600)
 				
 				msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+filename;
 				$.ajax({
-				url: '<?php echo base_url('admin/Chat/addChatMsg'); ?>',
+				url: "{{ url('admin/Chat/addChatMsg') }}",
 				type: "POST",
 				data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser},
 				dataType: "json",
@@ -2872,7 +2862,7 @@ if(window_witdh > 1600)
 				}
 				else {
 				$.ajax({
-				url: '<?php echo base_url('admin/Chat/changeLoginStatus'); ?>',
+				url: "{{ url('admin/Chat/changeLoginStatus') }}",
 				type: "POST",
 				data: {userId:data.userId, status: '1'},
 				dataType: "json",
@@ -2913,7 +2903,7 @@ if(window_witdh > 1600)
 				}
 				
 				$.ajax({
-				url: '<?php echo base_url('admin/Chat/changeLoginStatus'); ?>',
+				url: "{{ url('admin/Chat/changeLoginStatus') }}",
 				type: "POST",
 				data: {userId:data.userId, status: '0'},
 				dataType: "json",
@@ -3220,7 +3210,7 @@ if(window_witdh > 1600)
 					$('#msg_box_show_'+data.currentUser).removeClass('typing_messsage');
 				}, data.wait);
 		 		
-		 		$('#msg_box_show_'+data.currentUser).append( `<li class="media loading_message_li_${data.currentUser}" style="height: 43px;padding-top: 10px;"><img src="<?php echo base_url(); ?>assets/images/messageloading.gif" style="height: 25px;"></li>`);
+		 		$('#msg_box_show_'+data.currentUser).append( `<li class="media loading_message_li_${data.currentUser}" style="height: 43px;padding-top: 10px;"><img src="{{ URL::asset('assets/images/messageloading.gif') }}" style="height: 25px;"></li>`);
 			 	if(currentUser == data.chatTo)
 				{
 					var mUser = data.currentUser;
@@ -3244,7 +3234,7 @@ if(window_witdh > 1600)
 					$('#WebChatTextarea_'+data.currentUser).removeClass('typing_messsage');
 				}, data.wait);
 
-		 		$('#WebChatTextarea_'+data.currentUser).append( `<li class="media loading_message_big_li_${data.currentUser}" style="height: 43px;padding-top: 10px;"><img src="<?php echo base_url(); ?>assets/images/messageloading.gif" style="height: 25px;"></li>`);
+		 		$('#WebChatTextarea_'+data.currentUser).append( `<li class="media loading_message_big_li_${data.currentUser}" style="height: 43px;padding-top: 10px;"><img src="{{ URL::asset('assets/images/messageloading.gif') }}" style="height: 25px;"></li>`);
 			 	if(currentUser == data.chatTo)
 				{
 					var mUser = data.currentUser;
@@ -3348,7 +3338,7 @@ if(window_witdh > 1600)
 				
 				profileImg = `<span class="icons fl_letters s32" style="width:28px!important;height:28px!important;line-height:28px;font-size:11px;">${fname}${lname}</span>`;
 				}else{
-				profileImg = `<span class="icons s32"><img src="${data.avatar}" onerror="this.src='<?php echo base_url(); ?>assets/images/default_avt.jpeg'" class="img-circle" alt="" width="24" height="24"></span>`;
+				profileImg = `<span class="icons s32"><img src="${data.avatar}" onerror="this.src="{{ URL::asset('assets/images/default_avt.jpeg') }}" class="img-circle" alt="" width="24" height="24"></span>`;
 				}
 				
 				var userID = data.support_id;
@@ -3394,7 +3384,7 @@ if(window_witdh > 1600)
 
 				if($('#msg_box_show_'+chatbox).hasClass('typing_messsage')) {
 					
-			 		$('#msg_box_show_'+chatbox).append( `<li class="media loading_message_li_${chatbox}" style="height: 43px;padding-top: 10px;"><img src="<?php echo base_url(); ?>assets/images/messageloading.gif" style="height: 25px;"></li>`);
+			 		$('#msg_box_show_'+chatbox).append( `<li class="media loading_message_li_${chatbox}" style="height: 43px;padding-top: 10px;"><img src="{{ URL::asset('assets/images/messageloading.gif') }}" style="height: 25px;"></li>`);
 			 	}
 				
 				
@@ -3493,7 +3483,7 @@ if(window_witdh > 1600)
 				setTimeout(function(){ 
 				
 				$.ajax({
-				url: '<?php echo base_url('admin/Chat/readChatMsg'); ?>',
+				url: "{{ url('admin/Chat/readChatMsg') }}",
 				type: "POST",
 				data: {chatTo:data.chatTo, chatFrom:data.currentUser},
 				dataType: "json",
@@ -3543,7 +3533,7 @@ if(window_witdh > 1600)
 					{
 						
 					$.ajax({
-					url: '<?php echo base_url('admin/smschat/small_shortcutListing'); ?>',
+					url: "{{ url('admin/smschat/small_shortcutListing') }}",
 					data:{'boxid':chatTo},
 					type: "POST",
 					dataType: "html",
@@ -3585,7 +3575,7 @@ if(window_witdh > 1600)
 				socket.emit('chat_message', {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, currentUserName:currentUserName, avatar:avatar, teamId:teamId, teamName:teamName });
 				$(this).val('');
 				$.ajax({
-				url: '<?php echo base_url('admin/Chat/addChatMsg'); ?>',
+				url: "{{ url('admin/Chat/addChatMsg') }}",
 				type: "POST",
 				data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser},
 				dataType: "json",
@@ -3658,7 +3648,7 @@ if(window_witdh > 1600)
 				socket.emit('chat_message', {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, currentUserName:currentUserName, avatar:avatar });
 				$(this).val('');
 				$.ajax({
-				url: '<?php echo base_url('admin/Chat/addChatMsg'); ?>',
+				url: "{{ url('admin/Chat/addChatMsg') }}",
 				type: "POST",
 				data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser},
 				dataType: "json",
@@ -3738,94 +3728,74 @@ if(window_witdh > 1600)
 				
 			</script>
 			<?php
-				function phoneDisplay($num){
-					$num = preg_replace('/[^0-9]/', '', $num);
-					
-					$len = strlen($num);
-					if ($len==11 && substr($num,0,1)=='1'){
-						return substr($num,1,10);
-					}
-					return $num;
-				}
-				function mobileNoFormatChat($mobileNo){
-					if(!isset($mobileNo{3})) { return ''; }
-					// note: strip out everything but numbers 
-					$mobileNo = preg_replace("/[^0-9]/", "", $mobileNo);
-					$length = strlen($mobileNo);
-					switch($length) {
-						case 7:
-						return preg_replace("/([0-9]{3})([0-9]{4})/", "$1-$2", $mobileNo);
-						break;
-						case 10:
-						return preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "($1) $2-$3", $mobileNo);
-						break;
-						case 11:
-						return preg_replace("/([0-9]{1})([0-9]{3})([0-9]{3})([0-9]{4})/", "($2) $3-$4", $mobileNo);
-						break;
-						case 12:
-						return preg_replace("/([0-9]{2})([0-9]{3})([0-9]{3})([0-9]{4})/", "($2) $3-$4", $mobileNo);
-						break;
-						default:
-						return $mobileNo;
-						break;
-					}
-				}
-				
-				$totalSubscriber_schat  = getMyContact();
-				//$fUser = getsms_subscriber($loginUserData->id);
-				//pre($fUser);
-				$fUser = getsms_subscriber($loginUserData->id); 
-
-				$oldchat_list = activeOnlywebOldchatlist($loginUserData->id);
-				$WaitingChatlist = WaitingChatlist($loginUserData->id);
-				$fUserCount = count((array)$fUser);
-				$activeOnlyweb = activeOnlyweb($loginUserData->id);
-				$activeChatCount  =  count((array)$activeOnlyweb);
-				$asginChatlist = getTeamAssignDataHelper($teamLogin_id);
-				$unassignChatlist = getTeamUnAssignDataHelper();
-				$Favorites_list = getFavlist($loginUserData->id);
-
-				
-				/* sms */
-
-					
-				
-				$a_s_list = activeOnlysms($loginUserData->mobile); // here we place client twilio number
-				$o_s_list =  SmsOldest($loginUserData->mobile);
-				$w_s_list = SmsWaitlinglonest($loginUserData->mobile);
-				
-				
-				$activeChatSmsCount  =  count((array)$a_s_list);
-				$favouriteUserDataCount = count((array)$favouriteUserData);
-				$getactiveChatboxlisting = getactiveChatbox($loginUserData->id);
-				if($isLoggedInTeam)
-				{
-				  $hasweb_access = getMemberchatpermission($isLoggedInTeam);
-				  $has_web = $hasweb_access->web_chat;
-				  $has_sms = $hasweb_access->sms_chat;
-				  if($has_web)
-				  {
-				  	  $activeWebClass = 'active';
-				  }
-				  else if($has_sms)
-				  {
-                     $activeSmsClass = 'active';
-
-				  }
-
-			    }
-			    else
-			    {
-			    	$has_web = 1;
-				    $has_sms = 1;
-				    $activeWebClass = 'active';
-				    $activeSmsClass = '';
-			    }
-
-
-				
-				
-			?>
+function phoneDisplay($num) {
+    $num = preg_replace('/[^0-9]/', '', $num);
+    $len = strlen($num);
+    if ($len == 11 && substr($num, 0, 1) == '1') {
+        return substr($num, 1, 10);
+    }
+    return $num;
+}
+function mobileNoFormatChat($mobileNo) {
+    if (!isset($mobileNo{3})) {
+        return '';
+    }
+    // note: strip out everything but numbers
+    $mobileNo = preg_replace("/[^0-9]/", "", $mobileNo);
+    $length = strlen($mobileNo);
+    switch ($length) {
+        case 7:
+            return preg_replace("/([0-9]{3})([0-9]{4})/", "$1-$2", $mobileNo);
+        break;
+        case 10:
+            return preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "($1) $2-$3", $mobileNo);
+        break;
+        case 11:
+            return preg_replace("/([0-9]{1})([0-9]{3})([0-9]{3})([0-9]{4})/", "($2) $3-$4", $mobileNo);
+        break;
+        case 12:
+            return preg_replace("/([0-9]{2})([0-9]{3})([0-9]{3})([0-9]{4})/", "($2) $3-$4", $mobileNo);
+        break;
+        default:
+            return $mobileNo;
+        break;
+    }
+}
+$totalSubscriber_schat = getMyContact();
+//$fUser = getsms_subscriber($loginUserData->id);
+//pre($fUser);
+$fUser = getsms_subscriber($loginUserData->id);
+$oldchat_list = activeOnlywebOldchatlist($loginUserData->id);
+$WaitingChatlist = WaitingChatlist($loginUserData->id);
+$fUserCount = count((array)$fUser);
+$activeOnlyweb = activeOnlyweb($loginUserData->id);
+$activeChatCount = count((array)$activeOnlyweb);
+$asginChatlist = getTeamAssignDataHelper($teamLogin_id);
+$unassignChatlist = getTeamUnAssignDataHelper();
+$Favorites_list = getFavlist($loginUserData->id);
+/* sms */
+$a_s_list = activeOnlysms($loginUserData->mobile); // here we place client twilio number
+$o_s_list = SmsOldest($loginUserData->mobile);
+$w_s_list = SmsWaitlinglonest($loginUserData->mobile);
+$activeChatSmsCount = count((array)$a_s_list);
+//$favouriteUserDataCount = count((array)$favouriteUserData);
+$getactiveChatboxlisting = getactiveChatbox($loginUserData->id);
+if ($isLoggedInTeam) {
+    $hasweb_access = getMemberchatpermission($isLoggedInTeam);
+    $has_web = $hasweb_access->web_chat;
+    $has_sms = $hasweb_access->sms_chat;
+    if ($has_web) {
+        $activeWebClass = 'active';
+    } else if ($has_sms) {
+        $activeSmsClass = 'active';
+    }
+} else {
+    $has_web = 1;
+    $has_sms = 1;
+    $activeWebClass = 'active';
+    $activeSmsClass = '';
+}
+?>
 			
 			<div class="file_sms_web">
 				<input style="display:none;" id="preview_image_sms" user_id="" type="file">
@@ -3859,17 +3829,19 @@ if(window_witdh > 1600)
 				
 				<div class="sidebar_body" style="display:none">
 					<ul class="nav nav-tabs nav-tabs-bottom">
-						<?php if($has_web){ ?>	
+						<?php if ($has_web) { ?>	
 						<li class="<?php echo $activeWebClass; ?>"><a href="#webchattab" data-toggle="tab">Web Chat</a></li>
-						<?php } ?>
-						<?php if($has_sms ){ ?>	
+						<?php
+} ?>
+						<?php if ($has_sms) { ?>	
 						<li class="<?php echo $activeSmsClass; ?>"><a href="#smschattab" data-toggle="tab">SMS Chat</a></li>
-						<?php } ?>
+						<?php
+} ?>
 					</ul>
 					
 					
 					<div class="tab-content"> 
-					<?php if($has_web){ ?>	
+					<?php if ($has_web) { ?>	
 						<!--++++++++++++ Web Chat +++++++++++++++-->			  
 						<div class="tab-pane <?php echo $activeWebClass; ?> SmallWebchat" id="webchattab">	
                       
@@ -3891,30 +3863,29 @@ if(window_witdh > 1600)
 
 
 							<div class="user_img_sec regular slider" id="CurrentUserListing" style="display: none;">
-								<?php if(count($getactiveChatboxlisting)>0){ 
-									foreach($getactiveChatboxlisting as $key=>$value)
-									{
-										$valueData  = getAllUser($value->subscriber_id);
-										if(count($valueData)<=0)
-										{
-											$valueData  = getSubscribersInfo($value->subscriber_id);   
-										}
-										$valueData = $valueData[0];
-										if($value->type == 'webchat'){
-									?>
+								<?php if (count($getactiveChatboxlisting) > 0) {
+        foreach ($getactiveChatboxlisting as $key => $value) {
+            $valueData = getAllUser($value->subscriber_id);
+            if (count($valueData) <= 0) {
+                $valueData = getSubscribersInfo($value->subscriber_id);
+            }
+            $valueData = $valueData[0];
+            if ($value->type == 'webchat') {
+?>
 									<figure style="margin:15px 0;">
 										<a class="<?php echo $value->type; ?>" user_id="<?php echo $value->subscriber_id; ?>" href="javascript:void(0)"><?php echo showUserAvtar($valueData->avatar, $valueData->firstname, $valueData->lastname, 28, 28, 11); ?></a>
 										<span class="greendot"></span>
 									</figure>
 									
-									<?php } }
-									
-								} ?>
+									<?php
+            }
+        }
+    } ?>
 								
 							</div> 
 							<div class="clearfix"></div>
 							
-							<?php $this->load->view('admin/chat_app/common/web_header',array('Favorites_list'=>$Favorites_list,'activeChatCount'=>$activeChatCount,'fUserCount' => $fUserCount,'totalSubscriber_schat'=>$totalSubscriber_schat,'assignedChat'=>$asginChatlist,'unassignedChat'=>$unassignChatlist, 'loggedYou'=> $teamLogin_id)); ?>
+							@include('admin.chat_app.common.web_header', array('Favorites_list' => $Favorites_list, 'activeChatCount' => $activeChatCount, 'fUserCount' => $fUserCount, 'totalSubscriber_schat' => $totalSubscriber_schat, 'assignedChat' => $asginChatlist, 'unassignedChat' => $unassignChatlist, 'loggedYou' => $teamLogin_id))
 							
 							<div class="clearfix"></div>
 							
@@ -3930,13 +3901,13 @@ if(window_witdh > 1600)
 								<div id="small_web_InitalWeb">
 								<div class="activeChatList firstinit all_user_chat"></div>
 								<div class="panel-body p0 br5 mb10 a_list">
-									<?php $this->load->view('admin/chat_app/webchat/activechat_list', array('activechatlist' => $activeOnlyweb)); ?>
+									@include('admin.chat_app.webchat.activechat_list', array('activechatlist' => $activeOnlyweb))
 								</div>
 								
 								
 								<!--++++++++++++ oldest chat list +++++++++++++++-->
 								<div class="o_list" style="background-image:none; display:none">
-									<?php $this->load->view('admin/chat_app/webchat/oldchat_list', array('oldchat_list' => $oldchat_list)); ?>
+									@include('admin/chat_app/webchat/oldchat_list', array('oldchat_list' => $oldchat_list))
 								</div>
 								<!--++++++++++++ oldest chat list +++++++++++++++-->
 								
@@ -3956,7 +3927,7 @@ if(window_witdh > 1600)
 								<!--++++++++++++ Fav chat list +++++++++++++++-->
 								<div class="fav_list_web_small" style="background-image:none; display:none">
 								
-								<?php $this->load->view('admin/chat_app/webchat/favchat_list', array('favChatlist' => $Favorites_list)); ?>
+								@include('admin.chat_app.webchat.favchat_list', array('favChatlist' => $Favorites_list))
 								</div>
 								<!--++++++++++++ Fav chat list +++++++++++++++-->
 
@@ -3969,10 +3940,11 @@ if(window_witdh > 1600)
 							
 						</div>
 						<!--++++++++++++ Web Chat +++++++++++++++-->		
-						<?php } ?>
+						<?php
+} ?>
 						
 
-						<?php if($has_sms){ ?>
+						<?php if ($has_sms) { ?>
 						<!--++++++++++++ Sms Chat +++++++++++++++-->		
 						<div class="tab-pane <?php echo $activeSmsClass; ?> SmallSmschat" id="smschattab">
 
@@ -3987,7 +3959,7 @@ if(window_witdh > 1600)
 								<input style="display:none;width: calc(100% - 22px)" type="text" name="small_sms_webContactBox" placeholder="Search" id="small_sms_webContactBox" value="">
 								
 								<input type="hidden" name="small_sms_afterTrigger" id="small_sms_afterTrigger" value="">
-								<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+								<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
 							</div>
 						</div>
 						<!--++++++++SMS SEARCH BOX++++++-->
@@ -3995,29 +3967,27 @@ if(window_witdh > 1600)
 						
 						
 							<div class="bbot user_img_sec regular slider hidden" id="CurrentSMSUserListing"  style="margin:15px auto;">
-								<?php if(count($getactiveChatboxlisting)>0){ 
-									foreach($getactiveChatboxlisting as $key=>$value)
-									{
-										$valueData  = getAllUser($value->subscriber_id);
-										if(count($valueData)<=0)
-										{
-											$valueData  = getSubscribersInfo($value->subscriber_id);   
-										}
-										$valueData = $valueData[0];
-										if($value->type == 'smschat'){
-										
-									?>
+								<?php if (count($getactiveChatboxlisting) > 0) {
+        foreach ($getactiveChatboxlisting as $key => $value) {
+            $valueData = getAllUser($value->subscriber_id);
+            if (count($valueData) <= 0) {
+                $valueData = getSubscribersInfo($value->subscriber_id);
+            }
+            $valueData = $valueData[0];
+            if ($value->type == 'smschat') {
+?>
 									<figure>
 										<a class="<?php echo $value->type; ?>" user_id="<?php echo $value->subscriber_id; ?>" href="javascript:void(0)"><?php echo showUserAvtar($valueData->avatar, $valueData->firstname, $valueData->lastname, 28, 28, 11); ?></a>
 										<span class="greendot"></span>
 									</figure>
 									
-									<?php } }
-									
-								} ?>
+									<?php
+            }
+        }
+    } ?>
 							</div> 
 							
-							<?php $this->load->view('admin/chat_app/common/sms_header',array('activeChatSmsCount'=>$activeChatSmsCount,'fUserCount' => $fUserCount,'totalSubscriber_schat'=>$totalSubscriber_schat)); ?>
+							@include('admin.chat_app.common.sms_header', array('activeChatSmsCount' => $activeChatSmsCount, 'fUserCount' => $fUserCount, 'totalSubscriber_schat' => $totalSubscriber_schat))
 							
 							<div class="contact_lists_outer" style="height: 410px; padding: 0px; overflow:auto; margin-bottom: 3px!important;">
 								
@@ -4026,24 +3996,24 @@ if(window_witdh > 1600)
 							
 							   <div id="small_sms_InitalWeb">
 								<div class="a_list">
-									<?php $this->load->view('admin/chat_app/smschat/a_s_list', array('mobile'=>$loginUserData->mobile,'a_s_list' => $a_s_list)); ?>
+									@include('admin.chat_app.smschat.a_s_list', array('mobile' => $loginUserData->mobile, 'a_s_list' => $a_s_list))
 								</div>
 								
 								<!--++++++++++++ favourite chat list +++++++++++++++-->
 								<div class="f_list" style="background-image:none; display:none">
-									<?php  $this->load->view('admin/chat_app/smschat/favourite_list',array('fUser'=>$fUser)); ?>
+									@include('admin.chat_app.smschat.favourite_list', array('fUser' => $fUser))
 								</div>
 								<!--++++++++++++ favourite chat list +++++++++++++++-->
 								
 								<!--++++++++++++ oldest chat list +++++++++++++++-->
 								<div class="o_list" style="background-image:none; display:none">
-									<?php $this->load->view('admin/chat_app/smschat/o_s_list', array('mobile'=>$loginUserData->mobile,'o_s_list' => $o_s_list)); ?>
+									@include('admin.chat_app.smschat.o_s_list', array('mobile' => $loginUserData->mobile, 'o_s_list' => $o_s_list))
 								</div>
 								<!--++++++++++++ oldest chat list +++++++++++++++-->
 								
 								<!--++++++++++++ wait chat list +++++++++++++++-->
 								<div class="w_list" style="background-image:none; display:none">
-									<?php $this->load->view('admin/chat_app/smschat/w_s_list', array('mobile'=>$loginUserData->mobile,'w_s_list' => $w_s_list)); ?>
+									@include('admin.chat_app.smschat.w_s_list', array('mobile' => $loginUserData->mobile, 'w_s_list' => $w_s_list))
 								</div>
 								<!--++++++++++++ wait chat list +++++++++++++++-->
 								</div>
@@ -4051,43 +4021,37 @@ if(window_witdh > 1600)
 
 								<!-- Contact list -->
 								<div class="c_list" style="background-image:none; display:none ">
-									<?php 
-										$initNumber = "";
-										$owners = getowners($loginUserData->id);
-										$autocmpSearch = array();	
-										$contactCount=0;
-										$flag=0;
-										$character = array('A'=>'a', 'B'=>'b', 'C'=>'c', 'D'=>'d', 'E'=>'e', 'F'=>'f', 'G'=>'g', 'H'=>'h', 'I'=>'i', 'J'=>'j', 'K'=>'k', 'L'=>'l', 'M'=>'m', 'N'=>'n', 'O'=>'o', 'P'=>'p', 'Q'=>'q', 'R'=>'r', 'S'=>'s', 'T'=>'t', 'U'=>'u', 'V'=>'v', 'W'=>'w', 'X'=>'x', 'Y'=>'y', 'Z'=>'z');
-										foreach ($character as $key => $value) {
-											$getCharUserList = bycharuser($loginUserData->id, $value);
-											
-											if(!empty($getCharUserList)) {
-												
-												foreach ($getCharUserList as  $userData) {
-													
-													$userDataDetail = getUserDetail($userData->user_id);
-													 $favUser = getFavSmsUser($loginUserData->id, $userData->phone);
-													//if(!empty($userDataDetail)) {
-														//$favUser = $this->smsChat->getSMSFavouriteBySubsId($userData->id);
-														if($flag==0 )
-														{
-															$userId = $userData->user_id;
-															$incId = $userData->id;
-															$flag=1;	
-														}
-														
-														
-													?>
+									<?php
+    $initNumber = "";
+    $owners = getowners($loginUserData->id);
+    $autocmpSearch = array();
+    $contactCount = 0;
+    $flag = 0;
+    $character = array('A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd', 'E' => 'e', 'F' => 'f', 'G' => 'g', 'H' => 'h', 'I' => 'i', 'J' => 'j', 'K' => 'k', 'L' => 'l', 'M' => 'm', 'N' => 'n', 'O' => 'o', 'P' => 'p', 'Q' => 'q', 'R' => 'r', 'S' => 's', 'T' => 't', 'U' => 'u', 'V' => 'v', 'W' => 'w', 'X' => 'x', 'Y' => 'y', 'Z' => 'z');
+    foreach ($character as $key => $value) {
+        $getCharUserList = bycharuser($loginUserData->id, $value);
+        if (!empty($getCharUserList)) {
+            foreach ($getCharUserList as $userData) {
+                $userDataDetail = getUserDetail($userData->user_id);
+                $favUser = getFavSmsUser($loginUserData->id, $userData->phone);
+                //if(!empty($userDataDetail)) {
+                //$favUser = $this->smsChat->getSMSFavouriteBySubsId($userData->id);
+                if ($flag == 0) {
+                    $userId = $userData->user_id;
+                    $incId = $userData->id;
+                    $flag = 1;
+                }
+?>
 													<div  id="sidebar_Sms_box_<?php echo phoneDisplay($userData->phone); ?>" phone_no_format="<?php echo mobileNoFormatChat($userData->phone); ?>" subscriberphone="<?php echo phoneDisplay($userData->phone); ?>" phone_no="<?php echo phoneDisplay($userData->phone); ?>" class="sms_user"  user_id="<?php echo $userId; ?>" >
 														<div class="avatarImage"><?php echo showUserAvtar($userDataDetail->avatar, $userData->firstname, $userData->lastname, 28, 28, 11); ?></div>
 														<span style="display:none" id="fav_star_<?php echo $userID; ?>">
 															<?php if (!in_array($userID, $newFav)) { ?>
 																<a style="cursor: pointer;" class="favourite" status="1" user_id="<?php echo $userID; ?>"><i class="icon-star-full2 text-muted sidechatstar"></i></a>
 																<?php
-																} else { ?>
+                } else { ?>
 																<i class="icon-star-full2 txt_blue sidechatstarshow"></i>
 																<?php
-																} ?>
+                } ?>
 														</span>
 														<span class="slider-username contacts"><?php echo phoneNoFormat($userData->phone); ?> &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $userData->phone; ?>"><i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i></span> </span>
 														<span class="" style="float: left; margin-left: 12px;"><span style="font-weight:300!important; color: #6a7995 !important; font-size: 12px; margin-bottom: 3px; ">
@@ -4098,19 +4062,22 @@ if(window_witdh > 1600)
 														<span style="display: none;" class="slider-mobile contacts"><?php echo mobileNoFormatChat($userData->phone); ?> </span>
 														<span style="display: none;" class="slider-image img">
 															<?php
-																if (empty($loginUserData->avatar)) {
-																	echo $currentUserImg = '/assets/images/default_avt.jpeg';
-																	} else {
-																	echo $currentUserImg = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $loginUserData->avatar;
-																} ?></span>
+                if (empty($loginUserData->avatar)) {
+                    echo $currentUserImg = '/assets/images/default_avt.jpeg';
+                } else {
+                    echo $currentUserImg = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $loginUserData->avatar;
+                } ?></span>
 																
 																<span class="user_status"><?php //echo chatTimeAgo1($value->created);
-																?></span>
+                
+?></span>
 																
 													</div>
-												<?php $contactCount++; } } }  
-												
-									?>
+												<?php $contactCount++;
+            }
+        }
+    }
+?>
 								</div>
 								<!-- Contact list -->
 								
@@ -4125,7 +4092,8 @@ if(window_witdh > 1600)
 							
 						</div>
 						<!--++++++++++++ Sms Chat +++++++++++++++-->	
-						<?php } ?>			
+						<?php
+} ?>			
 					</div>
 				</div>        
 				
@@ -4185,7 +4153,7 @@ if(window_witdh > 1600)
 		
     }
   }
-  xmlhttp.open("GET","<?php echo base_url('admin/smschat/getSearchSmsListByinputSmallsms'); ?>?q="+str,true);
+  xmlhttp.open("GET","/admin/smschat/getSearchSmsListByinputSmallsms?q="+str ,true);
   xmlhttp.send();
 
 }
@@ -4193,7 +4161,7 @@ if(window_witdh > 1600)
 $(document).ready(function(){
 $(document).on("keyup",".small_web_MainsearchChatMsg", function() {
 $.ajax({
-url: '<?php echo base_url('admin/smschat/getSearchsubscriberByinputSmallWeb'); ?>',
+url: "{{ url('admin/smschat/getSearchsubscriberByinputSmallWeb') }}",
 type: "POST",
 data: {searchVal:$('#small_web_MainsearchChatMsg').val()},
 success: function (data) {
@@ -4287,7 +4255,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 		
     }
   }
-  xmlhttp.open("GET","<?php echo base_url('admin/smschat/livesearchSmallchat'); ?>?q="+str,true);
+  xmlhttp.open("GET","/admin/smschat/livesearchSmallchat?q="+str,true);
   xmlhttp.send();
 }
 				
@@ -4354,7 +4322,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 				$(document).on('click', '.SmallWebchat .unTab', function() {
 
 					$.ajax({
-				url: '<?php echo base_url('admin/smschat/showUntabAjaxSmallbox'); ?>',
+				url: "{{ url('admin/smschat/showUntabAjaxSmallbox') }}",
 				type: "POST",
 				success: function (data) {
 					$('.un_list_small').html(data); 
@@ -4377,7 +4345,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 				$(document).on('click', '.SmallWebchat .YouTab', function() {
 
 					$.ajax({
-				url: '<?php echo base_url('admin/smschat/showYoutabAjaxSmallbox'); ?>',
+				url: "{{ url('admin/smschat/showYoutabAjaxSmallbox') }}",
 				type: "POST",
 				success: function (data) {
 					$('.you_list_small').html(data); 
@@ -4532,15 +4500,15 @@ $('#small_web_AjaxSearchWeb').html(data);
 							
 							
 							
-							$('#minus_img_'+chatbox).attr('src','<?php echo base_url(); ?>/new_pages/assets/images/icon_maximize.png');
-							$('#close_img_'+chatbox).attr('src','<?php echo base_url(); ?>/new_pages/assets/images/close_red_20.png');
+							$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/icon_maximize.png') }}";
+							$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
 							
 							
 						}
 						else
 						{
-							$('#minus_img_'+chatbox).attr('src','<?php echo base_url(); ?>/new_pages/assets/images/grey_minus.png');
-							$('#close_img_'+chatbox).attr('src','<?php echo base_url(); ?>/new_pages/assets/images/close_red_20.png');
+							$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/grey_minus.png') }}";
+							$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
 							
 						}
 						
@@ -4574,25 +4542,24 @@ $('#small_web_AjaxSearchWeb').html(data);
 			<script>
 				
 				$( document ).ready( function () {
-					<?php if(count($getactiveChatboxlisting)>0){ ?>
+					<?php if (count($getactiveChatboxlisting) > 0) { ?>
 						$('.sidebar_head').trigger('click');
-					<?php } ?>
+					<?php
+} ?>
 				});
 			</script>
 			
 			<script>
 				$( document ).ready( function () {
-					<?php foreach($getactiveChatboxlisting as $key=>$value){ 
-						if($value->type == 'smschat')
-						{ ?>
+					<?php foreach ($getactiveChatboxlisting as $key => $value) {
+    if ($value->type == 'smschat') { ?>
 						$('#SmsIcon_<?php echo $value->subscriber_id; ?>').trigger('click');
-						<?php }
-						else
-						{ ?>
+						<?php
+    } else { ?>
 						$('#webIcon_<?php echo $value->subscriber_id; ?>').trigger('click');
-						<?php 	
-						}
-					} ?>
+						<?php
+    }
+} ?>
 					
 					
 					$( document ).on( 'click', '.webchat', function () {
@@ -4614,7 +4581,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 			
 			
 			
-			<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/highlight.js"></script>
+			<script type="text/javascript" src="{{ URL::asset('assets/js/highlight.js') }}"></script>
 			<script type="text/javascript">
 				$( document ).ready( function () {
 					$('.text-search').bind('keyup change', function(ev) {
@@ -5115,17 +5082,15 @@ $('#small_web_AjaxSearchWeb').html(data);
 				});
 
 				$('.sidebar_body').hide();
-					<?php foreach($getactiveChatboxlisting as $key=>$value){ 
-						if($value->type == 'smschat')
-						{ ?>
+					<?php foreach ($getactiveChatboxlisting as $key => $value) {
+    if ($value->type == 'smschat') { ?>
 						$('#sidebar_Sms_box_<?php echo $value->subscriber_id; ?>').trigger('click');
-						<?php }
-						else
-						{ ?>
+						<?php
+    } else { ?>
 						$('#sidebar-user-box-<?php echo $value->subscriber_id; ?>').trigger('click');
-						<?php 	
-						}
-					} ?>
+						<?php
+    }
+} ?>
 					
 					$( document ).on( 'click', '.webchat', function () {
 						var userid = $(this).attr( "user_id" );
@@ -5162,7 +5127,7 @@ $(document).on('click', '.webchat .short_icon', function(){
 	var user_id = $(this).attr('user_id');
 
 		$.ajax({
-		url: '<?php echo base_url('admin/smschat/small_shortcutListing'); ?>',
+		url: "{{ url('admin/smschat/small_shortcutListing') }}",
 		data:{'boxid':user_id},
 		type: "POST",
 		dataType: "html",
@@ -5179,7 +5144,7 @@ $(document).on('click', '.webchat .short_icon', function(){
 $(document).on('click', '.Smschat .short_icon', function(){
 	var user_id = $(this).attr('user_id');
 		$.ajax({
-		url: '<?php echo base_url('admin/smschat/small_shortcutListing_sms'); ?>',
+		url: "{{ url('admin/smschat/small_shortcutListing_sms') }}",
 		data:{'boxid':user_id},
 		type: "POST",
 		dataType: "html",
@@ -5221,7 +5186,7 @@ $(document).on('click', '.webchat .tweb', function(){
 				var thisObj = $(this);
 			var currentUser = "<?php echo $loginUserData->id; ?>";
 			$.ajax({
-				url: '<?php echo base_url('admin/smschat/addSMSFavourite'); ?>',
+				url: "{{ url('admin/smschat/addSMSFavourite') }}",
 				type: "POST",
 				data: {user_id:$(this).attr('subscriberId'), currentUser:currentUser},
 				dataType: "json",

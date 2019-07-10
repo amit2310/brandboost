@@ -51,7 +51,7 @@
                 <div class="notificationSmartPopup"></div>
        			<div class="col-md-12" style="position: absolute; bottom: 30px;">
            			<div class="btop p20 text-center">
-           				<a class="txt_blue2 fsize14 " href="<?php echo base_url().'admin/notifications'; ?>">View all notifications <i class="icon-arrow-right13 txt_blue2"></i></a>
+           				<a class="txt_blue2 fsize14 " href="{{ URL::asset('admin/notifications') }}">View all notifications <i class="icon-arrow-right13 txt_blue2"></i></a>
            			</div>
            		</div>
                 

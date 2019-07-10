@@ -104,7 +104,7 @@
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
         $.ajax({
-            url: '<?php echo base_url('admin/subscriber/add_contact'); ?>',
+            url: "{{ URL::asset('admin/subscriber/add_contact') }}",
             type: "POST",
             data: formData,
             contentType: false,
@@ -135,7 +135,7 @@
         var module_subscriber_id = $(this).attr("data-modulesubscriberid");
         var module_name = $(this).attr("data-modulename");
         $.ajax({
-            url: '<?php echo base_url('admin/subscriber/getSubscriberDetail'); ?>',
+            url: "{{ URL::asset('admin/subscriber/getSubscriberDetail') }}",
             type: "POST",
             data: {module_name: module_name, module_subscriber_id: module_subscriber_id},
             dataType: "json",
@@ -170,7 +170,7 @@
         var module_subscriber_id = $(this).attr("data-modulesubscriberid");
         var module_name = $(this).attr("data-modulename");
         $.ajax({
-            url: '<?php echo base_url('admin/subscriber/getSubscriberDetail'); ?>',
+            url: "{{ URL::asset('admin/subscriber/getSubscriberDetail') }}",
             type: "POST",
             data: {module_name: module_name, module_subscriber_id: module_subscriber_id},
             dataType: "json",
@@ -206,7 +206,7 @@
         var module_subscriber_id = $(this).attr("data-modulesubscriberid");
         var module_name = $(this).attr("data-modulename");
         $.ajax({
-            url: '<?php echo base_url('admin/subscriber/getSubscriberDetail'); ?>',
+            url: "{{ URL::asset('admin/subscriber/getSubscriberDetail') }}",
             type: "POST",
             data: {module_name: module_name, module_subscriber_id: module_subscriber_id},
             dataType: "json",
@@ -245,7 +245,7 @@
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
         $.ajax({
-            url: '<?php echo base_url('admin/subscriber/updateSubscriberDetails'); ?>',
+            url: "{{ URL::asset('admin/subscriber/updateSubscriberDetails') }}",
             type: "POST",
             data: formData,
             contentType: false,
@@ -276,7 +276,7 @@
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
         $.ajax({
-            url: '<?php echo base_url('admin/subscriber/updateSubscriberDetailsByid'); ?>',
+            url: "{{ URL::asset('admin/subscriber/updateSubscriberDetailsByid') }}",
             type: "POST",
             data: formData,
             contentType: false,
@@ -325,7 +325,7 @@
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
         $.ajax({
-            url: '<?php echo base_url('admin/subscriber/updateSubscriberDetailsByid'); ?>',
+            url: "{{ URL::asset('admin/subscriber/updateSubscriberDetailsByid') }}",
             type: "POST",
             data: formData,
             contentType: false,
@@ -365,7 +365,7 @@
 <?php if ($aUInfo->login_counter_lu >= 5) { ?>
         setTimeout(function () {
             $.ajax({
-                url: '<?php echo base_url('admin/users/updateUserData'); ?>',
+                url: "{{ URL::asset('admin/users/updateUserData') }}",
                 type: "POST",
                 data: {userId: '<?php echo $aUInfo->id; ?>', fieldName: 'login_counter_lu'},
                 dataType: "json",
@@ -387,7 +387,7 @@
 <?php if ($aUInfo->login_counter_au >= 12) { ?>
         setTimeout(function () {
             $.ajax({
-                url: '<?php echo base_url('admin/users/updateUserData'); ?>',
+                url: "{{ URL::asset('admin/users/updateUserData') }}",
                 type: "POST",
                 data: {userId: '<?php echo $aUInfo->id; ?>', fieldName: 'login_counter_au'},
                 dataType: "json",
@@ -408,7 +408,7 @@
 
     function createTwilioAccount(userId) {
         $.ajax({
-            url: "<?php echo base_url('/admin/users/createTwilioAccount'); ?>",
+            url: "{{ URL::asset('/admin/users/createTwilioAccount') }}",
             type: "POST",
             data: {
                 'user_id': userId
@@ -429,7 +429,7 @@
 
     function createSandgridAccount(userId) {
         $.ajax({
-            url: "<?php echo base_url('/admin/users/createSendGridSA'); ?>",
+            url: "{{ URL::asset('/admin/users/createSendGridSA') }}",
             type: "POST",
             data: {
                 'user_id': userId
@@ -456,7 +456,7 @@
             $('.overlaynew').show();
             var formData = new FormData($(this)[ 0 ]);
             $.ajax({
-                url: '<?php echo base_url('admin/contacts/add_contact'); ?>',
+                url: "{{ URL::asset('admin/contacts/add_contact') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -465,7 +465,7 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/contacts/mycontacts'); ?>';
+                        window.location.href = "{{ URL::asset('admin/contacts/mycontacts') }}";
                     } else {
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();
@@ -516,7 +516,7 @@
             var hidPlanID = $("#hidLevelPlanId").val();
             if ($('#lvltermsCondition').is(":checked") == true) {
                 $.ajax({
-                    url: "<?php echo base_url('payment/upgradeMembership'); ?>",
+                    url: "{{ URL::asset('payment/upgradeMembership') }}",
                     type: "POST",
                     data: {
                         plan_id: hidPlanID
@@ -632,7 +632,7 @@
 
             var formdata = $("#frmShortListModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/chatshortcut/addShortCut'); ?>',
+                url: "{{ URL::asset('admin/chatshortcut/addShortCut') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -679,7 +679,7 @@
             var redirectURL;
             var notificationid = $(this).attr('data-notifyid');
             if ($(this).attr("class").indexOf('viewAllNotification') != -1) {
-                redirectURL = '<?php echo base_url(); ?>admin/notifications';
+                redirectURL = "{{ URL::to('/') }}/admin/notifications";
             }
 
             if ($(this).attr("class").indexOf('readNotification') != -1) {
@@ -853,14 +853,14 @@
                     clearInterval(timeOverStart);
                     clearInterval(timeOutReminder);
                     clearInterval(stillLoggedIn);
-                    window.location.href = "<?php echo base_url('/admin/login/logout/'); ?>";
+                    window.location.href = "{{ URL::asset('/admin/login/logout/') }}";
 
                 } else {
                     $('.close').trigger('click');
                     clearInterval(timeOverStart);
                     clearInterval(timeOutReminder);
                     clearInterval(stillLoggedIn);
-                    //timeOverStart = timeOver(0, 0, '<?php echo $inactivity_length; ?>', '');
+                    
                 }
 
             }
@@ -881,7 +881,7 @@
     });
 
     $(document).on('click', '.logoutNo', function () {
-        window.location.href = "<?php echo base_url('/admin/login/logout/'); ?>";
+        window.location.href = "{{ URL::asset('/admin/login/logout/') }}";
     });
 
     $(document).on('click', '.remainLoggedIn', function () {
@@ -917,7 +917,7 @@
 <script>
     function syncContactSelectionSources() {
         $.ajax({
-            url: '<?php echo base_url('admin/workflow/syncWorkflowAudienceGlobal'); ?>',
+            url: "{{ URL::asset('admin/workflow/syncWorkflowAudienceGlobal') }}",
             type: "POST",
             data: {},
             dataType: "json",

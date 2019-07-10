@@ -80,6 +80,18 @@ class MembershipModel extends Model {
             return $oData;
         }
     }
+    
+    /**
+     * Get membership Data
+     * @param type $membershipPlanID
+     * @return type
+     */
+    public function getMembershipInfo($membershipPlanID) {
+        $oData = DB::table('tbl_cc_membership')
+                ->where('plan_id', $membershipPlanID)
+                ->first();
+        return $oData;
+    }
 
     public function getMembership($id = '') {
         $aData = array();
@@ -158,16 +170,7 @@ class MembershipModel extends Model {
         return $aData;
     }
 
-    public function getMembershipInfo($membershipPlanID) {
-        $result = $this->db->from('tbl_cc_membership');
-        $this->db->where('plan_id', $membershipPlanID);
-        $result = $this->db->get();
-        $response = array();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
+    
 
     public function getUpgradeUpsellSets($oPlans, $pID) {
         $aUpgradeData = array();

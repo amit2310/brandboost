@@ -134,7 +134,7 @@ if (!function_exists('admin_account')) {
 if (!function_exists('base_url')) {
 
     function base_url() {
-        return URL::to('/');
+        return URL::to('/').'/';
     }
 
 }
@@ -142,7 +142,6 @@ if (!function_exists('base_url')) {
 /**
  * Used to display pre formatted data
  */
-
 if (!function_exists('pre')) {
 
     function pre($data) {
@@ -162,7 +161,7 @@ if (!function_exists('page_auth')) {
     function page_auth() {
 
         $uriSegment = \Request::segment(2);
-        
+
         $isLoggedInAdmin = Session::get('admin_user_id');
         $isLoggedInCustomer = Session::get('customer_user_id');
         $isLoggedInUser = Session::get('user_user_id');
@@ -283,14 +282,292 @@ if (!function_exists('getMemberchatpermission')) {
  */
 if (!function_exists('getCountriesList')) {
 
-    function getCountriesList() {        
+    function getCountriesList() {
         $oCountryData = \App\Models\Admin\CountryModel::getCountriesList();
         return $oCountryData;
     }
 
 }
 
+/**
+ * Get Twilio related account details based on the user id
+ */
+if (!function_exists('getTwilioAccountCustom')) {
 
+    function getTwilioAccountCustom($userID) {
+        $oTwilio = \App\Models\Admin\SubscriberModel::getTwilioAccountById($userID);
+        return $oTwilio;
+    }
+
+}
+
+/**
+ * Get All member chats
+ */
+if (!function_exists('getMyContact')) {
+
+    function getMyContact($userId = '', $userRole = '') {
+        $oChat = \App\Models\Admin\SubscriberModel::getGlobalSubscribersChat($userId, $userRole);
+        return $oChat;
+    }
+
+}
+
+/**
+ * get favorite chat list
+ */
+if (!function_exists('getsms_subscriber')) {
+
+    function getsms_subscriber($room) {
+        $msgDetails = \App\Models\Admin\SmsChatModel::getSMSFavouriteByUserId($room);
+        return $msgDetails;
+    }
+
+}
+
+/**
+ * get Old chat data 
+ */
+if (!function_exists('activeOnlywebOldchatlist')) {
+
+    function activeOnlywebOldchatlist($userID) {
+        $oData = \App\Models\Admin\SubscriberModel::activeOnlywebOldchatlistDetails($userID);
+        return $oData;
+    }
+
+}
+
+/**
+ * Get the list of waiting chat list
+ */
+if (!function_exists('WaitingChatlist')) {
+
+    function WaitingChatlist($userID) {
+        $oData = \App\Models\Admin\SubscriberModel::WaitingChatlistDetails($userID);
+        return $oData;
+    }
+
+}
+
+/**
+ * Used to get only active support users
+ */
+if (!function_exists('activeOnlyweb')) {
+
+    function activeOnlyweb($userID) {
+        $oData = \App\Models\Admin\SubscriberModel::activeOnlywebDetails($userID);
+        return $oData;
+    }
+
+}
+
+
+/**
+ * Get Team member assigned chat
+ */
+if (!function_exists('getTeamAssignDataHelper')) {
+
+    function getTeamAssignDataHelper($teamId) {
+        $oData = \App\Models\Admin\SubscriberModel::getTeamAssignData($teamId);
+        return $oData;
+    }
+
+}
+
+/**
+ * Get Team member unassigned chat
+ */
+if (!function_exists('getTeamUnAssignDataHelper')) {
+
+    function getTeamUnAssignDataHelper() {
+        $oData = \App\Models\Admin\SubscriberModel::getTeamAssignData(0);
+        return $oData;
+    }
+
+}
+
+
+/**
+ * Get Favorite Chat list
+ */
+if (!function_exists('getFavlist')) {
+
+    function getFavlist($userID) {
+        $oData = \App\Models\Admin\SubscriberModel::getFavlistDetails($userID);
+        return $oData;
+    }
+
+}
+
+/*
+ * Get SMS actvie threads
+ */
+if (!function_exists('activeOnlysms')) {
+
+    function activeOnlysms($userID) {
+        $oData = \App\Models\Admin\SubscriberModel::activeOnlysmsDetails($userID);
+        return $oData;
+    }
+
+}
+
+/**
+ * Get Oldest SmS thread
+ */
+if (!function_exists('SmsOldest')) {
+
+    function SmsOldest($number) {
+        $oData = \App\Models\Admin\SubscriberModel::SmsOldest_list($number);
+        return $oData;
+    }
+
+}
+
+/**
+ * Get SMS waiting longest list
+ */
+if (!function_exists('SmsWaitlinglonest')) {
+
+    function SmsWaitlinglonest($number) {
+        $oData = \App\Models\Admin\SubscriberModel::SmsWaitlinglonest_list($number);
+        return $oData;
+    }
+
+}
+
+/**
+ * Get Active chat popup
+ */
+if (!function_exists('getactiveChatbox')) {
+
+    function getactiveChatbox($userId) {
+        $oData = \App\Models\Admin\SubscriberModel::getactiveChatboxSeries($userId);
+        return $oData;
+    }
+
+}
+
+/**
+ * Get one or multiple users based on user id
+ */
+if (!function_exists('getAllUser')) {
+
+    function getAllUser($userId) {
+        $oData = \App\Models\Admin\UsersModel::getAllUsers($userId);
+        return $oData;
+    }
+
+}
+
+
+/**
+ * Used to get Avatar of a member
+ * @param type $userImg
+ * @param type $firstName
+ * @param type $lastName
+ * @param type $width
+ * @param type $height
+ * @param type $fontSize
+ * @return string
+ */
+function showUserAvtar($userImg = '', $firstName = '', $lastName = '', $width = '', $height = '', $fontSize = '') {
+
+    $params= '';
+    if (!empty($width)) {
+        $params .= ' width="' . $width . '"';
+    }
+
+    if (!empty($height)) {
+        $params .= ' height="' . $height . '"';
+    }
+
+    $inlineStyle = '';
+
+    if (!empty($params)) {
+        $inlineStyle = ' style="width:' . $width . 'px!important;height:' . $height . 'px!important;line-height:' . $width . 'px;font-size:' . $fontSize . 'px;"';
+        $imgClass = 'img-circle';
+    } else {
+        $imgClass = 'img-circle img-xs';
+    }
+    if ($userImg == '') {
+        if (empty($firstName) && empty($lastName)) {
+            $profileImage = '<span class="icons fl_letters_gray s32" ' . $inlineStyle . '>NA</span>';
+        } else {
+            $profileImage = '<span class="icons fl_letters s32" ' . $inlineStyle . '>' . ucfirst(substr(trim($firstName), 0, 1)) . '' . ucfirst(substr(trim($lastName), 0, 1)) . '</span>';
+        }
+    } else {
+
+        $profileImage = '<span class="icons s32"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $userImg . '" onerror="this.src=\'/assets/images/default_avt.jpeg\'" class="' . $imgClass . '" alt="" ' . $params . '></span>';
+    }
+    return $profileImage;
+}
+
+/**
+ * Get Last Chat message
+ */
+if (!function_exists('getLastMessage')) {
+
+    function getLastMessage($room) {
+        $oData = \App\Models\Admin\SubscriberModel::getLastMessageDetails($room);
+        return $oData[0];
+    }
+
+}
+
+/**
+ * Get Support user details
+ */
+if (!function_exists('getSupportUser')) {
+
+    function getSupportUser($userID) {
+        $oData = \App\Models\Admin\SubscriberModel::getSupportUserDetail($userID);
+        return $oData;
+    }
+
+}
+
+/**
+ * 
+ */
+if (!function_exists('assignto')) {
+
+    function assignto($room) {
+        $oData = \App\Models\Admin\SubscriberModel::getassignto($room);
+        if (empty($oData)) {
+            $oData = \App\Models\Admin\SubscriberModel::getassigntoUser($room);
+        }
+        if(!empty($oData)){
+            return $oData[0]->teamName;
+        }
+        return false;
+        
+    }
+
+}
+
+if (!function_exists('getLastSms')) {
+
+    function getLastSms($room) {
+        $aData = array();
+        $CI = & get_instance();
+        $CI->load->model("admin/Subscriber_model", "mSubscriber");
+        $subsDetails = $CI->mSubscriber->getLastSmsDetails($room);
+        return $subsDetails;
+    }
+
+}
+
+if (!function_exists('getGSubscriberInfo')) {
+
+    function getGSubscriberInfo($id) {
+        $aData = array();
+        $CI = & get_instance();
+        $CI->load->model("admin/Subscriber_model", "mSubscriber");
+        $msgDetails = $CI->mSubscriber->getGlobalSubscriberInfo($id);
+        return $msgDetails;
+    }
+
+}
 
 
 
@@ -647,16 +924,7 @@ if (!function_exists('FileSizeConvert')) {
 }
 
 
-if (!function_exists('getMyContact')) {
 
-    function getMyContact($userId = '', $userRole = '') {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $result = $CI->mSubscriber->getGlobalSubscribersChat($userId, $userRole);
-        return $result;
-    }
-
-}
 
 if (!function_exists('bycharuser')) {
 
@@ -694,16 +962,7 @@ if (!function_exists('getchatshortcut')) {
 
 
 
-if (!function_exists('getactiveChatbox')) {
 
-    function getactiveChatbox($userId) {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $result = $CI->mSubscriber->getactiveChatboxSeries($userId);
-        return $result;
-    }
-
-}
 
 
 if (!function_exists('getLatestChat')) {
@@ -815,17 +1074,7 @@ if (!function_exists('getAdminContact')) {
 
 }
 
-if (!function_exists('getTeamAssignDataHelper')) {
 
-    function getTeamAssignDataHelper($teamId) {
-        $CI = & get_instance();  //get instance, access the CI superobject
-//$CI->load->model("admin/Chat_model", "mChat");
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $result = $CI->mSubscriber->getTeamAssignData($teamId);
-        return $result;
-    }
-
-}
 
 
 if (!function_exists('getChatRoom')) {
@@ -866,17 +1115,7 @@ if (!function_exists('getAllteam')) {
 }
 
 
-if (!function_exists('getTeamUnAssignDataHelper')) {
 
-    function getTeamUnAssignDataHelper() {
-        $CI = & get_instance();  //get instance, access the CI superobject
-//$CI->load->model("admin/Chat_model", "mChat");
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $result = $CI->mSubscriber->getTeamAssignData(0);
-        return $result;
-    }
-
-}
 
 
 if (!function_exists('getFavouriteUser')) {
@@ -956,10 +1195,6 @@ if (!function_exists('getMembershipUpsell')) {
     }
 
 }
-
-
-
-
 
 function getUserDetailsByUserID($userId) {
 
@@ -2154,19 +2389,6 @@ function checkSiteCategory($dataArray, $categoryName) {
     }
 }
 
-if (!function_exists('getAllUser')) {
-
-    function getAllUser($userId) {
-
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Users_model", "rUser");
-        $userDataArray = $CI->rUser->getAllUsers($userId);
-        return $userDataArray;
-    }
-
-}
-
 if (!function_exists('getCharUserList')) {
 
     function getCharUserList($char, $value) {
@@ -2200,84 +2422,7 @@ if (!function_exists('webchatUsers')) {
 
 }
 
-if (!function_exists('activeOnlyweb')) {
 
-    function activeOnlyweb($userID) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->activeOnlywebDetails($userID);
-        return $subscribersData;
-    }
-
-}
-
-
-if (!function_exists('getLastMessage')) {
-
-    function getLastMessage($room) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $msgDetails = $CI->mSubscriber->getLastMessageDetails($room);
-        return $msgDetails[0];
-    }
-
-}
-
-if (!function_exists('getLastSms')) {
-
-    function getLastSms($room) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subsDetails = $CI->mSubscriber->getLastSmsDetails($room);
-        return $subsDetails;
-    }
-
-}
-
-if (!function_exists('getGSubscriberInfo')) {
-
-    function getGSubscriberInfo($id) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $msgDetails = $CI->mSubscriber->getGlobalSubscriberInfo($id);
-        return $msgDetails;
-    }
-
-}
-
-
-if (!function_exists('getsms_subscriber')) {
-
-    function getsms_subscriber($room) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/SmsChat_model", "mSubchat");
-        $msgDetails = $CI->mSubchat->getSMSFavouriteByUserId($room);
-        return $msgDetails;
-    }
-
-}
-
-
-
-if (!function_exists('assignto')) {
-
-    function assignto($room) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->getassignto($room);
-        if (empty($subscribersData)) {
-            $subscribersData = $CI->mSubscriber->getassigntoUser($room);
-        }
-        return $subscribersData[0]->teamName;
-    }
-
-}
 
 if (!function_exists('getTwilioAccount')) {
 
@@ -2379,55 +2524,8 @@ if (!function_exists('searchSmsByinput')) {
 
 }
 
-if (!function_exists('WaitingChatlist')) {
-
-    function WaitingChatlist($userID) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->WaitingChatlistDetails($userID);
-        return $subscribersData;
-    }
-
-}
-
-if (!function_exists('getFavlist')) {
-
-    function getFavlist($userID) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $FavData = $CI->mSubscriber->getFavlistDetails($userID);
-        return $FavData;
-    }
-
-}
 
 
-if (!function_exists('SmsOldest')) {
-
-    function SmsOldest($number) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->SmsOldest_list($number);
-        return $subscribersData;
-    }
-
-}
-
-
-if (!function_exists('SmsWaitlinglonest')) {
-
-    function SmsWaitlinglonest($number) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->SmsWaitlinglonest_list($number);
-        return $subscribersData;
-    }
-
-}
 
 
 if (!function_exists('getincIdByuserId')) {
@@ -2454,31 +2552,6 @@ if (!function_exists('getincIdByPhone')) {
 
 }
 
-
-if (!function_exists('activeOnlywebOldchatlist')) {
-
-    function activeOnlywebOldchatlist($userID) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->activeOnlywebOldchatlistDetails($userID);
-        return $subscribersData;
-    }
-
-}
-
-if (!function_exists('activeOnlysms')) {
-
-    function activeOnlysms($userID) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->activeOnlysmsDetails($userID);
-        return $subscribersData;
-    }
-
-}
-
 function phone_display_custom_helper($num) {
     $num = preg_replace('/[^0-9]/', '', $num);
 
@@ -2488,19 +2561,6 @@ function phone_display_custom_helper($num) {
     }
     return $num;
 }
-
-if (!function_exists('getTwilioAccountCustom')) {
-
-    function getTwilioAccountCustom($userID) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/crons/Referral_inviter_model", "mInviter");
-        $subscribersData = $CI->mInviter->getTwilioAccount($userID);
-        return $subscribersData;
-    }
-
-}
-
 
 if (!function_exists('getUserbyPhone')) {
 
@@ -2539,18 +2599,7 @@ if (!function_exists('getSubscribersInfo')) {
     }
 
 }
-if (!function_exists('getSupportUser')) {
 
-    function getSupportUser($userID) {
-
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->getSupportUserDetail($userID);
-        return $subscribersData;
-    }
-
-}
 
 if (!function_exists('getSubscribersInfoByPhone')) {
 
@@ -2771,37 +2820,7 @@ function mobileNoFormat($mobileNo) {
     }
 }
 
-function showUserAvtar($userImg = '', $firstName = '', $lastName = '', $width = '', $height = '', $fontSize = '') {
 
-
-    if (!empty($width)) {
-        $params .= ' width="' . $width . '"';
-    }
-
-    if (!empty($height)) {
-        $params .= ' height="' . $height . '"';
-    }
-
-    $inlineStyle = '';
-
-    if (!empty($params)) {
-        $inlineStyle = ' style="width:' . $width . 'px!important;height:' . $height . 'px!important;line-height:' . $width . 'px;font-size:' . $fontSize . 'px;"';
-        $imgClass = 'img-circle';
-    } else {
-        $imgClass = 'img-circle img-xs';
-    }
-    if ($userImg == '') {
-        if (empty($firstName) && empty($lastName)) {
-            $profileImage = '<span class="icons fl_letters_gray s32" ' . $inlineStyle . '>NA</span>';
-        } else {
-            $profileImage = '<span class="icons fl_letters s32" ' . $inlineStyle . '>' . ucfirst(substr(trim($firstName), 0, 1)) . '' . ucfirst(substr(trim($lastName), 0, 1)) . '</span>';
-        }
-    } else {
-
-        $profileImage = '<span class="icons s32"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $userImg . '" onerror="this.src=\'/assets/images/default_avt.jpeg\'" class="' . $imgClass . '" alt="" ' . $params . '></span>';
-    }
-    return $profileImage;
-}
 
 function dataFormat($dataValue = '') {
     $timeStamp = (!empty($dataValue)) ? strtotime($dataValue) : time();
@@ -3258,7 +3277,6 @@ function notificationBackgroundColor($notificatioStatus) {
     }
     return $background_color;
 }
-
 
 if (!function_exists('getNotificationLang')) {
 

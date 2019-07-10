@@ -16,11 +16,245 @@ class SubscriberModel extends Model {
      */
     public static function getGlobalSubscribers($userID) {
         $oData = DB::table('tbl_subscribers')
-            ->select('tbl_subscribers.*', 'tbl_subscribers.id AS global_user_id', 'tbl_subscribers.status AS globalStatus')
-            ->where('owner_id', $userID)
-            ->where('firstname', '!=',  'NA')    
-            ->orderBy('id', 'desc')    
-            ->get();        
+                ->select('tbl_subscribers.*', 'tbl_subscribers.id AS global_user_id', 'tbl_subscribers.status AS globalStatus')
+                ->where('owner_id', $userID)
+                ->where('firstname', '!=', 'NA')
+                ->orderBy('id', 'desc')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * This function will return Twilio related account details based on the client/user id
+     * @param type $clientID
+     * @return type
+     */
+    public static function getTwilioAccountById($clientID) {
+        $oTwilio = DB::table('tbl_twilio_accounts')
+                ->where('user_id', $clientID)
+                ->where('status', 1)
+                ->first();
+        return $oTwilio;
+    }
+
+    /**
+     * Get the list of logged members all chat
+     * @param type $userID
+     * @param type $userRole
+     * @return type
+     */
+    public static function getGlobalSubscribersChat($userID, $userRole) {
+
+        $aData = DB::table('tbl_subscribers')
+                ->join('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
+                ->select('tbl_users.*')
+                ->when(($userRole > 1), function ($query, $userID) {
+                    return $query->where('tbl_subscribers.owner_id', $userID);
+                })
+                ->orderBy('tbl_subscribers.id', 'desc')
+                ->get();
+
+        return $aData;
+    }
+
+    /**
+     * Get Old Chat data 
+     * @param type $userID
+     * @return type
+     */
+    public static function activeOnlywebOldchatlistDetails($userID) {
+
+        $oData = DB::table('tbl_chat_supportuser')
+                ->where('supp_user', $userID)
+                ->orderBy('tbl_chat_supportuser.last_chat_time', 'asc')
+                ->get();
+
+        return $oData;
+    }
+
+    /**
+     * Get list of waiting chat list
+     * @param type $userID
+     * @return type
+     */
+    public static function WaitingChatlistDetails($userID) {
+        $oData = DB::table('tbl_chat_message')
+                ->where('user_to', $userID)
+                ->where('read_status', 0)
+                ->groupBy('token')
+                ->orderBy('created', 'asc')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Used to get only active support users
+     * @param type $userID
+     */
+    public static function activeOnlywebDetails($userID) {
+
+        $oData = DB::table('tbl_chat_supportuser')
+                ->where('supp_user', $userID)
+                ->orderBy('last_chat_time', 'desc')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Get Team member assigned chat
+     * @param type $teamId
+     * @return type\
+     */
+    public static function getTeamAssignData($teamId) {
+        $oData = DB::table('tbl_chat_supportuser')
+                ->where('assign_team_member', $teamId)
+                ->orderBy('id', 'desc')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Get Favorite Chat list
+     * @param type $userID
+     * @return type
+     */
+    public static function getFavlistDetails($userID) {
+        $oData = DB::table('tbl_chat_supportuser')
+                ->where('supp_user', $userID)
+                ->where('favourite', 1)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Get active sms thread details
+     * @param type $Number
+     * @return type
+     */
+    public static function activeOnlysmsDetails($Number) {
+
+        $oData = DB::select(DB::raw("SELECT tcm_subs1.* 
+                                        FROM   tbl_chat_sms_thread tc1 
+                                               INNER JOIN (SELECT * 
+                                                           FROM   tbl_chat_sms_thread 
+                                                           GROUP  BY token, 
+                                                                     created 
+                                                           ORDER  BY created DESC) AS tcm_subs1 
+                                                       ON tc1.token = tcm_subs1.token 
+                                        WHERE  ( tc1.to = '" . $Number . "' 
+                                                  OR tc1.from = '" . $Number . "' ) 
+                                        GROUP  BY tc1.token 
+                                        ORDER  BY tcm_subs1.created DESC "));
+        return $oData;
+    }
+
+    /**
+     * Get Oldest SMS thread
+     * @param type $Number
+     * @return type
+     */
+    public static function SmsOldest_list($Number) {
+
+        $oData = DB::select(DB::raw("SELECT tcm_subs1.* 
+                                        FROM   tbl_chat_sms_thread tc1 
+                                               INNER JOIN (SELECT * 
+                                                           FROM   tbl_chat_sms_thread 
+                                                           GROUP  BY token, 
+                                                                     created 
+                                                           ORDER  BY created ASC) AS tcm_subs1 
+                                                       ON tc1.token = tcm_subs1.token 
+                                        WHERE  ( tc1.to = '" . $Number . "' 
+                                                  OR tc1.from = '" . $Number . "' ) 
+                                        GROUP  BY tc1.token 
+                                        ORDER  BY tcm_subs1.created ASC "));
+
+        return $oData;
+    }
+
+    /**
+     * Get sms waiting longest list
+     * @param type $Number
+     * @return type
+     */
+    public static function SmsWaitlinglonest_list($Number) {
+        $oData = DB::table('tbl_chat_sms_thread')
+                ->where('to', $Number)
+                ->where('read_status', 0)
+                ->groupBy('token')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $userID
+     * @return type
+     */
+    public static function getactiveChatboxSeries($userID) {
+        $oData = DB::table('tbl_chat_status')
+                ->where('user_id', $userID)
+                ->where('status', 1)
+                ->orderBy('id', 'desc')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Get Chat last message
+     * @param type $room
+     * @return type
+     */
+    public static function getLastMessageDetails($room) {
+        $oData = DB::table('tbl_chat_message')
+                ->where('token', $room)
+                ->where('status', 1)
+                ->orderBy('id', 'desc')
+                ->limit(1)
+                ->get();
+
+        return $oData;
+    }
+
+    /**
+     * Get support user details
+     * @param type $userID
+     * @return type
+     */
+    public static function getSupportUserDetail($userID) {
+        $oData = DB::table('tbl_chat_supportuser')
+                ->where('user', $userID)
+                ->get();
+
+        return $oData;
+    }
+
+    /**
+     * Get Assigned Member
+     * @param type $room
+     * @return type
+     */
+    public static function getassignto($room) {
+
+        $oData = DB::select(DB::raw(" SELECT CONCAT(tbl_users_team.firstname, ' ', tbl_users_team.lastname) as teamName
+FROM `tbl_chat_supportuser`
+INNER JOIN `tbl_users_team` ON `tbl_chat_supportuser`.`assign_team_member`=`tbl_users_team`.`id`
+WHERE tbl_chat_supportuser.room = '" . $room . "'"));
+        
+        return $oData;
+    }
+    
+    /**
+     * Get Assigned chat to user
+     * @param type $room
+     * @return type
+     */
+    public static function getassigntoUser($room) {
+
+        $oData = DB::select(DB::raw(" SELECT CONCAT(tbl_users.firstname, ' ', tbl_users.lastname) as teamName
+FROM `tbl_chat_supportuser`
+INNER JOIN `tbl_users` ON `tbl_chat_supportuser`.`assign_team_member`=`tbl_users`.`id`
+WHERE tbl_chat_supportuser.room = '" . $room . "'"));
+        
         return $oData;
     }
 
@@ -45,19 +279,6 @@ class SubscriberModel extends Model {
                     return false;
             }
         }
-    }
-
-    public function getTeamAssignData($teamId) {
-
-        $result = '';
-        $this->db->where('assign_team_member', $teamId);
-        $this->db->from('tbl_chat_supportuser');
-        $this->db->order_by("id", "desc");
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            $result = $query->result();
-        }
-        return $result;
     }
 
     public function getCurrentUsage($clientID) {
@@ -225,54 +446,12 @@ class SubscriberModel extends Model {
         return $response;
     }
 
-    public function getactiveChatboxSeries($userID) {
-
-        $result = $this->db->query("select  type, subscriber_id from tbl_chat_status where  user_id = '" . $userID . "' AND status=1 order by id desc ");
-        $response = $result->result();
-
-        //echo $this->db->last_query();die;
-        return $response;
-    }
-
     public function webchatUsersDetails($userID) {
 
         $result = $this->db->query("select * from tbl_chat_message where  user_to = '" . $userID . "' AND status=1 order by id desc ");
         $response = $result->result();
 
         //echo $this->db->last_query();die;
-        return $response;
-    }
-
-    public function getSupportUserDetail($userID) {
-
-        $result = $this->db->query("select * from tbl_chat_supportuser where  user = '" . $userID . "'");
-        $response = $result->result();
-
-        //echo $this->db->last_query();die;
-        return $response;
-    }
-
-    public function activeOnlywebDetails($userID) {
-
-        /* $result = $this->db->query(" SELECT 
-          tcm_subs.*
-          FROM
-          tbl_chat_message tc INNER JOIN
-          (SELECT * FROM tbl_chat_message group by token, created ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token
-          WHERE (tc.user_to = '" . $userID . "' or tc.user_form ='" . $userID . "')
-          GROUP BY tc.token ORDER BY tcm_subs.created DESC");
-          $response = $result->result();
-          return $response;
-         */
-        $result = $this->db->query("SELECT * FROM `tbl_chat_supportuser` where supp_user ='" . $userID . "' ORDER BY `tbl_chat_supportuser`.`last_chat_time` DESC ");
-        $response = $result->result();
-        return $response;
-    }
-
-    public function getLastMessageDetails($room) {
-
-        $result = $this->db->query("SELECT * FROM `tbl_chat_message` WHERE `token` ='" . $room . "' order by id desc limit 1 ");
-        $response = $result->result();
         return $response;
     }
 
@@ -283,29 +462,7 @@ class SubscriberModel extends Model {
         return $response;
     }
 
-    public function getassignto($room) {
-
-        $result = $this->db->query(" SELECT CONCAT(tbl_users_team.firstname, ' ', tbl_users_team.lastname) as teamName
-FROM `tbl_chat_supportuser`
-INNER JOIN `tbl_users_team` ON `tbl_chat_supportuser`.`assign_team_member`=`tbl_users_team`.`id`
-WHERE tbl_chat_supportuser.room = '" . $room . "'");
-        $response = $result->result();
-
-        //echo $this->db->last_query();die;
-        return $response;
-    }
-
-    public function getassigntoUser($room) {
-
-        $result = $this->db->query(" SELECT CONCAT(tbl_users.firstname, ' ', tbl_users.lastname) as teamName
-FROM `tbl_chat_supportuser`
-INNER JOIN `tbl_users` ON `tbl_chat_supportuser`.`assign_team_member`=`tbl_users`.`id`
-WHERE tbl_chat_supportuser.room = '" . $room . "'");
-        $response = $result->result();
-
-        //echo $this->db->last_query();die;
-        return $response;
-    }
+    
 
     public function getTeamByroomDetails($room) {
 
@@ -416,77 +573,6 @@ FROM
         $response = $result->result();
 
         // echo $this->db->last_query();
-        return $response;
-    }
-
-    public function WaitingChatlistDetails($userID) {
-
-        $result = $this->db->query("SELECT * FROM tbl_chat_message where user_to = '" . $userID . "' AND read_status=0  GROUP BY token ORDER BY created ASC");
-        $response = $result->result();
-
-        //echo $this->db->last_query();die;
-        return $response;
-    }
-
-    public function getFavlistDetails($userID) {
-
-        $result = $this->db->query("SELECT * FROM tbl_chat_supportuser where supp_user = '" . $userID . "' AND favourite=1 ");
-        $response = $result->result();
-
-        //echo $this->db->last_query();die;
-        return $response;
-    }
-
-    public function activeOnlywebOldchatlistDetails($userID) {
-
-        /* $result = $this->db->query("SELECT tcm_subs.* FROM tbl_chat_message tc INNER JOIN (SELECT * FROM tbl_chat_message where read_status=1 group by token desc ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token WHERE ( tc.user_to = '" . $userID . "' or tc.user_form = '" . $userID . "') GROUP BY tc.token ORDER BY tcm_subs.created ASC");
-          $response = $result->result();
-
-          //echo $this->db->last_query();die;
-          return $response;
-         */
-
-        $result = $this->db->query("SELECT * FROM `tbl_chat_supportuser` where supp_user ='" . $userID . "' ORDER BY `tbl_chat_supportuser`.`last_chat_time` ASC ");
-        $response = $result->result();
-        return $response;
-    }
-
-    public function activeOnlysmsDetails($Number) {
-
-        $result = $this->db->query("SELECT 
-      tcm_subs1.*
-FROM 
-      tbl_chat_sms_thread tc1 INNER JOIN 
-      (SELECT * FROM tbl_chat_sms_thread group by token, created ORDER BY created DESC) as tcm_subs1 ON tc1.token = tcm_subs1.token 
-      WHERE (tc1.to = '" . $Number . "' or tc1.from ='" . $Number . "')
-      GROUP BY tc1.token ORDER BY tcm_subs1.created DESC ");
-        $response = $result->result();
-
-        //echo $this->db->last_query();die;
-        return $response;
-    }
-
-    public function SmsOldest_list($Number) {
-
-        $result = $this->db->query("SELECT 
-      tcm_subs1.*
-FROM 
-      tbl_chat_sms_thread tc1 INNER JOIN 
-      (SELECT * FROM tbl_chat_sms_thread group by token, created ORDER BY created ASC) as tcm_subs1 ON tc1.token = tcm_subs1.token 
-      WHERE (tc1.to = '" . $Number . "' or tc1.from ='" . $Number . "')
-      GROUP BY tc1.token ORDER BY tcm_subs1.created ASC ");
-        $response = $result->result();
-
-        //echo $this->db->last_query();die;
-        return $response;
-    }
-
-    public function SmsWaitlinglonest_list($Number) {
-
-        $result = $this->db->query("SELECT * FROM tbl_chat_sms_thread tc1 WHERE (tc1.`to` = '" . $Number . "' AND tc1.read_status=0) GROUP BY tc1.token");
-        $response = $result->result();
-
-        //echo $this->db->last_query();die;
         return $response;
     }
 
@@ -606,21 +692,6 @@ FROM
             $response = $result->result();
         }
         //echo $this->db->last_query();die;
-        return $response;
-    }
-
-    public function getGlobalSubscribersChat($userID, $userRole) {
-
-        $this->db->select("tbl_users.*");
-        $this->db->join("tbl_users", "tbl_subscribers.user_id=tbl_users.id", "INNER");
-        if ($userRole > 1) {
-            $this->db->where("tbl_subscribers.owner_id", $userID);
-        }
-        $this->db->order_by("tbl_subscribers.id", "DESC");
-        $result = $this->db->get("tbl_subscribers");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
         return $response;
     }
 

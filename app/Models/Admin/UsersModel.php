@@ -68,6 +68,22 @@ class UsersModel extends Model {
 
         return $oUser;
     }
+    
+    /**
+     * Used to get one or multiple users based on the userid
+     * @param type $id
+     * @return type
+     */
+    public static function getAllUsers($id = '') {
+        $oData = DB::table('tbl_users')
+                ->where('deleted_status', 0)
+                ->when(($id > 0), function($query, $id){
+                    return $query->where('id', $id);
+                })
+                ->orderBy('id', 'asc')
+                ->get();
+        return $oData;
+    }
 
     public function basicSignup($aData) {
         require_once $_SERVER['DOCUMENT_ROOT'] . '/chargebee-php/lib/ChargeBee.php';
@@ -126,22 +142,7 @@ class UsersModel extends Model {
         }
     }
 
-    public function getAllUsers($id = '') {
-
-        $response = array();
-        if ($id > 0) {
-
-            $this->db->where('id', $id);
-        }
-        $this->db->order_by('id', 'ASC');
-        $this->db->where('deleted_status', 0);
-        $this->db->from('tbl_users');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
     public function getCharUserList($userID, $char) {
 

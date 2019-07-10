@@ -275,9 +275,9 @@ if ($uriSegment == 'offsite') {
         </span>
         
 
-        {{-- @include('admin.components.smart-popup.smart-notification-widget') --}}
+         @include('admin.components.smart-popup.smart-notification-widget') 
 
-        {{-- @include('admin.modals.upgrade.upgrade_membership', array('oMemberships' => $objMembership, 'oSuggestedPlan' => $oUpgradePlanData, 'additionalPriceToPay' => $additionalPriceToPay, 'oCurrentPlanData' => $oCurrentPlanData, 'oUser' => $aUInfo)) --}}
+        @include('admin.modals.upgrade.upgrade_membership', array('oMemberships' => $objMembership, 'oSuggestedPlan' => $oUpgradePlanData, 'additionalPriceToPay' => $additionalPriceToPay, 'oCurrentPlanData' => $oCurrentPlanData, 'oUser' => $aUInfo))
         
         @include('layouts.main_partials._main_footer_js')
         

@@ -17,20 +17,19 @@ class BrandboostModel extends Model {
      */
     public static function getBrandboostByUserId($userId, $type = '') {
         $oData = DB::table('tbl_brandboost')
-                ->when(($userId > 0), function($query, $userId){
+                ->when(($userId > 0), function($query, $userId) {
                     return $query->where('user_id', $userId);
                 })
-                ->when((!empty($type)), function($query, $type){
+                ->when((!empty($type)), function($query, $type) {
                     return $query->where('review_type', $type);
                 })
                 ->where('delete_status', 0)
                 ->orderBy('id', 'desc')
                 ->get();
-        
+
         return $oData;
     }
-    
-    
+
     /**
      * Get Member's list of all Brandboost widgets
      * @param type $id
@@ -39,27 +38,70 @@ class BrandboostModel extends Model {
      * @return type
      */
     public static function getBBWidgets($id = 0, $userID = 0, $type = '') {
-        
+
         $oData = DB::table('tbl_brandboost_widgets')
-            ->leftJoin('tbl_brandboost', 'tbl_brandboost_widgets.brandboost_id', '=' , 'tbl_brandboost.id')
-            ->select('tbl_brandboost_widgets.*', 'tbl_brandboost.hashcode as bbHash', 'tbl_brandboost.brand_title AS bbBrandTitle', 'tbl_brandboost.brand_desc AS bbBrandDesc', 'tbl_brandboost.brand_img AS campaignImg')
-            ->when(($id > 0), function ($query, $id) {
+                ->leftJoin('tbl_brandboost', 'tbl_brandboost_widgets.brandboost_id', '=', 'tbl_brandboost.id')
+                ->select('tbl_brandboost_widgets.*', 'tbl_brandboost.hashcode as bbHash', 'tbl_brandboost.brand_title AS bbBrandTitle', 'tbl_brandboost.brand_desc AS bbBrandDesc', 'tbl_brandboost.brand_img AS campaignImg')
+                ->when(($id > 0), function ($query, $id) {
                     return $query->where('tbl_brandboost_widgets.id', $id);
                 })
-            ->when(($userID > 0), function ($query, $userID) {
+                ->when(($userID > 0), function ($query, $userID) {
                     return $query->where('tbl_brandboost_widgets.id', $userID);
                 })
-            ->when((!empty($type)), function ($query, $type) {
+                ->when((!empty($type)), function ($query, $type) {
                     return $query->where('tbl_brandboost_widgets.review_type', $type);
                 })
-            ->where('tbl_brandboost_widgets.delete_status', 0)
-            ->orderBy('tbl_brandboost_widgets.id', 'desc')    
-            ->get();
+                ->where('tbl_brandboost_widgets.delete_status', 0)
+                ->orderBy('tbl_brandboost_widgets.id', 'desc')
+                ->get();
 
         return $oData;
     }
-
     
+    
+    /**
+     * Get Onsite/Offsite brandboost stats
+     * @param type $userId
+     * @param type $bbId
+     * @return type
+     */
+    public function getBBStatsByIdAndUserId($userId, $bbId) {
+        $oData = DB::table('tbl_reviews')
+                ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
+                ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_reviews.user_id')
+                ->select(DB::raw('count(tbl_reviews.id) as totalNo'), 'tbl_reviews.*')
+                ->where('tbl_brandboost.review_type', 'onsite')
+                ->when(($userId != ''), function ($query, $userId) {
+                    return $query->where('tbl_brandboost.user_id', $userId);
+                })
+                ->when(($bbId != ''), function ($query, $bbId) {
+                    return $query->where('tbl_reviews.campaign_id', $bbId);
+                })
+                ->groupBy(DB::raw('DATE(tbl_reviews.created)'))
+                ->orderBy('tbl_reviews.id', 'desc')        
+                ->get();                
+                
+        return $oData;
+    }
+    
+    /**
+     * 
+     * @param type $campType
+     * @param type $userID
+     * @return type
+     */
+    public function getEmailSms($campType, $userID) {
+        
+        $oData = DB::table('tbl_brandboost')
+            ->rightJoin('tbl_campaigns', 'tbl_campaigns.event_id', '=' , 'tbl_brandboost.id')
+            ->select('tbl_campaigns.*', 'tbl_brandboost.user_id')
+            ->where('tbl_campaigns.campaign_type', $campType)
+            ->where('tbl_brandboost.user_id', $userID)    
+            ->orderBy('tbl_campaigns.id', 'desc')    
+            ->get();
+        return $oData;
+        
+    }
 
     public function getWidgetInfo($id, $hash = false) {
         if (!empty($id)) {
@@ -366,7 +408,7 @@ class BrandboostModel extends Model {
             return false;
         }
     }
-    
+
     //public function update($userID, $aData, $brandboostID) {
     public function updateBrandboost($userID, $aData, $brandboostID) {
         $this->db->where('id', $brandboostID);
@@ -1436,21 +1478,6 @@ class BrandboostModel extends Model {
         return $output;
     }
 
-    public function getEmailSms($campType, $userID) {
-
-        $result = array();
-        $this->db->select("tbl_campaigns.*, tbl_brandboost.user_id");
-        $this->db->where("tbl_campaigns.campaign_type", $campType);
-        $this->db->where("tbl_brandboost.user_id", $userID);
-        $this->db->join("tbl_campaigns", "tbl_campaigns.event_id = tbl_brandboost.id", "RIGHT");
-        $this->db->order_by("tbl_campaigns.id", "DESC");
-        $result = $this->db->get("tbl_brandboost");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
-    }
-
     public function getSentEmailCountByUserIdAndBBId($userID, $bbId = '') {
 
         $result = array();
@@ -2230,31 +2257,6 @@ class BrandboostModel extends Model {
             }
             return false;
         }
-    }
-
-    public function getBBStatsByIdAndUserId($userId, $bbId) {
-        $aData = array();
-        $this->db->select("count(tbl_reviews.id) as totalNo, tbl_reviews.*");
-        $this->db->order_by("tbl_reviews.id", "desc");
-        $this->db->where('tbl_brandboost.review_type', 'onsite');
-        if ($userId != '') {
-            $this->db->where('tbl_brandboost.user_id', $userId);
-        }
-        if ($bbId != '') {
-            $this->db->where('tbl_reviews.campaign_id', $bbId);
-        }
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_users.id = tbl_reviews.user_id", "LEFT");
-        $this->db->group_by('DATE(tbl_reviews.created)');
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        if ($aData)
-            return $aData;
-        else
-            return false;
     }
 
     public function getBBStatsByDate($cDate = '') {

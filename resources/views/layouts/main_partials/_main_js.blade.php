@@ -1,22 +1,22 @@
 <!-- Core JS files -->
-<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/loaders/pace.min') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/core/libraries/jquery.min') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/core/libraries/bootstrap.min') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/loaders/blockui.min') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/loaders/pace.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/core/libraries/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/core/libraries/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/loaders/blockui.min.js') }}"></script>
 <!-- /core JS files -->
 
-<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/forms/styling/uniform.min') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/notifications/sweet_alert.min') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/notifications/sweet_alert.min.js') }}"></script>
 
 
-<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/tables/datatables/datatables.min') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/pages/datatables_basic') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/core/app') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/jquery.slimscroll.min') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/notifications/pnotify.min') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/ui/moment/moment.min') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/pickers/daterangepicker') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/custom_datatable') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/pages/datatables_basic.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/core/app.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/jquery.slimscroll.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/notifications/pnotify.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/ui/moment/moment.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/pickers/daterangepicker.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/custom_datatable.js') }}"></script>
 <script>
     var redirectURL = '';
 
