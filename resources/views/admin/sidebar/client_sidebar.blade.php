@@ -219,7 +219,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-site-boost-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/brandboost/onsite_overview'); ?>"><i class="fa fa-circle"></i> Overview</a></li>
+                            ?>"><a href="{{ url('admin/brandboost/onsite_overview') }}"><i class="fa fa-circle"></i> Overview</a></li>
 
                             <li class="<?php
                             if ($pageName == 'brandboost' && $pageSeName == 'onsite') {
@@ -227,7 +227,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-site-boost-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/brandboost/onsite'); ?>"><i class="fa fa-circle"></i> Campaigns</a></li>
+                            ?>"><a href="{{ url('admin/brandboost/onsite') }}"><i class="fa fa-circle"></i> Campaigns</a></li>
                             <li class="<?php
                             if ($pageName == 'brandboost' && $pageSeName == 'reviews') {
                                 $activeParentClass = 'menu-site-boost';
@@ -243,7 +243,7 @@ $pageThName = \Request::segment(4);
                                 echo 'active';
                             }
                             ?>">
-                                <a href="<?php echo base_url('/admin/questions'); ?>"><i class="fa fa-circle"></i> Questions</a>
+                                <a href="{{ url('admin/questions') }}"><i class="fa fa-circle"></i> Questions</a>
 
 
                             </li>
@@ -255,7 +255,7 @@ $pageThName = \Request::segment(4);
                                 echo 'active';
                             }
                             ?>">
-                                <a href="<?php echo base_url('/admin/brandboost/review_request/onsite'); ?>"><i class="fa fa-circle"></i> Review Requests</a>
+                                <a href="{{ url('admin/brandboost/review_request/onsite') }}"><i class="fa fa-circle"></i> Review Requests</a>
                             </li>
 
                             <li class="<?php
@@ -265,7 +265,7 @@ $pageThName = \Request::segment(4);
                                 echo 'active';
                             }
                             ?>">
-                                <a href="<?php echo base_url('/admin/brandboost/media'); ?>"><i class="fa fa-circle"></i> Media</a>
+                                <a href="{{ url('admin/brandboost/media') }}"><i class="fa fa-circle"></i> Media</a>
                             </li>
 
                         </ul>
@@ -279,7 +279,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-offsite-boost-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/brandboost/offsite_overview'); ?>"><i class="fa fa-circle"></i> Overview</a></li>
+                            ?>"><a href="{{ url('admin/brandboost/offsite_overview') }}"><i class="fa fa-circle"></i> Overview</a></li>
 
                             <li class="<?php
                             if ($pageName == 'brandboost' && $pageSeName == 'offsite') {
@@ -287,7 +287,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-offsite-boost-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/brandboost/offsite'); ?>"><i class="fa fa-circle"></i> Campaigns</a></li>
+                            ?>"><a href="{{ url('admin/brandboost/offsite') }}"><i class="fa fa-circle"></i> Campaigns</a></li>
                             
                             
                             <li class="<?php
@@ -296,7 +296,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-offsite-boost-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/brandboost/review_request/offsite'); ?>"><i class="fa fa-circle"></i> Review Requests</a></li>
+                            ?>"><a href="{{ url('admin/brandboost/review_request/offsite') }}"><i class="fa fa-circle"></i> Review Requests</a></li>
                             
                             
                              <li class=""><a href="javascript:void(0)"><i class="fa fa-circle"></i>Competitors <span class="label bg-blue-400 menubadge">2</span></a></li>
@@ -323,7 +323,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-email-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/modules/emails/overview'); ?>"><i class="fa fa-circle"></i> Overview</a>
+                            ?>"><a href="{{ url('admin/modules/emails/overview') }}"><i class="fa fa-circle"></i> Overview</a>
                             </li>
                             <li class="<?php
                             if ($pageName == 'modules' && $pageSeName == 'emails' && $pageThName != 'overview' && $pageThName != 'sms' && $automation_type == 'email') {
@@ -331,21 +331,21 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-email-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/modules/emails'); ?>"><i class="fa fa-circle"></i> Automation</a></li>
+                            ?>"><a href="{{ url('admin/modules/emails') }}"><i class="fa fa-circle"></i> Automation</a></li>
                             <li class="<?php
                             if ($pageName == 'broadcast' && ($pageSeName == 'email' || (($pageSeName == 'edit' || $pageSeName == 'report') && strtolower($oBroadcast->campaign_type) =='email'))) {
                                 $activeParentClass = 'menu-email';
                                 $activeChildClass = 'menu-email-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/broadcast/email'); ?>"><i class="fa fa-circle"></i> Broadcast</a></li>
+                            ?>"><a href="{{ url('admin/broadcast/email') }}"><i class="fa fa-circle"></i> Broadcast</a></li>
                             <li class="<?php
                             if ($pageName == 'lists' && $pageSeName != 'smslists' && $pageSeName != 'getSMSListContacts') {
                                 $activeParentClass = 'menu-email';
                                 $activeChildClass = 'menu-email-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/lists/'); ?>"><i class="fa fa-circle"></i> Lists</a></li>
+                            ?>"><a href="{{ url('admin/lists/') }}"><i class="fa fa-circle"></i> Lists</a></li>
                             
                             <!--<li class="<?php
                             /*if ($pageName == 'broadcast' && $pageSeName == 'mysegments') {
@@ -353,7 +353,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-email-submenu';
                                 echo 'active';
                             }*/
-                            ?>"><a href="<?php echo base_url('/admin/broadcast/mysegments'); ?>"><i class="fa fa-circle"></i> Segments</a></li>-->
+                            ?>"><a href="{{ url('admin/broadcast/mysegments') }}"><i class="fa fa-circle"></i> Segments</a></li>-->
 
                         </ul>
                     </li>
@@ -366,7 +366,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-sms-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/broadcast/smsoverview'); ?>"><i class="fa fa-circle"></i> Overview</a>
+                            ?>"><a href="{{ url('admin/broadcast/smsoverview') }}"><i class="fa fa-circle"></i> Overview</a>
                             </li>
                             
                             <li class="<?php
@@ -375,7 +375,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-sms-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/modules/emails/sms'); ?>"><i class="fa fa-circle"></i> Automation</a></li>
+                            ?>"><a href="{{ url('admin/modules/emails/sms') }}"><i class="fa fa-circle"></i> Automation</a></li>
                             
                             
                             <li class="<?php
@@ -384,7 +384,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-sms-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/broadcast/sms'); ?>"><i class="fa fa-circle"></i> Broadcast</a></li>
+                            ?>"><a href="{{ url('admin/broadcast/sms') }}"><i class="fa fa-circle"></i> Broadcast</a></li>
                             
                             <li class="<?php
                             if ($pageName == 'lists' && $pageSeName == 'smslists' || $pageSeName == 'getSMSListContacts') {
@@ -392,7 +392,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-sms-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/lists/smslists'); ?>"><i class="fa fa-circle"></i> Lists</a></li>
+                            ?>"><a href="{{ url('admin/lists/smslists') }}"><i class="fa fa-circle"></i> Lists</a></li>
 
                         </ul>
                     </li>
@@ -401,7 +401,7 @@ $pageThName = \Request::segment(4);
                     if ($pageSeName == 'mysegments') {
                         echo 'active';
                     }
-                    ?>"> <a href="<?php echo base_url('/admin/broadcast/mysegments'); ?>"><strong class="nav_icon icon_segment"></strong> <span>Segments</span></a>
+                    ?>"> <a href="{{ url('admin/broadcast/mysegments') }}"><strong class="nav_icon icon_segment"></strong> <span>Segments</span></a>
 
                     </li>
 
@@ -409,7 +409,7 @@ $pageThName = \Request::segment(4);
                     if ($pageName == 'settings') {
                         echo 'active';
                     }
-                    ?>"><a href="<?php echo base_url('/admin/settings'); ?>"><strong class="nav_icon icon_brand"></strong> <span>Brand Page</span> <span class="label bg-blue-400 menubadge">1</span></a>
+                    ?>"><a href="{{ url('admin/settings') }}"><strong class="nav_icon icon_brand"></strong> <span>Brand Page</span> <span class="label bg-blue-400 menubadge">1</span></a>
                     </li> -->
 
                     <li id="menu-brand" class="listt"><a href="#"><strong class="nav_icon icon_brand"></strong> <span>Brand Page</span> <span class="label bg-blue-400 menubadge"></span></a>
@@ -421,14 +421,14 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-brand-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/settings'); ?>"><i class="fa fa-circle"></i> Brand Setting</a></li>
+                            ?>"><a href="{{ url('admin/settings') }}"><i class="fa fa-circle"></i> Brand Setting</a></li>
                             <li class="<?php
                             if ($pageName == 'brandboost' && $pageSeName == 'brand_configuration') {
                                 $activeParentClass = 'menu-brand';
                                 $activeChildClass = 'menu-brand-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/brandboost/brand_configuration'); ?>"><i class="fa fa-circle"></i> Universal Brand Page</a></li>
+                            ?>"><a href="{{ url('admin/brandboost/brand_configuration') }}"><i class="fa fa-circle"></i> Universal Brand Page</a></li>
 
                             <li class="<?php
                             if ($pageName == 'brandboost' && $pageSeName == 'campaign_specific') {
@@ -436,7 +436,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-brand-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/brandboost/campaign_specific'); ?>"><i class="fa fa-circle"></i> Campaign Specific</a></li>
+                            ?>"><a href="{{ url('admin/brandboost/campaign_specific') }}"><i class="fa fa-circle"></i> Campaign Specific</a></li>
 
                         </ul>
                     </li>
@@ -465,7 +465,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-widgets-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/modules/chat/'); ?>"><i class="fa fa-circle"></i> <span>Chat Widgets </span> <?php if(!empty($chatCount)):?><span class="label bg-blue-400 menubadge"><?php echo $chatCount;?></span><?php endif;?></a></li>
+                            ?>"><a href="{{ url('admin/modules/chat/') }}"><i class="fa fa-circle"></i> <span>Chat Widgets </span> <?php if(!empty($chatCount)):?><span class="label bg-blue-400 menubadge"><?php echo $chatCount;?></span><?php endif;?></a></li>
 							
 							<li class="<?php
                             if ($pageName == 'modules' && $pageSeName == 'nps' && $pageThName == 'widgets') {
@@ -473,7 +473,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-widgets-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/modules/nps/widgets'); ?>"><i class="fa fa-circle"></i> <span>NPS Widgets </span> <?php if(!empty($npsWidgetCount)):?><span class="label bg-blue-400 menubadge"><?php echo $npsWidgetCount;?></span><?php endif;?></a></li>
+                            ?>"><a href="{{ url('admin/modules/nps/widgets') }}"><i class="fa fa-circle"></i> <span>NPS Widgets </span> <?php if(!empty($npsWidgetCount)):?><span class="label bg-blue-400 menubadge"><?php echo $npsWidgetCount;?></span><?php endif;?></a></li>
 							
 							<li class="<?php
                             if ($pageName == 'modules' && $pageSeName == 'referral' && $pageThName == 'widgets') {
@@ -481,7 +481,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-widgets-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/modules/referral/widgets'); ?>"><i class="fa fa-circle"></i> <span>Referral Widgets </span> <?php if(!empty($referralWidgetCount)):?><span class="label bg-blue-400 menubadge"><?php echo $referralWidgetCount;?></span><?php endif;?></a></li>
+                            ?>"><a href="{{ url('admin/modules/referral/widgets') }}"><i class="fa fa-circle"></i> <span>Referral Widgets </span> <?php if(!empty($referralWidgetCount)):?><span class="label bg-blue-400 menubadge"><?php echo $referralWidgetCount;?></span><?php endif;?></a></li>
 							
 							<li class="<?php
                             if ($pageName == 'mediagallery') {
@@ -489,7 +489,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-widgets-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/mediagallery'); ?>"><i class="fa fa-circle"></i> <span>Media Widgets </span><span class="label bg-blue-400 menubadge">1</span></a></li>
+                            ?>"><a href="{{ url('admin/mediagallery') }}"><i class="fa fa-circle"></i> <span>Media Widgets </span><span class="label bg-blue-400 menubadge">1</span></a></li>
                         </ul>
                     </li>
 
@@ -503,7 +503,7 @@ $pageThName = \Request::segment(4);
                     if ($pageName == 'modules' && $pageSeName == 'referral') {
                         echo 'active';
                     }
-                    ?>"><a href="<?php echo base_url('/admin/modules/referral/'); ?>"><strong class="nav_icon icon_referral"></strong> <span>Referral App</span></a>
+                    ?>"><a href="{{ url('admin/modules/referral/') }}"><strong class="nav_icon icon_referral"></strong> <span>Referral App</span></a>
 
                     </li> -->
 
@@ -547,7 +547,7 @@ $pageThName = \Request::segment(4);
                     if ($pageName == 'modules' && $pageSeName == 'nps') {
                         echo 'active';
                     }
-                    ?>"><a href="<?php echo base_url('/admin/modules/nps/'); ?>"><strong class="nav_icon icon_nps"></strong> <span>NPS Feedback</span></a></li>
+                    ?>"><a href="{{ url('admin/modules/nps/') }}"><strong class="nav_icon icon_nps"></strong> <span>NPS Feedback</span></a></li>
 					-->
 					
 					<li id="menu-nps" class="listt1"><a href="javascript:void(0);"><strong class="nav_icon icon_nps"></strong> <span>NPS Survey</span></a>
@@ -558,7 +558,7 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-nps-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/modules/nps/overview'); ?>"><i class="fa fa-circle"></i> Overview</a></li>
+                            ?>"><a href="{{ url('admin/modules/nps/overview') }}"><i class="fa fa-circle"></i> Overview</a></li>
 
                             <li class="<?php
                             if ($pageName == 'modules' && $pageSeName == 'nps' && in_array($pageThName,array('', 'setup'))) {
@@ -566,14 +566,14 @@ $pageThName = \Request::segment(4);
                                 $activeChildClass = 'menu-nps-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/modules/nps'); ?>"><i class="fa fa-circle"></i> Campaigns</a></li>
+                            ?>"><a href="{{ url('admin/modules/nps') }}"><i class="fa fa-circle"></i> Campaigns</a></li>
                             <li class="<?php
                             if ($pageName == 'modules' && $pageSeName == 'nps' && $pageThName == 'score') {
                                 $activeParentClass = 'menu-nps';
                                 $activeChildClass = 'menu-nps-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="<?php echo base_url('/admin/modules/nps/score'); ?>"><i class="fa fa-circle"></i> Scores / Feedbacks</a></li>
+                            ?>"><a href="{{ url('admin/modules/nps/score') }}"><i class="fa fa-circle"></i> Scores / Feedbacks</a></li>
                         </ul>
                     </li>
 
@@ -649,7 +649,7 @@ $pageThName = \Request::segment(4);
                     if ($pageName == 'settings') {
                         echo 'active';
                     }
-                    ?>"><a href="<?php echo base_url('/admin/settings'); ?>"><strong class="nav_icon icon_settings"></strong> <span>Settings</span></a></li>
+                    ?>"><a href="{{ url('admin/settings') }}"><strong class="nav_icon icon_settings"></strong> <span>Settings</span></a></li>
 
 
                     <li class="active mt40 hidemenu"><a class="sidebar-control sidebar-main-toggle hidden-xs"><strong class="nav_icon icon_hide"></strong> <span>Hide Menu</span></a></li>

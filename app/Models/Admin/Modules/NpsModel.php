@@ -20,7 +20,7 @@ class NpsModel extends Model {
         $oData = DB::table('tbl_nps_widgets')
                 ->where('delete_status', 0)
                 ->where('user_id', $userID)
-                ->when(!empty($id), function ($query, $id) {
+                ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('id', $id);
                 })
                 ->get();

@@ -48,7 +48,7 @@ class SubscriberModel extends Model {
         $aData = DB::table('tbl_subscribers')
                 ->join('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
                 ->select('tbl_users.*')
-                ->when(($userRole > 1), function ($query, $userID) {
+                ->when(($userRole > 1), function ($query) use ($userID) {
                     return $query->where('tbl_subscribers.owner_id', $userID);
                 })
                 ->orderBy('tbl_subscribers.id', 'desc')

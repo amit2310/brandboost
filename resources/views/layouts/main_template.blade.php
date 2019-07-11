@@ -96,6 +96,7 @@ if ($uriSegment == 'offsite') {
     </head>
     
     <?php
+    $automation_type  = isset($automation_type) ? $automation_type : '';
 
     if (\Request::segment(2) == 'modules' && \Request::segment(3) == 'nps') {
         $pageColor = 'nps_sec';

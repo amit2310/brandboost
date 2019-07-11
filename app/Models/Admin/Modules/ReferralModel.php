@@ -18,7 +18,7 @@ class ReferralModel extends Model {
     public static function getReferralWidgets($userID, $id = '') {
         $oWidgets = DB::table('tbl_referral_widgets')
                 ->where('user_id', $userID)
-                ->when(!empty($id), function ($query, $id) {
+                ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('id', $id);
                 })
                 ->get();

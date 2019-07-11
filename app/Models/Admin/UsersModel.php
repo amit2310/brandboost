@@ -68,7 +68,7 @@ class UsersModel extends Model {
 
         return $oUser;
     }
-    
+
     /**
      * Used to get one or multiple users based on the userid
      * @param type $id
@@ -77,12 +77,57 @@ class UsersModel extends Model {
     public static function getAllUsers($id = '') {
         $oData = DB::table('tbl_users')
                 ->where('deleted_status', 0)
-                ->when(($id > 0), function($query, $id){
+                ->when(($id > 0), function($query) use ($id) {
                     return $query->where('id', $id);
                 })
                 ->orderBy('id', 'asc')
                 ->get();
         return $oData;
+    }
+
+    /**
+     * This method check if user has an active subscription
+     * @param type $userID
+     * @return boolean
+     */
+    public function isActiveSubscription($userID = 0) {
+        if (empty($userID)) {
+            $userID = Session::get('admin_user_id');
+            if ($userID > 0) {
+                return true;
+            }
+        }
+
+        if (empty($userID)) {
+            $userID = Session::get('customer_user_id');
+        }
+
+        if (!empty($userID)) {
+            $aUser = self::getUserInfo($userID);
+            $subscriptionID = $aUser->subscription_id;
+            if (!empty($subscriptionID)) {
+
+                $bData = DB::table('tbl_users')
+                        ->leftJoin('tbl_cc_subscriptions', 'tbl_users.subscription_id', '=', 'tbl_cc_subscriptions.subscription_id')
+                        ->select('tbl_cc_subscriptions.subscription_status')
+                        ->where('tbl_users.id', $userID)
+                        ->where('tbl_cc_subscriptions.subscription_status', 'active')
+                        ->orWhere('tbl_cc_subscriptions.subscription_status', 'in_trial')
+                        ->orderBy('tbl_cc_subscriptions.id', 'desc')
+                        ->limit(1)
+                        ->exists();
+                
+                if($bData)
+                    return true;
+                else
+                    return false;
+                
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     public function basicSignup($aData) {
@@ -141,8 +186,6 @@ class UsersModel extends Model {
                 return false;
         }
     }
-
-    
 
     public function getCharUserList($userID, $char) {
 
@@ -581,43 +624,6 @@ class UsersModel extends Model {
             $response = $result->row();
         }
         return $response;
-    }
-
-    public function isActiveSubscription($userID = 0) {
-        if (empty($userID)) {
-            $userID = $this->session->userdata('admin_user_id');
-            if ($userID > 0) {
-                return true;
-            }
-        }
-
-        if (empty($userID)) {
-            $userID = $this->session->userdata('customer_user_id');
-        }
-
-        if (!empty($userID)) {
-            $aUser = $this->getUserInfo($userID);
-            $subscriptionID = $aUser->subscription_id;
-            if (!empty($subscriptionID)) {
-                $this->db->select("tbl_cc_subscriptions.subscription_status");
-                $this->db->join("tbl_cc_subscriptions", "tbl_users.subscription_id = tbl_cc_subscriptions.subscription_id", "LEFT");
-                $this->db->where("tbl_users.id", $userID);
-                $this->db->where("tbl_cc_subscriptions.subscription_status", "active");
-                $this->db->or_where("tbl_cc_subscriptions.subscription_status", "in_trial");
-                $this->db->order_by('tbl_cc_subscriptions.id', 'DESC');
-                $this->db->limit(1);
-                $result = $this->db->get("tbl_users");
-                if ($result->num_rows() > 0) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
     }
 
 }

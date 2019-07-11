@@ -16,7 +16,7 @@ class ChatsModel extends Model {
         $oData = DB::table('tbl_chat_main')
             ->leftJoin('tbl_users', 'tbl_chat_main.user_id', '=' , 'tbl_users.id')
             ->select('tbl_chat_main.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
-            ->when(($userRole != 1), function ($query, $userID) {
+            ->when(($userRole != 1), function ($query) use ($userID) {
                     return $query->where('tbl_chat_main.user_id', $userID);
                 })    
             ->get();

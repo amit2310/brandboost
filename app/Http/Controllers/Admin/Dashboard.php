@@ -80,20 +80,24 @@ class Dashboard extends Controller {
         );
         return view('admin.dashboard', $aData);
     }
-
-    public function getReviewData(Requests $post) {
+    
+    
+    /**
+     * Gets filtered Reviews of a member
+     * @param Request $post
+     */
+    public function getReviewData(Request $post) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-
         $response = array();
         if (!empty($post)) {
             $draw = $post->draw;
             $start = $post->start;
             $rowperpage = $post->length;
-            $columnIndex = $post->order[0]->column;
-            $columnName = $post->columns[$columnIndex]->data;
-            $columnSortOrder = $post->order[0]->dir;
-            $searchValue = $post->search->value;
+            $columnIndex = $post->order[0]['column'];
+            $columnName = $post->columns[$columnIndex]['data'];
+            $columnSortOrder = $post->order[0]['dir'];
+            $searchValue = $post->search['value'];
             $mReviews = new ReviewsModel();
             $totalData = $mReviews->getMyReviews($userID);
             $totalRecords = count($totalData);
@@ -102,8 +106,6 @@ class Dashboard extends Controller {
             $totalRecordwithFilter = count($searchRecord);
 
             $reviewsData = $mReviews->getMyReviewsByFilter($userID, $searchValue, $columnName, $columnSortOrder, $start, $rowperpage);
-
-            //pre($reviewsData);
 
             $data = array();
 
@@ -116,7 +118,7 @@ class Dashboard extends Controller {
                     "action" => ''
                 );
             }
-
+            
             $response = array(
                 "draw" => intval($draw),
                 "iTotalRecords" => count($reviewsData),

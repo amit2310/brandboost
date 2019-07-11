@@ -133,8 +133,8 @@ if (!function_exists('admin_account')) {
  */
 if (!function_exists('base_url')) {
 
-    function base_url() {
-        return URL::to('/').'/';
+    function base_url($path='') {
+        return URL::to('/').'/'.$path;
     }
 
 }

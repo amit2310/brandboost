@@ -1512,7 +1512,7 @@
             'serverSide': true,
             'serverMethod': 'post',
             'ajax': {
-                'url': '<?php echo base_url(); ?>admin/dashboard/getReviewData'
+                'url': '<?php echo base_url(); ?>admin/dashboard/getReviewData', 'data' : {"_token": "{{ csrf_token() }}"},
             },
             'columns': [
                 {data: 'review_title'},
