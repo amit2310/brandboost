@@ -22,6 +22,7 @@ class NotificationModel extends Model {
         $lastWeekDate = date('Y-n-d', strtotime('-7 days'));
         $dateStartFilter = date('Y-n-d', strtotime($start));
         $dateEndFilter = date('Y-n-d', strtotime($end));
+        $status = '';
         if (!empty($type)) {
             $status = ($type == 'unread') ? 0 : 1;
         }
@@ -31,7 +32,7 @@ class NotificationModel extends Model {
             ->where('tbl_notifications.user_id', $userId)
             ->where(DB::raw("DATE(tbl_notifications.created)"), '<', "$lastWeekDate") 
             ->where(DB::raw("DATE(tbl_notifications.created)"), '>=', "$dateStartFilter")
-            ->when(!empty($type), function ($query, $status) {
+            ->when(!empty($type), function ($query) use ($status) {
                     return $query->where('tbl_notifications.status', $status);
                 })    
             ->orderBy('tbl_notifications.id', 'desc')    

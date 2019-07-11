@@ -19,3 +19,8 @@ Route::get('admin/login','Admin\Login@index');
 Route::post('admin/login','Admin\Login@index');
 
 Route::get('admin/dashboard','Admin\Dashboard@index');
+Route::post('admin/dashboard/getReviewData','Admin\Dashboard@getReviewData');
+
+//Email Modules
+Route::get('admin/modules/emails/overview','Admin\Modules\Emails@overview');
+Route::get('admin/modules/emails','Admin\Modules\Emails@index');

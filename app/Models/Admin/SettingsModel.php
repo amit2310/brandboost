@@ -16,7 +16,7 @@ class SettingsModel extends Model {
      */
     public static function getSystemNotificationTemplates($id = "") {
         $response = DB::table('tbl_notifications_sys_templates')
-                ->when(($id > 0), function ($query, $id) {
+                ->when(($id > 0), function ($query) use ($id) {
                     return $query->where('id', $id);
                 })
                 ->orderBy('id', 'desc')

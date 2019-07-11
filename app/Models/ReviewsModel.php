@@ -20,15 +20,65 @@ class ReviewsModel extends Model {
                 ->leftJoin('tbl_users', 'tbl_reviews.user_id', '=', 'tbl_users.id')
                 ->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
                 ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.country', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img')
-                ->when(!empty($campaignID), function ($query, $campaignID) {
+                ->when(!empty($campaignID), function ($query) use ($campaignID) {
                     return $query->where('tbl_reviews.campaign_id', $campaignID);
                 })
-                ->when(!empty($userID), function ($query, $userID) {
+                ->when(!empty($userID), function ($query) use ($userID) {
                     return $query->where('tbl_brandboost.user_id', $userID);
                 })
                 ->orderBy('tbl_reviews.id', 'desc')
                 ->get();
 
+        return $oData;
+    }
+
+    /**
+     * This method returns all the reviews belonging to a member
+     * @param type $userID
+     * @return type
+     */
+    public function getMyReviews($userID) {
+        $oData = DB::table('tbl_reviews')
+                ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
+                ->leftJoin('tbl_users', 'tbl_brandboost.user_id', '=', 'tbl_users.id')
+                ->select('tbl_reviews.id AS reviewid', 'tbl_reviews.review_type AS reviewtype', 'tbl_reviews.created AS review_created', 'tbl_reviews.status AS rstatus', 'tbl_reviews.*', 'tbl_brandboost.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
+                ->where('tbl_reviews.user_id', $userID)
+                ->orderBy('tbl_reviews.id', 'desc')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Returns filtered reviews of a member
+     * @param type $userID
+     * @param type $filterValue
+     * @param type $columnName
+     * @param type $columnSortOrder
+     * @param type $start
+     * @param type $limit
+     * @return type
+     */
+    public function getMyReviewsByFilter($userID, $filterValue = '', $columnName = 'id', $columnSortOrder = 'desc', $start = '1', $limit = '10') {
+        $oData = DB::table('tbl_reviews')
+                ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
+                ->leftJoin('tbl_users', 'tbl_brandboost.user_id', '=', 'tbl_users.id')
+                ->select('tbl_reviews.id AS reviewid', 'tbl_reviews.review_type AS reviewtype', 'tbl_reviews.created AS review_created', 'tbl_reviews.status AS rstatus', 'tbl_reviews.*', 'tbl_brandboost.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
+                ->where('tbl_reviews.user_id', $userID)
+                ->when(($filterValue != ''), function ($query) use ($filterValue) {
+                    return $query
+                            ->where('tbl_reviews.created', $filterValue)
+                            ->where('tbl_brandboost.brand_title', $filterValue)
+                            ->where('tbl_reviews.review_title', $filterValue)
+                            ->where('tbl_reviews.rating', $filterValue);
+                })
+                ->when(($columnName != ''), function($query) use($columnName, $columnSortOrder) {
+                    return $query->orderBy('tbl_reviews.' . $columnName, $columnSortOrder);
+                }, function($query) {
+                    $query->orderBy('tbl_reviews.id', 'desc');
+                })
+                ->offset($start)
+                ->limit($limit)
+                ->get();
         return $oData;
     }
 
@@ -737,21 +787,6 @@ class ReviewsModel extends Model {
         return false;
     }
 
-    public function getMyReviews($userID) {
-        $this->db->select("tbl_reviews.id AS reviewid, tbl_reviews.review_type AS reviewtype, tbl_reviews.created AS review_created, tbl_reviews.status AS rstatus, tbl_reviews.*, tbl_brandboost.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_brandboost.user_id=tbl_users.id");
-        //$this->db->group_by("tbl_reviews.campaign_id");
-        $this->db->order_by("reviewid", "DESC");
-        $this->db->where("tbl_reviews.user_id", $userID);
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        return $aData;
-    }
-
     public function getOnsiteReviewDetailsByUID($uniqueId) {
         $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar, tbl_brandboost_products.product_name, tbl_brandboost_products.product_image, tbl_brandboost_products.created as product_created");
         $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id");
@@ -774,34 +809,6 @@ class ReviewsModel extends Model {
         $this->db->order_by("tbl_reviews.id", "ASC");
         $oResponse = $this->db->get("tbl_reviews");
         //echo $this->db->last_query();
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        return $aData;
-    }
-
-    public function getMyReviewsByFilter($userID, $filterValue = '', $columnName = 'id', $columnSortOrder = 'DESC', $start = '1', $limit = '10') {
-        $this->db->select("tbl_reviews.id AS reviewid, tbl_reviews.review_type AS reviewtype, tbl_reviews.created AS review_created, tbl_reviews.status AS rstatus, tbl_reviews.*, tbl_brandboost.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_brandboost.user_id=tbl_users.id");
-
-        if ($columnName != '') {
-            $this->db->order_by("tbl_reviews." . $columnName, $columnSortOrder);
-        } else {
-            $this->db->order_by("tbl_reviews.id", 'DESC');
-        }
-        $this->db->where("tbl_reviews.user_id", $userID);
-
-        if ($filterValue != '') {
-            $this->db->where("tbl_reviews.created", $filterValue);
-            $this->db->where("tbl_brandboost.brand_title", $filterValue);
-            $this->db->where("tbl_reviews.review_title", $filterValue);
-            $this->db->where("tbl_reviews.rating", $filterValue);
-        }
-
-        $this->db->limit($limit, $start);
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
         if ($oResponse->num_rows() > 0) {
             $aData = $oResponse->result();
         }
