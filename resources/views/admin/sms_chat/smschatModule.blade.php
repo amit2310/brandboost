@@ -83,7 +83,7 @@
                                                 <ul>
                                                     @foreach ($errors->all() as $error)
                                                     <li>{{ $error }}</li>
-                                                      @endforeach
+                                                    @endforeach
                                                 </ul>
                                                 <?php echo session('authenticate'); ?>
                                             </div>

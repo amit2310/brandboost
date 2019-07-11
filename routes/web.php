@@ -17,5 +17,5 @@ Route::get('/', function () {
 
 Route::get('admin/login','Admin\Login@index');
 Route::post('admin/login','Admin\Login@index');
-
 Route::get('admin/dashboard','Admin\Dashboard@index');
+Route::get('admin/smschat','Admin\SmsChat@index');
