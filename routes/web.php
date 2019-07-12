@@ -28,3 +28,4 @@ Route::get('admin/modules/emails','Admin\Modules\Emails@index');
 
 //chat module
 Route::get('admin/smschat','Admin\SmsChat@index');
+Route::get('admin/webchat','Admin\WebChat@index');
