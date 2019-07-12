@@ -1662,6 +1662,13 @@ if (!function_exists('sendEmail')) {
 
 }
 
+   /**
+     * this function is used send message through twilio
+     * @return type
+     */
+
+
+
 if (!function_exists('sendSMS')) {
 
     function sendSMS($to, $message) {
@@ -1681,6 +1688,13 @@ if (!function_exists('sendSMS')) {
     }
 
 }
+
+
+    /**
+     * this function is used send message through twilio
+     * @return type
+     */
+
 
 if (!function_exists('sendClientSMS')) {
 

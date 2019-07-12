@@ -488,8 +488,8 @@ $(document).ready(function() {
 				for(var i=0; i<messageSmilies.length; i++) {
 					var messageSmiley = messageSmilies[i],
 					messageSmileyLower = messageSmiley.toLowerCase();
-					if(smiliesMap[messageSmileyLower]) {
-						messageText = messageText.replace(messageSmiley, "<img style='width:auto; height:auto;' src='<?php echo base_url(); ?>assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif' alt='smiley' />");
+					if(smiliesMapSMSChat[messageSmileyLower]) {
+						messageText = messageText.replace(messageSmiley, "<img style='width:auto; height:auto;' src='<?php echo base_url(); ?>assets/img-smile/"+smiliesMapSMSChat[messageSmileyLower]+".gif' alt='smiley' />");
 					}
 				}
 				
@@ -514,9 +514,6 @@ $(document).ready(function() {
 			$('.autoTime_'+userPhoneNo).timeago();
 
 
-
-
-				
 				$('.smsContainer .messageContent').val('');
 				
 				var msgHeight = document.getElementById("smsSearcharea").scrollHeight;
@@ -586,7 +583,7 @@ $(document).ready(function() {
 				$.ajax({
 					url: '<?php echo base_url('admin/smschat/sendMsg'); ?>',
 					type: "POST",
-					data: {'phoneNo' : userPhoneNo, 'messageContent' : messageContent, 'smstoken': newToken, 'moduleName' : 'chat', 'media_type': '', 'videoUrl': ''},
+					data: {'phoneNo' : userPhoneNo, 'messageContent' : messageContent, 'smstoken': newToken, 'moduleName' : 'chat', 'media_type': '', 'videoUrl': '',_token: '{{csrf_token()}}'},
 					dataType: "html",
 					success: function (data) {
 						

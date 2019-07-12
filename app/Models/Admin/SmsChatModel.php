@@ -135,6 +135,12 @@ class SmsChatModel extends Model {
         return $result;
     }
 
+
+     /**
+     * this function is used to add Sms Data in the database
+     * @return type
+     */
+
     public function addSmsChatData($data) {
 
         $result = $this->db->insert('tbl_chat_sms_thread', $data);
