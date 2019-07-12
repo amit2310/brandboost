@@ -144,21 +144,20 @@ class SmsChatModel extends Model {
             return false;
     }
 
-    public function getSMSThreadsByPhoneNo($fromNo, $toNo, $offsetVal) {
-        $result = array();
-        if ($fromNo != '' && $toNo != '') {
-            $where = "((`from` LIKE '%" . $fromNo . "%' AND `to` LIKE '%" . $toNo . "%') OR (`to` LIKE '%" . $fromNo . "%' AND `from` LIKE '%" . $toNo . "%'))";
-            $this->db->where($where);
-            //$this->db->limit(30, $offsetVal);
-            //$this->db->order_by("id", "DESC");
-            $this->db->from('tbl_chat_sms_thread');
-            $query = $this->db->get();
-            ///echo $this->db->last_query(); die;
-            if ($query->num_rows() > 0) {
-                $result = $query->result();
-            }
-        }
-        return $result;
+
+    /**
+     * this function is used to return the sms threads For Phone numbers 
+     * @param type $fromNo
+     * @param type $toNo
+     * @param type $offsetVal
+     * @return type
+     */
+
+    public static function getSMSThreadsByPhoneNo($fromNo, $toNo, $offsetVal) {
+      $oData = DB::select(DB::raw(" select * from tbl_chat_sms_thread where ((`from` LIKE '%" . $fromNo . "%' AND `to` LIKE '%" . $toNo . "%') OR (`to` LIKE '%" . $fromNo . "%' AND `from` LIKE '%" . $toNo . "%')) "));
+
+         return $oData;
+
     }
 
     public function getlivesearchData($loginId, $inVar) {

@@ -381,7 +381,7 @@ $(document).ready(function() {
 			 $('#livesearch').removeAttr("style");
 			$.ajax({
 				url: '<?php echo base_url('admin/smschat/getSubsinfo'); ?>',
-				type: "POST",
+				type: "GET",
 				data: {'userId':userId,'SubscriberPhone':SubscriberPhone},
 				success: function (data) {
                var obj =  $.parseJSON(data);
@@ -414,7 +414,7 @@ $(document).ready(function() {
 					$.ajax({
 						url: '<?php echo base_url('admin/smschat/showSmsThreads'); ?>',
 						type: "POST",
-						data: {'userId':userId,'SubscriberPhone':SubscriberPhone},
+						data: {'userId':userId,'SubscriberPhone':SubscriberPhone,_token: '{{csrf_token()}}'},
 						dataType: "html",
 						success: function (data) {
 						$('#smsSearcharea').html(data+'<div class="msg_push"></div>');
@@ -1005,12 +1005,12 @@ $('#AjaxSearchSms').html(data);
 	
 	 //  ######### Live Search ############ //  
 	<?php if ($defaultNumber != "") { ?>
-         showNoteslisting(<?php echo $DefaultsubscriberId; ?>);
-		showSMSChatData('<?php echo $DefaultsubscriberId; ?>','<?php echo $defaultNumber; ?>');
+         //showNoteslisting(<?php echo $DefaultsubscriberId; ?>);
+		  showSMSChatData('<?php echo $DefaultsubscriberId; ?>','<?php echo $defaultNumber; ?>');
 		<?php
 } else { ?>
 		showSMSChatData('<?php echo $subscriberId; ?>','<?php echo $defaultUserNumber; ?>');
-	    showNoteslisting(<?php echo $subscriberId; ?>);
+	    //showNoteslisting(<?php echo $subscriberId; ?>);
 		<?php
 } ?>
 </script>

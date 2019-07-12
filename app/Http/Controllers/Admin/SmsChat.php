@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\SmsChatModel;
 use App\Models\Admin\SubscriberModel;
+use Illuminate\Support\Facades\Input;
+use Session;
 
 class SmsChat extends Controller {
 
@@ -43,23 +45,20 @@ class SmsChat extends Controller {
      * @return type
      */
 
-
-
-     public function showSmsThreads() {
+   public function showSmsThreads() {
         $oUser = getLoggedUser($redirect = false);
         if (empty($oUser)) {
             return;
             exit();
         }
         $response = array();
-        $post = $this->input->post();
-        $userId = $post['userId'];
-        $SubscriberPhone = trim($post['SubscriberPhone']);
+        $userId = Input::post("userId");
+        $SubscriberPhone = trim(numberForamt(Input::post("SubscriberPhone")));
         $usersdata = getUserbyPhone($SubscriberPhone);
         $usersdata = $usersdata[0];
         $userDataDetail = getUserDetail($usersdata->user_id);
 
-        $offsetValue = $post['offsetValue'] > 0 ? 0 : $post['offsetValue'];
+        $offsetValue = Input::post("offsetValue") > 0 ? 0 : Input::post("offsetValue");
         $userDetail = getSubscribersInfo($userId);
 
         $isLoggedInTeam = Session::get("team_user_id");
@@ -70,26 +69,23 @@ class SmsChat extends Controller {
             $hasweb_access = getMemberchatpermission($isLoggedInTeam);
             if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
             if ($hasweb_access->bb_number != "") {
-             $Twilionumber = $hasweb_access->bb_number;
+             $Twilionumber = numberForamt($hasweb_access->bb_number);
             } else {
-            $Twilionumber = getClientTwilioAccount($oUser->id);
+            $Twilionumber = numberForamt(getClientTwilioAccount($oUser->id));
             }
             } else {
-            $Twilionumber = getClientTwilioAccount($oUser->id);
+            $Twilionumber = numberForamt(getClientTwilioAccount($oUser->id));
             }
        }
        else
        {
-            $Twilionumber = getClientTwilioAccount($oUser->id);
+            $Twilionumber = numberForamt(getClientTwilioAccount($oUser->id));
 
        }
 
 
 
-        $aTwilioAc->contact_no = $this->phone_display_custom($aTwilioAc->contact_no);
-
-
-        $chatThreadsData = $this->smsChat->getSMSThreadsByPhoneNo($aTwilioAc->contact_no, $SubscriberPhone, $offsetValue);
+        $chatThreadsData = SmsChatModel::getSMSThreadsByPhoneNo($Twilionumber, $SubscriberPhone, $offsetValue);
 
         if (count($chatThreadsData) > 0) {
             foreach ($chatThreadsData as $chatData) {
@@ -102,7 +98,8 @@ class SmsChat extends Controller {
                 if ($chatData->msg != '' && $chatData->module_name != 'nps') {
                     $fileView = '<div class="media-content">' . $chatData->msg . '</div>';
 
-                    $fileext = end(explode('.', $chatData->msg));
+                    $fileext = explode('.', $chatData->msg);
+                    $fileext = end($fileext);
                     $mmsFile = explode('/Media/', $chatData->msg);
 
                     if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
@@ -129,7 +126,7 @@ class SmsChat extends Controller {
 
                         <li class="media reversed" style="margin-top: 10px;">
                            <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><!--<img src="images/face2.jpg" class="img-circle img-xxs" alt="">--> 
-                        <?php echo showUserAvtar($loginUserData->avatar, $loginUserData->firstname, $loginUserData->lastname, 28, 28, 11); ?></span>
+                        <?php echo showUserAvtar($oUser->avatar, $oUser->firstname, $oUser->lastname, 28, 28, 11); ?></span>
                         <?php echo $fileView; ?>
                         <?php if(!empty($teamMeberName)) {?>
                         <span style="padding: 0;display: block;font-size: 10px;" class="text-muted text-size-small">Sent by <?php echo $teamMeberName; ?></span>
@@ -158,6 +155,48 @@ class SmsChat extends Controller {
                 }
             }
         }
+    }
+
+    
+
+     /**
+     * this function is used to return Subscriber information
+     * @return type
+     */
+
+
+    public function getSubsinfo() {
+        
+        $userId = Input::get("userId");
+        $SubscriberPhone = Input::get("SubscriberPhone");
+        if (empty($userId)) {
+            $usersdata = getUserbyPhone($SubscriberPhone);
+            $usersdata = $usersdata[0];
+            $userId = $usersdata->id;
+        }
+
+        $userDetail = getSubscribersInfo($userId);
+        $userData = $userDetail[0];
+        $userDataDetail = getUserDetail($userData->user_id);
+        $avatar = "";
+        if(!empty($userDataDetail->avatar))
+        {
+            $avatar = $userDataDetail->avatar;
+        }
+        $avatar = showUserAvtar($avatar, $userData->firstname, $userData->lastname, 88, 88, 21);
+        $arr = array();
+        $arr[0]['email'] = $userData->email;
+        $arr[1]['name'] = $userData->firstname . ' ' . $userData->lastname;
+        $arr[2]['phone'] = $userData->phone;
+        $arr[3]['avatar'] = $avatar;
+        $arr[4]['avatar_url'] = $avatar;
+        $arr[5]['em_sub_id'] = Input::get("userId");
+        $arr[6]['city'] = $userData->cityName;
+        $arr[7]['code'] = $userData->country_code;
+        $arr[8]['gender'] = $userData->gender;
+        $arr[9]['avfinder'] = $avatar;
+
+        echo json_encode($arr);
     }
 
 
