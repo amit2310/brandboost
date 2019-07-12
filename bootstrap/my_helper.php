@@ -1668,6 +1668,13 @@ if (!function_exists('sendEmail')) {
 
 }
 
+   /**
+     * this function is used send message through twilio
+     * @return type
+     */
+
+
+
 if (!function_exists('sendSMS')) {
 
     function sendSMS($to, $message) {
@@ -1687,6 +1694,13 @@ if (!function_exists('sendSMS')) {
     }
 
 }
+
+
+    /**
+     * this function is used send message through twilio
+     * @return type
+     */
+
 
 if (!function_exists('sendClientSMS')) {
 
@@ -2493,7 +2507,7 @@ if (!function_exists('getClientTwilioAccount')) {
 
     function getClientTwilioAccount($currentUserid) {
         $oData = \App\Models\Admin\SubscriberModel::getClientTwilioAccountDetails($currentUserid);
-        return $oData;
+        return $oData->contact_no;
     }
 
 }
@@ -2555,14 +2569,18 @@ if (!function_exists('getteam_member')) {
 
 }
 
+
+/**
+* This function will return Team Member name by the Phone number
+* @param type $usrid
+* @return type
+*/
+
 if (!function_exists('smsteam_member_name')) {
 
     function smsteam_member_name($usrid) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->get_sms_team_member_name($usrid);
-        return $subscribersData[0]->teamName;
+        $oData = \App\Models\Admin\SubscriberModel::get_sms_team_member_name($userID);
+        return $oData[0]->teamName;;
     }
 
 }
@@ -2677,15 +2695,19 @@ if (!function_exists('smschatUsers')) {
 
 }
 
+
+ /**
+ * This function will return Subscribers Information
+ * @param type $userID
+ * @return type
+ */
+
 if (!function_exists('getSubscribersInfo')) {
 
     function getSubscribersInfo($userID) {
 
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->getSubscribersInfoDetails($userID);
-        return $subscribersData;
+        $oData = \App\Models\Admin\SubscriberModel::getSubscribersInfoDetails($userID);
+        return $oData;
     }
 
 }

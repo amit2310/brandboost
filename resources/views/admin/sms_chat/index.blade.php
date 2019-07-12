@@ -1,7 +1,8 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php //echo $title; ?>
+<?php //echo $title;
+ ?>
 @endsection
 
 @section('contents')
@@ -37,8 +38,7 @@ if (!empty($isLoggedInTeam)) {
 } else {
     $loginUserData->mobile = $aTwilioAc->contact_no;
 }
-$totalSubscriber ="";
-
+$totalSubscriber = "";
 $loginUserData->mobile = numberForamt($loginUserData->mobile);
 $activeOnlysmsUsers = activeOnlysms($loginUserData->mobile); // here we place client twilio number
 $activeChatCount = count((array)$activeOnlysmsUsers);
@@ -181,8 +181,8 @@ foreach ($activeOnlysmsUsers as $key => $value) {
 		
 				<!--++++++++++++ Active chat list +++++++++++++++-->
 					<div id="a_list_sms" class="panel-body p0 br5 mb10 chat_user_list activeChat a_list" style="background-image:none; <?php if (!empty($defaultNumber)) { ?>display:block;<?php
-					} else { ?>display:none;<?php
-					} ?>">
+} else { ?>display:none;<?php
+} ?>">
 					 @include('admin.sms_chat.activechat_list', array('mobile'=>$loginUserData->mobile,'activechatlist' => $activeOnlysmsUsers))
 				</div>
 				<!--++++++++++++ Active chat list +++++++++++++++-->
@@ -226,15 +226,12 @@ $character = array('A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd', 'E' => 'e', '
 foreach ($character as $key => $value) {
     $getCharUserList = \App\Models\Admin\SubscriberModel::getGlobalSubscribersByChar($loginUserData->id, $value);
     foreach ($getCharUserList as $userData) {
-    	$count=0;
+        $count = 0;
         $userDataDetail = getUserDetail($userData->user_id);
-        if(!empty($userDataDetail->avatar))
-        {
-           $avatar =  $userDataDetail->avatar;
-        }
-        else
-        {
-         $avatar =  "";
+        if (!empty($userDataDetail->avatar)) {
+            $avatar = $userDataDetail->avatar;
+        } else {
+            $avatar = "";
         }
         $favUser = \App\Models\Admin\SmsChatModel::getSMSFavouriteBySubsId($userData->user_id);
         $autocmpSearch[] = $userData->firstname . '' . $userData->lastname . '(' . $userData->phone . ')';
@@ -381,7 +378,7 @@ $(document).ready(function() {
 			 $('#livesearch').removeAttr("style");
 			$.ajax({
 				url: '<?php echo base_url('admin/smschat/getSubsinfo'); ?>',
-				type: "POST",
+				type: "GET",
 				data: {'userId':userId,'SubscriberPhone':SubscriberPhone},
 				success: function (data) {
                var obj =  $.parseJSON(data);
@@ -414,7 +411,7 @@ $(document).ready(function() {
 					$.ajax({
 						url: '<?php echo base_url('admin/smschat/showSmsThreads'); ?>',
 						type: "POST",
-						data: {'userId':userId,'SubscriberPhone':SubscriberPhone},
+						data: {'userId':userId,'SubscriberPhone':SubscriberPhone,_token: '{{csrf_token()}}'},
 						dataType: "html",
 						success: function (data) {
 						$('#smsSearcharea').html(data+'<div class="msg_push"></div>');
@@ -491,8 +488,8 @@ $(document).ready(function() {
 				for(var i=0; i<messageSmilies.length; i++) {
 					var messageSmiley = messageSmilies[i],
 					messageSmileyLower = messageSmiley.toLowerCase();
-					if(smiliesMap[messageSmileyLower]) {
-						messageText = messageText.replace(messageSmiley, "<img style='width:auto; height:auto;' src='<?php echo base_url(); ?>assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif' alt='smiley' />");
+					if(smiliesMapSMSChat[messageSmileyLower]) {
+						messageText = messageText.replace(messageSmiley, "<img style='width:auto; height:auto;' src='<?php echo base_url(); ?>assets/img-smile/"+smiliesMapSMSChat[messageSmileyLower]+".gif' alt='smiley' />");
 					}
 				}
 				
@@ -517,9 +514,6 @@ $(document).ready(function() {
 			$('.autoTime_'+userPhoneNo).timeago();
 
 
-
-
-				
 				$('.smsContainer .messageContent').val('');
 				
 				var msgHeight = document.getElementById("smsSearcharea").scrollHeight;
@@ -589,7 +583,7 @@ $(document).ready(function() {
 				$.ajax({
 					url: '<?php echo base_url('admin/smschat/sendMsg'); ?>',
 					type: "POST",
-					data: {'phoneNo' : userPhoneNo, 'messageContent' : messageContent, 'smstoken': newToken, 'moduleName' : 'chat', 'media_type': '', 'videoUrl': ''},
+					data: {'phoneNo' : userPhoneNo, 'messageContent' : messageContent, 'smstoken': newToken, 'moduleName' : 'chat', 'media_type': '', 'videoUrl': '',_token: '{{csrf_token()}}'},
 					dataType: "html",
 					success: function (data) {
 						
@@ -1005,8 +999,8 @@ $('#AjaxSearchSms').html(data);
 	
 	 //  ######### Live Search ############ //  
 	<?php if ($defaultNumber != "") { ?>
-         showNoteslisting(<?php echo $DefaultsubscriberId; ?>);
-		showSMSChatData('<?php echo $DefaultsubscriberId; ?>','<?php echo $defaultNumber; ?>');
+           showNoteslisting(<?php echo $DefaultsubscriberId; ?>);
+		  showSMSChatData('<?php echo $DefaultsubscriberId; ?>','<?php echo $defaultNumber; ?>');
 		<?php
 } else { ?>
 		showSMSChatData('<?php echo $subscriberId; ?>','<?php echo $defaultUserNumber; ?>');

@@ -416,16 +416,17 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         
     }
 
-    public function getSubscribersInfoDetails($userID) {
-        $this->db->select("tbl_subscribers.*, tbl_subscribers.id as subscriber_id, tbl_subscribers.status AS globalStatus, tbl_subscribers.id AS global_user_id");
-        $this->db->where("id", $userID);
-        $this->db->order_by("id", "DESC");
-        //$this->db->where("status !=", 2);
-        $result = $this->db->get("tbl_subscribers");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+
+  /**
+ * This function will return Subscribers Information
+ * @param type $userID
+ * @return type
+ */
+
+    public static function getSubscribersInfoDetails($userID) {
+      $oData = DB::select(DB::raw(" SELECT * from tbl_subscribers where id = '" . $userID . "'"));
+        return $oData;
+
     }
 
     public function SubscribersInfoByPhone($phoneNumber) {
@@ -520,7 +521,7 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
      * @return type
      */
 
-   public function getClientTwilioAccountDetails($currentUserid)
+   public static function getClientTwilioAccountDetails($currentUserid)
    {
 
         $oData = DB::table('tbl_twilio_accounts')
@@ -563,12 +564,19 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         return $response;
     }
 
-    public function get_sms_team_member_name($usrid) {
-        $result = $this->db->query(" SELECT CONCAT(tbl_users_team.firstname, ' ', tbl_users_team.lastname) as teamName FROM `tbl_users_team` where tbl_users_team.id = '" . $usrid . "'");
-        $response = $result->result();
 
-        //echo $this->db->last_query();die;
-        return $response;
+  /**
+  * This function will return Team Member name by the Phone number
+  * @param type $usrid
+  * @return type
+  */
+
+    public function get_sms_team_member_name($usrid) {
+
+      $oData = DB::select(DB::raw("  SELECT CONCAT(tbl_users_team.firstname, ' ', tbl_users_team.lastname) as teamName FROM `tbl_users_team` where tbl_users_team.id = '" . $usrid . "' "));
+
+          return $oData;
+
     }
 
     /**
@@ -1521,13 +1529,21 @@ FROM
         return $response;
     }
 
+
+     /**
+    * This function will return notes
+    * @param type $usrid
+    * @return type
+    */
+
     public function visitornotes($usrid) {
 
-        $result = $this->db->query("SELECT * from tbl_visitor_notes where user='" . $usrid . "'");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+      $oData = DB::table('tbl_visitor_notes')
+      ->where('user', $usrid)
+      ->get();
+
+      return $oData;
+
     }
 
     public function getSubscriberBBCampaigns($subscriberID) {
