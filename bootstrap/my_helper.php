@@ -1121,14 +1121,20 @@ if (!function_exists('freeChatRoom')) {
 
 
 
-
+/**
+* Get All team data
+* @param type $userID
+* @return type
+*/
 if (!function_exists('getAllteam')) {
 
     function getAllteam($userID) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+        /*$CI = & get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Team_model", "mTeam");
         $result = $CI->mTeam->getAllteamMembers($userID);
-        return $result;
+        return $result;*/
+        $oData = \App\Models\Admin\TeamModel::getAllteamMembers($userID);
+        return $oData;
     }
 
 }
@@ -2561,15 +2567,17 @@ if (!function_exists('smsteam_member_name')) {
 
 }
 
-
+/**
+* Get last chat message
+* @param type $token
+* @return type
+*/
 if (!function_exists('getlastChatMessage')) {
 
     function getlastChatMessage($token) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->getlastChatMessageDetail($token);
-        return $subscribersData;
+     
+        $oData = \App\Models\Admin\SubscriberModel::getlastChatMessageDetail($token);
+        return $oData;
     }
 
 }

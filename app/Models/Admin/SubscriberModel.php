@@ -571,12 +571,17 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         return $response;
     }
 
-    public function getlastChatMessageDetail($token) {
+    /**
+    * Get last chat message
+    * @param type $token
+    * @return type
+    */
 
-        $result = $this->db->query("SELECT * FROM `tbl_chat_message` WHERE `token` ='" . $token . "' order by id desc limit 1");
-        $response = $result->result();
-        //echo $this->db->last_query();die;
-        return $response;
+    public static function getlastChatMessageDetail($token) {
+
+        $oData = DB::select(DB::raw("SELECT * FROM `tbl_chat_message` WHERE `token` ='" . $token . "' order by id desc limit 1"));
+
+        return $oData;
     }
 
     public function activeOnlywebDetailsByinput($userID, $searchval) {
