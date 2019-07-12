@@ -22,18 +22,20 @@ class SmsChatModel extends Model {
         return $oFavorite;
     }
 
-    public function getSMSFavouriteBySubsId($userId) {
+    /**
+     * Get Favorite user Details by the user id
+     * @param type $userId
+     * @return type
+     */
 
-        $result = '';
-        $this->db->select('fav_user_id,subscriber');
-        $this->db->where('fav_user_id', $userId);
-        $this->db->from('tbl_chat_favourite');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            $result = $query->num_rows();
-        }
-        ///echo $this->db->last_query(); die;
-        return $result;
+    public static function getSMSFavouriteBySubsId($userId) {
+
+            $oData = DB::table('tbl_chat_favourite')
+                 ->select('fav_user_id','subscriber')
+                ->where('fav_user_id', $userId)
+                 ->get();
+
+        return $oData;
     }
 
     public function deleteSMSFavourite($currentUserId, $subId) {
@@ -62,19 +64,26 @@ class SmsChatModel extends Model {
         return $result;
     }
 
-    public function getFavSmsUser($currentUserId, $number) {
 
-        $result = '';
-        $this->db->select('fav_user_id');
-        $this->db->where('curr_user_id', $currentUserId);
-        $this->db->where('fav_user_id', $number);
-        $this->db->from('tbl_chat_favourite');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            $result = $query->result();
-        }
+    /**
+     * This function will return fav sms user
+     * @param type $currentUserId
+     * @param type $number
+     * @return type
+     */
 
-        return $result;
+    public static function getFavSmsUser($currentUserId, $number) {
+
+               $oData = DB::table('tbl_chat_favourite')
+                ->select('fav_user_id')
+                 ->where('curr_user_id', $currentUserId)
+                ->where('fav_user_id', $number)
+                ->first();
+                if(!empty($oData->fav_user_id))
+                    return true;
+                else 
+                return false;    
+       
     }
 
     public function getSMSFavouriteUserSingle($currentUserId, $fav_user_id) {

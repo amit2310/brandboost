@@ -143,6 +143,9 @@ class SubscriberModel extends Model {
                                                        ON tc1.token = tcm_subs1.token 
                                         WHERE  ( tc1.to = '" . $Number . "' 
                                                   OR tc1.from = '" . $Number . "' ) 
+                                          AND tc1.token!=''
+                                           AND tc1.module_name='chat'
+
                                         GROUP  BY tc1.token 
                                         ORDER  BY tcm_subs1.created DESC "));
         return $oData;
@@ -396,17 +399,21 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         return $response;
     }
 
-    public function getchatshortcutlisting($userID) {
-        $this->db->select("tbl_chat_shortcuts.*");
-        $this->db->where("user_id", $userID);
-        $this->db->order_by("id", "DESC");
-        $this->db->where("status =", 1);
-        $result = $this->db->get("tbl_chat_shortcuts");
+    /**
+     * This function will return chatShortcuts used in the chat module
+     * @param type $userId
+     * @return type
+     */
 
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+    public static function getchatshortcutlisting($userID) {
+        $oData = DB::table('tbl_chat_shortcuts')
+                ->where('user_id', $userID)
+                ->where('status', 1)
+                ->orderBy('id', 'desc')
+                ->get();
+
+        return $oData;
+        
     }
 
     public function getSubscribersInfoDetails($userID) {
@@ -482,6 +489,13 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         return $response;
     }
 
+
+    /**
+     * This function will return Twilio related account details based on the Phone number
+     * @param type $contactNo
+     * @return type
+     */
+
     public function getTwilioAccount($contactNo) {
 
         if (strpos($contactNo, '+') !== false) {
@@ -498,6 +512,47 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         }
         return $response;
     }
+ 
+
+    /**
+     * This function will return Client Twilio account details
+     * @param type $contactNo
+     * @return type
+     */
+
+   public function getClientTwilioAccountDetails($currentUserid)
+   {
+
+        $oData = DB::table('tbl_twilio_accounts')
+                ->where('user_id', $currentUserid)
+                ->first();
+
+          return $oData;
+
+
+   }
+
+
+    /**
+     * This function will return Team member Twilio account details
+     * @param type $contactNo
+     * @return type
+     */
+
+   public function getTeamTwilioAccountDetails($currentUserid)
+   {
+
+        $oData = DB::table('tbl_users_team')
+                ->where('id', $currentUserid)
+                ->first();
+
+          return $oData;
+
+
+   }
+
+
+
 
     public function getteam_member_name($usrid) {
 
@@ -576,13 +631,18 @@ FROM
         return $response;
     }
 
-    public function getUserbyPhoneDetails($Number) {
+ /**
+ * This function will return Client/User details by the Phone number
+ * @param type $Number
+ * @return type
+ */
 
-        $result = $this->db->query("SELECT * FROM `tbl_subscribers` WHERE `phone` = '" . $Number . "'");
-        $response = $result->result();
+    public static function getUserbyPhoneDetails($Number) {
+        $oData = DB::table('tbl_subscribers')
+                ->where('phone', $Number)
+                ->get();
 
-        //echo $this->db->last_query();
-        return $response;
+        return $oData;
     }
 
     public function smschatUsersDetails($number) {
@@ -603,13 +663,19 @@ FROM
         return $response;
     }
 
-    public function getincIdByPhoneval($number) {
+      /**
+     * This function will only Client/User id by the phone number
+     * @param type $number
+     * @return type
+     */
 
-        $result = $this->db->query("select id from tbl_subscribers where  `phone` = '" . $number . "'");
-        $response = $result->result();
+    public static function getincIdByPhoneval($number) {
+            $oData = DB::table('tbl_subscribers')
+                ->select('id')
+                ->where('phone', $number)
+                ->get();
 
-        //echo $this->db->last_query();die;
-        return $response;
+        return $oData;
     }
 
     public function getuserImageDetails($userID) {
@@ -728,19 +794,23 @@ FROM
         }
     }
 
-    public function getGlobalSubscribersByChar($userID, $char) {
+  
+     /**
+     * This function will return subscriber by the charName
+     * @param type $userID
+     * @param type $char
+     * @return type
+     */
 
-        $response = array();
-        $this->db->where("owner_id", $userID);
-        $this->db->like('firstname', $char, 'after');
-        $this->db->where('status', 1);
-        //$this->db->where('firstname!=', 'NA');
-        $this->db->from('tbl_subscribers');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+    public static function getGlobalSubscribersByChar($userID, $char) {
+        
+        $oData = DB::table('tbl_subscribers')
+                ->where('owner_id', $userID)
+                ->where('firstname', 'like', $char.'%')
+                ->where('status', 1)
+                ->get();
+
+        return $oData;
     }
 
     public function getGlobalSubscribersByCharDetails($userID, $char) {

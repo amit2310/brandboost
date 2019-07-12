@@ -785,14 +785,17 @@ if (!function_exists('getBrandboostDetail')) {
 }
 
 
+ /**
+     * This function will return Userdetails by user id
+     * @param type $userID
+     * @return type
+     */
+
 if (!function_exists('getUserDetail')) {
 
     function getUserDetail($userID) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Users_model", "rUsers");
-        $oUser = $CI->rUsers->getUserInfo($userID);
-        return $oUser;
+       $oData = \App\Models\Admin\UsersModel::getUserInfo($userID);
+        return $oData;
     }
 
 }
