@@ -224,7 +224,7 @@
             
 					
 					 <!-- Note BOX -->
-					<?php $this->load->view('admin/smschat/notes_listing'); ?>
+					 @include('admin.sms_chat.notes_listing')
       			     <!-- Note BOX -->
         
 			
@@ -284,18 +284,22 @@
 						<button style="margin:0 10px 15px 0!important;" class="btn btn-xs plus_icon dropdown-toggle ml10" data-toggle="dropdown" aria-expanded="true"><i class="icon-plus3"></i></button>
 						<ul style="right: 0px!important;" class="dropdown-menu dropdown-menu-right tagss shadow p10">
 							<?php
-								$newolists = array();
+								/*$newolists = array();
 								
 								foreach ($getMyLists as $key => $value) {
 									$newolists[$value->id][] = $value;
 								}
+								*/
+
 							?>
 							<?php
-								if (!empty($newolists)) {
+								/*if (!empty($newolists)) {
 									foreach ($newolists as $value) {
 										?><button class="btn btn-xs btn_white_table"><?php echo $value[0]->list_name; ?></button><?php
 									}
 								}
+								*/
+								
 							?>
 							
 							

@@ -32,7 +32,8 @@ function getLoggedUser($redirect = true) {
 
         Session::put('admin_redirect_url', \Request::fullUrl());
         if ($redirect == true) {
-            return redirect('/admin/login');
+           // return redirect('/admin/login');
+            die(redirect('admin/login'));
         }
     }
     return $oUser;
@@ -99,6 +100,22 @@ if (!function_exists('userRoleAdmin')) {
         if ($userRole == 2) {
             redirect('user/profile');
         }
+    }
+
+}
+
+/**
+ * Function is used to remove any prefix in the numbers
+ */
+if (!function_exists('numberForamt')) {
+
+    function numberForamt($num) {
+       $num = preg_replace('/[^0-9]/', '', $num);
+    $len = strlen($num);
+    if ($len == 11 && substr($num, 0, 1) == '1') {
+        return substr($num, 1, 10);
+    }
+    return $num;
     }
 
 }
@@ -266,7 +283,7 @@ if (!function_exists('userSetting')) {
 
 
 /**
- * Check member chat permission
+ * Check member chat permissions
  */
 if (!function_exists('getMemberchatpermission')) {
 
@@ -948,19 +965,21 @@ if (!function_exists('getMySubscribers')) {
 
 }
 
+   /**
+     * This function will return chatShortcuts used in the chat module
+     * @param type $userId
+     * @return type
+     */
+
 if (!function_exists('getchatshortcut')) {
 
     function getchatshortcut($userId) {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $result = $CI->mSubscriber->getchatshortcutlisting($userId);
-        return $result;
+         $oData = \App\Models\Admin\SubscriberModel::getchatshortcutlisting($userId);
+        return $oData;
+       
     }
 
 }
-
-
-
 
 
 
@@ -1129,14 +1148,18 @@ if (!function_exists('getFavouriteUser')) {
 
 }
 
+     /**
+     * This function will return fav sms user
+     * @param type $loginUserid
+     * @param type $number
+     * @return type
+     */
 
 if (!function_exists('getFavSmsUser')) {
 
     function getFavSmsUser($loginUserid, $number) {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/SmsChat_model", "smsChat");
-        $result = $CI->smsChat->getFavSmsUser($loginUserid, $number);
-        return $result;
+        $oData = \App\Models\Admin\SmsChatModel::getFavSmsUser($loginUserid,$number);
+        return $oData;
     }
 
 }
@@ -2246,6 +2269,13 @@ if (!function_exists('getUserAllDataValue')) {
 
 }
 
+/**
+ * Used to set the limit for string 
+ * @param type $string
+  * @param type $cLimit
+ * @return type
+ */
+
 if (!function_exists('setStringLimit')) {
 
     function setStringLimit($string, $cLimit = '') {
@@ -2365,6 +2395,12 @@ function timeAgoNotification($datetime, $full = false) {
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
+/**
+ * Used to Formatting the Mobile number
+ * @param type $mobileNo
+ * @return type
+ */
+
 function phoneNoFormat($mobileNo) {
     if ($mobileNo != '') {
         if (strlen($mobileNo) == 13) {
@@ -2424,18 +2460,57 @@ if (!function_exists('webchatUsers')) {
 
 
 
+  /**
+     * This function will return Twilio related account details based on the Phone number
+     * @param type $contactNo
+     * @return type
+     */
+
 if (!function_exists('getTwilioAccount')) {
 
     function getTwilioAccount($contactNo) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $twilioDetail = $CI->mSubscriber->getTwilioAccount($contactNo);
-
-        return $twilioDetail;
+        $oData = \App\Models\Admin\SubscriberModel::getTwilioAccount($contactNo);
+        return $oData;
     }
 
 }
+
+
+ /**
+     * This function will return Client Twilio account details
+     * @param type $currentUserid
+     * @return type
+     */
+
+
+if (!function_exists('getClientTwilioAccount')) {
+
+    function getClientTwilioAccount($currentUserid) {
+        $oData = \App\Models\Admin\SubscriberModel::getClientTwilioAccountDetails($currentUserid);
+        return $oData;
+    }
+
+}
+
+
+/**
+     * This function will return Team member Twilio account details
+     * @param type $currentUserid
+     * @return type
+     */
+
+
+if (!function_exists('getTeamTwilioAccount')) {
+
+    function getTeamTwilioAccount($currentUserid) {
+        $oData = \App\Models\Admin\SubscriberModel::getTeamTwilioAccountDetails($currentUserid);
+        return $oData;
+    }
+
+}
+
+
+
 
 if (!function_exists('getTeamByroom')) {
 
@@ -2540,14 +2615,17 @@ if (!function_exists('getincIdByuserId')) {
 
 }
 
+/**
+ * This function will only Client/User id by the phone number
+ * @param type $number
+ * @return type
+ */
+
 if (!function_exists('getincIdByPhone')) {
 
     function getincIdByPhone($number) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->getincIdByPhoneval($number);
-        return $subscribersData;
+        $oData = \App\Models\Admin\SubscriberModel::getincIdByPhoneval($number);
+        return $oData;
     }
 
 }
@@ -2562,14 +2640,18 @@ function phone_display_custom_helper($num) {
     return $num;
 }
 
+
+  /**
+ * This function will return Client/User details by the Phone number
+ * @param type $Number
+ * @return type
+ */
+
 if (!function_exists('getUserbyPhone')) {
 
     function getUserbyPhone($Number) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $twilioData = $CI->mSubscriber->getUserbyPhoneDetails($Number);
-        return $twilioData;
+        $oData = \App\Models\Admin\SubscriberModel::getUserbyPhoneDetails($Number);
+        return $oData;
     }
 
 }

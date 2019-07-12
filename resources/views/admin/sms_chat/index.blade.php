@@ -1,3 +1,12 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php //echo $title; ?>
+@endsection
+
+@section('contents')
+
+
 <?php
 $loginUserData = getLoggedUser();
 function phone_display_custom($num) {
@@ -28,27 +37,29 @@ if (!empty($isLoggedInTeam)) {
 } else {
     $loginUserData->mobile = $aTwilioAc->contact_no;
 }
+$totalSubscriber ="";
 
-$loginUserData->mobile = phone_display_custom($loginUserData->mobile);
+$loginUserData->mobile = numberForamt($loginUserData->mobile);
 $activeOnlysmsUsers = activeOnlysms($loginUserData->mobile); // here we place client twilio number
 $activeChatCount = count((array)$activeOnlysmsUsers);
-//$favouriteUserDataCount = count((array)$favouriteUserData);
+$favouriteUserDataCount = count((array)$favouriteUserData);
+$favouriteUserDataCount = "";
 $SmsOldest_list = SmsOldest($loginUserData->mobile);
 $SmsWaitlinglonest = SmsWaitlinglonest($loginUserData->mobile);
 $shortcuts = getchatshortcut($loginUserData->id);
 $Counterflag = 0;
 foreach ($activeOnlysmsUsers as $key => $value) {
     if ($value->to != '' && $value->from != '') {
-        if (trim($value->to) == trim($loginUserData->mobile)) {
-            $usersdata = getUserbyPhone($value->from);
+        if (trim(numberForamt($value->to)) == trim($loginUserData->mobile)) {
+            $usersdata = getUserbyPhone(numberForamt($value->from));
             $usersdata = $usersdata[0];
         }
-        if ($value->from == $loginUserData->mobile) {
-            $usersdata = getUserbyPhone($value->to);
+        if (numberForamt($value->from) == $loginUserData->mobile) {
+            $usersdata = getUserbyPhone(numberForamt($value->to));
             $usersdata = $usersdata[0];
         }
         if ($Counterflag == 0) {
-            $defaultNumber = $usersdata->phone;
+            $defaultNumber = numberForamt($usersdata->phone);
             $userData = getincIdByPhone($defaultNumber);
             $DefaultsubscriberId = $userData[0]->id;
             $Counterflag = 1;
@@ -169,9 +180,9 @@ foreach ($activeOnlysmsUsers as $key => $value) {
 			 <div id="InitalSms">
 		
 				<!--++++++++++++ Active chat list +++++++++++++++-->
-				<div id="a_list_sms" class="panel-body p0 br5 mb10 chat_user_list activeChat a_list" style="background-image:none; <?php if (!empty($defaultNumber)) { ?>display:block;<?php
-} else { ?>display:none;<?php
-} ?>">
+					<div id="a_list_sms" class="panel-body p0 br5 mb10 chat_user_list activeChat a_list" style="background-image:none; <?php if (!empty($defaultNumber)) { ?>display:block;<?php
+					} else { ?>display:none;<?php
+					} ?>">
 					 @include('admin.sms_chat.activechat_list', array('mobile'=>$loginUserData->mobile,'activechatlist' => $activeOnlysmsUsers))
 				</div>
 				<!--++++++++++++ Active chat list +++++++++++++++-->
@@ -192,7 +203,7 @@ foreach ($activeOnlysmsUsers as $key => $value) {
 				
 					<!--++++++++++++ wait chat list +++++++++++++++-->
 				<div class="panel-body p0 br5 mb10 chat_user_list w_list" style="background-image:none; display:none">
-					@include('admin.sms_chat/wait_list', array('mobile'=>$loginUserData->mobile,'wait_list' => $SmsWaitlinglonest))
+					{{-- @include('admin.sms_chat/wait_list', array('mobile'=>$loginUserData->mobile,'wait_list' => $SmsWaitlinglonest)) --}}
 				</div>
 			    <!--++++++++++++ wait chat list +++++++++++++++-->
 		
@@ -207,17 +218,25 @@ foreach ($activeOnlysmsUsers as $key => $value) {
 } ?>">
 					<?php
 $initNumber = "";
-$owners = getowners($loginUserData->id);
+//$owners = getowners($loginUserData->id);
 $autocmpSearch = array();
 $contactCount = 0;
 $flag = 0;
 $character = array('A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd', 'E' => 'e', 'F' => 'f', 'G' => 'g', 'H' => 'h', 'I' => 'i', 'J' => 'j', 'K' => 'k', 'L' => 'l', 'M' => 'm', 'N' => 'n', 'O' => 'o', 'P' => 'p', 'Q' => 'q', 'R' => 'r', 'S' => 's', 'T' => 't', 'U' => 'u', 'V' => 'v', 'W' => 'w', 'X' => 'x', 'Y' => 'y', 'Z' => 'z');
 foreach ($character as $key => $value) {
-    $getCharUserList = $this->mSubscribers->getGlobalSubscribersByChar($loginUserData->id, $value);
-    //if(!empty($getCharUserList)) {
+    $getCharUserList = \App\Models\Admin\SubscriberModel::getGlobalSubscribersByChar($loginUserData->id, $value);
     foreach ($getCharUserList as $userData) {
+    	$count=0;
         $userDataDetail = getUserDetail($userData->user_id);
-        $favUser = $this->smsChat->getSMSFavouriteBySubsId($userData->user_id);
+        if(!empty($userDataDetail->avatar))
+        {
+           $avatar =  $userDataDetail->avatar;
+        }
+        else
+        {
+         $avatar =  "";
+        }
+        $favUser = \App\Models\Admin\SmsChatModel::getSMSFavouriteBySubsId($userData->user_id);
         $autocmpSearch[] = $userData->firstname . '' . $userData->lastname . '(' . $userData->phone . ')';
         if ($flag == 0) {
             $phone_no = $userData->phone;
@@ -232,9 +251,9 @@ foreach ($character as $key => $value) {
         } ?>" style="<?php if ($count == 1) {
             echo 'box-shadow:0 2px 4px 0 rgba(1, 21, 64, 0.06)!important; border-radius:0 0 5px 5px';
         } ?>"> 
-									<input type="hidden" id="userImg_<?php echo $userData->phone; ?>" value="<?php echo $userDataDetail->avatar; ?>">
+									<input type="hidden" id="userImg_<?php echo $userData->phone; ?>" value="">
 									<a href="javascript:void(0);" class="media-link bbot getChatDetails" subscriberId = "<?php echo $userData->id; ?>"  phone_no="<?php echo $userData->phone; ?>">
-										<div class="media-left"><?php echo showUserAvtar($userDataDetail->avatar, $userData->firstname, $userData->lastname, 28, 28, 12); ?>
+										<div class="media-left"><?php echo showUserAvtar($avatar, $userData->firstname, $userData->lastname, 28, 28, 12); ?>
 										<span class="favouriteSMSUser" subscriberId = "<?php echo $userData->phone; ?>"><i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i></span></div>
 										
 										<div class="media-body"> 
@@ -269,7 +288,7 @@ foreach ($character as $key => $value) {
 			
 			<div class="userChatData smsContainer">
 				
-				@include('admin.sms_chat.userchatdata', array('initSubsCriberId' => $initSubsCriberId,'defaultNumber'=>$defaultNumber,'shortcuts'=>$shortcuts))
+				@include('admin.sms_chat.userchatdata', array('defaultNumber'=>$defaultNumber,'shortcuts'=>$shortcuts))
 			</div>
 			
 			
@@ -1019,5 +1038,5 @@ alertMessage('Error: Some thing wrong!');
 }
 </script>
 
-
+@endsection
 
