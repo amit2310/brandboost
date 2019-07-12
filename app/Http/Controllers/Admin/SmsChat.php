@@ -200,4 +200,50 @@ class SmsChat extends Controller {
     }
 
 
+
+     /**
+     * this function is used to return sms notes 
+     * @return type
+     */
+
+
+  public function listingNotes()
+    {
+      
+        $SubscriberPhone = numberForamt(Input::post("NotesTo"));
+        $notes_from = numberForamt( Input::post("notes_from") );
+          
+         $mSubscriber = new SubscriberModel(); 
+         $oNotes = $mSubscriber->visitornotes($SubscriberPhone); 
+          foreach ($oNotes as $NotesData) {
+              
+               $fileext = end(explode('.', $NotesData->message));
+                $mmsFile = explode('/Media/', $NotesData->message);
+
+                if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
+                    $NotesData->message = "<div class='mrdia-file'><a href='" . $NotesData->message . "' target='_blank' class='previewImage'><img src='" . $NotesData->message . "' /></a></div>";
+                } else if ($fileext == 'doc' || $fileext == 'docx' || $fileext == 'odt' || $fileext == 'csv' || $fileext == 'pdf') {
+                   $NotesData->message = "<div class='media-content'><a href='" . $NotesData->message . "' target='_blank'>Download '" . $fileext . "' File</a></div>";
+                } else if (count($mmsFile) > 1) {
+                   $NotesData->message = "<div class='mrdia-file'><a href='" . $NotesData->message . "' target='_blank' class='previewImage'><img src='" . $NotesData->message . "' /></a></div>";
+                }
+              
+                    ?>
+                    <li class="media reversed">
+                       <div class="media-body">  
+                           <span style="display: none;" class="media-annotation user_icon"><span class="circle_green_status status-mark"></span>
+                            <?php echo showUserAvtar($loginUserData->avatar, $loginUserData->firstname, $loginUserData->lastname, 28, 28, 11); ?>                               </span>
+                           <div class="media-content" style="background-color:#fff9ec!important;"><?php echo $NotesData->message; ?>
+                           </div>
+                               <span style="padding: 0;display: block;font-size: 10px;position: absolute; right: 0;bottom: -16px;" class="text-muted text-size-small">
+                               Added By <?php echo assignto($NotesData->room).' '.date('F d Y', strtotime($NotesData->created)); } ?>  </span>
+                            </div>
+                    </li>
+<div style="height:10px" class="clearfix"></div>
+                <?php
+
+                 } 
+
+
+
 }

@@ -1,7 +1,8 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php //echo $title; ?>
+<?php //echo $title;
+ ?>
 @endsection
 
 @section('contents')
@@ -37,8 +38,7 @@ if (!empty($isLoggedInTeam)) {
 } else {
     $loginUserData->mobile = $aTwilioAc->contact_no;
 }
-$totalSubscriber ="";
-
+$totalSubscriber = "";
 $loginUserData->mobile = numberForamt($loginUserData->mobile);
 $activeOnlysmsUsers = activeOnlysms($loginUserData->mobile); // here we place client twilio number
 $activeChatCount = count((array)$activeOnlysmsUsers);
@@ -181,8 +181,8 @@ foreach ($activeOnlysmsUsers as $key => $value) {
 		
 				<!--++++++++++++ Active chat list +++++++++++++++-->
 					<div id="a_list_sms" class="panel-body p0 br5 mb10 chat_user_list activeChat a_list" style="background-image:none; <?php if (!empty($defaultNumber)) { ?>display:block;<?php
-					} else { ?>display:none;<?php
-					} ?>">
+} else { ?>display:none;<?php
+} ?>">
 					 @include('admin.sms_chat.activechat_list', array('mobile'=>$loginUserData->mobile,'activechatlist' => $activeOnlysmsUsers))
 				</div>
 				<!--++++++++++++ Active chat list +++++++++++++++-->
@@ -226,15 +226,12 @@ $character = array('A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd', 'E' => 'e', '
 foreach ($character as $key => $value) {
     $getCharUserList = \App\Models\Admin\SubscriberModel::getGlobalSubscribersByChar($loginUserData->id, $value);
     foreach ($getCharUserList as $userData) {
-    	$count=0;
+        $count = 0;
         $userDataDetail = getUserDetail($userData->user_id);
-        if(!empty($userDataDetail->avatar))
-        {
-           $avatar =  $userDataDetail->avatar;
-        }
-        else
-        {
-         $avatar =  "";
+        if (!empty($userDataDetail->avatar)) {
+            $avatar = $userDataDetail->avatar;
+        } else {
+            $avatar = "";
         }
         $favUser = \App\Models\Admin\SmsChatModel::getSMSFavouriteBySubsId($userData->user_id);
         $autocmpSearch[] = $userData->firstname . '' . $userData->lastname . '(' . $userData->phone . ')';
@@ -1005,12 +1002,12 @@ $('#AjaxSearchSms').html(data);
 	
 	 //  ######### Live Search ############ //  
 	<?php if ($defaultNumber != "") { ?>
-         //showNoteslisting(<?php echo $DefaultsubscriberId; ?>);
+           showNoteslisting(<?php echo $DefaultsubscriberId; ?>);
 		  showSMSChatData('<?php echo $DefaultsubscriberId; ?>','<?php echo $defaultNumber; ?>');
 		<?php
 } else { ?>
 		showSMSChatData('<?php echo $subscriberId; ?>','<?php echo $defaultUserNumber; ?>');
-	    //showNoteslisting(<?php echo $subscriberId; ?>);
+	    showNoteslisting(<?php echo $subscriberId; ?>);
 		<?php
 } ?>
 </script>

@@ -223,7 +223,9 @@
              <div class="tab-pane" id="Notes_tabs">
             
 					
-					 
+					 <!-- Note BOX -->
+					 @include('admin.sms_chat.notes_listing')
+      			     <!-- Note BOX -->
         
 			
 			 </div>

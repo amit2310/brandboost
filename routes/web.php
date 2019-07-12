@@ -30,3 +30,4 @@ Route::get('admin/modules/emails','Admin\Modules\Emails@index');
 Route::get('admin/smschat','Admin\SmsChat@index');
 Route::get('admin/smschat/getSubsinfo','Admin\SmsChat@getSubsinfo');
 Route::post('admin/smschat/showSmsThreads','Admin\SmsChat@showSmsThreads');
+Route::post('admin/smschat/listingNotes','Admin\SmsChat@listingNotes');

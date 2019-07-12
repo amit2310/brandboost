@@ -1524,13 +1524,21 @@ FROM
         return $response;
     }
 
+
+     /**
+    * This function will return notes
+    * @param type $usrid
+    * @return type
+    */
+
     public function visitornotes($usrid) {
 
-        $result = $this->db->query("SELECT * from tbl_visitor_notes where user='" . $usrid . "'");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+      $oData = DB::table('tbl_visitor_notes')
+      ->where('user', $usrid)
+      ->get();
+
+      return $oData;
+
     }
 
     public function getSubscriberBBCampaigns($subscriberID) {

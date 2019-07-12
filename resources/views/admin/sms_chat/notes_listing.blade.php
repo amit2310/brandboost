@@ -74,7 +74,7 @@
 				
 				}else{
 			            $.ajax({
-							url: "<?php echo base_url('/admin/contacts/add_contact_notes'); ?>",
+							url: "<?php echo base_url('/admin/smschat/add_contact_notes'); ?>",
 							type: "POST",
 							data: {notes: NotesContent, NotesTo: NotesTo,source:source,notes_from:'sms'},
 							dataType: "json",
@@ -161,9 +161,9 @@
 	
 	function showNoteslisting(NotesTo){
 			$.ajax({
-				url: '<?php echo base_url('admin/Contacts/listingNotes'); ?>',
+				url: '<?php echo base_url('admin/smschat/listingNotes'); ?>',
 				type: "POST",
-				data: {'NotesTo' : NotesTo,notes_from:'sms'},
+				data: {'NotesTo' : NotesTo,notes_from:'sms',_token: '{{csrf_token()}}'},
 				dataType: "html",
 				success: function (data) {
 					$('.NotesThreadsBox').html(data);
