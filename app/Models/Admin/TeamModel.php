@@ -131,13 +131,17 @@ class TeamModel extends Model {
         }
     }
 
-    public function getAllteamMembers($userID) {
-        $this->db->where("parent_user_id", $userID);
-        $query = $this->db->get('tbl_users_team');
-        if ($query->num_rows() > 0) {
-            $result = $query->result();
-        }
-        return $result;
+    /**
+    * Get All team member
+    * @param type $clientID
+    * @return type
+    */
+    public static function getAllteamMembers($userID) {
+        
+        $oData = DB::table('tbl_users_team')
+            ->where('parent_user_id', $userID)
+            ->get();
+        return $oData;
     }
 
     public function updateTeamUsers($aData, $teamUserId, $curruserID) {
