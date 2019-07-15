@@ -36,6 +36,7 @@ Route::post('admin/smschat/listingNotes','Admin\SmsChat@listingNotes');
 Route::post('admin/smschat/sendMsg','Admin\SmsChat@sendMsg');
 
 //Profile module
-Route::get('admin/profile','Admin\Profile@index');
+Route::get('admin/profile','Admin\AccountSetting@index');
+
 
 

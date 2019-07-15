@@ -130,6 +130,17 @@ class UsersModel extends Model {
         }
     }
 
+     /**
+     * This method is for get all country
+     * @return object
+     */
+    public static function getAllCountries() {
+
+        $oData = DB::table('tbl_countries')
+                ->get();
+        return $oData;
+    }
+
     public function basicSignup($aData) {
         require_once $_SERVER['DOCUMENT_ROOT'] . '/chargebee-php/lib/ChargeBee.php';
         $cbSite = $this->config->item('cb_site_name');
@@ -328,16 +339,6 @@ class UsersModel extends Model {
     public function user_count_all() {
         $query = $this->db->get("tbl_users");
         return $query->num_rows();
-    }
-
-    public function getAllCountries() {
-
-        $response = array();
-        $result = $this->db->get("tbl_countries");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
     }
 
     function user_fetch_details($limit, $start, $sortBy, $sortType) {
