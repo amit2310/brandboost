@@ -16,7 +16,7 @@ class CreateTblReviewsTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('unique_review_key', 100)->nullable();
-			$table->string('review_type', 45)->nullable()->default('product')->comment('"product", "service", "site"');
+                        $table->string('review_type', 45)->nullable()->default('product')->comment('"product", "service", "site"');
 			$table->string('campaign_id', 45)->nullable()->index('campaign_id');
 			$table->integer('product_id')->nullable();
 			$table->string('review_title')->nullable();
@@ -24,6 +24,7 @@ class CreateTblReviewsTable extends Migration {
 			$table->text('comment_text')->nullable();
 			$table->string('comment_video')->nullable()->index('comment_video_id');
 			$table->text('media_url')->nullable();
+                        $table->text('croped_image_url')->nullable();
 			$table->boolean('ratings');
 			$table->text('pro_review', 65535);
 			$table->text('cons_review', 65535);

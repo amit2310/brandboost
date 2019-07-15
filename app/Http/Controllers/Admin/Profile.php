@@ -65,7 +65,7 @@ class Profile extends Controller
             $emailFooterData = base64_decode($emailFooterData[0]->footer_content);
         }
         
-        $getClientTags = $mTags->getClientTags($userID);
+        $getClientTags = TagsModel::getClientTags($userID);
        
         $getMyLists = $mLists->getLists($userID);
         

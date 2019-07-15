@@ -25,6 +25,7 @@ Route::post('admin/dashboard/getReviewData','Admin\Dashboard@getReviewData');
 //Email Modules
 Route::get('admin/modules/emails/overview','Admin\Modules\Emails@overview');
 Route::get('admin/modules/emails','Admin\Modules\Emails@index');
+Route::get('admin/modules/emails/setupAutomation/{id}','Admin\Modules\Emails@setupAutomation');
 
 //chat module
 Route::get('admin/webchat','Admin\WebChat@index');

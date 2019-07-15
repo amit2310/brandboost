@@ -38,6 +38,21 @@ class TeamModel extends Model {
                 ->first();
         return $aData;
     }
+    
+    /**
+     * 
+     * @param type $tableName
+     * @param type $aData
+     * @return boolean
+     */
+    public static function saveActivityLog($tableName, $aData) {
+        $result = DB::table($tableName)->insert($aData);
+        if ($result) {
+            return true;
+        } else {
+            return true;
+        }
+    }
 
     public function checkIfUserRoleExists($roleName, $userID) {
         $this->db->where("user_id", $userID);
@@ -290,14 +305,7 @@ class TeamModel extends Model {
         return $aData;
     }
 
-    public function saveActivityLog($tableName, $aData) {
-        $bInserted = $this->db->insert($tableName, $aData);
-        if ($bInserted) {
-            return true;
-        } else {
-            return true;
-        }
-    }
+    
 
     public function getUserActivities($type = 'team', $userID) {
         if ($userID > 0) {

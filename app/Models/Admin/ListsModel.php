@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,51 +9,54 @@ use Session;
 
 class ListsModel extends Model {
 
-	/**
+    /**
      * Get Lists
      * @param type $userID
      * @param type $listID
      * @param type $status
      * @return type object
      */
-	public function getLists($userID = '', $listID = '', $status = 'all') {
+    public function getLists($userID = '', $listID = '', $status = 'all') {
 
 
-		$oData = DB::table('tbl_common_lists')
-            ->select('tbl_common_lists.*', 
-            	'tbl_automation_users.list_id as l_list_id', 
-            	'tbl_automation_users.user_id as l_user_id', 
-            	'tbl_subscribers.firstname as l_firstname', 
-            	'tbl_subscribers.lastname as l_lastname', 
-            	'tbl_subscribers.email as l_email', 
-            	'tbl_subscribers.phone as l_phone', 
-            	'tbl_subscribers.created as l_created', 
-            	'tbl_automation_users.status as l_status', 
-            	'tbl_users.email as cEmail', 
-            	'tbl_users.mobile as cMobile',
-            	 DB::raw("CONCAT(tbl_users.firstname,' ',tbl_users.lastname) AS lCreateUsername")
-            )
-            ->when(($listID > 0), function ($query) use ($listID) {
+        $oData = DB::table('tbl_common_lists')
+                ->select('tbl_common_lists.*', 'tbl_automation_users.list_id as l_list_id', 'tbl_automation_users.user_id as l_user_id', 'tbl_subscribers.firstname as l_firstname', 'tbl_subscribers.lastname as l_lastname', 'tbl_subscribers.email as l_email', 'tbl_subscribers.phone as l_phone', 'tbl_subscribers.created as l_created', 'tbl_automation_users.status as l_status', 'tbl_users.email as cEmail', 'tbl_users.mobile as cMobile', DB::raw("CONCAT(tbl_users.firstname,' ',tbl_users.lastname) AS lCreateUsername")
+                )
+                ->when(($listID > 0), function ($query) use ($listID) {
                     return $query->where('tbl_common_lists.id', $listID);
-                })  
-            ->when(($userID > 0), function ($query) use ($userID) {
+                })
+                ->when(($userID > 0), function ($query) use ($userID) {
                     return $query->where('tbl_common_lists.user_id', $userID);
-                }) 
-            ->when(($status != 'all'), function ($query) use ($status) {
+                })
+                ->when(($status != 'all'), function ($query) use ($status) {
                     return $query->where('tbl_common_lists.status', $status);
-                })   
-            ->leftJoin('tbl_automation_users', 'tbl_automation_users.list_id', '=' , 'tbl_common_lists.id')
-            ->leftJoin('tbl_subscribers', 'tbl_automation_users.subscriber_id', '=' , 'tbl_subscribers.id')
-            ->Join('tbl_users', 'tbl_users.id', '=' , 'tbl_common_lists.user_id')
-            ->orderBy('tbl_common_lists.id', 'desc')
-            ->where('tbl_common_lists.delete_status', 0)
-            ->get();
+                })
+                ->leftJoin('tbl_automation_users', 'tbl_automation_users.list_id', '=', 'tbl_common_lists.id')
+                ->leftJoin('tbl_subscribers', 'tbl_automation_users.subscriber_id', '=', 'tbl_subscribers.id')
+                ->join('tbl_users', 'tbl_users.id', '=', 'tbl_common_lists.user_id')
+                ->orderBy('tbl_common_lists.id', 'desc')
+                ->where('tbl_common_lists.delete_status', 0)
+                ->get();
 
         return $oData;
-     
     }
 
-	public function checkIfListExists($listName, $userID, $listID) {
+    /**
+     * Gets the Automation lists
+     * @param type $automationID
+     * @return type
+     */
+    public function getAutomationLists($automationID) {
+        $oData = DB::table('tbl_automations_emails_lists')
+            ->leftJoin('tbl_common_lists', 'tbl_common_lists.id', '=' , 'tbl_automations_emails_lists.list_id')
+            ->select('tbl_automations_emails_lists.*', 'tbl_common_lists.list_name')
+            ->where('tbl_automations_emails_lists.automation_id', $automationID)
+            ->where('tbl_common_lists.delete_status', 0)    
+            ->get();
+        return $oData;
+    }
+
+    public function checkIfListExists($listName, $userID, $listID) {
         $this->db->where("user_id", $userID);
         $this->db->where("list_name", $listName);
         if ($listID != '') {
@@ -67,19 +71,6 @@ class ListsModel extends Model {
         }
     }
 
-
-    public function getAutomationLists($automationID) {
-        $this->db->select("tbl_automations_emails_lists.*, tbl_common_lists.list_name");
-        $this->db->join("tbl_common_lists", "tbl_common_lists.id=tbl_automations_emails_lists.list_id", "LEFT");
-        $this->db->where("tbl_automations_emails_lists.automation_id", $automationID);
-        $this->db->where("tbl_common_lists.delete_status", 0);
-        $result = $this->db->get("tbl_automations_emails_lists");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-    
     public function getAutomationExcludedLists($automationID) {
         $this->db->select("tbl_automations_emails_lists_excluded.*, tbl_common_lists.list_name");
         $this->db->join("tbl_common_lists", "tbl_common_lists.id=tbl_automations_emails_lists_excluded.list_id", "LEFT");
@@ -140,7 +131,7 @@ class ListsModel extends Model {
             return false;
         }
     }
-    
+
     public function updateListStatus($id, $userID = '', $status) {
         $this->db->where("id", $id);
         if ($userID > 0) {
@@ -163,7 +154,7 @@ class ListsModel extends Model {
             $bAlreadyExists = $this->checkIfExistingSubscriberInList($listID, $subscriberID);
             if ($bAlreadyExists == false) {
                 $bAddNewEntry = true;
-            }else{
+            } else {
                 return true;
             }
         } else {
@@ -176,7 +167,7 @@ class ListsModel extends Model {
             if ($result)
                 return $inset_id;
         }
-       return false;
+        return false;
     }
 
     public function checkIfExistingSubscriberInList($listID, $subscriberID) {
@@ -340,7 +331,7 @@ class ListsModel extends Model {
         if ($subscriberID > 0) {
             $this->db->where("tbl_automation_users.subscriber_id", $subscriberID);
         }
-       
+
         $result = $this->db->get("tbl_automation_users");
         //echo $this->db->last_query();
         if ($result->num_rows() > 0) {

@@ -29,12 +29,12 @@
             </div>
         </div>
     </div>
-    <?php $this->load->view("admin/workflow2/tree", array("oEvents" => $oEvents)); ?>
+    @include('admin/workflow2/tree', ['oEvents' => $oEvents])
     
 
 </div>
 
-<?php $this->load->view("admin/modals/workflow2/workflow-popup", array('oDefaultTemplates' => $oDefaultTemplates)); ?>
+@include('admin/modals/workflow2/workflow-popup', ['oDefaultTemplates' => $oDefaultTemplates])
 
 <script>
 

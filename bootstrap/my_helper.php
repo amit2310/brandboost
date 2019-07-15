@@ -3411,6 +3411,46 @@ if (!function_exists('getNotificationLang')) {
         $getNotiLang = base64_decode($getNotiLang);
         return $getNotiLang;
     }
+    
+    
+    /**
+     * Used to save User activity
+     */
+    if (!function_exists('logUserActivity')) {
 
+        function logUserActivity($aData) {
+            $tableName = 'tbl_user_activities';
+            $userID = Session::get("team_user_id");
+            if ($userID > 0) {
+                $aData['user_id'] = $userID;
+                $tableName = 'tbl_team_activities';
+            }
+            $bResult = \App\Models\Admin\TeamModel::saveActivityLog($tableName, $aData);
+        }
+
+    }
+
+    
+    /**
+     *Get's app pages permission 
+     */
+    if (!function_exists('fetchPermissions')) {
+
+        function fetchPermissions($moduleName) {
+
+            $canRead = $canWrite = true;
+            $aPermissions = Session::get('permission');
+            if (!empty($aPermissions)) {
+                foreach ($aPermissions as $aPermission) {
+                    if ($aPermission->title == $moduleName) {
+                        $canRead = ($aPermission->permission == 1) ? true : false;
+                        $canWrite = ($aPermission->permission == 2) ? true : false;
+                    }
+                }
+            }
+            return array($canRead, $canWrite);
+        }
+
+    }
 }
 ?>
