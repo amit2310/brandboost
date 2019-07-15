@@ -213,24 +213,24 @@ class SmsChat extends Controller {
 
 
     public function sendMsg() {
-        $response = array();
         $isLoggedInTeam = Session::get("team_user_id");
+
         $msgSendUserId = Input::post("userId");
         $phoneNo = Input::post("phoneNo");
         $messageContent = Input::post("messageContent");
         $moduleName = Input::post("moduleName");
-        $smstoken = Input::post("smstoken");
         $media_type = Input::get("media_type");
         $videoUrl = Input::get("videoUrl");
         $oUser = getLoggedUser();
         $aTwilioAc = getTwilioAccountCustom($oUser->id);
         $sid = $aTwilioAc->account_sid;
         $token = $aTwilioAc->account_token;
-        $hasweb_access = getMemberchatpermission($isLoggedInTeam);
+        
         $media_url_show = '';
         
         if ($isLoggedInTeam) {
             $hasweb_access = getMemberchatpermission($isLoggedInTeam);
+
             if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
                 if ($hasweb_access->bb_number != "") {
                     $from = numberForamt($hasweb_access->bb_number);
@@ -257,24 +257,40 @@ class SmsChat extends Controller {
             $aSmsData = array('sid' => $sid, 'token' => $token, 'to' => $phoneNo, 'from' => $from, 'msg' => $messageContent);
         }
         $response = sendClinetSMS($aSmsData);
-        $aUsage = array('client_id' => $loginUserData->id, 'usage_type' => 'sms', 'direction' => 'outbound', 'content' => $messageContent, 'spend_to' => $phoneNo, 'spend_from' => $from, 'module_name' => 'sms chat', 'module_unit_id' => '');
+        if($response)
+        {
+        $aUsage = array('client_id' => $oUser->id, 'usage_type' => 'sms', 'direction' => 'outbound', 'content' => $messageContent, 'spend_to' => $phoneNo, 'spend_from' => $from, 'module_name' => 'sms chat', 'module_unit_id' => '');
         $charCount = strlen($messageContent);
         $totatMessageCount = ceil($charCount / 160);
         if ($totatMessageCount > 1) {
             for ($i = 0;$i < $totatMessageCount;$i++) {
                 $aUsage['segment'] = $i + 1;
-                updateCreditUsage($aUsage);
+                //updateCreditUsage($aUsage);
             }
         } else {
             $aUsage['segment'] = 1;
-            updateCreditUsage($aUsage);
+            //updateCreditUsage($aUsage);
         }
         $phoneNo = numberForamt($phoneNo);
         $from = numberForamt($from);
-        $sData = array('to' => $phoneNo, 'from' => $from, 'twilio_token' => $token, 'token' => $smstoken, 'msg' => $messageContent, 'media_type' => $media_type, 'module_name' => $moduleName, 'created' => date("Y-m-d H:i:s"), 'team_id' => $isLoggedInTeam, 'media_url_show' => $media_url_show);
-        $smsChat = new SmsChatModel();
+        $aToken =$phoneNo + $from;
+        if ($phoneNo > $from) {
+        $sToken = $phoneNo - $from;
+        } else {
+        $sToken = $from - $phoneNo;
+        }
+        $tokenResponse = $aToken . 'n' . $sToken;
+
+        $sData = array('to' => $phoneNo, 'from' => $from, 'twilio_token' => $token, 'token' => $tokenResponse, 'msg' => $messageContent, 'media_type' => $media_type, 'module_name' => $moduleName, 'created' => date("Y-m-d H:i:s"), 'team_id' => $isLoggedInTeam, 'media_url_show' => $media_url_show);
+         $smsChat = new SmsChatModel();
          $smsChat->addSmsChatData($sData);
-        if ($response) return true;
-        else return false;
+     }
+     else
+     {
+
+        echo 'ERROR!';
+     }
+
+      
     }
 }

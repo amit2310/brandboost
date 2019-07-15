@@ -142,12 +142,9 @@ class SmsChatModel extends Model {
      */
 
     public function addSmsChatData($data) {
+      $oData = DB::table('tbl_chat_sms_thread')->insert($data);
+      return $oData;
 
-        $result = $this->db->insert('tbl_chat_sms_thread', $data);
-        if ($result)
-            return true;
-        else
-            return false;
     }
 
 
