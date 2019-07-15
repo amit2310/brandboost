@@ -618,30 +618,43 @@ FROM
         return $response;
     }
 
-    public function searchSmsByinputDetails($Number, $searchval) {
+
+    
+   /**
+    * this function is used to filter the sms list based on the input provided in sms chat
+    * @param type $Number
+     * @param type $inputval
+     * @return type
+     */
+
+    public static function searchSmsByinputDetails($Number, $searchval) {
 
         if ($searchval != "") {
-            $result = $this->db->query("SELECT 
+
+            $oData = DB::select(DB::raw("SELECT 
       tcm_subs1.*
 FROM 
       tbl_chat_sms_thread tc1 INNER JOIN 
       (SELECT * FROM tbl_chat_sms_thread group by token, created ORDER BY created DESC) as tcm_subs1 ON tc1.token = tcm_subs1.token 
       WHERE (tc1.to = '" . $Number . "' or tc1.from ='" . $Number . "') AND tc1.msg  LIKE '%" . $searchval . "%'
-      GROUP BY tc1.token ORDER BY tcm_subs1.created DESC ");
+      GROUP BY tc1.token ORDER BY tcm_subs1.created DESC "));
+
+
         } else {
-            $result = $this->db->query("SELECT 
+
+            $oData = DB::select(DB::raw("SELECT 
       tcm_subs1.*
 FROM 
       tbl_chat_sms_thread tc1 INNER JOIN 
       (SELECT * FROM tbl_chat_sms_thread group by token, created ORDER BY created DESC) as tcm_subs1 ON tc1.token = tcm_subs1.token 
       WHERE (tc1.to = '" . $Number . "' or tc1.from ='" . $Number . "') AND tc1.msg  LIKE '%" . $searchval . "%'
-      GROUP BY tc1.token ORDER BY tcm_subs1.created DESC ");
+      GROUP BY tc1.token ORDER BY tcm_subs1.created DESC "));
+
+
         }
 
-        $response = $result->result();
+        return $oData;
 
-        // echo $this->db->last_query();
-        return $response;
     }
 
  /**

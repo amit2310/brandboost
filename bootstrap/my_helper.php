@@ -2617,14 +2617,19 @@ if (!function_exists('searchByinput')) {
 
 }
 
+      /**
+    * this function is used to filter the sms list based on the input provided in sms chat
+    * @param type $Number
+     * @param type $inputval
+     * @return type
+     */
+
 if (!function_exists('searchSmsByinput')) {
 
     function searchSmsByinput($Number, $inputval) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $Res_subscribersData = $CI->mSubscriber->searchSmsByinputDetails($Number, $inputval);
-        return $Res_subscribersData;
+      
+        $oData = \App\Models\Admin\SubscriberModel::searchSmsByinputDetails($Number, $inputval);
+        return $oData;
     }
 
 }

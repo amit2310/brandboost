@@ -454,10 +454,15 @@ class dropzone extends Controller
     }
 
     
+	/**
+	* This function used to upload images to the amazon s3 server 
+	* @param type $clientId
+	* @param type $clientId
+	* @return type
+	*/
 
     public function upload_s3_attachment($clientId, $folderName) {
-  echo 'test';
-  die;
+
         $userDetail = getUserDetailsByUserID($clientId);
         if($userDetail->s3_allow_size > $userDetail->s3_used_size) {
             
@@ -564,6 +569,7 @@ class dropzone extends Controller
     }
 
 
+    
      public function upload_s3_attachment_review($clientId, $folderName) 
      {
 
