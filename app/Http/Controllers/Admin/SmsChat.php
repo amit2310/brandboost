@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Session;
 class SmsChat extends Controller {
 
+
     /**
      * smschat module index function
      * @return type
@@ -205,7 +206,6 @@ class SmsChat extends Controller {
     }
 
 
-
     /**
      * this function is used send message through twilio
      * @return type
@@ -214,7 +214,6 @@ class SmsChat extends Controller {
 
     public function sendMsg() {
         $isLoggedInTeam = Session::get("team_user_id");
-
         $msgSendUserId = Input::post("userId");
         $phoneNo = Input::post("phoneNo");
         $messageContent = Input::post("messageContent");
@@ -225,12 +224,9 @@ class SmsChat extends Controller {
         $aTwilioAc = getTwilioAccountCustom($oUser->id);
         $sid = $aTwilioAc->account_sid;
         $token = $aTwilioAc->account_token;
-        
         $media_url_show = '';
-        
         if ($isLoggedInTeam) {
             $hasweb_access = getMemberchatpermission($isLoggedInTeam);
-
             if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
                 if ($hasweb_access->bb_number != "") {
                     $from = numberForamt($hasweb_access->bb_number);
@@ -243,7 +239,6 @@ class SmsChat extends Controller {
         } else {
             $from = numberForamt(getClientTwilioAccount($oUser->id));
         }
-
         if (!empty($videoUrl)) {
             $randNum = rand(8, 14);
             $rand_string = random_strings($randNum);
@@ -257,40 +252,199 @@ class SmsChat extends Controller {
             $aSmsData = array('sid' => $sid, 'token' => $token, 'to' => $phoneNo, 'from' => $from, 'msg' => $messageContent);
         }
         $response = sendClinetSMS($aSmsData);
-        if($response)
-        {
-        $aUsage = array('client_id' => $oUser->id, 'usage_type' => 'sms', 'direction' => 'outbound', 'content' => $messageContent, 'spend_to' => $phoneNo, 'spend_from' => $from, 'module_name' => 'sms chat', 'module_unit_id' => '');
-        $charCount = strlen($messageContent);
-        $totatMessageCount = ceil($charCount / 160);
-        if ($totatMessageCount > 1) {
-            for ($i = 0;$i < $totatMessageCount;$i++) {
-                $aUsage['segment'] = $i + 1;
+        if ($response) {
+            $aUsage = array('client_id' => $oUser->id, 'usage_type' => 'sms', 'direction' => 'outbound', 'content' => $messageContent, 'spend_to' => $phoneNo, 'spend_from' => $from, 'module_name' => 'sms chat', 'module_unit_id' => '');
+            $charCount = strlen($messageContent);
+            $totatMessageCount = ceil($charCount / 160);
+            if ($totatMessageCount > 1) {
+                for ($i = 0;$i < $totatMessageCount;$i++) {
+                    $aUsage['segment'] = $i + 1;
+                    //updateCreditUsage($aUsage);
+                    
+                }
+            } else {
+                $aUsage['segment'] = 1;
                 //updateCreditUsage($aUsage);
+                
+            }
+            $phoneNo = numberForamt($phoneNo);
+            $from = numberForamt($from);
+            $aToken = $phoneNo + $from;
+            if ($phoneNo > $from) {
+                $sToken = $phoneNo - $from;
+            } else {
+                $sToken = $from - $phoneNo;
+            }
+            $tokenResponse = $aToken . 'n' . $sToken;
+            $sData = array('to' => $phoneNo, 'from' => $from, 'twilio_token' => $token, 'token' => $tokenResponse, 'msg' => $messageContent, 'media_type' => $media_type, 'module_name' => $moduleName, 'created' => date("Y-m-d H:i:s"), 'team_id' => $isLoggedInTeam, 'media_url_show' => $media_url_show);
+            $smsChat = new SmsChatModel();
+            $smsChat->addSmsChatData($sData);
+        } else {
+            echo 'ERROR!';
+        }
+    }
+
+
+    /**
+     * this function is used to return subscriber list based on the input provided 
+     * @return type
+     */
+
+
+    public function livesearch() {
+        $oUser = getLoggedUser($redirect = false);
+        if (empty($oUser)) {
+            return;
+            exit();
+        }
+         $smsChat = new SmsChatModel();
+        $liveThreadsData = $smsChat->getlivesearchData($oUser->id, Input::get("q"));
+        if (count((array)$liveThreadsData) > 0) {
+            echo '<ul>';
+            foreach ($liveThreadsData as $key => $value) {
+?>
+                <li onclick="showSMSChatData('<?php echo $value->id; ?>', '<?php echo $value->phone; ?>', '<?php echo $value->firstname . ' ' . $value->lastname; ?>')" style="cursor:pointer"><?php echo $value->firstname . ' ' . $value->lastname . '&nbsp (' . $value->phone . ')'; ?></li>
+                <?php
+            }
+            echo '</ul>';
+        } else {
+            echo '400';
+        }
+    }
+
+
+    /**
+    * this function is used to filter the sms list based on the input provided in sms chat
+     * @return type
+     */
+
+    public function getSearchSmsListByinput() {
+    
+        $count = 0;
+        $isLoggedInTeam = Session::get("team_user_id");
+        $searchvalue = Input::post("searchVal");
+        $oUser = getLoggedUser();
+        $activechatlist = searchSmsByinput($oUser->mobile, $searchvalue);
+
+        if ($isLoggedInTeam) {
+            $hasweb_access = getMemberchatpermission($isLoggedInTeam);
+            if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
+                if ($hasweb_access->bb_number != "") {
+                    $oUserNumber = numberForamt($hasweb_access->bb_number);
+                } else {
+                    $oUserNumber = numberForamt(getClientTwilioAccount($oUser->id));
+                }
+            } else {
+                $oUserNumber = numberForamt(getClientTwilioAccount($oUser->id));
             }
         } else {
-            $aUsage['segment'] = 1;
-            //updateCreditUsage($aUsage);
+            $oUserNumber = numberForamt(getClientTwilioAccount($oUser->id));
         }
-        $phoneNo = numberForamt($phoneNo);
-        $from = numberForamt($from);
-        $aToken =$phoneNo + $from;
-        if ($phoneNo > $from) {
-        $sToken = $phoneNo - $from;
-        } else {
-        $sToken = $from - $phoneNo;
+
+
+       
+
+        foreach ($activechatlist as $key => $value) {
+            $showRed = 0;
+            $phoneNumber = "";
+            if ($value->to != '' && $value->from != '') {
+                     $value->to = numberForamt($value->to);
+                     $value->from =  numberForamt($value->from);
+                if (trim($value->to) == trim($oUserNumber)) {
+                    $usersdata = getUserbyPhone($value->from);
+                    $phoneNumber = $value->from;
+                    $usersdata = $usersdata[0];
+                    if ($value->read_status == 0) {
+                        $showRed = 1;
+                    }
+                }
+                if ($value->from == $oUserNumber) {
+                    $usersdata = getUserbyPhone($value->to);
+                    $phoneNumber = $value->to;
+                    $usersdata = $usersdata[0];
+                }
+
+                $userDataDetail = getUserDetail($usersdata->user_id);
+                if(!empty($userDataDetail->avatar))
+                {
+                    $avatar = $userDataDetail->avatar;
+                }
+                else
+                {
+                   $avatar=""; 
+                }
+
+                //$favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id, $usersdata->id);
+                   $favUser='';
+                if (strpos($value->msg, '/Media/') !== false) {
+                    $userMessage = "File Attachment";
+                } else {
+                    $userMessage = setStringLimit($value->msg, 50);
+                }
+                ?>
+                <div id="active_chat_box" class="activityShow <?php echo $count; ?> media chatbox_new bkg_white <?php
+                if ($count == 1) {
+                    echo 'mb10';
+                }
+                ?>" style="<?php
+                     if ($count > 7) {
+                         echo "display:block";
+                     } if ($count == 1) {
+                         echo 'box-shadow:0 2px 4px 0 rgba(1, 21, 64, 0.06)!important; border-radius:0 0 5px 5px';
+                     } if ($count == 2) {
+                         echo 'border-radius:5px 5px 5px 5px';
+                     }
+                     ?>"> 
+                    <a href="javascript:void(0);" class="media-link bbot <?php
+                    if ($count != 1) {
+                        echo 'bbot';
+                    }
+                    ?> getChatDetails <?php echo $count == 0 ? 'activechat' : ''; ?>" subscriberId="<?php echo $usersdata->id; ?>" rewId="<?php echo $value->from; ?>" phone_no="<?php echo $usersdata->phone; ?>">
+
+                        <div class="media-left">
+                            <?php if ($usersdata->id == '') { ?>
+                                <img src="/assets/images/default_avt.jpeg" class="img-circle" alt="" width="28" height="28">
+                                <?php
+                            } else {
+
+                                if ($usersdata->firstname == 'NA') {
+                                    $usersdata->firstname = "";
+                                }
+                                if ($usersdata->lastname == 'NA') {
+                                    $usersdata->lastname = "";
+                                }
+                                ?>
+                                <?php echo showUserAvtar($avatar, $usersdata->firstname, $usersdata->lastname, 28, 28, 12); ?>
+                            <?php } ?>
+                            <span class="favouriteSMSUser" subscriberId="<?php echo $usersdata->id; ?>"><i class="fa star_icon <?php echo $favUser > 0 ? 'fa-star yellow' : 'fa-star-o'; ?>"></i></span>
+                        </div>
+
+                        <div class="media-body"> 
+                            <span class="fsize12 txt_dark"><?php echo mobileNoFormat($phoneNumber); ?></span> 
+                            <span class="slider-phone contacts txt_dark" style="margin:0px;color: #6a7995!important; font-weight:bold; font-size:12px!important"><?php echo $userMessage; ?></span> 
+                            <span class="slider-phone contacts text-size-small txt_blue" style="margin:0px ; display:none"><?php echo $usersdata->phone; ?></span>
+
+                        </div>
+                        <div class="media-right" style="width: 100px"><span class="date_time txt_grey fsize11"><time class="autoTimeUpdate autoTime_<?php echo $phoneNumber; ?>"  datetime="<?php echo usaDate($value->created); ?>" title="<?php echo usaDate($value->created); ?>"><?php //echo chatTimeAgo($chatMessageRes->created);     ?></time></span>&nbsp
+                            <?php if ($showRed) { ?>
+                                <i id="gr_<?php echo $value->token; ?>" class="fa fa-circle txt_red fsize9"></i>
+                            <?php } ?>
+
+                        </div>
+
+                    </a> 
+                </div>
+                <?php
+                $count++;
+            }
         }
-        $tokenResponse = $aToken . 'n' . $sToken;
-
-        $sData = array('to' => $phoneNo, 'from' => $from, 'twilio_token' => $token, 'token' => $tokenResponse, 'msg' => $messageContent, 'media_type' => $media_type, 'module_name' => $moduleName, 'created' => date("Y-m-d H:i:s"), 'team_id' => $isLoggedInTeam, 'media_url_show' => $media_url_show);
-         $smsChat = new SmsChatModel();
-         $smsChat->addSmsChatData($sData);
-     }
-     else
-     {
-
-        echo 'ERROR!';
-     }
-
-      
+        ?>
+        <script>
+            $(document).ready(function () {
+                $(".autoTimeUpdate").timeago();
+            });
+        </script>
+        <?php
     }
+
 }

@@ -34,7 +34,8 @@ Route::get('admin/smschat/getSubsinfo','Admin\SmsChat@getSubsinfo');
 Route::post('admin/smschat/showSmsThreads','Admin\SmsChat@showSmsThreads');
 Route::post('admin/smschat/listingNotes','Admin\SmsChat@listingNotes');
 Route::post('admin/smschat/sendMsg','Admin\SmsChat@sendMsg');
-Route::get('dropzone/upload_s3_attachment','dropzone@upload_s3_attachment');
+Route::get('admin/smschat/livesearch','Admin\SmsChat@livesearch');
+Route::post('admin/smschat/getSearchSmsListByinput','Admin\SmsChat@getSearchSmsListByinput');
 
 //Profile module
 Route::get('admin/profile','Admin\AccountSetting@index');
