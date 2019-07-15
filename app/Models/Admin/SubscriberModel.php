@@ -667,13 +667,19 @@ FROM
         return $response;
     }
 
-    public function getincIdByuserIdval($userID) {
+    /**
+     * Get subscriber by user id
+     * @param type $userID
+     * @return type object
+     */
+    public static function getincIdByuserIdval($userID) {
 
-        $result = $this->db->query("select id from tbl_subscribers where  `user_id` = '" . $userID . "'");
-        $response = $result->result();
+        $oData = DB::table('tbl_subscribers')
+                ->select('id')
+                ->where('user_id', $userID)
+                ->get();
 
-        //echo $this->db->last_query();die;
-        return $response;
+        return $oData;
     }
 
       /**

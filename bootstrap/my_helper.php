@@ -2632,15 +2632,16 @@ if (!function_exists('searchSmsByinput')) {
 
 
 
-
+/**
+ * Get subscriber by user id
+ * @param type $userID
+ * @return type object
+ */
 if (!function_exists('getincIdByuserId')) {
 
     function getincIdByuserId($userID) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->getincIdByuserIdval($userID);
-        return $subscribersData;
+        $oData = \App\Models\Admin\SubscriberModel::getincIdByuserIdval($userID);
+        return $oData;
     }
 
 }
