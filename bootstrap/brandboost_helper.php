@@ -113,6 +113,22 @@ if (!function_exists('getMediaCount')) {
 
 }
 
+/**
+ * Get all Country
+ */
+if (!function_exists('getAllCountries')) {
+
+    function getAllCountries() {
+
+        $oWidgets = App\Models\Admin\UsersModel::getAllCountries();
+
+        if(!empty($oWidgets)) {
+            return $oWidgets;
+        }
+    }
+
+}
+
 
 if (!function_exists('getBBReportStats')) {
 
@@ -827,18 +843,6 @@ if (!function_exists('getUserDetailByEmailId')) {
 
 }
 
-if (!function_exists('getAllCountries')) {
-
-    function getAllCountries() {
-
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Users_model", "rUsers");
-        $aData = $CI->rUsers->getAllCountries();
-        return $aData;
-    }
-
-}
 
 if (!function_exists('showEmailSmsCount')) {
 
