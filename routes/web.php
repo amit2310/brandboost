@@ -35,3 +35,7 @@ Route::post('admin/smschat/showSmsThreads','Admin\SmsChat@showSmsThreads');
 Route::post('admin/smschat/listingNotes','Admin\SmsChat@listingNotes');
 Route::post('admin/smschat/sendMsg','Admin\SmsChat@sendMsg');
 
+//Profile module
+Route::get('admin/profile','Admin\Profile@index');
+
+
