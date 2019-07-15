@@ -584,11 +584,16 @@ $(document).ready(function() {
 					url: '<?php echo base_url('admin/smschat/sendMsg'); ?>',
 					type: "POST",
 					data: {'phoneNo' : userPhoneNo, 'messageContent' : messageContent, 'smstoken': newToken, 'moduleName' : 'chat', 'media_type': '', 'videoUrl': '',_token: '{{csrf_token()}}'},
-					dataType: "html",
 					success: function (data) {
-						
+						if(data == 'ERROR!')
+						{
+						  alert('Number is not valid');
+					}
+					else
+					{
 						var msgHeight = document.getElementById("smsSearcharea").scrollHeight;
 						$( '#smsSearcharea' ).scrollTop(msgHeight);
+					}
 					
 						},error: function(){
 					}
