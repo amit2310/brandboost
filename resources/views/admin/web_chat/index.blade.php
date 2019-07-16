@@ -154,7 +154,7 @@ else {
 							
 								
 								<input type="hidden" name="afterTrigger" id="afterTrigger" value="">
-								<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+								<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
 							</div>
 
 

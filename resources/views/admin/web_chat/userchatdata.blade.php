@@ -82,13 +82,13 @@ $teamMembers = getAllteam($aUInfo->id);
 <div style="width: 250px;float: left;margin: 5px 20px 0 0;display:none" class="chat_search_icon addtionalSearchDiv">
 	<input style="width: calc(100% - 22px);"
 	id="livesearchVal" onkeyup="showResult(this.value)" type="text" name="livesearchVal" value="" placeholder="Search">
-	<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+	<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
 	<div id="livesearch"></div>
 </div>
 <!--New Search-->
 			
 			
-			<h6 class="panel-title hIdelater"><a class="heading-elements-toggle"><i class="icon-more"></i></a> &nbsp; &nbsp;  <a style="cursor:pointer; float: left"><img src="/new_pages/assets/images/phone_green.png" class="" alt="" style="margin-top: 5px;" width="" height="">&nbspWEB</a> &nbsp;  <b style="font-weight:300!important; display: none; color: #6a7995 !important; font-size: 12px; margin-bottom: 0px" class="bigwebassign"></b>  </h6>
+			<h6 class="panel-title hIdelater"><a class="heading-elements-toggle"><i class="icon-more"></i></a> &nbsp; &nbsp;  <a style="cursor:pointer; float: left"><img src="/assets/images/phone_green.png" class="" alt="" style="margin-top: 5px;" width="" height="">&nbspWEB</a> &nbsp;  <b style="font-weight:300!important; display: none; color: #6a7995 !important; font-size: 12px; margin-bottom: 0px" class="bigwebassign"></b>  </h6>
 			
 			<div class="heading-elements" class="hIdelater">
 				
