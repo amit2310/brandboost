@@ -26,6 +26,9 @@ Route::post('admin/dashboard/getReviewData','Admin\Dashboard@getReviewData');
 Route::get('admin/modules/emails/overview','Admin\Modules\Emails@overview');
 Route::get('admin/modules/emails','Admin\Modules\Emails@index');
 
+//Onsite and Offsite Modules
+Route::get('admin/brandboost/onsite_overview','Admin\Brandboost@onsiteOverview');
+
 //chat module
 Route::get('admin/webchat','Admin\WebChat@index');
 

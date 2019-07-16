@@ -102,6 +102,125 @@ class BrandboostModel extends Model {
         return $oData;
         
     }
+	
+	/**
+     * get send email tracking data
+     * @param type $userId
+     * @param type $type
+     * @return type
+     */
+	public function getBrandboostEmailSend($userId, $type = '') {
+		
+		$oData = DB::table('tbl_track_sendgrid')
+			->when(!empty($userId), function ($query) use ($userId) {
+				return $query->where('tbl_brandboost.user_id', $userId);
+			})
+			->when(!empty($type), function ($query) use ($type) {
+				return $query->where('tbl_brandboost.review_type', $type);
+			}) 
+			->where('tbl_brandboost.delete_status', 0)
+			->where('tbl_track_sendgrid.event_name', 'delivered')    
+			->orderBy('tbl_brandboost.id', 'desc')
+			->join('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_track_sendgrid.brandboost_id')
+			->get();
+        return $oData;
+    }
+	
+	/**
+     * get send sms tracking data
+     * @param type $userId
+     * @param type $type
+     * @return type
+     */
+	public function getBrandboostSmsSend($userId, $type = '') {
+		$oData = DB::table('tbl_track_twillio')
+			->when(!empty($userId), function ($query) use ($userId) {
+				return $query->where('tbl_brandboost.user_id', $userId);
+			})
+			->when(!empty($type), function ($query) use ($type) {
+				return $query->where('tbl_brandboost.review_type', $type);
+			}) 
+			->where('tbl_brandboost.delete_status', 0)
+			->where('tbl_track_twillio.event_name', 'delivered')    
+			->orderBy('tbl_brandboost.id', 'desc')
+			->join('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_track_twillio.brandboost_id')
+			->get();
+        return $oData;
+    }
+	
+	/**
+     * get send email tracking data by month
+     * @param type $userId
+     * @param type $type
+     * @return type
+     */
+	public function getBrandboostEmailSendMonth($userId, $type = '') {
+		$oData = DB::table('tbl_track_sendgrid')
+			->when(!empty($userId), function ($query) use ($userId) {
+				return $query->where('tbl_brandboost.user_id', $userId);
+			})
+			->when(!empty($type), function ($query) use ($type) {
+				return $query->where('tbl_brandboost.review_type', $type);
+			}) 
+			->where('tbl_brandboost.delete_status', 0)
+			->where('tbl_track_sendgrid.event_name', 'delivered')    
+			->orderBy('tbl_brandboost.id', 'desc')
+			->join('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_track_sendgrid.brandboost_id')
+			->get();
+        return $oData;
+    }
+	
+	/**
+     * get review request data
+     * @param type $brandboostId
+     * @param type $type
+     * @return type
+     */
+	
+	public static function getReviewRequest($brandboostId = '', $type = '') {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $user_role = $aUser->user_role;
+		
+		$oData = DB::table('tbl_brandboost_events')
+                ->leftJoin('tbl_campaigns', 'tbl_campaigns.event_id', '=', 'tbl_brandboost_events.id')
+                ->leftJoin('tbl_tracking_log_email_sms', 'tbl_tracking_log_email_sms.campaign_id', '=', 'tbl_campaigns.id')
+                ->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.id', '=', 'tbl_tracking_log_email_sms.subscriber_id')
+                ->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=', 'tbl_brandboost_events.brandboost_id')
+                ->select('tbl_brandboost_users.*', 'tbl_brandboost_users.id as subscriberid', 'tbl_brandboost_users.status as subscriberstatus', 'tbl_brandboost.review_type', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img', 'tbl_brandboost_events.id as beventid', 'tbl_tracking_log_email_sms.id as trackinglogid', 'tbl_tracking_log_email_sms.subscriber_id as tracksubscriberid', 'tbl_tracking_log_email_sms.type as tracksubscribertype', 'tbl_tracking_log_email_sms.created as requestdate', 'tbl_campaigns.*')
+                ->when(($brandboostId > 0), function ($query) use ($brandboostId) {
+                    return $query->where('tbl_brandboost_events.brandboost_id', $brandboostId);
+                })
+                ->when(($user_role != 1), function ($query) use ($userID) {
+                    return $query->where('tbl_brandboost.user_id', $userID);
+                })
+                ->when((!empty($type)), function ($query) use ($type) {
+                    return $query->where('tbl_tracking_log_email_sms.type', $type);
+                }, function ($query){
+                    return $query->where('tbl_tracking_log_email_sms.type', 'email')
+					->orWhere('tbl_tracking_log_email_sms.type', 'sms');
+                })
+                ->get();
+
+        return $oData;
+    }
+	
+	/**
+     * get review request response
+     * @param type $brandboostID
+     * @return type
+     */
+	public static function getReviewRequestResponse($brandboostID) {
+		$oData = DB::table('tbl_reviews')
+			->select('tbl_brandboost_users.*', 'tbl_reviews.*', 'tbl_reviews.created as reviewdate')
+			->where('tbl_reviews.campaign_id', $brandboostID)
+			->where('tbl_brandboost_users.brandboost_id', $brandboostID)    
+			->orderBy('tbl_reviews.id', 'desc')
+			->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.user_id', '=' , 'tbl_reviews.user_id')
+			->get();
+        return $oData;
+    }
+	
 
     public function getWidgetInfo($id, $hash = false) {
         if (!empty($id)) {
@@ -1598,54 +1717,6 @@ class BrandboostModel extends Model {
           return $response; */
     }
 
-    public function getReviewRequest($brandboostId = '', $type = '') {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $user_role = $aUser->user_role;
-
-        $response = array();
-        $this->db->select('tbl_brandboost_users.*, tbl_brandboost_users.id as subscriberid, tbl_brandboost_users.status as subscriberstatus, tbl_brandboost.review_type, tbl_brandboost.brand_title, tbl_brandboost.brand_desc, tbl_brandboost.brand_img,tbl_brandboost_events.id as beventid,tbl_tracking_log_email_sms.id as trackinglogid , tbl_tracking_log_email_sms.subscriber_id as tracksubscriberid, tbl_tracking_log_email_sms.type as tracksubscribertype, tbl_tracking_log_email_sms.created as requestdate, tbl_campaigns.*');
-        if ($brandboostId > 0) {
-            $this->db->where('tbl_brandboost_events.brandboost_id', $brandboostId);
-        }
-
-        if ($user_role != 1) {
-            $this->db->where("tbl_brandboost.user_id", $userID);
-        }
-        if (!empty($type)) {
-            $this->db->where('tbl_tracking_log_email_sms.type', $type);
-        } else {
-            $this->db->where('(tbl_tracking_log_email_sms.type = "email" or tbl_tracking_log_email_sms.type = "sms")');
-        }
-        $this->db->from('tbl_brandboost_events');
-        $this->db->join("tbl_campaigns", "tbl_campaigns.event_id = tbl_brandboost_events.id", "LEFT");
-        $this->db->join("tbl_tracking_log_email_sms", "tbl_tracking_log_email_sms.campaign_id = tbl_campaigns.id", "LEFT");
-        $this->db->join("tbl_brandboost_users", "tbl_tracking_log_email_sms.subscriber_id = tbl_brandboost_users.id", "LEFT");
-        $this->db->join("tbl_brandboost", "tbl_brandboost_events.brandboost_id = tbl_brandboost.id", "LEFT");
-        $result = $this->db->get();
-        //echo $this->db->last_query();
-        //die;
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getReviewRequestResponse($brandboostID) {
-        $aData = array();
-        $this->db->select("tbl_brandboost_users.*, tbl_reviews.*, tbl_reviews.created as reviewdate");
-        $this->db->join("tbl_brandboost_users", "tbl_reviews.user_id = tbl_brandboost_users.user_id", "LEFT");
-        $this->db->where("tbl_reviews.campaign_id", $brandboostID);
-        $this->db->where("tbl_brandboost_users.brandboost_id", $brandboostID);
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $rResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
-    }
 
     public function getFeedbackCount($brandboostID) {
         $this->db->select("COUNT(id) AS total_count, category");
@@ -2497,76 +2568,6 @@ class BrandboostModel extends Model {
         return $aData;
     }
 
-    public function getBrandboostEmailSend($userId, $type = '') {
-
-        $this->db->select('tbl_track_sendgrid.*');
-        if ($userId > 0) {
-            $this->db->where('tbl_brandboost.user_id', $userId);
-        }
-
-        if (!empty($type)) {
-            $this->db->where('tbl_brandboost.review_type', $type);
-        }
-        $this->db->where('tbl_brandboost.delete_status', 0);
-        $this->db->where('tbl_track_sendgrid.event_name', 'delivered');
-        $this->db->order_by('tbl_brandboost.id', 'DESC');
-        $this->db->join("tbl_track_sendgrid", "tbl_brandboost.id = tbl_track_sendgrid.brandboost_id", "INNER");
-        $result = $this->db->get('tbl_brandboost');
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            //$aData = $result->result();
-            $aData = $result->num_rows();
-        }
-
-        return $aData;
-    }
-
-    public function getBrandboostSmsSend($userId, $type = '') {
-
-        $this->db->select('tbl_track_twillio.*');
-        if ($userId > 0) {
-            $this->db->where('tbl_brandboost.user_id', $userId);
-        }
-
-        if (!empty($type)) {
-            $this->db->where('tbl_brandboost.review_type', $type);
-        }
-        $this->db->where('tbl_brandboost.delete_status', 0);
-        $this->db->where('tbl_track_twillio.event_name', 'delivered');
-        $this->db->order_by('tbl_brandboost.id', 'DESC');
-        $this->db->join("tbl_track_twillio", "tbl_brandboost.id = tbl_track_twillio.brandboost_id", "INNER");
-        $result = $this->db->get('tbl_brandboost');
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            //$aData = $result->result();
-            $aData = $result->num_rows();
-        }
-
-        return $aData;
-    }
-
-    public function getBrandboostEmailSendMonth($userId, $type = '') {
-
-        $this->db->select('tbl_track_sendgrid.*');
-        if ($userId > 0) {
-            $this->db->where('tbl_brandboost.user_id', $userId);
-        }
-
-        if (!empty($type)) {
-            $this->db->where('tbl_brandboost.review_type', $type);
-        }
-        $this->db->where('tbl_brandboost.delete_status', 0);
-        $this->db->where('tbl_track_sendgrid.event_name', 'delivered');
-        $this->db->order_by('tbl_brandboost.id', 'DESC');
-        $this->db->join("tbl_track_sendgrid", "tbl_brandboost.id = tbl_track_sendgrid.brandboost_id", "INNER");
-        $result = $this->db->get('tbl_brandboost');
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
-    }
 
     public function getBrandboostSmsSendMonth($userId, $type = '') {
 
