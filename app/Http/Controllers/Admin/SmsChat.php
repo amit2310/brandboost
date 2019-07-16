@@ -484,8 +484,20 @@ class SmsChat extends Controller {
             'source'=>$source,
             'created' => date("Y-m-d H:i:s")
         );
-        $SmsChatObj->addSmsNotes($aData);
-       
+        
+        
+        if(!empty($SmsChatObj->addSmsNotes($aData)))
+        {
+            $response = array('status'=>'success');
+        }
+        else
+        {
+            $response = array('status'=>'error');
+        }
+        
+
+    echo json_encode($response); 
+
 
     }
 

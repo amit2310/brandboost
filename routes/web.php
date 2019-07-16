@@ -33,7 +33,10 @@ Route::get('admin/brandboost/onsite','Admin\Brandboost@onsite');
 
 //chat module
 Route::get('admin/webchat','Admin\WebChat@index');
-Route::get('admin/webchat/getUserinfo','Admin\WebChat@getUserinfo');
+Route::post('admin/webchat/getUserinfo','Admin\WebChat@getUserinfo');
+Route::post('admin/webchat/listingNotes','Admin\WebChat@listingNotes');
+Route::post('admin/webchat/getMessages','Admin\WebChat@getMessages');
+
 
 Route::get('admin/smschat','Admin\SmsChat@index');
 Route::get('admin/smschat/getSubsinfo','Admin\SmsChat@getSubsinfo');
