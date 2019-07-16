@@ -110,6 +110,51 @@ class Brandboost extends Controller {
         return view('admin.brandboost.onsite_overview', $aData);
     }
 	
+	/**
+	*
+	* call on site data listing page 
+	*/
+	public function onsite() {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $user_role = $aUser->user_role;
+        $company_name = $aUser->company_name;
+		
+		$mBrandboost = new BrandboostModel();
+		$mUsers = new UsersModel();
+        
+        if ($user_role == 1) {
+            $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite');
+        } else {
+            $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite');
+        }
+        $moduleName = 'brandboost-onsite';
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs">On Site </a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Campaigns" class="sidebar-control active hidden-xs ">Campaigns</a></li>
+			</ul>';
+
+        $bActiveSubsription = $mUsers->isActiveSubscription();
+        //$this->session->set_userdata('setTab', '');
+
+        $aData = array(
+            'title' => 'Onsite Brand Boost Campaigns',
+            'pagename' => $breadcrumb,
+            'aBrandbosts' => $aBrandboostList,
+            'bActiveSubsription' => $bActiveSubsription,
+            'user_role' => $user_role,
+            'company_name' => $company_name,
+            'moduleName' => $moduleName,
+			'viewstats' => true
+        );
+		
+		return view('admin.brandboost.onsite_list', $aData);
+    }
+	
 
     public function index() {
 
@@ -217,42 +262,6 @@ class Brandboost extends Controller {
         );
 
         $this->template->load('admin/admin_template_new', 'admin/brandboost/offsite_list', $aData);
-    }
-
-    public function onsite() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $user_role = $aUser->user_role;
-        $company_name = $aUser->company_name;
-        if ($user_role == 1) {
-            $aBrandboostList = $this->mBrandboost->getBrandboost('', 'onsite');
-        } else {
-            $aBrandboostList = $this->mBrandboost->getBrandboostByUserId($userID, 'onsite');
-        }
-        $moduleName = 'brandboost-onsite';
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs">On Site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Campaigns" class="sidebar-control active hidden-xs ">Campaigns</a></li>
-			</ul>';
-
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $this->session->set_userdata('setTab', '');
-
-        $aData = array(
-            'title' => 'Onsite Brand Boost Campaigns',
-            'pagename' => $breadcrumb,
-            'aBrandbosts' => $aBrandboostList,
-            'bActiveSubsription' => $bActiveSubsription,
-            'user_role' => $user_role,
-            'company_name' => $company_name,
-            'moduleName' => $moduleName
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/onsite_list', $aData);
     }
 
     public function onsite_bk() {
