@@ -234,9 +234,8 @@ if ($uriSegment == 'offsite') {
                 <div class="page-content">
                     <!-- Main content -->
 
-                    {{-- @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers)) --}}
-
                     <?php
+                    
                     if ($isLoggedInTeam) {
                         $hasweb_access = getMemberchatpermission($isLoggedInTeam);
                         if ($hasweb_access->web_chat == 1 || $hasweb_access->sms_chat == 1) {
@@ -259,7 +258,7 @@ if ($uriSegment == 'offsite') {
                         <?php 
                     } else if ($userRole == '3') {
                         ?>
-                        {{-- @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers)) --}}
+                        @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers))
                         @include('admin.sidebar.client_sidebar')
                        <?php 
                     } 
