@@ -1316,13 +1316,13 @@ if (!empty($hasweb_access)) {
 		     var nextSearchBut = '';
 		    if(typeof username == 'undefined')
 			{
-				nextSearchBut =  '<div style="z-index:9; width:282px;" class="chat_search_icon NextSearch"><input style="width:260px;" maxlength="10" id="searchChatMsg_New" onkeypress="return IsNumeric(event);" onkeyup="showResultSmall(this.value)"  class="searchChatMsg" type="text" name="searchChatMsg" value="" placeholder="Search Phone Number"><button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button><div id="livesearchSmall"></div></div>';
+				nextSearchBut =  '<div style="z-index:9; width:282px;" class="chat_search_icon NextSearch"><input style="width:260px;" maxlength="10" id="searchChatMsg_New" onkeypress="return IsNumeric(event);" onkeyup="showResultSmall(this.value)"  class="searchChatMsg" type="text" name="searchChatMsg" value="" placeholder="Search Phone Number"><button type="submit"><img src="/assets/images/chat_search_icon.png"></button><div id="livesearchSmall"></div></div>';
 				username='SMS';
 			}
 			else {
 				nextSearchBut = `<div style="z-index:9; width:282px;" class="chat_search_icon PreSearch">
 						<input style="width:260px;" id="searchChatMsg_${SubscriberPhone}" data-chatboxid="${SubscriberPhone}" class="searchSmsChatMsg" type="text" name="searchChatMsg" value="" placeholder="Search">
-							<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+							<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
 						</div>`;
 			}
 			  /*setTimeout(function(){
@@ -1382,7 +1382,7 @@ if (!empty($hasweb_access)) {
 </div>
 <div class="usdb">
 	<a class="userinfoicon2" href="#">
-	<span class="close"><img src="/new_pages/assets/images/cross_chat.png"></span></a>
+	<span class="close"><img src="/assets/images/cross_chat.png"></span></a>
 	<div class="row">
 		<div class="col-md-12 bbot pb10"><p><strong>Email</strong> <span>${useremail}</span></p><p>
 			<strong>Phone </strong> <span>${SubscriberPhone}</span></p><p><strong>Location </strong> 
@@ -1407,13 +1407,13 @@ if (!empty($hasweb_access)) {
 </div>
 <div class="msg_head" data-div="${SubscriberPhone}">
 	<div id="next_chat_${SubscriberPhone}"></div>
-	<img style="vertical-align:top; margin-top:3px;" src="/new_pages/assets/images/phone_green.png" alt="" width="" height="">&nbsp;<b class="Phoneuername" >${username}</b>
+	<img style="vertical-align:top; margin-top:3px;" src="/assets/images/phone_green.png" alt="" width="" height="">&nbsp;<b class="Phoneuername" >${username}</b>
 	<div><span style="font-weight:300!important; color:#6a7995!important; font-size:11px!important;">Assigned to:&nbsp; ${username}</span></div>
-	<span style="display:none" class="close"><img src="/new_pages/assets/images/cross_chat.png"/></span>
+	<span style="display:none" class="close"><img src="/assets/images/cross_chat.png"/></span>
 	<span user_id="${SubscriberPhone}" style="color:red;cursor:pointer;position: absolute;right: 9px;font-size:16px; top:11px;" box-close-type="smschat" class="green_check_close">
-	<img id="close_img_${SubscriberPhone}" src="/new_pages/assets/images/close_red_20.png"/></span>
-	<span style="cursor:pointer;position: absolute;right: 34px; top:10px; font-size: 25px;" class="green_check_minus"><img id="minus_img_${SubscriberPhone}" src="/new_pages/assets/images/grey_minus.png"/></span>
-	<span class="green_check"><img src="/new_pages/assets/images/green_check_20.png"/></span>
+	<img id="close_img_${SubscriberPhone}" src="/assets/images/close_red_20.png"/></span>
+	<span style="cursor:pointer;position: absolute;right: 34px; top:10px; font-size: 25px;" class="green_check_minus"><img id="minus_img_${SubscriberPhone}" src="/assets/images/grey_minus.png"/></span>
+	<span class="green_check"><img src="/assets/images/green_check_20.png"/></span>
 </div>
 <div class="msg_wrap">
 	<div style="padding: 10px 15px!important;" class="bbot bkg_white">
@@ -1424,7 +1424,7 @@ if (!empty($hasweb_access)) {
 	</div>
 	
 	
-	<span style="display:none" class="minimize"><img src="/new_pages/assets/images/minus_chat.png"/></span> 
+	<span style="display:none" class="minimize"><img src="/assets/images/minus_chat.png"/></span> 
 	
 	<div class="tab-content"> 
 
@@ -1494,9 +1494,9 @@ if (!empty($hasweb_access)) {
 					
 					
 					<a href="javascript:void(0)">
-					<img src="/new_pages/assets/images/chat_calendar.png"/></a>
+					<img src="/assets/images/chat_calendar.png"/></a>
 					<div id="webChatanchor_${userID}" style="float:right">
-						<a id="trigger_smschat_message_${userID}" rel="${userID}" SubscriberPhone="${SubscriberPhone}" userImage="${userImage}" class="p0" href="javascript:void(0)"><img src="/new_pages/assets/images/chat_send_blue.png" width="15"/></a>
+						<a id="trigger_smschat_message_${userID}" rel="${userID}" SubscriberPhone="${SubscriberPhone}" userImage="${userImage}" class="p0" href="javascript:void(0)"><img src="/assets/images/chat_send_blue.png" width="15"/></a>
 					</div>
 					
 				</div>
@@ -1546,9 +1546,9 @@ if (!empty($hasweb_access)) {
 						</a> 
 						
 						<a href="javascript:void(0)">
-						<img src="/new_pages/assets/images/chat_calendar.png"/></a>
+						<img src="/assets/images/chat_calendar.png"/></a>
 						<div id="webChatanchor_${NotesTo}" style="float:right">
-							<a id="trigger_webchat_message_${NotesTo}" rel="${NotesTo}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/new_pages/assets/images/chat_send_blue.png" width="15"/></a>
+							<a id="trigger_webchat_message_${NotesTo}" rel="${NotesTo}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/assets/images/chat_send_blue.png" width="15"/></a>
 						</div>
 						
 					</div>
@@ -2008,7 +2008,7 @@ chatPopup = `<div id="msg_box_${userID}" class="msg_box webchat" style="right:35
 	</div>
 	<div class="usdb">
 		<a class="userinfoicon2" href="#">
-		<span class="close"><img src="/new_pages/assets/images/cross_chat.png"></span></a>
+		<span class="close"><img src="/assets/images/cross_chat.png"></span></a>
 		<div class="row">
 			<div class="col-md-12 bbot pb10"><p><strong>Email</strong> <span>${useremail}</span></p><p>
 				<strong>Phone </strong> <span>${usermobile}</span></p><p><strong>Location </strong> 
@@ -2033,22 +2033,22 @@ chatPopup = `<div id="msg_box_${userID}" class="msg_box webchat" style="right:35
 	</div>
 	<div class="msg_head" data-div="${userID}">
 		
-		<img src="/new_pages/assets/images/desktop.png" class="" alt="" width="" height="">&nbsp;${username} <div id="next_chat_${userID}"></div>
-		<span style="display:none" class="close"><img src="/new_pages/assets/images/cross_chat.png"/></span>
+		<img src="/assets/images/desktop.png" class="" alt="" width="" height="">&nbsp;${username} <div id="next_chat_${userID}"></div>
+		<span style="display:none" class="close"><img src="/assets/images/cross_chat.png"/></span>
 		<span user_id="${userID}" style="color:red;cursor:pointer;position: absolute;right: 9px;font-size:16px; top:11px;" box-close-type="webchat" class="green_check_close">
-		<img id="close_img_${userID}" src="/new_pages/assets/images/close_red_20.png"/></span>
-		<span style="cursor:pointer;position: absolute;right: 34px; top:10px; font-size: 25px;" class="green_check_minus"><img id="minus_img_${userID}" src="/new_pages/assets/images/grey_minus.png"/></span>
-		<span class="green_check"><img src="/new_pages/assets/images/green_check_20.png"/></span>
+		<img id="close_img_${userID}" src="/assets/images/close_red_20.png"/></span>
+		<span style="cursor:pointer;position: absolute;right: 34px; top:10px; font-size: 25px;" class="green_check_minus"><img id="minus_img_${userID}" src="/assets/images/grey_minus.png"/></span>
+		<span class="green_check"><img src="/assets/images/green_check_20.png"/></span>
 	</div>
 	<div class="msg_wrap">
 		<div style="padding: 10px 15px!important;" class="bbot bkg_white">
 			<div style="z-index:9; width:282px;" class="chat_search_icon"><input style="width:260px;" id="searchChatMsg_${userID}" data-chatboxid="${userID}" class="searchChatMsg" type="text" name="searchChatMsg" value="" placeholder="Search">
-				<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+				<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
 			</div>
 		</div>
 		
 		
-		<span style="display:none" class="minimize"><img src="/new_pages/assets/images/minus_chat.png"/></span> 
+		<span style="display:none" class="minimize"><img src="/assets/images/minus_chat.png"/></span> 
 		
 		<div class="tab-content"> 
 
@@ -2119,9 +2119,9 @@ chatPopup = `<div id="msg_box_${userID}" class="msg_box webchat" style="right:35
 						
 						
 						<a href="javascript:void(0)">
-						<img src="/new_pages/assets/images/chat_calendar.png"/></a>
+						<img src="/assets/images/chat_calendar.png"/></a>
 						<div id="webChatanchor_${userID}" style="float:right">
-							<a id="trigger_webchat_message_${userID}" user_id="${userID}" rel="${userID}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/new_pages/assets/images/chat_send_blue.png" width="15"/></a>
+							<a id="trigger_webchat_message_${userID}" user_id="${userID}" rel="${userID}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/assets/images/chat_send_blue.png" width="15"/></a>
 						</div>
 						
 					</div>
@@ -2177,9 +2177,9 @@ chatPopup = `<div id="msg_box_${userID}" class="msg_box webchat" style="right:35
 							</a> 
 							
 							<a href="javascript:void(0)">
-							<img src="/new_pages/assets/images/chat_calendar.png"/></a>
+							<img src="/assets/images/chat_calendar.png"/></a>
 							<div id="webChatanchor_${userID}" style="float:right">
-								<a id="trigger_webchat_message_${userID}" rel="${userID}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/new_pages/assets/images/chat_send_blue.png" width="15"/></a>
+								<a id="trigger_webchat_message_${userID}" rel="${userID}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/assets/images/chat_send_blue.png" width="15"/></a>
 							</div>
 							
 						</div>
@@ -3819,12 +3819,12 @@ if ($isLoggedInTeam) {
 			</div>
 			
 			<div id="chat-sidebar" style="display: block;">
-			<div class="chat_add"><img style="padding:14px 10px 10px 10px" class="sms_user" src="/new_pages/assets/images/chat_plus_icon.png"></div>
+			<div class="chat_add"><img style="padding:14px 10px 10px 10px" class="sms_user" src="/assets/images/chat_plus_icon.png"></div>
 			
 				<div class="sidebar_head closemainchat">All Contacts&nbsp; (<?php echo count($totalSubscriber_schat); ?>)
 					
 					
-					<div id="closemainchatbox" style="display:none" class="closechatmain"><img src="/new_pages/assets/images/chat_left_arrow.png"></div>
+					<div id="closemainchatbox" style="display:none" class="closechatmain"><img src="/assets/images/chat_left_arrow.png"></div>
 				</div>
 				
 				<div class="sidebar_body" style="display:none">
@@ -3855,7 +3855,7 @@ if ($isLoggedInTeam) {
 								<input style="display:none;width: calc(100% - 22px)" type="text" name="small_web_webContactBox" placeholder="Search" id="small_web_webContactBox" value="">
 								
 								<input type="hidden" name="small_web_afterTrigger" id="small_web_afterTrigger" value="">
-								<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+								<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
 							</div>
 						</div>
 						<!--++++++++WEB SEARCH BOX++++++-->
@@ -4407,7 +4407,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('.SmallSmschat .o_list').hide();
 					$('.SmallSmschat .w_list').hide();
 					$('.SmallSmschat .f_list').show();
-					$('.SmallSmschat .t_sms_small').html('Favorite(<?php echo $favouriteUserDataCount; ?>)');
+					$('.SmallSmschat .t_sms_small').html('Favorite(5)');
 					
 				});
 				
