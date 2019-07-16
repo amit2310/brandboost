@@ -2238,13 +2238,13 @@ $( '[rel="' + chatbox + '"] .msg_wrap' ).slideToggle( "slow",function() {
 
 if ($(this).is(':visible'))
 { 
-$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/grey_minus.png') }}";
-$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
+$('#minus_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/grey_minus.png'); ?>");
+$('#close_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/close_red_20.png'); ?>");
 }
 else
 {
-$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/icon_maximize.png') }}";
-$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
+$('#minus_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/icon_maximize.png'); ?>");
+$('#close_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/close_red_20.png'); ?>");
 
 }
 
@@ -3370,132 +3370,126 @@ if(window_witdh > 1600)
 				
 			    if ( msg.trim().length != 0 ) {
 				
-				//alert(where);
 				
 				if(currentUser == data.currentUser) {
-				var chatbox = data.chatTo;
-
-				
-				
-				
-				$( '#msg_box_show_'+chatbox ).append( `<li class="media reversed">
-					<div class="media-body"> <span class="media-annotation user_icon">${profileImg}</span><div class="media-content">${nl2br(msg)}</div></div>
-				</li>`);
-
-				if($('#msg_box_show_'+chatbox).hasClass('typing_messsage')) {
+					var chatbox = data.chatTo;
 					
-			 		$('#msg_box_show_'+chatbox).append( `<li class="media loading_message_li_${chatbox}" style="height: 43px;padding-top: 10px;"><img src="{{ URL::asset('assets/images/messageloading.gif') }}" style="height: 25px;"></li>`);
-			 	}
-				
-				
-				
-				var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
-				$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
-				
+					$( '#msg_box_show_'+chatbox ).append( `<li class="media reversed">
+						<div class="media-body"> <span class="media-annotation user_icon">${profileImg}</span><div class="media-content">${nl2br(msg)}</div></div>
+					</li>`);
+
+					if($('#msg_box_show_'+chatbox).hasClass('typing_messsage')) {
+						
+				 		$('#msg_box_show_'+chatbox).append( `<li class="media loading_message_li_${chatbox}" style="height: 43px;padding-top: 10px;"><img src="{{ URL::asset('assets/images/messageloading.gif') }}" style="height: 25px;"></li>`);
+				 	}
+					
+					var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
+					$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
 				
 				}
 				else {
 
 				
 				
-				var options = {
-				title: data.currentUserName,
-				options: {
-				body: msg_noti,
-				icon: data.avatar,
-				lang: 'en-US'
-				}
-				};
-				
-				var chatbox = data.currentUser;
-				var msgBox = $('#msg_box_'+chatbox).attr( "rel" );
-				if($('#msg_box_'+chatbox).css('display') == 'none' || $('#msg_box_'+chatbox).find('.msg_wrap').css('display') == 'none')
-				{
-				var readStatus = $('#read_status_'+chatbox).attr('readStatus');
-				readStatus = Number(readStatus) + 1;
-				$('#read_status_'+chatbox).attr('readStatus',readStatus);
-				$('#read_status_'+chatbox).html('<span class="badge bg-success">'+readStatus+'</span>');
-				
-				$('#read_status_poopup_'+chatbox).html('<span class="readStatusCount">'+readStatus+'</span>');
-				
-				var readStatusFav = $('#read_status_fav_'+chatbox).attr('readStatus');
-				readStatusFav = Number(readStatusFav) + 1;
-				$('#read_status_fav_'+chatbox).attr('readStatus',readStatusFav);
-				$('#read_status_fav_'+chatbox).html('<span class="badge bg-success">'+readStatusFav+'</span>');
-				
-				var readStatusCon = $('#read_status_con_'+chatbox).attr('readStatus');
-				readStatusCon = Number(readStatusCon) + 1;
-				$('#read_status_con_'+chatbox).attr('readStatus',readStatusCon);
-				$('#read_status_con_'+chatbox).html('<span class="badge bg-success">'+readStatusCon+'</span>');
-				
-				playSound();
-				$("#easyNotify").easyNotify(options);
-				var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
-				$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
-				
-				}
-				else {
-				
-				if (typeof msgBox === "undefined") {
-				setTimeout(function(){ 
-				$('#sidebar-user-box-'+chatbox).trigger('click');
-				playSound();
-				$("#easyNotify").easyNotify(options);
-				var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
-				$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
-				}, 1000);
-				
-				}
-				else if(where == 'out') {
-				
-				$('#msg_box_show_'+chatbox).append(`<li class="media team_user_${chatbox}">
-					<div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span> 
-					${profileImg}</span>
-					<div class="media-content">${nl2br(msg)}</div>							
-					</div>
-				</li>`);
-				
-				playSound();
-				$("#easyNotify").easyNotify(options);
-				var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
-				$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
-				
-				
-				}
-				else {
-				
-				
-				$('#msg_box_show_'+chatbox).append(`<li class="media team_user_${chatbox}">
-					<div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span> 
-					${profileImg}</span>
-					<div class="media-content">${nl2br(msg)}</div>							
-					</div>
-				</li>`);
-				
-				
-				//playSound();
-				var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
-				$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
-				
-				
-				}
-				
-				setTimeout(function(){ 
-				
-				$.ajax({
-				url: "{{ url('admin/Chat/readChatMsg') }}",
-				type: "POST",
-				data: {chatTo:data.chatTo, chatFrom:data.currentUser},
-				dataType: "json",
-				success: function (data) {
-				if (data.status == 'ok') {
-				
-				}
-				}
-				});
-				
-				}, 500);
-				}	
+					var options = {
+					title: data.currentUserName,
+					options: {
+					body: msg_noti,
+					icon: data.avatar,
+					lang: 'en-US'
+					}
+					};
+					
+					var chatbox = data.currentUser;
+					var msgBox = $('#msg_box_'+chatbox).attr( "rel" );
+					if($('#msg_box_'+chatbox).css('display') == 'none' || $('#msg_box_'+chatbox).find('.msg_wrap').css('display') == 'none')
+					{
+						var readStatus = $('#read_status_'+chatbox).attr('readStatus');
+						readStatus = Number(readStatus) + 1;
+						$('#read_status_'+chatbox).attr('readStatus',readStatus);
+						$('#read_status_'+chatbox).html('<span class="badge bg-success">'+readStatus+'</span>');
+						
+						$('#read_status_poopup_'+chatbox).html('<span class="readStatusCount">'+readStatus+'</span>');
+						
+						var readStatusFav = $('#read_status_fav_'+chatbox).attr('readStatus');
+						readStatusFav = Number(readStatusFav) + 1;
+						$('#read_status_fav_'+chatbox).attr('readStatus',readStatusFav);
+						$('#read_status_fav_'+chatbox).html('<span class="badge bg-success">'+readStatusFav+'</span>');
+						
+						var readStatusCon = $('#read_status_con_'+chatbox).attr('readStatus');
+						readStatusCon = Number(readStatusCon) + 1;
+						$('#read_status_con_'+chatbox).attr('readStatus',readStatusCon);
+						$('#read_status_con_'+chatbox).html('<span class="badge bg-success">'+readStatusCon+'</span>');
+						
+						playSound();
+						$("#easyNotify").easyNotify(options);
+						var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
+						$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
+						
+					}
+					else {
+					
+						if (typeof msgBox === "undefined") {
+						setTimeout(function(){ 
+						$('#sidebar-user-box-'+chatbox).trigger('click');
+						playSound();
+						$("#easyNotify").easyNotify(options);
+						var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
+						$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
+						}, 1000);
+						
+						}
+						else if(where == 'out') {
+						
+						$('#msg_box_show_'+chatbox).append(`<li class="media team_user_${chatbox}">
+							<div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span> 
+							${profileImg}</span>
+							<div class="media-content">${nl2br(msg)}</div>							
+							</div>
+						</li>`);
+						
+						playSound();
+						$("#easyNotify").easyNotify(options);
+						var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
+						$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
+						
+						
+						}
+						else {
+						
+						
+						$('#msg_box_show_'+chatbox).append(`<li class="media team_user_${chatbox}">
+							<div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span> 
+							${profileImg}</span>
+							<div class="media-content">${nl2br(msg)}</div>							
+							</div>
+						</li>`);
+						
+						
+						//playSound();
+						var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
+						$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
+						
+						
+						}
+						
+						setTimeout(function(){ 
+						
+						$.ajax({
+						url: "<?php echo base_url('admin/Chat/readChatMsg'); ?>",
+						type: "POST",
+						data: {chatTo:data.chatTo, chatFrom:data.currentUser},
+						dataType: "json",
+						success: function (data) {
+						if (data.status == 'ok') {
+							
+						}
+						}
+						});
+						
+						}, 500);
+
+					}	
 				}
 				}
 				});
@@ -4507,15 +4501,15 @@ $('#small_web_AjaxSearchWeb').html(data);
 							
 							
 							
-							$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/icon_maximize.png') }}";
-							$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
+							$('#minus_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/icon_maximize.png'); ?>");
+							$('#close_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/close_red_20.png'); ?>");
 							
 							
 						}
 						else
 						{
-							$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/grey_minus.png') }}";
-							$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
+							$('#minus_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/grey_minus.png'); ?>");
+							$('#close_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/close_red_20.png'); ?>");
 							
 						}
 						
