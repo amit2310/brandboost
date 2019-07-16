@@ -386,7 +386,6 @@
 
 <?php if ($aUInfo->login_counter_au >= 12) { ?>
         setTimeout(function () {
-            alert('dfgf')
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('admin/users/updateUserData'); ?>",
@@ -405,7 +404,7 @@
                     $('.overlaynew').hide();
                 }
             });
-        }, 0);
+        }, 5000);
 <?php } ?>
 
     function createTwilioAccount(userId) {
