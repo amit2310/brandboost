@@ -407,13 +407,19 @@ Most startups fail. But many of those failures are preventable. The Lean Startup
 				$siteRevCount = '';
                 //$siteRevRA = getCampaignSiteReviewRA($data->id);
 				$siteRevRA = '';
-                $brandImgArray = unserialize($data->brand_img);
-                $brand_img = $brandImgArray[0]['media_url'];
 				
-                if (empty($brand_img)) {
-                    $imgSrc = base_url('assets/images/default_table_img2.png');
-					} else {
-                    $imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
+				if($data->brand_img == '' || $data->brand_img == 'b:0;'){
+					$imgSrc = base_url('assets/images/default_table_img2.png');
+				}else{
+					/*$brandImgArray = unserialize($data->brand_img);
+					$brand_img = $brandImgArray[0]['media_url'];
+					
+					if (empty($brand_img)) {
+						$imgSrc = base_url('assets/images/default_table_img2.png');
+						} else {
+						$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
+					}*/
+					$imgSrc = base_url('assets/images/default_table_img2.png');
 				}
 	?>
 
@@ -547,7 +553,6 @@ Most startups fail. But many of those failures are preventable. The Lean Startup
 				<div data-toggle="tooltip" title="<?php echo $negativeRating; ?> out of <?php echo $getResCount; ?> Response" data-placement="top" class="progress">
 					<div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $negativeGraph; ?>%"></div>
 				</div>
-
 			</td>
 
 			<td>
@@ -563,8 +568,8 @@ Most startups fail. But many of those failures are preventable. The Lean Startup
             		?>
             		<div class="media-left media-middle"> <a href="#"><img src="<?php echo $avatarImage; ?>" class="img-circle img-xs" alt=""></a> </div>
 					<div class="media-left">
-						<div class=""><a href="#" class="text-default text-semibold"><?php echo number_format($aReviews[0]->ratings, 1) ;?> <i class="fa fa-smile-o"></i></a> </div>
-						<div class="text-muted text-size-small"><?php echo $aReviews[0]->firstname.' '.$aReviews[0]->lastname; ?> </div>
+						<div class=""><a href="#" class="text-default text-semibold"><?php //echo number_format($aReviews[0]->ratings, 1); ?> <i class="fa fa-smile-o"></i></a> </div>
+						<div class="text-muted text-size-small"><?php //echo $aReviews[0]->firstname.' '.$aReviews[0]->lastname; ?> </div>
 					</div><?php
             	}
             	else {
@@ -600,7 +605,6 @@ Most startups fail. But many of those failures are preventable. The Lean Startup
 							<!-- <button type="button" class="btn btn-xs btn_white_table ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button> -->
 							<ul class="dropdown-menu dropdown-menu-right width-200">
 								
-								<?php if ($canWrite != FALSE): ?>
                                 <?php if ($data->status == 1) { ?>
 									<li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="<?php echo $data->id; ?>" status="2"><i class="icon-file-stats"></i> Pause</a></li>
 								<?php } ?>
@@ -611,7 +615,7 @@ Most startups fail. But many of those failures are preventable. The Lean Startup
 								<li><a href="<?php echo base_url('admin/brandboost/brand_configuration/'.$data->id);?>" class="text-default text-semibold"><i class="icon-pencil"></i> Brand Configuration</a></li>
 								<li><a href="javascript:void(0);" class="deleteCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
 								<li><a href="javascript:void(0);" class="archiveCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-file-text2"></i> Move to Archive</a></li>
-								<?php endif; ?>
+
 								<li><a href="javascript:void(0);" class="viewECode" brandID="<?php echo $data->id; ?>"><i class="icon-file-locked"></i> Get Embedded Code</a></li>
 								<li><a href="<?php echo base_url('admin/brandboost/stats/onsite/' . $data->id . '?t=contact'); ?>" target="_blank"><i class="icon-gear"></i> Contacts</a></li>
 								<li><a href="http://pleasereviewmehere.com/campaign/<?php echo strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id; ?>" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li>  
@@ -1297,7 +1301,7 @@ Highcharts.chart('linechart_a', {
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/brandboost/onsite_setup/' + data . brandboostID); ?>';
+                        window.location.href = 'admin/brandboost/onsite_setup/' + data.brandboostID;
 						} else {
                         alertMessage('Error: Some thing wrong!');
 					}
@@ -1390,3 +1394,4 @@ Highcharts.chart('linechart_a', {
 	
 	
 </script>
+@endsection
