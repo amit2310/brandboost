@@ -336,7 +336,7 @@ $(document).ready(function() {
 		  
 			var rewId = $(this).attr('rewId');
 		    var token = 	$(this).attr('token');
-			 showNoteslisting(subscriberId);
+			 showNoteslisting(SubscriberPhone);
 			$('.hIdelater').show();
 			$('#livesearchVal').val('');
 			$('#livesearch').html('');

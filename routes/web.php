@@ -42,6 +42,8 @@ Route::post('admin/smschat/sendMsg','Admin\SmsChat@sendMsg');
 Route::get('admin/smschat/livesearch','Admin\SmsChat@livesearch');
 Route::post('admin/smschat/getSearchSmsListByinput','Admin\SmsChat@getSearchSmsListByinput');
 Route::post('admin/smschat/add_contact_notes','Admin\SmsChat@add_contact_notes');
+Route::post('admin/smschat/addSmsNotes','Admin\SmsChat@addSmsNotes');
+Route::post('admin/smschat/listingSmsNotes','Admin\SmsChat@listingSmsNotes');
 
 
 //Profile module
