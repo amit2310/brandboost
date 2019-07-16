@@ -1,5 +1,6 @@
 <?php
 $oCampaignContacts = $aContactSelectionData['oCampaignImportContacts'];
+$aSelectedContacts = array();
 if (!empty($oCampaignContacts)) {
     foreach ($oCampaignContacts as $oRec) {
         $aSelectedContacts[] = $oRec->subscriber_id;
@@ -17,6 +18,8 @@ if (!empty($subscribersData)) {
         }
     }
 }
+
+
 ?>
 <div class="panel panel-flat wfSwitchMenu" id="wfImportFromContactList" style="display:none;">
     <div class="panel-heading">
@@ -51,11 +54,12 @@ if (!empty($subscribersData)) {
                         <?php
                         if (count($subscribersData) > 0) {
                             foreach ($subscribersData as $oContact) {
+                                $oContact->subscriber_id = !empty($oContact->subscriber_id) ? $oContact->subscriber_id : 0;
                                 $userData = '';
                                 if ($oContact->status != '2') {
 
                                     if ($oContact->user_id > 0) {
-                                        $userData = $this->mUser->getUserInfo($oContact->user_id);
+                                        $userData = App\Models\Admin\UsersModel::getUserInfo($oContact->user_id);
                                     }
                                     ?>
                                     <tr role="row">
@@ -68,7 +72,7 @@ if (!empty($subscribersData)) {
                                                     <span class="custmo_checkmark sblue"></span> 
                                                 </label>
                                             </div>
-                                            <div class="media-left media-middle"> <?php echo showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
+                                            <div class="media-left media-middle"> <?php echo @showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
                                             <div class="media-left">
                                                 <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot"><?php echo $oContact->firstname; ?> <?php echo $oContact->lastname; ?> </a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($oContact->country_code); ?>.png" onerror="this.src='<?php echo base_url(); ?>assets/images/flags/us.png'"></div>
                                                 <div class="text-muted text-size-small"><?php echo $oContact->email; ?></div>

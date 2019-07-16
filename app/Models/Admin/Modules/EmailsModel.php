@@ -710,6 +710,16 @@ class EmailsModel extends Model {
     }
 
     public function getEmailTwilioCategorizedStatsData($oData) {
+        $acceptedTotalCount = $acceptedUniqueCount = $acceptedDuplicateCount =  array();
+        $sentTotalCount = $sentUniqueCount = $sentDuplicateCount =  array();
+        $deliveredTotalCount = $deliveredUniqueCount = $deliveredDuplicateCount = array();
+        $undeliveredTotalCount = $undeliveredUniqueCount = $undeliveredDuplicateCount = array();
+        $failedTotalCount = $failedUniqueCount = $failedDuplicateCount = array();
+        $receivingTotalCount = $receivingUniqueCount = $receivingDuplicateCount = array();
+        $receivedTotalCount = $receivedUniqueCount = $receivedDuplicateCount = array();
+        $queuedTotalCount = $queuedUniqueCount = $queuedDuplicateCount = array();
+        $sendingTotalCount = $sendingUniqueCount = $sendingDuplicateCount = array();
+        $otherTotalCount = $otherUniqueCount = $otherDuplicateCount = array();
         if (!empty($oData)) {
 
             foreach ($oData as $oRow) {

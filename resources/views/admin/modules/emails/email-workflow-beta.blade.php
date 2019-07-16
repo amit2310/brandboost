@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <div class="content">
 
 
@@ -29,12 +36,14 @@
             </div>
         </div>
     </div>
-    @include('admin/workflow2/tree', ['oEvents' => $oEvents])
+    @include('admin.workflow2.tree', ['oEvents' => $oEvents])
     
 
 </div>
-
-@include('admin/modals/workflow2/workflow-popup', ['oDefaultTemplates' => $oDefaultTemplates])
+<?php 
+ $oDefaultTemplates = !(empty($oDefaultTemplates)) ? $oDefaultTemplates : array();
+?>
+@include('admin.modals.workflow2.workflow-popup', ['oDefaultTemplates' => $oDefaultTemplates])
 
 <script>
 
@@ -99,5 +108,5 @@
     });
 
 </script>
-
+@endsection
 

@@ -117,7 +117,7 @@ class WorkflowModel extends Model {
      * @param type $moduleName
      * @return boolean
      */
-    public function getEventCampaign($eventID, $moduleName) {
+    public static function getEventCampaign($eventID, $moduleName) {
         if (empty($eventID) || empty($moduleName)) {
             return false;
         }
@@ -161,7 +161,7 @@ class WorkflowModel extends Model {
      * @param type $moduleName
      * @return boolean
      */
-    public function getEventTwilioStats($campaignID, $moduleName) {
+    public static function getEventTwilioStats($campaignID, $moduleName) {
         if (empty($campaignID) || empty($moduleName)) {
             return false;
         }
@@ -208,7 +208,7 @@ class WorkflowModel extends Model {
      * @param type $moduleName
      * @return boolean
      */
-    public function getEventSendgridStats($campaignID, $moduleName) {
+    public static function getEventSendgridStats($campaignID, $moduleName) {
         if (empty($campaignID) || empty($moduleName)) {
             return false;
         }
@@ -252,6 +252,16 @@ class WorkflowModel extends Model {
      * @return array
      */
     public static function getEventTwilioCategorizedStats($oData) {
+        $acceptedTotalCount = $acceptedUniqueCount = $acceptedDuplicateCount = array();
+        $sentTotalCount = $sentUniqueCount = $sentDuplicateCount = array();
+        $deliveredTotalCount = $deliveredUniqueCount = $deliveredDuplicateCount = array();
+        $undeliveredTotalCount = $undeliveredUniqueCount = $undeliveredDuplicateCount = array();
+        $failedTotalCount = $failedUniqueCount = $failedDuplicateCount = array();
+        $receivingTotalCount = $receivingUniqueCount = $receivingDuplicateCount = array();
+        $receivedTotalCount = $receivedUniqueCount = $receivedDuplicateCount = array();
+        $queuedTotalCount = $queuedUniqueCount = $queuedDuplicateCount = array();
+        $sendingTotalCount = $sendingUniqueCount = $sendingDuplicateCount = array();
+        $otherTotalCount = $otherUniqueCount = $otherDuplicateCount = array();
         if (!empty($oData)) {
 
             foreach ($oData as $oRow) {
@@ -329,6 +339,7 @@ class WorkflowModel extends Model {
                 }
             }
         }
+
         //Okay Now print result
         $aCatogerizedData = array(
             'accepted' => array(
@@ -817,19 +828,21 @@ class WorkflowModel extends Model {
         }
     }
 
-    public function getCommonTemplateInfo($templateID) {
-        if ($templateID > 0) {
-            $this->db->where('tbl_common_templates.id', $templateID);
-        }
-
-        $this->db->select("tbl_common_templates.*, tbl_common_templates_categories.category_name, tbl_common_templates_categories.status AS category_status, tbl_common_templates_categories.module_name");
-        $this->db->join("tbl_common_templates_categories", "tbl_common_templates.category_id = tbl_common_templates_categories.id", "LEFT");
-
-        $result = $this->db->get('tbl_common_templates');
-        if ($result->num_rows() > 0) {
-            return $result->row();
-        }
-        return false;
+    /**
+     * Get Common template info
+     * @param type $templateID
+     * @return boolean
+     */
+    public static function getCommonTemplateInfo($templateID) {
+        $oData = DB::table('tbl_common_templates')
+                ->leftJoin('tbl_common_templates_categories', 'tbl_common_templates.category_id', '=', 'tbl_common_templates_categories.id')
+                ->select('tbl_common_templates.*', 'tbl_common_templates_categories.category_name', 'tbl_common_templates_categories.status AS category_status', 'tbl_common_templates_categories.module_name')
+                ->when(($templateID > 0), function ($query) use ($templateID) {
+                    return $query->where('tbl_common_templates.id', $templateID);
+                })
+                ->first();
+        return $oData;
+        
     }
 
     public function getCommonTemplateByName($templateName, $userID) {
@@ -2237,18 +2250,15 @@ class WorkflowModel extends Model {
      * @param type $userID
      * @return type
      */
-    public function getWorkflowSegmentSubscribers($segmentID, $userID) {
-        $this->db->select("tbl_segments_users.*, tbl_subscribers.id as globalSubscriberId,tbl_subscribers.user_id as subUserId, tbl_subscribers.firstname,tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_subscribers.status");
-        $this->db->join("tbl_subscribers", "tbl_segments_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->order_by("tbl_subscribers.id", "DESC");
-        $this->db->where("tbl_segments_users.segment_id", $segmentID);
-        $this->db->where("tbl_segments_users.user_id", $userID);
-
-        $result = $this->db->get("tbl_segments_users");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
+    public static function getWorkflowSegmentSubscribers($segmentID, $userID) {
+        $oData = DB::table('tbl_segments_users')
+                ->leftJoin('tbl_subscribers', 'tbl_segments_users.subscriber_id', '=', 'tbl_subscribers.id')
+                ->select('tbl_segments_users.*', 'tbl_subscribers.id as globalSubscriberId','tbl_subscribers.user_id as subUserId', 'tbl_subscribers.firstname','tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status')
+                ->where('tbl_segments_users.segment_id', $segmentID)
+                ->where('tbl_segments_users.user_id', $userID)
+                ->get();
+        return $oData;
+        
     }
 
     /**
@@ -2256,17 +2266,15 @@ class WorkflowModel extends Model {
      * @param type $tagID
      * @return type
      */
-    public function getWorkflowTagSubscribers($tagID) {
-        $this->db->select("tbl_subscribers.*, tbl_subscribers.id as subscriber_id, tbl_subscribers.status AS globalStatus, tbl_subscribers.id AS global_user_id");
-        $this->db->join("tbl_subscribers", "tbl_subscriber_tags.subscriber_id = tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_subscriber_tags.tag_id", $tagID);
-        $this->db->order_by("tbl_subscriber_tags.id", "DESC");
-        //$this->db->where("status !=", 2);
-        $result = $this->db->get("tbl_subscriber_tags");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+    public static function getWorkflowTagSubscribers($tagID) {
+        $oData = DB::table('tbl_subscriber_tags')
+                ->leftJoin('tbl_subscribers', 'tbl_subscriber_tags.subscriber_id', '=', 'tbl_subscribers.id')
+                ->select('tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.id AS global_user_id')
+                ->where('tbl_subscriber_tags.tag_id', $tagID)
+                ->orderBy('tbl_subscriber_tags.id', 'desc')
+                ->get();
+        return $oData;
+        
     }
 
     /**
@@ -2829,7 +2837,7 @@ class WorkflowModel extends Model {
 
             $importViewHtml = view("admin.workflow2.partials.importButtonTags", $aDataImportButtons);
             $sImportButtons = $importViewHtml->render();
-            
+
 
             //loaded broadcast properties tags
             $aDataExportButtons = array(
@@ -2843,7 +2851,7 @@ class WorkflowModel extends Model {
 
             $excludeViewHtml = view("admin.workflow2.partials.excludeButtonTags", $aDataExportButtons);
             $sExcludButtons = $excludeViewHtml->render();
-            
+
             $aData = array(
                 'oLists' => $oLists,
                 'oSegments' => $oSegments,
@@ -3893,7 +3901,7 @@ class WorkflowModel extends Model {
             if (!empty($oCampaignImportTags)) {
                 foreach ($oCampaignImportTags as $oRec) {
                     $tagId = $oRec->tag_id;
-                    $oTagSubscribers = $this->getWorkflowTagSubscribers($tagId);
+                    $oTagSubscribers = self::getWorkflowTagSubscribers($tagId);
                     if (!empty($oTagSubscribers)) {
                         foreach ($oTagSubscribers as $oSubscriber) {
                             if (!in_array($oSubscriber->id, $aWorkflowSubscribers)) {
@@ -3909,7 +3917,7 @@ class WorkflowModel extends Model {
             if (!empty($oCampaignImportSegments)) {
                 foreach ($oCampaignImportSegments as $oRec) {
                     $segmentId = $oRec->segment_id;
-                    $oSubscribers = $this->getWorkflowSegmentSubscribers($segmentId, $userID);
+                    $oSubscribers = self::getWorkflowSegmentSubscribers($segmentId, $userID);
                     if (!empty($oSubscribers)) {
                         foreach ($oSubscribers as $oSubscriber) {
                             if (!in_array($oSubscriber->subscriber_id, $aWorkflowSubscribers)) {
@@ -3963,7 +3971,7 @@ class WorkflowModel extends Model {
             if (!empty($oCampaignExcludeTags)) {
                 foreach ($oCampaignExcludeTags as $oRec) {
                     $tagId = $oRec->tag_id;
-                    $oTagSubscribers = $this->getWorkflowTagSubscribers($tagId);
+                    $oTagSubscribers = self::getWorkflowTagSubscribers($tagId);
                     if (!empty($oTagSubscribers)) {
                         foreach ($oTagSubscribers as $oSubscriber) {
                             if (!in_array($oSubscriber->id, $aWorkflowExcludedSubscribers)) {
@@ -3979,7 +3987,7 @@ class WorkflowModel extends Model {
             if (!empty($oCampaignExcludeSegments)) {
                 foreach ($oCampaignExcludeSegments as $oRec) {
                     $segmentId = $oRec->segment_id;
-                    $oSubscribers = $this->getWorkflowSegmentSubscribers($segmentId, $userID);
+                    $oSubscribers = self::getWorkflowSegmentSubscribers($segmentId, $userID);
                     if (!empty($oSubscribers)) {
                         foreach ($oSubscribers as $oSubscriber) {
                             if (!in_array($oSubscriber->subscriber_id, $aWorkflowExcludedSubscribers)) {
