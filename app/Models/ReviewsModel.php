@@ -98,7 +98,7 @@ class ReviewsModel extends Model {
                     return $query->where('tbl_reviews.campaign_id', $campaignID);
                 })
                 ->orderBy('tbl_reviews.id', 'desc')
-                ->get();
+                ->get();				
         return $oData;
     }
 	
