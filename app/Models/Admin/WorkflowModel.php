@@ -2198,25 +2198,19 @@ class WorkflowModel extends Model {
      * @return type
      */
     public function getWorkflowMyLists($userID) {
-        $this->db->select("tbl_common_lists.*, tbl_automation_users.list_id as l_list_id, tbl_automation_users.user_id as l_user_id, "
-                . "tbl_subscribers.firstname as l_firstname, tbl_subscribers.lastname as l_lastname, "
-                . "tbl_subscribers.email as l_email, tbl_subscribers.phone as l_phone,tbl_subscribers.created as l_created, tbl_automation_users.status as l_status, "
-                . "CONCAT(tbl_users.firstname,' ', tbl_users.lastname) as lCreateUsername, tbl_users.email as cEmail, tbl_users.mobile as cMobile");
-
-        if ($userID > 0) {
-            $this->db->where("tbl_common_lists.user_id", $userID);
-        }
-        $this->db->join("tbl_automation_users", "tbl_automation_users.list_id=tbl_common_lists.id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_automation_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_users.id=tbl_common_lists.user_id", "INNER");
-        $this->db->where("tbl_common_lists.delete_status", 0);
-        $this->db->where("tbl_common_lists.status", 'active');
-        $this->db->order_by("tbl_common_lists.id", "DESC");
-        $result = $this->db->get("tbl_common_lists");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_common_lists')
+                ->leftJoin('tbl_automation_users', 'tbl_automation_users.list_id', '=', 'tbl_common_lists.id')
+                ->leftJoin('tbl_subscribers', 'tbl_automation_users.subscriber_id', '=', 'tbl_subscribers.id')
+                ->join('tbl_users', 'tbl_users.id', '=', 'tbl_common_lists.user_id')
+                ->select("tbl_common_lists.*", "tbl_automation_users.list_id as l_list_id", "tbl_automation_users.user_id as l_user_id", "tbl_subscribers.firstname as l_firstname", "tbl_subscribers.lastname as l_lastname", "tbl_subscribers.email as l_email", "tbl_subscribers.phone as l_phone", "tbl_subscribers.created as l_created", "tbl_automation_users.status as l_status", DB::raw("CONCAT(tbl_users.firstname,' ', tbl_users.lastname) as lCreateUsername"), "tbl_users.email as cEmail", "tbl_users.mobile as cMobile")
+                ->where('tbl_common_lists.delete_status', 0)
+                ->where("tbl_common_lists.status", 'active')
+                ->when(($userID > 0), function($query) use($userID) {
+                    return $query->where('tbl_common_lists.user_id', $userID);
+                })
+                ->orderBy('tbl_common_lists.id', 'desc')
+                ->get();
+        return $oData;
     }
 
     /**
@@ -2226,19 +2220,15 @@ class WorkflowModel extends Model {
      * @return type
      */
     public function getWorkflowSegments($userID, $id = '') {
-        $this->db->select("tbl_segments.*");
-        if (!empty($userID)) {
-            $this->db->where('tbl_segments.user_id', $userID);
-        }
-
-        if (!empty($id)) {
-            $this->db->where("tbl_segments.id", $id);
-        }
-        $result = $this->db->get("tbl_segments");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_segments')
+                ->when(!empty($userID), function ($query) use ($userID) {
+                    return $query->where('user_id', $userID);
+                })
+                ->when(!empty($id), function ($query) use ($id) {
+                    return $query->where('id', $id);
+                })
+                ->get();
+        return $oData;
     }
 
     /**
@@ -2310,7 +2300,7 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where($fieldName, $moduleUnitID)
                 ->get();
@@ -2344,12 +2334,11 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where($fieldName, $moduleUnitID)
                 ->get();
-        return $oData;        
-        
+        return $oData;
     }
 
     /**
@@ -2384,7 +2373,7 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->leftJoin("tbl_common_lists", "tbl_common_lists.id", '=', "$tableName.list_id")
                 ->select("$tableName.*", "tbl_common_lists.list_name")
@@ -2392,7 +2381,6 @@ class WorkflowModel extends Model {
                 ->where("tbl_common_lists.delete_status", 0)
                 ->get();
         return $oData;
-        
     }
 
     /**
@@ -2427,16 +2415,15 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->leftJoin("tbl_common_lists", "tbl_common_lists.id", '=', "$tableName.list_id")
                 ->select("$tableName.*", "tbl_common_lists.list_name")
                 ->where("$tableName.$fieldName", $moduleUnitID)
                 ->where("tbl_common_lists.delete_status", 0)
                 ->get();
-        
+
         return $oData;
-        
     }
 
     /**
@@ -2486,7 +2473,7 @@ class WorkflowModel extends Model {
                 . "WHERE `tbl_automation_users`.`list_id` IN(" . implode(",", $aListsIDs) . ") "
                 . "ORDER BY `tbl_automation_users`.`id` DESC";
         $oData = DB::select(DB::raw($sql));
-        
+
         return $oData;
     }
 
@@ -2524,7 +2511,7 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where($fieldName, $moduleUnitID)
                 ->get();
@@ -2564,13 +2551,12 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where($fieldName, $moduleUnitID)
                 ->get();
 
-        return $oData;        
-        
+        return $oData;
     }
 
     /**
@@ -2605,12 +2591,11 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where($fieldName, $moduleUnitID)
                 ->get();
         return $oData;
-        
     }
 
     /**
@@ -2645,13 +2630,12 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where($fieldName, $moduleUnitID)
                 ->get();
 
-        return $oData;        
-        
+        return $oData;
     }
 
     /**
@@ -2686,14 +2670,13 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->leftJoin("tbl_segments", "$tableName.segment_id", '=', "tbl_segments.id")
                 ->select("$tableName.*", "tbl_segments.segment_name")
                 ->where("$tableName.$fieldName", $moduleUnitID)
                 ->get();
         return $oData;
-        
     }
 
     /**
@@ -2728,15 +2711,14 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->leftJoin("tbl_segments", "$tableName.segment_id", '=', "tbl_segments.id")
                 ->select("$tableName.*", "tbl_segments.segment_name")
                 ->where("$tableName.$fieldName", $moduleUnitID)
                 ->get();
-        
-        return $oData;        
-        
+
+        return $oData;
     }
 
     /**
@@ -2745,7 +2727,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID) {
+    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID) {
 
         switch ($moduleName) {
             case "brandboost":
@@ -2786,7 +2768,6 @@ class WorkflowModel extends Model {
                 ->orderBy("$tableName.id", "desc")
                 ->get();
         return $oData;
-        
     }
 
     /**
@@ -2796,43 +2777,43 @@ class WorkflowModel extends Model {
      */
     public static function getWorkflowContactSelectionInterfaceData($moduleName, $moduleUnitID) {
         if (!empty($moduleName) && $moduleUnitID > 0) {
-            
+
             $aUser = getLoggedUser();
             $userID = $aUser->id;
             //Get Common information which will display in both Import and Exclude interface
-            $oLists = $this->getWorkflowMyLists($userID);
+            $oLists = (new self)->getWorkflowMyLists($userID);
 
-            $oSegments = $this->getWorkflowSegments($userID);
+            $oSegments = (new self)->getWorkflowSegments($userID);
 
             $subscribersData = \App\Models\Admin\SubscriberModel::getGlobalSubscribers($userID);
 
             $aTags = \App\Models\Admin\TagsModel::getClientTags($userID);
 
-            $oCampaignSubscribers = $this->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+            $oCampaignSubscribers = self::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
 
 
             //Import Specific Data
-            $oTotalImportedSubscribers = $this->getWorkflowImportListSubscribers($moduleName, $moduleUnitID);
+            $oTotalImportedSubscribers = (new self)->getWorkflowImportListSubscribers($moduleName, $moduleUnitID);
 
-            $oImportLists = $this->getWorkflowImportLists($moduleName, $moduleUnitID);
+            $oImportLists = (new self)->getWorkflowImportLists($moduleName, $moduleUnitID);
 
-            $oCampaignImportContacts = $this->getWorkflowImportContacts($moduleName, $moduleUnitID);
+            $oCampaignImportContacts = (new self)->getWorkflowImportContacts($moduleName, $moduleUnitID);
 
-            $oCampaignImportTags = $this->getWorkflowImportTags($moduleName, $moduleUnitID);
+            $oCampaignImportTags = (new self)->getWorkflowImportTags($moduleName, $moduleUnitID);
 
-            $oCampaignImportSegments = $this->getWorkflowImportSegments($moduleName, $moduleUnitID);
+            $oCampaignImportSegments = (new self)->getWorkflowImportSegments($moduleName, $moduleUnitID);
 
 
             //Exclude Specific Data
-            $oTotalExcludeSubscribers = $this->getWorkflowExcludeListSubscribers($moduleName, $moduleUnitID);
+            $oTotalExcludeSubscribers = (new self)->getWorkflowExcludeListSubscribers($moduleName, $moduleUnitID);
 
-            $oExcludeLists = $this->getWorkflowExcludeLists($moduleName, $moduleUnitID);
+            $oExcludeLists = (new self)->getWorkflowExcludeLists($moduleName, $moduleUnitID);
 
-            $oCampaignExcludeContacts = $this->getWorkflowExcludeContacts($moduleName, $moduleUnitID);
+            $oCampaignExcludeContacts = (new self)->getWorkflowExcludeContacts($moduleName, $moduleUnitID);
 
-            $oCampaignExcludeTags = $this->getWorkflowExcludeTags($moduleName, $moduleUnitID);
+            $oCampaignExcludeTags = (new self)->getWorkflowExcludeTags($moduleName, $moduleUnitID);
 
-            $oCampaignExcludeSegments = $this->getWorkflowExcludeSegments($moduleName, $moduleUnitID);
+            $oCampaignExcludeSegments = (new self)->getWorkflowExcludeSegments($moduleName, $moduleUnitID);
 
 
             //Get Import/exclude buttons
@@ -2845,11 +2826,10 @@ class WorkflowModel extends Model {
                 'oCampaignTags' => $oCampaignImportTags,
                 'oCampaignSegments' => $oCampaignImportSegments
             );
-            
-            $importViewHtml =  View::make("admin.workflow2.partials.importButtonTags", $aDataImportButtons);            
+
+            $importViewHtml = view("admin.workflow2.partials.importButtonTags", $aDataImportButtons);
             $sImportButtons = $importViewHtml->render();
-
-
+            
 
             //loaded broadcast properties tags
             $aDataExportButtons = array(
@@ -2860,12 +2840,10 @@ class WorkflowModel extends Model {
                 'oCampaignTags' => $oCampaignExcludeTags,
                 'oCampaignSegments' => $oCampaignExcludeSegments
             );
-            
-            $excludeViewHtml = View::make("admin.workflow2.partials.excludeButtonTags", $aDataExportButtons);            
+
+            $excludeViewHtml = view("admin.workflow2.partials.excludeButtonTags", $aDataExportButtons);
             $sExcludButtons = $excludeViewHtml->render();
-
-
-
+            
             $aData = array(
                 'oLists' => $oLists,
                 'oSegments' => $oSegments,
@@ -3866,7 +3844,7 @@ class WorkflowModel extends Model {
 
         if (!empty($moduleName) && !empty($moduleUnitID)) {
             //Fliter subscibers to be used after excluding filters at the end of the function
-            $oPreSyncCampaignSubscribers = $this->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+            $oPreSyncCampaignSubscribers = self::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
 
             //pre($oPreSyncCampaignSubscribers);
             if (!empty($oPreSyncCampaignSubscribers)) {
