@@ -460,15 +460,15 @@ $(document).ready(function() {
 			$(this).addClass('activechat');
 		
 			$('.msg_tab_sec').trigger('click');
-		   userId = $(this).attr('userId');
-			var RwebId = $(this).attr('RwebId');
+		     var popupId = $(this).attr('userId');
+			var popupToken = $(this).attr('RwebId');
 			
-			showNoteslisting(userId);
+			//showNoteslisting(userId);
 			$('.hIdelater').show();
 			$('#livesearchVal').val('');
 			$('#livesearch').html('');
 			$('.addtionalSearchDiv').hide();
-		    loadMessageChat('');
+		    loadMessageChat(popupId,popupToken);
 			$('.bigwebassign').html('Assigned to: '+$(this).attr('assign_to'));
 			setTimeout(function(){ searchMainSmsPrevMsg('',$('.MainsearchChatMsg').val()); }, 2000);
 			
