@@ -76,7 +76,7 @@
 			            $.ajax({
 							url: "<?php echo base_url('/admin/smschat/add_contact_notes'); ?>",
 							type: "POST",
-							data: {notes: NotesContent, NotesTo: NotesTo,source:source,notes_from:'sms'},
+							data: {notes: NotesContent, NotesTo: NotesTo,source:source,notes_from:'sms',_token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (response) {
 								if (response.status == "success") {
