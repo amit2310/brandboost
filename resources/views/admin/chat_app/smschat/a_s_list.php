@@ -48,7 +48,7 @@ foreach ($a_s_list as $key => $value) {
         $country = !empty($usersdata->country) ? $usersdata->country : '';
 
 ?>
-		<div  phone_no_format="<?php echo phoneNoFormat($phoneNumber); ?>" id="sidebar_Sms_box_<?php echo $phoneNumber; ?>" class="sms_user sms_twr_<?php echo $phoneNumber; ?>" incSmsWid="<?php echo $incid; ?>" rewId="" phone_no="<?php echo trim($phoneNumber); ?>" <?php if ($showRed) { ?>wait="yes" token="<?php echo $value->token; ?>"<?php
+		<div  phone_no_format="<?php echo phoneNoFormat($phoneNumber); ?>" id="sidebar_Sms_box_<?php echo $phoneNumber; ?>" class="sms_user sms_twr_<?php echo $phoneNumber; ?>" phone_no="<?php echo trim($phoneNumber); ?>" <?php if ($showRed) { ?>wait="yes" token="<?php echo $value->token; ?>"<?php
         } ?> user_id="<?php echo $usersdata->id; ?>" >
 		<div class="avatarImage"><?php echo showUserAvtar($avatar, $usersdata->firstname, $usersdata->lastname, 28, 28, 11); ?></div>
 		

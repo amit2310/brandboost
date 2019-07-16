@@ -39,11 +39,11 @@ foreach ($favChatlist as $key => $value) {
 			$Usrvalue  = getSupportUser($userid);
 			$Usrvalue = $Usrvalue[0];
     
-        // $favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id,$incid[0]->id);
+    	$avatar = !empty($usersdata->avatar) ? $usersdata->avatar : '';
         
 ?>
 		<div RwebId="<?php echo $token; ?>" token="<?php echo $token; ?>" class="sidebar-user-box all_user_chat tk_<?php echo $token; ?>" assign_to="<?php echo assignto($token); ?>" incWid="" id="sidebar-user-box-<?php echo $userid; ?>" user_id="<?php echo $userid; ?>" >
-		<div class="avatarImage"><?php echo showUserAvtar($usersdata->avatar, $first_name, $last_name, 28, 28, 11); ?>
+		<div class="avatarImage"><?php echo showUserAvtar($avatar, $first_name, $last_name, 28, 28, 11); ?>
 			
 			
 		</div>
@@ -79,7 +79,7 @@ foreach ($favChatlist as $key => $value) {
 		<div class="col-md-12">
 		<div class="header_sec"> <i class="icon-info22 txt_blue"></i><?php echo $first_name . ' ' . $last_name; ?></div>
 		<div class="sidebar_info p20 text-center">
-		<?php echo showUserAvtar($usersdata->avatar, $first_name, $last_name, 60, 60, 21); ?>
+		<?php echo showUserAvtar($avatar, $first_name, $last_name, 60, 60, 21); ?>
 		<h3 class="mb0"><?php echo $first_name. ' ' .$last_name; ?></h3>
 
 		</div>
