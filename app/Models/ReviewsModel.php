@@ -81,6 +81,40 @@ class ReviewsModel extends Model {
                 ->get();
         return $oData;
     }
+	
+	/**
+     * Returns filtered reviews of a campaign
+     * @param type $campaignID
+     * @return campaign all reviews 
+     */
+	public static function getCampaignReviews($campaignID) {
+		$oData = DB::table('tbl_reviews')
+                ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
+                ->leftJoin('tbl_users', 'tbl_reviews.user_id', '=', 'tbl_users.id')
+                ->leftJoin('tbl_subscribers', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
+                ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country', 'tbl_subscribers.id AS subscriberId', 'tbl_brandboost.brand_title')
+                ->where('tbl_reviews.status', 1)
+				->when(!empty($campaignID), function ($query) use ($campaignID) {
+                    return $query->where('tbl_reviews.campaign_id', $campaignID);
+                })
+                ->orderBy('tbl_reviews.id', 'desc')
+                ->get();
+        return $oData;
+    }
+	
+	/**
+     * Returns get campaign reviews data
+     * @param type $campaignID
+     * @return campaign all reviews 
+     */
+	public static function getCampReviews($campaignID) {
+        $aData = array();
+		$oData = DB::table('tbl_reviews')
+                ->where('tbl_reviews.campaign_id', $campaignID)
+                ->orderBy('tbl_reviews.id', 'desc')
+                ->get();
+        return $oData;
+    }
 
     public function getBrandBoostCampaign($campaignID, $hash = false) {
 
@@ -278,24 +312,6 @@ class ReviewsModel extends Model {
         $this->db->order_by("tbl_reviews_site.id", "DESC");
         $rResponse = $this->db->get("tbl_reviews_site");
         //echo $this->db->last_query();exit;
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
-    }
-
-    public function getCampaignReviews($campaignID) {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar, tbl_users.country, tbl_subscribers.id as subscriberId, tbl_brandboost.brand_title");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
-        $this->db->join("tbl_brandboost", "tbl_brandboost.id=tbl_reviews.campaign_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_subscribers.user_id=tbl_users.id", "LEFT");
-        $this->db->where("tbl_reviews.status", 1);
-        if (!empty($campaignID)) {
-            $this->db->where("tbl_reviews.campaign_id", $campaignID);
-        }
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $rResponse = $this->db->get("tbl_reviews");
-
         if ($rResponse->num_rows() > 0) {
             $aData = $rResponse->result();
         }
@@ -1017,19 +1033,6 @@ class ReviewsModel extends Model {
             return true;
         else
             return false;
-    }
-
-    public function getCampReviews($campaignID) {
-        $aData = array();
-        $this->db->select("tbl_reviews.*");
-        $this->db->where("tbl_reviews.campaign_id", $campaignID);
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $rResponse = $this->db->get("tbl_reviews");
-
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
     }
 
     public function getCampReviewsRA($campaignID) {

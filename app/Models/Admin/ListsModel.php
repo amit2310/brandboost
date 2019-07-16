@@ -40,22 +40,22 @@ class ListsModel extends Model {
 
         return $oData;
     }
-
-    public function checkIfListExists($listName, $userID, $listID) {
-        $this->db->where("user_id", $userID);
-        $this->db->where("list_name", $listName);
-        if ($listID != '') {
-            $this->db->where_not_in("id", $listID);
-        }
-        $this->db->where("delete_status", 0);
-        $result = $this->db->get('tbl_common_lists');
-        if ($result->num_rows() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+	
+	/* 
+     * get active subscriber list data
+     * @param type $listId
+     * @return subscriber list
+     */
+	 
+    public static function getAllSubscribersList($listId) {
+		$oData = DB::table('tbl_brandboost_users')
+                ->where('brandboost_id', $listId)
+                ->orderBy('id', 'desc')        
+                ->get();                
+                
+        return $oData;
     }
-
+    
     /**
      * Gets the Automation lists
      * @param type $automationID
@@ -69,6 +69,22 @@ class ListsModel extends Model {
                 ->where('tbl_common_lists.delete_status', 0)
                 ->get();
         return $oData;
+    }
+	
+	
+	public function checkIfListExists($listName, $userID, $listID) {
+        $this->db->where("user_id", $userID);
+        $this->db->where("list_name", $listName);
+        if ($listID != '') {
+            $this->db->where_not_in("id", $listID);
+        }
+        $this->db->where("delete_status", 0);
+        $result = $this->db->get('tbl_common_lists');
+        if ($result->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getAutomationExcludedLists($automationID) {
@@ -255,19 +271,7 @@ class ListsModel extends Model {
         return $response;
     }
 
-    public function getAllSubscribersList($listId) {
-        $response = array();
-        $this->db->where('brandboost_id', $listId);
-        $this->db->order_by('id', 'DESC');
-        $this->db->from('tbl_brandboost_users');
-        //echo $this->db->last_query();exit;
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
+  
     public function getSubscribers($userID, $listId) {
         $response = array();
         $this->db->select('email,firstname,lastname,phone');
@@ -339,5 +343,4 @@ class ListsModel extends Model {
         }
         return $response;
     }
-
 }

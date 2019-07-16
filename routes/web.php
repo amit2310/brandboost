@@ -27,6 +27,9 @@ Route::get('admin/modules/emails/overview','Admin\Modules\Emails@overview');
 Route::get('admin/modules/emails','Admin\Modules\Emails@index');
 Route::get('admin/modules/emails/setupAutomation/{id}','Admin\Modules\Emails@setupAutomation');
 
+//Onsite and Offsite Modules
+Route::get('admin/brandboost/onsite_overview','Admin\Brandboost@onsiteOverview');
+
 //chat module
 Route::get('admin/webchat','Admin\WebChat@index');
 Route::get('admin/webchat/getUserinfo','Admin\WebChat@getUserinfo');
