@@ -21,7 +21,8 @@ foreach ($favChatlist as $key => $value) {
     $chatMessage = $chatMessageRes->message;
     $created = $chatMessageRes->created;
    
-        $fileext = end(explode('.', $chatMessage));
+        $fileext = explode('.', $chatMessage);
+        $fileext = end($fileext);
         if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
         $userMessage = "File Attachment";
         }
@@ -41,12 +42,12 @@ foreach ($favChatlist as $key => $value) {
         // $favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id,$incid[0]->id);
         
 ?>
-		<div RwebId="<?php echo $token; ?>" <?php if ($is_pending_small=='8') { ?>wait="yes" <?php } ?> token="<?php echo $value->token; ?>" class="sidebar-user-box all_user_chat tk_<?php echo $token; ?>" assign_to="<?php echo assignto($token); ?>" incWid="" id="sidebar-user-box-<?php echo $userid; ?>" user_id="<?php echo $userid; ?>" >
+		<div RwebId="<?php echo $token; ?>" token="<?php echo $token; ?>" class="sidebar-user-box all_user_chat tk_<?php echo $token; ?>" assign_to="<?php echo assignto($token); ?>" incWid="" id="sidebar-user-box-<?php echo $userid; ?>" user_id="<?php echo $userid; ?>" >
 		<div class="avatarImage"><?php echo showUserAvtar($usersdata->avatar, $first_name, $last_name, 28, 28, 11); ?>
 			
 			
 		</div>
-		<span style="display:none" id="fav_star_<?php echo $userID; ?>"></span>
+		<span style="display:none" id="fav_star_<?php echo $userid; ?>"></span>
 		<span class="slider-username contacts"><?php echo $first_name . ' ' . $last_name; ?> &nbsp; <i class="fa  star_icon <?php echo $value->favourite == 1?'fa-star yellow':'fa-star-o'; ?> favouriteUser" userId="<?php echo $value->id; ?>"></i></span>
 		 
 		
@@ -70,10 +71,7 @@ foreach ($favChatlist as $key => $value) {
         } ?></span>
 
 		<span class="user_status"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>" datetime="<?php echo $created; ?>"></time></span>
-		<?php if ($is_pending==8) { ?>
-			<i style="float:right" class="pr_<?php echo $value->token; ?> fa fa-circle txt_red fsize9"></i>
-			<?php
-        } ?>
+		
 		
 		<!--box hover chat details -->   
 		<div class="user_details p0">

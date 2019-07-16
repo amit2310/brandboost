@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Modules;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Modules\EmailsModel;
+use Illuminate\Http\Request;
 use App\Models\Admin\UsersModel;
+use App\Models\Admin\ListsModel;
+use App\Models\Admin\WorkflowModel;
+use App\Models\Admin\TemplatesModel;
+use App\Models\Admin\Modules\EmailsModel;
 use Cookie;
 use Session;
 
@@ -44,9 +47,8 @@ class Emails extends Controller {
             'oEvents' => $oEvents,
             'moduleName' => 'automation'
         );
-        
+
         return view('admin.modules.emails.overview', $aData);
-        
     }
 
     /**
@@ -80,52 +82,30 @@ class Emails extends Controller {
             'moduleName' => 'automation',
             'automation_type' => 'email'
         );
-        
+
         return view('admin.modules.emails.index', $aData);
-        
     }
 
-    public function sms() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $user_role = $aUser->user_role;
-        if ($user_role == 1) {
-            $userID = '';
-        }
-        $oAutomations = $this->mEmails->getEmailAutomations($userID, '', 'sms');
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs">SMS </a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Automations" class="sidebar-control active hidden-xs ">Automations</a></li>
-                    </ul>';
-        $aData = array(
-            'title' => 'SMS Automations',
-            'pagename' => $breadcrumb,
-            'oAutomations' => $oAutomations,
-            'bActiveSubsription' => $bActiveSubsription,
-            'user_role' => $user_role,
-            'type' => 'sms',
-            'automation_type' => 'sms'
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/modules/emails/index', $aData);
-    }
-
-    public function setupAutomation($id = '') {
+    /**
+     * This method is used to setup or configure an Email automation
+     * @param Request $request
+     */
+    public function setupAutomation(Request $request) {
+        $id = $request->id;
         if (empty($id)) {
-            redirect("admin/modules/emails");
+            redirect("/admin/modules/emails");
             exit;
         }
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
+        $mEmails = new EmailsModel();
+        $mUsers = new UsersModel();
+        $mLists = new ListsModel();
+        $mWorkflow = new WorkflowModel();
+        $mTemplates = new TemplatesModel();
+        $bActiveSubsription = $mUsers->isActiveSubscription();
         //get Automation Info
-        $oAutomations = $this->mEmails->getEmailAutomations($userID, $id);
+        $oAutomations = $mEmails->getEmailAutomations($userID, $id);
         if (empty($oAutomations)) {
             redirect("/admin/modules/emails");
             exit;
@@ -133,21 +113,21 @@ class Emails extends Controller {
 
         $automationType = $oAutomations[0]->automation_type;
         //get Lists
-        $oLists = $this->mLists->getLists($userID, '', 'active');
+        $oLists = $mLists->getLists($userID, '', 'active');
 
         //get Automation Events
-        $oEvents = $this->mEmails->getAutomationEvents($id);
+        $oEvents = $mEmails->getAutomationEvents($id);
 
         //get Automation Lists
-        $oAutomationLists = $this->mLists->getAutomationLists($id);
+        $oAutomationLists = $mLists->getAutomationLists($id);
 
         $moduleName = 'automation';
-        $oEvents = $this->mWorkflow->getWorkflowEvents($id, $moduleName);
+        $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
         $oEventsType = array('main', 'followup');
-        $oCampaignTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
-        $oTemplates = $this->mTemplates->getCommonTemplates();
-        $oDraftTemplates = $this->mTemplates->getCommonDraftTemplates($userID, '');
-        $oCategories = $this->mTemplates->getCommonTemplateCategories();
+        $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
+        $oTemplates = $mTemplates->getCommonTemplates();
+        $oDraftTemplates = $mTemplates->getCommonDraftTemplates($userID, '');
+        $oCategories = $mTemplates->getCommonTemplateCategories();
 
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -181,8 +161,39 @@ class Emails extends Controller {
             'oUser' => $oUser,
             'automation_type' => $automationType
         );
+        
+        return view('admin.modules.emails.email-workflow-beta', $pageData);
+        
+    }
 
-        $this->template->load('admin/admin_template_new', 'admin/modules/emails/email-workflow-beta', $pageData);
+    public function sms() {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $user_role = $aUser->user_role;
+        if ($user_role == 1) {
+            $userID = '';
+        }
+        $oAutomations = $this->mEmails->getEmailAutomations($userID, '', 'sms');
+        $bActiveSubsription = $this->mUser->isActiveSubscription();
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs">SMS </a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Automations" class="sidebar-control active hidden-xs ">Automations</a></li>
+                    </ul>';
+        $aData = array(
+            'title' => 'SMS Automations',
+            'pagename' => $breadcrumb,
+            'oAutomations' => $oAutomations,
+            'bActiveSubsription' => $bActiveSubsription,
+            'user_role' => $user_role,
+            'type' => 'sms',
+            'automation_type' => 'sms'
+        );
+
+        $this->template->load('admin/admin_template_new', 'admin/modules/emails/index', $aData);
     }
 
     public function setupSMSAutomation($id = '') {

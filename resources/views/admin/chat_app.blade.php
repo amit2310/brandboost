@@ -898,13 +898,13 @@ $aTwilioAc = getTwilioAccountCustom($loginUserData->id);
 if (!empty($hasweb_access)) {
     if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
         if ($hasweb_access->bb_number != "") {
-            $loginUserData->mobile = phone_display_custom_helper($hasweb_access->bb_number);
+            $loginUserData->mobile = numberForamt($hasweb_access->bb_number);
         } else {
-            $loginUserData->mobile = phone_display_custom_helper($aTwilioAc->contact_no);
+            $loginUserData->mobile = numberForamt($aTwilioAc->contact_no);
         }
     }
 } else {
-    $loginUserData->mobile = phone_display_custom_helper($aTwilioAc->contact_no);
+    $loginUserData->mobile = numberForamt($aTwilioAc->contact_no);
 }
 ?>
 <script>
@@ -3863,22 +3863,26 @@ if ($isLoggedInTeam) {
 
 
 							<div class="user_img_sec regular slider" id="CurrentUserListing" style="display: none;">
-								<?php if (count($getactiveChatboxlisting) > 0) {
+								<?php 
+								if (count($getactiveChatboxlisting) > 0) {
         foreach ($getactiveChatboxlisting as $key => $value) {
             $valueData = getAllUser($value->subscriber_id);
             if (count($valueData) <= 0) {
                 $valueData = getSubscribersInfo($value->subscriber_id);
             }
-            $valueData = $valueData[0];
-            if ($value->type == 'webchat') {
-?>
-									<figure style="margin:15px 0;">
-										<a class="<?php echo $value->type; ?>" user_id="<?php echo $value->subscriber_id; ?>" href="javascript:void(0)"><?php echo showUserAvtar($valueData->avatar, $valueData->firstname, $valueData->lastname, 28, 28, 11); ?></a>
-										<span class="greendot"></span>
-									</figure>
-									
-									<?php
-            }
+
+            if(!empty($valueData[0])) {
+	            $valueData = $valueData[0];
+	            if ($value->type == 'webchat') {
+						?>
+						<figure style="margin:15px 0;">
+							<a class="<?php echo $value->type; ?>" user_id="<?php echo $value->subscriber_id; ?>" href="javascript:void(0)"><?php echo showUserAvtar($valueData->avatar, $valueData->firstname, $valueData->lastname, 28, 28, 11); ?></a>
+							<span class="greendot"></span>
+						</figure>
+						
+						<?php
+	            }
+	        }
         }
     } ?>
 								
@@ -3973,16 +3977,18 @@ if ($isLoggedInTeam) {
             if (count($valueData) <= 0) {
                 $valueData = getSubscribersInfo($value->subscriber_id);
             }
-            $valueData = $valueData[0];
-            if ($value->type == 'smschat') {
-?>
-									<figure>
-										<a class="<?php echo $value->type; ?>" user_id="<?php echo $value->subscriber_id; ?>" href="javascript:void(0)"><?php echo showUserAvtar($valueData->avatar, $valueData->firstname, $valueData->lastname, 28, 28, 11); ?></a>
-										<span class="greendot"></span>
-									</figure>
-									
-									<?php
-            }
+            if(!empty($valueData[0])) {
+	            $valueData = $valueData[0];
+	            if ($value->type == 'smschat') {
+										?>
+										<figure>
+											<a class="<?php echo $value->type; ?>" user_id="<?php echo $value->subscriber_id; ?>" href="javascript:void(0)"><?php echo showUserAvtar($valueData->avatar, $valueData->firstname, $valueData->lastname, 28, 28, 11); ?></a>
+											<span class="greendot"></span>
+										</figure>
+										
+										<?php
+	            }
+	        }
         }
     } ?>
 							</div> 

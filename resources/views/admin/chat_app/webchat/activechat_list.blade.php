@@ -5,6 +5,7 @@ $flag = 0;
 $loginUserData = getLoggedUser();
 
 foreach ($activechatlist as $key => $value) {
+
     $token = "";
     $userid="";
     $chatMessage = "";
@@ -41,12 +42,12 @@ foreach ($activechatlist as $key => $value) {
         // $favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id,$incid[0]->id);
         $token = ($token) ? $token : '';
 ?>
-		<div RwebId="<?php echo $token; ?>" token="<?php echo $value->token; ?>" class="sidebar-user-box all_user_chat tk_<?php echo $token; ?>" assign_to="<?php echo assignto($token); ?>" incWid="" id="sidebar-user-box-<?php echo $userid; ?>" user_id="<?php echo $userid; ?>" >
+		<div RwebId="<?php echo $token; ?>" token="<?php echo $token; ?>" class="sidebar-user-box all_user_chat tk_<?php echo $token; ?>" assign_to="<?php echo assignto($token); ?>" incWid="" id="sidebar-user-box-<?php echo $userid; ?>" user_id="<?php echo $userid; ?>" >
 		<div class="avatarImage"><?php echo showUserAvtar($usersdata->avatar, $first_name, $last_name, 28, 28, 11); ?>
 			
 			
 		</div>
-		<span style="display:none" id="fav_star_<?php echo $userID; ?>"></span>
+		<span style="display:none" id="fav_star_<?php echo $userid; ?>"></span>
 		<span class="slider-username contacts"><?php echo $first_name . ' ' . $last_name; ?> &nbsp; <i class="fa  star_icon <?php echo $value->favourite == 1?'fa-star yellow':'fa-star-o'; ?> favouriteUser" userId="<?php echo $value->id; ?>"></i></span>
 		 
 		
@@ -71,10 +72,7 @@ foreach ($activechatlist as $key => $value) {
 
 		<span class="user_status"><time class="autoTimeUpdate autoTime_<?php echo  $userid; ?>" 
         datetime="<?php echo usaDate($created); ?>" title="<?php echo usaDate($created); ?>"><?php //echo chatTimeAgo($value->created); ?></time></span>
-		<?php if ($is_pending==8) { ?>
-			<i style="float:right" class="pr_<?php echo $value->token; ?> fa fa-circle txt_red fsize9"></i>
-			<?php
-        } ?>
+		
 		
 		<!--box hover chat details -->   
 		<div class="user_details p0">

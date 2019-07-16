@@ -62,13 +62,13 @@
 			<div style="width: 250px;float: left;margin: 5px 20px 0 0;display:none" class="chat_search_icon addtionalSearchDiv">
 				<input style="width: calc(100% - 22px);"
 				id="livesearchVal" onkeyup="showResult(this.value)" type="text" name="livesearchVal" value="" placeholder="Search">
-				<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+				<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
                 <div id="livesearch"></div>
 			</div>
 			<!--New Search-->
 			
 			
-			<h6 class="panel-title hIdelater pull-left mr20"><a class="heading-elements-toggle"><i class="icon-more"></i></a> &nbsp; &nbsp;  <a style="cursor:pointer;"><img src="/new_pages/assets/images/phone_green.png" class="" alt="" style="margin-top: 5px;" width="" height=""> SMS:</a> &nbsp; <span class="Dnumber"><?php echo mobileNoFormat($defaultNumber); ?> </span>  </h6>
+			<h6 class="panel-title hIdelater pull-left mr20"><a class="heading-elements-toggle"><i class="icon-more"></i></a> &nbsp; &nbsp;  <a style="cursor:pointer;"><img src="/assets/images/phone_green.png" class="" alt="" style="margin-top: 5px;" width="" height=""> SMS:</a> &nbsp; <span class="Dnumber"><?php echo mobileNoFormat($defaultNumber); ?> </span>  </h6>
 			
 		
 			<div class="heading-elements" class="hIdelater">
@@ -105,7 +105,7 @@
 				
 				<div class="tdropdown ml10 mr10 open">
 										<a style="margin:0!important;" class="dropdown-toggle fsize13" data-toggle="dropdown" aria-expanded="true"><img src="/assets/images/icon_clock_dark.png" width="14"> <i class="icon-arrow-down22"></i></a>
-										<ul style="right: 0px!important;" class="dropdown-menu dropdown-menu-right chat_dropdown">
+										<ul style="right: 0px!important; display: none;" class="dropdown-menu dropdown-menu-right chat_dropdown">
 										  <li><strong>Later today</strong> <span class="text-right pull-right">in 3 hours</span></li>
 										  <li><strong>Tomorrow</strong> <span class="text-right pull-right">Sat 8am</span></li>
 										  <li><strong>Monday</strong> <span class="text-right pull-right">Mon 8am</span></li>

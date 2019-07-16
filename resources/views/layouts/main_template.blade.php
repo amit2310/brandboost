@@ -233,6 +233,9 @@ if ($uriSegment == 'offsite') {
                 <!-- Page content -->
                 <div class="page-content">
                     <!-- Main content -->
+
+                    {{-- @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers)) --}}
+
                     <?php
                     if ($isLoggedInTeam) {
                         $hasweb_access = getMemberchatpermission($isLoggedInTeam);

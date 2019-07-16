@@ -37,16 +37,19 @@ class SettingsModel extends Model {
         return $oSettings;
     }
 
-    public function getSlugdetails($slug) {
 
-        $this->db->select("tbl_notifications_manager.*");
-        $this->db->where('tbl_notifications_manager.notification_slug', $slug);
-        $query = $this->db->get('tbl_notifications_manager');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
+   /**
+  * This function used to get slug information for notification purpose
+     * @param type $userID
+     * @return type
+     */
+
+    public static function getSlugdetails($slug) {
+        $oData = DB::table('tbl_notifications_manager')
+        ->where('tbl_notifications_manager', $slug)
+        ->get();
+        return $oData;
+
     }
 
     public function getallowNotification() {
@@ -113,16 +116,23 @@ class SettingsModel extends Model {
         }
     }
 
-    public function getCreditValues($id = '') {
-        if ($id > 0) {
-            $this->db->where('id', $id);
-        }
-        $result = $this->db->get('tbl_credit_values');
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
+
+
+    /**
+    * This function will return client account credit values 
+    * @param type $clientID
+    * @return type
+    */
+
+    public static function getCreditValues($id = '') {
+        $response = DB::table('tbl_credit_values')
+                ->when(($id > 0), function ($query) use ($id) {
+                    return $query->where('id', $id);
+                })
+                ->get();
         return $response;
+
+
     }
 
     public function getCreditValuesHistory() {
@@ -231,16 +241,21 @@ class SettingsModel extends Model {
         }
     }
 
-    public function checkPermissionentryDetails($userID, $slug) {
-        $response = array();
-        $this->db->where('user_id', $userID);
-        $this->db->where('notification_slug', $slug);
-        $result = $this->db->get("tbl_notifications_permission_entry");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        //echo $this->db->last_query();exit;
-        return $response;
+
+     /**
+    * This function is use to check the module permissons allow for notifications 
+    * @param type $clientID
+    * @return type
+    */
+
+    public static function checkPermissionentryDetails($userID, $slug) {
+
+        $oData = DB::table('tbl_notifications_permission_entry')
+        ->where('user_id', $userID)
+        ->where('notification_slug', slug)
+        ->get();
+        return $oData;
+        
     }
 
     public function updateNotificationPermissonData($aData, $userID) {
