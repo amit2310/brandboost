@@ -1,6 +1,7 @@
 <?php
 
 $oCampaignSegments = $aContactSelectionData['oCampaignImportSegments'];
+$aSelectedSegments = array();
 if (!empty($oCampaignSegments)) {
     foreach ($oCampaignSegments as $oRec) {
         $aSelectedSegments[] = $oRec->segment_id;
@@ -43,7 +44,7 @@ if (!empty($oCampaignSegments)) {
                         $userID = $aUser->id;
                         $oSegments = $aContactSelectionData['oSegments'];
                         foreach ($oSegments as $oSegment):
-                            $oSubscribers = $this->mWorkflow->getWorkflowSegmentSubscribers($oSegment->id, $userID);
+                            $oSubscribers = App\Models\Admin\WorkflowModel::getWorkflowSegmentSubscribers($oSegment->id, $userID);
                             ?>
                             <tr role="row">
                                 <td style="display: none;"><?php echo date('m/d/Y', strtotime($oSegment->created)); ?></td>

@@ -42,6 +42,7 @@
 <?php
 $aUser = getLoggedUser();
 $userID = $aUser->id;
+$aListIDs = array();
 if (!empty($oAutomationLists)) {
     foreach ($oAutomationLists as $oAutomationList) {
         $aListIDs[] = $oAutomationList->list_id;
@@ -140,7 +141,7 @@ if (!empty($oAutomationLists)) {
     But this was not the only jamming jeopardy he was exposed to. Unappalled by the massacre made upon them...</textarea>
                                 </div>
                                 <?php if (!empty($oCampaignTags)): ?>
-                                <div class="form-group" style="display:none;">
+                                    <div class="form-group" style="display:none;">
                                         <div class="note-btn-group btn-group note-view">
                                             <?php foreach ($oCampaignTags as $oTags): ?>
                                                 <button type="button" data-toggle="tooltip" title="Click to insert Tag" data-tag-name="<?php echo $oTags; ?>" class="btn btn-default add_btn draggable insert_tag_button"><?php echo $oTags; ?></button>
@@ -178,7 +179,7 @@ if (!empty($oAutomationLists)) {
                                             <p id="smsWorkflowCampaignPreview"></p>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <p><small><?php echo date("h:i"). ' '. dataFormat(); ?></small></p>
+                                        <p><small><?php echo date("h:i") . ' ' . dataFormat(); ?></small></p>
                                     </div>
 
                                 </div>
@@ -212,14 +213,14 @@ if (!empty($oAutomationLists)) {
                                 </div>
 
 <?php if (!empty($oCampaignTags)): ?>
-                                        <div class="form-group">
-                                            <div class="note-btn-group btn-group note-view">
+                                            <div class="form-group">
+                                                <div class="note-btn-group btn-group note-view">
     <?php foreach ($oCampaignTags as $oTags): ?>
-                                                        <button type="button" data-toggle="tooltip" title="Click to insert Tag" data-tag-name="<?php echo $oTags; ?>" class="btn btn-default add_btn draggable insert_tag_button"><?php echo $oTags; ?></button>
+                                                                <button type="button" data-toggle="tooltip" title="Click to insert Tag" data-tag-name="<?php echo $oTags; ?>" class="btn btn-default add_btn draggable insert_tag_button"><?php echo $oTags; ?></button>
     <?php endforeach; ?>
 
+                                                </div>
                                             </div>
-                                        </div>
 <?php endif; ?>
                             </div>
                         </div>
@@ -546,8 +547,8 @@ if (!empty($oAutomationLists)) {
                                             </div>
                                         </div>
                                         <div class="col-md-12 text-right mt-20">
-                                            <input type="hidden" name="brandboost_id" value="<?php echo $brandboostID; ?>" />
-                                            <input name="event_id" id="event_id" value="<?php echo $oMainEvent->id; ?>" type="hidden">
+                                            <input type="hidden" name="brandboost_id" value="<?php echo!empty($brandboostID) ? $brandboostID : ''; ?>" />
+                                            <input name="event_id" id="event_id" value="<?php echo!empty($oMainEvent->id) ? $oMainEvent->id : ''; ?>" type="hidden">
                                             <button type="button" class="btn dark_btn" id="createNewWorkflowEvent"><i class="fa fa-edit"></i><span> &nbsp; Save</span></button>
                                         </div>
                                     </form>
@@ -567,21 +568,25 @@ if (!empty($oAutomationLists)) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach ($subscribersData as $key => $subData) {
-                                        $srNo = $key + 1;
-                                        ?>
-                                        <tr>
-                                            <td><input class=""  type="checkbox"></td>
-                                            <td class="text-center"><?php echo $srNo; ?></td>
-                                            <td><div class="media-left"> <a href="javascript:void()" class="text-default text-semibold"><?php echo $subData->firstname; ?> <?php echo $subData->lastname; ?></a>
-                                                    <div class="text-muted text-size-small"><?php echo $subData->email; ?></div>
-                                                    <div class="text-muted text-size-small"><?php echo $subData->phone; ?></div>
-                                                </div></td>
-                                            <td><div class="text-semibold"><?php echo date("M d, Y", strtotime($subData->created)); ?></div>
-                                                <div class="text-muted text-size-small"><?php echo date("h:i A", strtotime($subData->created)); ?> (<?php echo timeAgo($subData->created); ?>)</div></td>
+                                    if (!empty($subscribersData)) {
+                                        foreach ($subscribersData as $key => $subData) {
+                                            $srNo = $key + 1;
+                                            ?>
+                                            <tr>
+                                                <td><input class=""  type="checkbox"></td>
+                                                <td class="text-center"><?php echo $srNo; ?></td>
+                                                <td><div class="media-left"> <a href="javascript:void()" class="text-default text-semibold"><?php echo $subData->firstname; ?> <?php echo $subData->lastname; ?></a>
+                                                        <div class="text-muted text-size-small"><?php echo $subData->email; ?></div>
+                                                        <div class="text-muted text-size-small"><?php echo $subData->phone; ?></div>
+                                                    </div></td>
+                                                <td><div class="text-semibold"><?php echo date("M d, Y", strtotime($subData->created)); ?></div>
+                                                    <div class="text-muted text-size-small"><?php echo date("h:i A", strtotime($subData->created)); ?> (<?php echo timeAgo($subData->created); ?>)</div></td>
 
-                                        </tr>
-                                    <?php } ?>
+                                            </tr>
+                                        <?php
+                                        }
+                                    }
+                                    ?>
 
                                 </tbody>
                             </table>
@@ -626,7 +631,7 @@ if (!empty($oAutomationLists)) {
                             <p id="wf_sms_campaign_preview"></p>
                         </div>
                         <div class="clearfix"></div>
-                        <p><small><?php echo date("h:i"). ' '. dataFormat(); ?></small></p>
+                        <p><small><?php echo date("h:i") . ' ' . dataFormat(); ?></small></p>
                     </div>
 
                 </div>
@@ -646,21 +651,21 @@ if (!empty($oAutomationLists)) {
                         <div class="email_editor_left">
                             <div class="p20 bbot"><p class="m0 txt_dark fw500">Email Configuration</p></div>
                             <div class="p20">
-<!--                                <div class="form-group">
-                                    <label class="">Email template</label>
-                                    <select name="template_source" id="wf_preview_edit_template_source" class="form-control h52" disabled="disabled">
-
-                                        <?php
-                                        foreach ($oDefaultTemplates as $oTemplate) {
-                                            if (($oTemplate->status == '1') && ($oTemplate->template_type == 'email' || $oTemplate->template_type == 'Email')):
-                                                ?>
-                                                <option value="<?php echo $oTemplate->id; ?>"><?php echo $oTemplate->template_name; ?></option>
-                                                <?php
-                                            endif;
-                                        }
+                                <!--                                <div class="form-group">
+                                                                    <label class="">Email template</label>
+                                                                    <select name="template_source" id="wf_preview_edit_template_source" class="form-control h52" disabled="disabled">
+                                
+                                <?php
+                                foreach ($oDefaultTemplates as $oTemplate) {
+                                    if (($oTemplate->status == '1') && ($oTemplate->template_type == 'email' || $oTemplate->template_type == 'Email')):
                                         ?>
-                                    </select>
-                                </div>-->
+                                                                                        <option value="<?php echo $oTemplate->id; ?>"><?php echo $oTemplate->template_name; ?></option>
+                                        <?php
+                                    endif;
+                                }
+                                ?>
+                                                                    </select>
+                                                                </div>-->
 
                                 <div class="form-group bbot pb20">
                                     <label class="">Language</label>
@@ -675,7 +680,7 @@ if (!empty($oAutomationLists)) {
                                     <input name="subject" id="wf_preview_edit_template_subject" class="form-control h52" required="" placeholder="Onsite Invitation Email" type="text">
                                 </div>
 
-                                <?php if ($moduleName != 'automation'): ?>
+<?php if ($moduleName != 'automation'): ?>
                                     <div class="form-group">
                                         <label class="">Greetings</label>
                                         <input name="greeting" id="wf_preview_edit_template_greeting" class="form-control h52" required="" placeholder="Hi, We’d love your feeed..." type="text">
@@ -686,9 +691,9 @@ if (!empty($oAutomationLists)) {
                                         <a class="fsize14 open_editor" href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/open_editor.png"/> </i> &nbsp; Open editor</a>
                                         <textarea name="introduction" id="wf_preview_edit_template_introduction" style="min-height: 238px; resize: none; padding-top: 58px!important;" class="form-control p20 fsize12">I have hinted that I would often jerk poor Queequeg from between the whale and the ship—where he would occasionally fall, from the incessant rolling and swaying of both. 
 
-    But this was not the only jamming jeopardy he was exposed to. Unappalled by the massacre made upon them...</textarea>
+        But this was not the only jamming jeopardy he was exposed to. Unappalled by the massacre made upon them...</textarea>
                                     </div>
-                                <?php endif; ?>
+<?php endif; ?>
                             </div>
                             <div class="p20 pt0" id="wfActiveCtr">
                                 <input type="hidden" name="moduleName" id="wf_preview_edit_template_moduleName" value="<?php echo $moduleName; ?>" />
@@ -753,21 +758,21 @@ if (!empty($oAutomationLists)) {
                         <div class="email_editor_left">
                             <div class="p20 bbot"><p class="m0 txt_dark fw500">SMS Configuration</p></div>
                             <div class="p20">
-<!--                                <div class="form-group">
-                                    <label class="">SMS template</label>
-                                    <select name="template_source" id="wf_preview_edit_sms_template_source" class="form-control h52" disabled="disabled">
-
-                                        <?php
-                                        foreach ($oDefaultTemplates as $oTemplate) {
-                                            if (($oTemplate->status == '1') && ($oTemplate->template_type == 'sms' || $oTemplate->template_type == 'Sms')):
-                                                ?>
-                                                <option value="<?php echo $oTemplate->id; ?>"><?php echo $oTemplate->template_name; ?></option>
-                                                <?php
-                                            endif;
-                                        }
+                                <!--                                <div class="form-group">
+                                                                    <label class="">SMS template</label>
+                                                                    <select name="template_source" id="wf_preview_edit_sms_template_source" class="form-control h52" disabled="disabled">
+                                
+                                <?php
+                                foreach ($oDefaultTemplates as $oTemplate) {
+                                    if (($oTemplate->status == '1') && ($oTemplate->template_type == 'sms' || $oTemplate->template_type == 'Sms')):
                                         ?>
-                                    </select>
-                                </div>-->
+                                                                                        <option value="<?php echo $oTemplate->id; ?>"><?php echo $oTemplate->template_name; ?></option>
+                                        <?php
+                                    endif;
+                                }
+                                ?>
+                                                                    </select>
+                                                                </div>-->
 
                                 <div class="form-group bbot pb20">
                                     <label class="">Language</label>
@@ -776,7 +781,7 @@ if (!empty($oAutomationLists)) {
 
                                     </select>
                                 </div>
-                                <?php if ($moduleName != 'automation'): ?>
+<?php if ($moduleName != 'automation'): ?>
                                     <div class="form-group">
                                         <label class="">Greetings</label>
                                         <input name="greeting" id="wf_preview_edit_sms_template_greeting" class="form-control h52" required="" placeholder="Hi, We’d love your feeed..." type="text">
@@ -787,10 +792,10 @@ if (!empty($oAutomationLists)) {
                                         <a class="fsize14 open_editor" href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/open_editor.png"/> </i> &nbsp; Open editor</a>
                                         <textarea name="introduction" id="wf_preview_edit_sms_template_introduction" style="min-height: 238px; resize: none; padding-top: 58px!important;" class="form-control p20 fsize12">I have hinted that I would often jerk poor Queequeg from between the whale and the ship—where he would occasionally fall, from the incessant rolling and swaying of both. 
 
-    But this was not the only jamming jeopardy he was exposed to. Unappalled by the massacre made upon them...</textarea>
+        But this was not the only jamming jeopardy he was exposed to. Unappalled by the massacre made upon them...</textarea>
                                     </div>
 
-                                <?php endif; ?>
+<?php endif; ?>
 
                             </div>
                             <div class="p20 pt0" id="wfSMSActiveCtr">
@@ -823,7 +828,7 @@ if (!empty($oAutomationLists)) {
                                             <p id="wf_preview_edit_sms_template_content_popup"></p>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <p><small><?php echo date("h:i"). ' '. dataFormat(); ?></small></p>
+                                        <p><small><?php echo date("h:i") . ' ' . dataFormat(); ?></small></p>
                                     </div>
 
                                 </div>
@@ -1013,7 +1018,7 @@ if (!empty($oAutomationLists)) {
                                                         <option value="">Choose Template</option>
                                                         <?php
                                                         foreach ($oDefaultTemplates as $oTemplate) {
-															//pre($oTemplate);
+                                                            //pre($oTemplate);
                                                             if (($oTemplate->status == '1') && ($oTemplate->template_type == 'sms' || $oTemplate->template_type == 'Sms')):
                                                                 ?>
                                                                 <option value="<?php echo $oTemplate->id; ?>"><?php echo $oTemplate->template_name; ?></option>

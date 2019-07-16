@@ -11,21 +11,6 @@ $userID = $aUser->id;
     <div class="panel-body p20 pt0 bkg_white">
         <div class="profile_headings m0 mb10 txt_green">CONFIGURATION </div>
 
-        <!--<div class="form-group">
-            <label class="control-label">Phone number</label>
-            <select class="form-control h52" disabled="disabled">
-                <option selected="selected"><?php echo mobileNoFormat($oTwilioAc->contact_no); ?></option>
-
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <label class="control-label">Message</label>
-            <p style="resize: none; min-height: 160px; overflow: auto;" class="form-control p20 fsize12"  id="wfSMSMenuContent"></p>
-
-        </div>
-        -->
-
         <div class="bbot pb20">
             <label class="custmo_checkbox pull-left">
                 <input type="checkbox" checked="checked">

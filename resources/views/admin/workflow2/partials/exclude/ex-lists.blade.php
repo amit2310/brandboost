@@ -1,5 +1,6 @@
 <?php
 $oExcludedLists = $aContactSelectionData['oExcludeLists'];
+$aListIDs = array();
 if (!empty($oExcludedLists)) {
     foreach ($oExcludedLists as $oExcludedList) {
         $aListIDs[] = $oExcludedList->list_id;

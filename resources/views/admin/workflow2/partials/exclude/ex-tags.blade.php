@@ -1,5 +1,6 @@
 <?php
 $oCampaignTags = $aContactSelectionData['oCampaignExcludeTags'];
+$aSelectedTags = array();
 if (!empty($oCampaignTags)) {
     foreach ($oCampaignTags as $oRec) {
         $aSelectedTags[] = $oRec->tag_id;
@@ -41,7 +42,7 @@ if (!empty($oCampaignTags)) {
                         $aTags = $aContactSelectionData['aTags'];
                         foreach ($aTags as $aTag):
                             $tagID = $aTag->tagid;
-                            $oTagSubscribers = $this->mWorkflow->getWorkflowTagSubscribers($tagID);
+                            $oTagSubscribers = App\Models\Admin\WorkflowModel::getWorkflowTagSubscribers($tagID);
                             ?>
                             <tr role="row">
                                 <td style="display: none;"><?php echo date('m/d/Y', strtotime($aTag->tag_created)); ?></td>
