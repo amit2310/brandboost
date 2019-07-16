@@ -1,3 +1,11 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
+
 <?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign'); ?>
 <?php
 $iActiveCount = $iArchiveCount = 0;
@@ -204,7 +212,7 @@ if (!empty($aBrandbosts)) {
 
                 <?php 
                     if($viewstats == true){
-                        $this->load->view("admin/brandboost/campaign-tabs/onsite/overview_stats");
+						@include('admin.brandboost.campaign-tabs.onsite.overview_stats');
                     }
                 ?>
 
@@ -280,11 +288,13 @@ if (!empty($aBrandbosts)) {
                                             //if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
                                             $list_id = $data->id;
                                             $user_id = $data->user_id;
-                                            $revCount = getCampaignReviewCount($data->id);
-                                            $revRA = getCampaignReviewRA($data->id);
-                                            $allSubscribers = $this->rLists->getAllSubscribersList($data->id);
-                                           
-                                            $subs = '';
+                                            //$revCount = getCampaignReviewCount($data->id);
+                                            //$revRA = getCampaignReviewRA($data->id);
+                                            //$allSubscribers = \App\Models\Admin\ListsModel::getAllSubscribersList($data->id);
+											//pre($allSubscribers); die;
+                                           $allSubscribers = array();
+										   $newContacts = 0;
+                                            /*$subs = '';
                                             if (!empty($allSubscribers)) {
                                                 $subs = $allSubscribers[0];
                                                 $newContacts = 0;
@@ -298,7 +308,7 @@ if (!empty($aBrandbosts)) {
                                                         $iActiveContactCount++;
                                                     }
                                                 }
-                                            }
+                                            }*/
 
                                             if(!empty($subs->s_created)) {
                                                 $lastListTime = timeAgo($subs->s_created);
@@ -306,34 +316,41 @@ if (!empty($aBrandbosts)) {
                                             else {
                                                 $lastListTime = '<div class="media-left">
                                                           <div class="">
-                                                            <span class="text-muted text-size-small">[No Data]</span>                                                          </div>
+                                                            <span class="text-muted text-size-small">[No Data]</span></div>
                                                         </div>';
                                             }
 
-                                            $siteRevCount = getCampaignSiteReviewCount($data->id);
-                                            $siteRevRA = getCampaignSiteReviewRA($data->id);
-                                            $brandImgArray = unserialize($data->brand_img);
+                                            //$siteRevCount = getCampaignSiteReviewCount($data->id);
+											$siteRevCount = 1;
+                                            //$siteRevRA = getCampaignSiteReviewRA($data->id);
+											$siteRevRA = 1;
+                                            
+											/*$brandImgArray = unserialize($data->brand_img);
                                             $brand_img = $brandImgArray[0]['media_url'];
 
                                             if (empty($brand_img)) {
                                                 $imgSrc = base_url('assets/images/default_table_img2.png');
                                             } else {
                                                 $imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
-                                            }
+                                            }*/
+											$imgSrc = base_url('assets/images/default_table_img2.png');
                                             ?>
 
 
                                             <?php
-                                            $reviewRequests = $this->mBrandboost->getReviewRequest($data->id, '');
-                                            $getSendRequest = count($reviewRequests);
-                                            $getSendRequestSms = getSendRequest($data->id, 'sms');
-                                            $getSendRequestEmail = getSendRequest($data->id, 'email');
+                                            $reviewRequests = \App\Models\Admin\BrandboostModel::getReviewRequest($data->id, '');
+                                            //$getSendRequest = count($reviewRequests);
+											$getSendRequest =1;
+                                            //$getSendRequestSms = getSendRequest($data->id, 'sms');
+											$getSendRequestSms = 1;
+                                            //$getSendRequestEmail = getSendRequest($data->id, 'email');
+											$getSendRequestEmail = 1;
                                             $getSendRequestEmailPersentage = $getSendRequestEmail * 100 / $getSendRequest;
                                             $getSendRequestSmsPersentage = $getSendRequestSms * 100 / $getSendRequest;
 
-                                            $reviewResponse = $this->mBrandboost->getReviewRequestResponse($data->id);
-                                            $getResCount = count($reviewResponse);
-                                            
+                                            $reviewResponse = \App\Models\Admin\BrandboostModel::getReviewRequestResponse($data->id);
+                                            //$getResCount = count($reviewResponse);
+                                            $getResCount = 1;
                                             if($data->id == 190){
                                                //pre($reviewResponse);
                                                //die;
@@ -377,7 +394,7 @@ if (!empty($aBrandbosts)) {
                                             $totalGraph = $getResCount * 100 / $getSendRequest;
                                             $totalGraph = $totalGraph > 100 ? 100 : $totalGraph;
 
-                                            $reviewUserData = $this->mUser->getUserInfo($reviewResponse[0]->user_id);
+                                            $reviewUserData = \App\Models\Admin\UsersModel::getUserInfo(35); //$reviewResponse[0]->user_id
                                             ?>
 
                                             <tr id="append-<?php echo $data->id; ?>" class="selectedClass">
@@ -400,7 +417,7 @@ if (!empty($aBrandbosts)) {
                                                 </td>
 
                                                 <td>
-                                                    <?php echo ratingView($revRA); ?>
+                                                    <?php //echo ratingView($revRA); ?>
                                                 </td>
                                                 <td>														
                                                     <div class="media-left">
@@ -789,7 +806,7 @@ if (!empty($aBrandbosts)) {
   </div>
 </div>
 
-<?php $this->load->view("admin/modals/segments/segments-popup");?>
+@include('admin.modals.segments.segments-popup')
 <script src="<?php echo base_url(); ?>assets/js/modules/segments/segments.js" type="text/javascript"></script>
                                                                             
 <!-- /addBrandboost -->
@@ -1400,9 +1417,6 @@ if (!empty($aBrandbosts)) {
         $('[data-toggle="tooltip"]').tooltip();
 
     });
-
-
-
-
 </script>
+@endsection
 

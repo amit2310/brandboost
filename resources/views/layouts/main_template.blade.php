@@ -234,7 +234,7 @@ if ($uriSegment == 'offsite') {
                 <div class="page-content">
                     <!-- Main content -->
 
-                     @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers))
+                    {{-- @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers)) --}}
 
                     <?php
                     if ($isLoggedInTeam) {
