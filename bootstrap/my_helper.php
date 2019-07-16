@@ -948,17 +948,17 @@ if (!function_exists('FileSizeConvert')) {
 }
 
 
-
-
+ /**
+ * This function will return subscriber by the charName
+ * @param type $userID
+ * @param type $char
+ * @return type
+ */
 if (!function_exists('bycharuser')) {
-
     function bycharuser($loginid, $value) {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $result = $CI->mSubscriber->getGlobalSubscribersByChar($loginid, $value);
-        return $result;
+        $oData = \App\Models\Admin\SubscriberModel::getGlobalSubscribersByChar($loginid, $value);
+        return $oData;
     }
-
 }
 
 if (!function_exists('getMySubscribers')) {

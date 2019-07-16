@@ -4019,7 +4019,7 @@ if ($isLoggedInTeam) {
 								
 								<!--++++++++++++ wait chat list +++++++++++++++-->
 								<div class="w_list" style="background-image:none; display:none">
-									@include('admin.chat_app.smschat.w_s_list', array('mobile' => $loginUserData->mobile, 'w_s_list' => $w_s_list))
+									
 								</div>
 								<!--++++++++++++ wait chat list +++++++++++++++-->
 								</div>
@@ -4029,7 +4029,6 @@ if ($isLoggedInTeam) {
 								<div class="c_list" style="background-image:none; display:none ">
 									<?php
     $initNumber = "";
-    $owners = getowners($loginUserData->id);
     $autocmpSearch = array();
     $contactCount = 0;
     $flag = 0;
@@ -4039,7 +4038,8 @@ if ($isLoggedInTeam) {
         if (!empty($getCharUserList)) {
             foreach ($getCharUserList as $userData) {
                 $userDataDetail = getUserDetail($userData->user_id);
-                $favUser = getFavSmsUser($loginUserData->id, $userData->phone);
+                $favUser = '';
+                //$favUser = getFavSmsUser($loginUserData->id, $userData->phone);
                 //if(!empty($userDataDetail)) {
                 //$favUser = $this->smsChat->getSMSFavouriteBySubsId($userData->id);
                 if ($flag == 0) {
@@ -4047,12 +4047,13 @@ if ($isLoggedInTeam) {
                     $incId = $userData->id;
                     $flag = 1;
                 }
+                $avatar = !empty($userDataDetail->avatar) ? $userDataDetail->avatar : '';
 ?>
-													<div  id="sidebar_Sms_box_<?php echo phoneDisplay($userData->phone); ?>" phone_no_format="<?php echo mobileNoFormatChat($userData->phone); ?>" subscriberphone="<?php echo phoneDisplay($userData->phone); ?>" phone_no="<?php echo phoneDisplay($userData->phone); ?>" class="sms_user"  user_id="<?php echo $userId; ?>" >
-														<div class="avatarImage"><?php echo showUserAvtar($userDataDetail->avatar, $userData->firstname, $userData->lastname, 28, 28, 11); ?></div>
-														<span style="display:none" id="fav_star_<?php echo $userID; ?>">
-															<?php if (!in_array($userID, $newFav)) { ?>
-																<a style="cursor: pointer;" class="favourite" status="1" user_id="<?php echo $userID; ?>"><i class="icon-star-full2 text-muted sidechatstar"></i></a>
+													<div  id="sidebar_Sms_box_<?php echo phoneDisplay($userData->phone); ?>" phone_no_format="<?php echo mobileNoFormatChat($userData->phone); ?>" subscriberphone="<?php echo phoneDisplay($userData->phone); ?>" phone_no="<?php echo phoneDisplay($userData->phone); ?>" class="sms_user"  user_id="" >
+														<div class="avatarImage"><?php echo showUserAvtar($avatar, $userData->firstname, $userData->lastname, 28, 28, 11); ?></div>
+														<span style="display:none" id="fav_star_">
+															<?php if (1) { ?>
+																<a style="cursor: pointer;" class="favourite" status="1" user_id=""><i class="icon-star-full2 text-muted sidechatstar"></i></a>
 																<?php
                 } else { ?>
 																<i class="icon-star-full2 txt_blue sidechatstarshow"></i>
