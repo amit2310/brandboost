@@ -21,7 +21,8 @@ foreach ($oldchat_list as $key => $value) {
     $chatMessage = $chatMessageRes->message;
     $created = $chatMessageRes->created;
    
-        $fileext = end(explode('.', $chatMessage));
+        $fileext = explode('.', $chatMessage);
+        $fileext = end($fileext);
         if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
         $userMessage = "File Attachment";
         }
@@ -43,9 +44,9 @@ foreach ($oldchat_list as $key => $value) {
         // $favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id,$incid[0]->id);
         
 ?>
-		<div RwebId="<?php echo $token; ?>" <?php if ($is_pending_small=='8') { ?>wait="yes" <?php } ?> token="<?php echo $value->token; ?>" class="sidebar-user-box all_user_chat tk_<?php echo $token; ?>" assign_to="<?php echo assignto($token); ?>" incWid="" id="sidebar-user-box-<?php echo $userid; ?>" user_id="<?php echo $userid; ?>" >
+		<div RwebId="<?php echo $token; ?>" token="<?php echo $token; ?>" class="sidebar-user-box all_user_chat tk_<?php echo $token; ?>" assign_to="<?php echo assignto($token); ?>" incWid="" id="sidebar-user-box-<?php echo $userid; ?>" user_id="<?php echo $userid; ?>" >
 		<div class="avatarImage"><?php echo showUserAvtar($usersdata->avatar, $first_name, $last_name, 28, 28, 11); ?></div>
-		<span style="display:none" id="fav_star_<?php echo $userID; ?>"></span>
+		<span style="display:none" id="fav_star_<?php echo $userid; ?>"></span>
 		<span class="slider-username contacts"><?php echo $first_name . ' ' . $last_name; ?> </span>
 		 
 		<span id="Small_assign_message_<?php echo $userid; ?>" class="slider-phone contacts txt_dark" style="margin:0px;color: #6a7995!important; font-weight:bold;padding-left:40px; font-size:12px!important"><?php echo $userMessage; ?></span> 
@@ -67,10 +68,7 @@ foreach ($oldchat_list as $key => $value) {
         } ?></span>
 
 		<span class="user_status"><time class="autoTimeUpdate" id="autoTime_<?php echo  $userid; ?>" datetime="<?php echo usaDate($created); ?>" title="<?php echo usaDate($created); ?>"><?php //echo chatTimeAgo($value->created); ?></time></span>
-		<?php if ($is_pending==8) { ?>
-			<i style="float:right" class="pr_<?php echo $value->token; ?> fa fa-circle txt_red fsize9"></i>
-			<?php
-        } ?>
+		
 		
 		<!--box hover chat details -->   
 		<div class="user_details p0">
@@ -81,8 +79,6 @@ foreach ($oldchat_list as $key => $value) {
 		<?php echo showUserAvtar($usersdata->avatar, $first_name, $last_name, 60, 60, 21); ?>
 		<h3 class="mb0"><?php echo $first_name. ' ' .$last_name; ?></h3>
 
-		<h6><strong><?php echo $cityName; ?>, <?php echo $country_code; ?></strong></h6>
-		<h6><strong><?php echo $address . ' ' . $city . ' ' . $state . ', ' . $country; ?></strong></h6>
 		</div>
 		<div class="p20 pt0 pb10">
 		<div class="interactions p0 pt10 pb10 btop">

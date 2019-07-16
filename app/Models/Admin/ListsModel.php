@@ -41,21 +41,6 @@ class ListsModel extends Model {
         return $oData;
     }
 
-    /**
-     * Gets the Automation lists
-     * @param type $automationID
-     * @return type
-     */
-    public function getAutomationLists($automationID) {
-        $oData = DB::table('tbl_automations_emails_lists')
-            ->leftJoin('tbl_common_lists', 'tbl_common_lists.id', '=' , 'tbl_automations_emails_lists.list_id')
-            ->select('tbl_automations_emails_lists.*', 'tbl_common_lists.list_name')
-            ->where('tbl_automations_emails_lists.automation_id', $automationID)
-            ->where('tbl_common_lists.delete_status', 0)    
-            ->get();
-        return $oData;
-    }
-
     public function checkIfListExists($listName, $userID, $listID) {
         $this->db->where("user_id", $userID);
         $this->db->where("list_name", $listName);
@@ -69,6 +54,21 @@ class ListsModel extends Model {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Gets the Automation lists
+     * @param type $automationID
+     * @return type
+     */
+    public function getAutomationLists($automationID) {
+        $oData = DB::table('tbl_automations_emails_lists')
+                ->leftJoin('tbl_common_lists', 'tbl_common_lists.id', '=', 'tbl_automations_emails_lists.list_id')
+                ->select('tbl_automations_emails_lists.*', 'tbl_common_lists.list_name')
+                ->where('tbl_automations_emails_lists.automation_id', $automationID)
+                ->where('tbl_common_lists.delete_status', 0)
+                ->get();
+        return $oData;
     }
 
     public function getAutomationExcludedLists($automationID) {

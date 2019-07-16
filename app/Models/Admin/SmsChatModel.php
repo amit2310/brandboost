@@ -142,12 +142,9 @@ class SmsChatModel extends Model {
      */
 
     public function addSmsChatData($data) {
+      $oData = DB::table('tbl_chat_sms_thread')->insert($data);
+      return $oData;
 
-        $result = $this->db->insert('tbl_chat_sms_thread', $data);
-        if ($result)
-            return true;
-        else
-            return false;
     }
 
 
@@ -166,20 +163,21 @@ class SmsChatModel extends Model {
 
     }
 
+
+     /**
+     * this function is used to return subscriber list based on the input provided 
+     * @param type $loginId
+     * @param type $inVar
+     * @return type
+     */
+
+
     public function getlivesearchData($loginId, $inVar) {
-        $result = array();
-        if ($loginId != '' && $inVar != '') {
-            $where = "(( `phone` LIKE '" . $inVar . "%'))";
-            $this->db->where($where);
-            $this->db->where('owner_id', $loginId);
-            $this->db->from('tbl_subscribers');
-            $query = $this->db->get();
-            ///echo $this->db->last_query(); 
-            if ($query->num_rows() > 0) {
-                $result = $query->result();
-            }
-        }
-        return $result;
+         $oData = DB::select(DB::raw(" select * from tbl_subscribers where (( `phone` LIKE '" . $inVar . "%')) 
+            AND owner_id='".$loginId."'  "));
+
+         return $oData;
+
     }
 
     public function getSMSThreadsByPhoneNoByFilter($fromNo, $toNo, $offsetVal, $dateStartFilter, $dateEndFilter) {

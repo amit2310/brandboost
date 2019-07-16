@@ -82,7 +82,10 @@ foreach ($activeOnlysmsUsers as $key => $value) {
 		.borderClass { border: solid 1px red!important; padding: 10px!important;}
 		.media.chatbox_new .media-right { width:100px!important}
 		
-	
+	.chat_search_icon {	position: relative;	height: 21px;	width: 100%;	border: none;}
+	.chat_search_icon input[type="text"]{width: 222px; border: none; border:none; height: 20px; font-size: 11px; float: left; margin: 0px 0 0 0; padding: 0px;}
+	.chat_search_icon button[type="submit"]{width: 20px;height: 20px; border: none; background: none; padding: 0px;}
+	.chat_search_icon button[type="submit"] img{vertical-align: top!important}
 		
 		.conversation_list {margin: 0; padding: 0;}
 		.conversation_list li{ list-style: none; display: inline-block; }
@@ -165,7 +168,7 @@ foreach ($activeOnlysmsUsers as $key => $value) {
 								<input style="display:none;width: calc(100% - 22px)" type="text" name="SmsContactBox" placeholder="Search" id="SmsContactBox" value="">
 								
 								<input type="hidden" name="afterTrigger" id="afterTrigger" value="">
-								<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+								<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
 							</div>
 						</div>
 						<!--++++++++SEARCH BOX++++++-->
@@ -584,11 +587,16 @@ $(document).ready(function() {
 					url: '<?php echo base_url('admin/smschat/sendMsg'); ?>',
 					type: "POST",
 					data: {'phoneNo' : userPhoneNo, 'messageContent' : messageContent, 'smstoken': newToken, 'moduleName' : 'chat', 'media_type': '', 'videoUrl': '',_token: '{{csrf_token()}}'},
-					dataType: "html",
 					success: function (data) {
-						
+						if(data == 'ERROR!')
+						{
+						  alert('Number is not valid');
+					}
+					else
+					{
 						var msgHeight = document.getElementById("smsSearcharea").scrollHeight;
 						$( '#smsSearcharea' ).scrollTop(msgHeight);
+					}
 					
 						},error: function(){
 					}
@@ -634,7 +642,7 @@ $(document).ready(function() {
 			}
 			
 			fetch('<?php echo base_url("/dropzone/upload_s3_attachment/" . $loginUserData->id . "/smschat"); ?>', { 
-				method: 'POST',
+				method: 'GET',
 				body: formData // This is your file object
 			}).then(
 			response => response.json() // if the response is a JSON object
@@ -984,7 +992,7 @@ $(document).on("keyup",".MainsearchSmsChatMsg", function() {
 $.ajax({
 url: '<?php echo base_url('admin/smschat/getSearchSmsListByinput'); ?>',
 type: "POST",
-data: {searchVal:$('#MainsearchSmsChatMsg').val()},
+data: {searchVal:$('#MainsearchSmsChatMsg').val(),_token: '{{csrf_token()}}'},
 success: function (data) {
 $('#InitalSms').hide();
 $('#AjaxSearchSms').show();

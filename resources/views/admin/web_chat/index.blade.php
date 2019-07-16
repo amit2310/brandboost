@@ -559,14 +559,15 @@ function loadMessageChat(userId,incId,clickvalue=null)
 			}
 			
 			var newToken = aToken+'n'+sToken;
-		     socket.emit('subscribe',newToken);
+		    socket.emit('subscribe',newToken);
 			
 			socket.emit('subscribe',newToken);
 			$.ajax({
-				url: '<?php echo base_url('admin/smschat/getUserinfo'); ?>',
+				url: '<?php echo base_url('admin/webchat/getUserinfo'); ?>',
 				type: "POST",
 				data: {'userId':userID,'incId':incId,'token':newToken},
 				success: function (data) {
+					console.log(data);
 					var obj =  $.parseJSON(data);
 					$('.forceunassign a').removeClass('active');
 					$('.default').removeClass('active');

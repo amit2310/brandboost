@@ -4,8 +4,9 @@
   use Aws\S3\S3Client;
   use Aws\Exception\AwsException; */
 require_once 'vendor/autoload.php'; // Loads the library
-
+use Illuminate\Http\Request;
 use Twilio\Rest\Client;
+use Twilio\Jwt\ClientToken;
 
 /**
  * Used to check where or not user logged in and if yes then return complete user information
@@ -644,15 +645,21 @@ if (!function_exists('chatTimeAgo')) {
 }
 
 
+
+/**
+* This function is used to update the credit usage for client account (sms/email)
+* @param type $clientID
+* @return type
+*/
+
 if (!function_exists('updateCreditUsage')) {
 
     function updateCreditUsage($aData = array()) {
 
-        $CI = & get_instance();
-        $CI->load->model("admin/Settings_model", "mmSetting");
+       
         if (!empty($aData['client_id'])) {
             $direction = $aData['direction'];
-            $oCreditVal = $CI->mmSetting->getCreditValues();
+            $oCreditVal = \App\Models\Admin\SettingsModel::getCreditValues();
             if (!empty($oCreditVal)) {
                 $iEmailCredits = $iSMSOutbound = $iSMSInbound = $iMMSOutbound = $iMMSInbound = 0;
                 foreach ($oCreditVal as $oCr) {
@@ -1427,14 +1434,7 @@ if (!function_exists('add_notifications')) {
 
     function add_notifications($aData, $eventName = '', $ownerID = '', $notifyAdminAlso = false) {
 
-// event_type :- user_registration, change_password, create_order, added_text_review, added_video_review
-        $CI = & get_instance();
-
-        $CI->load->model("admin/Notifications_model", "mNotifications");
-        $CI->load->model("admin/Users_model", 'mUser');
-        $CI->load->model("admin/Settings_model", "mSetting");
-        $CI->load->model("admin/Team_model", "mmT");
-        $isLoggedInTeam = $CI->session->userdata("team_user_id");
+       $mNotifications  = new NotificationModel();
 
         $bSysPermission = true;
         $bEmailPermission = true;
@@ -1444,19 +1444,19 @@ if (!function_exists('add_notifications')) {
 
 
             if ($isLoggedInTeam) {
-                $aTeamInfo = $CI->mmT->getTeamMember($isLoggedInTeam, $ownerID);
+                $aTeamInfo = \App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $ownerID);
                 $teamMemberName = $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname;
             }
 
-            $oUser = $CI->mUser->getUserInfo($ownerID);
-            $AdminUser = $CI->mUser->getUserInfo('1');
+            $oUser = \App\Models\Admin\UsersModel::getUserInfo($ownerID);
+            $AdminUser = \App\Models\Admin\UsersModel::getUserInfo('1');
             $userRole = $oUser->user_role;
-            $slugData = $CI->mSetting->getSlugdetails($eventName);
-            $checkEntry = $CI->mSetting->checkPermissionentryDetails($ownerID, $eventName);
+            $slugData = \App\Models\Admin\SettingsModel::getSlugdetails($eventName);
+            $checkEntry = \App\Models\Admin\SettingsModel::checkPermissionentryDetails($ownerID, $eventName);
             $slugDetails = $slugData[0];
             $slugDetails->client = 1;
             if ($userRole != '1') {
-                $aSysPermissionData = $CI->mSetting->getNotificationSettings($ownerID);
+                $aSysPermissionData = \App\Models\Admin\SettingsModel::getNotificationSettings($ownerID);
                 $Phone = (!empty($aSysPermissionData->notify_phone)) ? $aSysPermissionData->notify_phone : $oUser->mobile;
             }
 
@@ -1466,21 +1466,21 @@ if (!function_exists('add_notifications')) {
 //+++++++++++++ CLIENT AREA +++++++++++++++
 
             if ($eventName == 's3_storage_alert') {
-                $bSaved = $CI->mNotifications->addNotification($aData);
-                $bSaved = $CI->mNotifications->addClientEmailNotification($aData, $aSysPermissionData->notify_email, $oUser, $eventName, $teamMemberName);
+                $bSaved = $mNotifications->addNotification($aData);
+                $bSaved = $mNotifications->addClientEmailNotification($aData, $aSysPermissionData->notify_email, $oUser, $eventName, $teamMemberName);
             } else {
                 if ($slugDetails->client == 1 && $slugDetails->system == 1 && $aSysPermissionData->system_notify == 1) {
-                    $bSaved = $CI->mNotifications->addNotification($aData);
+                    $bSaved = $mNotifications->addNotification($aData);
                 }
 
                 if ($slugDetails->client == 1 && $slugDetails->email == 1 && $aSysPermissionData->email_notify == 1 && !empty($checkEntry->id)) {
-                    $bSaved = $CI->mNotifications->addClientEmailNotification($aData, $aSysPermissionData->notify_email, $oUser, $eventName, $teamMemberName);
+                    $bSaved = $mNotifications->addClientEmailNotification($aData, $aSysPermissionData->notify_email, $oUser, $eventName, $teamMemberName);
                 }
             }
 
 
             if ($slugDetails->client == 1 && $slugDetails->sms == 1 && $aSysPermissionData->sms_notify == 1 && !empty($checkEntry->id) && !empty($slugDetails->client_sms_content)) {
-                sendClientSMS($Phone, $slugDetails->client_sms_content, $oUser);
+                //sendClientSMS($Phone, $slugDetails->client_sms_content, $oUser);
                 $aUsage = array(
                     'client_id' => $ownerID,
                     'usage_type' => 'sms',
@@ -1491,7 +1491,7 @@ if (!function_exists('add_notifications')) {
                     'module_name' => 'sms notification',
                     'module_unit_id' => ''
                 );
-                updateCreditUsage($aUsage);
+                //updateCreditUsage($aUsage);
             }
 
 //+++++++++++++ CLIENT AREA +++++++++++++++
@@ -1503,12 +1503,12 @@ if (!function_exists('add_notifications')) {
 
             if ($slugDetails->admin == 1 && $slugDetails->email == 1) {
 
-                $bSaved = $CI->mNotifications->addAdminEmailNotification($aData, $AdminUser->email, $eventName);
+                $bSaved = $mNotifications->addAdminEmailNotification($aData, $AdminUser->email, $eventName);
             }
 
             if ($slugDetails->admin == 1 && $slugDetails->sms == 1 && !empty($slugDetails->admin_sms_content)) {
 
-                sendAdminSMS($AdminUser->mobile, $slugDetails->admin_sms_content);
+                //sendAdminSMS($AdminUser->mobile, $slugDetails->admin_sms_content);
             }
 
 //+++++++++++++ ADMIN AREA +++++++++++++++
@@ -1775,7 +1775,7 @@ if (!function_exists('sendClinetMMS')) {
 //echo 'testing data';
                     $res = $client->messages->create($toNum, $aRequest);
 //pre($res);
-                    return $res;
+                    return 1;
                 } else {
                     return false;
                 }
@@ -1791,6 +1791,13 @@ if (!function_exists('sendClinetMMS')) {
 }
 
 
+
+
+/**
+* This function will send sms through twilio API
+* @return type
+*/
+
 if (!function_exists('sendClinetSMS')) {
 
     function sendClinetSMS($aData = array()) {
@@ -1802,12 +1809,9 @@ if (!function_exists('sendClinetSMS')) {
                 $fromNum = $aData['from'];
                 $msg = $aData['msg'];
                 $charCount = strlen($msg);
-                $trackURL = $aData['smsTrackURL'];
                 $client = new Client($sid, $token);
                 $aRequest = array('from' => $fromNum, 'body' => $msg);
-                if (!empty($trackURL)) {
-                    $aRequest['statusCallback'] = $trackURL;
-                }
+               
                 if ($toNum != '' && $msg != '') {
 
                     if ($charCount > 500) {
@@ -1826,19 +1830,19 @@ if (!function_exists('sendClinetSMS')) {
                     } else {
 
                         $res = $client->messages->create($toNum, $aRequest);
+                        //$res->sid;
                     }
-
-                    return $res;
+                    
+                    return 1;
                 } else {
-                    return false;
+                    return 0;
                 }
             }
         } catch (Exception $ex) {
-//echo 'Message: ' .$ex->getMessage();
-            return false;
+            return 0;
         }
 
-        return false;
+        return 0;
     }
 
 }
@@ -2613,14 +2617,19 @@ if (!function_exists('searchByinput')) {
 
 }
 
+      /**
+    * this function is used to filter the sms list based on the input provided in sms chat
+    * @param type $Number
+     * @param type $inputval
+     * @return type
+     */
+
 if (!function_exists('searchSmsByinput')) {
 
     function searchSmsByinput($Number, $inputval) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $Res_subscribersData = $CI->mSubscriber->searchSmsByinputDetails($Number, $inputval);
-        return $Res_subscribersData;
+      
+        $oData = \App\Models\Admin\SubscriberModel::searchSmsByinputDetails($Number, $inputval);
+        return $oData;
     }
 
 }
@@ -2628,15 +2637,16 @@ if (!function_exists('searchSmsByinput')) {
 
 
 
-
+/**
+ * Get subscriber by user id
+ * @param type $userID
+ * @return type object
+ */
 if (!function_exists('getincIdByuserId')) {
 
     function getincIdByuserId($userID) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->getincIdByuserIdval($userID);
-        return $subscribersData;
+        $oData = \App\Models\Admin\SubscriberModel::getincIdByuserIdval($userID);
+        return $oData;
     }
 
 }
