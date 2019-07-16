@@ -508,6 +508,7 @@ if (!empty($aSelectedContacts)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="updateDraftTemplateName" id="updateDraftTemplateName" action="javascript:void();">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> &nbsp;Name your template <i class="icon-info22 fsize12 txt_grey"></i></h5>
@@ -668,7 +669,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '<?php echo base_url('admin/workflow/getWorkflowImportedProperties'); ?>',
             type: "POST",
-            data: {moduleName: moduleName, moduleUnitID: moduleUnitID},
+            data: {_token: '{{csrf_token()}}',moduleName: moduleName, moduleUnitID: moduleUnitID},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -686,7 +687,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '<?php echo base_url('admin/workflow/getWorkflowExportedProperties'); ?>',
             type: "POST",
-            data: {moduleName: moduleName, moduleUnitID: moduleUnitID},
+            data: {_token: '{{csrf_token()}}',moduleName: moduleName, moduleUnitID: moduleUnitID},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -703,7 +704,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '<?php echo base_url('admin/workflow/syncWorkflowAudience'); ?>',
             type: "POST",
-            data: {moduleName: moduleName, moduleUnitID: moduleUnitID},
+            data: {_token: '{{csrf_token()}}',moduleName: moduleName, moduleUnitID: moduleUnitID},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -733,7 +734,7 @@ if (!empty($aSelectedContacts)) {
             $.ajax({
                 url: '<?php echo base_url('admin/workflow/addContactToWorkflowCampaign'); ?>',
                 type: "POST",
-                data: {moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, contactId: contactId},
+                data: {_token: '{{csrf_token()}}',moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, contactId: contactId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -766,7 +767,7 @@ if (!empty($aSelectedContacts)) {
             $.ajax({
                 url: '<?php echo base_url('admin/workflow/addListToWorkflowCampaign'); ?>',
                 type: "POST",
-                data: {moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, selectedLists: listID},
+                data: {_token: '{{csrf_token()}}',moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, selectedLists: listID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -801,7 +802,7 @@ if (!empty($aSelectedContacts)) {
             $.ajax({
                 url: '<?php echo base_url('admin/workflow/addSegmentToWorkflowCampaign'); ?>',
                 type: "POST",
-                data: {moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, segmentId: segmentId},
+                data: {_token: '{{csrf_token()}}',moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, segmentId: segmentId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -834,7 +835,7 @@ if (!empty($aSelectedContacts)) {
             $.ajax({
                 url: '<?php echo base_url('admin/workflow/addTagToWorkflowCampaign'); ?>',
                 type: "POST",
-                data: {moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, tagId: tagId},
+                data: {_token: '{{csrf_token()}}',moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, tagId: tagId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -867,7 +868,7 @@ if (!empty($aSelectedContacts)) {
             $.ajax({
                 url: '<?php echo base_url('admin/workflow/addContactToExcludeWorkflowCampaign'); ?>',
                 type: "POST",
-                data: {moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, contactId: contactId},
+                data: {_token: '{{csrf_token()}}',moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, contactId: contactId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -899,7 +900,7 @@ if (!empty($aSelectedContacts)) {
             $.ajax({
                 url: '<?php echo base_url('admin/workflow/updateAutomationListsExcludedRecord'); ?>',
                 type: "POST",
-                data: {moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, selectedLists: listID},
+                data: {_token: '{{csrf_token()}}',moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, selectedLists: listID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -932,7 +933,7 @@ if (!empty($aSelectedContacts)) {
             $.ajax({
                 url: '<?php echo base_url('admin/workflow/addExcludeSegmentToWorkflowCampaign'); ?>',
                 type: "POST",
-                data: {moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, segmentId: segmentId},
+                data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, segmentId: segmentId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -964,7 +965,7 @@ if (!empty($aSelectedContacts)) {
             $.ajax({
                 url: '<?php echo base_url('admin/workflow/addExcludedTagToWorkflowCampaign'); ?>',
                 type: "POST",
-                data: {moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, tagId: tagId},
+                data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, tagId: tagId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1216,7 +1217,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/loadWorkflowEmailStats',
             type: "POST",
-            data: {moduleName: moduleName, moduleUnitId: moduleUnitId, eventId: eventId, campaign_id: campaign_id},
+            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitId: moduleUnitId, eventId: eventId, campaign_id: campaign_id},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1259,7 +1260,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/loadWorkflowSMSStats',
             type: "POST",
-            data: {moduleName: moduleName, campaign_id: campaign_id, moduleUnitId: moduleUnitId, eventId: eventId, },
+            data: {_token: '{{csrf_token()}}', moduleName: moduleName, campaign_id: campaign_id, moduleUnitId: moduleUnitId, eventId: eventId, },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1297,7 +1298,7 @@ if (!empty($aSelectedContacts)) {
             $.ajax({
                 url: '/admin/workflow/previewWorkflowCampaign',
                 type: "POST",
-                data: {moduleName: moduleName, campaignId: campaignId, moduleUnitId: moduleUnitId},
+                data: {_token: '{{csrf_token()}}', moduleName: moduleName, campaignId: campaignId, moduleUnitId: moduleUnitId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1341,7 +1342,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/updateWorkflowCampaign',
             type: "POST",
-            data: {moduleName: moduleName, subject: subject, greeting: greeting, introduction: introduction, template_source: template_source, campaignId: campaignId},
+            data: {_token: '{{csrf_token()}}', moduleName: moduleName, subject: subject, greeting: greeting, introduction: introduction, template_source: template_source, campaignId: campaignId},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1368,7 +1369,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/updateWorkflowCampaign',
             type: "POST",
-            data: {moduleName: moduleName, greeting: greeting, introduction: introduction, template_source: template_source, campaignId: campaignId},
+            data: {_token: '{{csrf_token()}}', moduleName: moduleName, greeting: greeting, introduction: introduction, template_source: template_source, campaignId: campaignId},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1400,14 +1401,7 @@ if (!empty($aSelectedContacts)) {
         $("#wf_edit_sms_template_greeting_EDITOR").text(greetText);
         $("#wf_edit_sms_template_greeting_PREVIEW").text(greetText);
     });
-    /*$(document).on("keyup", "#wf_preview_edit_template_introduction", function () {
-        var introText = $(this).val();
-        $("#wf_edit_template_introduction").text(introText);
-    });
-    $(document).on("keyup", "#wf_preview_edit_sms_template_greeting", function () {
-        var greetText = $(this).val();
-        $("#wf_edit_sms_template_greeting").text(greetText);
-    });*/
+    
     $(document).on("keyup", "#wf_preview_edit_sms_template_introduction", function () {
         var introText = $(this).val();
         introText = introText.replace(/\r\n|\r|\n/g, "<br />");
@@ -1441,7 +1435,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/updateEventTime',
             type: "POST",
-            data: {event_id: eventID, delay_value: timerValue, delay_unit: timerUnit, event_type: 'sent', 'moduleName': moduleName},
+            data: {_token: '{{csrf_token()}}', event_id: eventID, delay_value: timerValue, delay_unit: timerUnit, event_type: 'sent', 'moduleName': moduleName},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1461,7 +1455,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/updateEventTime',
             type: "POST",
-            data: {event_id: eventID, delay_value: timerValue, delay_unit: timerUnit, event_type: 'sent', 'moduleName': moduleName},
+            data: {_token: '{{csrf_token()}}', event_id: eventID, delay_value: timerValue, delay_unit: timerUnit, event_type: 'sent', 'moduleName': moduleName},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1483,7 +1477,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/sendTestEmailworkflowCampaign',
             type: "POST",
-            data: {moduleName: moduleName, moduleUnitID:moduleUnitID, campaignId: campaignId, email: email},
+            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID:moduleUnitID, campaignId: campaignId, email: email},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1509,7 +1503,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/sendTestEmailworkflowCampaign',
             type: "POST",
-            data: {moduleName: moduleName, moduleUnitID:moduleUnitID, campaignId: campaignId, email: email},
+            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID:moduleUnitID, campaignId: campaignId, email: email},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1529,7 +1523,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/sendTestEmailworkflowCampaign',
             type: "POST",
-            data: {moduleName: moduleName, moduleUnitID:moduleUnitID, campaignId: campaignId, email: email},
+            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID:moduleUnitID, campaignId: campaignId, email: email},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1548,7 +1542,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/sendTestSMSworkflowCampaign',
             type: "POST",
-            data: {'moduleName': moduleName, campaignId: campaignId, number: number},
+            data: {_token: '{{csrf_token()}}', 'moduleName': moduleName, campaignId: campaignId, number: number},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1566,7 +1560,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/sendTestSMSworkflowCampaign',
             type: "POST",
-            data: {'moduleName': moduleName, campaignId: campaignId, number: number},
+            data: {_token: '{{csrf_token()}}', 'moduleName': moduleName, campaignId: campaignId, number: number},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1589,7 +1583,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/sendTestSMSworkflowCampaign',
             type: "POST",
-            data: {moduleName: moduleName, moduleUnitID:moduleUnitID, campaignId: campaignId, number: number},
+            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID:moduleUnitID, campaignId: campaignId, number: number},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1631,7 +1625,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/sendTestSMSworkflowCampaign',
             type: "POST",
-            data: {'moduleName': moduleName, campaignId: campaignId, number: number},
+            data: {_token: '{{csrf_token()}}', 'moduleName': moduleName, campaignId: campaignId, number: number},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1725,7 +1719,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/addWorkflowNode',
             type: "POST",
-            data: {moduleName: moduleName, moduleUnitId: moduleUnitId, previous_event_id: previousID, emailTemplateId: emailTemplateId, smsTemplateId: smsTemplateId, source: source, delayVal: delayVal, delayUnit: delayUnit, 'current_event_id': currentID, 'event_type': event_type, node_type: node_type},
+            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitId: moduleUnitId, previous_event_id: previousID, emailTemplateId: emailTemplateId, smsTemplateId: smsTemplateId, source: source, delayVal: delayVal, delayUnit: delayUnit, 'current_event_id': currentID, 'event_type': event_type, node_type: node_type},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1771,7 +1765,7 @@ if (!empty($aSelectedContacts)) {
         $.ajax({
             url: '/admin/workflow/loadWorkflowTree',
             type: "POST",
-            data: {moduleName: moduleName, moduleUnitId: moduleUnitId},
+            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitId: moduleUnitId},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

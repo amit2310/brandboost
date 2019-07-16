@@ -793,6 +793,13 @@ class WorkflowModel extends Model {
         return $response;
     }
 
+    /**
+     * This function used to update workflow event
+     * @param type $aData
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
     public function updateWorkflowEvent($aData, $id, $moduleName) {
         if (empty($id) || empty($moduleName)) {
             return false;
@@ -818,10 +825,12 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-
-        $this->db->where('id', $id);
-        $result = $this->db->update($tableName, $aData);
-        if ($result) {
+        
+        $oData = DB::table($tableName)
+                ->where('id', $id)
+                ->update($aData);
+        
+        if ($oData) {
             return $id;
         } else {
             return false;
