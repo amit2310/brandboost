@@ -69,7 +69,7 @@ class AccountSetting extends Controller
         if(!empty($emailFooterData[0]->footer_content)) {
             $emailFooterData = base64_decode($emailFooterData[0]->footer_content);
         }
-       
+      
 
         if(!empty($aTeamInfo)) {
            

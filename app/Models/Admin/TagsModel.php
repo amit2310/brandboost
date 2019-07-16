@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,25 +9,24 @@ use Session;
 
 class TagsModel extends Model {
 
-	/**
+    /**
      * Get client tags
      * @param type $userid
      * @return type object
      */
-	public function getClientTags($userID = 0) {
+    public static function getClientTags($userID = 0) {
 
         $oData = DB::table('tbl_tag_groups')
-            ->leftJoin('tbl_tag_groups_entity', 'tbl_tag_groups.id', '=' , 'tbl_tag_groups_entity.group_id')
-            ->select('tbl_tag_groups.*', 'tbl_tag_groups_entity.id AS tagid', 'tbl_tag_groups_entity.tag_name', 'tbl_tag_groups_entity.tag_created')
-            ->when(($userID > 0), function ($query) use ($userID) {
+                ->leftJoin('tbl_tag_groups_entity', 'tbl_tag_groups.id', '=', 'tbl_tag_groups_entity.group_id')
+                ->select('tbl_tag_groups.*', 'tbl_tag_groups_entity.id AS tagid', 'tbl_tag_groups_entity.tag_name', 'tbl_tag_groups_entity.tag_created')
+                ->when(($userID > 0), function ($query) use ($userID) {
                     return $query->where('tbl_tag_groups.user_id', $userID);
-                }) 
-            ->orderBy('tbl_tag_groups.id', 'desc')
-            ->orderBy('tbl_tag_groups_entity.id', 'asc')        
-            ->get();
+                })
+                ->orderBy('tbl_tag_groups.id', 'desc')
+                ->orderBy('tbl_tag_groups_entity.id', 'asc')
+                ->get();
 
         return $oData;
-
     }
 
     public function getTagsReview($tagID) {
@@ -210,8 +210,7 @@ class TagsModel extends Model {
         }
     }
 
-
-      public function deleteTagGroupEntityWebchat($review_id,$tag_id) {
+    public function deleteTagGroupEntityWebchat($review_id, $tag_id) {
         $this->db->where('tag_id', $tag_id);
         $this->db->where('review_id', $review_id);
         $result = $this->db->delete('tbl_reviews_tags');
@@ -221,9 +220,6 @@ class TagsModel extends Model {
             return false;
         }
     }
-
-
-
 
     public function addReviewTag($aData) {
         $aTagIDs = $aData['aTagIDs'];
@@ -594,4 +590,5 @@ class TagsModel extends Model {
             return false;
         }
     }
+
 }
