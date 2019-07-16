@@ -1,4 +1,4 @@
-<?php
+<?php $bSummary = isset($bSummary) ? $bSummary : false;
 if (!empty($oCampaignLists)) {
     foreach ($oCampaignLists as $oRec) {
         ?>
@@ -11,6 +11,7 @@ if (!empty($oCampaignLists)) {
 <?php
 if (!empty($oCampaignTags)) {
     //pre($oCampaignTags);
+    $aSelectedTags = array();
     foreach($oCampaignTags as $oRec){
         $aSelectedTags[] = $oRec->tag_id;
     }

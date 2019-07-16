@@ -72,6 +72,7 @@ if ($userID > 0) {
 $aContactSelectionData = App\Models\Admin\WorkflowModel::getWorkflowContactSelectionInterfaceData($moduleName, $moduleUnitID);
 $iActiveCount = $iArchiveCount = 0;
 $aSelectedContacts = $aContactSelectionData['oCampaignSubscribers'];
+$iActiveSelectedCount = 0;
 if (!empty($aSelectedContacts)) {
     foreach ($aSelectedContacts as $oCount) {
         if ($oCount->status == 2) {
@@ -128,7 +129,7 @@ if (!empty($aSelectedContacts)) {
 
                                         <div class="timeline-date button mt20 mb40">
                                             <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle" data-toggle="dropdown"><i class="icon-plus3"></i></button>
-                                            <?php $this->load->view("/admin/workflow2/partials/action-dropdown", array('previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'main', 'eventType' => $oEventsType[0])); ?>
+                                            @include('/admin/workflow2/partials/action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'main', 'eventType' => $oEventsType[0])]
                                         </div>
                                     <?php endif; ?>
 
@@ -136,7 +137,7 @@ if (!empty($aSelectedContacts)) {
                                     $previousEventID = 0;
                                     $eventNo = 1;
                                     //$subscribersData = $this->mWorkflow->getWorkflowSubscribers($moduleUnitID, $moduleName);
-                                    $subscribersData = $this->mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+                                    $subscribersData = App\Models\Admin\WorkflowModel::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
                                     $bBranchDrawn = false;
                                     foreach ($oEvents as $key => $oEvent) {
                                         $bMulitpleBranches = false;
