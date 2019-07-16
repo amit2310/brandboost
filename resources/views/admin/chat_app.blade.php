@@ -4344,7 +4344,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 						$('.SmallWebchat .un_list_small').show();
      		         $('.SmallWebchat .you_list_small').hide();
      		         $('.SmallWebchat .fav_list_web_small').hide();
-					$('.SmallWebchat .t_web_main').html('Unassigned (<?php echo $unassignedChat; ?>)');
+					$('.SmallWebchat .t_web_main').html('Unassigned (<?php echo $unassignChatlist; ?>)');
 					
 				});
 
@@ -4367,7 +4367,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('.SmallWebchat .fav_list_web_small').hide();
 				    $('.SmallWebchat .un_list_small').hide();
      		         $('.SmallWebchat .you_list_small').show();
-					$('.SmallWebchat .t_web_main').html('You (<?php echo $assignedChat; ?>)');
+					$('.SmallWebchat .t_web_main').html('You (<?php echo $asginChatlist; ?>)');
 					
 				});
 				
