@@ -36,4 +36,38 @@ class WebChatModel extends Model {
         return $oResult;
     }
 
+     /**
+     * this function is used to get the webchat notes 
+     * @param type $userid
+     * @return type object
+     */
+
+    public function getWebNotes($userid) {
+
+        $oResult = DB::table('tbl_chat_supportuser')
+                ->where('assign_team_member', $teamId)
+                ->get();
+          return $oResult;
+    }
+
+
+     /**
+    * This function used to get all the webchat messages
+    * @return type
+    */
+
+
+    public function getwebchatMessages($token) {
+        $oData = DB::table('tbl_chat_message')
+        ->where('token', $token)
+        ->where('status', 1)
+        ->orderBy('id', 'desc')
+        ->get();
+        return $oData;
+
+       
+    }
+
+
+
 }

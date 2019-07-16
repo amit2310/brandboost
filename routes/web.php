@@ -29,10 +29,14 @@ Route::get('admin/modules/emails/setupAutomation/{id}','Admin\Modules\Emails@set
 
 //Onsite and Offsite Modules
 Route::get('admin/brandboost/onsite_overview','Admin\Brandboost@onsiteOverview');
+Route::get('admin/brandboost/onsite','Admin\Brandboost@onsite');
 
 //chat module
 Route::get('admin/webchat','Admin\WebChat@index');
-Route::get('admin/webchat/getUserinfo','Admin\WebChat@getUserinfo');
+Route::post('admin/webchat/getUserinfo','Admin\WebChat@getUserinfo');
+Route::post('admin/webchat/listingNotes','Admin\WebChat@listingNotes');
+Route::post('admin/webchat/getMessages','Admin\WebChat@getMessages');
+
 
 Route::get('admin/smschat','Admin\SmsChat@index');
 Route::get('admin/smschat/getSubsinfo','Admin\SmsChat@getSubsinfo');
@@ -42,10 +46,15 @@ Route::post('admin/smschat/sendMsg','Admin\SmsChat@sendMsg');
 Route::get('admin/smschat/livesearch','Admin\SmsChat@livesearch');
 Route::post('admin/smschat/getSearchSmsListByinput','Admin\SmsChat@getSearchSmsListByinput');
 Route::post('admin/smschat/add_contact_notes','Admin\SmsChat@add_contact_notes');
+Route::post('admin/smschat/addSmsNotes','Admin\SmsChat@addSmsNotes');
+Route::post('admin/smschat/listingSmsNotes','Admin\SmsChat@listingSmsNotes');
 
 
 //Profile module
 Route::get('admin/profile','Admin\AccountSetting@index');
+
+//Users module
+Route::post('admin/users/updateUserData','Admin\Users@updateUserData');
 
 //Workfow
 Route::post('admin/workflow/updateEventTime','Admin\WorkFlow@updateEventTime');
@@ -96,10 +105,3 @@ Route::post('admin/workflow/getWorkflowExportedProperties','Admin\WorkFlow@getWo
 Route::post('admin/workflow/syncWorkflowAudience','Admin\WorkFlow@syncWorkflowAudience');
 Route::get('admin/workflow/addAudienceToWorkflowCampaign','Admin\WorkFlow@addAudienceToWorkflowCampaign');
 Route::get('admin/workflow/syncWorkflowAudienceGlobal','Admin\WorkFlow@syncWorkflowAudienceGlobal');
-
-
-
-
-
-
-

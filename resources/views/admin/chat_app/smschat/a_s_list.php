@@ -1,90 +1,57 @@
-<?php 
-$count=0;
+<?php
+$count = 0;
+foreach ($a_s_list as $key => $value) {
+    $showRed = 0;
+    $phoneNumber = "";
+    if ($value->to != '' && $value->from != '') {
+        $value->to = numberForamt($value->to);
+        $value->from = numberForamt($value->from);
+        if (trim($value->to) == trim($mobile)) {
+            $usersdata = getUserbyPhone($value->from);
+            $phoneNumber = $value->from;
+            $usersdata = $usersdata[0];
+            if ($value->read_status == 0) {
+                $showRed = 1;
+            }
+        }
+        if ($value->from == $mobile) {
+            $usersdata = getUserbyPhone($value->to);
+            $phoneNumber = $value->to;
+            $usersdata = $usersdata[0];
+        }
+        $usersdatails = getUserDetail($usersdata->user_id);
+       
+        $fileext = explode('.', $value->msg);
+        $fileext = end($fileext);
+        if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
+            $userMessage = "File Attachment";
+        } else if ($value->media_type == 'video' || $value->media_type == 'image') {
+            $userMessage = "File Attachment";
+        } else if (strpos($value->msg, 'amazonaws') !== false) {
+            $userMessage = "File Attachment";
+        } else {
+            $userMessage = setStringLimit($value->msg, 40);
+        }
+        if ($usersdata->firstname == 'NA') {
+            $usersdata->firstname = "";
+        }
+        if ($usersdata->lastname == 'NA') {
+            $usersdata->lastname = "";
+        }
+        //$favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id, $usersdata->id);
+        $favUser = getFavSmsUser($loginUserData->id, $phoneNumber);
+        
+        $avatar = !empty($usersdata->avatar) ? $usersdata->avatar : '';
+        $address = !empty($usersdata->address) ? $usersdata->address : '';
+        $city = !empty($usersdata->city) ? $usersdata->city : '';
+        $state = !empty($usersdata->state) ? $usersdata->state : '';
+        $country = !empty($usersdata->country) ? $usersdata->country : '';
 
-
-
-foreach( $a_s_list as $key=>$value)
-{
-	$showRed=0;
-	$phoneNumber="";
-if( $value->to!='' && $value->from!='' )
-{
-	$value->to = phone_display_custom_helper($value->to);
-     $value->from  = phone_display_custom_helper($value->from);
-
-	if(trim($value->to) == trim($mobile))
-	{
-		$usersdata = getUserbyPhone($value->from);
-		$phoneNumber = $value->from;
-		$usersdata = $usersdata[0];
-		if($value->read_status == 0)
-		{
-			 $showRed=1;
-		}
+?>
+		<div  phone_no_format="<?php echo phoneNoFormat($phoneNumber); ?>" id="sidebar_Sms_box_<?php echo $phoneNumber; ?>" class="sms_user sms_twr_<?php echo $phoneNumber; ?>" phone_no="<?php echo trim($phoneNumber); ?>" <?php if ($showRed) { ?>wait="yes" token="<?php echo $value->token; ?>"<?php
+        } ?> user_id="<?php echo $usersdata->id; ?>" >
+		<div class="avatarImage"><?php echo showUserAvtar($avatar, $usersdata->firstname, $usersdata->lastname, 28, 28, 11); ?></div>
 		
-		
-	}
-	if($value->from == $mobile)
-	{ 
-		$usersdata = getUserbyPhone($value->to);
-		$phoneNumber = $value->to;
-		$usersdata = $usersdata[0];
-		
-		
-	}
-
-          $usersdatails = getUserDetail($usersdata->user_id);
-		 
-		  if($usersdata->user_id!="")
-		  {
-	       $incid = getincIdByuserId($usersdatails->id);
-		   $incid = $incid[0]->id;
-		  }
-		  else
-		  {
-		   $incid = $usersdata->id;
-		  }
-	
-			$fileext = end(explode('.', $value->msg));
-			if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
-			$userMessage = "File Attachment";
-			}
-			else if ($value->media_type == 'video' || $value->media_type == 'image') {
-			$userMessage="File Attachment";
-			}
-			else if (strpos($value->msg, 'amazonaws') !== false) {
-			$userMessage="File Attachment";
-			}
-
-			else {
-			$userMessage = setStringLimit($value->msg, 40);
-			}
-
-	          if($usersdata->firstname == 'NA')
-				{
-				 $usersdata->firstname="";
-				}
-				if($usersdata->lastname == 'NA')
-				{
-				 $usersdata->lastname="";
-				}
-		//$favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id, $usersdata->id);
-
-			
-           $favUser = getFavSmsUser($loginUserData->id, $phoneNumber);
-	
-	?>
-		<div  phone_no_format="<?php echo phoneNoFormat($phoneNumber); ?>" id="sidebar_Sms_box_<?php echo $usersdata->phone; ?>" class="sms_user sms_twr_<?php echo $usersdata->phone; ?>" incSmsWid="<?php echo $incid ; ?>" rewId="<?php echo $smsvalue->from; ?>" phone_no="<?php echo trim($usersdata->phone); ?>" <?php if($showRed){ ?>wait="yes" token="<?php echo $value->token; ?>"<?php } ?> user_id="<?php echo $usersdata->id; ?>" >
-		<div class="avatarImage"><?php echo showUserAvtar($usersdatails->avatar, $usersdata->firstname, $usersdata->lastname, 28, 28, 11); ?></div>
-		<span style="display:none" id="fav_star_<?php echo $userID; ?>">
-		<?php if (!in_array($userID, $newFav)) { ?>
-		<a style="cursor: pointer;" class="favourite" status="1" user_id="<?php echo $userID; ?>"><i class="icon-star-full2 text-muted sidechatstar"></i></a>
-		<?php
-        } else { ?>
-		<i class="icon-star-full2 txt_blue sidechatstarshow"></i>
-		<?php
-        } ?>
-		</span>
 		<span class="slider-username contacts"><?php echo phoneNoFormat($phoneNumber); ?>  &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $phoneNumber; ?>"><i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i></span> </span> 
 		
 		
@@ -98,13 +65,13 @@ if( $value->to!='' && $value->from!='' )
             
 		<span style="display: none;" class="slider-email contacts"><?php echo $usersdata->email; ?> </span>
             
-		<span style="display: none;" class="slider-mobile contacts"><?php echo $usersdata->mobile; ?> </span>
+		<span style="display: none;" class="slider-mobile contacts"><?php echo $mobile; ?> </span>
 		<span style="display: none;" class="slider-image img">
 			<?php
-        if (empty($loginUserData->avatar)) {
+        if (empty($avatar)) {
             echo $currentUserImg = '/assets/images/default_avt.jpeg';
         } else {
-            echo $currentUserImg = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $loginUserData->avatar;
+            echo $currentUserImg = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $avatar;
         } ?></span>
 
 		<span class="user_status date_time"><time class="autoTimeUpdate autoTime_<?php echo $phoneNumber; ?>" datetime="<?php echo usaDate($value->created); ?>"></time></span>
@@ -114,18 +81,18 @@ if( $value->to!='' && $value->from!='' )
 		<div class="col-md-12">
 		<div class="header_sec"> <i class="icon-info22 txt_blue"></i><?php echo $usersdata->firstname . ' ' . $usersdata->lastname; ?></div>
 		<div class="sidebar_info p20 text-center">
-		<?php echo showUserAvtar($usersdata->avatar, $usersdata->firstname, $usersdata->lastname, 60, 60, 21); ?>
+		<?php echo showUserAvtar($avatar, $usersdata->firstname, $usersdata->lastname, 60, 60, 21); ?>
 		<h3 class="mb0"><?php echo $usersdata->firstname . ' ' . $usersdata->lastname; ?></h3>
 
 		<h6><strong>San Francisco, CA</strong></h6>
-		<h6><strong><?php echo $usersdata->address . ' ' . $usersdata->city . ' ' . $usersdata->state . ', ' . $usersdata->country; ?></strong></h6>
+		<h6><strong><?php echo $address . ' ' . $city . ' ' . $state . ', ' . $country; ?></strong></h6>
 		</div>
 		<div class="p20 pt0 pb10">
 		<div class="interactions p0 pt10 pb10 btop">
 		<ul>
 		<li><i class="fa fa-envelope"></i><strong><?php echo $usersdata->email; ?></strong></li>
 		<?php if (!empty($mobile)) { ?>
-		<li><i class="fa fa-phone"></i><strong><?php echo $usersdata->mobile != '' ? $usersdata->mobile : '&nbsp;'; ?></strong></li>
+		<li><i class="fa fa-phone"></i><strong><?php echo $mobile != '' ? $mobile : '&nbsp;'; ?></strong></li>
 		<?php
         } ?>
 
@@ -149,8 +116,7 @@ if( $value->to!='' && $value->from!='' )
 		</div>
 		</div>
 	<?php
-		$count++;
-		
-}
+        $count++;
+    }
 }
 ?>

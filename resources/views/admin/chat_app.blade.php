@@ -1316,13 +1316,13 @@ if (!empty($hasweb_access)) {
 		     var nextSearchBut = '';
 		    if(typeof username == 'undefined')
 			{
-				nextSearchBut =  '<div style="z-index:9; width:282px;" class="chat_search_icon NextSearch"><input style="width:260px;" maxlength="10" id="searchChatMsg_New" onkeypress="return IsNumeric(event);" onkeyup="showResultSmall(this.value)"  class="searchChatMsg" type="text" name="searchChatMsg" value="" placeholder="Search Phone Number"><button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button><div id="livesearchSmall"></div></div>';
+				nextSearchBut =  '<div style="z-index:9; width:282px;" class="chat_search_icon NextSearch"><input style="width:260px;" maxlength="10" id="searchChatMsg_New" onkeypress="return IsNumeric(event);" onkeyup="showResultSmall(this.value)"  class="searchChatMsg" type="text" name="searchChatMsg" value="" placeholder="Search Phone Number"><button type="submit"><img src="/assets/images/chat_search_icon.png"></button><div id="livesearchSmall"></div></div>';
 				username='SMS';
 			}
 			else {
 				nextSearchBut = `<div style="z-index:9; width:282px;" class="chat_search_icon PreSearch">
 						<input style="width:260px;" id="searchChatMsg_${SubscriberPhone}" data-chatboxid="${SubscriberPhone}" class="searchSmsChatMsg" type="text" name="searchChatMsg" value="" placeholder="Search">
-							<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+							<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
 						</div>`;
 			}
 			  /*setTimeout(function(){
@@ -1382,7 +1382,7 @@ if (!empty($hasweb_access)) {
 </div>
 <div class="usdb">
 	<a class="userinfoicon2" href="#">
-	<span class="close"><img src="/new_pages/assets/images/cross_chat.png"></span></a>
+	<span class="close"><img src="/assets/images/cross_chat.png"></span></a>
 	<div class="row">
 		<div class="col-md-12 bbot pb10"><p><strong>Email</strong> <span>${useremail}</span></p><p>
 			<strong>Phone </strong> <span>${SubscriberPhone}</span></p><p><strong>Location </strong> 
@@ -1407,13 +1407,13 @@ if (!empty($hasweb_access)) {
 </div>
 <div class="msg_head" data-div="${SubscriberPhone}">
 	<div id="next_chat_${SubscriberPhone}"></div>
-	<img style="vertical-align:top; margin-top:3px;" src="/new_pages/assets/images/phone_green.png" alt="" width="" height="">&nbsp;<b class="Phoneuername" >${username}</b>
+	<img style="vertical-align:top; margin-top:3px;" src="/assets/images/phone_green.png" alt="" width="" height="">&nbsp;<b class="Phoneuername" >${username}</b>
 	<div><span style="font-weight:300!important; color:#6a7995!important; font-size:11px!important;">Assigned to:&nbsp; ${username}</span></div>
-	<span style="display:none" class="close"><img src="/new_pages/assets/images/cross_chat.png"/></span>
+	<span style="display:none" class="close"><img src="/assets/images/cross_chat.png"/></span>
 	<span user_id="${SubscriberPhone}" style="color:red;cursor:pointer;position: absolute;right: 9px;font-size:16px; top:11px;" box-close-type="smschat" class="green_check_close">
-	<img id="close_img_${SubscriberPhone}" src="/new_pages/assets/images/close_red_20.png"/></span>
-	<span style="cursor:pointer;position: absolute;right: 34px; top:10px; font-size: 25px;" class="green_check_minus"><img id="minus_img_${SubscriberPhone}" src="/new_pages/assets/images/grey_minus.png"/></span>
-	<span class="green_check"><img src="/new_pages/assets/images/green_check_20.png"/></span>
+	<img id="close_img_${SubscriberPhone}" src="/assets/images/close_red_20.png"/></span>
+	<span style="cursor:pointer;position: absolute;right: 34px; top:10px; font-size: 25px;" class="green_check_minus"><img id="minus_img_${SubscriberPhone}" src="/assets/images/grey_minus.png"/></span>
+	<span class="green_check"><img src="/assets/images/green_check_20.png"/></span>
 </div>
 <div class="msg_wrap">
 	<div style="padding: 10px 15px!important;" class="bbot bkg_white">
@@ -1424,7 +1424,7 @@ if (!empty($hasweb_access)) {
 	</div>
 	
 	
-	<span style="display:none" class="minimize"><img src="/new_pages/assets/images/minus_chat.png"/></span> 
+	<span style="display:none" class="minimize"><img src="/assets/images/minus_chat.png"/></span> 
 	
 	<div class="tab-content"> 
 
@@ -1494,9 +1494,9 @@ if (!empty($hasweb_access)) {
 					
 					
 					<a href="javascript:void(0)">
-					<img src="/new_pages/assets/images/chat_calendar.png"/></a>
+					<img src="/assets/images/chat_calendar.png"/></a>
 					<div id="webChatanchor_${userID}" style="float:right">
-						<a id="trigger_smschat_message_${userID}" rel="${userID}" SubscriberPhone="${SubscriberPhone}" userImage="${userImage}" class="p0" href="javascript:void(0)"><img src="/new_pages/assets/images/chat_send_blue.png" width="15"/></a>
+						<a id="trigger_smschat_message_${userID}" rel="${userID}" SubscriberPhone="${SubscriberPhone}" userImage="${userImage}" class="p0" href="javascript:void(0)"><img src="/assets/images/chat_send_blue.png" width="15"/></a>
 					</div>
 					
 				</div>
@@ -1546,9 +1546,9 @@ if (!empty($hasweb_access)) {
 						</a> 
 						
 						<a href="javascript:void(0)">
-						<img src="/new_pages/assets/images/chat_calendar.png"/></a>
+						<img src="/assets/images/chat_calendar.png"/></a>
 						<div id="webChatanchor_${NotesTo}" style="float:right">
-							<a id="trigger_webchat_message_${NotesTo}" rel="${NotesTo}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/new_pages/assets/images/chat_send_blue.png" width="15"/></a>
+							<a id="trigger_webchat_message_${NotesTo}" rel="${NotesTo}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/assets/images/chat_send_blue.png" width="15"/></a>
 						</div>
 						
 					</div>
@@ -2008,7 +2008,7 @@ chatPopup = `<div id="msg_box_${userID}" class="msg_box webchat" style="right:35
 	</div>
 	<div class="usdb">
 		<a class="userinfoicon2" href="#">
-		<span class="close"><img src="/new_pages/assets/images/cross_chat.png"></span></a>
+		<span class="close"><img src="/assets/images/cross_chat.png"></span></a>
 		<div class="row">
 			<div class="col-md-12 bbot pb10"><p><strong>Email</strong> <span>${useremail}</span></p><p>
 				<strong>Phone </strong> <span>${usermobile}</span></p><p><strong>Location </strong> 
@@ -2033,22 +2033,22 @@ chatPopup = `<div id="msg_box_${userID}" class="msg_box webchat" style="right:35
 	</div>
 	<div class="msg_head" data-div="${userID}">
 		
-		<img src="/new_pages/assets/images/desktop.png" class="" alt="" width="" height="">&nbsp;${username} <div id="next_chat_${userID}"></div>
-		<span style="display:none" class="close"><img src="/new_pages/assets/images/cross_chat.png"/></span>
+		<img src="/assets/images/desktop.png" class="" alt="" width="" height="">&nbsp;${username} <div id="next_chat_${userID}"></div>
+		<span style="display:none" class="close"><img src="/assets/images/cross_chat.png"/></span>
 		<span user_id="${userID}" style="color:red;cursor:pointer;position: absolute;right: 9px;font-size:16px; top:11px;" box-close-type="webchat" class="green_check_close">
-		<img id="close_img_${userID}" src="/new_pages/assets/images/close_red_20.png"/></span>
-		<span style="cursor:pointer;position: absolute;right: 34px; top:10px; font-size: 25px;" class="green_check_minus"><img id="minus_img_${userID}" src="/new_pages/assets/images/grey_minus.png"/></span>
-		<span class="green_check"><img src="/new_pages/assets/images/green_check_20.png"/></span>
+		<img id="close_img_${userID}" src="/assets/images/close_red_20.png"/></span>
+		<span style="cursor:pointer;position: absolute;right: 34px; top:10px; font-size: 25px;" class="green_check_minus"><img id="minus_img_${userID}" src="/assets/images/grey_minus.png"/></span>
+		<span class="green_check"><img src="/assets/images/green_check_20.png"/></span>
 	</div>
 	<div class="msg_wrap">
 		<div style="padding: 10px 15px!important;" class="bbot bkg_white">
 			<div style="z-index:9; width:282px;" class="chat_search_icon"><input style="width:260px;" id="searchChatMsg_${userID}" data-chatboxid="${userID}" class="searchChatMsg" type="text" name="searchChatMsg" value="" placeholder="Search">
-				<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+				<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
 			</div>
 		</div>
 		
 		
-		<span style="display:none" class="minimize"><img src="/new_pages/assets/images/minus_chat.png"/></span> 
+		<span style="display:none" class="minimize"><img src="/assets/images/minus_chat.png"/></span> 
 		
 		<div class="tab-content"> 
 
@@ -2119,9 +2119,9 @@ chatPopup = `<div id="msg_box_${userID}" class="msg_box webchat" style="right:35
 						
 						
 						<a href="javascript:void(0)">
-						<img src="/new_pages/assets/images/chat_calendar.png"/></a>
+						<img src="/assets/images/chat_calendar.png"/></a>
 						<div id="webChatanchor_${userID}" style="float:right">
-							<a id="trigger_webchat_message_${userID}" user_id="${userID}" rel="${userID}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/new_pages/assets/images/chat_send_blue.png" width="15"/></a>
+							<a id="trigger_webchat_message_${userID}" user_id="${userID}" rel="${userID}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/assets/images/chat_send_blue.png" width="15"/></a>
 						</div>
 						
 					</div>
@@ -2177,9 +2177,9 @@ chatPopup = `<div id="msg_box_${userID}" class="msg_box webchat" style="right:35
 							</a> 
 							
 							<a href="javascript:void(0)">
-							<img src="/new_pages/assets/images/chat_calendar.png"/></a>
+							<img src="/assets/images/chat_calendar.png"/></a>
 							<div id="webChatanchor_${userID}" style="float:right">
-								<a id="trigger_webchat_message_${userID}" rel="${userID}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/new_pages/assets/images/chat_send_blue.png" width="15"/></a>
+								<a id="trigger_webchat_message_${userID}" rel="${userID}" userImage="${userImage}" class="p0 webChatTrigger" href="javascript:void(0)"><img src="/assets/images/chat_send_blue.png" width="15"/></a>
 							</div>
 							
 						</div>
@@ -2238,13 +2238,13 @@ $( '[rel="' + chatbox + '"] .msg_wrap' ).slideToggle( "slow",function() {
 
 if ($(this).is(':visible'))
 { 
-$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/grey_minus.png') }}";
-$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
+$('#minus_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/grey_minus.png'); ?>");
+$('#close_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/close_red_20.png'); ?>");
 }
 else
 {
-$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/icon_maximize.png') }}";
-$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
+$('#minus_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/icon_maximize.png'); ?>");
+$('#close_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/close_red_20.png'); ?>");
 
 }
 
@@ -3370,132 +3370,126 @@ if(window_witdh > 1600)
 				
 			    if ( msg.trim().length != 0 ) {
 				
-				//alert(where);
 				
 				if(currentUser == data.currentUser) {
-				var chatbox = data.chatTo;
-
-				
-				
-				
-				$( '#msg_box_show_'+chatbox ).append( `<li class="media reversed">
-					<div class="media-body"> <span class="media-annotation user_icon">${profileImg}</span><div class="media-content">${nl2br(msg)}</div></div>
-				</li>`);
-
-				if($('#msg_box_show_'+chatbox).hasClass('typing_messsage')) {
+					var chatbox = data.chatTo;
 					
-			 		$('#msg_box_show_'+chatbox).append( `<li class="media loading_message_li_${chatbox}" style="height: 43px;padding-top: 10px;"><img src="{{ URL::asset('assets/images/messageloading.gif') }}" style="height: 25px;"></li>`);
-			 	}
-				
-				
-				
-				var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
-				$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
-				
+					$( '#msg_box_show_'+chatbox ).append( `<li class="media reversed">
+						<div class="media-body"> <span class="media-annotation user_icon">${profileImg}</span><div class="media-content">${nl2br(msg)}</div></div>
+					</li>`);
+
+					if($('#msg_box_show_'+chatbox).hasClass('typing_messsage')) {
+						
+				 		$('#msg_box_show_'+chatbox).append( `<li class="media loading_message_li_${chatbox}" style="height: 43px;padding-top: 10px;"><img src="{{ URL::asset('assets/images/messageloading.gif') }}" style="height: 25px;"></li>`);
+				 	}
+					
+					var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
+					$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
 				
 				}
 				else {
 
 				
 				
-				var options = {
-				title: data.currentUserName,
-				options: {
-				body: msg_noti,
-				icon: data.avatar,
-				lang: 'en-US'
-				}
-				};
-				
-				var chatbox = data.currentUser;
-				var msgBox = $('#msg_box_'+chatbox).attr( "rel" );
-				if($('#msg_box_'+chatbox).css('display') == 'none' || $('#msg_box_'+chatbox).find('.msg_wrap').css('display') == 'none')
-				{
-				var readStatus = $('#read_status_'+chatbox).attr('readStatus');
-				readStatus = Number(readStatus) + 1;
-				$('#read_status_'+chatbox).attr('readStatus',readStatus);
-				$('#read_status_'+chatbox).html('<span class="badge bg-success">'+readStatus+'</span>');
-				
-				$('#read_status_poopup_'+chatbox).html('<span class="readStatusCount">'+readStatus+'</span>');
-				
-				var readStatusFav = $('#read_status_fav_'+chatbox).attr('readStatus');
-				readStatusFav = Number(readStatusFav) + 1;
-				$('#read_status_fav_'+chatbox).attr('readStatus',readStatusFav);
-				$('#read_status_fav_'+chatbox).html('<span class="badge bg-success">'+readStatusFav+'</span>');
-				
-				var readStatusCon = $('#read_status_con_'+chatbox).attr('readStatus');
-				readStatusCon = Number(readStatusCon) + 1;
-				$('#read_status_con_'+chatbox).attr('readStatus',readStatusCon);
-				$('#read_status_con_'+chatbox).html('<span class="badge bg-success">'+readStatusCon+'</span>');
-				
-				playSound();
-				$("#easyNotify").easyNotify(options);
-				var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
-				$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
-				
-				}
-				else {
-				
-				if (typeof msgBox === "undefined") {
-				setTimeout(function(){ 
-				$('#sidebar-user-box-'+chatbox).trigger('click');
-				playSound();
-				$("#easyNotify").easyNotify(options);
-				var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
-				$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
-				}, 1000);
-				
-				}
-				else if(where == 'out') {
-				
-				$('#msg_box_show_'+chatbox).append(`<li class="media team_user_${chatbox}">
-					<div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span> 
-					${profileImg}</span>
-					<div class="media-content">${nl2br(msg)}</div>							
-					</div>
-				</li>`);
-				
-				playSound();
-				$("#easyNotify").easyNotify(options);
-				var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
-				$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
-				
-				
-				}
-				else {
-				
-				
-				$('#msg_box_show_'+chatbox).append(`<li class="media team_user_${chatbox}">
-					<div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span> 
-					${profileImg}</span>
-					<div class="media-content">${nl2br(msg)}</div>							
-					</div>
-				</li>`);
-				
-				
-				//playSound();
-				var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
-				$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
-				
-				
-				}
-				
-				setTimeout(function(){ 
-				
-				$.ajax({
-				url: "{{ url('admin/Chat/readChatMsg') }}",
-				type: "POST",
-				data: {chatTo:data.chatTo, chatFrom:data.currentUser},
-				dataType: "json",
-				success: function (data) {
-				if (data.status == 'ok') {
-				
-				}
-				}
-				});
-				
-				}, 500);
-				}	
+					var options = {
+					title: data.currentUserName,
+					options: {
+					body: msg_noti,
+					icon: data.avatar,
+					lang: 'en-US'
+					}
+					};
+					
+					var chatbox = data.currentUser;
+					var msgBox = $('#msg_box_'+chatbox).attr( "rel" );
+					if($('#msg_box_'+chatbox).css('display') == 'none' || $('#msg_box_'+chatbox).find('.msg_wrap').css('display') == 'none')
+					{
+						var readStatus = $('#read_status_'+chatbox).attr('readStatus');
+						readStatus = Number(readStatus) + 1;
+						$('#read_status_'+chatbox).attr('readStatus',readStatus);
+						$('#read_status_'+chatbox).html('<span class="badge bg-success">'+readStatus+'</span>');
+						
+						$('#read_status_poopup_'+chatbox).html('<span class="readStatusCount">'+readStatus+'</span>');
+						
+						var readStatusFav = $('#read_status_fav_'+chatbox).attr('readStatus');
+						readStatusFav = Number(readStatusFav) + 1;
+						$('#read_status_fav_'+chatbox).attr('readStatus',readStatusFav);
+						$('#read_status_fav_'+chatbox).html('<span class="badge bg-success">'+readStatusFav+'</span>');
+						
+						var readStatusCon = $('#read_status_con_'+chatbox).attr('readStatus');
+						readStatusCon = Number(readStatusCon) + 1;
+						$('#read_status_con_'+chatbox).attr('readStatus',readStatusCon);
+						$('#read_status_con_'+chatbox).html('<span class="badge bg-success">'+readStatusCon+'</span>');
+						
+						playSound();
+						$("#easyNotify").easyNotify(options);
+						var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
+						$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
+						
+					}
+					else {
+					
+						if (typeof msgBox === "undefined") {
+						setTimeout(function(){ 
+						$('#sidebar-user-box-'+chatbox).trigger('click');
+						playSound();
+						$("#easyNotify").easyNotify(options);
+						var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
+						$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
+						}, 1000);
+						
+						}
+						else if(where == 'out') {
+						
+						$('#msg_box_show_'+chatbox).append(`<li class="media team_user_${chatbox}">
+							<div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span> 
+							${profileImg}</span>
+							<div class="media-content">${nl2br(msg)}</div>							
+							</div>
+						</li>`);
+						
+						playSound();
+						$("#easyNotify").easyNotify(options);
+						var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
+						$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
+						
+						
+						}
+						else {
+						
+						
+						$('#msg_box_show_'+chatbox).append(`<li class="media team_user_${chatbox}">
+							<div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span> 
+							${profileImg}</span>
+							<div class="media-content">${nl2br(msg)}</div>							
+							</div>
+						</li>`);
+						
+						
+						//playSound();
+						var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
+						$( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
+						
+						
+						}
+						
+						setTimeout(function(){ 
+						
+						$.ajax({
+						url: "<?php echo base_url('admin/Chat/readChatMsg'); ?>",
+						type: "POST",
+						data: {chatTo:data.chatTo, chatFrom:data.currentUser},
+						dataType: "json",
+						success: function (data) {
+						if (data.status == 'ok') {
+							
+						}
+						}
+						});
+						
+						}, 500);
+
+					}	
 				}
 				}
 				});
@@ -3819,12 +3813,12 @@ if ($isLoggedInTeam) {
 			</div>
 			
 			<div id="chat-sidebar" style="display: block;">
-			<div class="chat_add"><img style="padding:14px 10px 10px 10px" class="sms_user" src="/new_pages/assets/images/chat_plus_icon.png"></div>
+			<div class="chat_add"><img style="padding:14px 10px 10px 10px" class="sms_user" src="/assets/images/chat_plus_icon.png"></div>
 			
 				<div class="sidebar_head closemainchat">All Contacts&nbsp; (<?php echo count($totalSubscriber_schat); ?>)
 					
 					
-					<div id="closemainchatbox" style="display:none" class="closechatmain"><img src="/new_pages/assets/images/chat_left_arrow.png"></div>
+					<div id="closemainchatbox" style="display:none" class="closechatmain"><img src="/assets/images/chat_left_arrow.png"></div>
 				</div>
 				
 				<div class="sidebar_body" style="display:none">
@@ -3855,7 +3849,7 @@ if ($isLoggedInTeam) {
 								<input style="display:none;width: calc(100% - 22px)" type="text" name="small_web_webContactBox" placeholder="Search" id="small_web_webContactBox" value="">
 								
 								<input type="hidden" name="small_web_afterTrigger" id="small_web_afterTrigger" value="">
-								<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+								<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
 							</div>
 						</div>
 						<!--++++++++WEB SEARCH BOX++++++-->
@@ -4019,7 +4013,7 @@ if ($isLoggedInTeam) {
 								
 								<!--++++++++++++ wait chat list +++++++++++++++-->
 								<div class="w_list" style="background-image:none; display:none">
-									@include('admin.chat_app.smschat.w_s_list', array('mobile' => $loginUserData->mobile, 'w_s_list' => $w_s_list))
+									
 								</div>
 								<!--++++++++++++ wait chat list +++++++++++++++-->
 								</div>
@@ -4029,7 +4023,6 @@ if ($isLoggedInTeam) {
 								<div class="c_list" style="background-image:none; display:none ">
 									<?php
     $initNumber = "";
-    $owners = getowners($loginUserData->id);
     $autocmpSearch = array();
     $contactCount = 0;
     $flag = 0;
@@ -4039,7 +4032,8 @@ if ($isLoggedInTeam) {
         if (!empty($getCharUserList)) {
             foreach ($getCharUserList as $userData) {
                 $userDataDetail = getUserDetail($userData->user_id);
-                $favUser = getFavSmsUser($loginUserData->id, $userData->phone);
+                $favUser = '';
+                //$favUser = getFavSmsUser($loginUserData->id, $userData->phone);
                 //if(!empty($userDataDetail)) {
                 //$favUser = $this->smsChat->getSMSFavouriteBySubsId($userData->id);
                 if ($flag == 0) {
@@ -4047,12 +4041,13 @@ if ($isLoggedInTeam) {
                     $incId = $userData->id;
                     $flag = 1;
                 }
+                $avatar = !empty($userDataDetail->avatar) ? $userDataDetail->avatar : '';
 ?>
-													<div  id="sidebar_Sms_box_<?php echo phoneDisplay($userData->phone); ?>" phone_no_format="<?php echo mobileNoFormatChat($userData->phone); ?>" subscriberphone="<?php echo phoneDisplay($userData->phone); ?>" phone_no="<?php echo phoneDisplay($userData->phone); ?>" class="sms_user"  user_id="<?php echo $userId; ?>" >
-														<div class="avatarImage"><?php echo showUserAvtar($userDataDetail->avatar, $userData->firstname, $userData->lastname, 28, 28, 11); ?></div>
-														<span style="display:none" id="fav_star_<?php echo $userID; ?>">
-															<?php if (!in_array($userID, $newFav)) { ?>
-																<a style="cursor: pointer;" class="favourite" status="1" user_id="<?php echo $userID; ?>"><i class="icon-star-full2 text-muted sidechatstar"></i></a>
+													<div  id="sidebar_Sms_box_<?php echo phoneDisplay($userData->phone); ?>" phone_no_format="<?php echo mobileNoFormatChat($userData->phone); ?>" subscriberphone="<?php echo phoneDisplay($userData->phone); ?>" phone_no="<?php echo phoneDisplay($userData->phone); ?>" class="sms_user"  user_id="" >
+														<div class="avatarImage"><?php echo showUserAvtar($avatar, $userData->firstname, $userData->lastname, 28, 28, 11); ?></div>
+														<span style="display:none" id="fav_star_">
+															<?php if (1) { ?>
+																<a style="cursor: pointer;" class="favourite" status="1" user_id=""><i class="icon-star-full2 text-muted sidechatstar"></i></a>
 																<?php
                 } else { ?>
 																<i class="icon-star-full2 txt_blue sidechatstarshow"></i>
@@ -4343,7 +4338,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 						$('.SmallWebchat .un_list_small').show();
      		         $('.SmallWebchat .you_list_small').hide();
      		         $('.SmallWebchat .fav_list_web_small').hide();
-					$('.SmallWebchat .t_web_main').html('Unassigned (<?php echo $unassignedChat; ?>)');
+					$('.SmallWebchat .t_web_main').html('Unassigned (<?php echo $unassignChatlist; ?>)');
 					
 				});
 
@@ -4366,7 +4361,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('.SmallWebchat .fav_list_web_small').hide();
 				    $('.SmallWebchat .un_list_small').hide();
      		         $('.SmallWebchat .you_list_small').show();
-					$('.SmallWebchat .t_web_main').html('You (<?php echo $assignedChat; ?>)');
+					$('.SmallWebchat .t_web_main').html('You (<?php echo $asginChatlist; ?>)');
 					
 				});
 				
@@ -4406,7 +4401,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('.SmallSmschat .o_list').hide();
 					$('.SmallSmschat .w_list').hide();
 					$('.SmallSmschat .f_list').show();
-					$('.SmallSmschat .t_sms_small').html('Favorite(<?php echo $favouriteUserDataCount; ?>)');
+					$('.SmallSmschat .t_sms_small').html('Favorite(5)');
 					
 				});
 				
@@ -4506,15 +4501,15 @@ $('#small_web_AjaxSearchWeb').html(data);
 							
 							
 							
-							$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/icon_maximize.png') }}";
-							$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
+							$('#minus_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/icon_maximize.png'); ?>");
+							$('#close_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/close_red_20.png'); ?>");
 							
 							
 						}
 						else
 						{
-							$('#minus_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/grey_minus.png') }}";
-							$('#close_img_'+chatbox).attr('src',"{{ URL::asset('assets/images/close_red_20.png') }}";
+							$('#minus_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/grey_minus.png'); ?>");
+							$('#close_img_'+chatbox).attr('src',"<?php echo base_url('assets/images/close_red_20.png'); ?>");
 							
 						}
 						

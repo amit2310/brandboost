@@ -214,11 +214,18 @@ class UsersModel extends Model {
         return $response;
     }
 
+    /**
+     * Update user record
+     * @param type $aData
+     * @param type $userId
+     * @return type 
+     */
     public function updateUsers($aData, $userId) {
 
-        $this->db->where('id', $userId);
-        $result = $this->db->update('tbl_users', $aData);
-        //echo $this->db->last_query();exit;
+        $result = DB::table('tbl_users')
+            ->where('id', $userId)
+            ->update($aData);
+
         if ($result)
             return true;
         else

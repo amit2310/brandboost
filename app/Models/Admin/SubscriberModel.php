@@ -368,13 +368,19 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         return $response;
     }
 
-    public function getSubscriberDetailsBydb($id) {
-        $this->db->where("id", $id);
-        $result = $this->db->get("tbl_subscribers");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+
+    /**
+    * This function will return chatUser details 
+    * @param type $clientID
+    * @return type
+    */
+
+    public static function getchatUser($userID) {
+       $oData = DB::table('tbl_chat_supportuser')
+                ->where('user', $userID)
+                ->get();
+
+        return $oData;
     }
 
     public function updateGlobalSubscriber($aData, $id) {

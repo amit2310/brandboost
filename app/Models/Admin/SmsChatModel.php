@@ -121,6 +121,38 @@ class SmsChatModel extends Model {
             return false;
     }
 
+
+     /**
+    * This function is used to add the sms notes 
+    * @return type
+    */
+
+    public function addSmsNotes($data)
+    {
+
+       $oData = DB::table('tbl_subscriber_notes')->insertGetId($data);
+      return $oData;
+
+    }
+
+     /**
+    * This function will return Sms notes
+    * @param type $usrid
+    * @return type
+    */
+
+    public function getSmsNotes($number) {
+
+      $oData = DB::table('tbl_subscriber_notes')
+      ->where('subscriber_id', $number)
+      ->get();
+
+      return $oData;
+
+    }
+
+
+
     public function getSMSMedia($rand_id) {
 
         $result = '';

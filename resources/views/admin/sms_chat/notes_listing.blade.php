@@ -65,7 +65,7 @@
 		
 		$('body').on('click', '.notes_but', function(){
 			var NotesTo="";
-		     NotesTo = $('.smsContainer #em_sub_id').val();
+		     NotesTo = $('.smsContainer #em_phone').val();
 			var NotesContent = $('.NotesContent').val();
 			 $('.NotesContent').val('');
 			var source='Sms chat notes';
@@ -74,9 +74,9 @@
 				
 				}else{
 			            $.ajax({
-							url: "<?php echo base_url('/admin/smschat/add_contact_notes'); ?>",
+							url: "<?php echo base_url('/admin/smschat/addSmsNotes'); ?>",
 							type: "POST",
-							data: {notes: NotesContent, NotesTo: NotesTo,source:source,notes_from:'sms',_token: '{{csrf_token()}}'},
+							data: {notes: NotesContent, NotesTo: NotesTo,_token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (response) {
 								if (response.status == "success") {
@@ -161,7 +161,7 @@
 	
 	function showNoteslisting(NotesTo){
 			$.ajax({
-				url: '<?php echo base_url('admin/smschat/listingNotes'); ?>',
+				url: '<?php echo base_url('admin/smschat/listingSmsNotes'); ?>',
 				type: "POST",
 				data: {'NotesTo' : NotesTo,notes_from:'sms',_token: '{{csrf_token()}}'},
 				dataType: "html",

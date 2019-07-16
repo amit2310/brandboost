@@ -365,9 +365,9 @@
 <?php if ($aUInfo->login_counter_lu >= 5) { ?>
         setTimeout(function () {
             $.ajax({
-                url: "{{ URL::asset('admin/users/updateUserData') }}",
+                url: "<?php echo base_url('admin/users/updateUserData'); ?>",
                 type: "POST",
-                data: {userId: '<?php echo $aUInfo->id; ?>', fieldName: 'login_counter_lu'},
+                data: {userId: '<?php echo $aUInfo->id; ?>', fieldName: 'login_counter_lu', _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -387,13 +387,14 @@
 <?php if ($aUInfo->login_counter_au >= 12) { ?>
         setTimeout(function () {
             $.ajax({
-                url: "{{ URL::asset('admin/users/updateUserData') }}",
                 type: "POST",
-                data: {userId: '<?php echo $aUInfo->id; ?>', fieldName: 'login_counter_au'},
+                url: "<?php echo base_url('admin/users/updateUserData'); ?>",
+                data: {userId: '<?php echo $aUInfo->id; ?>', fieldName: 'login_counter_au', _token: '<?php echo csrf_token() ?>'},
                 dataType: "json",
                 success: function (data) {
+
                     if (data.status == 'success') {
-                        //$("#showannualPopup").modal("show");
+                        //console.log('success');
                     } else {
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();

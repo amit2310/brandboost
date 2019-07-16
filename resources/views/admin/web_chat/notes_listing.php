@@ -141,7 +141,7 @@
 					msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'+filename;
 				    var source='Sms chat notes';
 					$.ajax({
-							url: "<?php echo base_url('/admin/Chat/addChatNotes'); ?>",
+							url: "<?php echo base_url('/admin/webchat/addChatNotes'); ?>",
 							type: "POST",
 							data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser,notes:'1'},
 							dataType: "json",
@@ -169,7 +169,7 @@
 	function showNoteslisting(NotesTo){
 		$('.NotesThreadsBox').attr('id','notesBox_'+NotesTo);
 			$.ajax({
-				url: '<?php echo base_url('admin/Contacts/listingNotes'); ?>',
+				url: '<?php echo base_url('admin/webchat/listingNotes'); ?>',
 				type: "POST",
 				data: {'NotesTo' : NotesTo,notes_from:'web'},
 				dataType: "html",

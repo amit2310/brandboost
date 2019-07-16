@@ -46,7 +46,7 @@ $pageThName = \Request::segment(4);
         <!-- User menu -->
         <div class="sidebar-user hidden">
             <div class="category-content">
-                <div class="media"> <a href="#" class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></a>
+                <div class="media"> <a href="#" class="media-left"><img src="<?php echo base_url('assets/images/placeholder.jpg'); ?>" class="img-circle img-sm" alt=""></a>
                     <div class="media-body"> <span class="media-heading text-semibold">Sailec Inc.</span>
                         <div class="text-size-mini">Business</div>
                     </div>

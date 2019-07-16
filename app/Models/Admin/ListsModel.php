@@ -51,8 +51,8 @@ class ListsModel extends Model {
 		$oData = DB::table('tbl_brandboost_users')
                 ->where('brandboost_id', $listId)
                 ->orderBy('id', 'desc')        
-                ->get();                
-                
+				->get();
+				
         return $oData;
     }
     
