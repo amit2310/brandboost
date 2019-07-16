@@ -50,5 +50,8 @@ Route::post('admin/smschat/listingSmsNotes','Admin\SmsChat@listingSmsNotes');
 //Profile module
 Route::get('admin/profile','Admin\AccountSetting@index');
 
+//Users module
+Route::post('admin/users/updateUserData','Admin\Users@updateUserData');
+
 
 
