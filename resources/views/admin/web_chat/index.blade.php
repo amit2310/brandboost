@@ -1,70 +1,77 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php //echo $title; ?>
+<?php //echo $title;
+ ?>
 @endsection
 
 @section('contents')
-<?php 
+<?php
 $contactCount = '';
 $aUInfo = getLoggedUser();
 $isLoggedInTeam = Session::get("team_user_id");
 if ($isLoggedInTeam) {
-	$aTeamInfo = App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
-    $teamMemberName = $aTeamInfo->firstname.' '.$aTeamInfo->lastname;
+    $aTeamInfo = App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
+    $teamMemberName = $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname;
     $teamMemberId = $aTeamInfo->id;
     $loginMember = $teamMemberId;
+} else {
+    $teamMemberName = '';
+    $teamMemberId = '';
+    $loginMember = $aUInfo->id;
 }
-else {
-	$teamMemberName = '';
-	$teamMemberId = '';
-	$loginMember = $aUInfo->id;
+if (empty($aUInfo->avatar))
+$avatar = "";
+else 
+$avatar = $aUInfo->avatar;
+
+if (empty($avatar)) {
+    $currentUserImg = '/assets/images/default_avt.jpeg';
+} else {
+    $currentUserImg = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $avatar;
+}
+$firstUserData = '';
+$favouriteUserDataCount = count((array)$favouriteUserData);
+
+// loop for latest chat by the user id 
+$activeOnlyweb = activeOnlyweb($loginMember); // login user id 
+
+// loop for old chats by the user id 
+$oldchat_list = activeOnlywebOldchatlist($loginMember);
+
+// loop for users who are waiting by the user id 
+$WaitingChatlist = WaitingChatlist($loginMember);
+$activeChatCount = count((array)$activeOnlyweb);
+
+// get shortcuts  the user id 
+$shortcuts = getchatshortcut($loginMember);
+
+// get sFavlist by the user id 
+$Favorites_list = getFavlist($loginMember);
+$FavoritesCount = count($Favorites_list);
+
+// loop to get the first user in the loop 
+$Counterflag = 0;
+
+foreach ($activeOnlyweb as $key => $value) {
+    $token = "";
+    $userid = "";
+    $token = $value->room;
+    $userid = $value->user;
+    if ($Counterflag == 0) {
+        $popupId = $userid;
+        $popupToken = $token;
+        $Counterflag = 1;
+    }
+    $Counterflag++;
 }
 
-
-	
-	if(empty($loginUserData->avatar)) {
-		
-		$currentUserImg =  '/assets/images/default_avt.jpeg';
-	}
-	else {
-		$currentUserImg = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/".$loginUserData->avatar;
-	} 
-	$firstUserData = '';
+// first user in the loop 
+$popupId = !empty($popupId) ? $popupId : '';
+$popupToken = !empty($popupToken) ? $popupToken : '';
 
 
-
-   $favouriteUserDataCount = count((array)$favouriteUserData);
-   $activeOnlyweb = activeOnlyweb($loginUserData->id);// here we place client twilio number
-   $oldchat_list = activeOnlywebOldchatlist($loginUserData->id);
-   $WaitingChatlist = WaitingChatlist($loginUserData->id);
-   $activeChatCount  =  count((array)$activeOnlyweb);
-   $shortcuts = getchatshortcut($loginUserData->id);
-   $Favorites_list = getFavlist($loginUserData->id);
-    $FavoritesCount  = count($Favorites_list);
-    $Counterflag=0;
-
-
-	
-	foreach( $activeOnlyweb as $key=>$value) {
-		$token = "";
-		$userid="";
-		
-		$token = $value->room;
-		$userid = $value->user;
-		
-		if($Counterflag == 0)
-		{
-		  
-		   $incid =$userid;
-		  
-			$Counterflag=1;
-		}
-
-		$Counterflag++;  
-	}
-
-	?>
+?>
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.timeago.js"></script>
 	<style>
 		.chat_user_list{/*height:730px;*/  height: 635px;  overflow:auto;}
@@ -154,7 +161,7 @@ else {
 							
 								
 								<input type="hidden" name="afterTrigger" id="afterTrigger" value="">
-								<button type="submit"><img src="/new_pages/assets/images/chat_search_icon.png"></button>
+								<button type="submit"><img src="/assets/images/chat_search_icon.png"></button>
 							</div>
 
 
@@ -183,7 +190,8 @@ else {
 							<input type="hidden" name="allChatC" class="allChatC" value="<?php echo $activeChatCount; ?>" />
 							<input type="hidden" name="unassigned" class="unassigned_chat" value="<?php echo $unassignedChat; ?>">
 							<input type="hidden" name="assigned" class="assigned_chat" id="assigned_chat_<?php echo $loggedYou; ?>" value="<?php echo $assignedChat; ?>">
-							<?php //echo $loggedYou; ?>
+							<?php //echo $loggedYou;
+ ?>
 							
 								</div>
 							
@@ -276,7 +284,6 @@ $(document).ready(function() {
 		site_url = site_url.replace(/\/$/, '');
 		var socket = io(site_url+':3000');
 		var userId;
-		var incId;
 		var currentUser = "<?php echo $loginUserData->id; ?>";
 		
 		   $( ".WebBoxList" ).each(function( index ) {
@@ -454,7 +461,6 @@ $(document).ready(function() {
 		
 			$('.msg_tab_sec').trigger('click');
 		   userId = $(this).attr('userId');
-		    incId = $(this).attr('incid');
 			var RwebId = $(this).attr('RwebId');
 			
 			showNoteslisting(userId);
@@ -462,7 +468,7 @@ $(document).ready(function() {
 			$('#livesearchVal').val('');
 			$('#livesearch').html('');
 			$('.addtionalSearchDiv').hide();
-		    loadMessageChat(userId,incId);
+		    loadMessageChat('');
 			$('.bigwebassign').html('Assigned to: '+$(this).attr('assign_to'));
 			setTimeout(function(){ searchMainSmsPrevMsg('',$('.MainsearchChatMsg').val()); }, 2000);
 			
@@ -503,20 +509,21 @@ $(document).ready(function() {
 				});
 	  	
 	}
-	var incId = '<?php echo $incid; ?>';
-	loadMessageChat(incId,'','');
-	showNoteslisting(incId);
+
+	// this functions called on pageload 
+	loadMessageChat('<?php echo $popupId; ?>','<?php echo $popupToken ; ?>');
+	//showNoteslisting('<?php echo $popupId; ?>','<?php echo $popupToken ; ?>');
 	
 	//  ######### Load Chat message ############ //
-function loadMessageChat(userId,incId,clickvalue=null)
+function loadMessageChat(userId,token,clickvalue=null)
 	 {
 		  $('#livesearchVal').val(clickvalue);
 			 $('#livesearch').html('');
 			 $('#livesearch').removeAttr("style");
-		 $('.editModuleSubscriber_main_web').attr('data-modulesubscriberid',incId);
-			$('.editModuleSubscriber_main_web').attr('moduleaccountid',incId);
+		      $('.editModuleSubscriber_main_web').attr('data-modulesubscriberid','');
+			$('.editModuleSubscriber_main_web').attr('moduleaccountid','');
 		
-			if(incId == "")
+			if(1)
 			{
 				
 				$('.editModuleSubscriber_main_web').hide();
@@ -528,52 +535,27 @@ function loadMessageChat(userId,incId,clickvalue=null)
 			}
 		 
 		 $('.WebChatTextarea').html('<div class="msg_push_web"></div>');
-		var currentUser = "<?php echo $loginUserData->id; ?>";
-		var currentUserName = "<?php echo $loginUserData->firstname . ' ' . $loginUserData->lastname; ?>";
-		var avatar = "<?php echo $loginUserData->avatar; ?>";
-		if(avatar != ' '){
-		avatar = "<?php echo 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $loginUserData->avatar; ?>";
-		}
-		else {
-		avatar = "<?php echo base_url('admin_new/images/userp.png'); ?>";
-		}
+		   var currentUser = "<?php echo $loginMember; ?>";
+		
 			var userID = userId;
-			var currentUser = "<?php echo $loginUserData->id; ?>";
-			var currentUserName = "<?php echo $loginUserData->firstname . ' ' . $loginUserData->lastname; ?>";
-			var avatar = "<?php echo $loginUserData->avatar; ?>";
-			if(avatar != ' '){
-				avatar = "<?php echo 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $loginUserData->avatar; ?>";
-			}
-			else {
-				avatar = "<?php echo base_url('admin_new/images/userp.png'); ?>";
-			}
+			var currentUserName = "<?php echo $aUInfo->firstname . ' ' . $aUInfo->lastname; ?>";
 			
-			var aToken = Number(userID) + Number(currentUser);
-			
-			
-			if(Number(userID) > Number(currentUser)){
-				var sToken = Number(userID) - Number(currentUser);
-			}
-			else {
-				var sToken = Number(currentUser) - Number(userID);
-			}
-			
-			var newToken = aToken+'n'+sToken;
+			var newToken = token;
 		    socket.emit('subscribe',newToken);
 			
 			socket.emit('subscribe',newToken);
 			$.ajax({
 				url: '<?php echo base_url('admin/webchat/getUserinfo'); ?>',
 				type: "POST",
-				data: {'userId':userID,'incId':incId,'token':newToken},
+				data: {'chatUserid':userID,'token':newToken,_token: '{{csrf_token()}}'},
 				success: function (data) {
-					console.log(data);
-					var obj =  $.parseJSON(data);
+					//console.log(data);
+					var obj = data;
 					$('.forceunassign a').removeClass('active');
 					$('.default').removeClass('active');
 					//console.log(obj);
-					var DynamicId = "bigweb_chat_"+obj[5].incId;
-					var DynamicId_shortcut = "bigweb_chat_shortcut_"+obj[5].incId;
+					var DynamicId = "bigweb_chat_"+obj[5].chatUserid;
+					var DynamicId_shortcut = "bigweb_chat_shortcut_"+obj[5].chatUserid;
 					$('#Webonly .bigweb_chat').attr('id',DynamicId);
 					$('.bigweb_chat_shortcut').attr('id',DynamicId_shortcut);
 
@@ -589,7 +571,7 @@ function loadMessageChat(userId,incId,clickvalue=null)
 					$('#Webonly #em_id').val(userID);
 					$('#Webonly #em_token').val(newToken);
 					$('#Webonly #em_current_user').val(currentUser);
-					$('#Webonly #em_inc_id').val(obj[5].incId);
+					$('#Webonly #em_inc_id').val(obj[5].chatUserid);
 					$('#Webonly #em_image').val(obj[4].avatar_url);
 					$('#Webonly #userId_encode').val(obj[10].userId_encode);
 					$('.WebChatTextarea').attr('id', 'WebChatTextarea_'+userID);
@@ -646,9 +628,9 @@ function loadMessageChat(userId,incId,clickvalue=null)
 					
 					
 			     $.ajax({
-				url: '<?php echo base_url('admin/Chat/getMessages'); ?>',
+				url: '<?php echo base_url('admin/webchat/getMessages'); ?>',
 				type: "POST",
-				data: {room:newToken, offset:'0'},
+				data: {room:newToken, offset:'0',_token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 					
@@ -1096,7 +1078,7 @@ function loadMessageChat(userId,incId,clickvalue=null)
 				formData.append('files[]', file);
 			}
 			
-			fetch('<?php echo base_url("/dropzone/upload_s3_attachment/".$loginUserData->id."/webchat"); ?>', { 
+			fetch('<?php echo base_url("/dropzone/upload_s3_attachment/" . $loginUserData->id . "/webchat"); ?>', { 
 				method: 'POST',
 				body: formData // This is your file object
 			}).then(
@@ -1450,7 +1432,7 @@ function loadMessageChat(userId,incId,clickvalue=null)
 			$.ajax({
 				url: '<?php echo base_url('admin/smschat/addSMSFavourite'); ?>',
 				type: "POST",
-				data: {user_id:$(this).attr('incid'), currentUser:currentUser},
+				data: {user_id:'', currentUser:currentUser},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'ok') {

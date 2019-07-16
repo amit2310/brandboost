@@ -130,8 +130,8 @@ class SmsChatModel extends Model {
     public function addSmsNotes($data)
     {
 
-       $oData = DB::table('tbl_subscriber_notes')->insert($data);
-        return $oData;
+       $oData = DB::table('tbl_subscriber_notes')->insertGetId($data);
+      return $oData;
 
     }
 

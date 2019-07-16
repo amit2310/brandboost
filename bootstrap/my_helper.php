@@ -1034,13 +1034,18 @@ if (!function_exists('getowners')) {
 
 }
 
+
+/**
+* This function will return chatUser details 
+* @param type $userId
+* @return type
+*/
+
 if (!function_exists('getSubscriberDetails')) {
 
     function getSubscriberDetails($userId) {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $result = $CI->mSubscriber->getSubscriberDetailsBydb($userId);
-        return $result;
+       $oData = \App\Models\Admin\SubscriberModel::getchatUser($userId);
+        return $oData;
     }
 
 }
