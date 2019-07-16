@@ -46,10 +46,9 @@ class SmsChat extends Controller {
         $SubscriberPhone = trim(numberForamt(Input::post("SubscriberPhone")));
         $usersdata = getUserbyPhone($SubscriberPhone);
         $usersdata = $usersdata[0];
-        $userDataDetail = getUserDetail($usersdata->user_id);
         $offsetValue = Input::post("offsetValue") > 0 ? 0 : Input::post("offsetValue");
-        $userDetail = getSubscribersInfo($userId);
         $isLoggedInTeam = Session::get("team_user_id");
+
         if ($isLoggedInTeam) {
             $hasweb_access = getMemberchatpermission($isLoggedInTeam);
             if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
@@ -67,6 +66,15 @@ class SmsChat extends Controller {
         $chatThreadsData = SmsChatModel::getSMSThreadsByPhoneNo($Twilionumber, $SubscriberPhone, $offsetValue);
         if (count($chatThreadsData) > 0) {
             foreach ($chatThreadsData as $chatData) {
+
+                $oUseravatar = !empty($oUser->avatar) ? $oUser->avatar : '';
+                $oUserfirstname = !empty($oUser->firstname) ? $oUser->firstname : '';
+                $oUserlastname = !empty($oUser->lastname) ? $oUser->lastname : '';
+                $useravatar = !empty($usersdata->avatar) ? $usersdata->avatar : '';
+                $userfirstname = !empty($usersdata->firstname) ? $usersdata->firstname : '';
+                $userlastname = !empty($usersdata->lastname) ? $usersdata->lastname : '';
+
+
                 $teamMeberName = "";
                 if (!empty($chatData->team_id)) {
                     $teamMeberName = smsteam_member_name($chatData->team_id);
@@ -96,7 +104,7 @@ class SmsChat extends Controller {
 
                         <li class="media reversed" style="margin-top: 10px;">
                            <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><!--<img src="images/face2.jpg" class="img-circle img-xxs" alt="">--> 
-                        <?php echo showUserAvtar($oUser->avatar, $oUser->firstname, $oUser->lastname, 28, 28, 11); ?></span>
+                        <?php echo showUserAvtar($oUseravatar, $oUserfirstname, $oUserlastname, 28, 28, 11); ?></span>
                         <?php echo $fileView; ?>
                         <?php if (!empty($teamMeberName)) { ?>
                         <span style="padding: 0;display: block;font-size: 10px;" class="text-muted text-size-small">Sent by <?php echo $teamMeberName; ?></span>
@@ -112,7 +120,7 @@ class SmsChat extends Controller {
 ?>
                         <li class="media" style="margin-top: 10px;">
                             <div class="media-body myclass"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span>
-                        <?php echo showUserAvtar($userDataDetail->avatar, $usersdata->firstname, $usersdata->lastname, 28, 28, 11); ?></span>
+                        <?php echo showUserAvtar($useravatar, $userfirstname, $userlastname, 28, 28, 11); ?></span>
                         <?php echo $fileView; ?>
                         <?php if (!empty($teamMeberName)) { ?>
                         <span style="padding: 0;display: block;font-size: 10px;" class="text-muted text-size-small">Sent by <?php echo $teamMeberName; ?></span>
@@ -174,30 +182,32 @@ class SmsChat extends Controller {
      */
 
 
-    public function listingNotes() {
+    public function listingSmsNotes() {
+        $oUser = getLoggedUser();
         $SubscriberPhone = numberForamt(Input::post("NotesTo"));
         $notes_from = numberForamt(Input::post("notes_from"));
-        $mSubscriber = new SubscriberModel();
-        $oNotes = $mSubscriber->visitornotes($SubscriberPhone);
+        $SmsChatObj = new SmsChatModel();
+         $oNotes = $SmsChatObj->getSmsNotes($SubscriberPhone);
         foreach ($oNotes as $NotesData) {
-            $fileext = end(explode('.', $NotesData->message));
-            $mmsFile = explode('/Media/', $NotesData->message);
+            $fileext = explode('.', $NotesData->notes);
+            $fileext = end($fileext);
+            $mmsFile = explode('/Media/', $NotesData->notes);
             if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
-                $NotesData->message = "<div class='mrdia-file'><a href='" . $NotesData->message . "' target='_blank' class='previewImage'><img src='" . $NotesData->message . "' /></a></div>";
+                $NotesData->notes = "<div class='mrdia-file'><a href='" . $NotesData->notes . "' target='_blank' class='previewImage'><img src='" . $NotesData->notes . "' /></a></div>";
             } else if ($fileext == 'doc' || $fileext == 'docx' || $fileext == 'odt' || $fileext == 'csv' || $fileext == 'pdf') {
-                $NotesData->message = "<div class='media-content'><a href='" . $NotesData->message . "' target='_blank'>Download '" . $fileext . "' File</a></div>";
+                $NotesData->notes = "<div class='media-content'><a href='" . $NotesData->notes . "' target='_blank'>Download '" . $fileext . "' File</a></div>";
             } else if (count($mmsFile) > 1) {
-                $NotesData->message = "<div class='mrdia-file'><a href='" . $NotesData->message . "' target='_blank' class='previewImage'><img src='" . $NotesData->message . "' /></a></div>";
+                $NotesData->notes = "<div class='mrdia-file'><a href='" . $NotesData->notes . "' target='_blank' class='previewImage'><img src='" . $NotesData->notes . "' /></a></div>";
             }
 ?>
                     <li class="media reversed">
                        <div class="media-body">  
                            <span style="display: none;" class="media-annotation user_icon"><span class="circle_green_status status-mark"></span>
-                            <?php echo showUserAvtar($loginUserData->avatar, $loginUserData->firstname, $loginUserData->lastname, 28, 28, 11); ?>                               </span>
-                           <div class="media-content" style="background-color:#fff9ec!important;"><?php echo $NotesData->message; ?>
+                            <?php echo showUserAvtar($oUser->avatar, $oUser->firstname, $oUser->lastname, 28, 28, 11); ?>                               </span>
+                           <div class="media-content" style="background-color:#fff9ec!important;"><?php echo $NotesData->notes; ?>
                            </div>
                                <span style="padding: 0;display: block;font-size: 10px;position: absolute; right: 0;bottom: -16px;" class="text-muted text-size-small">
-                               Added By <?php echo assignto($NotesData->room) . ' ' . date('F d Y', strtotime($NotesData->created));
+                               Added By <?php echo assignto('') . ' ' . date('F d Y', strtotime($NotesData->created));
         } ?>  </span>
                             </div>
                     </li>
@@ -445,6 +455,38 @@ class SmsChat extends Controller {
             });
         </script>
         <?php
+    }
+
+
+    /**
+    * This function is used to add the sms notes 
+    * @return type
+    */
+
+    public function addSmsNotes()
+    {
+
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $SmsChatObj = new SmsChatModel();
+       
+        $notes = Input::post("notes");
+        $subId = Input::post("NotesTo");
+       
+        $source = 'sms';
+        $type = "";
+       
+
+        $aData = array(
+            'user_id' => $userID,
+            'subscriber_id' => $subId,
+            'notes' => $notes,
+            'source'=>$source,
+            'created' => date("Y-m-d H:i:s")
+        );
+        $SmsChatObj->addSmsNotes($aData);
+       
+
     }
 
 }
