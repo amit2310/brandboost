@@ -75,13 +75,12 @@ class WebChat extends Controller {
         }
     }
     /**
-     * This function will return Twilio related account details based on the client/user id
-     * @param type $clientID
+     * This function is used to get the webchat notes 
      * @return type
      */
     public function listingNotes() {
         $oUser = getLoggedUser();
-        $chatUserid = Input::post("chatUserid");
+        $chatUserid = Input::post("NotesTo");
         $WebChatObj = new WebChatModel();
         $oNotes = $WebChatObj->getWebNotes($chatUserid);
         foreach ($oNotes as $NotesData) {
@@ -110,6 +109,7 @@ class WebChat extends Controller {
 <div style="height:10px" class="clearfix"></div>
                 <?php
     }
+
     /**
      * This function used to get all the webchat messages
      * @return type
@@ -154,6 +154,63 @@ class WebChat extends Controller {
         echo json_encode($response);
         exit;
     }
+
+
+     /**
+    * This function is used to add the web notes 
+    * @return type
+    */
+
+    public function addWebNotes()
+    {
+
+        $aUInfo = getLoggedUser();
+        $WebChatObj = new WebChatModel();
+        $isLoggedInTeam = Session::get("team_user_id");
+        if ($isLoggedInTeam) {
+        $aTeamInfo = App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
+        $teamMemberName = $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname;
+        $teamMemberId = $aTeamInfo->id;
+        $loginMember = $teamMemberId;
+        } else {
+        $teamMemberName = '';
+        $teamMemberId = '';
+        $loginMember = $aUInfo->id;
+        }
+
+        $SmsChatObj = new SmsChatModel();
+       
+        $msg = Input::post("msg");
+        $chatuserid = Input::post("chatTo");
+        $room = Input::post("room");
+        $team_id = $teamMemberId;
+        $client_id = $aUInfo->id;
+
+       
+
+        $aData = array(
+            'room' => $room,
+            'message' => $msg,
+            'user' => $chatuserid,
+            'client_id'=>$client_id,
+            'team_id'=>$team_id,
+            'created' => date("Y-m-d H:i:s")
+        );
+        
+        
+        if(!empty($WebChatObj->addWebNotes($aData)))
+        {
+            $response = array('status'=>'success');
+        }
+        else
+        {
+            $response = array('status'=>'error');
+        }
+        
+
+        echo json_encode($response); 
+
+
 
     /**
      * This function used to update the status from unread to read
@@ -200,6 +257,7 @@ class WebChat extends Controller {
 
         echo json_encode($response);
         exit;
+
     }
 
 }

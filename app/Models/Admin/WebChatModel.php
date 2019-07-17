@@ -44,8 +44,8 @@ class WebChatModel extends Model {
 
     public function getWebNotes($userid) {
 
-        $oResult = DB::table('tbl_chat_supportuser')
-                ->where('assign_team_member', $teamId)
+        $oResult = DB::table('tbl_visitor_notes')
+                ->where('user', $userid)
                 ->get();
           return $oResult;
     }
@@ -67,6 +67,20 @@ class WebChatModel extends Model {
 
        
     }
+
+     /**
+    * This function is used to add the web notes 
+    * @return type
+    */
+
+    public function addWebNotes($data)
+    {
+
+       $oData = DB::table('tbl_visitor_notes')->insertGetId($data);
+      return $oData;
+
+    }
+
 
     /**
      * this function is used to update the read status
@@ -102,6 +116,7 @@ class WebChatModel extends Model {
 
         return true;
     }
+
 
 
 }

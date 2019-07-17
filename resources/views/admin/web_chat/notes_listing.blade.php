@@ -78,12 +78,12 @@
 				
 				}else{
 			            $.ajax({
-							url: "<?php echo base_url('admin/Chat/addChatNotes'); ?>",
+							url: "<?php echo base_url('admin/webchat/addWebNotes'); ?>",
 							type: "POST",
-							data: {room:newToken, msg:NotesContent, chatTo:chatTo, currentUser:currentUser,notes:'1'},
+							data: {room:newToken, msg:NotesContent, chatTo:chatTo, currentUser:currentUser,notes:'1',_token:'{{csrf_token()}}'},
 							dataType: "json",
 							success: function (response) {
-								if (response.status == "ok") {
+								if (response.status == "success") {
 									showNoteslisting(chatTo);
 								}
 							},
@@ -141,12 +141,12 @@
 					msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'+filename;
 				    var source='Sms chat notes';
 					$.ajax({
-							url: "<?php echo base_url('/admin/webchat/addChatNotes'); ?>",
+							url: "<?php echo base_url('/admin/webchat/addWebNotes'); ?>",
 							type: "POST",
 							data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser,notes:'1'},
 							dataType: "json",
 							success: function (response) {
-								if (response.status == "ok") {
+								if (response.status == "success") {
 									showNoteslisting(chatTo);
 								}
 							},
@@ -171,7 +171,7 @@
 			$.ajax({
 				url: '<?php echo base_url('admin/webchat/listingNotes'); ?>',
 				type: "POST",
-				data: {'NotesTo' : NotesTo,notes_from:'web'},
+				data: {'NotesTo' : NotesTo,notes_from:'web',_token:'{{csrf_token()}}'},
 				dataType: "html",
 				success: function (data) {
 					$('#Webonly .NotesThreadsBox').html(data);
