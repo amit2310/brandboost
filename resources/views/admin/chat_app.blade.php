@@ -1252,7 +1252,7 @@ if (!empty($hasweb_access)) {
                     success: function (data) {
                         if (data.status == 'ok') {
 							
-							$('#CurrentSMSUserListing').html(' <figure><img style="width:16px!important; height:11px!important" id="theImg" src="{{ URL::asset('assets/images/ajax-loader.gif') }}" /> </figure>');
+							$('#CurrentSMSUserListing').html(' <figure><img style="width:16px!important; height:11px!important" id="theImg" src="<?php echo base_url('assets/images/ajax-loader.gif'); ?>" /> </figure>');
 							
 							$('#CurrentSMSUserListing').removeClass("slick-initialized slick-slider");
 							// ajax to list // 
@@ -1813,7 +1813,7 @@ dataType: "json",
 success: function (data) {
 if (data.status == 'ok') {
 
-$('#CurrentUserListing').html(' <figure style="margin:15px 0;"><img style="width:16px!important; height:11px!important" id="theImg" src="{{ URL::asset('assets/images/ajax-loader.gif') }}" /> </figure>');
+$('#CurrentUserListing').html(' <figure style="margin:15px 0;"><img style="width:16px!important; height:11px!important" id="theImg" src="<?php echo base_url('assets/images/ajax-loader.gif'); ?>" /> </figure>');
 $('#CurrentUserListing').removeClass("slick-initialized slick-slider");
 
 // ajax to list // 
@@ -1951,9 +1951,9 @@ $( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
 });
 
 $.ajax({
-url: "{{ url('admin/Chat/readMessages') }}",
+url: "<?php echo base_url('admin/webchat/readMessages'); ?>",
 type: "POST",
-data: {userID:userID, currentUser:currentUser},
+data: {userID:userID, currentUser:currentUser, _token: '{{csrf_token()}}'},
 dataType: "json",
 success: function (data) {
 if (data.status == 'ok') {
@@ -2301,9 +2301,9 @@ $( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
 });
 
 $.ajax({
-url: "{{ url('admin/Chat/readMessages') }}",
+url: "<?php echo base_url('admin/webchat/readMessages'); ?>",
 type: "POST",
-data: {userID:chatbox, currentUser:currentUser},
+data: {userID:chatbox, currentUser:currentUser, _token: '{{csrf_token()}}'},
 dataType: "json",
 success: function (data) {
 if (data.status == 'ok') {
@@ -2354,7 +2354,7 @@ success: function (data) {
 if (data.status == 'ok') 
 {
 	if(chatBoxType == 'webchat'){
-		$('#CurrentUserListing').html(' <figure style="margin:15px 0;"><img style="width:16px!important; height:11px!important" id="theImg" src="{{ URL::asset('assets/images/ajax-loader.gif') }}" /> </figure>');
+		$('#CurrentUserListing').html(' <figure style="margin:15px 0;"><img style="width:16px!important; height:11px!important" id="theImg" src="<?php echo base_url('assets/images/ajax-loader.gif'); ?>" /> </figure>');
 		$('#CurrentUserListing').removeClass("slick-initialized slick-slider");
 		// ajax to list // 
 		$.ajax({

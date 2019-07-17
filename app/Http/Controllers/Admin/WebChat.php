@@ -154,4 +154,29 @@ class WebChat extends Controller {
         echo json_encode($response);
         exit;
     }
+
+    /**
+     * This function used to update the status from unread to read
+     * @return type
+     */
+    public function readMessages() {
+
+        $webChatModel = new WebChatModel();
+        $from_user = Input::post("currentUser");
+        $to_user = Input::post("userID");
+        $aData = array(
+            'read_status' => '1'
+        );
+        $result = $webChatModel->readChatMsg($to_user, $from_user, $aData);
+
+        if ($result) {
+            $response = array('status' => 'ok');
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit();
+       
+    }
 }

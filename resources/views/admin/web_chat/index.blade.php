@@ -691,9 +691,9 @@ function loadMessageChat(userId,token,clickvalue=null)
 
 
 			$.ajax({
-				url: '<?php echo base_url('admin/Chat/readMessages'); ?>',
+				url: '<?php echo base_url('admin/webchat/readMessages'); ?>',
 				type: "POST",
-				data: {userID:userID, currentUser:currentUser},
+				data: {userID:userID, currentUser:currentUser, _token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'ok') {
