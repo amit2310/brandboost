@@ -10,6 +10,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\BrandboostModel;
 use App\Models\Admin\SubscriberModel;
+use App\Models\FeedbackModel;
+use App\Models\ReviewsModel;
+use App\Models\Admin\WorkflowModel;
+use App\Models\Admin\TemplatesModel;
+use App\Models\Admin\Crons\InviterModel;
+use Illuminate\Support\Facades\Input;
 use Session;
 
 class Brandboost extends Controller {
@@ -155,6 +161,123 @@ class Brandboost extends Controller {
 		return view('admin.brandboost.onsite_list', $aData);
     }
 	
+	/**
+	* This function will return onsite configuration related values
+	* @param type $brandboostID
+	* @return type
+	*/
+	public function onsiteSetup(Request $request) {
+		$brandboostID = $request->id;
+        $selectedTab = Input::get("t"); //$this->input->get('t');
+        $selectedCategory = Input::get("cate"); //$this->input->get('cate');
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+		
+		$mBrandboost = new BrandboostModel();
+		$mUsers = new UsersModel();
+		$mFeedback = new FeedbackModel();
+		$mWorkflow = new WorkflowModel();
+		$mReviews = new ReviewsModel();
+		$mTemplates = new TemplatesModel();
+		$mInviter = new TemplatesModel();
+
+        if (!empty($selectedTab)) {
+            if (in_array($selectedTab, ['Review Sources', 'Campaign Preferences', 'Rewards & Gifts', 'Configure Widgets', 'Email Workflow', 'Campaign Clients', 'Reviews', 'Integration', 'Image', 'Video'])) {
+                //set required session
+                //$this->session->set_userdata("setTab", $selectedTab);
+            }
+        } else {
+            $setTab = Session::get("setTab");
+            if ($setTab == '') {
+                //Session::set("setTab", 'Campaign Preferences');
+            }
+        }
+
+        if (empty($brandboostID)) {
+            redirect("admin/brandboost/onsite");
+            exit;
+        }
+
+        $bbProductsData = $mBrandboost->getProductData($brandboostID);
+        $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
+
+        if (empty($getBrandboost) || $getBrandboost[0]->user_id != $userID) {
+            redirect("admin/brandboost/onsite");
+            exit;
+        }
+        $getBrandboostFR = $mFeedback->getFeedbackResponse($brandboostID);
+        $moduleName = 'brandboost';
+        $moduleUnitID = '';
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+        $bActiveSubsription = $mUsers->isActiveSubscription();
+        $eventsdata = $mBrandboost->getBrandboostEvents($brandboostID);
+        $aReviews = $mReviews->getCampaignAllReviews($brandboostID);
+        //$revCount = getCampaignReviewCount($brandboostID);
+        //$revRA = getCampaignReviewRA($brandboostID);
+        $emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite');
+        $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');
+        
+        $oEvents = $mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
+        $oEventsType = array('send-invite', 'followup');
+        $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
+        $oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName, 'onsite');
+        $setTab = Session::get("setTab");
+        $oTemplates = $mTemplates->getCommonTemplates();
+        $oCategories = $mTemplates->getCommonTemplateCategories();
+
+        if ($this->use_default_accounts == true) {
+            $aTwilioData = $this->defaultTwilioDetails;
+            $fromNumber = $aData['from_entity'];
+        } else {
+            $aTwilioAc = $mInviter->getTwilioAccount($userID);
+            if (!empty($aTwilioAc)) {
+                $fromNumber = $aTwilioAc->contact_no;
+            }
+        }
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a  href="' . base_url('admin/brandboost/onsite') . '" class="sidebar-control hidden-xs">On site </a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $getBrandboost[0]->brand_title . '" class="sidebar-control active hidden-xs ">' . $getBrandboost[0]->brand_title . '</a></li>
+			</ul>';
+        //pre($getBrandboost[0]);
+
+        $aData = array(
+            'title' => 'Onsite Brand Boost Campaign',
+            'pagename' => $breadcrumb,
+            'getOnsite' => $getBrandboost,
+            'bActiveSubsription' => $bActiveSubsription,
+            'feedbackResponse' => $getBrandboostFR,
+            'brandboostData' => $getBrandboost[0],
+            'eventsData' => $eventsdata,
+            'oEvents' => $oEvents,
+            'moduleName' => $moduleName,
+            'moduleUnitID' => $brandboostID,
+            'oEventsType' => $oEventsType,
+            'oTemplates' => $oTemplates,
+            'oCategories' => $oCategories,
+            'oCampaignTags' => $oCampaignTags,
+            'oDefaultTemplates' => $oDefaultTemplates,
+            'subscribersData' => $oCampaignSubscribers, // $allSubscribers,
+            'result' => $feedbackData,
+            'setTab' => $setTab,
+            'brandboostID' => $brandboostID,
+            'bbProductsData' => $bbProductsData,
+            'aReviews' => $aReviews,
+            'revCount' => $revCount,
+            'revRA' => $revRA,
+            'selectedTab' => $selectedTab,
+            'emailTemplate' => $emailTemplate,
+            'smsTemplate' => $smsTemplate,
+            'selectedCategory' => $selectedCategory,
+            'fromNumber' => $fromNumber,
+            'aUserInfo' => $oUser
+        );
+		
+		return view('admin.brandboost.onsite_setup', $aData);
+    }	
 
     public function index() {
 
@@ -438,116 +561,6 @@ class Brandboost extends Controller {
         );
 
         $this->template->load('admin/admin_template_new', 'admin/brandboost/onsite_widget_stats', $aData);
-    }
-
-    public function onsite_setup($brandboostID) {
-        $selectedTab = $this->input->get('t');
-        $selectedCategory = $this->input->get('cate');
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-
-        if (!empty($selectedTab)) {
-            if (in_array($selectedTab, array('Review Sources', 'Campaign Preferences', 'Rewards & Gifts', 'Configure Widgets', 'Email Workflow', 'Campaign Clients', 'Reviews', 'Integration', 'Image', 'Video'))) {
-                //set required session
-                $this->session->set_userdata("setTab", $selectedTab);
-            }
-        } else {
-            $setTab = $this->session->userdata('setTab');
-            if ($setTab == '') {
-                $this->session->set_userdata("setTab", 'Campaign Preferences');
-                //$this->session->set_userdata("setTab", 'Reviews');
-            }
-        }
-
-
-
-        //$brandboostID = $this->session->userdata('brandboostID');
-
-        if (empty($brandboostID)) {
-            redirect("admin/brandboost/onsite");
-            exit;
-        }
-
-        $bbProductsData = $this->mBrandboost->getProductData($brandboostID);
-        $getBrandboost = $this->mBrandboost->getBrandboost($brandboostID);
-
-        if (empty($getBrandboost) || $getBrandboost[0]->user_id != $userID) {
-            redirect("admin/brandboost/onsite");
-            exit;
-        }
-        $getBrandboostFR = $this->mFeedback->getFeedbackResponse($brandboostID);
-        $moduleName = 'brandboost';
-        $moduleUnitID = $moduleUnitID;
-        //$allSubscribers = $this->rLists->getAllSubscribersList($brandboostID);
-        $oCampaignSubscribers = $this->mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $eventsdata = $this->mBrandboost->getBrandboostEvents($brandboostID);
-        $aReviews = $this->mReviews->getCampaignAllReviews($brandboostID);
-        $revCount = getCampaignReviewCount($brandboostID);
-        $revRA = getCampaignReviewRA($brandboostID);
-        $emailTemplate = $this->mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite');
-        $smsTemplate = $this->mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');
-        
-        $oEvents = $this->mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
-        $oEventsType = array('send-invite', 'followup');
-        $oCampaignTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
-        $oDefaultTemplates = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, 'onsite');
-        $setTab = $this->session->userdata("setTab");
-        $oTemplates = $this->mTemplates->getCommonTemplates();
-        $oCategories = $this->mTemplates->getCommonTemplateCategories();
-
-        if ($this->use_default_accounts == true) {
-            $aTwilioData = $this->defaultTwilioDetails;
-            $fromNumber = $aData['from_entity'];
-        } else {
-            $aTwilioAc = $this->mInviter->getTwilioAccount($userID);
-            if (!empty($aTwilioAc)) {
-                $fromNumber = $aTwilioAc->contact_no;
-            }
-        }
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a  href="' . base_url('admin/brandboost/onsite') . '" class="sidebar-control hidden-xs">On site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $getBrandboost[0]->brand_title . '" class="sidebar-control active hidden-xs ">' . $getBrandboost[0]->brand_title . '</a></li>
-			</ul>';
-        //pre($getBrandboost[0]);
-
-        $aData = array(
-            'title' => 'Onsite Brand Boost Campaign',
-            'pagename' => $breadcrumb,
-            'getOnsite' => $getBrandboost,
-            'bActiveSubsription' => $bActiveSubsription,
-            'feedbackResponse' => $getBrandboostFR,
-            'brandboostData' => $getBrandboost[0],
-            'eventsData' => $eventsdata,
-            'oEvents' => $oEvents,
-            'moduleName' => $moduleName,
-            'moduleUnitID' => $brandboostID,
-            'oEventsType' => $oEventsType,
-            'oTemplates' => $oTemplates,
-            'oCategories' => $oCategories,
-            'oCampaignTags' => $oCampaignTags,
-            'oDefaultTemplates' => $oDefaultTemplates,
-            'subscribersData' => $oCampaignSubscribers, // $allSubscribers,
-            'result' => $feedbackData,
-            'setTab' => $setTab,
-            'brandboostID' => $brandboostID,
-            'bbProductsData' => $bbProductsData,
-            'aReviews' => $aReviews,
-            'revCount' => $revCount,
-            'revRA' => $revRA,
-            'selectedTab' => $selectedTab,
-            'emailTemplate' => $emailTemplate,
-            'smsTemplate' => $smsTemplate,
-            'selectedCategory' => $selectedCategory,
-            'fromNumber' => $fromNumber,
-            'aUserInfo' => $oUser
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/onsite_setup', $aData);
     }
 
 
