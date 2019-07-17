@@ -15,6 +15,8 @@ use Twilio\Jwt\ClientToken;
  */
 function getLoggedUser($redirect = true) {
     
+    $oUser = array();
+    
     if (Session::get('admin_user_id') > 0) {
         $userID = Session::get('admin_user_id');
         
