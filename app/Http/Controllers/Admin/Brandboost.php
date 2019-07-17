@@ -278,6 +278,39 @@ class Brandboost extends Controller {
 		
 		return view('admin.brandboost.onsite_setup', $aData);
     }	
+	
+	/**
+	* Used to get campaign review request data
+	* @param type $param
+	* @return type
+	*/
+	public function reviewRequest(Request $request) {
+		$param = $request->type;
+		$mBrandboost = new BrandboostModel();
+		$mUsers = new UsersModel();
+		
+        $oRequests = $mBrandboost->getReviewRequest();
+		//pre($oRequests);die;
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs">On Site </a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Review Requests" class="sidebar-control active hidden-xs ">Review Requests</a></li>
+			</ul>';
+        $bActiveSubsription = $mUsers->isActiveSubscription();
+
+        $aData = array(
+            'oRequest' => $oRequests,
+            'title' => 'Review Requests',
+            'pagename' => $breadcrumb,
+            'bActiveSubsription' => $bActiveSubsription,
+            'param' => $param
+        );
+
+		return view('admin.brandboost.review_request', $aData);
+    }
 
     public function index() {
 
@@ -5598,28 +5631,7 @@ class Brandboost extends Controller {
         }
     }
 
-    public function review_request($param) {
-        $oRequests = $this->mBrandboost->getReviewRequest($id);
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs">On Site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Review Requests" class="sidebar-control active hidden-xs ">Review Requests</a></li>
-			</ul>';
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-
-        $aData = array(
-            'oRequest' => $oRequests,
-            'title' => 'Review Requests',
-            'pagename' => $breadcrumb,
-            'bActiveSubsription' => $bActiveSubsription,
-            'param' => $param
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/review_request', $aData);
-    }
+    
 
     public function getSendgridStats() {
         $post = $this->input->post();

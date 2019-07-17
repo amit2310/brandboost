@@ -200,8 +200,12 @@ class BrandboostModel extends Model {
                     return $query->where('tbl_tracking_log_email_sms.type', 'email')
 					->orWhere('tbl_tracking_log_email_sms.type', 'sms');
                 })
-                ->get();
-
+				->toSql();
+                //->get();
+				//$queries = DB::getQueryLog();
+				//print_r($queries);
+				die;
+				
         return $oData;
     }
 	
