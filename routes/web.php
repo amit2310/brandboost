@@ -30,6 +30,7 @@ Route::get('admin/modules/emails/setupAutomation/{id}','Admin\Modules\Emails@set
 //Onsite and Offsite Modules
 Route::get('admin/brandboost/onsite_overview','Admin\Brandboost@onsiteOverview');
 Route::get('admin/brandboost/onsite','Admin\Brandboost@onsite');
+Route::get('admin/questions','Admin\Questions@index1');
 
 //chat module
 Route::get('admin/webchat','Admin\WebChat@index');

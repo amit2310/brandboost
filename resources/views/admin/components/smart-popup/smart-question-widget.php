@@ -38,7 +38,9 @@
         </div>
     </div>
 </div>
-<?php $this->load->view("admin/modals/smartPopup/questions"); ?>
+
+@include('admin.modals.smartPopup.questions')
+
 <script src="<?php echo base_url(); ?>assets/js/modules/smart-popup/questions.js" type="text/javascript"></script>
 <script>
     $(document).ready(function () {
