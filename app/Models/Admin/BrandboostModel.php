@@ -206,7 +206,7 @@ class BrandboostModel extends Model {
     }
 	
 	/**
-     * get review request response
+     * Used to get review request response
      * @param type $brandboostID
      * @return type
      */
@@ -219,6 +219,83 @@ class BrandboostModel extends Model {
 			->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.user_id', '=' , 'tbl_reviews.user_id')
 			->get();
         return $oData;
+    }
+	
+	/**
+	* Used to get onsite campaign products data
+	* @param type $brandboostID
+	* @return type
+	*/
+	public function getProductData($brandboostID) {
+        if (!empty($brandboostID)) {
+			$oData = DB::table('tbl_brandboost_products')
+				->where('brandboost_id', $brandboostID)    
+				->orderBy('product_order', 'asc')
+				->get();
+			return $oData;
+        }
+    }
+	
+	/**
+	* Used to get branboost(onsite/offsite) campaign list/details
+	* @param type $brandboostID
+	* @return type
+	*/
+	public function getBrandboost($id = 0, $type = '') {
+		
+		$oData = DB::table('tbl_brandboost')
+			->when(($id > 0), function ($query) use ($id) {
+				return $query->where('id', $id);
+			})
+			->when((!empty($type)), function ($query) use ($type) {
+				return $query->where('review_type', $type);
+			})
+			->where('delete_status', 0)    
+			->orderBy('id', 'desc')
+			->get();
+		return $oData;
+    }
+	
+	/**
+	* Used to get onsite brandboost event data
+	* @param type $brandboostID
+	* @return type
+	*/
+	public function getBrandboostEvents($brandID) {
+		$oData = DB::table('tbl_brandboost_events')
+			->where('brandboost_id', $brandID)    
+			->orderBy('previous_event_id', 'asc')
+			->get();
+		return $oData;
+    }
+	
+	/**
+	* Used to get user campaign email templates
+	* @param type $uersID
+	* @param type $bbType
+	* @return type
+	*/
+	public function getAllCampaignTemplatesByUserID($uersID, $bbType = 'onsite') {
+        $sql = "SELECT * FROM tbl_campaign_templates WHERE (user_id='" . $uersID . "' OR user_id='0') AND template_type='email' AND brandboost_type='" . $bbType . "' order by id DESC";
+		
+		$oData = DB::select(DB::raw($sql));
+        return $oData;
+    }
+	
+	/**
+	* Used to get user campaign sms templates
+	* @param type $uersID
+	* @param type $bbType
+	* @return type
+	*/
+	public function getAllSMSCampaignTemplatesByUserID($uersID, $bbType = 'onsite') {
+        $oData = DB::table('tbl_campaign_templates')
+			->where('user_id', $uersID)      
+			->where('template_type', 'sms')    
+			->where('brandboost_type', $bbType)    
+			->orderBy('id', 'asc')
+			->get();
+		return $oData;
     }
 	
 
@@ -241,18 +318,7 @@ class BrandboostModel extends Model {
         return $aData;
     }
 
-    public function getProductData($brandboostID) {
-        if (!empty($brandboostID)) {
-            $this->db->where('brandboost_id', $brandboostID);
-            $this->db->order_by('product_order', 'ASC');
-            $result = $this->db->get('tbl_brandboost_products');
-            //echo $this->db->last_query();exit;
-            if ($result->num_rows() > 0) {
-                $aData = $result->result();
-            }
-        }
-        return $aData;
-    }
+    
 
     public function getProductDataByType($brandboostID, $type = 'product') {
         if (!empty($brandboostID)) {
@@ -432,40 +498,6 @@ class BrandboostModel extends Model {
         }
 
         return $aData;
-    }
-
-    public function getBrandboost($id = 0, $type = '') {
-
-        if ($id > 0) {
-            $this->db->where('id', $id);
-        }
-
-        if (!empty($type)) {
-            $this->db->where('review_type', $type);
-        }
-
-        $this->db->order_by('id', 'DESC');
-        $this->db->where('delete_status', 0);
-        $result = $this->db->get('tbl_brandboost');
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
-    }
-
-    public function getBrandboostEvents($brandID) {
-
-        $response = array();
-        $this->db->where('brandboost_id', $brandID);
-        $this->db->order_by('previous_event_id', 'ASC');
-        $this->db->from('tbl_brandboost_events');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
     }
 
     public function getCampByEventID($eventID) {
@@ -721,35 +753,7 @@ class BrandboostModel extends Model {
         return $response;
     }
 
-    public function getAllCampaignTemplatesByUserID($uersID, $bbType = 'onsite') {
-        $response = array();
-        $this->db->order_by('id', 'DESC');
-        $where = "(user_id='" . $uersID . "' OR user_id='0') AND template_type='email' AND brandboost_type='" . $bbType . "'";
-
-        $this->db->where($where);
-        //$this->db->where('user_id', $uersID);
-        //$this->db->where('template_type', 'email');
-        $this->db->from('tbl_campaign_templates');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getAllSMSCampaignTemplatesByUserID($uersID, $bbType = 'onsite') {
-        $response = array();
-        $this->db->order_by('id', 'DESC');
-        $this->db->where('user_id', $uersID);
-        $this->db->where('template_type', 'sms');
-        $this->db->where('brandboost_type', $bbType);
-        $this->db->from('tbl_campaign_templates');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
     public function updateCampaingTemplate($tempId, $aData) {
         $response = array();

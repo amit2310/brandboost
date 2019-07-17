@@ -184,10 +184,8 @@
                     <div style="margin: 0;" class="panel panel-flat">
                         <!-- ****** Load Smart Popup ***** -->
                         <?php if (!empty($oQuestions)): ?>
-                            <?php //$this->load->view("admin/components/smart-popup/smart-question-widget"); ?>
 							@include('admin.components.smart-popup.smart-question-widget')
-                        <?php endif;
-                        ?>
+                        <?php endif; ?>
                         <div class = "panel-heading"> <span class = "pull-left">
                                 <h6 class = "panel-title"><?php
                                     if (!empty($oQuestions)) {

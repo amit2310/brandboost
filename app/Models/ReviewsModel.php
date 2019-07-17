@@ -115,6 +115,26 @@ class ReviewsModel extends Model {
                 ->get();
         return $oData;
     }
+	
+	/**
+     * Used to get campaign reviews list
+     * @param type $campaignID
+     * @return campaign all reviews 
+     */
+	public function getCampaignAllReviews($campaignID) {
+		$oData = DB::table('tbl_reviews')
+			->leftJoin('tbl_users', 'tbl_reviews.user_id', '=', 'tbl_users.id')
+			->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
+			->leftJoin('tbl_subscribers', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
+			->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country', 'tbl_subscribers.id as subscriberId', 'tbl_brandboost.brand_title')
+			->where('tbl_reviews.status', 1)
+			->when(!empty($campaignID), function ($query) use ($campaignID) {
+				return $query->where('tbl_reviews.campaign_id', $campaignID);
+			})
+			->orderBy('tbl_reviews.id', 'desc')
+			->get();				
+        return $oData;
+    }
 
     public function getBrandBoostCampaign($campaignID, $hash = false) {
 
@@ -325,23 +345,6 @@ class ReviewsModel extends Model {
         $this->db->join("tbl_subscribers", "tbl_subscribers.user_id=tbl_users.id", "LEFT");
         $this->db->where("tbl_reviews.status", 1);
         $this->db->where("tbl_brandboost.user_id", $userId);
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $rResponse = $this->db->get("tbl_reviews");
-
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
-    }
-
-    public function getCampaignAllReviews($campaignID) {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar, tbl_users.country, tbl_subscribers.id as subscriberId, tbl_brandboost.brand_title");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
-        $this->db->join("tbl_brandboost", "tbl_brandboost.id=tbl_reviews.campaign_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_subscribers.user_id=tbl_users.id", "LEFT");
-        if (!empty($campaignID)) {
-            $this->db->where("tbl_reviews.campaign_id", $campaignID);
-        }
         $this->db->order_by("tbl_reviews.id", "DESC");
         $rResponse = $this->db->get("tbl_reviews");
 
