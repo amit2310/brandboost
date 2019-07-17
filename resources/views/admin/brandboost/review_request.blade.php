@@ -1,5 +1,13 @@
-<?php 
+@extends('layouts.main_template') 
 
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
+<?php 
+$oReqOnsite = array();
+$oReqOffsite = array();
 foreach ($oRequest as $data2) {
     if($data2->review_type == 'onsite'){
 		$oReqOnsite[]= $data2; 
@@ -18,7 +26,7 @@ if($param == 'onsite'){
     $oData  = $oRequest;
 }    
 
-
+$brandboostID = '';
 ?>
 <!-- Content area -->
 <div class="content">
@@ -406,7 +414,7 @@ if($param == 'onsite'){
                                                 <div class="col-md-12">
                                                     <div style="margin: 20px 0px 0;" class="text-center">
                                                         <h5 class="mb-20 mt40">
-                                                            Looks Like You Don’t Have Any Review Request Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+                                                            Looks Like You Don’t Have Any Review Request Yet <img src="<?php echo base_url('assets/images/smiley.png'); ?>"> <br>
                                                             Lets Create Your First Review Request.
                                                         </h5>
 
@@ -445,9 +453,6 @@ if($param == 'onsite'){
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Subscriber</h5>
 				</div>
                 <div class="modal-body">
-					
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-					<?php echo validation_errors(); ?></div>
 					
 					<div class="col-md-12">
 						
@@ -762,3 +767,4 @@ if($param == 'onsite'){
 	});
 	
 </script>
+@endsection
