@@ -31,6 +31,7 @@ Route::get('admin/modules/emails/setupAutomation/{id}','Admin\Modules\Emails@set
 Route::get('admin/brandboost/onsite_overview','Admin\Brandboost@onsiteOverview');
 Route::get('admin/brandboost/onsite','Admin\Brandboost@onsite');
 Route::get('admin/questions','Admin\Questions@index');
+Route::get('admin/brandboost/review_request/{type}','Admin\Brandboost@reviewRequest');
 Route::get('admin/brandboost/onsite_setup/{id}','Admin\Brandboost@onsiteSetup');
 
 //chat module
