@@ -74,13 +74,18 @@ class LoginModel extends Model {
                 ->first();
         
         if (!empty($user)) {
-            Session::put('admin_user_id', $user->id);
-            Session::put('current_user_id', $user->id);
+            
             if ($user->user_role == 1) {
+                Session::put('admin_user_id', $user->id);
+                Session::put('current_user_id', $user->id);
                 Session::put('current_user_role', 1);
             } else if ($user->user_role == 2) {
+                Session::put('user_user_id', $user->id);
+                Session::put('current_user_id', $user->id);
                 Session::put('current_user_role', 2);
             } else if ($user->user_role == 3) {
+                Session::put('customer_user_id', $user->id);
+                Session::put('current_user_id', $user->id);
                 Session::put('current_user_role', 3);
             } else {
                 //do nothing
@@ -186,7 +191,7 @@ class LoginModel extends Model {
      */
     public function checkS3server() {
 
-        $userid = Session::put('customer_user_id');
+        $userid = Session::get('customer_user_id');
         if (!empty($userid)) {
             $user = DB::table('tbl_users')
                     ->where('id', $userid)
@@ -207,7 +212,7 @@ class LoginModel extends Model {
     
     public function updateS3server() {
 
-        $userid = Session::put('customer_user_id');
+        $userid = Session::get('customer_user_id');
         if (!empty($userid)) {
             $data = [
                 's3_bucket' => '1',

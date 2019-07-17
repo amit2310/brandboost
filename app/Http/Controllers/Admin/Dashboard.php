@@ -22,7 +22,7 @@ class Dashboard extends Controller {
             $oUser = getLoggedUser();
             $userID = $oUser->id;
         }
-
+   
         $mBrandboost = new BrandboostModel();
         $mMembership = new MembershipModel();
         $mDashboard = new DashboardModel();

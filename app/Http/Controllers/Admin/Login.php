@@ -8,6 +8,7 @@ use App\Models\Admin\LoginModel;
 use Cookie;
 use Session;
 use App\Libraries\Custom\Mobile_Detect;
+use App\Models\Admin\WebChatModel;
 
 require 'aws/aws-autoloader.php';
 
@@ -23,7 +24,7 @@ class Login extends Controller {
      * @return display login page and redirect to dashboard page after authorization
      */
     public function index(Request $request) {
-        //echo phpinfo();
+
         $detect = new Mobile_Detect;
         if ($detect->isMobile()) {
             $platform_device = "Mobile";
@@ -51,6 +52,7 @@ class Login extends Controller {
             //Apply validation
             $mLogin = new LoginModel();
             $checkAdminUser = $mLogin->verifyAdminUser($loginid, $password, $remember);
+            
             if (!empty($checkAdminUser->id) && $checkAdminUser->id > 0) {
                 //Save login history
                 $mLogin->saveUserHistory($checkAdminUser->id, $platform_device);
@@ -146,6 +148,23 @@ class Login extends Controller {
         } else {
             return view('admin.login_form');
         }
+    }
+
+    /**
+     * Used to logout brandboost user
+     * 
+     * @param Request $request
+     * @return redirect to login page
+     */
+    public function logout() {
+
+        $webChatModel = new WebChatModel();
+        $aUser = getLoggedUser();
+        $aData = array('login_status' => '0');
+        $webChatModel->lastLoginDetail($aUser->id, $aData);
+        Session::flush();
+        Session::regenerate(true);
+        return view('admin.login_form');
     }
 
 }

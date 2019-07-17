@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('admin/login','Admin\Login@index');
 Route::post('admin/login','Admin\Login@index');
+Route::get('admin/login/logout','Admin\Login@logout');
 
 //Dashborad 
 Route::get('admin/dashboard','Admin\Dashboard@index');
@@ -39,6 +40,7 @@ Route::post('admin/webchat/listingNotes','Admin\WebChat@listingNotes');
 Route::post('admin/webchat/getMessages','Admin\WebChat@getMessages');
 Route::post('admin/webchat/readMessages','Admin\WebChat@readMessages');
 Route::post('admin/webchat/changeLoginStatus','Admin\WebChat@changeLoginStatus');
+Route::post('admin/webchat/addChatMsg','Admin\WebChat@addChatMsg');
 
 
 Route::get('admin/smschat','Admin\SmsChat@index');

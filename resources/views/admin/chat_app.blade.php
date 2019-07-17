@@ -2735,9 +2735,9 @@ if(window_witdh > 1600)
 				
 				msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+filename;
 				$.ajax({
-				url: "{{ url('admin/Chat/addChatMsg') }}",
+				url: "<?php echo base_url('admin/webchat/addChatMsg'); ?>",
 				type: "POST",
-				data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser},
+				data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, _token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 				if (data.status == 'ok') {
@@ -3569,9 +3569,9 @@ if(window_witdh > 1600)
 				socket.emit('chat_message', {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, currentUserName:currentUserName, avatar:avatar, teamId:teamId, teamName:teamName });
 				$(this).val('');
 				$.ajax({
-				url: "{{ url('admin/Chat/addChatMsg') }}",
+				url: "<?php echo base_url('admin/webchat/addChatMsg'); ?>",
 				type: "POST",
-				data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser},
+				data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, _token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 				if (data.status == 'ok') {
@@ -3642,9 +3642,9 @@ if(window_witdh > 1600)
 				socket.emit('chat_message', {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, currentUserName:currentUserName, avatar:avatar });
 				$(this).val('');
 				$.ajax({
-				url: "{{ url('admin/Chat/addChatMsg') }}",
+				url: "<?php echo base_url('admin/webchat/addChatMsg'); ?>",
 				type: "POST",
-				data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser},
+				data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, _token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 				if (data.status == 'ok') {

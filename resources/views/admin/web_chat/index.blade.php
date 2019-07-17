@@ -766,9 +766,9 @@ function loadMessageChat(userId,token,clickvalue=null)
 		socket.emit('chat_message', {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, currentUserName:currentUserName, avatar:avatar });
 		$(this).val('');
 		$.ajax({
-		url: '<?php echo base_url('admin/Chat/addChatMsg'); ?>',
+		url: '<?php echo base_url('admin/webchat/addChatMsg'); ?>',
 		type: "POST",
-		data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser},
+		data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, _token: '{{csrf_token()}}'},
 		dataType: "json",
 		success: function (data) {
 			if (data.status == 'ok') {
@@ -877,9 +877,9 @@ function loadMessageChat(userId,token,clickvalue=null)
 		socket.emit('chat_message', {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, currentUserName:currentUserName, avatar:avatar });
 		$(this).val('');
 		$.ajax({
-		url: '<?php echo base_url('admin/Chat/addChatMsg'); ?>',
+		url: '<?php echo base_url('admin/webchat/addChatMsg'); ?>',
 		type: "POST",
-		data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser},
+		data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, _token: '{{csrf_token()}}'},
 		dataType: "json",
 		success: function (data) {
 		if (data.status == 'ok') {
@@ -1110,9 +1110,9 @@ function loadMessageChat(userId,token,clickvalue=null)
 						
 						msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+filename;
 						$.ajax({
-							url: '<?php echo base_url('admin/Chat/addChatMsg'); ?>',
+							url: '<?php echo base_url('admin/webchat/addChatMsg'); ?>',
 							type: "POST",
-							data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser},
+							data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'ok') {
