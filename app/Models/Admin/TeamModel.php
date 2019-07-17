@@ -33,7 +33,7 @@ class TeamModel extends Model {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $aData = DB::table('tbl_users_team')
-                ->where('id', $memberID)
+                ->where('id', $MemberID)
                 ->where('parent_user_id', $userID)
                 ->first();
         return $aData;

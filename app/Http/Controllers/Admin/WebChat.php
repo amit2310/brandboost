@@ -260,4 +260,85 @@ class WebChat extends Controller {
 
     }
 
+    /**
+     * this function is used to save chat message
+     * @return type boolean
+     */
+    public function addChatMsg() {
+
+        /*$userId = Input::post("userId");
+        $userId = Input::post("userId");*/
+        echo "testing";
+        pre(Session::get("team_user_id"));
+        pre(Session::get("customer_user_id"));
+        /*if() {
+            $isLoggedInTeam = Session::get("team_user_id");
+        }
+        else if(Session::get("customer_user_id")) {
+            $isLoggedInTeam = Session::get("customer_user_id");
+        }
+        else {
+            $isLoggedInTeam = '0';
+        }
+        $oUser = getLoggedUser();
+        pre($oUser);
+
+        pre($isLoggedInTeam);*/
+        
+        exit();
+
+       /* $post = $this->input->post();
+        if($this->session->userdata("team_user_id")) {
+            $isLoggedInTeam = $this->session->userdata("team_user_id");
+        }
+        else if($this->session->userdata('customer_user_id')) {
+            $isLoggedInTeam = $this->session->userdata('customer_user_id');
+        }
+        else {
+            $isLoggedInTeam = '0';
+        }
+        $room = $post['room'];
+        $msg = $post['msg'];
+        $to_user = $post['chatTo'];
+        $from_user = $post['currentUser'];
+        $notes = $post['notes'];
+        if($notes == "")
+        {
+            $notes=0;
+        }
+
+        $aData = array(
+            'token' => $room,
+            'user_to' => $to_user,
+            'user_form' => $from_user,
+            'message' => $msg,
+            'read_status' => '0',
+            'team_member_id' => $isLoggedInTeam,
+            'notes'=>$notes,
+            'created' => date('Y-m-d H:i:s')
+        );
+        $result = $this->mChat->addChatMsg($aData);
+        $this->mChat->updateChat($room);
+
+        if ($result) {
+            $hasAssign = 0;
+            $getSupportUser = $this->mChat->getUserMessages($room);
+            if($getSupportUser->assign_team_member == 0) {
+                $this->mChat->assignChat($room, $isLoggedInTeam);
+                $hasAssign = 1;   
+            }
+            $chatRow =  $this->mChat->getassignChat($room);
+            if(empty($chatRow)){
+
+                $chatRow =  $this->mChat->getassignChatUser($room);
+            }
+            $response = array('status' => 'ok','isLoggedInTeam'=>$chatRow->teamName, 'teamId' => $chatRow->teamId, 'hasAssign' => $hasAssign);
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit;*/
+    }
+
 }

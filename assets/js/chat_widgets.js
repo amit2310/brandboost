@@ -340,7 +340,7 @@ BB = function (t) {
 				var newBBvisitortoken = localStorage.getItem("bb_user_chat_token");
 				//console.log(newBBvisitortoken, 'newBBvisitortoken');
 				bb_chat_socket.emit('chat_message', {room:newBBvisitortoken, msg:newMessage, chatTo:bbClientId, currentUser:currentUser, currentUserName:currentSupportName,msgType:'file' });
-				var bbsrc = this.userSettings.host + "/admin/Chat/addChatMsg";
+				var bbsrc = this.userSettings.host + "/admin/webchat/addChatMsg";
 				var a = 'room=' + newBBvisitortoken + '&msg=' + msg + '&chatTo=' + bbClientId + '&currentUser=' + currentUser;
 				e.value = '';
 				//i = call back function
@@ -391,7 +391,7 @@ BB = function (t) {
 		if(msg.length > 0 ){
 			setTimeout(() => {
 				bb_chat_socket.emit('chat_message', {room:newToken, msg:msg, chatTo:bbClientId, currentUser:currentUser, name:currentSupportName, currentUserName:currentSupportName, msgType:'text' });
-				var bbsrc = this.userSettings.host + "/admin/Chat/addChatMsg";
+				var bbsrc = this.userSettings.host + "/admin/webchat/addChatMsg";
 				var a = 'room=' + newToken + '&msg=' + msg + '&chatTo=' + bbClientId + '&currentUser=' + currentUser;
 				e.value = '';
 				//i = call back function
@@ -495,7 +495,7 @@ BB = function (t) {
 						//console.log(bbClientAvtarImg, 'bbClientAvtarImg');
 						bb_chat_socket.emit('chat_message', {room:newToken, avatar:bbClientAvtarImg, msg:greattingMessageArray[greatingMsgCounter],currentUserName:currentSupportName, chatTo:currentUser, currentUser:bbClientId, greatingMsg:'default' });
 						
-						var bbsrc = hostURL + "/admin/Chat/addChatMsg";
+						var bbsrc = hostURL + "/admin/webchat/addChatMsg";
 						var a = 'room=' + newToken + '&msg=' + greattingMessageArray[greatingMsgCounter] + '&chatTo=' + currentUser + '&currentUser=' + bbClientId;
 						//e.value = '';
 						var i = function (o) {
@@ -556,7 +556,7 @@ BB = function (t) {
 			
 			if(msg.length > 0 ){
 				bb_chat_socket.emit('chat_message', {room:newToken, msg:msg, chatTo:bbClientId, currentUser:currentUser,currentUserName:currentSupportName });
-				var bbsrc = this.userSettings.host + "/admin/Chat/addChatMsg";
+				var bbsrc = this.userSettings.host + "/admin/webchat/addChatMsg";
 				var a = 'room=' + newToken + '&msg=' + msg + '&chatTo=' + bbClientId + '&currentUser=' + currentUser;
 				e.value = '';
 				//i = call back function
