@@ -176,7 +176,6 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-	
 	public static function getReviewRequest($brandboostId = '', $type = '') {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -200,11 +199,7 @@ class BrandboostModel extends Model {
                     return $query->where('tbl_tracking_log_email_sms.type', 'email')
 					->orWhere('tbl_tracking_log_email_sms.type', 'sms');
                 })
-				->toSql();
-                //->get();
-				//$queries = DB::getQueryLog();
-				//print_r($queries);
-				die;
+				->get();
 				
         return $oData;
     }
