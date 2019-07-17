@@ -88,5 +88,20 @@ class WebChatModel extends Model {
     }
 
 
+    /**
+     * this function is used update last login
+     * @param type $userId
+     * @param type $aData
+     * @return type boolean
+     */
+    public function lastLoginDetail($userId, $aData) {
+
+        $result = DB::table('tbl_users')
+            ->where('id', $userId)
+            ->update($aData);
+
+        return true;
+    }
+
 
 }

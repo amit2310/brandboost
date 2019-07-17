@@ -2862,9 +2862,9 @@ if(window_witdh > 1600)
 				}
 				else {
 				$.ajax({
-				url: "{{ url('admin/Chat/changeLoginStatus') }}",
+				url: "{{ url('admin/webchat/changeLoginStatus') }}",
 				type: "POST",
-				data: {userId:data.userId, status: '1'},
+				data: {userId:data.userId, status: '1', _token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 				if (data.status == 'ok') {
@@ -2903,9 +2903,9 @@ if(window_witdh > 1600)
 				}
 				
 				$.ajax({
-				url: "{{ url('admin/Chat/changeLoginStatus') }}",
+				url: "{{ url('admin/webchat/changeLoginStatus') }}",
 				type: "POST",
-				data: {userId:data.userId, status: '0'},
+				data: {userId:data.userId, status: '0', _token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 				if (data.status == 'ok') {

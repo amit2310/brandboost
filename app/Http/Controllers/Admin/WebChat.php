@@ -179,4 +179,27 @@ class WebChat extends Controller {
         exit();
        
     }
+
+    /**
+     * this function is used login or not
+     * @return type boolean
+     */
+    public function changeLoginStatus() {
+
+        $webChatModel = new WebChatModel();
+        $userId = Input::post("userId");
+        $status = Input::post("status");
+
+        $aData = array('login_status' => $status, 'last_login' => date("Y-m-d H:i:s"));
+        $result = $webChatModel->lastLoginDetail($userId, $aData);
+        if ($result) {
+            $response = array('status' => 'ok');
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
 }
