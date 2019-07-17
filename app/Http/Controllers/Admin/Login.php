@@ -164,7 +164,7 @@ class Login extends Controller {
         $webChatModel->lastLoginDetail($aUser->id, $aData);
         Session::flush();
         Session::regenerate(true);
-        return view('admin.login_form');
+        return redirect('/admin/login'); 
     }
 
 }
