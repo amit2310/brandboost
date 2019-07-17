@@ -36,6 +36,7 @@ Route::get('admin/questions','Admin\Questions@index1');
 Route::get('admin/webchat','Admin\WebChat@index');
 Route::post('admin/webchat/getUserinfo','Admin\WebChat@getUserinfo');
 Route::post('admin/webchat/listingNotes','Admin\WebChat@listingNotes');
+Route::post('admin/webchat/addWebNotes','Admin\WebChat@addWebNotes');
 Route::post('admin/webchat/getMessages','Admin\WebChat@getMessages');
 
 

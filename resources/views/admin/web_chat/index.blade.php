@@ -512,7 +512,7 @@ $(document).ready(function() {
 
 	// this functions called on pageload 
 	loadMessageChat('<?php echo $popupId; ?>','<?php echo $popupToken ; ?>');
-	//showNoteslisting('<?php echo $popupId; ?>','<?php echo $popupToken ; ?>');
+	showNoteslisting('<?php echo $popupId; ?>','<?php echo $popupToken ; ?>');
 	
 	//  ######### Load Chat message ############ //
 function loadMessageChat(userId,token,clickvalue=null)
