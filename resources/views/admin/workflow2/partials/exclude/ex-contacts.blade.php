@@ -1,5 +1,6 @@
 <?php
 $aSelectedContacts = array();
+$oCampaignContacts = $aContactSelectionData['oCampaignExcludeContacts'];
 if (!empty($oCampaignContacts)) {
     foreach ($oCampaignContacts as $oRec) {
         $aSelectedContacts[] = $oRec->subscriber_id;
@@ -8,6 +9,7 @@ if (!empty($oCampaignContacts)) {
 
 $iActiveCount = $iArchiveCount = 0;
 $subscribersData = $aContactSelectionData['subscribersData'];
+
 if (!empty($subscribersData)) {
     foreach ($subscribersData as $oCount) {
         if ($oCount->status == 2) {
@@ -51,7 +53,6 @@ if (!empty($subscribersData)) {
                         <?php
                         if (count($subscribersData) > 0) {
                             foreach ($subscribersData as $oContact) {
-                                $oContact->subscriber_id = !empty($oContact->subscriber_id) ? $oContact->subscriber_id : 0;
                                 $userData = '';
                                 if ($oContact->status != '2') {
 

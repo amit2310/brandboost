@@ -745,23 +745,33 @@ class WorkflowModel extends Model {
         return $aData;
     }
 
-    public function getModuleUnitInfo($moduleName, $id) {
-        $this->db->where("id", $id);
+    /**
+     * This method used to get Module Unit info
+     * @param type $moduleName
+     * @param type $id
+     * @return boolean
+     */
+    public function getModuleUnitInfo($moduleName, $id) {               
 
         if ($moduleName == 'brandboost' || $moduleName == 'onsite' || $moduleName == 'offsite') {
-            $result = $this->db->get("tbl_brandboost");
+            $tableName = 'tbl_brandboost';            
         } else if ($moduleName == 'referral') {
-            $result = $this->db->get("tbl_referral_rewards");
+            $tableName = 'tbl_referral_rewards';            
         } else if ($moduleName == 'nps') {
-            $result = $this->db->get("tbl_nps_main");
+            $tableName = 'tbl_nps_main';            
         } else if ($moduleName == 'automation' || $moduleName == 'broadcast') {
-            $result = $this->db->get("tbl_automations_emails");
+            $tableName = 'tbl_automations_emails';            
+        }
+        
+        if (empty($tableName)) {
+            return false;
         }
 
-        if ($result->num_rows() > 0) {
-            return $result->row();
-        }
-        return false;
+        $oData = DB::table($tableName)
+                ->where('id', $id)
+                ->first();
+
+        return $oData;
     }
 
     public function getWorkflowAutomationSubscribers($automationID) {
@@ -825,11 +835,11 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where('id', $id)
                 ->update($aData);
-        
+
         if ($oData) {
             return $id;
         } else {
@@ -851,7 +861,6 @@ class WorkflowModel extends Model {
                 })
                 ->first();
         return $oData;
-        
     }
 
     public function getCommonTemplateByName($templateName, $userID) {
@@ -1956,6 +1965,12 @@ class WorkflowModel extends Model {
         }
     }
 
+    /**
+     * Used to get workflow end email/sms campaign details
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
     public function getWorkflowCampaign($id, $moduleName) {
         if (empty($id) || empty($moduleName)) {
             return false;
@@ -1984,13 +1999,10 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $this->db->where("id", $id);
-        $this->db->from($tableName);
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table($tableName)
+                ->where('id', $id)
+                ->first();
+        return $oData;
     }
 
     public function deleteNode($id, $moduleName) {
@@ -2262,12 +2274,11 @@ class WorkflowModel extends Model {
     public static function getWorkflowSegmentSubscribers($segmentID, $userID) {
         $oData = DB::table('tbl_segments_users')
                 ->leftJoin('tbl_subscribers', 'tbl_segments_users.subscriber_id', '=', 'tbl_subscribers.id')
-                ->select('tbl_segments_users.*', 'tbl_subscribers.id as globalSubscriberId','tbl_subscribers.user_id as subUserId', 'tbl_subscribers.firstname','tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status')
+                ->select('tbl_segments_users.*', 'tbl_subscribers.id as globalSubscriberId', 'tbl_subscribers.user_id as subUserId', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status')
                 ->where('tbl_segments_users.segment_id', $segmentID)
                 ->where('tbl_segments_users.user_id', $userID)
                 ->get();
         return $oData;
-        
     }
 
     /**
@@ -2283,7 +2294,6 @@ class WorkflowModel extends Model {
                 ->orderBy('tbl_subscriber_tags.id', 'desc')
                 ->get();
         return $oData;
-        
     }
 
     /**
@@ -2804,6 +2814,7 @@ class WorkflowModel extends Model {
 
             $subscribersData = \App\Models\Admin\SubscriberModel::getGlobalSubscribers($userID);
 
+
             $aTags = \App\Models\Admin\TagsModel::getClientTags($userID);
 
             $oCampaignSubscribers = self::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
@@ -2815,6 +2826,7 @@ class WorkflowModel extends Model {
             $oImportLists = (new self)->getWorkflowImportLists($moduleName, $moduleUnitID);
 
             $oCampaignImportContacts = (new self)->getWorkflowImportContacts($moduleName, $moduleUnitID);
+
 
             $oCampaignImportTags = (new self)->getWorkflowImportTags($moduleName, $moduleUnitID);
 
@@ -2928,8 +2940,10 @@ class WorkflowModel extends Model {
         }
 
         $aData[$fieldName] = $moduleUnitID;
-        $this->db->insert($tableName, $aData);
-        $inset_id = $this->db->insert_id();
+
+        $oData = DB::table($tableName)
+                ->insert($aData);
+
         if ($moduleName == 'referral') {
             $aRefLinkData = array(
                 'referral_id' => $referralID,
@@ -2940,13 +2954,20 @@ class WorkflowModel extends Model {
         }
 
         //echo $this->db->last_query();
-        if ($inset_id) {
-            return $inset_id;
+        if ($oData) {
+            return true;
         } else {
             return false;
         }
     }
 
+    /**
+     * Used to delete contact from the workflow campaign
+     * @param type $moduleName
+     * @param type $moduleUnitID
+     * @param type $subscriberID
+     * @return boolean
+     */
     public function deleteContactFromWorkflowCampaign($moduleName, $moduleUnitID, $subscriberID) {
         switch ($moduleName) {
             case "brandboost":
@@ -2978,11 +2999,12 @@ class WorkflowModel extends Model {
         }
 
         if (!empty($moduleUnitID)) {
-            $this->db->where($fieldName, $moduleUnitID);
-            $this->db->where("subscriber_id", $subscriberID);
-            $result = $this->db->delete($tableName);
-            //echo $this->db->last_query();
-            if ($result) {
+            $oResponse = DB::table($tableName)
+                    ->where($fieldName, $moduleUnitID)
+                    ->where('subscriber_id', $subscriberID)
+                    ->delete();
+
+            if ($oResponse) {
                 return true;
             }
         }
@@ -3029,10 +3051,11 @@ class WorkflowModel extends Model {
             return false;
         }
         if (!empty($moduleUnitID)) {
-            $this->db->where($fieldName, $moduleUnitID);
-            $this->db->where("subscriber_id", $subscriberID);
-            $result = $this->db->delete($tableName);
-            if ($result) {
+            $oResponse = DB::table($tableName)
+                    ->where($fieldName, $moduleUnitID)
+                    ->where('subscriber_id', $subscriberID)
+                    ->delete();
+            if ($oResponse) {
                 return true;
             }
         }
@@ -3082,9 +3105,8 @@ class WorkflowModel extends Model {
 
             if (!empty($aSubscribers)) {
                 $sql = "DELETE FROM `$tableName` WHERE `$fieldName`='$moduleUnitID' AND `subscriber_id` IN(" . implode(",", array_filter($aSubscribers)) . ")";
-                $result = $this->db->query($sql);
+                $result = DB::raw($sql);
             }
-
             if ($result) {
                 return true;
             }
@@ -3092,6 +3114,13 @@ class WorkflowModel extends Model {
         return false;
     }
 
+    /**
+     * Check for the duplicate audience in the workflow subscribers
+     * @param type $moduleName
+     * @param type $moduleUnitID
+     * @param type $subscriberID
+     * @return boolean
+     */
     public function isDuplicateWorkflowAudience($moduleName, $moduleUnitID, $subscriberID) {
         switch ($moduleName) {
             case "brandboost":
@@ -3126,10 +3155,12 @@ class WorkflowModel extends Model {
         }
 
         if (!empty($moduleUnitID)) {
-            $this->db->where($fieldName, $moduleUnitID);
-            $this->db->where("subscriber_id", $subscriberID);
-            $result = $this->db->get($tableName);
-            if ($result->num_rows() > 0) {
+            $bExists = DB::table($tableName)
+                    ->where($fieldName, $moduleUnitID)
+                    ->where('subscriber_id', $subscriberID)
+                    ->exists();
+
+            if ($bExists) {
                 return true;
             }
             return false;
@@ -3137,6 +3168,13 @@ class WorkflowModel extends Model {
         return false;
     }
 
+    /**
+     * This functions add audience to the campaign subscribers
+     * @param array $aData
+     * @param type $moduleName
+     * @param type $moduleUnitID
+     * @return boolean
+     */
     public function addAudienceToWorkflowCampaign($aData, $moduleName, $moduleUnitID) {
         switch ($moduleName) {
             case "brandboost":
@@ -3172,8 +3210,8 @@ class WorkflowModel extends Model {
         }
 
         $aData[$fieldName] = $moduleUnitID;
-        $this->db->insert($tableName, $aData);
-        $inset_id = $this->db->insert_id();
+        $oData = DB::table($tableName)
+                ->insert($aData);
         if ($moduleName == 'referral') {
             $aRefLinkData = array(
                 'referral_id' => $referralID,
@@ -3182,8 +3220,8 @@ class WorkflowModel extends Model {
             );
             $this->createReferralLink($aRefLinkData);
         }
-        if ($inset_id) {
-            return $inset_id;
+        if ($oData) {
+            return true;
         } else {
             return false;
         }
@@ -3225,8 +3263,8 @@ class WorkflowModel extends Model {
 
         if ($moduleUnitID > 0 && $iListID > 0) {
 
-            $result = $this->db->insert($tableName, array($fieldName => $moduleUnitID, 'list_id' => $iListID, 'created' => date("Y-m-d H:i:s")));
-            //echo $this->db->last_query();
+            $result = DB::table($tableName)
+                    ->insert([$fieldName => $moduleUnitID, 'list_id' => $iListID, 'created' => date("Y-m-d H:i:s")]);
             if ($result) {
                 return true;
             } else {
@@ -3269,9 +3307,10 @@ class WorkflowModel extends Model {
             return false;
         }
         if ($moduleUnitID > 0) {
-            $this->db->where($fieldName, $moduleUnitID);
-            $this->db->where('list_id', $listId);
-            $result = $this->db->delete($tableName);
+            $result = DB::table($tableName)
+                    ->where($fieldName, $moduleUnitID)
+                    ->where('list_id', $listId)
+                    ->delete();
             if ($result) {
                 return true;
             } else {
@@ -3287,23 +3326,18 @@ class WorkflowModel extends Model {
      * @return type
      */
     public function getWorkflowCommonListContacts($userID, $listID = '') {
-        $this->db->select("tbl_automation_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, "
-                . "tbl_common_lists.user_id AS clientID, tbl_common_lists.list_name");
-        $this->db->join("tbl_common_lists", "tbl_common_lists.id=tbl_automation_users.list_id", "INNER");
-        $this->db->join("tbl_subscribers", "tbl_automation_users.subscriber_id=tbl_subscribers.id", "LEFT");
-
-        if ($listID > 0) {
-            $this->db->where("tbl_automation_users.list_id", $listID);
-        }
-        if ($userID > 0) {
-            $this->db->where("tbl_common_lists.user_id", $userID);
-        }
-        $result = $this->db->get("tbl_automation_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_automation_users')
+                ->leftJoin('tbl_common_lists', 'tbl_common_lists.id', '=', 'tbl_automation_users.list_id')
+                ->leftJoin('tbl_subscribers', 'tbl_automation_users.subscriber_id', '=', 'tbl_subscribers.id')
+                ->select('tbl_automation_users.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_common_lists.user_id AS clientID', 'tbl_common_lists.list_name')
+                ->when(($listID > 0), function ($query) use ($listID) {
+                    return $query->where('tbl_automation_users.list_id', $listID);
+                })
+                ->when(($userID > 0), function ($query) use ($userID) {
+                    return $query->where('tbl_common_lists.user_id', $userID);
+                })
+                ->get();
+        return $oData;
     }
 
     /**
@@ -3340,11 +3374,11 @@ class WorkflowModel extends Model {
             return false;
         }
         $aData[$fieldName] = $moduleUnitID;
+        $oResponse = DB::table($tableName)
+                ->insert($aData);
 
-        $this->db->insert($tableName, $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
+        if ($oResponse) {
+            return true;
         } else {
             return false;
         }
@@ -3384,10 +3418,12 @@ class WorkflowModel extends Model {
         }
 
         if ($moduleUnitID > 0) {
-            $this->db->where($fieldName, $moduleUnitID);
-            $this->db->where("segment_id", $segmentID);
-            $result = $this->db->delete($tableName);
-            if ($result) {
+            $oResponse = DB::table($tableName)
+                    ->where($fieldName, $moduleUnitID)
+                    ->where('segment_id', $segmentID)
+                    ->delete();
+
+            if ($oResponse) {
                 return true;
             }
         }
@@ -3429,10 +3465,12 @@ class WorkflowModel extends Model {
         }
         $aData[$fieldName] = $moduleUnitID;
 
-        $this->db->insert($tableName, $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
+        $oResponse = DB::table($tableName)
+                ->insert($aData);
+
+
+        if ($oResponse) {
+            return true;
         } else {
             return false;
         }
@@ -3473,10 +3511,12 @@ class WorkflowModel extends Model {
         }
 
         if ($moduleUnitID > 0) {
-            $this->db->where($fieldName, $moduleUnitID);
-            $this->db->where("tag_id", $tagID);
-            $result = $this->db->delete($tableName);
-            if ($result) {
+            $oResponse = DB::table($tableName)
+                    ->where($fieldName, $moduleUnitID)
+                    ->where('tag_id', $tagID)
+                    ->delete();
+
+            if ($oResponse) {
                 return true;
             }
         }
@@ -3518,10 +3558,11 @@ class WorkflowModel extends Model {
         }
         $aData[$fieldName] = $moduleUnitID;
 
-        $this->db->insert($tableName, $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
+        $oResponse = DB::table($tableName)
+                ->insert($aData);
+
+        if ($oResponse) {
+            return true;
         } else {
             return false;
         }
@@ -3560,10 +3601,13 @@ class WorkflowModel extends Model {
             return false;
         }
         if ($moduleUnitID > 0) {
-            $this->db->where($fieldName, $moduleUnitID);
-            $this->db->where("subscriber_id", $subscriberID);
-            $result = $this->db->delete($tableName);
-            if ($result) {
+
+            $oResponse = DB::table($tableName)
+                    ->where($fieldName, $moduleUnitID)
+                    ->where('subscriber_id', $subscriberID)
+                    ->delete();
+
+            if ($oResponse) {
                 return true;
             }
         }
@@ -3606,9 +3650,10 @@ class WorkflowModel extends Model {
 
         if ($moduleUnitID > 0 && $iListID > 0) {
 
-            $result = $this->db->insert($tableName, array($fieldName => $moduleUnitID, 'list_id' => $iListID, 'created' => date("Y-m-d H:i:s")));
-            //echo $this->db->last_query();
-            if ($result) {
+            $oData = DB::table($tableName)
+                    ->insert([$fieldName => $moduleUnitID, 'list_id' => $iListID, 'created' => date("Y-m-d H:i:s")]);
+
+            if ($oData) {
                 return true;
             } else {
                 return false;
@@ -3650,15 +3695,18 @@ class WorkflowModel extends Model {
             return false;
         }
         if ($moduleUnitID > 0) {
-            $this->db->where($fieldName, $moduleUnitID);
-            $this->db->where('list_id', $listId);
-            $result = $this->db->delete($tableName);
-            if ($result) {
+
+            $oResponse = DB::table($tableName)
+                    ->where($fieldName, $moduleUnitID)
+                    ->where('list_id', $listId)
+                    ->delete();
+
+            if ($oResponse) {
                 return true;
-            } else {
-                return false;
             }
+            return false;
         }
+        return false;
     }
 
     /**
@@ -3697,10 +3745,11 @@ class WorkflowModel extends Model {
 
         $aData[$fieldName] = $moduleUnitID;
 
-        $this->db->insert($tableName, $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
+        $oData = DB::table($tableName)
+                ->insert($aData);
+
+        if ($oData) {
+            return true;
         } else {
             return false;
         }
@@ -3741,10 +3790,13 @@ class WorkflowModel extends Model {
         }
 
         if ($moduleUnitID > 0) {
-            $this->db->where($fieldName, $moduleUnitID);
-            $this->db->where("segment_id", $segmentID);
-            $result = $this->db->delete($tableName);
-            if ($result) {
+
+            $oResponse = DB::table($tableName)
+                    ->where($fieldName, $moduleUnitID)
+                    ->where('segment_id', $segmentID)
+                    ->delete();
+
+            if ($oResponse) {
                 return true;
             }
         }
@@ -3787,10 +3839,11 @@ class WorkflowModel extends Model {
 
         $aData[$fieldName] = $moduleUnitID;
 
-        $this->db->insert($tableName, $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
+        $oData = DB::table($tableName)
+                ->insert($aData);
+
+        if ($oData) {
+            return true;
         } else {
             return false;
         }
@@ -3831,10 +3884,12 @@ class WorkflowModel extends Model {
         }
 
         if ($moduleUnitID > 0) {
-            $this->db->where($fieldName, $moduleUnitID);
-            $this->db->where("tag_id", $tagID);
-            $result = $this->db->delete($tableName);
-            if ($result) {
+            $oResponse = DB::table($tableName)
+                    ->where($fieldName, $moduleUnitID)
+                    ->where('tag_id', $tagID)
+                    ->delete();
+
+            if ($oResponse) {
                 return true;
             }
         }

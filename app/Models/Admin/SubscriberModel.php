@@ -16,7 +16,7 @@ class SubscriberModel extends Model {
      */
     public static function getGlobalSubscribers($userID) {
         $oData = DB::table('tbl_subscribers')
-                ->select('tbl_subscribers.*', 'tbl_subscribers.id AS global_user_id', 'tbl_subscribers.status AS globalStatus')
+                ->select('tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.id AS global_user_id', 'tbl_subscribers.status AS globalStatus')
                 ->where('owner_id', $userID)
                 ->where('firstname', '!=', 'NA')
                 ->orderBy('id', 'desc')
