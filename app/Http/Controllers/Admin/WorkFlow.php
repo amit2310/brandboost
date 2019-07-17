@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\WorkflowModel;
+use App\Models\Admin\TagsModel;
 use Cookie;
 use Session;
 
@@ -75,7 +76,7 @@ class WorkFlow extends Controller {
      */
     public function addWorkflowEventToTree(Request $request) {
         $response = array();
-        
+
         $moduleName = strip_tags($request->moduleName);
         $templateID = strip_tags($request->templateId);
         $campaignType = strip_tags($request->campaign_type);
@@ -123,7 +124,7 @@ class WorkFlow extends Controller {
         $nodeType = strip_tags($request->node_type);
         $id = strip_tags($request->moduleUnitId);
 
-        $oNextNode = $this->mWorkflow->getNextNodeInfo($currentEventID, $moduleName);
+        $oNextNode = $mWorkflow->getNextNodeInfo($currentEventID, $moduleName);
 
         if (!empty($delayUnit) || !empty($delayValue)) {
             $delayVal = (!empty($delayValue)) ? $delayValue : 0;
@@ -134,7 +135,7 @@ class WorkFlow extends Controller {
 
             if ($smsTemplateID > 0) {
                 if ($moduleName == 'nps') {
-                    $oTemplate = $this->mWorkflow->getWorkflowDefaultTemplates('nps', '', $smsTemplateID);
+                    $oTemplate = $mWorkflow->getWorkflowDefaultTemplates('nps', '', $smsTemplateID);
                     $triggerParams['template_name'] = $oTemplate[0]->template_name;
                 }
 
@@ -158,7 +159,7 @@ class WorkFlow extends Controller {
                 }
 
                 if ($moduleName == 'nps') {
-                    $oTemplate = $this->mWorkflow->getWorkflowDefaultTemplates('nps', '', $emailTemplateID);
+                    $oTemplate = $mWorkflow->getWorkflowDefaultTemplates('nps', '', $emailTemplateID);
                     $triggerParams['template_name'] = $oTemplate[0]->template_name;
                 }
 
@@ -176,13 +177,12 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Add Workflow Node
      * @param Request $request
      */
     public function addWorkflowNode(Request $request) {
-        $response = array();        
+        $response = array();
         $moduleName = strip_tags($request->moduleName);
         $emailTemplateID = strip_tags($request->emailTemplateId);
         $smsTemplateID = strip_tags($request->smsTemplateId);
@@ -191,7 +191,7 @@ class WorkFlow extends Controller {
         $isDraft = ($source == 'draft') ? true : false;
 
         if ($emailTemplateID > 0) {
-            $oTemplateInfo = $this->mWorkflow->getCommonTemplateInfo($emailTemplateID);
+            $oTemplateInfo = $mWorkflow->getCommonTemplateInfo($emailTemplateID);
             if (!empty($oTemplateInfo)) {
                 $categoryStatus = $oTemplateInfo->category_status;
                 $templateSlug = $oTemplateInfo->template_slug;
@@ -199,7 +199,7 @@ class WorkFlow extends Controller {
         }
 
         if ($smsTemplateID > 0) {
-            $oTemplateInfo = $this->mWorkflow->getCommonTemplateInfo($smsTemplateID);
+            $oTemplateInfo = $mWorkflow->getCommonTemplateInfo($smsTemplateID);
             if (!empty($oTemplateInfo)) {
                 $categoryStatus = $oTemplateInfo->category_status;
                 $templateSlug = $oTemplateInfo->template_slug;
@@ -214,7 +214,7 @@ class WorkFlow extends Controller {
         $nodeType = strip_tags($request->node_type);
         $id = strip_tags($request->moduleUnitId);
 
-        $oNextNode = $this->mWorkflow->getNextNodeInfo($currentEventID, $moduleName);
+        $oNextNode = $mWorkflow->getNextNodeInfo($currentEventID, $moduleName);
 
         if (!empty($delayUnit) || !empty($delayValue)) {
             $delayVal = (!empty($delayValue)) ? $delayValue : 0;
@@ -269,8 +269,7 @@ class WorkFlow extends Controller {
         echo json_encode($response);
         exit;
     }
-    
-    
+
     /**
      * This function connects workflow node to each after after change in the order the workflow events
      * @param type $currentEventID
@@ -288,7 +287,7 @@ class WorkFlow extends Controller {
                 'previous_event_id' => $newEventID,
                 'updated' => date("Y-m-d H:i:s")
             );
-            $bUpdated = $this->mWorkflow->updateWorkflowEvent($aEventDataCurrent, $currentEventID, $moduleName);
+            $bUpdated = $mWorkflow->updateWorkflowEvent($aEventDataCurrent, $currentEventID, $moduleName);
             if ($bUpdated) {
                 return true;
             } else {
@@ -298,7 +297,7 @@ class WorkFlow extends Controller {
             if ($currentEventID > 0 && $newEventID > 0) {
                 //Get Next Node info from Current Node, so that we could update new node id into the next node's previous_event_id
                 //echo " Okay, currID is ". $currentEventID;
-                $oNextNode = $this->mWorkflow->getNextNodeInfo($currentEventID, $moduleName);
+                $oNextNode = $mWorkflow->getNextNodeInfo($currentEventID, $moduleName);
                 //pre($oNextNode);
                 if (!empty($oNextNode)) {
                     $nextEventID = $oNextNode->id;
@@ -310,7 +309,7 @@ class WorkFlow extends Controller {
                     'previous_event_id' => $currentEventID,
                     'updated' => date("Y-m-d H:i:s")
                 );
-                $bUpdated = $this->mWorkflow->updateWorkflowEvent($aEventDataNew, $newEventID, $moduleName);
+                $bUpdated = $mWorkflow->updateWorkflowEvent($aEventDataNew, $newEventID, $moduleName);
 
                 if ($nextEventID > 0) {
                     //Update Next Node
@@ -320,7 +319,7 @@ class WorkFlow extends Controller {
                         'updated' => date("Y-m-d H:i:s")
                     );
                     //pre($aEventDataNext);
-                    $bUpdated = $this->mWorkflow->updateWorkflowEvent($aEventDataNext, $nextEventID, $moduleName);
+                    $bUpdated = $mWorkflow->updateWorkflowEvent($aEventDataNext, $nextEventID, $moduleName);
                 }
 
                 if ($bUpdated) {
@@ -331,8 +330,7 @@ class WorkFlow extends Controller {
             }
         }
     }
-    
-    
+
     /**
      * Add Email/SMS event node into the workflow tree
      * @param type $id
@@ -346,10 +344,10 @@ class WorkFlow extends Controller {
      */
     public function createEventNode($id, $moduleName, $eventType, $previousID, $templateID = '', $triggerParam = '', $isDraft = false) {
         $response = array();
-        $eventID = $this->mWorkflow->createWorkflowEvent($id, $eventType, $previousID, $triggerParam, $moduleName);
+        $eventID = $mWorkflow->createWorkflowEvent($id, $eventType, $previousID, $triggerParam, $moduleName);
 
         if ($eventID > 0 && $templateID > 0) {
-            $aResponse = $this->mWorkflow->addEndCampaign($eventID, $templateID, $id, $moduleName, $isDraft);
+            $aResponse = $mWorkflow->addEndCampaign($eventID, $templateID, $id, $moduleName, $isDraft);
             $campaignID = $aResponse['id'];
             $subject = $aResponse['subject'];
             $content = $aResponse['content'];
@@ -365,7 +363,6 @@ class WorkFlow extends Controller {
         return $response;
     }
 
-    
     /**
      * Creates Workflow Event Node
      * @param type $id
@@ -375,13 +372,13 @@ class WorkFlow extends Controller {
      * @param type $templateID
      * @param type $triggerParam
      * @return type
-     */    
+     */
     public function createWorkflowEventNode($id, $moduleName, $eventType, $previousID, $templateID = '', $triggerParam = '') {
         $response = array();
-        $eventID = $this->mWorkflow->createWorkflowEvent($id, $eventType, $previousID, $triggerParam, $moduleName);
+        $eventID = $mWorkflow->createWorkflowEvent($id, $eventType, $previousID, $triggerParam, $moduleName);
 
         if ($eventID > 0 && $templateID > 0) {
-            $aResponse = $this->mWorkflow->addWorkflowCampaign($eventID, $templateID, $id, $moduleName);
+            $aResponse = $mWorkflow->addWorkflowCampaign($eventID, $templateID, $id, $moduleName);
             $campaignID = $aResponse['id'];
             $subject = $aResponse['subject'];
             $content = $aResponse['content'];
@@ -396,7 +393,6 @@ class WorkFlow extends Controller {
         return $response;
     }
 
-    
     /**
      * Updates workflow campaigns
      * @param Request $request
@@ -468,15 +464,15 @@ class WorkFlow extends Controller {
 
         //pre($aData);
 
-        $bUpdated = $this->mWorkflow->updateWorkflowCampaign($aData, $campaignID, $moduleName);
+        $bUpdated = $mWorkflow->updateWorkflowCampaign($aData, $campaignID, $moduleName);
 
         if ($moduleName == 'broadcast') {
             //Update in the default variation too
-            $oVariations = $this->mWorkflow->getWorkflowSplitVariations($moduleName, $moduleUnitID);
+            $oVariations = $mWorkflow->getWorkflowSplitVariations($moduleName, $moduleUnitID);
             if (!empty($oVariations)) {
                 $campaignID = $oVariations[0]->id;
             }
-            $bUpdated = $this->mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
+            $bUpdated = $mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
         }
 
         if ($bUpdated) {
@@ -489,7 +485,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * 
      * @param Request $request
@@ -515,13 +510,13 @@ class WorkFlow extends Controller {
         $templateType = 'sms';
         if ($template_source > 0) {
             //get template info
-            $oTemplate = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $template_source);
+            $oTemplate = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $template_source);
             //pre($oTemplate);
             if (!empty($oTemplate)) {
                 $templateName = $oTemplate[0]->template_name;
                 $templateName = (!empty($templateName)) ? $templateName . '_draft' : 'draft';
                 for ($i = 1; $i++; $i <= 20) {
-                    $checkDraft = $this->mWorkflow->getWorkflowDraftByName($moduleName, $templateName, $userID);
+                    $checkDraft = $mWorkflow->getWorkflowDraftByName($moduleName, $templateName, $userID);
                     if (empty($checkDraft)) {
                         break;
                     } else {
@@ -580,7 +575,7 @@ class WorkFlow extends Controller {
         if (empty($draftID)) {
             //Insert new draft
 
-            $templateID = $this->mWorkflow->addWorkflowDraft($aData, $moduleName);
+            $templateID = $mWorkflow->addWorkflowDraft($aData, $moduleName);
 
             if ($templateID > 0) {
                 $response['status'] = 'success';
@@ -590,7 +585,7 @@ class WorkFlow extends Controller {
             }
         } else {
             //update existing draft
-            $bUpdated = $this->mWorkflow->updateWorkflowDraft($aData, $draftID, $moduleName);
+            $bUpdated = $mWorkflow->updateWorkflowDraft($aData, $draftID, $moduleName);
             if ($bUpdated) {
                 $response['status'] = 'success';
                 $response['draftID'] = $draftID;
@@ -607,7 +602,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to save campaign into the my templates
      */
@@ -629,16 +623,16 @@ class WorkFlow extends Controller {
 
 
         if (!empty($campaignID)) {
-            $oCampaign = $this->mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
+            $oCampaign = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
             $myTemplateID = $oCampaign->mytemplateId;
             $templateType = strtolower($oCampaign->campaign_type);
             $templateSource = $oCampaign->template_source;
             if ($templateSource > 0) {
-                $oTemplate = $this->mWorkflow->getCommonTemplateInfo($templateSource);
+                $oTemplate = $mWorkflow->getCommonTemplateInfo($templateSource);
                 if (!empty($oTemplate)) {
                     $templateName = $oTemplate->template_name;
                     for ($i = 1; $i++; $i <= 20) {
-                        $isExists = $this->mWorkflow->getCommonTemplateByName($templateName, $userID);
+                        $isExists = $mWorkflow->getCommonTemplateByName($templateName, $userID);
                         if ($isExists == false) {
                             break;
                         } else {
@@ -698,12 +692,12 @@ class WorkFlow extends Controller {
         if (empty($myTemplateID)) {
             //insert new user template
             $aData['created'] = date("Y-m-d H:i:s");
-            $myTemplateID = $this->mWorkflow->addWorkflowMyTemplate($aData, $moduleName);
+            $myTemplateID = $mWorkflow->addWorkflowMyTemplate($aData, $moduleName);
             if ($myTemplateID > 0) {
                 //Update the same info into the target workflow campaign  
                 $aCampaignData = array('mytemplateId' => $myTemplateID);
 
-                $this->mWorkflow->updateWorkflowCampaign($aCampaignData, $campaignID, $moduleName);
+                $mWorkflow->updateWorkflowCampaign($aCampaignData, $campaignID, $moduleName);
                 $response['status'] = 'success';
                 $response['mytemplateid'] = $myTemplateID;
             } else {
@@ -713,7 +707,7 @@ class WorkFlow extends Controller {
             //update user template
             $aData['updated'] = date("Y-m-d H:i:s");
             unset($aData['template_name']);
-            $bUpdated = $this->mWorkflow->updateWorkflowMyTemplate($aData, $myTemplateID, $userID);
+            $bUpdated = $mWorkflow->updateWorkflowMyTemplate($aData, $myTemplateID, $userID);
             if ($bUpdated) {
                 $response['status'] = 'success';
                 $response['mytemplateid'] = $myTemplateID;
@@ -737,7 +731,7 @@ class WorkFlow extends Controller {
         $templateName = strip_tags($request->templateName);
         $draftID = strip_tags($request->template_draft_id);
 
-        $bDuplicate = $this->mWorkflow->isDuplicateWorkflowDraft($templateName, $moduleName, $userID);
+        $bDuplicate = $mWorkflow->isDuplicateWorkflowDraft($templateName, $moduleName, $userID);
         //echo "Duplicate ID is ". $bDuplicate;
         //die;
         if ($bDuplicate == true) {
@@ -748,7 +742,7 @@ class WorkFlow extends Controller {
             $aData = array(
                 'template_name' => $templateName
             );
-            $bUpdated = $this->mWorkflow->updateWorkflowDraft($aData, $draftID, $moduleName);
+            $bUpdated = $mWorkflow->updateWorkflowDraft($aData, $draftID, $moduleName);
             if ($bUpdated) {
                 $response['status'] = 'success';
                 $response['draftID'] = $draftID;
@@ -759,7 +753,7 @@ class WorkFlow extends Controller {
 
 
 
-//        $templateID = $this->mWorkflow->addWorkflowDraft($aData, $moduleName);
+//        $templateID = $mWorkflow->addWorkflowDraft($aData, $moduleName);
 //
 //        if ($templateID > 0) {
 //            $response['status'] = 'success';
@@ -777,7 +771,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update in the workflow template
      */
@@ -827,7 +820,7 @@ class WorkFlow extends Controller {
             $aData['introduction'] = $introduction;
         }
 
-        $bUpdated = $this->mWorkflow->updateWorkflowTemplate($aData, $templateID, $moduleName);
+        $bUpdated = $mWorkflow->updateWorkflowTemplate($aData, $templateID, $moduleName);
 
         if ($bUpdated) {
             $response['status'] = 'success';
@@ -844,7 +837,7 @@ class WorkFlow extends Controller {
      */
     public function sendTestEmailworkflowCampaign(Request $request) {
         $response = array();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
@@ -854,12 +847,12 @@ class WorkFlow extends Controller {
         $moduleUnitID = strip_tags($request->moduleUnitID);
         $emailAddress = strip_tags($request->email);
 
-        $oResponse = $this->mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
+        $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
         if (!empty($oResponse)) {
             $templateSource = $oResponse->template_source;
             if ($templateSource > 0) {
-                //$oDefaultTemplate = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateSource);
-                $oDefaultTemplate = $this->mWorkflow->getCommonTemplateInfo($templateSource);
+                //$oDefaultTemplate = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateSource);
+                $oDefaultTemplate = $mWorkflow->getCommonTemplateInfo($templateSource);
                 $defaultGreeting = $oDefaultTemplate->greeting;
                 $defaultIntroduction = $oDefaultTemplate->introduction;
             }
@@ -874,14 +867,14 @@ class WorkFlow extends Controller {
 //            $content = str_replace(array('{FIRST_NAME}', '{LAST_NAME}', '{EMAIL}'), array($aUser->firstname, $aUser->lastname, $aUser->email), $content);
 
 
-            $oUnitData = $this->mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
+            $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
 
             $content = str_replace(array('{{GREETING}}', '{GREETING}', '{{INTRODUCTION}}', '{INTRODUCTION}', 'wf_edit_template_introduction', 'wf_edit_sms_template_introduction'), array($greeting, $greeting, $introduction, $introduction, 'wf_edit_template_introduction_EDITOR', 'wf_edit_sms_template_introduction_EDITOR'), $content);
             $content = str_replace(array('{FIRST_NAME}', '{LAST_NAME}', '{EMAIL}'), array($aUser->firstname, $aUser->lastname, $aUser->email), $content);
 
 
             if ($moduleName == 'nps') {
-                $content = $this->mWorkflow->parseModuleStatictemplate($moduleName, $content, strtolower($oResponse->campaign_type), $oUnitData);
+                $content = $mWorkflow->parseModuleStatictemplate($moduleName, $content, strtolower($oResponse->campaign_type), $oUnitData);
             }
 
             if ($moduleName == 'referral') {
@@ -953,16 +946,16 @@ class WorkFlow extends Controller {
         $moduleUnitID = strip_tags($request->moduleUnitID);
         $number = strip_tags($request->number);
 
-        $oResponse = $this->mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
+        $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
         if (!empty($oResponse)) {
             $templateSource = $oResponse->template_source;
             if ($templateSource > 0) {
-                $oDefaultTemplate = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateSource);
+                $oDefaultTemplate = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateSource);
                 $defaultGreeting = $oDefaultTemplate[0]->greeting;
                 $defaultIntroduction = $oDefaultTemplate[0]->introduction;
             }
 
-            $oUnitData = $this->mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
+            $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
 
             $greeting = (!empty($oResponse->greeting)) ? $oResponse->greeting : $defaultGreeting;
             $introduction = (!empty($oResponse->introduction)) ? $oResponse->introduction : $defaultIntroduction;
@@ -973,7 +966,7 @@ class WorkFlow extends Controller {
             $content = str_replace(array('{FIRST_NAME}', '{LAST_NAME}', '{EMAIL}'), array($aUser->firstname, $aUser->lastname, $aUser->email), $content);
 
             if ($moduleName == 'nps') {
-                $content = $this->mWorkflow->parseModuleStatictemplate($moduleName, $content, strtolower($oResponse->campaign_type), $oUnitData);
+                $content = $mWorkflow->parseModuleStatictemplate($moduleName, $content, strtolower($oResponse->campaign_type), $oUnitData);
             }
 
             if ($moduleName == 'referral') {
@@ -1051,19 +1044,22 @@ class WorkFlow extends Controller {
         $moduleUnitID = strip_tags($request->moduleUnitId);
         $outputType = strip_tags($request->returnMethod);
         $previewType = strip_tags($request->previewType);
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
 
         $previewPrefix = ($previewType == 'onlyPreview') ? 'PREVIEW' : 'EDITOR';
 
-        $oResponse = $this->mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
+        $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
 
         if (!empty($oResponse)) {
             $templateSource = $oResponse->template_source;
             if ($templateSource > 0) {
-                $oDefaultTemplate = $this->mWorkflow->getCommonTemplateInfo($templateSource);
+                $oDefaultTemplate = $mWorkflow->getCommonTemplateInfo($templateSource);
                 $defaultGreeting = $oDefaultTemplate->greeting;
                 $defaultIntroduction = $oDefaultTemplate->introduction;
             }
-            $oUnitData = $this->mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
+            $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
             //pre($oUnitData);
             $cont = base64_decode($oResponse->stripo_compiled_html);
             $content = str_replace('\n', "<br>", $cont);
@@ -1076,7 +1072,7 @@ class WorkFlow extends Controller {
 
 
             if ($moduleName == 'nps') {
-                $content = $this->mWorkflow->parseModuleStatictemplate($moduleName, $content, strtolower($oResponse->campaign_type), $oUnitData);
+                $content = $mWorkflow->parseModuleStatictemplate($moduleName, $content, strtolower($oResponse->campaign_type), $oUnitData);
             }
 
             if ($moduleName == 'referral') {
@@ -1108,7 +1104,6 @@ class WorkFlow extends Controller {
         }
     }
 
-    
     /**
      * Used to get workflow campaign details
      */
@@ -1120,7 +1115,7 @@ class WorkFlow extends Controller {
         $campaignID = strip_tags($request->campaignId);
         $moduleName = strip_tags($request->moduleName);
 
-        $oResponse = $this->mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
+        $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
         if (!empty($campaignID)) {
             $subject = $oResponse->subject;
             $content = base64_decode($oResponse->html);
@@ -1142,7 +1137,7 @@ class WorkFlow extends Controller {
     /**
      * Used to get Workflow template
      * @param Request $request
-     */    
+     */
     public function getWorkflowTemplate(Request $request) {
         $response = array();
         $aUser = getLoggedUser();
@@ -1151,7 +1146,7 @@ class WorkFlow extends Controller {
         $templateID = strip_tags($request->templateId);
         $moduleName = strip_tags($request->moduleName);
 
-        $oResponseRow = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
+        $oResponseRow = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
         $oResponse = $oResponseRow[0];
         //echo "Template ID is ". $templateID;
         //pre($oResponse);
@@ -1177,7 +1172,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-        
     /**
      * 
      * @param Request $requestUsed to delete workflow Event node
@@ -1191,20 +1185,20 @@ class WorkFlow extends Controller {
 
         if ($eventID > 0) {
             //Get Current Node
-            $oCurrentNode = $this->mWorkflow->getNodeInfo($eventID, $moduleName);
+            $oCurrentNode = $mWorkflow->getNodeInfo($eventID, $moduleName);
             if (!empty($oCurrentNode)) {
                 $previousID = $oCurrentNode->previous_event_id;
             }
 
 
             //Get Previous Node
-            $oPreviousNode = $this->mWorkflow->getNodeInfo($previousID, $moduleName);
+            $oPreviousNode = $mWorkflow->getNodeInfo($previousID, $moduleName);
 
             //Get Next Node
-            $oNextNode = $this->mWorkflow->getNextNodeInfo($eventID, $moduleName);
+            $oNextNode = $mWorkflow->getNextNodeInfo($eventID, $moduleName);
 
             //Delete Node Now
-            $bDeleted = $this->mWorkflow->deleteNode($eventID, $moduleName);
+            $bDeleted = $mWorkflow->deleteNode($eventID, $moduleName);
 
             if ($bDeleted) {
                 //Connect adjacent nodes
@@ -1233,7 +1227,7 @@ class WorkFlow extends Controller {
                             $aData['data'] = json_encode($eventDataArr);
                         }
                     }
-                    $bUpdated = $this->mWorkflow->updateNode($aData, $oNextNode->id, $moduleName);
+                    $bUpdated = $mWorkflow->updateNode($aData, $oNextNode->id, $moduleName);
                 }
 
                 $response['status'] = 'success';
@@ -1248,7 +1242,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete workflow Draft
      */
@@ -1260,7 +1253,7 @@ class WorkFlow extends Controller {
         $templateID = strip_tags($request->template_id);
         $moduleName = strip_tags($request->moduleName);
         if (!empty($moduleName) && $templateID > 0) {
-            $bDeleted = $this->mWorkflow->deleteWorkflowDraft($moduleName, $templateID);
+            $bDeleted = $mWorkflow->deleteWorkflowDraft($moduleName, $templateID);
             if ($bDeleted) {
                 $response['status'] = 'success';
             } else {
@@ -1272,13 +1265,12 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to load Stripo campaign
      */
     public function loadStripoCampaign($moduleName, $campaignID, $moduleUnitID = '') {
-        $templateTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
-        $oResponse = $this->mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
+        $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
+        $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
         $subject = $oResponse->subject;
         $preheader = $oResponse->preheader;
         $template_source = $oResponse->template_source;
@@ -1296,13 +1288,12 @@ class WorkFlow extends Controller {
         $this->load->view("admin/workflow/stripo.php", $aData);
     }
 
-    
     /**
      * Used to load Stripo SMS campaign
      */
     public function loadStripoSMSCampaign($moduleName, $campaignID, $moduleUnitID = '') {
-        $templateTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
-        $oResponse = $this->mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
+        $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
+        $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
         $subject = $oResponse->subject;
         $template_source = $oResponse->template_source;
         $compiledSource = $oResponse->stripo_compiled_html;
@@ -1318,13 +1309,12 @@ class WorkFlow extends Controller {
         $this->load->view("admin/workflow2/smsStripo.php", $aData);
     }
 
-    
     /**
      * Used to load Stripo template
      */
     public function loadStripoTemplate($moduleName, $templateID) {
-        $templateTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
-        $oResponse = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
+        $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
+        $oResponse = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
         $subject = $oResponse[0]->template_subject;
         $aData = array(
             'templateID' => $templateID,
@@ -1337,7 +1327,6 @@ class WorkFlow extends Controller {
         $this->load->view("admin/workflow/stripo_template.php", $aData);
     }
 
-    
     /**
      * Used to see Stripo template preview
      */
@@ -1349,7 +1338,7 @@ class WorkFlow extends Controller {
         $templateID = strip_tags($request->template_id);
         $source = strip_tags($request->source);
         $isDraft = ($source == 'draft') ? true : false;
-        $templateTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
+        $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
         if (!empty($modName) && !empty($tempID)) {
             $bURLPreview = true;
             $moduleName = $modName;
@@ -1362,9 +1351,9 @@ class WorkFlow extends Controller {
 
         if ($isDraft == true) {
             //$moduleName, $templateID, $userID
-            $oResponse = $this->mWorkflow->getWorkflowDraftTemplates($moduleName, $templateID, $userID);
+            $oResponse = $mWorkflow->getWorkflowDraftTemplates($moduleName, $templateID, $userID);
         } else {
-            $oResponse = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
+            $oResponse = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
         }
 
         $subject = $oResponse[0]->template_subject;
@@ -1391,14 +1380,13 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to load Stripo Campaign Resources
      */
     public function loadStripoCampaignResources($type, $moduleName, $campaignID, $returnType = false) {
         //$campaignID = '457';
         //$moduleName = 'brandboost';
-        $oResponse = $this->mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
+        $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
 
         if (!empty($oResponse)) {
 
@@ -1407,7 +1395,7 @@ class WorkFlow extends Controller {
             $html = base64_decode($oResponse->stripo_html);
             $css = base64_decode($oResponse->stripo_css);
             $compiled = base64_decode($oResponse->stripo_compiled_html);
-            $templateTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
+            $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
             $blankStripoContent = $this->getStripoBlankContent();
 
             $blankHtml = base64_decode($blankStripoContent['html']);
@@ -1446,7 +1434,6 @@ class WorkFlow extends Controller {
         }
     }
 
-    
     /**
      * Used to load Stripo template Resources
      */
@@ -1455,12 +1442,12 @@ class WorkFlow extends Controller {
         //$moduleName = 'brandboost';
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        //$oResponse = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
+        //$oResponse = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
         if ($isDraft == true) {
             //$moduleName, $templateID, $userID
-            $oResponse = $this->mWorkflow->getWorkflowDraftTemplates($moduleName, $templateID, $userID);
+            $oResponse = $mWorkflow->getWorkflowDraftTemplates($moduleName, $templateID, $userID);
         } else {
-            $oResponse = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
+            $oResponse = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
         }
 
         if (!empty($oResponse)) {
@@ -1470,7 +1457,7 @@ class WorkFlow extends Controller {
             $html = base64_decode($oResponse[0]->stripo_html);
             $css = base64_decode($oResponse[0]->stripo_css);
             $compiled = base64_decode($oResponse[0]->stripo_compiled_html);
-            $templateTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
+            $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
             $campaignType = $oResponse[0]->template_type;
 
             $blankStripoContent = $this->getStripoBlankContent();
@@ -1510,7 +1497,6 @@ class WorkFlow extends Controller {
         }
     }
 
-    
     /**
      * 
      * @param type $moduleNameUsed to get all the templates
@@ -1518,27 +1504,27 @@ class WorkFlow extends Controller {
     public function templates($moduleName = '') {
         //brandboost Templates
         //Onsite Templates
-        $oOnsiteTemplates = $this->mWorkflow->getWorkflowDefaultTemplates('brandboost', 'onsite');
+        $oOnsiteTemplates = $mWorkflow->getWorkflowDefaultTemplates('brandboost', 'onsite');
 
         //Offsite Templates
-        $oOffsiteTemplates = $this->mWorkflow->getWorkflowDefaultTemplates('brandboost', 'offsite');
+        $oOffsiteTemplates = $mWorkflow->getWorkflowDefaultTemplates('brandboost', 'offsite');
 
         //Automation Template
-        $oAutomationTemplates = $this->mWorkflow->getWorkflowDefaultTemplates('automation');
+        $oAutomationTemplates = $mWorkflow->getWorkflowDefaultTemplates('automation');
 
         //Broadcast Template
-        $oBroadcastTemplates = $this->mWorkflow->getWorkflowDefaultTemplates('broadcast');
+        $oBroadcastTemplates = $mWorkflow->getWorkflowDefaultTemplates('broadcast');
 
         //Referral Templates
-        $oReferralTemplates = $this->mWorkflow->getWorkflowDefaultTemplates('referral');
+        $oReferralTemplates = $mWorkflow->getWorkflowDefaultTemplates('referral');
 
         //NPS Templates
-        $oNPSTemplates = $this->mWorkflow->getWorkflowDefaultTemplates('nps');
+        $oNPSTemplates = $mWorkflow->getWorkflowDefaultTemplates('nps');
 
 
         $oCampaignTags = $this->config->item('email_tags');
 
-        $oCategories = $this->mWorkflow->getWorkflowTemplateCategories('automation');
+        $oCategories = $mWorkflow->getWorkflowTemplateCategories('automation');
 
 
         //pre($oCampaignTags);
@@ -1565,7 +1551,6 @@ class WorkFlow extends Controller {
         }
     }
 
-    
     /**
      * Used to add new template
      */
@@ -1621,7 +1606,7 @@ class WorkFlow extends Controller {
                 $aData['category_id'] = $categoryID;
             }
 
-            $templateID = $this->mWorkflow->addWorkflowTemplate($aData, $moduleName);
+            $templateID = $mWorkflow->addWorkflowTemplate($aData, $moduleName);
 
             if ($templateID > 0) {
                 $response['status'] = 'success';
@@ -1636,7 +1621,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete workflow template
      */
@@ -1657,7 +1641,7 @@ class WorkFlow extends Controller {
             $templateID = strip_tags($request->templateID);
 
             if (!empty($moduleName) && $templateID > 0) {
-                $bDeleted = $this->mWorkflow->deleteWorkflowTemplate($moduleName, $templateID);
+                $bDeleted = $mWorkflow->deleteWorkflowTemplate($moduleName, $templateID);
                 if ($bDeleted) {
                     $response['status'] = 'success';
                 } else {
@@ -1673,7 +1657,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to get Stripo blank Contents
      */
@@ -1687,7 +1670,6 @@ class WorkFlow extends Controller {
         return array('html' => $html, 'css' => $css, 'compiled' => $compliled);
     }
 
-    
     /**
      * Used to get Referral Campaign Info
      */
@@ -1719,7 +1701,6 @@ class WorkFlow extends Controller {
         return $response;
     }
 
-    
     /**
      * Replaces all the tags of the referral module
      */
@@ -1732,13 +1713,13 @@ class WorkFlow extends Controller {
         $accountID = $oReferral->hashcode;
 
         if (!empty($referralID)) {
-            $aSettings = $this->mWorkflow->getReferralSettingsInfo($referralID);
+            $aSettings = $mWorkflow->getReferralSettingsInfo($referralID);
         }
 
         if (!empty($subscriberInfo)) {
             $advocateID = $subscriberInfo->advocateID;
             if ($advocateID > 0) {
-                $oRefLink = $this->mWorkflow->getReferralLink($advocateID);
+                $oRefLink = $mWorkflow->getReferralLink($advocateID);
                 $refKey = $oRefLink->refkey;
                 $refLink = site_url() . 'ref/t/' . $refKey;
             }
@@ -1833,8 +1814,8 @@ class WorkFlow extends Controller {
      * Replaces all the tags of the brandboost campaigns
      */
     public function brandboostEmailTagReplace($brandboostID, $sHtml, $campaignType = 'email', $subscriberInfo) {
-        $oBrandboost = $this->mWorkflow->getModuleUnitInfo('brandboost', $brandboostID);
-        $productsDetails = $this->mWorkflow->getProductDataByBBID($brandboostID);
+        $oBrandboost = $mWorkflow->getModuleUnitInfo('brandboost', $brandboostID);
+        $productsDetails = $mWorkflow->getProductDataByBBID($brandboostID);
         if ($oBrandboost->review_type == 'offsite') {
             $aOffsiteUrls = unserialize($oBrandboost->offsites_links);
             $random_keys = array_rand($aOffsiteUrls, 1);
@@ -1894,7 +1875,6 @@ class WorkFlow extends Controller {
         return $sHtml;
     }
 
-    
     /**
      * Used to load Workflow Email Stats
      * @param Request $request
@@ -1906,14 +1886,18 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitId);
         $eventId = strip_tags($request->eventId);
-        $_POST['campaignId'] = $campaignID;
-        $_POST['moduleName'] = $moduleName;
-        $_POST['moduleUnitId'] = $moduleUnitID;
-        $_POST['returnMethod'] = 'return';
+        $request->campaignId = $campaignID;
+        $request->moduleName = $moduleName;
+        $request->moduleUnitId = $moduleUnitID;
+        $request->returnMethod = 'return';
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        
         if ($campaignID > 0 && !empty($moduleName)) {
-            $oPreview = $this->previewWorkflowCampaign($_POST);
-            $aStats = $this->mWorkflow->getEventSendgridStats($campaignID, $moduleName);
-            $aCategorizedStats = $this->mWorkflow->getEventSendgridCategorizedStats($aStats);
+            $oPreview = $this->previewWorkflowCampaign($request);
+            $aStats = $mWorkflow->getEventSendgridStats($campaignID, $moduleName);
+            $aCategorizedStats = $mWorkflow->getEventSendgridCategorizedStats($aStats);
 
             $processedCount = $aCategorizedStats['processed']['UniqueCount'];
             $deliveredCount = $aCategorizedStats['delivered']['UniqueCount'];
@@ -1947,7 +1931,7 @@ class WorkFlow extends Controller {
                 'eventID' => $eventId
             );
 
-            $htmlStats = $this->load->view("admin/workflow/partials/email_stats", $oData, true);
+            $htmlStats = view('admin.workflow.partials.email_stats', $oData)->render();
             $response['status'] = 'success';
             $response['stats'] = $htmlStats;
             $response['oPreview'] = $oPreview;
@@ -1956,7 +1940,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to load Workflow Sms Stats
      * @param Request $request
@@ -1974,8 +1957,8 @@ class WorkFlow extends Controller {
         $_POST['returnMethod'] = 'return';
         if ($campaignID > 0 && !empty($moduleName)) {
             $oPreview = $this->previewWorkflowCampaign($_POST);
-            $aStatsSms = $this->mWorkflow->getEventTwilioStats($oCampaign->id, $moduleName);
-            $aCategorizedStatsSms = $this->mWorkflow->getEventTwilioCategorizedStats($aStatsSms);
+            $aStatsSms = $mWorkflow->getEventTwilioStats($oCampaign->id, $moduleName);
+            $aCategorizedStatsSms = $mWorkflow->getEventTwilioCategorizedStats($aStatsSms);
 
             $sentSmsCount = $aCategorizedStatsSms['sent']['UniqueCount'];
             $deliveredSmsCount = $aCategorizedStatsSms['delivered']['UniqueCount'];
@@ -2010,7 +1993,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to load workflow Tree
      * @param Request $request
@@ -2044,8 +2026,8 @@ class WorkFlow extends Controller {
 
 
 
-        $oEvents = $this->mWorkflow->getWorkflowEvents($moduleUnitID, $moduleName);
-        $oCampaignTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
+        $oEvents = $mWorkflow->getWorkflowEvents($moduleUnitID, $moduleName);
+        $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
 
         $pageData = array(
             'oAutomationLists' => $oAutomationLists,
@@ -2064,7 +2046,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to add contanct into the workflow campaign
      * @param Request $request
@@ -2082,6 +2063,9 @@ class WorkFlow extends Controller {
         $actionValue = $request->actionValue;
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
 
         if ($actionValue == 'addRecord') {
             $aData = array(
@@ -2090,20 +2074,19 @@ class WorkFlow extends Controller {
                 'subscriber_id' => $contactId,
                 'created' => date("Y-m-d H:i:s")
             );
-            $this->mWorkflow->addContactToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
+            $mWorkflow->addContactToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
         } else if ($actionValue == 'deleteRecord') {
-            $this->mWorkflow->deleteContactFromWorkflowCampaign($moduleName, $moduleUnitID, $contactId);
-            $this->mWorkflow->deleteAudienceFromWorkflowCampaign($moduleName, $moduleUnitID, $contactId);
+            $mWorkflow->deleteContactFromWorkflowCampaign($moduleName, $moduleUnitID, $contactId);
+            $mWorkflow->deleteAudienceFromWorkflowCampaign($moduleName, $moduleUnitID, $contactId);
         }
 
-        $oCampaignContacts = $this->mWorkflow->getWorkflowImportContacts($moduleName, $moduleUnitID);
+        $oCampaignContacts = $mWorkflow->getWorkflowImportContacts($moduleName, $moduleUnitID);
         $totalContacts = count($oCampaignContacts);
         $response = array('status' => 'success', 'msg' => "Success", 'total_contacts' => $totalContacts);
         echo json_encode($response);
         exit;
     }
 
-    
     /**
      * Used to add List into the workflow campaign
      * @param Request $request
@@ -2122,30 +2105,32 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
 
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
         if ($actionValue == 'addRecord') {
-            $this->mWorkflow->updateWorkflowList($moduleName, $moduleUnitID, $aSelectedLists);
+            $mWorkflow->updateWorkflowList($moduleName, $moduleUnitID, $aSelectedLists);
         } else if ($actionValue == 'deleteRecord') {
-            $this->mWorkflow->deleteWorkflowList($moduleName, $moduleUnitID, $aSelectedLists);
-            $oListSubscribers = $this->mWorkflow->getWorkflowCommonListContacts($userID, $aSelectedLists);
+            $mWorkflow->deleteWorkflowList($moduleName, $moduleUnitID, $aSelectedLists);
+            $oListSubscribers = $mWorkflow->getWorkflowCommonListContacts($userID, $aSelectedLists);
             if (!empty($oListSubscribers)) {
                 foreach ($oListSubscribers as $oSubscriber) {
                     $subscriberID = $oSubscriber->subscriber_id;
-                    $this->mWorkflow->deleteAudienceFromWorkflowCampaign($moduleName, $moduleUnitID, $subscriberID);
+                    $mWorkflow->deleteAudienceFromWorkflowCampaign($moduleName, $moduleUnitID, $subscriberID);
                 }
             }
         }
 
         //Get Campaign list subscribers
-        $oTotalSubscribers = $this->mWorkflow->getWorkflowImportListSubscribers($moduleName, $moduleUnitID);
+        $oTotalSubscribers = $mWorkflow->getWorkflowImportListSubscribers($moduleName, $moduleUnitID);
 
 
         $totalSubscribers = count($oTotalSubscribers);
 
         //Check for duplicate records
-
+        $duplicateCount = 0;
+        $aEmails = array();
         if (!empty($oTotalSubscribers)) {
-            $aEmails = array();
-            $duplicateCount = 0;
             foreach ($oTotalSubscribers as $oRec) {
                 if (in_array($oRec->subscriber_email, $aEmails)) {
                     $duplicateCount++;
@@ -2155,14 +2140,13 @@ class WorkFlow extends Controller {
         }
 
         //Get selected lists        
-        $oImportLists = $this->mWorkflow->getWorkflowImportLists($moduleName, $moduleUnitID);
+        $oImportLists = $mWorkflow->getWorkflowImportLists($moduleName, $moduleUnitID);
 
         $response = array('status' => 'success', 'msg' => "List Added successfully!", 'total_lists' => count($oImportLists), 'total_contacts' => $totalSubscribers, 'duplicate_contacts' => $duplicateCount);
         echo json_encode($response);
         exit;
     }
 
-    
     /**
      * Used to add Segment into the workflow campaign
      * @param Request $request
@@ -2181,31 +2165,33 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
 
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
         if ($actionValue == 'addRecord') {
             $aData = array(
                 'user_id' => $userID,
                 'segment_id' => $segmentId,
                 'created' => date("Y-m-d H:i:s")
             );
-            $this->mWorkflow->addSegmentToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
+            $mWorkflow->addSegmentToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
         } else if ($actionValue == 'deleteRecord') {
-            $this->mWorkflow->deleteSegmentFromWorkflowCampaign($moduleName, $moduleUnitID, $segmentId);
-            $oSubscribers = $this->mWorkflow->getWorkflowSegmentSubscribers($segmentId, $userID);
+            $mWorkflow->deleteSegmentFromWorkflowCampaign($moduleName, $moduleUnitID, $segmentId);
+            $oSubscribers = WorkflowModel::getWorkflowSegmentSubscribers($segmentId, $userID);
             if (!empty($oSubscribers)) {
                 foreach ($oSubscribers as $oSubscriber) {
                     $subscriberID = $oSubscriber->subscriber_id;
-                    $this->mWorkflow->deleteAudienceFromWorkflowCampaign($moduleName, $moduleUnitID, $subscriberID);
+                    $mWorkflow->deleteAudienceFromWorkflowCampaign($moduleName, $moduleUnitID, $subscriberID);
                 }
             }
         }
-        $oCampaignSegments = $this->mWorkflow->getWorkflowImportSegments($moduleName, $moduleUnitID);
+        $oCampaignSegments = $mWorkflow->getWorkflowImportSegments($moduleName, $moduleUnitID);
         $totalSegments = count($oCampaignSegments);
         $response = array('status' => 'success', 'msg' => "Success", 'total_segments' => $totalSegments);
         echo json_encode($response);
         exit;
     }
 
-    
     /**
      * Used to add Tags into the workflow campaign
      * @param Request $request
@@ -2223,31 +2209,35 @@ class WorkFlow extends Controller {
         $actionValue = $request->actionValue;
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
+
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+
         if ($actionValue == 'addRecord') {
             $aData = array(
                 'user_id' => $userID,
                 'tag_id' => $tagId,
                 'created' => date("Y-m-d H:i:s")
             );
-            $this->mWorkflow->addTagToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
+            $mWorkflow->addTagToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
         } else if ($actionValue == 'deleteRecord') {
-            $this->mWorkflow->deleteTagFromWorkflowCampaign($moduleName, $moduleUnitID, $tagId);
-            $oTagSubscribers = $this->mWorkflow->getWorkflowTagSubscribers($tagId);
+            $mWorkflow->deleteTagFromWorkflowCampaign($moduleName, $moduleUnitID, $tagId);
+            $oTagSubscribers = WorkflowModel::getWorkflowTagSubscribers($tagId);
             if (!empty($oTagSubscribers)) {
                 foreach ($oTagSubscribers as $oSubscriber) {
                     $subscriberID = $oSubscriber->id;
-                    $this->mWorkflow->deleteAudienceFromWorkflowCampaign($moduleName, $moduleUnitID, $subscriberID);
+                    $mWorkflow->deleteAudienceFromWorkflowCampaign($moduleName, $moduleUnitID, $subscriberID);
                 }
             }
         }
-        $oCampaignTags = $this->mWorkflow->getWorkflowImportTags($moduleName, $moduleUnitID);
+        $oCampaignTags = $mWorkflow->getWorkflowImportTags($moduleName, $moduleUnitID);
         $totalTags = count($oCampaignTags);
         $response = array('status' => 'success', 'msg' => "Success", 'total_tags' => $totalTags);
         echo json_encode($response);
         exit;
     }
 
-    
     /**
      * Used to exclude contact into the workflow campaign
      * @param Request $request
@@ -2265,25 +2255,28 @@ class WorkFlow extends Controller {
         $actionValue = $request->actionValue;
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
+
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
         if ($actionValue == 'addRecord') {
             $aData = array(
                 'user_id' => $userID,
                 'subscriber_id' => $contactId,
                 'created' => date("Y-m-d H:i:s")
             );
-            $this->mWorkflow->addContactToExcludeCampaign($aData, $moduleName, $moduleUnitID);
+            $mWorkflow->addContactToExcludeCampaign($aData, $moduleName, $moduleUnitID);
         } else if ($actionValue == 'deleteRecord') {
-            $this->mWorkflow->deleteContactToExcludeCampaign($moduleName, $moduleUnitID, $contactId);
+            $mWorkflow->deleteContactToExcludeCampaign($moduleName, $moduleUnitID, $contactId);
         }
 
-        $oCampaignContacts = $this->mWorkflow->getWorkflowExcludeContacts($moduleName, $moduleUnitID);
+        $oCampaignContacts = $mWorkflow->getWorkflowExcludeContacts($moduleName, $moduleUnitID);
         $totalContacts = count($oCampaignContacts);
         $response = array('status' => 'success', 'msg' => "Success", 'total_contacts' => $totalContacts);
         echo json_encode($response);
         exit;
     }
 
-    
     /**
      * Used to exclude list into the workflow campaign
      * @param Request $request
@@ -2301,23 +2294,26 @@ class WorkFlow extends Controller {
         $actionValue = $request->actionValue;
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
+
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
         if ($actionValue == 'addRecord') {
-            $this->mWorkflow->updateWorkflowExcludedList($moduleName, $moduleUnitID, $aSelectedLists);
+            $mWorkflow->updateWorkflowExcludedList($moduleName, $moduleUnitID, $aSelectedLists);
         } else if ($actionValue == 'deleteRecord') {
-            $this->mWorkflow->deleteWorkflowExcludedLists($moduleName, $moduleUnitID, $aSelectedLists);
+            $mWorkflow->deleteWorkflowExcludedLists($moduleName, $moduleUnitID, $aSelectedLists);
         }
 
         //Get Campaign list subscribers
-        $oTotalSubscribers = $this->mWorkflow->getWorkflowExcludeListSubscribers($moduleName, $moduleUnitID);
+        $oTotalSubscribers = $mWorkflow->getWorkflowExcludeListSubscribers($moduleName, $moduleUnitID);
 
 
         $totalSubscribers = count($oTotalSubscribers);
 
         //Check for duplicate records
-
+        $aEmails = array();
+        $duplicateCount = 0;
         if (!empty($oTotalSubscribers)) {
-            $aEmails = array();
-            $duplicateCount = 0;
             foreach ($oTotalSubscribers as $oRec) {
                 if (in_array($oRec->subscriber_email, $aEmails)) {
                     $duplicateCount++;
@@ -2328,7 +2324,7 @@ class WorkFlow extends Controller {
 
         //Get selected lists
 
-        $oLists = $this->mWorkflow->getWorkflowExcludeLists($moduleName, $moduleUnitID);
+        $oLists = $mWorkflow->getWorkflowExcludeLists($moduleName, $moduleUnitID);
 
 
         $response = array('status' => 'success', 'msg' => "List Added successfully!", 'total_lists' => count($oLists), 'total_contacts' => $totalSubscribers, 'duplicate_contacts' => $duplicateCount);
@@ -2336,7 +2332,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to exclude segments into the workflow campaign
      * @param Request $request
@@ -2354,25 +2349,28 @@ class WorkFlow extends Controller {
         $actionValue = $request->actionValue;
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        
         if ($actionValue == 'addRecord') {
             $aData = array(
                 'user_id' => $userID,
                 'segment_id' => $segmentId,
                 'created' => date("Y-m-d H:i:s")
             );
-            $this->mWorkflow->addExcludedSegmentToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
+            $mWorkflow->addExcludedSegmentToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
         } else if ($actionValue == 'deleteRecord') {
-            $this->mWorkflow->deleteExcludedSegmentToWorkflowCampaign($moduleName, $moduleUnitID, $segmentId);
+            $mWorkflow->deleteExcludedSegmentToWorkflowCampaign($moduleName, $moduleUnitID, $segmentId);
         }
 
-        $oCampaignSegments = $this->mWorkflow->getWorkflowExcludeSegments($moduleName, $moduleUnitID);
+        $oCampaignSegments = $mWorkflow->getWorkflowExcludeSegments($moduleName, $moduleUnitID);
         $totalSegments = count($oCampaignSegments);
         $response = array('status' => 'success', 'msg' => "Success", 'total_segments' => $totalSegments);
         echo json_encode($response);
         exit;
     }
 
-    
     /**
      * Used to exclude tags into the workflow campaign
      * @param Request $request
@@ -2390,24 +2388,27 @@ class WorkFlow extends Controller {
         $actionValue = $request->actionValue;
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        
         if ($actionValue == 'addRecord') {
             $aData = array(
                 'user_id' => $userID,
                 'tag_id' => $tagId,
                 'created' => date("Y-m-d H:i:s")
             );
-            $this->mWorkflow->addExcludedTagToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
+            $mWorkflow->addExcludedTagToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
         } else if ($actionValue == 'deleteRecord') {
-            $this->mWorkflow->deleteExcludedTagToWorkflowCampaign($moduleName, $moduleUnitID, $tagId);
+            $mWorkflow->deleteExcludedTagToWorkflowCampaign($moduleName, $moduleUnitID, $tagId);
         }
-        $oCampaignTags = $this->mWorkflow->getWorkflowExcludeTags($moduleName, $moduleUnitID);
+        $oCampaignTags = $mWorkflow->getWorkflowExcludeTags($moduleName, $moduleUnitID);
         $totalTags = count($oCampaignTags);
         $response = array('status' => 'success', 'msg' => "Success", 'total_tags' => $totalTags);
         echo json_encode($response);
         exit;
     }
 
-    
     /**
      * Used to get Imported Properties for a workflow campaign
      * @param Request $request
@@ -2417,19 +2418,20 @@ class WorkFlow extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if ($request) {
-            $this->load->model("admin/Tags_model", "mmTag");
+            $mWorkflow = new WorkflowModel();
             $moduleName = strip_tags($request->moduleName);
             $moduleUnitID = strip_tags($request->moduleUnitID);
 
-            $aTags = $this->mmTag->getClientTags($userID);
 
-            $oImportLists = $this->mWorkflow->getWorkflowImportLists($moduleName, $moduleUnitID);
+            $aTags = TagsModel::getClientTags($userID);
 
-            $oCampaignImportContacts = $this->mWorkflow->getWorkflowImportContacts($moduleName, $moduleUnitID);
+            $oImportLists = $mWorkflow->getWorkflowImportLists($moduleName, $moduleUnitID);
 
-            $oCampaignImportTags = $this->mWorkflow->getWorkflowImportTags($moduleName, $moduleUnitID);
+            $oCampaignImportContacts = $mWorkflow->getWorkflowImportContacts($moduleName, $moduleUnitID);
 
-            $oCampaignImportSegments = $this->mWorkflow->getWorkflowImportSegments($moduleName, $moduleUnitID);
+            $oCampaignImportTags = $mWorkflow->getWorkflowImportTags($moduleName, $moduleUnitID);
+
+            $oCampaignImportSegments = $mWorkflow->getWorkflowImportSegments($moduleName, $moduleUnitID);
 
             $aDataImportButtons = array(
                 'moduleUnitID' => $moduleUnitID,
@@ -2439,7 +2441,7 @@ class WorkFlow extends Controller {
                 'oCampaignTags' => $oCampaignImportTags,
                 'oCampaignSegments' => $oCampaignImportSegments
             );
-            $sImportButtons = $this->load->view("admin/workflow2/partials/importButtonTags", $aDataImportButtons, true);
+            $sImportButtons = view('admin.workflow2.partials.importButtonTags', $aDataImportButtons)->render();
         }
         $response['status'] = 'success';
         $response['content'] = $sImportButtons;
@@ -2447,7 +2449,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to get Excluded Properties for a workflow campaign
      * @param Request $request
@@ -2456,22 +2457,25 @@ class WorkFlow extends Controller {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
         if ($request) {
-            $this->load->model("admin/Tags_model", "mmTag");
             $moduleName = strip_tags($request->moduleName);
             $moduleUnitID = strip_tags($request->moduleUnitID);
             //Exclude Specific Data
-            $aTags = $this->mmTag->getClientTags($userID);
+            $aTags = TagsModel::getClientTags($userID);
 
-            $oTotalExcludeSubscribers = $this->mWorkflow->getWorkflowExcludeListSubscribers($moduleName, $moduleUnitID);
+            $oTotalExcludeSubscribers = $mWorkflow->getWorkflowExcludeListSubscribers($moduleName, $moduleUnitID);
 
-            $oExcludeLists = $this->mWorkflow->getWorkflowExcludeLists($moduleName, $moduleUnitID);
+            $oExcludeLists = $mWorkflow->getWorkflowExcludeLists($moduleName, $moduleUnitID);
 
-            $oCampaignExcludeContacts = $this->mWorkflow->getWorkflowExcludeContacts($moduleName, $moduleUnitID);
+            $oCampaignExcludeContacts = $mWorkflow->getWorkflowExcludeContacts($moduleName, $moduleUnitID);
 
-            $oCampaignExcludeTags = $this->mWorkflow->getWorkflowExcludeTags($moduleName, $moduleUnitID);
+            $oCampaignExcludeTags = $mWorkflow->getWorkflowExcludeTags($moduleName, $moduleUnitID);
 
-            $oCampaignExcludeSegments = $this->mWorkflow->getWorkflowExcludeSegments($moduleName, $moduleUnitID);
+            $oCampaignExcludeSegments = $mWorkflow->getWorkflowExcludeSegments($moduleName, $moduleUnitID);
 
             $aDataExportButtons = array(
                 'moduleUnitID' => $moduleUnitID,
@@ -2481,7 +2485,7 @@ class WorkFlow extends Controller {
                 'oCampaignTags' => $oCampaignExcludeTags,
                 'oCampaignSegments' => $oCampaignExcludeSegments
             );
-            $sExcludButtons = $this->load->view("admin/workflow2/partials/excludeButtonTags", $aDataExportButtons, true);
+            $sExcludButtons = view('admin.workflow2.partials.excludeButtonTags', $aDataExportButtons)->render();
         }
         $response['status'] = 'success';
         $response['content'] = $sExcludButtons;
@@ -2489,7 +2493,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to sync Audience after change in any import or exclude properties
      * @param Request $request
@@ -2500,11 +2503,12 @@ class WorkFlow extends Controller {
         if ($request) {
             $moduleName = strip_tags($request->moduleName);
             $moduleUnitID = strip_tags($request->moduleUnitID);
+            $preSyncSubscribers = array();
+            $mWorkflow = new WorkflowModel();
 
             if (!empty($moduleName) && !empty($moduleUnitID)) {
                 //Fliter subscibers to be used after excluding filters at the end of the function
-                $oPreSyncCampaignSubscribers = $this->mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
-
+                $oPreSyncCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
                 //pre($oPreSyncCampaignSubscribers);
                 if (!empty($oPreSyncCampaignSubscribers)) {
                     foreach ($oPreSyncCampaignSubscribers as $row) {
@@ -2514,7 +2518,7 @@ class WorkFlow extends Controller {
                 //Imported Properites
                 //Lists
                 $aWorkflowSubscribers = array();
-                $oImportLists = $this->mWorkflow->getWorkflowImportLists($moduleName, $moduleUnitID);
+                $oImportLists = $mWorkflow->getWorkflowImportLists($moduleName, $moduleUnitID);
                 if (!empty($oImportLists)) {
 
                     foreach ($oImportLists as $oList) {
@@ -2525,7 +2529,7 @@ class WorkFlow extends Controller {
                     //Get Unique Subscribers from each lists
                     if (!empty($aListIDs)) {
                         foreach ($aListIDs as $iListID) {
-                            $oListSubscribers = $this->mWorkflow->getWorkflowCommonListContacts($userID, $iListID);
+                            $oListSubscribers = $mWorkflow->getWorkflowCommonListContacts($userID, $iListID);
                             if (!empty($oListSubscribers)) {
                                 foreach ($oListSubscribers as $oSubscriber) {
                                     if (!in_array($oSubscriber->subscriber_id, $aWorkflowSubscribers)) {
@@ -2538,7 +2542,7 @@ class WorkFlow extends Controller {
                 }
 
                 //Imported Contacts
-                $oCampaignImportContacts = $this->mWorkflow->getWorkflowImportContacts($moduleName, $moduleUnitID);
+                $oCampaignImportContacts = $mWorkflow->getWorkflowImportContacts($moduleName, $moduleUnitID);
                 if (!empty($oCampaignImportContacts)) {
                     foreach ($oCampaignImportContacts as $oRec) {
                         if (!in_array($oRec->subscriber_id, $aWorkflowSubscribers)) {
@@ -2548,11 +2552,11 @@ class WorkFlow extends Controller {
                 }
 
                 //Imported Tags
-                $oCampaignImportTags = $this->mWorkflow->getWorkflowImportTags($moduleName, $moduleUnitID);
+                $oCampaignImportTags = $mWorkflow->getWorkflowImportTags($moduleName, $moduleUnitID);
                 if (!empty($oCampaignImportTags)) {
                     foreach ($oCampaignImportTags as $oRec) {
                         $tagId = $oRec->tag_id;
-                        $oTagSubscribers = $this->mWorkflow->getWorkflowTagSubscribers($tagId);
+                        $oTagSubscribers = WorkflowModel::getWorkflowTagSubscribers($tagId);
                         if (!empty($oTagSubscribers)) {
                             foreach ($oTagSubscribers as $oSubscriber) {
                                 if (!in_array($oSubscriber->id, $aWorkflowSubscribers)) {
@@ -2564,11 +2568,11 @@ class WorkFlow extends Controller {
                 }
 
                 //Imported Segments
-                $oCampaignImportSegments = $this->mWorkflow->getWorkflowImportSegments($moduleName, $moduleUnitID);
+                $oCampaignImportSegments = $mWorkflow->getWorkflowImportSegments($moduleName, $moduleUnitID);
                 if (!empty($oCampaignImportSegments)) {
                     foreach ($oCampaignImportSegments as $oRec) {
                         $segmentId = $oRec->segment_id;
-                        $oSubscribers = $this->mWorkflow->getWorkflowSegmentSubscribers($segmentId, $userID);
+                        $oSubscribers = WorkflowModel::getWorkflowSegmentSubscribers($segmentId, $userID);
                         if (!empty($oSubscribers)) {
                             foreach ($oSubscribers as $oSubscriber) {
                                 if (!in_array($oSubscriber->subscriber_id, $aWorkflowSubscribers)) {
@@ -2580,9 +2584,9 @@ class WorkFlow extends Controller {
                 }
 
                 //Excluded Properites
-                $aWorkflowExcludedSubscribers = array();
+                $aWorkflowExcludedSubscribers = $aEligibleSubscribers = array();
                 //Excluded Lists
-                $oExcludeLists = $this->mWorkflow->getWorkflowExcludeLists($moduleName, $moduleUnitID);
+                $oExcludeLists = $mWorkflow->getWorkflowExcludeLists($moduleName, $moduleUnitID);
                 if (!empty($oExcludeLists)) {
                     $aListIDs = array();
                     foreach ($oExcludeLists as $oList) {
@@ -2593,7 +2597,7 @@ class WorkFlow extends Controller {
                     //Get Unique Subscribers from each lists
                     if (!empty($aListIDs)) {
                         foreach ($aListIDs as $iListID) {
-                            $oListSubscribers = $this->mWorkflow->getWorkflowCommonListContacts($userID, $iListID);
+                            $oListSubscribers = $mWorkflow->getWorkflowCommonListContacts($userID, $iListID);
                             if (!empty($oListSubscribers)) {
                                 foreach ($oListSubscribers as $oSubscriber) {
                                     if (!in_array($oSubscriber->subscriber_id, $aWorkflowExcludedSubscribers)) {
@@ -2606,7 +2610,7 @@ class WorkFlow extends Controller {
                 }
 
                 //Excluded Contacts
-                $oCampaignExcludeContacts = $this->mWorkflow->getWorkflowExcludeContacts($moduleName, $moduleUnitID);
+                $oCampaignExcludeContacts = $mWorkflow->getWorkflowExcludeContacts($moduleName, $moduleUnitID);
                 if (!empty($oCampaignExcludeContacts)) {
                     foreach ($oCampaignExcludeContacts as $oRec) {
                         if (!in_array($oRec->subscriber_id, $aWorkflowExcludedSubscribers)) {
@@ -2618,11 +2622,11 @@ class WorkFlow extends Controller {
 
 
                 //Excluded Tags
-                $oCampaignExcludeTags = $this->mWorkflow->getWorkflowExcludeTags($moduleName, $moduleUnitID);
+                $oCampaignExcludeTags = $mWorkflow->getWorkflowExcludeTags($moduleName, $moduleUnitID);
                 if (!empty($oCampaignExcludeTags)) {
                     foreach ($oCampaignExcludeTags as $oRec) {
                         $tagId = $oRec->tag_id;
-                        $oTagSubscribers = $this->mWorkflow->getWorkflowTagSubscribers($tagId);
+                        $oTagSubscribers = WorkflowModel::getWorkflowTagSubscribers($tagId);
                         if (!empty($oTagSubscribers)) {
                             foreach ($oTagSubscribers as $oSubscriber) {
                                 if (!in_array($oSubscriber->id, $aWorkflowExcludedSubscribers)) {
@@ -2634,11 +2638,11 @@ class WorkFlow extends Controller {
                 }
 
                 //Excluded Segments
-                $oCampaignExcludeSegments = $this->mWorkflow->getWorkflowExcludeSegments($moduleName, $moduleUnitID);
+                $oCampaignExcludeSegments = $mWorkflow->getWorkflowExcludeSegments($moduleName, $moduleUnitID);
                 if (!empty($oCampaignExcludeSegments)) {
                     foreach ($oCampaignExcludeSegments as $oRec) {
                         $segmentId = $oRec->segment_id;
-                        $oSubscribers = $this->mWorkflow->getWorkflowSegmentSubscribers($segmentId, $userID);
+                        $oSubscribers = WorkflowModel::getWorkflowSegmentSubscribers($segmentId, $userID);
                         if (!empty($oSubscribers)) {
                             foreach ($oSubscribers as $oSubscriber) {
                                 if (!in_array($oSubscriber->subscriber_id, $aWorkflowExcludedSubscribers)) {
@@ -2648,7 +2652,7 @@ class WorkFlow extends Controller {
                         }
                     }
                 }
-
+                
                 //For Extra cleanup
                 if (!empty($aWorkflowSubscribers)) {
                     foreach ($aWorkflowSubscribers as $subscriberID) {
@@ -2663,7 +2667,7 @@ class WorkFlow extends Controller {
 
                 if (!empty($aWorkflowExcludedSubscribers)) {
                     foreach ($aWorkflowExcludedSubscribers as $subscriberID) {
-                        $this->mWorkflow->deleteAudienceFromWorkflowCampaign($moduleName, $moduleUnitID, $subscriberID);
+                        $mWorkflow->deleteAudienceFromWorkflowCampaign($moduleName, $moduleUnitID, $subscriberID);
                     }
                 }
 
@@ -2691,13 +2695,13 @@ class WorkFlow extends Controller {
                 //pre($suspciousSubscribers);
 
                 if (!empty($suspciousSubscribers)) {
-                    $this->mWorkflow->deleteSuspeciousWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $suspciousSubscribers);
+                    $mWorkflow->deleteSuspeciousWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $suspciousSubscribers);
                 }
             }
         }
 
-        $oCampaignSubscribers = $this->mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
-        $content = $this->load->view('admin/workflow2/partials/filtered-contacts-ajax', array('oCampaignSubscribers' => $oCampaignSubscribers), true);
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+        $content = view('admin.workflow2.partials.filtered-contacts-ajax', array('oCampaignSubscribers' => $oCampaignSubscribers))->render();
         $response['status'] = 'success';
         $response['content'] = $content;
         $response['total_audience'] = count($oCampaignSubscribers);
@@ -2705,7 +2709,6 @@ class WorkFlow extends Controller {
         exit;
     }
 
-    
     /**
      * Used to add Audience into the workflow campaign
      * @param type $aData
@@ -2713,21 +2716,21 @@ class WorkFlow extends Controller {
      * @param type $moduleUnitID
      */
     public function addAudienceToWorkflowCampaign($aData, $moduleName, $moduleUnitID) {
+        $mWorkflow = new WorkflowModel();
         $subscriberID = $aData['subscriber_id'];
         //Do some necessary check if any
-        //Check-1 -Duplicate Entry
-        $bDuplicate = $this->mWorkflow->isDuplicateWorkflowAudience($moduleName, $moduleUnitID, $subscriberID);
+        //Check-1 -Duplicate Entry  
+        $bDuplicate = $mWorkflow->isDuplicateWorkflowAudience($moduleName, $moduleUnitID, $subscriberID);
         if ($bDuplicate == false) {
-            $this->mWorkflow->addAudienceToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
+            $mWorkflow->addAudienceToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
         }
     }
 
-    
     /**
      * Used to sync audience aggregates to all properties
      */
     public function syncWorkflowAudienceGlobal() {
-        $this->mWorkflow->syncWorkflowAudienceGlobalModel();
+        $mWorkflow->syncWorkflowAudienceGlobalModel();
     }
 
 }

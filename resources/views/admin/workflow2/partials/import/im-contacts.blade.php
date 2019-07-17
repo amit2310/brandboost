@@ -6,7 +6,6 @@ if (!empty($oCampaignContacts)) {
         $aSelectedContacts[] = $oRec->subscriber_id;
     }
 }
-
 $iActiveCount = $iArchiveCount = 0;
 $subscribersData = $aContactSelectionData['subscribersData'];
 if (!empty($subscribersData)) {
@@ -53,8 +52,9 @@ if (!empty($subscribersData)) {
                     <tbody>
                         <?php
                         if (count($subscribersData) > 0) {
+                            
                             foreach ($subscribersData as $oContact) {
-                                $oContact->subscriber_id = !empty($oContact->subscriber_id) ? $oContact->subscriber_id : 0;
+                                
                                 $userData = '';
                                 if ($oContact->status != '2') {
 

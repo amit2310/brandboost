@@ -82,6 +82,7 @@ if (!empty($aSelectedContacts)) {
         }
     }
 }
+$aSelectedContacts = array();
 ?>
 <div class="">
     <div class="row">
