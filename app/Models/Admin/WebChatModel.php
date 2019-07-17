@@ -82,5 +82,41 @@ class WebChatModel extends Model {
     }
 
 
+    /**
+     * this function is used to update the read status
+     * @param type $to_user
+     * @param type $from_user
+     * @param type $aData
+     * @return type boolean
+     */
+    public function readChatMsg($to_user, $from_user, $aData) {
+
+        $result = DB::table('tbl_chat_message')
+            ->where('user_to', $from_user)
+            ->where('user_form', $to_user)
+            ->where('read_status', '0')
+            ->update($aData);
+
+        return true;
+
+    }
+
+
+    /**
+     * this function is used update last login
+     * @param type $userId
+     * @param type $aData
+     * @return type boolean
+     */
+    public function lastLoginDetail($userId, $aData) {
+
+        $result = DB::table('tbl_users')
+            ->where('id', $userId)
+            ->update($aData);
+
+        return true;
+    }
+
+
 
 }

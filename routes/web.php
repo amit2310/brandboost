@@ -38,6 +38,8 @@ Route::post('admin/webchat/getUserinfo','Admin\WebChat@getUserinfo');
 Route::post('admin/webchat/listingNotes','Admin\WebChat@listingNotes');
 Route::post('admin/webchat/addWebNotes','Admin\WebChat@addWebNotes');
 Route::post('admin/webchat/getMessages','Admin\WebChat@getMessages');
+Route::post('admin/webchat/readMessages','Admin\WebChat@readMessages');
+Route::post('admin/webchat/changeLoginStatus','Admin\WebChat@changeLoginStatus');
 
 
 Route::get('admin/smschat','Admin\SmsChat@index');
