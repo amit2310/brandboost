@@ -23,6 +23,7 @@ class WebChatModel extends Model {
         return $rCount; 
     }
 
+
     /**
      * Get Team Assign Data
      * @param type $teamId

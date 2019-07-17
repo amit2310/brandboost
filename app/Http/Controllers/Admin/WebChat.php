@@ -210,7 +210,7 @@ class WebChat extends Controller {
 
         echo json_encode($response); 
 
-
+}
 
     /**
      * This function used to update the status from unread to read
