@@ -320,18 +320,18 @@ if (!function_exists('getCampaignCommentCount')) {
 
 }
 
+
+ /**
+ * This function is used to get tags by the user id
+ * @return type
+ */
+
 if (!function_exists('getTagsByReviewID')) {
 
     function getTagsByReviewID($reviewId) {
-        $aUser = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Tags_model", "mTags");
+        $tagsData =  App\Models\Admin\TagsModel::getTagsDataByReviewID($reviewId);
+        return $tagsData;
 
-        $tagsData = $CI->mTags->getTagsDataByReviewID($reviewId);
-
-        if (!empty($tagsData)) {
-            return $tagsData;
-        }
     }
 
 }
@@ -1336,21 +1336,19 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
     exit;
 }
 
-function search_in_array($srchvalue, $array) {
-    if (is_array($array) && count($array) > 0) {
-        $foundkey = array_search($srchvalue, $array);
-        if ($foundkey === FALSE) {
-            foreach ($array as $key => $value) {
-                if (count($value) > 0) {
-                    $value = json_encode($value);
-                    $value = json_decode($value, true);
-                    $foundkey = search_in_array($srchvalue, $value);
-                    if ($foundkey != FALSE)
-                        return $foundkey;
-                }
-            }
-        } else
-            return $foundkey;
+
+
+    function search_in_array($srchvalue, $array) {
+
+    foreach ($array as $key => $value)
+     {
+         
+        if($value->tag_name == $srchvalue )
+        {
+           return true;
+        }
+
+
     }
 }
 

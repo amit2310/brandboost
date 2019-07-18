@@ -6,6 +6,8 @@ use App\Models\Admin\SmsChatModel;
 use App\Models\Admin\WebChatModel;
 use App\Models\Admin\SubscriberModel;
 use Illuminate\Support\Facades\Input;
+use App\Models\Admin\TagsModel;
+
 use Session;
 class WebChat extends Controller {
     /**
@@ -41,13 +43,14 @@ class WebChat extends Controller {
      * This function is used to get userinformation based on the client/user id
      * @return type
      */
+
     public function getUserinfo() {
         $chatUserid = Input::post("chatUserid");
         $token = Input::post("token");
         if (strlen($chatUserid) > 10 && $chatUserid != '' && $token != '') {
             $userDetail = getSubscriberDetails($chatUserid);
             $assignto = assignto($token);
-            //$taglist = getTagsByReviewID($userId);
+            $taglist = getTagsByReviewID($chatUserid);
             $userId_encode = base64_url_encode($chatUserid);
             $user_name_ex = explode(" ", $userDetail[0]->user_name);
             $avatar = showUserAvtar('', $user_name_ex[0], $user_name_ex[1], 84, 84, 24);
@@ -68,7 +71,7 @@ class WebChat extends Controller {
             $arr[8]['gender'] = '';
             $arr[9]['avfinder'] = '';
             $arr[10]['userId_encode'] = $userId_encode;
-            $arr[11]['taglist'] = '';
+            $arr[11]['taglist'] = $taglist;
             $arr[12]['assign_to'] = $assignto;
             $arr[13]['assign_team_member'] = $userDetail[0]->assign_team_member;
             return response()->json($arr, 200);
@@ -364,5 +367,141 @@ class WebChat extends Controller {
         echo json_encode($response);
         exit;
     }
+
+
+
+   /**
+     * this function is used to get all the tags related to the webchat user
+     * @return type boolean
+     */
+
+
+    public function listAllTagsWebchat() {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        if (empty($userID)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+        $TagsObj = new TagsModel();
+        $reviewID = base64_url_decode(strip_tags(Input::post("review_id")));
+        $feedbackID = base64_url_decode(strip_tags(Input::post("feedback_id"))); 
+        $questionID = base64_url_decode(strip_tags(Input::post("question_id")));  
+        
+        if ($reviewID > 0) {
+            $aAppliedTags = $TagsObj->getTagsDataByReviewID($reviewID);
+        }
+        if ($feedbackID > 0) {
+            $aAppliedTags = $TagsObj->getTagsDataByFeedbackID($feedbackID);
+        }
+        
+        if($questionID>0){
+            $aAppliedTags = $TagsObj->getTagsDataByQuestionID($questionID);
+        }
+        $aTag = $TagsObj->getClientTags($userID);
+
+        $sTags =  view("admin.tags.mytags_Web",array('oTags' => $aTag, 'aAppliedTags' => $aAppliedTags))->render();
+        $response = array('status' => 'success', 'list_tags' => $sTags);
+        echo json_encode($response);
+        exit;
+
+    }
+
+  
+
+   /**
+     * this function is used to add the tags for the webchat
+     * @return type boolean
+     */
+
+
+    public function applyWebTag() {
+        
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        if (empty($userID)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+       
+        $TagsObj = new TagsModel();
+        $reviewID = base64_url_decode(strip_tags(Input::post("review_id"))); 
+        $aTagID = Input::post("applytag");
+        $aInput = array(
+            'aTagIDs' => $aTagID,
+            'review_id' => $reviewID
+        );
+
+        $bAdded = $TagsObj->addReviewTag($aInput);
+
+        if ($bAdded) {
+            
+        $oTags = $TagsObj->getTagsDataByReviewID($reviewID);
+        
+        $sTagDropdown = view("admin.tags.tag_dropdown", array('oTags' => $oTags, 'fieldName'=> 'reviewid', 'fieldValue'=> base64_url_encode($reviewID), 'actionName'=> 'review-tag', 'actionClass'=> 'applyInsightTagsReviews'));
+            
+            $response = array('status' => 'success', 'msg' => 'Tag added successfully!', 'refreshTags' => $sTagDropdown, 'id'=>$reviewID);
+            echo json_encode($response);
+            exit;
+        } else {
+            $response = array('status' => 'error', 'msg' => 'Something went wrong!');
+            echo json_encode($response);
+            exit;
+        }
+
+    }
+
+
+    /**
+     * this function will return taglist
+     * @return type boolean
+     */
+
+    public function getWebTaglist() {
+        $userId = Input::post("userId");
+        $taglist = getTagsByReviewID($userId);
+        $arr = array();
+        $arr[0]['taglist'] = $taglist;
+        echo json_encode($arr);
+    }
+
+
+       /**
+     * this function is used delete the tags for webchat users
+     * @return type boolean
+     */
+
+
+     public function deleteTagFromWeb() {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $TagsObj = new TagsModel();
+        $grpid =  Input::post("grpid");
+        $tag_id = Input::post("tag_id");
+        $review_id = Input::post("review_id");
+
+        if (empty($review_id) || empty($tag_id)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+       
+        if (!empty($review_id) && !empty($tag_id)) {
+            $bDeleted = $TagsObj->deleteTagGroupEntityWebchat($review_id,$tag_id);
+            if ($bDeleted) {
+                $response = array('status' => 'success', 'msg' => 'Tag group deleted successfully!');
+                echo json_encode($response);
+                exit;
+            } else {
+                $response = array('status' => 'error', 'msg' => 'Something went wrong!');
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+
 
 }

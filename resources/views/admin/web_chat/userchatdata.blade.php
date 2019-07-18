@@ -329,6 +329,7 @@ $teamMembers = getAllteam($aUInfo->id);
                 <div class="modal-body" id="tagEntireList"></div>
 				
                 <div class="modal-footer modalFooterBtn">
+                	 <input type="hidden" name="_token" value="{{csrf_token()}}" />
                     <input type="hidden" name="review_id" id="tag_review_id" />
                     <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn dark_btn">Apply Tag</button>
@@ -457,7 +458,7 @@ $('#addnewtag_'+groupID).hide();
         	var userID = $('#em_id').val();
             var formdata = $("#frmReviewTagListModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/tags/applyReviewTag'); ?>',
+                url: '<?php echo base_url('admin/webchat/applyWebTag'); ?>',
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -467,9 +468,9 @@ $('#addnewtag_'+groupID).hide();
                         $("#ReviewTagListModal").modal("hide");
 
 						$.ajax({
-						url: '<?php echo base_url('admin/smschat/getTaglist'); ?>',
+						url: '<?php echo base_url('admin/webchat/getWebTaglist'); ?>',
 						type: "POST",
-						data: {'userId':userID},
+						data: {'userId':userID,_token: '{{csrf_token()}}'},
 						success: function (dataval) {
                          var obj =  $.parseJSON(dataval);
                          console.log(obj[0].taglist);
@@ -501,13 +502,13 @@ $('#addnewtag_'+groupID).hide();
 		});
 
 
-$(document).on("click", ".applyInsightTagsReviews", function () {
+            $(document).on("click", ".applyInsightTagsReviews", function () {
             var review_id = $('#userId_encode').val();
             var action_name = 'review-tag';
             $.ajax({
-                url: '<?php echo base_url('admin/tags/listAllTagsWebchat'); ?>',
+                url: '<?php echo base_url('admin/webchat/listAllTagsWebchat'); ?>',
                 type: "POST",
-                data: {review_id: review_id},
+                data: {review_id: review_id,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

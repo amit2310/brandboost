@@ -29,6 +29,27 @@ class TagsModel extends Model {
         return $oData;
     }
 
+
+        /**
+        * this function is used to get the tags by the review id
+        * @param type $reviewID
+        * @return type array
+        */
+
+    public static function getTagsDataByReviewID($reviewID) {
+
+            $oData = DB::table('tbl_reviews_tags')
+            ->select('tbl_tag_groups_entity.*', 'tbl_reviews_tags.tag_id', 'tbl_reviews_tags.review_id')
+            ->join('tbl_tag_groups_entity', 'tbl_tag_groups_entity.id', '=','tbl_reviews_tags.tag_id')
+            ->where("tbl_reviews_tags.review_id", $reviewID)
+            ->get();
+       
+
+        return $oData;
+    }
+
+
+
     public function getTagsReview($tagID) {
 
         $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar");
@@ -107,14 +128,22 @@ class TagsModel extends Model {
         return $aData;
     }
 
+   
+    /**
+    * This function will tagids 
+    * @param type $aTagID
+     @param type $reviewID
+    * @return type
+    */
+
     public function getTagByReviewIDTagID($aTagID, $reviewID) {
-        $this->db->where('tag_id', $aTagID);
-        $this->db->where('review_id', $reviewID);
-        $result = $this->db->get('tbl_reviews_tags');
-        if ($result->num_rows() > 0) {
-            $aData = $result->row();
-        }
-        return $aData;
+        
+        $oData = DB::table('tbl_reviews_tags')
+        ->where('tag_id', $aTagID)
+        ->where('review_id', $reviewID)
+        ->first();
+      return $oData;
+
     }
 
     public function getTagByFeedbackIDTagID($aTagID, $feedbackID) {
@@ -168,14 +197,13 @@ class TagsModel extends Model {
     }
 
     public function deleteReviewTagByID($id, $reviewID) {
-        $this->db->where('tag_id', $id);
-        $this->db->where('review_id', $reviewID);
-        $result = $this->db->delete('tbl_reviews_tags');
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $oData = DB::table('tbl_reviews_tags')
+        ->where('tag_id', $id)
+        ->where('review_id', $reviewID)
+        ->delete();
+        return $oData;
+
+
     }
 
     public function deleteFeedbackTagByID($id, $feedbackID) {
@@ -210,16 +238,27 @@ class TagsModel extends Model {
         }
     }
 
+
+     /**
+     * this function is used delete the tags for webchat users
+     * @return type boolean
+     */
+
     public function deleteTagGroupEntityWebchat($review_id, $tag_id) {
-        $this->db->where('tag_id', $tag_id);
-        $this->db->where('review_id', $review_id);
-        $result = $this->db->delete('tbl_reviews_tags');
-        if ($result) {
+            $oData = DB::table('tbl_reviews_tags')
+            ->where('tag_id', $tag_id)
+            ->where('review_id', $review_id)
+            ->get();
             return true;
-        } else {
-            return false;
-        }
     }
+
+
+   
+   /**
+     * this function is used to add the tags in the system
+     * @return type boolean
+     */
+
 
     public function addReviewTag($aData) {
         $aTagIDs = $aData['aTagIDs'];
@@ -232,20 +271,25 @@ class TagsModel extends Model {
                 );
 
                 $tagData = $this->getTagByReviewIDTagID($iTagID, $aData['review_id']);
-                if ($tagData->id == '') {
-                    $result = $this->db->insert('tbl_reviews_tags', $aInput);
+
+                if (empty($tagData->id)) {
+                    $result = DB::table('tbl_reviews_tags')->insert($aInput);
                 }
 
                 $reviewTagsData = $this->getTagsDataByReviewID($aData['review_id']);
                 foreach ($reviewTagsData as $reviewTagData) {
+                   // pre($reviewTagData);die;
                     if (in_array($reviewTagData->tag_id, $aTagIDs)) {
                         $result = true;
                     } else {
                         $result = $this->deleteReviewTagByID($reviewTagData->tag_id, $aData['review_id']);
+
                     }
                 }
+
             }
         } else {
+
             if (!empty($aData['review_id'])) {
                 $reviewTagsData = $this->getTagsDataByReviewID($aData['review_id']);
                 if (!empty($reviewTagsData)) {
@@ -416,46 +460,35 @@ class TagsModel extends Model {
         return $response;
     }
 
-    public function getTagsDataByReviewID($reviewID) {
+ 
+    /**
+     * this function is used to get the tags by the question id
+     * @param type $questionID
+     * @return type array
+     */
 
-        $this->db->select("tbl_tag_groups_entity.*, tbl_reviews_tags.tag_id, tbl_reviews_tags.review_id");
-        $this->db->join("tbl_tag_groups_entity", "tbl_tag_groups_entity.id=tbl_reviews_tags.tag_id", "LEFT");
-        $this->db->where("tbl_reviews_tags.review_id", $reviewID);
-        $result = $this->db->get("tbl_reviews_tags");
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
-    }
 
     public function getTagsDataByQuestionID($questionID) {
 
-        $this->db->select("tbl_tag_groups_entity.*, tbl_reviews_question_tags.tag_id, tbl_reviews_question_tags.question_id");
-        $this->db->join("tbl_tag_groups_entity", "tbl_tag_groups_entity.id=tbl_reviews_question_tags.tag_id", "LEFT");
-        $this->db->where("tbl_reviews_question_tags.question_id", $questionID);
-        $result = $this->db->get("tbl_reviews_question_tags");
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
+        $oData = DB::table('tbl_reviews_question_tags')
+        ->select('tbl_tag_groups_entity.*', 'tbl_reviews_question_tags.tag_id', 'tbl_reviews_question_tags.question_id')
+         ->join('tbl_tag_groups_entity', 'tbl_tag_groups_entity.id','=', 'tbl_reviews_question_tags.tag_id')
+         ->where("tbl_reviews_question_tags.question_id", $questionID)
+          ->get();
+       
+        return $oData;
     }
 
     public function getTagsDataByFeedbackID($feedbackID) {
 
-        $this->db->select("tbl_tag_groups_entity.*, tbl_feedback_tags.tag_id, tbl_feedback_tags.feedback_id");
-        $this->db->join("tbl_tag_groups_entity", "tbl_tag_groups_entity.id=tbl_feedback_tags.tag_id", "LEFT");
-        $this->db->where("tbl_feedback_tags.feedback_id", $feedbackID);
-        $result = $this->db->get("tbl_feedback_tags");
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
+        $oData = DB::table('tbl_feedback_tags')
+        ->select('tbl_tag_groups_entity.*', 'tbl_feedback_tags.tag_id', 'tbl_feedback_tags.feedback_id')
+        ->join('tbl_tag_groups_entity', 'tbl_tag_groups_entity.id', '=','tbl_feedback_tags.tag_id')
+        ->where("tbl_feedback_tags.feedback_id", $feedbackID)
+         ->get();
+       
 
-        return $aData;
+        return $oData;
     }
 
     public function checkifGroupExist($name, $userID) {
