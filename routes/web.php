@@ -34,6 +34,8 @@ Route::get('admin/brandboost/onsite','Admin\Brandboost@onsite');
 Route::get('admin/questions','Admin\Questions@index');
 Route::get('admin/brandboost/review_request/{type}','Admin\Brandboost@reviewRequest');
 Route::get('admin/brandboost/onsite_setup/{id}','Admin\Brandboost@onsiteSetup');
+Route::get('admin/brandboost/reviews/','Admin\Brandboost@reviews');
+Route::get('admin/brandboost/reviews/{id}','Admin\Brandboost@reviews');
 
 //chat module
 Route::get('admin/webchat','Admin\WebChat@index');

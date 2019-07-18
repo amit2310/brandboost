@@ -135,6 +135,41 @@ class ReviewsModel extends Model {
 			->get();				
         return $oData;
     }
+	
+	/**
+     * Used to get user campaign reviews list
+     * @param type $campaignID
+     * @return campaign all reviews 
+     */
+	public function getMyBranboostReviewsFilter($userID) {
+		$oData = DB::table('tbl_reviews')
+			->leftJoin('tbl_users', 'tbl_reviews.user_id', '=', 'tbl_users.id')
+			->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
+			->select('tbl_reviews.id AS reviewid', 'tbl_reviews.review_type AS reviewtype', 'tbl_reviews.created AS review_created', 'tbl_reviews.status AS rstatus', 'tbl_reviews.*', 'tbl_brandboost.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country as userCountry')
+			->where('tbl_brandboost.user_id', $userID)
+			->where('tbl_brandboost.delete_status', 0)
+			->orderBy('tbl_reviews.id', 'desc')
+			->get();				
+        return $oData;
+    }
+	
+	/**
+     * Used to get user campaign reviews list by user id
+     * @param type $campaignID
+     * @return campaign all reviews 
+     */
+	public function getMyBranboostReviews($userID) {
+        $oData = DB::table('tbl_reviews')
+			->leftJoin('tbl_users', 'tbl_reviews.user_id', '=', 'tbl_users.id')
+			->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
+			->select('tbl_reviews.id AS reviewid', 'tbl_reviews.review_type AS reviewtype', 'tbl_reviews.created AS review_created', 'tbl_reviews.status AS rstatus', 'tbl_reviews.*', 'tbl_brandboost.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country as userCountry')
+			->where('tbl_brandboost.user_id', $userID)
+			->where('tbl_brandboost.delete_status', 0)
+			->orderBy('tbl_reviews.id', 'desc')
+			->get();				
+        return $oData;
+    }
+	
 
     public function getBrandBoostCampaign($campaignID, $hash = false) {
 
@@ -849,98 +884,7 @@ class ReviewsModel extends Model {
         return $aData;
     }
 
-    public function getMyBranboostReviews($userID, $filterValue = '', $reviewstatus = '', $reviewcategory = '') {
-        $this->db->select("tbl_reviews.id AS reviewid, tbl_reviews.review_type AS reviewtype, tbl_reviews.created AS review_created, "
-                . "tbl_reviews.status AS rstatus, tbl_reviews.*, tbl_brandboost.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, "
-                . "tbl_users.mobile, tbl_users.avatar, tbl_users.country as userCountry");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id");
-        //$this->db->group_by("tbl_reviews.campaign_id");
-        $this->db->order_by("reviewid", "DESC");
-        $this->db->where("tbl_brandboost.user_id", $userID);
-        $this->db->where("tbl_brandboost.delete_status", 0);
-
-        if ($filterValue != '') {
-            $this->db->like("tbl_reviews.created", $filterValue);
-            $this->db->or_like("tbl_brandboost.brand_title", $filterValue);
-            $this->db->or_like("tbl_reviews.review_title", $filterValue);
-            $this->db->or_like("tbl_reviews.ratings", $filterValue);
-            //$this->db->or_like("tbl_users.firstname", $filterValue);
-            //$this->db->or_like("tbl_users.lastname", $filterValue);
-            $this->db->or_like("tbl_users.email", $filterValue);
-            $this->db->or_where("CONCAT(tbl_users.firstname, ' ', tbl_users.lastname) LIKE '%" . $filterValue . "%'");
-        }
-
-        if (!empty($reviewstatus)) {
-            $this->db->where("tbl_reviews.status", $reviewstatus);
-        }
-
-        if (!empty($reviewcategory)) {
-            if ($reviewcategory >= 4) {
-                $this->db->where("tbl_reviews.ratings >=", $reviewcategory);
-            } else if ($reviewcategory == 3) {
-                $this->db->where("tbl_reviews.ratings ", $reviewcategory);
-            } else {
-                $this->db->where("tbl_reviews.ratings <", $reviewcategory);
-            }
-        }
-
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        return $aData;
-    }
-
-    public function getMyBranboostReviewsFilter($userID, $filterValue = '', $reviewstatus = '', $reviewcategory = '', $columnName = '', $columnSortOrder = 'DESC', $start = 1, $limit = 10) {
-        $this->db->select("tbl_reviews.id AS reviewid, tbl_reviews.review_type AS reviewtype, tbl_reviews.created AS review_created, "
-                . "tbl_reviews.status AS rstatus, tbl_reviews.*, tbl_brandboost.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, "
-                . "tbl_users.mobile, tbl_users.avatar, tbl_users.country as userCountry");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id");
-
-        /* if($columnName != ''){
-          $this->db->order_by("tbl_reviews.".$columnName, $columnSortOrder);
-          }else{
-          $this->db->order_by("tbl_users.firstname", "DESC");
-          } */
-
-        $this->db->where("tbl_brandboost.user_id", $userID);
-        $this->db->where("tbl_brandboost.delete_status", 0);
-
-        if ($filterValue != '') {
-            $this->db->like("tbl_reviews.created", $filterValue);
-            $this->db->or_like("tbl_brandboost.brand_title", $filterValue);
-            $this->db->or_like("tbl_reviews.review_title", $filterValue);
-            $this->db->or_like("tbl_reviews.ratings", $filterValue);
-            $this->db->or_like("tbl_users.email", $filterValue);
-            $this->db->or_where("CONCAT(tbl_users.firstname, ' ', tbl_users.lastname) LIKE '%" . $filterValue . "%'");
-        }
-
-        if (!empty($reviewstatus)) {
-            $this->db->where("tbl_reviews.status", $reviewstatus);
-        }
-
-        if (!empty($reviewcategory)) {
-            if ($reviewcategory >= 4) {
-                $this->db->where("tbl_reviews.ratings >=", $reviewcategory);
-            } else if ($reviewcategory == 3) {
-                $this->db->where("tbl_reviews.ratings ", $reviewcategory);
-            } else {
-                $this->db->where("tbl_reviews.ratings <=", $reviewcategory);
-            }
-        }
-
-        $this->db->limit($limit, $start);
-
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        return $aData;
-    }
+    
 
     public function getContactBranboostReviews($userID) {
         $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar, tbl_users.country, tbl_subscribers.id as subscriberId, tbl_brandboost.brand_title");
