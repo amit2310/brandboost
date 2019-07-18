@@ -311,6 +311,70 @@ class Brandboost extends Controller {
 
 		return view('admin.brandboost.review_request', $aData);
     }
+	
+	
+	/**
+	* Used to get all reviews of campaign
+	* @param type $param
+	* @return type
+	*/
+	public function reviews(Request $request) {
+		$mBrandboost = new BrandboostModel();
+		$mUsers = new UsersModel();
+		$mReviews = new ReviewsModel();
+		$campaignId = $request->id;
+        if (!empty($campaignId)) {
+
+            $oCampaign = $mReviews->getBrandBoostCampaign($campaignId);
+            $aReviews = $mReviews->getCampaignReviews($campaignId);
+            $bActiveSubsription = $mUsers->isActiveSubscription();
+
+            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+				<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
+				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/brandboost/onsite') . '">' . $oCampaign->brand_title . '</a></li>
+				<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
+				<li><a class="sidebar-control hidden-xs">Reviews</a></li>
+                </ul>';
+
+            $aData = array(
+                'title' => 'Brand Boost Reviews',
+                'pagename' => $breadcrumb,
+                'oCampaign' => $oCampaign,
+                'aReviews' => $aReviews,
+                'campaignId' => $campaignId,
+                'bActiveSubsription' => $bActiveSubsription
+            );
+			
+			return view('admin.brandboost.review_list_camp', $aData);
+			
+        } else {
+            $aUser = getLoggedUser();
+            $userID = $aUser->id;
+            $aReviews = $mReviews->getMyBranboostReviews($userID);
+            $bActiveSubsription = $mUsers->isActiveSubscription();
+
+            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+				<li><a style="cursor:text;" class="sidebar-control hidden-xs">On Site </a></li>
+				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+				<li><a data-toggle="tooltip" data-placement="bottom" title="Reviews" class="sidebar-control active hidden-xs ">Reviews</a></li>
+				</ul>';
+
+            $aData = array(
+                'title' => 'Brand Boost Reviews',
+                'pagename' => $breadcrumb,
+                'oCampaign' => '',
+                'aReviews' => $aReviews,
+                'campaignId' => '',
+                'userId' => $userID,
+                'bActiveSubsription' => $bActiveSubsription
+            );
+
+			return view('admin.brandboost.review_list', $aData);
+        }
+    }
 
     public function index() {
 
@@ -2749,61 +2813,6 @@ class Brandboost extends Controller {
         }
         echo json_encode($response);
         exit;
-    }
-
-    public function reviews($campaignId = 0) {
-
-        if (!empty($campaignId)) {
-
-            $oCampaign = $this->mReviews->getBrandBoostCampaign($campaignId);
-            $aReviews = $this->mReviews->getCampaignReviews($campaignId);
-            $bActiveSubsription = $this->mUser->isActiveSubscription();
-
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-				<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/brandboost/onsite') . '">' . $oCampaign->brand_title . '</a></li>
-				<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-				<li><a class="sidebar-control hidden-xs">Reviews</a></li>
-                </ul>';
-
-            $aData = array(
-                'title' => 'Brand Boost Reviews',
-                'pagename' => $breadcrumb,
-                'oCampaign' => $oCampaign,
-                'aReviews' => $aReviews,
-                'campaignId' => $campaignId,
-                'bActiveSubsription' => $bActiveSubsription
-            );
-
-            $this->template->load('admin/admin_template_new', 'admin/brandboost/review_list_camp', $aData);
-        } else {
-            $aUser = getLoggedUser();
-            $userID = $aUser->id;
-            $aReviews = $this->mReviews->getMyBranboostReviews($userID);
-            $bActiveSubsription = $this->mUser->isActiveSubscription();
-
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs">On Site </a></li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a data-toggle="tooltip" data-placement="bottom" title="Reviews" class="sidebar-control active hidden-xs ">Reviews</a></li>
-				</ul>';
-
-            $aData = array(
-                'title' => 'Brand Boost Reviews',
-                'pagename' => $breadcrumb,
-                'oCampaign' => '',
-                'aReviews' => $aReviews,
-                'campaignId' => '',
-                'userId' => $userID,
-                'bActiveSubsription' => $bActiveSubsription
-            );
-
-
-            $this->template->load('admin/admin_template_new', 'admin/brandboost/review_list', $aData);
-        }
     }
 
     public function reviewsbeta() {
