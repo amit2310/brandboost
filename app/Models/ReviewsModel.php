@@ -205,6 +205,32 @@ class ReviewsModel extends Model {
 			->first();				
         return $oData;
     }
+	
+	/**
+     * Used to update review by reviewID
+     * @param type $reviewID
+     */
+	public static function updateReview($aData, $reviewID) {
+		$result = DB::table('tbl_reviews')
+           ->where('id', $reviewID)
+           ->update($aData);
+		   
+        if ($result)
+            return true;
+        else
+            return false;
+    }
+	
+	/**
+     * Used to delete review by reviewID
+     * @param type $reviewID
+     */
+	public static function deleteReviewByID($reviewID) {
+		$result = DB::table('tbl_reviews')
+           ->where('id', $reviewID)
+           ->delete();
+        return true;
+    }
 
     public function getCampReviewsWithFiveRatings($brandboostID) {
 
@@ -921,12 +947,6 @@ class ReviewsModel extends Model {
         return $aData;
     }
 
-    public function deleteReviewByID($reviewID) {
-        $this->db->where('id', $reviewID);
-        $result = $this->db->delete('tbl_reviews');
-        return true;
-    }
-
     public function deleteReviewNoteByID($noteId) {
         $this->db->where('id', $noteId);
         $result = $this->db->delete('tbl_reviews_notes');
@@ -987,17 +1007,6 @@ class ReviewsModel extends Model {
             $response = $result->result();
         }
         return $response;
-    }
-
-    public function updateReview($aData, $reviewID) {
-
-        $this->db->where('id', $reviewID);
-        $result = $this->db->update('tbl_reviews', $aData);
-        //echo $this->db->last_query();
-        if ($result)
-            return true;
-        else
-            return false;
     }
 
     public function getCampReviewsRA($campaignID) {
