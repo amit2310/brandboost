@@ -140,6 +140,21 @@ class UsersModel extends Model {
                 ->get();
         return $oData;
     }
+    
+    /**
+     * This function used to get Sendgrid Account info
+     * @param type $clientID
+     * @return type
+     */
+    public static function getSendgridAccount($clientID) {
+        $oData = DB::table('tbl_sendgrid_accounts')
+        ->where('user_id', $clientID)
+        ->where('status', 1)        
+        ->first();
+        
+        return $oData;
+        
+    }
 
     public function basicSignup($aData) {
         require_once $_SERVER['DOCUMENT_ROOT'] . '/chargebee-php/lib/ChargeBee.php';

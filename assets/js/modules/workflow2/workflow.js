@@ -143,11 +143,12 @@ $(document).ready(function () {
     $(document).on("click", ".wf_editCampaign", function (e) {
         var campaignId = $(this).attr('campaign_id');
         var moduleName = $(this).attr('moduleName');
+        var moduleUnitId = $(this).attr('moduleUnitId');
         if (campaignId != '' && moduleName != '') {
             var frame = document.getElementById("loadstripotemplateInline"),
             frameDoc = frame.contentDocument || frame.contentWindow.document;
             frameDoc.documentElement.innerHTML = "";
-            $("#loadstripotemplateInline").attr("src", site_url + 'admin/workflow/loadStripoCampaign/' + moduleName + '/' + campaignId);
+            $("#loadstripotemplateInline").attr("src", site_url + 'admin/workflow/loadStripoCampaign/' + moduleName + '/' + campaignId + '/' + moduleUnitId);
             $("#loadstripotemplateInline").attr("height", 1800);
             //$("#workflow_template_stripo_modal").modal();
             $("#superContainer").hide();

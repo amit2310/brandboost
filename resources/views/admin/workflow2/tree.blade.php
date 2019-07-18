@@ -1731,7 +1731,7 @@ $aSelectedContacts = array();
                     //Open Editor
                     if (emailTemplateId > 0) {
                         if (data.categoryStatus != '2') {
-                            $("#loadstripotemplateInline").attr("src", '<?php echo base_url(); ?>admin/workflow/loadStripoCampaign/' + moduleName + '/' + data.campaign_id);
+                            $("#loadstripotemplateInline").attr("src", '<?php echo base_url(); ?>admin/workflow/loadStripoCampaignn/' + moduleName + '/' + data.campaign_id + '/'+'<?php echo $moduleUnitID; ?>');
                             //$("#workflow_template_stripo_modal").modal();
                             $("#superContainer").hide();
                             $("#editTemplateContainer").show();
@@ -1742,7 +1742,7 @@ $aSelectedContacts = array();
 
                     if (smsTemplateId > 0) {
                         if (data.categoryStatus != '2') {
-                            $("#loadstripotemplateInline").attr("src", '<?php echo base_url(); ?>admin/workflow/loadStripoSMSCampaign/' + moduleName + '/' + data.campaign_id);
+                            $("#loadstripotemplateInline").attr("src", '<?php echo base_url(); ?>admin/workflow/loadStripoSMSCampaignn/' + moduleName + '/' + data.campaign_id + '/'+'<?php echo $moduleUnitID; ?>');
                             //$("#workflow_template_stripo_modal").modal();
                             $("#superContainer").hide();
                             $("#editTemplateContainer").show();

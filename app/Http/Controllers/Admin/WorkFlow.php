@@ -397,7 +397,7 @@ class WorkFlow extends Controller {
      * Updates workflow campaigns
      * @param Request $request
      */
-    public function updateWorkflowCampaign(Request $request) {
+    public function updateWorkflowCampaign(Request $request) { 
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -415,6 +415,9 @@ class WorkFlow extends Controller {
         $greeting = db_in($request->greeting);
         $introduction = db_in($request->introduction);
         $template_source = strip_tags($request->template_source);
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
 
         $aData = array();
 
@@ -620,6 +623,9 @@ class WorkFlow extends Controller {
         $greeting = db_in($request->greeting);
         $introduction = db_in($request->introduction);
         $myTemplateID = strip_tags($request->myTemplateId);
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
 
 
         if (!empty($campaignID)) {
@@ -846,6 +852,9 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
         $emailAddress = strip_tags($request->email);
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
 
         $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
         if (!empty($oResponse)) {
@@ -897,7 +906,7 @@ class WorkFlow extends Controller {
             }
 
             //Get Sendgrid Info for client
-            $aSendgridData = $this->mInviter->getSendgridAccount($userID);
+            $aSendgridData = getSendgridAccount($userID);
             if (!empty($aSendgridData)) {
                 $userName = $aSendgridData->sg_username;
                 $password = $aSendgridData->sg_password;
@@ -1268,7 +1277,14 @@ class WorkFlow extends Controller {
     /**
      * Used to load Stripo campaign
      */
-    public function loadStripoCampaign($moduleName, $campaignID, $moduleUnitID = '') {
+    public function loadStripoCampaign(Request $request) {
+        $moduleName = $request->module_name;
+        $campaignID = $request->campaign_id;
+        $moduleUnitID = $request->module_unit_id;
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        
         $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
         $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
         $subject = $oResponse->subject;
@@ -1285,7 +1301,7 @@ class WorkFlow extends Controller {
             'template_source' => $template_source,
             'compiledSource' => $compiledSource
         );
-        $this->load->view("admin/workflow/stripo.php", $aData);
+        return view('admin.workflow2.stripo', $aData);
     }
 
     /**
