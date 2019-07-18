@@ -77,6 +77,9 @@ class WorkFlow extends Controller {
      */
     public function addWorkflowEventToTree(Request $request) {
         $response = array();
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
 
         $moduleName = strip_tags($request->moduleName);
         $templateID = strip_tags($request->templateId);
@@ -188,6 +191,9 @@ class WorkFlow extends Controller {
         $emailTemplateID = strip_tags($request->emailTemplateId);
         $smsTemplateID = strip_tags($request->smsTemplateId);
         $source = strip_tags($request->source);
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
 
         $isDraft = ($source == 'draft') ? true : false;
 
@@ -222,6 +228,7 @@ class WorkFlow extends Controller {
             $unitVal = (!empty($delayUnit)) ? $delayUnit : "minute";
             $triggerParams = array('delay_type' => "after", 'delay_value' => $delayVal, 'delay_unit' => $unitVal);
         }
+        $newEventID = '';
         if (!empty($moduleName) && $id > 0) {
 
             if ($smsTemplateID > 0) {
@@ -280,7 +287,11 @@ class WorkFlow extends Controller {
      * @return boolean
      */
     public function connectWorkflowNode($currentEventID, $newEventID, $nodeType, $moduleName) {
-
+        $nextEventID = '';
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        
         if ($nodeType == 'main' && $currentEventID > 0 && $newEventID > 0) {
             //Update Current node
             $aEventDataCurrent = array(
@@ -345,6 +356,10 @@ class WorkFlow extends Controller {
      */
     public function createEventNode($id, $moduleName, $eventType, $previousID, $templateID = '', $triggerParam = '', $isDraft = false) {
         $response = array();
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        
         $eventID = $mWorkflow->createWorkflowEvent($id, $eventType, $previousID, $triggerParam, $moduleName);
 
         if ($eventID > 0 && $templateID > 0) {
@@ -957,6 +972,9 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
         $number = strip_tags($request->number);
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
 
         $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
         if (!empty($oResponse)) {
@@ -1000,7 +1018,7 @@ class WorkFlow extends Controller {
 
 
             //Get Twilio Info of client
-            $aTwilioAc = $this->mInviter->getTwilioAccount($userID);
+            $aTwilioAc = getTwilioAccountCustom($userID);
             if (!empty($aTwilioAc)) {
                 $sid = $aTwilioAc->account_sid;
                 $token = $aTwilioAc->account_token;
@@ -1198,7 +1216,7 @@ class WorkFlow extends Controller {
         
         //Instanciate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-
+        $previousID = '';
         if ($eventID > 0) {
             //Get Current Node
             $oCurrentNode = $mWorkflow->getNodeInfo($eventID, $moduleName);
@@ -1218,10 +1236,11 @@ class WorkFlow extends Controller {
 
             if ($bDeleted) {
                 //Connect adjacent nodes
+                $aData = array();
                 if (!empty($oNextNode)) {
 
                     $aData = array(
-                        'previous_event_id' => $oPreviousNode->id
+                        'previous_event_id' => isset($oPreviousNode->id) ? $oPreviousNode->id : ''
                     );
 
                     if ($oCurrentNode->event_type != 'followup') {
@@ -1314,7 +1333,14 @@ class WorkFlow extends Controller {
     /**
      * Used to load Stripo SMS campaign
      */
-    public function loadStripoSMSCampaign($moduleName, $campaignID, $moduleUnitID = '') {
+    public function loadStripoSMSCampaign(Request $request) {
+        $moduleName = $request->module_name;
+        $campaignID = $request->campaign_id;
+        $moduleUnitID = $request->module_unit_id;
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        
         $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
         $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
         $subject = $oResponse->subject;
@@ -1329,7 +1355,7 @@ class WorkFlow extends Controller {
             'template_source' => $template_source,
             'compiledSource' => $compiledSource
         );
-        $this->load->view("admin/workflow2/smsStripo.php", $aData);
+        return view('admin.workflow2.smsStripo', $aData);
     }
 
     /**
@@ -2063,10 +2089,9 @@ class WorkFlow extends Controller {
             'oEventsType' => $oEventsType,
             'oUser' => $oUser
         );
-
-        $treeHtml = view('admin.workflow2.loadAjaxTree', $pageData)->render();
-        $rightMenuHtml = view('admin.workflow2.partials.loadAjaxMainRightMenu', $pageData)->render();
-        $zoomRightMenuHtml = $this->load->view('admin.workflow2.partials.loadAjaxZoomMainRightMenu', $pageData)->render();
+        $treeHtml = view('admin.workflow2.loadAjaxTree', $pageData)->with(['mWorkflow' => $mWorkflow])->render();
+        $rightMenuHtml = view('admin.workflow2.partials.loadAjaxMainRightMenu', $pageData)->with(['mWorkflow' => $mWorkflow])->render();
+        $zoomRightMenuHtml = view('admin.workflow2.partials.loadAjaxZoomMainRightMenu', $pageData)->with(['mWorkflow' => $mWorkflow])->render();
         $response = array('status' => 'success', 'content' => $treeHtml, 'menu_content' => $rightMenuHtml, 'zoom_menu_content' => $zoomRightMenuHtml, 'msg' => "Success");
         echo json_encode($response);
         exit;

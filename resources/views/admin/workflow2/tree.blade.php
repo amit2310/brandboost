@@ -161,9 +161,17 @@ $aSelectedContacts = array();
                                             }
 
                                             $oCampaignData = App\Models\Admin\WorkflowModel::getEventCampaign($oEvent->id, $moduleName);
+                                            $oCampaign = !empty($oCampaignData[0]) ?  $oCampaignData[0] : '';
+                                            
+                                            if(empty($oCampaign)){
+                                                $oCampaign = new stdClass();
+                                                $oCampaign->id = '';
+                                                
+                                            }
 
-                                            $oCampaign = $oCampaignData[0];
+                                            //$oCampaign = $oCampaignData[0];
                                             //pre($oCampaign);
+                                           
                                             $isSMSAdded = $isEmailAdded = false;
                                             $previousID = $oEvent->previous_event_id;
                                             $currentID = $oEvent->id;
@@ -1445,7 +1453,7 @@ window.onpopstate = function () {
 
 
     });
-    $(document).on('blur', '#wf_timer_event_value', function () {
+    $(document).on('change', '#wf_timer_event_value', function () {
         var timerValue = $(this).val();
         var timerUnit = $("#wf_timer_event_unit").val();
         var eventID = $("#wf_timer_event_id").val();
@@ -1748,7 +1756,7 @@ window.onpopstate = function () {
                     //Open Editor
                     if (emailTemplateId > 0) {
                         if (data.categoryStatus != '2') {
-                            $("#loadstripotemplateInline").attr("src", '<?php echo base_url(); ?>admin/workflow/loadStripoCampaignn/' + moduleName + '/' + data.campaign_id + '/' + '<?php echo $moduleUnitID; ?>');
+                            $("#loadstripotemplateInline").attr("src", '<?php echo base_url(); ?>admin/workflow/loadStripoCampaign/' + moduleName + '/' + data.campaign_id + '/' + '<?php echo $moduleUnitID; ?>');
                             //$("#workflow_template_stripo_modal").modal();
                             $("#superContainer").hide();
                             $("#editTemplateContainer").show();
@@ -1759,7 +1767,7 @@ window.onpopstate = function () {
 
                     if (smsTemplateId > 0) {
                         if (data.categoryStatus != '2') {
-                            $("#loadstripotemplateInline").attr("src", '<?php echo base_url(); ?>admin/workflow/loadStripoSMSCampaignn/' + moduleName + '/' + data.campaign_id + '/' + '<?php echo $moduleUnitID; ?>');
+                            $("#loadstripotemplateInline").attr("src", '<?php echo base_url(); ?>admin/workflow/loadStripoSMSCampaign/' + moduleName + '/' + data.campaign_id + '/' + '<?php echo $moduleUnitID; ?>');
                             //$("#workflow_template_stripo_modal").modal();
                             $("#superContainer").hide();
                             $("#editTemplateContainer").show();

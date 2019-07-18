@@ -134,8 +134,9 @@ class TemplatesModel extends Model {
     public function updateCommonTemplate($aData, $templateID, $userID) {
         if ($templateID > 0) {
             $result = DB::table('tbl_common_templates')
-                            ->where('id', $templateID) > where('user_id', $userID)
-                            ->update($aData);
+                    ->where('id', $templateID)
+                    ->where('user_id', $userID)
+                    ->update($aData);
             if ($result)
                 return true;
         }

@@ -732,17 +732,17 @@ class WorkflowModel extends Model {
         return $oSubscribers;
     }
 
+    /**
+     * Used to get Product related information associated with the brandboost campaign
+     * @param type $brandboostID
+     * @return type
+     */
     public function getProductDataByBBID($brandboostID) {
-        if (!empty($brandboostID)) {
-            $this->db->where('brandboost_id', $brandboostID);
-            $this->db->order_by('product_order', 'ASC');
-            $result = $this->db->get('tbl_brandboost_products');
-            //echo $this->db->last_query();exit;
-            if ($result->num_rows() > 0) {
-                $aData = $result->result();
-            }
-        }
-        return $aData;
+        $oData = DB::table('tbl_brandboost_products')
+                ->where('brandboost_id', $brandboostID)
+                ->orderBy('product_order.id', 'asc')
+                ->get();
+        return $oData;
     }
 
     /**
@@ -774,6 +774,11 @@ class WorkflowModel extends Model {
         return $oData;
     }
 
+    /**
+     * Used to get the list of automation subscribers
+     * @param type $automationID
+     * @return type
+     */
     public function getWorkflowAutomationSubscribers($automationID) {
         $oLists = $this->getModuleAutomationLists($automationID);
         if (!empty($oLists)) {
@@ -787,20 +792,22 @@ class WorkflowModel extends Model {
         $sql = "SELECT tbl_automation_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_subscribers.status AS globalStatus FROM tbl_automation_users "
                 . "LEFT JOIN tbl_subscribers ON tbl_automation_users.subscriber_id=tbl_subscribers.id "
                 . "WHERE tbl_automation_users.list_id IN (" . implode(",", $aLists) . ") AND tbl_automation_users.status = '1' AND tbl_subscribers.email NOT IN(SELECT email FROM tbl_suppression_list) GROUP BY tbl_subscribers.email";
-        $result = $this->db->query($sql);
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::select(DB::raw($sql));
+        return $oData;
+        
     }
 
+    /**
+     * Used to get Automation Lists
+     * @param type $automationID
+     * @return type
+     */
     public function getModuleAutomationLists($automationID) {
-        $this->db->where("automation_id", $automationID);
-        $result = $this->db->get('tbl_automations_emails_lists');
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_automations_emails_lists')
+                ->where('automation_id', $automationID)
+                ->get();
+        return $oData;
+
     }
 
     /**
@@ -930,6 +937,14 @@ class WorkflowModel extends Model {
         return false;
     }
 
+    /**
+     * Used to get default templates
+     * @param type $moduleName
+     * @param type $moduleCatName
+     * @param type $id
+     * @param type $categoryID
+     * @return boolean
+     */
     public function getWorkflowDefaultTemplates($moduleName, $moduleCatName = '', $id = '', $categoryID = '') {
         if (empty($moduleName)) {
             return false;
@@ -959,29 +974,25 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-
-        $this->db->where("user_id", "0");
-        if ($moduleName == "brandboost" && !empty($moduleCatName)) {
-            $this->db->where("brandboost_type", $moduleCatName);
-        }
-
-        if ($moduleName == "broadcast" && !empty($moduleCatName)) {
-            $this->db->where("template_type", $moduleCatName);
-        }
-
-        if ($id > 0) {
-            $this->db->where("id", $id);
-        }
-
-        if ($categoryID > 0) {
-            $this->db->where('category_id', $categoryID);
-        }
-        $result = $this->db->get($tableName);
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            return $result->result();
-        }
-        return false;
+        
+        $oData = DB::table($tableName)
+                ->where('user_id', 0)
+                ->when(($moduleName == "brandboost" && !empty($moduleCatName)), function($query) use($moduleCatName) {
+                    return $query->where('brandboost_type', $moduleCatName);
+                })
+                ->when(($moduleName == "broadcast" && !empty($moduleCatName)), function($query) use($moduleCatName) {
+                    return $query->where('template_type', $moduleCatName);
+                })
+                ->when(($id > 0), function($query) use($id) {
+                    return $query->where('id', $id);
+                })
+                ->when(($categoryID > 0), function($query) use($categoryID) {
+                    return $query->where('category_id', $categoryID);
+                })
+                ->get();
+                
+        return $oData;
+        
     }
 
     public function isDuplicateWorkflowDraft($templateName, $moduleName, $userID = 0) {
@@ -1258,6 +1269,15 @@ class WorkflowModel extends Model {
         return false;
     }
 
+    /**
+     * Used to create a new node in the workflow tree
+     * @param type $id
+     * @param type $type
+     * @param type $previousEventID
+     * @param type $triggerParams
+     * @param type $moduleName
+     * @return boolean
+     */
     public function createWorkflowEvent($id, $type, $previousEventID = '', $triggerParams = '', $moduleName) {
         if (empty($id) || empty($moduleName)) {
             return false;
@@ -1309,13 +1329,10 @@ class WorkflowModel extends Model {
         }
         //echo "table name is ". $tableName;
 
+        $insert_id = DB::table($tableName)->insertGetId($aEventData);
 
-        $result = $this->db->insert($tableName, $aEventData);
-        //echo $this->db->last_query(); exit;
-        $inset_id = $this->db->insert_id();
-
-        if ($result)
-            return $inset_id;
+        if ($insert_id)
+            return $insert_id;
         else
             return false;
     }
@@ -1428,10 +1445,9 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $result = $this->db->insert($tableName, $aCampaignData);
-        $inset_id = $this->db->insert_id();
-        if ($result)
-            return array('id' => $inset_id, 'subject' => $resultData->template_subject, 'content' => base64_decode($resultData->template_content));
+        $insert_id = DB::table($tableName)->insertGetId($aCampaignData);
+        if ($insert_id)
+            return array('id' => $insert_id, 'subject' => $resultData->template_subject, 'content' => base64_decode($resultData->template_content));
         else
             return false;
     }
@@ -1589,9 +1605,8 @@ class WorkflowModel extends Model {
                 ->where('id', $id)
                 ->first();
         return $oData;
-        
     }
-    
+
     /**
      * Used to get Next Node info in the workflow tree sequence
      * @param type $previousEventID
@@ -1623,12 +1638,11 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where('previous_event_id', $previousEventID)
                 ->first();
         return $oData;
-        
     }
 
     /**
@@ -2037,7 +2051,7 @@ class WorkflowModel extends Model {
                 ->first();
         return $oData;
     }
-    
+
     /**
      * Used to delete a node from the workflow tree
      * @param type $id
@@ -2069,7 +2083,7 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where('id', $id)
                 ->delete();
@@ -2112,11 +2126,11 @@ class WorkflowModel extends Model {
             if (empty($tableName)) {
                 return false;
             }
-            
+
             $oData = DB::table($tableName)
-                ->where('event_id', $eventID)
-                ->delete();
-            
+                    ->where('event_id', $eventID)
+                    ->delete();
+
             if ($oData) {
                 return true;
             } else {
@@ -2157,11 +2171,11 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where('id', $id)
                 ->update($aData);
-        
+
         if ($oData) {
             return true;
         } else {

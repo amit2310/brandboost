@@ -27,6 +27,9 @@ Route::post('admin/dashboard/getReviewData','Admin\Dashboard@getReviewData');
 Route::get('admin/modules/emails/overview','Admin\Modules\Emails@overview');
 Route::get('admin/modules/emails','Admin\Modules\Emails@index');
 Route::get('admin/modules/emails/setupAutomation/{id}','Admin\Modules\Emails@setupAutomation');
+Route::post('admin/modules/emails/publishAsDraft','Admin\Modules\Emails@publishAsDraft');
+Route::post('admin/modules/emails/publishAutomationEvent','Admin\Modules\Emails@publishAutomationEvent');
+
 
 //Onsite and Offsite Modules
 Route::get('admin/brandboost/onsite_overview','Admin\Brandboost@onsiteOverview');
@@ -85,8 +88,8 @@ Route::post('admin/workflow/getWorkflowCampaign','Admin\WorkFlow@getWorkflowCamp
 Route::post('admin/workflow/getWorkflowTemplate','Admin\WorkFlow@getWorkflowTemplate');
 Route::post('admin/workflow/deleteWorkflowEvent','Admin\WorkFlow@deleteWorkflowEvent');
 Route::post('admin/workflow/deleteWorkflowDraft','Admin\WorkFlow@deleteWorkflowDraft');
-Route::get('admin/workflow/loadStripoCampaign/{module_name}/{campaign_id}/{module_unit_id}','Admin\WorkFlow@loadStripoCampaign');
-Route::get('admin/workflow/loadStripoSMSCampaign','Admin\WorkFlow@loadStripoSMSCampaign');
+Route::get('admin/workflow/loadStripoCampaign/{module_name}/{campaign_id}/{module_unit_id?}','Admin\WorkFlow@loadStripoCampaign');
+Route::get('admin/workflow/loadStripoSMSCampaign/{module_name}/{campaign_id}/{module_unit_id?}','Admin\WorkFlow@loadStripoSMSCampaign');
 Route::get('admin/workflow/loadStripoTemplate','Admin\WorkFlow@loadStripoTemplate');
 Route::get('admin/workflow/loadStripoTemplatePreview','Admin\WorkFlow@loadStripoTemplatePreview');
 Route::post('admin/workflow/loadStripoTemplatePreview','Admin\WorkFlow@loadStripoTemplatePreview');
@@ -115,5 +118,30 @@ Route::post('admin/workflow/syncWorkflowAudience','Admin\WorkFlow@syncWorkflowAu
 Route::get('admin/workflow/addAudienceToWorkflowCampaign','Admin\WorkFlow@addAudienceToWorkflowCampaign');
 Route::get('admin/workflow/syncWorkflowAudienceGlobal','Admin\WorkFlow@syncWorkflowAudienceGlobal');
 
+
 //Dropzone Section
 Route::post('dropzone/upload_editor_image','Dropzone@upload_editor_image');
+
+//Templates Module
+Route::get('admin/templates','Admin\Templates@index');
+Route::get('admin/templates/email','Admin\Templates@email');
+Route::get('admin/templates/sms','Admin\Templates@sms');
+Route::post('admin/templates/addUserTemplate','Admin\Templates@addUserTemplate');
+Route::get('admin/templates/editTemplate','Admin\Templates@editTemplate');
+Route::post('admin/templates/updateUserTemplate','Admin\Templates@updateUserTemplate');
+Route::post('admin/templates/updateUserTemplateName','Admin\Templates@updateUserTemplateName');
+Route::get('admin/templates/loadEmailTemplate','Admin\Templates@loadEmailTemplate');
+Route::get('admin/templates/loadSMSTemplate','Admin\Templates@loadSMSTemplate');
+Route::post('admin/templates/getCategorizedTemplates','Admin\Templates@getCategorizedTemplates');
+Route::post('admin/templates/loadTemplatePreview','Admin\Templates@loadTemplatePreview');
+Route::get('admin/templates/loadStripoResources','Admin\Templates@loadStripoResources');
+Route::get('admin/templates/parseModuleStatictemplate','Admin\Templates@parseModuleStatictemplate');
+Route::get('admin/templates/getStripoBlankTemplateContent','Admin\Templates@getStripoBlankTemplateContent');
+Route::post('admin/templates/sendTestEmail','Admin\Templates@sendTestEmail');
+Route::post('admin/templates/sendTestSMS','Admin\Templates@sendTestSMS');
+Route::post('admin/templates/cloneTemplate','Admin\Templates@cloneTemplate');
+Route::post('admin/templates/deleteTemplate','Admin\Templates@deleteTemplate');
+Route::get('admin/templates/saveThumbnail','Admin\Templates@saveThumbnail');
+Route::post('admin/templates/updateThumbnail','Admin\Templates@updateThumbnail');
+Route::get('admin/templates/brandboostEmailTagReplace','Admin\Templates@brandboostEmailTagReplace');
+

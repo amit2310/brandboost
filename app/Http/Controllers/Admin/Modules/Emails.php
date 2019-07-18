@@ -522,22 +522,25 @@ class Emails extends Controller {
         exit;
     }
 
-    public function publishAutomationEvent() {
+    public function publishAutomationEvent(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $automationID = $post['automation_id'];
+        
+        //Instanciate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+        
+        $automationID = $request->automation_id;
         $aData = array(
             'status' => 'active'
         );
 
-        $bUpdated = $this->mEmails->publishAutomationEvent($aData, $automationID, $userID);
+        $bUpdated = $mEmails->publishAutomationEvent($aData, $automationID, $userID);
 
 
         if ($bUpdated) {
@@ -564,22 +567,25 @@ class Emails extends Controller {
         exit;
     }
 
-    public function publishAsDraft() {
+    public function publishAsDraft(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $automationID = strip_tags($post['automation_id']);
+        
+        //Instanciate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+        
+        $automationID = strip_tags($request->automation_id);
         $aData = array(
             'status' => 'draft'
         );
 
-        $bUpdated = $this->mEmails->publishAutomationEvent($aData, $automationID, $userID);
+        $bUpdated = $mEmails->publishAutomationEvent($aData, $automationID, $userID);
 
 
         if ($bUpdated) {

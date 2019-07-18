@@ -76,6 +76,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmAddUserTemplateModal" id="frmAddUserTemplateModal" action="javascript:void();">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Add <?php echo $title; ?> &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
@@ -239,7 +240,7 @@
             $.ajax({
                 url: '/admin/templates/sendTestEmail',
                 type: "POST",
-                data: {templateId: templateId, email: email},
+                data: {_token: '{{csrf_token()}}', templateId: templateId, email: email},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -258,7 +259,7 @@
             $.ajax({
                 url: '/admin/templates/sendTestSMS',
                 type: "POST",
-                data: {templateId: templateId, number: number},
+                data: {_token: '{{csrf_token()}}', templateId: templateId, number: number},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

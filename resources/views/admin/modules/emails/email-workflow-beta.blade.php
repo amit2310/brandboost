@@ -76,7 +76,7 @@
         $.ajax({
             url: '<?php echo base_url('admin/modules/emails/publishAutomationEvent'); ?>',
             type: "POST",
-            data: {'automation_id': automationID},
+            data: {_token: '{{csrf_token()}}', 'automation_id': automationID},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -95,7 +95,7 @@
         $.ajax({
             url: '<?php echo base_url('admin/modules/emails/publishAsDraft'); ?>',
             type: "POST",
-            data: {'automation_id': automationID},
+            data: {_token: '{{csrf_token()}}', 'automation_id': automationID},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
