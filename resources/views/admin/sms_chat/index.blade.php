@@ -414,7 +414,7 @@ $(document).ready(function() {
 					$.ajax({
 						url: '<?php echo base_url('admin/smschat/showSmsThreads'); ?>',
 						type: "POST",
-						data: {'userId':userId,'SubscriberPhone':SubscriberPhone,_token: '{{csrf_token()}}'},
+						data: {'userId':userId,'SubscriberPhone':SubscriberPhone, _token: '{{csrf_token()}}'},
 						dataType: "html",
 						success: function (data) {
 						$('#smsSearcharea').html(data+'<div class="msg_push"></div>');
@@ -437,6 +437,7 @@ $(document).ready(function() {
 	$.ajax({
 	url: '<?php echo base_url('admin/smschat/shortcutListing'); ?>',
 	type: "POST",
+	data: { _token: '{{csrf_token()}}'},
 	dataType: "html",
 	success: function (data) {
 	$('#shortcutBox').html(data);

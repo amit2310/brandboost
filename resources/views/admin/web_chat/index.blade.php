@@ -813,6 +813,7 @@ function loadMessageChat(userId,token,clickvalue=null)
 		  $.ajax({
 			url: '<?php echo base_url('admin/smschat/shortcutListing'); ?>',
 			type: "POST",
+			data: { _token: '{{csrf_token()}}'},
 			dataType: "html",
 			success: function (data) {
 				$('#shortcutBox').html(data);

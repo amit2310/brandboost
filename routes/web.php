@@ -56,6 +56,7 @@ Route::post('admin/smschat/getSearchSmsListByinput','Admin\SmsChat@getSearchSmsL
 Route::post('admin/smschat/add_contact_notes','Admin\SmsChat@add_contact_notes');
 Route::post('admin/smschat/addSmsNotes','Admin\SmsChat@addSmsNotes');
 Route::post('admin/smschat/listingSmsNotes','Admin\SmsChat@listingSmsNotes');
+Route::post('admin/smschat/shortcutListing','Admin\SmsChat@shortcutListing');
 
 
 //Profile module
