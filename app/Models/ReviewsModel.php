@@ -170,6 +170,23 @@ class ReviewsModel extends Model {
         return $oData;
     }
 	
+	/**
+     * Used to get user campaign reviews list by user id
+     * @param type $campaignID
+     * @return campaign all reviews 
+     */
+	public static function getReviewAllComments($reviewId, $start = 0, $limit = 5) {
+        $oData = DB::table('tbl_reviews_comments')
+			->leftJoin('tbl_reviews', 'tbl_reviews_comments.review_id', '=', 'tbl_reviews.id')
+			->leftJoin('tbl_users', 'tbl_reviews_comments.user_id', '=', 'tbl_users.id')
+			->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.id as userId')
+			->where('tbl_reviews_comments.review_id', $reviewId)
+			->orderBy('tbl_reviews_comments.id', 'desc')
+			->offset($start)
+            ->limit($limit)
+			->get();				
+        return $oData;
+    }
 
     public function getBrandBoostCampaign($campaignID, $hash = false) {
 
@@ -1128,23 +1145,7 @@ class ReviewsModel extends Model {
         return $response;
     }
 
-    public function getReviewAllComments($reviewId, $start = 0, $limit = 5) {
-        $this->db->select("tbl_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.id as userId");
-        $this->db->join("tbl_reviews", "tbl_reviews_comments.review_id = tbl_reviews.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_reviews_comments.user_id=tbl_users.id");
-        $this->db->limit($limit, $start);
-        $this->db->order_by("tbl_reviews_comments.id", "DESC");
-        $this->db->where("tbl_reviews_comments.review_id", $reviewId);
-        $oResponse = $this->db->get("tbl_reviews_comments");
-        //echo $this->db->last_query();exit;
-
-        if ($oResponse->num_rows() > 0) {
-            $aComments = $oResponse->result();
-        }
-
-        return $aComments;
-        exit;
-    }
+    
 
     public function getAllMainComments($reviewId) {
         $this->db->select("tbl_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.id as userId");

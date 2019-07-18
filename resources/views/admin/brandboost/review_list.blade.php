@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php list($canRead, $canWrite) = fetchPermissions('Reviews'); ?>
 <div class="content">
 	
@@ -103,10 +110,9 @@
 											foreach ($aReviews as $oReview) {
 												
 												$getComm = getCampaignCommentCount($oReview->reviewid);
-												$reviewTags = getTagsByReviewID($oReview->reviewid);
-												$CI = & get_instance();
-												$CI->load->model("Reviews_model", "mReviews");
-												$reviewLikeCount = $CI->mReviews->countHelpful($oReview->id);
+												//$reviewTags = getTagsByReviewID($oReview->reviewid);
+												$reviewTags =  array();
+												//$reviewLikeCount = $CI->mReviews->countHelpful($oReview->id);
 												if (!empty($oReview->avatar)) {
 													$avatarImage = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oReview->avatar;
 													} else {
@@ -115,7 +121,7 @@
 												
 												$smilyImage = ratingView($oReview->ratings);
 												
-												$reviewCommentsData = $this->mReviews->getReviewAllComments($oReview->reviewid, 0, 100);
+												$reviewCommentsData = \App\Models\ReviewsModel::getReviewAllComments($oReview->reviewid, 0, 100);
 												
 												$approved = 0;
 												$pending = 0;
@@ -147,7 +153,7 @@
                                                         <div class="text-muted text-size-small"><?php echo $oReview->email; ?></div>
 													</div></td>
 													<td class="viewSmartPopup" reviewid="<?php echo $oReview->reviewid; ?>"><?php echo $smilyImage; ?></td>
-													<td><a href="<?php echo site_url('admin/brandboost/reviewdetails/' . $oReview->reviewid); ?>" class="txt_dblack"><div class="text-semibold"><?php echo setStringLimit($oReview->review_title, '23'); ?></div>
+													<td><a href="<?php echo base_url('admin/brandboost/reviewdetails/' . $oReview->reviewid); ?>" class="txt_dblack"><div class="text-semibold"><?php echo setStringLimit($oReview->review_title, '23'); ?></div>
 													<div class="text-size-small text-muted"><?php echo setStringLimit($oReview->comment_text, '31'); ?></div></a></td>
 													<td class="viewSmartPopup" reviewid="<?php echo $oReview->reviewid; ?>"><div class="media-left">
                                                         <div class=""><span class="text-default text-semibold"><?php echo dataFormat($oReview->review_created); ?></span> </div>
@@ -278,7 +284,7 @@
 														}
 														//echo '<li><a href="javascript:void(0);" class="showReviewPopup" tab_type="info" reviewid="' . $oReview->reviewid . '" ><i class="icon-file-locked"></i> View Review Popup</a></li>';
 														
-														echo '<li><a target="_blank" href="' . site_url('admin/brandboost/reviewdetails/' . $oReview->reviewid) . '"><i class="icon-file-locked"></i> View Review</a></li>';
+														echo '<li><a target="_blank" href="' . base_url('admin/brandboost/reviewdetails/' . $oReview->reviewid) . '"><i class="icon-file-locked"></i> View Review</a></li>';
 														if ($canWrite) {
 															if ($oReview->review_type == 'text') {
 																
@@ -475,9 +481,6 @@
 				</div>
                 <div class="modal-body">
 					
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-					<?php echo validation_errors(); ?></div>
-					
                     <div class="form-group">
                         <label class="control-label col-lg-3">Title</label>
                         <div class="col-lg-9">
@@ -561,9 +564,6 @@
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Review</h5>
 				</div>
                 <div class="modal-body">
-					
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-					<?php echo validation_errors(); ?></div>
 					
                     <div class="form-group">
                         <label class="control-label col-lg-3">Title</label>
@@ -1374,11 +1374,5 @@
 		});
 		
 	});
-	
-	
-	
-	
-	
-	
 </script>
-
+@endsection
