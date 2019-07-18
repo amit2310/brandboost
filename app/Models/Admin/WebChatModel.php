@@ -194,6 +194,7 @@ class WebChatModel extends Model {
      * @param type $token
      * @return type object
      */
+
     public function getassignChatUser($token) {
         $oData = DB::table('tbl_chat_supportuser')
             ->join('tbl_users', 'tbl_chat_supportuser.assign_team_member', '=' , 'tbl_users.id')
@@ -202,6 +203,25 @@ class WebChatModel extends Model {
             ->get();
 
         return $oData;
+
+    }
+
+    
+
+    /**
+     * this function is used to update the chat user contact information
+     * @return type boolean
+     */
+
+
+    public function updateSupportuser($supportid, $aData) {
+
+        $result = DB::table('tbl_chat_supportuser')
+            ->where('user', $supportid)
+            ->update($aData);
+
+        return true;
+
 
     }
 
