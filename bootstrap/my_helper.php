@@ -563,6 +563,17 @@ if (!function_exists('assignto')) {
 
 }
 
+/**
+     * Used to get User sendgrid account details
+     */
+    if(!function_exists(('getSendgridAccount'))){
+        
+        function getSendgridAccount($userID){
+            $oData = \App\Models\Admin\UsersModel::getSendgridAccount($userID);
+            return $oData;
+        }
+    }
+
 if (!function_exists('getLastSms')) {
 
     function getLastSms($room) {
@@ -686,7 +697,7 @@ if (!function_exists('updateCreditUsage')) {
                 }
             }
 
-            $oCurrentUsage = $CI->mmSetting->getCurrentUsage($aData['client_id']);
+            $oCurrentUsage = \App\Models\Admin\SettingsModel::getCurrentUsage($aData['client_id']);
             if (!empty($oCurrentUsage)) {
 
                 $mainCredits = $oCurrentUsage->credits;
@@ -749,7 +760,7 @@ if (!function_exists('updateCreditUsage')) {
                     }
 
                     if (!empty($sql)) {
-                        $result = $CI->db->query($sql);
+                         $result = \App\Models\Admin\SettingsModel::runCustomQuery($sql);
                         if ($result) {
                             $bDone = true;
                         }
@@ -773,10 +784,9 @@ if (!function_exists('updateCreditUsage')) {
                         'created' => date("Y-m-d H:i:s")
                     );
                     if ($bDone == true) {
-                        $CI->db->insert('tbl_account_usage_tracking', $aTrackingData);
+                        \App\Models\Admin\SettingsModel::saveClientUsageTracking($aTrackingData);                        
                     }
                     if ($result) {
-
                         return true;
                     } else {
                         return false;
@@ -2204,7 +2214,9 @@ if (!function_exists('getSendGridUserData')) {
 
 }
 
-
+/**
+ * Used to send Email through Sendgrid
+ */
 if (!function_exists('sendClientEmail')) {
 
     function sendClientEmail($aData = array()) {
@@ -2215,19 +2227,18 @@ if (!function_exists('sendClientEmail')) {
             $messageBody = $aData['message'];
             $messageSubject = $aData['subject'];
             $from = $aData['from_email'];
-            $fromName = $aData['from_name'];
+            $fromName = $aData['from_name'];           
 
-            $CI = & get_instance();
-
-            $siteemail = $CI->config->item('siteemail');
+            $siteemail = config('bbconfig.siteemail');
 
             $siteemail = (empty($from)) ? $siteemail : $from;
-            $url = $CI->config->item('api_url');
+            $url = config('bbconfig.api_url');
 
             $json_string = array(
                 'to' => array($emailAddress)
             );
-            $plainText = convertHtmlToPlain($messageBody);
+            //$plainText = convertHtmlToPlain($messageBody);
+            $plainText = '';
             $params = array(
                 'api_user' => $username,
                 'api_key' => $password,
@@ -3467,5 +3478,7 @@ if (!function_exists('getNotificationLang')) {
         }
 
     }
+    
+    
 }
 ?>

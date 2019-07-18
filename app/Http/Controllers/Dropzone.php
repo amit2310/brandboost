@@ -8,12 +8,63 @@ header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
 
 use Illuminate\Http\Request;
-use App\Libraries\Custom\S3;
+//use App\Libraries\Custom\S3;
 
 class dropzone extends Controller
 {
   
+    /**
+     * This function used to upload image from grapes editor into S3 server
+     * @param Request $request
+     */
+    public function upload_editor_image(Request $request) {
+        
+        $file = $request->file('files');
+        pre($file);
+        echo "File Name is ". $file->originalName;
+        die;
+        if(!empty($file)){
+            
+        }
+        if (!empty($_FILES)) {
+            //Collect Text Review(Save Video into S3)
+            $oResource = isset($_FILES['files']) ? $_FILES['files'] : false;
+            $ext = pathinfo($oResource['name'], PATHINFO_EXTENSION);
+            $allowed_types = array("png", "gif", "jpeg", "jpg", "JPG", "JPEG", "PNG", "GIF");
+            $error = "";
+            if ($oResource !== false) {
+                if (empty($error) && !in_array($ext, $allowed_types))
+                    $error = "Invalid video file format";
+                if (empty($error) && (!isset($oResource['size']) || $oResource['size'] > (6291456 * 100)))
+                    $error = "Maximum filesize limit is 600MB only.";
+                if (empty($error)) {
+                    // Put file to AWS S3
+                    $oResourceFile = "template_img_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
+                    $filekey = "campaigns/" . $oResourceFile;
+                    $input = file_get_contents($oResource['tmp_name']);
+                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                } else {
+                    echo "Error: " . $error;
+                }
+                //$aReviewData['comment_video'] = $oResourceFile;
+                $s3Src = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{$oResourceFile}";
+                $img = file_get_contents($s3Src);
+                $encodedImg = 'data:image/'.$ext.';base64,'.base64_encode($img);
 
+                $aData = array(
+                    'type' => 'image',
+                    'src' => $encodedImg,
+                    'width' => 250,
+                    'height' => 350
+                );
+                $response = array('data' => $aData);
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+    
+    
     public function upload_image() {
 
         if (!empty($_FILES)) {
@@ -44,7 +95,7 @@ class dropzone extends Controller
         }
     }
 
-    public function upload_editor_image() {
+    public function upload_editor_image_old() {
         if (!empty($_FILES)) {
             //Collect Text Review(Save Video into S3)
             $oResource = isset($_FILES['files']) ? $_FILES['files'] : false;

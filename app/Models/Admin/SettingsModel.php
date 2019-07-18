@@ -37,20 +37,52 @@ class SettingsModel extends Model {
         return $oSettings;
     }
 
-
-   /**
-  * This function used to get slug information for notification purpose
+    /**
+     * This function used to get slug information for notification purpose
      * @param type $userID
      * @return type
      */
-
     public static function getSlugdetails($slug) {
         $oData = DB::table('tbl_notifications_manager')
-        ->where('tbl_notifications_manager', $slug)
-        ->get();
+                ->where('tbl_notifications_manager', $slug)
+                ->get();
         return $oData;
-
     }
+    
+     /**
+     * Used to get current credit usage of a client
+     * @param type $clientID
+     * @return type
+     */
+    public static function getCurrentUsage($clientID) {
+        $oData = DB::table('tbl_account_usage')
+                ->where('user_id', $clientID)
+                ->first();
+        return $oData;
+    }
+    
+    /**
+     * Used to save client usage
+     * @param type $clientID
+     * @return type
+     */
+    public static function saveClientUsageTracking($aData) {
+        $oData = DB::table('tbl_account_usage_tracking')
+                ->insert($aData);
+        return $oData;
+    }
+    
+    /**
+     * Used to save client usage
+     * @param type $clientID
+     * @return type
+     */
+    public static function runCustomQuery($sql) {
+        $oData = DB::raw($sql);                
+        return $oData;
+    }
+    
+    
 
     public function getallowNotification() {
 
@@ -87,15 +119,7 @@ class SettingsModel extends Model {
         }
     }
 
-    public function getCurrentUsage($clientID) {
-        $this->db->where("user_id", $clientID);
-        $result = $this->db->get('tbl_account_usage');
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
+   
     // this function is user to get the remaining credit value 
     public function getremainingCredits($clientID) {
         $this->db->where("user_id", $clientID);
@@ -116,14 +140,11 @@ class SettingsModel extends Model {
         }
     }
 
-
-
     /**
-    * This function will return client account credit values 
-    * @param type $clientID
-    * @return type
-    */
-
+     * This function will return client account credit values 
+     * @param type $clientID
+     * @return type
+     */
     public static function getCreditValues($id = '') {
         $response = DB::table('tbl_credit_values')
                 ->when(($id > 0), function ($query) use ($id) {
@@ -131,8 +152,6 @@ class SettingsModel extends Model {
                 })
                 ->get();
         return $response;
-
-
     }
 
     public function getCreditValuesHistory() {
@@ -241,21 +260,18 @@ class SettingsModel extends Model {
         }
     }
 
-
-     /**
-    * This function is use to check the module permissons allow for notifications 
-    * @param type $clientID
-    * @return type
-    */
-
+    /**
+     * This function is use to check the module permissons allow for notifications 
+     * @param type $clientID
+     * @return type
+     */
     public static function checkPermissionentryDetails($userID, $slug) {
 
         $oData = DB::table('tbl_notifications_permission_entry')
-        ->where('user_id', $userID)
-        ->where('notification_slug', slug)
-        ->get();
+                ->where('user_id', $userID)
+                ->where('notification_slug', slug)
+                ->get();
         return $oData;
-        
     }
 
     public function updateNotificationPermissonData($aData, $userID) {

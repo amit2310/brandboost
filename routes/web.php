@@ -81,7 +81,7 @@ Route::post('admin/workflow/getWorkflowCampaign','Admin\WorkFlow@getWorkflowCamp
 Route::post('admin/workflow/getWorkflowTemplate','Admin\WorkFlow@getWorkflowTemplate');
 Route::post('admin/workflow/deleteWorkflowEvent','Admin\WorkFlow@deleteWorkflowEvent');
 Route::post('admin/workflow/deleteWorkflowDraft','Admin\WorkFlow@deleteWorkflowDraft');
-Route::get('admin/workflow/loadStripoCampaign','Admin\WorkFlow@loadStripoCampaign');
+Route::get('admin/workflow/loadStripoCampaign/{module_name}/{campaign_id}/{module_unit_id}','Admin\WorkFlow@loadStripoCampaign');
 Route::get('admin/workflow/loadStripoSMSCampaign','Admin\WorkFlow@loadStripoSMSCampaign');
 Route::get('admin/workflow/loadStripoTemplate','Admin\WorkFlow@loadStripoTemplate');
 Route::get('admin/workflow/loadStripoTemplatePreview','Admin\WorkFlow@loadStripoTemplatePreview');
@@ -110,3 +110,6 @@ Route::post('admin/workflow/getWorkflowExportedProperties','Admin\WorkFlow@getWo
 Route::post('admin/workflow/syncWorkflowAudience','Admin\WorkFlow@syncWorkflowAudience');
 Route::get('admin/workflow/addAudienceToWorkflowCampaign','Admin\WorkFlow@addAudienceToWorkflowCampaign');
 Route::get('admin/workflow/syncWorkflowAudienceGlobal','Admin\WorkFlow@syncWorkflowAudienceGlobal');
+
+//Dropzone Section
+Route::post('dropzone/upload_editor_image','Dropzone@upload_editor_image');
