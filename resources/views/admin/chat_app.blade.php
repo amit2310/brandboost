@@ -1256,13 +1256,13 @@ if (!empty($hasweb_access)) {
 							
 							$('#CurrentSMSUserListing').removeClass("slick-initialized slick-slider");
 							// ajax to list // 
-							$.ajax({
+							/*$.ajax({
 								url: "{{ url('admin/Chat/getCurrentActivechat/smschat') }}",
 								type: "POST",
 								data: {userID:userID, currentUser:currentUser},
 								dataType: "html",
 								success: function (data) {
-									/*
+									
 									setTimeout(function () {
 										$('#CurrentSMSUserListing').html(data);
 										var options = {
@@ -1273,11 +1273,11 @@ if (!empty($hasweb_access)) {
 										}
 										$('#CurrentSMSUserListing').slick(options);
 									}, 100);
-									*/
+									
 									},error: function(){
 									alertMessage('Error: Some thing wrong!');
 								}
-							});
+							});*/
 							// ajax to list// 
 							
 							
@@ -1820,7 +1820,7 @@ $('#CurrentUserListing').html(' <figure style="margin:15px 0;"><img style="width
 $('#CurrentUserListing').removeClass("slick-initialized slick-slider");
 
 // ajax to list // 
-$.ajax({
+/*$.ajax({
 url: "{{ url('admin/Chat/getCurrentActivechat/webchat') }}",
 type: "POST",
 data: {userID:userID, currentUser:currentUser},
@@ -1845,7 +1845,7 @@ $('.regular').slick(options);
 },error: function(){
 alertMessage('Error: Some thing wrong!');
 }
-});
+});*/
 // ajax to list// 
 
 
