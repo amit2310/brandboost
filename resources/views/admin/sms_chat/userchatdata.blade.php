@@ -355,6 +355,7 @@ $(document).ready(function() {
 	$(document).on('click', '#SMSonly .short_icon', function(){
 		$.ajax({
 		url: '<?php echo base_url('admin/smschat/shortcutListing'); ?>',
+		data: { _token: '{{csrf_token()}}'},
 		type: "POST",
 		dataType: "html",
 		success: function (data) {
