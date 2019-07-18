@@ -3876,7 +3876,7 @@ if ($isLoggedInTeam) {
 							</div> 
 							<div class="clearfix"></div>
 							
-							@include('admin.chat_app.common.web_header', array('Favorites_list' => $Favorites_list, 'activeChatCount' => $activeChatCount, 'fUserCount' => $fUserCount, 'totalSubscriber_schat' => count($totalSubscriber_schat), 'assignedChat' => count($asginChatlist), 'unassignedChat' => count($unassignChatlist), 'loggedYou' => $teamLogin_id))
+							@include('admin.chat_app.common.web_header', array('Favorites_list' => '7', 'activeChatCount' => '9', 'fUserCount' => ;10;, 'totalSubscriber_schat' => '20', 'assignedChat' => count($asginChatlist), 'unassignedChat' => count($unassignChatlist), 'loggedYou' => $teamLogin_id))
 							
 							<div class="clearfix"></div>
 							
