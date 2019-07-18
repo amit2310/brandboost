@@ -54,6 +54,8 @@ Route::post('admin/webchat/applyWebTag','Admin\WebChat@applyWebTag');
 Route::post('admin/webchat/getWebTaglist','Admin\WebChat@getWebTaglist');
 Route::post('admin/webchat/deleteTagFromWeb','Admin\WebChat@deleteTagFromWeb');
 Route::post('admin/webchat/setChatboxstatus','Admin\WebChat@setChatboxstatus');
+Route::post('admin/webchat/removeBoxStatus','Admin\WebChat@removeBoxStatus');
+
 
 
 
