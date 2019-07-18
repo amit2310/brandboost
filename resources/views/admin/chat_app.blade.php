@@ -1245,9 +1245,9 @@ if (!empty($hasweb_access)) {
 			{
 				// ajax to manage the chat popup stats // 
 				$.ajax({
-                   //url: "{{ url('admin/Chat/setChatboxstatus') }}",
+                    //url: "<?php echo base_url('admin/webchat/setChatboxstatus'); ?>",
                     type: "POST",
-                    data: {userID:userID, currentUser:currentUser,type:'smschat'},
+                    data: {userID:userID, currentUser:currentUser,type:'smschat', _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'ok') {
@@ -1809,9 +1809,9 @@ var NotesTo  =  $( this ).attr( "user_id" );
 webNoteslisting(NotesTo);
 // ajax to manage the chat popup stats // 
 $.ajax({
-url: "{{ url('admin/Chat/setChatboxstatus') }}",
+url: "<?php echo base_url('admin/webchat/setChatboxstatus'); ?>",
 type: "POST",
-data: {userID:userID, currentUser:currentUser,type:'webchat'},
+data: {userID:userID, currentUser:currentUser,type:'webchat', _token: '{{csrf_token()}}'},
 dataType: "json",
 success: function (data) {
 if (data.status == 'ok') {
