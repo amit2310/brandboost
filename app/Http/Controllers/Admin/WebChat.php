@@ -503,7 +503,6 @@ class WebChat extends Controller {
         }
     }
 
-
       /**
      * this function is used reassing the chat to the team member
      * @return type boolean
@@ -1001,6 +1000,64 @@ class WebChat extends Controller {
         <?php
     }
 
+
+    /**
+     * this function is used for set chat box
+     * @return type object
+     */
+
+    public function setChatboxstatus()
+    {
+        $webChatModel = new WebChatModel();
+        $user_id =  Input::post("currentUser");
+        $subscriber_id =  Input::post("userID");
+        $type =  Input::post("type");
+        $aData = array(
+            'user_id' => $user_id,
+            'subscriber_id' => $subscriber_id,
+            'status' => '1',
+            'type' => $type
+             
+        );
+        $result = $webChatModel->updateChatboxstatus($aData);
+        
+        if ($result) {
+            $response = array('status' => 'ok');
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit;
+       
+
+    }
+
+    /**
+     * this function is used for remove chat box
+     * @return type object
+     */
+    public function removeBoxStatus()
+    {
+        $webChatModel = new WebChatModel();
+        $user_id =  Input::post("currentUser");
+        $subscriber_id =  Input::post("userID");
+        $aData = array(
+            'user_id' => $user_id,
+            'subscriber_id' => $subscriber_id
+        );
+        $result = $webChatModel->removeActiveBoxStatus($aData);
+       
+        if ($result) {
+            $response = array('status' => 'ok', 'res' => $result);
+        } else {
+            $response = array('status' => 'error');
+        }
+     
+        echo json_encode($response);
+        exit;
+        
+    }
 
 
 }
