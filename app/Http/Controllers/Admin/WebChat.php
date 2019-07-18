@@ -264,6 +264,7 @@ class WebChat extends Controller {
      * this function is used to save chat message
      * @return type boolean
      */
+
     public function addChatMsg() {
 
         $webChatModel = new WebChatModel();
@@ -323,6 +324,45 @@ class WebChat extends Controller {
         
         exit();
 
+    }
+
+
+     /**
+     * this function is used to update the chat user contact information
+     * @return type boolean
+     */
+
+    public function updateSupportuser() {
+
+        $chatUserid  = Input::post("em_id");
+        $webChatModel = new WebChatModel();
+        if(!empty($chatUserid)) {
+                $getValue = Input::post("getValue");
+                $getName = Input::post("getName");
+                if($getName == 'support_name') {
+                    $aData = array('user_name' => $getValue);
+                }
+                else if($getName == 'support_email') {
+                    $aData = array('email' => $getValue);
+                }
+                else if($getName == 'support_phone') {
+                    $aData = array('phone' => $getValue);
+                }
+                $result = $webChatModel->updateSupportuser($chatUserid, $aData);
+                if($result){
+                    $response = array('status' => 'ok');
+                }
+                else {
+                    $response = array('status' => 'error');
+                }
+                          
+        }
+        else{
+            $response = array('status' => 'error');
+        }
+        
+        echo json_encode($response);
+        exit;
     }
 
 }

@@ -44,6 +44,7 @@ Route::post('admin/webchat/getMessages','Admin\WebChat@getMessages');
 Route::post('admin/webchat/readMessages','Admin\WebChat@readMessages');
 Route::post('admin/webchat/changeLoginStatus','Admin\WebChat@changeLoginStatus');
 Route::post('admin/webchat/addChatMsg','Admin\WebChat@addChatMsg');
+Route::post('admin/webchat/updateSupportuser','Admin\WebChat@updateSupportuser');
 
 
 Route::get('admin/smschat','Admin\SmsChat@index');
