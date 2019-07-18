@@ -539,7 +539,8 @@ class WebChat extends Controller {
             $chatMessageRes = getLastMessage($token);
             $getlastmessage = $chatMessageRes->message;
 
-            $fileext = end(explode('.', $getlastmessage));
+            $fileext = explode('.', $getlastmessage);
+            $fileext = end($fileext);
             if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
                 $userMessage = "File Attachment";
             } else if (strpos($getlastmessage, '/Media/') !== false) {
@@ -567,7 +568,7 @@ class WebChat extends Controller {
                 if ($count != 1) {
                     echo 'bbot';
                 }
-                ?> getChatDetails WebBoxList <?php echo $count == 0 ? '' : ''; ?>" userId="<?php echo $value->user; ?>" incId="<?php echo $incid[0]->id; ?>" RwebId="<?php echo $token; ?>" <?php if ($is_pending) { ?>wait="yes" token="<?php echo $token; ?>"<?php } ?>  >
+                ?> getChatDetails WebBoxList <?php echo $count == 0 ? '' : ''; ?>" userId="<?php echo $value->user; ?>" RwebId="<?php echo $token; ?>" >
                     <div class="media-left"><?php echo showUserAvtar('', $chatName[0], $chatName[1], 28, 28, 12); ?>
                         <!-- <i class="fa fa-star-o star_icon"></i> -->
                         <i class="fa star_icon <?php echo $value->favourite == 1 ? 'fa-star yellow' : 'fa-star-o'; ?> favouriteUser" userId="<?php echo $value->id; ?>"></i>
@@ -576,7 +577,7 @@ class WebChat extends Controller {
                     <div class="media-body"> 
                         <span class="fsize12 txt_dark"><?php echo $chatName[0]; ?> <?php echo $chatName[1]; ?></span> 
                         <span class="slider-phone contacts txt_dark" style="margin:0px; color: #6a7995!important;font-weight:bold; font-size:12px!important"><?php echo $userMessage; ?></span> 
-                        <span class="fsize12 txt_dark"><?php echo $fileView; ?></span> 
+                       
                     </div>
                     <div class="media-right" style="width: 90px"><span class="date_time txt_grey fsize11"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>"  datetime="<?php echo usaDate($chatMessageRes->created); ?>" title="<?php echo usaDate($chatMessageRes->created); ?>"><?php //echo chatTimeAgo($chatMessageRes->created);     ?></time>
 
@@ -637,7 +638,8 @@ class WebChat extends Controller {
             $chatMessage = $chatMessageRes->message;
             $created = $chatMessageRes->created;
 
-            $fileext = end(explode('.', $chatMessage));
+            $fileext = explode('.', $chatMessage);
+            $fileext = end($fileext);
             if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
                 $userMessage = "File Attachment";
             } else if (strpos($chatMessage, '/Media/') !== false) {
