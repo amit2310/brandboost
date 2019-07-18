@@ -308,9 +308,9 @@ class WebChat extends Controller {
                 $webChatModel->assignChat($room, $isLoggedInTeam);
                 $hasAssign = 1;   
             }
+
             $chatRow =  $webChatModel->getassignChat($room);
-            pre($chatRow);
-            die();
+            
             if(empty($chatRow)){
 
                 $chatRow =  $webChatModel->getassignChatUser($room);

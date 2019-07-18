@@ -181,10 +181,10 @@ class WebChatModel extends Model {
     public function getassignChat($token) {
 
         $oData = DB::table('tbl_chat_supportuser')
-            ->select(DB::raw("CONCAT('tbl_users_team.firstname,' ',tbl_users_team.lastname) as teamName"), 'tbl_chat_supportuser.assign_team_member as teamId')
+            ->select(DB::raw("CONCAT(tbl_users_team.firstname,' ',tbl_users_team.lastname) as teamName"), 'tbl_chat_supportuser.assign_team_member as teamId')
             ->join('tbl_users_team', 'tbl_chat_supportuser.assign_team_member', '=' , 'tbl_users_team.id')
             ->where('tbl_chat_supportuser.room', $token)
-            ->get();
+            ->first();
 
         return $oData;
     }
@@ -200,7 +200,7 @@ class WebChatModel extends Model {
             ->join('tbl_users', 'tbl_chat_supportuser.assign_team_member', '=' , 'tbl_users.id')
             ->select(DB::raw('CONCAT(tbl_users.firstname," ",tbl_users.lastname) as teamName'), 'tbl_chat_supportuser.assign_team_member as teamId')
             ->where('tbl_chat_supportuser.room', $token)
-            ->get();
+            ->first();
 
         return $oData;
 
