@@ -187,22 +187,23 @@ class ReviewsModel extends Model {
 			->get();				
         return $oData;
     }
-
-    public function getBrandBoostCampaign($campaignID, $hash = false) {
-
-        $this->db->select("tbl_brandboost.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.address as user_address, tbl_users.city as user_city, tbl_users.country as user_country");
-        $this->db->join("tbl_users", "tbl_brandboost.user_id=tbl_users.id", "LEFT");
-        if ($hash == true) {
-            $this->db->where("tbl_brandboost.hashcode", $campaignID);
-        } else {
-            $this->db->where("tbl_brandboost.id", $campaignID);
-        }
-        $rResponse = $this->db->get("tbl_brandboost");
-
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->row();
-        }
-        return $aData;
+	
+	/**
+     * Used to get brandboost campaign reviews list by campaign id
+     * @param type $campaignID
+     * @return campaign all reviews 
+     */
+	public function getBrandBoostCampaign($campaignID, $hash = false) {
+		$oData = DB::table('tbl_brandboost')
+			->leftJoin('tbl_users', 'tbl_brandboost.user_id', '=', 'tbl_users.id')
+			->select('tbl_brandboost.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.address as user_address', 'tbl_users.city as user_city', 'tbl_users.country as user_country')
+			->when(($hash == true), function($query) use($campaignID) {
+				return $query->where('tbl_brandboost.hashcode', $campaignID);
+			}, function($query) use($campaignID) {
+				$query->where('tbl_brandboost.id', $campaignID);
+			})
+			->first();				
+        return $oData;
     }
 
     public function getCampReviewsWithFiveRatings($brandboostID) {

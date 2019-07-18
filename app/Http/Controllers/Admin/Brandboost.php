@@ -375,6 +375,30 @@ class Brandboost extends Controller {
 			return view('admin.brandboost.review_list', $aData);
         }
     }
+	
+	/**
+	* Used to get show media page 
+	* @param type $param
+	* @return type
+	*/
+    public function media() {
+		$mUsers = new UsersModel();
+		$mReviews = new ReviewsModel();
+		
+        $aReviews = $mReviews->getCampaignReviewsDetail();
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/brandboost/onsite') . '">On site</a> </li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Media" class="sidebar-control active hidden-xs ">Media</a></li>
+			</ul>';
+		
+		$aData = array('title' => 'On Site Brand Boost Media', 'pagename' => $breadcrumb, 'aReviews' => $aReviews);
+		return view('admin.brandboost.media', $aData);
+    }
+	
 
     public function index() {
 
@@ -434,9 +458,6 @@ class Brandboost extends Controller {
             echo $resPonse;
         }
    }
-
-
-    
 
     //** offsite template controller 
 
@@ -733,20 +754,6 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/brandboost/campaign_specific', $aData);
     }
 
-    public function media() {
-
-        $aReviews = $this->mReviews->getCampaignReviewsDetail();
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/brandboost/onsite') . '">On site</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Media" class="sidebar-control active hidden-xs ">Media</a></li>
-			</ul>';
-
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/media_beta', array('title' => 'On Site Brand Boost Media', 'pagename' => $breadcrumb, 'aReviews' => $aReviews));
-    }
 
     public function email_tracking($param, $campId) {
 

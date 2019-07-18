@@ -297,6 +297,20 @@ class BrandboostModel extends Model {
 		return $oData;
     }
 	
+	/**
+	* Used to get onsite brandboost product data by id
+	* @param type $productId
+	* @return type
+	*/
+	public static function getProductDataById($productId) {
+        if (!empty($productId)) {
+			$oData = DB::table('tbl_brandboost_products')
+				->where('id', $productId)  
+				->orderBy('id', 'desc')
+				->first();
+			return $oData;
+        }
+    }
 
     public function getWidgetInfo($id, $hash = false) {
         if (!empty($id)) {
@@ -333,17 +347,7 @@ class BrandboostModel extends Model {
         return $aData;
     }
 
-    public function getProductDataById($productId) {
-        if (!empty($productId)) {
-            $this->db->where('id', $productId);
-            $result = $this->db->get('tbl_brandboost_products');
-            //echo $this->db->last_query();exit;
-            if ($result->num_rows() > 0) {
-                $aData = $result->row();
-            }
-        }
-        return $aData;
-    }
+    
 
     public function deleteProduct($bbId, $dataOrder) {
         if (!empty($bbId)) {
