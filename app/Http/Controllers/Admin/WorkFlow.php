@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\WorkflowModel;
 use App\Models\Admin\TagsModel;
+use App\Models\Admin\ListsModel;
 use Cookie;
 use Session;
 
@@ -926,6 +927,8 @@ class WorkFlow extends Controller {
                     $aUsage = array(
                         'client_id' => $userID,
                         'usage_type' => 'email',
+                        'direction' => 'outbound',
+                        'segment' => 1,
                         'content' => $content,
                         'spend_to' => $emailAddress,
                         'spend_from' => '',
@@ -1186,11 +1189,15 @@ class WorkFlow extends Controller {
      * @param Request $requestUsed to delete workflow Event node
      */
     public function deleteWorkflowEvent(Request $request) {
+        
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $eventID = strip_tags($request->event_id);
         $moduleName = strip_tags($request->moduleName);
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
 
         if ($eventID > 0) {
             //Get Current Node
@@ -2025,13 +2032,16 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        $mLists = new ListsModel();
+        
         if ($moduleName == 'automation') {
-            $this->load->model("admin/Lists_model", "mLists");
             //get Lists
-            $oLists = $this->mLists->getLists($userID, '', 'active');
+            $oLists = $mLists->getLists($userID, '', 'active');
             //get Automation Lists
-            $oAutomationLists = $this->mLists->getAutomationLists($moduleUnitID);
+            $oAutomationLists = $mLists->getAutomationLists($moduleUnitID);
             $oEventsType = array('main', 'followup');
         } else if (in_array($moduleName, array('brandboost', 'onsite', 'offsite'))) {
             $oEventsType = array('send-invite', 'followup');
@@ -2054,9 +2064,9 @@ class WorkFlow extends Controller {
             'oUser' => $oUser
         );
 
-        $treeHtml = $this->load->view('admin/workflow2/loadAjaxTree', $pageData, true);
-        $rightMenuHtml = $this->load->view('admin/workflow2/partials/loadAjaxMainRightMenu', $pageData, true);
-        $zoomRightMenuHtml = $this->load->view('admin/workflow2/partials/loadAjaxZoomMainRightMenu', $pageData, true);
+        $treeHtml = view('admin.workflow2.loadAjaxTree', $pageData)->render();
+        $rightMenuHtml = view('admin.workflow2.partials.loadAjaxMainRightMenu', $pageData)->render();
+        $zoomRightMenuHtml = $this->load->view('admin.workflow2.partials.loadAjaxZoomMainRightMenu', $pageData)->render();
         $response = array('status' => 'success', 'content' => $treeHtml, 'menu_content' => $rightMenuHtml, 'zoom_menu_content' => $zoomRightMenuHtml, 'msg' => "Success");
         echo json_encode($response);
         exit;
