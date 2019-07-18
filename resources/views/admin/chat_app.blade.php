@@ -4302,7 +4302,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('.SmallWebchat .fav_list_web_small').show();
 					$('.SmallWebchat .un_list_small').hide();
 					$('.SmallWebchat .you_list_small').hide();
-					$('.SmallWebchat .t_web_main').html('Favorites (<?php echo $FavoritesCount; ?>)');
+					$('.SmallWebchat .t_web_main').html('Favorites');
 					//$('.SmallWebchat .f_web_small').html('Oldest'); 
 
 					});
