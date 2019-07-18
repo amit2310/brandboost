@@ -3918,7 +3918,7 @@ if ($isLoggedInTeam) {
 								<!--++++++++++++ Fav chat list +++++++++++++++-->
 								<div class="fav_list_web_small" style="background-image:none; display:none">
 								
-								@include('admin.chat_app.webchat.favchat_list', array('favChatlist' => $Favorites_list))
+								  @include('admin.chat_app.webchat.favchat_list', array('favChatlist' => $Favorites_list))
 								</div>
 								<!--++++++++++++ Fav chat list +++++++++++++++-->
 
