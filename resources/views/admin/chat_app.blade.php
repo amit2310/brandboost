@@ -2339,9 +2339,9 @@ var chatBoxType = $( this ).attr( "box-close-type" );
 
 // ajax to manage the chat popup stats // 
 $.ajax({
-url: "{{ url('admin/Chat/removeBoxStatus') }}",
+url: "<?php echo base_url('admin/webchat/removeBoxStatus'); ?>",
 type: "POST",
-data: {userID:userID, currentUser:currentUser},
+data: {userID:userID, currentUser:currentUser, _token: '{{csrf_token()}}'},
 dataType: "json",
 success: function (data) {
 
@@ -2351,7 +2351,7 @@ if (data.status == 'ok')
 		$('#CurrentUserListing').html(' <figure style="margin:15px 0;"><img style="width:16px!important; height:11px!important" id="theImg" src="<?php echo base_url('assets/images/ajax-loader.gif'); ?>" /> </figure>');
 		$('#CurrentUserListing').removeClass("slick-initialized slick-slider");
 		// ajax to list // 
-		$.ajax({
+		/*$.ajax({
 			url: "{{ url('admin/Chat/getCurrentActivechat/webchat') }}",
 			type: "POST",
 			data: {userID:userID, currentUser:currentUser},
@@ -2373,7 +2373,7 @@ if (data.status == 'ok')
 			},error: function(){
 			alertMessage('Error: Some thing wrong!');
 			}
-		});
+		});*/
 	}else{
 		/*
 		$('#CurrentSMSUserListing').removeClass("slick-initialized slick-slider");

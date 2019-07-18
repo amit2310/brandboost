@@ -230,9 +230,7 @@ class WebChatModel extends Model {
      * @return type boolean
      */
     public function updateChatboxstatus($aData) {
-
-
-         $responseRes = DB::select(DB::raw("select * from tbl_chat_status where  
+        $responseRes = DB::select(DB::raw("select * from tbl_chat_status where  
         user_id = '".$aData['user_id']."' AND subscriber_id='".$aData['subscriber_id']."' "));
 
         if(empty($responseRes))
@@ -240,7 +238,17 @@ class WebChatModel extends Model {
             $insert_id = DB::table('tbl_chat_status')->insertGetId($aData);
             return $insert_id;
         }
-    
+    }
+
+    /**
+     * this function is used to remove the chat box status
+     * @return type boolean
+     */
+    public function removeActiveBoxStatus($aData)
+    {
+        $responseRes = DB::select(DB::raw("delete from tbl_chat_status where  
+        user_id = '".$aData['user_id']."' AND subscriber_id='".$aData['subscriber_id']."' "));
+        return 1;
     }
 
 

@@ -536,5 +536,31 @@ class WebChat extends Controller {
 
     }
 
+    /**
+     * this function is used for remove chat box
+     * @return type object
+     */
+    public function removeBoxStatus()
+    {
+        $webChatModel = new WebChatModel();
+        $user_id =  Input::post("currentUser");
+        $subscriber_id =  Input::post("userID");
+        $aData = array(
+            'user_id' => $user_id,
+            'subscriber_id' => $subscriber_id
+        );
+        $result = $webChatModel->removeActiveBoxStatus($aData);
+       
+        if ($result) {
+            $response = array('status' => 'ok', 'res' => $result);
+        } else {
+            $response = array('status' => 'error');
+        }
+     
+        echo json_encode($response);
+        exit;
+        
+    }
+
 
 }
