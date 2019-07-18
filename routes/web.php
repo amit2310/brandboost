@@ -51,6 +51,10 @@ Route::post('admin/webchat/listAllTagsWebchat','Admin\WebChat@listAllTagsWebchat
 Route::post('admin/webchat/applyWebTag','Admin\WebChat@applyWebTag');
 Route::post('admin/webchat/getWebTaglist','Admin\WebChat@getWebTaglist');
 Route::post('admin/webchat/deleteTagFromWeb','Admin\WebChat@deleteTagFromWeb');
+Route::post('admin/webchat/reassignChat','Admin\WebChat@reassignChat');
+Route::post('admin/webchat/showUntabAjax','Admin\WebChat@showUntabAjax');
+Route::post('admin/webchat/showYoutabAjax','Admin\WebChat@showYoutabAjax');
+Route::post('admin/webchat/showYoutabAjaxSmallbox','Admin\WebChat@showYoutabAjaxSmallbox');
 
 
 Route::get('admin/smschat','Admin\SmsChat@index');

@@ -4339,10 +4339,11 @@ $('#small_web_AjaxSearchWeb').html(data);
 				$(document).on('click', '.SmallWebchat .YouTab', function() {
 
 					$.ajax({
-				url: "{{ url('admin/smschat/showYoutabAjaxSmallbox') }}",
+				url: '<?php echo base_url('admin/webchat/showYoutabAjaxSmallbox'); ?>',
 				type: "POST",
+				data: { _token: '{{csrf_token()}}'},
 				success: function (data) {
-					$('.you_list_small').html(data); 
+					//$('.you_list_small').html(data); 
 				}
 			});
 

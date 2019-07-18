@@ -353,13 +353,13 @@ var site_url = "<?php echo base_url(); ?>";
 		var room = $('#em_token').val();
 		var user_id = $('#em_id').val();
 		$.ajax({  
-               url: '<?php echo base_url('admin/smschat/reassignChat'); ?>',
+               url: '<?php echo base_url('admin/webchat/reassignChat'); ?>',
                 type: "POST",
-               data: {room: room,assign_to:assign_to},
+               data: {room: room,assign_to:assign_to,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                 	console.log(data);
-                	socket.emit('reassign_post_data', {room:room, assign_to:assign_to, assign_from:data[0].preTeamId,assign_to_name:team_member_name ,user_id:user_id});
+                	socket.emit('reassign_post_data', {room:room, assign_to:assign_to, assign_from:data.preTeamId,assign_to_name:team_member_name ,user_id:user_id});
                     
 				}
 		});
