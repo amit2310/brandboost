@@ -469,6 +469,12 @@ class WebChat extends Controller {
     }
 
 
+       /**
+     * this function is used delete the tags for webchat users
+     * @return type boolean
+     */
+
+
      public function deleteTagFromWeb() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;

@@ -238,6 +238,12 @@ class TagsModel extends Model {
         }
     }
 
+
+     /**
+     * this function is used delete the tags for webchat users
+     * @return type boolean
+     */
+
     public function deleteTagGroupEntityWebchat($review_id, $tag_id) {
             $oData = DB::table('tbl_reviews_tags')
             ->where('tag_id', $tag_id)
