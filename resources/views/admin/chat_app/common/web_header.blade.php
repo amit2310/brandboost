@@ -9,7 +9,7 @@
 									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="unTab unassigned_show">Unassigned (<?php echo $unassignedChat; ?>) </b></a></strong></li>
 									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="YouTab assigned_show_<?php echo $loggedYou; ?>">You (<?php echo $assignedChat; ?>) </b></a></strong></li>
 
-									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class=" Smallwebfavtab">Favorites (<?php echo $FavoritesCount; ?>) </b></a></strong>
+									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class=" Smallwebfavtab">Favorites  </b></a></strong>
 									</li>
 
 									
