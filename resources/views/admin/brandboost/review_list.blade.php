@@ -1123,7 +1123,7 @@
                 $.ajax({
                     url: "<?php echo base_url('admin/reviews/deleteReview'); ?>",
                     type: "POST",
-                    data: {reviewid: reviewID},
+                    data: {reviewid: reviewID, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -1272,9 +1272,9 @@
             var status = $(this).attr('change_status');
             var review_id = $(this).attr('review_id');
             $.ajax({
-                url: '<?php echo base_url('admin/reviews/update_review_status'); ?>',
+                url: '<?php echo base_url('admin/reviews/updateReviewStatus'); ?>',
                 type: "POST",
-                data: {status: status, review_id: review_id},
+                data: {status: status, review_id: review_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 					
@@ -1296,9 +1296,9 @@
             var dataCategory = $(this).attr('change_category');
             var review_id = $(this).attr('review_id');
             $.ajax({
-                url: '<?php echo base_url('admin/reviews/update_review_category'); ?>',
+                url: '<?php echo base_url('admin/reviews/updateReviewCategory'); ?>',
                 type: "POST",
-                data: {dataCategory: dataCategory, review_id: review_id},
+                data: {dataCategory: dataCategory, review_id: review_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 					
