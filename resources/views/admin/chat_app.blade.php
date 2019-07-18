@@ -4265,7 +4265,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('#small_web_MainsearchChatMsg').show();
 					$('.SmallWebchat .fav_list_web_small').hide();
 
-					$('.SmallWebchat .t_web_main').html('All (<?php echo $activeChatCount; ?>)');
+					$('.SmallWebchat .t_web_main').html('All (5)');
 					
 				});
 				
@@ -4302,7 +4302,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('.SmallWebchat .fav_list_web_small').show();
 					$('.SmallWebchat .un_list_small').hide();
 					$('.SmallWebchat .you_list_small').hide();
-					$('.SmallWebchat .t_web_main').html('Favorites');
+					$('.SmallWebchat .t_web_main').html('Favorites (<?php echo $FavoritesCount; ?>)');
 					//$('.SmallWebchat .f_web_small').html('Oldest'); 
 
 					});
@@ -4327,7 +4327,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 						$('.SmallWebchat .un_list_small').show();
      		         $('.SmallWebchat .you_list_small').hide();
      		         $('.SmallWebchat .fav_list_web_small').hide();
-					$('.SmallWebchat .t_web_main').html('Unassigned (<?php echo $unassignChatlist; ?>)');
+					$('.SmallWebchat .t_web_main').html('Unassigned (5)');
 					
 				});
 
@@ -4335,13 +4335,13 @@ $('#small_web_AjaxSearchWeb').html(data);
 				$(document).on('click', '.SmallWebchat .YouTab', function() {
 
 					$.ajax({
-				url: '<?php echo base_url('admin/webchat/showYoutabAjaxSmallbox'); ?>',
-				type: "POST",
-				data: { _token: '{{csrf_token()}}'},
-				success: function (data) {
-					//$('.you_list_small').html(data); 
-				}
-			});
+						url: '<?php echo base_url('admin/webchat/showYoutabAjaxSmallbox'); ?>',
+						type: "POST",
+						data: { _token: '{{csrf_token()}}'},
+						success: function (data) {
+							$('.you_list_small').html(data); 
+						}
+					});
 
 					 $('#small_web_AjaxSearchWeb').hide();
 			          $('#small_web_InitalWeb').show();
@@ -4351,7 +4351,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('.SmallWebchat .fav_list_web_small').hide();
 				    $('.SmallWebchat .un_list_small').hide();
      		         $('.SmallWebchat .you_list_small').show();
-					$('.SmallWebchat .t_web_main').html('You (<?php echo $asginChatlist; ?>)');
+					$('.SmallWebchat .t_web_main').html('You (<?php echo count($asginChatlist); ?>)');
 					
 				});
 				
