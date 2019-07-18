@@ -496,9 +496,21 @@ class SmsChat extends Controller {
         }
         
 
-    echo json_encode($response); 
+        echo json_encode($response); 
+    }
 
+    public function shortcutListing() {
 
+        $loginUserData = getLoggedUser();
+        $shortcuts = SubscriberModel::getchatshortcutlisting($loginUserData->id);
+        foreach ($shortcuts as $key => $value) {
+            ?>
+            <li onclick="set_shortcut('<?php echo trim(preg_replace('/\s+/', ' ', $value->conversatation)); ?>')" class="shortcutlisting">
+                <strong class="shortcut_name"><?php echo $value->name; ?></strong><span>
+                    <?php echo setStringLimit($value->conversatation, 60); ?></span>
+            </li>
+            <?php
+        }
     }
 
 }

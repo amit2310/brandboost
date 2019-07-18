@@ -68,18 +68,17 @@
 
 			var NotesContent = $(this).val();
 			$(this).val('');
-			var source='Sms chat notes';
 		       if($.trim(NotesContent) == ''){
 				// $('#Webonly .NotesContent').addClass('borderClass');	
 				
 				}else{
 			            $.ajax({
-							url: "<?php echo base_url('admin/Chat/addChatNotes'); ?>",
+							url: "<?php echo base_url('admin/webchat/addWebNotes'); ?>",
 							type: "POST",
-							data: {room:newToken, msg:NotesContent, chatTo:chatTo, currentUser:currentUser,notes:'1'},
+							data: {room:newToken, msg:NotesContent, chatTo:chatTo, currentUser:currentUser,notes:'1',_token:'{{csrf_token()}}'},
 							dataType: "json",
 							success: function (response) {
-								if (response.status == "ok") {
+								if (response.status == "success") {
 
 									webNoteslisting(chatTo);
 								}
@@ -178,9 +177,9 @@
 	
 	function webNoteslisting(NotesTo){
 			$.ajax({
-				url: '<?php echo base_url('admin/Contacts/listingNotes'); ?>',
+				url: '<?php echo base_url('admin/webchat/listingNotes'); ?>',
 				type: "POST",
-				data: {'NotesTo' : NotesTo,notes_from:'web'},
+				data: {'NotesTo' : NotesTo,notes_from:'web',_token:'{{csrf_token()}}'},
 				dataType: "html",
 				success: function (data) {
 					$('#notes_box_listing_'+NotesTo).html(data);

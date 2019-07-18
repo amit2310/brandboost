@@ -56,8 +56,6 @@ class WebChatModel extends Model {
     * This function used to get all the webchat messages
     * @return type
     */
-
-
     public function getwebchatMessages($token) {
         $oData = DB::table('tbl_chat_message')
         ->where('token', $token)
@@ -73,7 +71,6 @@ class WebChatModel extends Model {
     * This function is used to add the web notes 
     * @return type
     */
-
     public function addWebNotes($data)
     {
 
@@ -116,6 +113,116 @@ class WebChatModel extends Model {
             ->update($aData);
 
         return true;
+    }
+
+
+    /**
+     * this function is used for add chat message
+     * @param type $aData
+     * @return type last insert id
+     */
+    public function addChatMsg($aData){
+
+        $insert_id = DB::table('tbl_chat_message')->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * this function is used for update last chat time
+     * @param type $token
+     * @param type $isLoggedInTeam
+     * @return type boolean
+     */
+    public function updateChat($token) {
+
+        $aData = array('last_chat_time' => date('Y-m-d H:i:s'));
+        $result = DB::table('tbl_chat_supportuser')
+            ->where('room', $token)
+            ->update($aData);
+
+        return true;
+
+    }
+
+     /**
+     * this function is used to check chat is already assign or not to the team member
+     * @param type $token
+     * @return type object
+     */
+    public function checkTeamAssign($token) { 
+        $oData = DB::table('tbl_chat_supportuser')
+        ->select('*')
+        ->where('room', $token)
+        ->first();
+        return $oData;
+    }
+
+    /**
+     * this function is used to for assign a chat
+     * @param type $token
+     * @param type $isLoggedInTeam
+     * @return type boolean
+     */
+    public function assignChat($token, $isLoggedInTeam) {
+
+        $aData = array('assign_team_member' => $isLoggedInTeam, 'reply_time' => date('Y-m-d H:i:s'));
+        $result = DB::table('tbl_chat_supportuser')
+            ->where('room', $token)
+            ->update($aData);
+
+        return true;
+    }
+
+    /**
+     * this function is used to for get assign a chat team
+     * @param type $token
+     * @return type object
+     */
+    public function getassignChat($token) {
+
+        $oData = DB::table('tbl_chat_supportuser')
+            ->select(DB::raw("CONCAT(tbl_users_team.firstname,' ',tbl_users_team.lastname) as teamName"), 'tbl_chat_supportuser.assign_team_member as teamId')
+            ->join('tbl_users_team', 'tbl_chat_supportuser.assign_team_member', '=' , 'tbl_users_team.id')
+            ->where('tbl_chat_supportuser.room', $token)
+            ->first();
+
+        return $oData;
+    }
+
+    /**
+     * this function is used to for get assign a chat user
+     * @param type $token
+     * @return type object
+     */
+
+    public function getassignChatUser($token) {
+        $oData = DB::table('tbl_chat_supportuser')
+            ->join('tbl_users', 'tbl_chat_supportuser.assign_team_member', '=' , 'tbl_users.id')
+            ->select(DB::raw('CONCAT(tbl_users.firstname," ",tbl_users.lastname) as teamName'), 'tbl_chat_supportuser.assign_team_member as teamId')
+            ->where('tbl_chat_supportuser.room', $token)
+            ->first();
+
+        return $oData;
+
+    }
+
+    
+
+    /**
+     * this function is used to update the chat user contact information
+     * @return type boolean
+     */
+
+
+    public function updateSupportuser($supportid, $aData) {
+
+        $result = DB::table('tbl_chat_supportuser')
+            ->where('user', $supportid)
+            ->update($aData);
+
+        return true;
+
+
     }
 
 

@@ -85,10 +85,11 @@ $(document).ready(function () {
         var node_type = $("#wf_action_node_type").val();
         var moduleName = $("#wf_action_moduleName").val();
         var moduleUnitId = $("#wf_action_module_unit_id").val();
+        var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/workflow/addWorkflowEventToTree',
             type: "POST",
-            data: {_token: '{{csrf_token()}}',moduleName: moduleName, moduleUnitId: moduleUnitId, previous_event_id: previousID, templateId: templateId, campaign_type: 'Email', 'current_event_id': currentID, 'event_type': event_type, node_type: node_type},
+            data: {_token: tkn ,moduleName: moduleName, moduleUnitId: moduleUnitId, previous_event_id: previousID, templateId: templateId, campaign_type: 'Email', 'current_event_id': currentID, 'event_type': event_type, node_type: node_type},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -124,10 +125,11 @@ $(document).ready(function () {
         var subject = $("#wf_campaign_subject").val();
         var content = $('#wf_editor_campaign_content').val();
         var campaignId = $("#wf_editor_campaign_id").val();
+        var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/workflow/updateWorkflowCampaign',
             type: "POST",
-            data: {_token: '{{csrf_token()}}',moduleName: moduleName, subject: subject, content: content, campaignId: campaignId},
+            data: {_token: tkn,moduleName: moduleName, subject: subject, content: content, campaignId: campaignId},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -143,11 +145,12 @@ $(document).ready(function () {
     $(document).on("click", ".wf_editCampaign", function (e) {
         var campaignId = $(this).attr('campaign_id');
         var moduleName = $(this).attr('moduleName');
+        var moduleUnitId = $(this).attr('moduleUnitId');
         if (campaignId != '' && moduleName != '') {
             var frame = document.getElementById("loadstripotemplateInline"),
             frameDoc = frame.contentDocument || frame.contentWindow.document;
             frameDoc.documentElement.innerHTML = "";
-            $("#loadstripotemplateInline").attr("src", site_url + 'admin/workflow/loadStripoCampaign/' + moduleName + '/' + campaignId);
+            $("#loadstripotemplateInline").attr("src", site_url + 'admin/workflow/loadStripoCampaign/' + moduleName + '/' + campaignId + '/' + moduleUnitId);
             $("#loadstripotemplateInline").attr("height", 1800);
             //$("#workflow_template_stripo_modal").modal();
             $("#superContainer").hide();
@@ -199,10 +202,11 @@ $(document).ready(function () {
         var templateContent = $("#smsWorkflowCampaignBody").val();
         var campaignId = $("#wf_sms_editor_campaign_id").val();
         var moduleName = $('#wf_sms_editor_moduleName').val();
+        var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/workflow/updateWorkflowCampaign',
             type: "POST",
-            data: {_token: '{{csrf_token()}}',stripo_compiled_html: templateContent, campaignId: campaignId, moduleName: moduleName},
+            data: {_token: tkn ,stripo_compiled_html: templateContent, campaignId: campaignId, moduleName: moduleName},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -223,11 +227,12 @@ $(document).ready(function () {
         var moduleUnitId = $(this).attr('data-moduleaccountid')
         var campaignType = $(this).attr('campaignType');
         var previewType = 'onlyPreview';
+        var tkn = $('meta[name="_token"]').attr('content');
         if (campaignId != '' && moduleName != '') {
             $.ajax({
                 url: '/admin/workflow/previewWorkflowCampaign',
                 type: "POST",
-                data: {_token: '{{csrf_token()}}',moduleName: moduleName, campaignId: campaignId, moduleUnitId: moduleUnitId, previewType:previewType},
+                data: {_token: tkn,moduleName: moduleName, campaignId: campaignId, moduleUnitId: moduleUnitId, previewType:previewType},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -260,10 +265,11 @@ $(document).ready(function () {
 
         deleteConfirmationPopup('Are you sure you want to delete this campaign', function () {
             $('.overlaynew').show();
+            var tkn = $('meta[name="_token"]').attr('content');
             $.ajax({
                 url: '/admin/workflow/deleteWorkflowEvent',
                 type: "POST",
-                data: {_token: '{{csrf_token()}}',moduleName: moduleName, event_id: event_id},
+                data: {_token: tkn ,moduleName: moduleName, event_id: event_id},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -302,10 +308,11 @@ $(document).ready(function () {
         var node_type = $("#wf_action_node_type").val();
         var moduleName = $("#wf_action_moduleName").val();
         var moduleUnitId = $("#wf_action_module_unit_id").val();
+        var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/workflow/addWorkflowEventToTreeNew',
             type: "POST",
-            data: {_token: '{{csrf_token()}}',moduleName: moduleName, moduleUnitId: moduleUnitId, previous_event_id: previousID, emailTemplateId: emailTemplateId, smsTemplateId: smsTemplateId, delayVal: delayVal, delayUnit: delayUnit, 'current_event_id': currentID, 'event_type': event_type, node_type: node_type},
+            data: {_token: tkn ,moduleName: moduleName, moduleUnitId: moduleUnitId, previous_event_id: previousID, emailTemplateId: emailTemplateId, smsTemplateId: smsTemplateId, delayVal: delayVal, delayUnit: delayUnit, 'current_event_id': currentID, 'event_type': event_type, node_type: node_type},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -374,10 +381,11 @@ function resetAddWorkFlowNodePopup() {
 }
 
 function displayEditCampaignPopup(moduleName, campaignId) {
+    var tkn = $('meta[name="_token"]').attr('content');
     $.ajax({
         url: '/admin/workflow/getWorkflowCampaign',
         type: "POST",
-        data: {_token: '{{csrf_token()}}',campaignId: campaignId, moduleName: moduleName},
+        data: {_token: tkn,campaignId: campaignId, moduleName: moduleName},
         dataType: "json",
         success: function (data) {
             if (data.status == 'success') {

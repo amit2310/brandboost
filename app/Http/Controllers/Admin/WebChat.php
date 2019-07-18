@@ -60,7 +60,7 @@ class WebChat extends Controller {
             $arr[0]['email'] = $email;
             $arr[1]['name'] = $user_name_ex[0] . ' ' . $user_name_ex[1];
             $arr[2]['phone'] = $userDetail[0]->phone != '' ? $userDetail[0]->phone : 'Add Phone';
-            $arr[3]['avatar'] = '';
+            $arr[3]['avatar'] = $avatar;
             $arr[4]['avatar_url'] = '';
             $arr[5]['chatUserid'] = $chatUserid;
             $arr[6]['city'] = '';
@@ -264,14 +264,11 @@ class WebChat extends Controller {
      * this function is used to save chat message
      * @return type boolean
      */
+
     public function addChatMsg() {
 
-        /*$userId = Input::post("userId");
-        $userId = Input::post("userId");*/
-        echo "testing";
-        pre(Session::get("team_user_id"));
-        pre(Session::get("customer_user_id"));
-        /*if() {
+        $webChatModel = new WebChatModel();
+        if(Session::get("team_user_id")) {
             $isLoggedInTeam = Session::get("team_user_id");
         }
         else if(Session::get("customer_user_id")) {
@@ -280,28 +277,12 @@ class WebChat extends Controller {
         else {
             $isLoggedInTeam = '0';
         }
-        $oUser = getLoggedUser();
-        pre($oUser);
 
-        pre($isLoggedInTeam);*/
-        
-        exit();
-
-       /* $post = $this->input->post();
-        if($this->session->userdata("team_user_id")) {
-            $isLoggedInTeam = $this->session->userdata("team_user_id");
-        }
-        else if($this->session->userdata('customer_user_id')) {
-            $isLoggedInTeam = $this->session->userdata('customer_user_id');
-        }
-        else {
-            $isLoggedInTeam = '0';
-        }
-        $room = $post['room'];
-        $msg = $post['msg'];
-        $to_user = $post['chatTo'];
-        $from_user = $post['currentUser'];
-        $notes = $post['notes'];
+        $room = Input::post('room');
+        $msg = Input::post('msg');
+        $to_user = Input::post('chatTo');
+        $from_user = Input::post('currentUser');
+        $notes = Input::post('notes');
         if($notes == "")
         {
             $notes=0;
@@ -317,20 +298,22 @@ class WebChat extends Controller {
             'notes'=>$notes,
             'created' => date('Y-m-d H:i:s')
         );
-        $result = $this->mChat->addChatMsg($aData);
-        $this->mChat->updateChat($room);
+        $result = $webChatModel->addChatMsg($aData);
+        $webChatModel->updateChat($room);
 
         if ($result) {
             $hasAssign = 0;
-            $getSupportUser = $this->mChat->getUserMessages($room);
+            $getSupportUser = $webChatModel->checkTeamAssign($room);
             if($getSupportUser->assign_team_member == 0) {
-                $this->mChat->assignChat($room, $isLoggedInTeam);
+                $webChatModel->assignChat($room, $isLoggedInTeam);
                 $hasAssign = 1;   
             }
-            $chatRow =  $this->mChat->getassignChat($room);
+
+            $chatRow =  $webChatModel->getassignChat($room);
+            
             if(empty($chatRow)){
 
-                $chatRow =  $this->mChat->getassignChatUser($room);
+                $chatRow =  $webChatModel->getassignChatUser($room);
             }
             $response = array('status' => 'ok','isLoggedInTeam'=>$chatRow->teamName, 'teamId' => $chatRow->teamId, 'hasAssign' => $hasAssign);
         } else {
@@ -338,7 +321,48 @@ class WebChat extends Controller {
         }
 
         echo json_encode($response);
-        exit;*/
+        
+        exit();
+
+    }
+
+
+     /**
+     * this function is used to update the chat user contact information
+     * @return type boolean
+     */
+
+    public function updateSupportuser() {
+
+        $chatUserid  = Input::post("em_id");
+        $webChatModel = new WebChatModel();
+        if(!empty($chatUserid)) {
+                $getValue = Input::post("getValue");
+                $getName = Input::post("getName");
+                if($getName == 'support_name') {
+                    $aData = array('user_name' => $getValue);
+                }
+                else if($getName == 'support_email') {
+                    $aData = array('email' => $getValue);
+                }
+                else if($getName == 'support_phone') {
+                    $aData = array('phone' => $getValue);
+                }
+                $result = $webChatModel->updateSupportuser($chatUserid, $aData);
+                if($result){
+                    $response = array('status' => 'ok');
+                }
+                else {
+                    $response = array('status' => 'error');
+                }
+                          
+        }
+        else{
+            $response = array('status' => 'error');
+        }
+        
+        echo json_encode($response);
+        exit;
     }
 
 }

@@ -751,18 +751,18 @@ class WorkflowModel extends Model {
      * @param type $id
      * @return boolean
      */
-    public function getModuleUnitInfo($moduleName, $id) {               
+    public function getModuleUnitInfo($moduleName, $id) {
 
         if ($moduleName == 'brandboost' || $moduleName == 'onsite' || $moduleName == 'offsite') {
-            $tableName = 'tbl_brandboost';            
+            $tableName = 'tbl_brandboost';
         } else if ($moduleName == 'referral') {
-            $tableName = 'tbl_referral_rewards';            
+            $tableName = 'tbl_referral_rewards';
         } else if ($moduleName == 'nps') {
-            $tableName = 'tbl_nps_main';            
+            $tableName = 'tbl_nps_main';
         } else if ($moduleName == 'automation' || $moduleName == 'broadcast') {
-            $tableName = 'tbl_automations_emails';            
+            $tableName = 'tbl_automations_emails';
         }
-        
+
         if (empty($tableName)) {
             return false;
         }
@@ -863,14 +863,18 @@ class WorkflowModel extends Model {
         return $oData;
     }
 
+    /**
+     * Used to get Common template By template name
+     * @param type $templateName
+     * @param type $userID
+     * @return type
+     */
     public function getCommonTemplateByName($templateName, $userID) {
-        $this->db->where("user_id", $userID);
-        $this->db->where("template_name", $templateName);
-        $result = $this->db->get('tbl_common_templates');
-        if ($result->num_rows() > 0) {
-            return true;
-        }
-        return false;
+        $oData = DB::table('tbl_common_templates')
+                ->where('user_id', $userID)
+                ->where('template_name', $templateName)
+                ->first();
+        return $oData;
     }
 
     public function getAllTemplates($moduleName, $moduleCatName = '', $id = '', $categoryID = '') {
@@ -1549,6 +1553,12 @@ class WorkflowModel extends Model {
             return false;
     }
 
+    /**
+     * Used to get a node info from the workflow tree
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
     public function getNodeInfo($id, $moduleName) {
         if (empty($id) || empty($moduleName)) {
             return false;
@@ -1575,15 +1585,19 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $this->db->where('id', $id);
-        $this->db->from($tableName);
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table($tableName)
+                ->where('id', $id)
+                ->first();
+        return $oData;
+        
     }
-
+    
+    /**
+     * Used to get Next Node info in the workflow tree sequence
+     * @param type $previousEventID
+     * @param type $moduleName
+     * @return boolean
+     */
     public function getNextNodeInfo($previousEventID, $moduleName) {
         if (empty($previousEventID) || empty($moduleName)) {
             return false;
@@ -1609,16 +1623,21 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-
-        $this->db->where('previous_event_id', $previousEventID);
-        $this->db->from($tableName);
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        
+        $oData = DB::table($tableName)
+                ->where('previous_event_id', $previousEventID)
+                ->first();
+        return $oData;
+        
     }
 
+    /**
+     * Used to update workflow end campaign
+     * @param type $aData
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
     public function updateWorkflowCampaign($aData, $id, $moduleName) {
         if (empty($id) || empty($moduleName)) {
             return false;
@@ -1647,9 +1666,11 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $this->db->where('id', $id);
-        $result = $this->db->update($tableName, $aData);
-        if ($result) {
+        $oData = DB::table($tableName)
+                ->where('id', $id)
+                ->update($aData);
+
+        if ($oData) {
             return true;
         } else {
             return false;
@@ -1867,18 +1888,30 @@ class WorkflowModel extends Model {
         }
     }
 
+    /**
+     * Used to add template into user's collection
+     * @param type $aData
+     * @return type
+     */
     public function addWorkflowMyTemplate($aData) {
-        $this->db->insert("tbl_common_templates", $aData);
-        $inset_id = $this->db->insert_id();
+        $inset_id = DB::table('tbl_common_templates')
+                ->insertGetId($aData);
         return $inset_id;
     }
 
+    /**
+     * Used to update template info into existing table in the user's collection
+     * @param type $aData
+     * @param type $templateID
+     * @param type $userID
+     * @return boolean
+     */
     public function updateWorkflowMyTemplate($aData, $templateID, $userID) {
         if ($templateID > 0) {
-            $this->db->where('id', $templateID);
-            $this->db->where('user_id', $userID);
-            $result = $this->db->update("tbl_common_templates", $aData);
-            //echo $this->db->last_query();
+            $result = DB::table('tbl_common_templates')
+                    ->where('id', $templateID)
+                    ->where('user_id', $userID)
+                    ->update($aData);
             if ($result)
                 return true;
         }
@@ -2004,7 +2037,13 @@ class WorkflowModel extends Model {
                 ->first();
         return $oData;
     }
-
+    
+    /**
+     * Used to delete a node from the workflow tree
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
     public function deleteNode($id, $moduleName) {
         if (empty($id) || empty($moduleName)) {
             return false;
@@ -2030,16 +2069,23 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-
-        $this->db->where("id", $id);
-        $result = $this->db->delete($tableName);
-        if ($result) {
+        
+        $oData = DB::table($tableName)
+                ->where('id', $id)
+                ->delete();
+        if ($oData) {
             $bCampaignDeleted = $this->deleteWorflowCampaign($id, $moduleName);
             return true;
         }
         return false;
     }
 
+    /**
+     * Used to delete end campaign belonging to a workflow node
+     * @param type $eventID
+     * @param type $moduleName
+     * @return boolean
+     */
     public function deleteWorflowCampaign($eventID, $moduleName) {
         if ($eventID > 0) {
             if (empty($eventID) || empty($moduleName)) {
@@ -2066,9 +2112,12 @@ class WorkflowModel extends Model {
             if (empty($tableName)) {
                 return false;
             }
-            $this->db->where('event_id', $eventID);
-            $result = $this->db->delete($tableName);
-            if ($result) {
+            
+            $oData = DB::table($tableName)
+                ->where('event_id', $eventID)
+                ->delete();
+            
+            if ($oData) {
                 return true;
             } else {
                 return false;
@@ -2076,6 +2125,13 @@ class WorkflowModel extends Model {
         }
     }
 
+    /**
+     * Used to update a workflow tree node
+     * @param type $aData
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
     public function updateNode($aData, $id, $moduleName) {
         if (empty($id) || empty($moduleName)) {
             return false;
@@ -2101,10 +2157,12 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-
-        $this->db->where("id", $id);
-        $result = $this->db->update($tableName, $aData);
-        if ($result) {
+        
+        $oData = DB::table($tableName)
+                ->where('id', $id)
+                ->update($aData);
+        
+        if ($oData) {
             return true;
         } else {
             return false;
