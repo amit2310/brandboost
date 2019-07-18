@@ -399,6 +399,64 @@ class Brandboost extends Controller {
 		return view('admin.brandboost.media', $aData);
     }
 	
+	/**
+	* Used to get show media page 
+	* @param type $param
+	* @return type
+	*/
+	public function reviewDetails($reviewID = 0) {
+        $response = array();
+        $response['status'] = 'error';
+        $selectedTab = Input::get('t');
+        
+		$revID = Input::post("reviewid");
+		$actionName = Input::post("action");
+
+        $reviewID = ($revID > 0) ? $revID : $reviewID;
+        $reviewCommentCount = getCampaignCommentCount($reviewID);
+        $reviewNotesData = ReviewsModel::listReviewNotes($reviewID);
+        $reviewCommentsData = ReviewsModel::getReviewAllParentsComments($reviewID, $start = 0);
+        $reviewData = ReviewsModel::getReviewInfo($reviewID);
+        $reviewTags = getTagsByReviewID($reviewID);
+        $totalComment = ReviewsModel::parentsCommentsCount($reviewID);
+        $productData = BrandboostModel::getProductDataById($reviewData->product_id);
+        $productName = $reviewData->product_id > 0 ? $productData->product_name : $reviewData->brand_title;
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a href="' . base_url('admin/brandboost/onsite') . '" class="sidebar-control hidden-xs">On site </a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a href="' . base_url('admin/brandboost/reviews/') . $reviewData->bbId . '" data-toggle="tooltip" data-placement="bottom" title="' . $productName . ' Review" class="sidebar-control active hidden-xs ">' . $productName . ' Review</a></li>
+			</ul>';
+
+        $aData = array(
+            'title' => 'Brand Boost Review Details',
+            'pagename' => $breadcrumb,
+            'reviewData' => $reviewData,
+            'productData' => $productData,
+            'reviewCommentCount' => $reviewCommentCount,
+            'reviewNotesData' => $reviewNotesData,
+            'reviewCommentsData' => $reviewCommentsData,
+            'reviewTags' => $reviewTags,
+            'reviewID' => $reviewID,
+            'totalComment' => $totalComment,
+            'productName' => $productName,
+            'selectedTab' => $selectedTab
+        );
+
+        if ($actionName == 'smart-popup') {
+            $popupContent = view('admin.components.smart-popup.reviews', $aData)->render();
+            $response['status'] = 'success';
+            $response['content'] = $popupContent;
+            echo json_encode($response);
+            exit;
+        } else {
+			return view('admin.brandboost.review_details', $aData);
+			
+        }
+    }
+	
 
     public function index() {
 
@@ -5521,61 +5579,6 @@ class Brandboost extends Controller {
             $response = array("status" => "success", "msg" => "Okay");
             echo json_encode($response);
             exit;
-        }
-    }
-
-    public function reviewdetails($reviewID = 0) {
-        $response = array();
-        $response['status'] = 'error';
-        $post = $this->input->post();
-        $get = $this->input->get();
-        $selectedTab = $get['t'];
-        if (!empty($post)) {
-            $revID = strip_tags($post['reviewid']);
-            $actionName = strip_tags($post['action']);
-        }
-
-        $reviewID = ($revID > 0) ? $revID : $reviewID;
-        $reviewCommentCount = getCampaignCommentCount($reviewID);
-        $reviewNotesData = $this->mReviews->listReviewNotes($reviewID);
-        $reviewCommentsData = $this->mReviews->getReviewAllParentsComments($reviewID, $start = 0);
-        $reviewData = $this->mReviews->getReviewInfo($reviewID);
-        $reviewTags = getTagsByReviewID($reviewID);
-        $totalComment = $this->mReviews->parentsCommentsCount($reviewID);
-        $productData = $this->mBrandboost->getProductDataById($reviewData->product_id);
-        $productName = $reviewData->product_id > 0 ? $productData->product_name : $reviewData->brand_title;
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a href="' . base_url('admin/brandboost/onsite') . '" class="sidebar-control hidden-xs">On site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a href="' . base_url('admin/brandboost/reviews/') . $reviewData->bbId . '" data-toggle="tooltip" data-placement="bottom" title="' . $productName . ' Review" class="sidebar-control active hidden-xs ">' . $productName . ' Review</a></li>
-			</ul>';
-
-        $aData = array(
-            'title' => 'Brand Boost Review Details',
-            'pagename' => $breadcrumb,
-            'reviewData' => $reviewData,
-            'productData' => $productData,
-            'reviewCommentCount' => $reviewCommentCount,
-            'reviewNotesData' => $reviewNotesData,
-            'reviewCommentsData' => $reviewCommentsData,
-            'reviewTags' => $reviewTags,
-            'reviewID' => $reviewID,
-            'totalComment' => $totalComment,
-            'productName' => $productName,
-            'selectedTab' => $selectedTab
-        );
-
-        if ($actionName == 'smart-popup') {
-            $popupContent = $this->load->view('admin/components/smart-popup/reviews', $aData, true);
-            $response['status'] = 'success';
-            $response['content'] = $popupContent;
-            echo json_encode($response);
-            exit;
-        } else {
-            $this->template->load('admin/admin_template_new', 'admin/brandboost/review_details', $aData);
         }
     }
 

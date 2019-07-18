@@ -231,6 +231,76 @@ class ReviewsModel extends Model {
            ->delete();
         return true;
     }
+	
+	/**
+     * Used to get reviews note by id
+     * @param type $id
+     * @return type 
+     */
+	public static function listReviewNotes($id) {
+        if (!empty($id)) {
+			$oData = DB::table('tbl_reviews_notes')
+				->leftJoin('tbl_users', 'tbl_reviews_notes.user_id', '=', 'tbl_users.id')
+				->select('tbl_reviews_notes.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email')
+				->where('tbl_reviews_notes.review_id', $id)
+				->orderBy('tbl_reviews_notes.id', 'desc')
+				->get();				
+			return $oData;
+        }
+    }
+
+	/**
+     * Used to get all parent comments by reviews id
+     * @param type $reviewId
+     * @param type $start
+     * @param type $limit
+     * @return type 
+     */
+	public static function getReviewAllParentsComments($reviewId, $start = 0, $limit = 5) {
+		$oData = DB::table('tbl_reviews_comments')
+			->leftJoin('tbl_reviews', 'tbl_reviews_comments.review_id', '=', 'tbl_reviews.id')
+			->leftJoin('tbl_users', 'tbl_reviews_comments.user_id', '=', 'tbl_users.id')
+			->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.id as userId')
+			->where('tbl_reviews_comments.review_id', $reviewId)
+			->where('tbl_reviews_comments.parent_comment_id', 0)
+			->orderBy('tbl_reviews_comments.id', 'desc')
+			->offset($start)
+            ->limit($limit)
+			->get();				
+        return $oData;
+    }
+	
+	/**
+     * Used to get review info by review id
+     * @param type $id
+     * @return type 
+     */
+	public static function getReviewInfo($id) {
+		$oData = DB::table('tbl_reviews')
+			->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
+			->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_reviews.user_id')
+			->select('tbl_brandboost.brand_title', 'tbl_brandboost.id AS bbId', 'tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.created as user_joining_date', 'tbl_users.avatar')
+			->where('tbl_reviews.id', $id)
+			->first();				
+        return $oData;	
+    }
+	
+	/**
+     * Used to count parent comments by review id
+     * @param type $id
+     * @return type 
+     */
+	public static function parentsCommentsCount($reviewId) {
+		$oData = DB::table('tbl_reviews_comments')
+			->leftJoin('tbl_reviews', 'tbl_reviews_comments.review_id', '=', 'tbl_reviews.id')
+			->leftJoin('tbl_users', 'tbl_reviews_comments.user_id', '=', 'tbl_users.id')
+			->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.id as userId')
+			->where('tbl_reviews_comments.review_id', $reviewId)
+			->where('tbl_reviews_comments.parent_comment_id', 0)
+			->orderBy('tbl_reviews_comments.id', 'desc')
+			->count();				
+        return $oData;
+    }
 
     public function getCampReviewsWithFiveRatings($brandboostID) {
 
@@ -1076,36 +1146,6 @@ class ReviewsModel extends Model {
           return $aData; */
     }
 
-    public function listReviewNotes($id) {
-        if (!empty($id)) {
-            $this->db->select("tbl_reviews_notes.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email");
-            $this->db->join("tbl_users", "tbl_reviews_notes.user_id=tbl_users.id", "LEFT");
-            $this->db->where("tbl_reviews_notes.review_id", $id);
-            $this->db->order_by("tbl_reviews_notes.id", "DESC");
-            $result = $this->db->get("tbl_reviews_notes");
-            //echo $this->db->last_query();
-            //die;
-            if ($result->num_rows() > 0) {
-                $response = $result->result();
-            }
-            return $response;
-        }
-    }
-
-    public function getReviewInfo($id) {
-        $this->db->select("tbl_brandboost.brand_title, tbl_brandboost.id AS bbId, tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.created as user_joining_date, tbl_users.avatar");
-        $this->db->join("tbl_users", "tbl_users.id=tbl_reviews.user_id", "LEFT");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id=tbl_brandboost.id", "LEFT");
-        $this->db->where("tbl_reviews.id", $id);
-        $result = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();
-        //die;
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
     public function saveReviewNotes($aData) {
         $bSaved = $this->db->insert("tbl_reviews_notes", $aData);
         $insert_id = $this->db->insert_id();
@@ -1191,25 +1231,6 @@ class ReviewsModel extends Model {
         exit;
     }
 
-    public function getReviewAllParentsComments($reviewId, $start = 0, $limit = 5) {
-        $this->db->select("tbl_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.id as userId");
-        $this->db->join("tbl_reviews", "tbl_reviews_comments.review_id = tbl_reviews.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_reviews_comments.user_id=tbl_users.id");
-        $this->db->limit($limit, $start);
-        $this->db->order_by("tbl_reviews_comments.id", "DESC");
-        $this->db->where("tbl_reviews_comments.review_id", $reviewId);
-        $this->db->where("tbl_reviews_comments.parent_comment_id", '0');
-        $oResponse = $this->db->get("tbl_reviews_comments");
-        //echo $this->db->last_query();exit;
-
-        if ($oResponse->num_rows() > 0) {
-            $aComments = $oResponse->result();
-        }
-
-        return $aComments;
-        exit;
-    }
-
     public function getReviewAllChildComments($reviewId, $parentId) {
         $this->db->select("tbl_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.id as userId");
         $this->db->join("tbl_reviews", "tbl_reviews_comments.review_id = tbl_reviews.id", "LEFT");
@@ -1225,19 +1246,6 @@ class ReviewsModel extends Model {
         }
 
         return $aComments;
-        exit;
-    }
-
-    public function parentsCommentsCount($reviewId) {
-        $this->db->select("tbl_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.id as userId");
-        $this->db->join("tbl_reviews", "tbl_reviews_comments.review_id = tbl_reviews.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_reviews_comments.user_id=tbl_users.id");
-        $this->db->order_by("tbl_reviews_comments.id", "DESC");
-        $this->db->where("tbl_reviews_comments.review_id", $reviewId);
-        $this->db->where("tbl_reviews_comments.parent_comment_id", '0');
-        $oResponse = $this->db->get("tbl_reviews_comments");
-
-        return $oResponse->num_rows();
         exit;
     }
 

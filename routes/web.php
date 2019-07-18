@@ -43,6 +43,8 @@ Route::get('admin/brandboost/media/','Admin\Brandboost@media');
 Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');
 Route::post('admin/reviews/updateReviewCategory/','Admin\Reviews@updateReviewCategory');
 Route::post('admin/reviews/deleteReview/','Admin\Reviews@deleteReview');
+Route::post('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
+Route::get('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
 
 
 //chat module
