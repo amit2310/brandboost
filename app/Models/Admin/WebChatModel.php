@@ -220,8 +220,34 @@ class WebChatModel extends Model {
             ->where('user', $supportid)
             ->update($aData);
 
-        return true;
+          return true;
 
+
+    }
+
+
+   /**
+     * this function is used to update get the room details for webchat
+     * @return type array
+     */
+
+
+    public function getChatRoomDetails($room,$assign_to) {
+
+        $oData = DB::table('tbl_chat_supportuser')
+        ->select('tbl_chat_supportuser.assign_team_member as preTeamId')
+        ->where('room', $room)
+        ->first();
+           if(!empty($oData)) {
+            $aData = array('assign_team_member' => $assign_to);
+            $result = DB::table('tbl_chat_supportuser')
+            ->where('room', $room)
+            ->update($aData);
+
+        }
+
+        return $oData; 
+       
 
     }
 
@@ -250,6 +276,7 @@ class WebChatModel extends Model {
         user_id = '".$aData['user_id']."' AND subscriber_id='".$aData['subscriber_id']."' "));
         return 1;
     }
+
 
 
 

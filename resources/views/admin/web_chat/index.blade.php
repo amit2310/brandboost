@@ -234,6 +234,12 @@ $popupToken = !empty($popupToken) ? $popupToken : '';
 				</div>
 			    <!--++++++++++++ unassigned chat list +++++++++++++++-->
 
+                    <!--++++++++++++ You chat list +++++++++++++++-->
+				<div class="panel-body p0 br5 mb10 chat_user_list you_list" style="background-image:none; display:none">
+					<?php //$this->load->view('admin/webchat/Youchat_list', array('Youchatlist' => $assignedChatData)); ?>
+				</div>
+			    <!--++++++++++++ You chat list +++++++++++++++-->
+			    
 
 			    <!--++++++++++++ favourite chat list +++++++++++++++-->
 				<div class="panel-body p0 br5 mb10 chat_user_list f_list" style="background-image:none; display:none">
@@ -1379,7 +1385,8 @@ function loadMessageChat(userId,token,clickvalue=null)
 		$(document).on('click', '#Webonly .unTab', function() {
 
 			$.ajax({
-				url: '<?php echo base_url('admin/smschat/showUntabAjax'); ?>',
+				url: '<?php echo base_url('admin/webchat/showUntabAjax'); ?>',
+				data: {_token: '{{csrf_token()}}'},
 				type: "POST",
 				success: function (data) {
 					$('.un_list').html(data); 
@@ -1403,7 +1410,8 @@ function loadMessageChat(userId,token,clickvalue=null)
 
           $(document).on('click', '#Webonly .YouTab', function() {
           	$.ajax({
-				url: '<?php echo base_url('admin/smschat/showYoutabAjax'); ?>',
+				url: '<?php echo base_url('admin/webchat/showYoutabAjax'); ?>',
+				data: {_token: '{{csrf_token()}}'},
 				type: "POST",
 				success: function (data) {
 					$('.you_list').html(data); 
