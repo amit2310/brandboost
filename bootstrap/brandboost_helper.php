@@ -311,11 +311,8 @@ if (!function_exists('getCampaignCommentCount')) {
 
     function getCampaignCommentCount($reviewId) {
         $aUser = array();
-        $CI = & get_instance();
-        $CI->load->model("Comment_model", "mComment");
-
-        $aComment = $CI->mComment->getCampReviewComment($reviewId);
-
+		$aComment = App\Models\CommentModel::getCampReviewComment($reviewId);
+       
         if (!empty($aComment)) {
             return count($aComment);
         }
