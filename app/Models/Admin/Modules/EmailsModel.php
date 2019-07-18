@@ -350,6 +350,34 @@ class EmailsModel extends Model {
         return $oData;
     }
 
+    /**
+     * Used to publish/unpublish Automation campaigns
+     * @param type $aData
+     * @param type $automationID
+     * @param type $userID
+     * @return boolean
+     */
+    public function publishAutomationEvent($aData, $automationID, $userID) {
+        if ($automationID > 0) {
+
+            $oResponse = DB::table('tbl_automations_emails_events')
+                    ->where('automation_id', $automationID)
+                    ->update($aData);
+            
+            if($oResponse){
+                 $oResponse2 = DB::table('tbl_automations_emails')
+                    ->where('id', $automationID)
+                    ->update($aData);
+            }
+            if ($oResponse || $oResponse2) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
     public function checkIfEmailAutomationExists($automationName, $userID) {
         $this->db->where("user_id", $userID);
         $this->db->where("title", $automationName);
@@ -641,25 +669,6 @@ class EmailsModel extends Model {
         return false;
     }
 
-    public function publishAutomationEvent($aData, $automationID, $userID) {
-        if ($automationID > 0) {
-            $this->db->where("automation_id", $automationID);
-            $result = $this->db->update("tbl_automations_emails_events", $aData);
-            //echo $this->db->last_query(); die();
-            if ($result) {
-                $this->db->where("id", $automationID);
-                $result = $this->db->update("tbl_automations_emails", $aData);
-            }
-
-            if ($result) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
-
     public function getEmailTwilioStats($param, $id, $eventType = '') {
         $sql = "SELECT tbl_automations_emails_tracking_twillio.* FROM tbl_automations_emails_tracking_twillio "
                 . "LEFT JOIN tbl_automations_emails ON tbl_automations_emails_tracking_twillio.automation_id = tbl_automations_emails.id "
@@ -710,8 +719,8 @@ class EmailsModel extends Model {
     }
 
     public function getEmailTwilioCategorizedStatsData($oData) {
-        $acceptedTotalCount = $acceptedUniqueCount = $acceptedDuplicateCount =  array();
-        $sentTotalCount = $sentUniqueCount = $sentDuplicateCount =  array();
+        $acceptedTotalCount = $acceptedUniqueCount = $acceptedDuplicateCount = array();
+        $sentTotalCount = $sentUniqueCount = $sentDuplicateCount = array();
         $deliveredTotalCount = $deliveredUniqueCount = $deliveredDuplicateCount = array();
         $undeliveredTotalCount = $undeliveredUniqueCount = $undeliveredDuplicateCount = array();
         $failedTotalCount = $failedUniqueCount = $failedDuplicateCount = array();

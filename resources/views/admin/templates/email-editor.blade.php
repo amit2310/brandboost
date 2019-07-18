@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <title>Email Editor</title>
         <link rel="stylesheet" href="//unpkg.com/grapesjs@0.10.7/dist/css/grapes.min.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>grapes/style/material.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>grapes/style/tooltip.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>grapes/style/toastr.min.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>grapes/dist/grapesjs-preset-newsletter.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/grapes/style/material.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/grapes/style/tooltip.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/grapes/style/toastr.min.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/grapes/dist/grapesjs-preset-newsletter.css">
         <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
 
 
@@ -17,12 +17,9 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/core/libraries/bootstrap.min.js?t=num"></script>
         <script src="//unpkg.com/grapesjs@0.10.7/dist/grapes.min.js"></script>
-        <script src="<?php echo base_url(); ?>grapes/dist/grapesjs-preset-newsletter.min.js"></script>
-        <link href="<?php echo base_url(); ?>new_pages/assets/css/theme1.css" rel="stylesheet" type="text/css">
+        <script src="<?php echo base_url(); ?>assets/grapes/dist/grapesjs-preset-newsletter.min.js"></script>
+        <link href="<?php echo base_url(); ?>assets/css/theme1.css" rel="stylesheet" type="text/css">
 
-<!--        <script src="<?php echo base_url(); ?>grapes/js/toastr.min.js"></script>
-
-<script src="<?php echo base_url(); ?>grapes/private/ajaxable.min.js"></script>-->
     </head>
     <style>
         body, html{ height: 100%; margin: 0;}
@@ -506,7 +503,7 @@
                     $.ajax({
                         url: '/admin/templates/updateUserTemplate',
                         type: "POST",
-                        data: {compiled_html: compliledHtml, templateId: templateId},
+                        data: {_token: '{{csrf_token()}}', compiled_html: compliledHtml, templateId: templateId},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {
@@ -535,7 +532,7 @@
                     $.ajax({
                         url: '/admin/workflow/saveWorkflowDraft',
                         type: "POST",
-                        data: {moduleName: moduleName, subject: subject, stripo_compiled_html: compliledHtml, campaignId: campaignId, template_source: template_source, draftID: draftID},
+                        data: {_token: '{{csrf_token()}}', moduleName: moduleName, subject: subject, stripo_compiled_html: compliledHtml, campaignId: campaignId, template_source: template_source, draftID: draftID},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {

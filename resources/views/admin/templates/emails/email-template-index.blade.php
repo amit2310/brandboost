@@ -270,7 +270,7 @@ $method = (isset($method)) ? $method : '';
                 $.ajax({
                     url: '<?php echo base_url('admin/templates/loadTemplatePreview'); ?>',
                     type: "POST",
-                    data: {template_id: templateID, source: source, moduleName: moduleName, moduleUnitId: moduleUnitId},
+                    data: {_token: '{{csrf_token()}}', template_id: templateID, source: source, moduleName: moduleName, moduleUnitId: moduleUnitId},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -299,7 +299,7 @@ $method = (isset($method)) ? $method : '';
             $.ajax({
                 url: '<?php echo base_url('admin/templates/getCategorizedTemplates'); ?>',
                 type: "POST",
-                data: {categoryid: categoryid, action: action, campaign_type: campaign_type, method: '<?php echo $method; ?>', selected_template: selected_template},
+                data: {_token: '{{csrf_token()}}', categoryid: categoryid, action: action, campaign_type: campaign_type, method: '<?php echo $method; ?>', selected_template: selected_template},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

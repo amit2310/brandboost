@@ -1,3 +1,12 @@
+<?php
+$moduleName = !empty($moduleName) ? $moduleName : '';
+$html = !empty($html) ? $html : '';
+$css = !empty($css) ? $css : '';
+$campaignID = !empty($campaignID) ? $campaignID : '';
+$template_source = !empty($template_source) ? $template_source : '';
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -161,8 +170,8 @@
                     getAuthToken: function (callback) {
                     request('POST', 'https://plugins.stripo.email/api/v1/auth',
                             JSON.stringify({
-                            pluginId: '<?php echo $this->config->item("stripo_plugin_id"); ?>',
-                                    secretKey: '<?php echo $this->config->item("stripo_secret_key"); ?>'
+                            pluginId: '<?php echo config('bbconfig.stripo_plugin_id'); ?>',
+                                    secretKey: '<?php echo config('bbconfig.stripo_secret_key'); ?>'
                             }),
                             function (data) {
                             callback(JSON.parse(data).token);
@@ -193,7 +202,7 @@
             $.ajax({
             url: '/admin/workflow/updateWorkflowTemplate',
                     type: "POST",
-                    data: {moduleName: moduleName, subject: subject, stripo_html: html, stripo_css:css, stripo_compiled_html:compliledHtml, templateId: templateId, greeting: greeting, introduction: introduction},
+                    data: {_token: '{{csrf_token()}}', moduleName: moduleName, subject: subject, stripo_html: html, stripo_css:css, stripo_compiled_html:compliledHtml, templateId: templateId, greeting: greeting, introduction: introduction},
                     dataType: "json",
                     success: function (data) {
                     if (data.status == 'success') {
@@ -218,7 +227,7 @@
                     $.ajax({
                     url: '/admin/workflow/saveWorkflowDraft',
                             type: "POST",
-                            data: {moduleName: moduleName, subject: subject, stripo_html: html, stripo_css:css, stripo_compiled_html:compliledHtml, campaignId: campaignId, template_source: template_source, draftID:draftID},
+                            data: {_token: '{{csrf_token()}}', moduleName: moduleName, subject: subject, stripo_html: html, stripo_css:css, stripo_compiled_html:compliledHtml, campaignId: campaignId, template_source: template_source, draftID:draftID},
                             dataType: "json",
                             success: function (data) {
                             if (data.status == 'success') {

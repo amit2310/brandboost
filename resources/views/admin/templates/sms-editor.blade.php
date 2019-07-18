@@ -14,7 +14,7 @@
         <link href="<?php echo base_url(); ?>assets/css/components.css" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url(); ?>assets/css/colors.css" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url(); ?>new_pages/assets/css/theme1.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>grapes/dist/grapesjs-preset-newsletter.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/grapes/dist/grapesjs-preset-newsletter.css">
         <style type="text/css">
             .dataTables_filter {display: none;}
             .starGray{color:#dbdcdd!important;}
@@ -370,7 +370,7 @@
                     $.ajax({
                         url: '/admin/templates/updateUserTemplate',
                         type: "POST",
-                        data: {compiled_html: compliledHtml, templateId: templateId},
+                        data: {_token: '{{csrf_token()}}', compiled_html: compliledHtml, templateId: templateId},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {
@@ -418,7 +418,7 @@
                     $.ajax({
                         url: '/admin/workflow/saveWorkflowDraft',
                         type: "POST",
-                        data: {moduleName: moduleName, stripo_compiled_html: compliledHtml, campaignId: campaignId, template_source: template_source, draftID: draftID},
+                        data: {_token: '{{csrf_token()}}', moduleName: moduleName, stripo_compiled_html: compliledHtml, campaignId: campaignId, template_source: template_source, draftID: draftID},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {

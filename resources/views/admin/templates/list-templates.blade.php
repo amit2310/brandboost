@@ -42,11 +42,11 @@
     <div class="tab-content"> 
         <!--===========TAB 1===========-->
         <?php if ($templateType == 'email'): ?>
-            <?php $this->load->view('admin/templates/emails/email-template-index'); ?>
+            @include('admin.templates.emails.email-template-index')
         <?php endif; ?>
 
         <?php if ($templateType == 'sms'): ?>
-            <?php $this->load->view('admin/templates/sms/sms-template-index'); ?>
+            @include('admin.templates.sms.sms-template-index')
         <?php endif; ?>
 
     </div>
@@ -58,6 +58,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmAddUserTemplateModal" id="frmAddUserTemplateModal" action="javascript:void();">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Add <?php echo $title; ?> &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
@@ -115,7 +116,7 @@
                     $.ajax({
                         url: '<?php echo base_url('admin/templates/cloneTemplate'); ?>',
                         type: "POST",
-                        data: {templateId: templateId, templateType: templateType},
+                        data: {_token: '{{csrf_token()}}', templateId: templateId, templateType: templateType},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {
@@ -153,7 +154,7 @@
                         $.ajax({
                             url: '<?php echo base_url('admin/templates/deleteTemplate'); ?>',
                             type: "POST",
-                            data: {templateId: templateId},
+                            data: {_token: '{{csrf_token()}}', templateId: templateId},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {
@@ -216,7 +217,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/templates/updateUserTemplateName'); ?>',
                 type: "POST",
-                data: { templateId:templateId, templateName:templateName},
+                data: {_token: '{{csrf_token()}}', templateId:templateId, templateName:templateName},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

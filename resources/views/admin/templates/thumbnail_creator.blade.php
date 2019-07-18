@@ -23,7 +23,7 @@
         $.ajax({
             url: '/admin/templates/updateThumbnail',
             type: "POST",
-            data: {templateId: templateId, imgsrc: imagestring},
+            data: {_token: '{{csrf_token()}}', templateId: templateId, imgsrc: imagestring},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

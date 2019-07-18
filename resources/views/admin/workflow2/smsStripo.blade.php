@@ -1,3 +1,13 @@
+<?php
+$draftID = !empty($draftID) ? $draftID : '';
+$moduleName = !empty($moduleName) ? $moduleName : '';
+$html = !empty($html) ? $html : '';
+$css = !empty($css) ? $css : '';
+$campaignID = !empty($campaignID) ? $campaignID : '';
+$template_source = !empty($template_source) ? $template_source : '';
+
+
+?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -13,8 +23,8 @@
         <link href="<?php echo base_url(); ?>assets/css/core.css" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url(); ?>assets/css/components.css" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url(); ?>assets/css/colors.css" rel="stylesheet" type="text/css">
-        <link href="<?php echo base_url(); ?>new_pages/assets/css/theme1.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>grapes/dist/grapesjs-preset-newsletter.css">
+        <link href="<?php echo base_url(); ?>assets/css/theme1.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/grapes/dist/grapesjs-preset-newsletter.css">
         <style type="text/css">
             .dataTables_filter {display: none;}
             .starGray{color:#dbdcdd!important;}
@@ -340,7 +350,7 @@
                     $.ajax({
                         url: '/admin/workflow/sendTestSMSworkflowCampaign',
                         type: "POST",
-                        data: {'moduleName': moduleName, campaignId: campaignId, number: number},
+                        data: {_token: '{{csrf_token()}}', 'moduleName': moduleName, campaignId: campaignId, number: number},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {
@@ -391,7 +401,7 @@
                     $.ajax({
                         url: '/admin/workflow/updateWorkflowCampaign',
                         type: "POST",
-                        data: {stripo_compiled_html: templateContent, campaignId: campaignId, moduleName: moduleName},
+                        data: {_token: '{{csrf_token()}}', stripo_compiled_html: templateContent, campaignId: campaignId, moduleName: moduleName},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {
@@ -433,7 +443,7 @@
                     $.ajax({
                         url: '/admin/workflow/savetoMyTemplates',
                         type: "POST",
-                        data: {moduleName: moduleName, stripo_compiled_html: compliledHtml, campaignId: campaignId, template_source: template_source},
+                        data: {_token: '{{csrf_token()}}', moduleName: moduleName, stripo_compiled_html: compliledHtml, campaignId: campaignId, template_source: template_source},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {

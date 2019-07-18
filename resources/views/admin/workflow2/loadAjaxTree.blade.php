@@ -37,12 +37,13 @@ if (empty($moduleName)) {
 $oUser = getLoggedUser();
 $userID = $oUser->id;
 if ($userID > 0) {
-    $oTwilioAc = $this->mInviter->getTwilioAccount($userID);
+    $oTwilioAc = getTwilioAccountCustom($userID);
 }
 
 
-$aContactSelectionData = $this->mWorkflow->getWorkflowContactSelectionInterfaceData($moduleName, $moduleUnitID);
+$aContactSelectionData = App\Models\Admin\WorkflowModel::getWorkflowContactSelectionInterfaceData($moduleName, $moduleUnitID);
 $iActiveCount = $iArchiveCount = 0;
+$iActiveSelectedCount = $iArchiveSelectedCount = 0;
 $aSelectedContacts = $aContactSelectionData['oCampaignSubscribers'];
 if (!empty($aSelectedContacts)) {
     foreach ($aSelectedContacts as $oCount) {
@@ -78,15 +79,17 @@ if (!empty($aSelectedContacts)) {
 
             <div class="timeline-date button mt20 mb40">
                 <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle" data-toggle="dropdown"><i class="icon-plus3"></i></button>
-                <?php $this->load->view("/admin/workflow2/partials/action-dropdown", array('previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'main', 'eventType' => $oEventsType[0])); ?>
+                @include('admin.workflow2.partials.action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'main', 'eventType' => $oEventsType[0]] )
             </div>
         <?php endif; ?>
 
         <?php
         $previousEventID = 0;
         $eventNo = 1;
-        $subscribersData = $this->mWorkflow->getWorkflowSubscribers($moduleUnitID, $moduleName);
+        $subscribersData = $mWorkflow->getWorkflowSubscribers($moduleUnitID, $moduleName);
         $bBranchDrawn = false;
+        $arrayKeys = array_keys($oEvents);
+        $lastArrayKey = array_pop($arrayKeys);
         foreach ($oEvents as $key => $oEvent) {
             $bMulitpleBranches = false;
             $finishBranch = false;
@@ -94,7 +97,12 @@ if (!empty($aSelectedContacts)) {
                 $finishBranch = true;
             }
             $aEventData = json_decode($oEvent->data);
-            $oEventDataNext = json_decode($oEvents[$key + 1]->data);
+            $nextIndex = ($key < $lastArrayKey) ? ($key + 1) : '';
+
+            if (($key + 1) <= $lastArrayKey) {
+                $oEventDataNext = json_decode($oEvents[$key + 1]->data);
+            }
+
 
             if (!empty($oEventDataNext)) {
                 if ($oEventDataNext->delay_value == 0 && $oEventDataNext->delay_unit == 'minute') {
@@ -102,8 +110,12 @@ if (!empty($aSelectedContacts)) {
                 }
             }
 
-            $oCampaignData = $this->mWorkflow->getEventCampaign($oEvent->id, $moduleName);
-            $oCampaign = $oCampaignData[0];
+            $oCampaignData = $mWorkflow->getEventCampaign($oEvent->id, $moduleName);
+            $oCampaign = !empty($oCampaignData[0]) ?  $oCampaignData[0] : '';
+            if (empty($oCampaign)) {
+                $oCampaign = new stdClass();
+                $oCampaign->id = '';
+            }            
             //pre($oCampaign);
             $isSMSAdded = $isEmailAdded = false;
             $previousID = $oEvent->previous_event_id;
@@ -118,8 +130,8 @@ if (!empty($aSelectedContacts)) {
 
             if ($oCampaign->id != '') {
 
-                $aStatsSms = $this->mWorkflow->getEventTwilioStats($oCampaign->id, $moduleName);
-                $aCategorizedStatsSms = $this->mWorkflow->getEventTwilioCategorizedStats($aStatsSms);
+                $aStatsSms = $mWorkflow->getEventTwilioStats($oCampaign->id, $moduleName);
+                $aCategorizedStatsSms = $mWorkflow->getEventTwilioCategorizedStats($aStatsSms);
 
                 $sentSmsCount = $aCategorizedStatsSms['sent']['UniqueCount'];
                 $deliveredSmsCount = $aCategorizedStatsSms['delivered']['UniqueCount'];
@@ -136,8 +148,8 @@ if (!empty($aSelectedContacts)) {
                 if (strtolower($oCampaign->campaign_type) == 'email') {
                     $sNodeType = 'email';
                     $isSMSAdded = true;
-                    $aStats = $this->mWorkflow->getEventSendgridStats($oCampaign->id, $moduleName);
-                    $aCategorizedStats = $this->mWorkflow->getEventSendgridCategorizedStats($aStats);
+                    $aStats = $mWorkflow->getEventSendgridStats($oCampaign->id, $moduleName);
+                    $aCategorizedStats = $mWorkflow->getEventSendgridCategorizedStats($aStats);
 
                     $processedCount = $aCategorizedStats['processed']['UniqueCount'];
                     $deliveredCount = $aCategorizedStats['delivered']['UniqueCount'];
@@ -219,11 +231,11 @@ if (!empty($aSelectedContacts)) {
                             <?php endif; ?>
                             <?php if ($sNodeType == 'sms'): ?>
                                 <!-- Draw Tree Node -->
-                                <?php $this->load->view("admin/workflow2/partials/sms_node.php", $aNodeData); ?>
+                                @include('admin.workflow2.partials.sms_node', $aNodeData)
 
                             <?php elseif ($sNodeType == 'email'): ?>
                                 <!-- Draw Tree Node -->
-                                <?php $this->load->view("admin/workflow2/partials/email_node.php", $aNodeData); ?>
+                                @include('admin.workflow2.partials.email_node', $aNodeData)
                             <?php endif; ?>
                             <?php if ($bMulitpleBranches == false): ?>
                             </div>
@@ -241,7 +253,7 @@ if (!empty($aSelectedContacts)) {
                 <?php if ($bMulitpleBranches == false): ?>
                     <div class="timeline-date button mt20 mb40">
                         <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle" data-toggle="dropdown" previous_event_id="<?php echo $previousID; ?>" current_event_id="<?php echo $currentID; ?>" event_type="<?php echo $nextEventType; ?>" data-node-type="followup"><i class="icon-plus3"></i></button>
-                        <?php $this->load->view("/admin/workflow2/partials/action-dropdown", array('previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'followup', 'eventType' => $nextEventType)); ?>
+                        @include('admin.workflow2.partials.action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'followup', 'eventType' => $nextEventType])
                     </div>
                 <?php endif; ?>
                 <?php
@@ -260,7 +272,7 @@ if (!empty($aSelectedContacts)) {
         <?php if ($bAnyMainEventExist == false): ?> 
             <div class="timeline-date button mt0 mb20">
                 <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle" data-toggle="dropdown"><i class="icon-plus3"></i></button>
-                <?php $this->load->view("/admin/workflow2/partials/action-dropdown", array('previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'main', 'eventType' => $oEventsType[0])); ?>
+                @include('admin.workflow2.partials.action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'main', 'eventType' => $oEventsType[0]])
             </div>
         <?php endif; ?>
 
