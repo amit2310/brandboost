@@ -112,7 +112,7 @@
 												$getComm = getCampaignCommentCount($oReview->reviewid);
 												//$reviewTags = getTagsByReviewID($oReview->reviewid);
 												$reviewTags =  array();
-												//$reviewLikeCount = $CI->mReviews->countHelpful($oReview->id);
+												//$reviewLikeCount = \App\Models\ReviewsModel::countHelpful($oReview->id);
 												if (!empty($oReview->avatar)) {
 													$avatarImage = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oReview->avatar;
 													} else {

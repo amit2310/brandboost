@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php list($canRead, $canWrite) = fetchPermissions('Reviews'); ?>
 
 <div class="content">
@@ -37,7 +44,8 @@
 						
 						
                         <?php if (!empty($aReviews)): ?>
-						<?php $this->load->view("admin/components/smart-popup/smart-review-widget"); ?>
+						<?php //$this->load->view("admin/components/smart-popup/smart-review-widget"); ?>
+						@include('admin.components.smart-popup.smart-review-widget')
                         <?php endif; ?>
 						
                         <div class="panel-heading"> 
@@ -76,7 +84,8 @@
 						</div>
 						
                         <div class="panel-body p0">
-                            <?php $this->load->view("admin/brandboost/partial/review_table"); ?>
+                            <?php //$this->load->view("admin/brandboost/partial/review_table"); ?>
+							@include('admin.brandboost.partial.review_table')
 						</div>
 					</div>
 				</div>
@@ -336,6 +345,6 @@
 	
 	
 </script>
-
+@endsection
 
 
