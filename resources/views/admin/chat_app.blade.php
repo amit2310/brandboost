@@ -1582,7 +1582,7 @@ function SMSChatData(userId="",SubscriberPhone,clickvalue="" )
 $.ajax({
 url: '<?php echo base_url('admin/smschat/showSmsThreads'); ?>',
 type: "POST",
-data: {'userId':userId,'SubscriberPhone':SubscriberPhone,_token: '{{csrf_token()}}'},
+data: {'userId':userId,'SubscriberPhone':SubscriberPhone, _token: '{{csrf_token()}}'},
 dataType: "html",
 success: function (data) {
 $('#sms_box_show_'+userId).html(data+'<div class="msg_push"></div>');
@@ -1605,8 +1605,8 @@ var userid =  userPhoneNo;
 	if(e.keyCode == 191)
 	{
 	$.ajax({
-	url: "{{ url('admin/smschat/small_shortcutListing_sms') }}",
-	data:{'boxid':userid},
+	url: "<?php echo base_url('admin/smschat/small_shortcutListing_sms'); ?>",
+	data:{'boxid':userid, _token: '{{csrf_token()}}'},
 	type: "POST",
 	dataType: "html",
 	success: function (data) {
@@ -3521,8 +3521,8 @@ if(window_witdh > 1600)
 					{
 						
 					$.ajax({
-					url: "{{ url('admin/smschat/small_shortcutListing') }}",
-					data:{'boxid':chatTo},
+					url: "<?php echo base_url('admin/smschat/small_shortcutListing'); ?>",
+					data:{'boxid':chatTo, _token: '{{csrf_token()}}'},
 					type: "POST",
 					dataType: "html",
 					success: function (data) {
@@ -5121,8 +5121,8 @@ $(document).on('click', '.webchat .short_icon', function(){
 	var user_id = $(this).attr('user_id');
 
 		$.ajax({
-		url: "{{ url('admin/smschat/small_shortcutListing') }}",
-		data:{'boxid':user_id},
+		url: "<?php echo base_url('admin/smschat/small_shortcutListing'); ?>",
+		data:{'boxid':user_id, _token: '{{csrf_token()}}'},
 		type: "POST",
 		dataType: "html",
 		success: function (data) {
@@ -5138,8 +5138,8 @@ $(document).on('click', '.webchat .short_icon', function(){
 $(document).on('click', '.Smschat .short_icon', function(){
 	var user_id = $(this).attr('user_id');
 		$.ajax({
-		url: "{{ url('admin/smschat/small_shortcutListing_sms') }}",
-		data:{'boxid':user_id},
+		url: "<?php echo base_url('admin/smschat/small_shortcutListing_sms'); ?>",
+		data:{'boxid':user_id, _token: '{{csrf_token()}}'},
 		type: "POST",
 		dataType: "html",
 		success: function (data) {

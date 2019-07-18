@@ -57,6 +57,8 @@ Route::post('admin/smschat/add_contact_notes','Admin\SmsChat@add_contact_notes')
 Route::post('admin/smschat/addSmsNotes','Admin\SmsChat@addSmsNotes');
 Route::post('admin/smschat/listingSmsNotes','Admin\SmsChat@listingSmsNotes');
 Route::post('admin/smschat/shortcutListing','Admin\SmsChat@shortcutListing');
+Route::post('admin/smschat/small_shortcutListing','Admin\SmsChat@small_shortcutListing');
+Route::post('admin/smschat/small_shortcutListing_sms','Admin\SmsChat@small_shortcutListing_sms');
 
 
 //Profile module

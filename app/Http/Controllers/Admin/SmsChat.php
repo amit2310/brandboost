@@ -499,8 +499,11 @@ class SmsChat extends Controller {
         echo json_encode($response); 
     }
 
+    /**
+    * This function is used to short cut listing message for big web and sms chat
+    * @return type
+    */
     public function shortcutListing() {
-
         $loginUserData = getLoggedUser();
         $shortcuts = SubscriberModel::getchatshortcutlisting($loginUserData->id);
         foreach ($shortcuts as $key => $value) {
@@ -508,6 +511,42 @@ class SmsChat extends Controller {
             <li onclick="set_shortcut('<?php echo trim(preg_replace('/\s+/', ' ', $value->conversatation)); ?>')" class="shortcutlisting">
                 <strong class="shortcut_name"><?php echo $value->name; ?></strong><span>
                     <?php echo setStringLimit($value->conversatation, 60); ?></span>
+            </li>
+            <?php
+        }
+    }
+
+    /**
+    * This function is used to short cut listing message for small web chat
+    * @return type
+    */
+    public function small_shortcutListing() {
+        $boxid = Input::post("boxid");
+        $loginUserData = getLoggedUser();
+        $shortcuts = SubscriberModel::getchatshortcutlisting($loginUserData->id);
+        foreach ($shortcuts as $key => $value) {
+            ?>
+            <li onclick="set_small_shortcut('<?php echo trim(preg_replace('/\s+/', ' ', $value->conversatation)); ?>', '<?php echo $boxid; ?>')" class="shortcutlisting">
+                <strong class="shortcut_name"><?php echo $value->name; ?></strong><span>
+                    <?php echo setStringLimit($value->conversatation, 18); ?></span>
+            </li>
+            <?php
+        }
+    }
+
+    /**
+    * This function is used to short cut listing message for sms chat
+    * @return type
+    */
+    public function small_shortcutListing_sms() {
+        $boxid = Input::post("boxid");
+        $loginUserData = getLoggedUser();
+        $shortcuts = SubscriberModel::getchatshortcutlisting($loginUserData->id);
+        foreach ($shortcuts as $key => $value) {
+            ?>
+            <li onclick="set_small_shortcut_sms('<?php echo trim(preg_replace('/\s+/', ' ', $value->conversatation)); ?>', '<?php echo $boxid; ?>')" class="shortcutlisting">
+                <strong class="shortcut_name"><?php echo $value->name; ?></strong><span>
+                    <?php echo setStringLimit($value->conversatation, 18); ?></span>
             </li>
             <?php
         }
