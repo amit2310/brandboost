@@ -60,7 +60,7 @@ class WebChat extends Controller {
             $arr[0]['email'] = $email;
             $arr[1]['name'] = $user_name_ex[0] . ' ' . $user_name_ex[1];
             $arr[2]['phone'] = $userDetail[0]->phone != '' ? $userDetail[0]->phone : 'Add Phone';
-            $arr[3]['avatar'] = '';
+            $arr[3]['avatar'] = $avatar;
             $arr[4]['avatar_url'] = '';
             $arr[5]['chatUserid'] = $chatUserid;
             $arr[6]['city'] = '';
