@@ -2,31 +2,12 @@
 				<div class="panel-body p0 bkg_white web_header SmallWebchat">
 						<div class="p20 bbot pt10 pb10">
 
-							<?php
-							   
-                               $FavoritesCount  = count($Favorites_list);
-
-							if(!empty($unassignedChat)) {
-								$unassignedCount = count($unassignedChat);
-							}
-							else {
-								$unassignedCount = 0;
-							}
-
-							if(!empty($assignedChat)) {
-								$assignedCount = count($assignedChat);
-							}
-							else {
-								$assignedCount = 0;
-							}
-							?>
-
 							<div class="tdropdown ml0">
 								<a  style="margin:0!important;" class="dropdown-toggle fsize12 txt_grey" data-toggle="dropdown" aria-expanded="false"><span class="t_web_main allChatShow" id="toogleDivName">All </span><i class="icon-arrow-down22"></i></a>
 								<ul style="right: 0px!important; margin-top: 25px; left: -20px;" class="dropdown-menu dropdown-menu-left chat_dropdown">
 									<li><strong><a  class="active" href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon1.png"/> <b class="smallbr allChatShow">All (<?php echo $activeChatCount; ?>)</b> </a></strong></li>
-									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="unTab unassigned_show">Unassigned (<?php echo $unassignedCount; ?>) </b></a></strong></li>
-									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="YouTab assigned_show_<?php echo $loggedYou; ?>">You (<?php echo $assignedCount; ?>) </b></a></strong></li>
+									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="unTab unassigned_show">Unassigned (<?php echo $unassignedChat; ?>) </b></a></strong></li>
+									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="YouTab assigned_show_<?php echo $loggedYou; ?>">You (<?php echo $assignedChat; ?>) </b></a></strong></li>
 
 									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class=" Smallwebfavtab">Favorites (<?php echo $FavoritesCount; ?>) </b></a></strong>
 									</li>
