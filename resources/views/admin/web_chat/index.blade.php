@@ -1022,9 +1022,9 @@ function loadMessageChat(userId,token,clickvalue=null)
 			 var review_id = $(this).attr('review_id');
 
 			 $.ajax({
-				url: '<?php echo base_url('admin/tags/deleteTagGroupEntityFromWeb'); ?>',
+				url: '<?php echo base_url('admin/webchat/deleteTagFromWeb'); ?>',
 				type: "POST",
-				data: {grpid:grpid, tag_id:tag_id,review_id:review_id},
+				data: {grpid:grpid, tag_id:tag_id,review_id:review_id,_token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'success') {
