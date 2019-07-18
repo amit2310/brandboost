@@ -151,17 +151,17 @@
 		$("#Smsnotes_box_listing_"+dyId).scrollTop(msgHeight);
 	});
 	
-	function SmsNoteslisting(SubscriberPhone,NotesTo){
+	function SmsNoteslisting(NotesTo){
 			
 			$.ajax({
-				url: '<?php echo base_url('admin/Contacts/listingNotes'); ?>',
+				url: '<?php echo base_url('admin/smschat/listingSmsNotes'); ?>',
 				type: "POST",
-				data: {'NotesTo' : NotesTo,notes_from:'web'},
+				data: {'NotesTo' : NotesTo,notes_from:'web',_token: '{{csrf_token()}}'},
 				dataType: "html",
 				success: function (data) {
-					$('#Smsnotes_box_listing_'+SubscriberPhone).html(data);
-					    var msgHeight = document.getElementById("Smsnotes_box_listing_"+SubscriberPhone).scrollHeight;
-						$("#Smsnotes_box_listing_"+SubscriberPhone).scrollTop(msgHeight);
+					$('#Smsnotes_box_listing_'+NotesTo).html(data);
+					    var msgHeight = document.getElementById("Smsnotes_box_listing_"+NotesTo).scrollHeight;
+						$("#Smsnotes_box_listing_"+NotesTo).scrollTop(msgHeight);
 					
 					},error: function(){
 					alertMessage('Error: Some thing wrong!');
