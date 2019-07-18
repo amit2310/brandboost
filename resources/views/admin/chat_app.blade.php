@@ -1222,24 +1222,24 @@ if (!empty($hasweb_access)) {
 			}
 		}, 5000); */
 		
+		// this function is used to load the sms chat or notes listing 
 		$( document ).on( 'click', '.sms_user', function () {
 			
 			//$(".user_details").hide();
 			
 			var userID =  $(this).attr('phone_no');
 			var SubscriberPhone = $(this).attr('phone_no');
-			var NotesTo = $(this).attr('incSmsWid');
-			console.log(NotesTo);
+			var NotesTo = $(this).attr('phone_no');
 				if(NotesTo == "" || typeof NotesTo == 'undefined')
 				{
                   
 				setTimeout(function(){  
-				  $('.SmscreateNotes').css('display','none');
+				  //$('.SmscreateNotes').css('display','none');
                   $('.userinfoicon').css('display','none');
 				  }, 50);
 				}
 
-			SmsNoteslisting(SubscriberPhone,NotesTo);
+			SmsNoteslisting(SubscriberPhone);
 			$('#sms_msg_box_'+userID).remove();
 			if($.isNumeric( userID ))
 			{
@@ -1580,9 +1580,9 @@ function SMSChatData(userId="",SubscriberPhone,clickvalue="" )
 {
 
 $.ajax({
-url: "{{ url('admin/smschat/showSmsThreads') }}",
+url: '<?php echo base_url('admin/smschat/showSmsThreads'); ?>',
 type: "POST",
-data: {'userId':userId,'SubscriberPhone':SubscriberPhone},
+data: {'userId':userId,'SubscriberPhone':SubscriberPhone,_token: '{{csrf_token()}}'},
 dataType: "html",
 success: function (data) {
 $('#sms_box_show_'+userId).html(data+'<div class="msg_push"></div>');
@@ -1784,9 +1784,12 @@ success: function (data) {
 });
 
 
+// please use only token to get or add messages in the webchat ignore all other variables 
+
 $( document ).on( 'click', '.sidebar-user-box', function () {
 var userID = $( this ).attr( "user_id" );
 var assing_to = $( this ).attr( "assign_to" );
+var token = $( this ).attr( "token" );
 
 if(userID.length>10)
 {
@@ -1869,22 +1872,13 @@ else {
 
 }
 
-var aToken = Number(userID) + Number(currentUser);
 
-if(Number(userID) > Number(currentUser)){
-var sToken = Number(userID) - Number(currentUser);
-}
-else {
-var sToken = Number(currentUser) - Number(userID);
-}
-
-var newToken = aToken+'n'+sToken;
 //console.log(newToken, 'get new token');
 var strTime = getTime();
 $.ajax({
-url: "{{ url('admin/Chat/getMessages') }}",
+url: '<?php echo base_url('admin/webchat/getMessages'); ?>',
 type: "POST",
-data: {room:newToken, offset:'0'},
+data: {room:token, offset:'0',_token: '{{csrf_token()}}'},
 dataType: "json",
 success: function (data) {
 //console.log(data)
@@ -2145,7 +2139,7 @@ chatPopup = `<div id="msg_box_${userID}" class="msg_box webchat" style="right:35
 				</div> 
 				<div class="textaraebox addSubscriberNotes">
 
-					<textarea   class="msg_input_notes addSubscriberNotes" newToken="${newToken}"  currentUser="${currentUser}" user_id="${userID}" userImage="${userImage}" 
+					<textarea   class="msg_input_notes addSubscriberNotes" newToken="${token}"  currentUser="${currentUser}" user_id="${userID}" userImage="${userImage}" 
 					placeholder="Shift + Enter to add a new line Start with ‘/’ to select a  Saved Message"></textarea>
 					
 				</div>
@@ -2172,7 +2166,7 @@ chatPopup = `<div id="msg_box_${userID}" class="msg_box webchat" style="right:35
 						</div>
 						<div class="col-xs-6 text-right">
 							<a id="" class="mr-15 short_icon" href="javascript:void();"><img src="/assets/images/chat_list_icon.png"/> </a>
-							<a style="cursor: pointer;" class="preview_image_button_cl_notes" newToken="${newToken}" user_id="${userID}">
+							<a style="cursor: pointer;" class="preview_image_button_cl_notes" newToken="${token}" user_id="${userID}">
 								<i class="icon-attachment"></i>
 							</a> 
 							
@@ -3857,26 +3851,25 @@ if ($isLoggedInTeam) {
 
 
 							<div class="user_img_sec regular slider" id="CurrentUserListing" style="display: none;">
-								<?php 
-								if (count($getactiveChatboxlisting) > 0) {
+								<?php
+    if (count($getactiveChatboxlisting) > 0) {
         foreach ($getactiveChatboxlisting as $key => $value) {
             $valueData = getAllUser($value->subscriber_id);
             if (count($valueData) <= 0) {
                 $valueData = getSubscribersInfo($value->subscriber_id);
             }
-
-            if(!empty($valueData[0])) {
-	            $valueData = $valueData[0];
-	            if ($value->type == 'webchat') {
-						?>
+            if (!empty($valueData[0])) {
+                $valueData = $valueData[0];
+                if ($value->type == 'webchat') {
+?>
 						<figure style="margin:15px 0;">
 							<a class="<?php echo $value->type; ?>" user_id="<?php echo $value->subscriber_id; ?>" href="javascript:void(0)"><?php echo showUserAvtar($valueData->avatar, $valueData->firstname, $valueData->lastname, 28, 28, 11); ?></a>
 							<span class="greendot"></span>
 						</figure>
 						
 						<?php
-	            }
-	        }
+                }
+            }
         }
     } ?>
 								
@@ -3971,18 +3964,18 @@ if ($isLoggedInTeam) {
             if (count($valueData) <= 0) {
                 $valueData = getSubscribersInfo($value->subscriber_id);
             }
-            if(!empty($valueData[0])) {
-	            $valueData = $valueData[0];
-	            if ($value->type == 'smschat') {
-										?>
+            if (!empty($valueData[0])) {
+                $valueData = $valueData[0];
+                if ($value->type == 'smschat') {
+?>
 										<figure>
 											<a class="<?php echo $value->type; ?>" user_id="<?php echo $value->subscriber_id; ?>" href="javascript:void(0)"><?php echo showUserAvtar($valueData->avatar, $valueData->firstname, $valueData->lastname, 28, 28, 11); ?></a>
 											<span class="greendot"></span>
 										</figure>
 										
 										<?php
-	            }
-	        }
+                }
+            }
         }
     } ?>
 							</div> 
@@ -5213,4 +5206,3 @@ $(document).on('click', '.webchat .tweb', function(){
 	 //  ######### fav click ############ //  
 
 			</script>
-				
