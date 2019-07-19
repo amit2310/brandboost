@@ -179,7 +179,7 @@ class Brandboost extends Controller {
 		$mWorkflow = new WorkflowModel();
 		$mReviews = new ReviewsModel();
 		$mTemplates = new TemplatesModel();
-		$mInviter = new TemplatesModel();
+		//$mInviter = new InviterModel();
 
         if (!empty($selectedTab)) {
             if (in_array($selectedTab, ['Review Sources', 'Campaign Preferences', 'Rewards & Gifts', 'Configure Widgets', 'Email Workflow', 'Campaign Clients', 'Reviews', 'Integration', 'Image', 'Video'])) {
@@ -214,6 +214,8 @@ class Brandboost extends Controller {
         $aReviews = $mReviews->getCampaignAllReviews($brandboostID);
         //$revCount = getCampaignReviewCount($brandboostID);
         //$revRA = getCampaignReviewRA($brandboostID);
+		$revCount = 1;
+		$revRA = array();
         $emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite');
         $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');
         
@@ -225,7 +227,7 @@ class Brandboost extends Controller {
         $oTemplates = $mTemplates->getCommonTemplates();
         $oCategories = $mTemplates->getCommonTemplateCategories();
 
-        if ($this->use_default_accounts == true) {
+        /*if ($this->use_default_accounts == true) {
             $aTwilioData = $this->defaultTwilioDetails;
             $fromNumber = $aData['from_entity'];
         } else {
@@ -233,7 +235,9 @@ class Brandboost extends Controller {
             if (!empty($aTwilioAc)) {
                 $fromNumber = $aTwilioAc->contact_no;
             }
-        }
+        }*/
+		
+		$fromNumber = '';
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -261,7 +265,7 @@ class Brandboost extends Controller {
             'oCampaignTags' => $oCampaignTags,
             'oDefaultTemplates' => $oDefaultTemplates,
             'subscribersData' => $oCampaignSubscribers, // $allSubscribers,
-            'result' => $feedbackData,
+            //'result' => $feedbackData,
             'setTab' => $setTab,
             'brandboostID' => $brandboostID,
             'bbProductsData' => $bbProductsData,
