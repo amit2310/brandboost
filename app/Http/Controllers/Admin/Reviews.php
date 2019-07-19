@@ -136,6 +136,54 @@ class Reviews extends Controller {
         exit;
     }
 	
+	/**
+     * Used to add review note
+     * @param type
+     */
+	public function saveReviewNotes() {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+		
+		$reviewID = Input::post("reviewid");
+		$brandboostID = Input::post("bid");
+		$clientID = Input::post("cid");
+		$sNotes = Input::post("notes");
+		
+		$aNotesData = array(
+			'review_id' => $reviewID,
+			'user_id' => $userID,//$clientID,
+			'brandboost_id' => $brandboostID,
+			'notes' => $sNotes,
+			'created' => date("Y-m-d H:i:s")
+		);
+		$bSaved = ReviewsModel::saveReviewNotes($aNotesData);
+		if ($bSaved) {
+			$response = array('status' => 'success', 'message' => 'Note has been added succesfully.');
+		}
+		echo json_encode($response);
+		exit;
+    }
+	
+	/**
+     * Used to delete review note
+     * @param type
+     */
+	public function deleteReviewNote() {
+        $response = array();
+		
+		$noteid = Input::post("noteid");
+        $result = ReviewsModel::deleteReviewNoteByID($noteid);
+        if ($result) {
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
     public function index($campaignId) {
         if (empty($campaignId)) {
             $aUser = getLoggedUser();
@@ -385,20 +433,7 @@ class Reviews extends Controller {
         exit;
     }
 	
-	public function deleteReviewNote() {
-        $response = array();
-        $post = $this->input->post();
-        $noteid = strip_tags($post['noteid']);
-        $result = $this->mReviews->deleteReviewNoteByID($noteid);
-        if ($result) {
-            $response['status'] = 'success';
-        } else {
-            $response['status'] = "Error";
-        }
-
-        echo json_encode($response);
-        exit;
-    }
+	
 
     public function getReviewNoteById() {
 
@@ -450,32 +485,7 @@ class Reviews extends Controller {
             exit;
         }
     }
-	
-    public function saveReviewNotes() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $reviewID = strip_tags($post['reviewid']);
-            $brandboostID = strip_tags($post['bid']);
-            $clientID = strip_tags($post['cid']);
-            $sNotes = $post['notes'];
-            $aNotesData = array(
-                'review_id' => $reviewID,
-                'user_id' => $userID,//$clientID,
-                'brandboost_id' => $brandboostID,
-                'notes' => $sNotes,
-                'created' => date("Y-m-d H:i:s")
-            );
-            $bSaved = $this->mReviews->saveReviewNotes($aNotesData);
-            if ($bSaved) {
-                $response = array('status' => 'success', 'message' => 'Note has been added succesfully.');
-            }
-            echo json_encode($response);
-            exit;
-        }
-    }
+
 	
 	public function saveReviewTitle() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');

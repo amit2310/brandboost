@@ -302,7 +302,34 @@ class ReviewsModel extends Model {
         return $oData;
     }
 
-    public function getCampReviewsWithFiveRatings($brandboostID) {
+
+    /**
+     * Used to save review notes
+     * @param type $id
+     * @return type 
+     */
+	public static function saveReviewNotes($aData) {
+		$insert_id = DB::table('tbl_reviews_notes')->insertGetId($aData);
+		return $insert_id;
+
+        if ($insert_id)
+            return $insert_id;
+        return false;
+    }
+	
+	/**
+     * Used to delete review note by note id
+     * @param type $id
+     * @return type 
+     */
+	public static function deleteReviewNoteByID($noteId) {
+		$result = DB::table('tbl_reviews_notes')
+           ->where('id', $noteId)
+           ->delete();
+        return true;
+    }
+	
+	public function getCampReviewsWithFiveRatings($brandboostID) {
 
         $this->db->select("tbl_brandboost.*, ut.firstname, ut.lastname, ut.email, tu.firstname as bb_u_firstname, tu.lastname as bb_u_lastname, tu.email as bb_u_email, tbl_reviews.comment_text, tbl_reviews.ratings, tbl_reviews.id as reviewId");
         $this->db->join("tbl_reviews", "tbl_brandboost.id=tbl_reviews.campaign_id", "LEFT");
@@ -1017,11 +1044,7 @@ class ReviewsModel extends Model {
         return $aData;
     }
 
-    public function deleteReviewNoteByID($noteId) {
-        $this->db->where('id', $noteId);
-        $result = $this->db->delete('tbl_reviews_notes');
-        return true;
-    }
+    
 
     public function getReviewNoteByID($noteId) {
 
@@ -1146,14 +1169,7 @@ class ReviewsModel extends Model {
           return $aData; */
     }
 
-    public function saveReviewNotes($aData) {
-        $bSaved = $this->db->insert("tbl_reviews_notes", $aData);
-        $insert_id = $this->db->insert_id();
-        //echo $this->db->last_query();
-        if ($bSaved)
-            return $insert_id;
-        return false;
-    }
+    
 
     public function saveCommentLikeStatus($aData) {
         $bSaved = $this->db->insert("tbl_comment_likes", $aData);

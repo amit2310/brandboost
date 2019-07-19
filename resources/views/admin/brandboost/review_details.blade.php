@@ -673,6 +673,7 @@
                             <input type="hidden" name="cid" id="cid" value="<?php echo $reviewData->user_id; ?>">
                             <input type="hidden" name="bid" id="bid" value="<?php echo $reviewData->bbId; ?>">
                             <button data-toggle="modal" data-target="#addnotes" type="button" id="saveReviewNotes" class="btn dark_btn"> Add Notes &nbsp; <i class="fa fa-angle-double-right"></i> </button>
+							{{ csrf_field() }}
                         </div>
                     </form>
                 </div>
@@ -963,7 +964,7 @@
                 $.ajax({
                     url: '<?php echo base_url('admin/reviews/deleteReviewNote'); ?>',
                     type: "POST",
-                    data: {noteid: noteId},
+                    data: {noteid: noteId, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
