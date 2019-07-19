@@ -10,10 +10,10 @@ use Session;
 use App\Libraries\Custom\Mobile_Detect;
 use App\Models\Admin\WebChatModel;
 
-require 'aws/aws-autoloader.php';
+//require 'aws/aws-autoloader.php';
 
-use Aws\S3\S3Client;
-use Aws\Exception\AwsException;
+//use Aws\S3\S3Client;
+//use Aws\Exception\AwsException;
 
 class Login extends Controller {
 

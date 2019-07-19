@@ -684,7 +684,7 @@ $(document).ready(function() {
 							url: '<?php echo base_url('admin/smschat/sendMMS'); ?>',
 							
 							type: "POST",
-							data: {'phoneNo' : chatTo, 'messageContent' : msg,'smstoken': newToken, 'moduleName' : 'chat', 'media_type': 'image', 'videoUrl':''},
+							data: {'phoneNo' : chatTo, 'messageContent' : msg,'smstoken': newToken, 'moduleName' : 'chat', 'media_type': 'image', 'videoUrl':'',_token: '{{csrf_token()}}'},
 							dataType: "html",
 							success: function (data) {
 							SMSChatBigData(chatTo,chatTo,'');
