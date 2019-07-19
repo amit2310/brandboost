@@ -152,6 +152,7 @@ Route::get('admin/workflow/syncWorkflowAudienceGlobal','Admin\WorkFlow@syncWorkf
 
 //Dropzone Section
 Route::post('dropzone/upload_editor_image','Dropzone@upload_editor_image');
+Route::post('dropzone/upload_s3_attachment/{clientId}/{folderName}','Dropzone@upload_s3_attachment');
 
 //Templates Module
 Route::get('admin/templates','Admin\Templates@index');

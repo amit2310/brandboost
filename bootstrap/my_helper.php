@@ -481,6 +481,18 @@ if (!function_exists('getAllUser')) {
 
 }
 
+/**
+ * Get a file size
+ */
+if (!function_exists('getFileSize')) {
+
+    function getFileSize($oName) {
+        $oData = \App\Models\Admin\SettingsModel::getFilesizeSettings($oName);
+        return $oData;
+    }
+
+}
+
 
 /**
  * Used to get Avatar of a member
@@ -899,21 +911,6 @@ if (!function_exists('updateCreditUsageOLD')) {
 }
 
 
-
-
-
-if (!function_exists('getFileSize')) {
-
-    function getFileSize($oName) {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/Setting_model", "mSetting");
-        $result = $CI->mSetting->getFilesizeSettings($oName);
-        return $result;
-    }
-
-}
-
-
 if (!function_exists('FileSizeConvertToBytes')) {
 
     function FileSizeConvertToBytes($Megabytes) {
@@ -1196,6 +1193,19 @@ if (!function_exists('getFavSmsUser')) {
 
 }
 
+    /**
+     * Get user detail by user id
+     * @param type $userId
+     * @return type object
+     */
+function getUserDetailsByUserID($userId) {
+    $aUser = '';
+    if ($userId > 0) {
+        $aUser = $oData = \App\Models\Admin\UsersModel::getUserInfo($userId);
+    }
+    return $aUser;
+}
+
 
 if (!function_exists('currentUserTwilioData')) {
 
@@ -1251,18 +1261,6 @@ if (!function_exists('getMembershipUpsell')) {
 
 }
 
-function getUserDetailsByUserID($userId) {
-
-    $aUser = array();
-    $CI = & get_instance();
-    $CI->load->model("admin/Users_model", "mmUser");
-    $aUser = '';
-
-    if ($userId > 0) {
-        $aUser = $CI->mmUser->getUserInfo($userId);
-    }
-    return $aUser;
-}
 
 if (!function_exists('user_account')) {
 
