@@ -242,7 +242,7 @@ $brandboostID = '';
 											} else {
 											$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
 										}*/
-										$aUser = $this->mUser->getUserInfo($data->user_id);
+										$aUser = \App\Models\Admin\UsersModel::getUserInfo($data->user_id);
 										$imgSrc = base_url('assets/images/default_table_img2.png');
 										
 									?>
