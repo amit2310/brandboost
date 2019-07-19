@@ -9,6 +9,7 @@ header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Dispo
 
 use Illuminate\Http\Request;
 //use App\Libraries\Custom\S3;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 class dropzone extends Controller
 {
@@ -19,9 +20,10 @@ class dropzone extends Controller
      */
     public function upload_editor_image(Request $request) {
         
-        $file = $request->file('files');
+        $file = $request->file('files')->storeAs('campaign', 'umair.jpg', 's3');
+        echo "Path is $file";
         pre($file);
-        echo "File Name is ". $file->originalName;
+        //echo "File Name is ". $file->store;
         die;
         if(!empty($file)){
             

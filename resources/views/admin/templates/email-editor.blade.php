@@ -1,3 +1,9 @@
+<?php
+    $campaignID = !(empty($campaignID)) ? $campaignID : '';
+    $moduleName = !(empty($moduleName)) ? $moduleName : '';
+    $template_source = !(empty($template_source)) ? $template_source : ''; 
+  
+?>
 <!doctype html>
 <html lang="en">
     <head>
