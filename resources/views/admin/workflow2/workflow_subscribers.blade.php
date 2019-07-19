@@ -1,4 +1,5 @@
 <?php
+$showArchived = false;
 $iActiveCount = $iArchiveCount = 0;
 if (!empty($subscribersData)) {
     foreach ($subscribersData as $oCount) {
@@ -10,8 +11,7 @@ if (!empty($subscribersData)) {
     }
 }
 if(empty($subscribersData)){
-   //$subscribersData = $this->mWorkflow->getWorkflowSubscribers($moduleUnitID, $moduleName);
-   $subscribersData = $this->mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+   $subscribersData = \App\Models\Admin\WorkflowModel::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
    
 }
 
@@ -22,7 +22,7 @@ if(!empty($subscribersData)) { ?>
         <div class="col-lg-12">
             <!-- Marketing campaigns -->
             <div class="panel panel-flat">
-                <?php $this->load->view("admin/components/smart-popup/smart-contact-widget");?>
+				@include('admin.components.smart-popup.smart-contact-widget')
                 <div class="panel-heading">
                     <span class="pull-left">
                         <h6 class="panel-title"><?php echo $iActiveCount; ?> Contacts</h6>
@@ -73,19 +73,17 @@ if(!empty($subscribersData)) { ?>
                         </thead>
                         <tbody>
                             <?php
-                            $CI = & get_instance();
-                            $CI->load->model("admin/Tags_model", "mmTag");
-                          
+                            
                             if (count($subscribersData) > 0) {
                                 foreach ($subscribersData as $oContact) {
                                     $subscriberID = $oContact->subscriber_id;
-                                    $oTags = $CI->mmTag->getSubscriberTags($subscriberID);
+                                    $oTags = \App\Models\Admin\TagModel::getSubscriberTags($subscriberID);
                                     $iTagCount = count($oTags);
                                     $userData = '';
                                     if ($oContact->status != '2') {
                                         
                                         if ($oContact->user_id > 0) {
-                                            $userData = $this->mUser->getUserInfo($oContact->user_id);
+                                            $userData = \App\Models\Admin\UsersModel::getUserInfo($oContact->user_id);
                                         }
 
                                         if ($userData->avatar == '') {
@@ -133,19 +131,6 @@ if(!empty($subscribersData)) { ?>
                                                 <a class="icons social"  <?php if (!empty($oContact->facebook_profile)): ?>href="<?php echo $oContact->facebook_profile; ?>" target="_blank" title="View facebook profile"<?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><img src="<?php echo base_url(); ?>assets/images/icons/facebook.svg"/></a> 
                                                 <a class="icons social" href="<?php echo $oContact->socialProfile; ?>"><img src="<?php echo base_url(); ?>assets/images/icons/google.svg"/></a> 
                                                 <a class="icons social" href="mailto:<?php echo $oContact->email; ?>"><img src="<?php echo base_url(); ?>assets/images/icons/mail.svg"/></a>
-
-                                                <!-- 
-                                                        <a <?php if (!empty($oContact->twitter_profile)): ?>href="<?php echo $oContact->twitter_profile; ?>" target="_blank" title="View twitter profile" <?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><button class="btn btn-xs plus_icon"><i class="icon-twitter txt_lblue" <?php if (empty($oContact->twitter_profile)): ?>style="color:#cccccc !important;"<?php endif; ?>></i></button></a>
-                                                        <a <?php if (!empty($oContact->facebook_profile)): ?>href="<?php echo $oContact->facebook_profile; ?>" target="_blank" title="View facebook profile"<?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><button class="btn btn-xs plus_icon"><i class="icon-facebook txt_dblue" <?php if (empty($oContact->facebook_profile)): ?>style="color:#cccccc !important;"<?php endif; ?>></i></button></a>
-                                                        <a <?php if (!empty($oContact->linkedin_profile)): ?>href="<?php echo $oContact->linkedin_profile; ?>" target="_blank" title="View linkedin profile"<?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><button class="btn btn-xs plus_icon"><i class="icon-linkedin txt_dblue" <?php if (empty($oContact->linkedin_profile)): ?>style="color:#cccccc !important;"<?php endif; ?>></i></button></a>
-                                                        <a <?php if (!empty($oContact->instagram_profile)): ?>href="<?php echo $oContact->instagram_profile; ?>" target="_blank" title="View instagram profile" <?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><button class="btn btn-xs plus_icon"><i class="icon-instagram txt_dblue" <?php if (empty($oContact->instagram_profile)): ?>style="color:#cccccc !important;"<?php endif; ?>></i></button></a>
-                                                <?php if (!empty($oContact->phone)): ?>
-                                                                <a href="javascript:void(0);" class="initsmschat" user_id="<?php echo $oContact->global_user_id; ?>" chat_class="sms_head" chat_type="SMS | <?php echo $oContact->phone; ?>" from_no="+123" to_no="<?php echo $oContact->phone; ?>" target="_blank"><button class="btn btn-xs plus_icon"><i class="icon-phone2 txt_green"></i></button></a>
-                                                <?php else: ?>
-                                                                <a href="<?php echo $oContact->socialProfile; ?>" title="Contact Number not found" target="_blank"><button class="btn btn-xs plus_icon"><i class="icon-phone2 txt_green" style="color:#CCCCCC;"></i></button></a>
-                                                <?php endif; ?>
-                                                        <a href="mailto:<?php echo $oContact->email; ?>"><button class="btn btn-xs plus_icon"><i class="icon-envelop txt_blue" <?php if (empty($oContact->email)): ?>style="color:#cccccc !important;"<?php endif; ?>></i></button></a>
-                                                -->
                                             </td>
 
                                             <td id="tag_container_<?php echo $oContact->subscriber_id; ?>">
@@ -236,7 +221,8 @@ else {
         <div class="col-lg-12">
             <!-- Marketing campaigns -->
             <div class="panel panel-flat">
-                <?php $this->load->view("admin/components/smart-popup/smart-contact-widget");?>
+                <?php //$this->load->view("admin/components/smart-popup/smart-contact-widget");?>
+				@include('admin.components.smart-popup.smart-contact-widget')
                 <div class="panel-heading">
                     <span class="pull-left">
                         <h6 class="panel-title"><?php echo $iActiveCount; ?> Contacts</h6>
@@ -385,18 +371,16 @@ else {
                             </thead>
                             <tbody>
                                 <?php
-                                $CI = & get_instance();
-                                $CI->load->model("admin/Tags_model", "mmTag");
-
+                                
                                 if (count($subscribersData) > 0) {
                                     foreach ($subscribersData as $oContact) {
                                         $subscriberID = $oContact->subscriber_id;
-                                        $oTags = $CI->mmTag->getSubscriberTags($subscriberID);
+                                        $oTags = \App\Models\Admin\TagModel::getSubscriberTags($subscriberID);
                                         $iTagCount = count($oTags);
 
                                         if ($oContact->status == '2') {
                                             if ($oContact->user_id > 0) {
-                                                $userData = $this->mUser->getUserInfo($oContact->user_id);
+                                                $userData = \App\Models\Admin\UsersModel::getUserInfo($oContact->user_id);
                                             }
 
                                             if ($userData->avatar == '') {
@@ -444,19 +428,6 @@ else {
                                                     <a class="icons social"  <?php if (!empty($oContact->facebook_profile)): ?>href="<?php echo $oContact->facebook_profile; ?>" target="_blank" title="View facebook profile"<?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><img src="<?php echo base_url(); ?>assets/images/icons/facebook.svg"/></a> 
                                                     <a class="icons social" href="<?php echo $oContact->socialProfile; ?>"><img src="<?php echo base_url(); ?>assets/images/icons/google.svg"/></a> 
                                                     <a class="icons social" href="mailto:<?php echo $oContact->email; ?>"><img src="<?php echo base_url(); ?>assets/images/icons/mail.svg"/></a>
-
-                                                    <!-- 
-                                                            <a <?php if (!empty($oContact->twitter_profile)): ?>href="<?php echo $oContact->twitter_profile; ?>" target="_blank" title="View twitter profile" <?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><button class="btn btn-xs plus_icon"><i class="icon-twitter txt_lblue" <?php if (empty($oContact->twitter_profile)): ?>style="color:#cccccc !important;"<?php endif; ?>></i></button></a>
-                                                            <a <?php if (!empty($oContact->facebook_profile)): ?>href="<?php echo $oContact->facebook_profile; ?>" target="_blank" title="View facebook profile"<?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><button class="btn btn-xs plus_icon"><i class="icon-facebook txt_dblue" <?php if (empty($oContact->facebook_profile)): ?>style="color:#cccccc !important;"<?php endif; ?>></i></button></a>
-                                                            <a <?php if (!empty($oContact->linkedin_profile)): ?>href="<?php echo $oContact->linkedin_profile; ?>" target="_blank" title="View linkedin profile"<?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><button class="btn btn-xs plus_icon"><i class="icon-linkedin txt_dblue" <?php if (empty($oContact->linkedin_profile)): ?>style="color:#cccccc !important;"<?php endif; ?>></i></button></a>
-                                                            <a <?php if (!empty($oContact->instagram_profile)): ?>href="<?php echo $oContact->instagram_profile; ?>" target="_blank" title="View instagram profile" <?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><button class="btn btn-xs plus_icon"><i class="icon-instagram txt_dblue" <?php if (empty($oContact->instagram_profile)): ?>style="color:#cccccc !important;"<?php endif; ?>></i></button></a>
-                                                    <?php if (!empty($oContact->phone)): ?>
-                                                                    <a href="javascript:void(0);" class="initsmschat" user_id="<?php echo $oContact->global_user_id; ?>" chat_class="sms_head" chat_type="SMS | <?php echo $oContact->phone; ?>" from_no="+123" to_no="<?php echo $oContact->phone; ?>" target="_blank"><button class="btn btn-xs plus_icon"><i class="icon-phone2 txt_green"></i></button></a>
-                                                    <?php else: ?>
-                                                                    <a href="<?php echo $oContact->socialProfile; ?>" title="Contact Number not found" target="_blank"><button class="btn btn-xs plus_icon"><i class="icon-phone2 txt_green" style="color:#CCCCCC;"></i></button></a>
-                                                    <?php endif; ?>
-                                                            <a href="mailto:<?php echo $oContact->email; ?>"><button class="btn btn-xs plus_icon"><i class="icon-envelop txt_blue" <?php if (empty($oContact->email)): ?>style="color:#cccccc !important;"<?php endif; ?>></i></button></a>
-                                                    -->
                                                 </td>
 
                                                 <td id="tag_container_<?php echo $oContact->subscriber_id; ?>">

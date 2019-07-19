@@ -220,6 +220,7 @@ class Brandboost extends Controller {
         $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');
         
         $oEvents = $mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
+
         $oEventsType = array('send-invite', 'followup');
         $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
         $oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName, 'onsite');
@@ -461,6 +462,23 @@ class Brandboost extends Controller {
         }
     }
 	
+	
+	/**
+	* Used to get show media page 
+	* @param type $param
+	* @return type
+	*/
+	public function setTab() {
+
+        $response = array();
+		$getActiveText = Input::post("getActiveText");
+		Session::put("setTab", trim($getActiveText));
+		$response['status'] = 'success';
+
+        echo json_encode($response);
+        exit;
+    }
+	
 
     public function index() {
 
@@ -567,34 +585,7 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/brandboost/offsite_list', $aData);
     }
 
-    public function onsite_bk() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $user_role = $aUser->user_role;
-        if ($user_role == 1) {
-            $aBrandboostList = $this->mBrandboost->getBrandboost('', 'onsite');
-        } else {
-            $aBrandboostList = $this->mBrandboost->getBrandboostByUserId($userID, 'onsite');
-        }
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Onsite" class="sidebar-control active hidden-xs ">Onsite</a></li>
-			</ul>';
-
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $this->session->set_userdata('setTab', '');
-        $aData = array(
-            'title' => 'Onsite Brand Boost Campaigns',
-            'pagename' => $breadcrumb,
-            'aBrandbosts' => $aBrandboostList,
-            'bActiveSubsription' => $bActiveSubsription,
-            'user_role' => $user_role
-        );
-        //$this->template->load('admin/admin_template_new', 'admin/brandboost/onsite_list_bk_2_1_2019', $aData);
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/onsite_list_datatable', $aData);
-    }
+    
 
     public function widget_overview() {
 
@@ -3538,20 +3529,7 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/brandboost/testing');
     }
 
-    public function setTab() {
-
-        $response = array();
-        $post = array();
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $getActiveText = $post['getActiveText'];
-            $this->session->set_userdata("setTab", trim($getActiveText));
-            $response['status'] = 'success';
-        }
-
-        echo json_encode($response);
-        exit;
-    }
+    
 
     public function offsite_setup($brandboostID) {
         //$brandboostID = $this->session->userdata('brandboostID');

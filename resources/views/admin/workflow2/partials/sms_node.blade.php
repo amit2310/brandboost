@@ -1,4 +1,5 @@
 <?php
+$categoryStatus = (!empty($categoryStatus)) ? $categoryStatus : '';
 $templatesourceId = $oCampaign->template_source;
 if ($templatesourceId > 0) {
     $oTemplateInfo = App\Models\Admin\WorkflowModel::getCommonTemplateInfo($templatesourceId);
