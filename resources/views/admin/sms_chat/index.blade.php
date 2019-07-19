@@ -42,8 +42,7 @@ $totalSubscriber = "";
 $loginUserData->mobile = numberForamt($loginUserData->mobile);
 $activeOnlysmsUsers = activeOnlysms($loginUserData->mobile); // here we place client twilio number
 $activeChatCount = count((array)$activeOnlysmsUsers);
-$favouriteUserDataCount = count((array)$favouriteUserData);
-$favouriteUserDataCount = "";
+$favouriteUserDataCount = count($favouriteUserData);
 $SmsOldest_list = SmsOldest($loginUserData->mobile);
 $SmsWaitlinglonest = SmsWaitlinglonest($loginUserData->mobile);
 $shortcuts = getchatshortcut($loginUserData->id);
@@ -132,7 +131,7 @@ foreach ($activeOnlysmsUsers as $key => $value) {
 									<li><strong><a  class="active" href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon1.png"/> <b class="smallbr">All (<?php echo $activeChatCount; ?>)</b> </a></strong></li>
 									<!-- <li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/>Open (13) </a></strong></li>
 									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon3.png"/>Resolved (172) </a></strong></li> -->
-									<li><strong><a  href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon4.png"/><span class="f_link">Favorite (<?php echo $favouriteUserDataCount; ?>)</span> </a></strong></li>
+									<li><strong><a  href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon4.png"/><span class="f_link">Favorite (<?php echo $favouriteUserData->count(); ?>)</span> </a></strong></li>
 									<li><strong><a  href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon5.png"/><span class="c_link">Contacts(<?php echo $totalSubscriber; ?>)</span></a></strong></li>
 									
 									<!-- <li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon5.png"/>Snoozed (28)</a></strong></li> -->
@@ -883,7 +882,7 @@ $(document).ready(function() {
 	     	$('#SMSonly .o_list').hide();
 		     $('#SMSonly .w_list').hide();
 			$('#SMSonly .f_list').show();
-			$('#SMSonly .t_sms_main').html('Favorite(<?php echo $favouriteUserDataCount; ?>)');
+			$('#SMSonly .t_sms_main').html('Favorite(<?php echo $favouriteUserData->count(); ?>)');
 			
 		});
 	

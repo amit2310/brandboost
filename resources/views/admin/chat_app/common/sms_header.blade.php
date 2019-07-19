@@ -10,7 +10,7 @@
 									<li style="display: none;"><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/>Open (13) </a></strong></li>
 									<li style="display: none"><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon3.png"/>Resolved (172) </a></strong></li>
 									<li style="display: block;"><strong><a  href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon4.png"/><span class="f_link">Favorite (<?php echo $fUserCount; ?>)</span> </a></strong></li>
-									<li><strong><a  href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon4.png"/><span class="c_link">Contacts(<?php echo count($totalSubscriber_schat); ?>)</span></a></strong></li>
+									<li><strong><a  href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon4.png"/><span class="c_link">Contacts()</span></a></strong></li>
 									
 									<li style="display: none;"><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon5.png"/>Snoozed (28)</a></strong></li>
 								</ul>

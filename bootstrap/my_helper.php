@@ -340,8 +340,8 @@ if (!function_exists('getMyContact')) {
  */
 if (!function_exists('getsms_subscriber')) {
 
-    function getsms_subscriber($room) {
-        $msgDetails = \App\Models\Admin\SmsChatModel::getSMSFavouriteByUserId($room);
+    function getsms_subscriber($userid) {
+        $msgDetails = \App\Models\Admin\SmsChatModel::getSMSFavouriteByUserId($userid);
         return $msgDetails;
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 foreach ($favouriteUserData as $key => $value) {
     $userDataDetail = getUserbyPhone($value->fav_user_id);
     $phoneNumber = $value->fav_user_id;
