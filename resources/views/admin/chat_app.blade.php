@@ -2578,6 +2578,8 @@ if(window_witdh > 1600)
 		let file = files[i];
 		formData.append('files[]', file);
 		}
+
+		formData.append('_token', '{{csrf_token()}}');
 		
 		fetch('<?php echo base_url("/dropzone/upload_s3_attachment/" . $loginUserData->id . "/smschat"); ?>', { 
 		method: 'POST',
@@ -2601,7 +2603,7 @@ if(window_witdh > 1600)
 					url: "{{ url('admin/smschat/sendMsg') }}",
 					
 					type: "POST",
-					data: {'phoneNo' : userPhoneNo, 'messageContent' : msg,'smstoken': newToken, 'moduleName' : 'chat', 'media_type': 'video', 'videoUrl': 'send'},
+					data: {'phoneNo' : userPhoneNo, 'messageContent' : msg,'smstoken': newToken, 'moduleName' : 'chat', 'media_type': 'video', 'videoUrl': 'send',  _token: '{{csrf_token()}}'},
 					dataType: "html",
 					success: function (data) {
 					SMSChatData(userPhoneNo,userPhoneNo,'');
@@ -2619,7 +2621,7 @@ if(window_witdh > 1600)
 					url: "{{ url('admin/smschat/sendMMS') }}",
 					
 					type: "POST",
-					data: {'phoneNo' : userPhoneNo, 'messageContent' : msg,'smstoken': newToken, 'moduleName' : 'chat', 'media_type': 'image', 'videoUrl':''},
+					data: {'phoneNo' : userPhoneNo, 'messageContent' : msg,'smstoken': newToken, 'moduleName' : 'chat', 'media_type': 'image', 'videoUrl':'',  _token: '{{csrf_token()}}'},
 					dataType: "html",
 					success: function (data) {
 					SMSChatData(userPhoneNo,userPhoneNo,'');
