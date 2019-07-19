@@ -264,41 +264,16 @@ $brandboostID = '';
 								          ?></div>
 								        </div></td>
 
-										<!-- <td>
-											<div class="media-left">
-												<div class="pt-5"><span class="text-default text-semibold"><?php echo $aUser->mobile == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($aUser->mobile); ?></span></div>
-												<div class="text-muted text-size-small"><?php echo $aUser->mobile != '' ? 'Chat' : ''; ?></div>
-											</div>
-										</td> -->
-
 										<td><div class="media-left media-middle"> <a class="icons" href="#"><i class="icon-display4 txt_purple"></i></a> </div>
 								        <div class="media-left">
 								          <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo ucwords($data->review_type); ?></a></div>
 								        </div></td>
-																			
-										<!-- <td>
-											<div class="media-left text-right">
-												<div class="pt-5"><span class="text-default text-semibold dark"><?php echo ucfirst($data->tracksubscribertype); ?></span></div>
-											</div>
-											<div class="media-left media-middle brig pr10"> 
-												<span class="icons s28">
-													<?php if(ucfirst($data->tracksubscribertype) == 'Sms'){ ?>
-														<img src="<?php echo base_url(); ?>assets/images/icon_round_sms.png" class="img-circle img-xs" alt="">
-														<?php } else{ ?>
-														<img src="<?php echo base_url(); ?>assets/images/icon_round_email.png" class="img-circle img-xs" alt="">
-													<?php } ?>
-												</span> 
-											</div>
-										</td> -->
-
+										
 										<td><div class="media-left media-middle"> <a class="icons" href="javascript:void();">
 								      	<?php if(ucfirst($data->tracksubscribertype) == 'Sms'){ ?>
                                                    <i class="icon-mobile2 txt_green"></i>
-                                                <!--  <img src="/assets/images/icon_round_sms.png" class="img-circle img-xs" alt=""> -->
 											<?php } else{ ?>
-                                           
                                                    <i class="icon-envelop txt_blue"></i>
-                                                <!--  <img src="/assets/images/icon_round_email.png" class="img-circle img-xs" alt=""> -->
 										<?php } ?>
 								      </a> </div>
 								        <div class="media-left">
@@ -357,7 +332,6 @@ $brandboostID = '';
 																echo "<li><a  subscriberId='" . $data->subscriberid . "' change_status = '1' class='chg_status'><i class='icon-file-locked'></i> Active</a></li>";
 															}
 														?>
-														<!--  <li><a href="javascript:void(0);" class="editSubscriber" subscriberid="<?php echo $data->subscriberid; ?>"><i class="icon-gear"></i> Edit</a></li> -->
 														
 														<li><a class="deleteSubscriber" href="javascript:void(0);" subscriberid="<?php echo $data->subscriberid; ?>" recordId="<?php echo $data->trackinglogid; ?>"><i class="icon-trash"></i> Delete</a></li>
 														
@@ -404,11 +378,6 @@ $brandboostID = '';
                                                             Looks Like You Don’t Have Any Review Request Yet <img src="<?php echo base_url('assets/images/smiley.png'); ?>"> <br>
                                                             Lets Create Your First Review Request.
                                                         </h5>
-
-                                                        <?php //if ($canWrite): ?>
-                                                            <!-- <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addOnSiteReview" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add On Site Review</button> -->
-                                                        <?php //endif; ?>
-
                                                     </div>
                                                 </div>
                                             </div>
