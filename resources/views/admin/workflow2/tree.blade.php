@@ -15,7 +15,7 @@ $bAnyMainEventExist = false;
 $oFinal = array();
 
 //In order to maintain order of the events
-if (!empty($oEvents)) {
+if ($oEvents->isNotEmpty()) {
     $oFinal[] = $oEvents[0];
     $eventID = $oEvents[0]->id;
     foreach ($oEvents as $key => $value) {
@@ -161,16 +161,12 @@ $aSelectedContacts = array();
                                             }
 
                                             $oCampaignData = App\Models\Admin\WorkflowModel::getEventCampaign($oEvent->id, $moduleName);
-                                            $oCampaign = !empty($oCampaignData[0]) ?  $oCampaignData[0] : '';
                                             
-                                            if(empty($oCampaign)){
-                                                $oCampaign = new stdClass();
-                                                $oCampaign->id = '';
+                                            if($oCampaignData->isNotEmpty()){
                                                 
+                                                $oCampaign = $oCampaignData[0];
                                             }
-
-                                            //$oCampaign = $oCampaignData[0];
-                                            //pre($oCampaign);
+                                                                                       
                                            
                                             $isSMSAdded = $isEmailAdded = false;
                                             $previousID = $oEvent->previous_event_id;

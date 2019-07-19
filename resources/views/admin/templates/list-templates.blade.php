@@ -1,3 +1,15 @@
+<?php
+$moduleName = !(empty($moduleName)) ?  $moduleName : '';
+$moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
+
+?>
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <!-- Content area -->
 <style>
     .template_preview.sms .custmo_checkbox {display:none !important;}
@@ -240,6 +252,6 @@
     });
 
 </script>
-
+@endsection
 
 

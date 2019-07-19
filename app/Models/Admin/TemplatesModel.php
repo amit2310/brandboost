@@ -121,7 +121,7 @@ class TemplatesModel extends Model {
      */
     public function addUserTemplate($aData) {
         $insert_id = DB::table('tbl_common_templates')->insertGetId($aData);
-        return $inset_id;
+        return $insert_id;
     }
 
     /**

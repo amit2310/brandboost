@@ -4,7 +4,10 @@ list($canReadAna, $canWriteAna) = fetchPermissions('Analytics');
 $bAnyMainEventExist = false;
 
 //In order to maintain order of the events
-if (!empty($oEvents)) {
+$oFinal = array();
+$oEvent = new stdClass();
+$previousID =  $currentID ='';
+if ($oEvents->isNotEmpty()) {
     $oFinal[] = $oEvents[0];
     $eventID = $oEvents[0]->id;
     foreach ($oEvents as $key => $value) {
@@ -18,7 +21,7 @@ if (!empty($oEvents)) {
     }
 }
 
-$oEvents = $oFinal;
+$oEvents = $oFinal; //Now its converted into the array
 
 if (!empty($oEvents)) {
     foreach ($oEvents as $oEvent) {
@@ -111,12 +114,11 @@ if (!empty($aSelectedContacts)) {
             }
 
             $oCampaignData = $mWorkflow->getEventCampaign($oEvent->id, $moduleName);
-            $oCampaign = !empty($oCampaignData[0]) ?  $oCampaignData[0] : '';
-            if (empty($oCampaign)) {
-                $oCampaign = new stdClass();
-                $oCampaign->id = '';
-            }            
-            //pre($oCampaign);
+            
+            if($oCampaignData->isNotEmpty()){
+                $oCampaign = $oCampaignData[0];
+            }
+           
             $isSMSAdded = $isEmailAdded = false;
             $previousID = $oEvent->previous_event_id;
             $currentID = $oEvent->id;

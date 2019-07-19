@@ -44,12 +44,12 @@ class SettingsModel extends Model {
      */
     public static function getSlugdetails($slug) {
         $oData = DB::table('tbl_notifications_manager')
-                ->where('tbl_notifications_manager', $slug)
+                ->where('tbl_notifications_manager.notification_slug', $slug)
                 ->get();
         return $oData;
     }
-    
-     /**
+
+    /**
      * Used to get current credit usage of a client
      * @param type $clientID
      * @return type
@@ -60,7 +60,7 @@ class SettingsModel extends Model {
                 ->first();
         return $oData;
     }
-    
+
     /**
      * Used to save client usage
      * @param type $clientID
@@ -71,18 +71,16 @@ class SettingsModel extends Model {
                 ->insert($aData);
         return $oData;
     }
-    
+
     /**
      * Used to save client usage
      * @param type $clientID
      * @return type
      */
     public static function runCustomQuery($sql) {
-        $oData = DB::raw($sql);                
+        $oData = DB::raw($sql);
         return $oData;
     }
-    
-    
 
     public function getallowNotification() {
 
@@ -119,7 +117,6 @@ class SettingsModel extends Model {
         }
     }
 
-   
     // this function is user to get the remaining credit value 
     public function getremainingCredits($clientID) {
         $this->db->where("user_id", $clientID);
@@ -269,7 +266,7 @@ class SettingsModel extends Model {
 
         $oData = DB::table('tbl_notifications_permission_entry')
                 ->where('user_id', $userID)
-                ->where('notification_slug', slug)
+                ->where('notification_slug', $slug)
                 ->get();
         return $oData;
     }
@@ -493,16 +490,19 @@ class SettingsModel extends Model {
         return false;
     }
 
-    public function getEmailNotificationTemplates($id = "") {
-        if ($id > 0) {
-            $this->db->where("id", $id);
-        }
-        $this->db->order_by("id", "DESC");
-        $result = $this->db->get("tbl_notifications_email_templates");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+    /**
+     * Used to get notification templates
+     * @param type $id
+     * @return type
+     */
+    public static function getEmailNotificationTemplates($id = "") {
+        $oData = DB::table('tbl_notifications_email_templates')
+                ->when(($id>0), function($query) use ($loginid){
+                    return $query->where('id', $id);
+                })
+                ->orderBy('id', 'desc')
+                ->get();
+        return $oData;        
     }
 
     public function getEmailNotificationContent($id = "") {

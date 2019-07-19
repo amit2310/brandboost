@@ -31,7 +31,7 @@ $userID = $aUser->id;
             <p><i class=""><img src="<?php echo base_url(); ?>assets/images/plus_icon_grey.png"/></i> &nbsp;  Create new email</p>
             <p><i class=""><img src="<?php echo base_url(); ?>assets/images/list_icon_grey.png"/></i> &nbsp;  Manage existing email</p>
             <?php if ($moduleName == 'broadcast' || $moduleName == 'automation' || $moduleName == 'email'): ?>
-            <p><a href="javascript:void(0);" id="wf_email_menu_edit" class="wf_editCampaign" campaign_id="<?php echo $oCampaign->id; ?>" moduleName="<?php echo $moduleName; ?>" moduleUnitId='<?php echo $moduleUnitID; ?>' campaignType="email"><i class=""><img src="<?php echo base_url(); ?>assets/images/list_icon_grey.png"/></i> &nbsp;  Edit Email</a></p>
+            <p><a href="javascript:void(0);" id="wf_email_menu_edit" class="wf_editCampaign" campaign_id="<?php echo (!empty($oCampaign)) ? $oCampaign->id : 0; ?>" moduleName="<?php echo $moduleName; ?>" moduleUnitId='<?php echo $moduleUnitID; ?>' campaignType="email"><i class=""><img src="<?php echo base_url(); ?>assets/images/list_icon_grey.png"/></i> &nbsp;  Edit Email</a></p>
             <?php endif; ?>
             <p><a href="javascript:void(0);" id="wf_email_preview" class="wf_previewCampaign" campaignType="email" data-moduleaccountid ="<?php echo $moduleUnitID;?>"><i class=""><img src="<?php echo base_url(); ?>assets/images/list_icon_grey.png"/></i> &nbsp;  Preview Email</a></p>
             <p><a href="javascript:void(0);" id="wf_email_testEmailCtr"  campaignType="email"><i class=""><img src="<?php echo base_url(); ?>assets/images/list_icon_grey.png"/></i> &nbsp;  Send Test Email</a>

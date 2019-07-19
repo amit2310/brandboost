@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <style>
     .app-loader {
         display: flex;
@@ -301,6 +308,6 @@
     });
 
 </script>
-
+@endsection
 
 

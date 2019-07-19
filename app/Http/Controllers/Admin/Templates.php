@@ -44,7 +44,7 @@ class Templates extends Controller {
             'templateType' => 'email',
             'method' => 'manage'
         );
-        $this->template->load('admin/admin_template_new', 'admin/templates/list-templates', $aData);
+        return view('admin.templates.list-templates', $aData);
     }
 
     
@@ -162,7 +162,7 @@ class Templates extends Controller {
      * 
      * @param type $idUsed to edit email/sms template
      */
-    public function editTemplate($id) {
+    public function edit($id) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -190,9 +190,10 @@ class Templates extends Controller {
             'pagename' => $breadcrumb,
             'templateID' => $id,
             'oTemplate' => $oTemplate,
-            'templateType' => $templateType
+            'templateType' => $templateType,
+            'oUser' => $aUser
         );
-        $this->template->load('admin/admin_template_new', 'admin/templates/edit', $aData);
+        return view('admin.templates.edit', $aData);
     }
 
     

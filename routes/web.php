@@ -165,4 +165,5 @@ Route::post('admin/templates/deleteTemplate','Admin\Templates@deleteTemplate');
 Route::get('admin/templates/saveThumbnail','Admin\Templates@saveThumbnail');
 Route::post('admin/templates/updateThumbnail','Admin\Templates@updateThumbnail');
 Route::get('admin/templates/brandboostEmailTagReplace','Admin\Templates@brandboostEmailTagReplace');
+Route::get('admin/templates/edit/{id}','Admin\Templates@edit');
 

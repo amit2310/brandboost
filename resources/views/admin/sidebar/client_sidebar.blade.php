@@ -36,6 +36,14 @@ $pageName = \Request::segment(2);
 $pageSeName = \Request::segment(3);
 $pageThName = \Request::segment(4);
 
+//Initialize variables
+$oBroadcast = !(empty($oBroadcast)) ? $oBroadcast : '';
+
+if(empty($oBroadcast)){
+    $oBroadcast = new stdClass();
+    $oBroadcast->campaign_type = '';
+}
+
 ?>
 <style>
     /*.listt1, .listt2{display: none;}*/
