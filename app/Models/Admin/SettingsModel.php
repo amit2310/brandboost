@@ -71,20 +71,6 @@ class SettingsModel extends Model {
                 ->insert($aData);
         return $oData;
     }
-
-    /**
-     * Get file size limit
-     * @param type $cName
-     * @return type
-     */
-    public static function getFilesizeSettings($cName) {
-
-        $oData = DB::table('tbl_filesize_settings')
-                ->where('name', $cName)
-                ->first();
-
-        return $oData->value;
-    }
     
     /**
      * Used to save client usage
