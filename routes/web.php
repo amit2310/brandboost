@@ -34,18 +34,26 @@ Route::post('admin/modules/emails/publishAutomationEvent','Admin\Modules\Emails@
 //Onsite and Offsite Modules
 Route::get('admin/brandboost/onsite_overview','Admin\Brandboost@onsiteOverview');
 Route::get('admin/brandboost/onsite','Admin\Brandboost@onsite');
-Route::get('admin/questions','Admin\Questions@index');
 Route::get('admin/brandboost/review_request/{type}','Admin\Brandboost@reviewRequest');
 Route::get('admin/brandboost/onsite_setup/{id}','Admin\Brandboost@onsiteSetup');
 Route::get('admin/brandboost/reviews/','Admin\Brandboost@reviews');
 Route::get('admin/brandboost/reviews/{id}','Admin\Brandboost@reviews');
 Route::get('admin/brandboost/media/','Admin\Brandboost@media');
-Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');
-Route::post('admin/reviews/updateReviewCategory/','Admin\Reviews@updateReviewCategory');
-Route::post('admin/reviews/deleteReview/','Admin\Reviews@deleteReview');
 Route::post('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
 Route::get('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
 
+
+Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');
+Route::post('admin/reviews/updateReviewCategory/','Admin\Reviews@updateReviewCategory');
+Route::post('admin/reviews/deleteReview/','Admin\Reviews@deleteReview');
+Route::post('admin/reviews/saveReviewNotes/','Admin\Reviews@saveReviewNotes');
+Route::post('admin/reviews/deleteReviewNote/','Admin\Reviews@deleteReviewNote');
+
+
+Route::post('admin/comments/add_comment/','Admin\Comments@addComment');
+
+
+Route::get('admin/questions','Admin\Questions@index');
 
 //chat module
 Route::get('admin/webchat','Admin\WebChat@index');
