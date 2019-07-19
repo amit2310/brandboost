@@ -902,25 +902,32 @@ if (!function_exists('updateCreditUsageOLD')) {
 
 
 
+/**
+* Get uploaded file size
+*/
 if (!function_exists('getFileSize')) {
 
-    function getFileSize($oName) {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/Setting_model", "mSetting");
-        $result = $CI->mSetting->getFilesizeSettings($oName);
-        return $result;
-    }
+   function getFileSize($oName) {
+       $oData = \App\Models\Admin\SettingsModel::getFilesizeSettings($oName);
+       return $oData;
+   }
 
 }
+
+/**
+* this function is used to conver the file to bytes
+*/
 
 
 if (!function_exists('FileSizeConvertToBytes')) {
 
-    function FileSizeConvertToBytes($Megabytes) {
-        return $Megabytes * 1048576;
-    }
+   function FileSizeConvertToBytes($Megabytes) {
+       return $Megabytes * 1048576;
+   }
 
 }
+
+
 
 if (!function_exists('FileSizeConvert')) {
 
@@ -1251,17 +1258,18 @@ if (!function_exists('getMembershipUpsell')) {
 
 }
 
+/**
+    * Get user detail by user id
+    * @param type $userId
+    * @return type object
+    */
+
 function getUserDetailsByUserID($userId) {
-
-    $aUser = array();
-    $CI = & get_instance();
-    $CI->load->model("admin/Users_model", "mmUser");
-    $aUser = '';
-
-    if ($userId > 0) {
-        $aUser = $CI->mmUser->getUserInfo($userId);
-    }
-    return $aUser;
+   $aUser = '';
+   if ($userId > 0) {
+       $aUser = $oData = \App\Models\Admin\UsersModel::getUserInfo($userId);
+   }
+   return $aUser;
 }
 
 if (!function_exists('user_account')) {
