@@ -25,6 +25,22 @@ class SettingsModel extends Model {
     }
 
     /**
+    * Get file size limit
+    * @param type $cName
+    * @return type
+    */
+   public static function getFilesizeSettings($cName) {
+
+       $oData = DB::table('tbl_filesize_settings')
+               ->where('name', $cName)
+               ->first();
+
+       return $oData->value;
+   }
+
+   
+
+    /**
      * This function used to get notification related data
      * @param type $userID
      * @return type

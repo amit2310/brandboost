@@ -639,10 +639,13 @@ $(document).ready(function() {
 			for (let i = 0; i < files.length; i++) {
 				let file = files[i];
 				formData.append('files[]', file);
+
 			}
-			
+
+			formData.append('_token', '{{csrf_token()}}');
+
 			fetch('<?php echo base_url("/dropzone/upload_s3_attachment/" . $loginUserData->id . "/smschat"); ?>', { 
-				method: 'GET',
+				method: 'POST',
 				body: formData // This is your file object
 			}).then(
 			response => response.json() // if the response is a JSON object
