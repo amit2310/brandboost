@@ -38,17 +38,16 @@ $activeOnlyweb = activeOnlyweb($loginMember); // login user id
 
 // loop for old chats by the user id 
 $oldchat_list = activeOnlywebOldchatlist($loginMember);
-
 // loop for users who are waiting by the user id 
 $WaitingChatlist = WaitingChatlist($loginMember);
-$activeChatCount = count((array)$activeOnlyweb);
-
 // get shortcuts  the user id 
 $shortcuts = getchatshortcut($loginMember);
-
 // get sFavlist by the user id 
 $Favorites_list = getFavlist($loginMember);
-$FavoritesCount = count($Favorites_list);
+// get unassign chat 
+$unassignChat = getTeamUnAssignDataHelper();
+// get assign chat 
+$assignChat = getTeamAssignDataHelper($loginMember);
 
 // loop to get the first user in the loop 
 $Counterflag = 0;
@@ -126,11 +125,11 @@ $popupToken = !empty($popupToken) ? $popupToken : '';
 							<div class="tdropdown ml0">
 								<a  style="margin:0!important;" class="dropdown-toggle fsize12 txt_grey" data-toggle="dropdown" aria-expanded="false"><span style="" class="t_web_main allChatShow" id="toogleDivName">All</span><i class="icon-arrow-down22"></i></a>
 								<ul style="right: 0px!important; margin-top: 25px; left: -20px;" class="dropdown-menu dropdown-menu-left chat_dropdown">
-									<li><strong><a  class="active" href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon1.png"/> <b class="smallbr allChatShow">All (<?php echo $activeChatCount; ?>)</b> </a></strong></li>
-									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="unTab unassigned_show">Unassigned (<?php echo $unassignedChat; ?>) </b></a></strong></li>
-									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="YouTab assigned_show_<?php echo $loggedYou; ?>">You (<?php echo $assignedChat; ?>) </b></a></strong></li>
+									<li><strong><a  class="active" href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon1.png"/> <b class="smallbr allChatShow">All (<?php echo $activeOnlyweb->count(); ?>)</b> </a></strong></li>
+									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="unTab unassigned_show">Unassigned (<?php echo $unassignChat->count(); ?>) </b></a></strong></li>
+									<li><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="YouTab assigned_show_<?php echo $loggedYou; ?>">You (<?php echo $assignChat->count(); ?>) </b></a></strong></li>
 
-									<li style="display: block;"><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="FavTab <?php echo $loggedYou; ?>">Favorites (<?php echo $FavoritesCount; ?>) </b></a></strong></li>
+									<li style="display: block;"><strong><a href="javascript:void(0)"><img class="small" src="/assets/images/cd_icon2.png"/><b class="FavTab <?php echo $loggedYou; ?>">Favorites (<?php echo $Favorites_list->count(); ?>) </b></a></strong></li>
 
 									
 									
@@ -179,17 +178,17 @@ $popupToken = !empty($popupToken) ? $popupToken : '';
                             
 							
 							<ul class="conversation_list">
-								<li><a href="javascript:void(0)" class="showList smallbr allChatShow active">All (<?php echo $activeChatCount; ?>)</a></li>
-								<li><a href="javascript:void(0)" class="showList unTab unassigned_show">Unassigned (<?php echo $unassignedChat; ?>) </a></li>
-								<li><a href="javascript:void(0)" class="showList YouTab assigned_show_<?php echo $loggedYou; ?>"> You (<?php echo $assignedChat; ?>) </a></li>
+								<li><a href="javascript:void(0)" class="showList smallbr allChatShow active">All (<?php echo $activeOnlyweb->count(); ?>)</a></li>
+								<li><a href="javascript:void(0)" class="showList unTab unassigned_show">Unassigned (<?php echo $unassignChat->count(); ?>) </a></li>
+								<li><a href="javascript:void(0)" class="showList YouTab assigned_show_<?php echo $loggedYou; ?>"> You (<?php echo $assignChat->count(); ?>) </a></li>
 							</ul>
 							
 							
 							
 							
-							<input type="hidden" name="allChatC" class="allChatC" value="<?php echo $activeChatCount; ?>" />
-							<input type="hidden" name="unassigned" class="unassigned_chat" value="<?php echo $unassignedChat; ?>">
-							<input type="hidden" name="assigned" class="assigned_chat" id="assigned_chat_<?php echo $loggedYou; ?>" value="<?php echo $assignedChat; ?>">
+							<input type="hidden" name="allChatC" class="allChatC" value="<?php echo $activeOnlyweb->count(); ?>" />
+							<input type="hidden" name="unassigned" class="unassigned_chat" value="<?php echo $unassignChat->count(); ?>">
+							<input type="hidden" name="assigned" class="assigned_chat" id="assigned_chat_<?php echo $loggedYou; ?>" value="<?php echo $assignChat->count(); ?>">
 							<?php //echo $loggedYou;
  ?>
 							
@@ -1317,7 +1316,7 @@ function loadMessageChat(userId,token,clickvalue=null)
      		$('#Webonly .f_list').hide();
      		$('.conversation_list li a').removeClass('active');
      		$('.conversation_list .allChatShow').addClass('active');
-		$('#Webonly .t_web_main').html('All');
+		$('#Webonly .t_web_main').html('All <?php echo $activeOnlyweb->count(); ?>');
 			
 		});
 	
@@ -1375,7 +1374,7 @@ function loadMessageChat(userId,token,clickvalue=null)
      		$('#Webonly .un_list').hide();
      		$('#Webonly .you_list').hide();
      		$('#Webonly .f_list').show();
-			$('#Webonly .t_web_main').html('Favorites');
+			$('#Webonly .t_web_main').html('Favorites <?php echo $Favorites_list->count(); ?>');
 		
 			
 		});
@@ -1403,7 +1402,7 @@ function loadMessageChat(userId,token,clickvalue=null)
      		$('#Webonly .f_list').hide();
      		$('.conversation_list li a').removeClass('active');
      		$('.conversation_list .unassigned_show').addClass('active');
-			$('#Webonly .t_web_main').html('(Unassigned)');
+			$('#Webonly .t_web_main').html('Unassigned (<?php echo $unassignChat->count(); ?>)');
 		
 			
 		});
@@ -1428,7 +1427,7 @@ function loadMessageChat(userId,token,clickvalue=null)
      		$('#Webonly .f_list').hide();
      		$('.conversation_list li a').removeClass('active');
      		$('.conversation_list .YouTab').addClass('active');
-			$('#Webonly .t_web_main').html('You (<?php echo $assignedChat; ?>)');
+			$('#Webonly .t_web_main').html('You (<?php echo $assignChat->count(); ?>)');
 		
 			
 		});

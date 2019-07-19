@@ -3752,22 +3752,36 @@ function mobileNoFormatChat($mobileNo) {
 $totalSubscriber_schat = getMyContact();
 //$fUser = getsms_subscriber($loginUserData->id);
 //pre($fUser);
+
+// sms favorite user listing 
 $fUser = getsms_subscriber($loginUserData->id);
+
+// old web chat listing 
 $oldchat_list = activeOnlywebOldchatlist($loginUserData->id);
 $WaitingChatlist = WaitingChatlist($loginUserData->id);
-$fUserCount = count((array)$fUser);
+
+/// active webchat users 
 $activeOnlyweb = activeOnlyweb($loginUserData->id);
-$activeChatCount = count((array)$activeOnlyweb);
+
+// assign webchat listing 
 $asginChatlist = getTeamAssignDataHelper($teamLogin_id);
+
+// unassign webchat listing 
 $unassignChatlist = getTeamUnAssignDataHelper();
+
+// web favorite user listing 
 $Favorites_list = getFavlist($loginUserData->id);
+
 /* sms */
+// newest sms chat listing 
 $a_s_list = activeOnlysms($loginUserData->mobile); // here we place client twilio number
+
+// sms oldest chat listing 
 $o_s_list = SmsOldest($loginUserData->mobile);
-$w_s_list = SmsWaitlinglonest($loginUserData->mobile);
-$activeChatSmsCount = count((array)$a_s_list);
-//$favouriteUserDataCount = count((array)$favouriteUserData);
+
 $getactiveChatboxlisting = getactiveChatbox($loginUserData->id);
+
+
 if ($isLoggedInTeam) {
     $hasweb_access = getMemberchatpermission($isLoggedInTeam);
     $has_web = $hasweb_access->web_chat;
@@ -3876,7 +3890,7 @@ if ($isLoggedInTeam) {
 							</div> 
 							<div class="clearfix"></div>
 							
-							@include('admin.chat_app.common.web_header', array('Favorites_list' => '7', 'activeChatCount' => '9', 'fUserCount' => 10, 'totalSubscriber_schat' => '20', 'assignedChat' => count($asginChatlist), 'unassignedChat' => count($unassignChatlist), 'loggedYou' => $teamLogin_id))
+							@include('admin.chat_app.common.web_header', array('FavUsers' => $Favorites_list->count(), 'activeChatCount' => $activeOnlyweb->count(), 'assignedChat' => $asginChatlist->count(), 'unassignedChat' => $unassignChatlist->count(), 'loggedYou' => $teamLogin_id))
 							
 							<div class="clearfix"></div>
 							
@@ -3976,7 +3990,7 @@ if ($isLoggedInTeam) {
     } ?>
 							</div> 
 							
-							@include('admin.chat_app.common.sms_header', array('activeChatSmsCount' => $activeChatSmsCount, 'fUserCount' => $fUserCount, 'totalSubscriber_schat' => $totalSubscriber_schat))
+							@include('admin.chat_app.common.sms_header', array('activeChatSmsCount' =>count($a_s_list) , 'fUserCount' => $fUser->count()))
 							
 							<div class="contact_lists_outer" style="height: 410px; padding: 0px; overflow:auto; margin-bottom: 3px!important;">
 								
@@ -4265,7 +4279,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('#small_web_MainsearchChatMsg').show();
 					$('.SmallWebchat .fav_list_web_small').hide();
 
-					$('.SmallWebchat .t_web_main').html('All (5)');
+					$('.SmallWebchat .t_web_main').html('All (<?php echo $activeOnlyweb->count(); ?>)');
 					
 				});
 				
@@ -4278,7 +4292,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 						$('.SmallWebchat .un_list_small').hide();
      		         $('.SmallWebchat .you_list_small').hide();
      		         $('.SmallWebchat .fav_list_web_small').hide();
-					$('.SmallWebchat .t_web_small').html('All (<?php echo $activeChatCount; ?>)');
+					$('.SmallWebchat .t_web_small').html('All ()');
 					$('.SmallWebchat .f_web_small').html('Newest'); 
 					
 				});
@@ -4302,7 +4316,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('.SmallWebchat .fav_list_web_small').show();
 					$('.SmallWebchat .un_list_small').hide();
 					$('.SmallWebchat .you_list_small').hide();
-					$('.SmallWebchat .t_web_main').html('Favorites');
+					$('.SmallWebchat .t_web_main').html('Favorites (<?php echo $Favorites_list->count(); ?>)');
 					//$('.SmallWebchat .f_web_small').html('Oldest'); 
 
 					});
@@ -4327,7 +4341,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 						$('.SmallWebchat .un_list_small').show();
      		         $('.SmallWebchat .you_list_small').hide();
      		         $('.SmallWebchat .fav_list_web_small').hide();
-					$('.SmallWebchat .t_web_main').html('Unassigned (5)');
+					$('.SmallWebchat .t_web_main').html('Unassigned (<?php echo $unassignChatlist->count(); ?>)');
 					
 				});
 
@@ -4351,7 +4365,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('.SmallWebchat .fav_list_web_small').hide();
 				    $('.SmallWebchat .un_list_small').hide();
      		         $('.SmallWebchat .you_list_small').show();
-					$('.SmallWebchat .t_web_main').html('You (<?php echo count($asginChatlist); ?>)');
+					$('.SmallWebchat .t_web_main').html('You (<?php echo $asginChatlist->count(); ?>)');
 					
 				});
 				
@@ -4391,7 +4405,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('.SmallSmschat .o_list').hide();
 					$('.SmallSmschat .w_list').hide();
 					$('.SmallSmschat .f_list').show();
-					$('.SmallSmschat .t_sms_small').html('Favorite(5)');
+					$('.SmallSmschat .t_sms_small').html('Favorite(<?php echo $fUser->count(); ?>)');
 					
 				});
 				
@@ -4409,7 +4423,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('#small_sms_webContactBox').hide();
                     $('#small_sms_MainsearchChatMsg').show();
 
-					$('.SmallSmschat .t_sms_small').html('All (<?php echo $activeChatCount; ?>)');
+					$('.SmallSmschat .t_sms_small').html('All ()');
 					
 				});
 				
@@ -4426,7 +4440,7 @@ $('#small_web_AjaxSearchWeb').html(data);
 					$('#small_sms_webContactBox').hide();
                     $('#small_sms_MainsearchChatMsg').show();
 
-					$('.SmallSmschat .t_sms_small').html('All (<?php echo $activeChatCount; ?>)');
+					$('.SmallSmschat .t_sms_small').html('All ()');
 					$('.SmallSmschat .f_sms_small').html('Newest'); 
 					
 				});
