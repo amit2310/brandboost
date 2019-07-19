@@ -91,6 +91,7 @@ Route::post('admin/smschat/listingSmsNotes','Admin\SmsChat@listingSmsNotes');
 Route::post('admin/smschat/shortcutListing','Admin\SmsChat@shortcutListing');
 Route::post('admin/smschat/small_shortcutListing','Admin\SmsChat@small_shortcutListing');
 Route::post('admin/smschat/small_shortcutListing_sms','Admin\SmsChat@small_shortcutListing_sms');
+Route::post('admin/smschat/sendMMS','Admin\SmsChat@sendMMS');
 
 
 //Profile module

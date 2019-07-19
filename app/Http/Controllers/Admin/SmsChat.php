@@ -295,6 +295,81 @@ class SmsChat extends Controller {
     }
 
 
+
+
+     public function sendMMS() {
+        $response = array();
+        $post = $this->input->post();
+        $msgSendUserId = $post['userId'];
+        $phoneNo = $this->phone_display_custom($post['phoneNo']);
+        $messageContent = $post['messageContent'];
+        $moduleName = $post['moduleName'];
+        $smstoken = $post['smstoken'];
+        $media_type = $post['media_type'];
+        $loginUserData = getLoggedUser();
+
+        $aTwilioAc = $this->mInviter->getTwilioAccount($loginUserData->id);
+        $sid = $aTwilioAc->account_sid;
+        $token = $aTwilioAc->account_token;
+        //$from = $this->phone_display_custom($aTwilioAc->contact_no);
+        $isLoggedInTeam = $this->session->userdata("team_user_id");
+        $aTwilioAc = $this->mInviter->getTwilioAccount($loginUserData->id);
+        $sid = $aTwilioAc->account_sid;
+        $token = $aTwilioAc->account_token;
+        $hasweb_access = getMemberchatpermission($isLoggedInTeam);
+        $media_url_show = '';
+
+        if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
+            if ($hasweb_access->bb_number != "") {
+                $from = $hasweb_access->bb_number;
+            } else {
+                $from = $aTwilioAc->contact_no;
+            }
+        } else {
+            $from = $aTwilioAc->contact_no;
+        }
+        
+        $aSmsData = array(
+            'sid' => $sid,
+            'token' => $token,
+            'to' => $phoneNo,
+            'from' => $from,
+            'msg' => $messageContent
+        );
+
+        $response = sendClinetMMS($aSmsData);
+        $aUsage = array(
+            'client_id' => $loginUserData->id,
+            'usage_type' => 'mms',
+            'direction' => 'outbound',
+            'content' => $messageContent,
+            'spend_to' => $phoneNo,
+            'segment' => 1,
+            'spend_from' => $from,
+            'module_name' => 'sms chat',
+            'module_unit_id' => ''
+        );
+        updateCreditUsage($aUsage);
+
+        $sData = array(
+            'to' => $phoneNo,
+            'from' => $from,
+            'token' => $smstoken,
+            'twilio_token' => $token,
+            'msg' => $messageContent,
+            'media_type' => $media_type,
+            'module_name' => $moduleName,
+            'created' => date("Y-m-d H:i:s")
+        );
+        $this->smsChat->addSmsChatData($sData);
+
+        if ($response)
+            return true;
+        else
+            return false;
+    }
+
+
     /**
      * this function is used to return subscriber list based on the input provided 
      * @return type
