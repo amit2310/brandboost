@@ -612,7 +612,6 @@ $(document).ready(function() {
 	
 	//  ######### media  file upload ############ //
 	$(document).on('click', '.smsContainer .smsFileAttechment', function() {
-
 			$('.smsContainer #mmsFile').attr('chatTo', $('.smsContainer #em_phone').val());
 			$('.smsContainer #mmsFile').trigger('click');
 		});
@@ -641,11 +640,9 @@ $(document).ready(function() {
 				let file = files[i];
 				formData.append('files[]', file);
 			}
-
-			formData.append('_token', '{{csrf_token()}}');
 			
 			fetch('<?php echo base_url("/dropzone/upload_s3_attachment/" . $loginUserData->id . "/smschat"); ?>', { 
-				method: 'POST',
+				method: 'GET',
 				body: formData // This is your file object
 			}).then(
 			response => response.json() // if the response is a JSON object
