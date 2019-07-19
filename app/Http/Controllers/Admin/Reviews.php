@@ -184,7 +184,19 @@ class Reviews extends Controller {
         exit;
     }
 	
-    public function index($campaignId) {
+	
+    /**
+     * Used to get review media images and videos
+     * @param type
+     */
+	public function getReviewMedia() {
+		$brandboostID = Input::post("brandboostID");
+        $aReviews = ReviewsModel::getCampaignReviews($brandboostID);
+		return view('admin.brandboost.listReviewMedia', array('aReviews'=>$aReviews))->render();
+    }
+	
+	
+	public function index($campaignId) {
         if (empty($campaignId)) {
             $aUser = getLoggedUser();
             $userID = $aUser->id;
@@ -571,14 +583,5 @@ class Reviews extends Controller {
 		echo json_encode($response);
 		exit;
 	}
-
-    public function getReviewMedia() {
-
-        $post = $this->input->post();
-        $brandboostID = $post['brandboostID'];
-        $aReviews = $this->mReviews->getCampaignReviews($brandboostID);
-        echo $this->load->view('admin/brandboost/listReviewMedia', array('aReviews'=>$aReviews), true);
-        exit;
-    }
 
 }

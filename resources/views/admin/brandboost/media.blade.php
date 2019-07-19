@@ -234,8 +234,6 @@
 									$mediaUrl = unserialize($review->media_url);
 									if(!empty($mediaUrl)) {
 										foreach ($mediaUrl as $value) {
-											$brandImgArray = unserialize($review->brand_img);
-											$brand_img = $brandImgArray[0]['media_url'];
 											if (in_array($value['media_url'], $allMediaImagesShow))
 											{
 												
@@ -243,13 +241,7 @@
 											else
 											{
 												$allMediaImagesShow[] = $value['media_url'];
-												if (empty($brand_img)) {
-													$imgSrc = base_url('assets/images/default_table_img2.png');
-													} 
-												else {
-													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $brand_img;
-												}
-
+												
 												$smilyImage = smilyRating($review->ratings);
 
 												$filePath = 'https://s3-us-west-2.amazonaws.com/brandboost.io/'.$value['media_url'];
@@ -269,7 +261,8 @@
 													$extFileImage = base_url('assets/images/file_blank.png');
 												}
 												
-												$getFileSize = getRemoteFileSize($filePath);
+												//$getFileSize = getRemoteFileSize($filePath);
+												$getFileSize = '512KB';
 
 											?>
 											<tr id="append-<?php echo $review->id.$incDel; ?>" class="selectedClass">
@@ -328,12 +321,6 @@
 													</div>
 												</td>
 												
-												<!-- <td>
-													<div class="media-left">
-														<div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo $review->mobile == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($review->mobile); ?></a></div>
-														<?php echo $review->mobile == '' ? '' : '<div class="text-muted text-size-small">Chat</div>'; ?>
-													</div>
-												</td> -->
 												<td>
 													<div class="media-left">
 														<div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo dataFormat($review->created); ?></a></div>
@@ -433,11 +420,6 @@
 								$mediaImageUrl = base_url('assets/images/media1.jpg');
 							}
 							
-							$brandImgArray = unserialize($review->brand_img);
-							$brand_img = $brandImgArray[0]['media_url'];
-							
-							
-							
 							if (in_array($value['media_url'], $allMediaImagesShow))
 							{
 								
@@ -446,11 +428,6 @@
 							{
 								$allMediaImagesShow[] = $value['media_url'];
 								
-								if (empty($brand_img)) {
-									$imgSrc = base_url('assets/images/default_table_img2.png');
-								} else {
-									$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $brand_img;
-								}
 								if($value['media_type'] == 'image')
 								{
 
@@ -478,7 +455,7 @@
 													</div>
 													<div class="caption">
 													   <p><?php echo $review->brand_title; ?></p>
-													   <p style="word-break: break-all;"><?php echo $value['media_name']; ?></p>
+													   <p style="word-break: break-all;"><?php //echo $value['media_name']; ?></p>
 													   <p class="text-size-small text-muted"><?php echo date('g:iA d M Y', strtotime($review->created)); ?></p>
 													</div>
 													<div class="caption bot">
@@ -496,22 +473,6 @@
 									  
 									</tr><?php
 
-										/* if($incMediaImg%4 == 0) {
-										 	?>
-										 					
-										 					</div> 
-										 				</div>
-										 			</td>
-										 			</tr>
-										 			<tr>
-										 			<td style="display: none;"></td>
-										 			<td style="display: none;"></td>
-										 			<td>
-										 				<div class="imagetab">
-															<div class="row">
-										 					
-										 	<?php
-										 }*/
 										 $incMediaImg++;
 										}
 										}
@@ -607,11 +568,6 @@
 								$mediaUrl = base_url('assets/images/flat/'.$videoImgArr[$rand].'.png');
 							}
 							
-							$brandImgArray = unserialize($review->brand_img);
-							$brand_img = $brandImgArray[0]['media_url'];
-							
-							
-							
 							if (in_array($value['media_url'], $allMediaImagesShow))
 							{
 								
@@ -621,12 +577,6 @@
 								$allMediaImagesShow[] = $value['media_url'];
 								
 								
-								
-								if (empty($brand_img)) {
-									$imgSrc = base_url('assets/images/default_table_img2.png');
-									} else {
-									$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $brand_img;
-								}
 								if($value['media_type'] != 'image')
 								{
 									$fileExt = pathinfo($value['media_url'], PATHINFO_EXTENSION);
@@ -664,7 +614,7 @@
 											</div>
 											<div class="caption">
 											   <p><?php echo $review->brand_title; ?></p>
-											   <p style="word-break: break-all;"><?php echo $value['media_name']; ?></p>
+											   <p style="word-break: break-all;"><?php //echo $value['media_name']; ?></p>
 											   <p class="text-size-small text-muted"><?php echo date('g:iA d M Y', strtotime($review->created)); ?></p>
 											</div>
 											<div class="caption bot">
