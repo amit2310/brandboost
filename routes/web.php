@@ -41,6 +41,7 @@ Route::get('admin/brandboost/reviews/{id}','Admin\Brandboost@reviews');
 Route::get('admin/brandboost/media/','Admin\Brandboost@media');
 Route::post('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
 Route::get('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
+Route::post('admin/brandboost/setTab/','Admin\Brandboost@setTab');
 
 
 Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');

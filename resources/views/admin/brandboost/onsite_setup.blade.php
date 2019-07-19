@@ -6,7 +6,7 @@
 
 @section('contents')
 <?php
-$feedbackResponseData = $feedbackResponse;
+$feedbackResponseData = $feedbackResponse[0];
 ?>
 <?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign');
 list($canReadCon, $canWriteCon) = fetchPermissions('Contacts');
@@ -27,7 +27,6 @@ $videoClass = '';
 /*if($_GET['type'] == 'media') {
     $setTab = 'Image';
 }*/
-
 
 if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
     $rs = 'active';
@@ -50,7 +49,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 } else if (trim($setTab) == 'Video' || $selectedTab == 'Video') {
     $videoClass = 'active';
 } else {
-    $rs = 'active';
+    $camp = 'active';
 }
 ?>
 <div class="content">
@@ -106,14 +105,13 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 	<div class="tab-content">
 
         <!--########################TAB 1 ##########################--> 
-        <?php //$this->load->view("admin/brandboost/campaign-tabs/onsite/onsite-reviews", array('reviews' => $reviews, 'aReviews' => $aReviews, 'brandboostData' => $brandboostData)); ?>
 		@include('admin.brandboost.campaign-tabs.onsite.onsite-reviews', array('reviews' => $reviews, 'aReviews' => $aReviews, 'brandboostData' => $brandboostData))
         <!--########################TAB 2 ##########################--> 
         <?php //$this->load->view("admin/brandboost/campaign-tabs/onsite/onsite-subscribers", array('campaign' => $campaign)); ?>
+		@include('admin.brandboost.campaign-tabs.onsite.onsite-subscribers', array('campaign' => $campaign))
         <!--########################TAB 3 ##########################-->
-        <?php //$this->load->view("admin/brandboost/campaign-tabs/onsite/onsite-preferences", array('camp' => $camp, 'offsites_links' => $offsites_links, 'feedbackResponseData' => $feedbackResponseData, 'brandboostData' => $brandboostData, 'bbProductsData' => $bbProductsData)); ?>
+		@include('admin.brandboost.campaign-tabs.onsite.onsite-preferences', array('camp' => $camp, 'feedbackResponseData' => $feedbackResponseData, 'brandboostData' => $brandboostData, 'bbProductsData' => $bbProductsData))
         <!--########################TAB 4 ##########################-->
-        <?php //$this->load->view("admin/brandboost/campaign-tabs/onsite/onsite-workflow-campaign-beta", array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents)); ?>
 		@include('admin.brandboost.campaign-tabs.onsite.onsite-workflow-campaign-beta', array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents))
         <!--########################TAB 5 ##########################--> 
         <?php //$this->load->view("admin/brandboost/campaign-tabs/onsite/onsite-image", array('aReviews' => $aReviews, 'imageClass' => $imageClass)); ?>
@@ -121,7 +119,6 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
     
 </div>	
 
-<?php //$this->load->view("admin/brandboost/campaign-tabs/onsite/onsite-popup"); ?>
 @include('admin.brandboost.campaign-tabs.onsite.onsite-popup')
 <?php //$this->load->view("admin/modals/workflow2/workflow-popup", array('oDefaultTemplates' => $oDefaultTemplates)); @include('admin.modals.workflow2.workflow-popup', array('oDefaultTemplates' => $oDefaultTemplates)) ?>
 
@@ -425,7 +422,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: "<?php echo base_url('/admin/brandboost/setTab'); ?>",
                 type: "POST",
-                data: {getActiveText: getActiveText},
+                data: {getActiveText: getActiveText, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == 'error') {
@@ -615,7 +612,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
         $.ajax({
             url: "<?php echo base_url('/admin/brandboost/setTab'); ?>",
             type: "POST",
-            data: {getActiveText: getActiveText},
+            data: {getActiveText: getActiveText, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (response) {
                 //window.location.href = window.location.href;
