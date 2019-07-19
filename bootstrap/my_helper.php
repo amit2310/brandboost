@@ -1786,12 +1786,9 @@ if (!function_exists('sendClinetMMS')) {
                 $toNum = $aData['to'];
                 $fromNum = $aData['from'];
                 $msg = $aData['msg'];
-                $trackURL = $aData['smsTrackURL'];
                 $client = new Client($sid, $token);
                 $aRequest = array('from' => $fromNum, 'mediaUrl' => $msg);
-                if (!empty($trackURL)) {
-                    $aRequest['statusCallback'] = $trackURL;
-                }
+                
                 if ($toNum != '' && $msg != '') {
 //echo 'testing data';
                     $res = $client->messages->create($toNum, $aRequest);

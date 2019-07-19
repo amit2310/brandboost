@@ -277,6 +277,7 @@ class SmsChat extends Controller {
                 //updateCreditUsage($aUsage);
                 
             }
+
             $phoneNo = numberForamt($phoneNo);
             $from = numberForamt($from);
             $aToken = $phoneNo + $from;
@@ -296,37 +297,40 @@ class SmsChat extends Controller {
 
 
 
+        /**
+        * this function is used send MMS messages
+        * @return type
+        */
+
 
      public function sendMMS() {
-        $response = array();
-        $post = $this->input->post();
-        $msgSendUserId = $post['userId'];
-        $phoneNo = $this->phone_display_custom($post['phoneNo']);
-        $messageContent = $post['messageContent'];
-        $moduleName = $post['moduleName'];
-        $smstoken = $post['smstoken'];
-        $media_type = $post['media_type'];
-        $loginUserData = getLoggedUser();
-
-        $aTwilioAc = $this->mInviter->getTwilioAccount($loginUserData->id);
+        
+        $isLoggedInTeam = Session::get("team_user_id");
+        $msgSendUserId = Input::post("userId");
+        $phoneNo = numberForamt(Input::post("phoneNo"));  
+        $messageContent = Input::post("messageContent");
+        $moduleName = Input::post("moduleName");
+        $smstoken = Input::post("smstoken");
+        $media_type = Input::post("media_type");
+       
+        $oUser = getLoggedUser();
+        $aTwilioAc = getTwilioAccountCustom($oUser->id);
         $sid = $aTwilioAc->account_sid;
         $token = $aTwilioAc->account_token;
-        //$from = $this->phone_display_custom($aTwilioAc->contact_no);
-        $isLoggedInTeam = $this->session->userdata("team_user_id");
-        $aTwilioAc = $this->mInviter->getTwilioAccount($loginUserData->id);
-        $sid = $aTwilioAc->account_sid;
-        $token = $aTwilioAc->account_token;
-        $hasweb_access = getMemberchatpermission($isLoggedInTeam);
         $media_url_show = '';
-
-        if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
-            if ($hasweb_access->bb_number != "") {
-                $from = $hasweb_access->bb_number;
+        if ($isLoggedInTeam) {
+            $hasweb_access = getMemberchatpermission($isLoggedInTeam);
+            if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
+                if ($hasweb_access->bb_number != "") {
+                    $from = numberForamt($hasweb_access->bb_number);
+                } else {
+                    $from = numberForamt(getClientTwilioAccount($oUser->id));
+                }
             } else {
-                $from = $aTwilioAc->contact_no;
+                $from = numberForamt(getClientTwilioAccount($oUser->id));
             }
         } else {
-            $from = $aTwilioAc->contact_no;
+            $from = numberForamt(getClientTwilioAccount($oUser->id));
         }
         
         $aSmsData = array(
@@ -337,9 +341,11 @@ class SmsChat extends Controller {
             'msg' => $messageContent
         );
 
-        $response = sendClinetMMS($aSmsData);
+       $response = sendClinetMMS($aSmsData);
+       if ($response) {
+
         $aUsage = array(
-            'client_id' => $loginUserData->id,
+            'client_id' => $oUser->id,
             'usage_type' => 'mms',
             'direction' => 'outbound',
             'content' => $messageContent,
@@ -351,22 +357,36 @@ class SmsChat extends Controller {
         );
         updateCreditUsage($aUsage);
 
+        $phoneNo = numberForamt($phoneNo);
+            $from = numberForamt($from);
+            $aToken = $phoneNo + $from;
+            if ($phoneNo > $from) {
+                $sToken = $phoneNo - $from;
+            } else {
+                $sToken = $from - $phoneNo;
+            }
+            $tokenResponse = $aToken . 'n' . $sToken;
+
+
+
         $sData = array(
             'to' => $phoneNo,
             'from' => $from,
-            'token' => $smstoken,
+            'token' => $tokenResponse,
             'twilio_token' => $token,
             'msg' => $messageContent,
             'media_type' => $media_type,
             'module_name' => $moduleName,
             'created' => date("Y-m-d H:i:s")
         );
-        $this->smsChat->addSmsChatData($sData);
-
-        if ($response)
-            return true;
+             $smsChat = new SmsChatModel();
+            $smsChat->addSmsChatData($sData);
+        }
         else
-            return false;
+        {
+
+            echo 'sdf';
+        }
     }
 
 
