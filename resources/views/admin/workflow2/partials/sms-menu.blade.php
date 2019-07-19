@@ -24,7 +24,7 @@ $userID = $aUser->id;
             <p><i class=""><img src="<?php echo base_url(); ?>assets/images/plus_icon_grey.png"/></i> &nbsp;  Create new sms</p>
             <p><i class=""><img src="<?php echo base_url(); ?>assets/images/list_icon_grey.png"/></i> &nbsp;  Manage existing sms</p> 
             <?php if ($moduleName == 'broadcast' || $moduleName == 'automation' || $moduleName == 'email'): ?>
-            <p><a href="javascript:void(0);" id="wf_sms_menu_edit" class="wf_editSMSCampaign" campaign_id="<?php echo $oCampaign->id; ?>" moduleName="<?php echo $moduleName; ?>" campaignType="sms"><i class=""><img src="<?php echo base_url(); ?>assets/images/list_icon_grey.png"/></i> &nbsp;  Edit SMS</a></p>
+            <p><a href="javascript:void(0);" id="wf_sms_menu_edit" class="wf_editSMSCampaign" campaign_id="<?php echo (!empty($oCampaign)) ? $oCampaign->id : 0; ?>" moduleName="<?php echo $moduleName; ?>" campaignType="sms"><i class=""><img src="<?php echo base_url(); ?>assets/images/list_icon_grey.png"/></i> &nbsp;  Edit SMS</a></p>
             <?php endif; ?>
             <p><a href="javascript:void(0);" id="wf_sms_preview" class="wf_previewCampaign" campaignType="sms" data-moduleaccountid ="<?php echo $moduleUnitID;?>"><i class=""><img src="<?php echo base_url(); ?>assets/images/list_icon_grey.png"/></i> &nbsp;  Preview SMS</a></p>
             <p><a href="javascript:void(0);" id="wf_sms_testSMSCtr"><i class=""><img src="<?php echo base_url(); ?>assets/images/list_icon_grey.png"/></i> &nbsp;  Send Test SMS</a>

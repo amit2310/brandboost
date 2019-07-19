@@ -8,7 +8,7 @@ use Cookie;
 use Session;
 
 class NotificationModel extends Model {
-    
+
     /**
      * Used to get all system notification assoicated with the logged user
      * @param type $userId
@@ -27,37 +27,45 @@ class NotificationModel extends Model {
             $status = ($type == 'unread') ? 0 : 1;
         }
         $aData = DB::table('tbl_notifications')
-            ->leftJoin('tbl_users', 'tbl_notifications.user_id', '=' , 'tbl_users.id')
-            ->select('tbl_notifications.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.avatar')
-            ->where('tbl_notifications.user_id', $userId)
-            ->where(DB::raw("DATE(tbl_notifications.created)"), '<', "$lastWeekDate") 
-            ->where(DB::raw("DATE(tbl_notifications.created)"), '>=', "$dateStartFilter")
-            ->when(!empty($type), function ($query) use ($status) {
+                ->leftJoin('tbl_users', 'tbl_notifications.user_id', '=', 'tbl_users.id')
+                ->select('tbl_notifications.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.avatar')
+                ->where('tbl_notifications.user_id', $userId)
+                ->where(DB::raw("DATE(tbl_notifications.created)"), '<', "$lastWeekDate")
+                ->where(DB::raw("DATE(tbl_notifications.created)"), '>=', "$dateStartFilter")
+                ->when(!empty($type), function ($query) use ($status) {
                     return $query->where('tbl_notifications.status', $status);
-                })    
-            ->orderBy('tbl_notifications.id', 'desc')    
-            ->get();
-                
+                })
+                ->orderBy('tbl_notifications.id', 'desc')
+                ->get();
+
         return $aData;
     }
 
-    public function addNotification($data) {
-        $result = $this->db->insert("tbl_notifications", $data);
-        $inset_id = $this->db->insert_id();
-        //echo $this->db->last_query();exit;
-        if ($result) {
-            return $inset_id;
+    /**
+     * Used to add Notification
+     * @param type $data
+     * @return boolean
+     */
+    public static function addNotification($aData) {
+        $insert_id = DB::table('tbl_notifications')->insertGetId($aData);
+        if ($insert_id) {
+            return $insert_id;
         } else {
             return false;
         }
     }
 
-    public function addClientEmailNotification($aData, $notifyEmail, $oUser, $eventName, $teamMemberName = "") {
+    /**
+     * Used to add cleint email notification
+     * @param type $aData
+     * @param type $notifyEmail
+     * @param type $oUser
+     * @param type $eventName
+     * @param type $teamMemberName
+     */
+    public static function addClientEmailNotification($aData, $notifyEmail, $oUser, $eventName, $teamMemberName = "") {
 
-        $CI = & get_instance();
-        $CI->load->model("admin/Users_model", "mmmUser");
-        $CI->load->model("admin/Settings_model", "mSetting");
-        $slugData = $CI->mSetting->getSlugdetails($eventName);
+        $slugData = \App\Models\Admin\SettingsModel::getSlugdetails($eventName);
         $slugDetails = $slugData[0];
         $email = (!empty($notifyEmail)) ? $notifyEmail : $oUser->email;
 
@@ -71,9 +79,6 @@ class NotificationModel extends Model {
         $remanning_limit = ($s3_allow_size - $s3_used_size);
         $remanning_credit = "";
         $remanning_credit = $oUser->remaining_credit;
-
-
-
 
         //$aUserTags = array('{FIRST_NAME}', '{LAST_NAME}', '{EMAIL}', '{LINK}');
         $aUserTags = array('{FIRST_NAME}', '{LAST_NAME}', '{limit}', '{credit}');
@@ -106,14 +111,19 @@ class NotificationModel extends Model {
         }
     }
 
-    public function addAdminEmailNotification($aData, $notifyEmail, $eventName) {
+    /**
+     * Used to add admin email notification
+     * @param type $aData
+     * @param type $notifyEmail
+     * @param type $eventName
+     */
+    public static function addAdminEmailNotification($aData, $notifyEmail, $eventName) {
 
-        $CI = & get_instance();
-        $CI->load->model("admin/Users_model", "mmmUser");
-        $CI->load->model("admin/Settings_model", "mSetting");
-        $slugData = $CI->mSetting->getSlugdetails($eventName);
-        $oUser = $CI->mmmUser->getUserInfo('1');
-        $slugDetails = $slugData[0];
+        $slugData = \App\Models\Admin\SettingsModel::getSlugdetails($eventName);
+        $oUser = \App\Models\Admin\UsersModel::getUserInfo('1');
+        if ($slugData->isNotEmpty()) {
+            $slugDetails = $slugData[0];
+        }
         $email = (!empty($notifyEmail)) ? $notifyEmail : $oUser->email;
 
         $aEmailTags = get_email_notification_tags();
@@ -145,10 +155,13 @@ class NotificationModel extends Model {
         }
     }
 
+    /**
+     * Used to add email notification- This method has now been deprecated
+     * @param type $aData
+     * @param type $notifyEmail
+     * @param type $oUser
+     */
     public function addEmailNotification_old($aData, $notifyEmail, $oUser) {
-
-        $CI = & get_instance();
-        $CI->load->model("admin/Users_model", "mmmUser");
 
         $email = (!empty($notifyEmail)) ? $notifyEmail : $oUser->email;
         $phone = $oUser->mobile;
@@ -190,107 +203,124 @@ class NotificationModel extends Model {
         }
     }
 
+    /**
+     * Used to get the list of today notifications 
+     * @param type $userId
+     * @param type $type
+     * @return type
+     */
     public function getNotificationsToday($userId, $type = '') {
 
         $currentDate = date('Y-n-d');
-        $aData = array();
 
-        $this->db->select("tbl_notifications.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.avatar");
-        $this->db->where('tbl_notifications.user_id', $userId);
-        if (!empty($type)) {
-            if ($type == 'unread') {
-                $status = 0;
-            } else {
-                $status = 1;
-            }
-            $this->db->where('tbl_notifications.status', $status);
-        }
+        $oData = DB::table('tbl_notifications')
+                ->leftJoin('tbl_users', 'tbl_notifications.user_id', '=', 'tbl_users.id')
+                ->select('tbl_notifications.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.avatar')
+                ->where('tbl_notifications.user_id', $userId)
+                ->where(DB::raw("DATE(tbl_notifications.created)"), $currentDate)
+                ->when(!empty($type), function ($query) use ($type) {
+                    $status = ($type == 'unread') ? 0 : 1;
+                    return $query->where('tbl_notifications.status', $status);
+                })
+                ->orderBy('tbl_notifications.id', 'desc')
+                ->get();
 
-        $this->db->where('DATE(tbl_notifications.created) = ', $currentDate);
-        $this->db->order_by('tbl_notifications.id', 'DESC');
-        $this->db->join("tbl_users", "tbl_notifications.user_id=tbl_users.id", "LEFT");
-        $query = $this->db->get('tbl_notifications');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
+        return $oData;
     }
 
+    /**
+     * Used to get the list of yesterday notifications 
+     * @param type $userId
+     * @param type $type
+     * @return type
+     */
     public function getNotificationsYesterday($userId, $type = '') {
 
         $yesterdayDate = date('Y-n-d', strtotime('-1 days'));
 
-        $aData = array();
+        $oData = DB::table('tbl_notifications')
+                ->leftJoin('tbl_users', 'tbl_notifications.user_id', '=', 'tbl_users.id')
+                ->select('tbl_notifications.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.avatar')
+                ->where('tbl_notifications.user_id', $userId)
+                ->where(DB::raw("DATE(tbl_notifications.created)"), $yesterdayDate)
+                ->when(!empty($type), function ($query) use ($type) {
+                    $status = ($type == 'unread') ? 0 : 1;
+                    return $query->where('tbl_notifications.status', $status);
+                })
+                ->orderBy('tbl_notifications.id', 'desc')
+                ->get();
 
-        $this->db->select("tbl_notifications.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.avatar");
-        $this->db->where('tbl_notifications.user_id', $userId);
-        if (!empty($type)) {
-            if ($type == 'unread') {
-                $status = 0;
-            } else {
-                $status = 1;
-            }
-            $this->db->where('tbl_notifications.status', $status);
-        }
-
-        $this->db->where('DATE(tbl_notifications.created) = ', $yesterdayDate);
-
-        $this->db->order_by('tbl_notifications.id', 'DESC');
-        $this->db->join("tbl_users", "tbl_notifications.user_id=tbl_users.id", "LEFT");
-        $query = $this->db->get('tbl_notifications');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
+        return $oData;
     }
 
+    /**
+     * Used to get the list of last week notifications 
+     * @param type $userId
+     * @param type $type
+     * @return type
+     */
     public function getNotificationsLastweek($userId, $type = '') {
 
         $lastWeekDate = date('Y-n-d', strtotime('-7 days'));
-        $aData = array();
 
-        $this->db->select("tbl_notifications.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.avatar");
-        $this->db->where('tbl_notifications.user_id', $userId);
-        if (!empty($type)) {
-            if ($type == 'unread') {
-                $status = 0;
-            } else {
-                $status = 1;
-            }
-            $this->db->where('tbl_notifications.status', $status);
-        }
+        $oData = DB::table('tbl_notifications')
+                ->leftJoin('tbl_users', 'tbl_notifications.user_id', '=', 'tbl_users.id')
+                ->select('tbl_notifications.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.avatar')
+                ->where('tbl_notifications.user_id', $userId)
+                ->where(DB::raw("DATE(tbl_notifications.created)"), '>=', $lastWeekDate)
+                ->when(!empty($type), function ($query) use ($type) {
+                    $status = ($type == 'unread') ? 0 : 1;
+                    return $query->where('tbl_notifications.status', $status);
+                })
+                ->orderBy('tbl_notifications.id', 'desc')
+                ->get();
 
-        $this->db->where('DATE(tbl_notifications.created) >= ', $lastWeekDate);
-
-        $this->db->order_by('tbl_notifications.id', 'DESC');
-        $this->db->join("tbl_users", "tbl_notifications.user_id=tbl_users.id", "LEFT");
-        $query = $this->db->get('tbl_notifications');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
+        return $oData;
     }
 
+    /**
+     * Used to mark notification as read
+     * @param type $userID
+     * @param type $id
+     */
     public function markReadNotification($userID, $id = '') {
         if ($userID > 0) {
-            $this->db->where("user_id", $userID);
-            if ($id > 0) {
-                $this->db->where('id', $id);
-            }
-            $this->db->update("tbl_notifications", array('status' => 1));
+
+            $oData = DB::table('tbl_notifications')
+                    ->where('user_id', $userID)
+                    ->when(($id > 0), function ($query) use ($id) {
+                        return $query->where('id', $id);
+                    })
+                    ->update(['status' => 1]);
+
+            return $oData;
         }
     }
 
+    /**
+     * Used to delete notification
+     * @param type $userID
+     * @param type $notificationId
+     * @return boolean
+     */
     public function deleteNotification($userID, $notificationId) {
-        $this->db->where('user_id', $userID);
-        $this->db->where('id', $notificationId);
-        $this->db->delete('tbl_notifications');
+        $result = DB::table('tbl_notifications')
+                ->where('user_id', $userID)
+                ->where('id', $notificationId)
+                ->delete();
+
         return true;
     }
 
+    /**
+     * Used to get filter based notifications
+     * @param type $userId
+     * @param type $type
+     * @param type $start
+     * @param type $end
+     * @param type $event_type
+     * @return type
+     */
     public function getNotificationsFilter($userId, $type = '', $start, $end, $event_type) {
 
         $aData = array();
@@ -298,45 +328,33 @@ class NotificationModel extends Model {
         $dateStartFilter = date('Y-n-d', strtotime($start));
         $dateEndFilter = date('Y-n-d', strtotime($end));
 
-        $this->db->select("tbl_notifications.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.avatar");
-        $this->db->where('tbl_notifications.user_id', $userId);
-        if (!empty($type)) {
-            if ($type == 'unread') {
-                $status = 0;
-            } else {
-                $status = 1;
-            }
-            $this->db->where('tbl_notifications.status', $status);
-        }
+        $oData = DB::table('tbl_notifications')
+                ->leftJoin('tbl_users', 'tbl_notifications.user_id', '=', 'tbl_users.id')
+                ->select('tbl_notifications.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.avatar')
+                ->where('tbl_notifications.user_id', $userId)
+                ->where(DB::raw("DATE(tbl_notifications.created)"), '>=', $dateStartFilter)
+                ->where(DB::raw("DATE(tbl_notifications.created)"), '<=', $dateEndFilter)
+                ->when(!empty($type), function ($query) use ($type) {
+                    $status = ($type == 'unread') ? 0 : 1;
+                    return $query->where('tbl_notifications.status', $status);
+                })
+                ->orderBy('tbl_notifications.id', 'desc')
+                ->get();
 
-        if (!empty($event_type)) {
-            $this->db->where('tbl_notifications.event_type', $event_type);
-        }
-
-        $this->db->where('DATE(tbl_notifications.created) >= ', $dateStartFilter);
-        $this->db->where('DATE(tbl_notifications.created) <= ', $dateEndFilter);
-
-        $this->db->order_by('tbl_notifications.id', 'DESC');
-        $this->db->join("tbl_users", "tbl_notifications.user_id=tbl_users.id", "LEFT");
-        $query = $this->db->get('tbl_notifications');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
+        return $oData;
     }
 
+    /**
+     * Used to get notification language
+     * @param type $eventType
+     * @return type
+     */
     public function getNotificationLang($eventType) {
 
-        $aData = array();
-        $this->db->select("tbl_notifications_sys_templates.*");
-        $this->db->where('tbl_notifications_sys_templates.template_tag', $eventType);
-        $query = $this->db->get('tbl_notifications_sys_templates');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->row();
-        }
-        return $aData;
+        $oData = DB::table('tbl_notifications_sys_templates')
+                ->where('tbl_notifications_sys_templates.template_tag', $eventType)
+                ->first();
+        return $oData;
     }
 
 }

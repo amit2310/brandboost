@@ -4,6 +4,7 @@
   use Aws\S3\S3Client;
   use Aws\Exception\AwsException; */
 require_once 'vendor/autoload.php'; // Loads the library
+
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
 use Twilio\Jwt\ClientToken;
@@ -14,22 +15,19 @@ use Twilio\Jwt\ClientToken;
  * @return type
  */
 function getLoggedUser($redirect = true) {
-    
+
     $oUser = array();
-    
+
     if (Session::get('admin_user_id') > 0) {
         $userID = Session::get('admin_user_id');
-        
     } else if (Session::get('customer_user_id') > 0) {
         $userID = Session::get('customer_user_id');
-       
     } else if (Session::get('user_user_id') > 0) {
         $userID = Session::get('user_user_id');
-      
     } else {
         $userID = 0;
     }
-    
+
 
     if ($userID > 0) {
         $oUser = \App\Models\Admin\UsersModel::getUserInfo($userID);
@@ -37,7 +35,7 @@ function getLoggedUser($redirect = true) {
 
         Session::put('admin_redirect_url', \Request::fullUrl());
         if ($redirect == true) {
-           // return redirect('/admin/login');
+            // return redirect('/admin/login');
             die(redirect('admin/login'));
         }
     }
@@ -115,12 +113,12 @@ if (!function_exists('userRoleAdmin')) {
 if (!function_exists('numberForamt')) {
 
     function numberForamt($num) {
-       $num = preg_replace('/[^0-9]/', '', $num);
-    $len = strlen($num);
-    if ($len == 11 && substr($num, 0, 1) == '1') {
-        return substr($num, 1, 10);
-    }
-    return $num;
+        $num = preg_replace('/[^0-9]/', '', $num);
+        $len = strlen($num);
+        if ($len == 11 && substr($num, 0, 1) == '1') {
+            return substr($num, 1, 10);
+        }
+        return $num;
     }
 
 }
@@ -155,8 +153,8 @@ if (!function_exists('admin_account')) {
  */
 if (!function_exists('base_url')) {
 
-    function base_url($path='') {
-        return URL::to('/').'/'.$path;
+    function base_url($path = '') {
+        return URL::to('/') . '/' . $path;
     }
 
 }
@@ -481,7 +479,6 @@ if (!function_exists('getAllUser')) {
 
 }
 
-
 /**
  * Used to get Avatar of a member
  * @param type $userImg
@@ -494,7 +491,7 @@ if (!function_exists('getAllUser')) {
  */
 function showUserAvtar($userImg = '', $firstName = '', $lastName = '', $width = '', $height = '', $fontSize = '') {
 
-    $params= '';
+    $params = '';
     if (!empty($width)) {
         $params .= ' width="' . $width . '"';
     }
@@ -558,25 +555,25 @@ if (!function_exists('assignto')) {
         if (empty($oData)) {
             $oData = \App\Models\Admin\SubscriberModel::getassigntoUser($room);
         }
-        if(!empty($oData)){
+        if (!empty($oData)) {
             return $oData[0]->teamName;
         }
         return false;
-        
     }
 
 }
 
 /**
-     * Used to get User sendgrid account details
-     */
-    if(!function_exists(('getSendgridAccount'))){
-        
-        function getSendgridAccount($userID){
-            $oData = \App\Models\Admin\UsersModel::getSendgridAccount($userID);
-            return $oData;
-        }
+ * Used to get User sendgrid account details
+ */
+if (!function_exists(('getSendgridAccount'))) {
+
+    function getSendgridAccount($userID) {
+        $oData = \App\Models\Admin\UsersModel::getSendgridAccount($userID);
+        return $oData;
     }
+
+}
 
 if (!function_exists('getLastSms')) {
 
@@ -662,16 +659,15 @@ if (!function_exists('chatTimeAgo')) {
 
 
 /**
-* This function is used to update the credit usage for client account (sms/email)
-* @param type $clientID
-* @return type
-*/
-
+ * This function is used to update the credit usage for client account (sms/email)
+ * @param type $clientID
+ * @return type
+ */
 if (!function_exists('updateCreditUsage')) {
 
     function updateCreditUsage($aData = array()) {
 
-       
+
         if (!empty($aData['client_id'])) {
             $direction = $aData['direction'];
             $oCreditVal = \App\Models\Admin\SettingsModel::getCreditValues();
@@ -764,7 +760,7 @@ if (!function_exists('updateCreditUsage')) {
                     }
 
                     if (!empty($sql)) {
-                         $result = \App\Models\Admin\SettingsModel::runCustomQuery($sql);
+                        $result = \App\Models\Admin\SettingsModel::runCustomQuery($sql);
                         if ($result) {
                             $bDone = true;
                         }
@@ -788,7 +784,7 @@ if (!function_exists('updateCreditUsage')) {
                         'created' => date("Y-m-d H:i:s")
                     );
                     if ($bDone == true) {
-                        \App\Models\Admin\SettingsModel::saveClientUsageTracking($aTrackingData);                        
+                        \App\Models\Admin\SettingsModel::saveClientUsageTracking($aTrackingData);
                     }
                     if ($result) {
                         return true;
@@ -962,17 +958,19 @@ if (!function_exists('FileSizeConvert')) {
 }
 
 
- /**
+/**
  * This function will return subscriber by the charName
  * @param type $userID
  * @param type $char
  * @return type
  */
 if (!function_exists('bycharuser')) {
+
     function bycharuser($loginid, $value) {
         $oData = \App\Models\Admin\SubscriberModel::getGlobalSubscribersByChar($loginid, $value);
         return $oData;
     }
+
 }
 
 if (!function_exists('getMySubscribers')) {
@@ -986,18 +984,16 @@ if (!function_exists('getMySubscribers')) {
 
 }
 
-   /**
-     * This function will return chatShortcuts used in the chat module
-     * @param type $userId
-     * @return type
-     */
-
+/**
+ * This function will return chatShortcuts used in the chat module
+ * @param type $userId
+ * @return type
+ */
 if (!function_exists('getchatshortcut')) {
 
     function getchatshortcut($userId) {
-         $oData = \App\Models\Admin\SubscriberModel::getchatshortcutlisting($userId);
+        $oData = \App\Models\Admin\SubscriberModel::getchatshortcutlisting($userId);
         return $oData;
-       
     }
 
 }
@@ -1050,15 +1046,14 @@ if (!function_exists('getowners')) {
 
 
 /**
-* This function will return chatUser details 
-* @param type $userId
-* @return type
-*/
-
+ * This function will return chatUser details 
+ * @param type $userId
+ * @return type
+ */
 if (!function_exists('getSubscriberDetails')) {
 
     function getSubscriberDetails($userId) {
-       $oData = \App\Models\Admin\SubscriberModel::getchatUser($userId);
+        $oData = \App\Models\Admin\SubscriberModel::getchatUser($userId);
         return $oData;
     }
 
@@ -1148,17 +1143,17 @@ if (!function_exists('freeChatRoom')) {
 
 
 /**
-* Get All team data
-* @param type $userID
-* @return type
-*/
+ * Get All team data
+ * @param type $userID
+ * @return type
+ */
 if (!function_exists('getAllteam')) {
 
     function getAllteam($userID) {
-        /*$CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/Team_model", "mTeam");
-        $result = $CI->mTeam->getAllteamMembers($userID);
-        return $result;*/
+        /* $CI = & get_instance();  //get instance, access the CI superobject
+          $CI->load->model("admin/Team_model", "mTeam");
+          $result = $CI->mTeam->getAllteamMembers($userID);
+          return $result; */
         $oData = \App\Models\Admin\TeamModel::getAllteamMembers($userID);
         return $oData;
     }
@@ -1180,17 +1175,16 @@ if (!function_exists('getFavouriteUser')) {
 
 }
 
-     /**
-     * This function will return fav sms user
-     * @param type $loginUserid
-     * @param type $number
-     * @return type
-     */
-
+/**
+ * This function will return fav sms user
+ * @param type $loginUserid
+ * @param type $number
+ * @return type
+ */
 if (!function_exists('getFavSmsUser')) {
 
     function getFavSmsUser($loginUserid, $number) {
-        $oData = \App\Models\Admin\SmsChatModel::getFavSmsUser($loginUserid,$number);
+        $oData = \App\Models\Admin\SmsChatModel::getFavSmsUser($loginUserid, $number);
         return $oData;
     }
 
@@ -1404,17 +1398,15 @@ if (!function_exists('sendEmailTemplate')) {
 
 
 
-
+/**
+ * Used to get notification tags
+ */
 if (!function_exists('get_email_notification_tags')) {
 
     function get_email_notification_tags() {
         $aTags = array();
-        $CI = & get_instance();
-
-        $CI->load->model("admin/Settings_model", "mSettings");
-
-        $oTemplates = $CI->mSettings->getEmailNotificationTemplates();
-        if (!empty($oTemplates)) {
+        $oTemplates = \App\Models\Admin\SettingsModel::getEmailNotificationTemplates();
+        if ($oTemplates->isNotEmpty()) {
             foreach ($oTemplates as $oTemplate) {
                 $aTags[$oTemplate->template_tag] = $oTemplate;
             }
@@ -1448,20 +1440,21 @@ if (!function_exists('checkPermissionentry')) {
 
 
 
-
+/**
+ * Used to add notification
+ */
 if (!function_exists('add_notifications')) {
 
     function add_notifications($aData, $eventName = '', $ownerID = '', $notifyAdminAlso = false) {
 
-       $mNotifications  = new NotificationModel();
-
         $bSysPermission = true;
         $bEmailPermission = true;
         $bSaved = false;
+        $isLoggedInTeam = '';
 
         if (!empty($ownerID) && !empty($eventName)) {
 
-
+            
             if ($isLoggedInTeam) {
                 $aTeamInfo = \App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $ownerID);
                 $teamMemberName = $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname;
@@ -1485,15 +1478,15 @@ if (!function_exists('add_notifications')) {
 //+++++++++++++ CLIENT AREA +++++++++++++++
 
             if ($eventName == 's3_storage_alert') {
-                $bSaved = $mNotifications->addNotification($aData);
-                $bSaved = $mNotifications->addClientEmailNotification($aData, $aSysPermissionData->notify_email, $oUser, $eventName, $teamMemberName);
+                $bSaved = \App\Models\Admin\NotificationModel::addNotification($aData);
+                $bSaved = \App\Models\Admin\NotificationModel::addClientEmailNotification($aData, $aSysPermissionData->notify_email, $oUser, $eventName, $teamMemberName);
             } else {
                 if ($slugDetails->client == 1 && $slugDetails->system == 1 && $aSysPermissionData->system_notify == 1) {
-                    $bSaved = $mNotifications->addNotification($aData);
+                    $bSaved = \App\Models\Admin\NotificationModel::addNotification($aData);
                 }
 
                 if ($slugDetails->client == 1 && $slugDetails->email == 1 && $aSysPermissionData->email_notify == 1 && !empty($checkEntry->id)) {
-                    $bSaved = $mNotifications->addClientEmailNotification($aData, $aSysPermissionData->notify_email, $oUser, $eventName, $teamMemberName);
+                    $bSaved = \App\Models\Admin\NotificationModel::addClientEmailNotification($aData, $aSysPermissionData->notify_email, $oUser, $eventName, $teamMemberName);
                 }
             }
 
@@ -1522,7 +1515,7 @@ if (!function_exists('add_notifications')) {
 
             if ($slugDetails->admin == 1 && $slugDetails->email == 1) {
 
-                $bSaved = $mNotifications->addAdminEmailNotification($aData, $AdminUser->email, $eventName);
+                $bSaved = \App\Models\Admin\NotificationModel::addAdminEmailNotification($aData, $AdminUser->email, $eventName);
             }
 
             if ($slugDetails->admin == 1 && $slugDetails->sms == 1 && !empty($slugDetails->admin_sms_content)) {
@@ -1625,6 +1618,11 @@ if (!function_exists('sendEmailPreview')) {
 
 }
 
+/**
+ * Converts Html to Plain text
+ * @param type $html
+ * @return type
+ */
 function convertHtmlToPlain($html) {
 //Step-1 Remove All Images
     $plainText = preg_replace("/<img[^>]+\>/i", "\r\n", $html);
@@ -1638,18 +1636,19 @@ function convertHtmlToPlain($html) {
     return $plainText;
 }
 
+/**
+ * Used to send emails
+ */
 if (!function_exists('sendEmail')) {
 
     function sendEmail($emailAddress, $messageBody, $messageSubject) {
 
-        $CI = & get_instance();
-
-        $website_name = $CI->config->item('website_name');
-        $mailFrom = $CI->config->item('mailFrom');
-        $siteemail = $CI->config->item('siteemail');
-        $sandgriduser = $CI->config->item('sandgriduser');
-        $sandgridpass = $CI->config->item('sandgridpass');
-        $url = $CI->config->item('api_url');
+        $website_name = config('bbconfig.website_name');
+        $mailFrom = config('bbconfig.mailFrom');
+        $siteemail = config('bbconfig.siteemail');
+        $sandgriduser = config('bbconfig.sandgriduser');
+        $sandgridpass = config('bbconfig.sandgridpass');
+        $url = config('bbconfig.api_url');
 //Generate Text Version of email
         $str = 'PHPZAG PHP <a href="https://www.phpzag.com/" title="PHP">TUTORIALS</a> AND ARTICLES.';
 //Remove Image
@@ -1667,7 +1666,7 @@ if (!function_exists('sendEmail')) {
                 'api_key' => $pass,
                 'x-smtpapi' => json_encode($json_string),
                 'to' => $emailAddress,
-                'subject' => ($messageSubject) ? $messageSubject : $CI->config->item('blank_subject'),
+                'subject' => ($messageSubject) ? $messageSubject : config('bbconfig.blank_subject'),
                 'html' => $messageBody,
                 'text' => $plainText,
                 'from' => $siteemail,
@@ -1687,13 +1686,10 @@ if (!function_exists('sendEmail')) {
 
 }
 
-   /**
-     * this function is used send message through twilio
-     * @return type
-     */
-
-
-
+/**
+ * this function is used send message through twilio
+ * @return type
+ */
 if (!function_exists('sendSMS')) {
 
     function sendSMS($to, $message) {
@@ -1715,12 +1711,10 @@ if (!function_exists('sendSMS')) {
 }
 
 
-    /**
-     * this function is used send message through twilio
-     * @return type
-     */
-
-
+/**
+ * this function is used send message through twilio
+ * @return type
+ */
 if (!function_exists('sendClientSMS')) {
 
     function sendClientSMS($to, $message, $oUser) {
@@ -1813,10 +1807,9 @@ if (!function_exists('sendClinetMMS')) {
 
 
 /**
-* This function will send sms through twilio API
-* @return type
-*/
-
+ * This function will send sms through twilio API
+ * @return type
+ */
 if (!function_exists('sendClinetSMS')) {
 
     function sendClinetSMS($aData = array()) {
@@ -1830,7 +1823,7 @@ if (!function_exists('sendClinetSMS')) {
                 $charCount = strlen($msg);
                 $client = new Client($sid, $token);
                 $aRequest = array('from' => $fromNum, 'body' => $msg);
-               
+
                 if ($toNum != '' && $msg != '') {
 
                     if ($charCount > 500) {
@@ -1851,7 +1844,7 @@ if (!function_exists('sendClinetSMS')) {
                         $res = $client->messages->create($toNum, $aRequest);
                         //$res->sid;
                     }
-                    
+
                     return 1;
                 } else {
                     return 0;
@@ -2231,7 +2224,7 @@ if (!function_exists('sendClientEmail')) {
             $messageBody = $aData['message'];
             $messageSubject = $aData['subject'];
             $from = $aData['from_email'];
-            $fromName = $aData['from_name'];           
+            $fromName = $aData['from_name'];
 
             $siteemail = config('bbconfig.siteemail');
 
@@ -2316,10 +2309,9 @@ if (!function_exists('getUserAllDataValue')) {
 /**
  * Used to set the limit for string 
  * @param type $string
-  * @param type $cLimit
+ * @param type $cLimit
  * @return type
  */
-
 if (!function_exists('setStringLimit')) {
 
     function setStringLimit($string, $cLimit = '') {
@@ -2444,7 +2436,6 @@ function timeAgoNotification($datetime, $full = false) {
  * @param type $mobileNo
  * @return type
  */
-
 function phoneNoFormat($mobileNo) {
     if ($mobileNo != '') {
         if (strlen($mobileNo) == 13) {
@@ -2504,12 +2495,11 @@ if (!function_exists('webchatUsers')) {
 
 
 
-  /**
-     * This function will return Twilio related account details based on the Phone number
-     * @param type $contactNo
-     * @return type
-     */
-
+/**
+ * This function will return Twilio related account details based on the Phone number
+ * @param type $contactNo
+ * @return type
+ */
 if (!function_exists('getTwilioAccount')) {
 
     function getTwilioAccount($contactNo) {
@@ -2520,13 +2510,11 @@ if (!function_exists('getTwilioAccount')) {
 }
 
 
- /**
-     * This function will return Client Twilio account details
-     * @param type $currentUserid
-     * @return type
-     */
-
-
+/**
+ * This function will return Client Twilio account details
+ * @param type $currentUserid
+ * @return type
+ */
 if (!function_exists('getClientTwilioAccount')) {
 
     function getClientTwilioAccount($currentUserid) {
@@ -2538,12 +2526,10 @@ if (!function_exists('getClientTwilioAccount')) {
 
 
 /**
-     * This function will return Team member Twilio account details
-     * @param type $currentUserid
-     * @return type
-     */
-
-
+ * This function will return Team member Twilio account details
+ * @param type $currentUserid
+ * @return type
+ */
 if (!function_exists('getTeamTwilioAccount')) {
 
     function getTeamTwilioAccount($currentUserid) {
@@ -2595,29 +2581,29 @@ if (!function_exists('getteam_member')) {
 
 
 /**
-* This function will return Team Member name by the Phone number
-* @param type $usrid
-* @return type
-*/
-
+ * This function will return Team Member name by the Phone number
+ * @param type $usrid
+ * @return type
+ */
 if (!function_exists('smsteam_member_name')) {
 
     function smsteam_member_name($usrid) {
         $oData = \App\Models\Admin\SubscriberModel::get_sms_team_member_name($userID);
-        return $oData[0]->teamName;;
+        return $oData[0]->teamName;
+        ;
     }
 
 }
 
 /**
-* Get last chat message
-* @param type $token
-* @return type
-*/
+ * Get last chat message
+ * @param type $token
+ * @return type
+ */
 if (!function_exists('getlastChatMessage')) {
 
     function getlastChatMessage($token) {
-     
+
         $oData = \App\Models\Admin\SubscriberModel::getlastChatMessageDetail($token);
         return $oData;
     }
@@ -2637,17 +2623,16 @@ if (!function_exists('searchByinput')) {
 
 }
 
-      /**
-    * this function is used to filter the sms list based on the input provided in sms chat
-    * @param type $Number
-     * @param type $inputval
-     * @return type
-     */
-
+/**
+ * this function is used to filter the sms list based on the input provided in sms chat
+ * @param type $Number
+ * @param type $inputval
+ * @return type
+ */
 if (!function_exists('searchSmsByinput')) {
 
     function searchSmsByinput($Number, $inputval) {
-      
+
         $oData = \App\Models\Admin\SubscriberModel::searchSmsByinputDetails($Number, $inputval);
         return $oData;
     }
@@ -2676,7 +2661,6 @@ if (!function_exists('getincIdByuserId')) {
  * @param type $number
  * @return type
  */
-
 if (!function_exists('getincIdByPhone')) {
 
     function getincIdByPhone($number) {
@@ -2696,13 +2680,11 @@ function phone_display_custom_helper($num) {
     return $num;
 }
 
-
-  /**
+/**
  * This function will return Client/User details by the Phone number
  * @param type $Number
  * @return type
  */
-
 if (!function_exists('getUserbyPhone')) {
 
     function getUserbyPhone($Number) {
@@ -2726,12 +2708,11 @@ if (!function_exists('smschatUsers')) {
 }
 
 
- /**
+/**
  * This function will return Subscribers Information
  * @param type $userID
  * @return type
  */
-
 if (!function_exists('getSubscribersInfo')) {
 
     function getSubscribersInfo($userID) {
@@ -2961,8 +2942,6 @@ function mobileNoFormat($mobileNo) {
             break;
     }
 }
-
-
 
 function dataFormat($dataValue = '') {
     $timeStamp = (!empty($dataValue)) ? strtotime($dataValue) : time();
@@ -3441,8 +3420,7 @@ if (!function_exists('getNotificationLang')) {
         $getNotiLang = base64_decode($getNotiLang);
         return $getNotiLang;
     }
-    
-    
+
     /**
      * Used to save User activity
      */
@@ -3460,9 +3438,9 @@ if (!function_exists('getNotificationLang')) {
 
     }
 
-    
+
     /**
-     *Get's app pages permission 
+     * Get's app pages permission 
      */
     if (!function_exists('fetchPermissions')) {
 
@@ -3482,7 +3460,5 @@ if (!function_exists('getNotificationLang')) {
         }
 
     }
-    
-    
 }
 ?>
