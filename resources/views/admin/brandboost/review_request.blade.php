@@ -233,19 +233,17 @@ $brandboostID = '';
 							<?php
 								
 									foreach ($oData as $data) {
-										if($data->brand_img != ''){
-											$brandImgArray = unserialize($data->brand_img);
-											$brand_img = $brandImgArray[0]['media_url'];
-											
-											if (empty($brand_img)) {
-												$imgSrc = base_url('assets/images/default_table_img2.png');
-												} else {
-												$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
-											}
-										}else{
+                                      
+										/*$brandImgArray = unserialize($data->brand_img);
+										$brand_img = $brandImgArray[0]['media_url'];
+										
+										if (empty($brand_img)) {
 											$imgSrc = base_url('assets/images/default_table_img2.png');
-										}
+											} else {
+											$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
+										}*/
 										$aUser = $this->mUser->getUserInfo($data->user_id);
+										$imgSrc = base_url('assets/images/default_table_img2.png');
 										
 									?>
 									<tr id="append-<?php echo $data->trackinglogid; ?>" class="selectedClass">
