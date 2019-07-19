@@ -9,6 +9,9 @@ header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Dispo
 
 use Illuminate\Http\Request;
 //use App\Libraries\Custom\S3;
+use Session;
+use Illuminate\Support\Facades\Storage;
+
 
 class dropzone extends Controller
 {
@@ -526,8 +529,7 @@ class dropzone extends Controller
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
-                $isLoggedInTeam = $this->session->userdata("team_user_id");
-
+                $isLoggedInTeam = Session::get('team_user_id');
 
                 //Collect Text Review(Save Video into S3)
                 if(!empty($_FILES['files'])) {
@@ -565,7 +567,8 @@ class dropzone extends Controller
                            
                             $filename = $videoReview['name'][0];
                             $input = file_get_contents($videoReview['tmp_name'][0]);
-                            $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            Storage::disk('s3')->put($filekey, $input);
                         }
                     }
 
@@ -959,4 +962,3 @@ class dropzone extends Controller
 }
 
 ?>
-}
