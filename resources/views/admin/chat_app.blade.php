@@ -2695,6 +2695,8 @@ if(window_witdh > 1600)
 			let file = files[i];
 			formData.append('files[]', file);
 			}
+
+			formData.append('_token', '{{csrf_token()}}');
 			
 			fetch('<?php echo base_url("/dropzone/upload_s3_attachment/" . $loginUserData->id . "/webchat"); ?>', { 
 			method: 'POST',
