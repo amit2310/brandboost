@@ -1,3 +1,9 @@
+<?php
+    $campaignID = !(empty($campaignID)) ? $campaignID : '';
+    $moduleName = !(empty($moduleName)) ? $moduleName : '';
+    $template_source = !(empty($template_source)) ? $template_source : ''; 
+  
+?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -13,8 +19,8 @@
         <link href="<?php echo base_url(); ?>assets/css/core.css" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url(); ?>assets/css/components.css" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url(); ?>assets/css/colors.css" rel="stylesheet" type="text/css">
-        <link href="<?php echo base_url(); ?>new_pages/assets/css/theme1.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/grapes/dist/grapesjs-preset-newsletter.css">
+        <link href="<?php echo base_url(); ?>assets/css/theme1.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/grapes/dist/grapesjs-preset-newsletter.css">
         <style type="text/css">
             .dataTables_filter {display: none;}
             .starGray{color:#dbdcdd!important;}

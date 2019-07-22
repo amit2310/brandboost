@@ -669,7 +669,7 @@ if (!function_exists('updateCreditUsage')) {
 
 
         if (!empty($aData['client_id'])) {
-            $direction = $aData['direction'];
+            $direction = !empty($aData['direction']) ? $aData['direction'] : '';
             $oCreditVal = \App\Models\Admin\SettingsModel::getCreditValues();
             if (!empty($oCreditVal)) {
                 $iEmailCredits = $iSMSOutbound = $iSMSInbound = $iMMSOutbound = $iMMSInbound = 0;
@@ -771,12 +771,12 @@ if (!function_exists('updateCreditUsage')) {
                     $aTrackingData = array(
                         'user_id' => $aData['client_id'],
                         'usage_type' => $aData['usage_type'],
-                        'direction' => $aData['direction'],
-                        'segment' => $aData['segment'],
-                        'spend_to' => $aData['spend_to'],
-                        'spend_from' => $aData['spend_from'],
-                        'module_name' => $aData['module_name'],
-                        'module_unit_id' => $aData['module_unit_id'],
+                        'direction' => !empty($aData['direction']) ? $aData['direction'] : '',
+                        'segment' => !empty($aData['segment']) ? $aData['segment'] : '',
+                        'spend_to' => !empty($aData['spend_to']) ? $aData['spend_to'] : '',
+                        'spend_from' => !empty($aData['spend_from']) ? $aData['spend_from'] : '',
+                        'module_name' => !empty($aData['module_name']) ? $aData['module_name'] : '', 
+                        'module_unit_id' => !empty($aData['module_unit_id']) ? $aData['module_unit_id'] : '',
                         'content' => base64_encode($aData['content']),
                         'opening_balance' => $totalCredits,
                         'balance_deducted' => $totalDeduction,
@@ -2228,8 +2228,8 @@ if (!function_exists('sendClientEmail')) {
             $emailAddress = $aData['email'];
             $messageBody = $aData['message'];
             $messageSubject = $aData['subject'];
-            $from = $aData['from_email'];
-            $fromName = $aData['from_name'];
+            $from = (!empty($aData['from_email'])) ? $aData['from_email'] : '';
+            $fromName = (!empty($aData['from_name'])) ? $aData['from_name'] : ''; 
 
             $siteemail = config('bbconfig.siteemail');
 

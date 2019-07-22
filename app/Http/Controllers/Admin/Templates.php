@@ -78,7 +78,7 @@ class Templates extends Controller {
             'templateType' => 'sms',
             'method' => 'manage'
         );
-        $this->template->load('admin/admin_template_new', 'admin/templates/list-templates', $aData);
+        return view('admin.templates.list-templates', $aData);
     }
 
     
@@ -162,20 +162,24 @@ class Templates extends Controller {
      * 
      * @param type $idUsed to edit email/sms template
      */
-    public function edit($id) {
-
+    public function edit(Request $request) {
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
+        $id=$request->id;
         //Instanciate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         $oTemplate = $mTemplates->getCommonTemplates($userID, '', $id, '');
         $templateType = $oTemplate[0]->template_type;
         if ($templateType == 'email') {
+            $activeTitle = 'Email';
             $templateLink = base_url('admin/templates/email');
         } else {
+            $activeTitle = 'SMS';
             $templateLink = base_url('admin/templates/sms');
+            
         }
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -183,7 +187,7 @@ class Templates extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a href="' . $templateLink . '" class="sidebar-control hidden-xs">Templates </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Edit Template" class="sidebar-control active hidden-xs ">SMS</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Edit Template" class="sidebar-control active hidden-xs ">'.$activeTitle.'</a></li>
                     </ul>';
         $aData = array(
             'title' => 'Edit Template',
@@ -280,13 +284,14 @@ class Templates extends Controller {
     /**
      * This function used to load the content of selected email template
      */
-    public function loadEmailTemplate($id) {
+    public function loadEmailTemplate(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
         //Instanciate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
+        $id = $request->id;
         $oTemplate = $mTemplates->getCommonTemplates($userID, '', $id, '');
         $compiledSource = $oTemplate[0]->stripo_compiled_html;
         $aData = array(
@@ -301,10 +306,10 @@ class Templates extends Controller {
      * This function used to load the content of selected sms template
      * @param type $id
      */
-    public function loadSMSTemplate($id) {
+    public function loadSMSTemplate(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+        $id = $request->id;
         //Instanciate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
@@ -878,10 +883,10 @@ class Templates extends Controller {
      * Used to create and store thumbnail for selected template
      * @param type $templateID
      */
-    public function saveThumbnail($templateID) {
+    public function saveThumbnail(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+        $templateID = $request->id;
         //Instanciate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
