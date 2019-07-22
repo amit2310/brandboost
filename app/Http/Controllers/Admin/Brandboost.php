@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-require 'aws/aws-autoloader.php';
-use Aws\S3\S3Client;
-use Aws\Exception\AwsException;
+//require 'aws/aws-autoloader.php';
+//use Aws\S3\S3Client;
+//use Aws\Exception\AwsException;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

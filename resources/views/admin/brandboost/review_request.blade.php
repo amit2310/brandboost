@@ -234,15 +234,16 @@ $brandboostID = '';
 								
 									foreach ($oData as $data) {
                                       
-										$brandImgArray = unserialize($data->brand_img);
+										/*$brandImgArray = unserialize($data->brand_img);
 										$brand_img = $brandImgArray[0]['media_url'];
 										
 										if (empty($brand_img)) {
 											$imgSrc = base_url('assets/images/default_table_img2.png');
 											} else {
 											$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
-										}
+										}*/
 										$aUser = $this->mUser->getUserInfo($data->user_id);
+										$imgSrc = base_url('assets/images/default_table_img2.png');
 										
 									?>
 									<tr id="append-<?php echo $data->trackinglogid; ?>" class="selectedClass">
@@ -250,20 +251,6 @@ $brandboostID = '';
 										<td style="display: none;"><?php echo $data->trackinglogid; ?></td>
 										<td class="editAction" style="display:none;"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $data->trackinglogid; ?>" value="<?php echo $data->trackinglogid; ?>" ><span class="custmo_checkmark"></span></label></td>
 										
-										<!-- <td>
-											<div class="media-left media-middle"> <a class="editBrandboost" brandid="<?php echo $data->brandboost_id; ?>" b_title="click to view campaign details" href="javascript:void(0);">
-											<img src="<?php echo $imgSrc; ?>" class="img-circle img-xs" alt=""></a> </div>
-											
-											
-											<div class="media-left">
-												<div class="pt-5">
-													<a href="javascript:void(0);" class="text-default text-semibold" brandid="<?php echo $data->brandboost_id; ?>"><?php echo $data->brand_title; ?></a>
-												</div>
-												<div class="text-muted text-size-small"><?php echo $data->review_type; ?></div>
-												
-											</div>
-										</td> -->
-
 										<td><div class="media-left media-middle"> <a class="editBrandboost" brandid="<?php echo $data->brandboost_id; ?>" b_title="click to view campaign details" href="javascript:void(0);"><img onerror="this.src='<?php echo base_url('assets/images/default-logo.png'); ?>'" src="<?php echo $imgSrc; ?>" class="img-circle img-xs br5" alt=""></a> </div>
 								        <div class="media-left">
 								          <div class=""><a href="javascript:void(0);" class="text-default text-semibold" brandid="<?php echo $data->brandboost_id; ?>" class="text-default text-semibold"><?php echo $data->brand_title; ?></a> </div>

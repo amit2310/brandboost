@@ -107,14 +107,13 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
         <!--########################TAB 1 ##########################--> 
 		@include('admin.brandboost.campaign-tabs.onsite.onsite-reviews', array('reviews' => $reviews, 'aReviews' => $aReviews, 'brandboostData' => $brandboostData))
         <!--########################TAB 2 ##########################--> 
-        <?php //$this->load->view("admin/brandboost/campaign-tabs/onsite/onsite-subscribers", array('campaign' => $campaign)); ?>
 		@include('admin.brandboost.campaign-tabs.onsite.onsite-subscribers', array('campaign' => $campaign))
         <!--########################TAB 3 ##########################-->
 		@include('admin.brandboost.campaign-tabs.onsite.onsite-preferences', array('camp' => $camp, 'feedbackResponseData' => $feedbackResponseData, 'brandboostData' => $brandboostData, 'bbProductsData' => $bbProductsData))
         <!--########################TAB 4 ##########################-->
 		@include('admin.brandboost.campaign-tabs.onsite.onsite-workflow-campaign-beta', array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents))
         <!--########################TAB 5 ##########################--> 
-        <?php //$this->load->view("admin/brandboost/campaign-tabs/onsite/onsite-image", array('aReviews' => $aReviews, 'imageClass' => $imageClass)); ?>
+		@include('admin.brandboost.campaign-tabs.onsite.onsite-image', array('aReviews' => $aReviews, 'imageClass' => $imageClass))
 	</div>
     
 </div>	

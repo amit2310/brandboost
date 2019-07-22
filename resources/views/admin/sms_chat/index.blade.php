@@ -639,10 +639,13 @@ $(document).ready(function() {
 			for (let i = 0; i < files.length; i++) {
 				let file = files[i];
 				formData.append('files[]', file);
+
 			}
-			
+
+			formData.append('_token', '{{csrf_token()}}');
+
 			fetch('<?php echo base_url("/dropzone/upload_s3_attachment/" . $loginUserData->id . "/smschat"); ?>', { 
-				method: 'GET',
+				method: 'POST',
 				body: formData // This is your file object
 			}).then(
 			response => response.json() // if the response is a JSON object
@@ -681,7 +684,7 @@ $(document).ready(function() {
 							url: '<?php echo base_url('admin/smschat/sendMMS'); ?>',
 							
 							type: "POST",
-							data: {'phoneNo' : chatTo, 'messageContent' : msg,'smstoken': newToken, 'moduleName' : 'chat', 'media_type': 'image', 'videoUrl':''},
+							data: {'phoneNo' : chatTo, 'messageContent' : msg,'smstoken': newToken, 'moduleName' : 'chat', 'media_type': 'image', 'videoUrl':'',_token: '{{csrf_token()}}'},
 							dataType: "html",
 							success: function (data) {
 							SMSChatBigData(chatTo,chatTo,'');
@@ -1027,7 +1030,7 @@ function SMSChatBigData(userId="",SubscriberPhone,clickvalue="" )
 $.ajax({
 url: '<?php echo base_url('admin/smschat/showSmsThreads'); ?>',
 type: "POST",
-data: {'userId':userId,'SubscriberPhone':SubscriberPhone},
+data: {'userId':userId,'SubscriberPhone':SubscriberPhone,_token: '{{csrf_token()}}'},
 dataType: "html",
 success: function (data) {
 $('#smsSearcharea').html(data+'<div class="msg_push"></div>');

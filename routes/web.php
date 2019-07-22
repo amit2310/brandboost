@@ -49,6 +49,7 @@ Route::post('admin/reviews/updateReviewCategory/','Admin\Reviews@updateReviewCat
 Route::post('admin/reviews/deleteReview/','Admin\Reviews@deleteReview');
 Route::post('admin/reviews/saveReviewNotes/','Admin\Reviews@saveReviewNotes');
 Route::post('admin/reviews/deleteReviewNote/','Admin\Reviews@deleteReviewNote');
+Route::post('admin/reviews/getReviewMedia/','Admin\Reviews@getReviewMedia');
 
 
 Route::post('admin/comments/add_comment/','Admin\Comments@addComment');
@@ -92,6 +93,7 @@ Route::post('admin/smschat/listingSmsNotes','Admin\SmsChat@listingSmsNotes');
 Route::post('admin/smschat/shortcutListing','Admin\SmsChat@shortcutListing');
 Route::post('admin/smschat/small_shortcutListing','Admin\SmsChat@small_shortcutListing');
 Route::post('admin/smschat/small_shortcutListing_sms','Admin\SmsChat@small_shortcutListing_sms');
+Route::post('admin/smschat/sendMMS','Admin\SmsChat@sendMMS');
 
 
 //Profile module
@@ -153,6 +155,8 @@ Route::get('admin/workflow/syncWorkflowAudienceGlobal','Admin\WorkFlow@syncWorkf
 
 //Dropzone Section
 Route::post('dropzone/upload_editor_image','Dropzone@upload_editor_image');
+Route::post('dropzone/upload_s3_attachment/{clientId}/{folderName}','Dropzone@upload_s3_attachment');
+
 
 //Templates Module
 Route::get('admin/templates','Admin\Templates@index');
