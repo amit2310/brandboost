@@ -54,6 +54,24 @@ class TeamModel extends Model {
         }
     }
 
+    /**
+     * This function is use for get the team member
+     * @param type $userID
+     * @return object
+     */
+    public function getTeamMembers($userID = '') {
+        $oData = DB::table('tbl_users_team')
+            ->select("tbl_users_team.*", "tbl_team_role.id AS roleID", "tbl_team_role.role_name")
+            ->join('tbl_team_role', 'tbl_users_team.team_role_id', '=' , 'tbl_team_role.id')
+            ->when(($userID > 0), function ($query) use ($userID) {
+                    return $query->where('tbl_users_team.parent_user_id', $userID);
+                })
+            ->orderBy('tbl_users_team.id', 'desc')
+            ->get();
+
+        return $oData;
+    }
+
     public function checkIfUserRoleExists($roleName, $userID) {
         $this->db->where("user_id", $userID);
         $this->db->where("role_name", $roleName);
@@ -291,19 +309,7 @@ class TeamModel extends Model {
         return $aData;
     }
 
-    public function getTeamMembers($userID = '') {
-        $this->db->select("tbl_users_team.*, tbl_team_role.id AS roleID, tbl_team_role.role_name");
-        $this->db->join("tbl_team_role", "tbl_users_team.team_role_id=tbl_team_role.id", "LEFT");
-        if ($userID > 0) {
-            $this->db->where("tbl_users_team.parent_user_id", $userID);
-        }
-        $this->db->order_by("tbl_users_team.id", "DESC");
-        $result = $this->db->get("tbl_users_team");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
-    }
+    
 
     
 

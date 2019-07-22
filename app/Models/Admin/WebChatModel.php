@@ -277,7 +277,17 @@ class WebChatModel extends Model {
         return 1;
     }
 
-
+    /**
+     * this function is used to get widget setting
+     * @return type object
+     */
+    public function getWidgetSettings($userToken) {
+        $oData = DB::table('tbl_chat_main')
+        ->select('*')
+        ->where('hashcode', $userToken)
+        ->first();
+        return $oData;     
+    }
 
 
 }

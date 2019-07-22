@@ -87,7 +87,7 @@ BB = function (t) {
         var e = this;
         var bb_key = this.userbbkey;
         var bb_widget_name = this.userSettings.widget;
-        var bbsrc = this.userSettings.host + "/chat/display_chat_widget/" + bb_widget_name + "/" + bb_key;
+        var bbsrc = this.userSettings.host + "/webchat/display_chat_widget/" + bb_widget_name + "/" + bb_key;
         var a = {};
         //i = call back function
         //a = POST data
@@ -206,7 +206,7 @@ BB = function (t) {
 							messageSmileyLower = messageSmiley.toLowerCase();
 							if(smiliesMap[messageSmileyLower]) {
 								msgBG = '';
-								newMessage = newMessage.replace(messageSmiley, "<img src='http://brandboost.io/assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif' alt='smiley' />");
+								newMessage = newMessage.replace(messageSmiley, "<img src='http://brandboostx.com/assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif' alt='smiley' />");
 							}
 						}
 
@@ -1109,7 +1109,7 @@ var bbwidget = document.getElementById("bbscriptloader").getAttribute("data-widg
 var bbvisitortoken = localStorage.getItem("bb_user_chat_token");
 //var bbchatgeattingdata = localStorage.getItem("bb_chat_geatting_data");
 var bb_chat_socket;
-bb_chat_socket = io('http://brandboost.io:3000');
+bb_chat_socket = io('http://brandboostx.com:3000');
 var currentUser = '';
 var currentUserName ='';
 var unreadmsgCounter = 0;
@@ -1177,7 +1177,7 @@ var smiliesMap = {
 if (bbkey != 'undefined' && bbwidget != 'undefined') { 
 
     var oBB = new BB(bbkey, {
-        "host": "http://brandboost.io",
+        "host": "http://brandboostx.com",
         "widget": bbwidget
     });
 
@@ -1259,7 +1259,7 @@ bb_chat_socket.on('chat message', function(data){
 		messageSmileyLower = messageSmiley.toLowerCase();
 		if(smiliesMap[messageSmileyLower]) {
 			//imgBgColor = 'style="background:none; padding: 10px; box-shadow:none;"';
-			msg = msg.replace(messageSmiley, "<img src='http://brandboost.io/assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif' alt='smiley' />");
+			msg = msg.replace(messageSmiley, "<img src='http://brandboostx.com/assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif' alt='smiley' />");
 		}
 	}
 

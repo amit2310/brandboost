@@ -7,6 +7,7 @@ use App\Models\Admin\WebChatModel;
 use App\Models\Admin\SubscriberModel;
 use Illuminate\Support\Facades\Input;
 use App\Models\Admin\TagsModel;
+use App\Models\Admin\TeamModel;
 
 use Session;
 class WebChat extends Controller {
@@ -1059,6 +1060,40 @@ class WebChat extends Controller {
         echo json_encode($response);
         exit;
         
+    }
+
+    /**
+     * this function is used for display chat third party widget
+     * @return type object
+     */
+    public function display_chat_widget($widgetType, $userAccountID){
+
+        $webChatModel = new WebChatModel();
+        $teamModel = new TeamModel();
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (!empty($userAccountID) && !empty($widgetType)) {
+            $content = '';
+            if ($widgetType == 'chat') {
+                $widgetSettings = $webChatModel->getWidgetSettings($userAccountID);
+                $teamsData = $teamModel->getTeamMembers($widgetSettings->user_id);
+                $userDataDetail = getUserDetail($widgetSettings->user_id);
+                $widgetData = array(
+                    'userAccountID' => $userAccountID,
+                    'widgetSettings' => $widgetSettings,
+                    'userDataDetail' => $userDataDetail,
+                    'teamsData' => $teamsData
+                );
+
+                $importViewHtml =  View("admin.chat_widget.embed_chat", $widgetData);
+                $content = $importViewHtml->render();
+               
+            }
+
+            $aData = array('content' => $content);
+            echo json_encode($aData);
+            exit;
+        }
+
     }
 
 
