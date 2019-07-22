@@ -77,6 +77,7 @@ Route::post('admin/webchat/showYoutabAjax','Admin\WebChat@showYoutabAjax');
 Route::post('admin/webchat/showYoutabAjaxSmallbox','Admin\WebChat@showYoutabAjaxSmallbox');
 Route::post('admin/webchat/setChatboxstatus','Admin\WebChat@setChatboxstatus');
 Route::post('admin/webchat/removeBoxStatus','Admin\WebChat@removeBoxStatus');
+Route::post('webchat/display_chat_widget/{widgetType}/{userAccountID}','Admin\WebChat@display_chat_widget');
 
 
 
