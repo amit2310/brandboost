@@ -16,7 +16,13 @@ if ($isLoggedInTeam) {
     $loginMember = $aUInfo->id;
 }
 $hasweb_access = getMemberchatpermission($loginMember);
-
+$web_chat="";
+$smschat="";
+if(!empty($hasweb_access))
+{
+    $web_chat = $hasweb_access->web_chat;
+    $sms_chat = $hasweb_access->sms_chat;
+}
 
 $username = $firstname . ' ' . $lastname;
 if (!empty($avatar)) {
@@ -142,13 +148,13 @@ $offBrandBoostCount = $offBrandBoostCount > 0 ? '(' . $offBrandBoostCount . ')' 
                     
                     <li><a href="<?php echo base_url(); ?>admin/brandboost/media"><i class="icon-bubbles6"></i> <span>Media</span></a></li>
                      
-                    <?php if($hasweb_access->web_chat == 1 || $hasweb_access->sms_chat ==1) {
+                    <?php if($web_chat == 1 || $sms_chat ==1) {
 
                         ?>
                     <li id="chat-onsite" class="listt0"><a href="javascript:void(0)"><strong class="nav_icon icon_chat"></strong> <span>Chat</span></a>
                         <ul id="Chat" class="hidden-ul">
-                    <?php if($hasweb_access->sms_chat == 1){ ?> <li><a href="<?php echo base_url(); ?>admin/smschat"><i class="fa fa-circle"></i>Sms Chat</a></li> <?php } ?>
-                           <?php if($hasweb_access->web_chat == 1){ ?>  <li><a href="<?php echo base_url(); ?>admin/webchat"><i class="fa fa-circle"></i>Web Chat</a></li><?php } ?>
+                    <?php if($sms_chat == 1){ ?> <li><a href="<?php echo base_url(); ?>admin/smschat"><i class="fa fa-circle"></i>Sms Chat</a></li> <?php } ?>
+                           <?php if($web_chat == 1){ ?>  <li><a href="<?php echo base_url(); ?>admin/webchat"><i class="fa fa-circle"></i>Web Chat</a></li><?php } ?>
                             <li><a href="<?php echo base_url(); ?>admin/chatshortcut"><i class="fa fa-circle"></i>Chat Shortcut</a></li>
                            
                         </ul>
