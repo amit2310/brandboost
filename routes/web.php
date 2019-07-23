@@ -42,7 +42,7 @@ Route::get('admin/brandboost/media/','Admin\Brandboost@media');
 Route::post('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
 Route::get('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
 Route::post('admin/brandboost/setTab/','Admin\Brandboost@setTab');
-Route::post('admin/brandboost/offsite_overview/','Admin\Brandboost@offsiteOverview');
+Route::get('admin/brandboost/offsite_overview/','Admin\Brandboost@offsiteOverview');
 
 
 Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');
@@ -83,6 +83,7 @@ Route::post('webchat/addChatMsg','Admin\WebChat@addChatMsg');
 Route::post('webchat/supportUser','Admin\WebChat@supportUser');
 Route::post('webchat/getMessages','Admin\WebChat@getMessages');
 Route::post('webchat/readChatMsg','Admin\WebChat@readChatMsg');
+Route::post('admin/webchat/favouriteUser','Admin\WebChat@favouriteUser');
 
 
 Route::get('admin/smschat','Admin\SmsChat@index');
@@ -99,6 +100,7 @@ Route::post('admin/smschat/shortcutListing','Admin\SmsChat@shortcutListing');
 Route::post('admin/smschat/small_shortcutListing','Admin\SmsChat@small_shortcutListing');
 Route::post('admin/smschat/small_shortcutListing_sms','Admin\SmsChat@small_shortcutListing_sms');
 Route::post('admin/smschat/sendMMS','Admin\SmsChat@sendMMS');
+Route::post('admin/smschat/addSMSFavourite','Admin\SmsChat@addSMSFavourite');
 
 
 //Profile module

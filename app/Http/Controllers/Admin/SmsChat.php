@@ -479,7 +479,6 @@ class SmsChat extends Controller {
                    $avatar=""; 
                 }
 
-                //$favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id, $usersdata->id);
                    $favUser='';
                 if (strpos($value->msg, '/Media/') !== false) {
                     $userMessage = "File Attachment";
@@ -633,6 +632,8 @@ class SmsChat extends Controller {
     * This function is used to short cut listing message for sms chat
     * @return type
     */
+
+
     public function small_shortcutListing_sms() {
         $boxid = Input::post("boxid");
         $loginUserData = getLoggedUser();
@@ -645,6 +646,36 @@ class SmsChat extends Controller {
             </li>
             <?php
         }
+    }
+
+     /**
+     * This function is used to add favourite sms chat user
+    * @return type
+    */
+
+     public function addSMSFavourite() {
+        $fav_user_id =  Input::post("user_id");
+        $curr_user_id = Input::post("currentUser");
+        $subscriber =   Input::post("subscriber");
+        $SmsChatObj = new SmsChatModel();
+
+        $aData = array('fav_user_id' => $fav_user_id, 'curr_user_id' => $curr_user_id, 'created' => date("Y-m-d H:i:s"));
+        $favUserCheck = $SmsChatObj->getFavSmsUser($curr_user_id, $fav_user_id);
+
+        if (!empty($favUserCheck)) {
+            $result = $SmsChatObj->deleteSMSFavourite($curr_user_id, $fav_user_id);
+        } else {
+
+            $result = $SmsChatObj->addSMSFavouriteUser($aData);
+        }
+        if ($result) {
+            $response = array('status' => 'ok');
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit;
     }
 
 }

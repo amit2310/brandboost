@@ -1,34 +1,37 @@
 <?php
-$avatar = $aUInfo->avatar;
-$firstname = $aUInfo->firstname;
-$lastname = $aUInfo->lastname;
-$userRole = $aUInfo->user_role;
-$address = $aUInfo->address;
-$hasweb_access = getMemberchatpermission($isLoggedInTeam);
+$avatar = !empty($aUInfo->avatar) ? $aUInfo->avatar : '';
+$firstname = !empty($aUInfo->firstname) ? $aUInfo->firstname : '';
+$lastname = !empty($aUInfo->lastname) ? $aUInfo->lastname : '';
+$userRole = !empty($aUInfo->user_role) ? $aUInfo->user_role : '';
+$address = !empty($aUInfo->address) ? $aUInfo->address : '';
+$isLoggedInTeam = Session::get("team_user_id");
+if ($isLoggedInTeam) {
+    $aTeamInfo = App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
+    $teamMemberName = $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname;
+    $teamMemberId = $aTeamInfo->id;
+    $loginMember = $teamMemberId;
+} else {
+    $teamMemberName = '';
+    $teamMemberId = '';
+    $loginMember = $aUInfo->id;
+}
+$hasweb_access = getMemberchatpermission($loginMember);
+$web_chat = "";
+$sms_chat = "";
+if(!empty($hasweb_access))
+{
+    $web_chat = $hasweb_access->web_chat;
+    $sms_chat = $hasweb_access->sms_chat;
+}
 
-/* if($userRole == '1'){
-
-  $roleName = 'Administrator';
-  }
-  else if($userRole == '2'){
-
-  $roleName = 'User';
-  }
-  else if($userRole == '3'){
-
-  $roleName = 'Customer';
-  }
-  else{
-
-  $roleName = '';
-  } */
 $username = $firstname . ' ' . $lastname;
 if (!empty($avatar)) {
     $srcUserImg = '/profile_images/' . $avatar;
 } else {
     $srcUserImg = '/profile_images/avatar_image.png';
 }
-$pageName = $this->uri->segment(2);
+
+$pageName = Request::segment(2);
 
 $onBrandBoostCount = getBBCount($aUInfo->id, 'onsite');
 $onBrandBoostCount = $onBrandBoostCount > 0 ? '(' . $onBrandBoostCount . ')' : '';
@@ -80,12 +83,12 @@ $offBrandBoostCount = $offBrandBoostCount > 0 ? '(' . $offBrandBoostCount . ')' 
                     <li class="navigation-header"><span>Your Brand Boosts</span> <i class="icon-menu" title="Your Brand Boosts"></i></li>
 
                     <li class="<?php
-                    if ($this->uri->segment(3) == 'onsite') {
+                    if (Request::segment(3) == 'onsite') {
                         echo 'active';
                     }
                     ?>"><a href="<?php echo base_url('/admin/brandboost/onsite'); ?>"><i class="icon-stack2"></i> <span>On Site Brand Boosts <?php echo $onBrandBoostCount; ?></span></a></li>
                     <li class="<?php
-                    if ($this->uri->segment(3) == 'offsite') {
+                    if (Request::segment(3) == 'offsite') {
                         echo 'active';
                     }
                     ?>"><a href="<?php echo base_url('/admin/brandboost/offsite'); ?>"><i class="icon-stack2"></i> <span>Off Site Brand Boosts <?php echo $offBrandBoostCount; ?></span></a></li>
@@ -145,11 +148,13 @@ $offBrandBoostCount = $offBrandBoostCount > 0 ? '(' . $offBrandBoostCount . ')' 
                     
                     <li><a href="<?php echo base_url(); ?>admin/brandboost/media"><i class="icon-bubbles6"></i> <span>Media</span></a></li>
                      
-                    <?php if($hasweb_access->web_chat == 1 || $hasweb_access->sms_chat ==1) {?>
+                    <?php if($web_chat == 1 || $sms_chat ==1) {
+
+                        ?>
                     <li id="chat-onsite" class="listt0"><a href="javascript:void(0)"><strong class="nav_icon icon_chat"></strong> <span>Chat</span></a>
                         <ul id="Chat" class="hidden-ul">
-                    <?php if($hasweb_access->sms_chat == 1){ ?> <li><a href="<?php echo base_url(); ?>admin/smschat"><i class="fa fa-circle"></i>Sms Chat</a></li> <?php } ?>
-                           <?php if($hasweb_access->web_chat == 1){ ?>  <li><a href="<?php echo base_url(); ?>admin/webchat"><i class="fa fa-circle"></i>Web Chat</a></li><?php } ?>
+                    <?php if($sms_chat == 1){ ?> <li><a href="<?php echo base_url(); ?>admin/smschat"><i class="fa fa-circle"></i>Sms Chat</a></li> <?php } ?>
+                           <?php if($web_chat == 1){ ?>  <li><a href="<?php echo base_url(); ?>admin/webchat"><i class="fa fa-circle"></i>Web Chat</a></li><?php } ?>
                             <li><a href="<?php echo base_url(); ?>admin/chatshortcut"><i class="fa fa-circle"></i>Chat Shortcut</a></li>
                            
                         </ul>

@@ -1133,6 +1133,7 @@ class WebChat extends Controller {
      * this function is used for add support user
      * @return type object
      */
+
     public function supportUser() {
 
         $webChatModel = new WebChatModel();
@@ -1190,6 +1191,21 @@ class WebChat extends Controller {
         );
 
         $result = $webChatModel->readChatMsg($to_user, $from_user, $aData);
+    }
+     
+     /**
+     * this function is used to add favourite webchatuser
+     * @return type object
+     */
+
+    public function favouriteUser() {
+        $userId = Input::post("userId");
+        $status = Input::post("status");
+        $webChatModel = new WebChatModel();
+        $aData = array(
+            'favourite' => $status
+        );
+        $result = $webChatModel->favouriteUser($userId, $aData);
 
         if ($result) {
             $response = array('status' => 'ok');
@@ -1199,6 +1215,7 @@ class WebChat extends Controller {
 
         echo json_encode($response);
         exit;
+
     }
 
 

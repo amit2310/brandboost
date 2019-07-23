@@ -9,6 +9,12 @@ use Session;
 
 class BroadcastModel extends Model {
 
+    /**
+     * 
+     * @param type $userID
+     * @param type $id
+     * @return type
+     */
     public function getMyBroadcasts($userID, $id = 0) {
         $aData = array();
         $this->db->select("tbl_automations_emails_campaigns.*, tbl_automations_emails.id as broadcast_id, tbl_automations_emails.user_id, tbl_automations_emails.title, tbl_automations_emails.description, tbl_automations_emails.email_type, tbl_automations_emails.status as bc_status, tbl_automations_emails.current_state,tbl_automations_emails.audience_type, tbl_automations_emails.sending_method, tbl_automations_emails.created, tbl_automations_emails_events.event_type, tbl_automations_emails_events.data, tbl_automations_emails_events.id as evtid");
@@ -32,6 +38,11 @@ class BroadcastModel extends Model {
         return $aData;
     }
 
+    /**
+     * 
+     * @param type $broadcastID
+     * @return type
+     */
     public function getBroadcastVariations($broadcastID) {
         $this->db->select("tbl_broadcast_split_campaigns.*, tbl_broadcast_split_testing.test_name, tbl_broadcast_split_testing.id as splitID");
         $this->db->join("tbl_broadcast_split_testing", "tbl_broadcast_split_campaigns.split_test_id = tbl_broadcast_split_testing.id", "LEFT");
@@ -46,6 +57,11 @@ class BroadcastModel extends Model {
         return $aData;
     }
 
+    /**
+     * 
+     * @param type $broadcastID
+     * @return type
+     */
     public function getBroadcastVariationCampaigns($broadcastID) {
         $this->db->where("tbl_broadcast_split_campaigns.broadcast_id", $broadcastID);
         $this->db->order_by("tbl_broadcast_split_campaigns.id", "ASC");
@@ -57,6 +73,13 @@ class BroadcastModel extends Model {
         return $aData;
     }
 
+    
+    /**
+     * 
+     * @param type $aData
+     * @param type $sendingMethod
+     * @return boolean
+     */
     public function addBroadcastCampaign($aData, $sendingMethod = 'normal') {
         if ($sendingMethod == 'split') {
             $result = $this->db->insert("tbl_broadcast_split_campaigns", $aData);

@@ -1,5 +1,6 @@
 <?php
 $count = 0;
+$loginUserData = getLoggedUser();
 foreach ($o_s_list as $key => $value) {
     $showRed = 0;
     $phoneNumber = "";
@@ -20,6 +21,11 @@ foreach ($o_s_list as $key => $value) {
             $usersdata = $usersdata[0];
         }
         $usersdatails = getUserDetail($usersdata->user_id);
+        $favUser = getFavSmsUser($loginUserData->id, $phoneNumber);
+        if(!empty($favUser))
+        {
+        	$favUser=1;
+        }
        
         $fileext = explode('.', $value->msg);
         $fileext = end($fileext);
@@ -38,8 +44,7 @@ foreach ($o_s_list as $key => $value) {
         if ($usersdata->lastname == 'NA') {
             $usersdata->lastname = "";
         }
-        //$favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id, $usersdata->id);
-        $favUser = getFavSmsUser($loginUserData->id, $phoneNumber);
+     
         
         $avatar = !empty($usersdata->avatar) ? $usersdata->avatar : '';
         $address = !empty($usersdata->address) ? $usersdata->address : '';

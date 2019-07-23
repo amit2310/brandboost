@@ -264,7 +264,7 @@ if (!empty($aBrandbosts)) {
                                             <th style="display: none;">Negative</th>
                                             <th style="display: none;">Today</th>
                                             <th><i class="icon-calendar"></i>Last Incoming Lead</th>
-                                            <?php if ($userRole != '2') { ?>
+                                            <?php if ($user_role != '2') { ?>
                                                 <th class="text-center nosort"><i class="fa fa-dot-circle-o"></i> Action</th>
                                             <?php } ?>
                                         </tr>
@@ -307,8 +307,8 @@ if (!empty($aBrandbosts)) {
                                                 }
 
                                                 $revCount = $positive = $neutral = $negative = 0;
-                                                //$revCount = getCampaignReviewCount($data->id);
                                                 $revCount = getCampaignFeedbackCount($data->id);
+												$revCount = 1;
                                                 $revCount = !empty($revCount) ? $revCount : 0;
                                                 $feedbackCount = \App\Models\Admin\BrandboostModel::getFeedbackCount($data->id);
                                                 $positive = $negative = $neutral = $positivePercentage = $neutralPercentage = $negativePercentage = 0;
@@ -352,44 +352,45 @@ if (!empty($aBrandbosts)) {
                                                     $offsiteTitle = substr($offsiteTitle, 0, 29) . '...';
                                                 }
 
-                                                $feedbackData = $this->mFeedback->getCampFeedbackData($data->id);
+                                                $feedbackData = \App\Models\FeedbackModel::getCampFeedbackData($data->id);
 
                                                 if ($data->id == '173') {
                                                     //pre($feedbackCount);
                                                     //die;
                                                 }
 
-                                                $subscriberData = $this->mFeedback->getSubscriberInfo($feedbackData->subscriber_id);
+                                                //$subscriberData = \App\Models\FeedbackModel::getSubscriberInfo($feedbackData->subscriber_id);
 
                                                 $newPositive = $newNegative = $newNeutral = 0;
 
                                                 $aPositiveSubscribers = $aNeutralSubscribers = $aNegativeSubscribers = array();
+												if(!$feedbackData->isEmpty()){
+													foreach ($feedbackData as $oFeedback) {
 
-                                                foreach ($feedbackData as $oFeedback) {
-
-                                                    if ($oFeedback->category != '') {
-                                                        if ($oFeedback->category == 'Positive' && !in_array($oFeedback->subscriber_id, $aPositiveSubscribers)) {
-                                                            if (strtotime($oFeedback->created) > $recent) {
-                                                                $newPositive++;
-                                                            }
-                                                            $positiveRating++;
-                                                            $aPositiveSubscribers[] = $oFeedback->subscriber_id;
-                                                        } else if ($oFeedback->category == 'Neutral' && !in_array($oFeedback->subscriber_id, $aNeutralSubscribers)) {
-                                                            if (strtotime($oFeedback->created) > $recent) {
-                                                                $newNeutral++;
-                                                            }
-                                                            $neturalRating++;
-                                                            $aNeutralSubscribers[] = $oFeedback->subscriber_id;
-                                                        } else {
-                                                            if (!in_array($oFeedback->subscriber_id, $aNegativeSubscribers))
-                                                                if (strtotime($oFeedback->created) > $recent) {
-                                                                    $newNegative++;
-                                                                }
-                                                            $negativeRating++;
-                                                            $aNegativeSubscribers[] = $oFeedback->subscriber_id;
-                                                        }
-                                                    }
-                                                }
+														if ($oFeedback->category != '') {
+															if ($oFeedback->category == 'Positive' && !in_array($oFeedback->subscriber_id, $aPositiveSubscribers)) {
+																if (strtotime($oFeedback->created) > $recent) {
+																	$newPositive++;
+																}
+																$positiveRating++;
+																$aPositiveSubscribers[] = $oFeedback->subscriber_id;
+															} else if ($oFeedback->category == 'Neutral' && !in_array($oFeedback->subscriber_id, $aNeutralSubscribers)) {
+																if (strtotime($oFeedback->created) > $recent) {
+																	$newNeutral++;
+																}
+																$neturalRating++;
+																$aNeutralSubscribers[] = $oFeedback->subscriber_id;
+															} else {
+																if (!in_array($oFeedback->subscriber_id, $aNegativeSubscribers))
+																	if (strtotime($oFeedback->created) > $recent) {
+																		$newNegative++;
+																	}
+																$negativeRating++;
+																$aNegativeSubscribers[] = $oFeedback->subscriber_id;
+															}
+														}
+													}
+												}
                                                 ?>
 
                                                 <!--=======================-->

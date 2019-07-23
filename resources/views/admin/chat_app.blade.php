@@ -896,7 +896,7 @@ if (!empty($isLoggedInTeam)) {
 }
 $aTwilioAc = getTwilioAccountCustom($loginUserData->id);
 if (!empty($hasweb_access)) {
-    if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
+    if ($hasweb_access->sms_chat == 1) {
         if ($hasweb_access->bb_number != "") {
             $loginUserData->mobile = numberForamt($hasweb_access->bb_number);
         } else {
@@ -1761,7 +1761,7 @@ $('#msg_input_sms_'+userPhoneNo).attr('userimage','<?php echo $currentUserImg; ?
 $.ajax({
 url: "{{ url('admin/smschat/sendMsg') }}",
 type: "POST",
-data: {'phoneNo' : userPhoneNo, 'messageContent' : messageContent, 'smstoken': newToken, 'moduleName' : 'chat', 'media_type': '', 'videoUrl': ''},
+data: {'phoneNo' : userPhoneNo, 'messageContent' : messageContent, 'smstoken': newToken, 'moduleName' : 'chat', 'media_type': '', 'videoUrl': '',_token: '{{csrf_token()}}'},
 dataType: "html",
 success: function (data) {
 	
@@ -3784,7 +3784,8 @@ $a_s_list = activeOnlysms($loginUserData->mobile); // here we place client twili
 $o_s_list = SmsOldest($loginUserData->mobile);
 
 $getactiveChatboxlisting = getactiveChatbox($loginUserData->id);
-
+$activeWebClass="";
+$activeSmsClass="";
 
 if ($isLoggedInTeam) {
     $hasweb_access = getMemberchatpermission($isLoggedInTeam);
@@ -4040,9 +4041,7 @@ if ($isLoggedInTeam) {
             foreach ($getCharUserList as $userData) {
                 $userDataDetail = getUserDetail($userData->user_id);
                 $favUser = '';
-                //$favUser = getFavSmsUser($loginUserData->id, $userData->phone);
-                //if(!empty($userDataDetail)) {
-                //$favUser = $this->smsChat->getSMSFavouriteBySubsId($userData->id);
+                
                 if ($flag == 0) {
                     $userId = $userData->user_id;
                     $incId = $userData->id;
@@ -4061,7 +4060,7 @@ if ($isLoggedInTeam) {
 																<?php
                 } ?>
 														</span>
-														<span class="slider-username contacts"><?php echo phoneNoFormat($userData->phone); ?> &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $userData->phone; ?>"><i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i></span> </span>
+														<span class="slider-username contacts"><?php echo phoneNoFormat($userData->phone); ?> &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $userData->phone; ?>"><i class="fa fa-star star_icon"></i></span> </span>
 														<span class="" style="float: left; margin-left: 12px;"><span style="font-weight:300!important; color: #6a7995 !important; font-size: 12px; margin-bottom: 3px; ">
                                                             Assigned to:&nbsp;<!--+1(359) 569-6585--><?php echo phoneNoFormat($userData->phone); ?></span></span> 
 														
@@ -5197,7 +5196,7 @@ $(document).on('click', '.webchat .tweb', function(){
 			$.ajax({
 				url: "{{ url('admin/smschat/addSMSFavourite') }}",
 				type: "POST",
-				data: {user_id:$(this).attr('subscriberId'), currentUser:currentUser},
+				data: {user_id:$(this).attr('subscriberId'), currentUser:currentUser,_token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'ok') {

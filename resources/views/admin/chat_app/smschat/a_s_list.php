@@ -1,5 +1,6 @@
 <?php
 $count = 0;
+$loginUserData = getLoggedUser();
 foreach ($a_s_list as $key => $value) {
     $showRed = 0;
     $phoneNumber = "";
@@ -38,14 +39,18 @@ foreach ($a_s_list as $key => $value) {
         if ($usersdata->lastname == 'NA') {
             $usersdata->lastname = "";
         }
-        //$favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id, $usersdata->id);
-        $favUser = getFavSmsUser($loginUserData->id, $phoneNumber);
         
-        $avatar = !empty($usersdata->avatar) ? $usersdata->avatar : '';
+        $avatar = !empty($usersdatails->avatar) ? $usersdatails->avatar : '';
         $address = !empty($usersdata->address) ? $usersdata->address : '';
         $city = !empty($usersdata->city) ? $usersdata->city : '';
         $state = !empty($usersdata->state) ? $usersdata->state : '';
+        $favUser=0;
         $country = !empty($usersdata->country) ? $usersdata->country : '';
+        $favUser = getFavSmsUser($loginUserData->id, $phoneNumber);
+        if(!empty($favUser))
+        {
+        	$favUser=1;
+        }
 
 ?>
 		<div  phone_no_format="<?php echo phoneNoFormat($phoneNumber); ?>" id="sidebar_Sms_box_<?php echo $phoneNumber; ?>" class="sms_user sms_twr_<?php echo $phoneNumber; ?>" phone_no="<?php echo trim($phoneNumber); ?>" <?php if ($showRed) { ?>wait="yes" token="<?php echo $value->token; ?>"<?php
