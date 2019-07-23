@@ -479,6 +479,55 @@ class Brandboost extends Controller {
         exit;
     }
 	
+	/**
+	* Used to get show offsite overview 
+	* @param type $param
+	* @return type
+	*/
+    public function offsiteOverview() {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $user_role = $aUser->user_role;
+        $this->session->unset_userdata('setTab');
+        if ($user_role == 1) {
+            $aBrandboostList = BrandboostModel::getBrandboost('', 'offsite');
+        } else {
+            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'offsite');
+            $bbEmailSend = BrandboostModel::getBrandboostEmailSend($userID, 'offsite');
+            $bbSmsSend = BrandboostModel::getBrandboostSmsSend($userID, 'offsite');
+
+            $bbEmailSendMonth = BrandboostModel::getBrandboostEmailSendMonth($userID, 'offsite');
+            $bbSMSSendMonth = BrandboostModel::getBrandboostSmsSendMonth($userID, 'offsite');
+        }
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+            <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+            <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+            <li><a style="cursor:text;" class="sidebar-control hidden-xs">Off Site </a></li>
+            <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+            <li><a data-toggle="tooltip" data-placement="bottom" title="Overview" class="sidebar-control active hidden-xs ">Overview</a></li>
+            </ul>';
+
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+
+        $aData = array(
+            'title' => 'Offsite overview',
+            'pagename' => $breadcrumb,
+            'aBrandbosts' => $aBrandboostList,
+            'bActiveSubsription' => $bActiveSubsription,
+            'currentUserId' => $userID,
+            'user_role' => $user_role,
+            'viewstats' => true,
+            'bbEmailSend' => $bbEmailSend,
+            'bbEmailSendMonth' => $bbEmailSendMonth,
+            'bbSMSSendMonth' => $bbSMSSendMonth,
+            'bbSmsSend' => $bbSmsSend
+        );
+
+		return view('admin.brandboost.offsite_list', $aData);
+    }
+	
 
     public function index() {
 
@@ -539,51 +588,7 @@ class Brandboost extends Controller {
         }
    }
 
-    //** offsite template controller 
-
-    public function offsite_overview() {
-
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $user_role = $aUser->user_role;
-        $this->session->unset_userdata('setTab');
-        if ($user_role == 1) {
-            $aBrandboostList = $this->mBrandboost->getBrandboost('', 'offsite');
-        } else {
-            $aBrandboostList = $this->mBrandboost->getBrandboostByUserId($userID, 'offsite');
-            $bbEmailSend = $this->mBrandboost->getBrandboostEmailSend($userID, 'offsite');
-            $bbSmsSend = $this->mBrandboost->getBrandboostSmsSend($userID, 'offsite');
-
-            $bbEmailSendMonth = $this->mBrandboost->getBrandboostEmailSendMonth($userID, 'offsite');
-            $bbSMSSendMonth = $this->mBrandboost->getBrandboostSmsSendMonth($userID, 'offsite');
-        }
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-            <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-            <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-            <li><a style="cursor:text;" class="sidebar-control hidden-xs">Off Site </a></li>
-            <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-            <li><a data-toggle="tooltip" data-placement="bottom" title="Overview" class="sidebar-control active hidden-xs ">Overview</a></li>
-            </ul>';
-
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-
-        $aData = array(
-            'title' => 'Offsite overview',
-            'pagename' => $breadcrumb,
-            'aBrandbosts' => $aBrandboostList,
-            'bActiveSubsription' => $bActiveSubsription,
-            'currentUserId' => $userID,
-            'user_role' => $user_role,
-            'viewstats' => true,
-            'bbEmailSend' => $bbEmailSend,
-            'bbEmailSendMonth' => $bbEmailSendMonth,
-            'bbSMSSendMonth' => $bbSMSSendMonth,
-            'bbSmsSend' => $bbSmsSend
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/offsite_list', $aData);
-    }
+    
 
     
 
