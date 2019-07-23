@@ -1876,7 +1876,7 @@ else {
 //console.log(newToken, 'get new token');
 var strTime = getTime();
 $.ajax({
-url: '<?php echo base_url('admin/webchat/getMessages'); ?>',
+url: '<?php echo base_url('webchat/getMessages'); ?>',
 type: "POST",
 data: {room:token, offset:'0',_token: '{{csrf_token()}}'},
 dataType: "json",
@@ -1885,7 +1885,6 @@ success: function (data) {
 // webchatfromhere;
 if (data.status == 'ok') {
 var result = data.res;
-//console.log(result);
 for(var inc = 0; inc < result.length; inc++) {
 var row = result[inc];
 var newUserTo = row.user_to;
@@ -1919,6 +1918,7 @@ else if(fileext[0] == 'mp4') {
 }
 }
 
+
 if(newUserFrom == currentUser){
 //console.log(newUserTo,'to user');
 $('<li class="media reversed"><div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span>'+avatarImg+'</span><div class="media-content">' + nl2br(newMessage) + '</div></div></li>' ).insertAfter( '[rel="' + newUserTo + '"] .msg_push' );
@@ -1930,7 +1930,6 @@ $('<li class="media team_user_'+newUserFrom+'"><div class="media-body"> <span cl
 
 }
 
-
 if(currentUser == newUserTo)
 {
 var mUser = newUserFrom;
@@ -1938,6 +1937,7 @@ var mUser = newUserFrom;
 else {
 var mUser = newUserTo;
 }
+
 var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
 $( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
 }
@@ -1945,7 +1945,7 @@ $( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
 });
 
 $.ajax({
-url: "<?php echo base_url('admin/webchat/readMessages'); ?>",
+url: "<?php echo base_url('webchat/readMessages'); ?>",
 type: "POST",
 data: {userID:userID, currentUser:currentUser, _token: '{{csrf_token()}}'},
 dataType: "json",
@@ -3474,7 +3474,7 @@ if(window_witdh > 1600)
 						setTimeout(function(){ 
 						
 						$.ajax({
-						url: "<?php echo base_url('admin/Chat/readChatMsg'); ?>",
+						url: "<?php echo base_url('webchat/readChatMsg'); ?>",
 						type: "POST",
 						data: {chatTo:data.chatTo, chatFrom:data.currentUser},
 						dataType: "json",

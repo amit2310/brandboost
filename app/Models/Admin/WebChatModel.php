@@ -63,8 +63,6 @@ class WebChatModel extends Model {
         ->orderBy('id', 'desc')
         ->get();
         return $oData;
-
-       
     }
 
      /**
@@ -315,7 +313,7 @@ class WebChatModel extends Model {
         $oData = DB::table('tbl_chat_supportuser')
         ->select('*')
         ->where('room', $token)
-        ->get();
+        ->first();
         return $oData;    
     }
 
