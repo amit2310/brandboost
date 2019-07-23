@@ -947,13 +947,13 @@ $(document).ready(function() {
 	
 	
 	 //  ######### fav click ############ //  
-			$('body').on('click','.favouriteSMSUser',function(){
+			$('body').on('click','.addSmsFavUser',function(){
 				var thisObj = $(this);
 			var currentUser = "<?php echo $loginUserData->id; ?>";
 			$.ajax({
 				url: '<?php echo base_url('admin/smschat/addSMSFavourite'); ?>',
 				type: "POST",
-				data: {user_id:$(this).attr('subscriberId'), currentUser:currentUser},
+				data: {user_id:$(this).attr('subscriberId'), currentUser:currentUser,_token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'ok') {
@@ -961,12 +961,12 @@ $(document).ready(function() {
 							thisObj.children().removeClass('yellow');
 							thisObj.children().removeClass('fa-star');
 							thisObj.children().addClass('fa-star-o');
-							ShowfavouritAjax();
+							//ShowfavouritAjax();
 							}else{
 							thisObj.children().addClass('yellow');
 							thisObj.children().addClass('fa-star');
 							thisObj.children().removeClass('fa-star-o');
-							ShowfavouritAjax();
+							//ShowfavouritAjax();
 						}
 						
 					}

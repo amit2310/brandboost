@@ -5196,7 +5196,7 @@ $(document).on('click', '.webchat .tweb', function(){
 			$.ajax({
 				url: "{{ url('admin/smschat/addSMSFavourite') }}",
 				type: "POST",
-				data: {user_id:$(this).attr('subscriberId'), currentUser:currentUser},
+				data: {user_id:$(this).attr('subscriberId'), currentUser:currentUser,_token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'ok') {

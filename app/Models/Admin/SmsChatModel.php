@@ -48,32 +48,16 @@ class SmsChatModel extends Model {
 
     public function deleteSMSFavourite($currentUserId, $subId) {
 
-            $oData = DB::table('tbl_chat_favourite')
-            ->select('fav_user_id','subscriber')
+            $oData = DB::table('tbl_sms_user_favourite')
             ->where('fav_user_id', $subId)
-            >where('curr_user_id', $currentUserId)
+            ->where('curr_user_id', $currentUserId)
             ->delete();
 
             return $oData;
 
     }
 
-    public function getSMSFavouriteUser($currentUserId, $subsid) {
-
-        $result = '';
-        $this->db->select('fav_user_id');
-        $this->db->where('curr_user_id', $currentUserId);
-        $this->db->where('fav_user_id', $subsid);
-        $this->db->from('tbl_chat_favourite');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            $result = $query->result();
-        }
-
-        return $result;
-    }
-
-
+    
     /**
      * This function will return fav sms user
      * @param type $currentUserId
@@ -83,7 +67,7 @@ class SmsChatModel extends Model {
 
     public static function getFavSmsUser($currentUserId, $number) {
 
-               $oData = DB::table('tbl_chat_favourite')
+               $oData = DB::table('tbl_sms_user_favourite')
                 ->select('fav_user_id')
                  ->where('curr_user_id', $currentUserId)
                 ->where('fav_user_id', $number)
@@ -95,8 +79,9 @@ class SmsChatModel extends Model {
     
 
 
-    public function addSMSFavourite($data) {
-         $oData = DB::table('tbl_subscriber_notes')->insertGetId($data);
+    public function addSMSFavouriteUser($data) {
+
+         $oData = DB::table('tbl_sms_user_favourite')->insertGetId($data);
 
         if ($oData)
             return true;
