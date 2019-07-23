@@ -229,13 +229,14 @@ foreach ($character as $key => $value) {
     $getCharUserList = \App\Models\Admin\SubscriberModel::getGlobalSubscribersByChar($loginUserData->id, $value);
     foreach ($getCharUserList as $userData) {
         $count = 0;
+        $favUser=0;
         $userDataDetail = getUserDetail($userData->user_id);
         if (!empty($userDataDetail->avatar)) {
             $avatar = $userDataDetail->avatar;
         } else {
             $avatar = "";
         }
-        $favUser = \App\Models\Admin\SmsChatModel::getSMSFavouriteBySubsId($userData->user_id);
+       // $favUser = \App\Models\Admin\SmsChatModel::getSMSFavouriteBySubsId($userData->user_id);
         $autocmpSearch[] = $userData->firstname . '' . $userData->lastname . '(' . $userData->phone . ')';
         if ($flag == 0) {
             $phone_no = $userData->phone;
@@ -244,6 +245,10 @@ foreach ($character as $key => $value) {
             $flag = 1;
         }
         $favUser = getFavSmsUser($loginUserData->id, $userData->phone);
+        if(!empty($favUser))
+        {
+        	$favUser=1;
+        }
 ?>
 								<div id="chatBx_<?php echo $userData->phone; ?>" class="media chatbox_new bkg_white <?php if ($count == 1) {
             echo 'mb10';
@@ -253,7 +258,7 @@ foreach ($character as $key => $value) {
 									<input type="hidden" id="userImg_<?php echo $userData->phone; ?>" value="">
 									<a href="javascript:void(0);" class="media-link bbot getChatDetails" subscriberId = "<?php echo $userData->id; ?>"  phone_no="<?php echo $userData->phone; ?>">
 										<div class="media-left"><?php echo showUserAvtar($avatar, $userData->firstname, $userData->lastname, 28, 28, 12); ?>
-										<span  subscriberId = "<?php echo $userData->phone; ?>"><i class="fa fa-star star_icon"></i></span></div>
+										<span  subscriberId = "<?php echo $userData->phone; ?>"><i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i></span></div>
 										
 										<div class="media-body"> 
 
