@@ -1109,7 +1109,7 @@ var bbwidget = document.getElementById("bbscriptloader").getAttribute("data-widg
 var bbvisitortoken = localStorage.getItem("bb_user_chat_token");
 //var bbchatgeattingdata = localStorage.getItem("bb_chat_geatting_data");
 var bb_chat_socket;
-bb_chat_socket = io('http://dev.brandboostx.com:3000');
+bb_chat_socket = io('http://brandboostx.com:3000');
 var currentUser = '';
 var currentUserName ='';
 var unreadmsgCounter = 0;
@@ -1177,7 +1177,7 @@ var smiliesMap = {
 if (bbkey != 'undefined' && bbwidget != 'undefined') { 
 
     var oBB = new BB(bbkey, {
-        "host": "http://dev.brandboostx.com",
+        "host": "http://brandboostx.com",
         "widget": bbwidget
     });
 
