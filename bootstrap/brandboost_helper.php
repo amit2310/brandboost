@@ -293,13 +293,9 @@ if (!function_exists('getCampaignReviewRA')) {
 
 if (!function_exists('getCampaignFeedbackCount')) {
 
-    function getCampaignFeedbackCount($campaignId) {
-        $aFeedback = array();
-        $CI = & get_instance();
-        $CI->load->model("Feedback_model", "mFeedback");
-
-        $aFeedback = $CI->mFeedback->getCampFeedback($campaignId);
-
+    function getCampaignFeedbackCount($campaignId) {       
+        $aFeedback = \App\Models\FeedbackModel::getCampFeedback($campaignId);
+		$aFeedback = $aFeedback->count();
         if (!empty($aFeedback)) {
             return $aFeedback;
         }

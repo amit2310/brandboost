@@ -90,7 +90,7 @@ class UsersModel extends Model {
      * @param type $userID
      * @return boolean
      */
-    public function isActiveSubscription($userID = 0) {
+    public static function isActiveSubscription($userID = 0) {
         if (empty($userID)) {
             $userID = Session::get('admin_user_id');
             if ($userID > 0) {
