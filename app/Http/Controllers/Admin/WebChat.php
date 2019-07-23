@@ -308,18 +308,18 @@ class WebChat extends Controller {
         if ($result) {
             $hasAssign = 0;
             $getSupportUser = $webChatModel->checkTeamAssign($room);
-            if($getSupportUser->assign_team_member == 0) {
+            if(empty($getSupportUser)) {
                 $webChatModel->assignChat($room, $isLoggedInTeam);
                 $hasAssign = 1;   
             }
 
             $chatRow =  $webChatModel->getassignChat($room);
-            
-            if(empty($chatRow)){
 
+            if(empty($chatRow)){
                 $chatRow =  $webChatModel->getassignChatUser($room);
             }
-            $response = array('status' => 'ok','isLoggedInTeam'=>$chatRow->teamName, 'teamId' => $chatRow->teamId, 'hasAssign' => $hasAssign);
+            //$response = array('status' => 'ok','isLoggedInTeam'=>$chatRow->teamName, 'teamId' => $chatRow->teamId, 'hasAssign' => $hasAssign);
+            $response = array('status' => 'ok');
         } else {
             $response = array('status' => 'error');
         }
@@ -1094,6 +1094,78 @@ class WebChat extends Controller {
             exit;
         }
 
+    }
+
+
+    /**
+     * this function is used for get user message
+     * @return type object
+     */
+    public function getUserMessages() {
+
+        $response = '';
+        $webChatModel = new WebChatModel();
+        $token = Input::post("room");
+        $offset = Input::post("offset");
+        $result = $webChatModel->getAllMessages($token);
+        $currentUserData = $webChatModel->getUserMessages($token);
+        foreach ($result as $get_value) {
+            $get_value->created = timeAgo($get_value->created);
+        }
+        if ($result) {
+            $response = array('status' => 'ok','currentUsername' => $currentUserData->user_name, 'current_user_id' => $currentUserData->user, 'res' => $result);
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+     * this function is used for add support user
+     * @return type object
+     */
+    public function supportUser() {
+
+        $webChatModel = new WebChatModel();
+        $room = Input::post("room");
+        $userID = Input::post("userID");
+        $currentUser = Input::post("currentUser");
+        $support_name = Input::post("support_name");
+        $email = Input::post("email");
+        $aLocationData = getLocationData();
+
+        $aData = array(
+            'room' => $room,
+            'supp_user' => $userID,
+            'user' => $currentUser,
+            'user_name' => $support_name,
+            'email' => $email,
+            'ip_address' => $aLocationData['ip_address'],
+            'platform' => $aLocationData['platform'],
+            'platform_device' => $aLocationData['platform_device'],
+            'browser' => $aLocationData['name'],
+            'useragent' => $aLocationData['userAgent'],
+            'country' => $aLocationData['country'],
+            'countryCode' => $aLocationData['countryCode'],
+            'region' => $aLocationData['region'],
+            'city' => $aLocationData['city'],
+            'longitude' => $aLocationData['longitude'],
+            'latitude' => $aLocationData['latitude'],
+            'status' => '0',
+            'created' => date('Y-m-d H:i:s')
+        );
+        $result = $webChatModel->addSupportUser($aData);
+        if ($result) {
+            $response = array('status' => 'ok');
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit;
+        
     }
 
 

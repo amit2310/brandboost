@@ -289,5 +289,47 @@ class WebChatModel extends Model {
         return $oData;     
     }
 
+    /**
+     * this function is used to get All message by token
+     * @param type $token
+     * @return type object
+     */
+    public function getAllMessages($token) {
+
+        $oData = DB::table('tbl_chat_message')
+        ->select('*')
+        ->where('token', $token)
+        ->orderBy('id', 'asc')
+        ->get();
+        return $oData;   
+    }
+
+
+    /**
+     * this function is used to get user message
+     * @param type $token
+     * @return type object
+     */
+    public function getUserMessages($token) {
+
+        $oData = DB::table('tbl_chat_supportuser')
+        ->select('*')
+        ->where('room', $token)
+        ->get();
+        return $oData;    
+    }
+
+    /**
+     * this function is used to add support user
+     * @param type $aData
+     * @return type insert id
+     */
+    public function addSupportUser($aData){
+
+        $oData = DB::table('tbl_chat_supportuser')->insertGetId($aData);
+        return $oData;
+    }
+
+
 
 }
