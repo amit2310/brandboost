@@ -944,9 +944,9 @@ function loadMessageChat(userId,token,clickvalue=null)
 			$(this).addClass('yellow');
 		}
 		$.ajax({
-		url: '<?php echo base_url('admin/Chat/favouriteUser'); ?>',
+		url: '<?php echo base_url('admin/webchat/favouriteUser'); ?>',
 		type: "POST",
-		data: {userId:userId, status:status},
+		data: {userId:userId, status:status,_token: '{{csrf_token()}}'},
 		dataType: "json",
 			success: function (data) {
 				if (data.status == 'ok') {

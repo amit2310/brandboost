@@ -38,8 +38,7 @@ foreach ($o_s_list as $key => $value) {
         if ($usersdata->lastname == 'NA') {
             $usersdata->lastname = "";
         }
-        //$favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id, $usersdata->id);
-        $favUser = getFavSmsUser($loginUserData->id, $phoneNumber);
+     
         
         $avatar = !empty($usersdata->avatar) ? $usersdata->avatar : '';
         $address = !empty($usersdata->address) ? $usersdata->address : '';
@@ -52,7 +51,7 @@ foreach ($o_s_list as $key => $value) {
         } ?> user_id="<?php echo $usersdata->id; ?>" >
 		<div class="avatarImage"><?php echo showUserAvtar($avatar, $usersdata->firstname, $usersdata->lastname, 28, 28, 11); ?></div>
 		
-		<span class="slider-username contacts"><?php echo phoneNoFormat($phoneNumber); ?>  &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $phoneNumber; ?>"><i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i></span> </span> 
+		<span class="slider-username contacts"><?php echo phoneNoFormat($phoneNumber); ?>  &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $phoneNumber; ?>"><i class="fa fa-star star_icon"></i></span> </span> 
 		
 		
 		

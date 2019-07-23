@@ -324,12 +324,29 @@ class WebChatModel extends Model {
      * @param type $aData
      * @return type insert id
      */
+
     public function addSupportUser($aData){
 
         $oData = DB::table('tbl_chat_supportuser')->insertGetId($aData);
         return $oData;
     }
 
+ 
+   /**
+     * this function is used to add favourite webchatuser
+     * @return type object
+     */
+
+   public function favouriteUser($userId, $aData) {
+
+        $oData = DB::table('tbl_chat_supportuser')
+            ->where('id', $userId)
+            ->update($aData);
+             return $oData; 
+
+        }
+
+       
 
 
 }

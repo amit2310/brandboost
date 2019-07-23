@@ -38,15 +38,24 @@ class SmsChatModel extends Model {
         return $oData;
     }
 
+     /**
+     * This function is used to delete the fav sms chat user
+     * @param type $currentUserId
+     * @param type $subId
+     * @return type
+     */
+
+
     public function deleteSMSFavourite($currentUserId, $subId) {
-        $this->db->where('fav_user_id', $subId);
-        $this->db->where('curr_user_id', $currentUserId);
-        $result = $this->db->delete('tbl_chat_favourite');
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+
+            $oData = DB::table('tbl_chat_favourite')
+            ->select('fav_user_id','subscriber')
+            ->where('fav_user_id', $subId)
+            >where('curr_user_id', $currentUserId)
+            ->delete();
+
+            return $oData;
+
     }
 
     public function getSMSFavouriteUser($currentUserId, $subsid) {
@@ -79,34 +88,17 @@ class SmsChatModel extends Model {
                  ->where('curr_user_id', $currentUserId)
                 ->where('fav_user_id', $number)
                 ->first();
-                if(!empty($oData->fav_user_id))
-                    return true;
-                else 
-                return false;    
+                return $oData;   
        
     }
 
-    public function getSMSFavouriteUserSingle($currentUserId, $fav_user_id) {
+    
 
-        $result = '';
-        $this->db->select('fav_user_id');
-        $this->db->where('curr_user_id', $currentUserId);
-        $this->db->where('fav_user_id', $fav_user_id);
-        $this->db->from('tbl_chat_favourite');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            $result = $query->num_rows();
-        }
-        ///echo $this->db->last_query(); die;
-
-        return $result;
-    }
 
     public function addSMSFavourite($data) {
-        $result = $this->db->insert('tbl_chat_favourite', $data);
-        ///echo $this->db->last_query(); die;
+         $oData = DB::table('tbl_subscriber_notes')->insertGetId($data);
 
-        if ($result)
+        if ($oData)
             return true;
         else
             return false;
@@ -131,7 +123,7 @@ class SmsChatModel extends Model {
     {
 
        $oData = DB::table('tbl_subscriber_notes')->insertGetId($data);
-      return $oData;
+       return $oData;
 
     }
 
@@ -375,5 +367,10 @@ class SmsChatModel extends Model {
         }
         return $query->num_rows();
     }
+
+
+
+
+
 
 }
