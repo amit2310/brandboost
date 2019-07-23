@@ -1,5 +1,6 @@
 <?php
 $count = 0;
+$loginUserData = getLoggedUser();
 foreach ($o_s_list as $key => $value) {
     $showRed = 0;
     $phoneNumber = "";
@@ -20,6 +21,11 @@ foreach ($o_s_list as $key => $value) {
             $usersdata = $usersdata[0];
         }
         $usersdatails = getUserDetail($usersdata->user_id);
+        $favUser = getFavSmsUser($loginUserData->id, $phoneNumber);
+        if(!empty($favUser))
+        {
+        	$favUser=1;
+        }
        
         $fileext = explode('.', $value->msg);
         $fileext = end($fileext);
@@ -51,7 +57,7 @@ foreach ($o_s_list as $key => $value) {
         } ?> user_id="<?php echo $usersdata->id; ?>" >
 		<div class="avatarImage"><?php echo showUserAvtar($avatar, $usersdata->firstname, $usersdata->lastname, 28, 28, 11); ?></div>
 		
-		<span class="slider-username contacts"><?php echo phoneNoFormat($phoneNumber); ?>  &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $phoneNumber; ?>"><i class="fa fa-star star_icon"></i></span> </span> 
+		<span class="slider-username contacts"><?php echo phoneNoFormat($phoneNumber); ?>  &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $phoneNumber; ?>"><i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i></span> </span> 
 		
 		
 		

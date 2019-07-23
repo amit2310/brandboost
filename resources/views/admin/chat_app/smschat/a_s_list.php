@@ -1,5 +1,6 @@
 <?php
 $count = 0;
+$loginUserData = getLoggedUser();
 foreach ($a_s_list as $key => $value) {
     $showRed = 0;
     $phoneNumber = "";
@@ -43,14 +44,20 @@ foreach ($a_s_list as $key => $value) {
         $address = !empty($usersdata->address) ? $usersdata->address : '';
         $city = !empty($usersdata->city) ? $usersdata->city : '';
         $state = !empty($usersdata->state) ? $usersdata->state : '';
+        $favUser=0;
         $country = !empty($usersdata->country) ? $usersdata->country : '';
+        $favUser = getFavSmsUser($loginUserData->id, $phoneNumber);
+        if(!empty($favUser))
+        {
+        	$favUser=1;
+        }
 
 ?>
 		<div  phone_no_format="<?php echo phoneNoFormat($phoneNumber); ?>" id="sidebar_Sms_box_<?php echo $phoneNumber; ?>" class="sms_user sms_twr_<?php echo $phoneNumber; ?>" phone_no="<?php echo trim($phoneNumber); ?>" <?php if ($showRed) { ?>wait="yes" token="<?php echo $value->token; ?>"<?php
         } ?> user_id="<?php echo $usersdata->id; ?>" >
 		<div class="avatarImage"><?php echo showUserAvtar($avatar, $usersdata->firstname, $usersdata->lastname, 28, 28, 11); ?></div>
 		
-		<span class="slider-username contacts"><?php echo phoneNoFormat($phoneNumber); ?>  &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $phoneNumber; ?>"><i class="fa fa-star star_icon"></i></span> </span> 
+		<span class="slider-username contacts"><?php echo phoneNoFormat($phoneNumber); ?>  &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $phoneNumber; ?>"><i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i></span> </span> 
 		
 		
 		

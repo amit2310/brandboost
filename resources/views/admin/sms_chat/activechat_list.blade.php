@@ -25,6 +25,11 @@ foreach ($activechatlist as $key => $value) {
         }
         $userDataDetail = getUserDetail($usersdata->user_id);
         $favUser = getFavSmsUser($loginUserData->id, $usersdata->phone);
+        if(!empty($favUser))
+        {
+            $favUser=1;
+        }
+
         if (empty($userDataDetail->avatar)) {
             $avatar = "";
         } else {
@@ -72,7 +77,7 @@ foreach ($activechatlist as $key => $value) {
 				<?php echo showUserAvtar($avatar, $usersdata->firstname, $usersdata->lastname, 28, 28, 12); ?>
 				<?php
         } ?>
-		<span class="addSmsFavUser" subscriberId="<?php echo $usersdata->phone; ?>"><i class="fa fa-star star_icon "></i></span>
+		<span class="addSmsFavUser" subscriberId="<?php echo $usersdata->phone; ?>"><i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i></span>
 			</div>
 
 			<div class="media-body"> 
