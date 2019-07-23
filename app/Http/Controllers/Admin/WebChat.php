@@ -308,9 +308,11 @@ class WebChat extends Controller {
         if ($result) {
             $hasAssign = 0;
             $getSupportUser = $webChatModel->checkTeamAssign($room);
-            if(empty($getSupportUser)) {
-                $webChatModel->assignChat($room, $isLoggedInTeam);
-                $hasAssign = 1;   
+            if(!empty($getSupportUser)) {
+                if($getSupportUser->assign_team_member == 0) {
+                    $webChatModel->assignChat($room, $isLoggedInTeam);
+                    $hasAssign = 1;   
+                }
             }
 
             $chatRow =  $webChatModel->getassignChat($room);
@@ -318,8 +320,10 @@ class WebChat extends Controller {
             if(empty($chatRow)){
                 $chatRow =  $webChatModel->getassignChatUser($room);
             }
-            //$response = array('status' => 'ok','isLoggedInTeam'=>$chatRow->teamName, 'teamId' => $chatRow->teamId, 'hasAssign' => $hasAssign);
-            $response = array('status' => 'ok');
+
+            $teamName = !empty($chatRow->teamName)? $chatRow->teamName : '';
+            $teamId = !empty($chatRow->teamId)? $chatRow->teamId : '';
+            $response = array('status' => 'ok','isLoggedInTeam'=>$teamName, 'teamId' => $teamId, 'hasAssign' => $hasAssign);
         } else {
             $response = array('status' => 'error');
         }
