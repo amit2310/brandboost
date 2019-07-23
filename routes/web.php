@@ -63,7 +63,6 @@ Route::get('admin/webchat','Admin\WebChat@index');
 Route::post('admin/webchat/getUserinfo','Admin\WebChat@getUserinfo');
 Route::post('admin/webchat/listingNotes','Admin\WebChat@listingNotes');
 Route::post('admin/webchat/addWebNotes','Admin\WebChat@addWebNotes');
-Route::post('admin/webchat/readMessages','Admin\WebChat@readMessages');
 Route::post('admin/webchat/changeLoginStatus','Admin\WebChat@changeLoginStatus');
 Route::post('admin/webchat/addChatMsg','Admin\WebChat@addChatMsg');
 Route::post('admin/webchat/updateSupportuser','Admin\WebChat@updateSupportuser');
@@ -83,6 +82,7 @@ Route::post('webchat/addChatMsg','Admin\WebChat@addChatMsg');
 Route::post('webchat/supportUser','Admin\WebChat@supportUser');
 Route::post('webchat/getMessages','Admin\WebChat@getMessages');
 Route::post('webchat/readChatMsg','Admin\WebChat@readChatMsg');
+Route::post('webchat/readMessages','Admin\WebChat@readMessages');
 Route::post('admin/webchat/favouriteUser','Admin\WebChat@favouriteUser');
 
 

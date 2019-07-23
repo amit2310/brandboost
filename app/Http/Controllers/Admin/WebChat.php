@@ -128,6 +128,9 @@ class WebChat extends Controller {
         //pre($result);die;
         if (count((array)$result) > 0) {
             foreach ($result as $get_value) {
+
+                $uFrom = $get_value->user_form;
+                $uTo = $get_value->user_to;
                 $avatarHtml = '';
                 $avatar = "";
                 if (strlen($get_value->user_form) > 10) {
@@ -140,6 +143,8 @@ class WebChat extends Controller {
                     } else {
                         $avatarHtml = showUserAvtar("", "A", "", 28, 28, 11);
                     }
+
+                    $get_value->user_form = (string)$uFrom; 
                 } else {
                     $oUserDetails = getAllUser($get_value->user_form);
                     $avatar = $oUserDetails[0]->avatar;
@@ -147,9 +152,12 @@ class WebChat extends Controller {
                     $firstname = !empty($oUserDetails[0]->firstname) ? $oUserDetails[0]->firstname : '';
                     $lastname = !empty($oUserDetails[0]->lastname) ? $oUserDetails[0]->lastname : '';
                     $avatarHtml = showUserAvtar($avatar, $firstname, $lastname, 28, 28, 11);
+
+                    $get_value->user_to = (string)$uTo;
                 }
                 $get_value->created = timeAgo($get_value->created);
                 $get_value->avatarImage = $avatarHtml;
+                
             }
         }
         //pre($result); die;

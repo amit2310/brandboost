@@ -1881,7 +1881,7 @@ type: "POST",
 data: {room:token, offset:'0',_token: '{{csrf_token()}}'},
 dataType: "json",
 success: function (data) {
-//console.log(data)
+// console.log(data)
 // webchatfromhere;
 if (data.status == 'ok') {
 var result = data.res;
