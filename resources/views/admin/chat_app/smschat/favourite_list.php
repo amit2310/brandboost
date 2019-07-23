@@ -4,7 +4,6 @@ foreach ($fUser as $key => $value) {
     $phoneNumber = $value->fav_user_id;
     $userDataDetail = $userDataDetail[0];
     $userInfo = getUserDetail($userDataDetail->user_id);
-    $favUser = 1;
 ?>
 	<div  phone_no_format="<?php echo phoneNoFormat($phoneNumber); ?>" id="sidebar_Sms_box_<?php echo $phoneNumber; ?>" class="sms_user sms_twr_<?php echo $phoneNumber; ?>" phone_no="<?php echo trim($phoneNumber); ?>" >
 			
@@ -29,7 +28,7 @@ foreach ($fUser as $key => $value) {
 			<div class="media-body"> 
 
 				
-				<span class="fsize12 txt_dark"><?php echo phoneNoFormat($phoneNumber); ?>  &nbsp; <i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i> </span> 
+				<span class="fsize12 txt_dark"><?php echo phoneNoFormat($phoneNumber); ?>  &nbsp; <i class="fa fa-star star_icon"></i> </span> 
 
 				<span class=""><span style="float: left; width: 100%; font-weight:300!important; color: #6a7995 !important; font-size: 12px; margin-bottom: 3px; ">
             Assigned to:&nbsp;<!--+1(359) 569-6585--><?php echo phoneNoFormat($phoneNumber); ?></span></span>

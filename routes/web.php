@@ -82,6 +82,7 @@ Route::post('webchat/display_chat_widget/{widgetType}/{userAccountID}','Admin\We
 Route::get('webchat/getUserMessages','Admin\WebChat@getUserMessages');
 Route::post('webchat/addChatMsg','Admin\WebChat@addChatMsg');
 Route::post('webchat/supportUser','Admin\WebChat@supportUser');
+Route::post('admin/webchat/favouriteUser','Admin\WebChat@favouriteUser');
 
 
 Route::get('admin/smschat','Admin\SmsChat@index');
@@ -98,6 +99,7 @@ Route::post('admin/smschat/shortcutListing','Admin\SmsChat@shortcutListing');
 Route::post('admin/smschat/small_shortcutListing','Admin\SmsChat@small_shortcutListing');
 Route::post('admin/smschat/small_shortcutListing_sms','Admin\SmsChat@small_shortcutListing_sms');
 Route::post('admin/smschat/sendMMS','Admin\SmsChat@sendMMS');
+Route::post('admin/smschat/addSMSFavourite','Admin\SmsChat@addSMSFavourite');
 
 
 //Profile module

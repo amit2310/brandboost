@@ -253,7 +253,7 @@ foreach ($character as $key => $value) {
 									<input type="hidden" id="userImg_<?php echo $userData->phone; ?>" value="">
 									<a href="javascript:void(0);" class="media-link bbot getChatDetails" subscriberId = "<?php echo $userData->id; ?>"  phone_no="<?php echo $userData->phone; ?>">
 										<div class="media-left"><?php echo showUserAvtar($avatar, $userData->firstname, $userData->lastname, 28, 28, 12); ?>
-										<span class="favouriteSMSUser" subscriberId = "<?php echo $userData->phone; ?>"><i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i></span></div>
+										<span  subscriberId = "<?php echo $userData->phone; ?>"><i class="fa fa-star star_icon"></i></span></div>
 										
 										<div class="media-body"> 
 

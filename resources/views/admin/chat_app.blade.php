@@ -4041,9 +4041,7 @@ if ($isLoggedInTeam) {
             foreach ($getCharUserList as $userData) {
                 $userDataDetail = getUserDetail($userData->user_id);
                 $favUser = '';
-                //$favUser = getFavSmsUser($loginUserData->id, $userData->phone);
-                //if(!empty($userDataDetail)) {
-                //$favUser = $this->smsChat->getSMSFavouriteBySubsId($userData->id);
+                
                 if ($flag == 0) {
                     $userId = $userData->user_id;
                     $incId = $userData->id;
@@ -4062,7 +4060,7 @@ if ($isLoggedInTeam) {
 																<?php
                 } ?>
 														</span>
-														<span class="slider-username contacts"><?php echo phoneNoFormat($userData->phone); ?> &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $userData->phone; ?>"><i class="fa fa-star star_icon <?php echo $favUser > 0 ? 'yellow' : ''; ?>"></i></span> </span>
+														<span class="slider-username contacts"><?php echo phoneNoFormat($userData->phone); ?> &nbsp; <span class="SmallchatfavouriteSMSUser" subscriberId="<?php echo $userData->phone; ?>"><i class="fa fa-star star_icon"></i></span> </span>
 														<span class="" style="float: left; margin-left: 12px;"><span style="font-weight:300!important; color: #6a7995 !important; font-size: 12px; margin-bottom: 3px; ">
                                                             Assigned to:&nbsp;<!--+1(359) 569-6585--><?php echo phoneNoFormat($userData->phone); ?></span></span> 
 														
