@@ -17,7 +17,7 @@ if ($isLoggedInTeam) {
 }
 $hasweb_access = getMemberchatpermission($loginMember);
 $web_chat="";
-$smschat="";
+$sms_chat="";
 if(!empty($hasweb_access))
 {
     $web_chat = $hasweb_access->web_chat;
