@@ -109,7 +109,7 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-	public function getBrandboostEmailSend($userId, $type = '') {
+	public static function getBrandboostEmailSend($userId, $type = '') {
 		
 		$oData = DB::table('tbl_track_sendgrid')
 			->when(!empty($userId), function ($query) use ($userId) {
@@ -132,7 +132,7 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-	public function getBrandboostSmsSend($userId, $type = '') {
+	public static function getBrandboostSmsSend($userId, $type = '') {
 		$oData = DB::table('tbl_track_twillio')
 			->when(!empty($userId), function ($query) use ($userId) {
 				return $query->where('tbl_brandboost.user_id', $userId);
@@ -154,7 +154,7 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-	public function getBrandboostEmailSendMonth($userId, $type = '') {
+	public static function getBrandboostEmailSendMonth($userId, $type = '') {
 		$oData = DB::table('tbl_track_sendgrid')
 			->when(!empty($userId), function ($query) use ($userId) {
 				return $query->where('tbl_brandboost.user_id', $userId);
@@ -310,6 +310,42 @@ class BrandboostModel extends Model {
 				->first();
 			return $oData;
         }
+    }
+	
+	/**
+	* Used to get onsite brandboost product data by id
+	* @param type $productId
+	* @return type
+	*/
+	public static function getBrandboostSmsSendMonth($userId, $type = '') {
+		$oData = DB::table('tbl_brandboost')
+			->select('tbl_track_twillio.*')
+			->when(($userId > 0), function ($query) use ($userId) {
+				return $query->where('tbl_brandboost.user_id', $userId);
+			})
+			->when((!empty($type)), function ($query) use ($type) {
+				return $query->where('tbl_brandboost.review_type', $type);
+			})
+			->where('tbl_track_twillio.event_name', 'delivered')
+			->where('tbl_brandboost.delete_status', 0)    
+			->orderBy('tbl_brandboost.id', 'desc')
+			->leftJoin('tbl_track_twillio', 'tbl_brandboost.id', '=' , 'tbl_track_twillio.brandboost_id')
+			->get();
+        return $oData;
+    }
+	
+	/**
+	* Used to get feedback count by brandboost id
+	* @param type $brandboostID
+	* @return type
+	*/
+	public static function getFeedbackCount($brandboostID) {
+		$oData = DB::table('tbl_brandboost_feedback')
+			->select('COUNT(id) AS total_count, category')
+			->where('brandboost_id', $brandboostID)
+			->groupBy('category')
+			->count();
+        return $oData;
     }
 
     public function getWidgetInfo($id, $hash = false) {
@@ -1724,19 +1760,6 @@ class BrandboostModel extends Model {
           return $response; */
     }
 
-
-    public function getFeedbackCount($brandboostID) {
-        $this->db->select("COUNT(id) AS total_count, category");
-        $this->db->where("brandboost_id", $brandboostID);
-        $this->db->group_by("category");
-        $result = $this->db->get("tbl_brandboost_feedback");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        //echo $this->db->last_query();
-        return $response;
-    }
-
     public function unsubscribeUserAC($aData) {
         $result = $this->db->insert('tbl_suppression_list', $aData);
         $inset_id = $this->db->insert_id();
@@ -2566,30 +2589,6 @@ class BrandboostModel extends Model {
         $this->db->where('review_type', $type);
         $this->db->where('delete_status', 0);
         $this->db->order_by('id', 'DESC');
-        $result = $this->db->get('tbl_brandboost');
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
-    }
-
-
-    public function getBrandboostSmsSendMonth($userId, $type = '') {
-
-        $this->db->select('tbl_track_twillio.*');
-        if ($userId > 0) {
-            $this->db->where('tbl_brandboost.user_id', $userId);
-        }
-
-        if (!empty($type)) {
-            $this->db->where('tbl_brandboost.review_type', $type);
-        }
-        $this->db->where('tbl_brandboost.delete_status', 0);
-        $this->db->where('tbl_track_twillio.event_name', 'delivered');
-        $this->db->order_by('tbl_brandboost.id', 'DESC');
-        $this->db->join("tbl_track_twillio", "tbl_brandboost.id = tbl_track_twillio.brandboost_id", "INNER");
         $result = $this->db->get('tbl_brandboost');
         //echo $this->db->last_query();exit;
         if ($result->num_rows() > 0) {
