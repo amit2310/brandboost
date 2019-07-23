@@ -246,7 +246,7 @@ if ($uriSegment == 'offsite') {
 
                     <?php
                     
-                    if ($loginMember) {
+                    if ($isLoggedInTeam) {
                         $hasweb_access = getMemberchatpermission($loginMember);
                         $web_chat="";
                         $sms_chat="";
