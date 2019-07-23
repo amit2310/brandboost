@@ -896,7 +896,7 @@ if (!empty($isLoggedInTeam)) {
 }
 $aTwilioAc = getTwilioAccountCustom($loginUserData->id);
 if (!empty($hasweb_access)) {
-    if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
+    if ($hasweb_access->sms_chat == 1) {
         if ($hasweb_access->bb_number != "") {
             $loginUserData->mobile = numberForamt($hasweb_access->bb_number);
         } else {
@@ -1761,7 +1761,7 @@ $('#msg_input_sms_'+userPhoneNo).attr('userimage','<?php echo $currentUserImg; ?
 $.ajax({
 url: "{{ url('admin/smschat/sendMsg') }}",
 type: "POST",
-data: {'phoneNo' : userPhoneNo, 'messageContent' : messageContent, 'smstoken': newToken, 'moduleName' : 'chat', 'media_type': '', 'videoUrl': ''},
+data: {'phoneNo' : userPhoneNo, 'messageContent' : messageContent, 'smstoken': newToken, 'moduleName' : 'chat', 'media_type': '', 'videoUrl': '',_token: '{{csrf_token()}}'},
 dataType: "html",
 success: function (data) {
 	
@@ -3784,7 +3784,8 @@ $a_s_list = activeOnlysms($loginUserData->mobile); // here we place client twili
 $o_s_list = SmsOldest($loginUserData->mobile);
 
 $getactiveChatboxlisting = getactiveChatbox($loginUserData->id);
-
+$activeWebClass="";
+$activeSmsClass="";
 
 if ($isLoggedInTeam) {
     $hasweb_access = getMemberchatpermission($isLoggedInTeam);
