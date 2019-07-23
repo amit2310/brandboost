@@ -12,11 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
 
-class dropzone extends Controller
+class dropzone extends Controller 
 {
   
     /**
-     * This function used to upload image from grapes editor into S3 server
+     * This function used to upload   image from grapes editor into S3 server
      * @param Request $request
      */
     public function upload_editor_image(Request $request) {
