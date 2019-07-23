@@ -223,7 +223,7 @@ $popupToken = !empty($popupToken) ? $popupToken : '';
 				
 				<!--++++++++++++ wait chat list +++++++++++++++-->
 				<div class="panel-body p0 br5 mb10 chat_user_list w_list" style="background-image:none; display:none">
-					@include('admin/web_chat/wait_list', array('WaitingChatlist' => $WaitingChatlist))
+					{{-- @include('admin/web_chat/wait_list', array('WaitingChatlist' => $WaitingChatlist)) --}}
 				</div>
 			    <!--++++++++++++ wait chat list +++++++++++++++-->
 

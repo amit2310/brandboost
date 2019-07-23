@@ -3,6 +3,7 @@ $count = 0;
 $flag = 0;
 $userMessage = "";
 foreach ($WaitingChatlist as $key => $value) {
+
     $token = "";
     $userid="";
     $chatMessage = "";
