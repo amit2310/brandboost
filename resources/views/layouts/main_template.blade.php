@@ -248,7 +248,14 @@ if ($uriSegment == 'offsite') {
                     
                     if ($loginMember) {
                         $hasweb_access = getMemberchatpermission($loginMember);
-                        if ($hasweb_access->web_chat == 1 || $hasweb_access->sms_chat == 1) {
+                        $web_chat="";
+                        $sms_chat="";
+                        if(!empty($hasweb_access))
+                        {
+                        $web_chat = $hasweb_access->web_chat;
+                        $sms_chat = $hasweb_access->sms_chat;
+                        }
+                        if ($web_chat == 1 || $sms_chat == 1) {
                             ?>
                            @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers, 'isLoggedInTeam' => $loginMember)) 
                             <?php
