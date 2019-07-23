@@ -6,6 +6,7 @@ $loginUserData = getLoggedUser();
 
 foreach ($activechatlist as $key => $value) {
 
+
     $token = "";
     $userid="";
     $chatMessage = "";
@@ -40,7 +41,7 @@ foreach ($activechatlist as $key => $value) {
 			$Usrvalue = $Usrvalue[0];
     
         // $favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id,$incid[0]->id);
-        $token = ($token) ? $token : '';
+        $token = !empty($token) ? $token : '';
         $avatar = !empty($usersdata->avatar) ? $usersdata->avatar : '';
 ?>
 		<div RwebId="<?php echo $token; ?>" token="<?php echo $token; ?>" class="sidebar-user-box all_user_chat tk_<?php echo $token; ?>" assign_to="<?php echo assignto($token); ?>" incWid="" id="sidebar-user-box-<?php echo $userid; ?>" user_id="<?php echo $userid; ?>" >

@@ -633,7 +633,7 @@ function loadMessageChat(userId,token,clickvalue=null)
 					
 					
 			     $.ajax({
-				url: '<?php echo base_url('admin/webchat/getMessages'); ?>',
+				url: '<?php echo base_url('webchat/getMessages'); ?>',
 				type: "POST",
 				data: {room:newToken, offset:'0',_token: '{{csrf_token()}}'},
 				dataType: "json",

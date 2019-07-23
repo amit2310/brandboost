@@ -125,12 +125,14 @@ class WebChat extends Controller {
         $limit = 10000;
         $WebChatObj = new WebChatModel();
         $result = $WebChatObj->getwebchatMessages($token);
+        //pre($result);die;
         if (count((array)$result) > 0) {
             foreach ($result as $get_value) {
                 $avatarHtml = '';
                 $avatar = "";
                 if (strlen($get_value->user_form) > 10) {
                     $avatar = "";
+
                     $supportUser = getSupportUser($get_value->user_form);
                     if (!empty($supportUser[0]->user_name)) {
                         $supportUserName = explode(" ", $supportUser[0]->user_name);
@@ -150,6 +152,7 @@ class WebChat extends Controller {
                 $get_value->avatarImage = $avatarHtml;
             }
         }
+        //pre($result); die;
         if ($result) {
             $response = array('status' => 'ok', 'res' => $result);
         } else {
@@ -1170,6 +1173,32 @@ class WebChat extends Controller {
         echo json_encode($response);
         exit;
         
+    }
+
+
+    /**
+     * this function is used for read chat message
+     * @return type object
+     */
+    public function readChatMsg() {
+
+        $webChatModel = new WebChatModel();
+        $to_user = Input::post("chatTo");
+        $from_user = Input::post("chatFrom");
+        $aData = array(
+            'read_status' => '1'
+        );
+
+        $result = $webChatModel->readChatMsg($to_user, $from_user, $aData);
+
+        if ($result) {
+            $response = array('status' => 'ok');
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit;
     }
 
 
