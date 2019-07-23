@@ -3465,5 +3465,66 @@ if (!function_exists('getNotificationLang')) {
         }
 
     }
+
+
+    /**
+     * Get's location data
+     */
+    function getLocationData() {
+        global $platform_device;
+        $ipaddress = '';
+        if (getenv('HTTP_CLIENT_IP'))
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        else if (getenv('HTTP_X_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+        else if (getenv('HTTP_X_FORWARDED'))
+            $ipaddress = getenv('HTTP_X_FORWARDED');
+        else if (getenv('HTTP_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_FORWARDED_FOR');
+        else if (getenv('HTTP_FORWARDED'))
+            $ipaddress = getenv('HTTP_FORWARDED');
+        else if (getenv('REMOTE_ADDR'))
+            $ipaddress = getenv('REMOTE_ADDR');
+        else
+            $ipaddress = 'UNKNOWN';
+        $aBrowserInfo = getBrowserN(); // Return userAgent, browsername, version, platform, pattern
+        $aLocationInfo = getLocationInfoByIp();
+        $aData = array_merge($aBrowserInfo, $aLocationInfo);
+        $aData['ip_address'] = $ipaddress;
+        $aData['platform_device'] = $platform_device;
+
+        return $aData;
+    }
+
+     /**
+     * Get's location data by ipaddress
+     */
+    function getLocationInfoByIp() {
+
+        $client = @$_SERVER['HTTP_CLIENT_IP'];
+        $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+        $remote = @$_SERVER['REMOTE_ADDR'];
+        $result = array('country' => '', 'countryCode' => '', 'city' => '', 'region' => '', 'longitude' => '', 'latitude' => '');
+        if (filter_var($client, FILTER_VALIDATE_IP)) {
+            $ip = $client;
+        } elseif (filter_var($forward, FILTER_VALIDATE_IP)) {
+            $ip = $forward;
+        } else {
+            $ip = $remote;
+        }
+
+        //103.254.97.14
+        $ip_data = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $ip));
+        if ($ip_data && $ip_data->geoplugin_countryName != null) {
+            $result['country'] = $ip_data->geoplugin_countryName;
+            $result['countryCode'] = $ip_data->geoplugin_countryCode;
+            $result['city'] = $ip_data->geoplugin_city;
+            $result['region'] = $ip_data->geoplugin_region;
+            $result['longitude'] = $ip_data->geoplugin_longitude;
+            $result['latitude'] = $ip_data->geoplugin_latitude;
+        }
+        return $result;
+    }
+
 }
 ?>

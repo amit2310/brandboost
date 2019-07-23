@@ -176,7 +176,7 @@ BB = function (t) {
 			t.show(cb);
 			t.hide(ub);
 			
-			var bbsrc = this.userSettings.host + "/admin/Chat/getUserMessages/";
+			var bbsrc = this.userSettings.host + "/webchat/getUserMessages/";
 			var a = 'room=' + bbvisitortoken + '&offset=0';
 			//i = call back function
 			//a = POST data
@@ -340,7 +340,7 @@ BB = function (t) {
 				var newBBvisitortoken = localStorage.getItem("bb_user_chat_token");
 				//console.log(newBBvisitortoken, 'newBBvisitortoken');
 				bb_chat_socket.emit('chat_message', {room:newBBvisitortoken, msg:newMessage, chatTo:bbClientId, currentUser:currentUser, currentUserName:currentSupportName,msgType:'file' });
-				var bbsrc = this.userSettings.host + "/admin/webchat/addChatMsg";
+				var bbsrc = this.userSettings.host + "/webchat/addChatMsg";
 				var a = 'room=' + newBBvisitortoken + '&msg=' + msg + '&chatTo=' + bbClientId + '&currentUser=' + currentUser;
 				e.value = '';
 				//i = call back function
@@ -391,7 +391,7 @@ BB = function (t) {
 		if(msg.length > 0 ){
 			setTimeout(() => {
 				bb_chat_socket.emit('chat_message', {room:newToken, msg:msg, chatTo:bbClientId, currentUser:currentUser, name:currentSupportName, currentUserName:currentSupportName, msgType:'text' });
-				var bbsrc = this.userSettings.host + "/admin/webchat/addChatMsg";
+				var bbsrc = this.userSettings.host + "/webchat/addChatMsg";
 				var a = 'room=' + newToken + '&msg=' + msg + '&chatTo=' + bbClientId + '&currentUser=' + currentUser;
 				e.value = '';
 				//i = call back function
@@ -495,7 +495,7 @@ BB = function (t) {
 						//console.log(bbClientAvtarImg, 'bbClientAvtarImg');
 						bb_chat_socket.emit('chat_message', {room:newToken, avatar:bbClientAvtarImg, msg:greattingMessageArray[greatingMsgCounter],currentUserName:currentSupportName, chatTo:currentUser, currentUser:bbClientId, greatingMsg:'default' });
 						
-						var bbsrc = hostURL + "/admin/webchat/addChatMsg";
+						var bbsrc = hostURL + "/webchat/addChatMsg";
 						var a = 'room=' + newToken + '&msg=' + greattingMessageArray[greatingMsgCounter] + '&chatTo=' + currentUser + '&currentUser=' + bbClientId;
 						//e.value = '';
 						var i = function (o) {
@@ -540,7 +540,7 @@ BB = function (t) {
 			//console.log(newToken, 'test 2');
 			bb_chat_socket.emit('subscribe', newToken);
 			
-			var bbsrc = this.userSettings.host + "/admin/Chat/supportUser";
+			var bbsrc = this.userSettings.host + "/webchat/supportUser";
 			var a = 'room=' + newToken + '&userID=' + bbClientId + '&currentUser=' + currentUser + '&support_name=' + username + '&email=' + email;
 			//i = call back function
 			//a = POST data
@@ -556,7 +556,7 @@ BB = function (t) {
 			
 			if(msg.length > 0 ){
 				bb_chat_socket.emit('chat_message', {room:newToken, msg:msg, chatTo:bbClientId, currentUser:currentUser,currentUserName:currentSupportName });
-				var bbsrc = this.userSettings.host + "/admin/webchat/addChatMsg";
+				var bbsrc = this.userSettings.host + "/webchat/addChatMsg";
 				var a = 'room=' + newToken + '&msg=' + msg + '&chatTo=' + bbClientId + '&currentUser=' + currentUser;
 				e.value = '';
 				//i = call back function
@@ -604,7 +604,7 @@ BB = function (t) {
 		//console.log(newToken, 'test 3');
 		bb_chat_socket.emit('subscribe', newToken);
 		
-		var bbsrc = this.userSettings.host + "/admin/Chat/supportUser";
+		var bbsrc = this.userSettings.host + "/webchat/supportUser";
 		var a = 'room=' + newToken + '&userID=' + bbClientId + '&currentUser=' + currentUser + '&support_name=' + support_name;
         //i = call back function
         //a = POST data
@@ -1109,7 +1109,7 @@ var bbwidget = document.getElementById("bbscriptloader").getAttribute("data-widg
 var bbvisitortoken = localStorage.getItem("bb_user_chat_token");
 //var bbchatgeattingdata = localStorage.getItem("bb_chat_geatting_data");
 var bb_chat_socket;
-bb_chat_socket = io('http://brandboostx.com:3000');
+bb_chat_socket = io('http://dev.brandboostx.com:3000');
 var currentUser = '';
 var currentUserName ='';
 var unreadmsgCounter = 0;
@@ -1177,7 +1177,7 @@ var smiliesMap = {
 if (bbkey != 'undefined' && bbwidget != 'undefined') { 
 
     var oBB = new BB(bbkey, {
-        "host": "http://brandboostx.com",
+        "host": "http://dev.brandboostx.com",
         "widget": bbwidget
     });
 
