@@ -72,7 +72,7 @@ foreach ($activechatlist as $key => $value) {
 				<?php echo showUserAvtar($avatar, $usersdata->firstname, $usersdata->lastname, 28, 28, 12); ?>
 				<?php
         } ?>
-		<span subscriberId="<?php echo $usersdata->phone; ?>"><i class="fa fa-star star_icon "></i></span>
+		<span class="addSmsFavUser" subscriberId="<?php echo $usersdata->phone; ?>"><i class="fa fa-star star_icon "></i></span>
 			</div>
 
 			<div class="media-body"> 

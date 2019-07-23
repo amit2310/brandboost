@@ -659,14 +659,14 @@ class SmsChat extends Controller {
         $subscriber =   Input::post("subscriber");
         $SmsChatObj = new SmsChatModel();
 
-        $aData = array('fav_user_id' => $fav_user_id, 'subscriber' => $subscriber, 'curr_user_id' => $curr_user_id, 'created' => date("Y-m-d H:i:s"));
+        $aData = array('fav_user_id' => $fav_user_id, 'curr_user_id' => $curr_user_id, 'created' => date("Y-m-d H:i:s"));
         $favUserCheck = $SmsChatObj->getFavSmsUser($curr_user_id, $fav_user_id);
 
-        if ($favUserCheck > 0) {
+        if (!empty($favUserCheck)) {
             $result = $SmsChatObj->deleteSMSFavourite($curr_user_id, $fav_user_id);
         } else {
 
-            $result = $SmsChatObj->addSMSFavourite($aData);
+            $result = $SmsChatObj->addSMSFavouriteUser($aData);
         }
         if ($result) {
             $response = array('status' => 'ok');
