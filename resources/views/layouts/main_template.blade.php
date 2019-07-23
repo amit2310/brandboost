@@ -9,6 +9,16 @@ if ($aUInfo->id == '') {
 }
 
 $isLoggedInTeam = Session::get("team_user_id");
+if ($isLoggedInTeam) {
+    $aTeamInfo = App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
+    $teamMemberName = $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname;
+    $teamMemberId = $aTeamInfo->id;
+    $loginMember = $teamMemberId;
+} else {
+    $teamMemberName = '';
+    $teamMemberId = '';
+    $loginMember = $aUInfo->id;
+}
 
 if ($isLoggedInTeam) {
     $aTeamInfo = \App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
@@ -236,11 +246,11 @@ if ($uriSegment == 'offsite') {
 
                     <?php
                     
-                    if ($isLoggedInTeam) {
-                        $hasweb_access = getMemberchatpermission($isLoggedInTeam);
+                    if ($loginMember) {
+                        $hasweb_access = getMemberchatpermission($loginMember);
                         if ($hasweb_access->web_chat == 1 || $hasweb_access->sms_chat == 1) {
                             ?>
-                           {{-- @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers, 'isLoggedInTeam' => $isLoggedInTeam)) --}}
+                           @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers, 'isLoggedInTeam' => $loginMember)) 
                             <?php
                         }
                         ?>
