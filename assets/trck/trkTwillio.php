@@ -56,32 +56,21 @@ try {
        
         if (!empty($to) && !empty($from)) {
 
-            $subcriberID = '0';
-            $eventID = '0';
-            $broadcastID = '0';
-            $automationID = '0';
-            $npsID = '0';
-            $npsStep = '0';
-            $npsScoreID = '0';
-            $referralID = '0';
-            $brandboostID = '0';
-
-
 
             $oLatestActivity = getLatestActivity($from, $to);
 
             
             
-            $moduleName = $oLatestActivity['module_name'];
-            $subcriberID = $oLatestActivity['subscriber_id'];
-            $eventID = $oLatestActivity['event_id'];
-            $broadcastID = $oLatestActivity['broadcast_id'];
-            $automationID = $oLatestActivity['automation_id'];
-            $npsID = $oLatestActivity['nps_id'];
-            $npsStep = $oLatestActivity['nps_step'];
-            $npsScoreID = $oLatestActivity['nps_score_id'];
-            $referralID = $oLatestActivity['referral_id'];
-            $brandboostID = $oLatestActivity['brandboost_id'];
+            $moduleName =  $oLatestActivity['module_name']!='' ? $oLatestActivity['module_name'] : '0';
+            $subcriberID =  $oLatestActivity['subscriber_id']!='' ? $oLatestActivity['subscriber_id'] : '0';
+            $eventID = $oLatestActivity['event_id']!='' ? $oLatestActivity['event_id'] : '0';
+            $broadcastID = $oLatestActivity['broadcast_id']!='' ? $oLatestActivity['broadcast_id'] : '0';
+            $automationID = $oLatestActivity['automation_id']!='' ? $oLatestActivity['automation_id'] : '0';
+            $npsID =  $oLatestActivity['nps_id']!='' ? $oLatestActivity['nps_id'] : '0';
+            $npsStep =  $oLatestActivity['nps_step']!='' ? $oLatestActivity['nps_step'] : '0';
+            $npsScoreID = $oLatestActivity['nps_score_id']!='' ? $oLatestActivity['nps_score_id'] : '0';
+            $referralID =  $oLatestActivity['referral_id']!='' ? $oLatestActivity['referral_id'] : '0';
+            $brandboostID =  $oLatestActivity['brandboost_id']!='' ? $oLatestActivity['brandboost_id'] : '0';
 
 
  
