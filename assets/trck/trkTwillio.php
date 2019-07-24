@@ -39,9 +39,9 @@ try {
         }
         //Get latest activity
         echo $to.'++++++++++++++++++++++++++++++'.$from;
-       echo 'Body Found+++++++++++++++ Lower';
+       
         if (!empty($to) && !empty($from)) {
-
+           echo 'Body Found+++++++++++++++ Lower1';
             $oLatestActivity = getLatestActivity($from, $to);
             //if (!empty($oLatestActivity)) {
             $moduleName = $oLatestActivity['module_name'];
@@ -49,12 +49,15 @@ try {
             $eventID = $oLatestActivity['event_id'];
             $broadcastID = $oLatestActivity['broadcast_id'];
             $automationID = $oLatestActivity['automation_id'];
-
+         echo 'Body Found+++++++++++++++ Lower2';
             $npsID = $oLatestActivity['nps_id'];
             $npsStep = $oLatestActivity['nps_step'];
             $npsScoreID = $oLatestActivity['nps_score_id'];
             $referralID = $oLatestActivity['referral_id'];
             $brandboostID = $oLatestActivity['brandboost_id'];
+            echo 'Body Found+++++++++++++++ Lower3';
+
+
  
             $aStoreSMS = array(
                 'to' => db_in($to),
