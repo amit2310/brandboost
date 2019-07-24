@@ -11,9 +11,6 @@ header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Dispo
 require_once '/var/www/html/assets/trck/vendor/autoload.php'; // Loads the library
 use Twilio\Rest\Client;
 include '/var/www/html/assets/trck/functions.php';
-$_REQUEST['From']='+17049075791';
-$_REQUEST['To'] = '+15097400384';
-
 
 $from = phone_display_custom($_REQUEST['From']);
 $to = phone_display_custom($_REQUEST['To']);
