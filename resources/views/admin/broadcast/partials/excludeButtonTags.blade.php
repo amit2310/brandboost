@@ -9,6 +9,8 @@ if (!empty($oCampaignLists)) {
 ?>
 
 <?php
+$aSelectedTags = array();
+$bSummaryExclude = !empty($bSummaryExclude) ? $bSummaryExclude : false;
 if (!empty($oCampaignTags)) {
     //pre($oCampaignTags);
     foreach($oCampaignTags as $oRec){

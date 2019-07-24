@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php
 $iActiveCount = $iArchiveCount = 0;
 
@@ -10,6 +17,8 @@ if (!empty($oBroadcast)) {
         }
     }
 }
+
+$newOpen = $newClick = 0;
 ?>
 <style>
     .createSegment{
@@ -196,7 +205,7 @@ if (!empty($oBroadcast)) {
                         <div class="panel panel-flat">
                             <div class="panel-heading">
                                 <span class="pull-left">
-                                    <h6 class="panel-title"><?php //echo $iActiveCount;       ?> Broadcast</h6>
+                                    <h6 class="panel-title"><?php //echo $iActiveCount;          ?> Broadcast</h6>
                                 </span>
 
                                 <div class="heading-elements">
@@ -268,13 +277,13 @@ if (!empty($oBroadcast)) {
 
                                                 if (strtolower($broadCastData->campaign_type) == 'email') {
                                                     if ($broadCastData->sending_method == 'split') {
-                                                        $aStats = $this->mBroadcast->getBroadcastSendgridStats('broadcast', $broadCastData->broadcast_id, '', 'split');
+                                                        $aStats = $mBroadcast->getBroadcastSendgridStats('broadcast', $broadCastData->broadcast_id, '', 'split');
                                                         //pre($aStats);
                                                     } else {
-                                                        $aStats = $this->mBroadcast->getBroadcastSendgridStats('broadcast', $broadCastData->broadcast_id);
+                                                        $aStats = $mBroadcast->getBroadcastSendgridStats('broadcast', $broadCastData->broadcast_id);
                                                     }
 
-                                                    $aCategorizedStats = $this->mBroadcast->getBroadcastSendgridCategorizedStatsData($aStats);
+                                                    $aCategorizedStats = $mBroadcast->getBroadcastSendgridCategorizedStatsData($aStats);
                                                     //pre($aCategorizedStats);
 
                                                     $totalSent = $aCategorizedStats['processed']['UniqueCount'];
@@ -282,46 +291,52 @@ if (!empty($oBroadcast)) {
                                                     $open = $aCategorizedStats['open']['UniqueCount'];
                                                     $click = $aCategorizedStats['click']['UniqueCount'];
 
-                                                    $totalSentGraph = $delivered * 100 / $totalSent;
-                                                    $totalSentGraph = ceil($totalSentGraph);
+                                                    if ($totalSent > 0) {
+                                                        $totalSentGraph = $delivered * 100 / $totalSent;
+                                                        $totalSentGraph = ceil($totalSentGraph);
+                                                    }
                                                 } else {
                                                     if ($broadCastData->sending_method == 'split') {
-                                                        $aStatsSms = $this->mBroadcast->getBroadcasstTwilioStats('broadcast', $broadCastData->broadcast_id, '', 'split');
+                                                        $aStatsSms = $mBroadcast->getBroadcasstTwilioStats('broadcast', $broadCastData->broadcast_id, '', 'split');
                                                     } else {
-                                                        $aStatsSms = $this->mBroadcast->getBroadcasstTwilioStats('broadcast', $broadCastData->broadcast_id);
+                                                        $aStatsSms = $mBroadcast->getBroadcasstTwilioStats('broadcast', $broadCastData->broadcast_id);
                                                     }
 
-                                                    $aCategorizedStatsSms = $this->mBroadcast->getBroadcastTwilioCategorizedStatsData($aStatsSms);
+                                                    $aCategorizedStatsSms = $mBroadcast->getBroadcastTwilioCategorizedStatsData($aStatsSms);
 
                                                     $totalSent = $aCategorizedStatsSms['sent']['UniqueCount'];
                                                     $delivered = $aCategorizedStatsSms['delivered']['UniqueCount'];
                                                     $queued = $aCategorizedStatsSms['queued']['UniqueCount'];
                                                     $open = $aCategorizedStatsSms['accepted']['UniqueCount'];
                                                     $click = '';
-                                                    $totalDeliveredGraph = $delivered * 100 / $totalSent;
-                                                    $totalDeliveredGraph = ceil($totalDeliveredGraph);
+                                                    if ($totalSent > 0) {
+                                                        $totalDeliveredGraph = $delivered * 100 / $totalSent;
+                                                        $totalDeliveredGraph = ceil($totalDeliveredGraph);
 
-                                                    $totalSentGraph = $totalSent * 100 / $totalSent;
-                                                    $totalSentGraph = ceil($totalSentGraph);
+                                                        $totalSentGraph = $totalSent * 100 / $totalSent;
+                                                        $totalSentGraph = ceil($totalSentGraph);
 
-                                                    $totalQueuedGraph = $queued * 100 / $totalSent;
-                                                    $totalQueuedGraph = ceil($totalQueuedGraph);
+                                                        $totalQueuedGraph = $queued * 100 / $totalSent;
+                                                        $totalQueuedGraph = ceil($totalQueuedGraph);
+                                                    }
                                                 }
 
 
 
                                                 if ($broadCastData->sending_method == 'split') {
                                                     $totalVariations = 0;
-                                                    $oVariations = $this->mBroadcast->getBroadcastVariations($broadCastData->broadcast_id);
+                                                    $oVariations = $mBroadcast->getBroadcastVariations($broadCastData->broadcast_id);
                                                     $totalVariations = count($oVariations);
                                                 }
 
 
-                                                $totalOpenGraph = $open * 100 / $totalSent;
-                                                $totalOpenGraph = ceil($totalOpenGraph);
+                                                if ($totalSent > 0) {
+                                                    $totalOpenGraph = $open * 100 / $totalSent;
+                                                    $totalOpenGraph = ceil($totalOpenGraph);
 
-                                                $totalClickGraph = $click * 100 / $totalSent;
-                                                $totalClickGraph = ceil($totalClickGraph);
+                                                    $totalClickGraph = $click * 100 / $totalSent;
+                                                    $totalClickGraph = ceil($totalClickGraph);
+                                                }
                                                 ?>
                                                 <tr id="append-<?php echo $broadCastData->broadcast_id; ?>" class="selectedClass">
                                                     <td style="display: none;"><?php echo date('m/d/Y', strtotime($broadCastData->created)); ?></td>
@@ -331,14 +346,14 @@ if (!empty($oBroadcast)) {
                                                         <div class="media-left media-middle pl-5"> <a class="icons br5" href="#"><img src="<?php echo base_url(); ?>assets/images/<?php echo (strtolower($broadCastData->campaign_type) == 'email') ? 'icon_massages.png' : 'icon_sms_24.png'; ?>" class="img-circle img-xs br5" alt=""></a> </div>
                                                         <div class="media-left">
                                                             <div class=""><a href="<?php echo base_url('admin/broadcast/edit/' . $broadCastData->broadcast_id); ?>" broadcast_id="<?php echo $broadCastData->broadcast_id; ?>" broadcast_title="<?php echo $broadCastData->title; ?>" broadcast_des="<?php echo $broadCastData->description; ?>" class="text-default text-semibold"><?php echo setStringLimit($broadCastData->title, 20); ?></a></div>
-                                                              <div class="text-muted text-size-small">
-                                                            <?php echo setStringLimit($broadCastData->description, 25); ?>
-                                                             </div>
-                                                            
+                                                            <div class="text-muted text-size-small">
+                                                                <?php echo setStringLimit($broadCastData->description, 25); ?>
+                                                            </div>
+
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <?php echo dataFormat(date("Y-m-d H:i:s",$deliverAt)). ' <span class="txt_grey">' . date("H:i A", $deliverAt). '</span>'; ?>
+                                                        <?php echo dataFormat(date("Y-m-d H:i:s", $deliverAt)) . ' <span class="txt_grey">' . date("H:i A", $deliverAt) . '</span>'; ?>
                                                     </td>
                                                     <?php if (strtolower($broadCastData->campaign_type) == 'email'): ?>
                                                         <td>
@@ -594,12 +609,11 @@ if (!empty($oBroadcast)) {
                                                     <td class="">
                                                         <?php
                                                         if ($broadCastData->bc_status == 'active') {
-                                                            if($bExpired == true){
+                                                            if ($bExpired == true) {
                                                                 echo '<i class="icon-primitive-dot txt_grey3 fsize16"></i> ';
-                                                            }else{
+                                                            } else {
                                                                 echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
                                                             }
-                                                            
                                                         } else {
                                                             echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
                                                         }
@@ -607,12 +621,11 @@ if (!empty($oBroadcast)) {
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
                                                             <?php
                                                             if ($broadCastData->bc_status == 'active') {
-                                                                if($bExpired == true){
+                                                                if ($bExpired == true) {
                                                                     echo 'Expired';
-                                                                }else{
+                                                                } else {
                                                                     echo 'Active';
                                                                 }
-                                                                
                                                             } else if ($broadCastData->bc_status == 'draft') {
                                                                 echo 'Draft';
                                                             } else {
@@ -649,12 +662,11 @@ if (!empty($oBroadcast)) {
                                                         } else if ($broadCastData->bc_status == 'draft') {
                                                             echo 'draft';
                                                         } else {
-                                                            if($bExpired == true){
+                                                            if ($bExpired == true) {
                                                                 echo 'expired';
-                                                            }else{
+                                                            } else {
                                                                 echo 'active';
                                                             }
-                                                            
                                                         }
                                                         ?>
                                                     </td>
@@ -1325,4 +1337,6 @@ if (!empty($oBroadcast)) {
         });
 
     });
-</script>		
+</script>
+
+@endsection
