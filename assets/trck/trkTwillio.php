@@ -15,7 +15,7 @@ include '/var/www/html/assets/trck/functions.php';
 $from = phone_display_custom($_REQUEST['From']);
 $to = phone_display_custom($_REQUEST['To']);
 
-             
+
 /*echo '<pre>';
 print_r($_REQUEST);
 echo $_REQUEST['From']='+17049075791';
@@ -28,13 +28,11 @@ $_REQUEST['Body']='Hey';
 */
 
 try {
-    mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 1', json_encode($_REQUEST));
     if (!empty($to) && !empty($from)) {
-        mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 2', json_encode($_REQUEST));
             
            $msg = $_REQUEST['Body'];
 
-        $charCount = strlen($msg);
+           $charCount = strlen($msg);
 
         $numMedia = $_REQUEST['NumMedia'];
         if ($numMedia > 0) {
