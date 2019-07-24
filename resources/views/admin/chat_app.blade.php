@@ -2784,7 +2784,13 @@ if(window_witdh > 1600)
                   {
   				      newMessage = "<a href='"+newMessage+"' class='previewImage' target='_blank'><img src='"+newMessage+"' height='58px' width='58px' /></a>";
 
-					$('.sms_twr_'+data.from).find('.slider-phone').html('File Attachment');
+					    $('.sms_twr_'+data.from).find('.slider-phone').html('File Attachment');
+				  }
+				  else
+				  {
+				  	var textMsg = newMessage.substring(0,20);
+                    $('.sms_twr_'+data.from).find('.slider-phone').html(textMsg);
+
 				  }
 				
 				
