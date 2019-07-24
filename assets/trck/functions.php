@@ -4,7 +4,7 @@
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL); */
 ob_start();
-
+echo 'Found the file++++++++++++++';
 function db_connect() {
     // Define connection as a static variable, to avoid connecting more than once
     static $connection;
