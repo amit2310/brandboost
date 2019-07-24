@@ -10,947 +10,60 @@ use Session;
 class BroadcastModel extends Model {
 
     /**
-     * 
+     * Used to get Broadcast campaigns by type e.i broadcast or automation
      * @param type $userID
+     * @param type $campaign_type
      * @param type $id
      * @return type
      */
-    public function getMyBroadcasts($userID, $id = 0) {
-        $aData = array();
-        $this->db->select("tbl_automations_emails_campaigns.*, tbl_automations_emails.id as broadcast_id, tbl_automations_emails.user_id, tbl_automations_emails.title, tbl_automations_emails.description, tbl_automations_emails.email_type, tbl_automations_emails.status as bc_status, tbl_automations_emails.current_state,tbl_automations_emails.audience_type, tbl_automations_emails.sending_method, tbl_automations_emails.created, tbl_automations_emails_events.event_type, tbl_automations_emails_events.data, tbl_automations_emails_events.id as evtid");
-        if ($userID > 0) {
-            $this->db->where('tbl_automations_emails.user_id', $userID);
-        }
-        $this->db->order_by('tbl_automations_emails.id', 'ASC');
-        if ($id > 0) {
-            $this->db->where('tbl_automations_emails.id', $id);
-        }
-        $this->db->where('tbl_automations_emails.deleted', '0');
-        $this->db->where('tbl_automations_emails.email_type', 'broadcast');
-        $this->db->join("tbl_automations_emails_events", "tbl_automations_emails_events.automation_id=tbl_automations_emails.id", "LEFT");
-        $this->db->join("tbl_automations_emails_campaigns", "tbl_automations_emails_campaigns.event_id=tbl_automations_emails_events.id", "LEFT");
-
-        $query = $this->db->get('tbl_automations_emails');
-        //echo $this->db->last_query();
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
-    }
-
-    /**
-     * 
-     * @param type $broadcastID
-     * @return type
-     */
-    public function getBroadcastVariations($broadcastID) {
-        $this->db->select("tbl_broadcast_split_campaigns.*, tbl_broadcast_split_testing.test_name, tbl_broadcast_split_testing.id as splitID");
-        $this->db->join("tbl_broadcast_split_testing", "tbl_broadcast_split_campaigns.split_test_id = tbl_broadcast_split_testing.id", "LEFT");
-        $this->db->where("tbl_broadcast_split_campaigns.broadcast_id", $broadcastID);
-        $this->db->where("tbl_broadcast_split_campaigns.status", "active");
-        $this->db->order_by("tbl_broadcast_split_campaigns.id", "ASC");
-        $query = $this->db->get('tbl_broadcast_split_campaigns');
-
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
-    }
-
-    /**
-     * 
-     * @param type $broadcastID
-     * @return type
-     */
-    public function getBroadcastVariationCampaigns($broadcastID) {
-        $this->db->where("tbl_broadcast_split_campaigns.broadcast_id", $broadcastID);
-        $this->db->order_by("tbl_broadcast_split_campaigns.id", "ASC");
-        $query = $this->db->get('tbl_broadcast_split_campaigns');
-
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
-    }
-
-    
-    /**
-     * 
-     * @param type $aData
-     * @param type $sendingMethod
-     * @return boolean
-     */
-    public function addBroadcastCampaign($aData, $sendingMethod = 'normal') {
-        if ($sendingMethod == 'split') {
-            $result = $this->db->insert("tbl_broadcast_split_campaigns", $aData);
-        } else {
-            $result = $this->db->insert("tbl_automations_emails_campaigns", $aData);
-        }
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function addBroadcastVariation($aData) {
-        $result = $this->db->insert("tbl_broadcast_split_campaigns", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function deleteVariation($id) {
-        if ($id > 0) {
-            $this->db->where("id", $id);
-            $result = $this->db->delete("tbl_broadcast_split_campaigns");
-            if ($result) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function updateVariation($aData, $id) {
-        if ($id > 0) {
-            $this->db->where('id', $id);
-            $result = $this->db->update('tbl_broadcast_split_campaigns', $aData);
-            if ($result)
-                return true;
-        }
-        return false;
-    }
-
-    public function updateSplitTest($aData, $id) {
-        if ($id > 0) {
-            $this->db->where('id', $id);
-            $result = $this->db->update('tbl_broadcast_split_testing', $aData);
-            if ($result)
-                return true;
-        }
-        return false;
-    }
-
     public function getMyBroadcastsByTypes($userID, $campaign_type = '', $id = 0) {
-        $aData = array();
-        $this->db->select("tbl_automations_emails_campaigns.*, tbl_automations_emails.id as broadcast_id, tbl_automations_emails.user_id, tbl_automations_emails.title, tbl_automations_emails.description, tbl_automations_emails.email_type, tbl_automations_emails.status as bc_status, tbl_automations_emails.created, tbl_automations_emails.sending_method, tbl_automations_emails_events.event_type, tbl_automations_emails_events.data");
-        if ($userID > 0) {
-            $this->db->where('tbl_automations_emails.user_id', $userID);
-        }
-        $this->db->order_by('tbl_automations_emails.id', 'ASC');
-        if ($id > 0) {
-            $this->db->where('tbl_automations_emails.id', $id);
-        }
-        if (!empty($campaign_type)) {
-            $this->db->where('tbl_automations_emails_campaigns.campaign_type', $campaign_type);
-        }
-        $this->db->where('tbl_automations_emails.deleted', '0');
-        $this->db->where('tbl_automations_emails.email_type', 'broadcast');
-        $this->db->join("tbl_automations_emails_events", "tbl_automations_emails_events.automation_id=tbl_automations_emails.id", "LEFT");
-        $this->db->join("tbl_automations_emails_campaigns", "tbl_automations_emails_campaigns.event_id=tbl_automations_emails_events.id", "LEFT");
 
-        $query = $this->db->get('tbl_automations_emails');
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_automations_emails')
+                ->leftJoin('tbl_automations_emails_events', 'tbl_automations_emails_events.automation_id', '=', 'tbl_automations_emails.id')
+                ->leftJoin('tbl_automations_emails_campaigns', 'tbl_automations_emails_campaigns.event_id', '=', 'tbl_automations_emails_events.id')
+                ->select('tbl_automations_emails_campaigns.*', 'tbl_automations_emails.id as broadcast_id', 'tbl_automations_emails.user_id', 'tbl_automations_emails.title', 'tbl_automations_emails.description', 'tbl_automations_emails.email_type', 'tbl_automations_emails.status as bc_status', 'tbl_automations_emails.created', 'tbl_automations_emails.sending_method', 'tbl_automations_emails_events.event_type', 'tbl_automations_emails_events.data')
+                ->where('tbl_automations_emails.deleted', 0)
+                ->where('tbl_automations_emails.email_type', 'broadcast')
+                ->when(($userID > 0), function ($query) use ($userID) {
+                    return $query->where('tbl_automations_emails.user_id', $userID);
+                })
+                ->when(($id > 0), function ($query) use ($id) {
+                    return $query->where('tbl_automations_emails.id', $id);
+                })
+                ->when(!empty($campaign_type), function ($query) use ($campaign_type) {
+                    return $query->where('tbl_automations_emails_campaigns.campaign_type', $campaign_type);
+                })
+                ->orderBy('tbl_automations_emails.id', 'asc')
+                ->get();
+
+        return $oData;
     }
 
-    public function createBroadcast($aData) {
-        $result = $this->db->insert("tbl_automations_emails", $aData);
-        //echo $this->db->last_query(); exit;
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function createSplitTest($aData) {
-        $result = $this->db->insert("tbl_broadcast_split_testing", $aData);
-        //echo $this->db->last_query(); exit;
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function createSegment($aData) {
-        $result = $this->db->insert("tbl_segments", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function isDuplicateSegment($segmentName, $userID = 0) {
-        $this->db->where('segment_name', $segmentName);
-
-        $this->db->where('user_id', $userID);
-
-        $result = $this->db->get('tbl_segments');
-        if ($result->num_rows() > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public function isDuplicateBroadcastAudience($broadcastID, $subscriberID) {
-        $this->db->where('broadcast_id', $broadcastID);
-
-        $this->db->where('subscriber_id', $subscriberID);
-
-        $result = $this->db->get('tbl_broadcast_users');
-        if ($result->num_rows() > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public function addSegmentSubscribers($segmentID, $campaignID, $segmentType, $campaignType, $moduleName = '', $sendingMethod = 'normal') {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-
-        $oExistingSubscribers = array();
-        $oExistingSubscribers = $this->getSegmentCoreSubscribers($segmentID);
-        if (!empty($oExistingSubscribers)) {
-            foreach ($oExistingSubscribers as $oSubs) {
-                $aExistingSubsID[] = $oSubs->subscriber_id;
-            }
-        }
-
-        if ($campaignType == 'email') {
-            if ($segmentType == 'total-sent') {
-                $param = 'delivered';
-            } else if ($segmentType == 'total-open') {
-                $param = 'open';
-            } else if ($segmentType == 'total-click') {
-                $param = 'click';
-            }
-
-            $oStats = $this->getBroadcastSendgridStats('broadcast', $campaignID, $param, $sendingMethod);
-            $aCategorizedStats = $this->getBroadcastSendgridCategorizedStatsData($oStats);
-
-            $oData = $aCategorizedStats[$param]['UniqueData'];
-        } else if ($campaignType == 'sms') {
-            if ($segmentType == 'total-sent') {
-                $param = 'sent';
-            } else if ($segmentType == 'total-delivered') {
-                $param = 'delivered';
-            } else if ($segmentType == 'total-queued') {
-                $param = 'queued';
-            } else if ($segmentType == 'total-undelivered') {
-                $param = 'undelivered';
-            } else if ($segmentType == 'total-click') {
-                $param = 'click';
-            }
-
-            $oStats = $this->getBroadcasstTwilioStats('broadcast', $campaignID, $sendingMethod);
-            $aCategorizedStats = $this->getBroadcastTwilioCategorizedStatsData($oStats);
-
-            $oData = $aCategorizedStats[$param]['UniqueData'];
-        }
-        if (!empty($oData)) {
-
-            //get Existing subscirbers in the segement if any
-            foreach ($oData as $oStat) {
-                $str = '';
-                $subscriberID = $oStat->global_subscriber_id;
-                if (!in_array($subscriberID, $aExistingSubsID)) {
-                    $str = "(" . $userID . "," . $segmentID . "," . $subscriberID . "," . "'" . date("Y-m-d H:i:s") . "')";
-                    $aSqlParam[] = $str;
-                }
-            }
-
-            if (!empty($aSqlParam)) {
-                $sql = "INSERT INTO `tbl_segments_users` (`user_id`, `segment_id`, `subscriber_id`, `created`) VALUES " . implode(",", $aSqlParam);
-
-                $result = $this->db->query($sql);
-                if ($result) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public function getSegmentCoreSubscribers($seqmentID) {
-        $this->db->where("segment_id", $seqmentID);
-        $result = $this->db->get("tbl_segments_users");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
-    }
-
-    public function getBroadcastInfo($id) {
-        $this->db->where("id", $id);
-        $result = $this->db->get("tbl_automations_emails");
-        if ($result->num_rows() > 0) {
-            $aData = $result->row();
-        }
-        return $aData;
-    }
-
-    public function getBroadcastSubscribers($broadcastID) {
-        $this->db->select("tbl_broadcast_users.id as local_user_id, tbl_subscribers.*, tbl_subscribers.id as subscriber_id, tbl_subscribers.status AS globalStatus, tbl_subscribers.id AS global_user_id");
-        $this->db->join("tbl_subscribers", "tbl_broadcast_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_broadcast_users.broadcast_id", $broadcastID);
-        $this->db->order_by("tbl_broadcast_users.id", "DESC");
-        $result = $this->db->get("tbl_broadcast_users");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function deleteAudienceToBraodcast($broadcastId, $subscriberID) {
-        if ($broadcastId > 0) {
-            $this->db->where("broadcast_id", $broadcastId);
-            $this->db->where("subscriber_id", $subscriberID);
-            $result = $this->db->delete("tbl_broadcast_users");
-            if ($result) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function deleteBraodcastContacts($broadcastId, $subscriberID) {
-        if ($broadcastId > 0) {
-            $this->db->where("automation_id", $broadcastId);
-            $this->db->where("subscriber_id", $subscriberID);
-            $result = $this->db->delete("tbl_automation_users");
-            if ($result) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function deleteAudienceById($id) {
-        if ($id > 0) {
-            $this->db->where("id", $id);
-            $result = $this->db->delete("tbl_broadcast_users");
-            if ($result) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function addBroadcastAudience($aData) {
-        $this->db->insert("tbl_broadcast_users", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function getSegments($userID, $id = '') {
-        $this->db->select("tbl_segments.*, tbl_automations_emails.title as campaign_title");
-        $this->db->join("tbl_automations_emails", "tbl_segments.source_campaign_id = tbl_automations_emails.id", "LEFT");
-
-
-        if (!empty($userID)) {
-            $this->db->where('tbl_segments.user_id', $userID);
-        }
-
-        if (!empty($id)) {
-            $this->db->where("tbl_segments.id", $id);
-        }
-        $result = $this->db->get("tbl_segments");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
-    }
-
-    public function getSegmentSubscribers($segmentID, $userID) {
-        $this->db->select("tbl_segments_users.*, tbl_subscribers.id as globalSubscriberId,tbl_subscribers.user_id as subUserId, tbl_subscribers.firstname,tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_subscribers.status");
-        $this->db->join("tbl_subscribers", "tbl_segments_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->order_by("tbl_subscribers.id", "DESC");
-        $this->db->where("tbl_segments_users.segment_id", $segmentID);
-        $this->db->where("tbl_segments_users.user_id", $userID);
-
-        $result = $this->db->get("tbl_segments_users");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
-    }
-
-    public function getSegmentById($userID, $segmentId) {
-        $this->db->select("tbl_segments.*, tbl_automations_emails.title as campaign_title");
-        $this->db->join("tbl_automations_emails", "tbl_segments.source_campaign_id = tbl_automations_emails.id", "LEFT");
-
-
-        if (!empty($userID)) {
-            $this->db->where('tbl_segments.user_id', $userID);
-        }
-        if (!empty($segmentId)) {
-            $this->db->where('tbl_segments.id', $segmentId);
-        }
-        $result = $this->db->get("tbl_segments");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
-    }
-
-    public function deleteSegmentByID($segmentID) {
-        $this->db->where('id', $segmentID);
-        $result = $this->db->delete('tbl_segments');
-        return true;
-    }
-
-    public function deleteSegmentUser($userID) {
-        $this->db->where('id', $userID);
-        $result = $this->db->delete('tbl_segments_users');
-        return true;
-    }
-
-    public function updateSegment($aData, $segmentId, $userID) {
-        $response = array();
-        $this->db->set($aData);
-        $this->db->where('id', $segmentId);
-        if (!empty($userID)) {
-            $this->db->where('user_id', $userID);
-        }
-        $result = $this->db->update('tbl_segments');
-        //echo $this->db->last_query();
-        if ($result)
-            return true;
-        else
-            return false;
-    }
-
-    public function updateBroadcast($aData, $autoId) {
-        $response = array();
-        $this->db->set($aData);
-        $this->db->where('id', $autoId);
-        $result = $this->db->update('tbl_automations_emails');
-        //echo $this->db->last_query();
-        if ($result)
-            return true;
-        else
-            return false;
-    }
-
-    public function createBroadcastEvent($aData) {
-        $result = $this->db->insert("tbl_automations_emails_events", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function createBroadcastCampaign($aData) {
-        $result = $this->db->insert("tbl_automations_emails_campaigns", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function createBroadcastDefaultVariationCampaign($aData) {
-        $result = $this->db->insert("tbl_broadcast_split_campaigns", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function updateAutomationScheduleDate($aData, $broadcastId) {
-        $response = array();
-        $this->db->set($aData);
-        $this->db->where('automation_id', $broadcastId);
-        $result = $this->db->update('tbl_automations_emails_events');
-        //echo $this->db->last_query();
-        if ($result)
-            return true;
-        else
-            return false;
-    }
-
-    public function updateBroadcastCampaignTemplate($aData, $campaignId) {
-        $response = array();
-        $this->db->set($aData);
-        $this->db->where('id', $campaignId);
-        $result = $this->db->update('tbl_automations_emails_campaigns');
-        //echo $this->db->last_query(); exit;
-        if ($result)
-            return true;
-        else
-            return false;
-    }
-
-    public function updateBroadcastCampaign($aData, $eventId) {
-        $response = array();
-        $this->db->set($aData);
-        $this->db->where('event_id', $eventId);
-        $result = $this->db->update('tbl_automations_emails_campaigns');
-        //echo $this->db->last_query(); exit;
-        if ($result)
-            return true;
-        else
-            return false;
-    }
-
-    public function updateBroadcastSettings($aData, $campaignId) {
-        $response = array();
-        $this->db->set($aData);
-        $this->db->where('campaign_id', $campaignId);
-        $result = $this->db->update('tbl_automations_emails_campaigns_settings');
-        if ($result)
-            return true;
-        else
-            return false;
-    }
-
-    public function getBroadcastSettings($campaignId) {
-        $response = array();
-        $this->db->where('campaign_id', $campaignId);
-        $this->db->from('tbl_automations_emails_campaigns_settings');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getTwillioData($userID) {
-        $response = array();
-        $this->db->where('user_id', $userID);
-        $this->db->from('tbl_twilio_accounts');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function checkBroadcastTitle($broadcastTitle, $userID) {
-        $response = array();
-        $this->db->where('user_id', $userID);
-        $this->db->where('title', $broadcastTitle);
-        $this->db->from('tbl_automations_emails');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = true;
-        } else {
-            $response = false;
-        }
-        return $response;
-    }
-
-    public function addBroadcastSettings($aData) {
-        $result = $this->db->insert("tbl_automations_emails_campaigns_settings", $aData);
-        //echo $this->db->last_query();
-
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
+    /**
+     * Used to get all templates
+     * @param type $userID
+     * @return type
+     */
     public function getMyCampaignTemplate($userID = 0) {
-        if ($userID > 0) {
-            $this->db->where("user_id", $userID);
-            $this->db->or_where("user_id", 0);
-        }
-        $this->db->where("status", 1);
-        $result = $this->db->get("tbl_automations_emails_campaigns_templates");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_automations_emails_campaigns_templates')
+                ->where('status', 1)
+                ->when(($userID > 0), function ($query) use ($userID) {
+                    return $query
+                            ->where('user_id', $userID)
+                            ->orWhere('user_id', 0);
+                })
+                ->get();
+        return $oData;
     }
 
-    public function getMyLists($userID = '') {
-        $this->db->select("tbl_common_lists.*, tbl_automation_users.list_id as l_list_id, tbl_automation_users.user_id as l_user_id, "
-                . "tbl_subscribers.firstname as l_firstname, tbl_subscribers.lastname as l_lastname, "
-                . "tbl_subscribers.email as l_email, tbl_subscribers.phone as l_phone,tbl_subscribers.created as l_created, tbl_automation_users.status as l_status, "
-                . "CONCAT(tbl_users.firstname,' ', tbl_users.lastname) as lCreateUsername, tbl_users.email as cEmail, tbl_users.mobile as cMobile");
-
-        if ($userID > 0) {
-            $this->db->where("tbl_common_lists.user_id", $userID);
-        }
-        $this->db->join("tbl_automation_users", "tbl_automation_users.list_id=tbl_common_lists.id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_automation_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_users.id=tbl_common_lists.user_id", "INNER");
-        //$this->db->where("tbl_automation_users.status", 1);
-        $this->db->where("tbl_common_lists.delete_status", 0);
-        $this->db->where("tbl_common_lists.status", 'active');
-        $this->db->order_by("tbl_common_lists.id", "DESC");
-        $result = $this->db->get("tbl_common_lists");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getBroadcastExcludedListSubscribers($automationID) {
-        $oLists = $this->getAutomationExcludedLists($automationID);
-        if (!empty($oLists)) {
-            foreach ($oLists as $oList) {
-                $aListsIDs[] = $oList->list_id;
-            }
-        }
-        if (empty($aListsIDs)) {
-            $aListsIDs = array('-1');
-        }
-        //write your own query
-        $sql = "SELECT tbl_automation_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.email as subscriber_email, tbl_subscribers.phone FROM tbl_automation_users "
-                . "LEFT JOIN tbl_subscribers ON tbl_automation_users.subscriber_id=tbl_subscribers.id "
-                . "WHERE tbl_automation_users.list_id IN (" . implode(",", $aListsIDs) . ") "
-                //. "AND tbl_automation_users.status = '1' "
-                . "AND tbl_subscribers.status = '1' ";
-
-        $sql = "SELECT `tbl_automation_users`.*, `tbl_subscribers`.`email`,  `tbl_subscribers`.`email` as subscriber_email, `tbl_subscribers`.`firstname`, `tbl_subscribers`.`lastname`, `tbl_subscribers`.`phone`, `tbl_subscribers`.`status` AS `globalStatus` "
-                . "FROM `tbl_automation_users` LEFT JOIN "
-                . "`tbl_subscribers` ON `tbl_automation_users`.`subscriber_id`= `tbl_subscribers`.`id` "
-                . "WHERE `tbl_automation_users`.`list_id` IN(" . implode(",", $aListsIDs) . ") "
-                . "ORDER BY `tbl_automation_users`.`id` DESC";
-        $result = $this->db->query($sql);
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getBroadcastListSubscribers($automationID) {
-        $oLists = $this->getAutomationLists($automationID);
-        if (!empty($oLists)) {
-            foreach ($oLists as $oList) {
-                $aListsIDs[] = $oList->list_id;
-            }
-        }
-        if (empty($aListsIDs)) {
-            $aListsIDs = array('-1');
-        }
-        //write your own query
-        $sql = "SELECT tbl_automation_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.email as subscriber_email, tbl_subscribers.phone FROM tbl_automation_users "
-                . "LEFT JOIN tbl_subscribers ON tbl_automation_users.subscriber_id=tbl_subscribers.id "
-                . "WHERE tbl_automation_users.list_id IN (" . implode(",", $aListsIDs) . ") "
-                //. "AND tbl_automation_users.status = '1' "
-                . "AND tbl_subscribers.status = '1' ";
-
-        $sql = "SELECT `tbl_automation_users`.*, `tbl_subscribers`.`email`,  `tbl_subscribers`.`email` as subscriber_email, `tbl_subscribers`.`firstname`, `tbl_subscribers`.`lastname`, `tbl_subscribers`.`phone`, `tbl_subscribers`.`status` AS `globalStatus` "
-                . "FROM `tbl_automation_users` LEFT JOIN "
-                . "`tbl_subscribers` ON `tbl_automation_users`.`subscriber_id`= `tbl_subscribers`.`id` "
-                . "WHERE `tbl_automation_users`.`list_id` IN(" . implode(",", $aListsIDs) . ") "
-                . "ORDER BY `tbl_automation_users`.`id` DESC";
-        $result = $this->db->query($sql);
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getAutomationLists($automationID) {
-        $this->db->where("automation_id", $automationID);
-        $result = $this->db->get('tbl_automations_emails_lists');
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getAutomationExcludedLists($automationID) {
-        $this->db->where("automation_id", $automationID);
-        $result = $this->db->get('tbl_automations_emails_lists_excluded');
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getBroadcastContacts($automationID) {
-        $this->db->where('automation_id', $automationID);
-        $result = $this->db->get("tbl_automation_users");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getBroadcastExcludedContacts($automationID) {
-        $this->db->where('automation_id', $automationID);
-        $result = $this->db->get("tbl_automation_users_excluded");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function addContactToCampaign($aData) {
-        $this->db->insert("tbl_automation_users", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function addContactToExcludeCampaign($aData) {
-        $this->db->insert("tbl_automation_users_excluded", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function deleteContactToCampaign($automationID, $subscriberID) {
-        if ($automationID > 0) {
-            $this->db->where("automation_id", $automationID);
-            $this->db->where("subscriber_id", $subscriberID);
-            $result = $this->db->delete("tbl_automation_users");
-            if ($result) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function deleteContactToExcludeCampaign($automationID, $subscriberID) {
-        if ($automationID > 0) {
-            $this->db->where("automation_id", $automationID);
-            $this->db->where("subscriber_id", $subscriberID);
-            $result = $this->db->delete("tbl_automation_users_excluded");
-            if ($result) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function getBroadcastTags($automationID) {
-        $this->db->where('automation_id', $automationID);
-        $result = $this->db->get("tbl_automations_emails_campaigns_tags");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getBroadcastExcludedTags($automationID) {
-        $this->db->where('automation_id', $automationID);
-        $result = $this->db->get("tbl_automations_emails_campaigns_tags_excluded");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getBroadcastSegments($automationID) {
-        $this->db->select("tbl_automations_emails_campaigns_segments_new.*, tbl_segments.segment_name");
-        $this->db->join("tbl_segments", "tbl_automations_emails_campaigns_segments_new.segment_id=tbl_segments.id", "LEFT");
-        $this->db->where('tbl_automations_emails_campaigns_segments_new.automation_id', $automationID);
-        $result = $this->db->get("tbl_automations_emails_campaigns_segments_new");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getBroadcastExcludedSegments($automationID) {
-        $this->db->select("tbl_automations_emails_campaigns_segments_excluded.*, tbl_segments.segment_name");
-        $this->db->join("tbl_segments", "tbl_automations_emails_campaigns_segments_excluded.segment_id=tbl_segments.id", "LEFT");
-        $this->db->where('tbl_automations_emails_campaigns_segments_excluded.automation_id', $automationID);
-        $result = $this->db->get("tbl_automations_emails_campaigns_segments_excluded");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function addTagToCampaign($aData) {
-        $this->db->insert("tbl_automations_emails_campaigns_tags", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function addExcludedTagToCampaign($aData) {
-        $this->db->insert("tbl_automations_emails_campaigns_tags_excluded", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function addSegmentToCampaign($aData) {
-        $this->db->insert("tbl_automations_emails_campaigns_segments_new", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function addExcludedSegmentToCampaign($aData) {
-        $this->db->insert("tbl_automations_emails_campaigns_segments_excluded", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function deleteSegmentToCampaign($automationID, $segmentID) {
-        if ($automationID > 0) {
-            $this->db->where("automation_id", $automationID);
-            $this->db->where("segment_id", $segmentID);
-            $result = $this->db->delete("tbl_automations_emails_campaigns_segments_new");
-            if ($result) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function deleteExcludedSegmentToCampaign($automationID, $segmentID) {
-        if ($automationID > 0) {
-            $this->db->where("automation_id", $automationID);
-            $this->db->where("segment_id", $segmentID);
-            $result = $this->db->delete("tbl_automations_emails_campaigns_segments_excluded");
-            if ($result) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function deleteTagToCampaign($automationID, $tagID) {
-        if ($automationID > 0) {
-            $this->db->where("automation_id", $automationID);
-            $this->db->where("tag_id", $tagID);
-            $result = $this->db->delete("tbl_automations_emails_campaigns_tags");
-            if ($result) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function deleteExcludedTagToCampaign($automationID, $tagID) {
-        if ($automationID > 0) {
-            $this->db->where("automation_id", $automationID);
-            $this->db->where("tag_id", $tagID);
-            $result = $this->db->delete("tbl_automations_emails_campaigns_tags_excluded");
-            if ($result) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function getMyBroadcastSubscribers($eventId, $eventType) {
-        $this->db->select("tbl_broadcast_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone,tbl_broadcast_emails_tracking_sendgrid.id as tracking_id,  tbl_broadcast_emails_tracking_sendgrid.event_name, tbl_broadcast_emails_tracking_sendgrid.email as e_email, tbl_broadcast_emails_tracking_sendgrid.created as e_created ");
-
-        $this->db->join("tbl_broadcast_users", "tbl_broadcast_users.id=tbl_broadcast_emails_tracking_sendgrid.subscriber_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_broadcast_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_broadcast_emails_tracking_sendgrid.event_id", $eventId);
-        $this->db->where("tbl_broadcast_emails_tracking_sendgrid.event_name", $eventType);
-        $this->db->group_by("tbl_broadcast_emails_tracking_sendgrid.subscriber_id");
-        $result = $this->db->get("tbl_broadcast_emails_tracking_sendgrid");
-        //echo $this->db->last_query(); exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getMyBroadcastSubscribersSMS($eventId, $eventType) {
-        $this->db->select("tbl_broadcast_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_broadcast_emails_tracking_twillio.event_name, tbl_broadcast_emails_tracking_twillio.to_number as e_number, tbl_broadcast_emails_tracking_twillio.created as e_created ");
-
-        $this->db->join("tbl_broadcast_users", "tbl_broadcast_users.id=tbl_broadcast_emails_tracking_twillio.subscriber_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_broadcast_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_broadcast_emails_tracking_twillio.event_id", $eventId);
-        $this->db->where("tbl_broadcast_emails_tracking_twillio.event_name", $eventType);
-        $this->db->group_by("tbl_broadcast_emails_tracking_twillio.subscriber_id");
-        $result = $this->db->get("tbl_broadcast_emails_tracking_twillio");
-        //echo $this->db->last_query(); exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getMyBroadcastSubscribers_old($eventId, $eventType) {
-        $this->db->select("tbl_automation_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone,tbl_automations_emails_tracking_sendgrid.id as tracking_id,  tbl_automations_emails_tracking_sendgrid.event_name, tbl_automations_emails_tracking_sendgrid.email as e_email, tbl_automations_emails_tracking_sendgrid.created as e_created ");
-
-        $this->db->join("tbl_automation_users", "tbl_automation_users.id=tbl_automations_emails_tracking_sendgrid.subscriber_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_automation_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_automations_emails_tracking_sendgrid.event_id", $eventId);
-        $this->db->where("tbl_automations_emails_tracking_sendgrid.event_name", $eventType);
-        $this->db->group_by("tbl_automations_emails_tracking_sendgrid.subscriber_id");
-        $result = $this->db->get("tbl_automations_emails_tracking_sendgrid");
-        //echo $this->db->last_query(); exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getMyBroadcastSubscribersSMS_old($eventId, $eventType) {
-        $this->db->select("tbl_automation_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_automations_emails_tracking_twillio.event_name, tbl_automations_emails_tracking_twillio.to_number as e_number, tbl_automations_emails_tracking_twillio.created as e_created ");
-
-        $this->db->join("tbl_automation_users", "tbl_automation_users.id=tbl_automations_emails_tracking_twillio.subscriber_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_automation_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_automations_emails_tracking_twillio.event_id", $eventId);
-        $this->db->where("tbl_automations_emails_tracking_twillio.event_name", $eventType);
-        $this->db->group_by("tbl_automations_emails_tracking_twillio.subscriber_id");
-        $result = $this->db->get("tbl_automations_emails_tracking_twillio");
-        //echo $this->db->last_query(); exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function deleteEmailRecordByID($recordID) {
-        $this->db->where('id', $recordID);
-        $result = $this->db->delete('tbl_automations_emails_tracking_sendgrid');
-        //echo $this->db->last_query(); exit;
-        return true;
-    }
-
+    /**
+     * Used to get broadcast email sendgrid stats
+     * @param type $param
+     * @param type $id
+     * @param type $eventType
+     * @param type $sendingMethod
+     * @return type
+     */
     public function getBroadcastSendgridStats($param, $id, $eventType = '', $sendingMethod = 'normal') {
 
         $campaignTable = ($sendingMethod == 'split') ? 'tbl_broadcast_split_campaigns' : 'tbl_automations_emails_campaigns';
@@ -1005,241 +118,21 @@ class BroadcastModel extends Model {
 
         $sql .= "ORDER BY tbl_broadcast_emails_tracking_sendgrid.id DESC";
 
-        $result = $this->db->query($sql);
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        //echo $this->db->last_query();
-        return $response;
+        $oData = DB::select(DB::raw($sql));
+
+        return $oData;
     }
 
-    public function getBroadcasstTwilioStats($param, $id, $eventType = '', $sendingMethod = 'normal') {
-        $campaignTable = ($sendingMethod == 'split') ? 'tbl_broadcast_split_campaigns' : 'tbl_automations_emails_campaigns';
-
-        $sql = "SELECT tbl_broadcast_emails_tracking_twillio.*, tbl_broadcast_users.subscriber_id as global_subscriber_id FROM tbl_broadcast_emails_tracking_twillio "
-                . "LEFT JOIN tbl_automations_emails ON tbl_broadcast_emails_tracking_twillio.broadcast_id = tbl_automations_emails.id "
-                . "LEFT JOIN tbl_automations_emails_events ON tbl_broadcast_emails_tracking_twillio.event_id = tbl_automations_emails_events.id "
-                . "LEFT JOIN {$campaignTable} ON tbl_broadcast_emails_tracking_twillio.campaign_id= {$campaignTable}.id "
-                . "LEFT JOIN tbl_broadcast_users ON tbl_broadcast_emails_tracking_twillio.subscriber_id = tbl_broadcast_users.id ";
-
-        if ($param == 'broadcast') {
-            $sql .= "WHERE tbl_broadcast_emails_tracking_twillio.broadcast_id='{$id}' ";
-        } else if ($param == 'campaign') {
-            $sql .= "WHERE tbl_broadcast_emails_tracking_twillio.campaign_id='{$id}' ";
-        } else if ($param == 'event_id') {
-            $sql .= "WHERE tbl_broadcast_emails_tracking_twillio.event_id='{$id}' ";
-        } else if ($param == 'subscriber') {
-            $sql .= "WHERE tbl_broadcast_emails_tracking_twillio.subscriber_id='{$id}' ";
-        } else {
-            $sql .= "WHERE 1 ";
-        }
-
-        if ($eventType == 'accepted') {
-            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='accepted' ";
-        } else if ($eventType == 'sent') {
-            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='sent' ";
-        } else if ($eventType == 'delivered') {
-            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='delivered' ";
-        } else if ($eventType == 'undelivered') {
-            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='undelivered' ";
-        } else if ($eventType == 'failed') {
-            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='failed' ";
-        } else if ($eventType == 'receiving') {
-            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='receiving' ";
-        } else if ($eventType == 'received') {
-            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='received' ";
-        } else if ($eventType == 'queued') {
-            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='queued' ";
-        } else if ($eventType == 'sending') {
-            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='sending' ";
-        }
-
-        if ($sendingMethod == 'normal') {
-            $sql .= "AND tbl_broadcast_emails_tracking_twillio.sending_method = 'normal' ";
-        } else {
-            $sql .= "AND tbl_broadcast_emails_tracking_twillio.sending_method = 'split' ";
-        }
-
-        $sql .= "ORDER BY tbl_broadcast_emails_tracking_twillio.id DESC";
-
-        $result = $this->db->query($sql);
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        //echo $this->db->last_query();
-        return $response;
-    }
-
-    public function getBroadcastTwilioCategorizedStatsData($oData) {
-        if (!empty($oData)) {
-
-            foreach ($oData as $oRow) {
-
-                if ($oRow->event_name == 'accepted') {
-                    $acceptedTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $acceptedUniqueCount) == true) {
-                        $acceptedDuplicateCount[] = $oRow;
-                    } else {
-                        $acceptedUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'sent') {
-                    $sentTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $sentUniqueCount) == true) {
-                        $sentDuplicateCount[] = $oRow;
-                    } else {
-                        $sentUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'delivered') {
-                    $deliveredTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $deliveredUniqueCount) == true) {
-                        $deliveredDuplicateCount[] = $oRow;
-                    } else {
-                        $deliveredUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'undelivered') {
-                    $undeliveredTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $undeliveredUniqueCount) == true) {
-                        $undeliveredDuplicateCount[] = $oRow;
-                    } else {
-                        $undeliveredUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'failed') {
-                    $failedTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $failedUniqueCount) == true) {
-                        $failedDuplicateCount[] = $oRow;
-                    } else {
-                        $failedUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'receiving') {
-                    $receivingTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $receivingUniqueCount) == true) {
-                        $receivingDuplicateCount[] = $oRow;
-                    } else {
-                        $receivingUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'received') {
-                    $receivedTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $receivedUniqueCount) == true) {
-                        $receivedDuplicateCount[] = $oRow;
-                    } else {
-                        $receivedUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'queued') {
-                    $queuedTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $queuedUniqueCount) == true) {
-                        $queuedDuplicateCount[] = $oRow;
-                    } else {
-                        $queuedUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'sending') {
-                    $sendingTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $sendingUniqueCount) == true) {
-                        $sendingDuplicateCount[] = $oRow;
-                    } else {
-                        $sendingUniqueCount[] = $oRow;
-                    }
-                } else {
-                    $otherTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $otherUniqueCount) == true) {
-                        $otherDuplicateCount[] = $oRow;
-                    } else {
-                        $otherUniqueCount[] = $oRow;
-                    }
-                }
-            }
-        }
-        //Okay Now print result
-        $aCatogerizedData = array(
-            'accepted' => array(
-                'TotalCount' => count($acceptedTotalCount),
-                'UniqueCount' => count($acceptedUniqueCount),
-                'DuplicateCount' => count($acceptedDuplicateCount),
-                'totalData' => $acceptedTotalCount,
-                'UniqueData' => $acceptedUniqueCount,
-                'DuplicateData' => $acceptedDuplicateCount
-            ),
-            'sent' => array(
-                'TotalCount' => count($sentTotalCount),
-                'UniqueCount' => count($sentUniqueCount),
-                'DuplicateCount' => count($sentDuplicateCount),
-                'totalData' => $sentTotalCount,
-                'UniqueData' => $sentUniqueCount,
-                'DuplicateData' => $sentDuplicateCount
-            ),
-            'delivered' => array(
-                'TotalCount' => count($deliveredTotalCount),
-                'UniqueCount' => count($deliveredUniqueCount),
-                'DuplicateCount' => count($deliveredDuplicateCount),
-                'totalData' => $deliveredTotalCount,
-                'UniqueData' => $deliveredUniqueCount,
-                'DuplicateData' => $deliveredDuplicateCount
-            ),
-            'undelivered' => array(
-                'TotalCount' => count($undeliveredTotalCount),
-                'UniqueCount' => count($undeliveredUniqueCount),
-                'DuplicateCount' => count($undeliveredDuplicateCount),
-                'totalData' => $undeliveredTotalCount,
-                'UniqueData' => $undeliveredUniqueCount,
-                'DuplicateData' => $undeliveredDuplicateCount
-            ),
-            'failed' => array(
-                'TotalCount' => count($failedTotalCount),
-                'UniqueCount' => count($failedUniqueCount),
-                'DuplicateCount' => count($failedDuplicateCount),
-                'totalData' => $failedTotalCount,
-                'UniqueData' => $failedUniqueCount,
-                'DuplicateData' => $failedDuplicateCount
-            ),
-            'receiving' => array(
-                'TotalCount' => count($receivingTotalCount),
-                'UniqueCount' => count($receivingUniqueCount),
-                'DuplicateCount' => count($receivingDuplicateCount),
-                'totalData' => $receivingTotalCount,
-                'UniqueData' => $receivingUniqueCount,
-                'DuplicateData' => $receivingDuplicateCount
-            ),
-            'received' => array(
-                'TotalCount' => count($receivedTotalCount),
-                'UniqueCount' => count($receivedUniqueCount),
-                'DuplicateCount' => count($receivedDuplicateCount),
-                'totalData' => $receivedTotalCount,
-                'UniqueData' => $receivedUniqueCount,
-                'DuplicateData' => $receivedDuplicateCount
-            ),
-            'queued' => array(
-                'TotalCount' => count($queuedTotalCount),
-                'UniqueCount' => count($queuedUniqueCount),
-                'DuplicateCount' => count($queuedDuplicateCount),
-                'totalData' => $queuedTotalCount,
-                'UniqueData' => $queuedUniqueCount,
-                'DuplicateData' => $queuedDuplicateCount
-            ),
-            'sending' => array(
-                'TotalCount' => count($sendingTotalCount),
-                'UniqueCount' => count($sendingUniqueCount),
-                'DuplicateCount' => count($sendingDuplicateCount),
-                'totalData' => $sendingTotalCount,
-                'UniqueData' => $sendingUniqueCount,
-                'DuplicateData' => $sendingDuplicateCount
-            ),
-            'other' => array(
-                'TotalCount' => count($otherTotalCount),
-                'UniqueCount' => count($otherUniqueCount),
-                'DuplicateCount' => count($otherDuplicateCount),
-                'totalData' => $otherTotalCount,
-                'UniqueData' => $otherUniqueCount,
-                'DuplicateData' => $otherDuplicateCount
-            )
-        );
-
-        return $aCatogerizedData;
-    }
-
+    /**
+     * Returns categorized stats
+     * @param type $oData
+     * @return array
+     */
     public function getBroadcastSendgridCategorizedStatsData($oData) {
-
+        $openCount = $clickCount = $processedCount = $deliveredCount = $bounceCount = $unsubscribeCount = $droppedCount = $spamCount = $groupResubscribeCount = $groupUnsubscribeCount = $deferredCount = array();
+        $openUniqueCount = $deliveredUniqueCount = $processedUniqueCount = $clickTotalCount = $clickUniqueCount = $bounceTotalCount = $bounceUniqueCount = $unsubscribeTotalCount = $unsubscribeUniqueCount = $droppedTotalCount = $droppedUniqueCount = $spamTotalCount = $spamUniqueCount = $groupResubscribeTotalCount = $groupResubscribeUniqueCount = $groupUnsubscribeTotalCount = $groupUnsubscribeUniqueCount = $deferredTotalCount = $deferredUniqueCount = $otherTotalCount = $otherUniqueCount = $otherDuplicateCount = $openTotalCount = $processedTotalCount = $deliveredTotalCount = array();
+        $openDuplicateCount = $clickDuplicateCount = $processedDuplicateCount = $deliveredDuplicateCount = $bounceDuplicateCount = $unsubscribeDuplicateCount = $droppedDuplicateCount = $spamDuplicateCount = $groupResubscribeDuplicateCount = $groupUnsubscribeDuplicateCount = $deferredDuplicateCount = array();
         if (!empty($oData)) {
-            $openCount = $clickCount = $processedCount = $deliveredCount = $bounceCount = $unsubscribeCount = $droppedCount = $spamCount = $groupResubscribeCount = $groupUnsubscribeCount = $deferredCount = array();
-            $openDuplicateCount = $clickDuplicateCount = $processedDuplicateCount = $deliveredDuplicateCount = $bounceDuplicateCount = $unsubscribeDuplicateCount = $droppedDuplicateCount = $spamDuplicateCount = $groupResubscribeDuplicateCount = $groupUnsubscribeDuplicateCount = $deferredDuplicateCount = array();
             foreach ($oData as $oRow) {
 
                 if ($oRow->event_name == 'open') {
@@ -1432,6 +325,1233 @@ class BroadcastModel extends Model {
         return $aCatogerizedData;
     }
 
+    /**
+     * Used to get Broadcast Variations
+     * @param type $broadcastID
+     * @return type
+     */
+    public function getBroadcastVariations($broadcastID) {
+        $oData = DB::table('tbl_broadcast_split_campaigns')
+                ->leftJoin('tbl_broadcast_split_testing', 'tbl_broadcast_split_campaigns.split_test_id', '=', 'tbl_broadcast_split_testing.id')
+                ->select('tbl_broadcast_split_campaigns.*', 'tbl_broadcast_split_testing.test_name', 'tbl_broadcast_split_testing.id as splitID')
+                ->where('tbl_broadcast_split_campaigns.broadcast_id', $broadcastID)
+                ->where('tbl_broadcast_split_campaigns.status', 'active')
+                ->orderBy('tbl_broadcast_split_campaigns.id', 'asc')
+                ->get();
+
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $userID
+     * @return typeUsed to get lists associated with the logged user
+     */
+    public function getMyLists($userID = '') {
+
+        $oData = DB::table('tbl_common_lists')
+                ->leftJoin('tbl_automation_users', 'tbl_automation_users.list_id', '=', 'tbl_common_lists.id')
+                ->leftJoin('tbl_subscribers', 'tbl_automation_users.subscriber_id', '=', 'tbl_subscribers.id')
+                ->join('tbl_users', 'tbl_users.id', '=', 'tbl_common_lists.user_id')
+                ->select('tbl_common_lists.*', 'tbl_automation_users.list_id as l_list_id', 'tbl_automation_users.user_id as l_user_id', 'tbl_subscribers.firstname as l_firstname', 'tbl_subscribers.lastname as l_lastname', 'tbl_subscribers.email as l_email', 'tbl_subscribers.phone as l_phone', 'tbl_subscribers.created as l_created', 'tbl_automation_users.status as l_status', DB::raw("CONCAT(tbl_users.firstname,' ', tbl_users.lastname) as lCreateUsername"), 'tbl_users.email as cEmail', 'tbl_users.mobile as cMobile')
+                ->where('tbl_common_lists.delete_status', 0)
+                ->where('tbl_common_lists.status', 'active')
+                ->when(($userID > 0), function ($query) use ($userID) {
+                    return $query->where('tbl_common_lists.user_id', $userID);
+                })
+                ->orderBy('tbl_common_lists.id', 'desc')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $userID
+     * @return typeUsed to get Twillio related account details
+     */
+    public function getTwillioData($userID) {
+        $oData = DB::table('tbl_twilio_accounts')
+                ->where('user_id', $userID)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $userID
+     * @param type $id
+     * @return typeUsed to get logged user's broadcast campaign
+     */
+    public function getMyBroadcasts($userID, $id = 0) {
+
+        $oData = DB::table('tbl_automations_emails')
+                ->leftJoin('tbl_automations_emails_events', 'tbl_automations_emails_events.automation_id', '=', 'tbl_automations_emails.id')
+                ->leftJoin('tbl_automations_emails_campaigns', 'tbl_automations_emails_campaigns.event_id', '=', 'tbl_automations_emails_events.id')
+                ->select('tbl_automations_emails_campaigns.*', 'tbl_automations_emails.id as broadcast_id', 'tbl_automations_emails.user_id', 'tbl_automations_emails.title', 'tbl_automations_emails.description', 'tbl_automations_emails.email_type', 'tbl_automations_emails.status as bc_status', 'tbl_automations_emails.current_state', 'tbl_automations_emails.audience_type', 'tbl_automations_emails.sending_method', 'tbl_automations_emails.created', 'tbl_automations_emails_events.event_type', 'tbl_automations_emails_events.data', 'tbl_automations_emails_events.id as evtid')
+                ->where('tbl_automations_emails.deleted', 0)
+                ->where('tbl_automations_emails.email_type', 'broadcast')
+                ->when(($userID > 0), function ($query) use ($userID) {
+                    return $query->where('tbl_automations_emails.user_id', $userID);
+                })
+                ->when(($id > 0), function ($query) use ($id) {
+                    return $query->where('tbl_automations_emails.id', $id);
+                })
+                ->orderBy('tbl_automations_emails.id', 'asc')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $automationID
+     * @return typeUsed to get Automation lists
+     */
+    public function getAutomationLists($automationID) {
+        $oData = DB::table('tbl_automations_emails_lists')
+                ->where('automation_id', $automationID)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $automationID
+     * @return typeUsed to get broadcast users list
+     */
+    public function getBroadcastContacts($automationID) {
+        $oData = DB::table('tbl_automation_users')
+                ->where('automation_id', $automationID)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Used to get Excluded lists users
+     */
+    public function getAutomationExcludedLists($automationID) {
+        $oData = DB::table('tbl_automations_emails_lists_excluded')
+                ->where('automation_id', $automationID)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $automationID
+     * @return typeUsed to get the list of excluded users
+     */
+    public function getBroadcastExcludedContacts($automationID) {
+        $oData = DB::table('tbl_automation_users_excluded')
+                ->where('automation_id', $automationID)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Used to add users into the broadcast campaign
+     * @param type $aData
+     * @return boolean
+     */
+    public function addContactToCampaign($aData) {
+        $insert_id = DB::table('tbl_automation_users')
+                ->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * Used to add users into the excluded list of contacts of a broadcast campaign
+     * @param type $aData
+     * @return type
+     */
+    public function addContactToExcludeCampaign($aData) {
+        $insert_id = DB::table('tbl_automation_users_excluded')
+                ->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * Used to delete contact from the broadcast campaign 
+     */
+    public function deleteContactToCampaign($automationID, $subscriberID) {
+        if ($automationID > 0) {
+            $oData = DB::table('tbl_automation_users')
+                    ->where('automation_id', $automationID)
+                    ->where('subscriber_id', $subscriberID)
+                    ->delete();
+            return $oData;
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @param type $automationID
+     * @param type $subscriberID
+     * @return booleanUsed to delete contact from excluded list of contacts
+     */
+    public function deleteContactToExcludeCampaign($automationID, $subscriberID) {
+        if ($automationID > 0) {
+            $oData = DB::table('tbl_automation_users_excluded')
+                    ->where('automation_id', $automationID)
+                    ->where('subscriber_id', $subscriberID)
+                    ->delete();
+            return $oData;
+        }
+        return false;
+    }
+
+    /**
+     * Used to get broadcast tags
+     */
+    public function getBroadcastTags($automationID) {
+        $oData = DB::table('tbl_automations_emails_campaigns_tags')
+                ->where('automation_id', $automationID)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Used to get the list of excluded tags inside the broadcast campaign
+     * @param type $automationID
+     * @return type
+     */
+    public function getBroadcastExcludedTags($automationID) {
+
+        $oData = DB::table('tbl_automations_emails_campaigns_tags_excluded')
+                ->where('automation_id', $automationID)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $broadcastID
+     * @return type
+     */
+    public function getBroadcastVariationCampaigns($broadcastID) {
+        $oData = DB::table('tbl_broadcast_split_campaigns')
+                ->where('tbl_broadcast_split_campaigns.broadcast_id', $broadcastID)
+                ->orderBy('tbl_broadcast_split_campaigns.id', 'asc')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $aData
+     * @param type $sendingMethod
+     * @return typeUsed to add new broadcast campaign
+     */
+    public function addBroadcastCampaign($aData, $sendingMethod = 'normal') {
+
+        if ($sendingMethod == 'split') {
+            $insert_id = DB::table('tbl_broadcast_split_campaigns')
+                    ->insertGetId($aData);
+        } else {
+            $insert_id = DB::table('tbl_automations_emails_campaigns')
+                    ->insertGetId($aData);
+        }
+        return $insert_id;
+    }
+
+    /**
+     * Used to add broadcast variations
+     */
+    public function addBroadcastVariation($aData) {
+        $insert_id = DB::table('tbl_broadcast_split_campaigns')
+                ->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * 
+     * @param type $id
+     * @return booleanUsed to delete variation from the broadcast campaign
+     */
+    public function deleteVariation($id) {
+        if ($id > 0) {
+            $oData = DB::table('tbl_broadcast_split_campaigns')
+                    ->where('id', $id)
+                    ->delete();
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @param type $aData
+     * @param type $id
+     * @return booleanUsed to update broadcast variation
+     */
+    public function updateVariation($aData, $id) {
+        if ($id > 0) {
+            $oData = DB::table('tbl_broadcast_split_campaigns')
+                    ->where('id', $id)
+                    ->update($aData);
+            return $oData;
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @param type $aData
+     * @param type $id
+     * @return booleanUsed to update split test 
+     */
+    public function updateSplitTest($aData, $id) {
+        if ($id > 0) {
+            $oData = DB::table('tbl_broadcast_split_testing')
+                    ->where('id', $id)
+                    ->update($aData);
+            return $oData;
+        }
+        return false;
+    }
+
+    /**
+     * Used to create new broadcast campaign
+     * @param type $aData
+     * @return boolean
+     */
+    public function createBroadcast($aData) {
+        $insert_id = DB::table('tbl_automations_emails')
+                ->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * Used to create split test
+     * @param type $aData
+     * @return type
+     */
+    public function createSplitTest($aData) {
+        $insert_id = DB::table('tbl_broadcast_split_testing')
+                ->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * Used to add new segment 
+     */
+    public function createSegment($aData) {
+        $insert_id = DB::table('tbl_segments')
+                ->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * Used to check if duplicate segment
+     * @param type $segmentName
+     * @param type $userID
+     * @return boolean
+     */
+    public function isDuplicateSegment($segmentName, $userID = 0) {
+        $oData = DB::table('tbl_segments')
+                ->where('user_id', $userID)
+                ->where('segment_name', $segmentName)
+                ->exists();
+        return $oData;
+    }
+
+    /**
+     * Used to check if duplicate audience exists
+     * @param type $broadcastID
+     * @param type $subscriberID
+     * @return boolean
+     */
+    public function isDuplicateBroadcastAudience($broadcastID, $subscriberID) {
+        $oData = DB::table('tbl_broadcast_users')
+                ->where('broadcast_id', $broadcastID)
+                ->where('subscriber_id', $subscriberID)
+                ->exists();
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $segmentID
+     * @param type $campaignID
+     * @param type $segmentType
+     * @param type $campaignType
+     * @param type $moduleName
+     * @param type $sendingMethod
+     * @return boolean
+     */
+    public function addSegmentSubscribers($segmentID, $campaignID, $segmentType, $campaignType, $moduleName = '', $sendingMethod = 'normal') {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $oExistingSubscribers = array();
+        $oExistingSubscribers = $this->getSegmentCoreSubscribers($segmentID);
+        if (!empty($oExistingSubscribers)) {
+            foreach ($oExistingSubscribers as $oSubs) {
+                $aExistingSubsID[] = $oSubs->subscriber_id;
+            }
+        }
+
+        if ($campaignType == 'email') {
+            if ($segmentType == 'total-sent') {
+                $param = 'delivered';
+            } else if ($segmentType == 'total-open') {
+                $param = 'open';
+            } else if ($segmentType == 'total-click') {
+                $param = 'click';
+            }
+
+            $oStats = $this->getBroadcastSendgridStats('broadcast', $campaignID, $param, $sendingMethod);
+            $aCategorizedStats = $this->getBroadcastSendgridCategorizedStatsData($oStats);
+
+            $oData = $aCategorizedStats[$param]['UniqueData'];
+        } else if ($campaignType == 'sms') {
+            if ($segmentType == 'total-sent') {
+                $param = 'sent';
+            } else if ($segmentType == 'total-delivered') {
+                $param = 'delivered';
+            } else if ($segmentType == 'total-queued') {
+                $param = 'queued';
+            } else if ($segmentType == 'total-undelivered') {
+                $param = 'undelivered';
+            } else if ($segmentType == 'total-click') {
+                $param = 'click';
+            }
+
+            $oStats = $this->getBroadcasstTwilioStats('broadcast', $campaignID, $sendingMethod);
+            $aCategorizedStats = $this->getBroadcastTwilioCategorizedStatsData($oStats);
+
+            $oData = $aCategorizedStats[$param]['UniqueData'];
+        }
+        if (!empty($oData)) {
+
+            //get Existing subscirbers in the segement if any
+            foreach ($oData as $oStat) {
+                $str = '';
+                $subscriberID = $oStat->global_subscriber_id;
+                if (!in_array($subscriberID, $aExistingSubsID)) {
+                    $str = "(" . $userID . "," . $segmentID . "," . $subscriberID . "," . "'" . date("Y-m-d H:i:s") . "')";
+                    $aSqlParam[] = $str;
+                }
+            }
+
+            if (!empty($aSqlParam)) {
+                $sql = "INSERT INTO `tbl_segments_users` (`user_id`, `segment_id`, `subscriber_id`, `created`) VALUES " . implode(",", $aSqlParam);
+
+                $result = DB::statement($sql);
+                if ($result) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Used to get segment subscribers
+     */
+    public function getSegmentCoreSubscribers($seqmentID) {
+        $oData = DB::table('tbl_segments_users')
+                ->where('segment_id', $seqmentID)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Used to get broadcast campaign info
+     * @param type $id
+     * @return type
+     */
+    public function getBroadcastInfo($id) {
+        $oData = DB::table('tbl_automations_emails')
+                ->where('id', $id)
+                ->first();
+        return $oData;
+    }
+
+    /**
+     * Used to get the list of broadcast subscribers
+     * @param type $broadcastID
+     * @return type
+     */
+    public function getBroadcastSubscribers($broadcastID) {
+        $oData = DB::table('tbl_broadcast_users')
+                ->leftJoin('tbl_subscribers', 'tbl_broadcast_users.subscriber_id', '=', 'tbl_subscribers.id')
+                ->select('tbl_broadcast_users.id as local_user_id', 'tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.id AS global_user_id')
+                ->where('tbl_broadcast_users.broadcast_id', $broadcastID)
+                ->orderBy('tbl_broadcast_users.id', 'desc')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Used to delete subscriber from broadcast campaign
+     */
+    public function deleteAudienceToBraodcast($broadcastId, $subscriberID) {
+        if ($broadcastId > 0) {
+            $oData = DB::table('tbl_broadcast_users')
+                    ->where('broadcast_id', $broadcastId)
+                    ->where('subscriber_id', $subscriberID)
+                    ->delete();
+            return $oData;
+        }
+        return false;
+    }
+
+    /**
+     * Used to delete broadcast audience
+     * @param type $broadcastId
+     * @param type $subscriberID
+     * @return boolean
+     */
+    public function deleteBraodcastContacts($broadcastId, $subscriberID) {
+        if ($broadcastId > 0) {
+            $oData = DB::table('tbl_automation_users')
+                    ->where('automation_id', $broadcastId)
+                    ->where('subscriber_id', $subscriberID)
+                    ->delete();
+            return $oData;
+        }
+        return false;
+    }
+
+    /**
+     * Used to delete subscriber by increment id
+     * @param type $id
+     * @return boolean
+     */
+    public function deleteAudienceById($id) {
+        if ($id > 0) {
+            $oData = DB::table('tbl_broadcast_users')
+                    ->where('id', $id)
+                    ->delete();
+            return $oData;
+        }
+        return false;
+    }
+
+    /**
+     * Used to add subscriber into the broadcast
+     * @param type $aData
+     * @return type
+     */
+    public function addBroadcastAudience($aData) {
+        $insert_id = DB::table('tbl_broadcast_users')
+                ->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * Used to get broadcast segments
+     * @param type $userID
+     * @param type $id
+     * @return type 
+     */
+    public function getSegments($userID, $id = '') {
+        $oData = DB::table('tbl_segments')
+                ->leftJoin('tbl_automations_emails', 'tbl_segments.source_campaign_id', '=', 'tbl_automations_emails.id')
+                ->select('tbl_segments.*', 'tbl_automations_emails.title as campaign_title')
+                ->when(!empty($userID), function ($query) use ($userID) {
+                    return $query->where('tbl_segments.user_id', $userID);
+                })
+                ->when(!empty($id), function ($query) use ($id) {
+                    return $query->where('tbl_segments.id', $id);
+                })
+                ->get();
+
+        return $oData;
+    }
+
+    /**
+     * Used to get segment subscribers
+     * @param type $segmentID
+     * @param type $userID
+     * @return type
+     */
+    public function getSegmentSubscribers($segmentID, $userID) {
+        $oData = DB::table('tbl_segments_users')
+                ->leftJoin('tbl_subscribers', 'tbl_segments_users.subscriber_id', '=', 'tbl_subscribers.id')
+                ->select('tbl_segments_users.*', 'tbl_subscribers.id as globalSubscriberId', 'tbl_subscribers.user_id as subUserId', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status')
+                ->where('tbl_segments_users.segment_id', $segmentID)
+                ->where('tbl_segments_users.user_id', $userID)
+                ->orderBy('tbl_subscribers.id', 'desc')
+                ->get();
+
+        return $oData;
+    }
+
+    /**
+     * Used to get segment by segment id
+     * @param type $userID
+     * @param type $segmentId
+     * @return type
+     * 
+     */
+    public function getSegmentById($userID, $segmentId) {
+        $oData = DB::table('tbl_segments')
+                ->leftJoin('tbl_automations_emails', 'tbl_segments.source_campaign_id', '=', 'tbl_automations_emails.id')
+                ->select('tbl_segments.*', 'tbl_automations_emails.title as campaign_title')
+                ->when(!empty($userID), function ($query) use ($userID) {
+                    return $query->where('tbl_segments.user_id', $userID);
+                })
+                ->when(!empty($segmentId), function ($query) use ($segmentId) {
+                    return $query->where('tbl_segments.id', $segmentId);
+                })
+                ->get();
+
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $segmentID
+     * @return typeUsed to delete segment by id
+     */
+    public function deleteSegmentByID($segmentID) {
+        $result = DB::table('tbl_segments')
+                ->where('id', $segmentID)
+                ->delete();
+        return $result;
+    }
+
+    /**
+     * Used to delete segment user
+     * @param type $userID
+     * @return type
+     */
+    public function deleteSegmentUser($userID) {
+        $result = DB::table('tbl_segments_users')
+                ->where('id', $userID)
+                ->delete();
+        return $result;
+    }
+
+    /**
+     * Used to update segment
+     * @param type $aData
+     * @param type $segmentId
+     * @param type $userID
+     * @return type
+     */
+    public function updateSegment($aData, $segmentId, $userID) {
+        $result = DB::table('tbl_segments')
+                ->where('id', $segmentId)
+                ->when((!empty($userID)), function($query) use ($userID) {
+                    return $query->orderBy('user_id', $userID);
+                })
+                ->update($aData);
+        return $result;
+    }
+
+    /**
+     * Used to update broadcast campaign
+     * @param type $aData
+     * @param type $autoId
+     * @return type
+     */
+    public function updateBroadcast($aData, $autoId) {
+        $result = DB::table('tbl_automations_emails')
+                ->where('id', $autoId)
+                ->update($aData);
+        return $result;
+    }
+
+    /**
+     * This function used to create broadcast event
+     * @param type $aData
+     * @return type
+     */
+    public function createBroadcastEvent($aData) {
+        $insert_id = DB::table('tbl_automations_emails_events')->insertGetId($aData);
+        return $inset_id;
+    }
+
+    /**
+     * Used to create broadcast end campaign
+     * @param type $aData
+     * @return boolean
+     */
+    public function createBroadcastCampaign($aData) {
+        $insert_id = DB::table('tbl_automations_emails_campaigns')->insertGetId($aData);
+        return $inset_id;
+    }
+
+    /**
+     * Used to create broadcast default variation campaign
+     * @param type $aData
+     * @return type
+     */
+    public function createBroadcastDefaultVariationCampaign($aData) {
+        $insert_id = DB::table('tbl_broadcast_split_campaigns')->insertGetId($aData);
+        return $inset_id;
+    }
+
+    /**
+     * Used to update broadcast schedule date and time
+     * @param type $aData
+     * @param type $broadcastId
+     * @return type
+     */
+    public function updateAutomationScheduleDate($aData, $broadcastId) {
+        $result = DB::table('tbl_automations_emails_events')
+                ->where('automation_id', $broadcastId)
+                ->update($aData);
+        return $result;
+    }
+
+    /**
+     * Used to update broadcast end campaign
+     * @param type $aData
+     * @param type $campaignId
+     * @return type
+     */
+    public function updateBroadcastCampaignTemplate($aData, $campaignId) {
+        $result = DB::table('tbl_automations_emails_campaigns')
+                ->where('id', $campaignId)
+                ->update($aData);
+        return $result;
+    }
+
+    /**
+     * Used to update broadcast campaign by event id
+     */
+    public function updateBroadcastCampaign($aData, $eventId) {
+        $result = DB::table('tbl_automations_emails_campaigns')
+                ->where('event_id', $eventId)
+                ->update($aData);
+        return $result;
+    }
+
+    /**
+     * Used to update broadcast settings
+     * @param type $aData
+     * @param type $campaignId
+     * @return type 
+     */
+    public function updateBroadcastSettings($aData, $campaignId) {
+        $result = DB::table('tbl_automations_emails_campaigns_settings')
+                ->where('campaign_id', $campaignId)
+                ->update($aData);
+        return $result;
+    }
+
+    /**
+     * 
+     * @param type $campaignId
+     * @return typeUsed to get broadcast settings
+     */
+    public function getBroadcastSettings($campaignId) {
+        $oData = DB::table('tbl_automations_emails_campaigns_settings')
+                ->where('campaign_id', $campaignId)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Used to check whether broadcast title exists or not
+     * @param type $broadcastTitle
+     * @param type $userID
+     * @return type
+     */
+    public function checkBroadcastTitle($broadcastTitle, $userID) {
+        $oData = DB::table('tbl_automations_emails')
+                ->where('user_id', $userID)
+                ->where('title', $broadcastTitle)
+                ->exists();
+        return $oData;
+    }
+
+    /**
+     * 
+     * @param type $aData
+     * @return typeUsed to add broadcast settings
+     */
+    public function addBroadcastSettings($aData) {
+        $insert_id = DB::table('tbl_automations_emails_campaigns_settings')->insertGetId($aData);
+        return $inset_id;
+    }
+
+    /**
+     * Used to broadcast subscribers from excluded subscribers list
+     * @param type $automationID
+     * @return type
+     */
+    public function getBroadcastExcludedListSubscribers($automationID) {
+        $oLists = $this->getAutomationExcludedLists($automationID);
+        if (!empty($oLists)) {
+            foreach ($oLists as $oList) {
+                $aListsIDs[] = $oList->list_id;
+            }
+        }
+        if (empty($aListsIDs)) {
+            $aListsIDs = array('-1');
+        }
+        $sql = "SELECT `tbl_automation_users`.*, `tbl_subscribers`.`email`,  `tbl_subscribers`.`email` as subscriber_email, `tbl_subscribers`.`firstname`, `tbl_subscribers`.`lastname`, `tbl_subscribers`.`phone`, `tbl_subscribers`.`status` AS `globalStatus` "
+                . "FROM `tbl_automation_users` LEFT JOIN "
+                . "`tbl_subscribers` ON `tbl_automation_users`.`subscriber_id`= `tbl_subscribers`.`id` "
+                . "WHERE `tbl_automation_users`.`list_id` IN(" . implode(",", $aListsIDs) . ") "
+                . "ORDER BY `tbl_automation_users`.`id` DESC";
+        $oData = DB::select(DB::raw($sql));
+        return $oData;
+    }
+
+    /**
+     * Used to get broadcast subscribers from the lists
+     * @param type $automationID
+     * @return type
+     */
+    public function getBroadcastListSubscribers($automationID) {
+        $oLists = $this->getAutomationLists($automationID);
+        if (!empty($oLists)) {
+            foreach ($oLists as $oList) {
+                $aListsIDs[] = $oList->list_id;
+            }
+        }
+        if (empty($aListsIDs)) {
+            $aListsIDs = array('-1');
+        }
+        //write your own query
+        $sql = "SELECT `tbl_automation_users`.*, `tbl_subscribers`.`email`,  `tbl_subscribers`.`email` as subscriber_email, `tbl_subscribers`.`firstname`, `tbl_subscribers`.`lastname`, `tbl_subscribers`.`phone`, `tbl_subscribers`.`status` AS `globalStatus` "
+                . "FROM `tbl_automation_users` LEFT JOIN "
+                . "`tbl_subscribers` ON `tbl_automation_users`.`subscriber_id`= `tbl_subscribers`.`id` "
+                . "WHERE `tbl_automation_users`.`list_id` IN(" . implode(",", $aListsIDs) . ") "
+                . "ORDER BY `tbl_automation_users`.`id` DESC";
+        $oData = DB::select(DB::raw($sql));
+        return $oData;
+    }
+
+    /**
+     * Used to get broadcast segments from the new table
+     * @param type $automationID
+     * @return type
+     */
+    public function getBroadcastSegments($automationID) {
+        $oData = DB::table('tbl_automations_emails_campaigns_segments_new')
+                ->leftJoin('tbl_segments', 'tbl_automations_emails_campaigns_segments_new.segment_id', '=', 'tbl_segments.id')
+                ->select('tbl_automations_emails_campaigns_segments_new.*', 'tbl_segments.segment_name')
+                ->where('tbl_automations_emails_campaigns_segments_new.automation_id', $automationID)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Used to get broadcast segments from excluded segment lists
+     * @param type $automationID
+     * @return type
+     */
+    public function getBroadcastExcludedSegments($automationID) {
+        $oData = DB::table('tbl_automations_emails_campaigns_segments_excluded')
+                ->leftJoin('tbl_segments', 'tbl_automations_emails_campaigns_segments_excluded.segment_id', '=', 'tbl_segments.id')
+                ->select('tbl_automations_emails_campaigns_segments_excluded.*', 'tbl_segments.segment_name')
+                ->where('tbl_automations_emails_campaigns_segments_excluded.automation_id', $automationID)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Used to add tags into the broadcast campaign subscribers
+     * @param type $aData
+     * @return type
+     */
+    public function addTagToCampaign($aData) {
+        $insert_id = DB::table('tbl_automations_emails_campaigns_tags')->insertGetId($aData);
+        return $inset_id;
+    }
+
+    /**
+     * Used to add tags into the broadcast campaign excluded list of subscribers
+     * @param type $aData
+     * @return type
+     */
+    public function addExcludedTagToCampaign($aData) {
+        $insert_id = DB::table('tbl_automations_emails_campaigns_tags_excluded')->insertGetId($aData);
+        return $inset_id;
+    }
+
+    /**
+     * Used to add segment into the campaign
+     * @param type $aData
+     * @return type
+     */
+    public function addSegmentToCampaign($aData) {
+        $insert_id = DB::table('tbl_automations_emails_campaigns_segments_new')->insertGetId($aData);
+        return $inset_id;
+    }
+
+    /**
+     * Used to add segment into the exlcuded list of segments
+     * @param type $aData
+     * @return type
+     */
+    public function addExcludedSegmentToCampaign($aData) {
+        $insert_id = DB::table('tbl_automations_emails_campaigns_segments_excluded')->insertGetId($aData);
+        return $inset_id;
+    }
+
+    /**
+     * Used to delete segments from the campaign segments
+     * @param type $automationID
+     * @param type $segmentID
+     * @return boolean
+     */
+    public function deleteSegmentToCampaign($automationID, $segmentID) {
+        if ($automationID > 0) {
+            $result = DB::table('tbl_automations_emails_campaigns_segments_new')
+                    ->where('automation_id', $automationID)
+                    ->where('segment_id', $segmentID)
+                    ->delete();
+            return $result;
+        }
+        return false;
+    }
+
+    /**
+     * Used to delete excluded segment from the campaign
+     * @param type $automationID
+     * @param type $segmentID
+     * @return boolean
+     */
+    public function deleteExcludedSegmentToCampaign($automationID, $segmentID) {
+        if ($automationID > 0) {
+            $result = DB::table('tbl_automations_emails_campaigns_segments_excluded')
+                    ->where('automation_id', $automationID)
+                    ->where('segment_id', $segmentID)
+                    ->delete();
+            return $result;
+        }
+        return false;
+    }
+
+    /**
+     * Used to delete tags from the campaign
+     * @param type $automationID
+     * @param type $tagID
+     * @return boolean
+     */
+    public function deleteTagToCampaign($automationID, $tagID) {
+        if ($automationID > 0) {
+            $result = DB::table('tbl_automations_emails_campaigns_tags')
+                    ->where('automation_id', $automationID)
+                    ->where('tag_id', $tagID)
+                    ->delete();
+            return $result;
+        }
+        return false;
+    }
+
+    /**
+     * Used to delete tags from the excluded tags list
+     * @param type $automationID
+     * @param type $tagID
+     * @return boolean
+     */
+    public function deleteExcludedTagToCampaign($automationID, $tagID) {
+        if ($automationID > 0) {
+            $result = DB::table('tbl_automations_emails_campaigns_tags_excluded')
+                    ->where('automation_id', $automationID)
+                    ->where('tag_id', $tagID)
+                    ->delete();
+            return $result;
+        }
+        return false;
+    }
+    
+    /**
+     * Used to get conditional broadcast subscribers
+     * @param type $eventId
+     * @param type $eventType
+     * @return type
+     */
+    public function getMyBroadcastSubscribers($eventId, $eventType) {
+        $oData = DB::table('tbl_broadcast_emails_tracking_sendgrid')
+                ->leftJoin('tbl_broadcast_users', 'tbl_broadcast_users.id', '=', 'tbl_broadcast_emails_tracking_sendgrid.subscriber_id')
+                ->leftJoin('tbl_subscribers', 'tbl_broadcast_users.subscriber_id', '=', 'tbl_subscribers.id')
+                ->select('tbl_broadcast_users.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone','tbl_broadcast_emails_tracking_sendgrid.id as tracking_id',  'tbl_broadcast_emails_tracking_sendgrid.event_name', 'tbl_broadcast_emails_tracking_sendgrid.email as e_email', 'tbl_broadcast_emails_tracking_sendgrid.created as e_created')
+                ->where('tbl_broadcast_emails_tracking_sendgrid.event_id', $eventId)
+                ->where('tbl_broadcast_emails_tracking_sendgrid.event_name', $eventType)
+                ->groupBy('tbl_broadcast_emails_tracking_sendgrid.subscriber_id')
+                ->get();
+        return $oData;        
+    }
+
+    /**
+     * Used to get conditional broadcast subscribers
+     */
+    public function getMyBroadcastSubscribersSMS($eventId, $eventType) {
+        $oData = DB::table('tbl_broadcast_emails_tracking_twillio')
+                ->leftJoin('tbl_broadcast_users', 'tbl_broadcast_users.id', '=', 'tbl_broadcast_emails_tracking_twillio.subscriber_id')
+                ->leftJoin('tbl_subscribers', 'tbl_broadcast_users.subscriber_id', '=', 'tbl_subscribers.id')
+                ->select('tbl_broadcast_users.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone','tbl_broadcast_emails_tracking_sendgrid.id as tracking_id',  'tbl_broadcast_emails_tracking_sendgrid.event_name', 'tbl_broadcast_emails_tracking_sendgrid.email as e_email', 'tbl_broadcast_emails_tracking_sendgrid.created as e_created')
+                ->where('tbl_broadcast_emails_tracking_twillio.event_id', $eventId)
+                ->where('tbl_broadcast_emails_tracking_twillio.event_name', $eventType)
+                ->groupBy('tbl_broadcast_emails_tracking_twillio.subscriber_id')
+                ->get();
+        return $oData; 
+        
+    }
+
+    /**
+     * Used to delete email record from the stats
+     * @param type $recordID
+     * @return type
+     */
+    public function deleteEmailRecordByID($recordID) {
+        $result = DB::table('tbl_automations_emails_tracking_sendgrid')
+        ->where('id', $recordID)
+        ->delete();
+        return $result;
+    }
+
+    
+    /**
+     * Used to get broadcast campaign twilio stats
+     * @param type $param
+     * @param type $id
+     * @param type $eventType
+     * @param type $sendingMethod
+     * @return type
+     */
+    public function getBroadcasstTwilioStats($param, $id, $eventType = '', $sendingMethod = 'normal') {
+        $campaignTable = ($sendingMethod == 'split') ? 'tbl_broadcast_split_campaigns' : 'tbl_automations_emails_campaigns';
+
+        $sql = "SELECT tbl_broadcast_emails_tracking_twillio.*, tbl_broadcast_users.subscriber_id as global_subscriber_id FROM tbl_broadcast_emails_tracking_twillio "
+                . "LEFT JOIN tbl_automations_emails ON tbl_broadcast_emails_tracking_twillio.broadcast_id = tbl_automations_emails.id "
+                . "LEFT JOIN tbl_automations_emails_events ON tbl_broadcast_emails_tracking_twillio.event_id = tbl_automations_emails_events.id "
+                . "LEFT JOIN {$campaignTable} ON tbl_broadcast_emails_tracking_twillio.campaign_id= {$campaignTable}.id "
+                . "LEFT JOIN tbl_broadcast_users ON tbl_broadcast_emails_tracking_twillio.subscriber_id = tbl_broadcast_users.id ";
+
+        if ($param == 'broadcast') {
+            $sql .= "WHERE tbl_broadcast_emails_tracking_twillio.broadcast_id='{$id}' ";
+        } else if ($param == 'campaign') {
+            $sql .= "WHERE tbl_broadcast_emails_tracking_twillio.campaign_id='{$id}' ";
+        } else if ($param == 'event_id') {
+            $sql .= "WHERE tbl_broadcast_emails_tracking_twillio.event_id='{$id}' ";
+        } else if ($param == 'subscriber') {
+            $sql .= "WHERE tbl_broadcast_emails_tracking_twillio.subscriber_id='{$id}' ";
+        } else {
+            $sql .= "WHERE 1 ";
+        }
+
+        if ($eventType == 'accepted') {
+            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='accepted' ";
+        } else if ($eventType == 'sent') {
+            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='sent' ";
+        } else if ($eventType == 'delivered') {
+            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='delivered' ";
+        } else if ($eventType == 'undelivered') {
+            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='undelivered' ";
+        } else if ($eventType == 'failed') {
+            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='failed' ";
+        } else if ($eventType == 'receiving') {
+            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='receiving' ";
+        } else if ($eventType == 'received') {
+            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='received' ";
+        } else if ($eventType == 'queued') {
+            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='queued' ";
+        } else if ($eventType == 'sending') {
+            $sql .= "AND tbl_broadcast_emails_tracking_twillio.event_name='sending' ";
+        }
+
+        if ($sendingMethod == 'normal') {
+            $sql .= "AND tbl_broadcast_emails_tracking_twillio.sending_method = 'normal' ";
+        } else {
+            $sql .= "AND tbl_broadcast_emails_tracking_twillio.sending_method = 'split' ";
+        }
+
+        $sql .= "ORDER BY tbl_broadcast_emails_tracking_twillio.id DESC";
+
+        $oData = DB::select(DB::raw($sql));
+        return $oData;
+    }
+
+    
+    /**
+     * Used to get categorized stats from an stats object
+     * @param type $oData
+     * @return array
+     */
+    public function getBroadcastTwilioCategorizedStatsData($oData) {
+        $acceptedTotalCount = $acceptedUniqueCount = $acceptedDuplicateCount = array();
+        $sentTotalCount = $sentUniqueCount = $sentDuplicateCount = array();
+        $deliveredTotalCount = $deliveredUniqueCount = $deliveredDuplicateCount = array();
+        $undeliveredTotalCount = $undeliveredUniqueCount = $undeliveredDuplicateCount = array();
+        $failedTotalCount = $failedUniqueCount = $failedDuplicateCount = array();
+        $receivingTotalCount = $receivingUniqueCount = $receivingDuplicateCount = array();
+        $receivedTotalCount = $receivedUniqueCount = $receivedDuplicateCount = array();
+        $queuedTotalCount = $queuedUniqueCount = $queuedDuplicateCount = array();
+        $sendingTotalCount = $sendingUniqueCount = $sendingDuplicateCount = array();
+        $otherTotalCount = $otherUniqueCount = $otherDuplicateCount = array();
+        if (!empty($oData)) {
+
+            foreach ($oData as $oRow) {
+
+                if ($oRow->event_name == 'accepted') {
+                    $acceptedTotalCount[] = $oRow;
+                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $acceptedUniqueCount) == true) {
+                        $acceptedDuplicateCount[] = $oRow;
+                    } else {
+                        $acceptedUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'sent') {
+                    $sentTotalCount[] = $oRow;
+                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $sentUniqueCount) == true) {
+                        $sentDuplicateCount[] = $oRow;
+                    } else {
+                        $sentUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'delivered') {
+                    $deliveredTotalCount[] = $oRow;
+                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $deliveredUniqueCount) == true) {
+                        $deliveredDuplicateCount[] = $oRow;
+                    } else {
+                        $deliveredUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'undelivered') {
+                    $undeliveredTotalCount[] = $oRow;
+                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $undeliveredUniqueCount) == true) {
+                        $undeliveredDuplicateCount[] = $oRow;
+                    } else {
+                        $undeliveredUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'failed') {
+                    $failedTotalCount[] = $oRow;
+                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $failedUniqueCount) == true) {
+                        $failedDuplicateCount[] = $oRow;
+                    } else {
+                        $failedUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'receiving') {
+                    $receivingTotalCount[] = $oRow;
+                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $receivingUniqueCount) == true) {
+                        $receivingDuplicateCount[] = $oRow;
+                    } else {
+                        $receivingUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'received') {
+                    $receivedTotalCount[] = $oRow;
+                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $receivedUniqueCount) == true) {
+                        $receivedDuplicateCount[] = $oRow;
+                    } else {
+                        $receivedUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'queued') {
+                    $queuedTotalCount[] = $oRow;
+                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $queuedUniqueCount) == true) {
+                        $queuedDuplicateCount[] = $oRow;
+                    } else {
+                        $queuedUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'sending') {
+                    $sendingTotalCount[] = $oRow;
+                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $sendingUniqueCount) == true) {
+                        $sendingDuplicateCount[] = $oRow;
+                    } else {
+                        $sendingUniqueCount[] = $oRow;
+                    }
+                } else {
+                    $otherTotalCount[] = $oRow;
+                    if ($this->checkIfDuplicateExistsInBroadcastStat($oRow, $otherUniqueCount) == true) {
+                        $otherDuplicateCount[] = $oRow;
+                    } else {
+                        $otherUniqueCount[] = $oRow;
+                    }
+                }
+            }
+        }
+        //Okay Now print result
+        $aCatogerizedData = array(
+            'accepted' => array(
+                'TotalCount' => count($acceptedTotalCount),
+                'UniqueCount' => count($acceptedUniqueCount),
+                'DuplicateCount' => count($acceptedDuplicateCount),
+                'totalData' => $acceptedTotalCount,
+                'UniqueData' => $acceptedUniqueCount,
+                'DuplicateData' => $acceptedDuplicateCount
+            ),
+            'sent' => array(
+                'TotalCount' => count($sentTotalCount),
+                'UniqueCount' => count($sentUniqueCount),
+                'DuplicateCount' => count($sentDuplicateCount),
+                'totalData' => $sentTotalCount,
+                'UniqueData' => $sentUniqueCount,
+                'DuplicateData' => $sentDuplicateCount
+            ),
+            'delivered' => array(
+                'TotalCount' => count($deliveredTotalCount),
+                'UniqueCount' => count($deliveredUniqueCount),
+                'DuplicateCount' => count($deliveredDuplicateCount),
+                'totalData' => $deliveredTotalCount,
+                'UniqueData' => $deliveredUniqueCount,
+                'DuplicateData' => $deliveredDuplicateCount
+            ),
+            'undelivered' => array(
+                'TotalCount' => count($undeliveredTotalCount),
+                'UniqueCount' => count($undeliveredUniqueCount),
+                'DuplicateCount' => count($undeliveredDuplicateCount),
+                'totalData' => $undeliveredTotalCount,
+                'UniqueData' => $undeliveredUniqueCount,
+                'DuplicateData' => $undeliveredDuplicateCount
+            ),
+            'failed' => array(
+                'TotalCount' => count($failedTotalCount),
+                'UniqueCount' => count($failedUniqueCount),
+                'DuplicateCount' => count($failedDuplicateCount),
+                'totalData' => $failedTotalCount,
+                'UniqueData' => $failedUniqueCount,
+                'DuplicateData' => $failedDuplicateCount
+            ),
+            'receiving' => array(
+                'TotalCount' => count($receivingTotalCount),
+                'UniqueCount' => count($receivingUniqueCount),
+                'DuplicateCount' => count($receivingDuplicateCount),
+                'totalData' => $receivingTotalCount,
+                'UniqueData' => $receivingUniqueCount,
+                'DuplicateData' => $receivingDuplicateCount
+            ),
+            'received' => array(
+                'TotalCount' => count($receivedTotalCount),
+                'UniqueCount' => count($receivedUniqueCount),
+                'DuplicateCount' => count($receivedDuplicateCount),
+                'totalData' => $receivedTotalCount,
+                'UniqueData' => $receivedUniqueCount,
+                'DuplicateData' => $receivedDuplicateCount
+            ),
+            'queued' => array(
+                'TotalCount' => count($queuedTotalCount),
+                'UniqueCount' => count($queuedUniqueCount),
+                'DuplicateCount' => count($queuedDuplicateCount),
+                'totalData' => $queuedTotalCount,
+                'UniqueData' => $queuedUniqueCount,
+                'DuplicateData' => $queuedDuplicateCount
+            ),
+            'sending' => array(
+                'TotalCount' => count($sendingTotalCount),
+                'UniqueCount' => count($sendingUniqueCount),
+                'DuplicateCount' => count($sendingDuplicateCount),
+                'totalData' => $sendingTotalCount,
+                'UniqueData' => $sendingUniqueCount,
+                'DuplicateData' => $sendingDuplicateCount
+            ),
+            'other' => array(
+                'TotalCount' => count($otherTotalCount),
+                'UniqueCount' => count($otherUniqueCount),
+                'DuplicateCount' => count($otherDuplicateCount),
+                'totalData' => $otherTotalCount,
+                'UniqueData' => $otherUniqueCount,
+                'DuplicateData' => $otherDuplicateCount
+            )
+        );
+
+        return $aCatogerizedData;
+    }
+
+    /**
+     * Check for the duplicate record in the stats
+     * @param type $aSearch
+     * @param type $tableData
+     * @return boolean
+     */
     public function checkIfDuplicateExistsInBroadcastStat($aSearch, $tableData) {
         if (!empty($tableData)) {
             foreach ($tableData as $oData) {

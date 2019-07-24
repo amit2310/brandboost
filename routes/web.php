@@ -195,7 +195,7 @@ Route::get('admin/broadcast/index','Admin\Broadcast@index');
 Route::get('admin/broadcast/email','Admin\Broadcast@email');
 Route::get('admin/broadcast/sms','Admin\Broadcast@sms');
 Route::get('admin/broadcast/smsoverview','Admin\Broadcast@smsoverview');
-Route::post('admin/broadcast/edit/{id?}','Admin\Broadcast@edit');
+Route::get('admin/broadcast/edit/{id?}','Admin\Broadcast@edit');
 Route::post('admin/broadcast/addVariation','Admin\Broadcast@addVariation');
 Route::post('admin/broadcast/updateSplitTest','Admin\Broadcast@updateSplitTest');
 Route::post('admin/broadcast/updateBroadcastSettingUnit','Admin\Broadcast@updateBroadcastSettingUnit');

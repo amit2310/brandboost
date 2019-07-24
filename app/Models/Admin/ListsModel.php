@@ -86,17 +86,20 @@ class ListsModel extends Model {
             return false;
         }
     }
-
+    
+    /**
+     * Used to get excluded lists
+     * @param type $automationID
+     * @return type
+     */
     public function getAutomationExcludedLists($automationID) {
-        $this->db->select("tbl_automations_emails_lists_excluded.*, tbl_common_lists.list_name");
-        $this->db->join("tbl_common_lists", "tbl_common_lists.id=tbl_automations_emails_lists_excluded.list_id", "LEFT");
-        $this->db->where("tbl_automations_emails_lists_excluded.automation_id", $automationID);
-        $this->db->where("tbl_common_lists.delete_status", 0);
-        $result = $this->db->get("tbl_automations_emails_lists_excluded");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_automations_emails_lists_excluded')
+        ->leftJoin('tbl_common_lists', 'tbl_common_lists.id', '=', 'tbl_automations_emails_lists_excluded.list_id')
+        ->select('tbl_automations_emails_lists_excluded.*', 'tbl_common_lists.list_name')
+        ->where('tbl_automations_emails_lists_excluded.automation_id', $automationID)
+        ->where('tbl_common_lists.delete_status', 0)        
+        ->get();
+        return $oData;
     }
 
     public function addLists($aData) {
