@@ -8,6 +8,7 @@ use App\Models\Admin\SubscriberModel;
 use Illuminate\Support\Facades\Input;
 use App\Models\Admin\TagsModel;
 use App\Models\Admin\TeamModel;
+use Response;
 
 use Session;
 class WebChat extends Controller {
@@ -155,7 +156,12 @@ class WebChat extends Controller {
         } else {
             $response = array('status' => 'error');
         }
-        echo json_encode($response);
+        //echo json_encode($response,true);
+        return Response::json(array(
+                    'status' => 'ok',
+                    'res'   => $result
+                )); 
+
         exit;
     }
 

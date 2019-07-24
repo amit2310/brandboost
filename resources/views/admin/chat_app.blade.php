@@ -1885,7 +1885,7 @@ success: function (data) {
 // webchatfromhere;
 if (data.status == 'ok') {
 var result = data.res;
-//console.log(result);
+console.log(result); return false;
 for(var inc = 0; inc < result.length; inc++) {
 var row = result[inc];
 var newUserTo = row.user_to;
@@ -1929,7 +1929,7 @@ $('<li class="media team_user_'+newUserFrom+'"><div class="media-body"> <span cl
 }
 
 }
-
+alert(newUserFrom);
 
 if(currentUser == newUserTo)
 {
