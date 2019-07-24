@@ -235,7 +235,7 @@ try {
 
 
                 //$tokenResponse = getSmsToken($from, $to);
-                $msg='https://api.twilio.com/2010-04-01/Accounts/AC3d562f95a4be856b7120b492cd25a270/Messages/MMf2a03c2298a1c97bd1f57972b63b9719/Media/ME1f49ebd691883566e9548abb3a3a152a ';
+                $msg='https://api.twilio.com/2010-04-01/Accounts/AC3d562f95a4be856b7120b492cd25a270/Messages/MMf620963399af7292944355c7d97cc869/Media/MEcc24870b1cf9f6562ad786ed9c495ef6';
                 $msgExplode = explode('/', $msg);
 
                 $mm_id = $msgExplode[7];
@@ -271,7 +271,7 @@ try {
 
                        $msg = "<a href='".$msg."' class='previewImage' target='_blank'><img src='".$msg."' height='58px' width='58px' /></a>";
 
-                        $showVideo = 'show';
+                        $showVideo = '';
 
 
                         $media_type = 'image';

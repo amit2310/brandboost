@@ -14,7 +14,7 @@ app.get('/', function(req, res){
 
 app.post('/sendSocketMessage',urlencodedParser, function(req, res){
 	//console.log(req.body);
-   io.emit('messageTresponse', {to:req.body.to, from:req.body.from, msg:req.body.msg,avatar:req.body.avatar, showVideo:req.body.showVideo});
+   io.emit('messageTresponse', {to:req.body.to, from:req.body.from, msg:req.body.msg,avatar:req.body.avatar, showVideo:req.body.showVideo,media_type:req.body.media_type});
 	res.send('Done');
 });
 
