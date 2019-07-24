@@ -12,8 +12,8 @@ use Twilio\Rest\Client;
 include '/var/www/html/assets/trck/functions.php';
 echo '<pre>';
 print_r($_REQUEST);
-$_REQUEST['From']='+17049075791';
-$_REQUEST['To'] = '+15097400384';
+echo $_REQUEST['From']='+17049075791';
+echo $_REQUEST['To'] = '+15097400384';
 $_REQUEST['Body']='Hey';
 //$from = '7049075791';
 //$to = '5097400384';
@@ -24,7 +24,7 @@ try {
     mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 1', json_encode($_REQUEST));
     if (!empty($_REQUEST['Body'])) {
         mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 2', json_encode($_REQUEST));
-           $from = phone_display_custom($_REQUEST['From']);
+             $from = phone_display_custom($_REQUEST['From']);
              $to = phone_display_custom($_REQUEST['To']);
         $msg = $_REQUEST['Body'];
 
@@ -53,7 +53,7 @@ try {
             $npsScoreID = $oLatestActivity['nps_score_id'];
             $referralID = $oLatestActivity['referral_id'];
             $brandboostID = $oLatestActivity['brandboost_id'];
-
+ 
             $aStoreSMS = array(
                 'to' => db_in($to),
                 'from' => db_in($from),
@@ -70,6 +70,8 @@ try {
                 'created' => date("Y-m-d H:i:s")
                     //'created' => date("Y-m-d H:i:s", strtotime('+5 hours')) //earlier it was hosted on pleasereviewmehere.com site
             );
+            echo '<pre>';
+            print_r($aStoreSMS);
             //Now process module wise data
             if (!empty($to)) {
                 $oTwilioDetails = getTwilioAccount($to);
@@ -92,10 +94,7 @@ try {
                     if (!empty($npsStep)) {
 
                         if ($npsStep == 1) {
-                            //Got NPS score
-                            // if NPS score valid, then ask for the feedback otherwise inform them for wrong input
                             if (in_array($msg, array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))) {
-                                //Validated, now ask for the feedback
                                 $replyMsg = 'Please type your feedback and let us know why do you want to rate this?';
                                 $aStoreSMS['nps_step'] = 2;
                                 //Store result in the database
@@ -148,8 +147,8 @@ try {
                                                 $aUsage['segment'] = 1;
                                                 updateCreditUsage($aUsage);
                                             }
-                                        }
-                                    }
+                                        }//client id
+                                    }//nps
                                 }
                             } else {
                                 $replyMsg = 'Please enter valid score ranging from 0-10';
@@ -169,7 +168,7 @@ try {
                                 );
                                 $bUpdated = updateSurveyFeedback($aFeedbackData, $npsScoreID);
                             }
-                        }
+                        }//npsstep2
                         //Now sendout the message
                         $client = new Client($sid, $token);
                         $client->messages->create(
@@ -199,8 +198,8 @@ try {
                             } else {
                                 $aUsage['segment'] = 1;
                                 updateCreditUsage($aUsage);
-                            }
-                        }
+                            }//
+                        }//client id
                     }
                 }
             } else {
