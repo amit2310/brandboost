@@ -1,8 +1,8 @@
 <?php
 echo 'File called+++++++++++++++++';
-/* ini_set('display_errors', 1);
+ini_set('display_errors', 1);
   ini_set('display_startup_errors', 1);
-  error_reporting(E_ALL); */
+  error_reporting(E_ALL); 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Max-Age: 1000');
@@ -43,7 +43,8 @@ try {
         if (!empty($to) && !empty($from)) {
            echo 'Body Found+++++++++++++++ Lower1';
             $oLatestActivity = getLatestActivity($from, $to);
-            //if (!empty($oLatestActivity)) {
+            echo '<pre>';
+            print_r($oLatestActivity);
             $moduleName = $oLatestActivity['module_name'];
             $subcriberID = $oLatestActivity['subscriber_id'];
             $eventID = $oLatestActivity['event_id'];
