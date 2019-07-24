@@ -2949,7 +2949,7 @@ if(window_witdh > 1600)
 				socket.emit('subscribe',newToken);
 				
 				
-				var supportDetail = `<div class="sidebar-user-box" id="sidebar-user-box-${data.support_id}" user_id="${data.support_id}">
+				var supportDetail = `<div class="sidebar-user-box" token="${newToken}" id="sidebar-user-box-${data.support_id}" user_id="${data.support_id}">
 					<div class="avatarImage"><span class="icons fl_letters s32" style="width:28px!important;height:28px!important;line-height:28px;font-size:11px;">${fname +''+ lname} </span></div>
 					
 					<span class="slider-username contacts">${data.support_name}</span>
@@ -3002,7 +3002,7 @@ if(window_witdh > 1600)
 				</div>`;
 				
 				var supportDetailBigChat=`<div class="activityShow 0 media chatbox_new bkg_white " style="">
-		    <a href="javascript:void(0);" incid="" class="media-link bbot tk_${newToken} getChatDetails WebBoxList activechat" userid="${data.support_id}" assign_to="" rwebid="${newToken}">
+		    <a href="javascript:void(0);" incid="" token="${newToken}" class="media-link bbot tk_${newToken} getChatDetails WebBoxList activechat" userid="${data.support_id}" assign_to="" rwebid="${newToken}">
 		        <div class="media-left"><span class="icons fl_letters s32" style="width:28px!important;height:28px!important;line-height:28px;font-size:12px;">${fname +''+ lname}</span><span class="favouriteSMSUser" incid="" userid="${data.support_id}"><i class="fa fa-star star_icon "></i></span>
 		        </div>
 
