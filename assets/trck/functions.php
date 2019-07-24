@@ -363,7 +363,7 @@ function db_out($string) {
 
 function getLatestActivity($to, $from) {
     global $db;
-    echo $sql = "SELECT * FROM tbl_chat_sms_thread WHERE (`to` LIKE '%{$to}' AND `from` LIKE '%{$from}') OR (`from` LIKE '%{$to}' AND `to` LIKE '%{$from}') ORDER BY id DESC LIMIT 1";
+    $sql = "SELECT * FROM tbl_chat_sms_thread WHERE (`to` LIKE '%{$to}' AND `from` LIKE '%{$from}') OR (`from` LIKE '%{$to}' AND `to` LIKE '%{$from}') ORDER BY id DESC LIMIT 1";
     $result = $db->query($sql);
     if ($result->num_rows > 0) {
         $response = $result->fetch_assoc();
