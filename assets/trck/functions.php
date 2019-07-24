@@ -3,8 +3,7 @@
 /* ini_set('display_errors', 1);
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL); */
-ob_start();
-echo 'Found the file++++++++++++++';
+
 function db_connect() {
     // Define connection as a static variable, to avoid connecting more than once
     static $connection;
@@ -204,7 +203,7 @@ function saveTrackingData($tableName, $aData) {
         foreach ($aData as $key => $val) {
             $sql .= "`{$key}` = '{$db->real_escape_string($val)}',";
         }
-        echo $sql = trim($sql, ",");
+        $sql = trim($sql, ",");
         $result = $db->query($sql);
         $insertID = $db->insert_id;
 

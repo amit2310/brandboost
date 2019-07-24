@@ -1,8 +1,9 @@
 <?php
-echo 'File called+++++++++++++++++';
-ini_set('display_errors', 1);
-  ini_set('display_startup_errors', 1);
-  error_reporting(E_ALL); 
+/*ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL); 
+*/
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Max-Age: 1000');
@@ -10,7 +11,7 @@ header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Dispo
 require_once '/var/www/html/assets/trck/vendor/autoload.php'; // Loads the library
 use Twilio\Rest\Client;
 include '/var/www/html/assets/trck/functions.php';
-echo '<pre>';
+/*echo '<pre>';
 print_r($_REQUEST);
 echo $_REQUEST['From']='+17049075791';
 echo $_REQUEST['To'] = '+15097400384';
@@ -19,11 +20,11 @@ $_REQUEST['Body']='Hey';
 //$to = '5097400384';
 //getLatestActivity($from, $to);
 //die;
+*/
 
 try {
     mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 1', json_encode($_REQUEST));
     if (!empty($_REQUEST['Body'])) {
-        echo 'Body Found+++++++++++++++ Upper';
         mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 2', json_encode($_REQUEST));
              $from = phone_display_custom($_REQUEST['From']);
              $to = phone_display_custom($_REQUEST['To']);
@@ -38,25 +39,20 @@ try {
             }
         }
         //Get latest activity
-        echo $to.'++++++++++++++++++++++++++++++'.$from;
        
         if (!empty($to) && !empty($from)) {
-           echo 'Body Found+++++++++++++++ Lower1';
             $oLatestActivity = getLatestActivity($from, $to);
-            echo '<pre>';
-            print_r($oLatestActivity);
+            
             $moduleName = $oLatestActivity['module_name'];
             $subcriberID = $oLatestActivity['subscriber_id'];
             $eventID = $oLatestActivity['event_id'];
             $broadcastID = $oLatestActivity['broadcast_id'];
             $automationID = $oLatestActivity['automation_id'];
-         echo 'Body Found+++++++++++++++ Lower2';
             $npsID = $oLatestActivity['nps_id'];
             $npsStep = $oLatestActivity['nps_step'];
             $npsScoreID = $oLatestActivity['nps_score_id'];
             $referralID = $oLatestActivity['referral_id'];
             $brandboostID = $oLatestActivity['brandboost_id'];
-            echo 'Body Found+++++++++++++++ Lower3';
 
 
  
@@ -76,8 +72,7 @@ try {
                 'created' => date("Y-m-d H:i:s")
                     //'created' => date("Y-m-d H:i:s", strtotime('+5 hours')) //earlier it was hosted on pleasereviewmehere.com site
             );
-            echo '<pre>';
-            print_r($aStoreSMS);
+            
             //Now process module wise data
             if (!empty($to)) {
                 $oTwilioDetails = getTwilioAccount($to);
@@ -210,7 +205,6 @@ try {
                 }
             } else {
               
-              echo 'i am in++++++++++++++++++++';
                 //Send message straight to the chat module
                 $aStoreSMS['to'] = $to;
                 $aStoreSMS['from'] = $from;
@@ -278,8 +272,7 @@ try {
                 $aStoreSMS['referral_id'] = '1';
                 $aStoreSMS['media_type'] = $media_type;
 
-             echo '<pre>';
-             print_r($aStoreSMS);
+             
                 saveTrackingData('tbl_chat_sms_thread', $aStoreSMS);
                 $totatMessageCount = ceil($charCount / 160);
                 if ($clientID > 0) {
