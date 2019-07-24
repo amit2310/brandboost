@@ -55,7 +55,22 @@ try {
         //Get latest activity
        
         if (!empty($to) && !empty($from)) {
+
+            $subcriberID = '0';
+            $eventID = '0';
+            $broadcastID = '0';
+            $automationID = '0';
+            $npsID = '0';
+            $npsStep = '0';
+            $npsScoreID = '0';
+            $referralID = '0';
+            $brandboostID = '0';
+
+
+
             $oLatestActivity = getLatestActivity($from, $to);
+
+            
             
             $moduleName = $oLatestActivity['module_name'];
             $subcriberID = $oLatestActivity['subscriber_id'];
