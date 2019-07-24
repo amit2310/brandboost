@@ -200,11 +200,11 @@ function getLocationData() {
 function saveTrackingData($tableName, $aData) {
     global $db;
     if (!empty($aData)) {
-       echo  $sql = "INSERT INTO {$tableName} SET ";
+       $sql = "INSERT INTO {$tableName} SET ";
         foreach ($aData as $key => $val) {
             $sql .= "`{$key}` = '{$db->real_escape_string($val)}',";
         }
-        $sql = trim($sql, ",");
+        echo $sql = trim($sql, ",");
         $result = $db->query($sql);
         $insertID = $db->insert_id;
 
@@ -363,7 +363,7 @@ function db_out($string) {
 
 function getLatestActivity($to, $from) {
     global $db;
-    $sql = "SELECT * FROM tbl_chat_sms_thread WHERE (`to` LIKE '%{$to}' AND `from` LIKE '%{$from}') OR (`from` LIKE '%{$to}' AND `to` LIKE '%{$from}') ORDER BY id DESC LIMIT 1";
+    echo $sql = "SELECT * FROM tbl_chat_sms_thread WHERE (`to` LIKE '%{$to}' AND `from` LIKE '%{$from}') OR (`from` LIKE '%{$to}' AND `to` LIKE '%{$from}') ORDER BY id DESC LIMIT 1";
     $result = $db->query($sql);
     if ($result->num_rows > 0) {
         $response = $result->fetch_assoc();
