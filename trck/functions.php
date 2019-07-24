@@ -11,7 +11,7 @@ function db_connect() {
     // Try and connect to the database, if a connection has not been established yet
     if (!isset($connection)) {
         if ($_SERVER["REMOTE_ADDR"] == "127.0.0.1") {
-            $connection = mysqli_connect('localhost', 'root', '', 'dev_brandboostdb');
+            $connection = mysqli_connect('localhost', 'root', '', 'dev_brandboostdbx');
         } else {
             $connection = mysqli_connect('db-brandboost.crokdqsmnwuz.us-west-2.rds.amazonaws.com', 'root', '!w@9Un+c.u[Ygehj', 'brandboostdb');
         }
