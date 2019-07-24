@@ -1,5 +1,5 @@
 <?php
-
+echo 'File called+++++++++++++++++';
 /* ini_set('display_errors', 1);
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL); */
@@ -11,7 +11,7 @@ require_once '/var/www/html/assets/trck/vendor/autoload.php'; // Loads the libra
 use Twilio\Rest\Client;
 include '/var/www/html/assets/trck/functions.php';
 echo '<pre>';
-print_r($_REQUEST['Body']);
+print_r($_REQUEST);
 //$from = '7049075791';
 //$to = '5097400384';
 //getLatestActivity($from, $to);
