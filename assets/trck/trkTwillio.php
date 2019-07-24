@@ -262,7 +262,6 @@ try {
 
                 $aStoreSMS['msg'] = $msg;
                 $aStoreSMS['token'] = $tokenResponse;
-                $aStoreSMS['response'] = json_encode($_REQUEST);
                 $aStoreSMS['media_type'] = $media_type;
 
              
