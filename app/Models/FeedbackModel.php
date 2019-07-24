@@ -14,12 +14,51 @@ class FeedbackModel extends Model
 	* @param type $campaignID
 	* @return type
 	*/
-	
 	public function getFeedbackResponse($campaignID) {
 		$oData = DB::table('tbl_feedback_response')
 			->where('brandboost_id', $campaignID)    
 			->orderBy('id', 'asc')
 			->get();
+		return $oData;
+    }
+	
+	/**
+	* Used to get campaign feedback data by brandboost id
+	* @param type $brandboostID
+	* @return type
+	*/
+	public static function getCampFeedback($brandboostID) {
+		$oData = DB::table('tbl_brandboost_feedback')
+			->where('brandboost_id', $brandboostID)    
+			->orderBy('id', 'desc')
+			->get();
+		return $oData;
+    }
+	
+	/**
+	* Used to get campaign feedback data by brandboost id
+	* @param type $brandboostID
+	* @return type
+	*/
+	public static function getCampFeedbackData($brandboostID) {
+		$oData = DB::table('tbl_brandboost_feedback')
+			->where('brandboost_id', $brandboostID)    
+			->where('type', 'offsite')
+			->first();
+		return $oData;
+    }
+	
+	/**
+	* Used to get subscriber info by subscriber id
+	* @param type $id
+	* @return type
+	*/
+	public static function getSubscriberInfo($id) {
+		$oData = DB::table('tbl_brandboost_users')
+			->select('tbl_subscribers.*')
+			->where('tbl_brandboost_users.id', $id)
+			->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=' , 'tbl_subscribers.id')
+			->first();
 		return $oData;
     }
 	
@@ -96,43 +135,7 @@ class FeedbackModel extends Model
         }
         return $response;
     }
-
-    public function getCampFeedback($brandboostID) {
-        $this->db->where("brandboost_id", $brandboostID);
-        $this->db->where("type", 'offsite');
-        $result = $this->db->get("tbl_brandboost_feedback");
-        if ($result->num_rows() > 0) {
-            $response = $result->num_rows();
-        }
-        return $response;
-    }
-	
-	public function getCampFeedbackData($brandboostID) {
-        $this->db->where("brandboost_id", $brandboostID);
-        $this->db->where("type", 'offsite');
-		$this->db->order_by("id", "DESC");
-        $result = $this->db->get("tbl_brandboost_feedback");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    
-
-    public function getSubscriberInfo($id) {
-
-        $this->db->select("tbl_subscribers.*");
-        $this->db->join("tbl_subscribers","tbl_brandboost_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where('tbl_brandboost_users.id', $id);
-        $result = $this->db->get('tbl_brandboost_users');
-        //echo $this->db->last_query();
-                
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
+   
 
     public function saveFeedbackLog($aData) {
         if (!empty($aData)) {

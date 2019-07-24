@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Admin\BroadcasatModel;
-use App\Models\Admin\TemplatesModel;
+use App\Models\Admin\BroadcastModel;
 use App\Models\Admin\WorkflowModel;
+use App\Models\Admin\TemplatesModel;
+use App\Models\Admin\ListsModel;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\TagsModel;
+
+
 use Cookie;
 use Session;
 
@@ -65,7 +68,7 @@ class Broadcast extends Controller {
         $campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);
         $moduleName = 'broadcast';
         Session::put("setTab", '');
-        return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb, 'campaignType' => $campaignType, 'moduleName' => $moduleName));
+        return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb, 'campaignType' => $campaignType, 'moduleName' => $moduleName))->with('mBroadcast', $mBroadcast);
     }
 
     /**
@@ -116,12 +119,12 @@ class Broadcast extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="SMS Overview" class="sidebar-control active hidden-xs ">Overview</a></li>
                     </ul>';
-        $smsDetailSubs = $this->mSubscriber->smsDetailSubs($userID);
-        $smsDetailAutomation = $this->mSubscriber->smsDetailAutomation($userID);
-        $smsDetailNPS = $this->mSubscriber->smsDetailNPS($userID);
-        $smsDetailReferral = $this->mSubscriber->smsDetailReferral($userID);
-        $smsDetailOnsite = $this->mSubscriber->smsDetailOnsite($userID);
-        $smsDetailChat = $this->mSubscriber->smsDetailChat($userMobile);
+        $smsDetailSubs = $mSubscriber->smsDetailSubs($userID);
+        $smsDetailAutomation = $mSubscriber->smsDetailAutomation($userID);
+        $smsDetailNPS = $mSubscriber->smsDetailNPS($userID);
+        $smsDetailReferral = $mSubscriber->smsDetailReferral($userID);
+        $smsDetailOnsite = $mSubscriber->smsDetailOnsite($userID);
+        $smsDetailChat = $mSubscriber->smsDetailChat($userMobile);
         $pageData = array(
             'title' => 'SMS Overview',
             'pagename' => $breadcrumb,
@@ -144,13 +147,31 @@ class Broadcast extends Controller {
      * Used to edit email/sms broadcast campaign
      * @param type $id
      */
-    public function edit(Request $request, $id = 0) {
+    public function edit(Request $request) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
+        $id = $request->id;
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
+        
+        //Instanciate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        
+        //Instanciate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+        
+        //Instanciate subscriber model to get its methods and properties
+        $mSubscriber = new SubscriberModel();
+        
+        //Instanciate Tags model to get its methods and properties
+        $mTag = new TagsModel();
+        
+        //Instanciate Templates model to get its methods and properties
+        $mTemplates = new TemplatesModel();
+        
+        
         
         $oLists = $mBroadcast->getMyLists($userID);
         $twillioData = $mBroadcast->getTwillioData($userID);
@@ -162,11 +183,11 @@ class Broadcast extends Controller {
 
         $moduleName = 'broadcast';
         if ($id > 0) {
-            $oEvents = $this->mWorkflow->getWorkflowEvents($id, $moduleName);
+            $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
             if (!empty($oEvents)) {
                 $eventID = $oEvents[0]->id;
                 if ($eventID > 0) {
-                    $oCampaign = $this->mWorkflow->getEventCampaign($eventID, $moduleName);
+                    $oCampaign = $mWorkflow->getEventCampaign($eventID, $moduleName);
                 }
             }
         }
@@ -194,16 +215,16 @@ class Broadcast extends Controller {
 
         $oVariations = $mBroadcast->getBroadcastVariations($id);
         //pre($oVariations);
-        $oAutomationLists = $this->mLists->getAutomationLists($id);
+        $oAutomationLists = $mLists->getAutomationLists($id);
         $oCampaignContacts = $mBroadcast->getBroadcastContacts($id);
         $oCampaignTags = $mBroadcast->getBroadcastTags($id);
         $broadcastSettings = $mBroadcast->getBroadcastSettings($oBroadcast[0]->id);
-        $subscribersData = $this->mSubscriber->getGlobalSubscribers($userID);
+        $subscribersData = $mSubscriber->getGlobalSubscribers($userID);
         $oBroadcastSubscriber = $mBroadcast->getBroadcastSubscribers($id);
-        $aTags = $this->mTag->getClientTags($userID);
+        $aTags = $mTag->getClientTags($userID);
         //pre($broadcastSettings);
         //die;
-        $activeTab = $this->session->userdata("setTab");
+        $activeTab = Session::get("setTab");
         if (empty($activeTab)) {
 
             $currentState = $oBroadcast[0]->current_state;
@@ -229,12 +250,12 @@ class Broadcast extends Controller {
             Session::put("setTab", $selectedTab);
         }
 
-        //$oDefaultTemplates = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName);
-        $oDefaultTemplates = $this->mTemplates->getCommonTemplates('', '', '', strtolower($oBroadcast[0]->campaign_type));
+        //$oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName);
+        $oDefaultTemplates = $mTemplates->getCommonTemplates('', '', '', strtolower($oBroadcast[0]->campaign_type));
         $oTemplates = $oDefaultTemplates;
-        $oUserTemplates = $this->mTemplates->getCommonTemplates($userID, '', '', strtolower($oBroadcast[0]->campaign_type));
-        $oDraftTemplates = $this->mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID);
-        $oCategories = $this->mWorkflow->getWorkflowTemplateCategories($moduleName);
+        $oUserTemplates = $mTemplates->getCommonTemplates($userID, '', '', strtolower($oBroadcast[0]->campaign_type));
+        $oDraftTemplates = $mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID);
+        $oCategories = $mWorkflow->getWorkflowTemplateCategories($moduleName);
 
         //Get Campaign list subscribers
         $oTotalSubscribers = $mBroadcast->getBroadcastListSubscribers($id);
@@ -275,7 +296,7 @@ class Broadcast extends Controller {
 
         //loaded broadcast properties tags
 
-        $oCampaignExcludedLists = $this->mLists->getAutomationExcludedLists($id);
+        $oCampaignExcludedLists = $mLists->getAutomationExcludedLists($id);
         $oCampaignExcludedContacts = $mBroadcast->getBroadcastExcludedContacts($id);
         $oCampaignExcludedTags = $mBroadcast->getBroadcastExcludedTags($id);
         $oCampaignExcludedSegments = $mBroadcast->getBroadcastExcludedSegments($id);
@@ -346,7 +367,7 @@ class Broadcast extends Controller {
             'bExpired' => $bExpired
         );
 
-        return view('admin.broadcast.setup', $aData);
+        return view('admin.broadcast.setup', $aData)->with('mBroadcast', $mBroadcast);
     }
 
     
@@ -395,7 +416,7 @@ class Broadcast extends Controller {
             //Sync Import/Exclude Properties
 
             if ($broadcastID > 0) {
-                $oDraftTemplates = $this->mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID);
+                $oDraftTemplates = $mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID);
                 $aData = array(
                     'oDraftTemplates' => $oDraftTemplates,
                     'variationID' => $iVariationID,
@@ -492,19 +513,19 @@ class Broadcast extends Controller {
                     $moduleName = 'broadcast';
                     if ($fieldName == 'subject') {
 
-                        $oVariations = $this->mWorkflow->getWorkflowSplitVariations($moduleName, $broadcastID);
+                        $oVariations = $mWorkflow->getWorkflowSplitVariations($moduleName, $broadcastID);
                         if (!empty($oVariations)) {
                             $campaignID = $oVariations[0]->id;
                         }
                         $aData = array(
                             'subject' => $fieldValue
                         );
-                        $this->mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
+                        $mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
                     } else {
                         $aData = array(
                             $fieldName => $fieldValue
                         );
-                        $this->mWorkflow->updateWorkflowSplitCampaign($aData, '', $moduleName, $broadcastID);
+                        $mWorkflow->updateWorkflowSplitCampaign($aData, '', $moduleName, $broadcastID);
                     }
                 }
             }
@@ -557,7 +578,7 @@ class Broadcast extends Controller {
                 } else if ($fieldName == 'variation_template') {
                     $templateID = $fieldValue;
                     //echo "Template ID is ". $templateID;
-                    $oTemplate = $this->mTemplates->getCommonTemplateInfo($templateID);
+                    $oTemplate = $mTemplates->getCommonTemplateInfo($templateID);
                     //pre($oDraft);
                     //die;
                     $aData['template_source'] = $fieldValue;
@@ -664,12 +685,12 @@ class Broadcast extends Controller {
         $source = '';
 
         if ($actionName == 'category') {
-            $oCategorizedTemplates = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, $campaignType, '', $categoryID);
+            $oCategorizedTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName, $campaignType, '', $categoryID);
         } else if ($actionName == 'draft') {
-            $oCategorizedTemplates = $this->mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID, $campaignType);
+            $oCategorizedTemplates = $mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID, $campaignType);
             $source = 'draft';
         } else if ($actionName == 'all') {
-            $oCategorizedTemplates = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, $campaignType);
+            $oCategorizedTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName, $campaignType);
         }
 
         $templateList = view('admin.broadcast.partials.categorized_template_list', array('oCategorizedTemplates' => $oCategorizedTemplates, 'selected_template' => $selected_template, 'source' => $source, 'campaignType' => $campaignType))->render();
@@ -767,13 +788,13 @@ class Broadcast extends Controller {
 
 
         //get Lists
-        $oLists = $this->mLists->getLists($userID);
+        $oLists = $mLists->getLists($userID);
 
         //get Automation Events
         $oEvents = $this->mEmails->getAutomationEvents($id);
 
         //get Automation Lists
-        $oAutomationLists = $this->mLists->getAutomationLists($id);
+        $oAutomationLists = $mLists->getAutomationLists($id);
 
         //get Default Email Templates
         $oDefaultTemplates = $this->mEmails->getEmailMoudleTemplates(0, 'email'); //empty or 0 for default templates
@@ -957,8 +978,12 @@ class Broadcast extends Controller {
         
         //Imported Properites
         //Lists
+        
+        //Instanciate List model to get its methods and properties
+        $mLists = new ListsModel();
+        
         $aBroadcastSubscribers = array();
-        $oAutomationLists = $this->mLists->getAutomationLists($broadcastID);
+        $oAutomationLists = $mLists->getAutomationLists($broadcastID);
         if (!empty($oAutomationLists)) {
 
             foreach ($oAutomationLists as $oAutomationList) {
@@ -969,7 +994,7 @@ class Broadcast extends Controller {
             //Get Unique Subscribers from each lists
             if (!empty($aListIDs)) {
                 foreach ($aListIDs as $iListID) {
-                    $oListSubscribers = $this->mLists->getListContacts($userID, $iListID);
+                    $oListSubscribers = $mLists->getListContacts($userID, $iListID);
                     if (!empty($oListSubscribers)) {
                         foreach ($oListSubscribers as $oSubscriber) {
                             if (!in_array($oSubscriber->subscriber_id, $aBroadcastSubscribers)) {
@@ -996,7 +1021,7 @@ class Broadcast extends Controller {
         if (!empty($oCampaignTags)) {
             foreach ($oCampaignTags as $oRec) {
                 $tagId = $oRec->tag_id;
-                $oTagSubscribers = $this->mSubscriber->getTagSubscribers($tagId);
+                $oTagSubscribers = $mSubscriber->getTagSubscribers($tagId);
                 if (!empty($oTagSubscribers)) {
                     foreach ($oTagSubscribers as $oSubscriber) {
                         if (!in_array($oSubscriber->id, $aBroadcastSubscribers)) {
@@ -1030,7 +1055,7 @@ class Broadcast extends Controller {
 
         $aBroadcastExcludedSubscribers = array();
         //Excluded Lists
-        $oCampaignExcludedLists = $this->mLists->getAutomationExcludedLists($broadcastID);
+        $oCampaignExcludedLists = $mLists->getAutomationExcludedLists($broadcastID);
         if (!empty($oCampaignExcludedLists)) {
             $aListIDs = array();
             foreach ($oCampaignExcludedLists as $oAutomationList) {
@@ -1041,7 +1066,7 @@ class Broadcast extends Controller {
             //Get Unique Subscribers from each lists
             if (!empty($aListIDs)) {
                 foreach ($aListIDs as $iListID) {
-                    $oListSubscribers = $this->mLists->getListContacts($userID, $iListID);
+                    $oListSubscribers = $mLists->getListContacts($userID, $iListID);
                     if (!empty($oListSubscribers)) {
                         foreach ($oListSubscribers as $oSubscriber) {
                             if (!in_array($oSubscriber->subscriber_id, $aBroadcastExcludedSubscribers)) {
@@ -1070,7 +1095,7 @@ class Broadcast extends Controller {
         if (!empty($oCampaignExcludedTags)) {
             foreach ($oCampaignExcludedTags as $oRec) {
                 $tagId = $oRec->tag_id;
-                $oTagSubscribers = $this->mSubscriber->getTagSubscribers($tagId);
+                $oTagSubscribers = $mSubscriber->getTagSubscribers($tagId);
                 if (!empty($oTagSubscribers)) {
                     foreach ($oTagSubscribers as $oSubscriber) {
                         if (!in_array($oSubscriber->id, $aBroadcastExcludedSubscribers)) {
@@ -1124,7 +1149,7 @@ class Broadcast extends Controller {
         //Imported Properites
         //Lists
         $aBroadcastSubscribers = array();
-        $oAutomationLists = $this->mLists->getAutomationLists($broadcastID);
+        $oAutomationLists = $mLists->getAutomationLists($broadcastID);
         if (!empty($oAutomationLists)) {
 
             foreach ($oAutomationLists as $oAutomationList) {
@@ -1135,7 +1160,7 @@ class Broadcast extends Controller {
             //Get Unique Subscribers from each lists
             if (!empty($aListIDs)) {
                 foreach ($aListIDs as $iListID) {
-                    $oListSubscribers = $this->mLists->getListContacts($userID, $iListID);
+                    $oListSubscribers = $mLists->getListContacts($userID, $iListID);
                     if (!empty($oListSubscribers)) {
                         foreach ($oListSubscribers as $oSubscriber) {
                             if (!in_array($oSubscriber->subscriber_id, $aBroadcastSubscribers)) {
@@ -1162,7 +1187,7 @@ class Broadcast extends Controller {
         if (!empty($oCampaignTags)) {
             foreach ($oCampaignTags as $oRec) {
                 $tagId = $oRec->tag_id;
-                $oTagSubscribers = $this->mSubscriber->getTagSubscribers($tagId);
+                $oTagSubscribers = $mSubscriber->getTagSubscribers($tagId);
                 if (!empty($oTagSubscribers)) {
                     foreach ($oTagSubscribers as $oSubscriber) {
                         if (!in_array($oSubscriber->id, $aBroadcastSubscribers)) {
@@ -1194,7 +1219,7 @@ class Broadcast extends Controller {
 
         $aBroadcastExcludedSubscribers = array();
         //Excluded Lists
-        $oCampaignExcludedLists = $this->mLists->getAutomationExcludedLists($broadcastID);
+        $oCampaignExcludedLists = $mLists->getAutomationExcludedLists($broadcastID);
         if (!empty($oCampaignExcludedLists)) {
             $aListIDs = array();
             foreach ($oCampaignExcludedLists as $oAutomationList) {
@@ -1205,7 +1230,7 @@ class Broadcast extends Controller {
             //Get Unique Subscribers from each lists
             if (!empty($aListIDs)) {
                 foreach ($aListIDs as $iListID) {
-                    $oListSubscribers = $this->mLists->getListContacts($userID, $iListID);
+                    $oListSubscribers = $mLists->getListContacts($userID, $iListID);
                     if (!empty($oListSubscribers)) {
                         foreach ($oListSubscribers as $oSubscriber) {
                             if (!in_array($oSubscriber->subscriber_id, $aBroadcastExcludedSubscribers)) {
@@ -1234,7 +1259,7 @@ class Broadcast extends Controller {
         if (!empty($oCampaignExcludedTags)) {
             foreach ($oCampaignExcludedTags as $oRec) {
                 $tagId = $oRec->tag_id;
-                $oTagSubscribers = $this->mSubscriber->getTagSubscribers($tagId);
+                $oTagSubscribers = $mSubscriber->getTagSubscribers($tagId);
                 if (!empty($oTagSubscribers)) {
                     foreach ($oTagSubscribers as $oSubscriber) {
                         if (!in_array($oSubscriber->id, $aBroadcastExcludedSubscribers)) {
@@ -1366,7 +1391,7 @@ class Broadcast extends Controller {
             );
             $mBroadcast->addTagToCampaign($aData);
             //Get Tag Subscribers
-            /* $oTagSubscribers = $this->mSubscriber->getTagSubscribers($tagId);
+            /* $oTagSubscribers = $mSubscriber->getTagSubscribers($tagId);
               if (!empty($oTagSubscribers)) {
               foreach ($oTagSubscribers as $oSubscriber) {
               $subscriberID = $oSubscriber->id;
@@ -1381,7 +1406,7 @@ class Broadcast extends Controller {
               } */
         } else {
             $mBroadcast->deleteTagToCampaign($automationID, $tagId);
-            $oTagSubscribers = $this->mSubscriber->getTagSubscribers($tagId);
+            $oTagSubscribers = $mSubscriber->getTagSubscribers($tagId);
             if (!empty($oTagSubscribers)) {
                 foreach ($oTagSubscribers as $oSubscriber) {
                     $subscriberID = $oSubscriber->id;
@@ -1557,7 +1582,7 @@ class Broadcast extends Controller {
         $automationID = $request->automation_id;
         if ($actionValue == 'addRecord') {
             $this->mEmails->updateAutomationList($automationID, $aSelectedLists);
-            /* $oListSubscribers = $this->mLists->getListContacts($userID, $aSelectedLists);
+            /* $oListSubscribers = $mLists->getListContacts($userID, $aSelectedLists);
               if (!empty($oListSubscribers)) {
               foreach ($oListSubscribers as $oSubscriber) {
               $subscriberID = $oSubscriber->subscriber_id;
@@ -1572,7 +1597,7 @@ class Broadcast extends Controller {
               } */
         } else {
             $this->mEmails->deleteAutomationLists($automationID, $aSelectedLists);
-            $oListSubscribers = $this->mLists->getListContacts($userID, $aSelectedLists);
+            $oListSubscribers = $mLists->getListContacts($userID, $aSelectedLists);
             if (!empty($oListSubscribers)) {
                 foreach ($oListSubscribers as $oSubscriber) {
                     $subscriberID = $oSubscriber->subscriber_id;
@@ -1632,7 +1657,7 @@ class Broadcast extends Controller {
         $automationID = $request->automation_id;
         if ($actionValue == 'addRecord') {
             $this->mEmails->updateAutomationExcludedList($automationID, $aSelectedLists);
-            /* $oListSubscribers = $this->mLists->getListContacts($userID, $aSelectedLists);
+            /* $oListSubscribers = $mLists->getListContacts($userID, $aSelectedLists);
               if (!empty($oListSubscribers)) {
               foreach ($oListSubscribers as $oSubscriber) {
               $subscriberID = $oSubscriber->subscriber_id;
@@ -2035,7 +2060,7 @@ class Broadcast extends Controller {
             //Copy entire normal/split campaigns
             if ($oldEventID > 0) {
                 $moduleName = 'broadcast';
-                $oCampaigns = $this->mWorkflow->getEventCampaign($oldEventID, $moduleName);
+                $oCampaigns = $mWorkflow->getEventCampaign($oldEventID, $moduleName);
                 if (!empty($oCampaigns)) {
                     foreach ($oCampaigns as $oCampaign) {
                         $aCampaignData = (array) $oCampaign;
@@ -2098,7 +2123,7 @@ class Broadcast extends Controller {
         );
         $mBroadcast->addBroadcastSettings($sData);
 
-        /* $oAutomationLists = $this->mLists->getAutomationLists($broadcastId);
+        /* $oAutomationLists = $mLists->getAutomationLists($broadcastId);
           foreach ($oAutomationLists as $listData) {
           $this->mEmails->updateAutomationList($broadcastID, $listData->list_id);
           } */
@@ -2314,7 +2339,7 @@ class Broadcast extends Controller {
             'status' => 1
         );
 
-        /* $bAlreadyExists = $this->mLists->checkIfListExists($title, $userID, $listID);
+        /* $bAlreadyExists = $mLists->checkIfListExists($title, $userID, $listID);
           if ($bAlreadyExists == true) {
           $response = array('status' => 'error', 'type' => 'duplicate', 'msg' => 'List name already exists');
           echo json_encode($response);
@@ -2465,7 +2490,7 @@ class Broadcast extends Controller {
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
         
-        //$userID = $this->session->userdata("current_user_id");
+        //$userID = Session::get("current_user_id");
         if (!empty($request)) {
             
             $multi_segment_id = $request->multi_segment_id;
@@ -2660,7 +2685,7 @@ class Broadcast extends Controller {
             $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $broadcastID);
             $campaignID = $oBroadcast[0]->id;
             $campaignType = strtolower($oBroadcast[0]->campaign_type);
-            $oEvents = $this->mWorkflow->getWorkflowEvents($broadcastID, 'broadcast');
+            $oEvents = $mWorkflow->getWorkflowEvents($broadcastID, 'broadcast');
             $bHaveVariations = false;
             $oVariations = $mBroadcast->getBroadcastVariations($broadcastID);
             if (!empty($oVariations)) {
@@ -2681,7 +2706,7 @@ class Broadcast extends Controller {
                 if ($eventID > 0) {
                     if ($campaignID > 0) {
                         //Update existing campaign
-                        $oTemplate = $this->mTemplates->getCommonTemplateInfo($templateID);
+                        $oTemplate = $mTemplates->getCommonTemplateInfo($templateID);
                         $templateSID = $templateID;
                         $aUpdateData = array(
                             'name' => $oTemplate->template_name,
@@ -2694,7 +2719,7 @@ class Broadcast extends Controller {
                             'template_source' => $templateSID,
                             'campaign_type' => $oTemplate->template_type
                         );
-                        $bUpdated = $this->mWorkflow->updateWorkflowCampaign($aUpdateData, $campaignID, $moduleName);
+                        $bUpdated = $mWorkflow->updateWorkflowCampaign($aUpdateData, $campaignID, $moduleName);
                         if ($bUpdated) {
 
                             if ($bHaveVariations == true) {
@@ -2731,7 +2756,7 @@ class Broadcast extends Controller {
                             $response = array('status' => 'success');
                         }
                     } else {
-                        $bAdded = $this->mWorkflow->addWorkflowCampaign($eventID, $templateID, $broadcastID, 'broadcast', $isDraft);
+                        $bAdded = $mWorkflow->addWorkflowCampaign($eventID, $templateID, $broadcastID, 'broadcast', $isDraft);
                         if ($bAdded) {
                             //Session::put("setTab", trim($tab));
                             $response = array('status' => 'success');
@@ -2770,7 +2795,7 @@ class Broadcast extends Controller {
         if (!empty($request)) {
             $campaignID = strip_tags($request->campaign_id);
             $moduleName = 'broadcast';
-            $oResponse = $this->mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
+            $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
             $campaignType = strtolower($oResponse->campaign_type);
             if ($campaignType == 'email') {
                 $sHtml = base64_decode($oResponse->stripo_compiled_html);
@@ -3006,10 +3031,10 @@ class Broadcast extends Controller {
         if (!empty($request)) {
             
             $broadcastID = strip_tags($request->broadcastId);
-            $oCampaignLists = $this->mLists->getAutomationLists($broadcastID);
+            $oCampaignLists = $mLists->getAutomationLists($broadcastID);
             $oCampaignContacts = $mBroadcast->getBroadcastContacts($broadcastID);
             $oCampaignTags = $mBroadcast->getBroadcastTags($broadcastID);
-            $aTags = $this->mTag->getClientTags($userID);
+            $aTags = $mTag->getClientTags($userID);
             $oCampaignSegments = $mBroadcast->getBroadcastSegments($broadcastID);
             $aData = array(
                 'broadcastID' => $broadcastID,
@@ -3041,10 +3066,10 @@ class Broadcast extends Controller {
         if (!empty($request)) {
             
             $broadcastID = strip_tags($request->broadcastId);
-            $oCampaignLists = $this->mLists->getAutomationExcludedLists($broadcastID);
+            $oCampaignLists = $mLists->getAutomationExcludedLists($broadcastID);
             $oCampaignContacts = $mBroadcast->getBroadcastExcludedContacts($broadcastID);
             $oCampaignTags = $mBroadcast->getBroadcastExcludedTags($broadcastID);
-            $aTags = $this->mTag->getClientTags($userID);
+            $aTags = $mTag->getClientTags($userID);
             $oCampaignSegments = $mBroadcast->getBroadcastExcludedSegments($broadcastID);
             $aData = array(
                 'broadcastID' => $broadcastID,
@@ -3088,21 +3113,21 @@ class Broadcast extends Controller {
                 $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $broadcastID);
                 $oSegments = $mBroadcast->getSegments($userID);
                 $broadcastSettings = $mBroadcast->getBroadcastSettings($oBroadcast[0]->id);
-                $subscribersData = $this->mSubscriber->getGlobalSubscribers($userID);
-                $aTags = $this->mTag->getClientTags($userID);
+                $subscribersData = $mSubscriber->getGlobalSubscribers($userID);
+                $aTags = $mTag->getClientTags($userID);
                 $moduleName = 'broadcast';
-                $oDefaultTemplates = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName);
-                $oDraftTemplates = $this->mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID);
-                $oCategories = $this->mWorkflow->getWorkflowTemplateCategories($moduleName);
+                $oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName);
+                $oDraftTemplates = $mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID);
+                $oCategories = $mWorkflow->getWorkflowTemplateCategories($moduleName);
 
 
 
                 if ($broadcastID > 0) {
-                    $oEvents = $this->mWorkflow->getWorkflowEvents($broadcastID, $moduleName);
+                    $oEvents = $mWorkflow->getWorkflowEvents($broadcastID, $moduleName);
                     if (!empty($oEvents)) {
                         $eventID = $oEvents[0]->id;
                         if ($eventID > 0) {
-                            $oCampaign = $this->mWorkflow->getEventCampaign($eventID, $moduleName);
+                            $oCampaign = $mWorkflow->getEventCampaign($eventID, $moduleName);
                         }
                     }
                 }
@@ -3130,7 +3155,7 @@ class Broadcast extends Controller {
                         }
                     }
 
-                    $oAutomationLists = $this->mLists->getAutomationLists($broadcastID);
+                    $oAutomationLists = $mLists->getAutomationLists($broadcastID);
                     $oCampaignContacts = $mBroadcast->getBroadcastContacts($broadcastID);
                     $oCampaignTags = $mBroadcast->getBroadcastTags($broadcastID);
                     $oCampaignSegments = $mBroadcast->getBroadcastSegments($broadcastID);
@@ -3157,7 +3182,7 @@ class Broadcast extends Controller {
                         }
                     }
 
-                    $oAutomationLists = $this->mLists->getAutomationExcludedLists($broadcastID);
+                    $oAutomationLists = $mLists->getAutomationExcludedLists($broadcastID);
                     $oCampaignContacts = $mBroadcast->getBroadcastExcludedContacts($broadcastID);
                     $oCampaignTags = $mBroadcast->getBroadcastExcludedTags($broadcastID);
                     $oCampaignSegments = $mBroadcast->getBroadcastExcludedSegments($broadcastID);

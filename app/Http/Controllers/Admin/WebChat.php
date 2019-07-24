@@ -126,12 +126,17 @@ class WebChat extends Controller {
         $limit = 10000;
         $WebChatObj = new WebChatModel();
         $result = $WebChatObj->getwebchatMessages($token);
+        //pre($result);die;
         if (count((array)$result) > 0) {
             foreach ($result as $get_value) {
+
+                $uFrom = $get_value->user_form;
+                $uTo = $get_value->user_to;
                 $avatarHtml = '';
                 $avatar = "";
                 if (strlen($get_value->user_form) > 10) {
                     $avatar = "";
+
                     $supportUser = getSupportUser($get_value->user_form);
                     if (!empty($supportUser[0]->user_name)) {
                         $supportUserName = explode(" ", $supportUser[0]->user_name);
@@ -139,6 +144,8 @@ class WebChat extends Controller {
                     } else {
                         $avatarHtml = showUserAvtar("", "A", "", 28, 28, 11);
                     }
+
+                    $get_value->user_form = (string)$uFrom; 
                 } else {
                     $oUserDetails = getAllUser($get_value->user_form);
                     $avatar = $oUserDetails[0]->avatar;
@@ -146,11 +153,15 @@ class WebChat extends Controller {
                     $firstname = !empty($oUserDetails[0]->firstname) ? $oUserDetails[0]->firstname : '';
                     $lastname = !empty($oUserDetails[0]->lastname) ? $oUserDetails[0]->lastname : '';
                     $avatarHtml = showUserAvtar($avatar, $firstname, $lastname, 28, 28, 11);
+
+                    $get_value->user_to = (string)$uTo;
                 }
                 $get_value->created = timeAgo($get_value->created);
                 $get_value->avatarImage = $avatarHtml;
+                
             }
         }
+        //pre($result); die;
         if ($result) {
             $response = array('status' => 'ok', 'res' => $result);
         } else {
@@ -1180,14 +1191,28 @@ class WebChat extends Controller {
     }
 
 
- 
+    /**
+     * this function is used for read chat message
+     * @return type object
+     */
+    public function readChatMsg() {
+
+        $webChatModel = new WebChatModel();
+        $to_user = Input::post("chatTo");
+        $from_user = Input::post("chatFrom");
+        $aData = array(
+            'read_status' => '1'
+        );
+
+        $result = $webChatModel->readChatMsg($to_user, $from_user, $aData);
+    }
+     
      /**
      * this function is used to add favourite webchatuser
      * @return type object
      */
 
-
-  public function favouriteUser() {
+    public function favouriteUser() {
         $userId = Input::post("userId");
         $status = Input::post("status");
         $webChatModel = new WebChatModel();

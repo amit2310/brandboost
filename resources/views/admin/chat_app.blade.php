@@ -1876,16 +1876,15 @@ else {
 //console.log(newToken, 'get new token');
 var strTime = getTime();
 $.ajax({
-url: '<?php echo base_url('admin/webchat/getMessages'); ?>',
+url: '<?php echo base_url('webchat/getMessages'); ?>',
 type: "POST",
 data: {room:token, offset:'0',_token: '{{csrf_token()}}'},
 dataType: "json",
 success: function (data) {
-//console.log(data)
+// console.log(data)
 // webchatfromhere;
 if (data.status == 'ok') {
 var result = data.res;
-console.log(result); return false;
 for(var inc = 0; inc < result.length; inc++) {
 var row = result[inc];
 var newUserTo = row.user_to;
@@ -1919,6 +1918,7 @@ else if(fileext[0] == 'mp4') {
 }
 }
 
+
 if(newUserFrom == currentUser){
 //console.log(newUserTo,'to user');
 $('<li class="media reversed"><div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span>'+avatarImg+'</span><div class="media-content">' + nl2br(newMessage) + '</div></div></li>' ).insertAfter( '[rel="' + newUserTo + '"] .msg_push' );
@@ -1929,7 +1929,6 @@ $('<li class="media team_user_'+newUserFrom+'"><div class="media-body"> <span cl
 }
 
 }
-alert(newUserFrom);
 
 if(currentUser == newUserTo)
 {
@@ -1938,6 +1937,7 @@ var mUser = newUserFrom;
 else {
 var mUser = newUserTo;
 }
+
 var msgHeight = document.getElementById("msg_box_show_"+mUser).scrollHeight;
 $( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
 }
@@ -1945,7 +1945,7 @@ $( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
 });
 
 $.ajax({
-url: "<?php echo base_url('admin/webchat/readMessages'); ?>",
+url: "<?php echo base_url('webchat/readMessages'); ?>",
 type: "POST",
 data: {userID:userID, currentUser:currentUser, _token: '{{csrf_token()}}'},
 dataType: "json",
@@ -2949,7 +2949,7 @@ if(window_witdh > 1600)
 				socket.emit('subscribe',newToken);
 				
 				
-				var supportDetail = `<div class="sidebar-user-box" id="sidebar-user-box-${data.support_id}" user_id="${data.support_id}">
+				var supportDetail = `<div class="sidebar-user-box" token="${newToken}" id="sidebar-user-box-${data.support_id}" user_id="${data.support_id}">
 					<div class="avatarImage"><span class="icons fl_letters s32" style="width:28px!important;height:28px!important;line-height:28px;font-size:11px;">${fname +''+ lname} </span></div>
 					
 					<span class="slider-username contacts">${data.support_name}</span>
@@ -3002,7 +3002,7 @@ if(window_witdh > 1600)
 				</div>`;
 				
 				var supportDetailBigChat=`<div class="activityShow 0 media chatbox_new bkg_white " style="">
-		    <a href="javascript:void(0);" incid="" class="media-link bbot tk_${newToken} getChatDetails WebBoxList activechat" userid="${data.support_id}" assign_to="" rwebid="${newToken}">
+		    <a href="javascript:void(0);" incid="" token="${newToken}" class="media-link bbot tk_${newToken} getChatDetails WebBoxList activechat" userid="${data.support_id}" assign_to="" rwebid="${newToken}">
 		        <div class="media-left"><span class="icons fl_letters s32" style="width:28px!important;height:28px!important;line-height:28px;font-size:12px;">${fname +''+ lname}</span><span class="favouriteSMSUser" incid="" userid="${data.support_id}"><i class="fa fa-star star_icon "></i></span>
 		        </div>
 
@@ -3474,7 +3474,7 @@ if(window_witdh > 1600)
 						setTimeout(function(){ 
 						
 						$.ajax({
-						url: "<?php echo base_url('admin/Chat/readChatMsg'); ?>",
+						url: "<?php echo base_url('webchat/readChatMsg'); ?>",
 						type: "POST",
 						data: {chatTo:data.chatTo, chatFrom:data.currentUser},
 						dataType: "json",

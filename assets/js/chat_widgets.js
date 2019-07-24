@@ -167,7 +167,7 @@ BB = function (t) {
 		}
 		
 		if(bbvisitortoken !== null){
-			//console.log(bbvisitortoken, 'test 1');
+			console.log(bbvisitortoken, 'test 1');
 			bb_chat_socket.emit('subscribe', bbvisitortoken);
 			//var ch = document.getElementById('bb_msg_head');
 			var cb = document.getElementById('bb_msg_wrap');
@@ -176,7 +176,7 @@ BB = function (t) {
 			t.show(cb);
 			t.hide(ub);
 			
-			var bbsrc = this.userSettings.host + "/webchat/getUserMessages/";
+			var bbsrc = this.userSettings.host + "/webchat/getUserMessages";
 			var a = 'room=' + bbvisitortoken + '&offset=0';
 			//i = call back function
 			//a = POST data

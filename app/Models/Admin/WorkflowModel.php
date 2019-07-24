@@ -794,7 +794,6 @@ class WorkflowModel extends Model {
                 . "WHERE tbl_automation_users.list_id IN (" . implode(",", $aLists) . ") AND tbl_automation_users.status = '1' AND tbl_subscribers.email NOT IN(SELECT email FROM tbl_suppression_list) GROUP BY tbl_subscribers.email";
         $oData = DB::select(DB::raw($sql));
         return $oData;
-        
     }
 
     /**
@@ -807,7 +806,6 @@ class WorkflowModel extends Model {
                 ->where('automation_id', $automationID)
                 ->get();
         return $oData;
-
     }
 
     /**
@@ -974,7 +972,7 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where('user_id', 0)
                 ->when(($moduleName == "brandboost" && !empty($moduleCatName)), function($query) use($moduleCatName) {
@@ -990,9 +988,8 @@ class WorkflowModel extends Model {
                     return $query->where('category_id', $categoryID);
                 })
                 ->get();
-                
+
         return $oData;
-        
     }
 
     public function isDuplicateWorkflowDraft($templateName, $moduleName, $userID = 0) {
@@ -1086,6 +1083,14 @@ class WorkflowModel extends Model {
         return false;
     }
 
+    /**
+     * Used to get draft templates
+     * @param type $moduleName
+     * @param type $id
+     * @param type $userID
+     * @param type $campaignType
+     * @return boolean
+     */
     public function getDraftTemplates($moduleName, $id, $userID = '', $campaignType = '') {
         if (empty($moduleName)) {
             return false;
@@ -1118,25 +1123,28 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        if (!(empty($id))) {
-            $this->db->where('id', $id);
-        }
-
-        if (!empty($campaignType)) {
-            $this->db->where('template_type', $campaignType);
-        }
-
-
-        $this->db->where("user_id", $userID);
-        $this->db->order_by("id", "DESC");
-        $result = $this->db->get($tableName);
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            return $result->result();
-        }
-        return false;
+        $oData = DB::table($tableName)
+                ->where('user_id', $userID)
+                ->when(!empty($id), function ($query) use ($id) {
+                    return $query->where('id', $id);
+                })
+                ->when(!empty($campaignType), function ($query) use ($campaignType) {
+                    return $query->where('template_type', $campaignType);
+                })
+                ->orderBy('id', 'desc')
+                ->get();
+        return $oData;
+        
     }
 
+    /**
+     * Used to get workflow draft templates
+     * @param type $moduleName
+     * @param type $id
+     * @param type $userID
+     * @param type $campaignType
+     * @return boolean
+     */
     public function getWorkflowDraftTemplates($moduleName, $id, $userID = '', $campaignType = '') {
         if (empty($moduleName)) {
             return false;
@@ -1166,24 +1174,18 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-
-        if (!(empty($id))) {
-            $this->db->where('id', $id);
-        }
-
-        if (!empty($campaignType)) {
-            $this->db->where('template_type', $campaignType);
-        }
-
-
-        $this->db->where("user_id", $userID);
-        $this->db->order_by("id", "DESC");
-        $result = $this->db->get($tableName);
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            return $result->result();
-        }
-        return false;
+        
+        $oData = DB::table($tableName)
+                ->where('user_id', $userID)
+                ->when(!empty($id), function ($query) use ($id) {
+                    return $query->where('id', $id);
+                })
+                ->when(!empty($campaignType), function ($query) use ($campaignType) {
+                    return $query->where('template_type', $campaignType);
+                })
+                ->orderBy('id', 'desc')
+                ->get();
+        return $oData;
     }
 
     public function getWorkflowDraftByName($moduleName, $templateName, $userID = '') {
@@ -1232,7 +1234,12 @@ class WorkflowModel extends Model {
         }
         return false;
     }
-
+    
+    /**
+     * Used to get workflow categorized templates
+     * @param type $moduleName
+     * @return boolean
+     */
     public function getWorkflowTemplateCategories($moduleName) {
         if (empty($moduleName)) {
             return false;
@@ -1260,13 +1267,10 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-
-
-        $result = $this->db->get($tableName);
-        if ($result->num_rows() > 0) {
-            return $result->result();
-        }
-        return false;
+        
+        $oData = DB::table($tableName)
+                ->get();
+        return $oData;
     }
 
     /**

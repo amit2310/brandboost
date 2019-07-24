@@ -489,7 +489,7 @@ class Brandboost extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
-        $this->session->unset_userdata('setTab');
+		Session::put("setTab", '');
         if ($user_role == 1) {
             $aBrandboostList = BrandboostModel::getBrandboost('', 'offsite');
         } else {

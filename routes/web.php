@@ -42,7 +42,7 @@ Route::get('admin/brandboost/media/','Admin\Brandboost@media');
 Route::post('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
 Route::get('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
 Route::post('admin/brandboost/setTab/','Admin\Brandboost@setTab');
-Route::post('admin/brandboost/offsite_overview/','Admin\Brandboost@offsiteOverview');
+Route::get('admin/brandboost/offsite_overview/','Admin\Brandboost@offsiteOverview');
 
 
 Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');
@@ -63,8 +63,6 @@ Route::get('admin/webchat','Admin\WebChat@index');
 Route::post('admin/webchat/getUserinfo','Admin\WebChat@getUserinfo');
 Route::post('admin/webchat/listingNotes','Admin\WebChat@listingNotes');
 Route::post('admin/webchat/addWebNotes','Admin\WebChat@addWebNotes');
-Route::post('admin/webchat/getMessages','Admin\WebChat@getMessages');
-Route::post('admin/webchat/readMessages','Admin\WebChat@readMessages');
 Route::post('admin/webchat/changeLoginStatus','Admin\WebChat@changeLoginStatus');
 Route::post('admin/webchat/addChatMsg','Admin\WebChat@addChatMsg');
 Route::post('admin/webchat/updateSupportuser','Admin\WebChat@updateSupportuser');
@@ -79,9 +77,12 @@ Route::post('admin/webchat/showYoutabAjaxSmallbox','Admin\WebChat@showYoutabAjax
 Route::post('admin/webchat/setChatboxstatus','Admin\WebChat@setChatboxstatus');
 Route::post('admin/webchat/removeBoxStatus','Admin\WebChat@removeBoxStatus');
 Route::post('webchat/display_chat_widget/{widgetType}/{userAccountID}','Admin\WebChat@display_chat_widget');
-Route::get('webchat/getUserMessages','Admin\WebChat@getUserMessages');
+Route::post('webchat/getUserMessages','Admin\WebChat@getUserMessages');
 Route::post('webchat/addChatMsg','Admin\WebChat@addChatMsg');
 Route::post('webchat/supportUser','Admin\WebChat@supportUser');
+Route::post('webchat/getMessages','Admin\WebChat@getMessages');
+Route::post('webchat/readChatMsg','Admin\WebChat@readChatMsg');
+Route::post('webchat/readMessages','Admin\WebChat@readMessages');
 Route::post('admin/webchat/favouriteUser','Admin\WebChat@favouriteUser');
 
 
@@ -194,7 +195,7 @@ Route::get('admin/broadcast/index','Admin\Broadcast@index');
 Route::get('admin/broadcast/email','Admin\Broadcast@email');
 Route::get('admin/broadcast/sms','Admin\Broadcast@sms');
 Route::get('admin/broadcast/smsoverview','Admin\Broadcast@smsoverview');
-Route::post('admin/broadcast/edit/{id?}','Admin\Broadcast@edit');
+Route::get('admin/broadcast/edit/{id?}','Admin\Broadcast@edit');
 Route::post('admin/broadcast/addVariation','Admin\Broadcast@addVariation');
 Route::post('admin/broadcast/updateSplitTest','Admin\Broadcast@updateSplitTest');
 Route::post('admin/broadcast/updateBroadcastSettingUnit','Admin\Broadcast@updateBroadcastSettingUnit');

@@ -203,11 +203,8 @@ if (!empty($aBrandbosts)) {
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
 
-                <?php
-                if ($viewstats == true) {
-					@include('admin.brandboost.campaign-tabs.offsite.overview_stats');
-                }
-                ?>
+                @include('admin.brandboost.campaign-tabs.offsite.overview_stats');
+				
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-flat">
@@ -264,7 +261,7 @@ if (!empty($aBrandbosts)) {
                                             <th style="display: none;">Negative</th>
                                             <th style="display: none;">Today</th>
                                             <th><i class="icon-calendar"></i>Last Incoming Lead</th>
-                                            <?php if ($userRole != '2') { ?>
+                                            <?php if ($user_role != '2') { ?>
                                                 <th class="text-center nosort"><i class="fa fa-dot-circle-o"></i> Action</th>
                                             <?php } ?>
                                         </tr>
@@ -307,8 +304,8 @@ if (!empty($aBrandbosts)) {
                                                 }
 
                                                 $revCount = $positive = $neutral = $negative = 0;
-                                                //$revCount = getCampaignReviewCount($data->id);
                                                 $revCount = getCampaignFeedbackCount($data->id);
+												$revCount = 1;
                                                 $revCount = !empty($revCount) ? $revCount : 0;
                                                 $feedbackCount = \App\Models\Admin\BrandboostModel::getFeedbackCount($data->id);
                                                 $positive = $negative = $neutral = $positivePercentage = $neutralPercentage = $negativePercentage = 0;
@@ -318,7 +315,7 @@ if (!empty($aBrandbosts)) {
                                                 $positiveGraph = 0;
                                                 $neturalGraph = 0;
                                                 $negativeGraph = 0;
-                                                if (!empty($feedbackCount)) {
+                                                /*if (!empty($feedbackCount)) {
                                                     foreach ($feedbackCount as $countUnit) {
                                                         if ($countUnit->category == 'Positive') {
                                                             $positive = $countUnit->total_count;
@@ -337,7 +334,7 @@ if (!empty($aBrandbosts)) {
                                                     $positivePercentage = number_format(($positive * 100) / $totalFeedback, 2);
                                                     $neutralPercentage = number_format(($neutral * 100) / $totalFeedback, 2);
                                                     $negativePercentage = number_format(($negative * 100) / $totalFeedback, 2);
-                                                }
+                                                }*/
 
                                                 $positiveGraph = $positive * 100 / $revCount;
                                                 $neturalGraph = $neutral * 100 / $revCount;
@@ -352,44 +349,45 @@ if (!empty($aBrandbosts)) {
                                                     $offsiteTitle = substr($offsiteTitle, 0, 29) . '...';
                                                 }
 
-                                                $feedbackData = $this->mFeedback->getCampFeedbackData($data->id);
+                                                $feedbackData = \App\Models\FeedbackModel::getCampFeedbackData($data->id);
 
                                                 if ($data->id == '173') {
                                                     //pre($feedbackCount);
                                                     //die;
                                                 }
 
-                                                $subscriberData = $this->mFeedback->getSubscriberInfo($feedbackData->subscriber_id);
+                                                //$subscriberData = \App\Models\FeedbackModel::getSubscriberInfo($feedbackData->subscriber_id);
 
                                                 $newPositive = $newNegative = $newNeutral = 0;
 
                                                 $aPositiveSubscribers = $aNeutralSubscribers = $aNegativeSubscribers = array();
+												if(count($feedbackData) > 0 ){
+													foreach ($feedbackData as $oFeedback) {
 
-                                                foreach ($feedbackData as $oFeedback) {
-
-                                                    if ($oFeedback->category != '') {
-                                                        if ($oFeedback->category == 'Positive' && !in_array($oFeedback->subscriber_id, $aPositiveSubscribers)) {
-                                                            if (strtotime($oFeedback->created) > $recent) {
-                                                                $newPositive++;
-                                                            }
-                                                            $positiveRating++;
-                                                            $aPositiveSubscribers[] = $oFeedback->subscriber_id;
-                                                        } else if ($oFeedback->category == 'Neutral' && !in_array($oFeedback->subscriber_id, $aNeutralSubscribers)) {
-                                                            if (strtotime($oFeedback->created) > $recent) {
-                                                                $newNeutral++;
-                                                            }
-                                                            $neturalRating++;
-                                                            $aNeutralSubscribers[] = $oFeedback->subscriber_id;
-                                                        } else {
-                                                            if (!in_array($oFeedback->subscriber_id, $aNegativeSubscribers))
-                                                                if (strtotime($oFeedback->created) > $recent) {
-                                                                    $newNegative++;
-                                                                }
-                                                            $negativeRating++;
-                                                            $aNegativeSubscribers[] = $oFeedback->subscriber_id;
-                                                        }
-                                                    }
-                                                }
+														/*if ($oFeedback->category != '') {
+															if ($oFeedback->category == 'Positive' && !in_array($oFeedback->subscriber_id, $aPositiveSubscribers)) {
+																if (strtotime($oFeedback->created) > $recent) {
+																	$newPositive++;
+																}
+																$positiveRating++;
+																$aPositiveSubscribers[] = $oFeedback->subscriber_id;
+															} else if ($oFeedback->category == 'Neutral' && !in_array($oFeedback->subscriber_id, $aNeutralSubscribers)) {
+																if (strtotime($oFeedback->created) > $recent) {
+																	$newNeutral++;
+																}
+																$neturalRating++;
+																$aNeutralSubscribers[] = $oFeedback->subscriber_id;
+															} else {
+																if (!in_array($oFeedback->subscriber_id, $aNegativeSubscribers))
+																	if (strtotime($oFeedback->created) > $recent) {
+																		$newNegative++;
+																	}
+																$negativeRating++;
+																$aNegativeSubscribers[] = $oFeedback->subscriber_id;
+															}
+														}*/
+													}
+												}
                                                 ?>
 
                                                 <!--=======================-->
@@ -409,24 +407,29 @@ if (!empty($aBrandbosts)) {
                                                     <td>
                                                         <?php
                                                         $bbReviewSourcesImages = '';
-                                                        foreach ($offsite_ids as $value) {
-                                                            if (!empty($value) && $value > 0) {
-                                                                $getData = getOffsite($value);
-                                                                if (!empty($getData->image)) {
-                                                                    if (file_exists("uploads/" . $getData->image)) {
-                                                                        $bbReviewSourcesImages = '<img src="/uploads/' . $getData->image . '" /> &nbsp';
-                                                                    } else {
-                                                                        $bbReviewSourcesImages = '<img src="' . base_url("assets/images/icon_hand.png") . '" /> &nbsp';
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
+														/*if(count($offsite_ids)> 0 ){
+															foreach ($offsite_ids as $value) {
+																if ($value > 0) {
+																	$getData = getOffsite($value);
+																	if (!empty($getData->image)) {
+																		if (file_exists("uploads/" . $getData->image)) {
+																			$bbReviewSourcesImages = '<img src="/uploads/' . $getData->image . '" /> &nbsp';
+																		} else {
+																			$bbReviewSourcesImages = '<img src="' . base_url("assets/images/icon_hand.png") . '" /> &nbsp';
+																		}
+																	}
+																}
+															}
+														}*/
+														
+														$bbReviewSourcesImages = '<img src="' . base_url("assets/images/icon_hand.png") . '" /> &nbsp';
 
                                                         if (empty($bbReviewSourcesImages)) {
                                                             $bbReviewSourcesImages = '<img src="' . base_url("assets/images/icon_hand.png") . '" /> &nbsp';
                                                         }
 
-                                                        $sourceName = strtolower($getData->name);
+                                                        //$sourceName = strtolower($getData->name);
+														$sourceName = 'yelp';
 
                                                         if ($sourceName == 'yelp') {
                                                             $sourceClass = 'txt_red';
@@ -440,10 +443,6 @@ if (!empty($aBrandbosts)) {
 
                                                         $sourceName = !empty($sourceName) ? $sourceName : 'NA';
 
-
-                                                        //echo $bbReviewSourcesImages;
-                                                        ?>
-                                                        <?php
                                                         if (empty($sourceName) || $sourceName == 'NA') {
                                                             echo displayNoData(true);
                                                         } else {
@@ -467,8 +466,8 @@ if (!empty($aBrandbosts)) {
                                                     </td>
 
                                                     <td>
-                                                        <div data-toggle="tooltip" title="Total contacts <?php echo sizeof($allSubscribers); ?>" data-placement="top">
-                                                            <a href="<?php echo base_url('admin/brandboost/offsite_setup/' . $data->id . '?t=contacts'); ?>"  class="text-default text-semibold"><?php echo sizeof($allSubscribers); ?><?php if ($newContacts > 0): ?><?php echo '<span style="color:#FF0000;"> (' . $newContacts . ' new)</span>'; ?><?php endif; ?></a>
+                                                        <div data-toggle="tooltip" title="Total contacts <?php //echo sizeof($allSubscribers); ?>" data-placement="top">
+                                                            <a href="<?php echo base_url('admin/brandboost/offsite_setup/' . $data->id . '?t=contacts'); ?>"  class="text-default text-semibold"><?php //echo sizeof($allSubscribers); ?><?php //if ($newContacts > 0): ?><?php //echo '<span style="color:#FF0000;"> (' . $newContacts . ' new)</span>'; ?><?php //endif; ?></a>
                                                         </div>
                                                     </td>
 
@@ -575,7 +574,7 @@ if (!empty($aBrandbosts)) {
                                                     </td>
                                                     <td>
                                                         <?php
-                                                        if ($feedbackData->category == 'Positive') {
+                                                        /*if ($feedbackData->category == 'Positive') {
                                                             $ratingValue = '5.0';
                                                             $icon = ' <i class="fa fa-smile-o"></i></a>';
                                                             $imageIcon = '<a href="#"><img src="http://brandboost.io/assets/images/userp.png" class="img-circle img-xs" alt=""></a>';
@@ -591,7 +590,10 @@ if (!empty($aBrandbosts)) {
                                                             $ratingValue = 'N/A';
                                                             $icon = '';
                                                             $imageIcon = '';
-                                                        }
+                                                        }*/
+														$ratingValue = '5.0';
+														$icon = ' <i class="fa fa-smile-o"></i></a>';
+														$imageIcon = '<a href="#"><img src="http://brandboost.io/assets/images/userp.png" class="img-circle img-xs" alt=""></a>';
                                                         ?>
                                                         <?php if ($revCount < 1) { ?>
                                                             <?php echo displayNoData(true); ?>
@@ -599,17 +601,10 @@ if (!empty($aBrandbosts)) {
                                                             <div class="media-left media-middle"> <img src="<?php echo smilyRating($ratingValue); ?>" class="img-circle" width="26" alt=""> </div>
                                                             <div class="media-left">
                                                                 <div class=""><a href="#" class="text-default text-semibold"><?php echo number_format($ratingValue, 1); ?> </a> </div>
-                                                                <div class="text-muted text-size-small"><?php echo ($subscriberData->firstname) ? $subscriberData->firstname : displayNoData(); ?></div>
+                                                                <div class="text-muted text-size-small"><?php //echo ($subscriberData->firstname) ? $subscriberData->firstname : displayNoData(); ?></div>
                                                             </div>
                                                         <?php } ?>
                                                     </td>
-
-
-
-
-
-                                                                                                <!--                                                    <td><a href="<?php echo base_url(); ?>admin/brandboost/statistics/<?php echo $data->id; ?>" target="_blank"><img src="<?php echo base_url("assets/images/table_graph.png"); ?>" class="" alt=""></a>
-                                                                                                                                                    </td>-->
 
                                                     <td>
                                                         <div class="tdropdown">
@@ -691,7 +686,6 @@ if (!empty($aBrandbosts)) {
                                                 </tr>       
                                                 <!--=======================-->
                                                 <?php
-                                                $inc++;
                                             }
                                         }
                                         ?>	
@@ -859,7 +853,8 @@ if (!empty($aBrandbosts)) {
     </div>
 </div>
 <!-- /editBrandboost -->
-<?php $this->load->view("admin/modals/segments/segments-popup"); ?>
+<?php //$this->load->view("admin/modals/segments/segments-popup"); ?>
+<?php @include('admin.modals.segments.segments-popup'); ?>
 <script src="<?php echo base_url(); ?>assets/js/modules/segments/segments.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -1424,7 +1419,7 @@ if (!empty($aBrandbosts)) {
                 success: function (data) {
 
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/brandboost/offsite_step_1/' + brandboostID); ?>';
+                        window.location.href = '<?php echo base_url('admin/brandboost/offsite_step_1/'); ?>'+brandboostID;
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }

@@ -23,10 +23,10 @@
 
 $positive = $negative = $neutral = $positivePercentage = $neutralPercentage = $negativePercentage = 0;
 $positiveRating = $neturalRating = $negativeRating = $positiveGraph = $neturalGraph = $negativeGraph = 0;
-$totalFeedback = 0;
+$totalFeedback = 1;
 foreach ($aBrandbosts as $data) {
 
-    $feedbackCount = \App\Models\Admin\BrandboostModel::getFeedbackCount($data->id);
+    /*$feedbackCount = \App\Models\Admin\BrandboostModel::getFeedbackCount($data->id);
     if (!empty($feedbackCount)) {
 
         foreach ($feedbackCount as $countUnit) {
@@ -44,7 +44,7 @@ foreach ($aBrandbosts as $data) {
         }
 
         $totalFeedback = $positiveGraph+ $neturalGraph+ $negativeGraph;
-    }
+    }*/
 
 }
 
@@ -160,13 +160,13 @@ $smsM = implode(",", $smsM);
 			  	<div class="row">
 			  		
 			  		<div class="col-xs-4 brig">
-			  		<h1 class="m0 lh25"><?php echo number_format($bbEmailSend); ?></h1>
+			  		<h1 class="m0 lh25"><?php //echo number_format($bbEmailSend); ?></h1>
 			  		<p>Emails &nbsp; <span style="border: none;" class="label bkg_blue ml0 ">5.9%</span></p>
 			  		</div>
 			  		
 			  		
 			  		<div class="col-xs-4">
-			  		<h1 class="m0 lh25"><?php echo number_format($bbSmsSend); ?></h1>
+			  		<h1 class="m0 lh25"><?php //echo number_format($bbSmsSend); ?></h1>
 			  		<p>SMS &nbsp; <span style="border: none;" class="label bkg_green ml0 ">5.9%</span></p>
 			  		</div>
 			  		
