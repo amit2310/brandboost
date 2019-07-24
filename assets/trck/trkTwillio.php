@@ -8,9 +8,9 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
-require_once 'vendor/autoload.php'; // Loads the library
+require_once '/var/www/html/assets/trck/vendor/autoload.php'; // Loads the library
 use Twilio\Rest\Client;
-include 'functions.php';
+include '/var/www/html/assets/trck/functions.php';
 $_REQUEST['From']='+17049075791';
 $_REQUEST['To'] = '+15097400384';
 
@@ -35,7 +35,16 @@ try {
             
            $msg = $_REQUEST['Body'];
 
+          if(!empty($_REQUEST['Body']))
+          {
            $charCount = strlen($msg);
+          }
+          else
+          {
+            $charCount = strlen('Not Available');
+
+          }
+
 
         $numMedia = $_REQUEST['NumMedia'];
         if ($numMedia > 0) {
