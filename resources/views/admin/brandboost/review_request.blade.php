@@ -281,14 +281,14 @@ $brandboostID = '';
 								        </div></td>
 
 										<td>
-											<div class="media-left media-middle"><?php echo showUserAvtar($aUser->avatar, $aUser->firstname, $aUser->lastname); ?></div>
+											<div class="media-left media-middle"><?php //echo showUserAvtar($aUser->avatar, $aUser->firstname, $aUser->lastname); ?></div>
 											
 											<div class="media-left">
-												<?php if($aUser->firstname != '') { ?>
+												<?php /*if($aUser->firstname != '') { ?>
 													<div class="pt-5">
                                                      <a href="<?php echo base_url();?>admin/subscriber/activities/<?php echo $aUser->id;?>" target="_blank" class="text-default text-semibold bbot"><span><?php echo $aUser->firstname; ?> <?php echo $aUser->lastname; ?></span></a><img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($aUser->country); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
 													<div class="text-muted text-size-small"><?php echo $aUser->email; ?></div>
-												<?php } else{ echo '<span class="text-muted text-size-small">[No Data]</span>'; } ?>
+												<?php } else{ echo '<span class="text-muted text-size-small">[No Data]</span>'; } */ ?>
 											</div>
 										</td>
 										

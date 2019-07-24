@@ -62,6 +62,26 @@ class FeedbackModel extends Model
 		return $oData;
     }
 	
+	/**
+	* Used to get feedback  by user id
+	* @param type $id
+	* @return type
+	*/
+	public static function getFeedback($userID, $user_role='') {
+		$oData = DB::table('tbl_brandboost_feedback')
+			->select('tbl_brandboost_feedback.*', 'tbl_users.avatar', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img', 'tbl_brandboost_users.subscriber_id as subscriber_id')
+			//->where('tbl_brandboost.brand_title', $id)
+			->when(($user_role > 0), function($query) use ($userID) {
+				return $query->where('tbl_brandboost_feedback.client_id', $userID);
+			})
+			->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.id', '=' , 'tbl_brandboost_feedback.subscriber_id')
+			->leftJoin('tbl_users', 'tbl_users.id', '=' , 'tbl_brandboost_users.user_id')
+			->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=' , 'tbl_subscribers.id')
+			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_brandboost_feedback.brandboost_id')
+			->get();
+		return $oData;
+    }
+	
     public function add($aData) {
         $result = $this->db->insert('tbl_brandboost_feedback', $aData);
         $inset_id = $this->db->insert_id();
@@ -72,27 +92,6 @@ class FeedbackModel extends Model
         } else {
             return false;
         }
-    }
-
-    public function getFeedback($userID, $user_role='') {
-        $response = array();
-        $this->db->select('tbl_brandboost_feedback.*, tbl_users.avatar, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_brandboost.brand_title, tbl_brandboost.brand_desc, tbl_brandboost.brand_img, tbl_brandboost_users.subscriber_id as subscriber_id');
-        $this->db->from('tbl_brandboost_feedback');
-        if ($user_role > 1) {
-            $this->db->where("tbl_brandboost_feedback.client_id", $userID);
-        }
-        $this->db->where("tbl_brandboost.brand_title !=", "");
-        $this->db->join('tbl_brandboost_users', 'tbl_brandboost_users.id = tbl_brandboost_feedback.subscriber_id', 'left');
-        $this->db->join('tbl_users', 'tbl_users.id = tbl_brandboost_users.user_id', 'left');
-        $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->join('tbl_brandboost', 'tbl_brandboost.id = tbl_brandboost_feedback.brandboost_id', 'left');
-        $this->db->order_by('tbl_brandboost_feedback.id', 'DESC');
-        $result = $this->db->get();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
     }
     
     

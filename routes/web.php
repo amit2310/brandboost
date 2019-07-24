@@ -43,6 +43,8 @@ Route::post('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetail
 Route::get('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
 Route::post('admin/brandboost/setTab/','Admin\Brandboost@setTab');
 Route::get('admin/brandboost/offsite_overview/','Admin\Brandboost@offsiteOverview');
+Route::get('admin/brandboost/offsite/','Admin\Brandboost@offsite');
+Route::get('admin/feedback/listall/','Admin\Feedback@getAllListingData');
 
 
 Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');
