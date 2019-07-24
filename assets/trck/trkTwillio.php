@@ -1,7 +1,8 @@
 <?php
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL); 
+*/
 
 
 header('Access-Control-Allow-Origin: *');
@@ -28,7 +29,7 @@ $_REQUEST['Body']='Hey';
 */
 
 try {
-    if (!empty($to) && !empty($from)) {
+      if (!empty($to) && !empty($from)) {
             
            $msg = $_REQUEST['Body'];
 

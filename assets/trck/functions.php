@@ -203,7 +203,7 @@ function saveTrackingData($tableName, $aData) {
         foreach ($aData as $key => $val) {
             $sql .= "`{$key}` = '{$db->real_escape_string($val)}',";
         }
-       echo  $sql = trim($sql, ",");
+        $sql = trim($sql, ",");
         $result = $db->query($sql);
         $insertID = $db->insert_id;
 
