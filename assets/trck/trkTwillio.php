@@ -235,6 +235,7 @@ try {
 
 
                 //$tokenResponse = getSmsToken($from, $to);
+                $msg='https://api.twilio.com/2010-04-01/Accounts/AC3d562f95a4be856b7120b492cd25a270/Messages/MMf2a03c2298a1c97bd1f57972b63b9719/Media/ME1f49ebd691883566e9548abb3a3a152a ';
                 $msgExplode = explode('/', $msg);
 
                 $mm_id = $msgExplode[7];
