@@ -10,18 +10,19 @@ header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Dispo
 require_once '/var/www/html/assets/trck/vendor/autoload.php'; // Loads the library
 use Twilio\Rest\Client;
 include '/var/www/html/assets/trck/functions.php';
-
-//$from = '+919717658547';
-//$to = '+15097400384';
+echo '<pre>';
+print_r($_REQUEST['Body']);
+//$from = '7049075791';
+//$to = '5097400384';
 //getLatestActivity($from, $to);
 //die;
 
 try {
     mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 1', json_encode($_REQUEST));
-    if ((!empty($_REQUEST['Body'])) || (!empty($_REQUEST['MediaUrl0']))) {
+    if (!empty($_REQUEST['Body'])) {
         mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 2', json_encode($_REQUEST));
-        $from = phone_display_custom($_REQUEST['From']);
-        $to = phone_display_custom($_REQUEST['To']);
+           $from = phone_display_custom($_REQUEST['From']);
+             $to = phone_display_custom($_REQUEST['To']);
         $msg = $_REQUEST['Body'];
 
         $charCount = strlen($msg);
@@ -166,7 +167,6 @@ try {
                                 $bUpdated = updateSurveyFeedback($aFeedbackData, $npsScoreID);
                             }
                         }
-
                         //Now sendout the message
                         $client = new Client($sid, $token);
                         $client->messages->create(
@@ -201,7 +201,8 @@ try {
                     }
                 }
             } else {
-                echo 'Yes i am in';
+              
+              echo 'i am in++++++++++++++++++++';
                 //Send message straight to the chat module
                 $aStoreSMS['to'] = $to;
                 $aStoreSMS['from'] = $from;
