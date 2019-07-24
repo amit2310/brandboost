@@ -299,7 +299,7 @@ BB = function (t) {
 			formData.append('files[]', file);
 		}
 		
-		fetch(this.userSettings.host + '/dropzone/upload_s3_attachment/'+ bb_client_id +'/webchat', { 
+		fetch(this.userSettings.host + '/webchat/dropzone/upload_s3_attachment/'+ bb_client_id +'/webchat', { 
 			method: 'POST',
 			body: formData // This is your file object
 		}).then(
