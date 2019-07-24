@@ -24,11 +24,11 @@ $_REQUEST['Body']='Hey';
 
 try {
     mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 1', json_encode($_REQUEST));
-    if (!empty($_REQUEST['Body'])) {
+    if (!empty($to) && !empty($from)) {
         mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 2', json_encode($_REQUEST));
              $from = phone_display_custom($_REQUEST['From']);
              $to = phone_display_custom($_REQUEST['To']);
-        $msg = $_REQUEST['Body'];
+           $msg = $_REQUEST['Body'];
 
         $charCount = strlen($msg);
 
@@ -270,6 +270,7 @@ try {
                 $aStoreSMS['nps_step'] = '1';
                 $aStoreSMS['nps_score_id'] = '1';
                 $aStoreSMS['referral_id'] = '1';
+                $aStoreSMS['response'] = json_encode($_REQUEST);
                 $aStoreSMS['media_type'] = $media_type;
 
              
