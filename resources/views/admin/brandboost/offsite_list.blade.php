@@ -359,10 +359,10 @@ if (!empty($aBrandbosts)) {
                                                 $newPositive = $newNegative = $newNeutral = 0;
 
                                                 $aPositiveSubscribers = $aNeutralSubscribers = $aNegativeSubscribers = array();
-												if(count($feedbackData) > 0 ){
+												/*if(count($feedbackData) > 0 ){
 													foreach ($feedbackData as $oFeedback) {
 
-														/*if ($oFeedback->category != '') {
+														if ($oFeedback->category != '') {
 															if ($oFeedback->category == 'Positive' && !in_array($oFeedback->subscriber_id, $aPositiveSubscribers)) {
 																if (strtotime($oFeedback->created) > $recent) {
 																	$newPositive++;
@@ -383,9 +383,9 @@ if (!empty($aBrandbosts)) {
 																$negativeRating++;
 																$aNegativeSubscribers[] = $oFeedback->subscriber_id;
 															}
-														}*/
+														}
 													}
-												}
+												}*/
                                                 ?>
 
                                                 <!--=======================-->
