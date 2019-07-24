@@ -11,6 +11,11 @@ header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Dispo
 require_once '/var/www/html/assets/trck/vendor/autoload.php'; // Loads the library
 use Twilio\Rest\Client;
 include '/var/www/html/assets/trck/functions.php';
+
+$from = phone_display_custom($_REQUEST['From']);
+$to = phone_display_custom($_REQUEST['To']);
+
+             
 /*echo '<pre>';
 print_r($_REQUEST);
 echo $_REQUEST['From']='+17049075791';
@@ -26,8 +31,7 @@ try {
     mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 1', json_encode($_REQUEST));
     if (!empty($to) && !empty($from)) {
         mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 2', json_encode($_REQUEST));
-             $from = phone_display_custom($_REQUEST['From']);
-             $to = phone_display_custom($_REQUEST['To']);
+            
            $msg = $_REQUEST['Body'];
 
         $charCount = strlen($msg);
