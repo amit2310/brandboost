@@ -2772,7 +2772,7 @@ if(window_witdh > 1600)
 				
 				socket.on('messageTresponse', function(data) {
 				var newMessage = data.msg;
-				console.log(data);
+				
 				 
                   if(data.media_type == 'video')
                   {
@@ -2788,7 +2788,15 @@ if(window_witdh > 1600)
 				  }
 				  else
 				  {
-				  	var textMsg = newMessage.substring(0,20);
+				  	 if(newMessage.length > 20)
+				  	 {
+				  	   var textMsg = newMessage.substring(0,20);
+				  	}
+				  	else
+				  	{
+				  		textMsg = newMessage;
+				  	}
+
                     $('.sms_twr_'+data.from).find('.slider-phone').html(textMsg);
 
 				  }
