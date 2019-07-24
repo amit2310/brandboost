@@ -292,7 +292,7 @@ try {
                 $avatarbox = showUserAvtarCustom($usersdata['avatar'], $usersdata['firstname'], $usersdata['lastname'], 28, 28, 11);
 
 
-                $url = 'http://brandboost.io:3000/sendSocketMessage';
+                $url = 'http://brandboostx.com:3000/sendSocketMessage';
 
                 $data = array(
                     'to' => $aStoreSMS['to'],
