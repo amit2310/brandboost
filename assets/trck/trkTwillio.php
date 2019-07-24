@@ -7,14 +7,9 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
-require_once 'vendor/autoload.php'; // Loads the library
-
+require_once '/var/www/html/assets/trck/vendor/autoload.php'; // Loads the library
 use Twilio\Rest\Client;
-echo $_SERVER["DOCUMENT_ROOT"];
-include 'functions.php';
-
-echo '<pre>';
-print_r($_REQUEST);
+include '/var/www/html/assets/trck/functions.php';
 
 //$from = '+919717658547';
 //$to = '+15097400384';
