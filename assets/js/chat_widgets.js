@@ -218,7 +218,7 @@ BB = function (t) {
 							if(fileext[0] == 'png' || fileext[0] == 'jpg' || fileext[0] == 'jpeg' || fileext[0] == 'gif') {
 								newMessage = "<a href='javascript:void(0)' class='bb_image_preview_btn' img-data='"+newMessage+"'><img src='"+newMessage+"' style='width:150px; height:auto;' /></a>";
 																
-							}else if(fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf') {
+							}else if(fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf' || fileext[0] == 'txt') {
 								newMessage = "<a href='"+newMessage+"' target='_blank'>Download '"+fileext[0].toUpperCase()+"' File</a>";
 							}
 							else if(fileext[0] == 'mp4') {
@@ -327,7 +327,7 @@ BB = function (t) {
 							}
 						}, 1000);
 						
-					}else if(fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf') {
+					}else if(fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf' || fileext[0] == 'txt') {
 						newMessage = "<a href='"+msg+"' target='_blank'>Download '"+fileext[0].toUpperCase()+"' File</a>";
 					}else if(fileext[0] == 'mp4' || fileext[0] == 'webm' || fileext[0] == 'ogg') {
 						newMessage = "<video class='media_file' controls><source src='"+msg+"' type='video/"+fileext[0]+"'></video>";
