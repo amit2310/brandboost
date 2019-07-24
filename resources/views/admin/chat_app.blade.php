@@ -1910,7 +1910,7 @@ if(typeof fileext != 'undefined' && fileext !== null){
 if(fileext[0] == 'png' || fileext[0] == 'jpg' || fileext[0] == 'jpeg' || fileext[0] == 'gif') {
 newMessage = "<a href='"+newMessage+"' class='previewImage' target='_blank'><img src='"+newMessage+"' height='auto' width='100%' /></a>";
 }
-else if(fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf') {
+else if(fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf' || fileext[0] == 'txt') {
 newMessage = "<a href='"+newMessage+"' target='_blank'>Download '"+fileext[0].toUpperCase()+"' File</a>";
 }
 else if(fileext[0] == 'mp4') {
@@ -2720,7 +2720,7 @@ if(window_witdh > 1600)
 					{
 						msg = "<a href='"+msg+"' class='previewImage' target='_blank'><img src='"+msg+"' height='58px' width='58px' /></a>";
 					}
-					else if(fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf') {
+					else if(fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf' || fileext[0] == 'txt') {
 						msg = "<a href='"+msg+"' target='_blank'>Download '"+fileext[0].toUpperCase()+"' File</a>";
 					}
 					else if(fileext[0] == 'mp4' || fileext[0] == 'webm' || fileext[0] == 'ogg') {
@@ -2777,10 +2777,16 @@ if(window_witdh > 1600)
                   if(data.media_type == 'video')
                   {
 				      newMessage = "<video width='100' height='100' controls><source src='"+newMessage+"' type='video/"+fileext[0]+"'></video>";
+ 
 					$('.sms_twr_'+data.from).find('.slider-phone').html('File Attachment');
-				}
+				  }
+                 else  if(data.media_type == 'image')
+                  {
+ 
+					$('.sms_twr_'+data.from).find('.slider-phone').html('File Attachment');
+				  }
 				
-
+				
 				if(data.showVideo != '')
 				{
 					$('<li class="media"><div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span>'+data.avatar+'</span>' + nl2br(newMessage) + '</div></li>' ).insertBefore( '[tWR="' + data.from + '"] .msg_push' );

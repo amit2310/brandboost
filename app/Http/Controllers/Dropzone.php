@@ -525,7 +525,7 @@ class dropzone extends Controller
             $filesize = getFileSize('filesize');
             if (!empty($_FILES)) {
 
-                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg");
+                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
@@ -541,7 +541,7 @@ class dropzone extends Controller
                     {
                         $mediaType = 'images';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                     }
                     else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
@@ -584,7 +584,7 @@ class dropzone extends Controller
                     {
                         $mediaType = 'images';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                     }
                     else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
@@ -636,7 +636,7 @@ class dropzone extends Controller
             $filesize = getFileSize('filesize');
             if (!empty($_FILES)) {
 
-                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg");
+                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
@@ -652,7 +652,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
@@ -692,7 +692,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
@@ -742,7 +742,7 @@ class dropzone extends Controller
             $filesize = getFileSize('filesize');
             if (!empty($_FILES)) {
 
-                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg");
+                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
@@ -758,7 +758,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
@@ -798,7 +798,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
@@ -855,7 +855,7 @@ class dropzone extends Controller
             $filesize = getFileSize('filesize');
             if (!empty($_FILES)) {
 
-                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg");
+                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
@@ -871,7 +871,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
@@ -911,7 +911,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
