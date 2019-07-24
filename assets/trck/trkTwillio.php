@@ -23,6 +23,7 @@ $_REQUEST['Body']='Hey';
 try {
     mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 1', json_encode($_REQUEST));
     if (!empty($_REQUEST['Body'])) {
+        echo 'Body Found+++++++++++++++ Upper';
         mail('rahul.ratnam2@gmail.com', 'Response: Twilio Data 2', json_encode($_REQUEST));
              $from = phone_display_custom($_REQUEST['From']);
              $to = phone_display_custom($_REQUEST['To']);
@@ -37,7 +38,8 @@ try {
             }
         }
         //Get latest activity
-
+        echo $to.'++++++++++++++++++++++++++++++'.$from;
+       echo 'Body Found+++++++++++++++ Lower';
         if (!empty($to) && !empty($from)) {
 
             $oLatestActivity = getLatestActivity($from, $to);
