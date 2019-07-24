@@ -2772,6 +2772,7 @@ if(window_witdh > 1600)
 				
 				socket.on('messageTresponse', function(data) {
 				var newMessage = data.msg;
+				console.log(data);
 				 
                   if(data.media_type == 'video')
                   {
