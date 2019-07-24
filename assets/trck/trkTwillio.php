@@ -14,6 +14,9 @@ use Twilio\Rest\Client;
 
 include 'functions.php';
 
+echo '<pre>';
+print_r($_REQUEST);
+
 //$from = '+919717658547';
 //$to = '+15097400384';
 //getLatestActivity($from, $to);
