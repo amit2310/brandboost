@@ -528,6 +528,40 @@ class Brandboost extends Controller {
 		return view('admin.brandboost.offsite_list', $aData);
     }
 	
+	/**
+	* Used to get show offsite listing page 
+	* @param type $param
+	* @return type
+	*/
+	public function offsite() {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $user_role = $aUser->user_role;
+        Session::put("setTab", '');
+        if ($user_role == 1) {
+            $aBrandboostList = BrandboostModel::getBrandboost('', 'offsite');
+        } else {
+            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'offsite');
+        }
+
+        $moduleName = 'brandboost-offsite';
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs">Off Site </a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Campaigns" class="sidebar-control active hidden-xs ">Campaigns</a></li>
+			</ul>';
+
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+		
+		return view('admin.brandboost.offsite_list', array('title' => 'Offsite Brand Boost Campaigns', 'pagename' => $breadcrumb, 'aBrandbosts' => $aBrandboostList, 'bActiveSubsription' => $bActiveSubsription, 'currentUserId' => $userID, 'user_role' => $user_role, 'moduleName' => $moduleName, 'viewstats' => false));
+		
+        //$this->template->load('admin/admin_template_new', 'admin/brandboost/offsite_list', array('title' => 'Offsite Brand Boost Campaigns', 'pagename' => $breadcrumb, 'aBrandbosts' => $aBrandboostList, 'bActiveSubsription' => $bActiveSubsription, 'currentUserId' => $userID, 'user_role' => $user_role, 'moduleName' => $moduleName));
+        //$this->load->view('admin/brandboost/offsite_list_testtemp');
+    }	
 
     public function index() {
 
@@ -4219,34 +4253,6 @@ class Brandboost extends Controller {
 
             exit;
         }
-    }
-
-    public function offsite() {
-
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $user_role = $aUser->user_role;
-        $this->session->unset_userdata('setTab');
-        if ($user_role == 1) {
-            $aBrandboostList = $this->mBrandboost->getBrandboost('', 'offsite');
-        } else {
-            $aBrandboostList = $this->mBrandboost->getBrandboostByUserId($userID, 'offsite');
-        }
-
-        $moduleName = 'brandboost-offsite';
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs">Off Site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Campaigns" class="sidebar-control active hidden-xs ">Campaigns</a></li>
-			</ul>';
-
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/offsite_list', array('title' => 'Offsite Brand Boost Campaigns', 'pagename' => $breadcrumb, 'aBrandbosts' => $aBrandboostList, 'bActiveSubsription' => $bActiveSubsription, 'currentUserId' => $userID, 'user_role' => $user_role, 'moduleName' => $moduleName));
-        //$this->load->view('admin/brandboost/offsite_list_testtemp');
     }
 
     public function edit_offsite() {

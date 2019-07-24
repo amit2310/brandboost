@@ -479,7 +479,7 @@ class TagsModel extends Model {
         return $oData;
     }
 
-    public function getTagsDataByFeedbackID($feedbackID) {
+    public static function getTagsDataByFeedbackID($feedbackID) {
 
         $oData = DB::table('tbl_feedback_tags')
         ->select('tbl_tag_groups_entity.*', 'tbl_feedback_tags.tag_id', 'tbl_feedback_tags.feedback_id')

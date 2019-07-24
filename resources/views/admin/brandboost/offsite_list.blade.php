@@ -29,9 +29,7 @@ if (!empty($aBrandbosts)) {
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
 
-            <?php
-            if ($viewstats == true) {
-                ?>
+            <?php if ($viewstats == true) {  ?>
                 <div class="col-md-5">
                     <h3><img src="/assets/images/offsite_icon_19.png" style="width: 16px;"> &nbsp; Off Site Overview</h3>
                 </div>
@@ -202,9 +200,9 @@ if (!empty($aBrandbosts)) {
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
-
+				<?php if ($viewstats == true) {  ?>
                 @include('admin.brandboost.campaign-tabs.offsite.overview_stats');
-				
+				<?php } ?>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-flat">
