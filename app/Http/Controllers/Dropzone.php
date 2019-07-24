@@ -541,7 +541,7 @@ class dropzone extends Controller
                     {
                         $mediaType = 'images';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                     }
                     else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
@@ -584,7 +584,7 @@ class dropzone extends Controller
                     {
                         $mediaType = 'images';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                     }
                     else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
@@ -652,7 +652,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
@@ -692,7 +692,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
@@ -758,7 +758,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
@@ -798,7 +798,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
@@ -871,7 +871,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
@@ -911,7 +911,7 @@ class dropzone extends Controller
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
                     }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' ) {
+                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
                     }
