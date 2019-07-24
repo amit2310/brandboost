@@ -235,7 +235,7 @@ try {
 
 
                 //$tokenResponse = getSmsToken($from, $to);
-                $msg='https://api.twilio.com/2010-04-01/Accounts/AC3d562f95a4be856b7120b492cd25a270/Messages/MMf620963399af7292944355c7d97cc869/Media/MEcc24870b1cf9f6562ad786ed9c495ef6';
+                
                 $msgExplode = explode('/', $msg);
 
                 $mm_id = $msgExplode[7];
@@ -265,7 +265,7 @@ try {
                             'created' => date("Y-m-d H:i:s")
                         );
                         $lastInsertId = addSmsMedia($sData);
-                        $msg = '<a href="http://brandboost.io/media/' . $rand_string . '" target="_blank"><img src="http://brandboost.io/assets/images/play_button.png"></a>';
+                        $msg = '<a href="http://brandboostx.com/media/' . $rand_string . '" target="_blank"><img src="http://brandboostx.com/assets/images/play_button.png"></a>';
                         $showVideo = 'show';
                     } else if ($contentExplode[0] == 'image') {
 
