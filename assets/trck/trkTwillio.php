@@ -262,14 +262,6 @@ try {
 
                 $aStoreSMS['msg'] = $msg;
                 $aStoreSMS['token'] = $tokenResponse;
-                $aStoreSMS['event_id'] = '1';
-                $aStoreSMS['nps_id'] = '1';
-                $aStoreSMS['broadcast_id'] = '1';
-                $aStoreSMS['brandboost_id'] = '1';
-                $aStoreSMS['automation_id'] = '1';
-                $aStoreSMS['nps_step'] = '1';
-                $aStoreSMS['nps_score_id'] = '1';
-                $aStoreSMS['referral_id'] = '1';
                 $aStoreSMS['response'] = json_encode($_REQUEST);
                 $aStoreSMS['media_type'] = $media_type;
 
