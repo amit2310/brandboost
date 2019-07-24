@@ -267,6 +267,12 @@ try {
                         $msg = '<a href="http://brandboost.io/media/' . $rand_string . '" target="_blank"><img src="http://brandboost.io/assets/images/play_button.png"></a>';
                         $showVideo = 'show';
                     } else if ($contentExplode[0] == 'image') {
+
+                       $msg = "<a href='".$msg."' class='previewImage' target='_blank'><img src='".$msg."' height='58px' width='58px' /></a>";
+
+                        $showVideo = 'show';
+
+
                         $media_type = 'image';
                     } else {
                         $media_type = '';
