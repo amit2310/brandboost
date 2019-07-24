@@ -16,7 +16,6 @@ function db_connect() {
             $connection = mysqli_connect('db-brandboost.crokdqsmnwuz.us-west-2.rds.amazonaws.com', 'root', '!w@9Un+c.u[Ygehj', 'brandboostdb');
         }
     }
-    print_r($connection);
     // If connection was not successful, handle the error
     if ($connection === false) {
         // Handle error - notify administrator, log to a file, show an error screen, etc.
@@ -201,7 +200,7 @@ function getLocationData() {
 function saveTrackingData($tableName, $aData) {
     global $db;
     if (!empty($aData)) {
-        $sql = "INSERT INTO {$tableName} SET ";
+       echo  $sql = "INSERT INTO {$tableName} SET ";
         foreach ($aData as $key => $val) {
             $sql .= "`{$key}` = '{$db->real_escape_string($val)}',";
         }

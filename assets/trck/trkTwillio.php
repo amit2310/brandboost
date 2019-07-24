@@ -7,11 +7,10 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
-echo 'hello675756767765757';
 require_once 'vendor/autoload.php'; // Loads the library
 
 use Twilio\Rest\Client;
-
+echo $_SERVER["DOCUMENT_ROOT"];
 include 'functions.php';
 
 echo '<pre>';
@@ -207,6 +206,7 @@ try {
                     }
                 }
             } else {
+                echo 'Yes i am in';
                 //Send message straight to the chat module
                 $aStoreSMS['to'] = $to;
                 $aStoreSMS['from'] = $from;
