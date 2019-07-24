@@ -269,7 +269,6 @@ try {
                         $showVideo = 'show';
                     } else if ($contentExplode[0] == 'image') {
 
-                       $msg = "<a href='".$msg."' class='previewImage' target='_blank'><img src='".$msg."' height='58px' width='58px' /></a>";
 
                         $showVideo = '';
 
