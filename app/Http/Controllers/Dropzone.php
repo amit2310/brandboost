@@ -525,7 +525,7 @@ class dropzone extends Controller
             $filesize = getFileSize('filesize');
             if (!empty($_FILES)) {
 
-                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg");
+                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
@@ -636,7 +636,7 @@ class dropzone extends Controller
             $filesize = getFileSize('filesize');
             if (!empty($_FILES)) {
 
-                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg");
+                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
@@ -742,7 +742,7 @@ class dropzone extends Controller
             $filesize = getFileSize('filesize');
             if (!empty($_FILES)) {
 
-                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg");
+                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
@@ -855,7 +855,7 @@ class dropzone extends Controller
             $filesize = getFileSize('filesize');
             if (!empty($_FILES)) {
 
-                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg");
+                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
