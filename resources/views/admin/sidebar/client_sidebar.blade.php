@@ -306,10 +306,10 @@ if(empty($oBroadcast)){
                             }
                             ?>"><a href="{{ url('admin/brandboost/review_request/offsite') }}"><i class="fa fa-circle"></i> Review Requests</a></li>
                             
-                            
+                            <!--
                              <li class=""><a href="javascript:void(0)"><i class="fa fa-circle"></i>Competitors <span class="label bg-blue-400 menubadge">2</span></a></li>
                              <li class=""><a href="javascript:void(0)"><i class="fa fa-circle"></i>Report</a></li>
-                            
+                            -->
                             
                             <li class="<?php
                             if ($pageName == 'feedback' && $pageSeName == 'listall') {
