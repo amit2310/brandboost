@@ -344,6 +344,54 @@ class WebChatModel extends Model {
 
         }
 
+
+      /**
+     * this function is used get the room details
+     * @return type
+     */
+
+public static function getTeamByroomDetails($room)
+{
+
+        $oData = DB::select(DB::raw(" SELECT user as userval from tbl_chat_supportuser WHERE room = '".$room."'" ));
+        return $oData;
+
+}
+
+/**
+ * prepare list after search
+ * @param type $userID
+ * @param type $searchval
+ * @return data object
+ */
+
+    public static function smallwfilterModel($userID,$searchval) {
+
+        if($searchval!="")
+        {
+        $oData = DB::select(DB::raw(" SELECT 
+      tcm_subs.* FROM 
+      tbl_chat_message tc INNER JOIN 
+      (SELECT * FROM tbl_chat_message group by token, created ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token 
+      WHERE (tc.user_to = '" . $userID . "' or tc.user_form ='" . $userID . "') AND tc.message  LIKE '%".$searchval."%'
+      GROUP BY tc.token ORDER BY tcm_subs.created DESC"));
+      }
+      else
+      {
+      $oData = DB::select(DB::raw(" SELECT 
+      tcm_subs.*
+FROM 
+      tbl_chat_message tc INNER JOIN 
+      (SELECT * FROM tbl_chat_message group by token, created ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token 
+      WHERE (tc.user_to = '" . $userID . "' or tc.user_form ='" . $userID . "') 
+      GROUP BY tc.token ORDER BY tcm_subs.created DESC"));
+      
+      } 
+      
+       
+        return $oData;
+    }
+
        
 
 

@@ -4173,17 +4173,19 @@ if ($isLoggedInTeam) {
 		
     }
   }
-  xmlhttp.open("GET","/admin/smschat/getSearchSmsListByinputSmallsms?q="+str ,true);
+  xmlhttp.open("GET","/admin/smschat/SearchSBox?_token: '{{csrf_token()}}'&q="+str ,true);
   xmlhttp.send();
 
 }
 
-$(document).ready(function(){
+
+$(document).ready(function()
+{
 $(document).on("keyup",".small_web_MainsearchChatMsg", function() {
 $.ajax({
-url: "{{ url('admin/smschat/getSearchsubscriberByinputSmallWeb') }}",
+url: '<?php echo base_url('admin/webchat/smallwfilter'); ?>',
 type: "POST",
-data: {searchVal:$('#small_web_MainsearchChatMsg').val()},
+data: {searchVal:$('#small_web_MainsearchChatMsg').val(),_token: '{{csrf_token()}}'},
 success: function (data) {
 $('#small_web_InitalWeb').hide();
 $('#small_web_AjaxSearchWeb').show();

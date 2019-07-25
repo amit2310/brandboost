@@ -1233,4 +1233,245 @@ class WebChat extends Controller {
     }
 
 
+    /**
+     * this function is used to make the list after searching in the small webchat
+     * @return type list
+     */
+
+
+    public function smallwfilter() {
+        $searchvalue = Input::post("searchVal");
+        $loginUserData = getLoggedUser();
+        $activechatlist = smallwfilterInput($loginUserData->id, $searchvalue);
+
+
+        $count = 0;
+        $flag = 0;
+
+        foreach ($activechatlist as $key => $value) {
+            $token = "";
+            $userid = "";
+            $chatMessage = "";
+            $created = "";
+            $first_name = "";
+            $last_name = "";
+            $user_to="";
+            $user_name="";
+            $token = $value->token;
+            $user_to = getTeamByroom($token);
+            $value = getSupportUser($user_to);
+            if($value->count()>0)
+            {
+            $value = $value[0];
+            $user_name = $value->user_name;
+            $nameDetails = explode(" ", $user_name);
+            $first_name = $nameDetails[0];
+            $last_name = $nameDetails[1];
+            $first_name = $first_name!="" ? $first_name : '';
+            $last_name = $last_name!="" ? $last_name : '';
+
+            $userid = $value->user;
+            $chatMessageRes = getLastMessage($token);
+            $chatMessage = $chatMessageRes->message;
+            $created = $chatMessageRes->created;
+
+            $fileext = explode('.', $chatMessage);
+             $fileext = end($fileext);
+            if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
+                $userMessage = "File Attachment";
+            } else if (strpos($chatMessage, '/Media/') !== false) {
+                $userMessage = "File Attachment";
+            } else if (strpos($chatMessage, 'amazonaws') !== false) {
+                $userMessage = "File Attachment";
+            } else {
+                $userMessage = setStringLimit($chatMessage, 30);
+            }
+
+            // $favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id,$incid[0]->id);
+            ?>
+            <div RwebId="<?php echo $token ?>" token="<?php echo $token; ?>" class="sidebar-user-box all_user_chat tk_<?php echo $token; ?>" incWid="" id="sidebar-user-box-<?php echo $userid; ?>" user_id="<?php echo $userid; ?>" >
+                <div class="avatarImage"><?php echo showUserAvtar('', $first_name, $last_name, 28, 28, 11); ?></div>
+
+                <span class="slider-username contacts"><?php echo $first_name . ' ' . $last_name; ?> </span> 
+                <span class="slider-phone contacts txt_dark" style="margin:0px;color: #6a7995!important; font-weight:bold;padding-left:40px; font-size:12px!important"><?php echo $userMessage; ?></span>
+
+                 <span id="" class="slider-phone contacts"><span style="float: left; width: 100%; font-weight:300!important; color: #6a7995 !important; font-size: 12px; margin-bottom: 3px; ">
+            <?php if(assignto($token)!=""){ ?>Assigned to:&nbsp <?php echo assignto($token); } ?> </span></span>
+
+
+                <span style="display: none;" class="slider-email contacts"></span>
+
+                <span style="display: none;" class="slider-mobile contacts"></span>
+                <span style="display: none;" class="slider-image img">
+                    <?php
+                    if (empty($loginUserData->avatar)) {
+                        echo $currentUserImg = '/assets/images/default_avt.jpeg';
+                    } else {
+                        echo $currentUserImg = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $loginUserData->avatar;
+                    }
+                    ?></span>
+
+                <span class="user_status"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>" 
+                                                datetime="<?php echo usaDate($created); ?>" title="<?php echo usaDate($created); ?>"><?php //echo chatTimeAgo($chatMessageRes->created);    ?></time></span>
+
+                <!--box hover chat details -->   
+                <div class="user_details p0">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="header_sec"> <i class="icon-info22 txt_blue"></i><?php echo $first_name . ' ' .$last_name; ?></div>
+                            <div class="sidebar_info p20 text-center">
+                                <?php echo showUserAvtar('', $first_name, $last_name, 60, 60, 21); ?>
+                                <h3 class="mb0"><?php echo $first_name . ' ' . $last_name; ?></h3>
+
+                               
+                            </div>
+                            <div class="p20 pt0 pb10">
+                                <div class="interactions p0 pt10 pb10 btop">
+                                    <ul>
+
+        <li><span style="width: 62px; float: left;"><i class="fa fa-envelope"></i> Email: </span><span class="userAdd">
+        <strong class="em"><?php echo $value->email; ?></strong></span> <input type="text" class="uAddText support_email" style="display:none;" name="support_email"> </li>
+        <li><span style="width: 62px; float: left;"><i class="fa fa-phone"></i> Phone: </span><span class="userAdd">
+        <strong class="em"><?php echo $value->phone; ?></strong></span> <input type="text" class="uAddText support_email" style="display:none;" name="support_email"> </li>
+
+        </ul>
+                                </div>
+                                <div class="p0 user_tags">
+                                    <p class="usertags_headings">Tags</p>
+                                    <button class="btn btn-xs btn_white_table">added review</button>
+                                    <button class="btn btn-xs btn_white_table">male 25+</button>
+                                    <button class="btn btn-xs btn_white_table">Referral</button>
+                                    <button class="btn btn-xs btn_white_table">Media</button>
+                                    <button class="btn btn-xs btn_white_table">+</button>
+                                </div>
+                            </div>
+                            <div class="p20 footer_txt btop"><a href="#">Open Profile &gt; </a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+        <script>
+            $(document).ready(function () {
+                $(".autoTimeUpdate").timeago();
+            });
+        </script>
+        <?php
+    }
+}
+
+
+    /**
+     * this function is used to make the list after searching in the big webchat
+     * @return type list
+     */
+
+
+     public function bigwfilter() {
+
+        $count = 0;
+        $flag = 0;
+        $userMessage = "";
+        $searchvalue = Input::post("searchVal");
+        $loginUserData = getLoggedUser();
+        $activechatlist = smallwfilterInput($loginUserData->id, $searchvalue);
+
+        foreach ($activechatlist as $key => $value) {
+            $token = "";
+            $userid = "";
+            $chatMessage = "";
+            $created = "";
+            $first_name = "";
+            $last_name = "";
+
+            $value->user_to = getTeamByroom($value->token);
+            $value = getSupportUser($value->user_to);
+            if($value->count()>0)
+            {
+            $value = $value[0];
+            $nameDetails = explode(" ", $value->user_name);
+            $first_name = $nameDetails[0];
+            $last_name = $nameDetails[1];
+
+            $token = $value->room;
+            $userid = $value->user;
+            $chatMessageRes = getLastMessage($token);
+            $chatMessage = $chatMessageRes->message;
+            $created = $chatMessageRes->created;
+
+            $fileext = explode('.', $chatMessage);
+             $fileext = end($fileext);
+            if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
+                $userMessage = "File Attachment";
+            } else if (strpos($chatMessage, '/Media/') !== false) {
+                $userMessage = "File Attachment";
+            } else if (strpos($chatMessage, 'amazonaws') !== false) {
+                $userMessage = "File Attachment";
+            } else {
+                $userMessage = setStringLimit($chatMessage, 30);
+            }
+            ?>
+            <div class="activityShow<?php echo $count; ?> media chatbox_new bkg_white <?php
+            if ($count == 1) {
+                echo 'mb10';
+            }
+            ?>" style="<?php
+                 if ($count > 7) {
+                     echo "display:block";
+                 }
+                 if ($count == 1) {
+                     echo 'box-shadow:0 2px 4px 0 rgba(1, 21, 64, 0.06)!important; border-radius:0 0 5px 5px';
+                 }
+                 if ($count == 2) {
+                     echo 'border-radius:5px 5px 5px 5px';
+                 }
+                 ?>"> 
+                <a href="javascript:void(0);" class="media-link <?php
+                if ($count != 1) {
+                    echo 'bbot';
+                }
+                ?> tk_<?php echo $token; ?> getChatDetails WebBoxList <?php echo $count == 0 ? 'activechat' : ''; ?>" userId="<?php echo $userid; ?>" 
+                   assign_to="<?php echo assignto($token); ?>" RwebId="<?php echo $token; ?>" token="<?php echo $token; ?>"<?php }
+                ?> >
+                    <div class="media-left"><?php echo showUserAvtar('', $first_name, $last_name, 28, 28, 12); ?>
+
+                    </div>
+
+                    <div class="media-body"> 
+                        <span class="fsize12 txt_dark"><?php echo $first_name; ?> <?php echo $last_name; ?></span> 
+
+                        <span id="Big_assign_message_<?php echo $userid; ?>" class="slider-phone contacts txt_dark" style="margin:0px;color: #6a7995!important; font-weight:bold; font-size:12px!important"><?php echo $userMessage; ?></span> 
+
+                        <span id="Big_assign_<?php echo $userid; ?>" class="fsize12 txt_dark assign_to"><span style="float: left; font-weight:bold; ">
+                                <?php if (assignto($token) != "") { ?>Assigned to:&nbsp </span><?php
+                                echo assignto($token);
+                            }
+                            ?></span>
+
+
+                    </div>
+                    <div class="media-right" style="width: 100px"><span class="date_time txt_grey fsize11"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>" datetime="<?php echo usaDate($created); ?>" ></time>
+                           
+                        </span></div>
+
+                </a> 
+            </div>
+
+            <?php
+            $count++;
+        }
+        ?>
+        <script>
+            $(document).ready(function () {
+                $(".autoTimeUpdate").timeago();
+            });
+        </script>
+        <?php
+    }
+
+
+
+
 }
