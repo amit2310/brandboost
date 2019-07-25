@@ -359,7 +359,7 @@
 	var myDropzoneLogoImg = new Dropzone(
 	'#myDropzone_avatar', //id of drop zone element 1
 	{
-		url: '<?php echo base_url("/dropzone/upload_profile_image"); ?>',
+		url: '<?php echo base_url("webchat/dropzone/upload_profile_image"); ?>',
 		uploadMultiple: false,
 		maxFiles: 1,
 		maxFilesize: 600,
