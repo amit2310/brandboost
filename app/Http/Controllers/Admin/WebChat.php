@@ -826,7 +826,7 @@ class WebChat extends Controller {
                 if ($count != 1) {
                     echo 'bbot';
                 }
-                ?>getChatDetails WebBoxList <?php echo $count == 0 ? '' : ''; ?>" userId="<?php echo $value->user; ?>"assign_to="<?php echo assignto($token); ?>" RwebId="<?php echo $token; ?>">
+                ?> getChatDetails WebBoxList <?php echo $count == 0 ? '' : ''; ?>" userId="<?php echo $value->user; ?>"assign_to="<?php echo assignto($token); ?>" RwebId="<?php echo $token; ?>">
                     <div class="media-left"><?php echo showUserAvtar('', $chatName[0], $chatName[1], 28, 28, 12); ?>
                         <!-- <i class="fa fa-star-o star_icon"></i> -->
                         <i class="fa star_icon <?php echo $value->favourite == 1 ? 'fa-star yellow' : 'fa-star-o'; ?> favouriteUser" userId="<?php echo $value->id; ?>"></i>
