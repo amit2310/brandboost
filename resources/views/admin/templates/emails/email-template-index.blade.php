@@ -4,6 +4,7 @@ $userID = $aUser->id;
 $bHaveStaticTemplates = '';
 $selected_template = (isset($selected_template)) ? $selected_template : '';
 $method = (isset($method)) ? $method : '';
+$moduleUnitID = !empty($moduleUnitID) ? $moduleUnitID : '';
 ?>
 <style>
     .emailtempsec{width: calc(100% - 190px);}

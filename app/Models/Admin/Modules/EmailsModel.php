@@ -363,11 +363,11 @@ class EmailsModel extends Model {
             $oResponse = DB::table('tbl_automations_emails_events')
                     ->where('automation_id', $automationID)
                     ->update($aData);
-            
-            if($oResponse){
-                 $oResponse2 = DB::table('tbl_automations_emails')
-                    ->where('id', $automationID)
-                    ->update($aData);
+
+            if ($oResponse) {
+                $oResponse2 = DB::table('tbl_automations_emails')
+                        ->where('id', $automationID)
+                        ->update($aData);
             }
             if ($oResponse || $oResponse2) {
                 return true;
@@ -426,11 +426,15 @@ class EmailsModel extends Model {
         }
     }
 
+    /**
+     * Used to add/update automation list
+     * @param type $automationID
+     * @param type $iListID
+     * @return boolean
+     */
     public function updateAutomationList($automationID, $iListID) {
         if ($automationID > 0 && $iListID > 0) {
-
-            $result = $this->db->insert("tbl_automations_emails_lists", array('automation_id' => $automationID, 'list_id' => $iListID, 'created' => date("Y-m-d H:i:s")));
-            //echo $this->db->last_query();
+            $result = DB::table('tbl_automations_emails_lists')->insert(['automation_id' => $automationID, 'list_id' => $iListID, 'created' => date("Y-m-d H:i:s")]);
             if ($result) {
                 return true;
             } else {
@@ -438,12 +442,16 @@ class EmailsModel extends Model {
             }
         }
     }
-
+    
+    /**
+     * Update automation excluded list
+     * @param type $automationID
+     * @param type $iListID
+     * @return boolean
+     */
     public function updateAutomationExcludedList($automationID, $iListID) {
         if ($automationID > 0 && $iListID > 0) {
-
-            $result = $this->db->insert("tbl_automations_emails_lists_excluded", array('automation_id' => $automationID, 'list_id' => $iListID, 'created' => date("Y-m-d H:i:s")));
-            //echo $this->db->last_query();
+            $result = DB::table('tbl_automations_emails_lists_excluded')->insert(['automation_id' => $automationID, 'list_id' => $iListID, 'created' => date("Y-m-d H:i:s")]);
             if ($result) {
                 return true;
             } else {
@@ -544,12 +552,19 @@ class EmailsModel extends Model {
             return false;
         }
     }
-
+    
+    /**
+     * Used to delete automation list
+     * @param type $automationID
+     * @param type $listId
+     * @return boolean
+     */
     public function deleteAutomationLists($automationID, $listId) {
         if ($automationID > 0) {
-            $this->db->where('automation_id', $automationID);
-            $this->db->where('list_id', $listId);
-            $result = $this->db->delete("tbl_automations_emails_lists");
+            $result = DB::table('tbl_automations_emails_lists')
+                    ->where('automation_id', $automationID)
+                    ->where('list_id', $listId)
+                    ->delete();
             if ($result) {
                 return true;
             } else {
@@ -557,12 +572,19 @@ class EmailsModel extends Model {
             }
         }
     }
-
+    
+    /**
+     * Used to delete automation excluded list
+     * @param type $automationID
+     * @param type $listId
+     * @return boolean
+     */
     public function deleteAutomationExcludedLists($automationID, $listId) {
         if ($automationID > 0) {
-            $this->db->where('automation_id', $automationID);
-            $this->db->where('list_id', $listId);
-            $result = $this->db->delete("tbl_automations_emails_lists_excluded");
+            $result = DB::table('tbl_automations_emails_lists_excluded')
+                    ->where('automation_id', $automationID)
+                    ->where('list_id', $listId)
+                    ->delete();            
             if ($result) {
                 return true;
             } else {

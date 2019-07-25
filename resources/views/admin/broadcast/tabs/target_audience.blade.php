@@ -67,17 +67,9 @@ if (!empty($oAutomationLists)) {
 
 
     </div>
-    <?php //$this->load->view("admin/components/smart-popup/smart-contact-widget"); ?>
+    @include('admin.components.smart-popup.smart-broadcast-audience-widget')
     
-    <?php $this->load->view("admin/components/smart-popup/smart-broadcast-audience-widget"); ?>
-    
-    <?php $this->load->view("admin/broadcast/partials/contact_selection"); ?>
-
-    <?php //$this->load->view("admin/broadcast/partials/list_selection"); ?>
-
-    <?php //$this->load->view("admin/broadcast/partials/contact_selection"); ?>
-
-    <?php //$this->load->view("admin/broadcast/partials/tag_selection"); ?>
+    @include('admin.broadcast.partials.contact_selection')
 
 </div>
 
@@ -147,8 +139,8 @@ if (!empty($oAutomationLists)) {
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-                        <?php echo validation_errors(); ?></div>
+                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?>
+                        <?php //echo validation_errors(); ?></div>
 
                     <div class="col-md-12">
 
@@ -204,8 +196,8 @@ if (!empty($oAutomationLists)) {
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-                        <?php echo validation_errors(); ?></div>
+                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?>
+                        <?php //echo validation_errors(); ?></div>
 
                     <div class="form-group">
                         <label class="control-label col-lg-3">Import CSV</label>
@@ -247,7 +239,7 @@ if (!empty($oAutomationLists)) {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/updateBroadcastData'); ?>',
                 type: "POST",
-                data: {broadcast_id: '<?php echo $oBroadcast->broadcast_id; ?>', audience_type: audience_type},
+                data: {_token: '{{csrf_token()}}', broadcast_id: '<?php echo $oBroadcast->broadcast_id; ?>', audience_type: audience_type},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -300,7 +292,7 @@ if (!empty($oAutomationLists)) {
                 $.ajax({
                     url: '<?php echo base_url('admin/broadcast/setTab'); ?>',
                     type: "POST",
-                    data: {tab: tab},
+                    data: {_token: '{{csrf_token()}}', tab: tab},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -352,7 +344,7 @@ if (!empty($oAutomationLists)) {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/syncSegment'); ?>',
                 type: "POST",
-                data: {segmentID: segmentID},
+                data: {_token: '{{csrf_token()}}', segmentID: segmentID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -381,7 +373,7 @@ if (!empty($oAutomationLists)) {
                         $.ajax({
                             url: '<?php echo base_url('admin/broadcast/deleteSegment'); ?>',
                             type: "POST",
-                            data: {segmentID: segmentID},
+                            data: {_token: '{{csrf_token()}}', segmentID: segmentID},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {
@@ -404,7 +396,7 @@ if (!empty($oAutomationLists)) {
             $.ajax({
                 url: '<?php echo base_url('admin/lists/getList'); ?>',
                 type: "POST",
-                data: {'list_id': listID},
+                data: {_token: '{{csrf_token()}}', 'list_id': listID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -488,7 +480,7 @@ if (!empty($oAutomationLists)) {
                             $.ajax({
                                 url: '<?php echo base_url('admin/lists/deleteLists'); ?>',
                                 type: "POST",
-                                data: {list_id: listID},
+                                data: {_token: '{{csrf_token()}}', list_id: listID},
                                 dataType: "json",
                                 success: function (data) {
                                     if (data.status == 'success') {

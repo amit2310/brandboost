@@ -1,3 +1,4 @@
+
 <style>
     .form-control::placeholder {color: #011540 !important;}
     .interactions ul li small{color: #09204f;}
@@ -44,6 +45,8 @@ if (!empty($oBroadcast)) {
 $aDeliveryParam = json_decode($oBroadcast->data);
 $deliveryDate = $aDeliveryParam->delivery_date;
 $deliveryTime = $aDeliveryParam->delivery_time;
+
+$sendingMethod = !empty($sendingMethod) ? $sendingMethod : '';
 ?>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/pickers/pickadate/picker.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/pickers/pickadate/picker.date.js"></script>

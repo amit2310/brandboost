@@ -964,7 +964,7 @@ class BroadcastModel extends Model {
      */
     public function createBroadcastEvent($aData) {
         $insert_id = DB::table('tbl_automations_emails_events')->insertGetId($aData);
-        return $inset_id;
+        return $insert_id;
     }
 
     /**
@@ -974,7 +974,7 @@ class BroadcastModel extends Model {
      */
     public function createBroadcastCampaign($aData) {
         $insert_id = DB::table('tbl_automations_emails_campaigns')->insertGetId($aData);
-        return $inset_id;
+        return $insert_id;
     }
 
     /**
@@ -984,7 +984,7 @@ class BroadcastModel extends Model {
      */
     public function createBroadcastDefaultVariationCampaign($aData) {
         $insert_id = DB::table('tbl_broadcast_split_campaigns')->insertGetId($aData);
-        return $inset_id;
+        return $insert_id;
     }
 
     /**
@@ -1069,7 +1069,7 @@ class BroadcastModel extends Model {
      */
     public function addBroadcastSettings($aData) {
         $insert_id = DB::table('tbl_automations_emails_campaigns_settings')->insertGetId($aData);
-        return $inset_id;
+        return $insert_id;
     }
 
     /**
@@ -1156,7 +1156,7 @@ class BroadcastModel extends Model {
      */
     public function addTagToCampaign($aData) {
         $insert_id = DB::table('tbl_automations_emails_campaigns_tags')->insertGetId($aData);
-        return $inset_id;
+        return $insert_id;
     }
 
     /**
@@ -1166,7 +1166,7 @@ class BroadcastModel extends Model {
      */
     public function addExcludedTagToCampaign($aData) {
         $insert_id = DB::table('tbl_automations_emails_campaigns_tags_excluded')->insertGetId($aData);
-        return $inset_id;
+        return $insert_id;
     }
 
     /**
@@ -1176,7 +1176,7 @@ class BroadcastModel extends Model {
      */
     public function addSegmentToCampaign($aData) {
         $insert_id = DB::table('tbl_automations_emails_campaigns_segments_new')->insertGetId($aData);
-        return $inset_id;
+        return $insert_id;
     }
 
     /**
@@ -1186,7 +1186,7 @@ class BroadcastModel extends Model {
      */
     public function addExcludedSegmentToCampaign($aData) {
         $insert_id = DB::table('tbl_automations_emails_campaigns_segments_excluded')->insertGetId($aData);
-        return $inset_id;
+        return $insert_id;
     }
 
     /**

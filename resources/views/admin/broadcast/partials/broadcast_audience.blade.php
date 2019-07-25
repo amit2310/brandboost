@@ -1,4 +1,8 @@
 <?php
+$recordSource = !(empty($recordSource)) ? $recordSource : '';
+$moduleName = !(empty($moduleName)) ? $moduleName : 'broadcast';
+$aSelectedContacts = !(empty($aSelectedContacts)) ? $aSelectedContacts : array();
+
 if ($recordSource == 'contact-selection') {
     $tableID = 'broadcastAudience';
     $prefix = 'cl';
@@ -12,42 +16,37 @@ if ($recordSource == 'contact-selection') {
 ?>
 
 <?php if (count($oBroadcastSubscriber) > 0) { ?>
-<table class="table" id="<?php echo $tableID; ?>">
-    <thead>
+    <table class="table" id="<?php echo $tableID; ?>">
+        <thead>
 
-        <tr>
-            <th style="display: none;"></th>
-            <th style="display: none;"></th>
-            <th class="nosort"><div class="brig pr10 editActionContact" style="display:none;">
-                    <label class="custmo_checkbox pull-left" ><input type="checkbox" name="checkAll[]" broadcast_id="<?php echo $oBroadcast->broadcast_id; ?>" class="control-primary" id="checkAllContact" ><span class="custmo_checkmark"></span></label>
-                </div> &nbsp;&nbsp;<i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i>Name</th>
-            <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_email_small.png"></i>Email</th>
-            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Phone</th>
-            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_social.png"></i>Social</th>
-            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_id.png"></i>Tags</th>
-            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Created</th>
+            <tr>
+                <th style="display: none;"></th>
+                <th style="display: none;"></th>
+                <th class="nosort"><div class="brig pr10 editActionContact" style="display:none;">
+                        <label class="custmo_checkbox pull-left" ><input type="checkbox" name="checkAll[]" broadcast_id="<?php echo !empty($oBroadcast) ? $oBroadcast->broadcast_id : ''; ?>" class="control-primary" id="checkAllContact" ><span class="custmo_checkmark"></span></label>
+                    </div> &nbsp;&nbsp;<i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i>Name</th>
+                <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_email_small.png"></i>Email</th>
+                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Phone</th>
+                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_social.png"></i>Social</th>
+                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_id.png"></i>Tags</th>
+                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Created</th>
 
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $CI = & get_instance();
-        $CI->load->model("admin/Tags_model", "mmTag");
-        //pre($oBroadcastSubscriber);
-        //die;
-        
+            </tr>
+        </thead>
+        <tbody>
+            <?php
             foreach ($oBroadcastSubscriber as $oContact) {
                 $subscriberID = $oContact->subscriber_id;
-                $oTags = $CI->mmTag->getSubscriberTags($subscriberID);
+                $oTags = $mTags->getSubscriberTags($subscriberID);
                 $iTagCount = count($oTags);
                 $userData = '';
                 if ($oContact->status != '2') {
 
                     if ($oContact->user_id > 0) {
-                        $userData = $this->mUser->getUserInfo($oContact->user_id);
+                        $userData = \App\Models\Admin\UsersModel::getUserInfo($oContact->user_id);
                     }
 
-                    if ($userData->avatar == '') {
+                    if (empty($userData->avatar)) {
                         $profileImage = '<a class="icons fl_letters s32" href="' . base_url() . 'admin/contacts/profile/' . $oContact->subscriber_id . '">' . ucfirst(substr($oContact->firstname, 0, 1)) . '' . ucfirst(substr($oContact->lastname, 0, 1)) . '</a>';
                     } else {
                         $profileImage = '<a class="icons s32" href="' . base_url() . 'admin/contacts/profile/' . $oContact->subscriber_id . '"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $userData->avatar . '" onerror="this.src=\'/assets/images/userp.png\'" class="img-circle img-xs" alt=""></a>';
@@ -63,7 +62,7 @@ if ($recordSource == 'contact-selection') {
                                     <span class="custmo_checkmark sblue"></span>
                                 </label>
                             </div>
-                            <div class="media-left media-middle" class="viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>"> <?php echo showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
+                            <div class="media-left media-middle" class="viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>"> <?php echo @showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
                             <div class="media-left" class="viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>">
                                 <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot"><?php echo $oContact->firstname; ?> <?php echo $oContact->lastname; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($oContact->country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
                             </div>
@@ -112,7 +111,7 @@ if ($recordSource == 'contact-selection') {
                                 <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
                                     <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
 
-                                        <li><a href="javascript:void(0);" class="deleteAudience" broadcast_id="<?php echo $oBroadcast->broadcast_id; ?>" subscriber_id="<?php echo $oContact->subscriber_id; ?>"><i class="icon-primitive-dot txt_red"></i> Delete</a> </li>
+                                        <li><a href="javascript:void(0);" class="deleteAudience" broadcast_id="<?php echo !empty($oBroadcast) ? $oBroadcast->broadcast_id : ''; ?>" subscriber_id="<?php echo $oContact->subscriber_id; ?>"><i class="icon-primitive-dot txt_red"></i> Delete</a> </li>
 
                                     </ul>
                                 </div>
@@ -126,11 +125,11 @@ if ($recordSource == 'contact-selection') {
                     <?php
                 }
             }
-        ?>
-    </tbody>
-</table>
-<?php  }
-else {
+            ?>
+        </tbody>
+    </table>
+<?php
+} else {
     ?>
     <table class="table datatable-basic">
         <thead>
@@ -147,62 +146,59 @@ else {
         </thead>
 
         <tbody>
-            <td style="display: none"></td>
-            <td style="display: none"></td>
-            <td colspan="10">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div style="margin: 20px 0px 0;" class="text-center">
-                            <h5 class="mb-20 mt40">
-                                Looks Like You Don’t Have Any Contact Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
-                                Lets Create Your First Contact.
-                            </h5>
+        <td style="display: none"></td>
+        <td style="display: none"></td>
+        <td colspan="10">
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="margin: 20px 0px 0;" class="text-center">
+                        <h5 class="mb-20 mt40">
+                            Looks Like You Don’t Have Any Contact Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+                            Lets Create Your First Contact.
+                        </h5>
 
-                            <?php //if ($canWrite): ?>
-                                <!-- <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addOnSiteReview" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add On Site Review</button> -->
-                            <?php //endif; ?>
+                        <?php //if ($canWrite): ?>
+                                    <!-- <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addOnSiteReview" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add On Site Review</button> -->
+                        <?php //endif; ?>
 
-                        </div>
                     </div>
                 </div>
-            </td>
-            <td style="display: none"></td>
-            <td style="display: none"></td>
-            <td style="display: none"></td>
-        </tbody>
+            </div>
+        </td>
+        <td style="display: none"></td>
+        <td style="display: none"></td>
+        <td style="display: none"></td>
+    </tbody>
     </table>
-    <?php
-}?>
+    <?php }
+?>
 
 
 <?php
 if ($recordSource == 'contact-selection') {
-   
     ?>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             var tableId = 'broadcastAudience';
             var tableBase = custom_data_table(tableId);
         });
     </script>
     <?php
 } else if ($recordSource == 'review-audience') {
-  
-     ?>
+    ?>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             var tableId = 'editBroadcastAudience';
             var tableBase = custom_data_table(tableId);
         });
     </script>
     <?php
 } else {
-   
-     ?>
+    ?>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             /*var tableId = 'broadcastAudience2';
-            var tableBase = custom_data_table(tableId);*/
+             var tableBase = custom_data_table(tableId);*/
         });
     </script>
     <?php

@@ -1,4 +1,5 @@
 <?php
+$aSelectedTags = array();
 if (!empty($oCampaignTags)) {
     foreach ($oCampaignTags as $oRec) {
         $aSelectedTags[] = $oRec->tag_id;
@@ -42,7 +43,7 @@ if (!empty($oCampaignTags)) {
                     <?php
                         foreach ($aTags as $aTag):
                             $tagID = $aTag->tagid;
-                            $oTagSubscribers = $this->mSubscriber->getTagSubscribers($tagID);
+                            $oTagSubscribers = App\Models\Admin\SubscriberModel::getTagSubscribers($tagID);
                             ?>
                         <tr>
                             <td style="display: none;"><?php echo date('m/d/Y', strtotime($aTag->tag_created)); ?></td>

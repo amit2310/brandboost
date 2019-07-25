@@ -1,3 +1,16 @@
+<?php
+if(empty($broadcastSettings)){
+    $broadcastSettings = new stdClass();
+    $broadcastSettings->text_version_email= 0;
+    $broadcastSettings->enable_mobile_responsiveness= 0;
+    $broadcastSettings->read_tracking= 0;
+    $broadcastSettings->link_tracking = 0;
+    $broadcastSettings->reply_tracking = 0;
+    $broadcastSettings->google_analytics= 0;
+    $broadcastSettings->campaign_archives= 0;
+    
+}
+?>
 <style>
     .form-control::placeholder {color: #011540 !important;}
     .interactions ul li small{color: #09204f;}
@@ -171,7 +184,7 @@ $deliveryTime = $aDeliveryParam->delivery_time;
 
 
 
-                        <?php $this->load->view("admin/broadcast/partials/add_split_form"); ?>
+                        @include('admin.broadcast.partials.add_split_form')
 
 
 
@@ -370,7 +383,7 @@ $deliveryTime = $aDeliveryParam->delivery_time;
         $.ajax({
             url: '<?php echo base_url('admin/broadcast/updateBroadcastSettingUnit'); ?>',
             type: "POST",
-            data: {fieldName: fieldName, fieldVal: fieldVal, 'event_id': '<?php echo $oBroadcast->event_id; ?>', 'campaign_id': '<?php echo $oBroadcast->id; ?>', broadcast_id: '<?php echo $oBroadcast->broadcast_id; ?>'},
+            data: {_token: '{{csrf_token()}}', fieldName: fieldName, fieldVal: fieldVal, 'event_id': '<?php echo $oBroadcast->event_id; ?>', 'campaign_id': '<?php echo $oBroadcast->id; ?>', broadcast_id: '<?php echo $oBroadcast->broadcast_id; ?>'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -400,7 +413,7 @@ $deliveryTime = $aDeliveryParam->delivery_time;
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/deleteVariation'); ?>',
                 type: "POST",
-                data: {variationID: variationID},
+                data: {_token: '{{csrf_token()}}', variationID: variationID},
                 dataType: "json",
                 success: function (data) {
                     $('.overlaynew').hide();
@@ -423,7 +436,7 @@ $deliveryTime = $aDeliveryParam->delivery_time;
         $.ajax({
             url: '<?php echo base_url('admin/broadcast/updateSplitTest'); ?>',
             type: "POST",
-            data: {fieldVal: fieldVal, testid: testid},
+            data: {_token: '{{csrf_token()}}', fieldVal: fieldVal, testid: testid},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -462,7 +475,7 @@ $deliveryTime = $aDeliveryParam->delivery_time;
         $.ajax({
             url: '<?php echo base_url('admin/broadcast/updateVariation'); ?>',
             type: "POST",
-            data: {fieldName: fieldName, fieldVal: fieldVal, variationID: variationID},
+            data: {_token: '{{csrf_token()}}', fieldName: fieldName, fieldVal: fieldVal, variationID: variationID},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -522,7 +535,7 @@ $deliveryTime = $aDeliveryParam->delivery_time;
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/addVariation'); ?>',
                 type: "POST",
-                data: {broadcast_id: broadcast_id, campaign_type: campaign_type},
+                data: {_token: '{{csrf_token()}}', broadcast_id: broadcast_id, campaign_type: campaign_type},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -552,7 +565,7 @@ $deliveryTime = $aDeliveryParam->delivery_time;
         $.ajax({
             url: '<?php echo base_url('admin/broadcast/updateBroadcastSettings'); ?>',
             type: "POST",
-            data: {'event_id': '<?php echo $oBroadcast->event_id; ?>', 'campaign_id': '<?php echo $oBroadcast->id; ?>', broadcast_id: '<?php echo $oBroadcast->broadcast_id; ?>', delivery_date: delivery_date, delivery_time: delivery_time, 'tab': tab},
+            data: {_token: '{{csrf_token()}}', 'event_id': '<?php echo $oBroadcast->event_id; ?>', 'campaign_id': '<?php echo $oBroadcast->id; ?>', broadcast_id: '<?php echo $oBroadcast->broadcast_id; ?>', delivery_date: delivery_date, delivery_time: delivery_time, 'tab': tab},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -649,7 +662,7 @@ $deliveryTime = $aDeliveryParam->delivery_time;
         $.ajax({
             url: '<?php echo base_url('admin/broadcast/updateBroadcastSettings'); ?>',
             type: "POST",
-            data: {'event_id': '<?php echo $oBroadcast->event_id; ?>', 'campaign_id': '<?php echo $oBroadcast->id; ?>', broadcast_id: '<?php echo $oBroadcast->broadcast_id; ?>', delivery_date: delivery_date, delivery_time: delivery_time, 'tab': tab},
+            data: {_token: '{{csrf_token()}}', 'event_id': '<?php echo $oBroadcast->event_id; ?>', 'campaign_id': '<?php echo $oBroadcast->id; ?>', broadcast_id: '<?php echo $oBroadcast->broadcast_id; ?>', delivery_date: delivery_date, delivery_time: delivery_time, 'tab': tab},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

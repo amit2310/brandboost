@@ -1134,7 +1134,6 @@ class WorkflowModel extends Model {
                 ->orderBy('id', 'desc')
                 ->get();
         return $oData;
-        
     }
 
     /**
@@ -1174,7 +1173,7 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->where('user_id', $userID)
                 ->when(!empty($id), function ($query) use ($id) {
@@ -1234,7 +1233,7 @@ class WorkflowModel extends Model {
         }
         return false;
     }
-    
+
     /**
      * Used to get workflow categorized templates
      * @param type $moduleName
@@ -1267,7 +1266,7 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
+
         $oData = DB::table($tableName)
                 ->get();
         return $oData;
@@ -1695,18 +1694,21 @@ class WorkflowModel extends Model {
         }
     }
 
+    /**
+     * Used to get Workflow Split Variations
+     * @param type $moduleName
+     * @param type $moduleUnitID
+     * @return type
+     */
     public function getWorkflowSplitVariations($moduleName, $moduleUnitID) {
-        $this->db->select("tbl_broadcast_split_campaigns.*, tbl_broadcast_split_testing.test_name, tbl_broadcast_split_testing.id as splitID");
-        $this->db->join("tbl_broadcast_split_testing", "tbl_broadcast_split_campaigns.split_test_id = tbl_broadcast_split_testing.id", "LEFT");
-        $this->db->where("tbl_broadcast_split_campaigns.broadcast_id", $moduleUnitID);
-        $this->db->where("tbl_broadcast_split_campaigns.status", "active");
-        $this->db->order_by("tbl_broadcast_split_campaigns.id", "ASC");
-        $query = $this->db->get('tbl_broadcast_split_campaigns');
-
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_broadcast_split_campaigns')
+                ->leftJoin('tbl_broadcast_split_testing', 'tbl_broadcast_split_campaigns.split_test_id', '=', 'tbl_broadcast_split_testing.id')
+                ->select('tbl_broadcast_split_campaigns.*', 'tbl_broadcast_split_testing.test_name', 'tbl_broadcast_split_testing.id as splitID')
+                ->where('tbl_broadcast_split_campaigns.broadcast_id', $moduleUnitID)
+                ->where('tbl_broadcast_split_campaigns.status', 'active')
+                ->orderBy('tbl_broadcast_split_campaigns.id', 'asc')
+                ->get();
+        return $oData;
     }
 
     public function updateWorkflowSplitCampaign($aData, $id, $moduleName, $broadcastID = '') {
@@ -1736,13 +1738,14 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        if ($broadcastID > 0) {
-            $this->db->where('broadcast_id', $broadcastID);
-        } else {
-            $this->db->where('id', $id);
-        }
 
-        $result = $this->db->update($tableName, $aData);
+        $result = DB::table($tableName)
+                ->when(($broadcastID > 0), function($query) use($broadcastID) {
+                    return $query->where('broadcast_id', $broadcastID);
+                }, function($query) use($id) {
+                    return $query->where('id', $id);
+                })
+                ->update($aData);
         //echo $this->db->last_query();
 
         if ($result) {

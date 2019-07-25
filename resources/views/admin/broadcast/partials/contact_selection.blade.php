@@ -1,4 +1,5 @@
 <?php
+$aSelectedContacts = array();
 if (!empty($oCampaignContacts)) {
     foreach ($oCampaignContacts as $oRec) {
         $aSelectedContacts[] = $oRec->subscriber_id;
@@ -79,32 +80,8 @@ if (!empty($oBroadcastSubscriber)) {
 
             <div class="panel-body p0 bkg_white">
                 <div id="liveBroadcastAudience">
-                <?php  $this->load->view('admin/broadcast/partials/broadcast_audience', array('recordSource' => 'contact-selection')); ?>
+                @include('admin.broadcast.partials.broadcast_audience', ['recordSource' => 'contact-selection'])
                 </div>    
-
-
-<!--                <div id="subscriberTagListsModal" class="modal fade">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <form method="post" name="frmSubscriberApplyTag" id="frmSubscriberApplyTag" action="javascript:void();">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h5 class="modal-title">Apply Tags</h5>
-                                </div>
-                                <div class="modal-body" id="tagEntireList"></div>
-                                <div class="modal-footer modalFooterBtn">
-                                    <input type="hidden" name="tag_subscriber_id" id="tag_subscriber_id" />
-                                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Apply Tag</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>-->
-
-
-                <!-- /content area -->
-<!--                <script src="<?php echo base_url(); ?>assets/js/modules/people/subscribers.js" type="text/javascript"></script>-->
 
             </div>
         </div>
