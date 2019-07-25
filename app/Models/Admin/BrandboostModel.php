@@ -347,6 +347,22 @@ class BrandboostModel extends Model {
 			->count();
         return $oData;
     }
+	
+	/**
+	* Used to get feedback count by brandboost id
+	* @param type $brandboostID
+	* @return type
+	*/
+	public function updateBrandboost($userID, $aData, $brandboostID) {
+		$result = DB::table('tbl_brandboost')
+		->where('id', $brandboostID)
+		->update($aData);
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function getWidgetInfo($id, $hash = false) {
         if (!empty($id)) {
@@ -592,18 +608,6 @@ class BrandboostModel extends Model {
     public function updateBrandboostFeedbackResponse($aData, $brandboostID) {
         $this->db->where('brandboost_id', $brandboostID);
         $result = $this->db->update('tbl_feedback_response', $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    //public function update($userID, $aData, $brandboostID) {
-    public function updateBrandboost($userID, $aData, $brandboostID) {
-        $this->db->where('id', $brandboostID);
-        $result = $this->db->update('tbl_brandboost', $aData);
-        //echo $this->db->last_query(); 
         if ($result) {
             return true;
         } else {

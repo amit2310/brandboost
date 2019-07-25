@@ -459,7 +459,6 @@ $brandboostID = '';
     function calltoReviewPage(brandboostID)
     {
          window.location.href='<?php echo base_url() ?>admin/brandboost/addreview/'+brandboostID;
-        
     }
 	
 	$(document).ready(function () {
@@ -527,7 +526,7 @@ $brandboostID = '';
 	                $.ajax({
 	                    url: "<?php echo base_url('admin/brandboost/deleteReviewRequest'); ?>",
 	                    type: "POST",
-	                    data: {multipal_id:val},
+	                    data: {multipal_id:val, _token: '{{csrf_token()}}'},
 	                    dataType: "json",
 	                    success: function (data) {
 	                        if (data.status == 'success') {
@@ -554,7 +553,7 @@ $brandboostID = '';
 				$.ajax({
 					url: '<?php echo base_url('admin/brandboost/subscriber_delete'); ?>',
 					type: "POST",
-					data: {subscriberid: subscriberID},
+					data: {subscriberid: subscriberID, _token: '{{csrf_token()}}'},
 					dataType: "json",
 					success: function (data) {
 						if (data.status == 'success') {
@@ -599,7 +598,7 @@ $brandboostID = '';
 			$.ajax({
 				url: '<?php echo base_url('admin/brandboost/getSubscriberById'); ?>',
 				type: "POST",
-				data: {subscriberID: subscriberID},
+				data: {subscriberID: subscriberID, _token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'success') {
@@ -650,7 +649,7 @@ $brandboostID = '';
                 $.ajax({
                     url: "<?php echo base_url('admin/brandboost/deleteRRrecord'); ?>",
                     type: "POST",
-                    data: {recordId: recordId},
+                    data: {recordId: recordId, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -675,7 +674,7 @@ $brandboostID = '';
 			$.ajax({
 				url: '<?php echo base_url('admin/brandboost/unsubscriber_user'); ?>',
 				type: "POST",
-				data: {subscriber_email: subscriberEmail, subscriberid: subscriberid},
+				data: {subscriber_email: subscriberEmail, subscriberid: subscriberid, _token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 					$('.overlaynew').hide();
@@ -697,7 +696,7 @@ $brandboostID = '';
 			$.ajax({
 				url: '<?php echo base_url('admin/brandboost/update_subscriber_status'); ?>',
 				type: "POST",
-				data: {status: status, subscriber_id: subscriberId},
+				data: {status: status, subscriber_id: subscriberId, _token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 					

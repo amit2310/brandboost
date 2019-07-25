@@ -5,14 +5,22 @@
 @endsection
 
 @section('contents')
-<?php
-$feedbackResponseData = $feedbackResponse[0];
-?>
-<?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign');
-list($canReadCon, $canWriteCon) = fetchPermissions('Contacts');
-?>
 
 <?php
+$feedbackResponseData = new stdClass();
+if(count($feedbackResponse) > 0){
+	$feedbackResponseData = $feedbackResponse[0];
+}
+
+if(count($bbProductsData) > 0){
+	$productsData = $bbProductsData;
+}else{
+	$productsData = new stdClass();
+}
+
+list($canRead, $canWrite) = fetchPermissions('Onsite Campaign');
+list($canReadCon, $canWriteCon) = fetchPermissions('Contacts');
+
 $rewards = '';
 $emailWorkflow = '';
 $campaign = '';
@@ -109,7 +117,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
         <!--########################TAB 2 ##########################--> 
 		@include('admin.brandboost.campaign-tabs.onsite.onsite-subscribers', array('campaign' => $campaign))
         <!--########################TAB 3 ##########################-->
-		@include('admin.brandboost.campaign-tabs.onsite.onsite-preferences', array('camp' => $camp, 'feedbackResponseData' => $feedbackResponseData, 'brandboostData' => $brandboostData, 'bbProductsData' => $bbProductsData))
+		@include('admin.brandboost.campaign-tabs.onsite.onsite-preferences', array('camp' => $camp, 'feedbackResponseData' => $feedbackResponseData, 'brandboostData' => $brandboostData, 'bbProductsData' => $productsData))
         <!--########################TAB 4 ##########################-->
 		@include('admin.brandboost.campaign-tabs.onsite.onsite-workflow-campaign-beta', array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents))
         <!--########################TAB 5 ##########################--> 
@@ -165,7 +173,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/emailtemplate/send_email_template'); ?>',
                 type: "POST",
-                data: {email: email, emailtemplate: emailtemplate, bb_id: '<?php echo $brandboostData->id; ?>'},
+                data: {email: email, emailtemplate: emailtemplate, bb_id: '<?php echo $brandboostData->id; ?>', _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     $('.overlaynew').hide();
@@ -186,7 +194,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/emailtemplate/send_sms_template'); ?>',
                 type: "POST",
-                data: {phoneNo: phoneNo, smstemplate: smstemplate, bb_id: '<?php echo $brandboostData->id; ?>'},
+                data: {phoneNo: phoneNo, smstemplate: smstemplate, bb_id: '<?php echo $brandboostData->id; ?>', _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     $('.overlaynew').hide();
@@ -210,7 +218,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/publishOnsiteStatusBB'); ?>',
                 type: "POST",
-                data: {'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':status},
+                data: {'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -236,7 +244,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 $.ajax({
                     url: '<?php echo base_url('admin/brandboost/publishOnsiteStatusBB'); ?>',
                     type: "POST",
-                    data: {'action': 'publishCampaign', 'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':'1'},
+                    data: {'action': 'publishCampaign', 'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':'1', _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -252,7 +260,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 $.ajax({
                     url: '<?php echo base_url('admin/brandboost/publishOnsiteStatusBB'); ?>',
                     type: "POST",
-                    data: {'action': 'publishCampaign', 'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':'0'},
+                    data: {'action': 'publishCampaign', 'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':'0', _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -270,7 +278,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/publishOnsiteBB'); ?>',
                 type: "POST",
-                data: {'action': 'publishCampaign', 'brandboostID': '<?php echo $brandboostData->id; ?>'},
+                data: {'action': 'publishCampaign', 'brandboostID': '<?php echo $brandboostData->id; ?>', _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -401,7 +409,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: "<?php echo base_url('/admin/brandboost/sms_template_popup'); ?>",
                 type: "POST",
-                data: {camp_id: camp_id, camp_temp_src: camp_temp_src},
+                data: {camp_id: camp_id, camp_temp_src: camp_temp_src, _token: '{{csrf_token()}}'},
                 dataType: "html",
                 success: function (response) {
 
@@ -452,7 +460,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/emailtemplate/emailPreviewTemplate'); ?>',
                 type: "POST",
-                data: {emailtemplate: templateContent},
+                data: {emailtemplate: templateContent, _token: '{{csrf_token()}}'},
                 dataType: "html",
                 success: function (data) {
                     if (data) {
@@ -489,7 +497,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/emailtemplate/emailPreviewTemplate'); ?>',
                 type: "POST",
-                data: {emailtemplate: templateContent},
+                data: {emailtemplate: templateContent, _token: '{{csrf_token()}}'},
                 dataType: "html",
                 success: function (data) {
                     if (data) {
@@ -519,7 +527,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/update_campaign'); ?>',
                 type: "POST",
-                data: {template_name: templateName, template_subject: templateSubject, from_name: fromName, from_email: fromEmail, reply_to: replyTo, template_content: templateContent, template_id: templateId, campaign_id: campaignId},
+                data: {template_name: templateName, template_subject: templateSubject, from_name: fromName, from_email: fromEmail, reply_to: replyTo, template_content: templateContent, template_id: templateId, campaign_id: campaignId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -543,7 +551,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/emailtemplate/emailPreviewTemplate'); ?>',
                 type: "POST",
-                data: {emailtemplate: templateContent},
+                data: {emailtemplate: templateContent, _token: '{{csrf_token()}}'},
                 dataType: "html",
                 success: function (data) {
                     if (data) {
@@ -589,7 +597,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/getSendgridStats'); ?>',
                 type: "POST",
-                data: {'type': 'campaign', 'id': campaignID},
+                data: {'type': 'campaign', 'id': campaignID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -650,7 +658,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
         $.ajax({
             url: '<?php echo base_url('admin/brandboost/create_campaign'); ?>',
             type: "POST",
-            data: {'campaign_type': campaignType, 'event_id': eventID, 'event_type': eventype, 'brandboost_type': 'onsite'},
+            data: {'campaign_type': campaignType, 'event_id': eventID, 'event_type': eventype, 'brandboost_type': 'onsite', _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 //console.log(data);
@@ -688,7 +696,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                         $.ajax({
                             url: '<?php echo base_url('admin/brandboost/delete_event'); ?>',
                             type: "POST",
-                            data: {'event_id': eventID},
+                            data: {'event_id': eventID, _token: '{{csrf_token()}}'},
                             dataType: "json",
                             success: function (data) {
                                 //console.log(data);
@@ -714,7 +722,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/delete_event'); ?>',
                 type: "POST",
-                data: {'event_id': eventID},
+                data: {'event_id': eventID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     //console.log(data);
