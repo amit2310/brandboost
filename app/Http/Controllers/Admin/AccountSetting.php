@@ -12,6 +12,7 @@ use App\Models\Admin\ListsModel;
 use App\Models\Admin\TeamModel;
 use Illuminate\Support\Facades\Input;
 use App\Models\Admin\UsersModel;
+use App\Models\Admin\LoginModel;
 use Session;
 
 
@@ -164,6 +165,51 @@ class AccountSetting extends Controller
 
         echo json_encode($response);
         exit;
-        
+
     }
+
+
+    /**
+     * This function is use for change the password
+     * @return type object
+     */
+    public function changePassword() {
+
+        $mLogin = new LoginModel();
+        $response = array();
+        $post = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $oldPassword = '';
+        $newPassword = '';
+        $rePassword = '';
+
+        $oldPassword = Input::post("oldPassword");
+        $newPassword = Input::post("newPassword");
+        $rePassword = Input::post("rePassword");
+
+        if ($newPassword == $rePassword) {
+            $checkPassword = $mLogin->ChangePassword($oldPassword, $newPassword, $rePassword);
+            if ($checkPassword) {
+               
+                // Send notification
+                $response['status'] = 'success';
+                $response['msg'] = 'Your password has been changed successfully.';
+            } else {
+               
+                $response['status'] = 'error';
+                $response['msg'] = 'Please enter correct old password.';
+            }
+        } else {
+
+            $response['status'] = 'error';
+            $response['msg'] = 'Your new password and re-enter new password are not matching. Please enter same password.';
+        }
+
+        echo json_encode($response);
+        exit;
+
+    }
+
 }
