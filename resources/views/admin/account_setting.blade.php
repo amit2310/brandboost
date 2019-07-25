@@ -460,36 +460,26 @@
 		
 		$(document).on('click', '.delete_account', function() {
 			
-			var elem = $(this);
-			swal({
-				title: "Are you sure? You want to delete the account!",
-				text: "You will not be able to recover this account!",
-				type: "warning",
-				showCancelButton: true,
-				confirmButtonColor: "#EF5350",
-				confirmButtonText: "Yes, delete it!",
-				cancelButtonText: "No, cancel pls!",
-				closeOnConfirm: true,
-				closeOnCancel: true
-			},
-			function (isConfirm) {
-				if (isConfirm) {
-					$('.overlaynew').show();
+			deleteConfirmationPopup(
+	        "This account will deleted immediately.<br>You can't undo this action.", 
+	        function() {
+
+	        	$('.overlaynew').show();
 					
-					$.ajax({
-						url: '<?php echo base_url('admin/account_setting/account_deleted'); ?>',
-						type: "POST",
-						data: {},
-						dataType: "json",
-						success: function (data) {
-							if (data.status == 'success') {
-								$('.overlaynew').hide();
-								window.location.href = '';
-							}
+				$.ajax({
+					url: '<?php echo base_url('admin/account_setting/account_deleted'); ?>',
+					type: "POST",
+					data: {'_token': '<?php echo csrf_token(); ?>'},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							$('.overlaynew').hide();
+							window.location.href = '';
 						}
-					});
-				}
-			});
+					}
+				});
+	        });
+			
 		});
 		
 		

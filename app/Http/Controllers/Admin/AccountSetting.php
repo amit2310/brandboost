@@ -212,4 +212,30 @@ class AccountSetting extends Controller
 
     }
 
+    /**
+     * This function is use for delete the account
+     * @return type object
+     */
+    public function account_deleted() {
+
+        $aUser = getLoggedUser();
+        $userId = $aUser->id;
+        $aData = array(
+            'deleted_status' => '1'
+        );
+
+        $mUser = new UsersModel();
+        $result = $mUser->updateUsers($aData, $userId);
+        if ($result) {
+            $response['status'] = 'success';
+            $response['msg'] = "Account has been deleted successfully.";
+        } else {
+            $response['msg'] = "Error: Something went wrong, try again";
+        }
+
+        echo json_encode($response);
+        exit;
+
+    }
+
 }
