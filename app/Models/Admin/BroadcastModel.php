@@ -573,6 +573,8 @@ class BroadcastModel extends Model {
             $oData = DB::table('tbl_broadcast_split_campaigns')
                     ->where('id', $id)
                     ->delete();
+            
+            return $oData;
         }
         return false;
     }
@@ -588,7 +590,7 @@ class BroadcastModel extends Model {
             $oData = DB::table('tbl_broadcast_split_campaigns')
                     ->where('id', $id)
                     ->update($aData);
-            return $oData;
+            return ($oData>-1) ? true : false;
         }
         return false;
     }
@@ -954,7 +956,7 @@ class BroadcastModel extends Model {
         $result = DB::table('tbl_automations_emails')
                 ->where('id', $autoId)
                 ->update($aData);
-        return $result;
+        return ($result > -1) ? true : false;
     }
 
     /**

@@ -274,6 +274,9 @@ $newOpen = $newClick = 0;
                                                 $totalOpenGraph = 0;
                                                 $totalClickGraph = 0;
                                                 $totalQueuedGraph = 0;
+                                                $totalDeliveredGraph = 0;
+                                                $queued = $open = $click = 0;
+                                                $newQueue = $newSent = $newDelivered = 0;
 
                                                 if (strtolower($broadCastData->campaign_type) == 'email') {
                                                     if ($broadCastData->sending_method == 'split') {
@@ -296,6 +299,7 @@ $newOpen = $newClick = 0;
                                                         $totalSentGraph = ceil($totalSentGraph);
                                                     }
                                                 } else {
+                                                    
                                                     if ($broadCastData->sending_method == 'split') {
                                                         $aStatsSms = $mBroadcast->getBroadcasstTwilioStats('broadcast', $broadCastData->broadcast_id, '', 'split');
                                                     } else {
@@ -308,7 +312,6 @@ $newOpen = $newClick = 0;
                                                     $delivered = $aCategorizedStatsSms['delivered']['UniqueCount'];
                                                     $queued = $aCategorizedStatsSms['queued']['UniqueCount'];
                                                     $open = $aCategorizedStatsSms['accepted']['UniqueCount'];
-                                                    $click = '';
                                                     if ($totalSent > 0) {
                                                         $totalDeliveredGraph = $delivered * 100 / $totalSent;
                                                         $totalDeliveredGraph = ceil($totalDeliveredGraph);

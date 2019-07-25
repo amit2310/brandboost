@@ -551,6 +551,11 @@ class TagsModel extends Model {
         return $oData;        
     }
 
+    /**
+     * Used to add apply subscriber tags
+     * @param type $aData
+     * @return boolean
+     */
     public function addSubscriberTag($aData) {
         $aTagIDs = $aData['aTagIDs'];
         if (!empty($aTagIDs)) {
@@ -562,8 +567,8 @@ class TagsModel extends Model {
                 );
 
                 $tagData = $this->getTagBySubscriberID($iTagID, $aData['subscriber_id']);
-                if ($tagData->id == '') {
-                    $result = $this->db->insert('tbl_subscriber_tags', $aInput);
+                if (empty($tagData)) {
+                    $result = DB::table('tbl_subscriber_tags')->insert($aInput); 
                 }
 
                 $oTags = $this->getSubscriberTags($aData['subscriber_id']);
@@ -583,21 +588,32 @@ class TagsModel extends Model {
             return false;
         }
     }
-
+    
+    /**
+     * Used to get subscriber's tags
+     * @param type $aTagID
+     * @param type $subscriberID
+     * @return type
+     */
     public function getTagBySubscriberID($aTagID, $subscriberID) {
-        $this->db->where('tag_id', $aTagID);
-        $this->db->where('subscriber_id', $subscriberID);
-        $result = $this->db->get('tbl_subscriber_tags');
-        if ($result->num_rows() > 0) {
-            $aData = $result->row();
-        }
-        return $aData;
+        $oData = DB::table('tbl_subscriber_tags')
+                    ->where('tag_id', $aTagID)
+                    ->where('subscriber_id', $subscriberID)
+                    ->first();
+        return $oData;        
     }
 
+    /**
+     * Used to remove subscriber tags
+     * @param type $id
+     * @param type $subscriberID
+     * @return boolean
+     */
     public function deleteSubscriberTag($id, $subscriberID) {
-        $this->db->where('tag_id', $id);
-        $this->db->where('subscriber_id', $subscriberID);
-        $result = $this->db->delete('tbl_subscriber_tags');
+        $result = DB::table('tbl_subscriber_tags')
+        ->where('tag_id', $id)
+        ->where('subscriber_id', $subscriberID)        
+        ->delete();
         if ($result) {
             return true;
         } else {

@@ -920,7 +920,7 @@
         $.ajax({
             url: "{{ URL::asset('admin/workflow/syncWorkflowAudienceGlobal') }}",
             type: "POST",
-            data: {},
+            data: {_token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

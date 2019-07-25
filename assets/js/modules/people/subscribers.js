@@ -219,10 +219,11 @@ $(document).ready(function () {
 
     $(document).on("click", ".applyInsightTags", function () {
         var subscriberId = $(this).attr("data-subscriber-id");
+        var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/tags/getSubscriberTags',
             type: "POST",
-            data: {subscriberId: subscriberId},
+            data: {_token: tkn,subscriberId: subscriberId},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -246,10 +247,11 @@ $(document).ready(function () {
     $("#frmSubscriberApplyTag").submit(function () {
         var formdata = $("#frmSubscriberApplyTag").serialize();
         var subscriberID = $("#tag_subscriber_id").val();
+        var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/tags/applySubscriberTag',
             type: "POST",
-            data: formdata,
+            data: formdata + '&_token=' + tkn,
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

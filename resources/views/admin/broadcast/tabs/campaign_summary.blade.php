@@ -46,7 +46,7 @@ if (!empty($oBroadcastSubscriber)) {
 
 if ($oBroadcast->sending_method == 'split') {
     $totalVariations = 0;
-    $oVariations = $this->mBroadcast->getBroadcastVariations($oBroadcast->broadcast_id);
+    $oVariations = $mBroadcast->getBroadcastVariations($oBroadcast->broadcast_id);
     $totalVariations = count($oVariations);
 }
 
@@ -434,9 +434,9 @@ $deliverAt = strtotime($timeString);
             var emailAddress = $('#testCampaignEmail').val();
 
             $.ajax({
-                url: '<?php echo base_url('admin/broadcast/sendPreviewBroadcastEmail'); ?>',
+                url: '<?php echo base_url('admin/workflow/sendTestEmailworkflowCampaign'); ?>',
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', email_body: '<?php echo $oBroadcast->stripo_compiled_html; ?>', email_subject: '<?php echo base64_encode($oBroadcast->subject); ?>', 'email_address': emailAddress, campaign_id: '<?php echo $oBroadcast->broadcast_id; ?>'},
+                data: {_token: '{{csrf_token()}}', 'moduleName': '<?php echo $moduleName;?>', 'email': emailAddress, campaignId: '<?php echo $oCampaign[0]->id; ?>'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

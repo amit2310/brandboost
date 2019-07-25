@@ -19,6 +19,7 @@
                     <select class="form-control h52 updateVariation" name="variation_template" variation_id="<?php echo $variationID;?>" placeholder="" required="required">
                         <option value="">Choose Template</option>
                         <?php
+                        $i = 0;
                         $i++;
                         if (!empty($oDraftTemplates)) {
 

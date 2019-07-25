@@ -484,14 +484,15 @@ class WorkFlow extends Controller {
         //pre($aData);
 
         $bUpdated = $mWorkflow->updateWorkflowCampaign($aData, $campaignID, $moduleName);
-
+        
         if ($moduleName == 'broadcast') {
             //Update in the default variation too
             $oVariations = $mWorkflow->getWorkflowSplitVariations($moduleName, $moduleUnitID);
             if (!empty($oVariations)) {
                 $campaignID = $oVariations[0]->id;
+                $bUpdated = $mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
             }
-            $bUpdated = $mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
+            
         }
 
         if ($bUpdated) {
@@ -2781,6 +2782,7 @@ class WorkFlow extends Controller {
      * Used to sync audience aggregates to all properties
      */
     public function syncWorkflowAudienceGlobal() {
+        $mWorkflow = new WorkflowModel();
         $mWorkflow->syncWorkflowAudienceGlobalModel();
     }
 

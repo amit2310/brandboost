@@ -160,6 +160,7 @@ Route::post('admin/workflow/getWorkflowExportedProperties','Admin\WorkFlow@getWo
 Route::post('admin/workflow/syncWorkflowAudience','Admin\WorkFlow@syncWorkflowAudience');
 Route::get('admin/workflow/addAudienceToWorkflowCampaign','Admin\WorkFlow@addAudienceToWorkflowCampaign');
 Route::get('admin/workflow/syncWorkflowAudienceGlobal','Admin\WorkFlow@syncWorkflowAudienceGlobal');
+Route::post('admin/workflow/syncWorkflowAudienceGlobal','Admin\WorkFlow@syncWorkflowAudienceGlobal');
 
 
 //Dropzone Section
@@ -194,6 +195,7 @@ Route::get('admin/templates/edit/{id}','Admin\Templates@edit');
 
 
 //Broadcast Module
+Route::get('admin/broadcast','Admin\Broadcast@index');
 Route::get('admin/broadcast/index','Admin\Broadcast@index');
 Route::get('admin/broadcast/email','Admin\Broadcast@email');
 Route::get('admin/broadcast/sms','Admin\Broadcast@sms');
@@ -257,4 +259,8 @@ Route::post('admin/broadcast/getExportedProperties','Admin\Broadcast@getExported
 Route::post('admin/broadcast/loadBroadcastAudience','Admin\Broadcast@loadBroadcastAudience');
 Route::post('admin/broadcast/multipalDeleteRecord','Admin\Broadcast@multipalDeleteRecord');
 Route::get('admin/broadcast/report/{broadcastID}','Admin\Broadcast@report');
+
+//Tags
+Route::post('admin/tags/getSubscriberTags','Admin\Tags@getSubscriberTags');
+Route::post('admin/tags/applySubscriberTag','Admin\Tags@applySubscriberTag');
 
