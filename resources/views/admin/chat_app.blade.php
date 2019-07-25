@@ -2295,7 +2295,7 @@ $( '#msg_box_show_'+mUser ).scrollTop(msgHeight);
 });
 
 $.ajax({
-url: "<?php echo base_url('admin/webchat/readMessages'); ?>",
+url: "<?php echo base_url('webchat/readMessages'); ?>",
 type: "POST",
 data: {userID:chatbox, currentUser:currentUser, _token: '{{csrf_token()}}'},
 dataType: "json",
