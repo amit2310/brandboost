@@ -1,4 +1,5 @@
 <?php
+$aListIDs = array();
 if (!empty($oAutomationLists)) {
     foreach ($oAutomationLists as $oAutomationList) {
         $aListIDs[] = $oAutomationList->list_id;

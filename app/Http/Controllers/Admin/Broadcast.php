@@ -11,8 +11,7 @@ use App\Models\Admin\ListsModel;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\TagsModel;
-
-
+use App\Models\Admin\Modules\EmailsModel;
 use Cookie;
 use Session;
 
@@ -31,7 +30,7 @@ class Broadcast extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
         $activeTab = Session::put("setTab", "");
@@ -43,7 +42,6 @@ class Broadcast extends Controller {
         return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb));
     }
 
-    
     /**
      * Used to display all email broadcast campaigns
      */
@@ -59,10 +57,10 @@ class Broadcast extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $activeTab = Session::put("setTab", "");
         $oBroadcast = $mBroadcast->getMyBroadcastsByTypes($userID, $campaignType);
         $campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);
@@ -85,10 +83,10 @@ class Broadcast extends Controller {
                     </ul>';
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $activeTab = Session::put("setTab", "");
         $oBroadcast = $mBroadcast->getMyBroadcastsByTypes($userID, $campaignType);
         $campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);
@@ -97,7 +95,6 @@ class Broadcast extends Controller {
         return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb, 'campaignType' => $campaignType, 'moduleName' => $moduleName));
     }
 
-    
     /**
      * Used to display sms campaign overview
      */
@@ -110,7 +107,7 @@ class Broadcast extends Controller {
         if ($user_role == 1) {
             $userID = '';
         }
-        $oAutomations = $this->mEmails->getEmailAutomations($userID);
+        $oAutomations = $mEmails->getEmailAutomations($userID);
         $bActiveSubsription = $this->mUser->isActiveSubscription();
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -142,7 +139,6 @@ class Broadcast extends Controller {
         return view('admin.broadcast.smsoverview', $pageData);
     }
 
-    
     /**
      * Used to edit email/sms broadcast campaign
      * @param type $id
@@ -151,28 +147,28 @@ class Broadcast extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         $id = $request->id;
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         //Instanciate Workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         //Instanciate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instanciate subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
-        
+
         //Instanciate Tags model to get its methods and properties
         $mTag = new TagsModel();
-        
+
         //Instanciate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
-        
-        
+
+
+
         $oLists = $mBroadcast->getMyLists($userID);
         $twillioData = $mBroadcast->getTwillioData($userID);
         $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
@@ -333,7 +329,6 @@ class Broadcast extends Controller {
             'title' => 'Brand Boost Broadcast',
             'oBroadcast' => $oBroadcast[0],
             'oVariations' => $oVariations,
-            'campaignTemplates' => $campaignTemplates,
             'oDefaultTemplates' => $oDefaultTemplates,
             'oDraftTemplates' => $oDraftTemplates,
             'oTemplates' => $oTemplates,
@@ -358,32 +353,32 @@ class Broadcast extends Controller {
             'importedCount' => $importedCount,
             'exportedCount' => $exportedCount,
             'moduleName' => 'broadcast',
-            'broadcastSettings' => $broadcastSettings[0],
+            'broadcastSettings' => ($broadcastSettings->isNotEmpty()) ? $broadcastSettings[0] : array(),
             'userData' => $aUser,
             'twillioData' => $twillioData[0],
             'pagename' => $breadcrumb,
             'oCampaign' => $oCampaign,
             'campaignType' => $campaignType,
-            'bExpired' => $bExpired
+            'bExpired' => $bExpired,
+            'oUser' => $aUser
         );
 
-        return view('admin.broadcast.setup', $aData)->with('mBroadcast', $mBroadcast);
+        return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
     }
 
-    
     /**
      * Used to add Variations in broadcast campaign
      */
     public function addVariation(Request $request) {
         $response = array();
         $aUser = getLoggedUser();
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $userID = $aUser->id;
-        
+
         $moduleName = 'broadcast';
 
         if (!empty($request)) {
@@ -434,7 +429,6 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update Split Test campaign
      */
@@ -442,11 +436,11 @@ class Broadcast extends Controller {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         if (!empty($request)) {
             $fieldValue = strip_tags($request->fieldVal);
             $splitTestID = strip_tags($request->testid);
@@ -468,7 +462,6 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update various properties of broadcast campaigns
      */
@@ -476,13 +469,13 @@ class Broadcast extends Controller {
 
         $response = array();
         $aUser = getLoggedUser();
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $userID = $aUser->id;
-        
+
         if (!empty($request)) {
             $fieldName = strip_tags($request->fieldName);
             $fieldValue = strip_tags($request->fieldVal);
@@ -538,7 +531,7 @@ class Broadcast extends Controller {
 
                 if (!empty($aBroadcastSettingsData)) {
                     $broadcastSettings = $mBroadcast->getBroadcastSettings($campaignId);
-                    if ($broadcastSettings[0]->id > 0) {
+                    if ($broadcastSettings->isNotEmpty()) {
                         $bUpdated = $mBroadcast->updateBroadcastSettings($aBroadcastSettingsData, $campaignId);
                     } else {
                         $aBroadcastSettingsData['campaign_id'] = $campaignId;
@@ -556,7 +549,6 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update variations of broadcast campaigns
      */
@@ -564,7 +556,7 @@ class Broadcast extends Controller {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         if (!empty($request)) {
             $fieldName = strip_tags($request->fieldName);
             $fieldValue = strip_tags($request->fieldVal);
@@ -605,7 +597,6 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete broadcast variations
      */
@@ -613,11 +604,11 @@ class Broadcast extends Controller {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         if (!empty($request)) {
             $variationID = strip_tags($request->variationID);
             if ($variationID > 0) {
@@ -633,7 +624,6 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to get all broadcast campaign users
      */
@@ -641,7 +631,14 @@ class Broadcast extends Controller {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
+        //Instanciate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instanciate Tag model to get its methods and properties
+        $mTag = new TagsModel();
+
+
         if (!empty($request)) {
             $broadcastID = strip_tags($request->broadcastId);
             //Sync Import/Exclude Properties
@@ -651,7 +648,7 @@ class Broadcast extends Controller {
                 $oBroadcastSubscriber = $mBroadcast->getBroadcastSubscribers($broadcastID);
                 $aData = array('oBroadcastSubscriber' => $oBroadcastSubscriber);
 
-                $content = view('admin.broadcast.partials.broadcast_audience', $aData)->render();
+                $content = view('admin.broadcast.partials.broadcast_audience', $aData)->with(['mTags' => $mTag])->render();
             }
         }
         if (!empty($content)) {
@@ -663,7 +660,6 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to get categorized template
      */
@@ -671,7 +667,7 @@ class Broadcast extends Controller {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         $actionName = strip_tags($request->action);
         $categoryID = strip_tags($request->categoryid);
         $selected_template = strip_tags($request->selected_template);
@@ -708,13 +704,13 @@ class Broadcast extends Controller {
      * Used to delete users from broadcast campaign
      */
     public function deleteBroadcastAudience(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
 
         $subscriberID = strip_tags($request->subscriber_id);
         $broadcastId = strip_tags($request->broadcast_id);
@@ -731,18 +727,17 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete users in bulk from broadcast campaign
      */
     public function deleteBroadcastBulkAudience(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
 
         $audienceArray = $request->audience_array;
         $broadcastId = strip_tags($request->broadcast_id);
@@ -784,26 +779,26 @@ class Broadcast extends Controller {
 
         $bActiveSubsription = $this->mUser->isActiveSubscription();
         //get Automation Info
-        $oAutomations = $this->mEmails->getEmailAutomations($userID, $id);
+        $oAutomations = $mEmails->getEmailAutomations($userID, $id);
 
 
         //get Lists
         $oLists = $mLists->getLists($userID);
 
         //get Automation Events
-        $oEvents = $this->mEmails->getAutomationEvents($id);
+        $oEvents = $mEmails->getAutomationEvents($id);
 
         //get Automation Lists
         $oAutomationLists = $mLists->getAutomationLists($id);
 
         //get Default Email Templates
-        $oDefaultTemplates = $this->mEmails->getEmailMoudleTemplates(0, 'email'); //empty or 0 for default templates
+        $oDefaultTemplates = $mEmails->getEmailMoudleTemplates(0, 'email'); //empty or 0 for default templates
         //get Default Other Email Templates
-        $oUsedOtherTemplates = $this->mEmails->getEmailMoudleTemplates($userID, 'email'); // for own other templates
+        $oUsedOtherTemplates = $mEmails->getEmailMoudleTemplates($userID, 'email'); // for own other templates
         //get Default Sms Templates
-        $oDefaultSMSTemplates = $this->mEmails->getEmailMoudleTemplates(0, 'sms'); //empty or 0 for default templates
+        $oDefaultSMSTemplates = $mEmails->getEmailMoudleTemplates(0, 'sms'); //empty or 0 for default templates
         //get Default Other Sms Templates
-        $oUsedOtherSMSTemplates = $this->mEmails->getEmailMoudleTemplates($userID, 'sms'); // for own other templates
+        $oUsedOtherSMSTemplates = $mEmails->getEmailMoudleTemplates($userID, 'sms'); // for own other templates
 
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">';
@@ -844,12 +839,12 @@ class Broadcast extends Controller {
      * Used to make a broadcast campaign archive 
      */
     public function moveArchive(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $response = array();
-        
+
         $broadcastId = $request->automation_id;
 
         $cData = array(
@@ -867,17 +862,16 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to make a broadcast campaign archive  in bulk
      */
     public function multipalArchiveAutomation(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $response = array();
-        
+
         $broadcastIds = $request->multipal_automation_id;
 
         $cData = array(
@@ -902,7 +896,7 @@ class Broadcast extends Controller {
      */
     public function addContactToCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -910,6 +904,22 @@ class Broadcast extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
+        //Instanciate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instanciate Subscriber model to get its methods and properties
+        $mSubscriber = new SubscriberModel();
+
+        //Instanciate Tag model to get its methods and properties
+        $mTag = new TagsModel();
+
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        //Instanciate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+
         $contactId = strip_tags($request->contactId);
         $actionValue = $request->actionValue;
         $automationID = $request->automation_id;
@@ -941,17 +951,16 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to add Audience to broadcast campaign
      * @param type $aData
      */
     public function addAudienceToBraodcast($aData) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $broadcastID = $aData['broadcast_id'];
         $subscriberID = $aData['subscriber_id'];
         //Do some necessary check if any
@@ -962,7 +971,6 @@ class Broadcast extends Controller {
         }
     }
 
-    
     /**
      * Used to get users count of imported and excluded users of a broadcast campaign
      * @param type $broadcastID
@@ -972,16 +980,24 @@ class Broadcast extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        //Imported Properites
-        //Lists
         
         //Instanciate List model to get its methods and properties
         $mLists = new ListsModel();
         
+        //Instanciate Subscriber model to get its methods and properties
+        $mSubscriber = new SubscriberModel();
+        
+        //Instanciate Subscriber model to get its methods and properties
+        $mTemplates = new TemplatesModel();
+
+        //Imported Properites
+        //Lists
+        
+        
+
         $aBroadcastSubscribers = array();
         $oAutomationLists = $mLists->getAutomationLists($broadcastID);
         if (!empty($oAutomationLists)) {
@@ -1132,7 +1148,6 @@ class Broadcast extends Controller {
         return $aData;
     }
 
-    
     /**
      * Used to sync users of a broadcast campaign when making change in various broadcast users selection properties
      * @param type $broadcastID
@@ -1142,10 +1157,16 @@ class Broadcast extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
+        //Instanciate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+
+        //Instanciate Subscriber model to get its methods and properties
+        $mSubscriber = new SubscriberModel();
+
         //Imported Properites
         //Lists
         $aBroadcastSubscribers = array();
@@ -1318,13 +1339,12 @@ class Broadcast extends Controller {
         return true;
     }
 
-    
     /**
      * Used to add users into the exclude list of broadcast campaign
      */
     public function addContactToExcludeCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1332,10 +1352,10 @@ class Broadcast extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $contactId = strip_tags($request->contactId);
         $actionValue = $request->actionValue;
         $automationID = $request->automation_id;
@@ -1360,13 +1380,12 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to add tags into the import list of broadcast campaign
      */
     public function addTagToCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1374,11 +1393,14 @@ class Broadcast extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+        //Instanciate Subscriber model to get its methods and properties
+        $mSubscriber = new SubscriberModel();
+
+
         $tagId = strip_tags($request->tagId);
         $actionValue = $request->actionValue;
         $automationID = $request->automation_id;
@@ -1390,20 +1412,6 @@ class Broadcast extends Controller {
                 'created' => date("Y-m-d H:i:s")
             );
             $mBroadcast->addTagToCampaign($aData);
-            //Get Tag Subscribers
-            /* $oTagSubscribers = $mSubscriber->getTagSubscribers($tagId);
-              if (!empty($oTagSubscribers)) {
-              foreach ($oTagSubscribers as $oSubscriber) {
-              $subscriberID = $oSubscriber->id;
-              $aBroadcastData = array(
-              'user_id' => $userID,
-              'broadcast_id' => $automationID,
-              'subscriber_id' => $subscriberID,
-              'created' => date("Y-m-d H:i:s")
-              );
-              $this->addAudienceToBraodcast($aBroadcastData);
-              }
-              } */
         } else {
             $mBroadcast->deleteTagToCampaign($automationID, $tagId);
             $oTagSubscribers = $mSubscriber->getTagSubscribers($tagId);
@@ -1426,7 +1434,7 @@ class Broadcast extends Controller {
      */
     public function addExcludedTagToCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1434,10 +1442,10 @@ class Broadcast extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $tagId = strip_tags($request->tagId);
         $actionValue = $request->actionValue;
         $automationID = $request->automation_id;
@@ -1459,13 +1467,12 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to add users into the imported segment list of broadcast campaign
      */
     public function addSegmentToCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1473,10 +1480,10 @@ class Broadcast extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $segmentId = strip_tags($request->segmentId);
         $actionValue = $request->actionValue;
         $automationID = $request->automation_id;
@@ -1518,13 +1525,12 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to add users into the exclude segment list of broadcast campaign
      */
     public function addExcludeSegmentToCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1532,11 +1538,11 @@ class Broadcast extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $segmentId = strip_tags($request->segmentId);
         $actionValue = $request->actionValue;
         $automationID = $request->automation_id;
@@ -1558,13 +1564,12 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update automation lists records- Deprecated
      */
     public function updateAutomationListsRecord(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1572,31 +1577,24 @@ class Broadcast extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+        //Instanciate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+
+        //Instanciate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+
+
         $aSelectedLists = $request->selectedLists;
         $actionValue = $request->actionValue;
         $automationID = $request->automation_id;
         if ($actionValue == 'addRecord') {
-            $this->mEmails->updateAutomationList($automationID, $aSelectedLists);
-            /* $oListSubscribers = $mLists->getListContacts($userID, $aSelectedLists);
-              if (!empty($oListSubscribers)) {
-              foreach ($oListSubscribers as $oSubscriber) {
-              $subscriberID = $oSubscriber->subscriber_id;
-              $aBroadcastData = array(
-              'user_id' => $userID,
-              'broadcast_id' => $automationID,
-              'subscriber_id' => $subscriberID,
-              'created' => date("Y-m-d H:i:s")
-              );
-              $this->addAudienceToBraodcast($aBroadcastData);
-              }
-              } */
+            $mEmails->updateAutomationList($automationID, $aSelectedLists);
         } else {
-            $this->mEmails->deleteAutomationLists($automationID, $aSelectedLists);
+            $mEmails->deleteAutomationLists($automationID, $aSelectedLists);
             $oListSubscribers = $mLists->getListContacts($userID, $aSelectedLists);
             if (!empty($oListSubscribers)) {
                 foreach ($oListSubscribers as $oSubscriber) {
@@ -1613,10 +1611,10 @@ class Broadcast extends Controller {
         $totalSubscribers = count($oTotalSubscribers);
 
         //Check for duplicate records
-
+        $aEmails = array();
+        $duplicateCount = 0;
         if (!empty($oTotalSubscribers)) {
-            $aEmails = array();
-            $duplicateCount = 0;
+
             foreach ($oTotalSubscribers as $oRec) {
                 if (in_array($oRec->subscriber_email, $aEmails)) {
                     $duplicateCount++;
@@ -1640,7 +1638,7 @@ class Broadcast extends Controller {
      */
     public function updateAutomationListsExcludedRecord(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1648,24 +1646,21 @@ class Broadcast extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
         
+        //Instanciate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+
         $aSelectedLists = $request->selectedLists;
         $actionValue = $request->actionValue;
         $automationID = $request->automation_id;
         if ($actionValue == 'addRecord') {
-            $this->mEmails->updateAutomationExcludedList($automationID, $aSelectedLists);
-            /* $oListSubscribers = $mLists->getListContacts($userID, $aSelectedLists);
-              if (!empty($oListSubscribers)) {
-              foreach ($oListSubscribers as $oSubscriber) {
-              $subscriberID = $oSubscriber->subscriber_id;
-              $mBroadcast->deleteAudienceToBraodcast($automationID, $subscriberID);
-              }
-              } */
+            $mEmails->updateAutomationExcludedList($automationID, $aSelectedLists);
+            
         } else {
-            $this->mEmails->deleteAutomationExcludedLists($automationID, $aSelectedLists);
+            $mEmails->deleteAutomationExcludedLists($automationID, $aSelectedLists);
             //$this->syncBroadcastAudience($automationID);
         }
 
@@ -1676,10 +1671,9 @@ class Broadcast extends Controller {
         $totalSubscribers = count($oTotalSubscribers);
 
         //Check for duplicate records
-
+        $aEmails = array();
+        $duplicateCount = 0;
         if (!empty($oTotalSubscribers)) {
-            $aEmails = array();
-            $duplicateCount = 0;
             foreach ($oTotalSubscribers as $oRec) {
                 if (in_array($oRec->subscriber_email, $aEmails)) {
                     $duplicateCount++;
@@ -1702,13 +1696,13 @@ class Broadcast extends Controller {
      * Used to updates broadcast templates used in the broadcast campaign
      */
     public function updateBroadcastTempalte(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
 
         $emailContent = $request->emailtemplate;
         $campaignId = strip_tags($request->campaignId);
@@ -1729,13 +1723,12 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update end campaign stripo
      */
     public function updateStripoCampaign(Request $request) {
         $response = array();
-        
+
         Session::put("setTab", trim($request->tab));
         $response = array('status' => 'success');
         echo json_encode($response);
@@ -1746,12 +1739,12 @@ class Broadcast extends Controller {
      * Used to update broadcast campaign from field-Deprecated
      */
     public function updateBroadcastFromEmail(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $response = array();
-        
+
 
         $editFromEmail = strip_tags($request->edit_from_email);
         $eventId = strip_tags($request->broadcast_event_id);
@@ -1775,12 +1768,12 @@ class Broadcast extends Controller {
      * Used to update in the clonned broadcast campaign
      */
     public function updateBroadcastClone(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $response = array();
-        
+
         $broadcastId = $request->edit_broadcastId;
         $campaignName = $request->campaign_name;
         $description = $request->description;
@@ -1799,18 +1792,17 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update email/sms broadcast campaign
      */
     public function updateBroadcast(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
         $status = strip_tags($request->status);
         $currentState = strip_tags($request->current_state);
 
@@ -1835,18 +1827,17 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update broadcast campaign data from various part of the broadcast campaign
      */
     public function updateBroadcastData(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
         $broadcastId = strip_tags($request->broadcast_id);
         $audienceType = strip_tags($request->audience_type);
         $aData = array();
@@ -1868,20 +1859,19 @@ class Broadcast extends Controller {
 
         echo json_encode($response);
         exit;
-    } 
-    
+    }
 
     /**
      * Used to update schedule date of email/sms broadcast campaign
      */
     public function updateAutomationScheduleDate(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
 
         $automationId = $request->automation_id;
 
@@ -1907,18 +1897,17 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update subject line of a email broadcast campaign
      */
     public function updateBroadcastSubject(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
 
         $editFromSubject = strip_tags($request->edit_email_subject);
         $eventId = strip_tags($request->broadcast_event_id);
@@ -1938,18 +1927,17 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update Broadcast Settings
      */
     public function updateBroadcastSettings(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
         $eventId = strip_tags($request->event_id);
         $campaignId = strip_tags($request->campaign_id);
         $broadcastID = strip_tags($request->broadcast_id);
@@ -1978,20 +1966,19 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to make a  clone of a broadcast campaign
      */
     public function clonBroadcastCampaign(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
         $broadcastId = $request->automation_id;
 
         $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $broadcastId);
@@ -2125,7 +2112,7 @@ class Broadcast extends Controller {
 
         /* $oAutomationLists = $mLists->getAutomationLists($broadcastId);
           foreach ($oAutomationLists as $listData) {
-          $this->mEmails->updateAutomationList($broadcastID, $listData->list_id);
+          $mEmails->updateAutomationList($broadcastID, $listData->list_id);
           } */
 
         if ($broadcastID) {
@@ -2137,20 +2124,19 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to create a broadcast campaign
      */
     public function createBroadcast(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
         $campaignName = strip_tags($request->campaign_name);
         $templateContent = strip_tags($request->template_content);
         $templateName = strip_tags($request->template_name);
@@ -2254,11 +2240,11 @@ class Broadcast extends Controller {
     public function mysegments() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $oSegments = $mBroadcast->getSegments($userID);
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -2277,13 +2263,12 @@ class Broadcast extends Controller {
         return view('admin.broadcast.segments', $aData);
     }
 
-    
     /**
      * Used to get segments for a broadcast campaign
      */
     public function getSegment(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -2292,11 +2277,11 @@ class Broadcast extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $segment_id = $request->segment_id;
         $oSegments = $mBroadcast->getSegmentById($userID, $segment_id);
 
@@ -2310,13 +2295,12 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update broadcast segments
      */
     public function updateSegment(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -2324,11 +2308,11 @@ class Broadcast extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $segmentID = strip_tags($request->segment_id);
         $title = strip_tags($request->title);
         $description = strip_tags($request->edit_description);
@@ -2365,7 +2349,6 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to get contacts associated with the segments
      * @param type $segmentID
@@ -2373,11 +2356,11 @@ class Broadcast extends Controller {
     public function segmentcontacts($segmentID) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $oSubscribers = $mBroadcast->getSegmentSubscribers($segmentID, $userID);
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -2399,18 +2382,17 @@ class Broadcast extends Controller {
         return view('admin.broadcast.segment_subscribers', $aData);
     }
 
-    
     /**
      * Used to delete segments in bulk
      */
     public function deleteMultipalSegment(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
         $multiSegmentid = $request->multiSegmentid;
         foreach ($multiSegmentid as $segmentid) {
 
@@ -2426,18 +2408,17 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete segment users in bulk
      */
     public function deleteMultipalSegmentUser(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
         $multiSegmentUserid = $request->multiSegmentUserid;
         foreach ($multiSegmentUserid as $segmentUserid) {
 
@@ -2453,17 +2434,16 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete broadcast segment
      */
     public function deleteSegment(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $response = array();
-        
+
         $segmentID = strip_tags($request->segmentID);
         $result = $mBroadcast->deleteSegmentByID($segmentID);
         if ($result) {
@@ -2476,23 +2456,22 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to archive segments in bulk-Deprecated
      */
     public function archive_multipal_segment(Request $request) {
 
         $response = array();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         //$userID = Session::get("current_user_id");
         if (!empty($request)) {
-            
+
             $multi_segment_id = $request->multi_segment_id;
 
             $aData = array(
@@ -2515,13 +2494,13 @@ class Broadcast extends Controller {
     public function createSegment(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
         $segmentName = strip_tags($request->segmentName);
         $description = strip_tags($request->segmentDescription);
         $campaignID = strip_tags($request->broadcastID);
@@ -2570,20 +2549,19 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to sync contacts inside the created segments
      */
     public function syncSegment(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
         $segmentID = strip_tags($request->segmentID);
         //Get Segment Info
         $oSegment = $mBroadcast->getSegments($userID, $segmentID);
@@ -2622,19 +2600,18 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to sync segment in bulk
      */
     public function syncSegmentMultiple(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $response = array();
-        
+
         $aSegments = $request->segmentCollection;
         if (!empty($aSegments)) {
             foreach ($aSegments as $segmentID) {
@@ -2658,18 +2635,23 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to add end campaign to the broadcast campaign
      */
     public function addCampaignToBroadcast(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
         
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
         
+        //Instanciate Subscriber model to get its methods and properties
+        $mTemplates = new TemplatesModel();
+
+
         $source = strip_tags($request->source);
         $broadcastID = strip_tags($request->broadcast_id);
         $templateID = strip_tags($request->template_id);
@@ -2725,7 +2707,7 @@ class Broadcast extends Controller {
                             if ($bHaveVariations == true) {
                                 //Update Default Variation too
                                 $aData = array(
-                                    'subject' => $oTemplate->subject,
+                                    'subject' => isset($oTemplate->subject) ? $oTemplate->subject : '',
                                     'html' => $oTemplate->template_content,
                                     'stripo_html' => $oTemplate->stripo_html,
                                     'stripo_css' => $oTemplate->stripo_css,
@@ -2779,19 +2761,18 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to see preview of a broadcast campaign
      */
     public function previewBroadcastCampaign(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
-        
+
+
+
         if (!empty($request)) {
             $campaignID = strip_tags($request->campaign_id);
             $moduleName = 'broadcast';
@@ -2809,19 +2790,18 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to send preview email of a broadcast campaign
      */
     public function sendPreviewBroadcastEmail(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
-        
+
+
+
         $emailAddress = strip_tags($request->email_address);
         $messageSubject = base64_decode(strip_tags($request->email_subject));
         $messageBody = base64_decode($request->email_body);
@@ -2846,20 +2826,19 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update session for the tabs
      */
     public function setTab(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
         if (!empty($request)) {
-            
+
             $tab = $request->tab;
             if (!empty($tab)) {
                 if ($tab == 'Review Contacts') {
@@ -2892,11 +2871,11 @@ class Broadcast extends Controller {
      * @param type $broadcast_id
      */
     public function records($email_sms, $broadcast_id) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         if (empty($broadcast_id)) {
             //Handle empty id error
         }
@@ -2942,23 +2921,22 @@ class Broadcast extends Controller {
         }
     }
 
-    
     /**
      * Used to get email report
      */
     public function getEmailReport(Request $request) {
 
-        
+
         $report = $request->report;
         $broadcast_id = $request->broadcastId;
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $broadcast_id);
         $oBroadcastReord = $mBroadcast->getMyBroadcastSubscribers($oBroadcast[0]->event_id, $report);
 
@@ -2966,22 +2944,21 @@ class Broadcast extends Controller {
         echo view('admin.broadcast.reports.subscriber-data', array('delivered' => $oBroadcastReord))->render();
     }
 
-    
     /**
      * Used to load Improted properties of audience selection
      */
     public function loadImportOption(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+
         $response = array();
-        
+
         if (!empty($request)) {
-            
+
             $broadcastID = strip_tags($request->broadcastId);
             $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $broadcastID);
             $content = view('admin.components.smart-popup.import-options', array('broadcastID' => $broadcastID, 'oBroadcast' => $oBroadcast[0]))->render();
@@ -2993,19 +2970,18 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to load excluded properties of audience selection
      */
     public function loadExcludeOption(Request $request) {
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $response = array();
-        
+
         if (!empty($request)) {
-            
+
             $broadcastID = strip_tags($request->broadcastId);
             $content = view('admin.components.smart-popup.exclude-options', array('broadcastID' => $broadcastID))->render();
             $response['status'] = 'success';
@@ -3016,20 +2992,35 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to get Imported properties
      */
     public function getImportedProperties(Request $request) {
-        
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
-        
+
+        //Instanciate Subscriber model to get its methods and properties
+        $mSubscriber = new SubscriberModel();
+
+        //Instanciate Tag model to get its methods and properties
+        $mTag = new TagsModel();
+
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        //Instanciate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+
+
+
         $response = array();
-        
+
         if (!empty($request)) {
-            
+
             $broadcastID = strip_tags($request->broadcastId);
             $oCampaignLists = $mLists->getAutomationLists($broadcastID);
             $oCampaignContacts = $mBroadcast->getBroadcastContacts($broadcastID);
@@ -3052,19 +3043,27 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to get Excluded properties
      */
     public function getExportedProperties(Request $request) {
-        
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
+        //Instanciate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+
+        //Instanciate Tags model to get its methods and properties
+        $mTag = new TagsModel();
+
         $response = array();
-        
+
         if (!empty($request)) {
-            
+
             $broadcastID = strip_tags($request->broadcastId);
             $oCampaignLists = $mLists->getAutomationExcludedLists($broadcastID);
             $oCampaignContacts = $mBroadcast->getBroadcastExcludedContacts($broadcastID);
@@ -3087,15 +3086,14 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to load Broadcast users added to the campaign
      */
     public function loadBroadcastAudience(Request $request) {
         $response = array();
-        
+
         if (!empty($request)) {
-            
+
             $broadcastID = strip_tags($request->broadcastId);
             $audienceType = strip_tags($request->audienceType);
             $actionType = strip_tags($request->actionType);
@@ -3103,11 +3101,24 @@ class Broadcast extends Controller {
 
                 $aUser = getLoggedUser();
                 $userID = $aUser->id;
-                
+
                 //Instanciate Broadcast model to get its methods and properties
                 $mBroadcast = new BroadcastModel();
-        
-        
+
+                //Instanciate Subscriber model to get its methods and properties
+                $mSubscriber = new SubscriberModel();
+
+                //Instanciate Tag model to get its methods and properties
+                $mTag = new TagsModel();
+
+                //Instanciate workflow model to get its methods and properties
+                $mWorkflow = new WorkflowModel();
+
+                //Instanciate Lists model to get its methods and properties
+                $mLists = new ListsModel();
+
+                $duplicateCount = 0;
+
                 $oLists = $mBroadcast->getMyLists($userID);
                 $twillioData = $mBroadcast->getTwillioData($userID);
                 $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $broadcastID);
@@ -3170,10 +3181,10 @@ class Broadcast extends Controller {
 
 
                     //Check for duplicate records
-
+                    $aEmails = array();
+                    $duplicateCount = 0;
                     if (!empty($oTotalSubscribers)) {
-                        $aEmails = array();
-                        $duplicateCount = 0;
+
                         foreach ($oTotalSubscribers as $oRec) {
                             if (in_array($oRec->subscriber_email, $aEmails)) {
                                 $duplicateCount++;
@@ -3190,7 +3201,6 @@ class Broadcast extends Controller {
 
                 $aData = array(
                     'oBroadcast' => $oBroadcast[0],
-                    'campaignTemplates' => $campaignTemplates,
                     'oDefaultTemplates' => $oDefaultTemplates,
                     'oDraftTemplates' => $oDraftTemplates,
                     'oCategories' => $oCategories,
@@ -3204,10 +3214,10 @@ class Broadcast extends Controller {
                     'aTags' => $aTags,
                     'oSegments' => $oSegments,
                     'oAutomationLists' => $oAutomationLists,
-                    'activeTab' => $activeTab,
-                    'broadcast_id' => $id,
+                    'broadcast_id' => $broadcastID,
                     'moduleName' => 'broadcast',
-                    'broadcastSettings' => $broadcastSettings[0],
+                    'moduleUnitID' => $broadcastID,
+                    'broadcastSettings' => !empty($broadcastSettings[0]) ? $broadcastSettings[0] : array(),
                     'userData' => $aUser,
                     'twillioData' => $twillioData[0],
                     'oCampaign' => $oCampaign
@@ -3216,21 +3226,21 @@ class Broadcast extends Controller {
 
             if ($actionType == 'import' && $audienceType == 'lists') {
 
-                $content = view('admin.components.smart-popup.broadcast-import-lists', $aData)->render();
+                $content = view('admin.components.smart-popup.broadcast-import-lists', $aData)->with(['mBroadcast' => $mBroadcast])->render();
             } else if ($actionType == 'import' && $audienceType == 'contacts') {
-                $content = view("admin/components/smart-popup/broadcast-import-contacts", $aData)->render();
+                $content = view("admin/components/smart-popup/broadcast-import-contacts", $aData)->with(['mBroadcast' => $mBroadcast])->render();
             } else if ($actionType == 'import' && $audienceType == 'segments') {
-                $content = view("admin/components/smart-popup/broadcast-import-segments", $aData)->render();
+                $content = view("admin/components/smart-popup/broadcast-import-segments", $aData)->with(['mBroadcast' => $mBroadcast])->render();
             } else if ($actionType == 'import' && $audienceType == 'tags') {
-                $content = view("admin/components/smart-popup/broadcast-import-tags", $aData)->render();
+                $content = view("admin/components/smart-popup/broadcast-import-tags", $aData)->with(['mBroadcast' => $mBroadcast])->render();
             } else if ($actionType == 'exclude' && $audienceType == 'lists') {
-                $content = view("admin/components/smart-popup/broadcast-exclude-lists", $aData)->render();
+                $content = view("admin/components/smart-popup/broadcast-exclude-lists", $aData)->with(['mBroadcast' => $mBroadcast])->render();
             } else if ($actionType == 'exclude' && $audienceType == 'contacts') {
-                $content = view("admin/components/smart-popup/broadcast-exclude-contacts", $aData)->render();
+                $content = view("admin/components/smart-popup/broadcast-exclude-contacts", $aData)->with(['mBroadcast' => $mBroadcast])->render();
             } else if ($actionType == 'exclude' && $audienceType == 'segments') {
-                $content = view("admin/components/smart-popup/broadcast-exclude-segments", $aData)->render();
+                $content = view("admin/components/smart-popup/broadcast-exclude-segments", $aData)->with(['mBroadcast' => $mBroadcast])->render();
             } else if ($actionType == 'exclude' && $audienceType == 'tags') {
-                $content = view("admin/components/smart-popup/broadcast-exclude-tags", $aData)->render();
+                $content = view("admin/components/smart-popup/broadcast-exclude-tags", $aData)->with(['mBroadcast' => $mBroadcast])->render();
             }
 
             $response['status'] = 'success';
@@ -3240,14 +3250,13 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete campaigns in bulk
      */
     public function multipalDeleteRecord(Request $request) {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -3255,10 +3264,10 @@ class Broadcast extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
             $userID = '';
@@ -3291,7 +3300,6 @@ class Broadcast extends Controller {
         exit;
     }
 
-    
     /**
      * Used to get reports associated with the campaigns
      * @param type $broadcastID
@@ -3299,10 +3307,10 @@ class Broadcast extends Controller {
     public function report($broadcastID) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $broadcastID);
         if (empty($oBroadcast)) {
             redirect("admin/broadcast/email");

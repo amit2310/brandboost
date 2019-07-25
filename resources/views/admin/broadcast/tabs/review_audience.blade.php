@@ -1,4 +1,5 @@
 <?php
+$aSelectedContacts = array();
 if (!empty($oCampaignContacts)) {
     foreach ($oCampaignContacts as $oRec) {
         $aSelectedContacts[] = $oRec->subscriber_id;
@@ -20,7 +21,7 @@ if (!empty($oBroadcastSubscriber)) {
 <div id="broadcastReviewAudience" class="broadcastTab" <?php if ($activeTab != 'Review Contacts' || empty($activeTab)): ?> style="display:none;"<?php endif; ?> >
     <div class="col-md-12 p0">
         <div class="panel panel-flat">
-            <?php $this->load->view("admin/components/smart-popup/smart-contact-widget"); ?>
+            @include('admin.components.smart-popup.smart-contact-widget')
             <div class="panel-heading">
                 <span class="pull-left">
                     <h6 class="panel-title"><span id="totalBroadcastReviewAudience"><?php echo $iActiveCount; ?></span> Contacts</h6>
@@ -58,7 +59,7 @@ if (!empty($oBroadcastSubscriber)) {
             </div>
             <div class="panel-body p0 bkg_white">
                 <div id="liveReviewAudience">
-                <?php  $this->load->view('admin/broadcast/partials/broadcast_audience', array('recordSource' => 'review-audience')); ?>
+                @include('admin.broadcast.partials.broadcast_audience', ['recordSource' => 'review-audience'])
                 </div>    
 
                 

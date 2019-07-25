@@ -1,4 +1,6 @@
 <?php
+$aSelectedContacts = array();
+$list_id = !(empty($list_id)) ? $list_id : '';
 if (!empty($oCampaignContacts)) {
     foreach ($oCampaignContacts as $oRec) {
         $aSelectedContacts[] = $oRec->subscriber_id;
@@ -56,12 +58,12 @@ if (!empty($subscribersData)) {
                             if ($oContact->status != '2') {
 
                                 if ($oContact->user_id > 0) {
-                                    $userData = $this->mUser->getUserInfo($oContact->user_id);
+                                    $userData = App\Models\Admin\UsersModel::getUserInfo($oContact->user_id);
                                 }
                                 ?>
                                 <tr>
-                                    <td style="display: none;"><?php echo date('m/d/Y', strtotime($oList->list_created)); ?></td>
-                                    <td style="display: none;"><?php echo $oList->id; ?></td>
+                                    <td style="display: none;"><?php echo date('m/d/Y', strtotime($oContact->created)); ?></td>
+                                    <td style="display: none;"><?php echo $oContact->id; ?></td>
                                     <td>
                                         <div class="media-left brig pr10">
                                             <label class="custmo_checkbox ">
@@ -69,7 +71,7 @@ if (!empty($subscribersData)) {
                                                 <span class="custmo_checkmark sblue"></span> 
                                             </label>
                                         </div>
-                                        <div class="media-left media-middle"> <?php echo showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
+                                        <div class="media-left media-middle"> <?php echo @showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
                                         <div class="media-left">
                                             <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot"><?php echo $oContact->firstname; ?> <?php echo $oContact->lastname; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($oContact->country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
                                             <div class="text-muted text-size-small"><?php echo $oContact->email; ?></div>

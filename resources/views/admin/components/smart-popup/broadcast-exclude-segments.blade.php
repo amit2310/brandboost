@@ -1,4 +1,5 @@
 <?php
+$aSelectedSegments = array();
 if (!empty($oCampaignSegments)) {
     foreach ($oCampaignSegments as $oRec) {
         $aSelectedSegments[] = $oRec->segment_id;
@@ -42,7 +43,7 @@ if (!empty($oCampaignSegments)) {
                     $aUser = getLoggedUser();
                     $userID = $aUser->id;
                     foreach ($oSegments as $oSegment):
-                        $oSubscribers = $this->mBroadcast->getSegmentSubscribers($oSegment->id, $userID);
+                        $oSubscribers = $mBroadcast->getSegmentSubscribers($oSegment->id, $userID);
                         ?>
                         <tr>
                             <td style="display: none;"><?php echo date('m/d/Y', strtotime($oSegment->created)); ?></td>

@@ -22,9 +22,9 @@ if (!empty($oDefaultTemplates)) {
 
 <div id="broadcastSelectTemplate" class="broadcastTab" <?php if ($activeTab != 'Choose Template'): ?> style="display:none;"<?php endif; ?>>
     <?php if (strtolower($oBroadcast->campaign_type) == 'email'): ?>
-        <?php $this->load->view("admin/templates/emails/email-template-index", array("campaign_type" => 'email')); ?>
+        @include('admin.templates.emails.email-template-index', ["campaign_type" => 'email'])
     <?php else: ?>
-        <?php $this->load->view("admin/templates/sms/sms-template-index", array("campaign_type" => 'sms')); ?>
+        @include('admin.templates.sms.sms-template-index', ["campaign_type" => 'sms'])
     <?php endif; ?>
 </div>
 
@@ -43,7 +43,7 @@ if (!empty($oDefaultTemplates)) {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/addCampaignToBroadcast'); ?>',
                 type: "POST",
-                data: {broadcast_id: broadcast_id, template_id: template_id, source: source},
+                data: {_token: '{{csrf_token()}}', broadcast_id: broadcast_id, template_id: template_id, source: source},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -86,7 +86,7 @@ if (!empty($oDefaultTemplates)) {
                         $.ajax({
                             url: "<?php echo base_url('admin/workflow/deleteWorkflowDraft'); ?>",
                             type: "POST",
-                            data: {moduleName: moduleName, template_id: templateID},
+                            data: {_token: '{{csrf_token()}}', moduleName: moduleName, template_id: templateID},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {

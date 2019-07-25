@@ -447,17 +447,21 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         return $response;
     }
 
-    public function getTagSubscribers($tagID) {
-        $this->db->select("tbl_subscribers.*, tbl_subscribers.id as subscriber_id, tbl_subscribers.status AS globalStatus, tbl_subscribers.id AS global_user_id");
-        $this->db->join("tbl_subscribers", "tbl_subscriber_tags.subscriber_id = tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_subscriber_tags.tag_id", $tagID);
-        $this->db->order_by("tbl_subscriber_tags.id", "DESC");
-        //$this->db->where("status !=", 2);
-        $result = $this->db->get("tbl_subscriber_tags");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+    /**
+     * Used to get tag subscribers
+     * @param type $tagID
+     * @return type
+     */
+    public static function getTagSubscribers($tagID) {
+        
+        $oData = DB::table('tbl_subscriber_tags')
+        ->leftJoin('tbl_subscribers', 'tbl_subscriber_tags.subscriber_id', '=', 'tbl_subscribers.id')
+        ->select('tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.id AS global_user_id')
+        ->where('tbl_subscriber_tags.tag_id', $tagID)
+        ->orderBy('tbl_subscriber_tags.id', 'desc')
+        ->get();
+        return $oData;
+        
     }
 
     public function webchatUsersDetails($userID) {

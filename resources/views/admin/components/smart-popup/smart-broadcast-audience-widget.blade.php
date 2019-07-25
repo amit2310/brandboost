@@ -2,7 +2,7 @@
     <div class="smart-broadcast-box-inner" style="width: 400px;overflow: hidden; height: 100%;">
         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
             <div class="row" style="height: 100%;" id="broadcastSmartPopupContainer">
-                <?php $this->load->view("admin/components/smart-popup/import-options"); ?> 
+                @import('admin.components.smart-popup.import-options') 
             </div>
         </div>					
     </div>
@@ -78,7 +78,7 @@
             $.ajax({
                 url: '/admin/broadcast/loadBroadcastAudience',
                 type: "POST",
-                data: {broadcastId: broadcastId, audienceType: audienceType, actionType: actionType},
+                data: {_token: '{{csrf_token()}}', broadcastId: broadcastId, audienceType: audienceType, actionType: actionType},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -105,7 +105,7 @@
         $.ajax({
             url: '/admin/broadcast/loadImportOption',
             type: "POST",
-            data: {broadcastId: broadcastId},
+            data: {_token: '{{csrf_token()}}', broadcastId: broadcastId},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -121,7 +121,7 @@
         $.ajax({
             url: '/admin/broadcast/loadExcludeOption',
             type: "POST",
-            data: {broadcastId: broadcastId},
+            data: {_token: '{{csrf_token()}}', broadcastId: broadcastId},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

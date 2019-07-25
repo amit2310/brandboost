@@ -7,6 +7,21 @@
     .interactions.configurations ul li small{font-weight: 300!important;color: #09204f!important;}
 </style>
 <?php
+if(empty($broadcastSettings)){
+    $broadcastSettings = new stdClass();
+    $broadcastSettings->text_version_email= 0;
+    $broadcastSettings->enable_mobile_responsiveness= 0;
+    $broadcastSettings->read_tracking= 0;
+    $broadcastSettings->link_tracking = 0;
+    $broadcastSettings->reply_tracking = 0;
+    $broadcastSettings->google_analytics= 0;
+    $broadcastSettings->campaign_archives= 0;    
+}
+
+
+
+?>
+<?php
 if (!empty($oBroadcast)) {
     $aMainTriggerData = json_decode($oBroadcast->data);
 }
@@ -286,15 +301,18 @@ $deliverAt = strtotime($timeString);
                                 <option>Choose Lists</option>
                                 <?php if (!empty($oLists)): ?>
                                     <?php
+                                    
                                     $newolists = array();
 
                                     foreach ($oLists as $key => $value) {
                                         $newolists[$value->id][] = $value;
                                     }
-
                                     foreach ($newolists as $oList):
-
                                         $oList = $oList[0];
+                                        if(!isset($oList->total_contacts)){
+                                            $oList->total_contacts = 0;
+                                        }
+                                        
                                         ?>
                                         <option value="<?php echo $oList->id; ?>" <?php if (in_array($oList->id, $aListIDs)): ?> selected="selected"<?php endif; ?>><?php echo $oList->list_name . ' (' . $oList->total_contacts . ' Contacts)'; ?></option>
                                     <?php endforeach; ?>
@@ -418,7 +436,7 @@ $deliverAt = strtotime($timeString);
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/sendPreviewBroadcastEmail'); ?>',
                 type: "POST",
-                data: {email_body: '<?php echo $oBroadcast->stripo_compiled_html; ?>', email_subject: '<?php echo base64_encode($oBroadcast->subject); ?>', 'email_address': emailAddress, campaign_id: '<?php echo $oBroadcast->broadcast_id; ?>'},
+                data: {_token: '{{csrf_token()}}', email_body: '<?php echo $oBroadcast->stripo_compiled_html; ?>', email_subject: '<?php echo base64_encode($oBroadcast->subject); ?>', 'email_address': emailAddress, campaign_id: '<?php echo $oBroadcast->broadcast_id; ?>'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -458,7 +476,7 @@ $deliverAt = strtotime($timeString);
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/updateBroadcast'); ?>',
                 type: "POST",
-                data: {broadcastId: broadcastId, status: status, current_state: current_state},
+                data: {_token: '{{csrf_token()}}', broadcastId: broadcastId, status: status, current_state: current_state},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

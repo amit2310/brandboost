@@ -1,4 +1,12 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php
+$activeDesign = $activeSetting = $activeSummary = $activeChoose = $activeSelect = $activeReviewContacts = $activeReport = $activeSelect = '';
 if ($activeTab == 'Design Template Edit') {
     $activeDesign = 'active';
     $backButtonTab = 'Choose Template';
@@ -50,39 +58,36 @@ if ($activeTab == 'Design Template Edit') {
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-7 text-right btn_area">
-
-<!--                <button type="button" class="btn light_btn importModuleContact contactShow <?php echo $clientClass; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID ?>" data-redirect="<?php echo base_url(); ?>admin/brandboost/onsite_setup/<?php echo $moduleUnitID; ?>"><i class="icon-arrow-up16"></i><span> &nbsp;  Import Contacts</span> </button>
-                <a class="btn light_btn ml10 contactShow <?php echo $clientClass; ?>" href="<?php echo base_url() ?>admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName; ?>&module_account_id=<?php echo $moduleUnitID; ?>"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contacts</span> </a>
-                <button type="button" class="btn dark_btn dropdown-toggle ml10 addModuleContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID ?>"><i class="icon-plus3"></i><span> &nbsp;  Add Contact</span> </button>  -->
                 <?php if ($bExpired == false): ?>
                     <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn launchCampaign" broadcastId = "<?php echo $broadcast_id; ?>" status="draft" current_state="<?php echo $activeTab; ?>"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
                 <?php endif; ?>
             </div>
         </div>
     </div>
-    <?php $this->load->view("admin/broadcast/partials/setup_menu"); ?>
+    @include('admin.broadcast.partials.setup_menu')
 
     <?php if ($bExpired == false): ?>
-        <?php $this->load->view("admin/broadcast/tabs/target_audience", array('activeSelect' => $activeSelect)); ?>
+        @include('admin.broadcast.tabs.target_audience', ['activeSelect' => $activeSelect])
     <?php endif; ?>
-    <?php $this->load->view("admin/broadcast/tabs/review_audience", array('activeReviewContacts' => $activeReviewContacts)); ?>
+    @include('admin.broadcast.tabs.review_audience', ['activeReviewContacts' => $activeReviewContacts])
 
     <?php if ($bExpired == false): ?>
-        <?php $this->load->view("admin/broadcast/tabs/choose_template", array('activeChoose' => $activeChoose)); ?>
+        @include('admin.broadcast.tabs.choose_template', ['activeChoose' => $activeChoose])
 
         <?php
-        if (strtolower($oBroadcast->campaign_type) == 'email') {
+        if (strtolower($oBroadcast->campaign_type) == 'email') { ?>
 
-            $this->load->view("admin/broadcast/tabs/template_design_beta", array('activeDesign' => $activeDesign));
-        } else {
-
-            $this->load->view("admin/broadcast/tabs/template_design_sms", array('activeDesign' => $activeDesign));
-        }
+            @include('admin.broadcast.tabs.template_design_beta', ['activeDesign' => $activeDesign]))
+        <?php
+        } else { ?>
+            @include('admin.broadcast.tabs.template_design_sms', ['activeDesign' => $activeDesign])
+        <?php
+            }
         ?>
-        <?php $this->load->view("admin/broadcast/tabs/settings", array('activeSetting' => $activeSetting)); ?>
+        @include('admin.broadcast.tabs.settings', ['activeSetting' => $activeSetting])
     <?php endif; ?>
-    <?php $this->load->view("admin/broadcast/tabs/campaign_summary", array('activeSummary' => $activeSummary, 'broadcast_id' => $broadcast_id)); ?>
-    <?php $this->load->view("admin/broadcast/tabs/report", array('activeReport' => $activeReport, 'broadcast_id' => $broadcast_id)); ?>
+    @include('admin.broadcast.tabs.campaign_summary', ['activeSummary' => $activeSummary, 'broadcast_id' => $broadcast_id])
+    @include('admin.broadcast.tabs.report', ['activeReport' => $activeReport, 'broadcast_id' => $broadcast_id])
 
 
 
@@ -326,7 +331,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '/admin/workflow/sendTestEmailworkflowCampaign',
                 type: "POST",
-                data: {'moduleName': moduleName, campaignId: campaignId, email: email},
+                data: {_token: '{{csrf_token()}}', 'moduleName': moduleName, campaignId: campaignId, email: email},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -346,7 +351,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '/admin/workflow/sendTestSMSworkflowCampaign',
                 type: "POST",
-                data: {'moduleName': moduleName, campaignId: campaignId, number: number},
+                data: {_token: '{{csrf_token()}}', 'moduleName': moduleName, campaignId: campaignId, number: number},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -367,7 +372,7 @@ if ($activeTab == 'Design Template Edit') {
                 $.ajax({
                     url: '<?php echo base_url('admin/workflow/loadStripoTemplatePreview'); ?>',
                     type: "POST",
-                    data: {moduleName: moduleName, template_id: templateID, source: source},
+                    data: {_token: '{{csrf_token()}}', moduleName: moduleName, template_id: templateID, source: source},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -393,7 +398,7 @@ if ($activeTab == 'Design Template Edit') {
                 $.ajax({
                     url: '<?php echo base_url('admin/broadcast/previewBroadcastCampaign'); ?>',
                     type: "POST",
-                    data: {campaign_id: campaignID},
+                    data: {_token: '{{csrf_token()}}', campaign_id: campaignID},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -467,7 +472,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/setTab'); ?>',
                 type: "POST",
-                data: {tab: tab, bid: '<?php echo $oBroadcast->broadcast_id; ?>'},
+                data: {_token: '{{csrf_token()}}', tab: tab, bid: '<?php echo $oBroadcast->broadcast_id; ?>'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -588,7 +593,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/setTab'); ?>',
                 type: "POST",
-                data: {tab: tab},
+                data: {_token: '{{csrf_token()}}', tab: tab},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -673,7 +678,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/setTab'); ?>',
                 type: "POST",
-                data: {tab: tab},
+                data: {_token: '{{csrf_token()}}', tab: tab},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -695,7 +700,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/getImportedProperties'); ?>',
                 type: "POST",
-                data: {broadcastId: broadcastId},
+                data: {_token: '{{csrf_token()}}', broadcastId: broadcastId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -711,7 +716,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/getExportedProperties'); ?>',
                 type: "POST",
-                data: {broadcastId: broadcastId},
+                data: {_token: '{{csrf_token()}}', broadcastId: broadcastId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -742,7 +747,7 @@ if ($activeTab == 'Design Template Edit') {
                             $.ajax({
                                 url: '<?php echo base_url('admin/broadcast/deleteBroadcastAudience'); ?>',
                                 type: "POST",
-                                data: {subscriber_id: subscriber_id, broadcast_id: broadcast_id},
+                                data: {_token: '{{csrf_token()}}', subscriber_id: subscriber_id, broadcast_id: broadcast_id},
                                 dataType: "json",
                                 success: function (data) {
                                     if (data.status == 'success') {
@@ -786,7 +791,7 @@ if ($activeTab == 'Design Template Edit') {
                                 $.ajax({
                                     url: '<?php echo base_url('admin/broadcast/deleteBroadcastBulkAudience'); ?>',
                                     type: "POST",
-                                    data: {audience_array: val, broadcast_id: broadcast_id},
+                                    data: {_token: '{{csrf_token()}}', audience_array: val, broadcast_id: broadcast_id},
                                     dataType: "json",
                                     success: function (data) {
                                         if (data.status == 'success') {
@@ -818,7 +823,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/addContactToCampaign'); ?>',
                 type: "POST",
-                data: {automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, contactId: contactId},
+                data: {_token: '{{csrf_token()}}', automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, contactId: contactId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -848,7 +853,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/updateAutomationListsRecord'); ?>',
                 type: "POST",
-                data: {automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, selectedLists: listID},
+                data: {_token: '{{csrf_token()}}', automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, selectedLists: listID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -879,7 +884,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/addSegmentToCampaign'); ?>',
                 type: "POST",
-                data: {automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, segmentId: segmentId},
+                data: {_token: '{{csrf_token()}}', automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, segmentId: segmentId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -909,7 +914,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/addTagToCampaign'); ?>',
                 type: "POST",
-                data: {automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, tagId: tagId},
+                data: {_token: '{{csrf_token()}}', automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, tagId: tagId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -940,7 +945,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/addContactToExcludeCampaign'); ?>',
                 type: "POST",
-                data: {automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, contactId: contactId},
+                data: {_token: '{{csrf_token()}}', automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, contactId: contactId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -971,7 +976,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/updateAutomationListsExcludedRecord'); ?>',
                 type: "POST",
-                data: {automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, selectedLists: listID},
+                data: {_token: '{{csrf_token()}}', automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, selectedLists: listID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1002,7 +1007,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/addExcludeSegmentToCampaign'); ?>',
                 type: "POST",
-                data: {automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, segmentId: segmentId},
+                data: {_token: '{{csrf_token()}}', automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, segmentId: segmentId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1033,7 +1038,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/addExcludedTagToCampaign'); ?>',
                 type: "POST",
-                data: {automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, tagId: tagId},
+                data: {_token: '{{csrf_token()}}', automation_id: '<?php echo $oBroadcast->broadcast_id; ?>', actionValue: actionValue, tagId: tagId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1058,7 +1063,7 @@ if ($activeTab == 'Design Template Edit') {
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/getBroadcastAudience'); ?>',
                 type: "POST",
-                data: {broadcastId: broadcastId},
+                data: {_token: '{{csrf_token()}}', broadcastId: broadcastId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1083,3 +1088,4 @@ if ($activeTab == 'Design Template Edit') {
     });
 
 </script>
+@endsection
