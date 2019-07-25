@@ -97,8 +97,10 @@
 				let file = files[i];
 				formData.append('files[]', file);
 			}
+			formData.append('_token','{{csrf_token()}}');
 			
-			fetch('<?php echo base_url("/dropzone/upload_chat_attachment"); ?>', { 
+			
+			fetch('<?php echo base_url("webchat/dropzone/upload_chat_attachment"); ?>', { 
 				method: 'POST',
 				body: formData // This is your file object
 			}).then(
@@ -123,9 +125,9 @@
 					msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'+filename;
 				    var source='Sms chat notes';
 					$.ajax({
-							url: "<?php echo base_url('admin/Chat/addChatNotes'); ?>",
+							url: "<?php echo base_url('admin/webchat/addWebNotes'); ?>",
 							type: "POST",
-							data: {room:newToken, msg:msg, chatTo:NotesTo, currentUser:currentUser,notes:'1'},
+							data: {room:newToken, msg:msg, chatTo:NotesTo, currentUser:currentUser,notes:'1',_token:'{{csrf_token()}}'},
 							dataType: "json",
 							success: function (response) {
 								if (response.status == "ok") {
