@@ -431,8 +431,9 @@
 			e.preventDefault();
 			$('.overlaynew').show();
 			var formdata = new FormData(this);
+			formdata.append('_token', '<?php echo csrf_token(); ?>');
 			$.ajax({
-				url: "<?php echo base_url('/admin/profile/changePassword'); ?>",
+				url: "<?php echo base_url('admin/profile/changePassword'); ?>",
 				type: "POST",
 				data: formdata,
 				contentType: false,
@@ -440,9 +441,8 @@
 				processData: false,
 				dataType: "json",
 				success: function (response) {
-					
+
 					if (response.status == 'success') {
-						
 						window.location.href = '';
 						} else {
 						alertMessage(response.msg);

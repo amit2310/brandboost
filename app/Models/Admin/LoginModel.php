@@ -224,6 +224,47 @@ class LoginModel extends Model {
         return true;
     }
 
+    /**
+     * This function is use for update password
+     * 
+     * @return boolean
+     */
+    public function ChangePassword($oldPassword, $newPassword, $rePassword) {
+        $response = false;
+        $password_hash = 'Umair';
+        $siteSalt = 'Rahul';
+        $oldPassword = base64_encode($oldPassword . $password_hash . $siteSalt);
+        $newPassword = base64_encode($newPassword . $password_hash . $siteSalt);
+        $userID = '';
+        if (Session::get('admin_user_id')) {
+            $userID = Session::get('admin_user_id');
+        } else if (Session::get('customer_user_id')) {
+            $userID = Session::get('customer_user_id');
+        } else if (Session::get('user_user_id')) {
+            $userID = Session::get('user_user_id');
+        } else {
+            redirect('/admin/login');
+        }
+
+        $user = DB::table('tbl_users')
+                    ->where('password', $oldPassword)
+                    ->where('id', $userID)
+                    ->first();
+
+        if(!empty($user)) {
+            $aData = array(
+                'password' => $newPassword
+            );
+          
+            $result = DB::table('tbl_users')
+                    ->where('id', $userID)
+                    ->update($aData);
+            $response = true;
+        }
+        
+        return $response;
+    }
+
     public function lastLoginDetail($userId, $aData) {
         $response = false;
         $this->db->where('id', $userId);
@@ -273,42 +314,7 @@ class LoginModel extends Model {
         return $user;
     }
 
-    public function ChangePassword($oldPassword, $newPassword, $rePassword) {
-        $response = false;
-        $password_hash = 'Umair';
-        $siteSalt = 'Rahul';
-        $oldPassword = base64_encode($oldPassword . $password_hash . $siteSalt);
-        $newPassword = base64_encode($newPassword . $password_hash . $siteSalt);
-        $userID = '';
-        if ($this->session->userdata('admin_user_id')) {
-            $userID = $this->session->userdata('admin_user_id');
-        } else if ($this->session->userdata('customer_user_id')) {
-            $userID = $this->session->userdata('customer_user_id');
-        } else if ($this->session->userdata('user_user_id')) {
-            $userID = $this->session->userdata('user_user_id');
-        } else {
-            redirect('/admin/login');
-        }
-
-        $this->db->from('tbl_users');
-        $this->db->where('password', $oldPassword);
-        $this->db->where('id', $userID);
-        $this->db->limit(1);
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            $user = $query->row();
-            $aData = array(
-                'password' => $newPassword
-            );
-            $this->db->where('id', $userID);
-            $result = $this->db->update('tbl_users', $aData);
-            //echo $this->db->last_query(); exit;
-
-            $response = true;
-        }
-        //sendEmailTemplate('welcome', $userID);
-        return $response;
-    }
+    
 
     public function ChangePasswordAdmin($oldPassword, $newPassword, $rePassword, $userID) {
         $response = false;
