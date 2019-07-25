@@ -107,6 +107,7 @@ Route::post('admin/smschat/addSMSFavourite','Admin\SmsChat@addSMSFavourite');
 
 //Profile module
 Route::get('admin/profile','Admin\AccountSetting@index');
+Route::post('admin/account_setting/saveProfileDetail','Admin\AccountSetting@saveProfileDetail');
 
 //Users module
 Route::post('admin/users/updateUserData','Admin\Users@updateUserData');
