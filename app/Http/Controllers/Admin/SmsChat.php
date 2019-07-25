@@ -37,11 +37,16 @@ class SmsChat extends Controller {
         $userId = Input::post("userId");
         $SubscriberPhone = trim(numberForamt(Input::post("SubscriberPhone")));
         $usersdata = getUserbyPhone($SubscriberPhone);
+        if($usersdata->count()>0)
+        {
         $usersdata = $usersdata[0];
         if (empty($usersdata->avatar)) {
             $userDataDetail = getUserDetail($usersdata->user_id);
+            if(!empty($userDataDetail))
+            {
             $usersdata->avatar = $userDataDetail->avatar;
         }
+    }
         $offsetValue = Input::post("offsetValue") > 0 ? 0 : Input::post("offsetValue");
         $isLoggedInTeam = Session::get("team_user_id");
         if ($isLoggedInTeam) {
@@ -129,6 +134,7 @@ class SmsChat extends Controller {
             }
         }
     }
+}
     /**
      * this function is used to return Subscriber information
      * @return type
