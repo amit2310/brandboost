@@ -390,9 +390,9 @@
 			$('.overlaynew').show();
 			
 			var formdata = new FormData(this);
-			
+			formdata.append('_token', '<?php echo csrf_token(); ?>');
 			$.ajax({
-				url: "<?php echo base_url('/admin/account_setting/saveProfileDetail'); ?>",
+				url: "<?php echo base_url('admin/account_setting/saveProfileDetail'); ?>",
 				type: "POST",
 				data: formdata,
 				contentType: false,
@@ -412,14 +412,14 @@
 						
 						} else {
 						
-						alertMessage(response.msg);
-						$('.overlaynew').hide();
-						
-					}
+							//alertMessage(response.msg);
+							$('.overlaynew').hide();
+							
+						}
 					
 				},
 				error: function (response) {
-					alertMessage(response.msg);
+					//alertMessage(response.msg);
 					$('.overlaynew').hide();
 				}
 			});
