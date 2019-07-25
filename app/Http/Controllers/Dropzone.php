@@ -167,35 +167,6 @@ class dropzone extends Controller
         }
     }
 
-    public function upload_profile_image() {
-
-        if (!empty($_FILES)) {
-
-            //Collect Text Review(Save Video into S3)
-            $videoReview = isset($_FILES['file']) ? $_FILES['file'] : false;
-            $ext = pathinfo($videoReview['name'], PATHINFO_EXTENSION);
-            $allowed_types = array("png", "jpeg", "jpg", "JPG", "JPEG", "PNG");
-            $error = "";
-            if ($videoReview !== false) {
-                if (empty($error) && !in_array($ext, $allowed_types))
-                    $error = "Invalid video file format";
-
-                if (empty($error) && (!isset($videoReview['size']) || $videoReview['size'] > (6291456 * 100)))
-                    $error = "Maximum filesize limit is 600MB only.";
-
-                if (empty($error)) {
-                    // Put file to AWS S3
-                    $videoReviewFile = "profile_image_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
-                    $filekey = "campaigns/" . $videoReviewFile;
-                    $filename = $videoReview['name'];
-                    $input = file_get_contents($videoReview['tmp_name']);
-                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
-                }
-                //$aReviewData['comment_video'] = $videoReviewFile;
-                echo $videoReviewFile;
-            }
-        }
-    }
 
     public function upload_campaign_files() {
 
@@ -505,6 +476,40 @@ class dropzone extends Controller
         $response = array('result' => $videoReviewFile, 'error' => $error);
         echo json_encode($response);
         exit;
+    }
+
+    /**
+    * This function used to upload user images to the amazon s3 server 
+    * @return type object
+    */
+    public function upload_profile_image() {
+
+        if (!empty($_FILES)) {
+
+            //Collect Text Review(Save Video into S3)
+            $videoReview = isset($_FILES['file']) ? $_FILES['file'] : false;
+            $ext = pathinfo($videoReview['name'], PATHINFO_EXTENSION);
+            $allowed_types = array("png", "jpeg", "jpg", "JPG", "JPEG", "PNG");
+            $error = "";
+            if ($videoReview !== false) {
+                if (empty($error) && !in_array($ext, $allowed_types))
+                    $error = "Invalid video file format";
+
+                if (empty($error) && (!isset($videoReview['size']) || $videoReview['size'] > (6291456 * 100)))
+                    $error = "Maximum filesize limit is 600MB only.";
+
+                if (empty($error)) {
+                    // Put file to AWS S3
+                    $videoReviewFile = "profile_image_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
+                    $filekey = "campaigns/" . $videoReviewFile;
+                    $filename = $videoReview['name'];
+                    $input = file_get_contents($videoReview['tmp_name']);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                }
+                echo $videoReviewFile;
+            }
+        }
     }
 
     
