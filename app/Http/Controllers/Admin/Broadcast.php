@@ -35,11 +35,12 @@ class Broadcast extends Controller {
         $mBroadcast = new BroadcastModel();
         $activeTab = Session::put("setTab", "");
         $campaignType = '';
+        $moduleName = 'broadcast';
         //$oBroadcast = $mBroadcast->getMyBroadcasts($userID);
 
         $oBroadcast = $mBroadcast->getMyBroadcastsByTypes($userID, $campaignType);
         $campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);
-        return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb));
+        return view('admin.broadcast.index', ['title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'campaignType' =>$campaignType, 'moduleName' => $moduleName, 'pagename' => $breadcrumb])->with(['mBroadcast'=>$mBroadcast]);
     }
 
     /**
@@ -376,6 +377,9 @@ class Broadcast extends Controller {
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
 
         $userID = $aUser->id;
 
@@ -473,6 +477,9 @@ class Broadcast extends Controller {
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
 
         $userID = $aUser->id;
 
@@ -505,6 +512,7 @@ class Broadcast extends Controller {
                     $bUpdated = $mBroadcast->updateBroadcastCampaign($aBroadcastCampaignData, $eventId);
                     $moduleName = 'broadcast';
                     if ($fieldName == 'subject') {
+
 
                         $oVariations = $mWorkflow->getWorkflowSplitVariations($moduleName, $broadcastID);
                         if (!empty($oVariations)) {
@@ -557,6 +565,12 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
+        //Instanciate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instanciate Subscriber model to get its methods and properties
+        $mTemplates = new TemplatesModel();
+
         if (!empty($request)) {
             $fieldName = strip_tags($request->fieldName);
             $fieldValue = strip_tags($request->fieldVal);
@@ -574,11 +588,13 @@ class Broadcast extends Controller {
                     //pre($oDraft);
                     //die;
                     $aData['template_source'] = $fieldValue;
-                    $aData['subject'] = $oTemplate->template_subject;
-                    $aData['stripo_compiled_html'] = $oTemplate->stripo_compiled_html;
-                    $aData['stripo_html'] = $oTemplate->stripo_html;
-                    $aData['stripo_css'] = $oTemplate->stripo_css;
-                    $aData['html'] = $oTemplate->html;
+                    if (!empty($oTemplate)) {
+                        $aData['subject'] = $oTemplate->template_subject;
+                        $aData['stripo_compiled_html'] = $oTemplate->stripo_compiled_html;
+                        $aData['stripo_html'] = $oTemplate->stripo_html;
+                        $aData['stripo_css'] = $oTemplate->stripo_css;
+                        $aData['html'] = (isset($oTemplate->html))? $oTemplate->html : '' ;
+                    }
                 } else if ($fieldName == 'variation_load') {
                     $aData['split_load'] = $fieldValue;
                 }
@@ -644,9 +660,10 @@ class Broadcast extends Controller {
             //Sync Import/Exclude Properties
 
             if ($broadcastID > 0) {
+                $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $broadcastID);
                 $this->syncBroadcastAudience($broadcastID);
                 $oBroadcastSubscriber = $mBroadcast->getBroadcastSubscribers($broadcastID);
-                $aData = array('oBroadcastSubscriber' => $oBroadcastSubscriber);
+                $aData = array('oBroadcastSubscriber' => $oBroadcastSubscriber, 'oBroadcast' => $oBroadcast[0]);
 
                 $content = view('admin.broadcast.partials.broadcast_audience', $aData)->with(['mTags' => $mTag])->render();
             }
@@ -983,20 +1000,20 @@ class Broadcast extends Controller {
 
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         //Instanciate List model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instanciate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
-        
+
         //Instanciate Subscriber model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
         //Imported Properites
         //Lists
-        
-        
+
+
 
         $aBroadcastSubscribers = array();
         $oAutomationLists = $mLists->getAutomationLists($broadcastID);
@@ -1649,7 +1666,7 @@ class Broadcast extends Controller {
 
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         //Instanciate Email model to get its methods and properties
         $mEmails = new EmailsModel();
 
@@ -1658,7 +1675,6 @@ class Broadcast extends Controller {
         $automationID = $request->automation_id;
         if ($actionValue == 'addRecord') {
             $mEmails->updateAutomationExcludedList($automationID, $aSelectedLists);
-            
         } else {
             $mEmails->deleteAutomationExcludedLists($automationID, $aSelectedLists);
             //$this->syncBroadcastAudience($automationID);
@@ -2644,10 +2660,10 @@ class Broadcast extends Controller {
 
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         //Instanciate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         //Instanciate Subscriber model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
@@ -2770,6 +2786,9 @@ class Broadcast extends Controller {
 
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
 
 
 

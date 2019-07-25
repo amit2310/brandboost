@@ -596,7 +596,7 @@
                                 if(silentMod != 'silent')
                                 window.parent.displayMessagePopup("success", "Success", "Campaign saved successfully!");
                             } else {
-                                alertMessage('Error: Some thing wrong!');
+                                window.parent.displayMessagePopup("error", "error", "Some thing wrong!");
                             }
                         }
                     });
@@ -621,7 +621,7 @@
                                 $("#createTemplateThumbnail").attr("src", thumbSrc);
 
                             } else {
-                                alertMessage('Error: Some thing wrong!');
+                                window.parent.displayMessagePopup("error", "error", "Some thing wrong!");
                             }
                         }
                     });

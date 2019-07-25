@@ -1687,7 +1687,7 @@ class WorkflowModel extends Model {
                 ->where('id', $id)
                 ->update($aData);
 
-        if ($oData) {
+        if ($oData > -1) {
             return true;
         } else {
             return false;
@@ -1711,6 +1711,14 @@ class WorkflowModel extends Model {
         return $oData;
     }
 
+    /**
+     * This function used to update split workflow campaigns
+     * @param type $aData
+     * @param type $id
+     * @param type $moduleName
+     * @param type $broadcastID
+     * @return boolean
+     */
     public function updateWorkflowSplitCampaign($aData, $id, $moduleName, $broadcastID = '') {
         //For now split table created for broadcast module only
         switch ($moduleName) {
@@ -1738,7 +1746,7 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-
+        //DB::enableQuerylog();
         $result = DB::table($tableName)
                 ->when(($broadcastID > 0), function($query) use($broadcastID) {
                     return $query->where('broadcast_id', $broadcastID);
@@ -1746,9 +1754,10 @@ class WorkflowModel extends Model {
                     return $query->where('id', $id);
                 })
                 ->update($aData);
-        //echo $this->db->last_query();
 
-        if ($result) {
+        //print_r(DB::getQuerylog());        
+
+        if ($result > -1) {
             return true;
         } else {
             return false;
@@ -3975,19 +3984,29 @@ class WorkflowModel extends Model {
         return false;
     }
 
+    /**
+     * Used to get global workflow campaign
+     * @param type $userID
+     * @return boolean
+     */
     public function getWorkflowCampaignGlobal($userID) {
         if ($userID > 0) {
-            $this->db->where("user_id", $userID);
-            $this->db->where("email_type", "automation");
-            $result = $this->db->get("tbl_automations_emails");
-            if ($result->num_rows() > 0) {
-                $response = $result->result();
-            }
-            return $response;
+            $oData = DB::table('tbl_automations_emails')
+                    ->where('user_id', $userID)
+                    ->where('email_type', 'automation')
+                    ->get();
+            return $oData;
         }
         return false;
     }
 
+    /**
+     * Used to sync workflow audience
+     * @param type $modName
+     * @param type $campID
+     * @param type $userID
+     * @return boolean
+     */
     public function syncWorkflowAudienceAuto($modName, $campID, $userID) {
 
         $moduleName = $modName;
@@ -4149,8 +4168,7 @@ class WorkflowModel extends Model {
                     }
                 }
             }
-            pre($aEligibleSubscribers);
-
+            //pre($aEligibleSubscribers);
             //Step-1: Delete all workflow subscribers from excluded  subscriber
             //Step-2: Add workflow Subscribers only those which are not in excluded subscribers
             //Step-1 Excecution
@@ -4177,11 +4195,14 @@ class WorkflowModel extends Model {
 
 
             //Get supecious subscribers
-            foreach ($preSyncSubscribers as $subscriberID) {
-                if (!in_array($subscriberID, $aEligibleSubscribers)) {
-                    $suspciousSubscribers[] = $subscriberID;
+            if (!empty($preSyncSubscribers)) {
+                foreach ($preSyncSubscribers as $subscriberID) {
+                    if (!in_array($subscriberID, $aEligibleSubscribers)) {
+                        $suspciousSubscribers[] = $subscriberID;
+                    }
                 }
             }
+
 
             //pre($suspciousSubscribers);
 
@@ -4204,6 +4225,9 @@ class WorkflowModel extends Model {
         }
     }
 
+    /**
+     * Used to sync worflow global audience 
+     */
     public function syncWorkflowAudienceGlobalModel() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;

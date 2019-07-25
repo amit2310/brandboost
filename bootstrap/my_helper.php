@@ -1541,20 +1541,21 @@ if (!function_exists('add_notifications')) {
 }
 
 
+/**
+ * Used to send template preview Email
+ */
 if (!function_exists('sendEmailPreview')) {
 
     function sendEmailPreview($emailAddress, $messageBody, $messageSubject, $aParam = array()) {
 
-        $CI = & get_instance();
-        $CI->load->model("admin/Users_model", 'mmUser');
-        $userID = $CI->session->userdata('current_user_id');
-        $aUser = $CI->mmUser->getUserInfo($userID);
-        $website_name = $CI->config->item('website_name');
+        $userID = Session::get('current_user_id');
+        $aUser = \App\Models\Admin\UsersModel::getUserInfo($userID);
+        $website_name = config('bbconfig.website_name');
 
         $tag = ["{FIRST_NAME}", "{LAST_NAME}", "{EMAIL}", "{WEBSITE}", "{PASSWORD}"];
 
         $password = base64_decode($aUser->password);
-        $password_hash = $CI->config->item('password_hash');
+        $password_hash = config('bbconfig.password_hash');
         $newPassword = explode($password_hash, $password);
         $newPass = $newPassword[0];
 
@@ -1562,29 +1563,31 @@ if (!function_exists('sendEmailPreview')) {
 
         $newTemp = str_replace($tag, $changeTo, $messageBody);
 
-//$emailFooter = $CI->config->item('emailFooter');
-        $aFooterTags = array('{{MODULENAME}}', '{{MODULEUNITID}}', '{{SUBSCRIBERID}}', '{{GLOBALSUBSCRIBERID}}');
-        $aFooterTagValues = array($moduleName, $moduleUnitID, $subscriberID, $globalSubscriberID);
-        $footerSrc = getDefaultEmailFooter();
-        $emailFooter = str_replace($aFooterTags, $aFooterTagValues, $footerSrc);
 
+        //$aFooterTags = array('{{MODULENAME}}', '{{MODULEUNITID}}', '{{SUBSCRIBERID}}', '{{GLOBALSUBSCRIBERID}}');
+        //$aFooterTagValues = array($moduleName, $moduleUnitID, $subscriberID, $globalSubscriberID);
+        $footerSrc = getDefaultEmailFooter();
+        //$emailFooter = str_replace($aFooterTags, $aFooterTagValues, $footerSrc);
+        $emailFooter = $footerSrc;
         if (!empty($aParam)) {
             $fromEmail = $aParam['fromEmail'];
             $fromName = $aParam['fromName'];
             $replyEmail = $aParam['replyEmail'];
         } else {
-            $fromEmail = $CI->config->item('siteemail');
+            $fromEmail = config('bbconfig.siteemail');
             $fromName = $aParam['fromName'];
             $replyEmail = $fromEmail;
         }
 
-        $mailFrom = $CI->config->item('mailFrom');
+        $mailFrom = config('bbconfig.mailFrom');
 
-        $sandgriduser = $CI->config->item('sandgriduser');
-        $sandgridpass = $CI->config->item('sandgridpass');
-        $url = $CI->config->item('api_url');
+        $sandgriduser = config('bbconfig.sandgriduser');
+        $sandgridpass = config('bbconfig.sandgridpass');
+        $url = config('bbconfig.api_url');
+        
+        //echo "Sendgrid User ={$sandgriduser} And Sendgrid password = {$sandgridpass} and URL = {$url}";
 
-        $fromEmail = $CI->session->userdata('previewFromEmailAddress') == '' ? $fromEmail : $CI->session->userdata('previewFromEmailAddress');
+        $fromEmail = config('bbconfig.previewFromEmailAddress') == '' ? $fromEmail : Session::get('previewFromEmailAddress');
 
         if ($mailFrom == 'sandgrid') {
             $user = $sandgriduser;
@@ -1598,7 +1601,7 @@ if (!function_exists('sendEmailPreview')) {
                 'api_key' => $pass,
                 'x-smtpapi' => json_encode($json_string),
                 'to' => $emailAddress,
-                'subject' => ($messageSubject) ? $messageSubject : $CI->config->item('blank_subject'),
+                'subject' => ($messageSubject) ? $messageSubject : config('bbconfig.blank_subject'),
                 'html' => $newTemp . $emailFooter,
                 'text' => $plainText,
                 'from' => $fromEmail,
@@ -1635,7 +1638,7 @@ function convertHtmlToPlain($html) {
 //Step-1 Remove All Images
     $plainText = preg_replace("/<img[^>]+\>/i", "\r\n", $html);
 //Step-2 Remove All anchor tags
-    $plainText = preg_replace("<a[^>]*>(.*?)</a>", "\r\n", $plainText);
+    $plainText = preg_replace("~<a[^>]*>(.*?)</a>~", "\r\n", $plainText);
 //Step-3 Remove all style 
     $plainText = preg_replace("/<style\\b[^>]*>(.*?)<\\/style>/s", "\r\n", $plainText);
 //Step-4 Now remove all html tags
