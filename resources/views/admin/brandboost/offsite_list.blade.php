@@ -1232,7 +1232,7 @@ if (!empty($aBrandbosts)) {
                                 $.ajax({
                                     url: '<?php echo base_url('admin/brandboost/delete_multipal_brandboost'); ?>',
                                     type: "POST",
-                                    data: {multi_brandboost_id: val},
+                                    data: {multi_brandboost_id: val, _token: '{{csrf_token()}}'},
                                     dataType: "json",
                                     success: function (data) {
                                         if (data.status == 'success') {
@@ -1273,7 +1273,7 @@ if (!empty($aBrandbosts)) {
                                 $.ajax({
                                     url: '<?php echo base_url('admin/brandboost/archive_multipal_brandboost'); ?>',
                                     type: "POST",
-                                    data: {multi_brandboost_id: val},
+                                    data: {multi_brandboost_id: val, _token: '{{csrf_token()}}'},
                                     dataType: "json",
                                     success: function (data) {
                                         if (data.status == 'success') {
@@ -1314,7 +1314,7 @@ if (!empty($aBrandbosts)) {
                                 $.ajax({
                                     url: '<?php echo base_url('admin/brandboost/delete_multipal_brandboost'); ?>',
                                     type: "POST",
-                                    data: {multi_brandboost_id: val},
+                                    data: {multi_brandboost_id: val, _token: '{{csrf_token()}}'},
                                     dataType: "json",
                                     success: function (data) {
                                         if (data.status == 'success') {
@@ -1354,7 +1354,7 @@ if (!empty($aBrandbosts)) {
                                 $.ajax({
                                     url: '<?php echo base_url('admin/brandboost/archive_multipal_brandboost'); ?>',
                                     type: "POST",
-                                    data: {multi_brandboost_id: val},
+                                    data: {multi_brandboost_id: val, _token: '{{csrf_token()}}'},
                                     dataType: "json",
                                     success: function (data) {
                                         if (data.status == 'success') {
@@ -1374,7 +1374,7 @@ if (!empty($aBrandbosts)) {
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/updateOnsiteStatus'); ?>',
                 type: "POST",
-                data: {'brandboostID': brandboostID, 'status': status},
+                data: {'brandboostID': brandboostID, 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1393,7 +1393,7 @@ if (!empty($aBrandbosts)) {
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/addOffsite'); ?>',
                 type: "POST",
-                data: {'campaignName': campaignName, 'campaignDescription': campaignDescription},
+                data: {'campaignName': campaignName, 'campaignDescription': campaignDescription, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
@@ -1412,7 +1412,7 @@ if (!empty($aBrandbosts)) {
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/update_offsite_step1'); ?>',
                 type: "POST",
-                data: {'campaignName': campaignName, 'brandboostID': brandboostID},
+                data: {'campaignName': campaignName, 'brandboostID': brandboostID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
@@ -1442,7 +1442,7 @@ if (!empty($aBrandbosts)) {
                         $.ajax({
                             url: '<?php echo base_url('admin/brandboost/delete_brandboost'); ?>',
                             type: "POST",
-                            data: {brandboost_id: brandID},
+                            data: {brandboost_id: brandID, _token: '{{csrf_token()}}'},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {

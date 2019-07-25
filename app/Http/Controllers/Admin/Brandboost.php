@@ -558,10 +558,43 @@ class Brandboost extends Controller {
         $bActiveSubsription = UsersModel::isActiveSubscription();
 		
 		return view('admin.brandboost.offsite_list', array('title' => 'Offsite Brand Boost Campaigns', 'pagename' => $breadcrumb, 'aBrandbosts' => $aBrandboostList, 'bActiveSubsription' => $bActiveSubsription, 'currentUserId' => $userID, 'user_role' => $user_role, 'moduleName' => $moduleName, 'viewstats' => false));
-		
-        //$this->template->load('admin/admin_template_new', 'admin/brandboost/offsite_list', array('title' => 'Offsite Brand Boost Campaigns', 'pagename' => $breadcrumb, 'aBrandbosts' => $aBrandboostList, 'bActiveSubsription' => $bActiveSubsription, 'currentUserId' => $userID, 'user_role' => $user_role, 'moduleName' => $moduleName));
-        //$this->load->view('admin/brandboost/offsite_list_testtemp');
     }	
+	
+	public function updateOnsiteStatus() {
+
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $brandboostID = Input::post("brandboostID");
+        $status = Input::post("status");
+        $aBrandboostData = array(
+            'status' => $status,
+        );
+        $result = BrandboostModel::updateBrandboost($userID, $aBrandboostData, $brandboostID);
+
+        //Add userActivity
+        $aActivityData = array(
+            'user_id' => $userID,
+            'event_type' => 'brandboost_onsite_status',
+            'action_name' => 'change_status_brandboost',
+            'brandboost_id' => $brandboostID,
+            'campaign_id' => '',
+            'inviter_id' => '',
+            'subscriber_id' => '',
+            'feedback_id' => '',
+            'activity_message' => 'New On Site Brandboost status changed',
+            'activity_created' => date("Y-m-d H:i:s")
+        );
+        logUserActivity($aActivityData);
+
+        if ($result) {
+            $response = array('status' => 'success');
+        } else {
+            $response = array('status' => 'error');
+        }
+        echo json_encode($response);
+        exit;
+    }
 
     public function index() {
 
@@ -2785,43 +2818,6 @@ class Brandboost extends Controller {
             'status' => $status,
         );
         $result = $this->mBrandboost->updateWidget($userID, $aData, $widgetID);
-        if ($result) {
-            $response = array('status' => 'success');
-        } else {
-            $response = array('status' => 'error');
-        }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function updateOnsiteStatus() {
-
-        $response = array();
-        $post = $this->input->post();
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $brandboostID = $post['brandboostID'];
-        $status = $post['status'];
-        $aBrandboostData = array(
-            'status' => $status,
-        );
-        $result = $this->mBrandboost->update($userID, $aBrandboostData, $brandboostID);
-
-        //Add userActivity
-        $aActivityData = array(
-            'user_id' => $userID,
-            'event_type' => 'brandboost_onsite_status',
-            'action_name' => 'change_status_brandboost',
-            'brandboost_id' => $brandboostID,
-            'campaign_id' => '',
-            'inviter_id' => '',
-            'subscriber_id' => '',
-            'feedback_id' => '',
-            'activity_message' => 'New On Site Brandboost status changed',
-            'activity_created' => date("Y-m-d H:i:s")
-        );
-        logUserActivity($aActivityData);
-
         if ($result) {
             $response = array('status' => 'success');
         } else {
