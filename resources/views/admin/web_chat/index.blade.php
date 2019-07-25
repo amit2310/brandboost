@@ -1481,9 +1481,9 @@ function loadMessageChat(userId,token,clickvalue=null)
 	$(document).ready(function(){
 	$(document).on("keyup",".MainsearchChatMsg", function() {
 	$.ajax({
-	url: '<?php echo base_url('admin/smschat/getSearchsubscriberByinput'); ?>',
+	url: '<?php echo base_url('admin/webchat/bigwfilter'); ?>',
 	type: "POST",
-	data: {searchVal:$('#MainsearchChatMsg').val()},
+	data: {searchVal:$('#MainsearchChatMsg').val(),_token: '{{csrf_token()}}'},
 	success: function (data) {
 	$('#InitalWeb').hide();
 	$('#AjaxSearchWeb').show();

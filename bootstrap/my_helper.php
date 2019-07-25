@@ -2549,15 +2549,25 @@ if (!function_exists('getTeamTwilioAccount')) {
 
 
 
+     /**
+     * this function is used get the room details
+     * @return type
+     */
 
 if (!function_exists('getTeamByroom')) {
 
     function getTeamByroom($room) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->getTeamByroomDetails($room);
-        return $subscribersData[0]->userval;
+        
+        $oData = \App\Models\Admin\WebChatModel::getTeamByroomDetails($room);
+        if(!empty($oData))
+        {
+            $userval = $oData[0]->userval;
+        }
+        else
+        {
+          $userval = "";
+        }
+        return $userval;
     }
 
 }
@@ -2619,17 +2629,26 @@ if (!function_exists('getlastChatMessage')) {
 }
 
 
-if (!function_exists('searchByinput')) {
 
-    function searchByinput($userID, $inputval) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $Res_subscribersData = $CI->mSubscriber->activeOnlywebDetailsByinput($userID, $inputval);
-        return $Res_subscribersData;
+/**
+ * prepare list after search
+ * @param type $userID
+ * @param type $inputval
+ * @return type
+ */
+
+if (!function_exists('smallwfilterInput')) {
+
+    function smallwfilterInput($userID, $inputval) {
+      
+        $oData = \App\Models\Admin\WebChatModel::smallwfilterModel($userID, $inputval);
+        return $oData;
+        
     }
 
 }
+
+
 
 /**
  * this function is used to filter the sms list based on the input provided in sms chat
