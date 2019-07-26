@@ -2249,7 +2249,7 @@ if (!function_exists('sendClientEmail')) {
                 'api_key' => $password,
                 'x-smtpapi' => json_encode($json_string),
                 'to' => $emailAddress,
-                'subject' => ($messageSubject) ? $messageSubject : $CI->config->item('blank_subject'),
+                'subject' => ($messageSubject) ? $messageSubject : config('bbconfig.blank_subject'),
                 'html' => $messageBody,
                 'text' => $plainText,
                 'from' => $siteemail,

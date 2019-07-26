@@ -1,5 +1,5 @@
 <?php
-$aCampaignTags = $this->config->item('email_tags');
+$aCampaignTags = config('bbconfig.email_tags');
 
 $smsCharCount = strlen(preg_replace("!<br.*?>!is", "\n", trim(base64_decode($oBroadcast->stripo_compiled_html))));
 $smsPartsCount = $smsCharCount / 160;
@@ -8,7 +8,7 @@ $smsPartsCount = $smsCharCount / 160;
     <div class="col-md-4">
         <div class="panel panel-flat">
             <div class="panel-heading">
-                <h6 class="panel-title">SMS Editorrr</h6>
+                <h6 class="panel-title">SMS Editor</h6>
                 <div class="heading-elements"><a href="javascript:void();"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a></div>
             </div>
             <div class="panel-body p0 bkg_white min_h567">

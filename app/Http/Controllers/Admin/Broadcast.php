@@ -40,7 +40,7 @@ class Broadcast extends Controller {
 
         $oBroadcast = $mBroadcast->getMyBroadcastsByTypes($userID, $campaignType);
         $campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);
-        return view('admin.broadcast.index', ['title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'campaignType' =>$campaignType, 'moduleName' => $moduleName, 'pagename' => $breadcrumb])->with(['mBroadcast'=>$mBroadcast]);
+        return view('admin.broadcast.index', ['title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'campaignType' => $campaignType, 'moduleName' => $moduleName, 'pagename' => $breadcrumb])->with(['mBroadcast' => $mBroadcast]);
     }
 
     /**
@@ -93,7 +93,7 @@ class Broadcast extends Controller {
         $campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);
         $moduleName = 'broadcast';
         Session::put("setTab", '');
-        return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb, 'campaignType' => $campaignType, 'moduleName' => $moduleName));
+        return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb, 'campaignType' => $campaignType, 'moduleName' => $moduleName))->with('mBroadcast', $mBroadcast);
     }
 
     /**
@@ -261,10 +261,10 @@ class Broadcast extends Controller {
         $totalSubscribers = count($oTotalSubscribers);
 
         //Check for duplicate records
-
+        $aEmails = array();
+        $duplicateCount = 0;
         if (!empty($oTotalSubscribers)) {
-            $aEmails = array();
-            $duplicateCount = 0;
+
             foreach ($oTotalSubscribers as $oRec) {
                 if (in_array($oRec->subscriber_email, $aEmails)) {
                     $duplicateCount++;
@@ -311,6 +311,13 @@ class Broadcast extends Controller {
         $aAudienceCount = $this->importExcludeAudienceCount($id);
         $importedCount = count($aAudienceCount['imported']);
         $exportedCount = count($aAudienceCount['excluded']);
+        
+        if(!empty($campaignType)){
+            $breadModuleName = (strtolower($campaignType) =='email' ) ? 'email' : 'sms';
+        }else{
+            $breadModuleName = '';
+        }
+        
 
 
 
@@ -318,7 +325,7 @@ class Broadcast extends Controller {
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/broadcast/') . '" class="sidebar-control hidden-xs">Broadcast </a></li>
+                        <li><a href="' . base_url('admin/broadcast/'.$breadModuleName) . '" class="sidebar-control hidden-xs">Broadcast </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="' . $oBroadcast[0]->title . '" class="sidebar-control active hidden-xs ">' . $oBroadcast[0]->title . '</a></li>
                     </ul>';
@@ -354,6 +361,7 @@ class Broadcast extends Controller {
             'importedCount' => $importedCount,
             'exportedCount' => $exportedCount,
             'moduleName' => 'broadcast',
+            'moduleUnitID' => $broadcastID,
             'broadcastSettings' => ($broadcastSettings->isNotEmpty()) ? $broadcastSettings[0] : array(),
             'userData' => $aUser,
             'twillioData' => $twillioData[0],
@@ -593,7 +601,7 @@ class Broadcast extends Controller {
                         $aData['stripo_compiled_html'] = $oTemplate->stripo_compiled_html;
                         $aData['stripo_html'] = $oTemplate->stripo_html;
                         $aData['stripo_css'] = $oTemplate->stripo_css;
-                        $aData['html'] = (isset($oTemplate->html))? $oTemplate->html : '' ;
+                        $aData['html'] = (isset($oTemplate->html)) ? $oTemplate->html : '';
                     }
                 } else if ($fieldName == 'variation_load') {
                     $aData['split_load'] = $fieldValue;
@@ -2769,7 +2777,7 @@ class Broadcast extends Controller {
                     'oBroadcast' => $oBroadcast[0],
                     'moduleName' => 'broadcast'
                 );
-                $sEditorContent = view('admin.broadcast.partials.template_design_sms_ajax.php', $aEditorData)->render();
+                $sEditorContent = view('admin.broadcast.partials.template_design_sms_ajax', $aEditorData)->render();
                 $response['editorData'] = $sEditorContent;
             }
         }
@@ -2786,7 +2794,7 @@ class Broadcast extends Controller {
 
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         //Instanciate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
