@@ -42,7 +42,7 @@ if($selectedTab == 'contacts'){
     $reviews = 'active';
 }
 else {
-    $camp = 'active';
+    $sources = 'active';
 }
 
 ?>
@@ -76,11 +76,6 @@ else {
             <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn onSiteCampaignStatus" status="2"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
 
             <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn onSiteCampaignStatus" status="1"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
-
-		  <!--<button type="button" class="btn light_btn importModuleContact" data-modulename="<?php echo $moduleName;?>" data-moduleaccountid="<?php echo $moduleUnitID ?>" data-redirect="<?php echo base_url();?>admin/brandboost/offsite_setup/<?php echo $moduleUnitID; ?>"><i class="icon-arrow-up16"></i><span> &nbsp;  Import Contact</span> </button>
-		  <a type="button" class="btn light_btn ml10" href="<?php echo base_url() ?>admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName;?>&module_account_id=<?php echo $moduleUnitID; ?>"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contact</span> </a>
-		  <button type="button" class="btn dark_btn dropdown-toggle ml10 addModuleContact" data-modulename="<?php echo $moduleName;?>" data-moduleaccountid="<?php echo $moduleUnitID ?>"><i class="icon-plus3"></i><span> &nbsp;  Add Contact</span> </button>
-		  -->
 		</div>
 	  </div>
 	</div>
@@ -88,23 +83,30 @@ else {
 
 	<div class="tab-content"> 
 		<!--########################TAB 0 ##########################-->
-		<?php $this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-review-sources", array('brandboostID' => $brandboostID, 'sources' => $sources, 'offsites_links' => $offsites_links, 'offSiteData' => $offSiteData, 'offsite_ids' => $offsite_ids)); ?>
+		<?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-review-sources", array('brandboostID' => $brandboostID, 'sources' => $sources, 'offsites_links' => $offsites_links, 'offSiteData' => $offSiteData, 'offsite_ids' => $offsite_ids)); ?>
+		@include('admin.brandboost.campaign-tabs.offsite.offsite-review-sources', array('brandboostID' => $brandboostID, 'sources' => $sources, 'offsites_links' => $offsites_links, 'offSiteData' => $offSiteData, 'offsite_ids' => $offsite_ids))
 		<!--########################TAB 1 ##########################-->
-		<?php $this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-preferences", array('brandboostID' => $brandboostID, 'camp' => $camp, 'offsites_links' => $offsites_links, 'feedbackResponseData' => $feedbackResponseData)); ?>
+		<?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-preferences", array('brandboostID' => $brandboostID, 'camp' => $camp, 'offsites_links' => $offsites_links, 'feedbackResponseData' => $feedbackResponseData)); ?>
+		@include('admin.brandboost.campaign-tabs.offsite.offsite-preferences', array('brandboostID' => $brandboostID, 'camp' => $camp, 'offsites_links' => $offsites_links, 'feedbackResponseData' => $feedbackResponseData))
 		<!--########################TAB 2 ##########################-->
-        <?php $this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-workflow-campaign-beta", array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents)); ?>
+        <?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-workflow-campaign-beta", array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents)); ?>
+		@include('admin.brandboost.campaign-tabs.offsite.offsite-workflow-campaign-beta', array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents))
 		<!--########################TAB 3 ##########################--> 
-		<?php $this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-subscribers", array('brandboostID' => $brandboostID, 'campaign' => $campaign)); ?>
+		<?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-subscribers", array('brandboostID' => $brandboostID, 'campaign' => $campaign)); ?>
+		@include('admin.brandboost.campaign-tabs.offsite.offsite-subscribers', array('brandboostID' => $brandboostID, 'campaign' => $campaign))
 		<!--########################TAB 4 ##########################--> 
-		<?php $this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-feedback", array('brandboostID' => $brandboostID, 'clients' => $clients)); ?>
+		<?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-feedback", array('brandboostID' => $brandboostID, 'clients' => $clients)); ?>
+		@include('admin.brandboost.campaign-tabs.offsite.offsite-feedback', array('brandboostID' => $brandboostID, 'clients' => $clients))
 	</div>
 </div>
 
 
-<?php $this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-popup"); ?>
-<?php //$this->load->view("admin/modals/workflow/workflow-popup", array('oDefaultTemplates' => $oDefaultTemplates)); ?>
-<?php $this->load->view("admin/modals/workflow2/workflow-popup", array('oDefaultTemplates' => $oDefaultTemplates)); ?>
+<?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-popup"); ?>
+@include('admin.brandboost.campaign-tabs.offsite.offsite-popup')
 
+<?php //$this->load->view("admin/modals/workflow2/workflow-popup", array('oDefaultTemplates' => $oDefaultTemplates)); ?>
+
+@include('admin.modals.workflow2.workflow-popup')
 
 <script>
 
@@ -250,7 +252,7 @@ else {
             $.ajax({
                 url: '<?php echo base_url('admin/emailtemplate/send_email_template'); ?>',
                 type: "POST",
-                data: {email: email, emailtemplate: emailtemplate, bb_id: '<?php echo $this->session->userdata('brandboostID'); ?>'},
+                data: {email: email, emailtemplate: emailtemplate, bb_id: ''},
                 dataType: "json",
                 success: function (data) {
                     $('.overlaynew').hide();
@@ -272,7 +274,7 @@ else {
             $.ajax({
                 url: '<?php echo base_url('admin/emailtemplate/send_sms_template'); ?>',
                 type: "POST",
-                data: {phoneNo: phoneNo, smstemplate: smstemplate, bb_id: '<?php echo $this->session->userdata('brandboostID'); ?>'},
+                data: {phoneNo: phoneNo, smstemplate: smstemplate, bb_id: ''},
                 dataType: "json",
                 success: function (data) {
                     $('.overlaynew').hide();

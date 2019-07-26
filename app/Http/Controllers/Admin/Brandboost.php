@@ -777,7 +777,7 @@ class Brandboost extends Controller {
             if (!empty($value) && $value > 0) {
                 $getData = getOffsite($value);
                 if (!empty($getData)) {
-                    $setTab = 'Campaign Preferences';
+                    $setTab = 'Review Sources';
                 }
             }
         }
