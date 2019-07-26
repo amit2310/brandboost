@@ -98,31 +98,47 @@ class BrandModel extends Model
 	}
     
 
-	/*public function updateBrandConfiguration_bk($brandboostId, $aData) {
+    /**
+    * This function is used to update brand configuration page settings
+    * @param type $clientID
+    * @return type
+    */
 
-		$this->db->where('brandboost_id', $brandboostId);
-        $result = $this->db->update('tbl_brand_configurations', $aData);
-        if ($result) {
+    public function updateBrandConfiguration($userID, $aData="") {
+
+            $result = DB::table('tbl_brand_configurations')
+            ->where('user_id', $userID)
+            ->update($aData);
+
+            if ($result >-1) {
             return true;
-        } else {
+            } else {
             return false;
-        }
+            }
 
-	}*/
+    }
 
-    public function updateBrandConfiguration($userID, $aData,$aThemeData,$theme_title) {
+
+     /**
+    * This function is used to save the all brand page settings as a new theme
+    * @param type $clientID
+    * @return type
+    */
+
+      public function saveTheme($userID, $aData="",$aThemeData="",$theme_title="") {
 
         if(!empty($theme_title))
         {
-            $result = $this->db->insert("tbl_brand_themes", $aThemeData);
-            $inset_id = $this->db->insert_id();
-            $aData['theme_id'] =  $inset_id;
+            $insert_id = DB::table('tbl_brand_themes')->insertGetId($aThemeData);
+            $aData['theme_id'] =  $insert_id;
             
         }
-       
-        $this->db->where('user_id', $userID);
-        $result = $this->db->update('tbl_brand_configurations', $aData);
-        if ($result) {
+      
+         $result = DB::table('tbl_brand_configurations')
+            ->where('user_id', $userID)
+            ->update($aData);
+             
+        if ($result>-1) {
             return true;
         } else {
             return false;
@@ -130,18 +146,6 @@ class BrandModel extends Model
 
     }
 
-	/*public function getBrandConfigurationData_bk($brandboostId) {
-
-		$result = '';
-		$this->db->where('brandboost_id', $brandboostId);
-		$this->db->from('tbl_brand_configurations');
-		$query = $this->db->get();
-		if ($query->num_rows() > 0) {
-            $result = $query->result();
-        }
-        return $result;      
-        
-	}*/
 
 
 

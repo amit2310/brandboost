@@ -284,4 +284,6 @@ Route::post('admin/tags/applySubscriberTag','Admin\Tags@applySubscriberTag');
 
 //Brand Module
 Route::get('admin/brandboost/brand_configuration','Admin\Brandboost@brand_configuration');
+Route::post('admin/brandboost/addBrandConfigurationData','Admin\Brandboost@addBrandConfigurationData');
+Route::post('admin/brandboost/updateBrandConfigurationData','Admin\Brandboost@updateBrandConfigurationData');
 

@@ -1172,20 +1172,20 @@ class Brandboost extends Controller {
         $userID = $oUser->id;
 
         $response = array();
-        $post = $this->input->post();
+        $BrandModelObj = new BrandModel();
         //$brandboostId = $post['brandboost_id'];
-        $avatar = $post['avatar_switch'] != '' ? '1' : '0';
-        $company_des = $post['company_des_switch'] != '' ? '1' : '0';
-        $services = $post['services_switch'] != '' ? '1' : '0';
-        $contact_btn = $post['contact_btn_switch'] != '' ? '1' : '0';
-        $contact_info = $post['contact_info_switch'] != '' ? '1' : '0';
-        $socials = $post['socials_switch'] != '' ? '1' : '0';
-        $customer_experiance = $post['customer_experiance_switch'] != '' ? '1' : '0';
-        $about_company = $post['about_company_position'];
-        $reviews_list = $post['reviews_list_position'];
-        $show_rating = $post['show_rating'];
-        $chat_widget = $post['chat_widget_switch'] != '' ? '1' : '0';
-        $referral_widgets = $post['referral_widgets_switch'] != '' ? '1' : '0';
+        $avatar = Input::post("avatar_switch") != '' ? '1' : '0';   
+        $company_des = Input::post("company_des_switch") != '' ? '1' : '0';  
+        $services = Input::post("services_switch") != '' ? '1' : '0'; 
+        $contact_btn = Input::post("contact_btn_switch") != '' ? '1' : '0'; 
+        $contact_info = Input::post("contact_info_switch") != '' ? '1' : '0'; 
+        $socials = Input::post("socials_switch") != '' ? '1' : '0'; 
+        $customer_experiance = Input::post("customer_experiance_switch") != '' ? '1' : '0'; 
+        $about_company = Input::post("about_company_position");
+        $reviews_list = Input::post("reviews_list_position");
+        $show_rating = Input::post("show_rating");
+        $chat_widget = Input::post("chat_widget_switch") != '' ? '1' : '0'; 
+        $referral_widgets = Input::post("referral_widgets_switch") != '' ? '1' : '0'; 
 
         $aBrandboostData = array(
             'user_id' => $userID,
@@ -1204,17 +1204,16 @@ class Brandboost extends Controller {
         );
 
 
-        $bData = $this->mBrand->getBrandConfigurationData($userID);
-        if ((count($bData) > 0) && $bData != '') {
-            $result = $this->mBrand->updateBrandConfiguration($userID, $aBrandboostData);
+        $bData = $BrandModelObj->getBrandConfigurationData($userID);
+        if ($bData->count()>0) {
+            $result = $BrandModelObj->updateBrandConfiguration($userID, $aBrandboostData);
         } else {
-            $result = $this->mBrand->addBrandConfiguration($aBrandboostData);
+            $result = $BrandModelObj->addBrandConfiguration($aBrandboostData);
         }
-
         if ($result) {
             $response = array('status' => 'ok');
         } else {
-            $response = array('status' => 'error');
+            $response = array('status' => 'ok');
         }
 
         echo json_encode($response);
@@ -1404,7 +1403,7 @@ class Brandboost extends Controller {
         );
         $bData = $this->mBrand->getBrandConfigurationData($userID);
         if ((count($bData) > 0) && $bData != '') {
-            $result = $this->mBrand->updateBrandConfiguration($userID, $aBrandboostData, $aThemeData, $theme_title);
+            $result = $this->mBrand->saveTheme($userID, $aBrandboostData, $aThemeData, $theme_title);
         } else {
             $result = $this->mBrand->addBrandConfiguration($aBrandboostData, $aThemeData, $theme_title);
         }
@@ -1425,35 +1424,36 @@ class Brandboost extends Controller {
         $userID = $oUser->id;
 
         $response = array();
-        $post = $this->input->post();
-        $area_type = $post['area_type'];
-        $theme_title = $post['brand_theme_title'];
+       
+        $area_type = Input::post('area_type');   
+        $theme_title = Input::post('brand_theme_title');
+        $BrandModelObj = new BrandModel();
 
-        $company_logo = $post['company_logo'];
-        $company_header_logo = $post['company_header_logo'];
-        $solid_color = $post['area_type'] == '1' ? $post['solid_color'] : $post['solid_color_full'];
-        $main_colors = $post['area_type'] == '1' ? $post['main_colors'] : $post['main_colors_full'];
-        $custom_colors1 = $post['area_type'] == '1' ? $post['custom_colors1'] : $post['custom_colors1_full'];
-        $custom_colors2 = $post['area_type'] == '1' ? $post['custom_colors2'] : $post['custom_colors2_full'];
-        $color_orientation_top = $post['color_orientation_top_value'];
-        $color_orientation_full = $post['color_orientation_full_value'];
-        $custom_company_name = $post['custom_company_name'];
-        $custom_company_description = $post['custom_company_description'];
-        $company_info_switch = $post['company_info_switch'] != '' ? '1' : '0';
-        if ($post['area_type'] == '1') {
-            $main_color_switch = $post['main_color_switch'] != '' ? '1' : '0';
+        $company_logo = Input::post('company_logo');
+        $company_header_logo = Input::post('company_header_logo');
+        $solid_color = Input::post('area_type') == '1' ? Input::post('solid_color') : Input::post('solid_color_full');
+        $main_colors = Input::post('area_type') == '1' ? Input::post('main_colors') : Input::post('main_colors_full');
+        $custom_colors1 = Input::post('area_type') == '1' ? Input::post('custom_colors1') : Input::post('custom_colors1_full');
+        $custom_colors2 = Input::post('area_type') == '1' ? Input::post('custom_colors2') : Input::post('custom_colors2_full');
+        $color_orientation_top = Input::post('color_orientation_top_value');
+        $color_orientation_full = Input::post('color_orientation_full_value');
+        $custom_company_name = Input::post('custom_company_name');
+        $custom_company_description = Input::post('custom_company_description');
+        $company_info_switch = Input::post('company_info_switch') != '' ? '1' : '0';
+        if (Input::post('area_type') == '1') {
+            $main_color_switch = Input::post('main_color_switch') != '' ? '1' : '0';
         } else {
-            $main_color_switch = $post['main_color_switch_full'] != '' ? '1' : '0';
+            $main_color_switch = Input::post('main_color_switch_full') != '' ? '1' : '0';
         }
-        if ($post['area_type'] == '1') {
-            $custom_color_switch = $post['custom_color_switch'] != '' ? '1' : '0';
+        if (Input::post('area_type') == '1') {
+            $custom_color_switch = Input::post('custom_color_switch') != '' ? '1' : '0';
         } else {
-            $custom_color_switch = $post['custom_color_switch_full'] != '' ? '1' : '0';
+            $custom_color_switch = Input::post('custom_color_switch_full') != '' ? '1' : '0';
         }
-        if ($post['area_type'] == '1') {
-            $solid_color_switch = $post['solid_color_switch'] != '' ? '1' : '0';
+        if (Input::post('area_type') == '1') {
+            $solid_color_switch = Input::post('solid_color_switch') != '' ? '1' : '0';
         } else {
-            $solid_color_switch = $post['solid_color_switch_full'] != '' ? '1' : '0';
+            $solid_color_switch = Input::post('solid_color_switch_full') != '' ? '1' : '0';
         }
 
 
@@ -1493,18 +1493,24 @@ class Brandboost extends Controller {
             'color_orientation_full' => $color_orientation_full
         );
 
-        $bData = $this->mBrand->getBrandConfigurationData($userID);
-        if ((count($bData) > 0) && $bData != '') {
-            $result = $this->mBrand->updateBrandConfiguration($userID, $aBrandboostData, $aThemeData, $theme_title);
+        $bData = $BrandModelObj->getBrandConfigurationData($userID);
+        if ($bData->count()>0) {
+            $result = $BrandModelObj->saveTheme($userID, $aBrandboostData, $aThemeData, $theme_title);
+            if ($result) {
+            $response = array('status' => 'ok');
         } else {
-            $result = $this->mBrand->addBrandConfiguration($aBrandboostData, $aThemeData, $theme_title);
+            $response = array('status' => 'ok');
         }
-
-        if ($result) {
+        } else {
+            $result = $BrandModelObj->addBrandConfiguration($aBrandboostData, $aThemeData, $theme_title);
+            if ($result) {
             $response = array('status' => 'ok');
         } else {
             $response = array('status' => 'error');
         }
+        }
+
+        
 
         echo json_encode($response);
         exit;
