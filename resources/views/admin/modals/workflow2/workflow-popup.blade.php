@@ -87,7 +87,8 @@ if (!empty($oAutomationLists)) {
                         </div>
 
                         <div class="col-md-12 text-right mt-20">
-                            <input type="hidden" name="automation_id" value="<?php echo $oAutomations[0]->id; ?>" />
+						
+                            <input type="hidden" name="automation_id" value="<?php echo (!empty($oAutomations)) ? $oAutomations[0]->id : 0; ?>" />
                             <button type="submit" class="btn dark_btn"><i class="fa fa-edit"></i> &nbsp; Save</button>
                         </div>
 
@@ -193,57 +194,6 @@ if (!empty($oAutomationLists)) {
         </div>    
     </div>
 </div>
-
-
-<!--<div id="workflow_sms_template_stripo_modal" class="modal fade">
-    <div style="max-width: 760px;" class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h5 class="modal-title"><i class="fa fa-tags"></i>&nbsp; Edit SMS Template</h5>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <form method="post" class="form-horizontal" id="saveWorkflowSmsTemplate" action="javascript:void();">
-                        <div class="col-md-6">
-                            <div style="margin-top: 0px;" class="temp_left_option p15">
-                                <div class="form-group">
-                                    <label>Body: </label>
-                                    <textarea style="height: 200px;" created_date="" name="smsWorkflowCampaignBody" id="smsWorkflowCampaignBody" class="form-control" placeholder="SMS body"></textarea>
-                                </div>
-
-<?php if (!empty($oCampaignTags)): ?>
-                                            <div class="form-group">
-                                                <div class="note-btn-group btn-group note-view">
-    <?php foreach ($oCampaignTags as $oTags): ?>
-                                                                <button type="button" data-toggle="tooltip" title="Click to insert Tag" data-tag-name="<?php echo $oTags; ?>" class="btn btn-default add_btn draggable insert_tag_button"><?php echo $oTags; ?></button>
-    <?php endforeach; ?>
-
-                                                </div>
-                                            </div>
-<?php endif; ?>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="mobile_sms_bkg">
-                                <div class="smsbubble smsWorkflowCampaignPreview">
-                                    Created: <?php echo date("M d, Y H:i A"); ?> <br>A collection of textile samples lay spread out on the table..A collection of textile samples lay spread out on the table..
-                                </div>	
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 text-right mt-20">
-                            <input type="hidden" name="wf_editor_campaign_id" id="wf_sms_editor_campaign_id" value="">
-                            <input type="hidden" name="wf_editor_moduleName" id="wf_sms_editor_moduleName" value="<?php echo $moduleName; ?>">
-                            <button class="btn pull-right bl_cust_btn btn-success" type="submit" id="updateWorkflowSmsCampaign"><i class="fa fa-plus"></i> &nbsp; Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
 
 
 <div id="workflow_template_stripo_modal" class="modal fade">
@@ -453,7 +403,7 @@ if (!empty($oAutomationLists)) {
                                                 <label for="wf_action_email_<?php echo $oTemplate->id; ?>">
                                                     <div class="panel-body">
                                                         <input type="radio" name="selectWorkflowEmailTemplate" class="selectWorkflowEmailTemplate" id="wf_action_email_<?php echo $oTemplate->id; ?>" value="<?php echo $oTemplate->id; ?>" />
-                                                        <div class="media-left"> <img src="<?php echo site_url('assets/images/email_icon2.png'); ?>" style="width: 40px;"> </div>
+                                                        <div class="media-left"> <img src="<?php echo base_url('assets/images/email_icon2.png'); ?>" style="width: 40px;"> </div>
                                                         <div class="media-left">
                                                             <h6><?php echo $oTemplate->template_name; ?></h6>
                                                             <p><?php echo $oTemplate->template_subject; ?></p>
@@ -488,7 +438,7 @@ if (!empty($oAutomationLists)) {
                                                 <label for="wf_action_sms_<?php echo $oTemplate->id; ?>">
                                                     <div class="panel-body">
                                                         <input type="radio" name="selectWorkflowSMSTemplate" class="selectWorkflowSMSTemplate" id="wf_action_sms_<?php echo $oTemplate->id; ?>"  value="<?php echo $oTemplate->id; ?>" />
-                                                        <div class="media-left"> <img src="<?php echo site_url('assets/images/email_icon2.png'); ?>" style="width: 40px;"> </div>
+                                                        <div class="media-left"> <img src="<?php echo base_url('assets/images/email_icon2.png'); ?>" style="width: 40px;"> </div>
                                                         <div class="media-left">
                                                             <h6><?php echo $oTemplate->template_name; ?></h6>
                                                             <p><?php echo $oTemplate->template_subject; ?></p>
