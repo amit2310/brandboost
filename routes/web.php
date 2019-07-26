@@ -327,5 +327,7 @@ Route::post('admin/lists/deleteListContact','Admin\Lists@deleteListContact');
 
 //Brand Module
 Route::get('admin/brandboost/brand_configuration','Admin\Brandboost@brand_configuration');
+Route::post('admin/brandboost/addBrandConfigurationData','Admin\Brandboost@addBrandConfigurationData');
+Route::post('admin/brandboost/updateBrandConfigurationData','Admin\Brandboost@updateBrandConfigurationData');
 
 

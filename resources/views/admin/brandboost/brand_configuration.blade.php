@@ -168,6 +168,7 @@
 
                                     <div class="profile_headings txt_upper p20 fsize11 fw600">Company info <a class="pull-right plus_icon" href="#"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
                                     <form method="post" name="frmSubmit" id="frmSubmit" action="javascript:void(0);"  enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         <div class="p20">
                                             <div class="row">
                                                 <div class="col-md-12"> 
@@ -305,6 +306,7 @@
 
                                 <div class="tab-pane" id="Design">
                                     <form method="post" name="frmDesignSubmit" id="frmDesignSubmit" action="javascript:void(0);"  enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <input type="hidden" name="template_style" id="template_style" value="">
                                         <input type="hidden" name="area_type" id="area_type" value="<?php if($brandData->area_type == "") { echo '1';} else {  echo $brandData->area_type;  } ?>">
                                          <input type="hidden" value="<?php echo $brandData->color_orientation_full; ?>" id="color_orientation_full_value" name="color_orientation_full_value">
@@ -1138,56 +1140,8 @@
     }
 
         
-        /*
-           var myDropzoneLogoImg = new Dropzone(
-                '#myDropzone_logo_img', //id of drop zone element 1
-                {
-                    url: '',
-                    uploadMultiple: false,
-                    maxFiles: 1,
-                    maxFilesize: 600,
-                    acceptedFiles: 'image/*',
-                    addRemoveLinks: false,
-                    success: function (response) {
-                         
-                        //$('.dz-preview').remove();
-                        $('#company_logo').val(response.xhr.responseText);
-                        $('.company_avatar').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' + response.xhr.responseText);
-                          $('#frmDesignSubmit').trigger('submit');
-                        /*$("[data-dz-thumbnail='']").each(function(){                    
-                         var src = $(this).attr("src");
-                         $('.company_avatar').attr("src", src);
-                         });*/
-                    }
-              //  });
-
-       /* Dropzone.autoDiscover = false;
-
-        var myDropzoneHeaderLogo = new Dropzone(
-                '#myDropzone_company_header_logo', //id of drop zone element 1
-                {
-                    url: '',
-                    uploadMultiple: false,
-                    maxFiles: 1,
-                    maxFilesize: 600,
-                    acceptedFiles: 'image/*',
-                    addRemoveLinks: false,
-                    success: function (response) {
-                        
-                        //$('.dz-preview').remove();
-                        $('#company_header_logo').val(response.xhr.responseText);
-                        $('.company_header_avatar').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' + response.xhr.responseText);
-                          $('#frmDesignSubmit').trigger('submit'); 
-                        /*$("[data-dz-thumbnail='']").each(function(){                    
-                         var src = $(this).attr("src");
-                         $('.company_header_avatar').attr("src", src);
-                         });*/
-                   // }
-               // });
-
-        //Dropzone.autoDiscover = false;
-
-        */
+        
+ 
 
         // ******** main color switch for top area ******** // 
         $('#main_color_switch').change(function () {
@@ -2292,6 +2246,7 @@
                     {
                         setTimeout(function () {
                             $('.overlaynew').hide();
+                            displayMessagePopup();
                             $('.tabbable a[href="#Design"]').click();
                         }, 1000);
                     } else {
