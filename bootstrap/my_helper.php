@@ -1424,22 +1424,20 @@ if (!function_exists('get_email_notification_tags')) {
 
 }
 
+
+/**
+ * Used to check permission entry
+ */
 if (!function_exists('checkPermissionentry')) {
 
     function checkPermissionentry($slug) {
-        $aTags = array();
-        $CI = & get_instance();
-        $aUser = getLoggedUser();
-        $CI->load->model("admin/Settings_model", "mSettings");
 
-        if (!empty($aUser->id) && !empty($slug)) {
-            $checkEntry = $CI->mSettings->checkPermissionentryDetails($aUser->id, $slug);
-            if (!empty($checkEntry->id)) {
-                return true;
-            } else {
-                return false;
-            }
-//return $aTags;
+        $aUser = getLoggedUser();
+        $checkEntry = \App\Models\Admin\SettingsModel::checkPermissionentryDetails($aUser->id, $slug);
+        if (!empty($checkEntry->id)) {
+            return true;
+        } else {
+            return false;
         }
     }
 

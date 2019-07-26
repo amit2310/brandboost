@@ -98,16 +98,17 @@ class SettingsModel extends Model {
         return $oData;
     }
 
-    public function getallowNotification() {
+    /**
+     * This function is use for get allow notification
+     * @return type object
+     */
+    public static function getallowNotification() {
 
-        $this->db->select("tbl_notifications_manager.*");
-        $this->db->where('tbl_notifications_manager.client', '1');
-        $query = $this->db->get('tbl_notifications_manager');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_notifications_manager')
+                ->select('tbl_notifications_manager.*')
+                ->where('tbl_notifications_manager.client', '1')
+                ->get();
+        return $oData;
     }
 
     public function updateContactStoreUsage($userID) {
@@ -167,6 +168,46 @@ class SettingsModel extends Model {
         return $response;
     }
 
+    /**
+     * This function use for get import history
+     * @param type $userID
+     * @return type object
+     */
+    public static function getImportHistory($userID) {
+
+        $oData = DB::table('tbl_history_import')
+                ->where('user_id', $userID)
+                ->orderBy('id', 'DESC')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * This function use for get export history
+     * @param type $userID
+     * @return type object
+     */
+    public static function getExportHistory($userID) {
+
+        $oData = DB::table('tbl_history_export')
+                ->where('user_id', $userID)
+                ->orderBy('id', 'DESC')
+                ->get();
+        return $oData;
+    }
+
+
+    /**
+     * This function use for get setting data
+     * @return type object
+     */
+    public static function getSettingsData() {
+
+        $oData = DB::table('tbl_popup_settings')
+                ->get();
+        return $oData;
+    }
+
     public function getCreditValuesHistory() {
         $result = $this->db->get('tbl_credit_values_history');
         if ($result->num_rows() > 0) {
@@ -212,17 +253,6 @@ class SettingsModel extends Model {
             return true;
         else
             return false;
-    }
-
-    public function getSettingsData() {
-
-        $response = array();
-        $this->db->from('tbl_popup_settings');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
     }
 
     public function getSettingsDataByField($fieldKey) {
@@ -287,6 +317,18 @@ class SettingsModel extends Model {
         return $oData;
     }
 
+    /**
+     * This function is use for add notification settings
+     * @param type $userID
+     * @return type
+     */
+    public static function addNotificationSettings($userID) {
+        $aData = array('user_id' => $userID);
+        $oData = DB::table('tbl_users_notification_settings')
+                ->insert($aData);
+        return $oData;
+    }
+
     public function updateNotificationPermissonData($aData, $userID) {
 
         $this->db->where('user_id', $userID);
@@ -309,29 +351,6 @@ class SettingsModel extends Model {
         }
     }
 
-    public function addNotificationSettings($userID) {
-        $this->db->insert("tbl_users_notification_settings", array('user_id' => $userID));
-    }
-
-    public function getImportHistory($userID) {
-        $this->db->where('user_id', $userID);
-        $this->db->order_by('id', 'DESC');
-        $result = $this->db->get("tbl_history_import");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getExportHistory($userID) {
-        $this->db->where('user_id', $userID);
-        $this->db->order_by('id', 'DESC');
-        $result = $this->db->get("tbl_history_export");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
 
     public function logExportHistory($aData) {
         $this->db->insert("tbl_history_export", $aData);
