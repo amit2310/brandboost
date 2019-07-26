@@ -97,12 +97,14 @@
 		//  ######### media  file upload ############ //
 		$(document).on('click', '#Webonly .notesFileAttechment', function() {
 		$('#Webonly #mmsFile_notes_web').trigger('click');
+		
 		});
 		//  ######### media  file upload ############ //
 
 	});
 	
 	$(document).on('change', '#Webonly #mmsFile_notes_web', function(e) {
+		$('.overlaynew').show();
 			const files = document.querySelector('[id=mmsFile_notes_web]').files;
 			var NotesTo = $('#Webonly #em_inc_id').val();
 			var newToken = $('#em_token').val();
@@ -114,8 +116,9 @@
 				let file = files[i];
 				formData.append('files[]', file);
 			}
+			formData.append('_token','{{csrf_token()}}');
 			
-			fetch('<?php echo base_url("/dropzone/upload_chat_attachment"); ?>', { 
+			fetch('<?php echo base_url("dropzone/upload_s3_attachment/" . $loginUserData->id . "/webchat"); ?>', { 
 				method: 'POST',
 				body: formData // This is your file object
 			}).then(
@@ -126,7 +129,7 @@
 
 					var filename = success.result;
 					var fileext = (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
-					var msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'+filename;
+					var msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+filename;
 					
 					if(fileext[0] == 'png' || fileext[0] == 'jpg' || fileext[0] == 'jpeg' || fileext[0] == 'gif') 
 					{
@@ -138,12 +141,12 @@
 					
 					var messageText ='<li class="media reversed"> <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><span class="icons s32"><img src="<?php echo $currentUserImg; ?>" class="img-circle" alt="" width="150" height="auto"></span></span><div class="media-content">'+msg+'</div></div></li>';
 					
-					msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'+filename;
-				    var source='Sms chat notes';
+					msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+filename;
+				    var source='web chat notes';
 					$.ajax({
 							url: "<?php echo base_url('/admin/webchat/addWebNotes'); ?>",
 							type: "POST",
-							data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser,notes:'1'},
+							data: {room:newToken, msg:msg, chatTo:chatTo, currentUser:currentUser,notes:'1',_token:'{{csrf_token()}}'},
 							dataType: "json",
 							success: function (response) {
 								if (response.status == "success") {
@@ -154,7 +157,7 @@
 								// error
 							}
 						});
-					
+					$('.overlaynew').hide();
 				}
 				else {
 					// error
