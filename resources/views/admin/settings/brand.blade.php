@@ -47,7 +47,6 @@
 
         <!--===========TAB 5===========-->
         @include('admin.settings.tabs.notifications')
-        <?php //$this->load->view("admin/settings/tabs/notifications"); ?>
 
         <!--===========TAB 6===========-->
         @include('admin.settings.tabs.import')
