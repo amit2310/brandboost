@@ -44,10 +44,16 @@ Route::get('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails
 Route::post('admin/brandboost/setTab/','Admin\Brandboost@setTab');
 Route::get('admin/brandboost/offsite_overview/','Admin\Brandboost@offsiteOverview');
 Route::get('admin/brandboost/offsite/','Admin\Brandboost@offsite');
-Route::get('admin/brandboost/updateOnsiteStatus/','Admin\Brandboost@updateOnsiteStatus');
+Route::post('admin/brandboost/updateOnsiteStatus/','Admin\Brandboost@updateOnsiteStatus');
+Route::post('admin/brandboost/getBBECode/','Admin\Brandboost@getBBECode');
+Route::post('admin/brandboost/archive_multipal_brandboost/','Admin\Brandboost@archiveMultipalBrandboost');
+Route::post('admin/brandboost/delete_brandboost/','Admin\Brandboost@deleteBrandboost');
 
 
 Route::get('admin/feedback/listall/','Admin\Feedback@getAllListingData');
+Route::get('admin/questions/view/{id}','Admin\Questions@questionView');
+Route::get('admin/questions/details/{id}','Admin\Questions@questionDetails');
+Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
 
 
 Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');

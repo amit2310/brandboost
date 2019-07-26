@@ -1,8 +1,15 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php
 $questionTitle = $oQuestion->question_title;
 $questionDescription = $oQuestion->question;
 ?>
-<script type="text/javascript" src="<?php echo site_url('assets/js/viewbox.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/viewbox.min.js'); ?>"></script>
 <style>
     .viewbox-container{
         position: fixed;
@@ -188,7 +195,8 @@ $questionDescription = $oQuestion->question;
                                 $data = curl_exec($ch);
                                 $fileSize = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
                                 curl_close($ch);
-                                $getFileSize = FileSizeConvert($fileSize);
+                                //$getFileSize = FileSizeConvert($fileSize);
+								$getFileSize = '';
                                 ?>
 
                                 <div class="p25 bbot">
@@ -230,7 +238,8 @@ $questionDescription = $oQuestion->question;
                                 $data = curl_exec($ch);
                                 $fileSize = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
                                 curl_close($ch);
-                                $getFileSize = FileSizeConvert($fileSize);
+                                //$getFileSize = FileSizeConvert($fileSize);
+								$getFileSize = '';
                                 ?>
 
 
@@ -251,10 +260,6 @@ $questionDescription = $oQuestion->question;
                                         <div class="text-muted text-size-small"><?php echo '.' . strtoupper($ext); ?></div>
                                     </div>
                                 </div> 
-
-
-
-
                                 <?php
                             }
                         }
@@ -269,11 +274,6 @@ $questionDescription = $oQuestion->question;
                 </div>
             </div>
 
-
-
-
-
-
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <h6 class="panel-title">Tags</h6>
@@ -285,10 +285,6 @@ $questionDescription = $oQuestion->question;
                 </div>
                 <div class="panel-body p0" >
                     <div class="profile_sec">
-
-
-
-
 
                         <div class="p25">
                             <?php
@@ -361,9 +357,6 @@ $questionDescription = $oQuestion->question;
                     <div class="panel-body p0">
                         <div class="comment_sec">
                             <ul class="addMoreComment">
-
-
-
                                 <?php
                                 //pre($oAnswers);
                                 if (!empty($oAnswers)) {
@@ -371,7 +364,7 @@ $questionDescription = $oQuestion->question;
                                     foreach ($oAnswers as $oAnswer) {
                                         $defaultAvatar = base_url() . "assets/images/userp.png";
                                         $avtarImage = $oAnswer->avatar == 'avatar_image.png' ? $defaultAvatar : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oAnswer->avatar;
-										$aHelpful = $this->mQuestion->countAnsHelpful($oAnswer->id);
+										$aHelpful = \App\Models\Admin\QuestionModel::countAnsHelpful($oAnswer->id);
                                         ?>
                                         <li class="bbot">
 
@@ -418,10 +411,10 @@ $questionDescription = $oQuestion->question;
 
                             </ul>
 
-                            <?php if ($totalComment > 5) {
+                            <?php /* if ($totalComment > 5) {
                                 ?>
                                 <input type="hidden" id="numOfComment" value="5">
-                                <div class="loadMoreRecord"><a style="cursor: pointer;" id='loadMoreComment' revId="<?php echo $reviewData->id; ?>">Load more</a><img class="loaderImage hidden" height="20px" width="20px" src="<?php echo base_url(); ?>assets/images/widget_load.gif"></div><?php }
+                                <div class="loadMoreRecord"><a style="cursor: pointer;" id='loadMoreComment' revId="<?php echo $reviewData->id; ?>">Load more</a><img class="loaderImage hidden" height="20px" width="20px" src="<?php echo base_url(); ?>assets/images/widget_load.gif"></div><?php } */
                             ?>
 
                         </div>
@@ -502,26 +495,11 @@ $questionDescription = $oQuestion->question;
                         <button class="btn dark_btn btn-xs mr20" data-toggle="modal" data-target="#addnotes">Add Note</button>	 
                         
                     </div>
-
-
-
-
-
                 </div>
             </div>
-
-
-
-
         </div>
-
     </div>
-
-
     <!--================================= CONTENT AFTER TAB===============================-->
-
-
-
 </div>
 
 <div id="videoQuestionModal" class="modal fade">
@@ -752,7 +730,7 @@ $questionDescription = $oQuestion->question;
             $.ajax({
                 url: '<?php echo base_url('admin/questions/getAnswer'); ?>',
                 type: "POST",
-                data: {answerID: answerID},
+                data: {answerID: answerID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -802,30 +780,30 @@ $questionDescription = $oQuestion->question;
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: '<?php echo base_url('admin/questions/delete_answer'); ?>',
-                                type: "POST",
-                                data: {answerId: answerId},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = window.location.href;
-                                    } else {
-                                        $('.overlaynew').hide();
-                                        alertMessage('Error: Some thing wrong!');
-                                    }
-                                },
-                                error: function () {
-                                    $('.overlaynew').hide();
-                                    alertMessage('Error: Some thing wrong!');
-                                }
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					$.ajax({
+						url: '<?php echo base_url('admin/questions/delete_answer'); ?>',
+						type: "POST",
+						data: {answerId: answerId, _token: '{{csrf_token()}}'},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = window.location.href;
+							} else {
+								$('.overlaynew').hide();
+								alertMessage('Error: Some thing wrong!');
+							}
+						},
+						error: function () {
+							$('.overlaynew').hide();
+							alertMessage('Error: Some thing wrong!');
+						}
+					});
+				}
+			});
         });
         
         $(document).on('click', '.chg_status', function () {
@@ -836,7 +814,7 @@ $questionDescription = $oQuestion->question;
             $.ajax({
                 url: '<?php echo base_url('admin/questions/update_answer_status'); ?>',
                 type: "POST",
-                data: {status: status, answer_id: answer_id},
+                data: {status: status, answer_id: answer_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -856,7 +834,7 @@ $questionDescription = $oQuestion->question;
             $.ajax({
                 url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
                 type: "POST",
-                data: {question_id: question_id},
+                data: {question_id: question_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -981,36 +959,32 @@ $questionDescription = $oQuestion->question;
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: '<?php echo base_url('admin/questions/deleteQuestionNote'); ?>',
-                                type: "POST",
-                                data: {noteid: noteId},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = '';
-                                    } else {
-                                        $('.overlaynew').hide();
-                                        alertMessage('Error: Some thing wrong!');
-                                    }
-                                },
-                                error: function () {
-                                    $('.overlaynew').hide();
-                                    alertMessage('Error: Some thing wrong!');
-                                }
-                            });
-                        }
-                    });
-            
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					$.ajax({
+						url: '<?php echo base_url('admin/questions/deleteQuestionNote'); ?>',
+						type: "POST",
+						data: {noteid: noteId, _token: '{{csrf_token()}}'},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = '';
+							} else {
+								$('.overlaynew').hide();
+								alertMessage('Error: Some thing wrong!');
+							}
+						},
+						error: function () {
+							$('.overlaynew').hide();
+							alertMessage('Error: Some thing wrong!');
+						}
+					});
+				}
+			});
         });
-
     });
-
-
-
 </script>
 
+@endsection
