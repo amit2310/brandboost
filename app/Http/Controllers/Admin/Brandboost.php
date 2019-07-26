@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\BrandboostModel;
+use App\Models\Admin\BrandModel;
 use App\Models\Admin\SubscriberModel;
 use App\Models\FeedbackModel;
 use App\Models\ReviewsModel;
@@ -931,13 +932,15 @@ class Brandboost extends Controller {
     public function brand_configuration() {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
+        $BrandObj = new BrandModel();
+        $mBrandboostObj = new BrandboostModel();
+        $mReviewsObj = new ReviewsModel();
 
-        $brandData = $this->mBrand->getBrandConfigurationData($userID);
-        // pre($brandData);
-        $brandThemeData = $this->mBrand->getBrandThemesData($userID);
-        $aBrandboostList = $this->mBrandboost->getBrandboostByUserId($userID, 'onsite');
-        $faQData = $this->mBrand->getFaqData();
-        $aReviews = $this->mReviews->getCampaignReviewsByUserId($userID);
+        $brandData = $BrandObj->getBrandConfigurationData($userID);
+        $brandThemeData = $BrandObj->getBrandThemesData($userID);
+        $aBrandboostList = $mBrandboostObj->getBrandboostByUserId($userID, 'onsite');
+        $faQData = $BrandObj->getFaqData();
+        $aReviews = $mReviewsObj->getCampaignReviewsByUserId($userID);
         //pre($aReviews);
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -947,7 +950,8 @@ class Brandboost extends Controller {
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Brand Configuration" class="sidebar-control active hidden-xs ">Brand Configuration</a></li>
 			</ul>';
 
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/brand_configuration', array('title' => 'Brand Configuration', 'pagename' => $breadcrumb, 'brandData' => $brandData[0], 'aBrandbosts' => $aBrandboostList, 'brandThemeData' => $brandThemeData, 'faQData' => $faQData, 'aReviews' => $aReviews, 'userData' => $oUser));
+             return view ('admin.brandboost.brand_configuration',array('title' => 'Brand Configuration', 'pagename' => $breadcrumb, 'brandData' => $brandData[0], 'aBrandbosts' => $aBrandboostList, 'brandThemeData' => $brandThemeData, 'faQData' => $faQData, 'aReviews' => $aReviews, 'userData' => $oUser));
+
 
         /* $brandData = $this->mBrand->getBrandConfigurationData($this->uri->segment(4));
           $faQData = $this->mBrand->getFaqData();

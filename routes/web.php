@@ -282,3 +282,6 @@ Route::get('admin/broadcast/report/{broadcastID}','Admin\Broadcast@report');
 Route::post('admin/tags/getSubscriberTags','Admin\Tags@getSubscriberTags');
 Route::post('admin/tags/applySubscriberTag','Admin\Tags@applySubscriberTag');
 
+//Brand Module
+Route::get('admin/brandboost/brand_configuration','Admin\Brandboost@brand_configuration');
+
