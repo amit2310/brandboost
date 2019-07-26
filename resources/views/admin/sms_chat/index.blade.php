@@ -1015,12 +1015,12 @@ $('#AjaxSearchSms').html(data);
 	
 	 //  ######### Live Search ############ //  
 	<?php if ($defaultNumber != "") { ?>
-           showNoteslisting(<?php echo $DefaultsubscriberId; ?>);
+           showNoteslisting(<?php echo $defaultNumber; ?>);
 		  showSMSChatData('<?php echo $DefaultsubscriberId; ?>','<?php echo $defaultNumber; ?>');
 		<?php
 } else { ?>
 		showSMSChatData('<?php echo $subscriberId; ?>','<?php echo $defaultUserNumber; ?>');
-	    showNoteslisting(<?php echo $subscriberId; ?>);
+	    showNoteslisting(<?php echo $defaultUserNumber; ?>);
 		<?php
 } ?>
 </script>
