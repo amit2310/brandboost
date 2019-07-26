@@ -128,6 +128,9 @@ Route::post('admin/account_setting/saveProfileDetail','Admin\AccountSetting@save
 Route::post('admin/profile/changePassword','Admin\AccountSetting@changePassword');
 Route::post('admin/account_setting/account_deleted','Admin\AccountSetting@account_deleted');
 
+//Setting 
+Route::get('admin/settings','Admin\Settings@index');
+
 //Users module
 Route::post('admin/users/updateUserData','Admin\Users@updateUserData');
 
