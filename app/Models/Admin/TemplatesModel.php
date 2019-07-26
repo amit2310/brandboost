@@ -18,7 +18,7 @@ class TemplatesModel extends Model {
      * @param type $bHideStaticTemplate
      * @return type
      */
-    public function getCommonTemplates($userID = 0, $categoryID = '', $id = '', $templateType = '', $bHideStaticTemplate = false) {
+    public static function getCommonTemplates($userID = 0, $categoryID = '', $id = '', $templateType = '', $bHideStaticTemplate = false) {
         $oData = DB::table('tbl_common_templates')
                 ->leftJoin('tbl_common_templates_categories', 'tbl_common_templates.category_id', '=', 'tbl_common_templates_categories.id')
                 ->select('tbl_common_templates.*', 'tbl_common_templates_categories.category_name', 'tbl_common_templates_categories.status AS category_status', 'tbl_common_templates_categories.module_name')
@@ -66,7 +66,7 @@ class TemplatesModel extends Model {
      * Used to get common template categories
      * @return boolean
      */
-    public function getCommonTemplateCategories() {
+    public static function getCommonTemplateCategories() {
         $oData = DB::table('tbl_common_templates_categories')
                 ->get();
         return $oData;

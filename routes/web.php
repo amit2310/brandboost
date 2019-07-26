@@ -49,12 +49,7 @@ Route::post('admin/brandboost/updateOnsiteStatus/','Admin\Brandboost@updateOnsit
 Route::post('admin/brandboost/getBBECode/','Admin\Brandboost@getBBECode');
 Route::post('admin/brandboost/archive_multipal_brandboost/','Admin\Brandboost@archiveMultipalBrandboost');
 Route::post('admin/brandboost/delete_brandboost/','Admin\Brandboost@deleteBrandboost');
-
-
-Route::get('admin/feedback/listall/','Admin\Feedback@getAllListingData');
-Route::get('admin/questions/view/{id}','Admin\Questions@questionView');
-Route::get('admin/questions/details/{id}','Admin\Questions@questionDetails');
-Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
+Route::get('admin/brandboost/offsite_setup/{id}','Admin\Brandboost@offsiteSetup');
 
 
 Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');
@@ -68,7 +63,15 @@ Route::post('admin/reviews/getReviewMedia/','Admin\Reviews@getReviewMedia');
 Route::post('admin/comments/add_comment/','Admin\Comments@addComment');
 
 
+Route::get('admin/feedback/listall/','Admin\Feedback@getAllListingData');
+
+
+Route::get('admin/questions/view/{id}','Admin\Questions@questionView');
+Route::get('admin/questions/details/{id}','Admin\Questions@questionDetails');
+Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
 Route::get('admin/questions','Admin\Questions@index');
+
+
 
 //chat module
 Route::get('admin/webchat','Admin\WebChat@index');
@@ -282,6 +285,7 @@ Route::get('admin/broadcast/report/{broadcastID}','Admin\Broadcast@report');
 Route::post('admin/tags/getSubscriberTags','Admin\Tags@getSubscriberTags');
 Route::post('admin/tags/applySubscriberTag','Admin\Tags@applySubscriberTag');
 
+
 //Lists
 Route::get('admin/lists','Admin\Lists@index');
 Route::get('admin/lists/smslists','Admin\Lists@smslists');
@@ -321,5 +325,7 @@ Route::post('admin/lists/moveToArchiveList','Admin\Lists@moveToArchiveList');
 Route::post('admin/lists/changeListStatus','Admin\Lists@changeListStatus');
 Route::post('admin/lists/deleteListContact','Admin\Lists@deleteListContact');
 
+//Brand Module
+Route::get('admin/brandboost/brand_configuration','Admin\Brandboost@brand_configuration');
 
 

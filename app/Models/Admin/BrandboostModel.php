@@ -260,7 +260,7 @@ class BrandboostModel extends Model {
 	* @param type $brandboostID
 	* @return type
 	*/
-	public function getBrandboostEvents($brandID) {
+	public static function getBrandboostEvents($brandID) {
 		$oData = DB::table('tbl_brandboost_events')
 			->where('brandboost_id', $brandID)    
 			->orderBy('previous_event_id', 'asc')
@@ -274,7 +274,7 @@ class BrandboostModel extends Model {
 	* @param type $bbType
 	* @return type
 	*/
-	public function getAllCampaignTemplatesByUserID($uersID, $bbType = 'onsite') {
+	public static function getAllCampaignTemplatesByUserID($uersID, $bbType = 'onsite') {
         $sql = "SELECT * FROM tbl_campaign_templates WHERE (user_id='" . $uersID . "' OR user_id='0') AND template_type='email' AND brandboost_type='" . $bbType . "' order by id DESC";
 		
 		$oData = DB::select(DB::raw($sql));
@@ -287,7 +287,7 @@ class BrandboostModel extends Model {
 	* @param type $bbType
 	* @return type
 	*/
-	public function getAllSMSCampaignTemplatesByUserID($uersID, $bbType = 'onsite') {
+	public static function getAllSMSCampaignTemplatesByUserID($uersID, $bbType = 'onsite') {
         $oData = DB::table('tbl_campaign_templates')
 			->where('user_id', $uersID)      
 			->where('template_type', 'sms')    
@@ -362,6 +362,19 @@ class BrandboostModel extends Model {
         } else {
             return false;
         }
+    }
+	
+	
+	/**
+	* Used to get all offsite reviews
+	* @param type $param
+	* @return type
+	*/
+	public static function getAllOffsiteReviews() {
+		$oData = DB::table('tbl_reviews_offsite')
+			->orderBy('id', 'desc')
+			->get();
+        return $oData;
     }
 
     public function getWidgetInfo($id, $hash = false) {
@@ -746,17 +759,6 @@ class BrandboostModel extends Model {
             return true;
         else
             return false;
-    }
-
-    public function getAllOffsiteReviews() {
-        $response = array();
-        $this->db->order_by('id', 'DESC');
-        $this->db->from('tbl_reviews_offsite');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
     }
 
     public function getOffsiteReviewsBYUN($name, $source, $brandboostId) {

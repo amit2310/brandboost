@@ -91,10 +91,10 @@ foreach ($activechatlist as $key => $value) {
 		<div class="interactions p0 pt10 pb10 btop">
 		<ul>
 
-		<li><span style="width: 62px; float: left;"><i class="fa fa-envelope"></i> Email: </span><span class="userAdd">
-		<strong class="em"><?php echo $Usrvalue->email; ?></strong></span> <input type="text" class="uAddText support_email" style="display:none;" name="support_email"> </li>
-		<li><span style="width: 62px; float: left;"><i class="fa fa-phone"></i> Phone: </span><span class="userAdd">
-		<strong class="em"><?php echo $Usrvalue->phone; ?></strong></span> <input type="text" class="uAddText support_email" style="display:none;" name="support_email"> </li>
+		<li><span style="width: 62px; float: left;"><i class="fa fa-envelope"></i> Email: </span><span class="">
+		<strong class="em"><?php echo $Usrvalue->email != "" ? $Usrvalue->email: "N/A"; ?></strong></span> <input type="text" class="uAddText support_email" style="display:none;" name="support_email"> </li>
+		<li><span style="width: 62px; float: left;"><i class="fa fa-phone"></i> Phone: </span><span class="">
+		<strong class="em"><?php echo $Usrvalue->phone != "" ? $Usrvalue->phone: "N/A"; ?></strong></span> <input type="text" class="uAddText support_email" style="display:none;" name="support_email"> </li>
 
 		</ul>
 		</div>

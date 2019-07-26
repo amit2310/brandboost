@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\BrandboostModel;
+use App\Models\Admin\BrandModel;
 use App\Models\Admin\SubscriberModel;
 use App\Models\FeedbackModel;
 use App\Models\ReviewsModel;
 use App\Models\Admin\WorkflowModel;
 use App\Models\Admin\TemplatesModel;
+use App\Models\Admin\OffsiteModel;
 use App\Models\Admin\Crons\InviterModel;
 use Illuminate\Support\Facades\Input;
 use Session;
@@ -163,7 +165,7 @@ class Brandboost extends Controller {
 	
 	/**
 	* This function will return onsite configuration related values
-	* @param type $brandboostID
+	* @param type $request
 	* @return type
 	*/
 	public function onsiteSetup(Request $request) {
@@ -286,7 +288,7 @@ class Brandboost extends Controller {
 	
 	/**
 	* Used to get campaign review request data
-	* @param type $param
+	* @param type $request
 	* @return type
 	*/
 	public function reviewRequest(Request $request) {
@@ -320,7 +322,7 @@ class Brandboost extends Controller {
 	
 	/**
 	* Used to get all reviews of campaign
-	* @param type $param
+	* @param type $request
 	* @return type
 	*/
 	public function reviews(Request $request) {
@@ -406,7 +408,7 @@ class Brandboost extends Controller {
 	
 	/**
 	* Used to get show media page 
-	* @param type $param
+	* @param type $reviewID
 	* @return type
 	*/
 	public function reviewDetails($reviewID = 0) {
@@ -700,27 +702,129 @@ class Brandboost extends Controller {
 
         $response = array();
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $brandboostID = $post['brandboost_id'];
+		$brandboostID = $post['brandboost_id'];
 
-            $result = $this->mBrandboost->getBrandboost($brandboostID);
+		$result = BrandboostModel::getBrandboost($brandboostID);
 
-            if ($result) {
-                $response['status'] = 'success';
-                $campaign_key = $result[0]->hashcode;
-                $sWidget = $result[0]->widget_type;
-                $response['result'] = htmlentities('<script type="text/javascript" id="bbscriptloader" data-key="' . $campaign_key . '" data-widgets="' . $sWidget . '" async="" src="' . base_url('assets/js/widgets.js') . '"></script>');
-            } else {
-                $response['status'] = "Error";
-            }
+		if ($result) {
+			$response['status'] = 'success';
+			$campaign_key = $result[0]->hashcode;
+			$sWidget = $result[0]->widget_type;
+			$response['result'] = htmlentities('<script type="text/javascript" id="bbscriptloader" data-key="' . $campaign_key . '" data-widgets="' . $sWidget . '" async="" src="' . base_url('assets/js/widgets.js') . '"></script>');
+		} else {
+			$response['status'] = "Error";
+		}
 
-            echo json_encode($response);
-            exit;
-        }
+		echo json_encode($response);
+		exit;
     }
 
-    public function index() {
+
+    /**
+	* Used to get offsite config data by brandboost id 
+	* @param type $brandboostID
+	* @return type
+	*/
+	public function offsiteSetup($brandboostID) {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        if (empty($brandboostID)) {
+            redirect("admin/brandboost/offsite");
+            exit;
+        }
+		
+		$selectedTab = Input::get('t');
+        $oBrandboost = BrandboostModel::getBrandboost($brandboostID);
+        if (empty($oBrandboost) || $oBrandboost[0]->user_id != $userID) {
+            redirect("admin/brandboost/offsite");
+            exit;
+        }
+        
+        $moduleName = 'brandboost';
+        $moduleUnitID = $brandboostID;
+        
+
+        $oFeedbackResponse = FeedbackModel::getFeedbackResponse($brandboostID);
+        
+        $oCampaignSubscribers = WorkflowModel::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $eventsdata = BrandboostModel::getBrandboostEvents($brandboostID);
+        $offSiteReviews = BrandboostModel::getAllOffsiteReviews($brandboostID);
+
+        $offsite_ids = $oBrandboost[0]->offsite_ids;
+        $offsite_ids = unserialize($offsite_ids);
+        $offsite_ids = implode(",", $offsite_ids);
+        //$totalSocialIcon = OffsiteModel::offsite_count_all_edit('', $offsite_ids);
+		$totalSocialIcon  = 5;
+        $offstepdata = OffsiteModel::getOffsite();
+        $feedbackData = FeedbackModel::getFeedbackByBrandboostID($brandboostID);
+        $emailTemplate = BrandboostModel::getAllCampaignTemplatesByUserID($userID, 'offsite');
+        $smsTemplate = BrandboostModel::getAllSMSCampaignTemplatesByUserID($userID, 'offsite');
+        $oTemplates = TemplatesModel::getCommonTemplates();
+        $oCategories = TemplatesModel::getCommonTemplateCategories();
+
+        
+        $oEvents = WorkflowModel::getWorkflowEvents($brandboostID, $moduleName);
+        $oEventsType = array('send-invite', 'followup');
+        $oCampaignTags = WorkflowModel::getWorkflowCampaignTags($moduleName);
+        $oDefaultTemplates = WorkflowModel::getWorkflowDefaultTemplates($moduleName, 'offsite');
+
+
+        $setTab = Session::get("setTab");
+
+        $offsite_ids = $oBrandboost[0]->offsite_ids;
+        $offsite_ids = unserialize($offsite_ids);
+        foreach ($offsite_ids as $value) {
+            if (!empty($value) && $value > 0) {
+                $getData = getOffsite($value);
+                if (!empty($getData)) {
+                    $setTab = 'Campaign Preferences';
+                }
+            }
+        }
+
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a href="' . base_url('admin/brandboost/offsite') . '" class="sidebar-control hidden-xs">Off site </a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $oBrandboost[0]->brand_title . '" class="sidebar-control active hidden-xs ">' . $oBrandboost[0]->brand_title . '</a></li>
+			</ul>';
+
+
+        $aData = array(
+            'title' => 'Offsite Brand Boost Campaign',
+            'pagename' => $breadcrumb,
+            'getOffsite' => $oBrandboost,
+            'bActiveSubsription' => $bActiveSubsription,
+            'feedbackResponse' => $oFeedbackResponse,
+            'brandboostData' => $oBrandboost[0],
+            'eventsData' => $eventsdata,
+            'oEvents' => $oEvents,
+            'moduleName' => $moduleName,
+            'moduleUnitID' => $brandboostID,
+            'oEventsType' => $oEventsType,
+            'oCampaignTags' => $oCampaignTags,
+            'oDefaultTemplates' => $oDefaultTemplates,
+            'oTemplates' => $oTemplates,
+            'oCategories' => $oCategories,
+            'subscribersData' => $oCampaignSubscribers,// $allSubscribers,
+            'totalSocialIcon' => $totalSocialIcon,
+            'result' => $feedbackData,
+            'setTab' => $setTab,
+            'selectedTab' => $selectedTab,
+            'brandboostID' => $brandboostID,
+            'offSiteData' => $offstepdata,
+            'offSiteReviews' => $offSiteReviews,
+            'emailTemplate' => $emailTemplate,
+            'smsTemplate' => $smsTemplate
+        );
+
+		return view('admin.brandboost.offsite_setup', $aData);
+    }
+	
+	public function index() {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -931,13 +1035,15 @@ class Brandboost extends Controller {
     public function brand_configuration() {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
+        $BrandObj = new BrandModel();
+        $mBrandboostObj = new BrandboostModel();
+        $mReviewsObj = new ReviewsModel();
 
-        $brandData = $this->mBrand->getBrandConfigurationData($userID);
-        // pre($brandData);
-        $brandThemeData = $this->mBrand->getBrandThemesData($userID);
-        $aBrandboostList = $this->mBrandboost->getBrandboostByUserId($userID, 'onsite');
-        $faQData = $this->mBrand->getFaqData();
-        $aReviews = $this->mReviews->getCampaignReviewsByUserId($userID);
+        $brandData = $BrandObj->getBrandConfigurationData($userID);
+        $brandThemeData = $BrandObj->getBrandThemesData($userID);
+        $aBrandboostList = $mBrandboostObj->getBrandboostByUserId($userID, 'onsite');
+        $faQData = $BrandObj->getFaqData();
+        $aReviews = $mReviewsObj->getCampaignReviewsByUserId($userID);
         //pre($aReviews);
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -947,7 +1053,8 @@ class Brandboost extends Controller {
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Brand Configuration" class="sidebar-control active hidden-xs ">Brand Configuration</a></li>
 			</ul>';
 
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/brand_configuration', array('title' => 'Brand Configuration', 'pagename' => $breadcrumb, 'brandData' => $brandData[0], 'aBrandbosts' => $aBrandboostList, 'brandThemeData' => $brandThemeData, 'faQData' => $faQData, 'aReviews' => $aReviews, 'userData' => $oUser));
+             return view ('admin.brandboost.brand_configuration',array('title' => 'Brand Configuration', 'pagename' => $breadcrumb, 'brandData' => $brandData[0], 'aBrandbosts' => $aBrandboostList, 'brandThemeData' => $brandThemeData, 'faQData' => $faQData, 'aReviews' => $aReviews, 'userData' => $oUser));
+
 
         /* $brandData = $this->mBrand->getBrandConfigurationData($this->uri->segment(4));
           $faQData = $this->mBrand->getFaqData();
@@ -3683,107 +3790,6 @@ class Brandboost extends Controller {
 
     public function test() {
         $this->template->load('admin/admin_template_new', 'admin/brandboost/testing');
-    }
-
-    
-
-    public function offsite_setup($brandboostID) {
-        //$brandboostID = $this->session->userdata('brandboostID');
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        if (empty($brandboostID)) {
-            redirect("admin/brandboost/offsite");
-            exit;
-        }
-        $selectedTab = $this->input->get('t');
-        $oBrandboost = $this->mBrandboost->getBrandboost($brandboostID);
-        if (empty($oBrandboost) || $oBrandboost[0]->user_id != $userID) {
-            redirect("admin/brandboost/offsite");
-            exit;
-        }
-        
-        $moduleName = 'brandboost';
-        $moduleUnitID = $brandboostID;
-        
-
-        $oFeedbackResponse = $this->mFeedback->getFeedbackResponse($brandboostID);
-        //$allSubscribers = $this->rLists->getAllSubscribersList($brandboostID);
-        
-        $oCampaignSubscribers = $this->mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $eventsdata = $this->mBrandboost->getBrandboostEvents($brandboostID);
-        $offSiteReviews = $this->mBrandboost->getAllOffsiteReviews($brandboostID);
-
-        $offsite_ids = $getBrandboost[0]->offsite_ids;
-        $offsite_ids = unserialize($offsite_ids);
-        $offsite_ids = implode(",", $offsite_ids);
-        $totalSocialIcon = $this->rOffsites->offsite_count_all_edit('', $offsite_ids);
-        $offstepdata = $this->rOffsites->getOffsite();
-        $feedbackData = $this->mFeedback->getFeedbackByBrandboostID($brandboostID);
-        $emailTemplate = $this->mBrandboost->getAllCampaignTemplatesByUserID($userID, 'offsite');
-        $smsTemplate = $this->mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'offsite');
-        $oTemplates = $this->mTemplates->getCommonTemplates();
-        $oCategories = $this->mTemplates->getCommonTemplateCategories();
-
-        
-        $oEvents = $this->mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
-        $oEventsType = array('send-invite', 'followup');
-        $oCampaignTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
-        $oDefaultTemplates = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName, 'offsite');
-
-
-        $setTab = $this->session->userdata("setTab");
-
-        $offsite_ids = $oBrandboost[0]->offsite_ids;
-        $offsite_ids = unserialize($offsite_ids);
-        foreach ($offsite_ids as $value) {
-            if (!empty($value) && $value > 0) {
-                $getData = getOffsite($value);
-                if (!empty($getData)) {
-                    $setTab = 'Campaign Preferences';
-                }
-            }
-        }
-
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a href="' . base_url('admin/brandboost/offsite') . '" class="sidebar-control hidden-xs">Off site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $oBrandboost[0]->brand_title . '" class="sidebar-control active hidden-xs ">' . $oBrandboost[0]->brand_title . '</a></li>
-			</ul>';
-
-
-        $aData = array(
-            'title' => 'Offsite Brand Boost Campaign',
-            'pagename' => $breadcrumb,
-            'getOffsite' => $oBrandboost,
-            'bActiveSubsription' => $bActiveSubsription,
-            'feedbackResponse' => $oFeedbackResponse,
-            'brandboostData' => $oBrandboost[0],
-            'eventsData' => $eventsdata,
-            'oEvents' => $oEvents,
-            'moduleName' => $moduleName,
-            'moduleUnitID' => $brandboostID,
-            'oEventsType' => $oEventsType,
-            'oCampaignTags' => $oCampaignTags,
-            'oDefaultTemplates' => $oDefaultTemplates,
-            'oTemplates' => $oTemplates,
-            'oCategories' => $oCategories,
-            'subscribersData' => $oCampaignSubscribers,// $allSubscribers,
-            'totalSocialIcon' => $totalSocialIcon,
-            'result' => $feedbackData,
-            'setTab' => $setTab,
-            'selectedTab' => $selectedTab,
-            'brandboostID' => $brandboostID,
-            'offSiteData' => $offstepdata,
-            'offSiteReviews' => $offSiteReviews,
-            'emailTemplate' => $emailTemplate,
-            'smsTemplate' => $smsTemplate
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/offsite_setup', $aData);
     }
 
     public function delete_multipal_offsite_brandboost_review() {

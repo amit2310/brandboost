@@ -2607,8 +2607,13 @@ if (!function_exists('smsteam_member_name')) {
 
     function smsteam_member_name($usrid) {
         $oData = \App\Models\Admin\SubscriberModel::get_sms_team_member_name($userID);
-        return $oData[0]->teamName;
-        ;
+        if(!empty($oData)) {
+            return $oData[0]->teamName;
+        }
+        else {
+            return '';
+        }
+        
     }
 
 }
