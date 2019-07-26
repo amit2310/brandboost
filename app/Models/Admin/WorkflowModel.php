@@ -15,7 +15,7 @@ class WorkflowModel extends Model {
      * @param type $moduleName
      * @return boolean
      */
-    public function getWorkflowEvents($id, $moduleName) {
+    public static function getWorkflowEvents($id, $moduleName) {
         if (empty($id) || empty($moduleName)) {
             return false;
         }
@@ -59,7 +59,7 @@ class WorkflowModel extends Model {
      * @param type $moduleName
      * @return type
      */
-    public function getWorkflowCampaignTags($moduleName) {
+    public static function getWorkflowCampaignTags($moduleName) {
         $aTags = config('bbconfig.email_tags');
         return $aTags;
     }
@@ -943,7 +943,7 @@ class WorkflowModel extends Model {
      * @param type $categoryID
      * @return boolean
      */
-    public function getWorkflowDefaultTemplates($moduleName, $moduleCatName = '', $id = '', $categoryID = '') {
+    public static function getWorkflowDefaultTemplates($moduleName, $moduleCatName = '', $id = '', $categoryID = '') {
         if (empty($moduleName)) {
             return false;
         }

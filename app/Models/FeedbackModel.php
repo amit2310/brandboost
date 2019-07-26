@@ -14,7 +14,7 @@ class FeedbackModel extends Model
 	* @param type $campaignID
 	* @return type
 	*/
-	public function getFeedbackResponse($campaignID) {
+	public static function getFeedbackResponse($campaignID) {
 		$oData = DB::table('tbl_feedback_response')
 			->where('brandboost_id', $campaignID)    
 			->orderBy('id', 'asc')
@@ -82,6 +82,26 @@ class FeedbackModel extends Model
 		return $oData;
     }
 	
+	/**
+	* Used to get feedback by brandboost id
+	* @param type $brandboostID
+	* @return type
+	*/
+	public static function getFeedbackByBrandboostID($brandboostID) {
+        $oData = DB::table('tbl_brandboost_feedback')
+			->select('tbl_brandboost_feedback.*', 'tbl_users.avatar', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_img')
+			->where('tbl_brandboost_feedback.brandboost_id', 'offsite')
+			->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.id', '=' , 'tbl_brandboost_feedback.subscriber_id')
+			->leftJoin('tbl_users', 'tbl_users.id', '=' , 'tbl_brandboost_users.user_id')
+			->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=' , 'tbl_subscribers.id')
+			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_brandboost_feedback.brandboost_id')
+			->where('tbl_brandboost_feedback.brandboost_id', $brandboostID)
+			->get();
+		return $oData;
+		
+    }
+	
+	
     public function add($aData) {
         $result = $this->db->insert('tbl_brandboost_feedback', $aData);
         $inset_id = $this->db->insert_id();
@@ -106,26 +126,6 @@ class FeedbackModel extends Model
         $this->db->join('tbl_users', 'tbl_users.id = tbl_brandboost_users.user_id', 'LEFT');
         $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id=tbl_subscribers.id", "LEFT");
         $this->db->join('tbl_brandboost', 'tbl_brandboost.id = tbl_brandboost_feedback.brandboost_id', 'LEFT');
-        $this->db->order_by('tbl_brandboost_feedback.id', 'DESC');
-        $result = $this->db->get();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    
-
-    public function getFeedbackByBrandboostID($brandboostID) {
-        $response = array();
-        $this->db->select('tbl_brandboost_feedback.*, tbl_users.avatar, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_brandboost.brand_title, tbl_brandboost.brand_img');
-        $this->db->from('tbl_brandboost_feedback');
-        $this->db->where("tbl_brandboost_feedback.brandboost_id", $brandboostID);
-        $this->db->join('tbl_brandboost_users', 'tbl_brandboost_users.id = tbl_brandboost_feedback.subscriber_id', 'left');
-        $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->join('tbl_users', 'tbl_users.id = tbl_brandboost_users.user_id', 'left');
-        $this->db->join('tbl_brandboost', 'tbl_brandboost.id = tbl_brandboost_feedback.brandboost_id', 'left');
         $this->db->order_by('tbl_brandboost_feedback.id', 'DESC');
         $result = $this->db->get();
 

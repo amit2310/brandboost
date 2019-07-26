@@ -348,11 +348,7 @@ if (!function_exists('getCampaignsByEventID')) {
 if (!function_exists('getOffsite')) {
 
     function getOffsite($offsiteId) {
-        $aUser = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Offsite_model", "mOffsite");
-
-        $aOffsiteDetail = $CI->mOffsite->getOffsite($offsiteId);
+        $aOffsiteDetail = App\Models\Admin\OffsiteModel::getOffsite($offsiteId);
 
         if (!empty($aOffsiteDetail)) {
             return $aOffsiteDetail[0];
