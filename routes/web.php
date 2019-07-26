@@ -49,12 +49,7 @@ Route::post('admin/brandboost/updateOnsiteStatus/','Admin\Brandboost@updateOnsit
 Route::post('admin/brandboost/getBBECode/','Admin\Brandboost@getBBECode');
 Route::post('admin/brandboost/archive_multipal_brandboost/','Admin\Brandboost@archiveMultipalBrandboost');
 Route::post('admin/brandboost/delete_brandboost/','Admin\Brandboost@deleteBrandboost');
-
-
-Route::get('admin/feedback/listall/','Admin\Feedback@getAllListingData');
-Route::get('admin/questions/view/{id}','Admin\Questions@questionView');
-Route::get('admin/questions/details/{id}','Admin\Questions@questionDetails');
-Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
+Route::get('admin/brandboost/offsite_setup/{id}','Admin\Brandboost@offsiteSetup');
 
 
 Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');
@@ -68,7 +63,15 @@ Route::post('admin/reviews/getReviewMedia/','Admin\Reviews@getReviewMedia');
 Route::post('admin/comments/add_comment/','Admin\Comments@addComment');
 
 
+Route::get('admin/feedback/listall/','Admin\Feedback@getAllListingData');
+
+
+Route::get('admin/questions/view/{id}','Admin\Questions@questionView');
+Route::get('admin/questions/details/{id}','Admin\Questions@questionDetails');
+Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
 Route::get('admin/questions','Admin\Questions@index');
+
+
 
 //chat module
 Route::get('admin/webchat','Admin\WebChat@index');

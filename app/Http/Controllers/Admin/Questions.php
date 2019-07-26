@@ -126,14 +126,12 @@ class Questions extends Controller {
         
         if ($actionName == 'smart-popup') {
 			$popupContent =  view('admin.components.smart-popup.questions', $aData)->render();
-            //$popupContent = $this->load->view('admin/components/smart-popup/questions', $aData, true);
             $response['status'] = 'success';
             $response['content'] = $popupContent;
             echo json_encode($response);
             exit;
         } else {
 			return view('admin.question.question_details', $aData);
-           //$this->template->load('admin/admin_template_new', 'admin/question/question_details', $aData);
         }
     }
 	
