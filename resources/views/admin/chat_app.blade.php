@@ -1386,7 +1386,7 @@ if (!empty($hasweb_access)) {
 	<div class="row">
 		<div class="col-md-12 bbot pb10"><p><strong>Email</strong> <span>${useremail}</span></p><p>
 			<strong>Phone </strong> <span>${SubscriberPhone}</span></p><p><strong>Location </strong> 
-			<span>New-York, USA (GMT-4)</span></p><p><strong>Gender </strong> <span>Male</span></p><p>
+			<span>New-York test2, USA (GMT-4)</span></p><p><strong>Gender </strong> <span>Male</span></p><p>
 		<strong>Seen </strong> <span><i class="icon-primitive-dot txt_green fsize9"></i>${newUserStatus}</span></p>
 		</div>
 		<div class="col-md-12 pt10 pb10 bbot">
@@ -2006,7 +2006,7 @@ chatPopup = `<div id="msg_box_${userID}" class="msg_box webchat" style="right:35
 		<div class="row">
 			<div class="col-md-12 bbot pb10"><p><strong>Email</strong> <span>${useremail}</span></p><p>
 				<strong>Phone </strong> <span>${usermobile}</span></p><p><strong>Location </strong> 
-				<span>New-York, USA (GMT-4)</span></p><p><strong>Gender </strong> <span>Male</span></p><p>
+				<span>New-York test1, USA (GMT-4)</span></p><p><strong>Gender </strong> <span>Male</span></p><p>
 			<strong>Seen </strong> <span><i class="icon-primitive-dot txt_green fsize9"></i>${newUserStatus}</span></p>
 			</div>
 			<div class="col-md-12 pt10 pb10 bbot">
