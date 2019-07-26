@@ -89,6 +89,7 @@ class WebChat extends Controller {
         $WebChatObj = new WebChatModel();
         $oNotes = $WebChatObj->getWebNotes($chatUserid);
         foreach ($oNotes as $NotesData) {
+            
             $fileext = explode('.', $NotesData->message);
             $fileext = end($fileext);
             $mmsFile = explode('/Media/', $NotesData->message);
@@ -107,7 +108,7 @@ class WebChat extends Controller {
                            <div class="media-content" style="background-color:#fff9ec!important;"><?php echo $NotesData->message; ?>
                            </div>
                                <span style="padding: 0;display: block;font-size: 10px;position: absolute; right: 0;bottom: -16px;" class="text-muted text-size-small">
-                               Added By <?php echo assignto('') . ' ' . date('F d Y', strtotime($NotesData->created));
+                               Added By <?php echo assignto($NotesData->room) . ' ' . date('F d Y', strtotime($NotesData->created));
         } ?>  </span>
                             </div>
                     </li>
