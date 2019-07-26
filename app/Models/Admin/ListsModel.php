@@ -71,15 +71,23 @@ class ListsModel extends Model {
         return $oData;
     }
 
+    /**
+     * Used to check if List exists or not
+     * @param type $listName
+     * @param type $userID
+     * @param type $listID
+     * @return boolean
+     */
     public function checkIfListExists($listName, $userID, $listID) {
-        $this->db->where("user_id", $userID);
-        $this->db->where("list_name", $listName);
-        if ($listID != '') {
-            $this->db->where_not_in("id", $listID);
-        }
-        $this->db->where("delete_status", 0);
-        $result = $this->db->get('tbl_common_lists');
-        if ($result->num_rows() > 0) {
+        $oData = DB::table('tbl_common_lists')
+                ->where('user_id', $userID)
+                ->where('list_name', $listName)
+                ->where('delete_status', 0)
+                ->when(!empty($listID), function($query) use ($listID) {
+                    return $query->whereNotIn('id', [$listID]);
+                })
+                ->exists();
+        if ($oData) {
             return true;
         } else {
             return false;
@@ -101,14 +109,14 @@ class ListsModel extends Model {
         return $oData;
     }
 
+    /**
+     * Used to add a new list
+     * @param type $aData
+     * @return boolean
+     */
     public function addLists($aData) {
-        $result = $this->db->insert("tbl_common_lists", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
+        $insert_id = DB::table('tbl_common_lists')->insertGetId($aData);
+        return $insert_id;        
     }
 
     public function updateLists($aData, $id, $userID = '') {
@@ -259,7 +267,6 @@ class ListsModel extends Model {
                 })
                 ->get();
         return $oData;
-
     }
 
     public function getAllSubscribers($userID, $listId) {

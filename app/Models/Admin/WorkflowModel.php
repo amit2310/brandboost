@@ -718,16 +718,13 @@ class WorkflowModel extends Model {
         if ($moduleName == 'automation' || $moduleName == 'broadcast') {
             $oSubscribers = $this->getWorkflowAutomationSubscribers($id);
         } else {
-            $this->db->select("{$tableName}.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.status AS globalStatus");
-            $this->db->join("tbl_subscribers", "{$tableName}.subscriber_id= tbl_subscribers.id", "LEFT");
-            $this->db->where("{$tableName}.{$filterField}", $id);
-            $this->db->order_by("{$tableName}.id", 'DESC');
-            $this->db->from($tableName);
-            $result = $this->db->get();
-            //echo $this->db->last_query();die;
-            if ($result->num_rows() > 0) {
-                $oSubscribers = $result->result();
-            }
+            
+            $oSubscribers = DB::table($tableName)
+                    ->leftJoin("tbl_subscribers", "{$tableName}.subscriber_id", "=", "tbl_subscribers.id")
+                    ->select("{$tableName}.*", "tbl_subscribers.email", "tbl_subscribers.firstname", "tbl_subscribers.lastname", "tbl_subscribers.phone", "tbl_subscribers.status AS globalStatus")
+                    ->where("{$tableName}.{$filterField}", $id)
+                    ->orderBy("{$tableName}.id", "desc")
+                    ->get();            
         }
         return $oSubscribers;
     }
