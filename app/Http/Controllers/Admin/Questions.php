@@ -9,11 +9,17 @@ use App\Models\Admin\BrandboostModel;
 use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\QuestionModel;
 //use App\Models\SignupModel;
-//use App\Models\Admin\TagsModel;
+use App\Models\Admin\TagsModel;
+use Illuminate\Support\Facades\Input;
 use Session;
 
 class Questions extends Controller {
-
+	
+	/**
+	* Used to get question data
+	* @param type $campaignId
+	* @return type
+	*/
     public function index($campaignId = 0) {
 
         $aUser = getLoggedUser();
@@ -44,13 +50,18 @@ class Questions extends Controller {
 
 		return view('admin.question.question_list', $aData);
     }
-
-    public function view($campaignId) {
+	
+	/**
+	* Used to get questions list by campaign id
+	* @param type $campaignId
+	* @return type
+	*/
+	public function questionView($campaignId) {
         if (!empty($campaignId)) {
 
-            $oBrandboost = $this->mBrandboost->getBrandboost($campaignId);
-            $oQuestions = $this->mQuestion->getBrandboostQuestions($campaignId);
-            $bActiveSubsription = $this->mUser->isActiveSubscription();
+            $oBrandboost = BrandboostModel::getBrandboost($campaignId);
+            $oQuestions = QuestionModel::getBrandboostQuestions($campaignId);
+            $bActiveSubsription = UsersModel::isActiveSubscription();
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
@@ -63,15 +74,73 @@ class Questions extends Controller {
                 'title' => 'Onsite Questions',
                 'pagename' => $breadcrumb,
                 'oQuestions' => $oQuestions,
-                'aReviews' => $aReviews,
                 'campaignId' => $campaignId,
                 'bActiveSubsription' => $bActiveSubsription
             );
-
-            $this->template->load('admin/admin_template_new', 'admin/question/question_list', $aData);
+			
+			return view('admin.question.question_list', $aData);
         }
     }
+	
+	/**
+	* Used to get questions details data by question id
+	* @param type $questionID
+	* @return type
+	*/
+	public function questionDetails($questionID) {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $selectedTab = Input::get('t');             
+		$quesID = Input::post("questionID");
+		$actionName = Input::post("action");
 
+        $questionID = ($quesID > 0) ? $quesID : $questionID;
+        $oQuestion = QuestionModel::getQuestionDetails($questionID);
+        $oAnswers = QuestionModel::getAllAnswer($questionID);
+        //$oTags = TagsModel::getTagsDataByQuestionID($questionID);
+        $oNotes = QuestionModel::getQuestionNotes($questionID);
+
+        /*if (!empty($oAnswers)) {
+            $brandboostID = $oAnswers[0]->campaign_id;
+        }*/
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a href="' . base_url('admin/questions') . '" class="sidebar-control hidden-xs">Question </a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Details" class="sidebar-control active hidden-xs ">Details</a></li>
+                    </ul>';
+
+        $aData = array(
+            'title' => 'Question Details',
+            'pagename' => $breadcrumb,
+            'oQuestion' => $oQuestion,
+            'oAnswers' => $oAnswers,
+            'oTags' => '',
+            'oNotes' => $oNotes,
+            'selectedTab' => $selectedTab,
+            'brandboostID' => '',
+            'userID' => $userID
+        );
+        
+        if ($actionName == 'smart-popup') {
+			$popupContent =  view('admin.components.smart-popup.questions', $aData)->render();
+            //$popupContent = $this->load->view('admin/components/smart-popup/questions', $aData, true);
+            $response['status'] = 'success';
+            $response['content'] = $popupContent;
+            echo json_encode($response);
+            exit;
+        } else {
+			return view('admin.question.question_details', $aData);
+           //$this->template->load('admin/admin_template_new', 'admin/question/question_details', $aData);
+        }
+    }
+	
+	/**
+	* Used to add questions
+	* @return type
+	*/
     public function add() {
 
         $aUser = getLoggedUser();
@@ -100,63 +169,6 @@ class Questions extends Controller {
         );
 
         $this->template->load('admin/admin_template_new', 'admin/question/add_question', $aData);
-    }
-
-    public function details($questionID) {
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-        $post = $this->input->post();
-        $get = $this->input->get();
-        $selectedTab = $get['t'];                
-        if (!empty($post)) {
-            $quesID = strip_tags($post['questionID']);
-            $actionName = strip_tags($post['action']);
-        }
-
-        $questionID = ($quesID > 0) ? $quesID : $questionID;
-        $oQuestion = $this->mQuestion->getQuestionDetails($questionID);
-        $oAnswers = $this->mQuestion->getAllAnswer($questionID);
-        $oTags = $this->mTags->getTagsDataByQuestionID($questionID);
-        $oNotes = $this->mQuestion->getQuestionNotes($questionID);
-
-
-
-        if (!empty($oAnswers)) {
-            $brandboostID = $oAnswers[0]->campaign_id;
-            //$oBrandboost = $this->mBrandboost->getBrandboost($brandboostID);
-        }
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/questions') . '" class="sidebar-control hidden-xs">Question </a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Details" class="sidebar-control active hidden-xs ">Details</a></li>
-                    </ul>';
-
-        $aData = array(
-            'title' => 'Question Details',
-            'pagename' => $breadcrumb,
-            'oQuestion' => $oQuestion,
-            'oAnswers' => $oAnswers,
-            'oTags' => $oTags,
-            'oNotes' => $oNotes,
-            'selectedTab' => $selectedTab,
-            'brandboostID' => $brandboostID,
-            'userID' => $userID
-        );
-        
-        if ($actionName == 'smart-popup') {
-            $popupContent = $this->load->view('admin/components/smart-popup/questions', $aData, true);
-            $response['status'] = 'success';
-            $response['content'] = $popupContent;
-            echo json_encode($response);
-            exit;
-        } else {
-            $this->template->load('admin/admin_template_new', 'admin/question/question_details', $aData);
-        }
-
-        
     }
 
     public function saveManualQuestion() {

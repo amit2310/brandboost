@@ -240,7 +240,7 @@ class BrandboostModel extends Model {
 	* @param type $brandboostID
 	* @return type
 	*/
-	public function getBrandboost($id = 0, $type = '') {
+	public static function getBrandboost($id = 0, $type = '') {
 		
 		$oData = DB::table('tbl_brandboost')
 			->when(($id > 0), function ($query) use ($id) {
@@ -353,7 +353,7 @@ class BrandboostModel extends Model {
 	* @param type $brandboostID
 	* @return type
 	*/
-	public function updateBrandboost($userID, $aData, $brandboostID) {
+	public static function updateBrandboost($userID, $aData, $brandboostID) {
 		$result = DB::table('tbl_brandboost')
 		->where('id', $brandboostID)
 		->update($aData);

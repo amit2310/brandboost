@@ -18,11 +18,6 @@
             <div class="col-md-7">
                 <h3><img src="/assets/images/onsite_icons.png"> &nbsp; On Site Questions</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
-                    <!-- <li class="active all"><a style="cursor:pointer" class="filterByColumn" fil="">All</a></li>
-                    <li><a style="cursor:pointer" class="filterByColumn" fil="1">Approved</a></li>
-                    <li><a style="cursor:pointer" class="filterByColumn" fil="0">Dispproved</a></li>
-                    <li><a style="cursor:pointer" class="filterByColumn" fil="2">Pending</a></li> -->
-
                     <li class="active all"><a style="javascript:void();" class="filterByColumn" fil="">All</a></li>
                     <li><a style="javascript:void();" class="filterByColumn" fil="1">Approved</a></li>
                     <li><a style="cursor:pointer" class="filterByColumn" fil="0">Dispproved</a></li>
@@ -223,7 +218,6 @@
                                         <th><i class=""><img src="assets/images/icon_source.png"></i>Question</th>
                                         <th><i class=""><img src="assets/images/icon_campaign.png"></i>Campaign</th>
                                         <th><i class=""><img src="assets/images/icon_clock.png"></i>Created</th>
-<!--                                        <th><i class="icon-hash"></i>Tags</th>-->
                                         <th class="text-right pull-right"><i class=""><img src="assets/images/icon_status.png"></i>Status</th>
                                         <th class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
                                         <th style="display: none;">Status</th>
@@ -233,7 +227,6 @@
 
                                     <!--================================================-->
                                     <?php
-                                    
                                         $inc = 1;
                                         foreach ($oQuestions as $oQuestion) {
 
@@ -266,7 +259,7 @@
                                                     }
                                                 }
                                             }
-                                            
+                                            //pre($oQuestion); die;
                                             ?>
                                             <tr>
                                                 <td style="display: none;"><?php echo date('m/d/Y', strtotime($oQuestion->created)); ?></td>

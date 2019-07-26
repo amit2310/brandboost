@@ -11,7 +11,7 @@ use Session;
 class QuestionModel extends Model
 {
 	/**
-     * get brandboost questions response
+     * Used to get brandboost questions response
      * @param type $userID
      * @return type
      */
@@ -29,7 +29,7 @@ class QuestionModel extends Model
     }
 	
 	/**
-     * get brandboost all answers of question response
+     * Used to get brandboost all answers of question response
      * @param type $questionID
      * @param type $id
      * @return type
@@ -46,6 +46,54 @@ class QuestionModel extends Model
 			->get();
         return $oData;
     }
+	
+	/**
+     * Used to get brandboost all questions by campaign id
+     * @param type $campId
+     * @return type
+     */
+	public static function getBrandboostQuestions($campId) {
+		$oData = DB::table('tbl_reviews_question')
+			->select('tbl_reviews_question.*', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.review_type', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
+			->where('tbl_reviews_question.campaign_id', $campId)
+			->where('tbl_reviews_question.status', 1)
+			->leftJoin('tbl_users', 'tbl_reviews_question.user_id', '=' , 'tbl_users.id')
+			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_reviews_question.campaign_id')
+			->orderBy('id', 'desc')
+			->get();
+        return $oData;
+    }
+	
+	/**
+     * Used to get questions details by question id
+     * @param type $questionID
+     * @return type
+     */
+	public static function getQuestionDetails($questionID){
+		$oData = DB::table('tbl_reviews_question')
+			->select('tbl_reviews_question.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users_notification_settings.email_notify', 'tbl_users_notification_settings.system_notify')
+			->where('tbl_reviews_question.id', $questionID)
+			->leftJoin('tbl_users', 'tbl_reviews_question.user_id', '=' , 'tbl_users.id')
+			->leftJoin('tbl_users_notification_settings', 'tbl_users_notification_settings.user_id', '=' , 'tbl_users.id')
+			->first();
+        return $oData;
+    }
+	
+	/**
+     * Used to get questions notes by question id
+     * @param type $questionId
+     * @return type
+     */
+	public static function getQuestionNotes($questionId) {
+		$oData = DB::table('tbl_reviews_question_notes')
+			->select('tbl_reviews_question_notes.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email')
+			->where('tbl_reviews_question_notes.question_id', $questionId)
+			->leftJoin('tbl_users', 'tbl_reviews_question_notes.user_id', '=' , 'tbl_users.id')
+			->orderBy('tbl_reviews_question_notes.id', 'desc')
+			->get();
+        return $oData;
+    }
+	
 
     public function getReviewAnswerHelpful($answerID){
 
@@ -83,21 +131,6 @@ class QuestionModel extends Model
 		return $result;
 	}
     
-    public function getQuestionDetails($questionID){
-        $response = array();
-        $this->db->select("tbl_reviews_question.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar, "
-                . "tbl_users_notification_settings.email_notify, tbl_users_notification_settings.system_notify");
-        $this->db->join("tbl_users", "tbl_reviews_question.user_id = tbl_users.id", "LEFT");
-        $this->db->join("tbl_users_notification_settings", "tbl_users_notification_settings.user_id = tbl_users.id", "LEFT");
-        $this->db->where('tbl_reviews_question.id', $questionID);
-        $this->db->from('tbl_reviews_question');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-    
     public function saveQuestionNotes($aData) {
         $bSaved = $this->db->insert("tbl_reviews_question_notes", $aData);
         $insert_id = $this->db->insert_id();
@@ -107,21 +140,7 @@ class QuestionModel extends Model
         return false;
     }
     
-    public function getQuestionNotes($id) {
-        if (!empty($id)) {
-            $this->db->select("tbl_reviews_question_notes.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email");
-            $this->db->join("tbl_users", "tbl_reviews_question_notes.user_id=tbl_users.id", "LEFT");
-            $this->db->where("tbl_reviews_question_notes.question_id", $id);
-            $this->db->order_by("tbl_reviews_question_notes.id", "DESC");
-            $result = $this->db->get("tbl_reviews_question_notes");
-            //echo $this->db->last_query();
-            //die;
-            if ($result->num_rows() > 0) {
-                $response = $result->result();
-            }
-            return $response;
-        }
-    }
+    
     
     
     public function getQuestionNoteInfo($noteId) {
@@ -173,19 +192,6 @@ class QuestionModel extends Model
         }
         return $response;
     }*/
-
-    public function getBrandboostQuestions($campId) {
-        $response = array();
-        $this->db->where('campaign_id', $campId);
-        $this->db->where('status', '1');
-        $this->db->order_by('id', 'DESC');
-        $this->db->from('tbl_reviews_question');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
 
     public function getAllQuestion($id = '') {
 
