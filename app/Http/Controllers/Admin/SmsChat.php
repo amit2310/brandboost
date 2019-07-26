@@ -179,6 +179,7 @@ class SmsChat extends Controller {
         $SmsChatObj = new SmsChatModel();
         $oNotes = $SmsChatObj->getSmsNotes($SubscriberPhone);
         foreach ($oNotes as $NotesData) {
+           
             $fileext = explode('.', $NotesData->notes);
             $fileext = end($fileext);
             $mmsFile = explode('/Media/', $NotesData->notes);
@@ -197,7 +198,7 @@ class SmsChat extends Controller {
                            <div class="media-content" style="background-color:#fff9ec!important;"><?php echo $NotesData->notes; ?>
                            </div>
                                <span style="padding: 0;display: block;font-size: 10px;position: absolute; right: 0;bottom: -16px;" class="text-muted text-size-small">
-                               Added By <?php echo assignto('') . ' ' . date('F d Y', strtotime($NotesData->created));
+                               Added By <?php echo $oUser->firstname.' '.$oUser->lastname . ' ' . date('F d Y', strtotime($NotesData->created));
         } ?>  </span>
                             </div>
                     </li>
