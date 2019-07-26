@@ -874,6 +874,8 @@ class WorkFlow extends Controller {
         $mWorkflow = new WorkflowModel();
 
         $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
+        $defaultGreeting = '';
+        $defaultIntroduction = '';
         if (!empty($oResponse)) {
             $templateSource = $oResponse->template_source;
             if ($templateSource > 0) {
@@ -917,7 +919,7 @@ class WorkFlow extends Controller {
             $subject = $oResponse->subject;
 
             $preheader = $oResponse->preheader;
-
+            $sPreheaderText = '';
             if (!empty($preheader)) {
                 $sPreheaderText = '<span class="c3896 c5535" style="box-sizing: border-box;display:none;visibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">' . $preheader . '</span>';
             }
@@ -1995,19 +1997,23 @@ class WorkFlow extends Controller {
      * @param Request $request
      */
     public function loadWorkflowSMSStats(Request $request) {
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        
         $response = array();
         $response['status'] = "Error";
         $campaignID = strip_tags($request->campaign_id);
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitId);
         $eventId = strip_tags($request->eventId);
-        $_POST['campaignId'] = $campaignID;
-        $_POST['moduleName'] = $moduleName;
-        $_POST['moduleUnitId'] = $moduleUnitID;
-        $_POST['returnMethod'] = 'return';
+        $request->campaignId = $campaignID;
+        $request->moduleName = $moduleName;
+        $request->moduleUnitId = $moduleUnitID;
+        $request->returnMethod = 'return';
         if ($campaignID > 0 && !empty($moduleName)) {
-            $oPreview = $this->previewWorkflowCampaign($_POST);
-            $aStatsSms = $mWorkflow->getEventTwilioStats($oCampaign->id, $moduleName);
+            $oPreview = $this->previewWorkflowCampaign($request);
+            $aStatsSms = $mWorkflow->getEventTwilioStats($campaignID, $moduleName);
             $aCategorizedStatsSms = $mWorkflow->getEventTwilioCategorizedStats($aStatsSms);
 
             $sentSmsCount = $aCategorizedStatsSms['sent']['UniqueCount'];
@@ -2034,7 +2040,7 @@ class WorkFlow extends Controller {
                 'eventID' => $eventId
             );
 
-            $htmlStats = $this->load->view("admin/workflow/partials/sms_stats", $oData, true);
+            $htmlStats = view('admin.workflow.partials.sms_stats', $oData)->render();
             $response['status'] = 'success';
             $response['oPreview'] = $oPreview;
             $response['stats'] = $htmlStats;

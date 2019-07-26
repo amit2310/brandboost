@@ -1000,7 +1000,7 @@ $newOpen = $newClick = 0;
                                 $.ajax({
                                     url: '<?php echo base_url('admin/modules/emails/multipalDeleteAutomation'); ?>',
                                     type: "POST",
-                                    data: {multipal_automation_id: val},
+                                    data: {_token: '{{csrf_token()}}', multipal_automation_id: val},
                                     dataType: "json",
                                     success: function (data) {
                                         if (data.status == 'success') {
@@ -1078,7 +1078,7 @@ $newOpen = $newClick = 0;
                                 $.ajax({
                                     url: '<?php echo base_url('admin/modules/emails/multipalDeleteAutomation'); ?>',
                                     type: "POST",
-                                    data: {multipal_automation_id: val},
+                                    data: {_token: '{{csrf_token()}}', multipal_automation_id: val},
                                     dataType: "json",
                                     success: function (data) {
                                         if (data.status == 'success') {
@@ -1118,7 +1118,7 @@ $newOpen = $newClick = 0;
                                 $.ajax({
                                     url: '<?php echo base_url('admin/broadcast/multipalArchiveAutomation'); ?>',
                                     type: "POST",
-                                    data: {multipal_automation_id: val},
+                                    data: {_token: '{{csrf_token()}}', multipal_automation_id: val},
                                     dataType: "json",
                                     success: function (data) {
                                         if (data.status == 'success') {
@@ -1175,7 +1175,7 @@ $newOpen = $newClick = 0;
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/clonBroadcastCampaign'); ?>',
                 type: "POST",
-                data: {automation_id: automationID},
+                data: {_token: '{{csrf_token()}}', automation_id: automationID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1194,7 +1194,7 @@ $newOpen = $newClick = 0;
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/moveArchive'); ?>',
                 type: "POST",
-                data: {automation_id: automationID},
+                data: {_token: '{{csrf_token()}}', automation_id: automationID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1215,7 +1215,7 @@ $newOpen = $newClick = 0;
                         $.ajax({
                             url: '<?php echo base_url('admin/modules/emails/deleteAutomation'); ?>',
                             type: "POST",
-                            data: {automation_id: automationID},
+                            data: {_token: '{{csrf_token()}}', automation_id: automationID},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {
@@ -1239,7 +1239,7 @@ $newOpen = $newClick = 0;
                 $.ajax({
                     url: '<?php echo base_url('admin/broadcast/updateBroadcastClone'); ?>',
                     type: "POST",
-                    data: {edit_broadcastId: broadcastId, campaign_name: campaignName, description: description},
+                    data: {_token: '{{csrf_token()}}', edit_broadcastId: broadcastId, campaign_name: campaignName, description: description},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -1267,11 +1267,10 @@ $newOpen = $newClick = 0;
             var campaignTemplateID = $('#campaignTemplateID').val();
             var campaignTemplateContant = $('#campaignTemplateContant').val();
             $('.overlaynew').show();
-            var formData = new FormData($(this)[0]);
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/createBroadcast'); ?>',
                 type: "POST",
-                data: {'campaign_name': campaignName, 'template_name': campaignTemplateID, 'description': description, 'template_content': campaignTemplateContant, 'broadcast_type': broadCastType},
+                data: {_token: '{{csrf_token()}}', 'campaign_name': campaignName, 'template_name': campaignTemplateID, 'description': description, 'template_content': campaignTemplateContant, 'broadcast_type': broadCastType},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1304,10 +1303,11 @@ $newOpen = $newClick = 0;
         $('#addBroadcastSegment').submit(function () {
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
+            var tkn = $('meta[name="_token"]').attr('content');
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/createSegment'); ?>',
                 type: "POST",
-                data: formData,
+                data: formData + '&_token=' + tkn,
                 contentType: false,
                 cache: false,
                 processData: false,

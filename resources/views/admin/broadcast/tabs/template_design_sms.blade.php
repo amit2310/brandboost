@@ -1,5 +1,6 @@
 <?php
-$aCampaignTags = $this->config->item('email_tags');
+$aCampaignTags = config('bbconfig.email_tags');
+$draftID = !empty($draftID) ? $draftID : '';
 ?>
 <style>
     #externalSystemContainer {
@@ -261,7 +262,7 @@ $aCampaignTags = $this->config->item('email_tags');
 				$.ajax({
 					url: '/admin/workflow/updateWorkflowCampaign',
 					type: "POST",
-					data: {moduleName: moduleName, stripo_compiled_html: compliledHtml, campaignId: campaignId, moduleUnitID:moduleUnitID},
+					data: {_token: '{{csrf_token()}}', moduleName: moduleName, stripo_compiled_html: compliledHtml, campaignId: campaignId, moduleUnitID:moduleUnitID},
 					dataType: "json",
 					success: function (data) {
 						if (data.status == 'success') {
@@ -287,7 +288,7 @@ $aCampaignTags = $this->config->item('email_tags');
 				$.ajax({
 					url: '/admin/workflow/saveWorkflowDraft',
 					type: "POST",
-					data: {moduleName: moduleName, stripo_compiled_html: compliledHtml, campaignId: campaignId, template_source: template_source, draftID: draftID},
+					data: {_token: '{{csrf_token()}}', moduleName: moduleName, stripo_compiled_html: compliledHtml, campaignId: campaignId, template_source: template_source, draftID: draftID},
 					dataType: "json",
 					success: function (data) {
 						if (data.status == 'success') {
@@ -312,10 +313,11 @@ $aCampaignTags = $this->config->item('email_tags');
 		
         $(document).on("submit", "#updateDraftTemplateName", function () {
             var formData = new FormData($(this)[0]);
+            var tkn = $('meta[name="_token"]').attr('content');
             $.ajax({
                 url: '<?php echo base_url('admin/workflow/updateWorkflowDraft'); ?>',
                 type: "POST",
-                data: formData,
+                data: formData + '&_token=' + tkn,
                 contentType: false,
                 cache: false,
                 processData: false,

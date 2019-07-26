@@ -14,6 +14,23 @@ foreach ($oEvents as $key => $oEvent) {
         $nextEventType = $currentEventType;
     }
 }
+
+if(empty($oEvent)){
+    $oEvent = new stdClass();
+    $oEvent->id = 0;
+}
+
+if(empty($aEventData)){
+    $aEventData = new stdClass();
+    $aEventData->delay_value=0;
+    $aEventData->delay_unit='minute';
+    $aEventData->delay_time=10;    
+}
+$previousID = !empty($previousID) ? $previousID : 0;
+$currentID = !empty($currentID) ? $currentID : 0;
+$currentEventType = !empty($currentEventType) ? $currentEventType : '';
+$nextEventType = !empty($nextEventType) ? $nextEventType : '';
+
 ?>
 <div class="profile_headings m0 mb10">TRIGGERS  <a href="#" class="pull-right"><i class="fa fsize15 txt_grey fa-angle-down"></i></a></div>
 <ul class="action_box_new nodes">

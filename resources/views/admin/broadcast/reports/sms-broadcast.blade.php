@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <script src = "https://code.highcharts.com/highcharts.js"></script>
 
 
@@ -166,11 +173,13 @@
     </div>
     <?php
     if (!empty($aBroadcastStats)) {
-        
+
         $iSentMax = 0;
         $iDeliveredMax = 0;
-        
-        
+        $sentWinner = 0;
+        $grandSent = $grandDelivered = $grandQueued = $grandFailed = $grandUndelivered = 0;
+        $grandDeliveredRate = $grandQueuedRate = $grandFailedRate = 0;
+        $deliverWinner = $grandUndeliveredRate  = 0; 
         foreach ($aBroadcastStats as $oCampaignStats) {
             //pre($oCampaignStats);
             //die;
@@ -180,17 +189,15 @@
             $undelivered = $aStats['undelivered']['UniqueCount'];
             $queued = $aStats['queued']['UniqueCount'];
             $failed = $aStats['failed']['UniqueCount'];
-                       
-            if($sent>$iSentMax){
+
+            if ($sent > $iSentMax) {
                 $iSentMax = $sent;
                 $sentWinner = $oCampaignStats['variationData']->id;
-                
             }
-            
-            if($delivered>$iDeliveredMax){
+
+            if ($delivered > $iDeliveredMax) {
                 $iDeliveredMax = $delivered;
                 $deliverWinner = $oCampaignStats['variationData']->id;
-                
             }
 
             $grandSent = $grandSent + $sent;
@@ -199,19 +206,20 @@
             $grandFailed = $grandFailed + $failed;
             $grandUndelivered = $grandUndelivered + $undelivered;
         }
-        
-        $grandDeliveredRate = number_format((($grandDelivered*100)/$grandSent),2);
-        $grandQueuedRate = number_format((($grandQueued*100)/$grandSent),2);
-        $grandFailedRate = number_format((($grandFailed*100)/$grandSent),2);
-        $grandUndeliveredRate = number_format((($grandUndelivered*100)/$grandSent),2);
+
+        if ($grandSent > 0) {
+            $grandDeliveredRate = number_format((($grandDelivered * 100) / $grandSent), 2);
+            $grandQueuedRate = number_format((($grandQueued * 100) / $grandSent), 2);
+            $grandFailedRate = number_format((($grandFailed * 100) / $grandSent), 2);
+            $grandUndeliveredRate = number_format((($grandUndelivered * 100) / $grandSent), 2);
+        }
     }
-    
-    $grandDeliveredRate = ($grandDeliveredRate>0) ? $grandDeliveredRate : '0';
-    $grandQueuedRate = ($grandQueuedRate>0) ? $grandQueuedRate : '0';
-    $grandFailedRate = ($grandFailedRate>0) ? $grandFailedRate : '0';
-    
+
+    $grandDeliveredRate = ($grandDeliveredRate > 0) ? $grandDeliveredRate : '0';
+    $grandQueuedRate = ($grandQueuedRate > 0) ? $grandQueuedRate : '0';
+    $grandFailedRate = ($grandFailedRate > 0) ? $grandFailedRate : '0';
+
     $aSequence = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
-    
     ?>
     <div class="tab-content"> 
         <!--===========TAB 1===========-->
@@ -303,67 +311,66 @@
                                 <thead>
                                     <tr>
                                         <th><i class="icon-calendar"></i>Campaign/Variation Name</th>
-                                        <?php if ($sendingMethod == 'split'): ?>
-                                        <th class="text-center"><i class="fa fa-smile-o"></i>Traffic</th>
-                                        <?php endif; ?>
+<?php if ($sendingMethod == 'split'): ?>
+                                            <th class="text-center"><i class="fa fa-smile-o"></i>Traffic</th>
+<?php endif; ?>
                                         <th class="text-center"><i class="fa fa-smile-o"></i>Sent</th>
                                         <th class="text-center"><i class="fa fa-smile-o"></i>Delivered</th>
                                         <th class="text-center"><i class="fa fa-smile-o"></i>Queued</th>
                                         <th class="text-center"><i class="fa fa-smile-o"></i>Undelivered</th>
                                         <th class="text-center"><i class="fa fa-smile-o"></i>Failed</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <!--================================================-->
-                                    <?php
-                                    if (!empty($aBroadcastStats)) {
-                                        $i=-1;
-                                        foreach ($aBroadcastStats as $oCampaignStats) {
-                                            //pre($oCampaignStats);
-                                            //die;
-                                            $aStats = $oCampaignStats['statsData'];
-                                            $totalSent = $aStats['sent']['UniqueCount'];
-                                            $totalDelivered = $aStats['delivered']['UniqueCount'];
-                                            $totalUnDelivered = $aStats['undelivered']['UniqueCount'];
-                                            $totalQueue = $aStats['queued']['UniqueCount'];
-                                            $totalFailed = $aStats['failed']['UniqueCount'];
-                                            $i++;
-                                            
-                                            ?>
+<?php
+if (!empty($aBroadcastStats)) {
+    $i = -1;
+    foreach ($aBroadcastStats as $oCampaignStats) {
+        //pre($oCampaignStats);
+        //die;
+        $aStats = $oCampaignStats['statsData'];
+        $totalSent = $aStats['sent']['UniqueCount'];
+        $totalDelivered = $aStats['delivered']['UniqueCount'];
+        $totalUnDelivered = $aStats['undelivered']['UniqueCount'];
+        $totalQueue = $aStats['queued']['UniqueCount'];
+        $totalFailed = $aStats['failed']['UniqueCount'];
+        $i++;
+        ?>
 
                                             <tr>
                                                 <td>
                                                     <div class="media-left media-middle"> 
-                                                        <a class="icons br5" href="#"><img src="<?php echo base_url();?>assets/images/icon_sms_24.png" class="img-circle img-xs br5" alt=""></a>
+                                                        <a class="icons br5" href="#"><img src="<?php echo base_url(); ?>assets/images/icon_sms_24.png" class="img-circle img-xs br5" alt=""></a>
                                                     </div>
                                                     <div class="media-left">
                                                         <div class="pt-5"><a href="#" class="text-default txt_dgrey text-semibold">
-                                                            <?php if ($sendingMethod == 'split'): ?>
-                                                                    <?php echo ($oCampaignStats['variationData']->variation_name) ? $oCampaignStats['variationData']->variation_name : 'Variation '. $aSequence[$i]; ?>
-                                                                <?php else: ?>
-                                                                    <?php echo ($oBroadcast->title) ? $oBroadcast->title : 'Unnamed Campaign'; ?>
+        <?php if ($sendingMethod == 'split'): ?>
+            <?php echo ($oCampaignStats['variationData']->variation_name) ? $oCampaignStats['variationData']->variation_name : 'Variation ' . $aSequence[$i]; ?>
+        <?php else: ?>
+            <?php echo ($oBroadcast->title) ? $oBroadcast->title : 'Unnamed Campaign'; ?>
                                                                 <?php endif; ?>
                                                             </a> </div>
                                                     </div>
                                                 </td>
 
-                                                <?php if ($sendingMethod == 'split'): ?>
-                                                <td class="text-center"><span class="txt_dgrey"><?php echo $oCampaignStats['variationData']->split_load; ?>%</span></td>
-                                                <?php endif; ?>
-                                                <td class="text-center"><span class="<?php echo ($oCampaignStats['variationData']->id == $sentWinner && $sendingMethod == 'split') ? 'txt_green': 'txt_dgrey'?>"><?php echo $totalSent; ?></span></td>
-                                                <td class="text-center"><span class="<?php echo ($oCampaignStats['variationData']->id == $deliverWinner && $sendingMethod == 'split') ? 'txt_green': 'txt_dgrey'?>"><?php echo $totalDelivered; ?></span></td>
+                                                                <?php if ($sendingMethod == 'split'): ?>
+                                                    <td class="text-center"><span class="txt_dgrey"><?php echo $oCampaignStats['variationData']->split_load; ?>%</span></td>
+        <?php endif; ?>
+                                                <td class="text-center"><span class="<?php echo ($oCampaignStats['variationData']->id == $sentWinner && $sendingMethod == 'split') ? 'txt_green' : 'txt_dgrey' ?>"><?php echo $totalSent; ?></span></td>
+                                                <td class="text-center"><span class="<?php echo ($oCampaignStats['variationData']->id == $deliverWinner && $sendingMethod == 'split') ? 'txt_green' : 'txt_dgrey' ?>"><?php echo $totalDelivered; ?></span></td>
                                                 <td class="text-center"><span class="txt_dgrey"><?php echo $totalQueue; ?></span></td>
                                                 <td class="text-center"><span class="txt_dgrey"><?php echo $totalUnDelivered; ?></span></td>
-                                                <td class="text-center"><span class="txt_dgrey"><?php echo $totalFailed;?></span></td>
-                                                
+                                                <td class="text-center"><span class="txt_dgrey"><?php echo $totalFailed; ?></span></td>
+
 
                                             </tr>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
+        <?php
+    }
+}
+?>
 
 
                                 </tbody>
@@ -393,28 +400,28 @@
             plotShadow: false
         };
         var title = {
-            text: '<?php echo $grandSent;?> <br> <span style="border: none;" class="label bkg_green ml0 ">100%</span>',
+            text: '<?php echo $grandSent; ?> <br> <span style="border: none;" class="label bkg_green ml0 ">100%</span>',
             align: 'center',
             verticalAlign: 'middle',
             y: 50
         };
-        
+
         var title2 = {
-            text: '<?php echo $grandDelivered;?> <br> <span style="border: none;" class="label bkg_green ml0 "><?php echo $grandDeliveredRate;?>%</span>',
+            text: '<?php echo $grandDelivered; ?> <br> <span style="border: none;" class="label bkg_green ml0 "><?php echo $grandDeliveredRate; ?>%</span>',
             align: 'center',
             verticalAlign: 'middle',
             y: 50
         };
-        
+
         var title3 = {
-            text: '<?php echo $grandQueued;?> <br> <span style="border: none;" class="label bkg_green ml0 "><?php echo $grandQueuedRate;?>%</span>',
+            text: '<?php echo $grandQueued; ?> <br> <span style="border: none;" class="label bkg_green ml0 "><?php echo $grandQueuedRate; ?>%</span>',
             align: 'center',
             verticalAlign: 'middle',
             y: 50
         };
-        
+
         var title4 = {
-            text: '<?php echo $grandUndelivered;?> <br> <span style="border: none;" class="label bkg_green ml0 "><?php echo $grandUndeliveredRate;?>%</span>',
+            text: '<?php echo $grandUndelivered; ?> <br> <span style="border: none;" class="label bkg_green ml0 "><?php echo $grandUndeliveredRate; ?>%</span>',
             align: 'center',
             verticalAlign: 'middle',
             y: 50
@@ -447,8 +454,8 @@
                 colors: ['#4ebc86', '#90EE90', '#228B22', '#008000'],
                 innerSize: '85%',
                 data: [
-                    ['Sent', <?php echo ($sent>0) ? '100' : '0';?>],
-                    ['Not Sent', <?php echo ($sent>0) ? '0' : '100';?>],
+                    ['Sent', <?php echo ($sent > 0) ? '100' : '0'; ?>],
+                    ['Not Sent', <?php echo ($sent > 0) ? '0' : '100'; ?>],
 
                     {
                         name: 'Others',
@@ -467,8 +474,8 @@
                 colors: ['#4ebc86', '#90EE90', '#228B22', '#008000'],
                 innerSize: '85%',
                 data: [
-                    ['Delivered', <?php echo $grandDeliveredRate;?>],
-                    ['Not Delivered', <?php echo (100 - ($grandDeliveredRate));?>],
+                    ['Delivered', <?php echo $grandDeliveredRate; ?>],
+                    ['Not Delivered', <?php echo (100 - ($grandDeliveredRate)); ?>],
 
                     {
                         name: 'Others',
@@ -486,8 +493,8 @@
                 colors: ['#4ebc86', '#90EE90', '#228B22', '#008000'],
                 innerSize: '85%',
                 data: [
-                    ['{series.name}', <?php echo $grandQueuedRate;?>],
-                    ['Not Queued', <?php echo (100 - ($grandQueuedRate));?>],
+                    ['{series.name}', <?php echo $grandQueuedRate; ?>],
+                    ['Not Queued', <?php echo (100 - ($grandQueuedRate)); ?>],
 
                     {
                         name: 'Others',
@@ -505,8 +512,8 @@
                 colors: ['#4ebc86', '#90EE90', '#228B22', '#008000'],
                 innerSize: '85%',
                 data: [
-                    ['Undelivered', <?php echo $grandUndeliveredRate;?>],
-                    ['Non Undelivered', <?php echo (100 - ($grandUndeliveredRate));?>],
+                    ['Undelivered', <?php echo $grandUndeliveredRate; ?>],
+                    ['Non Undelivered', <?php echo (100 - ($grandUndeliveredRate)); ?>],
 
                     {
                         name: 'Others',
@@ -559,4 +566,4 @@
 
     });
 </script>
-
+@endsection

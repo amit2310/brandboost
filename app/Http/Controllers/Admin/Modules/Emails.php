@@ -169,12 +169,17 @@ class Emails extends Controller {
     public function sms() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        
+        $mEmails = new EmailsModel();
+        
+        $mUsers = new UsersModel();
+        
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
             $userID = '';
         }
-        $oAutomations = $this->mEmails->getEmailAutomations($userID, '', 'sms');
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
+        $oAutomations = $mEmails->getEmailAutomations($userID, '', 'sms');
+        $bActiveSubsription = $mUsers->isActiveSubscription();
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -189,11 +194,12 @@ class Emails extends Controller {
             'oAutomations' => $oAutomations,
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role,
+            'moduleName' => 'automation',
             'type' => 'sms',
             'automation_type' => 'sms'
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/modules/emails/index', $aData);
+        return view('admin.modules.emails.index', $aData);
     }
 
     public function setupSMSAutomation($id = '') {
@@ -204,15 +210,15 @@ class Emails extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
+        $bActiveSubsription = $mUsers->isActiveSubscription();
         //get Automation Info
-        $oAutomations = $this->mEmails->getEmailAutomations($userID, $id);
+        $oAutomations = $mEmails->getEmailAutomations($userID, $id);
 
         //get Lists
         $oLists = $this->mLists->getLists($userID, '', 'active');
 
         //get Automation Events
-        $oEvents = $this->mEmails->getAutomationEvents($id);
+        $oEvents = $mEmails->getAutomationEvents($id);
 
         //get Automation Lists
         $oAutomationLists = $this->mLists->getAutomationLists($id);
@@ -260,27 +266,27 @@ class Emails extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
+        $bActiveSubsription = $mUsers->isActiveSubscription();
         //get Automation Info
-        $oAutomations = $this->mEmails->getEmailAutomations($userID, $id);
+        $oAutomations = $mEmails->getEmailAutomations($userID, $id);
 
         //get Lists
         $oLists = $this->mLists->getLists($userID, '', 'active');
 
         //get Automation Events
-        $oEvents = $this->mEmails->getAutomationEvents($id);
+        $oEvents = $mEmails->getAutomationEvents($id);
 
         //get Automation Lists
         $oAutomationLists = $this->mLists->getAutomationLists($id);
 
         //get Default Email Templates
-        $oDefaultTemplates = $this->mEmails->getEmailMoudleTemplates(0, 'email'); //empty or 0 for default templates
+        $oDefaultTemplates = $mEmails->getEmailMoudleTemplates(0, 'email'); //empty or 0 for default templates
         //get Default Other Email Templates
-        $oUsedOtherTemplates = $this->mEmails->getEmailMoudleTemplates($userID, 'email'); // for own other templates
+        $oUsedOtherTemplates = $mEmails->getEmailMoudleTemplates($userID, 'email'); // for own other templates
         //get Default Sms Templates
-        $oDefaultSMSTemplates = $this->mEmails->getEmailMoudleTemplates(0, 'sms'); //empty or 0 for default templates
+        $oDefaultSMSTemplates = $mEmails->getEmailMoudleTemplates(0, 'sms'); //empty or 0 for default templates
         //get Default Other Sms Templates
-        $oUsedOtherSMSTemplates = $this->mEmails->getEmailMoudleTemplates($userID, 'sms'); // for own other templates
+        $oUsedOtherSMSTemplates = $mEmails->getEmailMoudleTemplates($userID, 'sms'); // for own other templates
 
 
         $breadcrumb = '<ul class="breadcrumb">
@@ -318,28 +324,28 @@ class Emails extends Controller {
 
         $type = $_GET['type'];
 
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
+        $bActiveSubsription = $mUsers->isActiveSubscription();
         //get Automation Info
-        $oAutomations = $this->mEmails->getEmailAutomations($userID, $id);
+        $oAutomations = $mEmails->getEmailAutomations($userID, $id);
 
 
         //get Lists
         $oLists = $this->mLists->getLists($userID);
 
         //get Automation Events
-        $oEvents = $this->mEmails->getAutomationEvents($id);
+        $oEvents = $mEmails->getAutomationEvents($id);
 
         //get Automation Lists
         $oAutomationLists = $this->mLists->getAutomationLists($id);
 
         //get Default Email Templates
-        $oDefaultTemplates = $this->mEmails->getEmailMoudleTemplates(0, 'email'); //empty or 0 for default templates
+        $oDefaultTemplates = $mEmails->getEmailMoudleTemplates(0, 'email'); //empty or 0 for default templates
         //get Default Other Email Templates
-        $oUsedOtherTemplates = $this->mEmails->getEmailMoudleTemplates($userID, 'email'); // for own other templates
+        $oUsedOtherTemplates = $mEmails->getEmailMoudleTemplates($userID, 'email'); // for own other templates
         //get Default Sms Templates
-        $oDefaultSMSTemplates = $this->mEmails->getEmailMoudleTemplates(0, 'sms'); //empty or 0 for default templates
+        $oDefaultSMSTemplates = $mEmails->getEmailMoudleTemplates(0, 'sms'); //empty or 0 for default templates
         //get Default Other Sms Templates
-        $oUsedOtherSMSTemplates = $this->mEmails->getEmailMoudleTemplates($userID, 'sms'); // for own other templates
+        $oUsedOtherSMSTemplates = $mEmails->getEmailMoudleTemplates($userID, 'sms'); // for own other templates
 
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">';
@@ -397,14 +403,14 @@ class Emails extends Controller {
             'created' => $dateTime
         );
 
-        $bAlreadyExists = $this->mEmails->checkIfEmailAutomationExists($title, $userID);
+        $bAlreadyExists = $mEmails->checkIfEmailAutomationExists($title, $userID);
         if ($bAlreadyExists == true) {
             $response = array('status' => 'error', 'type' => 'duplicate', 'msg' => 'Automation name already exists');
             echo json_encode($response);
             exit;
         }
 
-        $insertID = $this->mEmails->addEmailAutomation($aData);
+        $insertID = $mEmails->addEmailAutomation($aData);
         if ($insertID > 0) {
             //Add Useractivity log
             $aActivityData = array(
@@ -456,7 +462,7 @@ class Emails extends Controller {
         if ($user_role == 1) {
             $userID = '';
         }
-        $oAutomation = $this->mEmails->getEmailAutomations($userID, $automationID);
+        $oAutomation = $mEmails->getEmailAutomations($userID, $automationID);
         if (!empty($oAutomation)) {
             $response = array('status' => 'success', 'id' => $oAutomation[0]->id, 'title' => $oAutomation[0]->title, 'description' => $oAutomation[0]->description);
         } else {
@@ -490,14 +496,14 @@ class Emails extends Controller {
             'description' => $description
         );
 
-        $bAlreadyExists = $this->mEmails->checkIfEmailAutomationExists($title, $userID);
+        $bAlreadyExists = $mEmails->checkIfEmailAutomationExists($title, $userID);
         if ($bAlreadyExists == true) {
             $response = array('status' => 'error', 'type' => 'duplicate', 'msg' => 'Automation title already exists');
             echo json_encode($response);
             exit;
         }
 
-        $bUpdated = $this->mEmails->updateEmailAutomation($aData, $automationID, $userID);
+        $bUpdated = $mEmails->updateEmailAutomation($aData, $automationID, $userID);
         if ($bUpdated) {
             //Add Useractivity log
             $aActivityData = array(
@@ -631,7 +637,7 @@ class Emails extends Controller {
         $eventType = strip_tags($post['event_type']);
 
         if ($templateID > 0) {
-            $oTemplate = $this->mEmails->getEmailMoudleTemplateInfo($templateID);
+            $oTemplate = $mEmails->getEmailMoudleTemplateInfo($templateID);
             if (!empty($oTemplate)) {
                 $templateName = $oTemplate->template_name;
                 $campaignType = ucfirst($oTemplate->template_type);
@@ -671,7 +677,7 @@ class Emails extends Controller {
         if ($eventType == 'main') {
             if ($currentEventID > 0) {
                 //Event already exists lets check if main campaign exists
-                $oMainCampaign = $this->mEmails->getEmailCampaignInfo($currentEventID);
+                $oMainCampaign = $mEmails->getEmailCampaignInfo($currentEventID);
                 if (!empty($oMainCampaign)) {
                     //This is just the concept of Linked list
                     //Main campaign exisits
@@ -679,31 +685,31 @@ class Emails extends Controller {
                     //get Main Campaign ID
                     //
                     //Step-1 Get Followup Node Info(header of the linked node)
-                    $oFollowupEvent = $this->mEmails->getEmailAutomationEventByPreviousID($currentEventID);
+                    $oFollowupEvent = $mEmails->getEmailAutomationEventByPreviousID($currentEventID);
                     $followupEventID = $oFollowupEvent->id;
                     $mainCampaignID = $oMainCampaign->id;
                     $aCampaignData['event_id'] = $currentEventID;
-                    $campaignID = $this->mEmails->addEmailAutomationCampaign($aCampaignData);
+                    $campaignID = $mEmails->addEmailAutomationCampaign($aCampaignData);
                     //Step-2 Add Followup (new linked node)
                     $aEventData['previous_event_id'] = $currentEventID;
-                    $eventID = $this->mEmails->addEmailAutomationEvent($aEventData);
+                    $eventID = $mEmails->addEmailAutomationEvent($aEventData);
                     //Step-3 Update old Main Campaign
                     $aUpdateData = array(
                         'event_id' => $eventID
                     );
-                    $bUpdated = $this->mEmails->updateEmailAutomationCampaign($aUpdateData, $mainCampaignID);
+                    $bUpdated = $mEmails->updateEmailAutomationCampaign($aUpdateData, $mainCampaignID);
 
                     //Step-4 Update new followup address into the next followup header
                     $aLinkedData = array(
                         'previous_event_id' => $eventID
                     );
 
-                    $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedData, $followupEventID);
+                    $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedData, $followupEventID);
 
                     $aLinkedData = array(
                         'status' => 'draft'
                     );
-                    $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedData, $currentEventID);
+                    $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedData, $currentEventID);
 
                     $response = array('status' => 'success', 'msg' => "Added successfully");
                     if ($campaignID) {
@@ -715,7 +721,7 @@ class Emails extends Controller {
                     //Main campaign do not existis
                     //Add a new campaign with main event id
                     $aCampaignData['event_id'] = $currentEventID;
-                    $campaignID = $this->mEmails->addEmailAutomationCampaign($aCampaignData);
+                    $campaignID = $mEmails->addEmailAutomationCampaign($aCampaignData);
                     $response = array('status' => 'success', 'msg' => "Added successfully");
                     if ($campaignID) {
                         $response['campaignId'] = $campaignID;
@@ -726,26 +732,26 @@ class Emails extends Controller {
             }
         } else if ($eventType == 'followup') {
             //Step-1 Get Next Node information
-            $oFollowupEvent = $this->mEmails->getEmailAutomationEventByPreviousID($currentEventID);
+            $oFollowupEvent = $mEmails->getEmailAutomationEventByPreviousID($currentEventID);
             $followupEventID = $oFollowupEvent->id;
             //Step-2 Create New Node followup
             $aEventData['previous_event_id'] = $currentEventID;
-            $eventID = $this->mEmails->addEmailAutomationEvent($aEventData);
+            $eventID = $mEmails->addEmailAutomationEvent($aEventData);
             //Step-3 Create New followup Campaign
             $aCampaignData['event_id'] = $eventID;
-            $campaignID = $this->mEmails->addEmailAutomationCampaign($aCampaignData);
+            $campaignID = $mEmails->addEmailAutomationCampaign($aCampaignData);
             //Step-4 Update new followup address into the next followup header
             if (!empty($oFollowupEvent)) {
                 $aLinkedData = array(
                     'previous_event_id' => $eventID
                 );
 
-                $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedData, $followupEventID);
+                $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedData, $followupEventID);
             }
             $aLinkedData = array(
                 'status' => 'draft'
             );
-            $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedData, $eventID);
+            $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedData, $eventID);
             $response = array('status' => 'success', 'msg' => "Added successfully");
             if ($campaignID) {
                 $response['campaignId'] = $campaignID;
@@ -760,11 +766,11 @@ class Emails extends Controller {
 
         if (empty($previousEventID) || ($previousEventID == 0)) {
             //check if campaing added
-            $bCampaignExists = $this->mEmails->getEmailCampaignInfo($currentEventID);
+            $bCampaignExists = $mEmails->getEmailCampaignInfo($currentEventID);
         }
 
         if ($templateID > 0) {
-            $oTemplate = $this->mEmails->getEmailMoudleTemplateInfo($templateID);
+            $oTemplate = $mEmails->getEmailMoudleTemplateInfo($templateID);
             //pre($oTemplate);
             //die;
             if (!empty($oTemplate)) {
@@ -785,7 +791,7 @@ class Emails extends Controller {
                     'created' => date("Y-m-d H:i:s")
                 );
                 if ($bCampaignExists == true) {
-                    $eventID = $this->mEmails->addEmailAutomationEvent($aEventData);
+                    $eventID = $mEmails->addEmailAutomationEvent($aEventData);
                 } else {
                     $eventID = $currentEventID;
                 }
@@ -795,7 +801,7 @@ class Emails extends Controller {
                         'previous_event_id' => $eventID
                     );
                     if ($bCampaignExists == true) {
-                        //$this->mEmails->manageEmailAutomationEventOrder($aManageOrderData, $previousEventID, $eventID);
+                        //$mEmails->manageEmailAutomationEventOrder($aManageOrderData, $previousEventID, $eventID);
                     }
 
                     $aCampaignData = array(
@@ -813,7 +819,7 @@ class Emails extends Controller {
                         'created' => date("Y-m-d H:i:s")
                     );
 
-                    $campaignID = $this->mEmails->addEmailAutomationCampaign($aCampaignData);
+                    $campaignID = $mEmails->addEmailAutomationCampaign($aCampaignData);
                     //Add Segment Data 
 
                     $aSegmentData = array(
@@ -822,7 +828,7 @@ class Emails extends Controller {
                         'created' => date("Y-m-d H:i:s")
                     );
 
-                    $this->mEmails->addEmailAutomationSegment($aSegmentData);
+                    $mEmails->addEmailAutomationSegment($aSegmentData);
 
                     $response = array('status' => 'success', 'msg' => "Added successfully");
                     if ($campaignID) {
@@ -856,11 +862,11 @@ class Emails extends Controller {
 
         if (empty($previousEventID) || ($previousEventID == 0)) {
             //check if campaing added
-            $bCampaignExists = $this->mEmails->getEmailCampaignInfo($currentEventID);
+            $bCampaignExists = $mEmails->getEmailCampaignInfo($currentEventID);
         }
 
         if ($templateID > 0) {
-            $oTemplate = $this->mEmails->getEmailMoudleTemplateInfo($templateID);
+            $oTemplate = $mEmails->getEmailMoudleTemplateInfo($templateID);
             //pre($oTemplate);
             //die;
             if (!empty($oTemplate)) {
@@ -881,7 +887,7 @@ class Emails extends Controller {
                     'created' => date("Y-m-d H:i:s")
                 );
                 if ($bCampaignExists == true) {
-                    $eventID = $this->mEmails->addEmailAutomationEvent($aEventData);
+                    $eventID = $mEmails->addEmailAutomationEvent($aEventData);
                 } else {
                     $eventID = $currentEventID;
                 }
@@ -891,7 +897,7 @@ class Emails extends Controller {
                         'previous_event_id' => $eventID
                     );
                     if ($bCampaignExists == true) {
-                        //$this->mEmails->manageEmailAutomationEventOrder($aManageOrderData, $previousEventID, $eventID);
+                        //$mEmails->manageEmailAutomationEventOrder($aManageOrderData, $previousEventID, $eventID);
                     }
 
                     $aCampaignData = array(
@@ -909,7 +915,7 @@ class Emails extends Controller {
                         'created' => date("Y-m-d H:i:s")
                     );
 
-                    $campaignID = $this->mEmails->addEmailAutomationCampaign($aCampaignData);
+                    $campaignID = $mEmails->addEmailAutomationCampaign($aCampaignData);
                     //Add Segment Data 
 
                     $aSegmentData = array(
@@ -918,7 +924,7 @@ class Emails extends Controller {
                         'created' => date("Y-m-d H:i:s")
                     );
 
-                    $this->mEmails->addEmailAutomationSegment($aSegmentData);
+                    $mEmails->addEmailAutomationSegment($aSegmentData);
 
                     $response = array('status' => 'success', 'msg' => "Added successfully");
                     if ($campaignID) {
@@ -956,7 +962,7 @@ class Emails extends Controller {
                 'data' => $eventData
             );
 
-            $campaignId = $this->mEmails->updateEmailAutomationEvent($eData, $eventID);
+            $campaignId = $mEmails->updateEmailAutomationEvent($eData, $eventID);
             if ($campaignId) {
                 //Add Useractivity log
                 $aUser = getLoggedUser();
@@ -1036,12 +1042,12 @@ class Emails extends Controller {
 
         if ($eventID > 0) {
             //Update
-            $result = $this->mEmails->updateEmailAutomationEvent($aData, $eventID);
+            $result = $mEmails->updateEmailAutomationEvent($aData, $eventID);
             $response = array('status' => 'success', 'msg' => "Trigger updated successfully!");
         } else {
             //Insert New Event
             $aData['created'] = date("Y-m-d H:i:s");
-            $result = $this->mEmails->addEmailAutomationEvent($aData);
+            $result = $mEmails->addEmailAutomationEvent($aData);
             $response = array('status' => 'success', 'msg' => "Trigger Added successfully!");
         }
         echo json_encode($response);
@@ -1061,10 +1067,10 @@ class Emails extends Controller {
         $aSelectedLists = $post['selectedLists'];
         $automationID = strip_tags($post['automation_id']);
         if (!empty($aSelectedLists)) {
-            $bDeleted = $this->mEmails->deleteAllAutomationLists($automationID);
+            $bDeleted = $mEmails->deleteAllAutomationLists($automationID);
             if ($bDeleted) {
                 foreach ($aSelectedLists as $iListID) {
-                    $this->mEmails->updateAutomationList($automationID, $iListID);
+                    $mEmails->updateAutomationList($automationID, $iListID);
                 }
             }
         }
@@ -1086,21 +1092,21 @@ class Emails extends Controller {
         $eventID = strip_tags($post['event_id']);
         if ($eventID > 0) {
             //Get Current Node
-            $currentNode = $this->mEmails->getEmailAutomationEvent($eventID);
+            $currentNode = $mEmails->getEmailAutomationEvent($eventID);
             $currentNodePreviousID = $currentNode->previous_event_id;
             //Get Previous Node
-            $previousNode = $this->mEmails->getEmailAutomationEvent($currentNodePreviousID);
+            $previousNode = $mEmails->getEmailAutomationEvent($currentNodePreviousID);
             //Get Next Node
-            $nextNode = $this->mEmails->getEmailAutomationEventByPreviousID($eventID);
+            $nextNode = $mEmails->getEmailAutomationEventByPreviousID($eventID);
 
-            $bDeleted = $this->mEmails->deleteEmailAutomationEvent($eventID);
+            $bDeleted = $mEmails->deleteEmailAutomationEvent($eventID);
         }
 
 
 
         if ($bDeleted == true) {
             $aLinkedData = array('previous_event_id' => $previousNode->id);
-            $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedData, $nextNode->id);
+            $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedData, $nextNode->id);
             //Add Useractivity log
             $aActivityData = array(
                 'user_id' => $userID,
@@ -1142,27 +1148,27 @@ class Emails extends Controller {
 
             //Step-1 
             if ($previousEventID > 0) {
-                $bIsMainEvent = $this->mEmails->isMainEvent($currentEventID);
+                $bIsMainEvent = $mEmails->isMainEvent($currentEventID);
                 if ($bIsMainEvent == false) {
                     $aLinkedData = array(
                         'previous_event_id' => $previousEventID
                     );
-                    $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedData, $currentEventID);
+                    $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedData, $currentEventID);
                     $response = array('status' => 'success', 'msg' => "updated successfully!");
                 }
             } else {
                 //Main event, so no need to touch event. here we will shuffle in campaign records
                 //Current Event
                 //Next Event
-                $oMainCampaign = $this->mEmails->getEmailCampaignInfo($nextEventID);
-                $oCurrentCampaign = $this->mEmails->getEmailCampaignInfo($currentEventID);
+                $oMainCampaign = $mEmails->getEmailCampaignInfo($nextEventID);
+                $oCurrentCampaign = $mEmails->getEmailCampaignInfo($currentEventID);
                 //Now we will interchange event ids between these two campaigns
                 if (!empty($oMainCampaign)) {
                     $mainCampaignID = $oMainCampaign->id;
                     $aCampaignData = array(
                         'event_id' => $currentEventID
                     );
-                    $bUpdated = $this->mEmails->updateEmailAutomationCampaign($aCampaignData, $mainCampaignID);
+                    $bUpdated = $mEmails->updateEmailAutomationCampaign($aCampaignData, $mainCampaignID);
                     $response = array('status' => 'success', 'msg' => "updated successfully!");
                 }
 
@@ -1171,7 +1177,7 @@ class Emails extends Controller {
                     $aCampaignData = array(
                         'event_id' => $nextEventID
                     );
-                    $bUpdated = $this->mEmails->updateEmailAutomationCampaign($aCampaignData, $currentCampaignID);
+                    $bUpdated = $mEmails->updateEmailAutomationCampaign($aCampaignData, $currentCampaignID);
                     $response = array('status' => 'success', 'msg' => "updated successfully!");
                 }
             }
@@ -1181,13 +1187,13 @@ class Emails extends Controller {
             if ($nextEventID > 0 && $previousEventID > 0) {
                 //Check if current node is the main event
 
-                $bIsMainEvent = $this->mEmails->isMainEvent($currentEventID);
+                $bIsMainEvent = $mEmails->isMainEvent($currentEventID);
                 if ($bIsMainEvent) {
                     //As main event, so we have to shuffle only in campaigns
                     //Current Event
                     //Next Event
-                    $oMainCampaign = $this->mEmails->getEmailCampaignInfo($currentEventID);
-                    $oPreviousCampaign = $this->mEmails->getEmailCampaignInfo($previousEventID);
+                    $oMainCampaign = $mEmails->getEmailCampaignInfo($currentEventID);
+                    $oPreviousCampaign = $mEmails->getEmailCampaignInfo($previousEventID);
 
                     //Now we will interchange event ids between these two campaigns
                     if (!empty($oMainCampaign)) {
@@ -1195,7 +1201,7 @@ class Emails extends Controller {
                         $aCampaignData = array(
                             'event_id' => $previousEventID
                         );
-                        $bUpdated = $this->mEmails->updateEmailAutomationCampaign($aCampaignData, $mainCampaignID);
+                        $bUpdated = $mEmails->updateEmailAutomationCampaign($aCampaignData, $mainCampaignID);
                         $response = array('status' => 'success', 'msg' => "updated successfully!");
                     }
 
@@ -1204,26 +1210,26 @@ class Emails extends Controller {
                         $aCampaignData = array(
                             'event_id' => $currentEventID
                         );
-                        $bUpdated = $this->mEmails->updateEmailAutomationCampaign($aCampaignData, $previousCampaignID);
+                        $bUpdated = $mEmails->updateEmailAutomationCampaign($aCampaignData, $previousCampaignID);
                         $response = array('status' => 'success', 'msg' => "updated successfully!");
                     }
                 } else {
                     $aLinkedData = array(
                         'previous_event_id' => $currentEventID
                     );
-                    $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedData, $nextEventID);
+                    $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedData, $nextEventID);
                     $response = array('status' => 'success', 'msg' => "updated successfully!");
                 }
             }
         } else if ($actionName == 'detach') {
 
             if ($previousEventID > 0 && $nextEventID > 0) {
-                $bIsMainEvent = $this->mEmails->isMainEvent($previousEventID);
+                $bIsMainEvent = $mEmails->isMainEvent($previousEventID);
                 if ($bIsMainEvent == false) {
                     $aLinkedData = array(
                         'previous_event_id' => $previousEventID
                     );
-                    $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedData, $nextEventID);
+                    $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedData, $nextEventID);
                 }
             }
             $response = array('status' => 'success', 'msg' => "updated successfully!");
@@ -1253,15 +1259,15 @@ class Emails extends Controller {
             if (empty($previousEventID)) {
                 //Main Node
                 //Main event, so no need to touch event. here we will shuffle in campaign records
-                $oMainCampaign = $this->mEmails->getEmailCampaignInfo($nextEventID);
-                $oCurrentCampaign = $this->mEmails->getEmailCampaignInfo($currentEventID);
+                $oMainCampaign = $mEmails->getEmailCampaignInfo($nextEventID);
+                $oCurrentCampaign = $mEmails->getEmailCampaignInfo($currentEventID);
                 //Now we will interchange event ids between these two campaigns
                 if (!empty($oMainCampaign)) {
                     $mainCampaignID = $oMainCampaign->id;
                     $aCampaignData = array(
                         'event_id' => $currentEventID
                     );
-                    $bUpdated = $this->mEmails->updateEmailAutomationCampaign($aCampaignData, $mainCampaignID);
+                    $bUpdated = $mEmails->updateEmailAutomationCampaign($aCampaignData, $mainCampaignID);
                     $response = array('status' => 'success', 'msg' => "updated successfully!");
                 }
 
@@ -1270,7 +1276,7 @@ class Emails extends Controller {
                     $aCampaignData = array(
                         'event_id' => $nextEventID
                     );
-                    $bUpdated = $this->mEmails->updateEmailAutomationCampaign($aCampaignData, $currentCampaignID);
+                    $bUpdated = $mEmails->updateEmailAutomationCampaign($aCampaignData, $currentCampaignID);
                     $response = array('status' => 'success', 'msg' => "updated successfully!");
                 }
             }
@@ -1282,7 +1288,7 @@ class Emails extends Controller {
                 $aLinkedDataCurrent = array(
                     'previous_event_id' => $previousEventID
                 );
-                $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedDataCurrent, $currentEventID);
+                $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedDataCurrent, $currentEventID);
 
                 $response = array('status' => 'success', 'msg' => "updated successfully!");
             }
@@ -1293,24 +1299,24 @@ class Emails extends Controller {
                 $aLinkedData = array(
                     'previous_event_id' => $currentEventID
                 );
-                $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedData, $nextEventID);
+                $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedData, $nextEventID);
 
                 //Update Current Node
                 $aLinkedDataCurrent = array(
                     'previous_event_id' => $previousEventID
                 );
-                $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedDataCurrent, $currentEventID);
+                $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedDataCurrent, $currentEventID);
 
                 $response = array('status' => 'success', 'msg' => "updated successfully!");
             }
         } else if ($actionName == 'detach') {
             if ($previousEventID > 0 && $nextEventID > 0) {
-                $bIsMainEvent = $this->mEmails->isMainEvent($previousEventID);
+                $bIsMainEvent = $mEmails->isMainEvent($previousEventID);
                 if ($bIsMainEvent == false) {
                     $aLinkedData = array(
                         'previous_event_id' => $previousEventID
                     );
-                    $bLinked = $this->mEmails->updateEmailAutomationEvent($aLinkedData, $nextEventID);
+                    $bLinked = $mEmails->updateEmailAutomationEvent($aLinkedData, $nextEventID);
                 }
             }
             $response = array('status' => 'success', 'msg' => "updated successfully!");
@@ -1337,7 +1343,7 @@ class Emails extends Controller {
 
         $multiAutomationID = $post['multipal_automation_id'];
         foreach ($multiAutomationID as $automationID) {
-            $bDeleted = $this->mEmails->deleteEmailAutomation($automationID, $userID);
+            $bDeleted = $mEmails->deleteEmailAutomation($automationID, $userID);
             if ($bDeleted == true) {
                 //Add Useractivity log
                 $aActivityData = array(
@@ -1383,7 +1389,7 @@ class Emails extends Controller {
 
         $automationID = $post['automation_id'];
 
-        $bArchive = $this->mEmails->updateEmailAutomation($aData, $automationID, $userID);
+        $bArchive = $mEmails->updateEmailAutomation($aData, $automationID, $userID);
         if ($bArchive == true) {
             //Add Useractivity log
             $aActivityData = array(
@@ -1432,7 +1438,7 @@ class Emails extends Controller {
             'status' => $status
         );
 
-        $bArchive = $this->mEmails->updateEmailAutomation($aData, $automationID, $userID);
+        $bArchive = $mEmails->updateEmailAutomation($aData, $automationID, $userID);
         if ($bArchive == true) {
             //Add Useractivity log
             $aActivityData = array(
@@ -1478,7 +1484,7 @@ class Emails extends Controller {
 
         $multiAutomationID = $post['multipal_automation_id'];
         foreach ($multiAutomationID as $automationID) {
-            $bArchive = $this->mEmails->updateEmailAutomation($aData, $automationID, $userID);
+            $bArchive = $mEmails->updateEmailAutomation($aData, $automationID, $userID);
             if ($bArchive == true) {
                 //Add Useractivity log
                 $aActivityData = array(
@@ -1517,7 +1523,7 @@ class Emails extends Controller {
             $userID = '';
         }
         $automationID = strip_tags($post['automation_id']);
-        $bDeleted = $this->mEmails->deleteEmailAutomation($automationID, $userID);
+        $bDeleted = $mEmails->deleteEmailAutomation($automationID, $userID);
         if ($bDeleted == true) {
             //Add Useractivity log
             $aActivityData = array(
@@ -1552,7 +1558,7 @@ class Emails extends Controller {
         $userID = $aUser->id;
         $campaignID = strip_tags($post['campaignId']);
         if ($campaignID > 0) {
-            $oCampaign = $this->mEmails->getEmailAutomationCampaign($campaignID);
+            $oCampaign = $mEmails->getEmailAutomationCampaign($campaignID);
             if (!empty($oCampaign)) {
                 $response = array('status' => 'success', 'data' => $oCampaign, 'description' => base64_decode($oCampaign->description), 'content' => base64_decode($oCampaign->html), 'createdVal' => 'Created: ' . date("M d, Y h:i A", strtotime($oCampaign->created)) . ' (' . timeAgo($oCampaign->created) . ')', 'msg' => "List deleted successfully!");
             } else {
@@ -1597,7 +1603,7 @@ class Emails extends Controller {
             'html' => base64_encode($templateHtmlContent)
         );
 
-        $bUpdated = $this->mEmails->updateEmailAutomationCampaign($aData, $campaignId);
+        $bUpdated = $mEmails->updateEmailAutomationCampaign($aData, $campaignId);
 
         if ($bUpdated) {
             //Add Useractivity log

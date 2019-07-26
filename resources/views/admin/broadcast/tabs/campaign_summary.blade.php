@@ -27,6 +27,7 @@ if (!empty($oBroadcast)) {
 }
 
 if (!empty($oAutomationLists)) {
+    $aListIDs = array();
     foreach ($oAutomationLists as $oAutomationList) {
         $aListIDs[] = $oAutomationList->list_id;
     }
@@ -442,6 +443,26 @@ $deliverAt = strtotime($timeString);
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
                         displayMessagePopup('success', '', 'Test Email has been sent successfully. Please check in your email.');
+
+                    }
+                }
+            });
+            return false;
+        });
+        
+        $('#sendTestSMSPreview').on('click', function () {
+            $('.overlaynew').show();
+            var phone = $('#testCampaignSMS').val();
+
+            $.ajax({
+                url: '<?php echo base_url('admin/workflow/sendTestSMSworkflowCampaign'); ?>',
+                type: "POST",
+                data: {_token: '{{csrf_token()}}', 'moduleName': '<?php echo $moduleName;?>', 'number': phone, campaignId: '<?php echo $oCampaign[0]->id; ?>'},
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('.overlaynew').hide();
+                        displayMessagePopup('success', '', 'Test Sms has been sent successfully');
 
                     }
                 }
