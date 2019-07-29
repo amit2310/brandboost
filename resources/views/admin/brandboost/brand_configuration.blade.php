@@ -980,6 +980,7 @@
   <div class="modal-dialog" style="max-width: 542px;">
     <div class="modal-content">
       <form name="addQuestionFrm" id="addQuestionFrm" method="post" class="form-horizontal">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="modal-header p20 pl30">
           <button type="button" class="close" data-dismiss="modal">×</button>
           <h5 class="modal-title txt_black">Add new question</h5>
