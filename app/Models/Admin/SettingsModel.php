@@ -316,7 +316,7 @@ class SettingsModel extends Model {
         $oData = DB::table('tbl_notifications_permission_entry')
                 ->where('user_id', $userID)
                 ->where('notification_slug', $slug)
-                ->get();
+                ->first();
         return $oData;
     }
 
@@ -332,26 +332,33 @@ class SettingsModel extends Model {
         return $oData;
     }
 
-    public function updateNotificationPermissonData($aData, $userID) {
+    /**
+     * This function is use for update notification permission
+     * @param type $aData
+     * @param type $userID
+     * @return type boolean
+     */
+    public static function updateNotificationPermissonData($aData, $userID) {
 
-        $this->db->where('user_id', $userID);
-        $this->db->where('notification_slug', $aData['notification_slug']);
-        $result = $this->db->get("tbl_notifications_permission_entry");
-        if ($result->num_rows() > 0) {
+        $oData = DB::table('tbl_notifications_permission_entry')
+                ->where('user_id', $userID)
+                ->where('notification_slug', $aData['notification_slug'])
+                ->get();
+        pre($oData->count());
 
-            $this->db->where('user_id', $userID);
-            $this->db->where('notification_slug', $aData['notification_slug']);
-            $result = $this->db->delete('tbl_notifications_permission_entry');
-        } else {
-
-            $result = $this->db->insert("tbl_notifications_permission_entry", array('user_id' => $userID, 'notification_slug' => $aData['notification_slug']));
+        if($oData->count() > 0) {
+            $oData = DB::table('tbl_notifications_permission_entry')
+                ->where('user_id', $userID)
+                ->where('notification_slug', $aData['notification_slug'])
+                ->delete();
         }
-
-        if ($result) {
-            return true;
-        } else {
-            return false;
+        else {
+            $oData = DB::table('tbl_notifications_permission_entry')
+                ->insert(array('user_id' => $userID, 'notification_slug' => $aData['notification_slug']));
         }
+    
+        return true;
+
     }
 
 
