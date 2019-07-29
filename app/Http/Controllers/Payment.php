@@ -10,7 +10,7 @@ class Payment extends Controller {
 
     //var $merchant_id = '14';
 
-    public function __construct() {
+    //public function __construct() {
         //parent::__construct();
         /*$this->load->model("Payment_model", "mPayment");
         $this->load->model("Infusion_model", "mInfusion");
@@ -25,11 +25,7 @@ class Payment extends Controller {
         $cbSiteToken = $this->config->item('cb_access_token');
         ChargeBee_Environment::configure($cbSite, $cbSiteToken);
         $calledMethod = $this->uri->segment(2);*/
-
-
-    }
-
-
+    //}
 
     public function index() {
 
@@ -998,7 +994,6 @@ class Payment extends Controller {
         // This function is use for upgrade membership
     */
     public function upgradeMembership() {
-
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $subscriptionID = $oUser->subscription_id;
@@ -1012,7 +1007,7 @@ class Payment extends Controller {
             //pre($aUserSubscription);
             //die;
             if (!empty($aUserSubscription)) {
-
+              
                 if(!empty($aUserSubscription[0])) {
                     $aUserSubscription = $aUserSubscription[0];
                 }
