@@ -208,6 +208,20 @@ class SettingsModel extends Model {
         return $oData;
     }
 
+    /**
+     * This function use for update company profile
+     * @return type boolean
+     */
+    public static function updateCompanyProfile($aData, $userID) {
+        if ($userID > 0) {
+            $oData = DB::table('tbl_users')
+                ->where('id', $userID)
+                ->update($aData);
+            return true;
+        }
+    }
+
+
     public function getCreditValuesHistory() {
         $result = $this->db->get('tbl_credit_values_history');
         if ($result->num_rows() > 0) {
@@ -279,18 +293,7 @@ class SettingsModel extends Model {
             return false;
     }
 
-    public function updateCompanyProfile($aData, $userID) {
-        if ($userID > 0) {
-            $this->db->where('id', $userID);
-            $result = $this->db->update('tbl_users', $aData);
-            if ($result) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
+    
     public function updateNotificationSettings($aData, $userID) {
         if ($userID > 0) {
             $this->db->where('user_id', $userID);

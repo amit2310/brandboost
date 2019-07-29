@@ -67,8 +67,9 @@
     $(document).ready(function () {
         $("#frmGeneralBusinessInfo, #frmGeneralBusinessInfo2, #frmGeneralBusinessInfo3, #frmGeneralBusinessInfo4").submit(function () {
             var formData = $(this).serialize();
+            //formData.append('_token', '<?php echo csrf_token(); ?>');
             $.ajax({
-                url: "<?php echo base_url('admin/settings/updateCompanyFormData'); ?>",
+                url: "<?php echo base_url('webchat/settings/updateCompanyFormData'); ?>",
                 type: "POST",
                 data: formData,
                 dataType: "json",

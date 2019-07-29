@@ -82,4 +82,35 @@ class Settings extends Controller {
 
 	}
 
+	/**
+     * Update company form data
+     * @param type
+     */
+	public function updateCompanyFormData() {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        $post = Input::post();
+
+        if (!empty($post)) {
+            foreach ($post as $field => $value) {
+                $aData[$field] = $value;
+            }
+
+            if (!empty($aData)) {
+                $aData['updated'] = date("Y-m-d H:i:s");
+                $bUpdated = SettingsModel::updateCompanyProfile($aData, $userID);
+                if ($bUpdated) {
+                    $response['status'] = 'success';
+                } else {
+                    $response['status'] = 'error';
+                }
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+        
+    }
+
 }
