@@ -542,7 +542,7 @@ class TagsModel extends Model {
      * @param type $subscriberID
      * @return type
      */
-    public function getSubscriberTags($subscriberID) {
+    public static function getSubscriberTags($subscriberID) {
         $oData = DB::table('tbl_subscriber_tags')
                 ->leftJoin('tbl_tag_groups_entity', 'tbl_tag_groups_entity.id', '=', 'tbl_subscriber_tags.tag_id')
                 ->select('tbl_tag_groups_entity.*', 'tbl_subscriber_tags.tag_id', 'tbl_subscriber_tags.subscriber_id')
@@ -571,7 +571,7 @@ class TagsModel extends Model {
                     $result = DB::table('tbl_subscriber_tags')->insert($aInput); 
                 }
 
-                $oTags = $this->getSubscriberTags($aData['subscriber_id']);
+                $oTags = self::getSubscriberTags($aData['subscriber_id']);
                 foreach ($oTags as $oTag) {
                     if (in_array($oTag->tag_id, $aTagIDs)) {
                         $result = true;

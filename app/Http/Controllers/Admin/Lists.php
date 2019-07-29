@@ -153,6 +153,7 @@ class Lists extends Controller {
             'moduleName' => $moduleName,
             'moduleUnitID' => $moduleUnitID,
             'listName' => $listName,
+            'list_id' => $listID,
             'listtype' => 'email',
             'bActiveSubsription' => $bActiveSubsription
         );
@@ -202,11 +203,13 @@ class Lists extends Controller {
                 </ul>';
 
         $aData = array(
+            'title' => 'List Contacts : '.$listName,
             'subscribersData' => $subscribersData,
             'pagename' => $breadcrumb,
             'moduleName' => $moduleName,
             'moduleUnitID' => $moduleUnitID,
             'listName' => $listName,
+            'listtype' => 'sms',
             'bActiveSubsription' => $bActiveSubsription
         );
         return view('admin.lists.list-contacts-beta', $aData);

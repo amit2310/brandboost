@@ -293,7 +293,7 @@ Route::post('admin/tags/applySubscriberTag','Admin\Tags@applySubscriberTag');
 Route::get('admin/lists','Admin\Lists@index');
 Route::get('admin/lists/smslists','Admin\Lists@smslists');
 Route::get('admin/lists/getListContacts','Admin\Lists@getListContacts');
-Route::post('admin/lists/getSMSListContacts','Admin\Lists@getSMSListContacts');
+Route::get('admin/lists/getSMSListContacts','Admin\Lists@getSMSListContacts');
 Route::post('admin/lists/getContactDetail','Admin\Lists@getContactDetail');
 Route::post('admin/lists/updateSubscriber','Admin\Lists@updateSubscriber');
 Route::post('admin/lists/addList','Admin\Lists@addList');

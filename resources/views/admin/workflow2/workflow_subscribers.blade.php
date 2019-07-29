@@ -74,23 +74,27 @@ if(!empty($subscribersData)) { ?>
                         <tbody>
                             <?php
                             
+                            
                             if (count($subscribersData) > 0) {
                                 foreach ($subscribersData as $oContact) {
                                     $subscriberID = $oContact->subscriber_id;
-                                    $oTags = \App\Models\Admin\TagModel::getSubscriberTags($subscriberID);
+                                    
+                                    $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($subscriberID);
                                     $iTagCount = count($oTags);
                                     $userData = '';
+                                    $profileImage = '';
                                     if ($oContact->status != '2') {
                                         
                                         if ($oContact->user_id > 0) {
                                             $userData = \App\Models\Admin\UsersModel::getUserInfo($oContact->user_id);
+                                            
+                                            $profileImage = '<a class="icons s32" href="' . base_url() . 'admin/contacts/profile/' . $oContact->subscriber_id . '"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($userData->avatar) . '" onerror="this.src=\'/assets/images/userp.png\'" class="img-circle img-xs" alt=""></a>';
                                         }
 
-                                        if ($userData->avatar == '') {
+                                        if (empty($profileImage)) {
                                             $profileImage = '<a class="icons fl_letters s32" href="' . base_url() . 'admin/contacts/profile/' . $oContact->subscriber_id . '">' . ucfirst(substr($oContact->firstname, 0, 1)) . '' . ucfirst(substr($oContact->lastname, 0, 1)) . '</a>';
-                                        } else {
-                                            $profileImage = '<a class="icons s32" href="' . base_url() . 'admin/contacts/profile/' . $oContact->subscriber_id . '"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $userData->avatar . '" onerror="this.src=\'/assets/images/userp.png\'" class="img-circle img-xs" alt=""></a>';
-                                        }
+                                            
+                                        } 
                                         ?>
                                         <tr id="append-<?php echo $oContact->subscriber_id; ?>" class="selectedClass">
                                             <td style="display: none;"><?php echo date('m/d/Y', strtotime($oContact->created)); ?></td>
@@ -99,9 +103,9 @@ if(!empty($subscribersData)) { ?>
 
 
                                             <td class="viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>">											
-                                                <div class="media-left media-middle"> <?php echo showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
+                                                <div class="media-left media-middle"> <?php echo @showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
                                                 <div class="media-left">
-                                                    <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot"><?php echo $oContact->firstname; ?> <?php echo $oContact->lastname; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($oContact->country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
+                                                    <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot"><?php echo $oContact->firstname; ?> <?php echo $oContact->lastname; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo @strtolower($oContact->country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
                                                     <div class="text-muted text-size-small"><?php echo $oContact->email; ?></div>
                                                 </div>
                                             </td>
@@ -129,7 +133,7 @@ if(!empty($subscribersData)) { ?>
                                             <td>
                                                 <a class="icons social" <?php if (!empty($oContact->twitter_profile)): ?>href="<?php echo $oContact->twitter_profile; ?>" target="_blank" title="View twitter profile" <?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><img src="<?php echo base_url(); ?>assets/images/icons/twitter.svg"/></a> 
                                                 <a class="icons social"  <?php if (!empty($oContact->facebook_profile)): ?>href="<?php echo $oContact->facebook_profile; ?>" target="_blank" title="View facebook profile"<?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><img src="<?php echo base_url(); ?>assets/images/icons/facebook.svg"/></a> 
-                                                <a class="icons social" href="<?php echo $oContact->socialProfile; ?>"><img src="<?php echo base_url(); ?>assets/images/icons/google.svg"/></a> 
+                                                <a class="icons social" href="<?php echo @($oContact->socialProfile); ?>"><img src="<?php echo base_url(); ?>assets/images/icons/google.svg"/></a> 
                                                 <a class="icons social" href="mailto:<?php echo $oContact->email; ?>"><img src="<?php echo base_url(); ?>assets/images/icons/mail.svg"/></a>
                                             </td>
 
@@ -386,7 +390,7 @@ else {
                                             if ($userData->avatar == '') {
                                                 $profileImage = '<a class="icons fl_letters s32" href="' . base_url() . 'admin/contacts/profile/' . $oContact->subscriber_id . '">' . ucfirst(substr($oContact->firstname, 0, 1)) . '' . ucfirst(substr($oContact->lastname, 0, 1)) . '</a>';
                                             } else {
-                                                $profileImage = '<a class="icons s32" href="' . base_url() . 'admin/contacts/profile/' . $oContact->subscriber_id . '"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $userData->avatar . '" onerror="this.src=\'/assets/images/userp.png\'" class="img-circle img-xs" alt=""></a>';
+                                                $profileImage = '<a class="icons s32" href="' . base_url() . 'admin/contacts/profile/' . $oContact->subscriber_id . '"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($userData->avatar) . '" onerror="this.src=\'/assets/images/userp.png\'" class="img-circle img-xs" alt=""></a>';
                                             }
                                             ?>
                                             <tr id="append-<?php echo $oContact->subscriber_id; ?>" class="selectedClass">

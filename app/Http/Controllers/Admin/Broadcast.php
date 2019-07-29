@@ -108,8 +108,19 @@ class Broadcast extends Controller {
         if ($user_role == 1) {
             $userID = '';
         }
+        
+        //Instanciate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+        
+        //Instanciate User model to get its methods and properties
+        $mUsers = new UsersModel();
+        
+        //Instanciate subscriber model to get its methods and properties
+        $mSubscriber = new SubscriberModel();
+        
+        
         $oAutomations = $mEmails->getEmailAutomations($userID);
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
+        $bActiveSubsription = $mUsers->isActiveSubscription();
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
