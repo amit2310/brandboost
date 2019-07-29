@@ -474,7 +474,8 @@
                 type: "POST",
                 data: {
                     fieldname: fieldname,
-                    fieldval: fieldval
+                    fieldval: fieldval,
+                    _token: '<?php echo csrf_token(); ?>'
 				},
                 dataType: "json",
                 success: function (data) {
