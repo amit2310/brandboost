@@ -72,7 +72,7 @@
         $.ajax({
             url: '/admin/brandboost/getFaqdetails/' + faQListid + '?t=' + selectedTab,
             type: "POST",
-            data: {faQListid: faQListid, action: 'smart-popup'},
+            data: {faQListid: faQListid, action: 'smart-popup',_token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
 

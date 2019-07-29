@@ -338,20 +338,14 @@ class ListsModel extends Model {
     }
 
     public function getSubscriberList($subscriberID) {
-        $this->db->select("tbl_common_lists.list_name, tbl_common_lists.id");
-        $this->db->join("tbl_common_lists", "tbl_common_lists.id=tbl_automation_users.list_id", "INNER");
-        //$this->db->join("tbl_subscribers", "tbl_automation_users.subscriber_id=tbl_subscribers.id", "LEFT");
+       $oData =  DB::table('tbl_automation_users')
+        ->select('tbl_common_lists.list_name', 'tbl_common_lists.id')
+        ->join('tbl_common_lists', 'tbl_common_lists.id','=','tbl_automation_users.list_id')
+        ->when(!empty($subscriberID), function($query) use ($subscriberID){
+        return $query->where('tbl_automation_users.subscriber_id',$subscriberID);
+        })->get();
+       return $oData;
 
-        if ($subscriberID > 0) {
-            $this->db->where("tbl_automation_users.subscriber_id", $subscriberID);
-        }
-
-        $result = $this->db->get("tbl_automation_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
     }
 
 }
