@@ -385,7 +385,7 @@ $oCountries = getAllCountries();
 		});
 		
 		
-		$('.token-field').tokenfield();
+		//$('.token-field').tokenfield();
 		
 		$('.changeBA1').click(function(){
 			$('.changeBA1').removeClass('txt_purple');
