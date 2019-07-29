@@ -28,10 +28,8 @@ class BrandModel extends Model
 	}
     
       public function addFaqData($aData){
-
-		$result = $this->db->insert(" tbl_brandboost_faqs", $aData);
-		//echo $this->db->last_query(); exit;
-        $inset_id = $this->db->insert_id();
+     
+		$inset_id = DB::table('tbl_brandboost_faqs')->insertGetId($aData);
         if ($inset_id) {
             return $inset_id;
         } else {

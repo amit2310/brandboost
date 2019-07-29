@@ -1327,12 +1327,12 @@ class Brandboost extends Controller {
     public function addFaqData() {
 
         $response = array();
-        $post = $this->input->post();
+        $post = Input::post();
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $faq_question = $post['question'];
         $faq_answer = $post['answer'];
-
+        $mBrand = new BrandModel();
 
         // $referral_widgets = $post['referral_widgets_switch'] != '' ? '1' : '0';
 
@@ -1343,7 +1343,7 @@ class Brandboost extends Controller {
         );
 
 
-        $result = $this->mBrand->addFaqData($addFaqData);
+        $result = $mBrand->addFaqData($addFaqData);
 
         if ($result) {
             $response = array('status' => 'ok');

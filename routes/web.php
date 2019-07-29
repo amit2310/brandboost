@@ -347,5 +347,6 @@ Route::post('admin/brandboost/UpdateFaqData','Admin\Brandboost@UpdateFaqData');
 Route::post('admin/brandboost/update_faq_status','Admin\Brandboost@update_faq_status');
 Route::post('admin/brandboost/addBrandCampaign','Admin\Brandboost@addBrandCampaign');
 Route::post('admin/brandboost/getBrandThemeData','Admin\Brandboost@getBrandThemeData');
+Route::post('admin/brandboost/addFaqData','Admin\Brandboost@addFaqData');
 
 
