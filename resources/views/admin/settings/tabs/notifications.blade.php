@@ -56,6 +56,7 @@
                             <!-- notification loop start -->
                             <?php foreach($notificationlisting as $key=>$value){ 
                                  $checkflag = checkPermissionentry($value->notification_slug);
+                              
                                 ?>
                                 <div class="form-group mb10">
                                     <p class="pull-left mb0"><?php echo $value->notification_name; ?></p>
@@ -197,7 +198,8 @@
 				url: "<?php echo base_url('admin/settings/updateNotificationPermisson'); ?>",
 				type: "POST",
 				data: {
-					notification_slug: notification_slug
+					notification_slug: notification_slug,
+                    _token: '<?php echo csrf_token(); ?>'
 				},
 				dataType: "json",
 				success: function (data) {

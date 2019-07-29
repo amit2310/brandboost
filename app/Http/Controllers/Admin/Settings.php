@@ -143,4 +143,34 @@ class Settings extends Controller {
         exit;
     }
 
+    /**
+     * Update notification permission
+     * @param type
+     */
+    public function updateNotificationPermisson() {
+
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        $post = Input::post();
+        if ($post) {
+            $fieldName = strip_tags($post['notification_slug']);
+
+            $aData = array(
+               'notification_slug' => $fieldName
+            );
+            
+            $aData['updated'] = date("Y-m-d H:i:s");
+
+            $bUpdated = SettingsModel::updateNotificationPermissonData($aData, $userID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
 }
