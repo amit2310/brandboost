@@ -344,8 +344,7 @@ class SettingsModel extends Model {
                 ->where('user_id', $userID)
                 ->where('notification_slug', $aData['notification_slug'])
                 ->get();
-        pre($oData->count());
-
+       
         if($oData->count() > 0) {
             $oData = DB::table('tbl_notifications_permission_entry')
                 ->where('user_id', $userID)
