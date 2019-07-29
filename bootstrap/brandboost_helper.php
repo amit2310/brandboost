@@ -350,7 +350,7 @@ if (!function_exists('getOffsite')) {
     function getOffsite($offsiteId) {
         $aOffsiteDetail = App\Models\Admin\OffsiteModel::getOffsite($offsiteId);
 
-        if (!empty($aOffsiteDetail)) {
+        if (!empty($aOffsiteDetail[0])) {
             return $aOffsiteDetail[0];
         }
     }

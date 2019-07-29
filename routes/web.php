@@ -37,33 +37,36 @@ Route::get('admin/brandboost/onsite_overview','Admin\Brandboost@onsiteOverview')
 Route::get('admin/brandboost/onsite','Admin\Brandboost@onsite');
 Route::get('admin/brandboost/review_request/{type}','Admin\Brandboost@reviewRequest');
 Route::get('admin/brandboost/onsite_setup/{id}','Admin\Brandboost@onsiteSetup');
-Route::get('admin/brandboost/reviews/','Admin\Brandboost@reviews');
+Route::get('admin/brandboost/reviews','Admin\Brandboost@reviews');
 Route::get('admin/brandboost/reviews/{id}','Admin\Brandboost@reviews');
-Route::get('admin/brandboost/media/','Admin\Brandboost@media');
+Route::get('admin/brandboost/media','Admin\Brandboost@media');
 Route::post('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
 Route::get('admin/brandboost/reviewdetails/{id}','Admin\Brandboost@reviewDetails');
 Route::post('admin/brandboost/setTab/','Admin\Brandboost@setTab');
-Route::get('admin/brandboost/offsite_overview/','Admin\Brandboost@offsiteOverview');
-Route::get('admin/brandboost/offsite/','Admin\Brandboost@offsite');
+Route::get('admin/brandboost/offsite_overview','Admin\Brandboost@offsiteOverview');
+Route::get('admin/brandboost/offsite','Admin\Brandboost@offsite');
 Route::post('admin/brandboost/updateOnsiteStatus/','Admin\Brandboost@updateOnsiteStatus');
-Route::post('admin/brandboost/getBBECode/','Admin\Brandboost@getBBECode');
-Route::post('admin/brandboost/archive_multipal_brandboost/','Admin\Brandboost@archiveMultipalBrandboost');
-Route::post('admin/brandboost/delete_brandboost/','Admin\Brandboost@deleteBrandboost');
+Route::post('admin/brandboost/getBBECode','Admin\Brandboost@getBBECode');
+Route::post('admin/brandboost/archive_multipal_brandboost','Admin\Brandboost@archiveMultipalBrandboost');
+Route::post('admin/brandboost/delete_brandboost','Admin\Brandboost@deleteBrandboost');
 Route::get('admin/brandboost/offsite_setup/{id}','Admin\Brandboost@offsiteSetup');
+Route::get('admin/brandboost/widget_overview','Admin\Brandboost@widgetOverview');
+Route::get('admin/brandboost/widgets','Admin\Brandboost@widgets');
 
 
-Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');
-Route::post('admin/reviews/updateReviewCategory/','Admin\Reviews@updateReviewCategory');
-Route::post('admin/reviews/deleteReview/','Admin\Reviews@deleteReview');
-Route::post('admin/reviews/saveReviewNotes/','Admin\Reviews@saveReviewNotes');
-Route::post('admin/reviews/deleteReviewNote/','Admin\Reviews@deleteReviewNote');
-Route::post('admin/reviews/getReviewMedia/','Admin\Reviews@getReviewMedia');
+
+Route::post('admin/reviews/updateReviewStatus','Admin\Reviews@updateReviewStatus');
+Route::post('admin/reviews/updateReviewCategory','Admin\Reviews@updateReviewCategory');
+Route::post('admin/reviews/deleteReview','Admin\Reviews@deleteReview');
+Route::post('admin/reviews/saveReviewNotes','Admin\Reviews@saveReviewNotes');
+Route::post('admin/reviews/deleteReviewNote','Admin\Reviews@deleteReviewNote');
+Route::post('admin/reviews/getReviewMedia','Admin\Reviews@getReviewMedia');
 
 
-Route::post('admin/comments/add_comment/','Admin\Comments@addComment');
+Route::post('admin/comments/add_comment','Admin\Comments@addComment');
 
 
-Route::get('admin/feedback/listall/','Admin\Feedback@getAllListingData');
+Route::get('admin/feedback/listall','Admin\Feedback@getAllListingData');
 
 
 Route::get('admin/questions/view/{id}','Admin\Questions@questionView');
