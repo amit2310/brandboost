@@ -365,6 +365,7 @@ class Broadcast extends Controller {
             'oAutomationLists' => $oAutomationLists,
             'activeTab' => $activeTab,
             'broadcast_id' => $id,
+            'broadcastID' => $id,
             'sImportButtons' => $sImportButtons,
             'sImportButtonsSummary' => $sImportButtonsSummary,
             'sExcludButtons' => $sExcludButtons,
@@ -2010,6 +2011,9 @@ class Broadcast extends Controller {
 
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
+        
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
 
 
         $response = array();

@@ -1,3 +1,6 @@
+<?php 
+  $broadcastID = (!empty($broadcastID)) ? $broadcastID : '';
+?>
 <div class="col-md-12">
     <a style="left: 35px; top: 15px;" class="reviews smart-broadcast slide-toggle bkg_grey_light" ><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_arrow_left.png"/></i></a> 
     <h5 style="padding-left: 75px;" class="panel-title" id="smart-broadcast-title">Add Contacts</h5>
