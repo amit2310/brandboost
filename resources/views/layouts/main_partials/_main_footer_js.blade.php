@@ -517,10 +517,11 @@
             var hidPlanID = $("#hidLevelPlanId").val();
             if ($('#lvltermsCondition').is(":checked") == true) {
                 $.ajax({
-                    url: "{{ URL::asset('payment/upgradeMembership') }}",
+                    url: "<?php echo base_url('payment/upgradeMembership'); ?>",
                     type: "POST",
                     data: {
-                        plan_id: hidPlanID
+                        plan_id: hidPlanID,
+                        _token: '<?php echo csrf_token(); ?>'
                     },
                     dataType: "json",
                     success: function (data) {
