@@ -129,6 +129,9 @@ Route::post('admin/account_setting/account_deleted','Admin\AccountSetting@accoun
 Route::get('admin/settings','Admin\Settings@index');
 Route::post('webchat/settings/updateCompanyFormData','Admin\Settings@updateCompanyFormData');
 
+//Payment 
+Route::post('payment/upgradeMembership','Payment@upgradeMembership');
+
 //Users module
 Route::post('admin/users/updateUserData','Admin\Users@updateUserData');
 
