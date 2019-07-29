@@ -610,7 +610,9 @@ class dropzone extends Controller
                             }
                             $filename = $videoReview['name'];
                             $input = file_get_contents($videoReview['tmp_name']);
-                            $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            $s3 = \Storage::disk('s3');
+                            $s3->put($filekey,$input, 'public');
                         }
                     }
 

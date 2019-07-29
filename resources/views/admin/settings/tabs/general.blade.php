@@ -64,7 +64,7 @@ $oCountries = getAllCountries();
                                         <div class="input-group">
                                         <span class="input-group-addon"><i class="icon-upload7"></i></span>
                                         <div class="dropzone" id="myDropzone"></div>
-                                        <div id="uploadedSiteFiles"></div>
+                                        <div style="display: none;" id="uploadedSiteFiles"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -430,7 +430,7 @@ $oCountries = getAllCountries();
         });
 
         Dropzone.options.myDropzone = {
-            url: '<?php echo base_url("dropzone/uploadCompanyLogo"); ?>',
+            url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment/".$oUser->id."/onsite"); ?>',
             uploadMultiple: false,
             maxFiles: 10,
             maxFilesize: 600,
