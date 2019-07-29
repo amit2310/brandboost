@@ -54,7 +54,6 @@ class BrandboostModel extends Model {
                 ->where('tbl_brandboost_widgets.delete_status', 0)
                 ->orderBy('tbl_brandboost_widgets.id', 'desc')
                 ->get();
-
         return $oData;
     }
     
@@ -376,6 +375,36 @@ class BrandboostModel extends Model {
 			->get();
         return $oData;
     }
+	
+	/**
+	* Used to get all offsite reviews
+	* @param type $param
+	* @return type
+	*/
+	public static function getBBWidgetStats($fieldVal, $filedName = 'widget_id', $type = '') {
+		$oData = DB::table('tbl_brandboost_widget_tracking_log')
+			->select('tbl_brandboost_widget_tracking_log.*', 'tbl_brandboost.brand_title as bbBrandTitle', 'tbl_brandboost.brand_desc as bbBrandDesc', 'tbl_brandboost.brand_img', 'tbl_brandboost_widgets.widget_title', 'tbl_brandboost_widgets.widget_img', 'tbl_brandboost_widgets.widget_desc')
+			->when(($filedName == 'widget_id'), function ($query) use ($fieldVal) {
+				return $query->where('widget_id', $fieldVal);
+			})
+			->when(($filedName == 'owner_id'), function ($query) use ($fieldVal) {
+				return $query->where('owner_id', $fieldVal);
+			})
+			->when(($filedName == 'widget_type'), function ($query) use ($fieldVal) {
+				return $query->where('widget_type', $fieldVal);
+			})
+			->when(($filedName == 'brandboost_id'), function ($query) use ($fieldVal) {
+				return $query->where('brandboost_id', $fieldVal);
+			})
+			->when(($type != ''), function ($query) use ($type) {
+				return $query->where('track_type', $type);
+			})
+ 
+			->leftJoin('tbl_brandboost', 'tbl_brandboost_widget_tracking_log.brandboost_id', '=' , 'tbl_brandboost.id')
+			->leftJoin('tbl_brandboost_widgets', 'tbl_brandboost_widget_tracking_log.widget_id', '=' , 'tbl_brandboost_widgets.id')
+			->get();
+        return $oData;
+    }
 
     public function getWidgetInfo($id, $hash = false) {
         if (!empty($id)) {
@@ -471,38 +500,6 @@ class BrandboostModel extends Model {
         } else {
             return false;
         }
-    }
-
-    public function getBBWidgetStats($fieldVal, $filedName = 'widget_id', $type = '') {
-        $this->db->select("tbl_brandboost_widget_tracking_log.*, tbl_brandboost.brand_title as bbBrandTitle, tbl_brandboost.brand_img, tbl_brandboost_widgets.widget_title, tbl_brandboost_widgets.widget_img");
-        if ($filedName == 'widget_id') {
-            $this->db->where('widget_id', $fieldVal);
-        }
-
-        if ($filedName == 'owner_id') {
-            $this->db->where('owner_id', $fieldVal);
-        }
-
-        if ($filedName == 'widget_type') {
-            $this->db->where('widget_type', $fieldVal);
-        }
-
-        if ($filedName == 'brandboost_id') {
-            $this->db->where('brandboost_id', $fieldVal);
-        }
-        $this->db->join("tbl_brandboost", "tbl_brandboost_widget_tracking_log.brandboost_id=tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_brandboost_widgets", "tbl_brandboost_widget_tracking_log.widget_id=tbl_brandboost_widgets.id", "LEFT");
-        if (!empty($type)) {
-            $this->db->where('track_type', $type);
-        }
-
-        $result = $this->db->get('tbl_brandboost_widget_tracking_log');
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
     }
 
     public function addWidget($aData) {

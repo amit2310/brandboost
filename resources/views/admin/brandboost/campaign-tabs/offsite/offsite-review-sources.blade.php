@@ -217,23 +217,17 @@
 
                                         <?php
                                         $thumbColor = array('bkg1', 'bkg2', 'bkg3', 'bkg4', 'bkg5', 'bkg6');
-
-
+										
                                         foreach ($offSiteData as $siteData) {
-
-                                            //pre($siteData->image);
 
                                             $categoryunserilize = unserialize($siteData->site_categories);
                                             if ($categoryunserilize[0] == 'OtherSources') {
-
-
                                                 $showextra = 1;
                                             }
 
 
                                             if (in_array($cate['title'], unserialize($siteData->site_categories))) {
-                                                //$inc = rand(0, 5);
-                                                $getLinksSocial = $offsites_links[$siteData->id]['link'];
+                                                $getLinksSocial = $offsites_links[$siteData->id]['shorturl'];
                                                 $sourceName = strtolower($siteData->name);
 
 
@@ -479,8 +473,6 @@
                 $('.firstRow').addClass('in');
                 $("#defaultothersources").show();
                 flag = 1;
-
-
             }
             if (flag == 0)
             {
@@ -493,10 +485,7 @@
                     $(".notFoundRow").show();
                     $("#defaultothersources").hide();
                 }
-
             }
-
-
         });
 
         $("#OtherSourcesPopupFrm").submit(function () {

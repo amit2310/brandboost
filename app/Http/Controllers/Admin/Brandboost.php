@@ -16,6 +16,7 @@ use App\Models\ReviewsModel;
 use App\Models\Admin\WorkflowModel;
 use App\Models\Admin\TemplatesModel;
 use App\Models\Admin\OffsiteModel;
+use App\Models\Admin\LiveModel;
 use App\Models\Admin\Crons\InviterModel;
 use Illuminate\Support\Facades\Input;
 use Session;
@@ -69,10 +70,9 @@ class Brandboost extends Controller {
 	
 	
 	/**
-	*
-	* onsite template controller 
+	* Used to get onsite overview brandboost data
+	* @return type
 	*/
-	
     public function onsiteOverview() {
 
         $aUser = getLoggedUser();
@@ -117,10 +117,11 @@ class Brandboost extends Controller {
 
         return view('admin.brandboost.onsite_overview', $aData);
     }
+
 	
 	/**
-	*
-	* call on site data listing page 
+	* Used to get onsite brandboost data
+	* @return type
 	*/
 	public function onsite() {
         $aUser = getLoggedUser();
@@ -162,9 +163,10 @@ class Brandboost extends Controller {
 		
 		return view('admin.brandboost.onsite_list', $aData);
     }
+
 	
 	/**
-	* This function will return onsite configuration related values
+	* Used to get onsite configuration related values
 	* @param type $request
 	* @return type
 	*/
@@ -285,6 +287,7 @@ class Brandboost extends Controller {
 		
 		return view('admin.brandboost.onsite_setup', $aData);
     }	
+
 	
 	/**
 	* Used to get campaign review request data
@@ -318,7 +321,7 @@ class Brandboost extends Controller {
 
 		return view('admin.brandboost.review_request', $aData);
     }
-	
+
 	
 	/**
 	* Used to get all reviews of campaign
@@ -382,6 +385,7 @@ class Brandboost extends Controller {
 			return view('admin.brandboost.review_list', $aData);
         }
     }
+
 	
 	/**
 	* Used to get show media page 
@@ -405,6 +409,7 @@ class Brandboost extends Controller {
 		$aData = array('title' => 'On Site Brand Boost Media', 'pagename' => $breadcrumb, 'aReviews' => $aReviews);
 		return view('admin.brandboost.media', $aData);
     }
+
 	
 	/**
 	* Used to get show media page 
@@ -480,6 +485,7 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
+
 	
 	/**
 	* Used to get show offsite overview 
@@ -529,6 +535,7 @@ class Brandboost extends Controller {
 
 		return view('admin.brandboost.offsite_list', $aData);
     }
+
 	
 	/**
 	* Used to get show offsite listing page 
@@ -561,6 +568,7 @@ class Brandboost extends Controller {
 		
 		return view('admin.brandboost.offsite_list', array('title' => 'Offsite Brand Boost Campaigns', 'pagename' => $breadcrumb, 'aBrandbosts' => $aBrandboostList, 'bActiveSubsription' => $bActiveSubsription, 'currentUserId' => $userID, 'user_role' => $user_role, 'moduleName' => $moduleName, 'viewstats' => false));
     }	
+
 	
 	/**
 	* Used to update onsite brandboost campaing status
@@ -602,6 +610,7 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
+
 	
 	/**
 	* Used to update campaign as a archive
@@ -648,6 +657,7 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
+
 	
 	/**
 	* Used to update campaign as a archive
@@ -692,6 +702,7 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
+
 	
 	/**
 	* Used to get branboost embedded code
@@ -824,6 +835,90 @@ class Brandboost extends Controller {
 		return view('admin.brandboost.offsite_setup', $aData);
     }
 	
+	
+	/**
+	* Used to get widget overview related data
+	* @return type
+	*/
+	public function widgetOverview() {
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+            <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+            <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+            <li><a style="cursor:text;" class="sidebar-control hidden-xs">Widgets </a></li>
+            <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+            <li><a data-toggle="tooltip" data-placement="bottom" title="Onsite Widgets" class="sidebar-control active hidden-xs ">Overview</a></li>
+            </ul>';
+
+        $aUser = getLoggedUser();
+        $clientID = $aUser->id;
+        $oLiveData = LiveModel::getLiveData($clientID);
+        $oCurrentLiveData = LiveModel::getCurrentLiveData($clientID);
+        $chatWidget = LiveModel::chatWidget($clientID);
+        $brandboostOnsiteWidget = LiveModel::brandboostWidget($clientID, 'onsite');
+        $brandboostOffsiteWidget = LiveModel::brandboostWidget($clientID, 'offsite');
+
+        $aData = array(
+            'title' => 'Widgets Overview',
+            'pagename' => $breadcrumb,
+            'oLiveData' => $oLiveData,
+            'oCurrentLiveData' => $oCurrentLiveData,
+            'chatWidget' => $chatWidget,
+            'bOnsiteWidget' => $brandboostOnsiteWidget,
+            'bOffsiteWidget' => $brandboostOffsiteWidget
+        );
+
+        //$this->template->load('admin/admin_template_new', 'admin/brandboost/widget_overview', $aData);
+		return view('admin.brandboost.widget_overview', $aData);
+    }
+	
+	
+	/**
+	* Used to get onsite widget data list
+	* @return type
+	*/
+	public function widgets() {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $user_role = $oUser->user_role;
+        if ($user_role == 1) {
+            $oWidgetsList = BrandboostModel::getBBWidgets('', '', 'onsite');
+        } else {
+            $oWidgetsList = BrandboostModel::getBBWidgets('', $userID, 'onsite');
+        }
+		
+        $oStats = BrandboostModel::getBBWidgetStats($userID, 'owner_id');
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs">Widgets </a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Onsite Widgets" class="sidebar-control active hidden-xs ">Onsite Widgets</a></li>
+			</ul>';
+
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+		Session::put("setTab", '');
+        
+		$aData = array(
+            'title' => 'Onsite Widgets',
+            'pagename' => $breadcrumb,
+            'oWidgetsList' => $oWidgetsList,
+            'bActiveSubsription' => $bActiveSubsription,
+            'oStats' => $oStats,
+            'user_role' => $user_role
+        );
+        
+		//$this->template->load('admin/admin_template_new', 'admin/brandboost/widget_list', $aData);
+		return view('admin.brandboost.widget_list', $aData);
+    }
+	
+	
+	
+	
+	
+	
+	
 	public function index() {
 
         $aUser = getLoggedUser();
@@ -882,71 +977,6 @@ class Brandboost extends Controller {
             echo $resPonse;
         }
    }
-
-
-    public function widget_overview() {
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-            <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-            <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-            <li><a style="cursor:text;" class="sidebar-control hidden-xs">Widgets </a></li>
-            <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-            <li><a data-toggle="tooltip" data-placement="bottom" title="Onsite Widgets" class="sidebar-control active hidden-xs ">Overview</a></li>
-            </ul>';
-
-        $aUser = getLoggedUser();
-        $clientID = $aUser->id;
-        $oLiveData = $this->mLive->getLiveData($clientID);
-        $oCurrentLiveData = $this->mLive->getCurrentLiveData($clientID);
-        $chatWidget = $this->mLive->chatWidget($clientID);
-        $brandboostOnsiteWidget = $this->mLive->brandboostWidget($clientID, 'onsite');
-        $brandboostOffsiteWidget = $this->mLive->brandboostWidget($clientID, 'offsite');
-
-        $aData = array(
-            'title' => 'Widgets Overview',
-            'pagename' => $breadcrumb,
-            'oLiveData' => $oLiveData,
-            'oCurrentLiveData' => $oCurrentLiveData,
-            'chatWidget' => $chatWidget,
-            'bOnsiteWidget' => $brandboostOnsiteWidget,
-            'bOffsiteWidget' => $brandboostOffsiteWidget
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/widget_overview', $aData);
-    }
-
-    public function widgets() {
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-        $user_role = $oUser->user_role;
-        if ($user_role == 1) {
-            $oWidgetsList = $this->mBrandboost->getBBWidgets('', '', 'onsite');
-        } else {
-            $oWidgetsList = $this->mBrandboost->getBBWidgets('', $userID, 'onsite');
-        }
-
-        $oStats = $this->mBrandboost->getBBWidgetStats($userID, 'owner_id');
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs">Widgets </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Onsite Widgets" class="sidebar-control active hidden-xs ">Onsite Widgets</a></li>
-			</ul>';
-
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $this->session->set_userdata('setTab', '');
-        $aData = array(
-            'title' => 'Onsite Widgets',
-            'pagename' => $breadcrumb,
-            'oWidgetsList' => $oWidgetsList,
-            'bActiveSubsription' => $bActiveSubsription,
-            'oStats' => $oStats,
-            'user_role' => $user_role
-        );
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/widget_list', $aData);
-    }
 
     public function onsite_widget_setup($widgetID) {
         $selectedTab = $this->input->get('t');
