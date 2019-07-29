@@ -1211,20 +1211,20 @@ class Brandboost extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
-        $post = $this->input->post();
+        $post = Input::post();
         $campaign = $post['campaign'];
-        $brandboostId = $post['brandboost_id'];
 
         $aBrandboostData = array(
             'user_id' => $userID,
             'campaign_ids' => serialize($campaign)
         );
+        $mBrand = new BrandModel();
 
-        $bData = $this->mBrand->getBrandConfigurationData($userID);
-        if ((count($bData) > 0) && $bData != '') {
-            $result = $this->mBrand->updateBrandConfiguration($userID, $aBrandboostData);
+        $bData = $mBrand->getBrandConfigurationData($userID);
+        if ($bData->count()>0) {
+            $result = $mBrand->updateBrandConfiguration($userID, $aBrandboostData);
         } else {
-            $result = $this->mBrand->addBrandConfiguration($aBrandboostData);
+            $result = $mBrand->addBrandConfiguration($aBrandboostData);
         }
 
         if ($result) {
@@ -1238,11 +1238,12 @@ class Brandboost extends Controller {
     }
 
     public function getBrandThemeData() {
-        $post = $this->input->post();
+        $post = Input::post();
         $BrandthemeId = $post['BrandthemeId'];
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $result = $this->mBrand->getBrandThemeConfigData($BrandthemeId);
+        $mBrand = new BrandModel();
+        $result = $mBrand->getBrandThemeConfigData($BrandthemeId);
 
         if ($result) {
             $response = array('status' => 'ok');
@@ -1358,8 +1359,8 @@ class Brandboost extends Controller {
 
         $response = array();
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
+      $mBrand = new  BrandModel();
+            $post = Input::post();
 
             $faqId = strip_tags($post['faq_id']);
             $status = strip_tags($post['status']);
@@ -1368,7 +1369,7 @@ class Brandboost extends Controller {
                 'status' => $status
             );
 
-            $result = $this->mBrand->updateFaQStatus($aData, $faqId);
+            $result = $mBrand->updateFaQStatus($aData, $faqId);
             if ($result) {
                 $response['status'] = 'success';
                 $response['message'] = "Status has been updated successfully.";
@@ -1378,7 +1379,7 @@ class Brandboost extends Controller {
 
             echo json_encode($response);
             exit;
-        }
+        
     }
 
     public function delete_faq() {
@@ -1427,8 +1428,8 @@ class Brandboost extends Controller {
 
         $response = array();
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
+       $mBrand = new BrandModel();
+            $post = Input::post();
 
             $faqId = strip_tags($post['faq_id']);
             $faq_question = $post['question'];
@@ -1441,7 +1442,7 @@ class Brandboost extends Controller {
             );
 
 
-            $result = $this->mBrand->UpdateFaqData($aData, $faqId);
+            $result = $mBrand->UpdateFaqData($aData, $faqId);
             if ($result) {
                 $response['status'] = 'success';
                 $response['message'] = "Status has been updated successfully.";
@@ -1451,14 +1452,15 @@ class Brandboost extends Controller {
 
             echo json_encode($response);
             exit;
-        }
+        
     }
 
     public function getFaqdetails($faQListid) {
         $oUser = getLoggedUser();
+        $mBrand = new BrandModel();
+        $post = Input::post();
         $userID = $oUser->id;
-        $post = $this->input->post();
-        $get = $this->input->get();
+        $get = Input::get();
         $selectedTab = $get['t'];
         if (!empty($post)) {
             $faQListid = strip_tags($post['faQListid']);
@@ -1466,7 +1468,7 @@ class Brandboost extends Controller {
         }
 
 
-        $oFdetails = $this->mBrand->getFAQSingleDetails($faQListid);
+        $oFdetails = $mBrand->getFAQSingleDetails($faQListid);
 
 
 
@@ -1484,13 +1486,13 @@ class Brandboost extends Controller {
         );
 
         if ($actionName == 'smart-popup') {
-            $popupContent = $this->load->view('admin/components/smart-popup/faqs', $aData, true);
+            $popupContent = view('admin.components.smart-popup.faqs', $aData)->render();
             $response['status'] = 'success';
             $response['content'] = $popupContent;
             echo json_encode($response);
             exit;
         } else {
-            $this->template->load('admin/admin_template_new', 'admin/question/question_details', $aData);
+            return view ('admin.question.question_details', $aData);
         }
     }
 

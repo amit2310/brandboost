@@ -27,15 +27,13 @@ class ReferralModel extends Model {
     }
 
     public function getReferralLists($userID) {
-        $response = "";
-        $this->db->select("tbl_referral_rewards.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile");
-        $this->db->join("tbl_users", "tbl_referral_rewards.user_id=tbl_users.id", "LEFT");
-        $this->db->where("tbl_referral_rewards.user_id", $userID);
-        $result = $this->db->get("tbl_referral_rewards");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+          $aData =  DB::table('tbl_referral_rewards')
+        ->select('tbl_referral_rewards.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
+        ->leftjoin('tbl_users', 'tbl_referral_rewards.user_id','=','tbl_users.id')
+        ->where('tbl_referral_rewards.user_id', $userID)
+        ->get();
+        
+        return $aData;
     }
 
     public function deleteReferral($userID, $id) {

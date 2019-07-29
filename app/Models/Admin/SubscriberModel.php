@@ -331,14 +331,19 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         return false;
     }
 
+    /**
+    * This function will subscriber information 
+    * @param type $id
+    * @return type
+    */
+
     public function getPeopleSubscriberInfo($id) {
-        $this->db->where("id", $id);
-        $result = $this->db->get("tbl_subscribers");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+    $oData = DB::table('tbl_subscribers')
+    ->where('id', $id)
+    ->get();
+    return $oData;
     }
+
 
     public function getGlobalSubscriberInfo($id) {
         $this->db->where("id", $id);
@@ -1433,12 +1438,9 @@ FROM
     }
 
     public function addContactNotes($aData) {
-        $result = $this->db->insert("tbl_subscriber_notes", $aData);
 
-        if ($result)
-            return true;
-        else
-            return false;
+        $result = DB::table('tbl_subscriber_notes')->insert($aData);
+         return $result;
     }
 
     public function getSubscribersById($subID) {
@@ -1452,87 +1454,74 @@ FROM
     }
 
     public function getUserById($userID) {
-        $this->db->select("tbl_users.*");
-        $this->db->where("id", $userID);
-        $result = $this->db->get("tbl_users");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_users')
+       ->where("id", $userID)->first();
+       
+        return $oData;
     }
 
     public function getUserActivities($userID) {
-
-        $this->db->select("tbl_user_activities.*");
-        $this->db->where("user_id", $userID);
-        $this->db->order_by("id", "DESC");
-        $this->db->limit(15, 0);
-        $result = $this->db->get("tbl_user_activities");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+         $oData = DB::table('tbl_user_activities')
+          ->where("user_id", $userID)
+        ->orderBy("id", "DESC")
+          ->limit(15, 0)->get();
+        
+        return $oData;
     }
 
     public function getSubscriberEmailSms($subsId, $type = 'email') {
 
-        $this->db->select("tbl_brandboost_users.*, tbl_brandboost.brand_title, tbl_brandboost.id as brand_id, tbl_brandboost.review_type as brand_type, tbl_tracking_log_email_sms.created as trackdate");
-        $this->db->where("tbl_brandboost_users.subscriber_id", $subsId);
-        $this->db->where("tbl_tracking_log_email_sms.type", $type);
-        $this->db->join("tbl_tracking_log_email_sms", "tbl_brandboost_users.id=tbl_tracking_log_email_sms.subscriber_id", "INNER");
-        $this->db->join("tbl_brandboost", "tbl_brandboost.id=tbl_brandboost_users.brandboost_id", "INNER");
-        $this->db->order_by("tbl_tracking_log_email_sms.created", "DESC");
-        $result = $this->db->get("tbl_brandboost_users");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+       $aData =  DB::table('tbl_brandboost_users')
+        ->select('tbl_brandboost_users.*', 'tbl_brandboost.brand_title', 'tbl_brandboost.id as brand_id', 'tbl_brandboost.review_type as brand_type', 'tbl_tracking_log_email_sms.created as trackdate')
+        ->where('tbl_brandboost_users.subscriber_id', $subsId)
+        ->where('tbl_tracking_log_email_sms.type', $type)
+        ->join('tbl_tracking_log_email_sms', 'tbl_brandboost_users.id','=','tbl_tracking_log_email_sms.subscriber_id')
+         ->join('tbl_brandboost', 'tbl_brandboost.id','=','tbl_brandboost_users.brandboost_id')
+         ->orderBy('tbl_tracking_log_email_sms.created', 'DESC')
+         ->get();
+       
+        return $aData;
     }
 
     public function getReferalSubscriberEmailSms($subsId, $type = 'email') {
 
-        $this->db->select("tbl_referral_users.*, tbl_referral_rewards.title, tbl_referral_rewards.id as referral_id, tbl_referral_automations_tracking_logs.created_at as trackdate");
-        $this->db->where("tbl_referral_users.subscriber_id", $subsId);
-        $this->db->where("tbl_referral_automations_tracking_logs.campaign_type", $type);
-        $this->db->join("tbl_referral_automations_tracking_logs", "tbl_referral_users.id=tbl_referral_automations_tracking_logs.subscriber_id", "INNER");
-        $this->db->join("tbl_referral_rewards", "tbl_referral_rewards.hashcode=tbl_referral_users.account_id", "INNER");
-        $this->db->order_by("tbl_referral_automations_tracking_logs.created_at", "DESC");
-        $result = $this->db->get("tbl_referral_users");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+       $aData =  DB::table('tbl_referral_users')
+        ->select('tbl_referral_users.*', 'tbl_referral_rewards.title', 'tbl_referral_rewards.id as referral_id', 'tbl_referral_automations_tracking_logs.created_at as trackdate')
+      ->where('tbl_referral_users.subscriber_id', $subsId)
+        ->where('tbl_referral_automations_tracking_logs.campaign_type', $type)
+        ->join('tbl_referral_automations_tracking_logs', 'tbl_referral_users.id','=','tbl_referral_automations_tracking_logs.subscriber_id')
+      ->join('tbl_referral_rewards', 'tbl_referral_rewards.hashcode','=','tbl_referral_users.account_id')
+       ->orderBy('tbl_referral_automations_tracking_logs.created_at', 'DESC')
+        ->get();
+       
+        return $aData;
     }
 
     public function getNpsSubscriberEmailSms($subsId, $type = 'email') {
-
-        $this->db->select("tbl_nps_users.*, tbl_nps_main.title, tbl_nps_main.id as npm_id , tbl_nps_automations_tracking_logs.created_at as trackdate");
-        $this->db->where("tbl_nps_users.subscriber_id", $subsId);
-        $this->db->where("tbl_nps_automations_tracking_logs.campaign_type", $type);
-        $this->db->join("tbl_nps_automations_tracking_logs", "tbl_nps_users.id=tbl_nps_automations_tracking_logs.subscriber_id", "INNER");
-        $this->db->join("tbl_nps_main", "tbl_nps_main.hashcode=tbl_nps_users.account_id", "INNER");
-        $this->db->order_by("tbl_nps_automations_tracking_logs.created_at", "DESC");
-        $result = $this->db->get("tbl_nps_users");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $aData =  DB::table('tbl_nps_users')
+        ->select('tbl_nps_users.*', 'tbl_nps_main.title', 'tbl_nps_main.id as npm_id' , 'tbl_nps_automations_tracking_logs.created_at as trackdate')
+        ->where('tbl_nps_users.subscriber_id', $subsId)
+        ->where('tbl_nps_automations_tracking_logs.campaign_type', $type)
+        ->join('tbl_nps_automations_tracking_logs', 'tbl_nps_users.id','=','tbl_nps_automations_tracking_logs.subscriber_id')
+        ->join('tbl_nps_main', 'tbl_nps_main.hashcode','=','tbl_nps_users.account_id')
+        ->orderBy('tbl_nps_automations_tracking_logs.created_at', 'DESC')
+        ->get();
+       
+        return $aData;
     }
 
     public function getAutomationSubsEmailSms($subsId, $type = 'email') {
-
-        $this->db->select("tbl_automation_users.*, tbl_automations_emails.title, tbl_automations_emails.id as automation_id, tbl_automations_emails_tracking_logs.created_at as trackdate");
-        $this->db->where("tbl_automation_users.subscriber_id", $subsId);
-        $this->db->where("tbl_automations_emails_tracking_logs.campaign_type", $type);
-        $this->db->join("tbl_automations_emails_tracking_logs", "tbl_automation_users.id=tbl_automations_emails_tracking_logs.subscriber_id", "INNER");
-        $this->db->join("tbl_automations_emails_lists", "tbl_automations_emails_lists.list_id=tbl_automation_users.list_id", "INNER");
-        $this->db->join("tbl_automations_emails", "tbl_automations_emails_lists.automation_id = tbl_automations_emails.id", "INNER");
-        $this->db->order_by("tbl_automations_emails_tracking_logs.created_at", "DESC");
-        $result = $this->db->get("tbl_automation_users");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+            $aData =  DB::table('tbl_automation_users')
+        ->select('tbl_automation_users.*', 'tbl_automations_emails.title', 'tbl_automations_emails.id as automation_id', 'tbl_automations_emails_tracking_logs.created_at as trackdate')
+        ->where('tbl_automation_users.subscriber_id', $subsId)
+        ->where('tbl_automations_emails_tracking_logs.campaign_type', $type)
+        ->join('tbl_automations_emails_tracking_logs', 'tbl_automation_users.id','=','tbl_automations_emails_tracking_logs.subscriber_id')
+        ->join('tbl_automations_emails_lists', 'tbl_automations_emails_lists.list_id','=','tbl_automation_users.list_id')
+        ->join('tbl_automations_emails', 'tbl_automations_emails_lists.automation_id','=','tbl_automations_emails.id')
+        ->orderBy('tbl_automations_emails_tracking_logs.created_at', 'DESC')
+        ->get();
+        
+        return $aData;
     }
 
     public function getContactNotes($subsId) {
@@ -1542,20 +1531,19 @@ FROM
             exit();
         }
         if (strlen($subsId) > 10) {
-            $result = $this->db->query("SELECT `tbl_subscriber_notes`.*, `tbl_chat_supportuser`.`user_name` FROM `tbl_subscriber_notes` INNER JOIN `tbl_chat_supportuser` ON `tbl_subscriber_notes`.`subscriber_id` = `tbl_chat_supportuser`.`user` WHERE `tbl_subscriber_notes`.`user_id` = '" . $loginUserData->id . "' AND `tbl_subscriber_notes`.`subscriber_id` = '" . $subsId . "' ORDER BY `tbl_subscriber_notes`.`created` ASC");
+            $oData = DB::select(DB::raw("SELECT `tbl_subscriber_notes`.*, `tbl_chat_supportuser`.`user_name` FROM `tbl_subscriber_notes` INNER JOIN `tbl_chat_supportuser` ON `tbl_subscriber_notes`.`subscriber_id` = `tbl_chat_supportuser`.`user` WHERE `tbl_subscriber_notes`.`user_id` = '" . $loginUserData->id . "' AND `tbl_subscriber_notes`.`subscriber_id` = '" . $subsId . "' ORDER BY `tbl_subscriber_notes`.`created` ASC"));
         } else {
-            $this->db->select("tbl_subscriber_notes.*, tbl_users.firstname, tbl_users.lastname");
-            $this->db->where("tbl_subscriber_notes.subscriber_id", $subsId);
-            $this->db->order_by("tbl_subscriber_notes.created", "ASC");
-            $this->db->join("tbl_users", "tbl_subscriber_notes.user_id = tbl_users.id", "INNER");
-            $result = $this->db->get("tbl_subscriber_notes");
+            $oData = DB::table('tbl_subscriber_notes')
+            ->select('tbl_subscriber_notes.*', 'tbl_users.firstname', 'tbl_users.lastname')
+            ->where('tbl_subscriber_notes.subscriber_id', $subsId)
+            ->orderBy('tbl_subscriber_notes.created', 'ASC')
+            ->join('tbl_users', 'tbl_subscriber_notes.user_id','=','tbl_users.id')
+            ->get();
         }
 
 
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+       
+        return $oData;
     }
 
 
@@ -1576,40 +1564,29 @@ FROM
     }
 
     public function getSubscriberBBCampaigns($subscriberID) {
-        $this->db->select("tbl_brandboost_users.*, tbl_brandboost.brand_title, tbl_brandboost.review_type ");
-        $this->db->join("tbl_brandboost", "tbl_brandboost_users.brandboost_id=tbl_brandboost.id", "LEFT");
-        $this->db->where("tbl_brandboost_users.subscriber_id", $subscriberID);
-        //$this->db->group_by("tbl_brandboost.id");
-        $result = $this->db->get("tbl_brandboost_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $aData =  DB::table('tbl_brandboost_users')->
+        select('tbl_brandboost_users.*', 'tbl_brandboost.brand_title', 'tbl_brandboost.review_type')
+        ->leftjoin('tbl_brandboost', 'tbl_brandboost_users.brandboost_id','=','tbl_brandboost.id')
+        ->where("tbl_brandboost_users.subscriber_id", $subscriberID)->get();
+        
+        return $aData;
     }
 
     public function getSubscriberNPSCampaigns($subscriberID) {
-        $this->db->select("tbl_nps_users.*, tbl_nps_main.title");
-        $this->db->join("tbl_nps_main", "tbl_nps_users.account_id=tbl_nps_main.hashcode", "LEFT");
-        $this->db->where("tbl_nps_users.subscriber_id", $subscriberID);
-        $result = $this->db->get("tbl_nps_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $aData =  DB::table('tbl_nps_users')->
+         select('tbl_nps_users.*', 'tbl_nps_main.title')
+        ->leftjoin('tbl_nps_main', 'tbl_nps_users.account_id','=','tbl_nps_main.hashcode')
+        ->where('tbl_nps_users.subscriber_id', $subscriberID)->get();
+        return $aData;
     }
 
     public function getSubscriberReferralCampaigns($subscriberID) {
-        $this->db->select("tbl_referral_users.*, tbl_referral_rewards.title");
-        $this->db->join("tbl_referral_rewards", "tbl_referral_users.account_id=tbl_referral_rewards.hashcode", "LEFT");
-        $this->db->where("tbl_referral_users.subscriber_id", $subscriberID);
-        $result = $this->db->get("tbl_referral_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $aData =  DB::table('tbl_referral_users')
+        ->select('tbl_referral_users.*', 'tbl_referral_rewards.title')
+        ->leftjoin('tbl_referral_rewards', 'tbl_referral_users.account_id','=','tbl_referral_rewards.hashcode')
+         ->where('tbl_referral_users.subscriber_id', $subscriberID)->get();
+       
+        return $aData;
     }
 
     public function getSubsByBrandboostId($brandID, $subID) {

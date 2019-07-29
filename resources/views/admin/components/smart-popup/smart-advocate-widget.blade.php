@@ -50,7 +50,7 @@
                 $.ajax({
                     url: "<?php echo base_url('/admin/contacts/add_contact_notes'); ?>",
                     type: "POST",
-                    data: {notes: notes, subscriberid: subscriberid, type: 'smartpopup'},
+                    data: {notes: notes, subscriberid: subscriberid, type: 'smartpopup',_token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (response) {
                         if (response.status == "success") {

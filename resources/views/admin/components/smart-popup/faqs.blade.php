@@ -2,6 +2,7 @@
     <h5 class="panel-title">Question</h5>
 
     <form name="UpdateQuestionFrm" id="UpdateQuestionFrm" method="post" class="form-horizontal">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
         <input name="faq_id" id="faq_id" type="hidden" value="<?php echo $oFdetails->id; ?>">
         <a style="position: absolute; right: 20px; top: 17px;" href="javascript:void(0)"><i class="editIconPre"><img src="/assets/images/edit_icon.png"></i>
             <i style="display:none" class="editIconPost"><img src="/assets/images/edit_icon.png"></i>

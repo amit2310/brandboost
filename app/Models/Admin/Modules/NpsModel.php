@@ -29,15 +29,13 @@ class NpsModel extends Model {
     }
 
     public function getNpsLists($userID) {
-        $response = "";
-        $this->db->select("tbl_nps_main.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile");
-        $this->db->join("tbl_users", "tbl_nps_main.user_id=tbl_users.id", "LEFT");
-        $this->db->where("tbl_nps_main.user_id", $userID);
-        $result = $this->db->get("tbl_nps_main");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $aData =  DB::table('tbl_nps_main')
+        ->select('tbl_nps_main.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
+        ->join('tbl_users', 'tbl_nps_main.user_id','=','tbl_users.id')
+        ->where('tbl_nps_main.user_id', $userID)
+        ->get();
+        
+        return $aData;
     }
 
     public function getNpsListsByDate($userID) {
@@ -388,25 +386,21 @@ class NpsModel extends Model {
     }
 
     public function getNPSScore($hashKey = '', $userID = '') {
-        //$response = "";
 
-        $this->db->select("tbl_nps_score.*, tbl_nps_main.title as campaignTitle, tbl_nps_main.id as npsID, tbl_nps_main.platform, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.id AS subscriberId");
-        $this->db->join("tbl_subscribers", "tbl_nps_score.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->join("tbl_nps_main", "tbl_nps_main.hashcode=tbl_nps_score.refkey", "LEFT");
-        if ($hashKey != '') {
-            $this->db->where("tbl_nps_score.refkey", $hashKey);
-        }
-        if (!empty($userID)) {
-            $this->db->where("tbl_nps_main.user_id", $userID);
-        }
-        $this->db->order_by("tbl_nps_score.id", 'DESC');
-        $result = $this->db->get("tbl_nps_score");
-        //echo $this->db->last_query();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+      $aData =  DB::table('tbl_nps_score')
+        ->select('tbl_nps_score.*', 'tbl_nps_main.title as campaignTitle', 'tbl_nps_main.id as npsID', 'tbl_nps_main.platform', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone', 'tbl_subscribers.id AS subscriberId')
+        ->leftjoin('tbl_subscribers', 'tbl_nps_score.subscriber_id','=','tbl_subscribers.id')
+        ->leftjoin('tbl_nps_main', 'tbl_nps_main.hashcode','=','tbl_nps_score.refkey')
+        ->when(!empty($hashKey), function($query) use ($hashKey){
+        return $query->where('tbl_nps_score.refkey',$hashKey);
+        })
+         ->when(!empty($userID), function($query) use ($userID){
+        return $query->where('tbl_nps_main.user_id',$userID);
+        })
+       
+        ->orderBy('tbl_nps_score.id', 'DESC')->get();
+       
+        return $aData;
     }
 
     public function getNPSScore_old($hashKey = '') {

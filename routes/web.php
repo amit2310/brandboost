@@ -332,5 +332,12 @@ Route::post('admin/lists/deleteListContact','Admin\Lists@deleteListContact');
 Route::get('admin/brandboost/brand_configuration','Admin\Brandboost@brand_configuration');
 Route::post('admin/brandboost/addBrandConfigurationData','Admin\Brandboost@addBrandConfigurationData');
 Route::post('admin/brandboost/updateBrandConfigurationData','Admin\Brandboost@updateBrandConfigurationData');
+Route::post('admin/contacts/profile/{contactId}','Admin\Contacts@profile');
+Route::post('admin/contacts/add_contact_notes','Admin\Contacts@add_contact_notes');
+Route::post('admin/brandboost/getFaqdetails/{faqId}','Admin\Brandboost@getFaqdetails');
+Route::post('admin/brandboost/UpdateFaqData','Admin\Brandboost@UpdateFaqData');
+Route::post('admin/brandboost/update_faq_status','Admin\Brandboost@update_faq_status');
+Route::post('admin/brandboost/addBrandCampaign','Admin\Brandboost@addBrandCampaign');
+Route::post('admin/brandboost/getBrandThemeData','Admin\Brandboost@getBrandThemeData');
 
 
