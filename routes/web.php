@@ -133,6 +133,8 @@ Route::get('admin/settings','Admin\Settings@index');
 Route::post('webchat/settings/updateCompanyFormData','Admin\Settings@updateCompanyFormData');
 Route::post('admin/settings/updateCompanyProfile','Admin\Settings@updateCompanyProfile');
 Route::post('admin/settings/updateNotificationPermisson','Admin\Settings@updateNotificationPermisson');
+Route::post('admin/settings/updateNotificationSettings','Admin\Settings@updateNotificationSettings');
+
 
 //Payment 
 Route::post('payment/upgradeMembership','Payment@upgradeMembership');
