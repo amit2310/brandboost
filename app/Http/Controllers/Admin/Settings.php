@@ -113,4 +113,34 @@ class Settings extends Controller {
         
     }
 
+    /**
+     * Update company profile
+     * @param type
+     */
+    public function updateCompanyProfile() {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        $post = Input::post();
+        if ($post) {
+            $fieldName = strip_tags($post['fieldname']);
+            $fieldValue = strip_tags($post['fieldval']);
+
+            $aData = array(
+                $fieldName => $fieldValue
+            );
+            
+            $aData['updated'] = date("Y-m-d H:i:s");
+
+            $bUpdated = SettingsModel::updateCompanyProfile($aData, $userID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
 }

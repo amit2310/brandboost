@@ -131,6 +131,7 @@ Route::post('admin/account_setting/account_deleted','Admin\AccountSetting@accoun
 //Setting 
 Route::get('admin/settings','Admin\Settings@index');
 Route::post('webchat/settings/updateCompanyFormData','Admin\Settings@updateCompanyFormData');
+Route::post('admin/settings/updateCompanyProfile','Admin\Settings@updateCompanyProfile');
 
 //Payment 
 Route::post('payment/upgradeMembership','Payment@upgradeMembership');
