@@ -716,7 +716,7 @@ class Tags extends Controller {
         $subscriberID = strip_tags($request->subscriberId);
 
         $aTag = TagsModel::getClientTags($userID);
-        $aSubscriberTags = $mTag->getSubscriberTags($subscriberID);
+        $aSubscriberTags = TagsModel::getSubscriberTags($subscriberID);
 
         $sTags = view('admin.tags.mytags', array('oTags' => $aTag, 'aAppliedTags' => $aSubscriberTags))->render();
         $response = array('status' => 'success', 'list_tags' => $sTags);

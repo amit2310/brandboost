@@ -49,12 +49,7 @@ Route::post('admin/brandboost/updateOnsiteStatus/','Admin\Brandboost@updateOnsit
 Route::post('admin/brandboost/getBBECode/','Admin\Brandboost@getBBECode');
 Route::post('admin/brandboost/archive_multipal_brandboost/','Admin\Brandboost@archiveMultipalBrandboost');
 Route::post('admin/brandboost/delete_brandboost/','Admin\Brandboost@deleteBrandboost');
-
-
-Route::get('admin/feedback/listall/','Admin\Feedback@getAllListingData');
-Route::get('admin/questions/view/{id}','Admin\Questions@questionView');
-Route::get('admin/questions/details/{id}','Admin\Questions@questionDetails');
-Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
+Route::get('admin/brandboost/offsite_setup/{id}','Admin\Brandboost@offsiteSetup');
 
 
 Route::post('admin/reviews/updateReviewStatus/','Admin\Reviews@updateReviewStatus');
@@ -68,7 +63,15 @@ Route::post('admin/reviews/getReviewMedia/','Admin\Reviews@getReviewMedia');
 Route::post('admin/comments/add_comment/','Admin\Comments@addComment');
 
 
+Route::get('admin/feedback/listall/','Admin\Feedback@getAllListingData');
+
+
+Route::get('admin/questions/view/{id}','Admin\Questions@questionView');
+Route::get('admin/questions/details/{id}','Admin\Questions@questionDetails');
+Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
 Route::get('admin/questions','Admin\Questions@index');
+
+
 
 //chat module
 Route::get('admin/webchat','Admin\WebChat@index');
@@ -288,4 +291,50 @@ Route::get('admin/broadcast/report/{broadcastID}','Admin\Broadcast@report');
 //Tags
 Route::post('admin/tags/getSubscriberTags','Admin\Tags@getSubscriberTags');
 Route::post('admin/tags/applySubscriberTag','Admin\Tags@applySubscriberTag');
+
+
+//Lists
+Route::get('admin/lists','Admin\Lists@index');
+Route::get('admin/lists/smslists','Admin\Lists@smslists');
+Route::get('admin/lists/getListContacts','Admin\Lists@getListContacts');
+Route::get('admin/lists/getSMSListContacts','Admin\Lists@getSMSListContacts');
+Route::post('admin/lists/getContactDetail','Admin\Lists@getContactDetail');
+Route::post('admin/lists/updateSubscriber','Admin\Lists@updateSubscriber');
+Route::post('admin/lists/addList','Admin\Lists@addList');
+Route::post('admin/lists/getList','Admin\Lists@getList');
+Route::post('admin/lists/updateList','Admin\Lists@updateList');
+Route::post('admin/lists/archiveMultipalLists','Admin\Lists@archiveMultipalLists');
+Route::post('admin/lists/deleteMultipalLists','Admin\Lists@deleteMultipalLists');
+Route::post('admin/lists/deleteLists','Admin\Lists@deleteLists');
+Route::post('admin/lists/addListSusbscriber','Admin\Lists@addListSusbscriber');
+Route::post('admin/lists/importListCSV','Admin\Lists@importListCSV');
+Route::post('admin/lists/exportListCSV','Admin\Lists@exportListCSV');
+Route::get('admin/lists/rolelist','Admin\Lists@rolelist');
+Route::get('admin/lists/memberlist','Admin\Lists@memberlist');
+Route::get('admin/lists/viewLog','Admin\Lists@viewLog');
+Route::get('admin/lists/activitylist','Admin\Lists@activitylist');
+Route::post('admin/lists/addTeamMember','Admin\Lists@addTeamMember');
+Route::post('admin/lists/addRole','Admin\Lists@addRole');
+Route::post('admin/lists/getRole','Admin\Lists@getRole');
+Route::post('admin/lists/updateRole','Admin\Lists@updateRole');
+Route::post('admin/lists/deleteRole','Admin\Lists@deleteRole');
+Route::post('admin/lists/getTeamMember','Admin\Lists@getTeamMember');
+Route::post('admin/lists/updateTeamMember','Admin\Lists@updateTeamMember');
+Route::post('admin/lists/deleteTeamMember','Admin\Lists@deleteTeamMember');
+Route::post('admin/lists/manageRolePermission','Admin\Lists@manageRolePermission');
+Route::post('admin/lists/addRolePermission','Admin\Lists@addRolePermission');
+Route::post('admin/lists/updateRolePermission','Admin\Lists@updateRolePermission');
+Route::post('admin/lists/updateContactStatus','Admin\Lists@updateContactStatus');
+Route::post('admin/lists/deleteMultipalListContact','Admin\Lists@deleteMultipalListContact');
+Route::post('admin/lists/archiveMultipalListContact','Admin\Lists@archiveMultipalListContact');
+Route::post('admin/lists/moveToArchiveListContact','Admin\Lists@moveToArchiveListContact');
+Route::post('admin/lists/moveToArchiveList','Admin\Lists@moveToArchiveList');
+Route::post('admin/lists/changeListStatus','Admin\Lists@changeListStatus');
+Route::post('admin/lists/deleteListContact','Admin\Lists@deleteListContact');
+
+//Brand Module
+Route::get('admin/brandboost/brand_configuration','Admin\Brandboost@brand_configuration');
+Route::post('admin/brandboost/addBrandConfigurationData','Admin\Brandboost@addBrandConfigurationData');
+Route::post('admin/brandboost/updateBrandConfigurationData','Admin\Brandboost@updateBrandConfigurationData');
+
 

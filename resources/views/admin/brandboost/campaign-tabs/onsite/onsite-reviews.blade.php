@@ -2,8 +2,11 @@
 <?php
 $aReviewData = array(
     'aReviews' => $aReviews,
-    'campaignId' => $brandboostData->id
+    'campaignId' => "" //$brandboostData->id
 );
+$reviews="";
+$selectedCategory="";
+$bActiveSubsription="";
 ?>
 <div class="tab-pane <?php echo $reviews; ?>" id="right-icon-tab6">
     <div class="row">

@@ -1648,87 +1648,89 @@ FROM
             return $inset_id;
     }
 
+    /**
+     * Used to get sms subscribers details from broadcast module
+     * @param type $userId
+     * @return type
+     */
     public function smsDetailSubs($userId) {
-
-        $response = array();
-        $this->db->select("tbl_subscribers.id as subsId, tbl_broadcast_emails_tracking_twillio.*");
-        $this->db->join("tbl_broadcast_emails_tracking_twillio", "tbl_subscribers.id=tbl_broadcast_emails_tracking_twillio.subscriber_id", "INNER");
-        $this->db->where("tbl_subscribers.owner_id", $userId);
-        $result = $this->db->get("tbl_subscribers");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_subscribers')
+            ->join('tbl_broadcast_emails_tracking_twillio', 'tbl_subscribers.id', '=', 'tbl_broadcast_emails_tracking_twillio.subscriber_id')
+            ->select('tbl_subscribers.id as subsId', 'tbl_broadcast_emails_tracking_twillio.*')
+            ->where('tbl_subscribers.owner_id', $userId)            
+            ->get();
+        return $oData;        
     }
 
+    /**
+     * Used to get Sms subscribers from automation module
+     * @param type $userId
+     * @return type
+     */
     public function smsDetailAutomation($userId) {
-
-        $response = array();
-        $this->db->select("tbl_subscribers.id as subsId, tbl_automations_emails_tracking_twillio.*");
-        $this->db->join("tbl_automations_emails_tracking_twillio", "tbl_subscribers.id=tbl_automations_emails_tracking_twillio.subscriber_id", "INNER");
-        $this->db->where("tbl_subscribers.owner_id", $userId);
-        $result = $this->db->get("tbl_subscribers");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_subscribers')
+            ->join('tbl_automations_emails_tracking_twillio', 'tbl_subscribers.id', '=', 'tbl_automations_emails_tracking_twillio.subscriber_id')
+            ->select('tbl_subscribers.id as subsId', 'tbl_automations_emails_tracking_twillio.*')
+            ->where('tbl_subscribers.owner_id', $userId)            
+            ->get();
+        return $oData;        
     }
 
+    /**
+     * Used to get sms subscriber details from the Referral module
+     * @param type $userId
+     * @return type
+     */
     public function smsDetailReferral($userId) {
-
-        $response = array();
-        $this->db->select("tbl_subscribers.id as subsId, tbl_referral_automations_tracking_twillio.*");
-        $this->db->join("tbl_referral_automations_tracking_twillio", "tbl_subscribers.id=tbl_referral_automations_tracking_twillio.subscriber_id", "INNER");
-        $this->db->where("tbl_subscribers.owner_id", $userId);
-        $result = $this->db->get("tbl_subscribers");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_subscribers')
+            ->join('tbl_referral_automations_tracking_twillio', 'tbl_subscribers.id', '=', 'tbl_referral_automations_tracking_twillio.subscriber_id')
+            ->select('tbl_subscribers.id as subsId', 'tbl_referral_automations_tracking_twillio.*')
+            ->where('tbl_subscribers.owner_id', $userId)            
+            ->get();
+        return $oData;  
+        
     }
 
+    /**
+     * Used to get sms subscriber details from the NPS module
+     * @param type $userId
+     * @return type
+     */
     public function smsDetailNPS($userId) {
-
-        $response = array();
-        $this->db->select("tbl_subscribers.id as subsId, tbl_nps_automations_tracking_twillio.*");
-        $this->db->join("tbl_nps_automations_tracking_twillio", "tbl_subscribers.id=tbl_nps_automations_tracking_twillio.subscriber_id", "INNER");
-        $this->db->where("tbl_subscribers.owner_id", $userId);
-        $result = $this->db->get("tbl_subscribers");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_subscribers')
+            ->join('tbl_nps_automations_tracking_twillio', 'tbl_subscribers.id', '=', 'tbl_nps_automations_tracking_twillio.subscriber_id')
+            ->select('tbl_subscribers.id as subsId', 'tbl_nps_automations_tracking_twillio.*')
+            ->where('tbl_subscribers.owner_id', $userId)            
+            ->get();
+        return $oData;  
     }
 
+    /**
+     * Used to get sms subscriber details from the Onsite module
+     * @param type $userId
+     * @return type
+     */
     public function smsDetailOnsite($userId) {
-
-        $response = array();
-        $this->db->select("tbl_subscribers.id as subsId, tbl_track_twillio.*");
-        $this->db->join("tbl_track_twillio", "tbl_subscribers.id=tbl_track_twillio.subscriber_id", "INNER");
-        $this->db->where("tbl_subscribers.owner_id", $userId);
-        $result = $this->db->get("tbl_subscribers");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_subscribers')
+            ->join('tbl_track_twillio', 'tbl_subscribers.id', '=', 'tbl_track_twillio.subscriber_id')
+            ->select('tbl_subscribers.id as subsId', 'tbl_track_twillio.*')
+            ->where('tbl_subscribers.owner_id', $userId)            
+            ->get();
+        return $oData;
+        
     }
 
+    /**
+     * Get sms chat details from mobile number
+     * @param type $mobileNum
+     * @return type
+     */
     public function smsDetailChat($mobileNum) {
-
-        $response = array();
-        $this->db->select("*");
-        $this->db->where("from", $mobileNum);
-        $result = $this->db->get("tbl_chat_sms_thread");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_chat_sms_thread')
+                ->where('from', $mobileNum)
+                ->get();
+        return $oData;  
+        
     }
 
 }

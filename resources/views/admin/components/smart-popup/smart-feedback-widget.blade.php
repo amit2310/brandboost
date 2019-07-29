@@ -38,7 +38,8 @@
         </div>
     </div>
 </div>
-<?php $this->load->view("admin/modals/smartPopup/feedback"); ?>
+<?php //$this->load->view("admin/modals/smartPopup/feedback"); ?>
+@include('admin.modals.smartPopup.feedback')
 <script src="<?php echo base_url(); ?>assets/js/modules/smart-popup/feedback.js" type="text/javascript"></script>
 <script>
     $(document).ready(function () {

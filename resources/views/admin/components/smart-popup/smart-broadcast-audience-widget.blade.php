@@ -2,7 +2,7 @@
     <div class="smart-broadcast-box-inner" style="width: 400px;overflow: hidden; height: 100%;">
         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
             <div class="row" style="height: 100%;" id="broadcastSmartPopupContainer">
-                @import('admin.components.smart-popup.import-options') 
+                @include('admin.components.smart-popup.import-options') 
             </div>
         </div>					
     </div>

@@ -273,7 +273,7 @@
                     <div class="col-md-12">
                         <div style="margin: 20px 0px 0;" class="text-center">
                             <h5 class="mb-20 mt40">
-                                Looks Like You Don’t Have Any Feedback Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+                                Looks Like You Don’t Have Any Feedback Yet <img src="<?php echo base_url('assets/images/smiley.png'); ?>"> <br>
                                 Lets Create Your First Feedback.
                             </h5>
 

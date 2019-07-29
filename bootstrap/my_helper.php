@@ -3552,4 +3552,50 @@ if (!function_exists('getNotificationLang')) {
     }
 
 }
+
+
+/**
+ * Used to display formatted phone number
+ * @param type $num
+ * @return type
+ */
+function phoneDisplay($num) {
+    $num = preg_replace('/[^0-9]/', '', $num);
+    $len = strlen($num);
+    if ($len == 11 && substr($num, 0, 1) == '1') {
+        return substr($num, 1, 10);
+    }
+    return $num;
+}
+
+/**
+ * Used to get formatted phone number
+ * @param type $mobileNo
+ * @return string
+ */
+function mobileNoFormatChat($mobileNo) {
+    if (!isset($mobileNo{3})) {
+        return '';
+    }
+    // note: strip out everything but numbers
+    $mobileNo = preg_replace("/[^0-9]/", "", $mobileNo);
+    $length = strlen($mobileNo);
+    switch ($length) {
+        case 7:
+            return preg_replace("/([0-9]{3})([0-9]{4})/", "$1-$2", $mobileNo);
+        break;
+        case 10:
+            return preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "($1) $2-$3", $mobileNo);
+        break;
+        case 11:
+            return preg_replace("/([0-9]{1})([0-9]{3})([0-9]{3})([0-9]{4})/", "($2) $3-$4", $mobileNo);
+        break;
+        case 12:
+            return preg_replace("/([0-9]{2})([0-9]{3})([0-9]{3})([0-9]{4})/", "($2) $3-$4", $mobileNo);
+        break;
+        default:
+            return $mobileNo;
+        break;
+    }
+}
 ?>

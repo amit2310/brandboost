@@ -5,7 +5,7 @@
 	.box .col-md-2.review_source_new .inner .text_sec img{width: 10px; height: 10px; vertical-align: top;margin-top: 3px;}
 </style>
 <?php
-	$widgetType = $widgetData->widget_type;
+	//$widgetType = $widgetData->widget_type;
 ?>
 
 <div class="box smart-widget-type-box" style="width: 680px; z-index:11;">
