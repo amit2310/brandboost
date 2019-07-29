@@ -293,16 +293,19 @@ class SettingsModel extends Model {
             return false;
     }
 
-    
-    public function updateNotificationSettings($aData, $userID) {
+    /**
+     * This function is use to check the module permissons allow for notifications 
+     * @param type $clientID
+     * @return type
+     */
+    public static function updateNotificationSettings($aData, $userID) {
         if ($userID > 0) {
-            $this->db->where('user_id', $userID);
-            $result = $this->db->update('tbl_users_notification_settings', $aData);
-            if ($result) {
-                return true;
-            } else {
-                return false;
-            }
+          
+            DB::table('tbl_users_notification_settings')
+                ->where('user_id', $userID)
+                ->update($aData);
+
+            return true;
         }
     }
 
