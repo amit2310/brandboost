@@ -214,15 +214,11 @@ class BrandModel extends Model
 	}
 
     public function getFaqDataByUserId($userID) {
-
-        $result = '';
-        $this->db->where('user_id', $userID);
-        $this->db->from('tbl_brandboost_faqs');
-        $this->db->order_by("id", "desc");
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            $result = $query->result();
-        }
-        return $result; 
+     
+        $oData = DB::table('tbl_brandboost_faqs')
+         ->where('user_id', $userID)
+        ->orderBy("id", "desc");
+       
+        return $oData; 
     }
 }

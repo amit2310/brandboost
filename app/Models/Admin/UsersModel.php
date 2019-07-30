@@ -562,16 +562,22 @@ class UsersModel extends Model {
         return $response;
     }
 
+
+ 
+    /**
+     * Used to get the username on the behalf of the company name
+     * @param type $companyName
+     * @return username
+     */
+
+
     public function getUserByCompanyName($companyName) {
 
         $companyName = str_replace("-", " ", $companyName);
-        $this->db->like('tbl_users.company_name', $companyName);
-        $result = $this->db->get('tbl_users');
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_users')
+        ->where('tbl_users.company_name','like', '%'.$companyName.'%')->first();
+        
+        return $oData;
     }
 
     public function updateUser($userID, $data) {
