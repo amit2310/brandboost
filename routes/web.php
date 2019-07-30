@@ -52,6 +52,7 @@ Route::post('admin/brandboost/delete_brandboost','Admin\Brandboost@deleteBrandbo
 Route::get('admin/brandboost/offsite_setup/{id}','Admin\Brandboost@offsiteSetup');
 Route::get('admin/brandboost/widget_overview','Admin\Brandboost@widgetOverview');
 Route::get('admin/brandboost/widgets','Admin\Brandboost@widgets');
+Route::post('reviews/saveNewReview','Reviews@saveNewReview');
 
 
 
