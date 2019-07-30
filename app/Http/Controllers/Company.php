@@ -12,9 +12,10 @@ use App\Models\Admin\BrandboostModel;
 use App\Models\Admin\QuestionModel;
 
 use Session;
-
-		class Company extends Controller {
-
+error_reporting(0);
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+class Company extends Controller {
 
 
       /**
@@ -28,6 +29,9 @@ use Session;
 			$mBrand = new  BrandModel();
 			$mBrandboost = new BrandboostModel();
 			$mUser = new UsersModel();
+				$questionAndAnsData= array();
+				$userDetail= array();
+				$aReviews= array();
 
 
 			if (!empty($campaign)) {
@@ -35,9 +39,7 @@ use Session;
 				$productName = Request::segment(3);
 				$campaignId = explode('-', $productName);
 				$campaignId = end($campaignId);
-				$questionAndAnsData= array();
-				$userDetail= array();
-				$aReviews= array();
+			
 
 				if (!empty($campaignId)) {
 					$offset = 0;
@@ -72,9 +74,7 @@ use Session;
 				$userID = 0;
 				$offset = 0;
 				$limit = 100;
-				$questionAndAnsData= array();
-				$userDetail= array();
-				$aReviews= array();
+			
 				$userDetail = $mUser->getUserByCompanyName($bussName);
 				$bussName = ucwords(str_replace('-', ' ', $bussName));
 				$userID = $userDetail->id;
@@ -83,7 +83,6 @@ use Session;
 				$campaign_ids = unserialize($brandData[0]->campaign_ids);
 				if(!empty($campaign_ids)) {
 					$aReviews = $this->getSelectedCampaignReviews($campaign_ids, $limit, $offset);
-					//pre($aReviews);
 				}
 				$faQData = $mBrand->getFaqDataByUserId($userID);
 				
@@ -99,13 +98,14 @@ use Session;
 		
 		
 		public function getReviewQuestionsAndAnswers($campaignId){
+			$mUser = new UsersModel();
 			$oQuestions = $this->mQuestion->getBrandboostQuestions($campaignId);
 			if (!empty($oQuestions)) {
 				foreach ($oQuestions as $qusetion) {
 					$qusetion = (array) $qusetion;
 					$questionID = $qusetion['id'];
 					$aQAData[$questionID] = $qusetion;
-					$userData = $this->mUser->getUserInfo($qusetion['user_id']);
+					$userData = $mUser->getUserInfo($qusetion['user_id']);
 					$aQAData[$questionID]['user_data'] = $userData;
 					
 					$oAnswers = $this->mQuestion->getAllAnswer($questionID);
@@ -113,7 +113,7 @@ use Session;
 						foreach ($oAnswers as $answer) {
 							$answer = (array) $answer;
 							$answerID = $answer['id'];
-							$userData = $this->mUser->getUserInfo($answer['user_id']);
+							$userData = $mUser->getUserInfo($answer['user_id']);
 							$helpfulData = $this->mQuestion->getReviewAnswerHelpful($answerID);
 							$aQAData[$questionID]['answer'][$answerID] = $answer;
 							$aQAData[$questionID]['answer'][$answerID]['user_data'] = $userData;
@@ -427,6 +427,7 @@ use Session;
 		public function getCampaignSiteReviews($campaignID, $limit, $offset, $aSettings = array()) {
 			//$aUser = getLoggedUser();
 			$aUser = array();
+			$mUser  = new UsersModel();
 			if(!empty($aUser)){
 				$aSettings['logged'] = true;
 				$aSettings['logged_id'] = $aUser->id;
@@ -443,7 +444,7 @@ use Session;
 					$reviewID = $aReview['id'];
 					$userID = $aReview['user_id'];
 					$aReviewData[$reviewID] = $aReview;
-					$userData = $this->mUser->getUserInfo($userID);
+					$userData = $mUser->getUserInfo($userID);
 					// Get Helpful
 					$aHelpful = $this->mReviews->countSiteReviewHelpful($reviewID);
 					$aReviewData[$reviewID]['total_helpful'] = $aHelpful['yes'];
@@ -472,6 +473,9 @@ use Session;
 		public function getCampaignReviews($campaignID, $limit, $offset, $aSettings = array()) {
 			//$aUser = getLoggedUser();
 			$aUser = array();
+			$mUser = new UsersModel();
+			$mBrandboost = new BrandboostModel();
+			$mReviews = new ReviewsModel();
 			if(!empty($aUser)){
 				$aSettings['logged'] = true;
 				$aSettings['logged_id'] = $aUser->id;
@@ -487,17 +491,17 @@ use Session;
 					$reviewID = $aReview['id'];
 					$userID = $aReview['user_id'];
 					$aReviewData[$reviewID] = $aReview;
-					$userData = $this->mUser->getUserInfo($userID);
+					$userData = $mUser->getUserInfo($userID);
 					// Get Helpful
-					$aHelpful = $this->mReviews->countHelpful($reviewID);
+					$aHelpful = $mReviews->countHelpful($reviewID);
 					$aReviewData[$reviewID]['total_helpful'] = $aHelpful['yes'];
 					$aReviewData[$reviewID]['total_helpful_no'] = $aHelpful['no'];
 					$aReviewData[$reviewID]['user_data'] = (array) $userData;
 					
 					//Get Comments Block
 					//$oComments = $this->getCommentsBlock($reviewID);
-					$oComments = $this->mReviews->getComments($reviewID, $aSettings);
-					$aProductData = $this->mBrandboost->getProductDataById($oReview->product_id);
+					$oComments = $mReviews->getComments($reviewID, $aSettings);
+					$aProductData = $mBrandboost->getProductDataById($oReview->product_id);
 					$aCommentsData = array();
 					if (!empty($oComments)) {
 						foreach ($oComments as $oComment) {
@@ -518,6 +522,9 @@ use Session;
 		
 		public function getProductsCampaignReviews($campaignID, $limit, $offset, $productType, $aSettings = array()) {
 			//$aUser = getLoggedUser();
+			$mUser = new UsersModel();
+			$mReviews = new ReviewsModel();
+			$mBrandboost  = new BrandboostModel();
 			$aUser = array();
 			if(!empty($aUser)){
 				$aSettings['logged'] = true;
@@ -534,17 +541,17 @@ use Session;
 					$reviewID = $aReview['id'];
 					$userID = $aReview['user_id'];
 					$aReviewData[$reviewID] = $aReview;
-					$userData = $this->mUser->getUserInfo($userID);
+					$userData = $mUser->getUserInfo($userID);
 					// Get Helpful
-					$aHelpful = $this->mReviews->countHelpful($reviewID);
+					$aHelpful = $mReviews->countHelpful($reviewID);
 					$aReviewData[$reviewID]['total_helpful'] = $aHelpful['yes'];
 					$aReviewData[$reviewID]['total_helpful_no'] = $aHelpful['no'];
 					$aReviewData[$reviewID]['user_data'] = (array) $userData;
 					
 					//Get Comments Block
 					//$oComments = $this->getCommentsBlock($reviewID);
-					$oComments = $this->mReviews->getComments($reviewID, $aSettings);
-					$aProductData = $this->mBrandboost->getProductDataById($oReview->product_id);
+					$oComments = $mReviews->getComments($reviewID, $aSettings);
+					$aProductData = $mBrandboost->getProductDataById($oReview->product_id);
 					$aCommentsData = array();
 					if (!empty($oComments)) {
 						foreach ($oComments as $oComment) {
@@ -565,6 +572,7 @@ use Session;
 		public function getSelectedCampaignReviews($multiCampaignID, $limit, $offset, $aSettings = array()) {
 			//$aUser = getLoggedUser();
 			$mReviews = new ReviewsModel();
+			$mUser  = new UsersModel();
 			$aReviewData = array();
 			$aUser = array();
 			if(!empty($aUser)){
@@ -582,7 +590,7 @@ use Session;
 					$reviewID = $aReview['id'];
 					$userID = $aReview['user_id'];
 					$aReviewData[$reviewID] = $aReview;
-					$userData = $this->mUser->getUserInfo($userID);
+					$userData = $mUser->getUserInfo($userID);
 					// Get Helpful
 					$aHelpful = $mReviews->countHelpful($reviewID);
 					$aReviewData[$reviewID]['total_helpful'] = $aHelpful['yes'];

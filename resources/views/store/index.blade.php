@@ -1,21 +1,24 @@
-    <?php 
-
+	<?php 
 	$productsData= array();
 	if($brandData->template_style == 1)
-	{
-	   @include("store.layer1"); 
+	{?>
+	@include("store.layer1"); 
+	<?php
 	}
 	else if($brandData->template_style == 2)
-	{
+	{?>
 	@include("store.layer2"); 
+	<?php 
 	}
 	else if($brandData->template_style == 3)
-	{
-	 include("store.layer2"); 
+	{ ?>
+	@include("store.layer3"); 
+	<?php 
 	}
 	else
-	{
-		@include("store.layer1"); 
+	{ ?>
+	@include("store.layer1"); 
+	<?php
 	}
 
 	?>
