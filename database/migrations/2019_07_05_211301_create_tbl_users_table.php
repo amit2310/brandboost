@@ -45,7 +45,7 @@ class CreateTblUsersTable extends Migration {
 			$table->integer('login_counter_au')->default(0);
 			$table->string('company_name', 55);
 			$table->text('company_description');
-			$table->string('company_logo', 55)->default('avatar_image.png');
+			$table->string('company_logo', 255)->default('avatar_image.png');
 			$table->string('company_type')->nullable();
 			$table->string('company_operate_scope', 22)->nullable();
 			$table->integer('company_working_hours')->default(8);
@@ -81,7 +81,7 @@ class CreateTblUsersTable extends Migration {
 			$table->integer('receive_debug_notification')->default(0);
 			$table->dateTime('created')->nullable();
 			$table->integer('login_status')->default(0);
-			$table->dateTime('last_login');
+			$table->dateTime('last_login')->nullable();
 			$table->integer('deleted_status')->default(0)->comment('1 = Deleted, 0 = Not deleted');
 			$table->integer('phone_display')->default(1);
 			$table->integer('website_display')->default(1);
