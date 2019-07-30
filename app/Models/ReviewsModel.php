@@ -474,7 +474,7 @@ class ReviewsModel extends Model {
         ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_brandboost.brand_title')
         ->leftjoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
         ->join('tbl_brandboost', 'tbl_reviews.campaign_id','=','tbl_brandboost.id')
-        ->where('tbl_reviews.campaign_id', $multiCampaignID)
+        ->whereIn('tbl_reviews.campaign_id', $multiCampaignID)
         ->where('tbl_reviews.status', '1')
         ->when((!empty($aSettings['logged']) && !empty($aSettings['logged_id'])), function($query){
          return $query->orWhere("tbl_reviews.status", '2');
@@ -651,14 +651,14 @@ class ReviewsModel extends Model {
 
     public function countHelpful($reviewID) {
         $result = array();
-        $this->db->where("review_id", $reviewID);
-        $rResponse = $this->db->get("tbl_reviews_helpful");
+        $rResponse = DB::table('tbl_reviews_helpful')
+        ->where("review_id", $reviewID)->get();
         $yes = 0;
         $no = 0;
         //echo $this->db->last_query();
-        if ($rResponse->num_rows() > 0) {
-            $oResult = $rResponse->result();
-            foreach ($oResult as $row) {
+        if ($rResponse->count() > 0) {
+            //$oResult = $rResponse->result();
+            foreach ($rResponse as $row) {
                 if ($row->helpful_yes == 1) {
                     $yes++;
                 } else if ($row->helpful_no == 1) {
@@ -773,19 +773,17 @@ class ReviewsModel extends Model {
     }
 
     public function getComments($reviewID, $aSettings = array()) {
-        $this->db->select("tbl_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile");
-        $this->db->join("tbl_users", "tbl_reviews_comments.user_id=tbl_users.id", "LEFT");
-        $this->db->where("tbl_reviews_comments.review_id", $reviewID);
-        $this->db->where("tbl_reviews_comments.status", "1");
-        if (!empty($aSettings['logged']) && !empty($aSettings['logged_id'])) {
-            $this->db->or_where("tbl_reviews_comments.status", "2");
-        }
-        $this->db->order_by("tbl_reviews_comments.id", "DESC");
-        //$this->db->limit(3, 0);
-        $rResponse = $this->db->get("tbl_reviews_comments");
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
+       $aData =  DB::table('tbl_reviews_comments')
+        ->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
+        ->leftjoin('tbl_users', 'tbl_reviews_comments.user_id','=','tbl_users.id')
+        ->where('tbl_reviews_comments.review_id', $reviewID)
+         ->where("tbl_reviews_comments.status", "1")
+            ->when((!empty($aSettings['logged']) && !empty($aSettings['logged_id'])), function($query){
+            return $query->orWhere("tbl_reviews_comments.status", "2");
+            })
+
+        ->orderBy("tbl_reviews_comments.id", "DESC")->get();
+       
         return $aData;
     }
 
