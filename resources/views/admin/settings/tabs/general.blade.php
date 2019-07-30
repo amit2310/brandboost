@@ -450,9 +450,9 @@ $oCountries = getAllCountries();
                         $('#brand_logo_image_preview').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
                         var dropImage = $('#company_logo').val();
                         $.ajax({
-                            url: '<?php echo base_url('admin/brandboost/DeleteObjectFromS3'); ?>',
+                            url: '<?php echo base_url('admin/brandboost/deleteObjectFromS3'); ?>',
                             type: "POST",
-                            data: {dropImage: dropImage},
+                            data: {dropImage: dropImage, _token: '<?php echo csrf_token(); ?>'},
                             dataType: "json",
                             success: function (data) {
                                 console.log(data);
