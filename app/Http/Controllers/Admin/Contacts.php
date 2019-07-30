@@ -388,9 +388,9 @@ class Contacts extends Controller
         $moduleUnitID = $userID;
 
         if (!empty($userID)) {
-            $subscribersData = $this->mSubscriber->getGlobalSubscribers($userID);
-            $archiveContacts = $this->mSubscriber->getArchiveGlobalSubscribers($userID);
-            $getClientTags = $this->mTags->getClientTags($userID);
+            $subscribersData = SubscriberModel::getGlobalSubscribers($userID);
+            $archiveContacts = SubscriberModel::getArchiveGlobalSubscribers($userID);
+            $getClientTags = TagsModel::getClientTags($userID);
         }
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -398,21 +398,22 @@ class Contacts extends Controller
                         <li><a class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Contacts" class="sidebar-control active hidden-xs ">Contacts</a></li>
                       </ul>';
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
+        $bActiveSubsription = UsersModel::isActiveSubscription();
 
-        $data = array(
+        $aData = array(
             'title' => 'Contacts',
             'pagename' => $breadcrumb,
             'archiveContacts' => $archiveContacts,
-            'oContacts' => $oContacts,
             'subscribersData' => $subscribersData,
             'moduleName' => $moduleName,
             'moduleUnitID' => $moduleUnitID,
             'getClientTags' => $getClientTags,
-            'bActiveSubsription' => $bActiveSubsription
+            'bActiveSubsription' => $bActiveSubsription,
+            'list_id' => ''
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/subscriber/list-subscribers', $data);
+        return view('admin.subscriber.list-subscribers', $aData);
+
     }
 
     public function mycontacts_old() {

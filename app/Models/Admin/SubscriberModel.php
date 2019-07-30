@@ -398,16 +398,19 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         }
     }
 
-    public function getArchiveGlobalSubscribers($userID) {
-        $this->db->where("owner_id", $userID);
-        $this->db->where("status", 2);
-        $this->db->order_by("id", "DESC");
+    /**
+     * This function return archive global subscribers
+     * @param type $userId
+     * @return type object
+     */
+    public static function getArchiveGlobalSubscribers($userID) {
 
-        $result = $this->db->get("tbl_subscribers");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+         $oData = DB::table('tbl_subscribers')
+                ->where('owner_id', $userID)
+                ->where('status', 2)
+                ->orderBy('id', 'desc')
+                ->get();
+        return $oData;
     }
 
     /**
