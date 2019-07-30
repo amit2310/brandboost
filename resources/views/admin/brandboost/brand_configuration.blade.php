@@ -318,7 +318,7 @@
                                         <div class="profile_headings txt_upper p20 fsize11 fw600">Page appearance <a class="pull-right plus_icon" href="#"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
 
                                         <div class="p20">
-                                            <div class="barand_avatar mb20">
+                                            <div class="barand_avatar mb20 hidden">
                                                 <?php 
                                                 //$brandboostData->logo_img1='';
                                                 //$brandboostData->logo_img1='';

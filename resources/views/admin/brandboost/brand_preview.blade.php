@@ -106,7 +106,7 @@ $headercolor2 = '#1e1e40';
 				<img class="company_avatar top_1 br5" src="<?php echo base_url('assets/images/avatar_defaut_logo.png'); ?>" 
 					 alt="<?php //echo $brandboostData->brand_title ;?>" width="100" style="max-height:50px">
 				<?php } else { ?>
-				<img class="company_avatar top_1 br5" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $brandData->company_logo; ?>" 
+				<img class="company_avatar top_1 br5" src="https://s3-us-west-2.amazonaws.com/brandboost.io/<?php echo $brandData->company_logo; ?>" 
 					 alt="<?php //echo $brandboostData->brand_title ;?>" width="100" style="max-height:50px">
 				<?php } ?>			</div>
 			<div class="col-md-6 text-right"><a href="" class="txt_white">FAQ</a></div>
@@ -122,7 +122,7 @@ $headercolor2 = '#1e1e40';
 				<img  src="<?php echo base_url('assets/images/default-logo.png'); ?>" 
 					 alt="<?php //echo $brandboostData->brand_title ;?>"  width="95" height="95" class="rounded company_header_avatar bot1">
 				<?php } else { ?>
-				<img  src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $brandData->company_header_logo; ?>" 
+				<img  src="https://s3-us-west-2.amazonaws.com/brandboost.io/<?php echo $brandData->company_header_logo; ?>" 
 					 alt="<?php //echo $brandboostData->brand_title ;?>" width="95" height="95" class="rounded company_header_avatar bot1" >
 				<?php } ?>						
 					</div>
