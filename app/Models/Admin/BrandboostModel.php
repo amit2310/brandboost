@@ -38,7 +38,6 @@ class BrandboostModel extends Model {
      * @return type
      */
     public static function getBBWidgets($id = 0, $userID = 0, $type = '') {
-
         $oData = DB::table('tbl_brandboost_widgets')
                 ->leftJoin('tbl_brandboost', 'tbl_brandboost_widgets.brandboost_id', '=', 'tbl_brandboost.id')
                 ->select('tbl_brandboost_widgets.*', 'tbl_brandboost.hashcode as bbHash', 'tbl_brandboost.brand_title AS bbBrandTitle', 'tbl_brandboost.brand_desc AS bbBrandDesc', 'tbl_brandboost.brand_img AS campaignImg')
@@ -46,7 +45,7 @@ class BrandboostModel extends Model {
                     return $query->where('tbl_brandboost_widgets.id', $id);
                 })
                 ->when(($userID > 0), function ($query) use ($userID) {
-                    return $query->where('tbl_brandboost_widgets.id', $userID);
+                    return $query->where('tbl_brandboost_widgets.user_id', $userID);
                 })
                 ->when((!empty($type)), function ($query) use ($type) {
                     return $query->where('tbl_brandboost_widgets.review_type', $type);
