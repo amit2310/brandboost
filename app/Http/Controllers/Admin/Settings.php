@@ -93,6 +93,7 @@ class Settings extends Controller {
         $post = Input::post();
 
         if (!empty($post)) {
+
             foreach ($post as $field => $value) {
                 $aData[$field] = $value;
             }

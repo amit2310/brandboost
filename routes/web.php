@@ -50,9 +50,9 @@ Route::post('admin/brandboost/getBBECode','Admin\Brandboost@getBBECode');
 Route::post('admin/brandboost/archive_multipal_brandboost','Admin\Brandboost@archiveMultipalBrandboost');
 Route::post('admin/brandboost/delete_brandboost','Admin\Brandboost@deleteBrandboost');
 Route::get('admin/brandboost/offsite_setup/{id}','Admin\Brandboost@offsiteSetup');
+Route::post('admin/brandboost/deleteObjectFromS3','Admin\Brandboost@deleteObjectFromS3');
 Route::get('admin/brandboost/widget_overview','Admin\Brandboost@widgetOverview');
 Route::get('admin/brandboost/widgets','Admin\Brandboost@widgets');
-
 
 
 Route::post('admin/reviews/updateReviewStatus','Admin\Reviews@updateReviewStatus');
