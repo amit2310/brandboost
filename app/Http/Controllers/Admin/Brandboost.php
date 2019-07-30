@@ -19,6 +19,7 @@ use App\Models\Admin\OffsiteModel;
 use App\Models\Admin\LiveModel;
 use App\Models\Admin\Crons\InviterModel;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
 
 class Brandboost extends Controller {
@@ -949,31 +950,14 @@ class Brandboost extends Controller {
     }
 
 
-    public function DeleteObjectFromS3() {
-        $post = $this->input->post();
+    public function deleteObjectFromS3() {
+
+        $post = Input::post();
         if(!empty($post['dropImage']))
         {
             $dropImage = $post['dropImage'];
-
-            $bucketName = 'brandboost.io';
-            $s3Client = new S3Client([
-                  'region' => 'us-west-2',
-                  'version' => '2006-03-01',
-                  'credentials' => [
-                      'key' => 'AKIAJ52XK7ZH7VCR7XHQ',
-                      'secret' => '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'
-                  ],
-                  // Set the S3 class to use objects.dreamhost.com/bucket
-                  // instead of bucket.objects.dreamhost.com
-                  'use_path_style_endpoint' => true
-               ]);
-
-
-            $resPonse = $s3Client->deleteObject(array(
-               'Bucket' => $bucketName,
-               'Key'    => $dropImage
-            ));
-
+            $s3 = \Storage::disk('s3');
+            $resPonse = $s3->delete($dropImage);
             echo $resPonse;
         }
    }
