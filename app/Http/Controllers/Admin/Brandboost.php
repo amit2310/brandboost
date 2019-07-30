@@ -949,7 +949,9 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/brandboost/onsite_list', $aData);
     }
 
-
+    /*
+        Delete the file from the s3 server
+    */
     public function deleteObjectFromS3() {
 
         $post = Input::post();
