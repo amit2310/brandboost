@@ -2569,33 +2569,38 @@ class BrandboostModel extends Model {
         }
     }
 
-    public function campaignSiteReview($campaignID, $limit = 5, $offsite = 0) {
+    /**
+	* function is used to get the campaign site reviews
+	* @return type
+	*/
 
-        $this->db->select("tbl_reviews_site.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar");
-        $this->db->join("tbl_users", "tbl_reviews_site.user_id=tbl_users.id", "LEFT");
-        $this->db->where("tbl_reviews_site.campaign_id", $campaignID);
-        $this->db->order_by("tbl_reviews_site.id", "DESC");
-        $this->db->limit($limit, $offsite);
-        $rResponse = $this->db->get("tbl_reviews_site");
-        //echo $this->db->last_query(); exit;
-        if ($rResponse->num_rows() > 0) {
-            return $response = $rResponse->result_array();
-        } else {
-            return '';
-        }
+    public function campaignSiteReview($campaignID, $limit = 5, $offsite = 0) {
+        $aData =  DB::table('tbl_reviews_site')
+        ->select('tbl_reviews_site.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
+        ->leftjoin('tbl_users', 'tbl_reviews_site.user_id','=','tbl_users.id')
+        ->where('tbl_reviews_site.campaign_id', $campaignID)
+        ->orderBy("tbl_reviews_site.id", "DESC")
+         ->limit($limit, $offsite)->get();
+         return $aData;
+        
     }
+
+
+
+ /**
+* This function will return User details by the user id
+* @param type $userId
+* @return type
+*/
+
 
     public function getBrandboostDetailByUserId($userId, $type = '') {
 
-        $this->db->where('user_id', $userId);
-        $this->db->where('review_type', $type);
-        $this->db->where('delete_status', 0);
-        $this->db->order_by('id', 'DESC');
-        $result = $this->db->get('tbl_brandboost');
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
+      $aData =  DB::table('tbl_brandboost')
+        ->where('review_type', $type)
+        ->where('delete_status', 0)
+        ->orderBy('id', 'DESC')->get();
+       
 
         return $aData;
     }
