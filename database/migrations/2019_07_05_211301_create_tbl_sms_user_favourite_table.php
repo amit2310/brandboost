@@ -15,7 +15,7 @@ class CreateTblSmsUserFavouriteTable extends Migration {
 		Schema::create('tbl_sms_user_favourite', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('fav_user_id');
+			$table->string('fav_user_id', 255);
 			$table->integer('curr_user_id');
 			$table->dateTime('created');
 		});
