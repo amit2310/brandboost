@@ -1025,19 +1025,16 @@ class ReviewsModel extends Model {
     
 
     public function getContactBranboostReviews($userID) {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar, tbl_users.country, tbl_subscribers.id as subscriberId, tbl_brandboost.brand_title");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_subscribers.user_id=tbl_users.id", "LEFT");
-        //$this->db->group_by("tbl_reviews.campaign_id");
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $this->db->where("tbl_reviews.user_id", $userID);
-        $this->db->where("tbl_brandboost.delete_status", 0);
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
+       $aData =  DB::table('tbl_reviews')
+        ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country', 'tbl_subscribers.id as subscriberId', 'tbl_brandboost.brand_title')
+        ->leftjoin('tbl_brandboost', 'tbl_reviews.campaign_id' ,'=', 'tbl_brandboost.id')
+        ->join('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
+        ->join('tbl_subscribers', 'tbl_subscribers.user_id','=','tbl_users.id')
+        ->orderBy('tbl_reviews.id', 'DESC')
+        ->where('tbl_reviews.user_id', $userID)
+        ->where('tbl_brandboost.delete_status', 0)
+        ->get();
+       
         return $aData;
     }
 

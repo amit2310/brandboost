@@ -18,6 +18,7 @@
  $brandboostData="";
  $company_logo1 = "";
  $company_logo = "";
+ $tb0active="";
 
 
  if(!empty($_GET['tab']) && $_GET['tab'] =='3')
@@ -835,6 +836,7 @@
 
                                     ?>
                                     <form method="post" name="frmSubmit" id="frmSubmitCampaign" action="javascript:void(0);"  enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         <div class="p20">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -978,6 +980,7 @@
   <div class="modal-dialog" style="max-width: 542px;">
     <div class="modal-content">
       <form name="addQuestionFrm" id="addQuestionFrm" method="post" class="form-horizontal">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="modal-header p20 pl30">
           <button type="button" class="close" data-dismiss="modal">×</button>
           <h5 class="modal-title txt_black">Add new question</h5>
@@ -1034,7 +1037,7 @@
 
  <!--=====================================Createnewlist Popup================================-->    
   <form name="template_type">
-<input type="text" name="template_type" value="" id="template_type_value">
+<input type="hidden" name="template_type" value="" id="template_type_value">
   </form>      
 
 
@@ -2158,7 +2161,7 @@
             $.ajax({
                 url: '<?php echo base_url(); ?>/admin/brandboost/update_faq_status',
                 type: "POST",
-                data: {status: status, faq_id: faq_id},
+                data: {status: status, faq_id: faq_id,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -2217,6 +2220,7 @@
                     {
                         setTimeout(function () {
                             $('.overlaynew').hide();
+                             displayMessagePopup();
                             //window.location.href = 'http://brandboost.io/admin/brandboost/brand_configuration/' + $('#design_brandboost_id').val();
                         }, 1000);
                     } else {
@@ -2263,7 +2267,7 @@
              $.ajax({
                 url: "<?php echo base_url(); ?>/admin/brandboost/getBrandThemeData",
                 method: "POST",
-                data: {'BrandthemeId': this.value},
+                data: {'BrandthemeId': this.value,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data)
                 {

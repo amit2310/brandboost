@@ -13,14 +13,13 @@ class BrandModel extends Model
         
         if(!empty($theme_title))
         {
-        $result = $this->db->insert("tbl_brand_themes", $aThemeData);
-        $inset_id = $this->db->insert_id();
-        $aData['theme_id'] =  $inset_id;
+           $aData['theme_id'] =   DB::table('tbl_brand_themes')
+            ->insertGetId($aThemeData);
 
         }
-		$result = $this->db->insert("tbl_brand_configurations", $aData);
-		//echo $this->db->last_query();
-        $inset_id = $this->db->insert_id();
+
+        $inset_id = DB::table('tbl_brand_configurations')
+	    ->insertGetId("tbl_brand_configurations", $aData);
         if ($inset_id) {
             return $inset_id;
         } else {
@@ -29,10 +28,8 @@ class BrandModel extends Model
 	}
     
       public function addFaqData($aData){
-
-		$result = $this->db->insert(" tbl_brandboost_faqs", $aData);
-		//echo $this->db->last_query(); exit;
-        $inset_id = $this->db->insert_id();
+     
+		$inset_id = DB::table('tbl_brandboost_faqs')->insertGetId($aData);
         if ($inset_id) {
             return $inset_id;
         } else {
@@ -44,10 +41,11 @@ class BrandModel extends Model
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 		$result = '';
-		$this->db->where('user_id', $userID);
-        $this->db->where('id', $FaqId);
-        $result = $this->db->update('tbl_brandboost_faqs', $aData);
-        if ($result)
+        DB::table('tbl_brandboost_faqs')
+		->where('user_id', $userID)
+        ->where('id', $FaqId)
+        ->update($aData);
+        if ($result>-1)
             return true;
         else
             return false;
@@ -57,11 +55,12 @@ class BrandModel extends Model
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 		$result = '';
-		$this->db->where('user_id', $userID);
-        $this->db->where('id', $FaqId);
-        $result = $this->db->update('tbl_brandboost_faqs', $aData);
+        $result = DB::table('tbl_brandboost_faqs')
+		->where('user_id', $userID)
+        ->where('id', $FaqId)
+         ->update($aData);
           
-        if ($result)
+        if ($result>-1)
             return true;
         else
             return false;
@@ -86,14 +85,11 @@ class BrandModel extends Model
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 		$result = '';
-		$this->db->where('user_id', $userID);
-        $this->db->where('id', $faQListid);
-		$this->db->from('tbl_brandboost_faqs');
-		$query = $this->db->get();
-		if ($query->num_rows() > 0) {
-            $result = $query->result();
-        }
-        return $result;      
+        $oData = DB::table('tbl_brandboost_faqs')
+		->where('user_id', $userID)
+        ->where('id', $faQListid)->get();
+		
+        return $oData;      
         
 	}
     
@@ -188,18 +184,11 @@ class BrandModel extends Model
         $result = '';
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $this->db->select('*')
-        ->from('tbl_brand_configurations')
-        ->join('tbl_brand_themes', 'tbl_brand_configurations.user_id = tbl_brand_themes.user_id');
-        $this->db->where('tbl_brand_themes.id', $BrandthemeId);
-        $this->db->where('tbl_brand_themes.user_id', $userID);
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-        $result = $query->result();
-     
-        }
-        
-         
+        $result = DB::table('tbl_brand_configurations')
+        ->join('tbl_brand_themes', 'tbl_brand_configurations.user_id','=','tbl_brand_themes.user_id')
+         ->where('tbl_brand_themes.id', $BrandthemeId)
+         ->where('tbl_brand_themes.user_id', $userID)->get();
+       
          return $result;        
         
     }

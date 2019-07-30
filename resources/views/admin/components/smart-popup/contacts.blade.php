@@ -48,20 +48,22 @@
 
 </style>
 <?php
-if (!empty($getMyLists)) {
+$aSelectedLists = array();
+if ($getMyLists->count()>0) {
     foreach ($getMyLists as $key => $value) {
         $aSelectedLists[] = $value->id;
     }
 }
 $aUInfo = $userData;
 //pre($aUInfo);
-$cb_contact_id = $aUInfo->cb_contact_id;
+//$cb_contact_id = $aUInfo->cb_contact_id;
 $userId = $aUInfo->id;
 
-$avatar = $aUInfo->avatar;
+$avatar = "";
 $firstname = $aUInfo->firstname;
 $lastname = $aUInfo->lastname;
-$userRole = $aUInfo->user_role;
+//$userRole = $aUInfo->user_role;
+$userRole = "";
 
 if ($userRole == '1') {
 
@@ -83,7 +85,8 @@ if (!empty($avatar) && $avatar != 'avatar_image.png') {
     $srcUserImg = '/profile_images/avatar_image.png';
 }
 
-$address = $aUInfo->address;
+//$address = $aUInfo->address;
+$address ="";
 $city = $aUInfo->cityName;
 $state = $aUInfo->stateName;
 $country = $aUInfo->country_code;
@@ -94,15 +97,15 @@ $email = $aUInfo->email;
 $mobile = $aUInfo->phone;
 $gender = $aUInfo->gender;
 
-if (!empty($aUInfo->user_id)) {
-    $getNotification = $this->mSetting->getNotificationSettings($aUInfo->user_id);
-    $getUser = $this->mUser->getAllUsers($aUInfo->user_id);
+if (!empty($aUInfo->user_id)) { 
+    $getNotification = \App\Models\Admin\SettingsModel::getNotificationSettings($aUInfo->user_id);
+    $getUser = \App\Models\Admin\UsersModel::getAllUsers($aUInfo->user_id);
     $getUser = $getUser[0];
 } else {
     $getNotification = '';
     $getUser = '';
 }
-$oTags = $this->mTags->getSubscriberTags($aUInfo->id);
+$oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
 ?>
 
 <div class="smartpopup-container">
@@ -363,7 +366,7 @@ $oTags = $this->mTags->getSubscriberTags($aUInfo->id);
 
             <div class="tab-pane" id="NewNote">
                 <div class="pt10 p10" id="contact-notes-container" style="min-height:500px;">
-                    <?php $this->load->view("admin/contacts/partial/smart-notes-block"); ?>
+                    @include("admin.contacts.partial.smart-notes-block")
                 </div>
             </div>
             <div class="tab-pane" id="Email">

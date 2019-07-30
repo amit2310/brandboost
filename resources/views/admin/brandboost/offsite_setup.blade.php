@@ -9,12 +9,14 @@
 <?php
 $feedbackResponseData = $feedbackResponse;
 $offsiteDetail = $getOffsite[0];
+
+
 $offsite_ids = $offsiteDetail->offsite_ids;
 $offsites_links = $offsiteDetail->offsites_links;
 $offsite_ids = unserialize($offsite_ids);
 $offsites_links = unserialize($offsites_links);
 list($canReadCon, $canWriteCon) = fetchPermissions('Contacts');
-
+ 
 $rewards = '';
 $emailWorkflow = '';
 $campaign = '';
