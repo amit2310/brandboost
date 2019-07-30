@@ -712,8 +712,8 @@ class Brandboost extends Controller {
 	public function getBBECode() {
 
         $response = array();
-        $post = array();
-		$brandboostID = $post['brandboost_id'];
+
+		$brandboostID = Input::post("brandboost_id");
 
 		$result = BrandboostModel::getBrandboost($brandboostID);
 
@@ -764,7 +764,7 @@ class Brandboost extends Controller {
 
         $offsite_ids = $oBrandboost[0]->offsite_ids;
         $offsite_ids = unserialize($offsite_ids);
-        $offsite_ids = implode(",", $offsite_ids);
+        $offsite_ids = @implode(",", $offsite_ids);
         //$totalSocialIcon = OffsiteModel::offsite_count_all_edit('', $offsite_ids);
 		$totalSocialIcon  = 5;
         $offstepdata = OffsiteModel::getOffsite();
@@ -780,19 +780,20 @@ class Brandboost extends Controller {
         $oCampaignTags = WorkflowModel::getWorkflowCampaignTags($moduleName);
         $oDefaultTemplates = WorkflowModel::getWorkflowDefaultTemplates($moduleName, 'offsite');
 
-
         $setTab = Session::get("setTab");
-
-        $offsite_ids = $oBrandboost[0]->offsite_ids;
-        $offsite_ids = unserialize($offsite_ids);
-        foreach ($offsite_ids as $value) {
-            if (!empty($value) && $value > 0) {
-                $getData = getOffsite($value);
-                if (!empty($getData)) {
-                    $setTab = 'Review Sources';
-                }
-            }
-        }
+		$offsiteIds = explode(',', $offsite_ids);
+		if(!empty($offsiteIds)){
+			foreach ($offsiteIds as $value) {
+				if (!empty($value) && $value > 0) {
+					$getData = getOffsite($value);
+					if (!empty($getData)) {
+						$setTab = 'Review Sources';
+					}
+				}
+			}
+		}else{
+			$setTab = 'Review Sources';
+		}
 
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -914,9 +915,325 @@ class Brandboost extends Controller {
     }
 	
 	
+	/**
+	* Used to get offsite campaign preference
+	* @return type
+	*/
+	public function campaignPreferences() {
+
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+		$brandboostID = Input::post("brandboostID");
+        $oBrandboost = BrandboostModel::getBrandboost($brandboostID);
+        $brandboostData = $oBrandboost[0];
+
+        $offsites_links = $brandboostData->offsites_links;
+        $offsites_links = unserialize($offsites_links);
+
+        $offsite_ids = $brandboostData->offsite_ids;
+        $offsite_ids = unserialize($offsite_ids);
+        if (!empty($offsite_ids)) {
+            $selected_list = implode(",", $offsite_ids);
+        } else {
+            $selected_list = 0;
+        }
+        $socialsList = '';
+        if (!empty($offsite_ids)) {
+            $thumbColor = array('bkg1', 'bkg2', 'bkg3', 'bkg4', 'bkg5', 'bkg6');
+
+            foreach ($offsite_ids as $value) {
+                if (!empty($value) && $value > 0) {
+                    $getData = getOffsite($value);
+                    if (!empty($getData)) {
+                        $inc = rand(0, 5);
+                        $getLinksSocial = $offsites_links[$getData->id]['link'];
+
+                        $sourceName = strtolower($getData->name);
+                        if ($sourceName == 'yelp') {
+                            $sourceClass = 'txt_red';
+                            $thumbclass = 'bkg2';
+                        } else if ($sourceName == 'google') {
+                            $sourceClass = 'txt_blue';
+                            $thumbclass = 'bkg1';
+                        } else if ($sourceName == 'yahoo') {
+                            $sourceClass = 'txt_purple';
+                            $thumbclass = 'bkg5';
+                        } else if ($sourceName == 'facebook') {
+                            $sourceClass = 'txt_dblue';
+                            $thumbclass = 'bkg3';
+                        } else {
+                            $sourceClass = 'txt_blue';
+                            $thumbclass = 'bkg1';
+                        }
+                        $sourceName = !empty($sourceName) ? $sourceName : 'NA';
+
+
+                        $socialsList .= '<li class="media panel-body stack-media-on-mobile" id="socialIcon' . $value . '">
+                            <div class="media-left"> <a class="' . $thumbclass . '" href="javascript:void(0);">';
+
+                        if (in_array('OtherSources', unserialize($getData->site_categories))) {
+                            $socialsList .= '<i class="icon-' . $sourceName . ' ' . $sourceClass . ' socialIcon" style="font-style:inherit">M</i>';
+                        } else {
+
+                            //$socialsList .= '<i class="icon-' . $sourceName . ' ' . $sourceClass . ' socialIcon"></i>';
+
+                            $socialsList .= '<img src="/uploads/' . $getData->image . '" height="45" width="45">';
+                        }
+
+                        $socialsList .= '</a> </div>
+                            <div class="media-body">
+							<div class="col-md-12 mb-10 pl0 pr0">
+							<h5>' . $getData->name . '</h5>
+							<h6>';
+                        if (in_array('OtherSources', unserialize($getData->site_categories))) {
+                            $getLinksSocial = $getLinksSocial != '' ? $getLinksSocial : $getData->website_url;
+                            $socialsList .= str_replace("www.", "", preg_replace('#^https?://#', '', $getLinksSocial));
+                        } else {
+
+                            $socialsList .= preg_replace('#^https?://#', '', $getData->website_url);
+                        }
+
+
+                        $socialsList .= '</h6>';
+                        $socialsList .= '</div>
+							<div class="col-md-12 pl0 pr0">
+							<div class="input-group">';
+                        if (in_array('OtherSources', unserialize($getData->site_categories))) {
+
+                            $socialsList .= '<input style="text-align:left;" class="form-control autoSave siteURLId_' . $getData->id . '" autocomplete="off" linkid="' . $getData->id . '" id="linkUrl' . $getData->id . '" name="offsite_url[]" value="' . ($getLinksSocial != '' ? $getLinksSocial : $getData->website_url) . '" placeholder="Enter Web Address" type="text" required="required">';
+                        } else {
+                            $socialsList .= '<span class="input-group-addon" style="padding-right: 0;">' . $getData->website_url . '</span>';
+
+                            $socialsList .= '<input class="form-control autoSave siteURLId_' . $getData->id . '" autocomplete="off" linkid="' . $getData->id . '" id="linkUrl' . $getData->id . '" name="offsite_url[]" value="' . ($getLinksSocial != '' ? $getLinksSocial : '') . '" placeholder="Enter Web Address" type="text" required="required">';
+                        }
+
+                        $socialsList .= '<input type="hidden" name="offsite_id[]" value="' . $getData->id . '">
+							</div>
+							</div>
+                            </div>
+                            <div class="media-right text-nowrap">
+							<button type="button" class="btn save white_btn previewButton" siteUrl="' . $getData->website_url . '" siteId="' . $getData->id . '">Preview </button> &nbsp;
+							<button type="button" style="padding: 4px 20px!important" class="btn save dark_btn getReview linkurlC"  bbID="' . $brandboostID . '" linkid="' . $getData->id . '">Save </button>
+							<button type="submit" class="offsite_selected_r cancle" offsiteSelected="1" offsiteId="' . $getData->id . '"><i class="fa fa-close"></i></button>
+                            </div>
+							</li>';
+                    }
+                }
+            }
+        }
+
+        $response = array('status' => 'success', 'socialList' => $socialsList, 'selectedList' => $selected_list);
+        echo json_encode($response);
+        exit;
+    }
 	
 	
+	/**
+	* Used to add and edit offsite campaign preference
+	* @return type
+	*/
+	public function addOffsiteEdit() {
+
+        $response = array();
+		$userID = Session::get("current_user_id");
+		$offset_id = Input::post("offstepIds");
+
+		$offstepIds = serialize($offset_id);
+		$brandboostID = Input::post("brandboostID");
+		$aData = array(
+			'offsite_ids' => $offstepIds
+		);
+
+		$result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
+
+		if ($result) {
+			Session::put("setTab", 'Campaign Preferences');
+			$response['status'] = 'success';
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
 	
+	
+	/**
+	* Used to add offsite resources
+	* @return type
+	*/
+	public function addOffsiteResources() {
+
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+		$brandboostID = Input::post("brandboostID"); //$post['brandboostID'];
+		$selected_list = Input::post("selected_list"); //$post['selected_list'];
+		$socialId = Input::post("offsiteId"); //$post['offsiteId'];
+
+		$getBrandboost = BrandboostModel::getBrandboost($brandboostID);
+		$getBrand = unserialize($getBrandboost[0]->offsites_links);
+		unset($getBrand[$socialId]);
+		$selected_list = explode(",", $selected_list);
+
+		$aData = array(
+			'offsite_ids' => serialize($selected_list),
+			'offsites_links' => serialize($getBrand)
+		);
+
+		$result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
+		if ($result) {
+			$response['status'] = 'success';
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
+	
+	
+	/**
+	* Used to add offsite url link
+	* @return type
+	*/
+	public function addOffsiteUrl() {
+
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $brandboostID = Input::post("brandboostID");
+
+		$review_expire = Input::post("review_expire"); //$post['review_expire'];
+		$review_expire_link = Input::post("review_expire_link"); //$post['review_expire_link'];
+		$revExpireLink = array();
+		if ($review_expire_link == 'custom') {
+			$txtInteger = Input::post("txtInteger"); //$post['txtInteger'];
+			$exp_duration = Input::post("exp_duration"); //$post['exp_duration'];
+			$revExpireLink['delay_value'] = $txtInteger;
+			$revExpireLink['delay_unit'] = $exp_duration;
+		} else {
+			$revExpireLink['delay_value'] = 'never';
+			$revExpireLink['delay_unit'] = 'never';
+		}
+
+
+		$offsite_id = Input::post("offsite_id"); //$post['offsite_id'];
+		$offsite_url = Input::post("offsite_url"); //$post['offsite_url'];
+		$edit_campaignName = Input::post("edit_campaignName"); //$post['edit_campaignName'];
+		$selected_list = Input::post("selected_list"); //$post['selected_list'];
+		$selected_list = explode(",", $selected_list);
+
+		$newOffsiteUrl = array();
+		$oReviewSources = OffsiteModel::getOffsite();
+		if (!empty($oReviewSources)) {
+			foreach ($oReviewSources as $oWebsite) {
+				$oSources[$oWebsite->id] = $oWebsite;
+			}
+		}
+		$inc = 0;
+		foreach ($offsite_id as $val) {
+			//get source info
+			$oSourceInfo = $oSources[$val];
+			$newOffsiteUrl[$val]['source'] = $oSourceInfo->name;
+			$newOffsiteUrl[$val]['link'] = $offsite_url[$inc];
+			$newOffsiteUrl[$val]['longurl'] = $oSourceInfo->website_url . $offsite_url[$inc];
+			$newOffsiteUrl[$val]['shorturl'] = base_url('r/' . $brandboostID . '/' . $val);
+			$inc++;
+		}
+		$offsiteUrl = serialize($newOffsiteUrl);
+		$storeURL = Input::post("store_url"); //strip_tags($post['store_url']);
+		$aData = array(
+			'offsites_links' => $offsiteUrl,
+			'brand_title' => $edit_campaignName,
+			'offsite_ids' => serialize($selected_list),
+			'link_expire_review' => $review_expire,
+			'link_expire_custom' => json_encode($revExpireLink),
+			'store_url' => $storeURL
+		);
+
+		$result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
+		
+		$feedback_type = Input::post("feedback_type"); //$post['feedback_type'];
+		$ratings_type = Input::post("ratings_type"); //$post['ratings_type'];
+		$from_name = Input::post("from_name"); //$post['from_name'];
+		$from_email = Input::post("from_email"); //$post['from_email'];
+		$sender_name = Input::post("sender_name"); //$post['sender_name'];
+		$offsite_url = Input::post("offsite_url"); //$post['offsite_url'];
+		$positive_title = Input::post("positive_title"); //$post['positive_title'];
+		$positive_subtitle = Input::post("positive_subtitle"); //$post['positive_subtitle'];
+		$negetive_title = Input::post("negetive_title"); //$post['negetive_title'];
+		$negetive_subtitle = Input::post("negetive_subtitle"); //$post['negetive_subtitle'];
+		$neutral_title = Input::post("neutral_title"); //$post['neutral_title'];
+		$neutral_subtitle = Input::post("neutral_subtitle"); //$post['neutral_subtitle'];
+
+
+		$feedbackData = array(
+			'brandboost_id' => $brandboostID,
+			'feedback_type' => $feedback_type,
+			'ratings_type' => $ratings_type,
+			'from_name' => $from_name,
+			'from_email' => $from_email,
+			'sms_sender' => $sender_name,
+			'pos_title' => $positive_title,
+			'pos_sub_title' => $positive_subtitle,
+			'neg_title' => $negetive_title,
+			'neg_sub_title' => $negetive_subtitle,
+			'neu_title' => $neutral_title,
+			'neu_sub_title' => $neutral_subtitle,
+			'created' => date("Y-m-d H:i:s")
+		);
+		$aResponse = FeedbackModel::getFeedbackResponse($brandboostID);
+		if (count($aResponse) > 0) {
+			$result = BrandboostModel::updateBrandboostFeedbackResponse($feedbackData, $brandboostID);
+		} else {
+			$result = BrandboostModel::addBrandboostFeedbackResponse($feedbackData);
+		}
+
+		if ($result) {
+			//Okay We also need to update "From" info into the campaigns
+			$this->updateWorkflowFromInfo($feedbackData, $brandboostID);
+			
+			$response['status'] = 'success';
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
+	
+	
+	/**
+	* Used to continue offsite steps
+	* @return type
+	*/
+	public function continueStepOffsite() {
+
+        $response = array();
+
+		$targetName = Input::post("targetName"); //$post['targetName'];
+		$brandboostID = Input::post("brandboostID"); //$post['brandboostID'];
+		$aUser = getLoggedUser();
+		$userID = $aUser->id;
+		if ($targetName == '' && $brandboostID > 0) {
+			$aData = array(
+				'status' => 1
+			);
+
+			$result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
+			$response['public'] = 1;
+		} else {
+			Session::put("setTab", $targetName);
+			$response['public'] = 0;
+		}
+		$response['status'] = 'success';
+		echo json_encode($response);
+		exit;
+    }
 	
 	
 	public function index() {
@@ -4137,218 +4454,7 @@ class Brandboost extends Controller {
             exit;
         }
     }
-
-    public function add_offsite_edit() {
-
-        $response = array();
-        $post = array();
-        $userID = $this->session->userdata("current_user_id");
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $offset_id = $post['offstepIds'];
-
-            $offstepIds = serialize($offset_id);
-            $brandboostID = strip_tags($post['brandboostID']);
-            $aData = array(
-                'offsite_ids' => $offstepIds
-            );
-
-            $result = $this->mBrandboost->update($userID, $aData, $brandboostID);
-
-            if ($result) {
-                $this->session->set_userdata("setTab", 'Campaign Preferences');
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function continueStepOffsite() {
-
-        $response = array();
-        $post = array();
-        $post = $this->input->post();
-        if ($post) {
-            $targetName = $post['targetName'];
-            $brandboostID = $post['brandboostID'];
-            $aUser = getLoggedUser();
-            $userID = $aUser->id;
-            if ($targetName == '' && $brandboostID > 0) {
-                $aData = array(
-                    'status' => 1
-                );
-
-                $result = $this->mBrandboost->update($userID, $aData, $brandboostID);
-                $response['public'] = 1;
-            } else {
-                $this->session->set_userdata("setTab", $targetName);
-                $response['public'] = 0;
-            }
-            $response['status'] = 'success';
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function add_offsite_resources() {
-
-        $response = array();
-        $post = array();
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $brandboostID = $post['brandboostID'];
-            $selected_list = $post['selected_list'];
-            $socialId = $post['offsiteId'];
-
-            $getBrandboost = $this->mBrandboost->getBrandboost($brandboostID);
-            $getBrand = unserialize($getBrandboost[0]->offsites_links);
-            unset($getBrand[$socialId]);
-            $selected_list = explode(",", $selected_list);
-
-            $aData = array(
-                'offsite_ids' => serialize($selected_list),
-                'offsites_links' => serialize($getBrand)
-            );
-
-            $result = $this->mBrandboost->update($userID, $aData, $brandboostID);
-            if ($result) {
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function add_offsite_url() {
-
-        $response = array();
-        $post = array();
-        $post = $this->input->post();
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        //$userID = $this->session->userdata("current_user_id");
-        $brandboostID = strip_tags($post['brandboostID']);
-
-        if (!empty($post)) {
-
-
-            $review_expire = $post['review_expire'];
-            $review_expire_link = $post['review_expire_link'];
-            $revExpireLink = array();
-            if ($review_expire_link == 'custom') {
-
-                $txtInteger = $post['txtInteger'];
-                $exp_duration = $post['exp_duration'];
-                $revExpireLink['delay_value'] = $txtInteger;
-                $revExpireLink['delay_unit'] = $exp_duration;
-            } else {
-
-                $revExpireLink['delay_value'] = 'never';
-                $revExpireLink['delay_unit'] = 'never';
-            }
-
-
-            $offsite_id = $post['offsite_id'];
-            $offsite_url = $post['offsite_url'];
-            $edit_campaignName = $post['edit_campaignName'];
-            $selected_list = $post['selected_list'];
-            $selected_list = explode(",", $selected_list);
-
-            $newOffsiteUrl = array();
-            $oReviewSources = $this->rOffsites->getOffsite();
-            if (!empty($oReviewSources)) {
-                foreach ($oReviewSources as $oWebsite) {
-                    $oSources[$oWebsite->id] = $oWebsite;
-                }
-            }
-            $inc = 0;
-            foreach ($offsite_id as $val) {
-                //get source info
-                $oSourceInfo = $oSources[$val];
-                $newOffsiteUrl[$val]['source'] = $oSourceInfo->name;
-                $newOffsiteUrl[$val]['link'] = $offsite_url[$inc];
-                $newOffsiteUrl[$val]['longurl'] = $oSourceInfo->website_url . $offsite_url[$inc];
-                $newOffsiteUrl[$val]['shorturl'] = base_url('r/' . $brandboostID . '/' . $val);
-                $inc++;
-            }
-            $offsiteUrl = serialize($newOffsiteUrl);
-            $storeURL = strip_tags($post['store_url']);
-            $aData = array(
-                'offsites_links' => $offsiteUrl,
-                'brand_title' => $edit_campaignName,
-                'offsite_ids' => serialize($selected_list),
-                'link_expire_review' => $review_expire,
-                'link_expire_custom' => json_encode($revExpireLink),
-                'store_url' => $storeURL
-            );
-
-            $result = $this->mBrandboost->update($userID, $aData, $brandboostID);
-            //  echo $this->db->last_query();
-
-
-
-            $feedback_type = $post['feedback_type'];
-            $ratings_type = $post['ratings_type'];
-            $from_name = $post['from_name'];
-            $from_email = $post['from_email'];
-            $sender_name = $post['sender_name'];
-            $offsite_url = $post['offsite_url'];
-            $positive_title = $post['positive_title'];
-            $positive_subtitle = $post['positive_subtitle'];
-            $negetive_title = $post['negetive_title'];
-            $negetive_subtitle = $post['negetive_subtitle'];
-            $neutral_title = $post['neutral_title'];
-            $neutral_subtitle = $post['neutral_subtitle'];
-
-
-            $feedbackData = array(
-                'brandboost_id' => $brandboostID,
-                'feedback_type' => $feedback_type,
-                'ratings_type' => $ratings_type,
-                'from_name' => $from_name,
-                'from_email' => $from_email,
-                'sms_sender' => $sender_name,
-                'pos_title' => $positive_title,
-                'pos_sub_title' => $positive_subtitle,
-                'neg_title' => $negetive_title,
-                'neg_sub_title' => $negetive_subtitle,
-                'neu_title' => $neutral_title,
-                'neu_sub_title' => $neutral_subtitle,
-                'created' => date("Y-m-d H:i:s")
-            );
-            $aResponse = $this->mFeedback->getFeedbackResponse($brandboostID);
-            if (count($aResponse) > 0) {
-                $result = $this->mBrandboost->updateBrandboostFeedbackResponse($feedbackData, $brandboostID);
-            } else {
-                $result = $this->mBrandboost->addBrandboostFeedbackResponse($feedbackData);
-            }
-
-            if ($result) {
-                //Okay We also need to update "From" info into the campaigns
-
-                $this->updateWorkflowFromInfo($feedbackData, $brandboostID);
-                //Set Tab session
-                //$this->session->set_userdata("setTab", 'Email Workflow');
-
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
+    
 
     public function updateWorkflowFromInfo($aData, $brandboostID) {
         if (!empty($brandboostID)) {
@@ -4380,41 +4486,6 @@ class Brandboost extends Controller {
         }
     }
 
-    public function addOffsiteUrl() {
-
-        $response = array();
-        $post = array();
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $post = $this->input->post();
-        $brandboostID = $post['bbID'];
-        $result = $this->mBrandboost->getBrandboost($brandboostID);
-        if ($post) {
-
-            $getSocialId = $post['getSocialId'];
-            $getUrl = $post['getUrl'];
-            $offsites_links = unserialize($result[0]->offsites_links);
-            $offsites_links[$getSocialId]['link'] = $getUrl;
-            $offsites_links[$getSocialId]['longurl'] = $getUrl;
-            $offsites_links[$getSocialId]['shorturl'] = base_url('r/' . $brandboostID . '/' . $getSocialId);
-
-            $offsiteUrl = serialize($offsites_links);
-            $aData = array(
-                'offsites_links' => $offsiteUrl
-            );
-
-            $result = $this->mBrandboost->update($userID, $aData, $brandboostID);
-            if ($result) {
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-
-            echo json_encode($response);
-
-            exit;
-        }
-    }
 
     public function edit_offsite() {
 
@@ -6093,121 +6164,6 @@ class Brandboost extends Controller {
             );
             $this->mSettings->logExportHistory($aHistoryData);
         }
-        exit;
-    }
-
-    public function campaignPreferences() {
-
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $brandboostID = $post['brandboostID'];
-        $oBrandboost = $this->mBrandboost->getBrandboost($brandboostID);
-        $brandboostData = $oBrandboost[0];
-
-        $offsites_links = $brandboostData->offsites_links;
-        $offsites_links = unserialize($offsites_links);
-
-        $offsite_ids = $brandboostData->offsite_ids;
-        $offsite_ids = unserialize($offsite_ids);
-        if (!empty($offsite_ids)) {
-            $selected_list = implode(",", $offsite_ids);
-        } else {
-            $selected_list = 0;
-        }
-        $socialsList = '';
-        if (!empty($offsite_ids)) {
-            $thumbColor = array('bkg1', 'bkg2', 'bkg3', 'bkg4', 'bkg5', 'bkg6');
-
-            foreach ($offsite_ids as $value) {
-                if (!empty($value) && $value > 0) {
-                    $getData = getOffsite($value);
-                    if (!empty($getData)) {
-                        $inc = rand(0, 5);
-                        $getLinksSocial = $offsites_links[$getData->id]['link'];
-
-                        $sourceName = strtolower($getData->name);
-                        if ($sourceName == 'yelp') {
-                            $sourceClass = 'txt_red';
-                            $thumbclass = 'bkg2';
-                        } else if ($sourceName == 'google') {
-                            $sourceClass = 'txt_blue';
-                            $thumbclass = 'bkg1';
-                        } else if ($sourceName == 'yahoo') {
-                            $sourceClass = 'txt_purple';
-                            $thumbclass = 'bkg5';
-                        } else if ($sourceName == 'facebook') {
-                            $sourceClass = 'txt_dblue';
-                            $thumbclass = 'bkg3';
-                        } else {
-                            $sourceClass = 'txt_blue';
-                            $thumbclass = 'bkg1';
-                        }
-                        $sourceName = !empty($sourceName) ? $sourceName : 'NA';
-
-
-                        $socialsList .= '<li class="media panel-body stack-media-on-mobile" id="socialIcon' . $value . '">
-                            <div class="media-left"> <a class="' . $thumbclass . '" href="javascript:void(0);">';
-
-                        if (in_array('OtherSources', unserialize($getData->site_categories))) {
-                            $socialsList .= '<i class="icon-' . $sourceName . ' ' . $sourceClass . ' socialIcon" style="font-style:inherit">M</i>';
-                        } else {
-
-                            //$socialsList .= '<i class="icon-' . $sourceName . ' ' . $sourceClass . ' socialIcon"></i>';
-
-                            $socialsList .= '<img src="/uploads/' . $getData->image . '" height="45" width="45">';
-                        }
-
-                        $socialsList .= '</a> </div>
-                            <div class="media-body">
-							<div class="col-md-12 mb-10 pl0 pr0">
-							<h5>' . $getData->name . '</h5>
-							<h6>';
-                        if (in_array('OtherSources', unserialize($getData->site_categories))) {
-                            $getLinksSocial = $getLinksSocial != '' ? $getLinksSocial : $getData->website_url;
-                            $socialsList .= str_replace("www.", "", preg_replace('#^https?://#', '', $getLinksSocial));
-                        } else {
-
-                            $socialsList .= preg_replace('#^https?://#', '', $getData->website_url);
-                        }
-
-
-                        $socialsList .= '</h6>';
-                        $socialsList .= '</div>
-							<div class="col-md-12 pl0 pr0">
-							<div class="input-group">';
-                        if (in_array('OtherSources', unserialize($getData->site_categories))) {
-
-                            $socialsList .= '<input style="text-align:left;" class="form-control autoSave siteURLId_' . $getData->id . '" autocomplete="off" linkid="' . $getData->id . '" id="linkUrl' . $getData->id . '" name="offsite_url[]" value="' . ($getLinksSocial != '' ? $getLinksSocial : $getData->website_url) . '" placeholder="Enter Web Address" type="text" required="required">';
-                        } else {
-                            $socialsList .= '<span class="input-group-addon" style="padding-right: 0;">' . $getData->website_url . '</span>';
-
-                            $socialsList .= '<input class="form-control autoSave siteURLId_' . $getData->id . '" autocomplete="off" linkid="' . $getData->id . '" id="linkUrl' . $getData->id . '" name="offsite_url[]" value="' . ($getLinksSocial != '' ? $getLinksSocial : '') . '" placeholder="Enter Web Address" type="text" required="required">';
-                        }
-
-                        $socialsList .= '<input type="hidden" name="offsite_id[]" value="' . $getData->id . '">
-							</div>
-							</div>
-                            </div>
-                            <div class="media-right text-nowrap">
-							<button type="button" class="btn save white_btn previewButton" siteUrl="' . $getData->website_url . '" siteId="' . $getData->id . '">Preview </button> &nbsp;
-							<button type="button" style="padding: 4px 20px!important" class="btn save dark_btn getReview linkurlC"  bbID="' . $brandboostID . '" linkid="' . $getData->id . '">Save </button>
-							<button type="submit" class="offsite_selected_r cancle" offsiteSelected="1" offsiteId="' . $getData->id . '"><i class="fa fa-close"></i></button>
-                            </div>
-							</li>';
-                    }
-                }
-            }
-        }
-
-        $response = array('status' => 'success', 'socialList' => $socialsList, 'selectedList' => $selected_list);
-        echo json_encode($response);
         exit;
     }
 

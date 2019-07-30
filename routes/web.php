@@ -52,6 +52,11 @@ Route::post('admin/brandboost/delete_brandboost','Admin\Brandboost@deleteBrandbo
 Route::get('admin/brandboost/offsite_setup/{id}','Admin\Brandboost@offsiteSetup');
 Route::get('admin/brandboost/widget_overview','Admin\Brandboost@widgetOverview');
 Route::get('admin/brandboost/widgets','Admin\Brandboost@widgets');
+Route::post('admin/brandboost/campaignPreferences','Admin\Brandboost@campaignPreferences');
+Route::post('admin/brandboost/add_offsite_edit','Admin\Brandboost@addOffsiteEdit');
+Route::post('admin/brandboost/add_offsite_resources','Admin\Brandboost@addOffsiteResources');
+Route::post('admin/brandboost/add_offsite_url','Admin\Brandboost@addOffsiteUrl');
+Route::post('admin/brandboost/continueStepOffsite','Admin\Brandboost@continueStepOffsite');
 
 
 
