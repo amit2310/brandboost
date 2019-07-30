@@ -8,7 +8,7 @@
 <?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign'); ?>
 <?php
 $iActiveCount = $iArchiveCount = 0;
-$oWidgetsList =  array();
+//$oWidgetsList =  array();
 
 if (!empty($oWidgetsList)) {
     foreach ($oWidgetsList as $oCount) {
@@ -19,6 +19,18 @@ if (!empty($oWidgetsList)) {
         }
     }
 }
+$aViews = array();
+$aClicks = array();
+$aComments = array();
+$aHelpful = array();
+$aViews1 = array();
+$aClicks1 = array();
+$aComments1 = array();
+$aHelpful1 = array();
+$aViews2 = array();
+$aClicks2 = array();
+$aComments2 = array();
+$aHelpful2 = array();
 ?>
 <!-- Content area -->
 <div class="content">
@@ -241,9 +253,10 @@ if (!empty($oWidgetsList)) {
                                         $inc = 1;
                                         $aUser = getLoggedUser();
                                         $currentUserId = $aUser->id;
+										
                                         foreach ($oWidgetsList as $data) {
                                             $wid = $data->id;
-                                            $oStats = $this->mBrandboost->getBBWidgetStats($wid);
+                                            $oStats = \App\Models\Admin\BrandboostModel::getBBWidgetStats($wid);
                                             //widget Stats related Data
                                             if (!empty($oStats)) {
                                                 foreach ($oStats as $oStat) {
@@ -268,23 +281,17 @@ if (!empty($oWidgetsList)) {
                                             if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
                                                 $list_id = $data->id;
                                                 $user_id = $data->user_id;
-                                                $brandImgArray = unserialize($data->brand_img);
-                                                $brand_img = $brandImgArray[0]['media_url'];
-
-                                                if (empty($brand_img)) {
-                                                    $imgSrc = base_url('assets/images/default_table_img2.png');
-                                                } else {
-                                                    $imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
-                                                }
-
+                                                
                                                 //Attached camapaign brand Image
                                                 $campaignImgArray = unserialize($data->campaignImg);
                                                 $campaign_img = $campaignImgArray[0]['media_url'];
 
                                                 if (empty($campaign_img)) {
                                                     $campaignImgSrc = base_url('assets/images/default_table_img2.png');
+													$imgSrc = base_url('assets/images/default_table_img2.png');
                                                 } else {
                                                     $campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
+													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
                                                 }
                                                 ?>
 
@@ -350,19 +357,19 @@ if (!empty($oWidgetsList)) {
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <?php echo ($totalViews) ? $totalViews : '0'; ?>
+                                                        <?php //echo ($totalViews) ? $totalViews : '0'; ?>0
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <?php echo ($totalClicks) ? $totalClicks : '0'; ?>
+                                                        <?php //echo ($totalClicks) ? $totalClicks : '0'; ?>0
                                                     </td>
 													
 													 <td class="text-center">
-                                                        <?php echo ($totalComments) ? $totalComments : '0'; ?>
+                                                        <?php //echo ($totalComments) ? $totalComments : '0'; ?>0
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <?php echo ($totalHelpful) ? $totalHelpful : '0'; ?>
+                                                        <?php //echo ($totalHelpful) ? $totalHelpful : '0'; ?>0
                                                     </td>
 
                                                     <td>
@@ -481,7 +488,7 @@ if (!empty($oWidgetsList)) {
                                         $currentUserId = $aUser->id;
                                         foreach ($oWidgetsList as $data) {
                                             $wid = $data->id;
-                                            $oStats = $this->mBrandboost->getBBWidgetStats($wid);
+                                            $oStats = \App\Models\Admin\BrandboostModel::getBBWidgetStats($wid);
                                             //widget Stats related Data
                                             if (!empty($oStats)) {
                                                 foreach ($oStats as $oStat) {
@@ -508,13 +515,15 @@ if (!empty($oWidgetsList)) {
                                             if ($data->status == 3) {
                                                 $list_id = $data->id;
                                                 $user_id = $data->user_id;
-                                                $brandImgArray = unserialize($data->brand_img);
-                                                $brand_img = $brandImgArray[0]['media_url'];
+												$campaignImgArray = unserialize($data->campaignImg);
+                                                $campaign_img = $campaignImgArray[0]['media_url'];
 
-                                                if (empty($brand_img)) {
-                                                    $imgSrc = base_url('assets/images/default_table_img2.png');
+                                                if (empty($campaign_img)) {
+                                                    $campaignImgSrc = base_url('assets/images/default_table_img2.png');
+													$imgSrc = base_url('assets/images/default_table_img2.png');
                                                 } else {
-                                                    $imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
+                                                    $campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
+													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
                                                 }
                                                 ?>
 
@@ -656,8 +665,8 @@ if (!empty($oWidgetsList)) {
                 </div>
             </div>
             
-			<?php //$this->load->view("admin/brandboost/campaign-tabs/widget/onsite-widget-stats", array('statsType' => 'aggregate')); ?>
-			@include('admin.brandboost.campaign-tabs.widget.onsite-widget-stats', array('statsType' => ''))
+			<?php //$this->load->view("admin/brandboost/campaign-tabs/widget/onsite-widget-stats", array('statsType' => 'aggregate')); 
+			//@include('admin.brandboost.campaign-tabs.widget.onsite-widget-stats', array('statsType' => '')) ?>
 			<?php else: ?>
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
