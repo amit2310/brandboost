@@ -110,7 +110,7 @@ class SubscriberModel extends Model {
      * @return type boolean
      */
     public static function updateContactStoreUsage($userID) {
-        $oCurrentUsage = $this->getCurrentUsage($userID);
+        $oCurrentUsage = SubscriberModel::getCurrentUsage($userID);
         if (!empty($oCurrentUsage)) {
             $mainContactLimit = $oCurrentUsage->contact_limit;
             $mainContactLimitTopup = $oCurrentUsage->contact_limit_topup;
@@ -136,7 +136,7 @@ class SubscriberModel extends Model {
      * @param type $clientID
      * @return type object
      */
-    public function getCurrentUsage($clientID) {
+    public static function getCurrentUsage($clientID) {
 
         $oData = DB::table('tbl_account_usage')
                 ->where('user_id', $clientID)
