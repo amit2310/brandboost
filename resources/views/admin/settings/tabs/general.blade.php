@@ -54,10 +54,12 @@ $oCountries = getAllCountries();
                             </div>
                         </div>
                         <!--====LOGO SETTINGS====-->
+                        
                         <div class="bbot p30">
                             <div class="row">
                                 <div class="col-md-3"><p class="text-muted">Logo</p></div>
-                                <div class="col-md-2 brig"><img class="img-circle" id="brand_logo_image_preview" width="64" height="64" src="<?php if (!empty($oUser->company_logo)): ?>https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $oUser->company_logo; ?><?php else: ?><?php echo base_url(); ?>assets/images/wakerslogo.png<?php endif; ?>"/></div>
+                                <div class="col-md-2 brig"><img class="img-circle" id="brand_logo_image_preview" width="64" height="64" src="<?php if (!empty($oUser->company_logo)): ?>https://s3-us-west-2.amazonaws.com/brandboost.io/<?php echo $oUser->company_logo; ?><?php else: ?><?php echo base_url(); ?>assets/images/wakerslogo.png<?php endif; ?>"/></div>
+
                                 <div class="col-md-6 col-md-offset-1">
                                     <div class="form-group mb0">
                                         
@@ -69,6 +71,7 @@ $oCountries = getAllCountries();
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" id="company_logo" name="company_logo" value="<?php echo $oUser->company_logo; ?>">
                         </div>
                         <!--====GENERAL SETTINGS====-->
                         <div class="bbot p30">
@@ -429,27 +432,44 @@ $oCountries = getAllCountries();
             }
         });
 
-        Dropzone.options.myDropzone = {
-            url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment/".$oUser->id."/onsite"); ?>',
-            uploadMultiple: false,
-            maxFiles: 10,
-            maxFilesize: 600,
-            acceptedFiles: 'image/*',
-            addRemoveLinks: false,
-            success: function (response) {
-                $('#uploadedSiteFiles').append(response.xhr.responseText);
-                
-                
-                $("[data-dz-thumbnail='']").each(function(){
-                    
-                    var src = $(this).attr("src");
-                    $("#brand_logo_image_preview").attr("src", src);
-                });
-                
-                
-            }
 
-        }
+        Dropzone.autoDiscover = false;
+            var myDropzone = new Dropzone(
+            '#myDropzone', //id of drop zone element 1
+            {
+                url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment"); ?>/<?php echo $oUser->id; ?>/onsite',
+                uploadMultiple: false,
+                maxFiles: 1,
+                maxFilesize: 600,
+                acceptedFiles: 'image/*',
+                addRemoveLinks: false,
+                success: function (response) {
+                    
+                    if(response.xhr.responseText != "") {
+
+                        $('#brand_logo_image_preview').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
+                        var dropImage = $('#company_logo').val();
+                        $.ajax({
+                            url: '<?php echo base_url('admin/brandboost/deleteObjectFromS3'); ?>',
+                            type: "POST",
+                            data: {dropImage: dropImage, _token: '<?php echo csrf_token(); ?>'},
+                            dataType: "json",
+                            success: function (data) {
+                                console.log(data);
+                            }
+                        });
+                       
+                    
+                        $('#company_logo').val(response.xhr.responseText);
+                        $('.saveUserOtherInfo').trigger('click');
+                    }
+                    
+                }
+            });
+            myDropzone.on("complete", function(file) {
+              myDropzone.removeFile(file);
+            });
+
 
     });
 </script>

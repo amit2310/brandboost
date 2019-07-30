@@ -38,7 +38,6 @@ class BrandboostModel extends Model {
      * @return type
      */
     public static function getBBWidgets($id = 0, $userID = 0, $type = '') {
-
         $oData = DB::table('tbl_brandboost_widgets')
                 ->leftJoin('tbl_brandboost', 'tbl_brandboost_widgets.brandboost_id', '=', 'tbl_brandboost.id')
                 ->select('tbl_brandboost_widgets.*', 'tbl_brandboost.hashcode as bbHash', 'tbl_brandboost.brand_title AS bbBrandTitle', 'tbl_brandboost.brand_desc AS bbBrandDesc', 'tbl_brandboost.brand_img AS campaignImg')
@@ -46,14 +45,14 @@ class BrandboostModel extends Model {
                     return $query->where('tbl_brandboost_widgets.id', $id);
                 })
                 ->when(($userID > 0), function ($query) use ($userID) {
-                    return $query->where('tbl_brandboost_widgets.id', $userID);
+                    return $query->where('tbl_brandboost_widgets.user_id', $userID);
                 })
                 ->when((!empty($type)), function ($query) use ($type) {
                     return $query->where('tbl_brandboost_widgets.review_type', $type);
                 })
                 ->where('tbl_brandboost_widgets.delete_status', 0)
                 ->orderBy('tbl_brandboost_widgets.id', 'desc')
-                ->get();
+                ->get(); 
         return $oData;
     }
     
@@ -405,6 +404,18 @@ class BrandboostModel extends Model {
 			->get();
         return $oData;
     }
+	
+	
+	public static function addBrandboostFeedbackResponse($aData) {
+		$insert_id = DB::table('tbl_feedback_response')->insertGetId($aData);
+        if ($insert_id) {
+            return $insert_id;
+        } else {
+            return false;
+        }
+    }
+	
+	
 
     public function getWidgetInfo($id, $hash = false) {
         if (!empty($id)) {
@@ -604,18 +615,7 @@ class BrandboostModel extends Model {
         }
     }
 
-    public function addBrandboostFeedbackResponse($aData) {
-        $result = $this->db->insert('tbl_feedback_response', $aData);
-        $inset_id = $this->db->insert_id();
-        //echo $this->db->last_query();exit;
-        if ($inset_id) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function updateBrandboostFeedbackResponse($aData, $brandboostID) {
+    public static function updateBrandboostFeedbackResponse($aData, $brandboostID) {
         $this->db->where('brandboost_id', $brandboostID);
         $result = $this->db->update('tbl_feedback_response', $aData);
         if ($result) {

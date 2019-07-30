@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Admin\SubscribersModel;
+use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\SettingsModel;
 use App\Models\Admin\SubscriberActivityModel;
 use App\Libraries\Custom\csvimport;
+use Illuminate\Support\Facades\Input;
 use Cookie;
 use Session;
 
@@ -282,8 +283,10 @@ class Subscribers extends Controller {
      * Used to add a new subscriber
      */
     public function add_contact() {
+
         $response = array();
-        $post = $this->input->post();
+        $result = array();
+        $post = Input::post();
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         if (empty($post)) {
@@ -311,9 +314,9 @@ class Subscribers extends Controller {
         $moduleName = strip_tags($post['module_name']);
         $moduleAccountID = strip_tags($post['module_account_id']);
         //$emailUser = getUserDetailByEmailId($email);
-        $oUserAccount = $this->mUser->checkEmailExist($email);
+        $oUserAccount = UsersModel::checkEmailExist($email);
 
-        if (!empty($oUserAccount)) {
+        if (!empty($oUserAccount[0])) {
             $emailUserId = $oUserAccount[0]->id;
         }
 
@@ -321,7 +324,7 @@ class Subscribers extends Controller {
         $bAlreadyExists = 0;
         $oGlobalUser = "";
         if (!empty($email)) {
-            $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
+            $oGlobalUser = SubscriberModel::checkIfGlobalSubscriberExists($userID, 'email', $email);
         }
         if (!empty($oGlobalUser)) {
             $iSubscriberID = $oGlobalUser->id;
@@ -350,7 +353,7 @@ class Subscribers extends Controller {
             if (!empty($emailUserId)) {
                 $aSubscriberData['user_id'] = $emailUserId;
             }
-            $iSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
+            $iSubscriberID = SubscriberModel::addGlobalSubscriber($aSubscriberData);
         }
 
         if (!empty($moduleName)) {

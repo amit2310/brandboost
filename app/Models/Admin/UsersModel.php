@@ -153,7 +153,20 @@ class UsersModel extends Model {
         ->first();
         
         return $oData;
+    }
+
+    /**
+     * This function used to check email exist
+     * @param type $emailID
+     * @return type object
+     */
+    public static function checkEmailExist($emailID) {
+
+        $oData = DB::table('tbl_users')
+        ->where('email', $emailID)
+        ->get();
         
+        return $oData;
     }
 
     public function basicSignup($aData) {
@@ -345,17 +358,6 @@ class UsersModel extends Model {
             $response = $result->result();
         }
         return $response[0];
-    }
-
-    public function checkEmailExist($emailID) {
-
-        $response = array();
-        $this->db->where('email', $emailID);
-        $result = $this->db->get("tbl_users");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
     }
 
     public function user_count_all() {

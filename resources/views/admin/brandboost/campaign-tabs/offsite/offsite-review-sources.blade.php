@@ -196,7 +196,7 @@
 
                                         <?php if (!empty($cate['cat_img'])) { ?>
                                             <i class="">
-                                                <img src="/new_pages/assets/images/<?php echo $cate['cat_img']; ?>"></i>
+                                                <img src="/assets/images/<?php echo $cate['cat_img']; ?>"></i>
                                         <?php } else if (!empty($cate['icon_class'])) { ?>
                                             <i class="<?php echo $cate['icon_class']; ?>"></i> 
                                         <?php } else { ?>
@@ -227,7 +227,7 @@
 
 
                                             if (in_array($cate['title'], unserialize($siteData->site_categories))) {
-                                                $getLinksSocial = $offsites_links[$siteData->id]['shorturl'];
+                                                $getLinksSocial = @$offsites_links[$siteData->id]['shorturl'];
                                                 $sourceName = strtolower($siteData->name);
 
 
@@ -278,18 +278,20 @@
                                                 ?>
 
 
-
+												<?php //echo sizeof($offsite_ids); print_r($offsite_ids); die; ?>
                                                 <div onmouseover="ShowImg('<?php echo $siteData->id; ?>')" onmouseleave="HideImg('<?php echo $siteData->id; ?>')" class="<?php if (in_array('OtherSources', unserialize($siteData->site_categories))) { ?>OtMouseover_<?php
                                                          echo $siteData->id;
                                                      }
                                                      ?> col-xs-12 col-md-2 col-sm-2 rev_col <?php
-                                                     if (in_array($siteData->id, $offsite_ids)) {
-                                                         echo 'selected';
-                                                     }
+													 if(!empty($offsite_ids)){
+														 if (in_array($siteData->id, $offsite_ids)) {
+															 echo 'selected';
+														 }
+													 }
                                                      ?>" offsetId="<?php echo $siteData->id; ?>" id="review_steps<?php echo $siteData->id; ?>">
                                                     <?php if (in_array('OtherSources', unserialize($siteData->site_categories))) { ?>
                                                         <a id="tickImg_<?php echo $siteData->id; ?>" style="display:none" CsourceId="<?php echo $siteData->id; ?>" href="javascript:void(0);" class="deleteCustomSource"><i class="icon-cross2"></i></a>
-            <?php } ?>
+												<?php } ?>
                                                     <div class="thumbnail">
 
                                                         <div class="thumb <?php echo $thumbclass; ?>">
@@ -322,17 +324,21 @@
                                                                 <?php if ($canWrite): ?>
                                                                 <label class="custom-form-switch pull-right mt10">
                                                                     <input class="field offsite_selected" type="checkbox" <?php
-                                                                    if (in_array($siteData->id, $offsite_ids)) {
-                                                                        echo 'checked';
-                                                                    } else {
-                                                                        echo '';
-                                                                    }
+																	if(!empty($offsite_ids)){
+																		if (in_array($siteData->id, $offsite_ids)) {
+																			echo 'checked';
+																		} else {
+																			echo '';
+																		}
+																	}
                                                                     ?> offsiteSelected="<?php
+																		if(!empty($offsite_ids)){
                                                                            if (in_array($siteData->id, $offsite_ids)) {
                                                                                echo '1';
                                                                            } else {
                                                                                echo '0';
                                                                            }
+																		}
                                                                            ?>" offsiteId="<?php echo $siteData->id; ?>">
                                                                     <span class="toggle green"></span>
                                                                 </label>
@@ -553,7 +559,7 @@
                         $.ajax({
                             url: '<?php echo base_url('admin/offsite/delete_customsource'); ?>',
                             type: "POST",
-                            data: {'CustomSourceID': CsourceId},
+                            data: {'CustomSourceID': CsourceId, _token: '{{csrf_token()}}'},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {
@@ -634,7 +640,7 @@
             (function () {
                 $.ajax({
                     url: "<?php echo base_url('admin/brandboost/campaignPreferences'); ?>",
-                    data: {brandboostID: '<?php echo $brandboostData->id; ?>'},
+                    data: {brandboostID: '<?php echo $brandboostData->id; ?>', _token: '{{csrf_token()}}'},
                     method: "POST",
                     dataType: "json",
                     success: function (data)
@@ -657,7 +663,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/add_offsite_edit'); ?>',
                 type: "POST",
-                data: {'offstepIds': offstepIds, brandboostID: brandboostID},
+                data: {'offstepIds': offstepIds, brandboostID: brandboostID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
