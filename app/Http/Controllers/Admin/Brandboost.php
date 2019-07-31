@@ -1529,18 +1529,21 @@ class Brandboost extends Controller {
     public function switchTemplate() {
 
         $oUser = getLoggedUser();
+        $mBrand = new BrandModel();
         $userID = $oUser->id;
-        $post = $this->input->post();
+        $post = Input::post();
         $template_style = $post['template_style'];
+        $aThemeData="";
+        $theme_title="";
         $aBrandboostData = array(
             'user_id' => $userID,
             'template_style' => $template_style,
         );
-        $bData = $this->mBrand->getBrandConfigurationData($userID);
+        $bData = $mBrand->getBrandConfigurationData($userID);
         if ((count($bData) > 0) && $bData != '') {
-            $result = $this->mBrand->saveTheme($userID, $aBrandboostData, $aThemeData, $theme_title);
+            $result = $mBrand->saveTheme($userID, $aBrandboostData, $aThemeData="", $theme_title);
         } else {
-            $result = $this->mBrand->addBrandConfiguration($aBrandboostData, $aThemeData, $theme_title);
+            $result = $mBrand->addBrandConfiguration($aBrandboostData, $aThemeData="", $theme_title);
         }
 
         if ($result) {
