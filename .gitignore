@@ -8,7 +8,7 @@ npm-debug.log
 yarn-error.log
 .env
 /vendor/*
-/uploads/*
+/uploads
 /profile_images/*
 /infusionsoft-php-sdk/*
 /vendor
