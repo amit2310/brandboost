@@ -766,6 +766,25 @@ FROM
         return $oSubscribers;
     }
 
+    /**
+     * Get Suppression List
+     * @return type object
+     */
+    public function getSuppressionList() {
+
+        $aEmails = array();
+        $oData = DB::table('tbl_suppression_list')
+                ->get();
+
+        if ($oData->count() > 0) {
+            foreach ($oData as $oRec) {
+                $aEmails[] = strtolower($oRec->email);
+            }
+        }
+
+        return $aEmails;
+    }
+
     public function getuserImageDetails($userID) {
         $this->db->select("tbl_users.avatar as avatarImage");
         $this->db->where("id", $userID);
@@ -1450,17 +1469,6 @@ FROM
         } else {
             return false;
         }
-    }
-
-    public function getSuppressionList() {
-        $aEmails = array();
-        $result = $this->db->get("tbl_suppression_list");
-        if ($result->num_rows() > 0) {
-            foreach ($result->result() as $oRec) {
-                $aEmails[] = strtolower($oRec->email);
-            }
-        }
-        return $aEmails;
     }
 
     public function addContactNotes($aData) {

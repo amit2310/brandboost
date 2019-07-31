@@ -373,8 +373,14 @@ class SettingsModel extends Model {
                 ->insert($aData);
     }
 
+    /**
+     * This function is use for log import history
+     * @param type $aData
+     * @return type boolean
+     */
     public function logImportHistory($aData) {
-        $this->db->insert("tbl_history_import", $aData);
+        $oData = DB::table('tbl_history_import')
+                ->insert($aData);
     }
 
     public function getSystemNotifyPermissions($userID, $eventName) {
