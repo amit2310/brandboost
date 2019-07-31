@@ -598,27 +598,32 @@ class Subscribers extends Controller {
      * Used to export subscribers through csv file
      */
     public function exportSubscriberCSV() {
+
         // file name 
+        $mSubscriber = new SubscriberModel();
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $userRole = $oUser->user_role;
         $filename = 'users_' . time() . '.csv';
-        header("Content-Description: File Transfer");
+        /*header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
-        header("Content-Type: application/csv; ");
+        header("Content-Type: application/csv; ");*/
 
-        $post = $this->input->get();
+        $post = Input::get();
 
         $moduleName = strip_tags($post['module_name']);
         $moduleAccountID = strip_tags($post['module_account_id']);
 
 
         if ($userRole != '1') {
-            $oSubscribers = $this->mSubscriber->getModuleSubscribers($userID, $moduleName, $moduleAccountID);
+            $oSubscribers = $mSubscriber->getModuleSubscribers($userID, $moduleName, $moduleAccountID);
         } else {
             //$userID = '';
-            $oSubscribers = $this->mSubscriber->getModuleSubscribers('', $moduleName, $moduleAccountID);
+            $oSubscribers = $mSubscriber->getModuleSubscribers('', $moduleName, $moduleAccountID);
         }
+
+        pre($oSubscribers);
+        die();
 
         // file creation 
         $file = fopen('php://output', 'w');

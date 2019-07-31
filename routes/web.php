@@ -308,6 +308,7 @@ Route::post('admin/tags/applySubscriberTag','Admin\Tags@applySubscriberTag');
 
 //Subscriber
 Route::post('admin/subscriber/add_contact','Admin\Subscribers@add_contact');
+Route::get('admin/subscriber/exportSubscriberCSV','Admin\Subscribers@exportSubscriberCSV');
 
 //Lists
 Route::get('admin/lists','Admin\Lists@index');
