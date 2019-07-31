@@ -310,6 +310,7 @@ Route::post('admin/tags/applySubscriberTag','Admin\Tags@applySubscriberTag');
 //Subscriber
 Route::post('admin/subscriber/add_contact','Admin\Subscribers@add_contact');
 Route::get('admin/subscriber/exportSubscriberCSV','Admin\Subscribers@exportSubscriberCSV');
+Route::post('admin/subscriber/importSubscriberCSV','Admin\Subscribers@importSubscriberCSV');
 
 //Lists
 Route::get('admin/lists','Admin\Lists@index');

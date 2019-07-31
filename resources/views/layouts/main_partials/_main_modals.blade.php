@@ -1135,6 +1135,7 @@
 
                 </div>
                 <div class="modal-footer">
+                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <input type="hidden" name="module_name" id="import_active_module_name" value="">
                     <input type="hidden" name="module_account_id" id="import_module_account_id" value="">
                     <input type="hidden" name="redirect_url" id="import_redirect_url" value="">
