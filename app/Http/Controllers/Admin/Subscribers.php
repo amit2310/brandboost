@@ -440,20 +440,25 @@ class Subscribers extends Controller {
      * Used to import subscribers through csv file
      */
     public function importSubscriberCSV() {
-        $this->load->model("admin/Workflow_model", "mWorkflow");
 
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $someoneadded = false;
-        $post = $this->input->post();
-        $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'csv';
-        $config['max_size'] = '1000';
-        $list_id = $post['list_id'];
-
+        $post = Input::post();
+      
+        if(!empty($post['list_id'])) {
+            $list_id = $post['list_id'];
+        }
         $moduleName = strip_tags($post['module_name']);
         $moduleAccountID = strip_tags($post['module_account_id']);
         $redirectURL = $post['redirect_url'];
+
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'csv';
+        $config['max_size'] = '1000';
+        
+
+        
 
         $this->load->library('upload', $config);
 
