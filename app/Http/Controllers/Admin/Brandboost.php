@@ -1316,7 +1316,40 @@ class Brandboost extends Controller {
         exit;
     }
 	
-	
+	/**
+	* Used to update offsite workflow from info by brandboost id
+	* $param type $brandboostID
+	* @return type
+	*/
+	public function updateWorkflowFromInfo($aData, $brandboostID) {
+        if (!empty($brandboostID)) {
+            $eventsdata = BrandboostModel::getBrandboostEvents($brandboostID);
+            if (!empty($eventsdata)) {
+                foreach ($eventsdata as $aEvent) {
+                    $eventID = $aEvent->id;
+                    if (!empty($eventID)) {
+                        $aCampaigns = getCampaignsByEventID($eventID);
+                        if (!empty($aCampaigns)) {
+                            foreach ($aCampaigns as $aCampaign) {
+                                $aUpdateData = array();
+                                $campaignID = $aCampaign->id;
+                                if (!empty($aData['from_name'])) {
+                                    $aUpdateData['from_name'] = $aData['from_name'];
+                                }
+
+                                if (!empty($aData['from_email'])) {
+                                    $aUpdateData['from_email'] = $aData['from_email'];
+                                }
+                                if (!empty($aUpdateData)) {
+                                    $bUpdated = BrandboostModel::updateCampaing($aUpdateData, $campaignID);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 	
 	
 	
@@ -4525,37 +4558,6 @@ class Brandboost extends Controller {
 
             echo json_encode($response);
             exit;
-        }
-    }
-    
-
-    public function updateWorkflowFromInfo($aData, $brandboostID) {
-        if (!empty($brandboostID)) {
-            $eventsdata = $this->mBrandboost->getBrandboostEvents($brandboostID);
-            if (!empty($eventsdata)) {
-                foreach ($eventsdata as $aEvent) {
-                    $eventID = $aEvent->id;
-                    if (!empty($eventID)) {
-                        $aCampaigns = getCampaignsByEventID($eventID);
-                        if (!empty($aCampaigns)) {
-                            foreach ($aCampaigns as $aCampaign) {
-                                $aUpdateData = array();
-                                $campaignID = $aCampaign->id;
-                                if (!empty($aData['from_name'])) {
-                                    $aUpdateData['from_name'] = $aData['from_name'];
-                                }
-
-                                if (!empty($aData['from_email'])) {
-                                    $aUpdateData['from_email'] = $aData['from_email'];
-                                }
-                                if (!empty($aUpdateData)) {
-                                    $bUpdated = $this->mBrandboost->updateCampaing($aUpdateData, $campaignID);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 
