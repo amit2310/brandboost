@@ -20,7 +20,6 @@ class EmailModel extends Model {
                 ->where('tbl_automations_emails.status', 'active')
                 ->where('tbl_automations_emails_events.status', 'active')
                 ->where('tbl_automations_emails.deleted', '!=', '1')
-                ->orWhere('tbl_cc_subscriptions.subscription_status', 'in_trial')
                 ->orderBy('tbl_automations_emails_events.id', 'desc')
                 ->get();
         return $oData;
