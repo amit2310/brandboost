@@ -182,7 +182,6 @@ class Contacts extends Controller
             if (!empty($subscribersData->user_id) && $subscribersData->user_id > 0) {
                 $userId = $subscribersData->user_id;
                 $getUserById = $mSubscriber->getUserById($userId);
-                $getUserActivities = '';
                 $getClientTags = $mTags->getClientTags($userId);
                 $getUserActivities = $mSubscriber->getUserActivities($userId);
                 $getFeedback = $mFeedback->getFeedback($userId);
