@@ -449,6 +449,33 @@ class BrandboostModel extends Model {
 			return false;
 		}
     }
+	
+	/**
+	* Used to update brandboost feedback response by brandboostID
+	* @param type $brandboostID
+	* @return type
+	*/
+	public static function updateBrandboostFeedbackResponse($aData, $brandboostID) {
+		$result = DB::table('tbl_feedback_response')
+           ->where('brandboost_id', $brandboostID)
+           ->update($aData);
+        if ($result > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
     public function getWidgetInfo($id, $hash = false) {
         if (!empty($id)) {
@@ -648,15 +675,7 @@ class BrandboostModel extends Model {
         }
     }
 
-    public static function updateBrandboostFeedbackResponse($aData, $brandboostID) {
-        $this->db->where('brandboost_id', $brandboostID);
-        $result = $this->db->update('tbl_feedback_response', $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    
 
     //public function delete($id) {
     public function deleteBrandboost($id) {

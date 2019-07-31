@@ -56,6 +56,7 @@ Route::get('admin/brandboost/widgets','Admin\Brandboost@widgets');
 Route::post('reviews/saveNewReview','Reviews@saveNewReview');
 Route::post('admin/brandboost/switchTemplate','Admin\Brandboost@switchTemplate');
 
+
 Route::post('admin/brandboost/campaignPreferences','Admin\Brandboost@campaignPreferences');
 Route::post('admin/brandboost/add_offsite_edit','Admin\Brandboost@addOffsiteEdit');
 Route::post('admin/brandboost/add_offsite_resources','Admin\Brandboost@addOffsiteResources');
@@ -81,6 +82,7 @@ Route::get('admin/feedback/details/{id}','Admin\Feedback@feedbackDetails');
 Route::post('admin/feedback/details/{id}','Admin\Feedback@feedbackDetails');
 Route::post('admin/feedback/updateFeedbackStatus','Admin\Feedback@updateFeedbackStatus');
 Route::post('admin/feedback/updateFeedbackRatings','Admin\Feedback@updateFeedbackRatings');
+
 
 Route::post('admin/tags/listAllTags','Admin\Tags@listAllTags');
 
