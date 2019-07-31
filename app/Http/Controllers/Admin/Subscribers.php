@@ -601,13 +601,14 @@ class Subscribers extends Controller {
 
         // file name 
         $mSubscriber = new SubscriberModel();
+        $mSettings = new SettingsModel();
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $userRole = $oUser->user_role;
         $filename = 'users_' . time() . '.csv';
-        /*header("Content-Description: File Transfer");
+        header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
-        header("Content-Type: application/csv; ");*/
+        header("Content-Type: application/csv; ");
 
         $post = Input::get();
 
@@ -621,9 +622,6 @@ class Subscribers extends Controller {
             //$userID = '';
             $oSubscribers = $mSubscriber->getModuleSubscribers('', $moduleName, $moduleAccountID);
         }
-
-        pre($oSubscribers);
-        die();
 
         // file creation 
         $file = fopen('php://output', 'w');
@@ -643,7 +641,7 @@ class Subscribers extends Controller {
                 'item_count' => count($oSubscribers),
                 'created' => date("Y-m-d H:i:s")
             );
-            $this->mSettings->logExportHistory($aHistoryData);
+            $mSettings->logExportHistory($aHistoryData);
         }
         //Add Useractivity log
 
