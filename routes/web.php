@@ -61,6 +61,8 @@ Route::post('admin/brandboost/add_offsite_edit','Admin\Brandboost@addOffsiteEdit
 Route::post('admin/brandboost/add_offsite_resources','Admin\Brandboost@addOffsiteResources');
 Route::post('admin/brandboost/add_offsite_url','Admin\Brandboost@addOffsiteUrl');
 Route::post('admin/brandboost/continueStepOffsite','Admin\Brandboost@continueStepOffsite');
+Route::post('admin/brandboost/update_subscriber_status','Admin\Brandboost@updateSubscriberStatus');
+Route::post('admin/brandboost/deleteRRrecord','Admin\Brandboost@deleteRRrecord');
 
 
 Route::post('admin/reviews/updateReviewStatus','Admin\Reviews@updateReviewStatus');
@@ -76,6 +78,11 @@ Route::post('admin/comments/add_comment','Admin\Comments@addComment');
 
 Route::get('admin/feedback/listall','Admin\Feedback@getAllListingData');
 Route::get('admin/feedback/details/{id}','Admin\Feedback@feedbackDetails');
+Route::post('admin/feedback/details/{id}','Admin\Feedback@feedbackDetails');
+Route::post('admin/feedback/updateFeedbackStatus','Admin\Feedback@updateFeedbackStatus');
+Route::post('admin/feedback/updateFeedbackRatings','Admin\Feedback@updateFeedbackRatings');
+
+Route::post('admin/tags/listAllTags','Admin\Tags@listAllTags');
 
 
 Route::get('admin/questions/view/{id}','Admin\Questions@questionView');

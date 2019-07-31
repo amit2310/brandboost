@@ -523,7 +523,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
                 type: "POST",
-                data: {review_id: review_id, feedback_id: feedback_id},
+                data: {review_id: review_id, feedback_id: feedback_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -547,7 +547,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/update_offsite_step1'); ?>',
                 type: "POST",
-                data: {'brandboostID': brandboostID},
+                data: {'brandboostID': brandboostID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
@@ -574,7 +574,7 @@
             $.ajax({
                 url: "<?php echo base_url('/admin/feedback/displayfeedback'); ?>",
                 type: "POST",
-                data: {fid: feedbackid},
+                data: {fid: feedbackid, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -615,52 +615,52 @@
                 closeOnConfirm: false,
                 closeOnCancel: false
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            var formdata = $("#frmSendFeedbackReply").serialize();
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: "<?php echo base_url('/admin/feedback/replyFeedback'); ?>",
-                                type: "POST",
-                                data: formdata + "&career=" + career,
-                                dataType: "json",
-                                success: function (response) {
-                                    $('.overlaynew').hide();
-                                    if (response.status == "success") {
-                                        swal({
-                                            title: "Success!",
-                                            text: response.message,
-                                            confirmButtonColor: "#66BB6A",
-                                            type: "success"
-                                        });
-                                    } else {
-                                        swal({
-                                            title: "ERROR!",
-                                            text: response.message,
-                                            confirmButtonColor: "#2196F3",
-                                            type: "error"
-                                        });
-                                    }
-                                },
-                                error: function (response) {
-                                    $('.overlaynew').hide();
-                                    swal({
-                                        title: "ERROR!",
-                                        text: response.message,
-                                        confirmButtonColor: "#2196F3",
-                                        type: "error"
-                                    });
-                                }
-                            });
-                        } else {
-                            swal({
-                                title: "Cancelled",
-                                text: "",
-                                confirmButtonColor: "#2196F3",
-                                type: "error"
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					var formdata = $("#frmSendFeedbackReply").serialize();
+					$('.overlaynew').show();
+					$.ajax({
+						url: "<?php echo base_url('/admin/feedback/replyFeedback'); ?>",
+						type: "POST",
+						data: formdata + "&career=" + career,
+						dataType: "json",
+						success: function (response) {
+							$('.overlaynew').hide();
+							if (response.status == "success") {
+								swal({
+									title: "Success!",
+									text: response.message,
+									confirmButtonColor: "#66BB6A",
+									type: "success"
+								});
+							} else {
+								swal({
+									title: "ERROR!",
+									text: response.message,
+									confirmButtonColor: "#2196F3",
+									type: "error"
+								});
+							}
+						},
+						error: function (response) {
+							$('.overlaynew').hide();
+							swal({
+								title: "ERROR!",
+								text: response.message,
+								confirmButtonColor: "#2196F3",
+								type: "error"
+							});
+						}
+					});
+				} else {
+					swal({
+						title: "Cancelled",
+						text: "",
+						confirmButtonColor: "#2196F3",
+						type: "error"
+					});
+				}
+			});
         });
 
         $(document).on("click", "#saveFeedbackNote", function () {
@@ -695,7 +695,7 @@
             $.ajax({
                 url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
                 type: "POST",
-                data: {fid: feedbackid, status: statusVal},
+                data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -717,7 +717,7 @@
             $.ajax({
                 url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
                 type: "POST",
-                data: {fid: feedbackid, status: statusVal},
+                data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -759,7 +759,7 @@
             $.ajax({
                 url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
                 type: "POST",
-                data: {fid: feedbackid, status: statusVal},
+                data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     $('.overlaynew').hide();
@@ -773,9 +773,6 @@
                 }
             });
         });
-
-
-
     });
 
 </script>

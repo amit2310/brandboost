@@ -83,38 +83,14 @@ $(document).ready(function () {
         return false;
     });
 
-    $(document).on("click", ".applyInsightTagsFeedback", function () {
-        var review_id = $(this).attr("reviewid");
-        var feedback_id = $(this).attr("feedback_id");
-        var action_name = $(this).attr("action_name");
-        $.ajax({
-            url: '/admin/tags/listAllTags',
-            type: "POST",
-            data: {review_id: review_id, feedback_id: feedback_id},
-            dataType: "json",
-            success: function (data) {
-                if (data.status == 'success') {
-                    $('.overlaynew').hide();
-                    $("#tagEntireListFeedback").html(data.list_tags);
-                    $("#tag_review_id").val(review_id);
-                    $("#tag_feedback_id").val(feedback_id);
-                    if (action_name == 'review-tag') {
-                        $("#ReviewTagListModal").modal("show");
-                    } else if (action_name == 'feedback-tag') {
-                        $("#FeedbackTagListModal").modal("show");
-                    }
-                }
-            }
-        });
-    });
+    
 
     $(document).on("click", ".editBrandboost", function () {
-
         var brandboostID = $(this).attr('brandID');
         $.ajax({
             url: '/admin/brandboost/update_offsite_step1',
             type: "POST",
-            data: {'brandboostID': brandboostID},
+            data: {'brandboostID': brandboostID, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
 
@@ -141,7 +117,7 @@ $(document).ready(function () {
         $.ajax({
             url: "/admin/feedback/displayfeedback",
             type: "POST",
-            data: {fid: feedbackid},
+            data: {fid: feedbackid, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (response) {
                 if (response.status == "success") {
@@ -182,52 +158,52 @@ $(document).ready(function () {
             closeOnConfirm: false,
             closeOnCancel: false
         },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        var formdata = $("#frmSendFeedbackReply").serialize();
-                        $('.overlaynew').show();
-                        $.ajax({
-                            url: "/admin/feedback/replyFeedback",
-                            type: "POST",
-                            data: formdata + "&career=" + career,
-                            dataType: "json",
-                            success: function (response) {
-                                $('.overlaynew').hide();
-                                if (response.status == "success") {
-                                    swal({
-                                        title: "Success!",
-                                        text: response.message,
-                                        confirmButtonColor: "#66BB6A",
-                                        type: "success"
-                                    });
-                                } else {
-                                    swal({
-                                        title: "ERROR!",
-                                        text: response.message,
-                                        confirmButtonColor: "#2196F3",
-                                        type: "error"
-                                    });
-                                }
-                            },
-                            error: function (response) {
-                                $('.overlaynew').hide();
-                                swal({
-                                    title: "ERROR!",
-                                    text: response.message,
-                                    confirmButtonColor: "#2196F3",
-                                    type: "error"
-                                });
-                            }
-                        });
-                    } else {
-                        swal({
-                            title: "Cancelled",
-                            text: "",
-                            confirmButtonColor: "#2196F3",
-                            type: "error"
-                        });
-                    }
-                });
+		function (isConfirm) {
+			if (isConfirm) {
+				var formdata = $("#frmSendFeedbackReply").serialize();
+				$('.overlaynew').show();
+				$.ajax({
+					url: "/admin/feedback/replyFeedback",
+					type: "POST",
+					data: formdata + "&career=" + career,
+					dataType: "json",
+					success: function (response) {
+						$('.overlaynew').hide();
+						if (response.status == "success") {
+							swal({
+								title: "Success!",
+								text: response.message,
+								confirmButtonColor: "#66BB6A",
+								type: "success"
+							});
+						} else {
+							swal({
+								title: "ERROR!",
+								text: response.message,
+								confirmButtonColor: "#2196F3",
+								type: "error"
+							});
+						}
+					},
+					error: function (response) {
+						$('.overlaynew').hide();
+						swal({
+							title: "ERROR!",
+							text: response.message,
+							confirmButtonColor: "#2196F3",
+							type: "error"
+						});
+					}
+				});
+			} else {
+				swal({
+					title: "Cancelled",
+					text: "",
+					confirmButtonColor: "#2196F3",
+					type: "error"
+				});
+			}
+		});
     });
 
     $(document).on("click", "#saveFeedbackNote", function () {
@@ -252,39 +228,16 @@ $(document).ready(function () {
         });
     });
 
-
-
-
-    $(document).on("click", ".updateFeedbackStatusNew", function () {
-        $('.overlaynew').show();
-        var feedbackid = $(this).attr('feedback_id');
-        var statusVal = $(this).attr('fb_status');
-        $.ajax({
-            url: "/admin/feedback/updateFeedbackRatings",
-            type: "POST",
-            data: {fid: feedbackid, status: statusVal},
-            dataType: "json",
-            success: function (response) {
-                if (response.status == "success") {
-                    $('.overlaynew').hide();
-                    window.location.href = '';
-                }
-            },
-            error: function (response) {
-                alertMessage(response.message);
-            }
-        });
-    });
-
     $(document).on("click", ".updateFeedbackStatus", function () {
-        $('.overlaynew').show();
+		alert(1);
+        /*$('.overlaynew').show();
         var feedbackid = $("input[name='fid']").val();
         var fbtime = $("input[name='fbtime']").val();
         var statusVal = $(this).attr('fb_status');
         $.ajax({
             url: "/admin/feedback/updateFeedbackRatings",
             type: "POST",
-            data: {fid: feedbackid, status: statusVal},
+            data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (response) {
                 if (response.status == "success") {
@@ -315,18 +268,19 @@ $(document).ready(function () {
             error: function (response) {
                 alertMessage(response.message);
             }
-        });
+        });*/
     });
 
 
     $(document).on("click", ".updateFeedbackStatus2", function () {
-        $('.overlaynew').show();
+		alert(3);
+        /*$('.overlaynew').show();
         var feedbackid = $(this).attr('feedback_id');
         var statusVal = $(this).attr('fb_status');
         $.ajax({
             url: "/admin/feedback/updateFeedbackRatings",
             type: "POST",
-            data: {fid: feedbackid, status: statusVal},
+            data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (response) {
                 $('.overlaynew').hide();
@@ -338,33 +292,11 @@ $(document).ready(function () {
                 $('.overlaynew').hide();
                 alertMessage(response.message);
             }
-        });
+        });*/
     });
 
 
-    $(document).on('click', '.chg_status', function () {
-        $('.overlaynew').show();
-        var status = $(this).attr('change_status');
-        var feedbackid = $(this).attr('feedback_id');
-        $.ajax({
-            url: '/admin/feedback/updateFeedbackStatus',
-            type: "POST",
-            data: {status: status, fid: feedbackid},
-            dataType: "json",
-            success: function (data) {
-
-                if (data.status == 'success') {
-
-                    window.location.href = '';
-
-                } else {
-
-                    alertMessage('Error: Some thing wrong!');
-                    $('.overlaynew').hide();
-                }
-            }
-        });
-    });
+    
 
     $(document).on('change', '#checkAll', function () {
         if (false == $(this).prop("checked")) {
@@ -435,23 +367,23 @@ $(document).ready(function () {
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: 'admin/feedback/deleteMultipalFeedbackData',
-                                type: "POST",
-                                data: {multi_feedback_id: val},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = '';
-                                    }
-                                }
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					$.ajax({
+						url: 'admin/feedback/deleteMultipalFeedbackData',
+						type: "POST",
+						data: {multi_feedback_id: val, _token: '{{csrf_token()}}'},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = '';
+							}
+						}
+					});
+				}
+			});
         }
     });
 

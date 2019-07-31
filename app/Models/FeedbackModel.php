@@ -149,7 +149,20 @@ class FeedbackModel extends Model
 		return $oData;
     }
 
-	
+	/**
+	* Used to get feedback all parent comments by feedback Id
+	* @param type $feedbackID
+	* @return type
+	*/
+	public static function updateFeedbackStatus($aData, $id) {
+		$result = DB::table('tbl_brandboost_feedback')
+           ->where('id', $id)
+           ->update($aData);
+        if ($result > -1)
+            return true;
+        else
+            return false;
+    }
 
 
 
@@ -319,16 +332,6 @@ class FeedbackModel extends Model
     public function saveFeedbackNotes($aData) {
         $bInserted = $this->db->insert("tbl_brandboost_feedback_notes", $aData);
         if ($bInserted)
-            return true;
-        else
-            return false;
-    }
-
-    public function updateFeedbackStatus($aData, $id) {
-        $this->db->set($aData);
-        $this->db->where('id', $id);
-        $result = $this->db->update("tbl_brandboost_feedback");
-        if ($result)
             return true;
         else
             return false;

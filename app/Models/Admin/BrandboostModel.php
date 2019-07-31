@@ -419,7 +419,11 @@ class BrandboostModel extends Model {
         return $oData;
     }
 	
-	
+	/**
+	* Used to add brandboost feedback response
+	* @param type $param
+	* @return type
+	*/
 	public static function addBrandboostFeedbackResponse($aData) {
 		$insert_id = DB::table('tbl_feedback_response')->insertGetId($aData);
         if ($insert_id) {
@@ -429,7 +433,22 @@ class BrandboostModel extends Model {
         }
     }
 	
-	
+	/**
+	* Used to delete review request by request id
+	* @param type $recordId
+	* @return type
+	*/
+	public static function deleteReviewRequest($recordId) {
+		$result = DB::table('tbl_tracking_log_email_sms')
+               ->where('id', $recordId)
+               ->delete();
+			   
+		if ($result) {
+			return true;
+		} else {
+			return false;
+		}
+    }
 
     public function getWidgetInfo($id, $hash = false) {
         if (!empty($id)) {
@@ -2561,17 +2580,7 @@ class BrandboostModel extends Model {
         }
     }
 
-    public function deleteReviewRequest($recordId) {
-        if ($recordId > 0) {
-            $this->db->where('id', $recordId);
-            $result = $this->db->delete("tbl_tracking_log_email_sms");
-            if ($result) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
+    
 
     public function addEmailAutomationCampaign($aData) {
         $result = $this->db->insert("tbl_campaigns", $aData);
