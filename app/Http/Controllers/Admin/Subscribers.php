@@ -8,10 +8,10 @@ use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\SettingsModel;
 use App\Models\Admin\SubscriberActivityModel;
-use App\Libraries\Custom\csvimport;
 use Illuminate\Support\Facades\Input;
 use Cookie;
 use Session;
+use App\Libraries\Custom\Csvimport;
 
 class Subscribers extends Controller {
 
@@ -439,8 +439,9 @@ class Subscribers extends Controller {
     /**
      * Used to import subscribers through csv file
      */
-    public function importSubscriberCSV() {
+    public function importSubscriberCSV(Request $request) {
 
+        $csvimport = new Csvimport();
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $someoneadded = false;
@@ -453,149 +454,135 @@ class Subscribers extends Controller {
         $moduleAccountID = strip_tags($post['module_account_id']);
         $redirectURL = $post['redirect_url'];
 
-        $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'csv';
-        $config['max_size'] = '1000';
+        $file_path = $request->file('userfile')->getRealPath();
         
+        if ($csvimport->get_array($file_path)) {
+            $csv_array = $csvimport->get_array($file_path);
+           
+            $aSuppressionList = $this->mSubscriber->getSuppressionList();
+            $imported = 0;
+            foreach ($csv_array as $row) {
+                $firstName = $row['FIRST_NAME'];
+                $lastName = $row['LAST_NAME'];
+                $email = $row['EMAIL'];
+                $phone = $row['PHONE'];
+                $gender = $row['GENDER']; //male/female
+                $countryCode = $row['COUNTRY']; //Contry code
+                $cityName = $row['CITY'];
+                $stateName = $row['STATE'];
+                $zipCode = $row['ZIP'];
+                $twitterProfile = $row['TWITTER_PROFILE'];
+                $facebookProfile = $row['FACEBOOK_PROFILE'];
+                $linkedinProfile = $row['LINKEDIN_PROFILE'];
+                $instagramProfile = $row['INSTAGRAM_PROFILE'];
+                $socialProfile = $row['OTHER_SOCIAL_PROFILE'];
+                $emailUserId = 0;
 
-        
+                if (!in_array(strtolower($email), $aSuppressionList)) {
+                    $imported++;
+                    $emailUser = $this->mUser->checkEmailExist($email);
+                    if (!empty($emailUser)) {
+                        $emailUserId = $emailUser[0]->id;
+                    }
 
-        $this->load->library('upload', $config);
-
-        // If upload failed, display error
-        if (!$this->upload->do_upload()) {
-            
-        } else {
-
-            $file_data = $this->upload->data();
-            $file_path = './uploads/' . $file_data['file_name'];
-
-            if ($this->csvimport->get_array($file_path)) {
-                $csv_array = $this->csvimport->get_array($file_path);
-                $aSuppressionList = $this->mSubscriber->getSuppressionList();
-                $imported = 0;
-                foreach ($csv_array as $row) {
-                    $firstName = $row['FIRST_NAME'];
-                    $lastName = $row['LAST_NAME'];
-                    $email = $row['EMAIL'];
-                    $phone = $row['PHONE'];
-                    $gender = $row['GENDER']; //male/female
-                    $countryCode = $row['COUNTRY']; //Contry code
-                    $cityName = $row['CITY'];
-                    $stateName = $row['STATE'];
-                    $zipCode = $row['ZIP'];
-                    $twitterProfile = $row['TWITTER_PROFILE'];
-                    $facebookProfile = $row['FACEBOOK_PROFILE'];
-                    $linkedinProfile = $row['LINKEDIN_PROFILE'];
-                    $instagramProfile = $row['INSTAGRAM_PROFILE'];
-                    $socialProfile = $row['OTHER_SOCIAL_PROFILE'];
-                    $emailUserId = 0;
-
-                    if (!in_array(strtolower($email), $aSuppressionList)) {
-                        $imported++;
-                        $emailUser = $this->mUser->checkEmailExist($email);
-                        if (!empty($emailUser)) {
-                            $emailUserId = $emailUser[0]->id;
+                    $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
+                    if (!empty($oGlobalUser)) {
+                        $iSubscriberID = $oGlobalUser->id;
+                    } else {
+                        //Add global subscriber
+                        $aSubscriberData = array(
+                            'owner_id' => $userID,
+                            'firstName' => $firstName,
+                            'lastName' => $lastName,
+                            'email' => $email,
+                            'phone' => $phone,
+                            'gender' => $gender,
+                            'country_code' => $countryCode,
+                            'cityName' => $cityName,
+                            'stateName' => $stateName,
+                            'zipCode' => $zipCode,
+                            'facebook_profile' => $facebookProfile,
+                            'twitter_profile' => $twitterProfile,
+                            'linkedin_profile' => $linkedinProfile,
+                            'instagram_profile' => $instagramProfile,
+                            'socialProfile' => $socialProfile,
+                            'created' => date("Y-m-d H:i:s")
+                        );
+                        if (!empty($emailUserId)) {
+                            $aSubscriberData['user_id'] = $emailUserId;
                         }
 
-                        $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
-                        if (!empty($oGlobalUser)) {
-                            $iSubscriberID = $oGlobalUser->id;
-                        } else {
-                            //Add global subscriber
-                            $aSubscriberData = array(
-                                'owner_id' => $userID,
-                                'firstName' => $firstName,
-                                'lastName' => $lastName,
-                                'email' => $email,
-                                'phone' => $phone,
-                                'gender' => $gender,
-                                'country_code' => $countryCode,
-                                'cityName' => $cityName,
-                                'stateName' => $stateName,
-                                'zipCode' => $zipCode,
-                                'facebook_profile' => $facebookProfile,
-                                'twitter_profile' => $twitterProfile,
-                                'linkedin_profile' => $linkedinProfile,
-                                'instagram_profile' => $instagramProfile,
-                                'socialProfile' => $socialProfile,
-                                'created' => date("Y-m-d H:i:s")
-                            );
-                            if (!empty($emailUserId)) {
-                                $aSubscriberData['user_id'] = $emailUserId;
-                            }
+                        $iSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
+                    }
 
-                            $iSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
+                    if (!empty($moduleName)) {
+                        $aData = array(
+                            'user_id' => $emailUserId,
+                            'subscriber_id' => $iSubscriberID,
+                            'created' => date("Y-m-d H:i:s")
+                        );
+
+                        if ($moduleName == 'list') {
+                            $aData['list_id'] = $moduleAccountID;
+                            $tableName = 'tbl_automation_users';
+                        } else if ($moduleName == 'brandboost') {
+                            $aData['brandboost_id'] = $moduleAccountID;
+                            $tableName = 'tbl_brandboost_users';
+                        } else if ($moduleName == 'referral') {
+                            $aData['account_id'] = $moduleAccountID;
+                            $tableName = 'tbl_referral_users';
+                        } else if ($moduleName == 'nps') {
+                            $aData['account_id'] = $moduleAccountID;
+                            $tableName = 'tbl_nps_users';
                         }
 
-                        if (!empty($moduleName)) {
-                            $aData = array(
-                                'user_id' => $emailUserId,
-                                'subscriber_id' => $iSubscriberID,
-                                'created' => date("Y-m-d H:i:s")
-                            );
-
-                            if ($moduleName == 'list') {
-                                $aData['list_id'] = $moduleAccountID;
-                                $tableName = 'tbl_automation_users';
-                            } else if ($moduleName == 'brandboost') {
-                                $aData['brandboost_id'] = $moduleAccountID;
-                                $tableName = 'tbl_brandboost_users';
-                            } else if ($moduleName == 'referral') {
-                                $aData['account_id'] = $moduleAccountID;
-                                $tableName = 'tbl_referral_users';
-                            } else if ($moduleName == 'nps') {
-                                $aData['account_id'] = $moduleAccountID;
-                                $tableName = 'tbl_nps_users';
-                            }
-
-                            if (!empty($tableName)) {
-                                $result = $this->mSubscriber->addModuleSubscriber($aData, $moduleName, $tableName);
-                                $someoneadded = true;
-                            }
+                        if (!empty($tableName)) {
+                            $result = $this->mSubscriber->addModuleSubscriber($aData, $moduleName, $tableName);
+                            $someoneadded = true;
                         }
                     }
                 }
-
-
-                //Log Import History
-                if ($imported > 0) {
-                    $aHistoryData = array(
-                        'user_id' => $userID,
-                        'import_name' => 'Contacts',
-                        'item_count' => $imported,
-                        'created' => date("Y-m-d H:i:s")
-                    );
-                    $this->mSettings->logImportHistory($aHistoryData);
-                }
-
-
-
-                if ($someoneadded == true) {
-                    //Add Useractivity log
-                    $aActivityData = array(
-                        'user_id' => $userID,
-                        'module_name' => $moduleName,
-                        'module_account_id' => $moduleAccountID,
-                        'event_type' => 'import_subscribers',
-                        'action_name' => 'imported_contact',
-                        'list_id' => '',
-                        'brandboost_id' => '',
-                        'campaign_id' => '',
-                        'inviter_id' => '',
-                        'subscriber_id' => '',
-                        'feedback_id' => '',
-                        'activity_message' => 'Imported subscribers',
-                        'activity_created' => date("Y-m-d H:i:s")
-                    );
-                    logUserActivity($aActivityData);
-                }
-                $this->mWorkflow->syncWorkflowAudienceGlobalModel();
-                redirect($redirectURL);
-            } else {
-                $data['error'] = "Error occured";
             }
+
+
+            //Log Import History
+            if ($imported > 0) {
+                $aHistoryData = array(
+                    'user_id' => $userID,
+                    'import_name' => 'Contacts',
+                    'item_count' => $imported,
+                    'created' => date("Y-m-d H:i:s")
+                );
+                $this->mSettings->logImportHistory($aHistoryData);
+            }
+
+
+
+            if ($someoneadded == true) {
+                //Add Useractivity log
+                $aActivityData = array(
+                    'user_id' => $userID,
+                    'module_name' => $moduleName,
+                    'module_account_id' => $moduleAccountID,
+                    'event_type' => 'import_subscribers',
+                    'action_name' => 'imported_contact',
+                    'list_id' => '',
+                    'brandboost_id' => '',
+                    'campaign_id' => '',
+                    'inviter_id' => '',
+                    'subscriber_id' => '',
+                    'feedback_id' => '',
+                    'activity_message' => 'Imported subscribers',
+                    'activity_created' => date("Y-m-d H:i:s")
+                );
+                logUserActivity($aActivityData);
+            }
+            $this->mWorkflow->syncWorkflowAudienceGlobalModel();
+            redirect($redirectURL);
+        } else {
+            $data['error'] = "Error occured";
         }
+        
     }
 
     
