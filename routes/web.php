@@ -74,12 +74,17 @@ Route::post('admin/comments/add_comment','Admin\Comments@addComment');
 
 
 Route::get('admin/feedback/listall','Admin\Feedback@getAllListingData');
+Route::get('admin/feedback/details/{id}','Admin\Feedback@feedbackDetails');
 
 
 Route::get('admin/questions/view/{id}','Admin\Questions@questionView');
 Route::get('admin/questions/details/{id}','Admin\Questions@questionDetails');
 Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
 Route::get('admin/questions','Admin\Questions@index');
+
+
+Route::get('admin/modules/chat','Admin\Modules\Chat@index');
+
 
 
 

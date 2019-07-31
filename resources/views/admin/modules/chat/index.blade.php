@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <!-- Content area -->
 <?php //if($oPrograms): ?>
 <div class="content">
@@ -204,7 +211,7 @@
 											$negetive = 0;
 											$totalFeedbackNum = 0;
 											$hashcode = $oProgram->hashcode;
-											$oContactsT = $this->mNPS->getMyUsers($hashcode);
+											$oContactsT = \App\Models\Admin\Modules\NpsModel::getMyUsers($hashcode);
 											$totalFeedback = $oProgram->NPS;
 											//pre($totalFeedback);
 											foreach ($totalFeedback as $value) {
@@ -789,9 +796,5 @@
         });
 		
 	});
-	
-	
-	
-	
 </script>
-
+@endsection

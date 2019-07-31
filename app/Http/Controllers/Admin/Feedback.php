@@ -7,13 +7,18 @@ use App\Models\Admin\UsersModel;
 use App\Models\Admin\BrandboostModel;
 use App\Models\Admin\SubscriberModel;
 use App\Models\FeedbackModel;
-use App\Models\TagModel;
+use App\Models\Admin\TagsModel;
 use App\Models\Admin\Crons\InviterModel;
 use Illuminate\Support\Facades\Input;
 use Session;
 
 class Feedback extends Controller {
 	
+	/**
+	* Used to get feedback data list by brandboost id;
+	* @param type $request
+	* @return type
+	*/
 	public function getAllListingData($brandboostID = 0) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -43,10 +48,60 @@ class Feedback extends Controller {
             'brandboostDetail' => $getBrandboost,
             'result' => $result
         );
-
-        //$this->template->load('admin/admin_template_new', 'admin/feedback/feedback', $data);
 		return view('admin.feedback.feedback', $aData);
     }
+	
+	/**
+	* Used to get feedback details by feedback id
+	* @param type $request
+	* @return type
+	*/
+	public function feedbackDetails($feedbackID) {
+        $response = array();
+        $response['status'] = 'error';
+        $selectedTab = Input::get('t');
+        $feedID = Input::post('feedbackid');
+        $actionName = Input::post('action');
+
+        $feedbackID = ($feedID > 0) ? $feedID : $feedbackID;
+
+        if (!empty($feedbackID) && $feedbackID > 0) {
+            $oFeedbackData = FeedbackModel::getFeedbackInfo($feedbackID);
+            $oFeedbackNotes = FeedbackModel::listFeedbackNotes($feedbackID);
+            $oCommentsData = FeedbackModel::getFeedbackParentsComments($feedbackID, false, $start = 0);
+            $feedbackTags = TagsModel::getTagsDataByFeedbackID($feedbackID);
+
+            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a href="' . base_url('admin/brandboost/offsite') . '" class="sidebar-control hidden-xs">Off Site </a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a href="' . base_url('admin/feedback/listall/') . '" data-toggle="tooltip" data-placement="bottom" title="Feedback" class="sidebar-control active hidden-xs ">Feedback</a></li>
+                    </ul>';
+
+            $aData = array(
+                'title' => 'Feedback Details',
+                'pagename' => $breadcrumb,
+                'result' => $oFeedbackData,
+                'oCommentsData' => $oCommentsData,
+                'oNotes' => $oFeedbackNotes,
+                'feedbackTags' => $feedbackTags,
+                'selectedTab' => $selectedTab
+            );
+
+
+            if ($actionName == 'smart-popup') {
+                $popupContent = view('admin.components.smart-popup.feedback', $aData)->render();
+                $response['status'] = 'success';
+                $response['content'] = $popupContent;
+                echo json_encode($response);
+                exit;
+            } else {
+				return view('admin.feedback.feedback_details', $aData);
+            }
+        }
+    }
+	
 	
     public function index($brandboostID = '') {
         $aUser = getLoggedUser();
@@ -102,57 +157,7 @@ class Feedback extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/feedback/myfeedback', $data);
     }
 
-    
-
-    public function details($feedbackID) {
-        $response = array();
-        $response['status'] = 'error';
-        $post = $this->input->post();
-        $get = $this->input->get();
-        $selectedTab = $get['t'];
-        if (!empty($post)) {
-            $feedID = strip_tags($post['feedbackid']);
-            $actionName = strip_tags($post['action']);
-        }
-
-        $feedbackID = ($feedID > 0) ? $feedID : $feedbackID;
-
-        if (!empty($feedbackID) && $feedbackID > 0) {
-            $oFeedbackData = $this->mFeedback->getFeedbackInfo($feedbackID);
-            $oFeedbackNotes = $this->mFeedback->listFeedbackNotes($feedbackID);
-            $oCommentsData = $this->mFeedback->getFeedbackParentsComments($feedbackID, false, $start = 0);
-            $feedbackTags = $this->mTag->getTagsDataByFeedbackID($feedbackID);
-
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/brandboost/offsite') . '" class="sidebar-control hidden-xs">Off Site </a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/feedback/listall/') . '" data-toggle="tooltip" data-placement="bottom" title="Feedback" class="sidebar-control active hidden-xs ">Feedback</a></li>
-                    </ul>';
-
-            $data = array(
-                'title' => 'Feedback Details',
-                'pagename' => $breadcrumb,
-                'result' => $oFeedbackData,
-                'oCommentsData' => $oCommentsData,
-                'oNotes' => $oFeedbackNotes,
-                'feedbackTags' => $feedbackTags,
-                'selectedTab' => $selectedTab
-            );
-
-
-            if ($actionName == 'smart-popup') {
-                $popupContent = $this->load->view('admin/components/smart-popup/feedback', $data, true);
-                $response['status'] = 'success';
-                $response['content'] = $popupContent;
-                echo json_encode($response);
-                exit;
-            } else {
-                $this->template->load('admin/admin_template_new', 'admin/feedback/feedback_details.php', $data);
-            }
-        }
-    }
+   
 
     public function thread($brandboostID, $subscriberID = '') {
         //because its not necessary to have an account to leave feedback on the website. So users will have subscriber id
