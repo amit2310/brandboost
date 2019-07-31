@@ -141,7 +141,12 @@ class Contacts extends Controller
         $mReferral = new ReferralModel();
         $mTags = new TagsModel();
 
-
+        $getUserActivities = '';
+        $getClientTags = '';
+        $getFeedback = '';
+        $aReviews = '';
+        $oProgramsRef = '';
+        $oPrograms = '';
          
 
         if (!empty($contactId)) {
@@ -177,7 +182,7 @@ class Contacts extends Controller
             if (!empty($subscribersData->user_id) && $subscribersData->user_id > 0) {
                 $userId = $subscribersData->user_id;
                 $getUserById = $mSubscriber->getUserById($userId);
-
+                $getUserActivities = '';
                 $getClientTags = $mTags->getClientTags($userId);
                 $getUserActivities = $mSubscriber->getUserActivities($userId);
                 $getFeedback = $mFeedback->getFeedback($userId);
@@ -343,6 +348,7 @@ class Contacts extends Controller
 
             //'userData' => $getUserById,
             //'getMyLists' => $getMyLists
+
             $aData = array(
                 'subscribersData' => $subscribersData,
                 'userData' => $subscribersData,
