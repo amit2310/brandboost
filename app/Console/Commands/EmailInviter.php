@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Admin\Crons\ManagerModel;
-use App\Models\Admin\Crons\EmailModel;
+use App\Models\Admin\Crons\BroadcastModel;
 use App\Models\Admin\UsersModel;
 
 class EmailInviter extends Command {
@@ -75,7 +75,7 @@ class EmailInviter extends Command {
         $mInviter = new EmailModel();
 
         $oCron = $mCron->checkCronStatus('automation');
-        
+
         if ($oCron->locked == true) {
             die("Currently cron is locked");
         }
@@ -84,7 +84,7 @@ class EmailInviter extends Command {
             //Lock Cron
             $bLocked = $mCron->lockCron('automation');
         }
-        
+
         if ($bLocked == false) {
             die("Currently cron is locked!!");
         }
@@ -96,7 +96,7 @@ class EmailInviter extends Command {
         if ($aEvents->isNotEmpty()) {
             foreach ($aEvents as $aEvent) {
                 //if ($aEvent->automation_id == '193') {
-                    
+
                 $bActiveSubsription = false;
                 $userID = $aEvent->client_id;
                 if ($userID > 0) {
@@ -159,12 +159,12 @@ class EmailInviter extends Command {
             $delayType = $oParams->delay_type; //after or before
             $delayUnit = $oParams->delay_unit; // minute or hour or day or week or year
             $delayValue = $oParams->delay_value;
-            
+
             //Get all subscriber and then find eligible subscribers only
             $oTriggers = $mInviter->getInviterFollowupSubscribers($inviterID, $previousEventID);
             //pre("==========================");
             //pre($oTriggers);
-            
+
             $timeNow = time();
             $aEligibleSubscriber = array();
             if (!empty($oTriggers)) {
@@ -173,10 +173,10 @@ class EmailInviter extends Command {
                     $lastTriggered = strtotime($oTrigger->start_at);
                     $deliverAt = $this->simplifiedTime($delayType, $delayUnit, $delayValue, $lastTriggered);
                     $endTime = $deliverAt + 7200;
-                    /*echo "\n Time Now". date("Y-m-d H:i:s", $timeNow);
+                    /* echo "\n Time Now". date("Y-m-d H:i:s", $timeNow);
                       echo "\n Delivery Time". date("Y-m-d H:i:s", $deliverAt);
                       echo "\n End Time". date("Y-m-d H:i:s", $endTime); */
-                      
+
                     if ($this->testing == true) {
                         $deliverAt = $timeNow;
                     }
@@ -184,10 +184,10 @@ class EmailInviter extends Command {
                         $aEligibleSubscriber[] = $oTrigger;
                     }
                 }
-                
+
                 //pre($aEligibleSubscriber);
                 //die;
-                
+
                 if (!empty($aEligibleSubscriber)) {
                     $aFireData = array(
                         'inviter_data' => $aEvent,
@@ -232,9 +232,9 @@ class EmailInviter extends Command {
                     $addedTime = strtotime($oSubscriber->created);
                     $deliverAt = $this->simplifiedTime($delayType, $delayUnit, $delayValue, $addedTime);
                     $endTime = $deliverAt + 1800; //Process for additional 30 minutes of expiry
-                    /*echo "\n Time Now". date("Y-m-d H:i:s", $timeNow);
+                    /* echo "\n Time Now". date("Y-m-d H:i:s", $timeNow);
                       echo "\n Delivery Time". date("Y-m-d H:i:s", $deliverAt);
-                      echo "\n End Time". date("Y-m-d H:i:s", $endTime); */ 
+                      echo "\n End Time". date("Y-m-d H:i:s", $endTime); */
                     if ($timeNow >= $deliverAt && $oSubscriber->status == 1) {
                         $aEligibleSubscriber[] = $oSubscriber;
                     }
@@ -592,7 +592,7 @@ class EmailInviter extends Command {
                         //die;
                         $bEmailSent = $this->SG_smtp($aEmailData);
                     }
-                    
+
                     if ($bEmailSent == true && $bSkipped == false) {
                         //Track Record
                         echo "<br> Email sent successfully";
@@ -1002,8 +1002,8 @@ class EmailInviter extends Command {
         $eventID = $aData['inviter_id'];
         $subscriberID = $aData['subscriber_id'];
         $moduleName = $aData['module_name'];
-        
-        
+
+
 
 
         $qs = '?';
@@ -1033,7 +1033,7 @@ class EmailInviter extends Command {
         if (!empty($smsTrackURL)) {
             $smsTrackURL = $smsTrackURL . $qs;
         }
-       
+
 
         $aSmsData = array(
             'sid' => $sid,
@@ -1461,7 +1461,7 @@ class EmailInviter extends Command {
             $delayType = $oParams->delay_type; //after or before
             $delayUnit = $oParams->delay_unit; // minute or hour or day or week or year
             $delayValue = $oParams->delay_value;
-            
+
 
             //Get all subscriber and then find eligible subscribers only
             $oSubscribers = $mInviter->getInviterEligibleSubscribers($automationID);
