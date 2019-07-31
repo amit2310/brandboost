@@ -899,7 +899,7 @@
 									<li><a href="#right-icon-tab2" class="tabColor" data-toggle="tab">Service Reviews <span>(<?php echo count($servicesReviews) > 0 ? count($servicesReviews) : '0';?>)</span></a> </li>
 									<!-- <li><a href="#right-icon-tab3" class="tabColor" data-toggle="tab">Questions <span>(<?php echo count($questionAndAnsData); ?>)</span></a> </li> -->
 									<li><a href="#right-icon-tab3" class="tabColor" data-toggle="tab">Questions <span>(<?php if(!empty($questionAndAnsData)) { echo count($questionAndAnsData); } else { echo '0'; } ?>)</span></a> </li>
-									<li><a href="#right-icon-tab4" class="tabColor" data-toggle="tab">FAQ <span>(<?php if(!empty($faQData)) { echo count($faQData); } else { echo '0'; } ?>)</span></a> </li>
+									<li><a href="#right-icon-tab4" class="tabColor" data-toggle="tab">FAQ <span>(<?php echo count(array_filter($faQData)); ?>)</span></a> </li>
 								</ul>
 							</div>
 							
@@ -1462,13 +1462,17 @@
 										<div class="panel-heading">
 											<h6 class="panel-title">FAQ</h6>
 										</div>
-										<div class="panel-body p20 pt0 bkg_white min_h300">
+										<div class="panel-body p20 pt0 bkg_white">
 											<div class="panel-group panel-group-control content-group-lg mb0">
 												
 												<!--  Faq loop Start  -->
 												<?php  
 													$incfaq = 1;
-													foreach ($faQData as $faQDataRow) { ?>
+													if(count($faQDataRow)>0)
+													{
+													  foreach ($faQData as $faQDataRow) { 
+                                                       
+														?>
 													<div class="panel panel-white">
 														<div class="panel-heading pl0 sh_no">
 															<h6 class="panel-title">
@@ -1481,7 +1485,9 @@
 													</div>
 													<?php
 														$incfaq++; 
-													} ?> 
+													}
+
+													} else { ?> <i style="color:#000; padding-top: 15px; display: block">No Faq given yet</i> <?php   }?> 
 													<!--  Faq loop Start  -->
 											</div>
 										</div>
