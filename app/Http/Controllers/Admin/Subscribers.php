@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\SettingsModel;
+use App\Models\Admin\WorkflowModel;
 use App\Models\Admin\SubscriberActivityModel;
 use Illuminate\Support\Facades\Input;
 use Cookie;
@@ -442,6 +443,9 @@ class Subscribers extends Controller {
     public function importSubscriberCSV(Request $request) {
 
         $csvimport = new Csvimport();
+        $mSubscriber = new SubscriberModel();
+        $mSettings = new SettingsModel();
+        $mWorkflow = new WorkflowModel();
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $someoneadded = false;
@@ -458,10 +462,14 @@ class Subscribers extends Controller {
         
         if ($csvimport->get_array($file_path)) {
             $csv_array = $csvimport->get_array($file_path);
-           
-            $aSuppressionList = $this->mSubscriber->getSuppressionList();
+
+            $aSuppressionList = $mSubscriber->getSuppressionList();
             $imported = 0;
+
+            
+
             foreach ($csv_array as $row) {
+                
                 $firstName = $row['FIRST_NAME'];
                 $lastName = $row['LAST_NAME'];
                 $email = $row['EMAIL'];
@@ -471,21 +479,24 @@ class Subscribers extends Controller {
                 $cityName = $row['CITY'];
                 $stateName = $row['STATE'];
                 $zipCode = $row['ZIP'];
-                $twitterProfile = $row['TWITTER_PROFILE'];
-                $facebookProfile = $row['FACEBOOK_PROFILE'];
-                $linkedinProfile = $row['LINKEDIN_PROFILE'];
-                $instagramProfile = $row['INSTAGRAM_PROFILE'];
-                $socialProfile = $row['OTHER_SOCIAL_PROFILE'];
+                $twitterProfile = $row['TWITTER_PROFILE'] != ''?$row['TWITTER_PROFILE']:'';
+                $facebookProfile = $row['FACEBOOK_PROFILE'] != ''?$row['FACEBOOK_PROFILE']:'';
+                //$linkedinProfile = $row['LINKEDIN_PROFILE'];
+                $instagramProfile = $row['INSTAGRAM_PROFILE'] != ''?$row['INSTAGRAM_PROFILE']:'';
+                $socialProfile = $row['OTHER_SOCIAL_PROFILE'] != ''?$row['OTHER_SOCIAL_PROFILE']:'';
                 $emailUserId = 0;
 
                 if (!in_array(strtolower($email), $aSuppressionList)) {
                     $imported++;
-                    $emailUser = $this->mUser->checkEmailExist($email);
+                    $emailUser = UsersModel::checkEmailExist($email);
                     if (!empty($emailUser)) {
-                        $emailUserId = $emailUser[0]->id;
+                        if(!empty($emailUser[0])) {
+                            $emailUserId = $emailUser[0]->id;
+                        }
+                        
                     }
 
-                    $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
+                    $oGlobalUser = SubscriberModel::checkIfGlobalSubscriberExists($userID, 'email', $email);
                     if (!empty($oGlobalUser)) {
                         $iSubscriberID = $oGlobalUser->id;
                     } else {
@@ -503,7 +514,7 @@ class Subscribers extends Controller {
                             'zipCode' => $zipCode,
                             'facebook_profile' => $facebookProfile,
                             'twitter_profile' => $twitterProfile,
-                            'linkedin_profile' => $linkedinProfile,
+                            //'linkedin_profile' => $linkedinProfile,
                             'instagram_profile' => $instagramProfile,
                             'socialProfile' => $socialProfile,
                             'created' => date("Y-m-d H:i:s")
@@ -512,7 +523,7 @@ class Subscribers extends Controller {
                             $aSubscriberData['user_id'] = $emailUserId;
                         }
 
-                        $iSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
+                        $iSubscriberID = SubscriberModel::addGlobalSubscriber($aSubscriberData);
                     }
 
                     if (!empty($moduleName)) {
@@ -553,7 +564,7 @@ class Subscribers extends Controller {
                     'item_count' => $imported,
                     'created' => date("Y-m-d H:i:s")
                 );
-                $this->mSettings->logImportHistory($aHistoryData);
+                $mSettings->logImportHistory($aHistoryData);
             }
 
 
@@ -577,8 +588,8 @@ class Subscribers extends Controller {
                 );
                 logUserActivity($aActivityData);
             }
-            $this->mWorkflow->syncWorkflowAudienceGlobalModel();
-            redirect($redirectURL);
+            $mWorkflow->syncWorkflowAudienceGlobalModel();
+            return redirect($redirectURL);
         } else {
             $data['error'] = "Error occured";
         }
