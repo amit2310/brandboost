@@ -93,7 +93,12 @@
         $.ajax({
             url: '/admin/contacts/profile/' + subscriberID,
             type: "POST",
-            data: {subscriberId: subscriberID, moduleName: moduleName, action: 'smart-popup'},
+            data: {
+                    subscriberId: subscriberID, 
+                    moduleName: moduleName, 
+                    action: 'smart-popup',
+                    _token: '<?php echo csrf_token(); ?>'
+                },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

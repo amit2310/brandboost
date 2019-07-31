@@ -358,9 +358,12 @@ $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
                         <div class="text-center mt20"><?php echo displayNoData(); ?></div>
                     <?php } ?>
 
-                    <?php if (count($userActivities) > 10) { ?>
-                        <div class="loadMoreRecord loadMoreRecordActivity text-center"><a style="cursor: pointer;" class="loadMoreActivity" >Load more</a><img class="loaderImage hidden" src="<?php echo base_url(); ?>assets/images/widget_load.gif" width="20px" height="20px"></div>
-                    <?php } ?>
+                    <?php 
+                    if(!empty($userActivities)) {
+                        if (count($userActivities) > 10) { ?>
+                            <div class="loadMoreRecord loadMoreRecordActivity text-center"><a style="cursor: pointer;" class="loadMoreActivity" >Load more</a><img class="loaderImage hidden" src="<?php echo base_url(); ?>assets/images/widget_load.gif" width="20px" height="20px"></div>
+                        <?php }
+                    } ?>
                 </div>					
             </div>
 
