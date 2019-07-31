@@ -16,6 +16,7 @@ use App\Models\ReviewsModel;
 use App\Models\Admin\WorkflowModel;
 use App\Models\Admin\TemplatesModel;
 use App\Models\Admin\OffsiteModel;
+use App\Models\Admin\ReviewlistsModel;
 use App\Models\Admin\LiveModel;
 use App\Models\Admin\Crons\InviterModel;
 use Illuminate\Support\Facades\Input;
@@ -1216,8 +1217,8 @@ class Brandboost extends Controller {
 
         $response = array();
 
-		$targetName = Input::post("targetName"); //$post['targetName'];
-		$brandboostID = Input::post("brandboostID"); //$post['brandboostID'];
+		$targetName = Input::post("targetName");
+		$brandboostID = Input::post("brandboostID");
 		$aUser = getLoggedUser();
 		$userID = $aUser->id;
 		if ($targetName == '' && $brandboostID > 0) {
@@ -1235,6 +1236,89 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
+	
+	
+	/**
+	* Used to update subscriber status
+	* @return type
+	*/
+	public function updateSubscriberStatus() {
+
+        $response = array();
+		$status = Input::post("status");
+		$subscriberId = Input::post("subscriber_id");
+
+		$aData = array(
+			'status' => $status
+		);
+
+		$result = ReviewlistsModel::updateSubscriber($aData, $subscriberId);
+		if ($result) {
+			//Add Useractivity log
+			$actionName = ($status == 1) ? 'user_active' : 'user_inactive';
+			$aUser = getLoggedUser();
+			$userID = $aUser->id;
+
+			$aActivityData = array(
+				'user_id' => $userID,
+				'event_type' => 'brandboost_onsite_offsite',
+				'action_name' => $actionName,
+				'brandboost_id' => '',
+				'campaign_id' => '',
+				'inviter_id' => '',
+				'subscriber_id' => $subscriberId,
+				'feedback_id' => '',
+				'activity_message' => 'Brandboost user was made ' . ($status == 1) ? 'active' : 'inactive',
+				'activity_created' => date("Y-m-d H:i:s")
+			);
+			
+			logUserActivity($aActivityData);
+			
+			$response['status'] = 'success';
+		} else {
+			$response['status'] = "Error";
+		}
+		echo json_encode($response);
+		exit;
+    }
+	
+	/**
+	* Used to delete review request
+	* @return type
+	*/
+	public function deleteRRrecord() {
+        $response = array();
+		$recordId = Input::post("recordId");
+		$result = BrandboostModel::deleteReviewRequest($recordId);
+		if ($result) {
+			//Add  log
+			$aUser = getLoggedUser();
+			$userID = $aUser->id;
+
+			$aActivityData = array(
+				'user_id' => $userID,
+				'event_type' => 'request_review_deleted',
+				'action_name' => 'request_review_deleted',
+				'brandboost_id' => '',
+				'campaign_id' => '',
+				'inviter_id' => '',
+				'subscriber_id' => '',
+				'feedback_id' => '',
+				'activity_message' => 'Review request deleted',
+				'activity_created' => date("Y-m-d H:i:s")
+			);
+			logUserActivity($aActivityData);
+			$response['status'] = 'success';
+		} else {
+			$response['status'] = "Error";
+		}
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	
+	
 	
 	
 	public function index() {
@@ -4927,49 +5011,6 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function update_subscriber_status() {
-
-        $response = array();
-        $post = $this->input->post();
-        if ($post) {
-
-            $status = strip_tags($post['status']);
-            $subscriberId = strip_tags($post['subscriber_id']);
-
-            $aData = array(
-                'status' => $status
-            );
-
-            $result = $this->rLists->updateSubscriber($aData, $subscriberId);
-            if ($result) {
-                //Add Useractivity log
-                $actionName = ($status == 1) ? 'user_active' : 'user_inactive';
-                $aUser = getLoggedUser();
-                $userID = $aUser->id;
-
-
-                $aActivityData = array(
-                    'user_id' => $userID,
-                    'event_type' => 'brandboost_onsite_offsite',
-                    'action_name' => $actionName,
-                    'brandboost_id' => '',
-                    'campaign_id' => '',
-                    'inviter_id' => '',
-                    'subscriber_id' => $subscriberId,
-                    'feedback_id' => '',
-                    'activity_message' => 'Brandboost user was made ' . ($status == 1) ? 'active' : 'inactive',
-                    'activity_created' => date("Y-m-d H:i:s")
-                );
-                logUserActivity($aActivityData);
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-            echo json_encode($response);
-            exit;
-        }
-    }
-
     public function delete_multipal_subscriber() {
 
         $response = array();
@@ -5019,39 +5060,6 @@ class Brandboost extends Controller {
                 $result = $this->mBrandboost->deleteReviewRequest($recordId);
             }
             if ($result) {
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-        }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function deleteRRrecord() {
-        $response = array();
-        $post = $this->input->post();
-        if ($post) {
-            $recordId = $post['recordId'];
-            $result = $this->mBrandboost->deleteReviewRequest($recordId);
-            if ($result) {
-                //Add  log
-                $aUser = getLoggedUser();
-                $userID = $aUser->id;
-
-                $aActivityData = array(
-                    'user_id' => $userID,
-                    'event_type' => 'request_review_deleted',
-                    'action_name' => 'request_review_deleted',
-                    'brandboost_id' => '',
-                    'campaign_id' => '',
-                    'inviter_id' => '',
-                    'subscriber_id' => '',
-                    'feedback_id' => '',
-                    'activity_message' => 'Review request deleted',
-                    'activity_created' => date("Y-m-d H:i:s")
-                );
-                logUserActivity($aActivityData);
                 $response['status'] = 'success';
             } else {
                 $response['status'] = "Error";

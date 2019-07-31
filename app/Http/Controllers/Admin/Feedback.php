@@ -102,6 +102,49 @@ class Feedback extends Controller {
         }
     }
 	
+	/**
+	* Used to update feedback status
+	* @return type
+	*/
+	public function updateFeedbackStatus() {
+        $response = array('status' => 'error', 'message' => 'Something went wrong');
+		$feedbackID = Input::post('fid');
+		$status = Input::post('status');
+		$aData = array(
+			'status' => $status
+		);
+
+		$result = FeedbackModel::updateFeedbackStatus($aData, $feedbackID);
+		if ($result) {
+			$response = array('status' => 'success', 'message' => 'Feedback status have been changed successfully.');
+		}
+		echo json_encode($response);
+		exit;
+    }
+	
+	/**
+	* Used to update feedback ratings
+	* @return type
+	*/
+	public function updateFeedbackRatings() {
+        $response = array('status' => 'error', 'message' => 'Something went wrong');
+		$feedbackID = Input::post('fid');
+		$status = Input::post('status');
+		$aData = array(
+			'category' => $status
+		);
+
+		$result = FeedbackModel::updateFeedbackStatus($aData, $feedbackID);
+		if ($result) {
+			$response = array('status' => 'success', 'message' => 'Feedback status have been changed succesfully.');
+		}
+		echo json_encode($response);
+		exit;
+    }
+	
+	
+	
+	
 	
     public function index($brandboostID = '') {
         $aUser = getLoggedUser();
@@ -264,44 +307,6 @@ class Feedback extends Controller {
             $bSaved = $this->mFeedback->saveFeedbackNotes($aNotesData);
             if ($bSaved) {
                 $response = array('status' => 'success', 'message' => 'Note has been added succesfully.');
-            }
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function updateFeedbackStatus() {
-        $response = array('status' => 'error', 'message' => 'Something went wrong');
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $feedbackID = strip_tags($post['fid']);
-            $status = strip_tags($post['status']);
-            $aData = array(
-                'status' => $status
-            );
-
-            $result = $this->mFeedback->updateFeedbackStatus($aData, $feedbackID);
-            if ($result) {
-                $response = array('status' => 'success', 'message' => 'Feedback status have been changed succesfully.');
-            }
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function updateFeedbackRatings() {
-        $response = array('status' => 'error', 'message' => 'Something went wrong');
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $feedbackID = strip_tags($post['fid']);
-            $status = strip_tags($post['status']);
-            $aData = array(
-                'category' => $status
-            );
-
-            $result = $this->mFeedback->updateFeedbackStatus($aData, $feedbackID);
-            if ($result) {
-                $response = array('status' => 'success', 'message' => 'Feedback status have been changed succesfully.');
             }
             echo json_encode($response);
             exit;

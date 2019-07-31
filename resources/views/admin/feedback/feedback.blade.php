@@ -235,7 +235,6 @@ if (!empty($result)) {
                                     <a href="javascript:void();" class="editDataList"><i class="icon-pencil4"></i></a>
                                     <a href="javascript:void();" style="display: none;" id="deleteButtonBrandboostFeedbacks" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                 </div>
-
                             </div>
                         </div>
                     <?php //} ?>
@@ -246,14 +245,81 @@ if (!empty($result)) {
             </div>
         </div>
         <!-- /dashboard content -->
-
-
     </div>
-
 </div>
 
-<?php //$this->load->view("admin/modals/modules/offsite/feedback_modal"); ?>
 @include('admin.modals.modules.offsite.feedback_modal');
 <script src="<?php echo base_url(); ?>assets/js/modules/offsite/feedback.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	$(document).on('click', '.chg_status', function () {
+		$('.overlaynew').show();
+		var status = $(this).attr('change_status');
+		var feedbackid = $(this).attr('feedback_id');
+		$.ajax({
+			url: '/admin/feedback/updateFeedbackStatus',
+			type: "POST",
+			data: {status: status, fid: feedbackid, _token: '{{csrf_token()}}'},
+			dataType: "json",
+			success: function (data) {
+				if (data.status == 'success') {
+					window.location.href = '';
+				} else {
+					alertMessage('Error: Some thing wrong!');
+					$('.overlaynew').hide();
+				}
+			}
+		});
+	});
+	
+	$(document).on("click", ".updateFeedbackStatusNew", function () {
+        $('.overlaynew').show();
+        var feedbackid = $(this).attr('feedback_id');
+        var statusVal = $(this).attr('fb_status');
+        $.ajax({
+            url: "/admin/feedback/updateFeedbackRatings",
+            type: "POST",
+            data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
+            dataType: "json",
+            success: function (response) {
+                if (response.status == "success") {
+                    $('.overlaynew').hide();
+                    window.location.href = '';
+                }
+            },
+            error: function (response) {
+                alertMessage(response.message);
+            }
+        });
+    });
+	
+	$(document).on("click", ".applyInsightTagsFeedback", function () {
+        var review_id = $(this).attr("reviewid");
+        var feedback_id = $(this).attr("feedback_id");
+        var action_name = $(this).attr("action_name");
+        $.ajax({
+            url: '/admin/tags/listAllTags',
+            type: "POST",
+            data: {review_id: review_id, feedback_id: feedback_id, _token: '{{csrf_token()}}'},
+            dataType: "json",
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('.overlaynew').hide();
+                    $("#tagEntireListFeedback").html(data.list_tags);
+                    $("#tag_review_id").val(review_id);
+                    $("#tag_feedback_id").val(feedback_id);
+                    if (action_name == 'review-tag') {
+                        $("#ReviewTagListModal").modal("show");
+                    } else if (action_name == 'feedback-tag') {
+                        $("#FeedbackTagListModal").modal("show");
+                    }
+                }
+            }
+        });
+    });
+	
+});
+</script>
+
 @endsection
 

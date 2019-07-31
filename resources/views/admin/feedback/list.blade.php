@@ -1,99 +1,99 @@
-<?php list($canRead, $canWrite) = fetchPermissions('Feedbacks'); ?>
-<?php
-$aData['allTab'] = '';
-$aData['postiveTab'] = '';
-$aData['neutralTab'] = '';
-$aData['negativeTag'] = '';
+<style>
+    .ratingBox .fa{font-size: 20px; color: #f8e71c; margin: 0 2px;}
+    .ratingBox .fastar{color: #ddd!important;}
+    .panel-heading {border-bottom: 1px solid #f5f4f5 !important;}
 
-
-if ($selected_tab == 'all') {
-    $allTab = 'active';
-    $aData['allTab'] = $allTab;
-} else if ($selected_tab == 'positive') {
-    $postiveTab = 'active';
-    $aData['postiveTab'] = $postiveTab;
-} else if ($selected_tab == 'neutral') {
-    $neutralTab = 'active';
-    $aData['neutralTab'] = $neutralTab;
-} else if ($selected_tab == 'negative') {
-    $negativeTag = 'active';
-    $aData['negativeTag'] = $negativeTag;
-} else {
-    $allTab = 'active';
-    $aData['allTab'] = $allTab;
-}
-
-
-if (!empty($result)) {
-    foreach ($result as $record) {
-        if ($record->category == 'Positive') {
-            $oPositive[] = $record;
-        } else if ($record->category == 'Neutral') {
-            $oNuetral[] = $record;
-        } else if ($record->category == 'Negative') {
-            $oNegative[] = $record;
-        }
-    }
-}
-?>
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-flat">
-            <div class="panel-heading">
-
-                <h6 class="panel-title">Requires Attention</h6>
-
-                <?php
-                $titleName = '';
-                $revType = "Offsite";
-                if (!empty($brandboostDetail[0]->review_type)) {
-                    $revType = $brandboostDetail[0]->review_type;
-                }
-                if (!empty($brandboostDetail[0]->brand_title)) {
-
-                    $titleName = ': ' . ucfirst($brandboostDetail[0]->brand_title);
-                }
-                ?>
-
-                <!--<h6 class="panel-title">New Note</h6>-->
-                <ul class="nav nav-tabs nav-tabs-bottom" id="nav-tabs-bottom" style="position: absolute; top: 20px; left: 15%;">
-                    <li class="<?php echo $allTab; ?>"><a href="#right-icon-tab11" data-toggle="tab"> All (<?php echo count($result); ?>)</a></li>
-                    <li class="<?php echo $postiveTab; ?>"><a id="positive_tag" href="#right-icon-tab12" data-toggle="tab"> Positive (<?php echo count($oPositive); ?>)</a></li>
-                    <li class="<?php echo $neutralTab; ?>"><a href="#right-icon-tab13" data-toggle="tab"> Neutral (<?php echo count($oNuetral); ?>)</a></li>
-                    <li class="<?php echo $negativeTag; ?>"><a href="#right-icon-tab14" data-toggle="tab"> Negative (<?php echo count($oNegative); ?>)</a></li>
-                </ul>
-                <div class="heading-elements">
-                    <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-                        <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
-                        <div class="form-control-feedback">
-                            <i class="icon-search4"></i>
-                        </div>
-                    </div>&nbsp; &nbsp;
-
-                    <button type="button" class="btn btn-xs btn-default editDataList"><i class="icon-pencil position-left"></i> Edit</button>
-                    <button id="deleteButtonBrandboostFeedbacks" class="btn btn-xs custom_action_box"><i class="icon-trash position-left"></i> Delete</button>
+    .media_review .img-cust{width: 64px!important; height: 64px!important}
+    .media_review .media-heading{margin-bottom: 20px;}
+    .media_review .media-heading a.text-semibold{ color: #231f20!important; font-size: 14px; font-weight: 400;}
+    .media_review .media-heading a.text-semibold strong{  font-weight: 500;}
+    .media_review .mediastar .fa{font-size: 17px; margin: 0 2px; color: #fc9951;}
+    .media_review .label.bg-success {	padding: 1px 5px 2px 5px !important;	margin: 0 5px; color: #333; background: #fadeb8!important; border-color: #f3d1a2!important;}
+    .media_review p{font-size: 14px!important; color: #231f20; margin-bottom: 20px; font-size: 14px; font-weight: 400; line-height: 24px;}
+    .media_review a.readmore{ color: #6598c7; font-weight: 300; font-size: 14px; text-decoration:underline; margin-bottom: 15px; display: inline-block;}
+    .media_review span.date{ float: right; font-weight: 300; font-size: 14px; color: #777274;}
+    .media_review .media {	margin-top: 25px;	border-bottom: 1px solid #f5f4f5;	padding-bottom: 25px;}
+    .media_review .media:first-child {	margin-top: 0!important;}
+</style>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/editors/summernote/summernote.min.js"></script>
+<!-- Content area -->
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">Feedback list<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                    <div class="heading-elements"> <span class="label bg-success heading-text"><?php echo sizeof($result);?> Feedback</span>
+                        <ul class="icons-list">
+                            <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> <span class="caret"></span></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#"><i class="icon-sync"></i> Update data</a></li>
+                                    <li><a href="#"><i class="icon-list-unordered"></i> Detailed log</a></li>
+                                    <li><a href="#"><i class="icon-pie5"></i> Statistics</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#"><i class="icon-cross3"></i> Clear list</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="media-list media_review stack-media-on-mobile">
+                                <?php
+                            if (count($result) > 0) {
+                                foreach ($result as $data) {
+                                    
+                                    ?>
+                                <li class="media">
+                                    <div class="media-left"> <a href="#"><img src="<?php echo (!empty($data->avatar)) ? base_url().'/profile_images/'.$data->avatar : base_url().'/profile_images/avatar_image.png'; ?>" class="img-circle img-cust" alt=""></a> </div>
+                                    <div class="media-body">
+                                        <div class="media-heading"> <a href="#" class="text-semibold"><strong><?php echo $data->firstname; ?> <?php echo $data->lastname; ?></strong> rated <a href="javascript:void(0);" class="editBrandboost" brandid="<?php echo $data->brandboost_id;?>" b_title="click to view campaign details"><?php echo ($data->brand_title) ? $data->brand_title : 'it' ; ?></a> &nbsp; &nbsp; <span class="mediastar">
+                                                <?php if ($data->category == 'Positive'): ?>
+                                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                                <?php elseif ($data->category == 'Neutral'): ?>
+                                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+                                                <?php elseif ($data->category == 'Negative'): ?>
+                                                    <i class="fa fa-star"></i><i class="fa fa-star fastar"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+                                                <?php endif; ?></span> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span> <span><a class="displayFeedback" style="text-decoration: 'none;'" fb_tab_type="note" feedback_id="<?php echo $data->id; ?>" href="javascript:void(0);" fb_time="<?php echo date("M d, Y h:i A", strtotime($data->created)); ?> (<?php echo timeAgo($data->created);?>)"><span class="label bg-success heading-text">+ Add Notes</span></a> 
+                                                    <span class="label bg-success heading-text" ><ul class="icons-list">  
+                                                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li><a class="displayFeedback" fb_tab_type="feedback" feedback_id="<?php echo $data->id; ?>" fb_time="<?php echo date("M d, Y h:i A", strtotime($data->created)); ?> (<?php echo timeAgo($data->created);?>)" href="javascript:void(0);" ><i class="icon-file-stats "></i> View</a></li>
+                                                        <li><a class="displayFeedback" fb_tab_type="note" feedback_id="<?php echo $data->id; ?>" href="javascript:void(0);" fb_time="<?php echo date("M d, Y h:i A", strtotime($data->created)); ?> (<?php echo timeAgo($data->created);?>)"><i class="icon-pencil7"></i> Add Note</a></li>
 
-            </div>
-
-            <div class="tab-content">
-
-                <!--########################TAB 1 ##########################-->
-                <?php $this->load->view("admin/feedback/feedback-tab/feeback-all", array('aData' => $result, 'allTab' => $allTab)) ?>
-                <!--########################TAB 2 ##########################-->
-                <?php $this->load->view("admin/feedback/feedback-tab/feedback-positive", array('aData' => $oPositive, 'postiveTab' => $postiveTab)); ?>
-                <!--########################TAB 3 ##########################-->
-                <?php $this->load->view("admin/feedback/feedback-tab/feedback-nuetral", array('aData' => $oNuetral, 'neutralTab' => $neutralTab)); ?>
-                <!--########################TAB 4 ##########################-->
-                <?php $this->load->view("admin/feedback/feedback-tab/feedback-negative", array('aData' => $oNegative, 'negativeTag' => $negativeTag)); ?>
-
-
+                                                    </ul>
+                                                </li>
+                                            </ul></span>
+                                                </span> <span class="date"><?php echo date('F d, Y h:i A', strtotime($data->created)); ?></span> </div>
+                                        <p><?php echo strlen($data->feedback)>200 ? substr($data->feedback, 0, 200). '...' : $data->feedback;?></p>
+                                        <a class="readmore displayFeedback" fb_tab_type="feedback" feedback_id="<?php echo $data->id; ?>" fb_time="<?php echo date("M d, Y h:i A", strtotime($data->created)); ?> (<?php echo timeAgo($data->created);?>)" href="javascript:void(0);">Read more</a>
+<!--                                        <ul class="list-inline list-inline-separate text-size-small">
+                                            <li>57 Likes </li>
+                                            <li>8 Comments</li>
+                                            <li>1574 Views</li>
+                                        </ul>-->
+                                    </div>
+                                </li>
+                                <?php
+                                }
+                            }else {
+                                echo '<li class="text-center">No any feedback found.</li>';
+                            }
+                            ?>	
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <!--<div class="col-md-12 text-right"> <a href="#" class="btn bg-blue-600"> Continue <i class=" icon-arrow-right13 text-size-base position-right"></i> </a> </div>-->
     </div>
-</div>
 
+    
+
+</div>
 <!-- /content area -->
 <div id="feedbackPopup" class="modal fade">
     <div class="modal-dialog">
@@ -112,14 +112,12 @@ if (!empty($result)) {
 
                             <ul class="icons-list" style="float:right;">  
                                 <li class="dropup"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                    <?php if ($canWrite): ?>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <li class="text-semibold" style="border-bottom:1px solid #ddd; padding:5px 15px 10px;">Change Status</li>
-                                            <li class="bg-danger updateFeedbackStatus" fb_status="Negative" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Negative</li>
-                                            <li class="bg-blue updateFeedbackStatus" fb_status="Neutral" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Neutral</li>
-                                            <li class="bg-success updateFeedbackStatus" fb_status="Positive" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Positive</li>
-                                        </ul>
-                                    <?php endif; ?>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li class="text-semibold" style="border-bottom:1px solid #ddd; padding:5px 15px 10px;">Change Status</li>
+                                        <li class="bg-danger updateFeedbackStatus" fb_status="Negative" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Negative</li>
+                                        <li class="bg-blue updateFeedbackStatus" fb_status="Neutral" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Neutral</li>
+                                        <li class="bg-success updateFeedbackStatus" fb_status="Positive" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Positive</li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
@@ -147,75 +145,11 @@ if (!empty($result)) {
     </div>
 </div>
 
-<div id="FeedbackTagListModal" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form method="post" name="frmFeedbackTagListModal" id="frmFeedbackTagListModal" action="javascript:void();">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Apply Tags</h5>
-                </div>
 
-                <div class="modal-body" id="tagEntireList">
-
-                </div>
-
-                <div class="modal-footer">
-                    <input type="hidden" name="feedback_id" id="tag_feedback_id" />
-                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Apply Tag</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 
 <script>
     $(document).ready(function () {
-
-        $("#frmFeedbackTagListModal").submit(function () {
-            var formdata = $("#frmFeedbackTagListModal").serialize();
-            $.ajax({
-                url: '<?php echo base_url('admin/tags/applyFeedbackTag'); ?>',
-                type: "POST",
-                data: formdata,
-                dataType: "json",
-                success: function (data) {
-                    if (data.status == 'success') {
-                        $("#FeedbackTagListModal").modal("hide");
-                        //alertMessageAndRedirect('Tags applied successfully!', window.location.href);
-                        window.location.href = window.location.href;
-                    }
-                }
-            });
-            return false;
-        });
-
-        $(document).on("click", ".applyInsightTags", function () {
-            var review_id = $(this).attr("reviewid");
-            var feedback_id = $(this).attr("feedback_id");
-            var action_name = $(this).attr("action_name");
-            $.ajax({
-                url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
-                type: "POST",
-                data: {review_id: review_id, feedback_id: feedback_id},
-                dataType: "json",
-                success: function (data) {
-                    if (data.status == 'success') {
-                        $('.overlaynew').hide();
-                        $("#tagEntireList").html(data.list_tags);
-                        $("#tag_review_id").val(review_id);
-                        $("#tag_feedback_id").val(feedback_id);
-                        if (action_name == 'review-tag') {
-                            $("#ReviewTagListModal").modal("show");
-                        } else if (action_name == 'feedback-tag') {
-                            $("#FeedbackTagListModal").modal("show");
-                        }
-                    }
-                }
-            });
-        });
 
         $(document).on("click", ".editBrandboost", function () {
 
@@ -223,7 +157,7 @@ if (!empty($result)) {
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/update_offsite_step1'); ?>',
                 type: "POST",
-                data: {'brandboostID': brandboostID},
+                data: {'brandboostID': brandboostID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
@@ -235,7 +169,8 @@ if (!empty($result)) {
                 }
             });
         });
-
+        
+        
         $(document).on("click", ".displayFeedback", function () {
             var elem = $(this);
             var fid = $(this).attr("feedback_id");
@@ -250,7 +185,7 @@ if (!empty($result)) {
             $.ajax({
                 url: "<?php echo base_url('/admin/feedback/displayfeedback'); ?>",
                 type: "POST",
-                data: {fid: feedbackid},
+                data: {fid: feedbackid, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -361,31 +296,6 @@ if (!empty($result)) {
             });
         });
 
-
-
-
-        $(document).on("click", ".updateFeedbackStatusNew", function () {
-            $('.overlaynew').show();
-            var feedbackid = $(this).attr('feedback_id');
-            var statusVal = $(this).attr('fb_status');
-            $.ajax({
-                url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
-                type: "POST",
-                data: {fid: feedbackid, status: statusVal},
-                dataType: "json",
-                success: function (response) {
-                    if (response.status == "success") {
-                        $('.overlaynew').hide();
-                        //alertMessageAndRedirect(response.message, window.location.href);
-                        window.location.href = window.location.href;
-                    }
-                },
-                error: function (response) {
-                    alertMessage(response.message);
-                }
-            });
-        });
-
         $(document).on("click", ".updateFeedbackStatus", function () {
             $('.overlaynew').show();
             var feedbackid = $("input[name='fid']").val();
@@ -394,7 +304,7 @@ if (!empty($result)) {
             $.ajax({
                 url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
                 type: "POST",
-                data: {fid: feedbackid, status: statusVal},
+                data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -436,13 +346,12 @@ if (!empty($result)) {
             $.ajax({
                 url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
                 type: "POST",
-                data: {fid: feedbackid, status: statusVal},
+                data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     $('.overlaynew').hide();
                     if (response.status == "success") {
-                        //alertMessageAndRedirect(response.message, window.location.href);
-                        window.location.href = window.location.href;
+                        alertMessageAndRedirect(response.message, window.location.href);
                     }
                 },
                 error: function (response) {
@@ -451,7 +360,11 @@ if (!empty($result)) {
                 }
             });
         });
+
+
+
     });
 
 </script>
+
 

@@ -157,7 +157,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/update_offsite_step1'); ?>',
                 type: "POST",
-                data: {'brandboostID': brandboostID},
+                data: {'brandboostID': brandboostID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
@@ -185,7 +185,7 @@
             $.ajax({
                 url: "<?php echo base_url('/admin/feedback/displayfeedback'); ?>",
                 type: "POST",
-                data: {fid: feedbackid},
+                data: {fid: feedbackid, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -304,7 +304,7 @@
             $.ajax({
                 url: "<?php echo base_url('/admin/feedback/updateFeedbackStatus'); ?>",
                 type: "POST",
-                data: {fid: feedbackid, status: statusVal},
+                data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -346,7 +346,7 @@
             $.ajax({
                 url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
                 type: "POST",
-                data: {fid: feedbackid, status: statusVal},
+                data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     $('.overlaynew').hide();
