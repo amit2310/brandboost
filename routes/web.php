@@ -54,6 +54,7 @@ Route::post('admin/brandboost/deleteObjectFromS3','Admin\Brandboost@deleteObject
 Route::get('admin/brandboost/widget_overview','Admin\Brandboost@widgetOverview');
 Route::get('admin/brandboost/widgets','Admin\Brandboost@widgets');
 Route::post('reviews/saveNewReview','Reviews@saveNewReview');
+Route::post('admin/brandboost/switchTemplate','Admin\Brandboost@switchTemplate');
 
 Route::post('admin/brandboost/campaignPreferences','Admin\Brandboost@campaignPreferences');
 Route::post('admin/brandboost/add_offsite_edit','Admin\Brandboost@addOffsiteEdit');
@@ -363,6 +364,7 @@ Route::post('admin/brandboost/addBrandCampaign','Admin\Brandboost@addBrandCampai
 Route::post('admin/brandboost/getBrandThemeData','Admin\Brandboost@getBrandThemeData');
 Route::post('admin/brandboost/addFaqData','Admin\Brandboost@addFaqData');
 Route::post('admin/brandboost/addFaqData','Admin\Brandboost@addFaqData');
-Route::get('for/{brand}','Company@index');
+Route::get('for/{brand}/{id}','Company@index');
+Route::post('admin/questions/saveNewQuestion','Admin\Questions@saveNewQuestion');
 
 

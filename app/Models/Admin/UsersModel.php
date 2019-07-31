@@ -293,32 +293,39 @@ class UsersModel extends Model {
         return true;
     }
 
+    /**
+    * This function is used to check the user found or not in the bb system
+    * @param type $clientID
+    * @return type
+    */
     public function checkIfUser($aParam) {
         if (!empty($aParam)) {
             $key = array_keys($aParam);
             $val = array_values($aParam);
-            $this->db->where($key[0], $val[0]);
-            $this->db->limit(1);
-            $result = $this->db->get("tbl_users");
-            //echo $this->db->last_query();
-            if ($result->num_rows() > 0) {
-                return $result->row()->id;
-            }
+            $oData = DB::table('tbl_users')
+             ->where($key[0], $val[0])
+            ->limit(1)->first();
+             return $oData->id;           
         }
         return false;
     }
+
+  
+        /**
+        * This function is used to check the subscriber exists or not
+        * @param type $clientID
+        * @return type
+        */
 
     public function checkIfSubscriber($aParam) {
         if (!empty($aParam)) {
             $key = array_keys($aParam);
             $val = array_values($aParam);
-            $this->db->where($key[0], $val[0]);
-            $this->db->limit(1);
-            $result = $this->db->get("tbl_subscribers");
-            //echo $this->db->last_query();
-            if ($result->num_rows() > 0) {
-                return $result->row()->id;
-            }
+            $aData =  DB::table('tbl_subscribers')
+            ->where($key[0], $val[0])
+            ->limit(1)->first();
+            pre($aData); die;
+           
         }
         return false;
     }

@@ -1088,7 +1088,7 @@
                $.ajax({
                 url: "<?php echo base_url(); ?>/admin/brandboost/switchTemplate",
                 method: "POST",
-                data: {'template_style': current_type},
+                data: {'template_style': current_type,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data)
                 {

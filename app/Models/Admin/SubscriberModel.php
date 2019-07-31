@@ -404,10 +404,18 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         return $oData;
     }
 
+
+    /**
+    * This function is used to update the subscriber information
+    * @param type $id
+    * @return type
+    */
+
     public function updateGlobalSubscriber($aData, $id) {
-        $this->db->where("id", $id);
-        $result = $this->db->update("tbl_subscribers", $aData);
-        if ($result) {
+        $oData = DB::table('tbl_subscribers')
+        ->where("id", $id)
+         ->update($aData);
+        if ($result>-1) {
             return true;
         } else {
             return false;
@@ -1159,11 +1167,11 @@ FROM
     }
 
     public function addBrandboostUserAccount($aData, $iRole = 2, $sendNotification = false) {
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/chargebee-php/lib/ChargeBee.php';
-        $cbSite = $this->config->item('cb_site_name');
-        $cbSiteToken = $this->config->item('cb_access_token');
-        ChargeBee_Environment::configure($cbSite, $cbSiteToken);
-        $this->load->model("CBee_model", "mChargebeeModel");
+       // require_once $_SERVER['DOCUMENT_ROOT'] . '/chargebee-php/lib/ChargeBee.php';
+        //$cbSite = $this->config->item('cb_site_name');
+        //$cbSiteToken = $this->config->item('cb_access_token');
+        //ChargeBee_Environment::configure($cbSite, $cbSiteToken);
+        //$this->load->model("CBee_model", "mChargebeeModel");
 
         $firstName = $aData['firstname'];
         $lastName = $aData['lastname'];
@@ -1178,7 +1186,7 @@ FROM
             $randstring .= $characters[rand(0, strlen($characters))];
         }
         $password = strip_tags($randstring);
-
+        $email ='darwin454@123789.org';
         $userID = $this->checkIfBrandboostUserExists(array('email' => $email));
         if ($userID == false) {
             $aChargebeeData = array(
@@ -1186,7 +1194,7 @@ FROM
                 'lastname' => $lastName,
                 'email' => $email
             );
-            $chargebeeUserID = $this->mChargebeeModel->createContact($aChargebeeData);
+            //$chargebeeUserID = $this->mChargebeeModel->createContact($aChargebeeData);
 
             $password_hash = $this->config->item('password_hash');
             $siteSalt = $this->config->item('siteSalt');
@@ -1245,16 +1253,20 @@ FROM
         if (!empty($aParam)) {
             $key = array_keys($aParam);
             $val = array_values($aParam);
-            $this->db->where($key[0], $val[0]);
-            $this->db->limit(1);
-            $result = $this->db->get("tbl_users");
-            //echo $this->db->last_query();
-            if ($result->num_rows() > 0) {
-                return $result->row()->id;
-            }
+           $oData =  DB::table('tbl_users')
+            ->where($key[0], $val[0])
+            ->limit(1)->get();
+            
         }
-        return false;
     }
+
+  
+    
+     /**
+     * function is used to register the user details with the subscriber
+     * @param type $aData
+     * @return type
+     */
 
     public function registerUserAlongWithSubscriber($aData) {
         $firstName = $aData['firstname'];
@@ -1354,19 +1366,23 @@ FROM
         $this->db->insert("tbl_users_notification_settings", $aData);
     }
 
+
+    /**
+    * This function is used to check the user already exists or not 
+    * @param type $clientID
+    * @return type
+    */
+
     public function checkIfBrandboostUserExists($aParam) {
         if (!empty($aParam)) {
             $key = array_keys($aParam);
             $val = array_values($aParam);
-            $this->db->where($key[0], $val[0]);
-            $this->db->limit(1);
-            $result = $this->db->get("tbl_users");
-            //echo $this->db->last_query();
-            if ($result->num_rows() > 0) {
-                return $result->row()->id;
-            }
+            $oData = DB::table('tbl_users')
+            ->where($key[0], $val[0])
+            ->limit(1)->insertGetId($aParam);
+            return $oData;
+           
         }
-        return false;
     }
 
     public function deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID) {

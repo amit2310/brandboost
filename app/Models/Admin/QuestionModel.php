@@ -271,19 +271,28 @@ class QuestionModel extends Model
             return false;
     }
 
-    public function addQuestion($aData) {
+    /**
+    * This function is used to add the Question
+    * @param type
+    * @return type
+    */
 
-        $result = $this->db->insert('tbl_reviews_question', $aData);
-        $insert_id = $this->db->insert_id();
-        if ($insert_id)
-            return $insert_id;
+    public function addQuestion($aData) {
+        $oData = DB::table('tbl_reviews_question')->insertGetId($aData);
+        if (!empty($oData))
+            return $oData;
         else
             return false;
     }
 
+    /**
+* This function is used to save the question for tracking purpose
+* @param type $clientID
+* @return type
+*/
     public function trackQuestionGeo($aData) {
-        $result = $this->db->insert('tbl_reviews_question_tracking_log', $aData);
-        if ($result)
+      $oData =   DB::table('tbl_reviews_question_tracking_log')->insertGetId($aData);
+        if (!empty($oData))
             return true;
         else
             return false;

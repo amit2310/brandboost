@@ -432,31 +432,36 @@ class ReviewsModel extends Model {
         return $aData;
     }
 
-    public function getReviewsByProductType($campaignID, $aSettings = array(), $productType = 'product') {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_brandboost.brand_title");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id=tbl_brandboost.id", "LEFT");
-        $this->db->where("tbl_reviews.campaign_id", $campaignID);
-        $this->db->where("tbl_reviews.review_type", $productType);
-        $this->db->where("tbl_reviews.status", '1');
-        if (!empty($aSettings['logged']) && !empty($aSettings['logged_id'])) {
-            $this->db->or_where("tbl_reviews.status", '2');
-        }
-        if (!empty($aSettings) && !empty($aSettings['min_ratings'])) {
-            $this->db->where("tbl_reviews.ratings >=", $aSettings['min_ratings']);
-        }
+ 
 
-        $start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
+   /**
+    * This function is used to get the Reviews by the product type
+    * @return type
+    */
 
-        if (!empty($aSettings) && !empty($aSettings['review_limit'])) {
-            $this->db->limit($aSettings['review_limit'], $start);
-        }
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $rResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
+
+    public function getReviewsByProductType($campaignID, $aSettings = array(), $productType='product') {
+         $start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
+
+        $aData =  DB::table('tbl_reviews')
+        ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_brandboost.brand_title')
+        ->leftjoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
+        ->leftjoin('tbl_brandboost', 'tbl_reviews.campaign_id','=','tbl_brandboost.id')
+         ->where("tbl_reviews.campaign_id", $campaignID)
+        ->where("tbl_reviews.review_type", $productType)
+        ->where("tbl_reviews.status", '1')
+        ->when(!empty($aSettings['logged']) && !empty($aSettings['logged_id']), function($query){
+           return $query->orWhere("tbl_reviews.status", '2');
+        })
+         ->when(!empty($aSettings) && !empty($aSettings['min_ratings']),function($query) use ($aSettings) {
+           return $query->orWhere('tbl_reviews.ratings','>=',$aSettings['min_ratings']);
+        })
+          ->when(!empty($aSettings) && !empty($aSettings['review_limit']),function($query) use ($start) {
+           return $query->limit($aSettings['review_limit'], $start);
+        })
+
+        ->orderBy("tbl_reviews.id", "DESC")->get();
+      
         return $aData;
     }
 
@@ -830,12 +835,18 @@ class ReviewsModel extends Model {
         }
     }
 
+
+    /**
+    * This function is used to save the reviews
+    * @param type $clientID
+    * @return type
+    */
+
     public function saveReview($aData) {
-        $bSaved = $this->db->insert("tbl_reviews", $aData);
-        $insert_id = $this->db->insert_id();
-        //echo $this->db->last_query();
-        if ($bSaved)
-            return $insert_id;
+        $oData = DB::table('tbl_reviews')
+        ->insertGetId($aData);
+        if (!empty($oData))
+            return $oData;
         return false;
     }
 

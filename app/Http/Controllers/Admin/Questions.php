@@ -12,7 +12,7 @@ use App\Models\Admin\QuestionModel;
 use App\Models\Admin\TagsModel;
 use Illuminate\Support\Facades\Input;
 use Session;
-
+error_reporting(0);
 class Questions extends Controller {
 	
 	/**
@@ -793,10 +793,19 @@ class Questions extends Controller {
     }*/
 
 
+    /**
+    * This function is used to save the question
+    * @param type 
+    * @return type
+    */
+
     public function saveNewQuestion() {
 
         $response = array();
-        $post = $this->input->post();
+        $post = Input::post();
+         $mUser = new UsersModel();
+         $mSubscriber = new SubscriberModel();
+         $mQuestion  = new QuestionModel();
         if (!empty($post)) {
             $headLine = strip_tags($post['title']);
             $question = strip_tags($post['description']);
@@ -829,14 +838,14 @@ class Questions extends Controller {
 
             $bRequireGlobalSubs = false;
             //Check if user exist
-            $userID = $this->mUser->checkIfUser(array('email' => $email));
+            $userID = $mUser->checkIfUser(array('email' => $email));
             // User does not exists then registration
             if ($userID == false) {
                 //Check if exists in subscriber list
-                $subscriberID = $this->mUser->checkIfSubscriber(array('email' => $email));
+                $subscriberID = $mUser->checkIfSubscriber(array('email' => $email));
 
                 if ($subscriberID > 0) {
-                    $aSubscriber = $this->mUser->getSubscriberInfo($subscriberID);
+                    $aSubscriber = $mUser->getSubscriberInfo($subscriberID);
                     $firstName = $aSubscriber->firstname;
                     $lastName = $aSubscriber->lastname;
 
@@ -868,7 +877,7 @@ class Questions extends Controller {
                         'email' => $email,
                         'mobile' => $mobile,
                     );
-                    $userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
+                    $userID = $mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
                     if ($userID > 0) {
                         $bRequireGlobalSubs = true;
                     }
@@ -882,7 +891,7 @@ class Questions extends Controller {
                         'updated' => date("Y-m-d H:i:s")
                     );
 
-                    $bUpdated = $this->mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
+                    $bUpdated = $mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
                 }
 
                 if (empty($userID)) {
@@ -903,7 +912,7 @@ class Questions extends Controller {
                 'created' => date("Y-m-d H:i:s")
             );
 
-            $questionID = $this->mQuestion->addQuestion($aData);
+            $questionID = $mQuestion->addQuestion($aData);
             if ($questionID) {
                 //Get Tracking Data
                 //Get Location based data
@@ -924,7 +933,7 @@ class Questions extends Controller {
                     'created_at' => date("Y-m-d H:i:s")
                 );
 
-                $this->mQuestion->trackQuestionGeo($aTrackData);
+                $mQuestion->trackQuestionGeo($aTrackData);
 
                 // Send Notification
                 $aNotificationData = array(
