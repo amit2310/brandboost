@@ -364,6 +364,7 @@ Route::post('admin/brandboost/getBrandThemeData','Admin\Brandboost@getBrandTheme
 Route::post('admin/brandboost/addFaqData','Admin\Brandboost@addFaqData');
 Route::post('admin/brandboost/addFaqData','Admin\Brandboost@addFaqData');
 Route::get('for/{brand}/{id}','Company@index');
+Route::get('for/{brand}','Company@index');
 Route::post('admin/questions/saveNewQuestion','Admin\Questions@saveNewQuestion');
 
 

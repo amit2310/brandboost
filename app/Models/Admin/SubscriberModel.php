@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Models\Admin;
-
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ChargeBeeModel;
 use DB;
 use Cookie;
 use Session;
+
 
 class SubscriberModel extends Model {
 
@@ -1160,12 +1161,12 @@ FROM
     }
 
     public function addBrandboostUserAccount($aData, $iRole = 2, $sendNotification = false) {
-       // require_once $_SERVER['DOCUMENT_ROOT'] . '/chargebee-php/lib/ChargeBee.php';
+       //require_once $_SERVER['DOCUMENT_ROOT'] . '/chargebee-php/lib/ChargeBee.php';
         //$cbSite = $this->config->item('cb_site_name');
         //$cbSiteToken = $this->config->item('cb_access_token');
         //ChargeBee_Environment::configure($cbSite, $cbSiteToken);
         //$this->load->model("CBee_model", "mChargebeeModel");
-
+       $mChargebeeModel = new ChargeBeeModel(); 
         $firstName = $aData['firstname'];
         $lastName = $aData['lastname'];
         $email = $aData['email'];
@@ -1187,7 +1188,8 @@ FROM
                 'lastname' => $lastName,
                 'email' => $email
             );
-            //$chargebeeUserID = $this->mChargebeeModel->createContact($aChargebeeData);
+            $chargebeeUserID = $mChargebeeModel->createContact($aChargebeeData);
+
 
             $password_hash = $this->config->item('password_hash');
             $siteSalt = $this->config->item('siteSalt');
@@ -1371,8 +1373,9 @@ FROM
             $key = array_keys($aParam);
             $val = array_values($aParam);
             $oData = DB::table('tbl_users')
+            ->select('*')
             ->where($key[0], $val[0])
-            ->limit(1)->insertGetId($aParam);
+            ->limit(1)->first($aParam);
             return $oData;
            
         }
