@@ -27,7 +27,12 @@ class NpsModel extends Model {
 
         return $oData;
     }
-
+	
+	/**
+     * Used to get nps widget list by user id
+     * @param type $userID
+     * @return type
+     */
     public function getNpsLists($userID) {
         $aData =  DB::table('tbl_nps_main')
         ->select('tbl_nps_main.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
@@ -36,6 +41,27 @@ class NpsModel extends Model {
         ->get();
         
         return $aData;
+    }
+	
+	/**
+     * Used to get nps widget list by user id
+     * @param type $userID
+     * @return type
+     */
+	public static function getMyUsers($accountID) {
+        $oNPS = $this->getSurveyInfoByRef($accountID);
+        $npsID = $oNPS->id;
+        if ($npsID > 0) {
+            $this->db->select("tbl_nps_campaign_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.status AS globalStatus, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id");
+            $this->db->join("tbl_subscribers", "tbl_nps_campaign_users.subscriber_id=tbl_subscribers.id", "LEFT");
+            $this->db->where("tbl_nps_campaign_users.nps_id", $npsID);
+            $result = $this->db->get("tbl_nps_campaign_users");
+            if ($result->num_rows() > 0) {
+                $response = $result->result();
+            }
+        }
+
+        return $response;
     }
 
     public function getNpsListsByDate($userID) {
@@ -740,32 +766,7 @@ class NpsModel extends Model {
             return false;
     }
 
-    public function getMyUsers($accountID) {
-        $oNPS = $this->getSurveyInfoByRef($accountID);
-        $npsID = $oNPS->id;
-        if ($npsID > 0) {
-            $this->db->select("tbl_nps_campaign_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.status AS globalStatus, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id");
-            $this->db->join("tbl_subscribers", "tbl_nps_campaign_users.subscriber_id=tbl_subscribers.id", "LEFT");
-            $this->db->where("tbl_nps_campaign_users.nps_id", $npsID);
-            $result = $this->db->get("tbl_nps_campaign_users");
-            if ($result->num_rows() > 0) {
-                $response = $result->result();
-            }
-        }
-
-        return $response;
-    }
-
-    public function getMyUsers_old($accountID) {
-        $this->db->select("tbl_nps_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.status AS globalStatus, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id");
-        $this->db->join("tbl_subscribers", "tbl_nps_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_nps_users.account_id", $accountID);
-        $result = $this->db->get("tbl_nps_users");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
     public function getNpsUserById($userID) {
         $this->db->select("tbl_nps_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id, tbl_subscribers.user_id AS bb_user_id");

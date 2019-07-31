@@ -70,7 +70,6 @@ class FeedbackModel extends Model
 	public static function getFeedback($userID, $user_role='') {
 		$oData = DB::table('tbl_brandboost_feedback')
 			->select('tbl_brandboost_feedback.*', 'tbl_users.avatar', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img', 'tbl_brandboost_users.subscriber_id as subscriber_id')
-			//->where('tbl_brandboost.brand_title', $id)
 			->when(($user_role > 0), function($query) use ($userID) {
 				return $query->where('tbl_brandboost_feedback.client_id', $userID);
 			})
@@ -101,8 +100,68 @@ class FeedbackModel extends Model
 		
     }
 	
+	/**
+	* Used to get feedback details by feedback id
+	* @param type $id
+	* @return type
+	*/
+	public static function getFeedbackInfo($id) {
+		$oData = DB::table('tbl_brandboost_feedback')
+			->select('tbl_brandboost.brand_title', 'tbl_brandboost.user_id AS ownerID', 'tbl_brandboost_feedback.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone')
+			->where('tbl_brandboost_feedback.id', $id)
+			->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.id', '=' , 'tbl_brandboost_feedback.subscriber_id')
+			->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=' , 'tbl_subscribers.id')
+			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_brandboost_feedback.brandboost_id')
+			->first();
+		return $oData;
+		
+    }
 	
-    public function add($aData) {
+	/**
+	* Used to get feedback notes data by feedback id
+	* @param type $id
+	* @return type
+	*/
+	public static function listFeedbackNotes($id) {
+		$oData = DB::table('tbl_brandboost_feedback_notes')
+			->select('tbl_brandboost_feedback_notes.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email')
+			->where('tbl_brandboost_feedback_notes.feedback_id', $id)
+			->leftJoin('tbl_users', 'tbl_users.id', '=' , 'tbl_brandboost_feedback_notes.client_id')
+			->orderBy('tbl_brandboost_feedback_notes.id', 'desc')
+			->get();
+		return $oData;
+    }
+
+	/**
+	* Used to get feedback all parent comments by feedback Id
+	* @param type $feedbackID
+	* @return type
+	*/
+	public static function getFeedbackParentsComments($feedbackID) {
+		$oData = DB::table('tbl_brandboost_feedback_comments')
+			->select('tbl_brandboost_feedback_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.id as userId')
+			->where('tbl_brandboost_feedback_comments.feedback_id', $feedbackID)
+			->where('tbl_brandboost_feedback_comments.parent_comment_id', 0)
+			->leftJoin('tbl_brandboost_feedback', 'tbl_brandboost_feedback_comments.feedback_id', '=' , 'tbl_brandboost_feedback.id')
+			->leftJoin('tbl_users', 'tbl_users.id', '=' , 'tbl_brandboost_feedback_comments.user_id')
+			->orderBy('tbl_brandboost_feedback_comments.id', 'desc')
+			->get();
+		return $oData;
+    }
+
+	
+
+
+
+
+
+
+
+
+
+
+
+   public function add($aData) {
         $result = $this->db->insert('tbl_brandboost_feedback', $aData);
         $inset_id = $this->db->insert_id();
         //$last_query = $this->db->last_query();
@@ -233,21 +292,7 @@ class FeedbackModel extends Model
             return false;
     }
 
-    public function listFeedbackNotes($id) {
-        if (!empty($id)) {
-            $this->db->select("tbl_brandboost_feedback_notes.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email");
-            $this->db->join("tbl_users", "tbl_brandboost_feedback_notes.client_id=tbl_users.id", "LEFT");
-            $this->db->where("tbl_brandboost_feedback_notes.feedback_id", $id);
-            $this->db->order_by("tbl_brandboost_feedback_notes.id", "DESC");
-            $result = $this->db->get("tbl_brandboost_feedback_notes");
-            //echo $this->db->last_query();
-            //die;
-            if ($result->num_rows() > 0) {
-                $response = $result->result();
-            }
-            return $response;
-        }
-    }
+    
     
     public function getFeedbackNoteInfo($noteId) {
 
@@ -289,24 +334,6 @@ class FeedbackModel extends Model
             return false;
     }
     
-    
-    
-
-    public function getFeedbackInfo($id) {
-        $this->db->select("tbl_brandboost.brand_title, tbl_brandboost.user_id AS ownerID, tbl_brandboost_feedback.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone");
-
-        $this->db->join("tbl_brandboost_users", "tbl_brandboost_users.id=tbl_brandboost_feedback.subscriber_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->join("tbl_brandboost", "tbl_brandboost_feedback.brandboost_id=tbl_brandboost.id", "LEFT");
-        $this->db->where("tbl_brandboost_feedback.id", $id);
-        $result = $this->db->get("tbl_brandboost_feedback");
-        //echo $this->db->last_query();
-        //die;
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
 
     public function getBrandboostInfo($id) {
         $this->db->where("id", $id);
@@ -335,26 +362,7 @@ class FeedbackModel extends Model
     }
     
     
-    public function getFeedbackParentsComments($feedbackID, $pagination= true , $start = 0, $limit = 5) {
-        $this->db->select("tbl_brandboost_feedback_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.id as userId");
-        $this->db->join("tbl_brandboost_feedback", "tbl_brandboost_feedback_comments.feedback_id = tbl_brandboost_feedback.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_brandboost_feedback_comments.user_id=tbl_users.id");
-        if($pagination == true){
-            $this->db->limit($limit, $start);
-        }
-        $this->db->order_by("tbl_brandboost_feedback_comments.id", "DESC");
-        $this->db->where("tbl_brandboost_feedback_comments.feedback_id", $feedbackID);
-        $this->db->where("tbl_brandboost_feedback_comments.parent_comment_id", '0');
-        $oResponse = $this->db->get("tbl_brandboost_feedback_comments");
-        //echo $this->db->last_query();exit;
-
-        if ($oResponse->num_rows() > 0) {
-            $aComments = $oResponse->result();
-        }
-
-        return $aComments;
-        exit;
-    }
+    
     
     public function deleteFeedbackComment($commentID) {
         $this->db->where('id', $commentID);

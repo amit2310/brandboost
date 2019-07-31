@@ -1,18 +1,22 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php
-//pre($result);
 list($canRead, $canWrite) = fetchPermissions('Feedbacks');
 $feedbackBrand = $result->brand_title;
 $feedbackTitle = $result->title;
 $feedbackDescription = $result->feedback;
 if (empty($feedbackTags)) {
-    $CI = & get_instance();
-    $CI->load->model("admin/Tags_model", "mT");
-    $feedbackTags = $CI->mT->getTagsDataByFeedbackID($result->id);
+    $feedbackTags = \App\Models\Admin\TagsModel::getTagsDataByFeedbackID($result->id);
 }
 
 //pre($result);
 ?>
-<script type="text/javascript" src="<?php echo site_url('assets/js/viewbox.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/viewbox.min.js'); ?>"></script>
 <style>
     .viewbox-container{
         position: fixed;
@@ -174,115 +178,6 @@ if (empty($feedbackTags)) {
         <div class="col-md-3">
             <div class="panel panel-flat">
                 <div class="panel-heading">
-                    <h6 class="panel-title">Image & Video</h6>
-                    <div class="heading-elements">
-                        <div class="table_action_tool">
-                            <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body p0" >
-                    <div class="image_video">
-                        <?php
-                        $mediaArray = unserialize($result->media_url);
-                        if (!empty($mediaArray)) {
-                            foreach ($mediaArray as $media) {
-                                if ($media['media_type'] == 'image') {
-                                    $media_url = $media['media_url'];
-                                    $videoImage = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $media_url;
-                                    $ext = pathinfo($videoImage, PATHINFO_EXTENSION);
-                                    $ch = curl_init($videoImage);
-                                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-                                    curl_setopt($ch, CURLOPT_HEADER, TRUE);
-                                    curl_setopt($ch, CURLOPT_NOBODY, TRUE);
-                                    $data = curl_exec($ch);
-                                    $fileSize = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
-                                    curl_close($ch);
-                                    $getFileSize = FileSizeConvert($fileSize);
-                                    ?>
-
-                                    <div class="p25 bbot">
-                                        <div class="media-left media-middle pr40"> 
-                                            <a class="thumbnail2" href="<?php echo $videoImage; ?>"><img src="<?php echo $videoImage; ?>" class="br5" height="45px" width="60px"/></a>
-                                        </div>
-                                        <div class="media-left media-middle pr10"> 
-                                            <a class="icons" href="javascript:void(0)">
-                                                <?php
-                                                if ($ext == 'png') {
-                                                    ?>
-                                                    <img src="<?php echo base_url(); ?>assets/images/png.png" class="img-xs file" alt="">
-                                                    <?php
-                                                } else {
-                                                    ?>
-                                                    <img src="<?php echo base_url(); ?>assets/images/jpg.png" class="img-xs file" alt="">
-                                                <?php }
-                                                ?>
-
-                                            </a> 
-                                        </div>
-                                        <div class="media-left">
-                                            <div class="pt-5">
-                                                <a href="javascript:void(0)" class="text-default text-semibold"><?php echo $getFileSize; ?></a>
-                                            </div>
-                                            <div class="text-muted text-size-small"><?php echo '.' . strtoupper($ext); ?></div>
-                                        </div>
-                                    </div>
-
-                                    <?php
-                                } else {
-                                    $media_url = $media['media_url'];
-                                    $videoImage = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $media_url;
-                                    $ext = pathinfo($videoImage, PATHINFO_EXTENSION);
-                                    $ch = curl_init($videoImage);
-                                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-                                    curl_setopt($ch, CURLOPT_HEADER, TRUE);
-                                    curl_setopt($ch, CURLOPT_NOBODY, TRUE);
-                                    $data = curl_exec($ch);
-                                    $fileSize = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
-                                    curl_close($ch);
-                                    $getFileSize = FileSizeConvert($fileSize);
-                                    ?>
-
-
-                                    <div class="p25 bbot">
-                                        <div class="media-left media-middle pr40"> 
-                                            <a class="videoQuestion" style="cursor: pointer;" filepath="<?php echo $videoImage; ?>" fileext="<?php echo $ext; ?>">
-                                                <img src="<?php echo base_url(); ?>assets/images/media2.jpg"/></a>
-                                        </div>
-                                        <div class="media-left media-middle pr10"> 
-                                            <a class="icons" href="javascript:void(0)">
-                                                <img src="<?php echo base_url(); ?>assets/images/mp4.png" class="img-xs file" alt="">
-                                            </a> 
-                                        </div>
-                                        <div class="media-left">
-                                            <div class="pt-5">
-                                                <a href="javascript:void(0)" class="text-default text-semibold"><?php echo $getFileSize; ?></a> 
-                                            </div>
-                                            <div class="text-muted text-size-small"><?php echo '.' . strtoupper($ext); ?></div>
-                                        </div>
-                                    </div> 
-
-
-
-
-                                    <?php
-                                }
-                            }
-                        } else {
-                            ?><div class="p25 bbot text-center"><span><i>No Image found</i></span></div><?php
-                        }
-                        ?>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-
-            <div class="panel panel-flat">
-                <div class="panel-heading">
                     <h6 class="panel-title">Tags</h6>
                     <div class="heading-elements">
                         <div class="table_action_tool">
@@ -292,11 +187,6 @@ if (empty($feedbackTags)) {
                 </div>
                 <div class="panel-body p0" >
                     <div class="profile_sec">
-
-
-
-
-
                         <div class="p25">
                             <?php
                             if (!empty($feedbackTags)) {
@@ -335,14 +225,10 @@ if (empty($feedbackTags)) {
                     <p class="fsize13 mb20 lh25 txt_grey2"><?php echo $feedbackDescription; ?></p>
 
                     <?php
-                    $defaultAvatar = base_url() . "assets/images/userp.png";
-                    if ($result->avatar) {
-                        $avatarImage = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/profile_image_9672_e3abdb9b595bb7fd46f89f7716447f38266ef481.jpg";
-                    } else {
-                        $avatarImage = $defaultAvatar;
-                    }
+                    $avatarImage = base_url() . "assets/images/userp.png";
+                    
                     ?> 
-                    <div class="media-left media-middle pr10"> <a class="icons" href="#"><img onerror="this.src='<?php echo $defaultAvatar; ?>';" style="width: 18px;" src="<?php echo $avatarImage; ?>" class="img-circle" alt=""></a> </div>
+                    <div class="media-left media-middle pr10"> <a class="icons" href="javascript:void(0);"><img style="width: 18px;" src="<?php echo $avatarImage; ?>" class="img-circle" alt=""></a> </div>
                     <div class="media-left">
                         <div class="text-muted">by <?php echo $result->firstname . " " . $result->lastname; ?>   <span class="ml20"><i class="icon-checkmark3 fsize12 txt_green"></i>&nbsp; Verified Purchase</span></div>
                     </div>
@@ -352,7 +238,7 @@ if (empty($feedbackTags)) {
                 </div>
                 <div class="panel-footer p20 pl30 pr30 ">
                     <p class="mb0 fsize13">
-                        <span class="ml20"><!-- <i class="icon-comment fsize11 txt_purple"></i> &nbsp; <?php echo (count($oAnswers)) > 0 ? count($oAnswers) . ' Answers' : '0 Answers'; ?> --></span>
+                        <span class="ml20"></span>
                     </p>
                 </div>
             </div>
@@ -439,9 +325,7 @@ if (empty($feedbackTags)) {
             <?php } ?>
             <!--=========Add Comment===========-->
             <?php
-//pre($result->id);
-            $oFeedback = $this->mFeedback->getFeedbackInfo($result->id);
-//pre($oFeedback); 
+            $oFeedback = \App\Models\FeedbackModel::getFeedbackInfo($result->id); 
             ?>
             <form name="frmSendFeedbackReply" id="frmSendFeedbackReply" method="post" action="javascript:void();">
                 <input type="hidden" name="fbtime" value="<?php echo date("M d, Y h:i A", strtotime($oFeedback->created)); ?> (<?php echo timeAgo($oFeedback->created); ?>)" />
@@ -491,11 +375,7 @@ if (empty($feedbackTags)) {
                             <li><small>Ref</small> <strong><?php echo displayNoData();?></strong></li>
                             <li><small>Name</small> <strong><?php echo $result->firstname . ' ' . $result->lastname; ?>  </strong></li>
                             <li><small>Email</small> <strong><?php echo $result->email; ?></strong></li>
-                            <li><small>Phone</small> <strong><?php echo ($result->mobile) ? $result->mobile : displayNoData(); ?></strong></li>
-<!--                            <li><small>Notification</small> <strong><?php echo ($result->system_notify) ? 'On' : 'Off'; ?></strong></li>
-                            <li><small>Id</small> <strong><?php echo $result->user_id; ?></strong></li>
-                            <li><small>Emails</small> <strong><?php echo ($result->email_notify) ? 'On' : 'Off'; ?></strong></li>
-                            <li><small>SMS</small> <strong><?php echo ($result->email_notify) ? 'On' : 'Off'; ?></strong></li>-->
+                            <li><small>Phone</small> <strong><?php echo ($result->phone) ? $result->phone : displayNoData(); ?></strong></li>
                         </ul>
                     </div>
                     <div class="profile_headings">Feedback Notes <a class="pull-right plus_icon" href="#"><i class="icon-plus3"></i></a></div>
@@ -523,20 +403,9 @@ if (empty($feedbackTags)) {
                         <button class="btn dark_btn btn-xs mr20" data-toggle="modal" data-target="#feedbackPopup">Add Note</button>	 
                     </div> 
 
-                    <?php if ($canWrite): ?>
-                            <!-- <button type="button" feedback_id='<?php echo $result->id; ?>' class="btn dark_btn btn-xs mr20 displayFeedback"> Add Notes  </button> -->
-                    <?php endif; ?>
-
-
-
-
-
+                
                 </div>
             </div>
-
-
-
-
         </div>
 
     </div>
@@ -769,30 +638,30 @@ if (empty($feedbackTags)) {
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: '<?php echo base_url('admin/feedback/deleteFeedbackNote'); ?>',
-                                type: "POST",
-                                data: {noteid: noteId},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = '';
-                                    } else {
-                                        $('.overlaynew').hide();
-                                        alertMessage('Error: Some thing wrong!');
-                                    }
-                                },
-                                error: function () {
-                                    $('.overlaynew').hide();
-                                    alertMessage('Error: Some thing wrong!');
-                                }
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					$.ajax({
+						url: '<?php echo base_url('admin/feedback/deleteFeedbackNote'); ?>',
+						type: "POST",
+						data: {noteid: noteId},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = '';
+							} else {
+								$('.overlaynew').hide();
+								alertMessage('Error: Some thing wrong!');
+							}
+						},
+						error: function () {
+							$('.overlaynew').hide();
+							alertMessage('Error: Some thing wrong!');
+						}
+					});
+				}
+			});
 
         });
 
@@ -817,58 +686,53 @@ if (empty($feedbackTags)) {
                 closeOnConfirm: false,
                 closeOnCancel: false
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            var formdata = $("#frmSendFeedbackReply").serialize();
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: "<?php echo base_url('/admin/feedback/replyFeedback'); ?>",
-                                type: "POST",
-                                data: formdata + "&career=" + career,
-                                dataType: "json",
-                                success: function (response) {
-                                    $('.overlaynew').hide();
-                                    if (response.status == "success") {
-                                        swal({
-                                            title: "Success!",
-                                            text: response.message,
-                                            confirmButtonColor: "#66BB6A",
-                                            type: "success"
-                                        });
-                                    } else {
-                                        swal({
-                                            title: "ERROR!",
-                                            text: response.message,
-                                            confirmButtonColor: "#2196F3",
-                                            type: "error"
-                                        });
-                                    }
-                                },
-                                error: function (response) {
-                                    $('.overlaynew').hide();
-                                    swal({
-                                        title: "ERROR!",
-                                        text: response.message,
-                                        confirmButtonColor: "#2196F3",
-                                        type: "error"
-                                    });
-                                }
-                            });
-                        } else {
-                            swal({
-                                title: "Cancelled",
-                                text: "",
-                                confirmButtonColor: "#2196F3",
-                                type: "error"
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					var formdata = $("#frmSendFeedbackReply").serialize();
+					$('.overlaynew').show();
+					$.ajax({
+						url: "<?php echo base_url('/admin/feedback/replyFeedback'); ?>",
+						type: "POST",
+						data: formdata + "&career=" + career,
+						dataType: "json",
+						success: function (response) {
+							$('.overlaynew').hide();
+							if (response.status == "success") {
+								swal({
+									title: "Success!",
+									text: response.message,
+									confirmButtonColor: "#66BB6A",
+									type: "success"
+								});
+							} else {
+								swal({
+									title: "ERROR!",
+									text: response.message,
+									confirmButtonColor: "#2196F3",
+									type: "error"
+								});
+							}
+						},
+						error: function (response) {
+							$('.overlaynew').hide();
+							swal({
+								title: "ERROR!",
+								text: response.message,
+								confirmButtonColor: "#2196F3",
+								type: "error"
+							});
+						}
+					});
+				} else {
+					swal({
+						title: "Cancelled",
+						text: "",
+						confirmButtonColor: "#2196F3",
+						type: "error"
+					});
+				}
+			});
         });
-
-
     });
-
-
-
 </script>
-
+@endsection
