@@ -103,6 +103,7 @@
         event.preventDefault();
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
+        formData.append('_token', '{{csrf_token()}}');
         $.ajax({
             url: "{{ URL::asset('admin/subscriber/add_contact') }}",
             type: "POST",

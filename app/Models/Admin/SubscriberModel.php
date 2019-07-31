@@ -88,6 +88,63 @@ class SubscriberModel extends Model {
     }
 
     /**
+     * Add global subscriber
+     * @param type $aData
+     * @return type insert id
+     */
+    public static function addGlobalSubscriber($aData) {
+
+        $insert_id = DB::table('tbl_subscribers')->insertGetId($aData);
+
+        if ($insert_id > 0 && !empty($aData['owner_id'])) {
+            //update contact storage usaged
+            SubscriberModel::updateContactStoreUsage($aData['owner_id']);
+        }
+
+       return $insert_id;
+    }
+
+    /**
+     * Update contacts store usage
+     * @param type $userID
+     * @return type boolean
+     */
+    public static function updateContactStoreUsage($userID) {
+        $oCurrentUsage = SubscriberModel::getCurrentUsage($userID);
+        if (!empty($oCurrentUsage)) {
+            $mainContactLimit = $oCurrentUsage->contact_limit;
+            $mainContactLimitTopup = $oCurrentUsage->contact_limit_topup;
+            $sFieldName = '';
+            if ($mainContactLimit > 0) {
+                $sFieldName = '`contact_limit`';
+            } else if ($mainContactLimitTopup > 0) {
+                $sFieldName = '`contact_limit_topup`';
+            }
+
+            if (!empty($sFieldName)) {
+
+                $sql = "UPDATE tbl_account_usage SET {$sFieldName} = ({$sFieldName} - 1) WHERE user_id='{$userID}'";
+                $oData = DB::select(DB::raw($sql));
+
+                return true;
+            }
+        }
+    }
+
+    /**
+     * get current usage
+     * @param type $clientID
+     * @return type object
+     */
+    public static function getCurrentUsage($clientID) {
+
+        $oData = DB::table('tbl_account_usage')
+                ->where('user_id', $clientID)
+                ->first();
+        return $oData;
+    }
+
+    /**
      * Used to get only active support users
      * @param type $userID
      */
@@ -123,6 +180,20 @@ class SubscriberModel extends Model {
                 ->where('supp_user', $userID)
                 ->where('favourite', 1)
                 ->get();
+        return $oData;
+    }
+
+    /**
+     * Check if global subscriber exists
+     * @param type $ownerID, $fieldName, $fieldValue
+     * @return type object
+     */
+    public static function checkIfGlobalSubscriberExists($ownerID, $fieldName, $fieldValue) {
+
+        $oData = DB::table('tbl_subscribers')
+                ->where('owner_id', $ownerID)
+                ->where($fieldName, $fieldValue)
+                ->first();
         return $oData;
     }
 
@@ -261,64 +332,9 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         return $oData;
     }
 
-    public function updateContactStoreUsage($userID) {
-        $oCurrentUsage = $this->getCurrentUsage($userID);
-        if (!empty($oCurrentUsage)) {
-            $mainContactLimit = $oCurrentUsage->contact_limit;
-            $mainContactLimitTopup = $oCurrentUsage->contact_limit_topup;
-            $sFieldName = '';
-            if ($mainContactLimit > 0) {
-                $sFieldName = '`contact_limit`';
-            } else if ($mainContactLimitTopup > 0) {
-                $sFieldName = '`contact_limit_topup`';
-            }
+    
 
-            if (!empty($sFieldName)) {
-                $sql = "UPDATE tbl_account_usage SET {$sFieldName} = ({$sFieldName} - 1) WHERE user_id='{$userID}'";
-                $result = $this->db->query($sql);
-                if ($result)
-                    return true;
-                else
-                    return false;
-            }
-        }
-    }
-
-    public function getCurrentUsage($clientID) {
-        $this->db->where("user_id", $clientID);
-        $result = $this->db->get('tbl_account_usage');
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function addGlobalSubscriber($aData) {
-        $result = $this->db->insert("tbl_subscribers", $aData);
-        //echo $this->db->last_query();
-        $inset_id = $this->db->insert_id();
-        if ($inset_id > 0 && !empty($aData['owner_id'])) {
-            //update contact storage usaged
-            $this->updateContactStoreUsage($aData['owner_id']);
-        }
-
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function checkIfGlobalSubscriberExists($ownerID, $fieldName, $fieldValue) {
-        $this->db->where("owner_id", $ownerID);
-        $this->db->where("{$fieldName}", $fieldValue);
-        $result = $this->db->get("tbl_subscribers");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
+    
 
     public function checkIfMySubscriber($ownerID, $iSubscriberID) {
         $this->db->where("owner_id", $ownerID);
@@ -398,16 +414,19 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         }
     }
 
-    public function getArchiveGlobalSubscribers($userID) {
-        $this->db->where("owner_id", $userID);
-        $this->db->where("status", 2);
-        $this->db->order_by("id", "DESC");
+    /**
+     * This function return archive global subscribers
+     * @param type $userId
+     * @return type object
+     */
+    public static function getArchiveGlobalSubscribers($userID) {
 
-        $result = $this->db->get("tbl_subscribers");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+         $oData = DB::table('tbl_subscribers')
+                ->where('owner_id', $userID)
+                ->where('status', 2)
+                ->orderBy('id', 'desc')
+                ->get();
+        return $oData;
     }
 
     /**

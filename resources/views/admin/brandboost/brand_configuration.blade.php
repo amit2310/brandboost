@@ -318,13 +318,13 @@
                                         <div class="profile_headings txt_upper p20 fsize11 fw600">Page appearance <a class="pull-right plus_icon" href="#"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
 
                                         <div class="p20">
-                                            <div class="barand_avatar mb20">
+                                            <div class="barand_avatar mb20 hidden">
                                                 <?php 
                                                 //$brandboostData->logo_img1='';
                                                 //$brandboostData->logo_img1='';
                                                 ?>
                                                 <img width="64" height="65" class="rounded" src="<?php //echo $brandboostData->logo_img1 == '' ? base_url('assets/images/default_table_img2.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brandboostData->logo_img; ?>"/>
-                                                <img width="65" height="65" class="rounded" src="<?php echo $company_logo1 == '' ? base_url('assets/images/default_table_img2.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $company_logo; ?>"/>
+                                                <img width="65" height="65" class="rounded" src="<?php echo $company_logo1 == '' ? base_url('assets/images/default_table_img2.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $company_logo; ?>"/>
                                             </div>
                                             <!--<p class="txt_upper fsize11 fw500 text-muted">Company Avatar</p>-->
                                             <div class="form-group">
@@ -1142,8 +1142,80 @@
 
     }
 
-        
-        
+    
+    Dropzone.autoDiscover = false;
+    var myDropzoneLogoImg = new Dropzone(
+    '#myDropzone_logo_img', //id of drop zone element 1
+    {
+        url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment"); ?>/<?php echo $userData->id; ?>/onsite',
+        uploadMultiple: false,
+        maxFiles: 1,
+        maxFilesize: 600,
+        acceptedFiles: 'image/*',
+        addRemoveLinks: false,
+        success: function (response) {
+            
+            if(response.xhr.responseText != "") {
+
+                $('.company_avatar').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
+                var dropImage = $('#company_logo').val();
+                $.ajax({
+                    url: '<?php echo base_url('admin/brandboost/deleteObjectFromS3'); ?>',
+                    type: "POST",
+                    data: {dropImage: dropImage, _token: '<?php echo csrf_token(); ?>'},
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+               
+            
+                $('#company_logo').val(response.xhr.responseText);
+                $('#frmDesignSubmit').trigger('submit');
+            }
+            
+        }
+    });
+    myDropzoneLogoImg.on("complete", function(file) {
+      myDropzoneLogoImg.removeFile(file);
+    });
+
+
+    var myDropzoneHeaderLogo = new Dropzone(
+    '#myDropzone_company_header_logo', //id of drop zone element 1
+    {
+        url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment"); ?>/<?php echo $userData->id; ?>/onsite',
+        uploadMultiple: false,
+        maxFiles: 1,
+        maxFilesize: 600,
+        acceptedFiles: 'image/*',
+        addRemoveLinks: false,
+        success: function (response) {
+            
+            if(response.xhr.responseText != "") {
+
+                $('.company_header_avatar').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
+                var dropImage = $('#company_header_logo').val();
+                $.ajax({
+                    url: '<?php echo base_url('admin/brandboost/deleteObjectFromS3'); ?>',
+                    type: "POST",
+                    data: {dropImage: dropImage, _token: '<?php echo csrf_token(); ?>'},
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+               
+            
+                $('#company_header_logo').val(response.xhr.responseText);
+                $('#frmDesignSubmit').trigger('submit');
+            }
+            
+        }
+    });
+    myDropzoneHeaderLogo.on("complete", function(file) {
+      myDropzoneHeaderLogo.removeFile(file);
+    });
  
 
         // ******** main color switch for top area ******** // 
@@ -2276,11 +2348,11 @@
                     {
                          if(data.company_logo=='')
                          {
-                         $(".company_avatar").attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'+data.default_logo);
+                         $(".company_avatar").attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+data.default_logo);
                          }
                           if(data.company_header_logo=='')
                          {
-                         $(".company_header_avatar").attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'+data.default_header_logo);
+                         $(".company_header_avatar").attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+data.default_header_logo);
                          }
                         
                         

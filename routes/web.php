@@ -50,11 +50,17 @@ Route::post('admin/brandboost/getBBECode','Admin\Brandboost@getBBECode');
 Route::post('admin/brandboost/archive_multipal_brandboost','Admin\Brandboost@archiveMultipalBrandboost');
 Route::post('admin/brandboost/delete_brandboost','Admin\Brandboost@deleteBrandboost');
 Route::get('admin/brandboost/offsite_setup/{id}','Admin\Brandboost@offsiteSetup');
+Route::post('admin/brandboost/deleteObjectFromS3','Admin\Brandboost@deleteObjectFromS3');
 Route::get('admin/brandboost/widget_overview','Admin\Brandboost@widgetOverview');
 Route::get('admin/brandboost/widgets','Admin\Brandboost@widgets');
 Route::post('reviews/saveNewReview','Reviews@saveNewReview');
 Route::post('admin/brandboost/switchTemplate','Admin\Brandboost@switchTemplate');
 
+Route::post('admin/brandboost/campaignPreferences','Admin\Brandboost@campaignPreferences');
+Route::post('admin/brandboost/add_offsite_edit','Admin\Brandboost@addOffsiteEdit');
+Route::post('admin/brandboost/add_offsite_resources','Admin\Brandboost@addOffsiteResources');
+Route::post('admin/brandboost/add_offsite_url','Admin\Brandboost@addOffsiteUrl');
+Route::post('admin/brandboost/continueStepOffsite','Admin\Brandboost@continueStepOffsite');
 
 
 Route::post('admin/reviews/updateReviewStatus','Admin\Reviews@updateReviewStatus');
@@ -301,6 +307,8 @@ Route::get('admin/broadcast/report/{broadcastID}','Admin\Broadcast@report');
 Route::post('admin/tags/getSubscriberTags','Admin\Tags@getSubscriberTags');
 Route::post('admin/tags/applySubscriberTag','Admin\Tags@applySubscriberTag');
 
+//Subscriber
+Route::post('admin/subscriber/add_contact','Admin\Subscribers@add_contact');
 
 //Lists
 Route::get('admin/lists','Admin\Lists@index');
@@ -347,6 +355,7 @@ Route::post('admin/brandboost/addBrandConfigurationData','Admin\Brandboost@addBr
 Route::post('admin/brandboost/updateBrandConfigurationData','Admin\Brandboost@updateBrandConfigurationData');
 Route::post('admin/contacts/profile/{contactId}','Admin\Contacts@profile');
 Route::post('admin/contacts/add_contact_notes','Admin\Contacts@add_contact_notes');
+Route::get('admin/contacts/mycontacts','Admin\Contacts@mycontacts');
 Route::post('admin/brandboost/getFaqdetails/{faqId}','Admin\Brandboost@getFaqdetails');
 Route::post('admin/brandboost/UpdateFaqData','Admin\Brandboost@UpdateFaqData');
 Route::post('admin/brandboost/update_faq_status','Admin\Brandboost@update_faq_status');
