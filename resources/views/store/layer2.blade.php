@@ -13,13 +13,13 @@
 		<meta property="og:site_name" content="Branboost" />
 		<!-- Global stylesheets -->
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-		<link href="<?php echo base_url(); ?>new_pages/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+		<link href="<?php echo base_url(); ?>assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6448636/7750592/css/fonts.css" />
-		<link href="<?php echo base_url(); ?>new_pages/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-		<link href="<?php echo base_url(); ?>new_pages/assets/css/core.css" rel="stylesheet" type="text/css">
-		<link href="<?php echo base_url(); ?>new_pages/assets/css/components.css" rel="stylesheet" type="text/css">
-		<link href="<?php echo base_url(); ?>new_pages/assets/css/colors.css" rel="stylesheet" type="text/css">
-		<link href="<?php echo base_url(); ?>new_pages/assets/css/theme1.css" rel="stylesheet" type="text/css">
+		<link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+		<link href="<?php echo base_url(); ?>assets/css/core.css" rel="stylesheet" type="text/css">
+		<link href="<?php echo base_url(); ?>assets/css/components.css" rel="stylesheet" type="text/css">
+		<link href="<?php echo base_url(); ?>assets/css/colors.css" rel="stylesheet" type="text/css">
+		<link href="<?php echo base_url(); ?>assets/css/theme1.css" rel="stylesheet" type="text/css">
 		<style type="text/css">
 			
 			.review_ratings .ratings .fa.fa-star{margin-right: 1px; color: #ffc537!important; }
@@ -35,10 +35,10 @@
 		
 		
 		<!-- Core JS files -->
-		<script type="text/javascript" src="<?php echo base_url(); ?>new_pages/assets/js/plugins/loaders/pace.min.js"></script>
-		<script type="text/javascript" src="<?php echo base_url(); ?>new_pages/assets/js/core/libraries/jquery.min.js"></script>
-		<script type="text/javascript" src="<?php echo base_url(); ?>new_pages/assets/js/core/libraries/bootstrap.min.js"></script>
-		<script type="text/javascript" src="<?php echo base_url(); ?>new_pages/assets/js/plugins/loaders/blockui.min.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/loaders/pace.min.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/core/libraries/jquery.min.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/core/libraries/bootstrap.min.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/loaders/blockui.min.js"></script>
 		<!-- /core JS files -->
 		
 		<style type="text/css">
@@ -650,7 +650,7 @@
 														?><img src="<?php echo base_url(); ?>assets/images/flags/<?php echo $countryFlag; ?>.png" alt=""><?php
 													}
 													else {
-														?><img src="<?php echo base_url(); ?>new_pages/assets/images/un_flag.png" alt=""><?php
+														?><img src="<?php echo base_url(); ?>assets/images/un_flag.png" alt=""><?php
 													} ?> 
 												<?php echo $countryName != ''? $countryName: 'N/A'; ?></strong></li>
 												<li><small><i class="fa fa-building-o mr10"></i>City</small> <strong><span class="brig pr10 mr10"><?php echo $userDetail->city != ''? $userDetail->city: 'N/A'; ?></span>  <?php echo $userDetail->address != '' ? $userDetail->address : 'N/A'; ?></strong></li>
@@ -779,7 +779,7 @@
 													?><img src="<?php echo base_url(); ?>assets/images/flags/<?php echo $countryFlag; ?>.png" alt=""><?php
 												}
 												else {
-													?><img src="<?php echo base_url(); ?>new_pages/assets/images/un_flag.png" alt=""><?php
+													?><img src="<?php echo base_url(); ?>assets/images/un_flag.png" alt=""><?php
 												} ?>
 												
 												
@@ -1536,6 +1536,7 @@
 		<div class="modal-dialog">
 			<div class="">
 				<form method="post" name="frmSiteReviewSubmit" id="frmQuestionSubmit" container_name="sitereview" action="#"  enctype="multipart/form-data">
+					<input type="hidden" name="_token" value="{{csrf_token()}}">
 					<div class="review_sec">
 						<div class="review_chat42" style="margin:0 auto;">
 							<div class="head <?php echo $gradientClassReview; ?>">
@@ -1625,7 +1626,7 @@
 								</div>
 								
 								<div class="clearfix"></div>
-								<div class="star_bottom closeQ"><img src="<?php echo base_url(); ?>/new_pages/assets/images/widget/cross-icon.png"></div>
+								<div class="star_bottom closeQ"><img src="<?php echo base_url(); ?>/assets/images/widget/cross-icon.png"></div>
 							</div>
 						</div>
 					</div>
@@ -1645,6 +1646,7 @@
 					</div>
 					<div class="second_box">
 						<form method="post" name="frmProductReviewSubmit" id="frmProductReviewSubmit" container_name="productreview" action="#"  enctype="multipart/form-data"> 
+							<input type="hidden" name="_token" value="{{csrf_token()}}">
 							<div class="middle">
 								<?php
 									if(count($productsData) > 0 ) {
@@ -1690,7 +1692,7 @@
 											<div class="clearfix"></div>
 											<div class="drag_bx dropzone" id="myDropzone_<?php echo $productData->id; ?>">
 												<span class="drop_rate2">
-													<img src="<?php echo base_url(); ?>/new_pages/assets/images/review/drag_icon_2.png">
+													<img src="<?php echo base_url(); ?>/assets/images/review/drag_icon_2.png">
 													<div class="Drag-Drop-Your-Fil">Drag &amp; Drop Your Files</div>
 													<div class="GIF-JPG-PNG-ASF">GIF, JPG, PNG, ASF, FLV, M4V, MOV, MP4</div>
 												</span>
@@ -1760,7 +1762,7 @@
 									<div class="clearfix"></div>
 									<div class="drag_bx dropzone" id="myDropzone2">
 										<span class="drop_rate2">
-											<img src="<?php echo base_url(); ?>/new_pages/assets/images/review/drag_icon_2.png">
+											<img src="<?php echo base_url(); ?>/assets/images/review/drag_icon_2.png">
 											<div class="Drag-Drop-Your-Fil">Drag &amp; Drop Your Files</div>
 											<div class="GIF-JPG-PNG-ASF">GIF, JPG, PNG, ASF, FLV, M4V, MOV, MP4</div>
 										</span>
@@ -1823,7 +1825,7 @@
 							<div class="clearfix"></div>
 						</form>
 					</div>
-					<div class="star_bottom closeR"><img src="<?php echo base_url(); ?>/new_pages/assets/images/widget/cross-icon.png"></div>
+					<div class="star_bottom closeR"><img src="<?php echo base_url(); ?>/assets/images/widget/cross-icon.png"></div>
 				</div>
 			</div>
 		</div>
@@ -1858,7 +1860,7 @@
 						<div class="middle">
 							<div class="main_comment">
 								<div class="box_1">
-									<img src="<?php echo base_url(); ?>/new_pages/assets/images/widget/heart.png">
+									<img src="<?php echo base_url(); ?>/assets/images/widget/heart.png">
 									<h1>Thanks for your review!</h1>
 									<p>Hi Alen.S! Thanks for purchasing from Brandboost.
 										Can a Spare a minute of your time to tell us 
@@ -1872,7 +1874,7 @@
 						</div>
 						<div class="clearfix"></div>
 					</div>
-					<div class="star_bottom closeTM"><img src="<?php echo base_url(); ?>/new_pages/assets/images/widget/cross-icon.png"></div>
+					<div class="star_bottom closeTM"><img src="<?php echo base_url(); ?>/assets/images/widget/cross-icon.png"></div>
 				</div>
 			</div>
 		</div>

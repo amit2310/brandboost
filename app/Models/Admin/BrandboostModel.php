@@ -30,6 +30,20 @@ class BrandboostModel extends Model {
         return $oData;
     }
 
+
+     /**
+     * function is used to fetch the BB campaign information 
+     * @param type $campaignID
+     * @return type
+     */
+
+
+    public function getBBInfo($bbID) {
+    	$oData = DB::table('tbl_brandboost')
+        ->where("id", $bbID)->first();
+        return $oData;
+    }
+
     /**
      * Get Member's list of all Brandboost widgets
      * @param type $id

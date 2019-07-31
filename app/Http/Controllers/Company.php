@@ -10,8 +10,8 @@ use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\BrandModel;
 use App\Models\Admin\BrandboostModel;
 use App\Models\Admin\QuestionModel;
-
 use Session;
+
 error_reporting(0);
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
@@ -36,7 +36,7 @@ class Company extends Controller {
 
 			if (!empty($campaign)) {
 				
-				$productName = Request::segment(3);
+				$productName = request()->segment(3);
 				$campaignId = explode('-', $productName);
 				$campaignId = end($campaignId);
 			
@@ -99,7 +99,8 @@ class Company extends Controller {
 		
 		public function getReviewQuestionsAndAnswers($campaignId){
 			$mUser = new UsersModel();
-			$oQuestions = $this->mQuestion->getBrandboostQuestions($campaignId);
+			  $mQuestion = new QuestionModel();
+			$oQuestions = $mQuestion->getBrandboostQuestions($campaignId);
 			if (!empty($oQuestions)) {
 				foreach ($oQuestions as $qusetion) {
 					$qusetion = (array) $qusetion;
@@ -108,13 +109,13 @@ class Company extends Controller {
 					$userData = $mUser->getUserInfo($qusetion['user_id']);
 					$aQAData[$questionID]['user_data'] = $userData;
 					
-					$oAnswers = $this->mQuestion->getAllAnswer($questionID);
+					$oAnswers = $mQuestion->getAllAnswer($questionID);
 					if (!empty($oAnswers)) {
 						foreach ($oAnswers as $answer) {
 							$answer = (array) $answer;
 							$answerID = $answer['id'];
 							$userData = $mUser->getUserInfo($answer['user_id']);
-							$helpfulData = $this->mQuestion->getReviewAnswerHelpful($answerID);
+							$helpfulData = $mQuestion->getReviewAnswerHelpful($answerID);
 							$aQAData[$questionID]['answer'][$answerID] = $answer;
 							$aQAData[$questionID]['answer'][$answerID]['user_data'] = $userData;
 							$aQAData[$questionID]['answer'][$answerID]['helpful'] = $helpfulData;
@@ -534,7 +535,7 @@ class Company extends Controller {
 			$aSettings['start'] = $offset;
 			$aSettings['review_limit'] = $limit;
 			
-			$oReviews = $this->mReviews->getReviewsByProductType($campaignID, $aSettings, $productType);
+			$oReviews = $mReviews->getReviewsByProductType($campaignID, $aSettings, $productType);
 			if (!empty($oReviews)) {
 				foreach ($oReviews as $oReview) {
 					$aReview = (array) $oReview;

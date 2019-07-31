@@ -1553,6 +1553,7 @@
 		<div class="modal-dialog">
 			<div class="">
 				<form method="post" name="frmSiteReviewSubmit" id="frmQuestionSubmit" container_name="sitereview" action="#"  enctype="multipart/form-data">
+					<input type="hidden" name="_token" value="{{csrf_token()}}">
 					<div class="review_sec">
 						<div class="review_chat42" style="margin:0 auto;">
 							<div class="head <?php echo $gradientClassReview; ?>">

@@ -9,7 +9,8 @@ use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\BrandModel;
 use App\Models\Admin\BrandboostModel;
 use App\Models\Admin\QuestionModel;
-
+use Session;
+error_reporting(0);
 
 class Reviews extends Controller {
 
@@ -420,6 +421,9 @@ class Reviews extends Controller {
     public function saveNewReview() {
         $response = array();
         $post = Input::post();
+         $mInviter = new BrandboostModel();
+         $mSubscriber = new SubscriberModel();
+         $mReviews = new ReviewsModel();
         $bAllDone = false;
 
         if (!empty($post)) {
@@ -443,8 +447,8 @@ class Reviews extends Controller {
                 $showName = 1;
             }
 
-            $aBrandboost = $this->mInviter->getBBInfo($campaignID);
-            $clientID = $aBrandboost->user_id;
+            $aBrandboost = $mInviter->getBBInfo($campaignID);
+             $clientID = $aBrandboost->user_id;
 
             //Collect Review
 
@@ -461,7 +465,7 @@ class Reviews extends Controller {
                     'phone' => $mobile
                 );
                 $aRegistrationData['clientID'] = $clientID;
-                $userID = $this->mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
+                $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 
                 $siteReviewFile = $post['site_uploaded_name'];
                 $siteReviewFileArray = array();
@@ -483,7 +487,7 @@ class Reviews extends Controller {
                     'created' => date("Y-m-d H:i:s")
                 );
                 //Save Site Reviews
-                $bSaved = $this->mReviews->saveReview($aReviewData);
+                $bSaved = $mReviews->saveReview($aReviewData);
             } else if ($type == 'product' || $type == 'service') {
 
                 if(!empty($productId)) {
@@ -526,7 +530,7 @@ class Reviews extends Controller {
                             'created' => date("Y-m-d H:i:s")
                         );
                         //Save Brandboost Reviews 
-                        $reviewID = $this->mReviews->saveReview($aReviewData);
+                        $reviewID = $mReviews->saveReview($aReviewData);
                     }
                 }
                 else {
@@ -547,7 +551,7 @@ class Reviews extends Controller {
                     );
 
                     $aRegistrationData['clientID'] = $clientID;
-                    $userID = $this->mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
+                    $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 
                     $productReviewFile = $post['uploaded_name'];
                     $productReviewFileArray = array();
@@ -570,16 +574,17 @@ class Reviews extends Controller {
                     );
 
                     //Save Brandboost Reviews 
-                    $reviewID = $this->mReviews->saveReview($aReviewData);
+                    $reviewID = $mReviews->saveReview($aReviewData);
                     
                 }
                 if ($reviewID > 0) {
                     $bSaved = true;
                 }
-                $this->session->set_userdata('review_id', $reviewID);
+                Session::put('review_id', $reviewID);
+
             } else if ($type == 'recomendation') {
                 //Update Recommmendations into brandboost reviews
-                $bSaved = $this->mReviews->updateReview(array('recvalue' => $recommendedValue), $reviewID);
+                $bSaved = $mReviews->updateReview(array('recvalue' => $recommendedValue), $reviewID);
             }
 
             if ($bSaved) {
