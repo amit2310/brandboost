@@ -363,9 +363,14 @@ class SettingsModel extends Model {
 
     }
 
-
+    /**
+     * This function is use for log export history
+     * @param type $aData
+     * @return type boolean
+     */
     public function logExportHistory($aData) {
-        $this->db->insert("tbl_history_export", $aData);
+        $oData = DB::table('tbl_history_export')
+                ->insert($aData);
     }
 
     public function logImportHistory($aData) {
