@@ -744,6 +744,28 @@ FROM
         return $oData;
     }
 
+    /**
+     * Get module subscribers
+     * @param type $userID, $moduleName, $moduleAccountID
+     * @return type object
+     */
+    public function getModuleSubscribers($userID, $moduleName, $moduleAccountID) {
+
+        if ($moduleName == 'list') {
+            $oSubscribers = $this->getlistModuleContacts($userID, $moduleAccountID);
+        } else if ($moduleName == 'brandboost') {
+            $oSubscribers = $this->getBrandboostModuleContacts($userID, $moduleAccountID);
+        } else if ($moduleName == 'referral') {
+            $oSubscribers = $this->getReferralModuleContacts($userID, $moduleAccountID);
+        } else if ($moduleName == 'nps') {
+            $oSubscribers = $this->getNpsModuleContacts($userID, $moduleAccountID);
+        } else if ($moduleName == 'people') {
+            $oSubscribers = $this->getGlobalSubscribers($userID);
+        }
+
+        return $oSubscribers;
+    }
+
     public function getuserImageDetails($userID) {
         $this->db->select("tbl_users.avatar as avatarImage");
         $this->db->where("id", $userID);
@@ -963,22 +985,7 @@ FROM
         return false;
     }
 
-    public function getModuleSubscribers($userID, $moduleName, $moduleAccountID) {
-
-        if ($moduleName == 'list') {
-            $oSubscribers = $this->getlistModuleContacts($userID, $moduleAccountID);
-        } else if ($moduleName == 'brandboost') {
-            $oSubscribers = $this->getBrandboostModuleContacts($userID, $moduleAccountID);
-        } else if ($moduleName == 'referral') {
-            $oSubscribers = $this->getReferralModuleContacts($userID, $moduleAccountID);
-        } else if ($moduleName == 'nps') {
-            $oSubscribers = $this->getNpsModuleContacts($userID, $moduleAccountID);
-        } else if ($moduleName == 'people') {
-            $oSubscribers = $this->getGlobalSubscribers($userID);
-        }
-
-        return $oSubscribers;
-    }
+    
 
     public function getlistModuleContacts($userID = '', $listID = '') {
         $this->db->select("tbl_subscribers.*, tbl_subscribers.id AS global_user_id");
