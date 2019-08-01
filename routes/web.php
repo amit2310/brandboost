@@ -398,3 +398,20 @@ Route::get('for/{brand}','Company@index');
 Route::post('admin/questions/saveNewQuestion','Admin\Questions@saveNewQuestion');
 
 
+//Team Module
+Route::get('admin/team/dashboard','Admin\Team@dashboard');
+Route::post('admin/team/addTeamMember','Admin\Team@addTeamMember');
+Route::post('admin/team/manageRolePermission','Admin\Team@manageRolePermission');
+Route::post('admin/team/updateRolePermission','Admin\Team@updateRolePermission');
+Route::get('admin/team/rolelist','Admin\Team@rolelist');
+Route::get('admin/team/manageRolePermission','Admin\Team@manageRolePermission');
+Route::post('admin/team/getRole','Admin\Team@getRole');
+Route::post('admin/team/updateRole','Admin\Team@updateRole');
+Route::post('admin/team/deleteRole','Admin\Team@deleteRole');
+Route::post('admin/team/addRole','Admin\Team@addRole');
+Route::get('admin/team/memberlist','Admin\Team@memberlist');
+Route::post('admin/team/getTeamMember','Admin\Team@getTeamMember');
+Route::post('admin/team/updateTeamMember','Admin\Team@updateTeamMember');
+Route::get('admin/team/activitylist','Admin\Team@activitylist');
+
+
