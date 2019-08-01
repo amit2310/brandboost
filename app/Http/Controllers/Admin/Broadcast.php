@@ -262,6 +262,8 @@ class Broadcast extends Controller {
         $oDefaultTemplates = $mTemplates->getCommonTemplates('', '', '', strtolower($oBroadcast[0]->campaign_type));
         $oTemplates = $oDefaultTemplates;
         $oUserTemplates = $mTemplates->getCommonTemplates($userID, '', '', strtolower($oBroadcast[0]->campaign_type));
+        //pre($oUserTemplates);
+        //die;
         $oDraftTemplates = $mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID);
         $oCategories = $mWorkflow->getWorkflowTemplateCategories($moduleName);
 
@@ -399,6 +401,9 @@ class Broadcast extends Controller {
 
         //Instanciate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
+        
+        //Instanciate Subscriber model to get its methods and properties
+        $mTemplates = new TemplatesModel();
 
 
         $userID = $aUser->id;
@@ -436,11 +441,12 @@ class Broadcast extends Controller {
 
             if ($broadcastID > 0) {
                 $oDraftTemplates = $mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID);
+                $oUserTemplates = $mTemplates->getCommonTemplates($userID, '', '', strtolower($campaignType));
                 $aData = array(
-                    'oDraftTemplates' => $oDraftTemplates,
+                    'oUserTemplates' => $oUserTemplates,
                     'variationID' => $iVariationID,
                     'campaignType' => $campaignType
-                );
+                );  
                 $content = view('admin.broadcast.partials.add_split_form_single', $aData)->render();
             }
         }

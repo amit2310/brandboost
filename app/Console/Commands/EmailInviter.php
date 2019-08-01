@@ -399,8 +399,8 @@ class EmailInviter extends Command {
     }
 
     /**
-     * 
-     * @param type $aEventProcess Reminder Invites
+     * Process Reminder Invites
+     * @param type $aEvent
      */
     public function processReminderInvites($aEvent = array()) {
         //Instanciate Email Model to access its properties and methods
@@ -752,6 +752,13 @@ class EmailInviter extends Command {
         $mInviter->saveSendingLog($aTrackData);
     }
 
+    /**
+     * 
+     * @param type $sMessage
+     * @param type $msgID
+     * @param type $aTrackSettings
+     * @return type
+     */
     public function prepareHtmlContent($sMessage, $msgID, $aTrackSettings) {
 
         $sMessage = $this->addClickTrackingUrl($sMessage, $msgID, $aTrackSettings);
@@ -760,6 +767,13 @@ class EmailInviter extends Command {
         return $sMessage;
     }
 
+    /**
+     * 
+     * @param type $content
+     * @param type $msgId
+     * @param type $aSettingsData
+     * @return type
+     */
     function addClickTrackingUrl($content, $msgId, $aSettingsData = array()) {
         if (preg_match_all('/<a[^>]*href=["\'](?<url>http[^"\']*)["\']/i', $content, $matches)) {
             foreach ($matches[0] as $key => $href) {
@@ -806,23 +820,51 @@ class EmailInviter extends Command {
         return $content;
     }
 
+    /**
+     * 
+     * @param type $content
+     * @param type $msgId
+     * @return type
+     */
     public function addOpenTrackingUrl($content, $msgId) {
         $trackOpenUrl = $this->trackServer . '/email_track.php?open_track=true&msgid=' . $this->base64UrlEncode($msgId);
         return $content . '<img src="' . $trackOpenUrl . '" width="0" height="0" alt="" style="visibility:hidden" />';
     }
 
+    /**
+     * 
+     * @return type
+     */
     public function generateMessageId() {
         return time() . rand(100000, 999999) . '.' . uniqid();
     }
 
+    /**
+     * 
+     * @param type $val
+     * @return type
+     */
     public function base64UrlEncode($val) {
         return strtr(base64_encode($val), '+/=', '-_,');
     }
 
+    /**
+     * 
+     * @param type $val
+     * @return type
+     */
     public function base64UrlDecode($val) {
         return base64_decode(strtr($val, '-_,', '+/='));
     }
 
+    /**
+     * 
+     * @param type $delayType
+     * @param type $delayUnit
+     * @param type $delayValue
+     * @param type $sourceTime
+     * @return int
+     */
     public function simplifiedTime($delayType, $delayUnit, $delayValue, $sourceTime) {
         switch (strtolower($delayUnit)) {
             case "minute":
@@ -864,6 +906,11 @@ class EmailInviter extends Command {
         return $simplifiedTime;
     }
 
+    /**
+     * 
+     * @param type $aData
+     * @return boolean
+     */
     public function SG_smtp($aData) {
         //Instanciate Email Model to access its properties and methods
         $mInviter = new EmailModel();

@@ -414,6 +414,7 @@ class WorkFlow extends Controller {
      * @param Request $request
      */
     public function updateWorkflowCampaign(Request $request) { 
+        $bUpdated = true;
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -483,14 +484,20 @@ class WorkFlow extends Controller {
 
         //pre($aData);
 
-        $bUpdated = $mWorkflow->updateWorkflowCampaign($aData, $campaignID, $moduleName);
+        if(!empty($aData)){
+            $bUpdated = $mWorkflow->updateWorkflowCampaign($aData, $campaignID, $moduleName);
+        }
+        
         
         if ($moduleName == 'broadcast') {
             //Update in the default variation too
             $oVariations = $mWorkflow->getWorkflowSplitVariations($moduleName, $moduleUnitID);
             if (!empty($oVariations)) {
                 $campaignID = $oVariations[0]->id;
-                $bUpdated = $mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
+                if(!empty($aData)){
+                    $bUpdated = $mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
+                }
+                
             }
             
         }

@@ -21,11 +21,11 @@
                         <?php
                         $i = 0;
                         $i++;
-                        if (!empty($oDraftTemplates)) {
+                        if (!empty($oUserTemplates)) {
 
-                            foreach ($oDraftTemplates as $oDraftTemplate):
+                            foreach ($oUserTemplates as $oTemplate):
 
-                                echo '<option value="' . $oDraftTemplate->id . '">' . $oDraftTemplate->template_name . '</option>';
+                                echo '<option value="' . $oTemplate->id . '">' . $oTemplate->template_name . '</option>';
                             endforeach;
                         }
                         ?>
