@@ -166,30 +166,30 @@ if(!empty($subscribersData)) { ?>
                                                     <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
                                                         <?php
                                                         if ($oContact->status == 1 && $oContact->globalStatus == 1) {
-                                                            ?><li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '0'><i class="icon-primitive-dot txt_grey"></i> Inactive</a></li>
+                                                            ?><li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '0' csrf_token="<?php echo csrf_token(); ?>"><i class="icon-primitive-dot txt_grey"></i> Inactive</a></li>
                                                             <?php
                                                         } else {
                                                             ?>
-                                                            <li><a class='<?php if ($oContact->globalStatus == 1): ?>changeModuleContactStatus<?php else: ?>changeModuleContactStatusDisabled<?php endif; ?>'  data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '1'><i class="icon-primitive-dot txt_green"></i> Active</a></li>
+                                                            <li><a class='<?php if ($oContact->globalStatus == 1): ?>changeModuleContactStatus<?php else: ?>changeModuleContactStatusDisabled<?php endif; ?>'  data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '1' csrf_token="<?php echo csrf_token(); ?>"><i class="icon-primitive-dot txt_green"></i> Active</a></li>
                                                             <?php
                                                         }
                                                         ?>
-                                                        <li><a class="moveToArchiveModuleContact" href="javascript:void(0);" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
+                                                        <li><a class="moveToArchiveModuleContact" href="javascript:void(0);" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" csrf_token="<?php echo csrf_token(); ?>"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
                                                     </ul>
                                                 </div>
                                             </td>
                                             <td class="text-center">
                                                 <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
                                                     <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
-                                                        <li><a class="moveToArchiveModuleContact" href="javascript:void(0);" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>"><i class="icon-trash"></i> Move To Archive</a></li>
+                                                        <li><a class="moveToArchiveModuleContact" href="javascript:void(0);" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" csrf_token="<?php echo csrf_token(); ?>"><i class="icon-trash"></i> Move To Archive</a></li>
 
                                                         <?php
                                                         if ($oContact->status == 1 && $oContact->globalStatus == 1) {
-                                                            ?><li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '0'><i class='icon-file-locked'></i> Inactive</a></li>
+                                                            ?><li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '0' csrf_token="<?php echo csrf_token(); ?>"><i class='icon-file-locked'></i> Inactive</a></li>
                                                             <?php
                                                         } else {
                                                             ?>
-                                                            <li><a class='<?php if ($oContact->globalStatus == 1): ?>changeModuleContactStatus<?php else: ?>changeModuleContactStatusDisabled<?php endif; ?>'  data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '1'><i class='icon-file-locked'></i> Active</a></li>
+                                                            <li><a class='<?php if ($oContact->globalStatus == 1): ?>changeModuleContactStatus<?php else: ?>changeModuleContactStatusDisabled<?php endif; ?>'  data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '1' csrf_token="<?php echo csrf_token(); ?>"><i class='icon-file-locked'></i> Active</a></li>
                                                             <?php
                                                         }
                                                         ?>
@@ -461,9 +461,9 @@ else {
                                                     <div class="tdropdown">
                                                         <?php echo ($oContact->status == 1 && $oContact->globalStatus == 1) == 1 ? '<i class="icon-primitive-dot txt_green fsize16"></i>' : '<i class="icon-primitive-dot txt_red fsize16"></i>'; ?> <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown"><?php echo ($oContact->status == 1 && $oContact->globalStatus == 1) ? ' Active' : ' Archive'; ?></a>
                                                         <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
-                                                            <li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '0'><i class="icon-primitive-dot txt_grey"></i> Inactive</a></li>
+                                                            <li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '0' csrf_token="<?php echo csrf_token(); ?>"><i class="icon-primitive-dot txt_grey"></i> Inactive</a></li>
 
-                                                            <li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '1'><i class="icon-primitive-dot txt_green"></i> Active</a></li>
+                                                            <li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '1' csrf_token="<?php echo csrf_token(); ?>"><i class="icon-primitive-dot txt_green"></i> Active</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>

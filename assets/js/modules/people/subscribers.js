@@ -45,10 +45,16 @@ $(document).ready(function () {
         var subscriberId = $(this).attr('data-modulesubscriberid');
         var moduleName = $(this).attr('data-modulename');
         var moduleUnitId = $(this).attr('data-moduleaccountid');
+        var csrf_token = $(this).attr('csrf_token');
         $.ajax({
             url: '/admin/subscriber/moveToArchiveModuleContact',
             type: "POST",
-            data: {subscriberId: subscriberId, moduleName: moduleName, moduleUnitId: moduleUnitId},
+            data: {
+                    subscriberId: subscriberId, 
+                    moduleName: moduleName, 
+                    moduleUnitId: moduleUnitId, 
+                    _token: csrf_token
+                },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -65,11 +71,18 @@ $(document).ready(function () {
         var subscriberId = $(this).attr('data-modulesubscriberid');
         var moduleName = $(this).attr('data-modulename');
         var moduleUnitId = $(this).attr('data-moduleaccountid');
+        var csrf_token = $(this).attr('csrf_token');
 
         $.ajax({
             url: '/admin/subscriber/changeModuleContactStatus',
             type: "POST",
-            data: {contactStatus: contactStatus, subscriberId: subscriberId, moduleName: moduleName, moduleUnitId: moduleUnitId},
+            data: {
+                    contactStatus: contactStatus, 
+                    subscriberId: subscriberId, 
+                    moduleName: moduleName, 
+                    moduleUnitId: moduleUnitId,
+                    _token: csrf_token
+                },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

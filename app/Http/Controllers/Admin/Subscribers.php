@@ -183,6 +183,7 @@ class Subscribers extends Controller {
      * Used to update subscribers details
      */
     public function updateSubscriberDetails() {
+        $mSubscriber = new SubscriberModel();
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -269,7 +270,7 @@ class Subscribers extends Controller {
                 'subscriber_id' => $iSubscriberID
             );
 
-            $res = $this->mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberId);
+            $res = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberId);
 
             if ($res) {
                 $response = array('status' => 'success', 'msg' => "Subscriber updated successfully!");
@@ -672,7 +673,8 @@ class Subscribers extends Controller {
      */
     public function moveToArchiveModuleContact() {
 
-        $post = $this->input->post();
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
 
         if (empty($post)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -688,7 +690,7 @@ class Subscribers extends Controller {
             'status' => 2
         );
 
-        $bUpdated = $this->mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
+        $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
 
         if ($bUpdated == true) {
             $response = array('status' => 'success', 'msg' => "Contact archived successfully!");
@@ -704,7 +706,8 @@ class Subscribers extends Controller {
      */
     public function moveToActiveModuleContact() {
 
-        $post = $this->input->post();
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
 
         if (empty($post)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -720,7 +723,7 @@ class Subscribers extends Controller {
             'status' => 1
         );
 
-        $bUpdated = $this->mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
+        $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
 
         if ($bUpdated == true) {
             $response = array('status' => 'success', 'msg' => "Contact made active successfully!");
@@ -735,7 +738,9 @@ class Subscribers extends Controller {
      * Used to update module subscribers status
      */
     public function changeModuleContactStatus() {
-        $post = $this->input->post();
+
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
 
         if (empty($post)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -752,7 +757,7 @@ class Subscribers extends Controller {
             'status' => $status
         );
 
-        $bUpdated = $this->mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
+        $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
 
         if ($bUpdated == true) {
             $response = array('status' => 'success', 'msg' => "Status updated successfully!");
@@ -827,7 +832,8 @@ class Subscribers extends Controller {
      */
     public function archiveBulkModuleContacts() {
 
-        $post = $this->input->post();
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
 
         if (empty($post)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -844,7 +850,7 @@ class Subscribers extends Controller {
                 'status' => 2
             );
 
-            $bUpdated = $this->mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
+            $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
         }
 
         if ($bUpdated == true) {
@@ -861,7 +867,8 @@ class Subscribers extends Controller {
      */
     public function activeBulkModuleContacts() {
 
-        $post = $this->input->post();
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
 
         if (empty($post)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -878,7 +885,7 @@ class Subscribers extends Controller {
                 'status' => 1
             );
 
-            $bUpdated = $this->mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
+            $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
         }
 
         if ($bUpdated == true) {
