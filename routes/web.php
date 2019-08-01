@@ -329,6 +329,7 @@ Route::post('admin/subscriber/moveToArchiveModuleContact','Admin\Subscribers@mov
 Route::post('admin/subscriber/changeModuleContactStatus','Admin\Subscribers@changeModuleContactStatus');
 Route::post('admin/subscriber/getSubscriberDetail','Admin\Subscribers@getSubscriberDetail');
 Route::post('admin/subscriber/updateSubscriberDetails','Admin\Subscribers@updateSubscriberDetails');
+Route::post('admin/subscriber/deleteModuleSubscriber','Admin\Subscribers@deleteModuleSubscriber');
 
 //Lists
 Route::get('admin/lists','Admin\Lists@index');

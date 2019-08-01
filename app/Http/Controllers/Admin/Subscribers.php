@@ -773,7 +773,8 @@ class Subscribers extends Controller {
      * Used to delete module subscirbers
      */
     public function deleteModuleSubscriber() {
-        $post = $this->input->post();
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
 
         if (empty($post)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -784,11 +785,8 @@ class Subscribers extends Controller {
         $moduleName = strip_tags($post['moduleName']);
         $moduleUnitID = strip_tags($post['moduleUnitId']);
         $subscriberID = strip_tags($post['subscriberId']);
-        $status = strip_tags($post['contactStatus']);
 
-
-
-        $bDeleted = $this->mSubscriber->deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID);
+        $bDeleted = $mSubscriber->deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID);
 
         if ($bDeleted == true) {
             $response = array('status' => 'success', 'msg' => "Contact deleted successfully!");
