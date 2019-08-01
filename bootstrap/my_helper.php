@@ -1199,12 +1199,17 @@ if (!function_exists('getFavSmsUser')) {
 }
 
 
+/**
+* This function is used to get/check twilio data 
+* @param type 
+* @return type
+*/
+
+
 if (!function_exists('currentUserTwilioData')) {
 
     function currentUserTwilioData($currentUser) {
-        $CI = & get_instance();  //get instance, access the CI superobject
-        $CI->load->model("admin/crons/Referral_inviter_model", "mInviter");
-        $result = $CI->mInviter->getTwilioAccount($currentUser);
+        $result = \App\Models\Admin\TeamModel::getTwilioAccountInfo($currentUser);
         return $result;
     }
 
@@ -1968,6 +1973,13 @@ if (!function_exists('getTwilioPNByAreaCode')) {
 }
 
 
+
+/**
+* This function is used to create the twilio account for the team members
+* @param type
+* @return type
+*/
+
 if (!function_exists('createTwilioCNTeam')) {
 
     function createTwilioCNTeam($phoneNumber) {
@@ -1983,7 +1995,7 @@ if (!function_exists('createTwilioCNTeam')) {
         $number = $client->incomingPhoneNumbers->create(
                 array(
                     "phoneNumber" => $phoneNumber,
-                    "smsUrl" => "http://brandboost.io/trck/trkTwillio.php"
+                    "smsUrl" => "http://brandboostx.com/trck/trkTwillio.php"
                 )
         );
 

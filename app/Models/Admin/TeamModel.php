@@ -54,8 +54,22 @@ class TeamModel extends Model {
         }
     }
 
+
+ /**
+* This function will return Twilio related account details based on the client/user id
+* @param type $clientID
+* @return type
+*/
+    public function getTwilioAccountInfo($clientID) {
+        $oData = DB::table('tbl_twilio_accounts')
+        ->where('user_id', $clientID)
+        ->where("status", 1);
+        return $oData;
+    }
+
+
     /**
-     * This function is use for get the team member
+     * This function is use for get the team members 
      * @param type $userID
      * @return object
      */
@@ -72,27 +86,39 @@ class TeamModel extends Model {
         return $oData;
     }
 
+   
+    /**
+    * This function will check role is already exists or not
+    * @param type $clientID
+    * @return type
+    */
+
     public function checkIfUserRoleExists($roleName, $userID) {
-        $this->db->where("user_id", $userID);
-        $this->db->where("role_name", $roleName);
-        $result = $this->db->get('tbl_team_role');
-        if ($result->num_rows() > 0) {
+        $oData = DB::table('tbl_team_role')
+         ->where("user_id", $userID)
+        ->where("role_name", $roleName)->get();
+        if ($oData->count() > 0) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function addTeamMember($aData) {
 
-        $this->db->where("email", $aData['email']);
-        $result = $this->db->get('tbl_users_team');
-        if ($result->num_rows() > 0) {
+     /**
+    * This function will add the team member
+    * @param type 
+    * @return type
+    */
+
+    public function addTeamMember($aData) {
+        $aDataRes =  DB::table('tbl_users_team')
+        ->where("email", $aData['email'])->get();
+        if ($aDataRes->count() > 0) {
             return 'email';
         } else {
-            $result = $this->db->insert("tbl_users_team", $aData);
-            $insert_id = $this->db->insert_id();
-            if ($result) {
+           $insert_id = DB::table('tbl_users_team')->insertGetId($aData);
+            if ($insert_id>0) {
                 return $insert_id;
             } else {
                 return false;
@@ -100,68 +126,93 @@ class TeamModel extends Model {
         }
     }
 
+     /**
+    * This function is used to add the new role 
+    * @param type $clientID
+    * @return type
+    */
+
     public function addTeamRole($aData) {
-        $result = $this->db->insert("tbl_team_role", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
+        $oData = DB::table('tbl_team_role')->insertGetId($aData);
+        if ($oData>0) {
+            return $oData;
         } else {
             return false;
         }
     }
+
+
+    /**
+    * This function is use to update the role for team member
+    * @param type $clientID
+    * @return type
+    */
+
 
     public function updateTeamRole($aData, $roleID, $userID) {
-        $this->db->where("id", $roleID);
-        $this->db->where("user_id", $userID);
-        $result = $this->db->update("tbl_team_role", $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $oData = DB::table('tbl_team_role')
+         ->where("id", $roleID)
+          ->where("user_id", $userID)
+         ->update($aData);
+       return true;
     }
+
+    /**
+    * This function is use to delete the role for team member
+    * @param type $clientID
+    * @return type
+    */
 
     public function deleteRole($roleID, $userID) {
-        $this->db->where("id", $roleID);
-        $this->db->where("user_id", $userID);
-        $result = $this->db->delete("tbl_team_role");
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+       $oData =  DB::table('tbl_team_role')
+        ->where("id", $roleID)
+        ->where("user_id", $userID)->delete();
+        return true;
     }
+
+
+    /**
+    * This function will return existing role assing to team member
+    * @param type $userID
+    * @param type $id
+    * @return type
+    */
 
     public function getRole($id, $userID) {
-        $this->db->where("id", $id);
-        $this->db->where("user_id", $userID);
-        $result = $this->db->get('tbl_team_role');
-        if ($result->num_rows() > 0) {
-            $aData = $result->row();
-        }
-        return $aData;
+        $oData = DB::table('tbl_team_role')
+        ->where("id", $id)
+        ->where("user_id", $userID)->first();
+        
+        return $oData;
     }
+
+
+    /**
+    * This function will update the data for team members
+    * @param type $clientID
+    * @return type
+    */
 
     public function updateTeamMember($aData, $memberID, $userID) {
-        $this->db->where("id", $memberID);
-        $this->db->where("parent_user_id", $userID);
-        $result = $this->db->update("tbl_users_team", $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $aData =  DB::table('tbl_users_team')
+        ->where('id', $memberID)
+        ->where('parent_user_id', $userID)->update($aData);
+         return true;
+       
     }
 
+
+    /**
+    * This function will delete the team members
+    * @param type $clientID
+    * @return type
+    */
+
     public function deleteTeamMember($memberID, $userID) {
-        $this->db->where("id", $memberID);
-        $this->db->where("parent_user_id", $userID);
-        $result = $this->db->delete("tbl_users_team");
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $aData =  DB::table('tbl_reviews')
+        ->where('id', $memberID)
+        ->where('parent_user_id', $userID);
+        return true;
     }
 
     /**
@@ -208,6 +259,13 @@ class TeamModel extends Model {
         return $yesAddedOne;
     }
 
+
+    /**
+    * This function is used to update the team member permissions levels
+    * @param type 
+    * @return type
+    */
+
     public function updateRolePermission($aData) {
         $isUpdated = false;
         $bSomethingChanged = false;
@@ -230,21 +288,24 @@ class TeamModel extends Model {
                 if (in_array($iPermissionID, $selectedPermissionID)) {
                     //Add permission
                     if ($iCheckIfAddedAlready == false) {
-                        $this->db->insert('tbl_team_role_permission', array('role_id' => $roleID, 'permission_id' => $iPermissionID, 'permission' => $selectedPermissionValue[$iPermissionID]));
+                        DB::table('tbl_team_role_permission')->insert(array('role_id' => $roleID, 'permission_id' => $iPermissionID, 'permission' => $selectedPermissionValue[$iPermissionID]));
                         $bSomethingChanged = true;
                     } else {
                         //update now
                         $updateData = array('role_id' => $roleID, 'permission_id' => $iPermissionID, 'permission' => $selectedPermissionValue[$iPermissionID]);
-                        $this->db->where("id", $iCheckIfAddedAlready);
-                        $this->db->update("tbl_team_role_permission", $updateData);
+
+                        DB::table('tbl_team_role_permission')
+                         ->where("id", $iCheckIfAddedAlready)
+                          ->update($updateData);
                         $bSomethingChanged = true;
                     }
                 } else {
                     //remove permission
                     if ($iCheckIfAddedAlready) {
-                        $this->db->where('role_id', $roleID);
-                        $this->db->where('permission_id', $iPermissionID);
-                        $this->db->delete('tbl_team_role_permission');
+                        DB::table('tbl_team_role_permission')
+                        ->where('role_id', $roleID)
+                        ->where('permission_id', $iPermissionID)
+                          ->delete();
                         $bSomethingChanged = true;
                     }
                 }
@@ -254,118 +315,159 @@ class TeamModel extends Model {
         return $bSomethingChanged;
     }
 
+
+  /**
+* This function will check the permissons already added or not 
+* @param type $clientID
+* @return type
+*/
+
     public function checkIfPermissionAdded($roleID, $iPermissionID) {
-        $this->db->where('role_id', $roleID);
-        $this->db->where('permission_id', $iPermissionID);
-        $result = $this->db->get('tbl_team_role_permission');
-        if ($result->num_rows() > 0) {
-            $aData = $result->row();
-            $iPermissionID = $aData->id;
+        $oData = DB::table('tbl_team_role_permission')
+          ->where('role_id', $roleID)
+           ->where('permission_id', $iPermissionID)->first();
+        if (!empty($oData->id)) {
+            $iPermissionID = $oData->id;
             return $iPermissionID;
         } else {
             return false;
         }
     }
 
+   
+    /**
+    * This function will return all roles in the sysetm
+    * @param type $userID
+    * @return type
+    */
+
     public function getRoleList($userID = '') {
-        $this->db->select("tbl_team_role.*");
-        if ($userID > 0) {
-            $this->db->where("user_id", $userID);
-        }
-        $result = $this->db->get('tbl_team_role');
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_team_role')
+        ->when($userID>0, function($query) use ($userID){
+        return $query->where('user_id',$userID);
+        })->get();
+       
+        return $oData;
     }
+
+
+    /**
+    * This function is used to get the team role permissions
+    * @param type $roleID
+    * @return type
+    */
 
     public function getTeamRolePermission($roleID) {
-        $this->db->select("tbl_team_role_permission.*");
-        $this->db->where("role_id", $roleID);
-        $result = $this->db->get("tbl_team_role_permission");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_team_role_permission')
+        ->where('role_id', $roleID)->get();
+        
+        return $oData;
     }
 
-    public function getTeamRolePermissionName($roleID) {
-        $this->db->select("tbl_team_role_permission.*, tbl_team_permission.title");
-        $this->db->where("role_id", $roleID);
-        $this->db->join("tbl_team_permission", "tbl_team_role_permission.permission_id=tbl_team_permission.id", "INNER");
-        $result = $this->db->get("tbl_team_role_permission");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
+  
+    /**
+    * This function will return team role permissons name 
+    * @param type $roleID
+    * @return type
+    */
+
+    public static function getTeamRolePermissionName($roleID) {
+        $oData = DB::table('tbl_team_role_permission')
+        ->select('tbl_team_role_permission.*', 'tbl_team_permission.title')
+        ->where('role_id', $roleID)
+        ->join('tbl_team_permission', 'tbl_team_role_permission.permission_id','=','tbl_team_permission.id')
+         ->get();
+        return $oData;
     }
+
+
+    /**
+    * This function is used to get the available permissons for the team member
+    * @param type
+    * @return type
+    */
 
     public function getAvailablePermissions() {
-        $this->db->select("tbl_team_permission.*");
-        $result = $this->db->get("tbl_team_permission");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_team_permission')->get();
+        return $oData;
     }
 
     
 
     
 
-    public function getUserActivities($type = 'team', $userID) {
-        if ($userID > 0) {
-            $this->db->where("user_id", $userID);
-        }
+    /**
+    * This function will return team member activity lists
+    * @param type
+    * @return type
+    */
 
+    public function getUserActivities($type = 'team', $userID='') {
+
+      $clientID = Session::get('customer_user_id');
         if ($type == 'team') {
-            $clientID = $this->session->userdata('customer_user_id');
-            if ($clientID > 0) {
-                $this->db->where("tbl_users_team.parent_user_id", $clientID);
-            }
-            $this->db->select("tbl_team_activities.*, tbl_team_activities.id AS activityID, tbl_team_activities.activity_created AS activityTime, tbl_users_team.*");
-            $this->db->join("tbl_users_team", "tbl_team_activities.user_id=tbl_users_team.id", "LEFT");
-            $this->db->order_by("tbl_team_activities.id", "DESC");
-            $result = $this->db->get("tbl_team_activities");
+
+
+        $oData = DB::table('tbl_team_activities')
+        ->when(userID>0, function($query) use ($userID){
+        return $query->where('user_id',$userID);
+        })
+
+            
+             
+             ->when($clientID>0, function($query) use ($clientID){
+                 return $query->where('tbl_users_team.parent_user_id', $clientID);
+        })
+            ->select('tbl_team_activities.*', 'tbl_team_activities.id AS activityID', 'tbl_team_activities.activity_created AS activityTime', 'tbl_users_team.*')
+               ->leftjoin('tbl_users_team', 'tbl_team_activities.user_id','=','tbl_users_team.id')
+                 ->orderBy('tbl_team_activities.id', 'DESC')->get();
         } else if ($type == 'user') {
-            $this->db->select("tbl_users_team.*, tbl_users_team.id AS activityID, tbl_users_team.activity_created AS activityTime, tbl_users.*");
-            $this->db->join("tbl_users", "tbl_users_team.user_id=tbl_users.id", "LEFT");
-            $this->db->order_by("tbl_users_team.id", "DESC");
-            $result = $this->db->get("tbl_users_team");
+            $oData = DB::table('tbl_users_team')
+            ->select('tbl_users_team.*', 'tbl_users_team.id AS activityID', 'tbl_users_team.activity_created AS activityTime', 'tbl_users.*')
+               ->leftjoin('tbl_users', 'tbl_users_team.user_id','=','tbl_users.id')
+                 ->orderBy('tbl_users_team.id', 'DESC')->get();
         }
 
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
+       
+        return $oData;
     }
+
+
+     /**
+    * This function will return member permissions
+    * @param type $userID
+    * @return type
+    */
 
     public function getMemberPermissions($userID) {
-        $this->db->select("tbl_team_role_permission.permission, tbl_team_permission.title");
-        $this->db->join("tbl_team_role", "tbl_users_team.team_role_id = tbl_team_role.id", "INNER");
-        $this->db->join("tbl_team_role_permission", "tbl_team_role_permission.role_id=tbl_team_role.id", "LEFT");
-        $this->db->join("tbl_team_permission", "tbl_team_role_permission.permission_id=tbl_team_permission.id", "LEFT");
-        $this->db->where("tbl_users_team.id", $userID);
-        $result = $this->db->get("tbl_users_team");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_users_team')
+         ->select('tbl_team_role_permission.permission', 'tbl_team_permission.title')
+         ->join('tbl_team_role', 'tbl_users_team.team_role_id' ,'=','tbl_team_role.id')
+         ->leftjoin('tbl_team_role_permission', 'tbl_team_role_permission.role_id','=','tbl_team_role.id')
+          ->leftjoin('tbl_team_permission', 'tbl_team_role_permission.permission_id','=','tbl_team_permission.id')
+            ->where('tbl_users_team.id', $userID)->get();
+        
+        return $oData;
     }
+
+
+    /**
+    * This function will return Team Role on the behalf of the role id
+    * @param type $roleID
+    * @return type
+    */
 
     public function getTeamByRoleId($roleID) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $this->db->select("tbl_users_team.*");
-        $this->db->where("team_role_id", $roleID);
-        $this->db->where("parent_user_id", $userID);
-        $this->db->where("status", 1);
-        $result = $this->db->get("tbl_users_team");
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_users_team')
+        ->select('tbl_users_team.*')
+        ->where('team_role_id', $roleID)
+        ->where('parent_user_id', $userID)
+        ->where('status', 1)->get();
+       
+        return $oData;
     }
 
 }
