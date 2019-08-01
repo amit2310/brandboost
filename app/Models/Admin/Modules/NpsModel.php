@@ -480,19 +480,25 @@ class NpsModel extends Model {
         return $response;
     }
 
-    public function getNPSScoreSummery($refKey = '') {
+    /**
+     * Get NPS Score summery
+     * @param type $refKey
+     * @return object
+     */
+    public static function getNPSScoreSummery($refKey = '') {
 
         $response = "";
         $positive = $nuetral = $negative = 0;
         $pScore = $nScore = $negScore = 0;
 
-        if ($refKey != '') {
-            $this->db->where("tbl_nps_score.refkey", $refKey);
-        }
-        $result = $this->db->get("tbl_nps_score");
+         $response = DB::table('tbl_nps_score')
+                ->when(!empty($refKey), function($query) use ($refKey){
+                    return $query->where('tbl_nps_score.refkey', $refKey);
+                })
+                ->get();
+
         //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
+        if ($response->count() > 0) {
             if (!empty($response)) {
                 foreach ($response as $oRec) {
 
@@ -522,7 +528,7 @@ class NpsModel extends Model {
             'Promoters' => $positiveScore,
             'Passive' => $nuetralScore,
             'Detractors' => $negativeScore,
-            'NPSScore' => (($pScore + $nScore + $negScore) * 10) / count($response)
+            'NPSScore' => (count($response) > 0)?(($pScore + $nScore + $negScore) * 10) / count($response) : 0
         );
 
         return $aData;

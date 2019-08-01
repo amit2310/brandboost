@@ -161,6 +161,7 @@ Route::post('admin/account_setting/saveProfileDetail','Admin\AccountSetting@save
 Route::post('admin/profile/changePassword','Admin\AccountSetting@changePassword');
 Route::post('admin/account_setting/account_deleted','Admin\AccountSetting@account_deleted');
 Route::get('admin/accounts/usage','Admin\AccountSetting@usage');
+Route::get('admin/accounts/usageInfo','Admin\AccountSetting@usageInfo');
 
 
 //Setting 
