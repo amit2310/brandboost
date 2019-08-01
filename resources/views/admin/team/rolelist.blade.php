@@ -236,7 +236,7 @@
                                         <ul class="dropdown-menu dropdown-menu-right width-200">
                                             <li><a href="javascript:void(0);" role_id="<?php echo $oRole->id; ?>" class="managerole"><i class="icon-gear"></i> Manage Permission</a></li>
 											<li><a href="javascript:void(0);" role_id="<?php echo $oRole->id; ?>" class="editrole"><i class="icon-pencil"></i> Edit</a></li>
-											<li><a href="javascript:void(0);" role_id="<?php echo $oRole->id; ?>" class="deleterole" brandID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
+											<li><a href="javascript:void(0);" role_id="<?php echo $oRole->id; ?>" class="deleterole" brandID="<?php //echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
                                         </ul>
                                     </div>
 

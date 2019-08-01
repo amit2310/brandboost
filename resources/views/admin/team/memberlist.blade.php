@@ -179,7 +179,7 @@
                 <div class="panel panel-flat">
 
                     <div class="panel-heading">
-                            <h6 class="panel-title"><?php echo count($oMembers) > 0 ? count($oMembers) : ''; ?> Team Members</h6>
+                            <h6 class="panel-title"><?php echo $oMembers->count() > 0 ? $oMembers->count() : ''; ?> Team Members</h6>
                             <div class="heading-elements">
                                 <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                     <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
@@ -195,7 +195,7 @@
 
 
                     <div class="panel-body p0">
-                    <?php if (!empty($oMembers)): ?>
+                    <?php  if ($oMembers->isNotEmpty()){ ?>
                         <table class="table datatable-basic datatable-sorting">
                             <thead>
                                 <tr>
@@ -212,7 +212,7 @@
                             </thead>
 
                             <tbody>
-                                <?php foreach ($oMembers as $oMember): ?>
+                                <?php foreach ($oMembers as $oMember){ ?>
                                     <tr id="append-<?php echo $oMember->id; ?>" class="selectedClass">
 										<td style="display: none;"><?php echo date('m/d/Y', strtotime($oMember->created)); ?></td>
 										<td style="display: none;"><?php echo $oMember->id; ?></td>
@@ -260,15 +260,17 @@
                                             
                                                     <li><a href="<?php echo base_url("admin/team/viewLog/".$oMember->id);?>" target="_blank" member_id="<?php echo $oMember->id; ?>" class="viewActivity"><i class="icon-gear"></i> View Activity Log</a></li>
                                                     <li><a href="javascript:void(0);" member_id="<?php echo $oMember->id; ?>" class="editTeamMember"><i class="icon-file-stats"></i> Edit</a></li>
-                                                    <li><a href="javascript:void(0);" member_id="<?php echo $oMember->id; ?>" class="deleteTeamMember" brandID="<?php echo $data->id; ?>"><i class="icon-file-text2"></i> Delete</a></li>
+                                                    <li><a href="javascript:void(0);" member_id="<?php echo $oMember->id; ?>" class="deleteTeamMember" brandID="<?php //echo $data->id; ?>"><i class="icon-file-text2"></i> Delete</a></li>
                                                 </ul>
                                             </div>
                                         </td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php }
+                                 ?>
                             </tbody>
                         </table>
-                        <?php else: ?>
+                        <?php }
+                        else{ ?>
                              <table class="table datatable-basic datatable-sorting">
                                     <thead>
                                         <tr>
@@ -291,7 +293,7 @@
                                                     <div class="col-md-12">
                                                         <div style="margin: 20px 0px 0;" class="text-center">
                                                             <h5 class="mb-20">
-                        Looks Like You Don’t Have Any Team Member Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+                        Looks Like You Don’t Have Any Team Member Yet <img src="/assets/images/smiley.png"> <br>
                         Lets Add Team Member.
                     </h5>
                     <button id="addTeamMember" class="btn bl_cust_btn btn-default dark_btn ml20 mb40 addTeamMember" type="button"><i class="icon-plus3"></i> Add Team Member</button>
@@ -320,7 +322,7 @@
         </div>
     
         </div>
-    <?php endif; ?>
+    <?php } ?>
     <!-- /dashboard content -->
 
 </div>
@@ -465,7 +467,7 @@
                                     <select class="form-control" name="edit_memberRole" id="edit_memberRole" required>
                                         <option value="">Select Role</option>
                                         <?php
-                                        if (!empty(oRoles)) {
+                                        if (!empty($oRoles)) {
                                             foreach ($oRoles as $oRole) {
                                                 ?>
                                                 <option value="<?php echo $oRole->id; ?>"><?php echo $oRole->role_name; ?></option>
@@ -486,7 +488,7 @@
                         <span class="display-inline-block pull-left fsize13">Show team member web chat?</span>
                         <span class="display-inline-block pull-right fsize13">
                         <label class="custom-form-switch pull-left">
-                        <input class="field" type="checkbox" name="edit_webchat_config" id="edit_webchat_config">
+                        <input class="field" value="" type="checkbox" name="edit_webchat_config" id="edit_webchat_config">
                         <span class="toggle blue"></span>
                         </label>
                         </span>
@@ -514,7 +516,9 @@
                         </div>
                         </div>
 
-                       <?php if($oMember->bb_number == ""){ ?>
+                       <?php 
+                       
+                           if($oMembers[0]->bb_number == ""){ ?>
                              <div class="col-md-12" style="margin-top: 10px;display: none;" id="edit_bb_number_section">
                         <div class="form-group mb0">
                             <span class="display-inline-block pull-left fsize13">Add team member brand boost phone number?</span>
@@ -531,6 +535,7 @@
                             <p>Note: if this option is enabled a new number will be assign to this team member otherwise he will contiune with the main account number</p>
                             </div>
                             <?php } ?>
+
 
 
                             <div class="col-md-12" style="margin-top: 10px;display: none;" id="edit_bb_area_code">
@@ -698,7 +703,7 @@
                                     <select class="form-control" name="memberRole" required>
                                         <option value="">Select Role</option>
                                         <?php
-                                        if (!empty(oRoles)) {
+                                        if (!empty($oRoles)) {
                                             foreach ($oRoles as $oRole) {
                                                 ?>
                                                 <option value="<?php echo $oRole->id; ?>"><?php echo $oRole->role_name; ?></option>
@@ -975,7 +980,7 @@ $('#edit_bb_area_code_listing').html(' <figure style="margin:15px 0;"><img style
 						$.ajax({
 							url: '<?php echo base_url('admin/team/deleteTeamMembers');?>',
 							type: "POST",
-							data: {multipal_id : val},
+							data: {multipal_id : val,_token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if(data.status == 'success') {
@@ -1110,7 +1115,7 @@ var elem = $(this);
 					$.ajax({
 						url: '<?php echo base_url('admin/team/deleteTeamMember'); ?>',
 						type: "POST",
-						data: {member_id: memberID},
+						data: {member_id: memberID,_token: '{{csrf_token()}}'},
 						dataType: "json",
 						success: function (data) {
 							$('.overlaynew').hide();

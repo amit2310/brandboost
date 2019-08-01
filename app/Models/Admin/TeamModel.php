@@ -60,7 +60,7 @@ class TeamModel extends Model {
 * @param type $clientID
 * @return type
 */
-    public function getTwilioAccountInfo($clientID) {
+    public static function getTwilioAccountInfo($clientID) {
         $oData = DB::table('tbl_twilio_accounts')
         ->where('user_id', $clientID)
         ->where("status", 1);
@@ -209,9 +209,9 @@ class TeamModel extends Model {
     */
 
     public function deleteTeamMember($memberID, $userID) {
-        $aData =  DB::table('tbl_reviews')
+        $aData =  DB::table('tbl_users_team')
         ->where('id', $memberID)
-        ->where('parent_user_id', $userID);
+        ->where('parent_user_id', $userID)->delete();
         return true;
     }
 
@@ -409,7 +409,7 @@ class TeamModel extends Model {
 
 
         $oData = DB::table('tbl_team_activities')
-        ->when(userID>0, function($query) use ($userID){
+        ->when($userID>0, function($query) use ($userID){
         return $query->where('user_id',$userID);
         })
 
@@ -419,7 +419,7 @@ class TeamModel extends Model {
                  return $query->where('tbl_users_team.parent_user_id', $clientID);
         })
             ->select('tbl_team_activities.*', 'tbl_team_activities.id AS activityID', 'tbl_team_activities.activity_created AS activityTime', 'tbl_users_team.*')
-               ->leftjoin('tbl_users_team', 'tbl_team_activities.user_id','=','tbl_users_team.id')
+               ->leftJoin('tbl_users_team', 'tbl_team_activities.user_id','=','tbl_users_team.id')
                  ->orderBy('tbl_team_activities.id', 'DESC')->get();
         } else if ($type == 'user') {
             $oData = DB::table('tbl_users_team')
@@ -457,7 +457,7 @@ class TeamModel extends Model {
     * @return type
     */
 
-    public function getTeamByRoleId($roleID) {
+    public static function getTeamByRoleId($roleID) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
