@@ -43,12 +43,8 @@ if (!empty($aBrandbosts)) {
                      <div class="col-md-3">
                         <h3><img src="<?php echo base_url() ?>assets/images/onsite_icons.png"> On Site Review Campaigns</h3>
                         <ul class="nav nav-tabs nav-tabs-bottom">
-                            <!-- <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Active Campaigns</a></li>
-                            <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li> -->
-
                             <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="1|0|2">Active Campaigns</a></li>
                             <li><a style="javascript:void();" class="filterByColumn" fil="3">Archive</a></li>
-
                         </ul>
                     </div>
                     <?php
