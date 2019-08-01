@@ -339,7 +339,7 @@
                       <div class="col-md-12">
                         <div class="panel panel-flat review_ratings">
                           <div class="panel-heading">
-                            <h6 class="panel-title"><?php echo count($oRoles); ?> Roles</h6>
+                            <h6 class="panel-title"><?php echo $oRoles->count(); ?> Roles</h6>
                             <div class="heading-elements">
                                                         <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                                           <input class="form-control input-sm" placeholder="Search by name" type="text">
@@ -674,7 +674,7 @@
                                     <select class="form-control" name="memberRole" id="memberRole" required>
                                         <option value="">Select Role</option>
                                         <?php
-                                        if (!empty(oRoles)) {
+                                        if (!empty($oRoles)) {
                                             foreach ($oRoles as $oRole) {
                                                 ?>
                                                 <option value="<?php echo $oRole->id; ?>"><?php echo $oRole->role_name; ?></option>

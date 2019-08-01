@@ -15,7 +15,7 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Cookie;
 use Session;
 
-error_reporting(0);
+//error_reporting(0);
 
 
 class Team extends Controller {
@@ -32,6 +32,7 @@ class Team extends Controller {
         $userID = $aUser->id;
         $mUser  = new UsersModel();
         $mTeam = new TeamModel();
+        $oRoles = array();
         $userDetail = $mUser->getAllUsers($userID);
         $userRole = $userDetail[0]->user_role;
         if($userRole != '1') {
@@ -39,8 +40,9 @@ class Team extends Controller {
         }
         else {
             $userID = '';
-            $oRoles = $mTeam->getRoleList($userID);
+            $oRoles = \App\Models\Admin\UsersModel::getRoleList($userID);
         }
+
         
         $bActiveSubsription = $mUser->isActiveSubscription();
 
@@ -166,6 +168,8 @@ class Team extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $post['smschat_config']="";
+        $post['webchat_config']="";
 
         $teamRoleID = strip_tags($post['memberRole']);
         $firstName = strip_tags($post['firstname']);
@@ -513,8 +517,8 @@ class Team extends Controller {
         $lastName = strip_tags($post['edit_lastname']);
         $email = strip_tags($post['edit_email']);
         $phone = strip_tags($post['edit_phone']);
-        if($post['edit_webchat_config']=='on') { $web_chat=1; } else { $web_chat=0;}
-        if($post['edit_smschat_config']=='on') { $sms_chat=1; } else { $sms_chat=0;}
+        if(isset($post['edit_webchat_config']) && $post['edit_webchat_config']=='on') { $web_chat=1; } else { $web_chat=0;}
+        if(isset($post['edit_webchat_config']) && $post['edit_smschat_config']=='on') { $sms_chat=1; } else { $sms_chat=0;}
 
         $edit_gender = $post['edit_gender'];
         $edit_countryCode = $post['edit_countryCode'];
@@ -547,7 +551,7 @@ class Team extends Controller {
         );
         
 
-       if($post['edit_smschat_config']=='on' && $post['twilioMobileNo']!="" )
+       if(isset($post['edit_smschat_config']) && $post['edit_smschat_config']=='on' && $post['twilioMobileNo']!="" )
        {
            $response = createTwilioCNTeam($post['twilioMobileNo']);
            if($response['status']=='success')
@@ -580,16 +584,17 @@ class Team extends Controller {
     
     public function deleteTeamMember(){
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
+        $post = Input::post();
         if(empty($post)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        $mTeam = new TeamModel();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $memberID = strip_tags($post['member_id']);
-        $bDeleted = $this->mTeam->deleteTeamMember($memberID, $userID);
+        $bDeleted = $mTeam->deleteTeamMember($memberID, $userID);
         if($bDeleted == true){
             $response = array('status' => 'success', 'msg' => "Team member has been deleted successfully!");
         }
@@ -737,7 +742,7 @@ class Team extends Controller {
         $userID = $aUser->id;
         $mUser = new UsersModel();
         $mTeam = new TeamModel();
-     
+          $oRoles = array();
         $userDetail = $mUser->getAllUsers($userID);
         $userRole = $userDetail[0]->user_role;
         if($userRole != '1') {

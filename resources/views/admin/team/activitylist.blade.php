@@ -283,7 +283,7 @@
 							<select name="edit_memberRole" id="edit_memberRole" class="form-control">
 								<option>Select Role</option>
 								<?php
-								if (!empty(oRoles)) {
+								if (!empty($oRoles)) {
 									foreach ($oRoles as $oRole) {
 										?>
 										<option value="<?php echo $oRole->id; ?>"><?php echo $oRole->role_name; ?></option>
@@ -334,7 +334,7 @@
                     <select name="memberRole">
                         <option>Select Role</option>
                         <?php
-                        if (!empty(oRoles)) {
+                        if (!empty($oRoles)) {
                             foreach ($oRoles as $oRole) {
                                 ?>
                                 <option value="<?php echo $oRole->id; ?>"><?php echo $oRole->role_name; ?></option>
