@@ -87,7 +87,7 @@
 //pre($aUInfo);
 
     if (!empty($aUInfo->user_id)) {
-        $getNotification = $this->mSetting->getNotificationSettings($aUInfo->user_id);
+        $getNotification = App\Models\Admin\SettingsModel::getNotificationSettings($aUInfo->user_id);
         $getUser = $this->mUser->getAllUsers($aUInfo->user_id);
         $getUser = $getUser[0];
     } else {
