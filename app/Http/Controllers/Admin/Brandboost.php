@@ -912,7 +912,6 @@ class Brandboost extends Controller {
             'user_role' => $user_role
         );
         
-		//$this->template->load('admin/admin_template_new', 'admin/brandboost/widget_list', $aData);
 		return view('admin.brandboost.widget_list', $aData);
     }
 	
@@ -1282,6 +1281,7 @@ class Brandboost extends Controller {
 		exit;
     }
 	
+	
 	/**
 	* Used to delete review request
 	* @return type
@@ -1315,6 +1315,7 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
+	
 	
 	/**
 	* Used to update offsite workflow from info by brandboost id
@@ -1350,6 +1351,342 @@ class Brandboost extends Controller {
             }
         }
     }
+	
+	
+	/**
+	* Used to get onsite widget configuration settings by widget id
+	* $param type $widgetID
+	* @return type
+	*/
+	public function onsiteWidgetSetup($widgetID) {
+        $selectedTab = Input::get("t");
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        if (!empty($selectedTab)) {
+            if (in_array($selectedTab, array('Review Sources', 'Configure Widgets', 'Integration'))) {
+                //set required session
+                Session::put("setTab", $selectedTab);
+            }
+        } else {
+            $setTab = Session::get('setTab');
+            if ($setTab == '') {
+                Session::put("setTab", 'Review Sources');
+            }
+        }
+
+        if (empty($widgetID)) {
+            redirect("admin/brandboost/widgets");
+            exit;
+        }
+
+        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite');
+        $oWidgets = BrandboostModel::getBBWidgets($widgetID);
+        $oStats = BrandboostModel::getBBWidgetStats($widgetID);
+        $widgetThemeData = BrandboostModel::getWidgetThemeByUserID($userID);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $setTab = Session::get("setTab");
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a href="' . base_url('admin/brandboost/widgets') . '" class="sidebar-control hidden-xs">Onsite Widgets </a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $oWidgets[0]->widget_title . '" class="sidebar-control active hidden-xs ">' . $oWidgets[0]->widget_title . '</a></li>
+			</ul>';
+
+        $aData = array(
+            'title' => 'Onsite Widget',
+            'pagename' => $breadcrumb,
+            'oWidgets' => $oWidgets,
+            'bActiveSubsription' => $bActiveSubsription,
+            'widgetData' => $oWidgets[0],
+            'oBrandboostList' => $oBrandboostList,
+            'oStats' => $oStats,
+            'setTab' => $setTab,
+            'widgetID' => $widgetID,
+            'widgetThemeData' => $widgetThemeData,
+            'selectedTab' => $selectedTab
+        );
+
+		return view('admin.brandboost.onsite_widget_setup', $aData);
+    }
+	
+	
+	/**
+	* Used to set onsite widget
+	* @return type
+	*/
+	public function setOnsiteWidget() {
+        $response = array("status" => "error", "msg" => "Something went wrong");
+        
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $widgetTypeID = Input::post("widgetTypeID");
+        $widgetID = Input::post("widgetID");
+        $aData = array(
+            'widget_type' => $widgetTypeID
+        );
+
+        if (!empty($widgetID)) {
+			Session::put("selectedOnsiteWidget", $widgetID);
+            $result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+            $response = array("status" => "success", "msg" => "Okay");
+            echo json_encode($response);
+            exit;
+        }
+    }
+	
+	/**
+	* Used to add onsite brandboost widget data
+	* @return type
+	*/
+	public function addBrandBoostWidgetData() {
+
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+
+        $brandboostID = Input::post('campaign_id');
+        $title = Input::post('title');
+        $desc = Input::post('desc');
+        $bAllowComment = Input::post('allow_comment');
+        $bAllowVideoReview = Input::post('allow_video_reviews');
+        $bAllowHelpful = Input::post('allow_helpful');
+        $bAllowLiveReading = Input::post('allow_live_reading');
+        $bAllowRatings = Input::post('allow_ratings');
+        $bAllowTimestamp = Input::post('allow_timestamp');
+        $bAllowProsCons = Input::post('allow_pros_cons');
+        $bgColor = Input::post('bg_color');
+        $textColor = Input::post('text_color');
+        $pro_cons = Input::post('pro_cons');
+        $domainName = Input::post('domain_name');
+        $ratingValue = Input::post('ratingValue');
+        $bbDisplay = Input::post('bbDisplay');
+        $widgetID = Input::post('edit_widgetId');
+        $alternativeDesign = Input::post('alternative_design');
+        $allowCampaignName = Input::post('allow_campaign_name');
+        $reviewsOrderBy = Input::post('reviews_order_by');
+        $reviewsOrder = Input::post('reviews_order');
+        $numofrev = Input::post('numofrev');
+        
+		/*$barndFileData = Input::post('brand_img');
+        $brandFileArray = array();
+		
+		pre($barndFileData); die;
+
+        foreach ($barndFileData['media_url'] as $key => $fileData) {
+            $brandFileArray[$key]['media_url'] = $fileData;
+            $brandFileArray[$key]['media_type'] = $barndFileData['media_type'][$key];
+        }
+        $brandImageFileName = empty(Input::post('brand_img')) ? Input::post('edit_brand_img') : serialize($brandFileArray);*/
+		
+		$logoImageFileName = Input::post('logo_img') == '' ? Input::post('edit_logo_img') : Input::post('logo_img');
+        $review_expire = Input::post('review_expire');
+        $review_expire_link = Input::post('review_expire_link');
+        $revExpireLink = array();
+        if ($review_expire_link == 'custom') {
+
+            $txtInteger = $post['txtInteger'];
+            $exp_duration = $post['exp_duration'];
+            $revExpireLink['delay_value'] = $txtInteger;
+            $revExpireLink['delay_unit'] = $exp_duration;
+        } else {
+
+            $revExpireLink['delay_value'] = 'never';
+            $revExpireLink['delay_unit'] = 'never';
+        }
+
+
+        $aData = array(
+            'user_id' => $userID,
+            //'brandboost_id' => $brandboostID,
+            'brand_title' => $title,
+            'brand_desc' => $desc,
+            //'widget_img' => $brandImageFileName,
+            'logo_img' => $logoImageFileName,
+            'allow_comments' => $bAllowComment,
+            'allow_video_reviews' => $bAllowVideoReview,
+            'allow_helpful_feedback' => $bAllowHelpful,
+            'allow_live_reading_review' => $bAllowLiveReading,
+            'allow_comment_ratings' => $bAllowRatings,
+            'allow_review_timestamp' => $bAllowTimestamp,
+            'allow_pros_cons' => $bAllowProsCons,
+            'alternative_design' => $alternativeDesign,
+            'allow_campaign_name' => $allowCampaignName,
+            'bg_color' => $bgColor,
+            'text_color' => $textColor,
+            'num_of_review' => $numofrev,
+            'domain_name' => $domainName,
+            'pro_cons' => $pro_cons,
+            'often_bb_display' => $bbDisplay,
+            'min_ratings_display' => $ratingValue,
+            'link_expire_review' => $review_expire,
+            'reviews_order' => $reviewsOrder,
+            'reviews_order_by' => $reviewsOrderBy,
+            'link_expire_custom' => json_encode($revExpireLink)
+        );
+
+
+        $result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+
+        if ($result) {
+            $response = array('status' => 'ok');
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+	/**
+	* Used to save preview data
+	* @return type
+	*/
+	public function savePreviewData() {
+
+        $response = array();
+        $brandboostID = Session::get('brandboostID');
+        $userID = Session::get("current_user_id");
+
+		$fieldName = Input::post('field_name');
+		$fieldValue = Input::post('field_value');
+
+		$aData = array(
+			$fieldName => $fieldValue
+		);
+
+		$result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
+		if ($result) {
+			$response['status'] = 'success';
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
+	
+	/**
+	* Used to add brandboost widget design
+	* @return type
+	*/
+	public function addBrandBoostWidgetDesign() {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $response = array();
+
+        $company_logo = Input::post('company_logo');
+        $allow_branding = Input::post('allow_branding') != '' ? '1' : '0';
+        $notification = Input::post('notification') != '' ? '1' : '0';
+        $company_info_switch = Input::post('company_info_switch') != '' ? '1' : '0';
+        $widgetID = Input::post('edit_widgetId');
+        $solid_color = Input::post('solid_color');
+        $main_colors = Input::post('main_colors');
+        $custom_colors1 = Input::post('custom_colors1');
+        $custom_colors2 = Input::post('custom_colors2');
+        $main_color_switch = Input::post('widget_bgcolor_switch') == 1 ? '1' : '0';
+        $custom_color_switch = Input::post('widget_bgcolor_switch') == 2 ? '1' : '0';
+        $solid_color_switch = Input::post('widget_bgcolor_switch') == 3 ? '1' : '0';
+        $custom_company_name = Input::post('custom_company_name');
+        $custom_company_description = Input::post('custom_company_description');
+
+        $widget_font_color = Input::post('widget_font_color');
+        $widget_border_color = Input::post('widget_border_color');
+        $widget_position = Input::post('widget_position');
+        $widget_themes = Input::post('widget_themes');
+        $icon_type = Input::post('icon_type');
+        $color_orientation = Input::post('color_orientation');
+
+        $solid_color_rating = Input::post('solid_color_rating');
+        $main_colors_rating = Input::post('main_colors_rating');
+        $custom_colors_rating1 = Input::post('custom_colors_rating1');
+        $custom_colors_rating2 = Input::post('custom_colors_rating2');
+        $main_color_switch_rating = Input::post('main_color_switch_rating') != '' ? '1' : '0';
+
+        $aData = array(
+            'user_id' => $userID,
+            'widget_font_color' => $widget_font_color,
+            'widget_border_color' => $widget_border_color,
+            'widget_position' => $widget_position,
+            'widget_themes' => $widget_themes,
+            'icon_type' => $icon_type,
+            'color_orientation' => $color_orientation,
+            'header_color' => $main_colors,
+            'header_solid_color' => $solid_color,
+            'header_custom_color1' => $custom_colors1,
+            'header_custom_color2' => $custom_colors2,
+            'header_color_solid' => $solid_color_switch,
+            'header_color_fix' => $main_color_switch,
+            'header_color_custom' => $custom_color_switch,
+            'company_logo' => $company_logo,
+            'allow_branding' => $allow_branding,
+            'notification' => $notification,
+            'company_info' => $company_info_switch,
+            'company_info_name' => $custom_company_name,
+            'company_info_description' => $custom_company_description,
+            'rating_color' => $main_colors_rating,
+            'rating_solid_color' => $solid_color_rating,
+            'rating_custom_color1' => $custom_colors_rating1,
+            'rating_custom_color2' => $custom_colors_rating2,
+            'rating_color_fix' => $main_color_switch_rating
+        );
+
+
+        $result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+
+        if ($result) {
+            $response = array('status' => 'ok');
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+	/**
+	* Used to update brandboost widget campaign
+	* @return type
+	*/
+	public function addBrandBoostWidgetCampaign() {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $response = array();
+
+        $widgetID = Input::post('campaign_widget_id');
+        $campaignId = Input::post('campaign_id');
+
+        $aData = array(
+            'brandboost_id' => $campaignId
+        );
+
+
+        $result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+
+        if ($result) {
+            $response = array('status' => 'ok');
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -1397,60 +1734,6 @@ class Brandboost extends Controller {
             echo $resPonse;
         }
    }
-
-    public function onsite_widget_setup($widgetID) {
-        $selectedTab = $this->input->get('t');
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-
-        if (!empty($selectedTab)) {
-            if (in_array($selectedTab, array('Review Sources', 'Configure Widgets', 'Integration'))) {
-                //set required session
-                $this->session->set_userdata("setTab", $selectedTab);
-            }
-        } else {
-            $setTab = $this->session->userdata('setTab');
-            if ($setTab == '') {
-                $this->session->set_userdata("setTab", 'Review Sources');
-            }
-        }
-
-        if (empty($widgetID)) {
-            redirect("admin/brandboost/widgets");
-            exit;
-        }
-
-        $oBrandboostList = $this->mBrandboost->getBrandboostByUserId($userID, 'onsite');
-        $oWidgets = $this->mBrandboost->getBBWidgets($widgetID);
-        $oStats = $this->mBrandboost->getBBWidgetStats($widgetID);
-        $widgetThemeData = $this->mBrandboost->getWidgetThemeByUserID($userID);
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $setTab = $this->session->userdata("setTab");
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a href="' . base_url('admin/brandboost/widgets') . '" class="sidebar-control hidden-xs">Onsite Widgets </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $oWidgets[0]->widget_title . '" class="sidebar-control active hidden-xs ">' . $oWidgets[0]->widget_title . '</a></li>
-			</ul>';
-
-        $aData = array(
-            'title' => 'Onsite Widget',
-            'pagename' => $breadcrumb,
-            'oWidgets' => $oWidgets,
-            'bActiveSubsription' => $bActiveSubsription,
-            'widgetData' => $oWidgets[0],
-            'oBrandboostList' => $oBrandboostList,
-            'oStats' => $oStats,
-            'setTab' => $setTab,
-            'widgetID' => $widgetID,
-            'widgetThemeData' => $widgetThemeData,
-            'selectedTab' => $selectedTab
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/onsite_widget_setup', $aData);
-    }
 
     public function onsite_widget_stats($widgetID) {
         if (empty($widgetID)) {
@@ -2087,105 +2370,7 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function addBrandBoostWidgetData() {
-
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-        $response = array();
-        $post = $this->input->post();
-        $brandboostID = strip_tags($post['campaign_id']);
-        $title = strip_tags($post['title']);
-        $desc = strip_tags($post['desc']);
-        $bAllowComment = strip_tags($post['allow_comment']);
-        $bAllowVideoReview = strip_tags($post['allow_video_reviews']);
-        $bAllowHelpful = strip_tags($post['allow_helpful']);
-        $bAllowLiveReading = strip_tags($post['allow_live_reading']);
-        $bAllowRatings = strip_tags($post['allow_ratings']);
-        $bAllowTimestamp = strip_tags($post['allow_timestamp']);
-        $bAllowProsCons = strip_tags($post['allow_pros_cons']);
-        $bgColor = strip_tags($post['bg_color']);
-        $textColor = strip_tags($post['text_color']);
-        $pro_cons = strip_tags($post['pro_cons']);
-        $domainName = strip_tags($post['domain_name']);
-        $ratingValue = strip_tags($post['ratingValue']);
-        $bbDisplay = strip_tags($post['bbDisplay']);
-        $widgetID = strip_tags($post['edit_widgetId']);
-        $alternativeDesign = strip_tags($post['alternative_design']);
-        $allowCampaignName = strip_tags($post['allow_campaign_name']);
-        $reviewsOrderBy = strip_tags($post['reviews_order_by']);
-        $reviewsOrder = strip_tags($post['reviews_order']);
-
-        //$widgettype = $this->session->userdata('selectedOnsiteWidget');
-        $numofrev = strip_tags($post['numofrev']);
-
-        $barndFileData = $post['brand_img'];
-        $brandFileArray = array();
-
-        foreach ($barndFileData['media_url'] as $key => $fileData) {
-            $brandFileArray[$key]['media_url'] = $fileData;
-            $brandFileArray[$key]['media_type'] = $barndFileData['media_type'][$key];
-        }
-
-        $logoImageFileName = $post['logo_img'] == '' ? $post['edit_logo_img'] : $post['logo_img'];
-        $brandImageFileName = empty($post['brand_img']) ? $post['edit_brand_img'] : serialize($brandFileArray);
-
-        $review_expire = $post['review_expire'];
-        $review_expire_link = $post['review_expire_link'];
-        $revExpireLink = array();
-        if ($review_expire_link == 'custom') {
-
-            $txtInteger = $post['txtInteger'];
-            $exp_duration = $post['exp_duration'];
-            $revExpireLink['delay_value'] = $txtInteger;
-            $revExpireLink['delay_unit'] = $exp_duration;
-        } else {
-
-            $revExpireLink['delay_value'] = 'never';
-            $revExpireLink['delay_unit'] = 'never';
-        }
-
-
-        $aData = array(
-            'user_id' => $userID,
-            //'brandboost_id' => $brandboostID,
-            'brand_title' => $title,
-            'brand_desc' => $desc,
-            'widget_img' => $brandImageFileName,
-            'logo_img' => $logoImageFileName,
-            'allow_comments' => $bAllowComment,
-            'allow_video_reviews' => $bAllowVideoReview,
-            'allow_helpful_feedback' => $bAllowHelpful,
-            'allow_live_reading_review' => $bAllowLiveReading,
-            'allow_comment_ratings' => $bAllowRatings,
-            'allow_review_timestamp' => $bAllowTimestamp,
-            'allow_pros_cons' => $bAllowProsCons,
-            'alternative_design' => $alternativeDesign,
-            'allow_campaign_name' => $allowCampaignName,
-            'bg_color' => $bgColor,
-            'text_color' => $textColor,
-            'num_of_review' => $numofrev,
-            'domain_name' => $domainName,
-            'pro_cons' => $pro_cons,
-            'often_bb_display' => $bbDisplay,
-            'min_ratings_display' => $ratingValue,
-            'link_expire_review' => $review_expire,
-            'reviews_order' => $reviewsOrder,
-            'reviews_order_by' => $reviewsOrderBy,
-            'link_expire_custom' => json_encode($revExpireLink)
-        );
-
-
-        $result = $this->mBrandboost->updateWidget($userID, $aData, $widgetID);
-
-        if ($result) {
-            $response = array('status' => 'ok');
-        } else {
-            $response = array('status' => 'error');
-        }
-
-        echo json_encode($response);
-        exit;
-    }
+    
 
     public function addBrandBoostData() {
 
@@ -2278,108 +2463,6 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function addBrandBoostWidgetCampaign() {
-
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $response = array();
-        $post = $this->input->post();
-
-        $widgetID = $post['campaign_widget_id'];
-        $campaignId = $post['campaign_id'];
-
-        $aData = array(
-            'brandboost_id' => $campaignId
-        );
-
-
-        $result = $this->mBrandboost->updateWidget($userID, $aData, $widgetID);
-
-        if ($result) {
-            $response = array('status' => 'ok');
-        } else {
-            $response = array('status' => 'error');
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function addBrandBoostWidgetDesign() {
-
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $response = array();
-        $post = $this->input->post();
-
-        $company_logo = $post['company_logo'];
-        $allow_branding = $post['allow_branding'] != '' ? '1' : '0';
-        $notification = $post['notification'] != '' ? '1' : '0';
-        $company_info_switch = $post['company_info_switch'] != '' ? '1' : '0';
-        $widgetID = $post['edit_widgetId'];
-        $solid_color = $post['solid_color'];
-        $main_colors = $post['main_colors'];
-        $custom_colors1 = $post['custom_colors1'];
-        $custom_colors2 = $post['custom_colors2'];
-        $main_color_switch = $post['widget_bgcolor_switch'] == 1 ? '1' : '0';
-        $custom_color_switch = $post['widget_bgcolor_switch'] == 2 ? '1' : '0';
-        $solid_color_switch = $post['widget_bgcolor_switch'] == 3 ? '1' : '0';
-        $custom_company_name = $post['custom_company_name'];
-        $custom_company_description = $post['custom_company_description'];
-
-        $widget_font_color = $post['widget_font_color'];
-        $widget_border_color = $post['widget_border_color'];
-        $widget_position = $post['widget_position'];
-        $widget_themes = $post['widget_themes'];
-        $icon_type = $post['icon_type'];
-        $color_orientation = $post['color_orientation'];
-
-        $solid_color_rating = $post['solid_color_rating'];
-        $main_colors_rating = $post['main_colors_rating'];
-        $custom_colors_rating1 = $post['custom_colors_rating1'];
-        $custom_colors_rating2 = $post['custom_colors_rating2'];
-        $main_color_switch_rating = $post['main_color_switch_rating'] != '' ? '1' : '0';
-
-        $aData = array(
-            'user_id' => $userID,
-            'widget_font_color' => $widget_font_color,
-            'widget_border_color' => $widget_border_color,
-            'widget_position' => $widget_position,
-            'widget_themes' => $widget_themes,
-            'icon_type' => $icon_type,
-            'color_orientation' => $color_orientation,
-            'header_color' => $main_colors,
-            'header_solid_color' => $solid_color,
-            'header_custom_color1' => $custom_colors1,
-            'header_custom_color2' => $custom_colors2,
-            'header_color_solid' => $solid_color_switch,
-            'header_color_fix' => $main_color_switch,
-            'header_color_custom' => $custom_color_switch,
-            'company_logo' => $company_logo,
-            'allow_branding' => $allow_branding,
-            'notification' => $notification,
-            'company_info' => $company_info_switch,
-            'company_info_name' => $custom_company_name,
-            'company_info_description' => $custom_company_description,
-            'rating_color' => $main_colors_rating,
-            'rating_solid_color' => $solid_color_rating,
-            'rating_custom_color1' => $custom_colors_rating1,
-            'rating_custom_color2' => $custom_colors_rating2,
-            'rating_color_fix' => $main_color_switch_rating
-        );
-
-
-        $result = $this->mBrandboost->updateWidget($userID, $aData, $widgetID);
-
-        if ($result) {
-            $response = array('status' => 'ok');
-        } else {
-            $response = array('status' => 'error');
-        }
-
-        echo json_encode($response);
-        exit;
-    }
 
     public function createBrandBoostWidgetTheme() {
 
@@ -4049,32 +4132,6 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function savePreviewData() {
-
-        $response = array();
-        $brandboostID = $this->session->userdata('brandboostID');
-        $userID = $this->session->userdata("current_user_id");
-        $post = $this->input->post();
-        if ($post) {
-            $fieldName = strip_tags($post['field_name']);
-            $fieldValue = strip_tags($post['field_value']);
-
-            $aData = array(
-                $fieldName => $fieldValue
-            );
-
-            $result = $this->mBrandboost->update($userID, $aData, $brandboostID);
-            if ($result) {
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
-
     public function publish_campaign() {
 
         $response = array();
@@ -5644,30 +5701,7 @@ class Brandboost extends Controller {
       exit;
       } */
 
-    public function setOnsiteWidget() {
-        $response = array("status" => "error", "msg" => "Something went wrong");
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array("status" => "error", "msg" => "Empty request header");
-            echo json_encode($response);
-            exit;
-        }
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-        $widgetTypeID = $post['widgetTypeID'];
-        $widgetID = $post['widgetID'];
-        $aData = array(
-            'widget_type' => $widgetTypeID
-        );
-
-        if (!empty($widgetID)) {
-            $this->session->set_userdata("selectedOnsiteWidget", $widgetID);
-            $result = $this->mBrandboost->updateWidget($userID, $aData, $widgetID);
-            $response = array("status" => "success", "msg" => "Okay");
-            echo json_encode($response);
-            exit;
-        }
-    }
+    
 
     public function setWidget() {
         $response = array("status" => "error", "msg" => "Something went wrong");

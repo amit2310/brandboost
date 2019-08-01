@@ -466,10 +466,40 @@ class BrandboostModel extends Model {
         }
     }
 	
+	/**
+	* Used to update brandboost feedback response by brandboostID
+	* @param type $brandboostID
+	* @return type
+	*/
+	public static function getWidgetThemeByUserID($userID = '') {
+		$oData = DB::table('tbl_brandboost_widget_theme_settings')
+			->when(($userID > 0), function ($query) use ($userID) {
+				return $query->where('user_id', $userID)
+				->orWhere('user_id', 1);
+			})
+			->where('status', 1)
+			->orderBy('id', 'asc')
+			->get();
+        return $oData;
+		
+    }
 	
-	
-	
-	
+	/**
+	* Used to update widget by userID
+	* @param type $userID
+	* @param type $brandboostID
+	* @return type
+	*/
+	public static function updateWidget($userID, $aData, $brandboostID) {
+		$result = DB::table('tbl_brandboost_widgets')
+           ->where('id', $brandboostID)
+           ->update($aData);
+        if ($result > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 	
 	
 	
@@ -583,16 +613,6 @@ class BrandboostModel extends Model {
         }
     }
 
-    public function updateWidget($userID, $aData, $brandboostID) {
-        $this->db->where('id', $brandboostID);
-        $result = $this->db->update('tbl_brandboost_widgets', $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public function creatWidgetTheme($aData) {
         $result = $this->db->insert('tbl_brandboost_widget_theme_settings', $aData);
         $inset_id = $this->db->insert_id();
@@ -611,24 +631,6 @@ class BrandboostModel extends Model {
         }
 
         $result = $this->db->get('tbl_brandboost_widget_theme_settings');
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
-    }
-
-    public function getWidgetThemeByUserID($userID = '') {
-
-        if ($userID > 0) {
-            $this->db->where('user_id', $userID);
-            $this->db->or_where('user_id', 1);
-        }
-
-        $this->db->order_by('id', 'ASC');
-        $this->db->where('status', 1);
-        $result = $this->db->get('tbl_brandboost_widget_theme_settings');
-        //echo $this->db->last_query();exit;
         if ($result->num_rows() > 0) {
             $aData = $result->result();
         }

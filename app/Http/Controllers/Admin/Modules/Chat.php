@@ -1,8 +1,5 @@
 <?php
 namespace App\Http\Controllers\Admin\Modules;
-//require 'aws/aws-autoloader.php';
-//use Aws\S3\S3Client;
-//use Aws\Exception\AwsException;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,7 +13,11 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
 
 class Chat extends Controller {
-
+	
+	/**
+	* Used to get chat data list
+	* @return type
+	*/
     public function index() {
 
         $aUser = getLoggedUser();
@@ -42,6 +43,9 @@ class Chat extends Controller {
 		
 		return view('admin.modules.chat.index', $aData);
     }
+	
+	
+	
 
     public function addChat() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');

@@ -692,13 +692,7 @@
 	$brand_desc = $widgetData->brand_desc;
 	$logo_img = $widgetData->logo_img;
 	$hashcodeBB = $widgetData->hashcode;
-	$brandImgArray = unserialize($widgetData->brand_img);
-	
-	if (!empty($brandImgArray[0]['media_url'])) {
 		
-		$brand_img = $brandImgArray[0]['media_url'];
-	}
-	
 	$rating = $widgetData->min_ratings_display;
 	
 	$allow_comments = $widgetData->allow_comments;
@@ -740,16 +734,16 @@
                     <div class="tab-content"> 
                         <div class="tab-pane active" id="Configurations">
                             <div class="profile_sec">
-                                <form method="post" name="frmWidgetConfSubmit" id="frmWidgetConfSubmit" action="javascript:void(0);"  enctype="multipart/form-data">
+                                <form method="post" name="frmWidgetConfSubmit" id="frmWidgetConfSubmit" action="javascript:void(0);" enctype="multipart/form-data">
 									
+                                    {{csrf_field()}}
                                     <input type="hidden" name="edit_logo_img" id="edit_logo_img" value="<?php echo $logo_img; ?>" />
-                                    <input type="hidden" name="edit_brand_img" id="edit_brand_img" value=<?php echo serialize($brandImgArray); ?> />
                                     <input type="hidden" name="edit_widgetId" id="edit_widgetId" value=<?php echo $widgetID; ?> />
 									<div class="configurations p20">
 										<div class="form-group">
 											<div class="">
 												<label class="control-label">Template</label>
-												<button id="newcampaign" class="btn h52 form-control w100" style="text-align: left; padding: 7px 23px!important;"><span>Vertical Popup</span> <i class="pull-right txt_grey"><img src="<?php echo base_url(); ?>new_pages/assets/images/icon_grid.png"></i></button>
+												<button id="newcampaign" class="btn h52 form-control w100" style="text-align: left; padding: 7px 23px!important;"><span>Vertical Popup</span> <i class="pull-right txt_grey"><img src="<?php echo base_url(); ?>assets/images/icon_grid.png"></i></button>
 											</div>
 										</div>
 									</div>
@@ -776,7 +770,7 @@
 											</li>
                                             <li><small class="wauto">People Currently Reading</small> 
                                                 <label class="custom-form-switch pull-right">
-                                                    <input type="checkbox" name="allow_live_reading" id="allow_live_reading"  value="<?php echo $allow_live_reading_review != '0' ? $allow_live_reading_review : '0'; ?>" <?php echo $allow_live_reading_review != '0' ? 'checked' : ''; ?> class="field checkedBoxValue autoSaveConfig" ><!-- preview_fname="preview_allow_helpful_feedback" -->
+                                                    <input type="checkbox" name="allow_live_reading" id="allow_live_reading"  value="<?php echo $allow_live_reading_review != '0' ? $allow_live_reading_review : '0'; ?>" <?php echo $allow_live_reading_review != '0' ? 'checked' : ''; ?> class="field checkedBoxValue autoSaveConfig" >
                                                     <span class="toggle"></span>
 												</label>
 											</li>
@@ -804,12 +798,7 @@
                                                     <span class="toggle"></span>
 												</label>
 											</li>
-											<!-- <li><small class="wauto">Pros & Cons</small> 
-												<label class="custom-form-switch pull-right">
-												<input type="checkbox" name="allow_pros_cons" id="allow_pros_cons" value="<?php echo $allow_pros_cons != '0' ? $allow_pros_cons : '0'; ?>" <?php echo $allow_pros_cons != '0' ? 'checked' : ''; ?> class="field checkedBoxValue" preview_fname="preview_allow_pros_cons">
-												<span class="toggle"></span>
-												</label>
-											</li> -->
+											
                                             <div class="clearfix"></div>
 										</ul>
 									</div>
@@ -818,20 +807,7 @@
                                     <div class="profile_headings">Brand Boost Details <a class="pull-right plus_icon" href="javascript:void(0);"><i class="fa fsize15 txt_grey fa-angle-down"></i></a></div>
 									
                                     <div class="configurations p25">
-                                        <!-- <div class="form-group">
-                                            <label class="control-label">Choose Onsite Campaign</label>
-                                            <div class="">
-											<select class="form-control h52 autoSaveConfig" name="campaign_id" required="required">
-											<option value="">Select</option>
-											<?php if(!empty($oBrandboostList)):?>
-											<?php foreach($oBrandboostList as $oBrandboost):?>
-											<option value="<?php echo $oBrandboost->id;?>" <?php if($widgetData->brandboost_id == $oBrandboost->id):?> selected="selected"<?php endif;?>><?php echo $oBrandboost->brand_title;?></option>
-											<?php endforeach;?>
-											<?php endif; ?>
-											</select>
-											
-											</div>
-										</div> -->
+                                        
                                         
                                         <div class="form-group">
                                             <label class="control-label">Domain</label>
@@ -943,7 +919,7 @@
 						<div class="tab-pane" id="Design">
                             <div class="profile_headings fsize12 fw500">Widget appearance <a class="pull-right plus_icon" href="javascript:void(0);"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
                             <form method="post" name="frmSubmitWidgetDesign" id="frmSubmitWidgetDesign" action="javascript:void(0);"  enctype="multipart/form-data">
-								
+								{{ csrf_field() }}
                                 <input type="hidden" name="edit_widgetId" id="edit_widgetId" value=<?php echo $widgetID; ?> />
 								
                                 <div class="p20">							
@@ -1032,14 +1008,7 @@
 										
 										
 										<div class="form-group">
-											<!-- <label class="control-label txt_upper fsize11 fw500 text-muted">Gradient Color picker</label>
-												<div class="form-group pull-right mb0">
-												<p class="pull-left mb0 fsize11 fw500 text-muted mr-5">Custom Gradient color</p>
-												<label class="custom-form-switch pull-right">
-												<input class="field" type="checkbox" <?php echo $widgetData->header_color_custom < 1 ? '' : 'checked'; ?> name="custom_color_switch" id="custom_color_switch">
-												<span class="toggle dred"></span> </label>
-												<div class="clearfix"></div>
-											</div> -->
+											
 											<div class="row">
 												<div class="position-relative mt-5 col-md-6">
 													<input name="custom_colors1" class="form-control h52 autoSaveDesign" id="custom_colors1" placeholder="#000000" type="text" value="<?php echo $widgetData->header_custom_color1 == '' ? '#000000' : $widgetData->header_custom_color1; ?>" <?php echo $widgetData->header_color_custom < 1 ? 'readonly' : ''; ?>>
@@ -1078,14 +1047,7 @@
 									
 									
 									<div class="mb20 widgetSingleColorBox" <?php echo $widgetData->header_color_solid == 0 ? 'style="display:none;"' : ''; ?>>
-                                        <!-- <label class="control-label txt_upper fsize11 fw500 text-muted">Single Color picker</label>
-											<div class="form-group pull-right mb0">
-                                            <p class="pull-left mb0 fsize11 fw500 text-muted mr-5">Solid color</p>
-                                            <label class="custom-form-switch pull-right">
-											<input class="field" type="checkbox" <?php echo $widgetData->header_color_solid < 1 ? '' : 'checked'; ?> name="solid_color_switch" id="solid_color_switch">
-											<span class="toggle dred"></span> </label>
-                                            <div class="clearfix"></div>
-										</div> -->
+                                        
 										
                                         <div class="row">
                                             <div class="position-relative mt-5 col-md-12">
@@ -1128,13 +1090,13 @@
                                         <div class="form-group pull-right mb0">
                                             <p class="pull-left mb0 fsize11 fw500 text-muted mr-5">Gradient</p>
                                             <label class="custom-form-switch pull-right">
-                                                <input class="field autoSaveDesign" type="checkbox" <?php //echo ($widgetData->rating_color_fix > 0 || empty($widgetData)) ? 'checked' : ''; ?> name="main_color_switch_rating" id="main_color_switch_rating">
+                                                <input class="field autoSaveDesign" type="checkbox" name="main_color_switch_rating" id="main_color_switch_rating">
 											<span class="toggle dred"></span> </label>
                                             <div class="clearfix"></div>
 										</div>
 									</div>
 									
-									<div class="widgetMultiColorBoxRating hidden"  <?php //echo ($widgetData->rating_color_fix > 0 || empty($widgetData)) ? '' : 'style="display:none;"'; ?>>
+									<div class="widgetMultiColorBoxRating hidden">
 										<div class="form-group">
 											<div class="color_box">
 												<input type="hidden" name="main_colors_rating" id="main_colors_rating" value="<?php echo $widgetData->rating_color == '' ? 'yellow' : $widgetData->rating_color; ?>">
@@ -1152,13 +1114,13 @@
 										<div class="form-group">
 											<div class="row">
 												<div class="position-relative mt-5 col-md-6">
-													<input name="custom_colors_rating1" class="form-control h52 autoSaveDesign" id="custom_colors_rating1" placeholder="#ffcb65" type="text" value="<?php echo $widgetData->rating_custom_color1 == '' ? '#ffcb65' : $widgetData->rating_custom_color1; ?>" <?php echo $widgetData->rating_color_custom < 1 ? 'readonly' : ''; ?>>
-													<a style="position: absolute; top: 17px; right: 25px;" class="colorpickerRating1 colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php echo $widgetData->rating_custom_color1 == '' ? 'style="color:#ffcb65"' : 'style="color:' . $widgetData->rating_custom_color1 . '"'; ?>></i></a>
+													<input name="custom_colors_rating1" class="form-control h52 autoSaveDesign" id="custom_colors_rating1" placeholder="#ffcb65" type="text" value="<?php //echo $widgetData->rating_custom_color1 == '' ? '#ffcb65' : $widgetData->rating_custom_color1; ?>" <?php //echo $widgetData->rating_color_custom < 1 ? 'readonly' : ''; ?>>
+													<a style="position: absolute; top: 17px; right: 25px;" class="colorpickerRating1 colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php //echo $widgetData->rating_custom_color1 == '' ? 'style="color:#ffcb65"' : 'style="color:' . $widgetData->rating_custom_color1 . '"'; ?>></i></a>
 												</div>
 												
 												<div class="position-relative mt-5 col-md-6">
-													<input name="custom_colors_rating2" class="form-control h52 autoSaveDesign" id="custom_colors_rating2" placeholder="#ffcb65" type="text" value="<?php echo $widgetData->rating_custom_color2 == '' ? '#ffcb65' : $widgetData->rating_custom_color2; ?>" <?php echo $widgetData->rating_color_custom < 1 ? 'readonly' : ''; ?>>
-													<a style="position: absolute; top: 17px; right: 25px;" class="colorpickerRating2 colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php echo $widgetData->rating_custom_color2 == '' ? 'style="color:#ffcb65"' : 'style="color:' . $widgetData->rating_custom_color2 . '"'; ?>></i></a>
+													<input name="custom_colors_rating2" class="form-control h52 autoSaveDesign" id="custom_colors_rating2" placeholder="#ffcb65" type="text" value="<?php //echo $widgetData->rating_custom_color2 == '' ? '#ffcb65' : $widgetData->rating_custom_color2; ?>" <?php //echo $widgetData->rating_color_custom < 1 ? 'readonly' : ''; ?>>
+													<a style="position: absolute; top: 17px; right: 25px;" class="colorpickerRating2 colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php //echo $widgetData->rating_custom_color2 == '' ? 'style="color:#ffcb65"' : 'style="color:' . $widgetData->rating_custom_color2 . '"'; ?>></i></a>
 												</div>
 											</div>
 										</div>
@@ -1167,8 +1129,8 @@
 									<div class="mb20 widgetSingleColorBoxRating" <?php //echo ($widgetData->rating_color_fix > 0 || empty($widgetData)) ? 'style="display:none;"' : ''; ?>>
                                         <div class="row">
                                             <div class="position-relative mt-5 col-md-12">
-                                                <input name="solid_color_rating" class="form-control h52 autoSaveDesign" id="solid_color_rating" placeholder="#ffcb65" type="text" value="<?php echo $widgetData->rating_solid_color == '' ? '#ffcb65' : $widgetData->rating_solid_color; ?>" <?php echo $widgetData->rating_color_solid < 1 ? 'readonly' : ''; ?>>
-                                                <a style="position: absolute; top: 17px; right: 25px;" class="solidcolorpickerRating colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php echo $widgetData->rating_solid_color == '' ? 'style="color:#ffcb65"' : 'style="color:' . $widgetData->rating_solid_color . '"'; ?>></i></a>
+                                                <input name="solid_color_rating" class="form-control h52 autoSaveDesign" id="solid_color_rating" placeholder="#ffcb65" type="text" value="<?php //echo $widgetData->rating_solid_color == '' ? '#ffcb65' : $widgetData->rating_solid_color; ?>" <?php //echo $widgetData->rating_color_solid < 1 ? 'readonly' : ''; ?>>
+                                                <a style="position: absolute; top: 17px; right: 25px;" class="solidcolorpickerRating colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php //echo $widgetData->rating_solid_color == '' ? 'style="color:#ffcb65"' : 'style="color:' . $widgetData->rating_solid_color . '"'; ?>></i></a>
 											</div>
 										</div>
 									</div>
@@ -1236,7 +1198,7 @@
 											
 											<input type="hidden" name="theme_custom_colors2" id="theme_custom_colors2" value="<?php echo $widgetData->header_custom_color2; ?>">
 											
-											<input type="hidden" name="theme_solid_color" id="theme_solid_color" value="<?php echo $widgetData->solid_color; ?>">
+											<input type="hidden" name="theme_solid_color" id="theme_solid_color" value="<?php //echo $widgetData->solid_color; ?>">
 											
 											<input type="hidden" name="theme_bg_color_switch" id="theme_bg_color_switch" value="<?php echo $widgetData->header_color_fix == 0 ? '' : $widgetData->header_color_fix; ?><?php echo $widgetData->header_color_custom == 0 ? '' : $widgetData->header_color_custom; ?><?php echo $widgetData->header_color_solid == 0 ? '' : $widgetData->header_color_solid; ?>">
 											
@@ -1269,6 +1231,7 @@
 						<div class="tab-pane" id="Campaign">
 							<div class="profile_headings txt_upper p20 fsize11 fw600">Select Campaign <a class="pull-right plus_icon" href="javascript:void(0);"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
 							<form method="post" name="frmSubmitCampaign" id="frmSubmitCampaign" action="javascript:void(0);">
+								{{ csrf_field() }}
 								<div class="p20">
 									<div class="row">
 										<div class="col-md-12">
@@ -3890,6 +3853,7 @@
 				$.ajax({
 					url: "<?php echo base_url(); ?>/admin/brandboost/getWidgetThemeData/"+themeID,
 					method: "POST",
+					data: {_token: '{{csrf_token()}}'},
 					dataType: "json",
 					success: function (data)
 					{
@@ -4159,7 +4123,7 @@
                 $.ajax({
                     url: "<?php echo base_url(); ?>/admin/brandboost/showPWPreview",
                     method: "POST",
-                    data: {'hashcode': '<?php echo $hashcodeBB; ?>', 'widget_type': widgetType},
+                    data: {'hashcode': '<?php echo $hashcodeBB; ?>', 'widget_type': widgetType, _token: '{{csrf_token()}}'},
                     dataType: "html",
                     success: function (data)
                     {
@@ -4174,7 +4138,7 @@
 					}
 				});
 				} else {
-                $('#previewIframe').attr('src', '<?php echo site_url('/preview/'); ?>' + widgetType + '/<?php echo $hashcodeBB; ?>');
+                $('#previewIframe').attr('src', '<?php echo base_url('/preview/'); ?>' + widgetType + '/<?php echo $hashcodeBB; ?>');
                 $("#campaignPreview").modal('show');
 			}
 		});
@@ -4191,7 +4155,7 @@
         var myDropzoneLogoImg = new Dropzone(
 		'#myDropzone_logo_img', //id of drop zone element 1
 		{
-			url: '<?php echo site_url("/dropzone/upload_image"); ?>',
+			url: '<?php echo base_url("/dropzone/upload_image"); ?>',
 			uploadMultiple: false,
 			maxFiles: 1,
 			maxFilesize: 600,
@@ -4209,7 +4173,7 @@
         var myDropzoneBrandImg = new Dropzone(
 		'#myDropzone_brand_img', //id of drop zone element 1
 		{
-			url: '<?php echo site_url("/dropzone/upload_campaign_files"); ?>',
+			url: '<?php echo base_url("/dropzone/upload_campaign_files"); ?>',
 			uploadMultiple: false,
 			maxFiles: 1,
 			maxFilesize: 600,
@@ -4864,7 +4828,7 @@
         $.ajax({
             url: "<?php echo base_url(); ?>/admin/brandboost/savePreviewData",
             method: "POST",
-            data: {'field_name': fieldName, 'field_value': fieldData},
+            data: {'field_name': fieldName, 'field_value': fieldData, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {}
 		});
