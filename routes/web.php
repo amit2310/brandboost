@@ -325,6 +325,8 @@ Route::post('admin/tags/applySubscriberTag','Admin\Tags@applySubscriberTag');
 Route::post('admin/subscriber/add_contact','Admin\Subscribers@add_contact');
 Route::get('admin/subscriber/exportSubscriberCSV','Admin\Subscribers@exportSubscriberCSV');
 Route::post('admin/subscriber/importSubscriberCSV','Admin\Subscribers@importSubscriberCSV');
+Route::post('admin/subscriber/moveToArchiveModuleContact','Admin\Subscribers@moveToArchiveModuleContact');
+Route::post('admin/subscriber/changeModuleContactStatus','Admin\Subscribers@changeModuleContactStatus');
 
 //Lists
 Route::get('admin/lists','Admin\Lists@index');

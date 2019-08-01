@@ -794,6 +794,29 @@ FROM
         return $aEmails;
     }
 
+    /**
+     * Update module subscriber
+     * @return type object
+     */
+    public function updateModuleSubscriber($moduleName = '', $aData, $id) {
+        if ($id > 0) {
+            if ($moduleName == 'list') {
+                DB::table('tbl_automation_users')->where('id', $id)->update($aData);
+            } else if ($moduleName == 'brandboost') {
+                DB::table('tbl_brandboost_users')->where('id', $id)->update($aData);
+            } else if ($moduleName == 'referral') {
+                DB::table('tbl_referral_users')->where('id', $id)->update($aData);
+            } else if ($moduleName == 'nps') {
+                DB::table('tbl_nps_users')->where('id', $id)->update($aData);
+            } else if ($moduleName == 'people') {
+                DB::table('tbl_subscribers')->where('id', $id)->update($aData);
+            } else {
+                //Do nothing
+            }
+        }
+        return true;
+    }
+
     public function getuserImageDetails($userID) {
         $this->db->select("tbl_users.avatar as avatarImage");
         $this->db->where("id", $userID);
@@ -1154,26 +1177,6 @@ FROM
         return $response;
     }
 
-    public function updateModuleSubscriber($moduleName = '', $aData, $id) {
-        if ($id > 0) {
-            $this->db->where("id", $id);
-            if ($moduleName == 'list') {
-                $bUpdated = $this->db->update("tbl_automation_users", $aData);
-            } else if ($moduleName == 'brandboost') {
-                $bUpdated = $this->db->update("tbl_brandboost_users", $aData);
-            } else if ($moduleName == 'referral') {
-                $bUpdated = $this->db->update("tbl_referral_users", $aData);
-            } else if ($moduleName == 'nps') {
-                $bUpdated = $this->db->update("tbl_nps_users", $aData);
-            } else if ($moduleName == 'people') {
-                $bUpdated = $this->db->update("tbl_subscribers", $aData);
-            } else {
-                //Do nothing
-            }
-        }
-//echo $this->db->last_query();die;
-        return $bUpdated;
-    }
 
     public function updateModuleSubscriberByid($aData, $id) {
 
