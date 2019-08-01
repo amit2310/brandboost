@@ -124,6 +124,7 @@ class Contacts extends Controller
     */
 
     public function profile($contactId) {
+
         $oUser = getLoggedUser();
         $clientID = $oUser->id;
         $response = array();

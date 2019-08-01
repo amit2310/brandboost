@@ -1,3 +1,11 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php //echo $title; ?>
+@endsection
+
+@section('contents')
+
 <style>
     @media only screen and (min-width:993px) and (max-width:1024px){
         .panel-body.min_h270.p0 .table{max-width: 1000px !important
@@ -17,14 +25,33 @@
         }
     }
     $aUInfo = $userData;
-//pre($aUInfo);
-    $cb_contact_id = $aUInfo->cb_contact_id;
+    
+    //$cb_contact_id = $aUInfo->cb_contact_id;
     $userId = $aUInfo->id;
 
-    $avatar = $aUInfo->avatar;
+    if(!empty($aUInfo->avatar)) {
+        $avatar = $aUInfo->avatar;
+    }
+    else {
+        $avatar = '';
+    }
+    if(!empty($aUInfo->user_role)) {
+        $userRole = $aUInfo->user_role;
+    }
+    else {
+        $userRole = '';
+    }
+
+    if(!empty($aUInfo->address)) {
+        $address = $aUInfo->address;
+    }
+    else {
+        $address = '';
+    }
+
     $firstname = $aUInfo->firstname;
     $lastname = $aUInfo->lastname;
-    $userRole = $aUInfo->user_role;
+    
 
     if ($userRole == '1') {
 
@@ -46,7 +73,7 @@
         $srcUserImg = '/profile_images/avatar_image.png';
     }
 
-    $address = $aUInfo->address;
+    
     $city = $aUInfo->cityName;
     $state = $aUInfo->stateName;
     $country = $aUInfo->country_code;
@@ -75,7 +102,7 @@
       $oTags = $getClientTags;
       } */
 
-    $oTags = $this->mTags->getSubscriberTags($aUInfo->id);
+    $oTags = App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
 
 //pre($oTags);
 //pre($subscribersData);
@@ -103,11 +130,14 @@
                 <!--=============Button Area Right Side==============-->
                 <div class="col-md-7 text-right btn_area">
                     <?php
-                    if ($oUser->user_role == '1') {
-                        ?>
-                        <button type="button" class="btn light_btn ml20 addManualCredit" id="<?php echo base64_url_encode($aUInfo->id); ?>"><i class="icon-star-full2 txt_black"></i><span> &nbsp;  Add Credits</span> </button>
-                        <?php
+                    if(!empty($oUser)) {
+                        if ($oUser->user_role == '1') {
+                            ?>
+                            <button type="button" class="btn light_btn ml20 addManualCredit" id="<?php echo base64_url_encode($aUInfo->id); ?>"><i class="icon-star-full2 txt_black"></i><span> &nbsp;  Add Credits</span> </button>
+                            <?php
+                        }
                     }
+                    
                     ?>
                     <?php if (!empty($email)): ?>
                         <a  href="mailto:<?php echo $email; ?>" class="btn light_btn ml20 pt10"><i class="icon-envelop2"></i><span> &nbsp;   Send email</span> </a>
@@ -428,9 +458,17 @@
                                                     </tbody>
                                                 </table>
 
-                                                <?php if (count($userActivities) > 10) { ?>
+                                                <?php 
+
+                                                if(!empty($userActivities)) {
+
+                                                    if (count($userActivities) > 10) { 
+                                                    ?>
                                                     <div class="loadMoreRecord loadMoreRecordActivity"><a style="cursor: pointer;" class="loadMoreActivity" >Load more</a><img class="loaderImage hidden" src="<?php echo base_url(); ?>assets/images/widget_load.gif" width="20px" height="20px"></div>
-                                                <?php } ?>
+                                                    <?php 
+                                                    }
+                                                }
+                                                ?>
 
                                             </div>
                                         </div>
@@ -438,7 +476,7 @@
                                     <div class="tab-pane" id="NewNote">
                                         <div class="panel panel-flat mb0">
                                             <div class="panel-body p0" id="contact-notes-container">
-                                                <?php $this->load->view("admin/contacts/partial/notes-block"); ?>
+                                                <?php //$this->load->view("admin/contacts/partial/notes-block"); ?>
                                             </div>
                                         </div>
                                     </div>
@@ -453,7 +491,7 @@
                                                 <table class="table">
                                                     <tbody>
                                                         <?php
-//pre($result);
+
                                                         $emailCount = 0;
                                                         if (!empty($result)) {
                                                             $emailInc = 1;
@@ -498,9 +536,15 @@
                                                     </tbody>
                                                 </table>
 
-                                                <?php if ($emailInc > 10) { ?>
-                                                    <div class="loadMoreRecord loadMoreRecordEmail"><a style="cursor: pointer;" class="loadMoreEmail" >Load more</a><img class="loaderImage hidden" src="<?php echo base_url(); ?>assets/images/widget_load.gif" width="20px" height="20px"></div>
-                                                <?php } ?>
+                                                <?php 
+                                                if(!empty($emailInc)) {
+                                                    if ($emailInc > 10) { 
+                                                        ?>
+                                                        <div class="loadMoreRecord loadMoreRecordEmail"><a style="cursor: pointer;" class="loadMoreEmail" >Load more</a><img class="loaderImage hidden" src="<?php echo base_url(); ?>assets/images/widget_load.gif" width="20px" height="20px"></div>
+                                                        <?php 
+                                                    }
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
@@ -561,9 +605,16 @@
                                                     </tbody>
                                                 </table>
 
-                                                <?php if ($smsInc > 10) { ?>
-                                                    <div class="loadMoreRecord loadMoreRecordSms"><a style="cursor: pointer;" class="loadMoreSms" >Load more</a><img class="loaderImage hidden" src="<?php echo base_url(); ?>assets/images/widget_load.gif" width="20px" height="20px"></div>
-                                                <?php } ?>
+                                                <?php 
+                                                if(!empty($smsInc)) {
+
+                                                    if ($smsInc > 10) { 
+                                                        ?>
+                                                        <div class="loadMoreRecord loadMoreRecordSms"><a style="cursor: pointer;" class="loadMoreSms" >Load more</a><img class="loaderImage hidden" src="<?php echo base_url(); ?>assets/images/widget_load.gif" width="20px" height="20px"></div>
+                                                        <?php 
+                                                    }
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
@@ -700,11 +751,39 @@
                             </div>
                             <div class="panel-body" >
                                 <div class="interactions">
+                                    <?php
+                                    if(!empty($getUser->last_login)) {
+                                        $last_login = $getUser->last_login;
+                                    }
+                                    else {
+                                        $last_login = 0;
+                                    }
+                                    if(!empty($getNotification->system_notify)) {
+                                        $system_notify = $getNotification->system_notify;
+                                    }
+                                    else {
+                                        $system_notify = 0;
+                                    }
 
+                                    if(!empty($getNotification->user_id)) {
+                                        $user_id = $getNotification->user_id;
+                                    }
+                                    else {
+                                        $user_id = 0;
+                                    }
+
+                                    if(!empty($getNotification->email_notify))
+                                    {
+                                        $email_notify = $getNotification->email_notify;
+                                    }
+                                    else {
+                                        $email_notify = '';
+                                    }
+                                    ?>
                                     <ul>
                                         <li><small>Source</small> <strong>Email</strong></li>
                                         <li><small>First Seen</small> <strong><?php echo!empty($getUser->created) ? date('d M Y', strtotime($getUser->created)) : displayNoData(); ?></strong></li>
-                                        <li><small>Last Seen</small> <strong><?php echo strtotime($getUser->last_login) > 0 ? date('d M Y', strtotime($getUser->last_login)) : displayNoData(); ?></strong></li>
+                                        <li><small>Last Seen</small> <strong><?php echo strtotime($last_login) > 0 ? date('d M Y', strtotime($last_login)) : displayNoData(); ?></strong></li>
                                         <li><small>Page views</small> <strong>[No Data]</strong></li>
                                         <li><small>Reviews</small> <strong><?php
                                                 if (!empty($aReviews)) {
@@ -713,10 +792,10 @@
                                                     echo displayNoData();
                                                 }
                                                 ?></strong></li>
-                                        <li><small>Notification</small> <strong><?php echo ($getNotification->system_notify) ? 'On' : 'Off'; ?></strong></li>
-                                        <li><small>Id</small> <strong><?php echo $getNotification->user_id > 0 ? $getNotification->user_id : displayNoData(); ?></strong></li>
-                                        <li><small>SMS</small> <strong><?php echo ($getNotification->email_notify) ? 'On' : 'Off'; ?></strong></li>
-                                        <li><small>Emails</small> <strong><?php echo ($getNotification->email_notify) ? 'On' : 'Off'; ?></strong></li>
+                                        <li><small>Notification</small> <strong><?php echo ($system_notify) ? 'On' : 'Off'; ?></strong></li>
+                                        <li><small>Id</small> <strong><?php echo $user_id > 0 ? $user_id : displayNoData(); ?></strong></li>
+                                        <li><small>SMS</small> <strong><?php echo ($email_notify) ? 'On' : 'Off'; ?></strong></li>
+                                        <li><small>Emails</small> <strong><?php echo ($email_notify) ? 'On' : 'Off'; ?></strong></li>
                                     </ul>
                                 </div>
                             </div>
@@ -730,7 +809,7 @@
                     <div class="col-md-12">
                         <div style="margin: 0;" class="panel panel-flat">
                             <?php if (!empty($aReviews)): ?>
-                                <?php $this->load->view("admin/components/smart-popup/smart-review-widget"); ?>
+                                <?php //$this->load->view("admin/components/smart-popup/smart-review-widget"); ?>
                             <?php endif; ?>
                             <div class="panel-heading"> <span class="pull-left">
                                     <h6 class="panel-title"><?php
@@ -763,7 +842,7 @@
 
                             <div class="panel-body p0">
 
-                                <?php $this->load->view("admin/brandboost/partial/review_table", array('access' => 'limited')); ?>
+                                <?php //$this->load->view("admin/brandboost/partial/review_table", array('access' => 'limited')); ?>
 
 
 
@@ -834,6 +913,8 @@
 
                                         <!--================================================-->
                                         <?php
+                                        if(!empty($oProgramsRef)) {
+
                                         foreach ($oProgramsRef as $oProgram):
                                             if ($oProgram->status != 'archive') {
                                                 ?>
@@ -886,7 +967,9 @@
                                                                                                                                                                                                                 
                                                                                                                                                                                                                         </td> -->
                                                 </tr>
-                                            <?php } endforeach; ?>
+                                            <?php } endforeach;
+
+                                            } ?>
 
                                     </tbody>
                                 </table>
@@ -956,6 +1039,7 @@
 
                                     <tbody>
                                         <?php
+                                        if(!empty($oPrograms)) {
                                         foreach ($oPrograms as $oProgram):
 
                                             $positive = 0;
@@ -1208,7 +1292,9 @@
 
 
                                                 </tr>
-                                            <?php } endforeach; ?>
+                                            <?php } endforeach;
+
+                                            } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -1225,8 +1311,10 @@
     </div>
     <!-- </div> -->
     <?php
-    if ($oUser->user_role == '1') {
-        $this->load->view("admin/modals/credits/add_credits");
+    if(!empty($oUser)) {
+        if ($oUser->user_role == '1') {
+            $this->load->view("admin/modals/credits/add_credits");
+        }
     }
     ?>
 
@@ -1437,8 +1525,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-                            <?php echo validation_errors(); ?></div>
+                      
 
                         <div class="form-group">
                             <label class="control-label col-lg-3">Title</label>
@@ -1524,8 +1611,6 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-                            <?php echo validation_errors(); ?></div>
 
                         <div class="form-group">
                             <label class="control-label col-lg-3">Title</label>
@@ -1886,7 +1971,9 @@
                                                 <div class="checkbox">
                                                     <label class="custmo_checkbox pull-left mt-5 ">
                                                         <input type="hidden" name="allList[]" value="<?php echo $oList->id; ?>" />
-                                                        <input type="checkbox" name="listid[]" <?php if (in_array($oList->id, $aSelectedLists)): ?> checked="checked"<?php endif; ?> value="<?php echo $oList->id; ?>">
+                                                        <input type="checkbox" name="listid[]" <?php 
+                                                        if(!empty($aSelectedLists)) {
+                                                        if (in_array($oList->id, $aSelectedLists)): ?> checked="checked"<?php endif; } ?> value="<?php echo $oList->id; ?>">
                                                         <span class="custmo_checkmark"></span>
 
                                                     </label>
@@ -2647,3 +2734,5 @@
 
 
     </script>
+
+    @endsection

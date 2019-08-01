@@ -377,6 +377,7 @@ Route::post('admin/brandboost/updateBrandConfigurationData','Admin\Brandboost@up
 Route::post('admin/contacts/profile/{contactId}','Admin\Contacts@profile');
 Route::post('admin/contacts/add_contact_notes','Admin\Contacts@add_contact_notes');
 Route::get('admin/contacts/mycontacts','Admin\Contacts@mycontacts');
+Route::get('admin/contacts/profile/{id}','Admin\Contacts@profile');
 Route::post('admin/brandboost/getFaqdetails/{faqId}','Admin\Brandboost@getFaqdetails');
 Route::post('admin/brandboost/UpdateFaqData','Admin\Brandboost@UpdateFaqData');
 Route::post('admin/brandboost/update_faq_status','Admin\Brandboost@update_faq_status');
