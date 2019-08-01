@@ -1,3 +1,11 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
+
 <script src = "https://code.highcharts.com/highcharts.js"></script>
 
 
@@ -171,10 +179,13 @@
         $iClickMax = 0;
         $iDeliveredMax = 0;
         $aClickWinner = array();
+        $grandSent = $grandDelivered = $grandOpen = $grandClick = $grandBounce = 0;
+        $grandOpenRate = $grandClickRate = $grandDeliveryRate = 0 ;
 
         foreach ($aBroadcastStats as $oCampaignStats) {
             //pre($oCampaignStats);
             //die;
+            $deliverWinner = $openWinner = $clickWinner = 0;
             $aStats = $oCampaignStats['statsData'];
             $sent = $aStats['processed']['UniqueCount'];
             $delivered = $aStats['delivered']['UniqueCount'];
@@ -204,19 +215,20 @@
             $grandBounce = $grandBounce + $bounce;
         }
 
-        $grandOpenRate = number_format((($grandOpen * 100) / $grandSent), 2);
+        if ($grandSent > 0) {
+            $grandOpenRate = number_format((($grandOpen * 100) / $grandSent), 2);
 
-        $grandClickRate = number_format((($grandClick * 100) / $grandSent), 2);
+            $grandClickRate = number_format((($grandClick * 100) / $grandSent), 2);
 
-        $grandDeliveryRate = number_format((($grandDelivered * 100) / $grandSent), 2);
+            $grandDeliveryRate = number_format((($grandDelivered * 100) / $grandSent), 2);
+        }
     }
-    $grandOpenRate = ($grandOpenRate>0) ? $grandOpenRate : '0';
+    $grandOpenRate = ($grandOpenRate > 0) ? $grandOpenRate : '0';
 
-    $grandClickRate = ($grandClickRate>0) ? $grandClickRate : '0';
+    $grandClickRate = ($grandClickRate > 0) ? $grandClickRate : '0';
 
-    $grandDeliveryRate = ($grandDeliveryRate>0) ? $grandDeliveryRate : '0';
+    $grandDeliveryRate = ($grandDeliveryRate > 0) ? $grandDeliveryRate : '0';
     $aSequence = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
-    
     ?>
     <div class="tab-content"> 
         <!--===========TAB 1===========-->
@@ -307,7 +319,7 @@
                                 <thead>
                                     <tr>
                                         <th><i class="icon-calendar"></i><?php echo ($sendingMethod == 'split') ? 'Campaign/Variation Name' : 'Campaign Name' ?></th>
-                                        <?php if ($sendingMethod == 'split'): ?>
+<?php if ($sendingMethod == 'split'): ?>
                                             <th class="text-center"><i class="fa fa-smile-o"></i>Traffic</th>
                                         <?php endif; ?>
                                         <th class="text-center"><i class="fa fa-smile-o"></i>Sent</th>
@@ -323,21 +335,21 @@
                                 <tbody>
 
                                     <!--================================================-->
-                                    <?php
-                                    if (!empty($aBroadcastStats)) {
-                                        $i=-1;
-                                        foreach ($aBroadcastStats as $oCampaignStats) {
-                                            //pre($oCampaignStats);
-                                            //die;
-                                            $aStats = $oCampaignStats['statsData'];
-                                            $totalSent = $aStats['processed']['UniqueCount'];
-                                            $totalDelivered = $aStats['delivered']['UniqueCount'];
-                                            $totalOpen = $aStats['open']['UniqueCount'];
-                                            $totalClick = $aStats['click']['UniqueCount'];
-                                            $totalBounce = $aStats['bounce']['UniqueCount'];
-                                            $totalFailed = $aStats['dropped']['UniqueCount'];
-                                            $i++;
-                                            ?>
+<?php
+if (!empty($aBroadcastStats)) {
+    $i = -1;
+    foreach ($aBroadcastStats as $oCampaignStats) {
+        //pre($oCampaignStats);
+        //die;
+        $aStats = $oCampaignStats['statsData'];
+        $totalSent = $aStats['processed']['UniqueCount'];
+        $totalDelivered = $aStats['delivered']['UniqueCount'];
+        $totalOpen = $aStats['open']['UniqueCount'];
+        $totalClick = $aStats['click']['UniqueCount'];
+        $totalBounce = $aStats['bounce']['UniqueCount'];
+        $totalFailed = $aStats['dropped']['UniqueCount'];
+        $i++;
+        ?>
 
                                             <tr>
                                                 <td>
@@ -346,8 +358,8 @@
                                                     </div>
                                                     <div class="media-left">
                                                         <div class="pt-5"><a href="#" class="text-default txt_dgrey text-semibold">
-                                                                <?php if ($sendingMethod == 'split'): ?>
-                                                                    <?php echo ($oCampaignStats['variationData']->variation_name) ? $oCampaignStats['variationData']->variation_name : 'Variation '. $aSequence[$i]; ?>
+        <?php if ($sendingMethod == 'split'): ?>
+                                                                    <?php echo ($oCampaignStats['variationData']->variation_name) ? $oCampaignStats['variationData']->variation_name : 'Variation ' . $aSequence[$i]; ?>
                                                                 <?php else: ?>
                                                                     <?php echo ($oBroadcast->title) ? $oBroadcast->title : 'Unnamed Campaign'; ?>
                                                                 <?php endif; ?>
@@ -356,7 +368,7 @@
                                                     </div>
                                                 </td>
 
-                                                <?php if ($sendingMethod == 'split'): ?>
+        <?php if ($sendingMethod == 'split'): ?>
                                                     <td class="text-center"><span class="txt_dgrey"><?php echo $oCampaignStats['variationData']->split_load; ?>%</span></td>
                                                 <?php endif; ?>
                                                 <td class="text-center"><span class="txt_dgrey"><?php echo $totalSent; ?></span></td>
@@ -370,10 +382,10 @@
 
 
                                             </tr>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
+        <?php
+    }
+}
+?>
 
 
                                 </tbody>
@@ -457,8 +469,8 @@
                 colors: ['#2eb4dd', '#bce4f1', '#bce4f1', '#910000'],
                 innerSize: '85%',
                 data: [
-                    ['Sent', <?php echo ($sent>0) ? '100' : '0';?>],
-                    ['Not Sent', <?php echo ($sent>0) ? '0' : '100';?>],
+                    ['Sent', <?php echo ($sent > 0) ? '100' : '0'; ?>],
+                    ['Not Sent', <?php echo ($sent > 0) ? '0' : '100'; ?>],
 
                     {
                         name: 'Others',
@@ -570,3 +582,4 @@
     });
 </script>
 
+@endsection

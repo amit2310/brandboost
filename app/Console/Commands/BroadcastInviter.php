@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Admin\Crons\ManagerModel;
-use App\Models\Admin\Crons\EmailModel;
+use App\Models\Admin\Crons\BroadcastModel;
 use App\Models\Admin\UsersModel;
 
 class BroadcastInviter extends Command {
@@ -50,7 +50,7 @@ class BroadcastInviter extends Command {
         $this->from_email = 'request@brandboost.io';
         $this->client_from_email = '';
         $this->testing = false;
-        $this->testCampaignId = '192';
+        $this->testCampaignId = '208';
     }
 
     /**
@@ -66,13 +66,13 @@ class BroadcastInviter extends Command {
 
         //Check Cron Lock
         $bLocked = false;
-        
+
         //Instanciate cron manager model to access its properties and methods
         $mCron = new ManagerModel();
-        
+
         //Instanciate Email Model to access its properties and methods
-        $mInviter = new EmailModel();
-        
+        $mInviter = new BroadcastModel();
+
         $oCron = $mCron->checkCronStatus('broadcast');
 
         if ($oCron->locked == true) {
@@ -88,7 +88,7 @@ class BroadcastInviter extends Command {
             die("Currently cron is locked!!");
         }
 
-        $aEvents = $this->mInviter->getInviterEvents();
+        $aEvents = $mInviter->getInviterEvents();
         //pre($aEvents);
         //die;
 
@@ -96,21 +96,23 @@ class BroadcastInviter extends Command {
             foreach ($aEvents as $aEvent) {
                 $bActiveSubsription = false;
                 $automationID = $aEvent->automation_id;
-                $userID = $aEvent->client_id;
-                if ($userID > 0) {
-                    $bActiveSubsription = $this->mUser->isActiveSubscription($userID);
-                    if ($bActiveSubsription == true) {
-                        //echo $automationID.'<br>';
-                        /* if($automationID != '35') {
-                          continue;
-                          } */
+                if ($automationID == 208) {
+                    $userID = $aEvent->client_id;
+                    if ($userID > 0) {
+                        $bActiveSubsription = UsersModel::isActiveSubscription($userID);
+                        if ($bActiveSubsription == true) {
+                            //echo $automationID.'<br>';
+                            /* if($automationID != '35') {
+                              continue;
+                              } */
 
-                        $inviterID = $aEvent->id;
-                        $eventType = $aEvent->event_type;
-                        $previousEventID = $aEvent->previous_event_id;
+                            $inviterID = $aEvent->id;
+                            $eventType = $aEvent->event_type;
+                            $previousEventID = $aEvent->previous_event_id;
 
-                        if ($eventType == 'broadcast') {
-                            $this->processSpecificDateTime($aEvent);
+                            if ($eventType == 'broadcast') {
+                                $this->processSpecificDateTime($aEvent);
+                            }
                         }
                     }
                 }
@@ -119,11 +121,17 @@ class BroadcastInviter extends Command {
 
         //Release Cron
         $mCron->releaseCron('broadcast');
-        echo "<br>=========================<br>";
-        print("Script Ended");
+        echo "\n=========================\n";
+        print("Script Ended\n");
     }
 
+    /**
+     * 
+     * @param type $aEvent
+     */
     public function processSpecificDateTime($aEvent = array()) {
+        //Instanciate Email Model to access its properties and methods
+        $mInviter = new BroadcastModel();
 
         if (!empty($aEvent)) {
             $automationID = $aEvent->automation_id;
@@ -139,7 +147,7 @@ class BroadcastInviter extends Command {
             //$timeNow = strtotime(date("h:i A"));
             $timeNow = strtotime($estTime);
 
-            $endTime = $deliverAt + 1800;  //Valid for next 30 minutes after the delivery date
+            $endTime = $deliverAt + 7200;  //Valid for next 30 minutes after the delivery date
 
 
             if ($this->testing == true) {
@@ -149,16 +157,16 @@ class BroadcastInviter extends Command {
 
             if ($automationID == $this->testCampaignId) {
                 echo "Deliver Date " . date("Y-m-d H:i:s", $deliverAt);
-                echo "<br> Time Now " . date("Y-m-d H:i:s", $timeNow);
+                echo "\n Time Now " . date("Y-m-d H:i:s", $timeNow);
             }
 
             if ($timeNow >= $deliverAt && $timeNow <= $endTime) {
                 //if (1) {
 
-                $oSubscribers = $this->mInviter->getInviterEligibleSubscribers($automationID);
+                $oSubscribers = $mInviter->getInviterEligibleSubscribers($automationID);
 
 
-                $aProcessedSubscribers = $this->mInviter->getTriggeredSubscribers($inviterID);
+                $aProcessedSubscribers = $mInviter->getTriggeredSubscribers($inviterID);
 
                 if ($automationID == $this->testCampaignId) {
                     echo "I am in";
@@ -193,21 +201,21 @@ class BroadcastInviter extends Command {
         }
     }
 
+    /**
+     * 
+     * @param type $aData
+     */
     public function fireAutomationCampaign($aData = array()) {
+        //Instanciate Email Model to access its properties and methods
+        $mInviter = new BroadcastModel();
+
         $oEvent = $aData['inviter_data'];
         $broadcastID = $oEvent->automation_id;
         $inviterID = $oEvent->id;
-        $eventType = $oEvent->event_type;
-        $previousEventID = $oEvent->previous_event_id;
-        $clientID = $oEvent->client_id;
-        $aSubscribers = $aData['subscribers'];
 
         //Get owner information
         $this->client_from_email = '';
-        $clientFirstName = $oEvent->client_first_name;
-        $clientLastName = $oEvent->client_last_name;
         $clientEmail = $oEvent->client_email;
-        $clientPhone = $oEvent->client_phone;
 
         if (!empty($clientEmail)) {
             $this->client_from_email = $clientEmail;
@@ -218,7 +226,7 @@ class BroadcastInviter extends Command {
         }
         if ($broadcastID > 0) {
             //get More info about broadcast campaign
-            $oBroadcast = $this->mInviter->getBroadcast($broadcastID);
+            $oBroadcast = $mInviter->getBroadcast($broadcastID);
             if (!empty($oBroadcast)) {
                 $sendingMethod = $oBroadcast->sending_method;
                 $broadcastStatus = $oBroadcast->status;
@@ -230,10 +238,10 @@ class BroadcastInviter extends Command {
                 if ($broadcastStatus == 'active') {
                     if ($isSplit == true) {
                         //echo "In Split";
-                        $aCampaigns = $this->mInviter->getBroadcastSplitCampaign($inviterID);
+                        $aCampaigns = $mInviter->getBroadcastSplitCampaign($inviterID);
                     } else {
                         //echo "In Normal";
-                        $aCampaigns = $this->mInviter->getBroadcastCampaign($inviterID);
+                        $aCampaigns = $mInviter->getBroadcastCampaign($inviterID);
                     }
 
 
@@ -259,21 +267,24 @@ class BroadcastInviter extends Command {
         }
     }
 
+    /**
+     * 
+     * @param type $aData
+     * @param type $aCampaigns
+     */
     public function sendNormalCampaigns($aData = array(), $aCampaigns) {
+
         $oEvent = $aData['inviter_data'];
         $broadcastID = $oEvent->automation_id;
         $inviterID = $oEvent->id;
-        $eventType = $oEvent->event_type;
         $previousEventID = $oEvent->previous_event_id;
         $clientID = $oEvent->client_id;
         $aSubscribers = $aData['subscribers'];
         //pre($aCampaigns);
         //Get owner information
         $this->client_from_email = '';
-        $clientFirstName = $oEvent->client_first_name;
-        $clientLastName = $oEvent->client_last_name;
         $clientEmail = $oEvent->client_email;
-        $clientPhone = $oEvent->client_phone;
+
 
         if (!empty($clientEmail)) {
             $this->client_from_email = $clientEmail;
@@ -332,21 +343,22 @@ class BroadcastInviter extends Command {
         }
     }
 
+    /**
+     * 
+     * @param type $aData
+     * @param type $aCampaigns
+     */
     public function sendSplitCampaigns($aData = array(), $aCampaigns) {
         $oEvent = $aData['inviter_data'];
         $broadcastID = $oEvent->automation_id;
         $inviterID = $oEvent->id;
-        $eventType = $oEvent->event_type;
         $previousEventID = $oEvent->previous_event_id;
         $clientID = $oEvent->client_id;
         $aSubscribers = $aData['subscribers'];
         $totalSubscribers = count($aSubscribers);
         //Get owner information
         $this->client_from_email = '';
-        $clientFirstName = $oEvent->client_first_name;
-        $clientLastName = $oEvent->client_last_name;
         $clientEmail = $oEvent->client_email;
-        $clientPhone = $oEvent->client_phone;
 
         if (!empty($clientEmail)) {
             $this->client_from_email = $clientEmail;
@@ -384,7 +396,7 @@ class BroadcastInviter extends Command {
                 $lastCampaignID = end($aCampaignIDs);
                 foreach ($aSubscribers as $oSubscriber) {
                     //echo "<br>Yes I am going to process a Subscriber with {$oSubscriber->email}";
-                    $aSplitData = $this->getNextSplitCampaign($aFinalCampaigns, $aCampaignIDs, $campaignIndex, $aProcessedSubscribersCount);
+                    $aSplitData = $this->getNextSplitCampaign($aFinalCampaigns, $aCampaignIDs, $campaignIndex, '');
                     //pre($aSplitData);
                     //die;
                     if (!empty($aSplitData)) {
@@ -434,6 +446,7 @@ class BroadcastInviter extends Command {
                             $content = str_replace('<br/>', "\n", $content);
                             $content = str_replace('<br />', "\n", $content);
                             $content = strip_tags(nl2br($content));
+                            $fromNumber = $this->defaultTwilioDetails['from_number'];
                             $aSmsData = array(
                                 'from_number' => $fromNumber, //We need this from client twillio phone number
                                 'content' => $content,
@@ -455,16 +468,24 @@ class BroadcastInviter extends Command {
                         $campaignIndex = ($currentCampaignID == $lastCampaignID) ? 0 : $campIndex + 1;
                         $totalProcessed = $camptotalProcessed + 1;
                         //echo "Total Processed ". $totalProcessed;
-                        $aProcessedSubscribersCount[$currentCampaignID] = $totalProcessed;
+                        //$aProcessedSubscribersCount[$currentCampaignID] = $totalProcessed;
                         //pre($aProcessedSubscribersCount);
                     } else {
-                        echo "<br>Split Array is blank";
+                        echo "\nSplit Array is blank";
                     }
                 }
             }
         }
     }
 
+    /**
+     * 
+     * @param type $aFinalCampaigns
+     * @param type $aCampaignIDs
+     * @param type $campaignIndex
+     * @param type $aProcessedSubscribersCount
+     * @return type
+     */
     public function getNextSplitCampaign($aFinalCampaigns, $aCampaignIDs, $campaignIndex, $aProcessedSubscribersCount) {
         $lastCampaignID = end($aCampaignIDs);
         $currentCampaignID = $aCampaignIDs[$campaignIndex];
@@ -473,8 +494,11 @@ class BroadcastInviter extends Command {
           echo "<br>Current Campaign ID =". $currentCampaignID;
           echo "<br>INdex now = $campaignIndex" ; */
         $allowedMaximumSubscribers = $aVariationInfo['variationSubscribersCount'];
-
-        $totalProcessed = count($aProcessedSubscribersCount[$currentCampaignID]);
+        $totalProcessed = 0;
+        if(!empty($currentCampaignID) && !empty($aProcessedSubscribersCount)){
+            $totalProcessed = count($aProcessedSubscribersCount[$currentCampaignID]);
+        }
+        
         //echo "<br>Allowed Maximum Subscribers" . $allowedMaximumSubscribers . " And Total Processsed" . $totalProcessed;
         if ($allowedMaximumSubscribers > 0) {
             if ($totalProcessed < $allowedMaximumSubscribers) {
@@ -507,7 +531,16 @@ class BroadcastInviter extends Command {
         }
     }
 
+    /**
+     * 
+     * @param type $oSubscriber
+     * @param type $aData
+     */
     public function sendBroadcastEmail($oSubscriber, $aData) {
+        //Instanciate Email Model to access its properties and methods
+        $mInviter = new BroadcastModel();
+
+
         $content = $aData['content'];
         $fromEmail = $aData['from'];
         $subject = $aData['subject'];
@@ -518,7 +551,7 @@ class BroadcastInviter extends Command {
         $sendingMethod = ($aData['sending_method'] == 'split') ? 'split' : 'normal';
 
         if (!empty($oSubscriber)) {
-            //$userCurrentUsage = $this->mInviter->getCurrentUsage($clientID);
+            //$userCurrentUsage = $mInviter->getCurrentUsage($clientID);
             //if ($userCurrentUsage->email_balance > 0 || $userCurrentUsage->email_balance_topup > 0) {
             $emailContent = $content;
             $messageID = $this->generateMessageId();
@@ -534,10 +567,11 @@ class BroadcastInviter extends Command {
             $aTrackSetttings['module_name'] = $aData['module_name'];
             $aTrackSetttings['sending_method'] = $sendingMethod;
             //Replace Tags
-            $contentReplaced = $this->mInviter->emailTagReplace($aData['broadcast_id'], $emailContent, 'email', $oSubscriber);
+            $contentReplaced = $mInviter->emailTagReplace($aData['broadcast_id'], $emailContent, 'email', $oSubscriber);
             //echo "Content is ". $content;
             $msg = '';
             $msg = $this->prepareHtmlContent($contentReplaced, $messageID, $aTrackSetttings);
+
             //pre($aData);
             //echo $msg;
 
@@ -556,7 +590,6 @@ class BroadcastInviter extends Command {
                 'subscriber_id' => $oSubscriber->id,
                 'preceded_by' => $aData['previous_event_id'],
                 'message_id' => $messageID,
-                'sending_server_id' => $currentServerID,
                 'client_id' => $clientID,
                 'module_name' => $aData['module_name'],
                 'moduleName' => $aData['module_name'],
@@ -568,13 +601,13 @@ class BroadcastInviter extends Command {
             );
             if ($this->enableQueue == true) {
                 //Add email in the queue
-                $this->mInviter->saveInviterQueue($aEmailData);
+                $mInviter->saveInviterQueue($aEmailData);
             } else {
                 //Send email now
                 pre($aEmailData);
                 //die;
                 //Okay final check if campaign sent to the subscriber or not
-                $bCampaignAlreadySent = $this->mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->id, 'subs_email', $oSubscriber->email);
+                $bCampaignAlreadySent = $mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->id, 'subs_email', $oSubscriber->email);
                 $bSkipped = false;
                 if ($bCampaignAlreadySent == true) {
                     $bEmailSent = true;
@@ -587,7 +620,7 @@ class BroadcastInviter extends Command {
 
                 if ($bEmailSent == true && $bSkipped == false) {
                     //Track Record
-                    echo "<br> Email sent successfully";
+                    echo "\n Email sent successfully";
                     $aLogData = array(
                         'inviter_id' => $aData['inviter_id'],
                         'subscriber_id' => $oSubscriber->id,
@@ -595,7 +628,6 @@ class BroadcastInviter extends Command {
                         'message_id' => $messageID,
                         'campaign_id' => $aData['campaign_id'],
                         'sending_method' => $sendingMethod,
-                        'sending_server_id' => $currentServerID,
                         'type' => 'email',
                         'subs_email' => $oSubscriber->email,
                         'subs_phone' => $oSubscriber->phone
@@ -618,14 +650,22 @@ class BroadcastInviter extends Command {
         }
     }
 
+    /**
+     * 
+     * @param type $oSubscriber
+     * @param type $aData
+     */
     public function sendBroadcastSms($oSubscriber, $aData) {
+        //Instanciate Email Model to access its properties and methods
+        $mInviter = new BroadcastModel();
+
         $content = $aData['content'];
         $fromNumber = $aData['from_number'];
         $clientID = $aData['client_id'];
         $sendingMethod = ($aData['sending_method'] == 'split') ? 'split' : 'normal';
         if (!empty($oSubscriber)) {
-            $smsContent = $this->mInviter->emailTagReplace($aData['broadcast_id'], $content, 'sms', $oSubscriber);
-            //$userCurrentUsage = $this->mInviter->getCurrentUsage($clientID);
+            $smsContent = $mInviter->emailTagReplace($aData['broadcast_id'], $content, 'sms', $oSubscriber);
+            //$userCurrentUsage = $mInviter->getCurrentUsage($clientID);
             //if ($userCurrentUsage->sms_balance > 0 || $userCurrentUsage->sms_balance_topup > 0) {
             $messageID = $this->generateMessageId();
             $toNumber = $oSubscriber->phone;
@@ -647,11 +687,11 @@ class BroadcastInviter extends Command {
                 'created' => date("Y-m-d H:i:s")
             );
             if ($this->enableQueue == true) {
-                $this->mInviter->saveInviterQueue($aSmsData);
+                $mInviter->saveInviterQueue($aSmsData);
             } else {
                 //Send SMS now
                 $bSmsSent = false;
-                $bCampaignAlreadySent = $this->mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->id, 'subs_phone', $oSubscriber->phone);
+                $bCampaignAlreadySent = $mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->id, 'subs_phone', $oSubscriber->phone);
                 $bSkipped = false;
                 if ($bCampaignAlreadySent == true) {
                     $bSmsSent = true;
@@ -670,7 +710,6 @@ class BroadcastInviter extends Command {
                         'message_id' => $messageID,
                         'campaign_id' => $aData['campaign_id'],
                         'sending_method' => $sendingMethod,
-                        'sending_server_id' => $currentServerID,
                         'type' => 'sms',
                         'subs_email' => $oSubscriber->email,
                         'subs_phone' => $oSubscriber->phone
@@ -704,7 +743,16 @@ class BroadcastInviter extends Command {
         }
     }
 
+    /**
+     * 
+     * @param type $oSubscribers
+     * @param type $aData
+     */
     public function sendBulkBroadcastEmail($oSubscribers, $aData) {
+        //Instanciate Email Model to access its properties and methods
+        $mInviter = new BroadcastModel();
+
+
         $content = $aData['content'];
         $fromEmail = $aData['from'];
         $subject = $aData['subject'];
@@ -719,7 +767,7 @@ class BroadcastInviter extends Command {
 
         if (!empty($oSubscribers)) {
             foreach ($oSubscribers as $oSubscriber) {
-                //$userCurrentUsage = $this->mInviter->getCurrentUsage($clientID);
+                //$userCurrentUsage = $mInviter->getCurrentUsage($clientID);
                 //if ($userCurrentUsage->email_balance > 0 || $userCurrentUsage->email_balance_topup > 0) {
                 $emailContent = $content;
                 $messageID = $this->generateMessageId();
@@ -734,7 +782,7 @@ class BroadcastInviter extends Command {
                 $aTrackSetttings['client_id'] = $clientID;
                 $aTrackSetttings['module_name'] = $aData['module_name'];
                 //Replace Tags
-                $contentReplaced = $this->mInviter->emailTagReplace($aData['broadcast_id'], $emailContent, 'email', $oSubscriber);
+                $contentReplaced = $mInviter->emailTagReplace($aData['broadcast_id'], $emailContent, 'email', $oSubscriber);
                 //echo "Content is ". $content;
                 $msg = '';
                 $msg = $this->prepareHtmlContent($contentReplaced, $messageID, $aTrackSetttings);
@@ -756,7 +804,6 @@ class BroadcastInviter extends Command {
                     'subscriber_id' => $oSubscriber->id,
                     'preceded_by' => $aData['previous_event_id'],
                     'message_id' => $messageID,
-                    'sending_server_id' => $currentServerID,
                     'client_id' => $clientID,
                     'module_name' => $aData['module_name'],
                     'moduleName' => $aData['module_name'],
@@ -767,13 +814,13 @@ class BroadcastInviter extends Command {
                 );
                 if ($this->enableQueue == true) {
                     //Add email in the queue
-                    $this->mInviter->saveInviterQueue($aEmailData);
+                    $mInviter->saveInviterQueue($aEmailData);
                 } else {
                     //Send email now
                     //pre($aEmailData);
                     //die;
                     //Okay final check if campaign sent to the subscriber or not
-                    $bCampaignAlreadySent = $this->mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->id, 'subs_email', $oSubscriber->email);
+                    $bCampaignAlreadySent = $mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->id, 'subs_email', $oSubscriber->email);
                     $bSkipped = false;
                     if ($bCampaignAlreadySent == true) {
                         $bEmailSent = true;
@@ -784,14 +831,13 @@ class BroadcastInviter extends Command {
 
                     if ($bEmailSent == true && $bSkipped == false) {
                         //Track Record
-                        echo "<br> Email sent successfully";
+                        echo "\n Email sent successfully";
                         $aLogData = array(
                             'inviter_id' => $aData['inviter_id'],
                             'subscriber_id' => $oSubscriber->id,
                             'preceded_by' => $aData['previous_event_id'],
                             'message_id' => $messageID,
                             'campaign_id' => $aData['campaign_id'],
-                            'sending_server_id' => $currentServerID,
                             'type' => 'email',
                             'subs_email' => $oSubscriber->email,
                             'subs_phone' => $oSubscriber->phone
@@ -815,15 +861,23 @@ class BroadcastInviter extends Command {
         }
     }
 
+    /**
+     * 
+     * @param type $oSubscribers
+     * @param type $aData
+     */
     public function sendBulkBroadcastSms($oSubscribers, $aData) {
+        //Instanciate Email Model to access its properties and methods
+        $mInviter = new BroadcastModel();
+
         $content = $aData['content'];
         $fromNumber = $aData['from_number'];
         $clientID = $aData['client_id'];
         if (!empty($oSubscribers)) {
             foreach ($oSubscribers as $oSubscriber) {
 
-                $smsContent = $this->mInviter->emailTagReplace($aData['broadcast_id'], $content, 'sms', $oSubscriber);
-                //$userCurrentUsage = $this->mInviter->getCurrentUsage($clientID);
+                $smsContent = $mInviter->emailTagReplace($aData['broadcast_id'], $content, 'sms', $oSubscriber);
+                //$userCurrentUsage = $mInviter->getCurrentUsage($clientID);
                 //if ($userCurrentUsage->sms_balance > 0 || $userCurrentUsage->sms_balance_topup > 0) {
                 $messageID = $this->generateMessageId();
                 $toNumber = $oSubscriber->phone;
@@ -844,11 +898,11 @@ class BroadcastInviter extends Command {
                     'created' => date("Y-m-d H:i:s")
                 );
                 if ($this->enableQueue == true) {
-                    $this->mInviter->saveInviterQueue($aSmsData);
+                    $mInviter->saveInviterQueue($aSmsData);
                 } else {
                     //Send SMS now
                     $bSmsSent = false;
-                    $bCampaignAlreadySent = $this->mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->id, 'subs_phone', $oSubscriber->phone);
+                    $bCampaignAlreadySent = $mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->id, 'subs_phone', $oSubscriber->phone);
                     $bSkipped = false;
                     if ($bCampaignAlreadySent == true) {
                         $bSmsSent = true;
@@ -866,7 +920,6 @@ class BroadcastInviter extends Command {
                             'preceded_by' => $aData['previous_event_id'],
                             'message_id' => $messageID,
                             'campaign_id' => $aData['campaign_id'],
-                            'sending_server_id' => $currentServerID,
                             'type' => 'sms',
                             'subs_email' => $oSubscriber->email,
                             'subs_phone' => $oSubscriber->phone
@@ -901,7 +954,14 @@ class BroadcastInviter extends Command {
         }
     }
 
+    /**
+     * 
+     * @param type $aData
+     */
     public function saveLog($aData) {
+        //Instanciate Email Model to access its properties and methods
+        $mInviter = new BroadcastModel();
+
         $timeNow = date("Y-m-d H:i:s");
         $insertID = 0;
         if (!empty($aData)) {
@@ -912,7 +972,7 @@ class BroadcastInviter extends Command {
                 'start_at' => $timeNow,
                 'created_at' => $timeNow
             );
-            $insertID = $this->mInviter->saveTriggerData($aTriggerData); //Trigger table
+            $insertID = $mInviter->saveTriggerData($aTriggerData); //Trigger table
         }
 
         //Track Log
@@ -921,16 +981,23 @@ class BroadcastInviter extends Command {
             'message_id' => $aData['message_id'],
             'subscriber_id' => $aData['subscriber_id'],
             'campaign_id' => $aData['campaign_id'],
-            'sending_method' => $aData['sending_method'],
+            'sending_method' => isset($aData['sending_method']) ? $aData['sending_method'] : 'normal' ,
             'auto_trigger_id' => $insertID,
             'status' => 'sent',
             'subs_email' => $aData['subs_email'],
             'subs_phone' => $aData['subs_phone'],
             'created_at' => date("Y-m-d H:i:s"),
         );
-        $this->mInviter->saveSendingLog($aTrackData);
+        $mInviter->saveSendingLog($aTrackData);
     }
 
+    /**
+     * 
+     * @param type $sMessage
+     * @param type $msgID
+     * @param type $aTrackSettings
+     * @return type
+     */
     public function prepareHtmlContent($sMessage, $msgID, $aTrackSettings) {
 
         $sMessage = $this->addClickTrackingUrl($sMessage, $msgID, $aTrackSettings);
@@ -939,6 +1006,13 @@ class BroadcastInviter extends Command {
         return $sMessage;
     }
 
+    /**
+     * 
+     * @param type $content
+     * @param type $msgId
+     * @param type $aSettingsData
+     * @return type
+     */
     function addClickTrackingUrl($content, $msgId, $aSettingsData = array()) {
         if (preg_match_all('/<a[^>]*href=["\'](?<url>http[^"\']*)["\']/i', $content, $matches)) {
             foreach ($matches[0] as $key => $href) {
@@ -952,7 +1026,7 @@ class BroadcastInviter extends Command {
                     $broadcastID = $aSettingsData['broadcast_id'];
                     $clientID = $aSettingsData['client_id'];
                     $moduleName = $aSettingsData['module_name'];
-                    $sendingMethod = $aSettingsData['sending_method'];
+                    $sendingMethod = !empty($aSettingsData['sending_method']) ? $aSettingsData['sending_method'] : '';
                     $additionalParams = '';
                     if ($userID > 0) {
                         $additionalParams .= '&uid=' . $userID;
@@ -989,31 +1063,55 @@ class BroadcastInviter extends Command {
         return $content;
     }
 
+    /**
+     * 
+     * @param type $content
+     * @param type $msgId
+     * @param type $aSettingsData
+     * @return type
+     */
     public function addOpenTrackingUrl($content, $msgId, $aSettingsData = array()) {
 
-        $sendingMethod = $aSettingsData['sending_method'];
-        $sendingMethod = ($sendingMethod) ? $sendingMethod : 'normal';
-
-
-
-
+        $sendingMethod = isset($aSettingsData['sending_method']) ? $aSettingsData['sending_method'] : 'normal';
 
         $trackOpenUrl = $this->trackServer . '/broadcast_track.php?open_track=true&msgid=' . $this->base64UrlEncode($msgId) . '&sm=' . $sendingMethod;
         return $content . '<img src="' . $trackOpenUrl . '" width="0" height="0" alt="" style="visibility:hidden" />';
     }
 
+    /**
+     * 
+     * @return type
+     */
     public function generateMessageId() {
         return time() . rand(100000, 999999) . '.' . uniqid();
     }
 
+    /**
+     * 
+     * @param type $val
+     * @return type
+     */
     public function base64UrlEncode($val) {
         return strtr(base64_encode($val), '+/=', '-_,');
     }
 
+    /**
+     * 
+     * @param type $val
+     * @return type
+     */
     public function base64UrlDecode($val) {
         return base64_decode(strtr($val, '-_,', '+/='));
     }
 
+    /**
+     * 
+     * @param type $delayType
+     * @param type $delayUnit
+     * @param type $delayValue
+     * @param type $sourceTime
+     * @return int
+     */
     public function simplifiedTime($delayType, $delayUnit, $delayValue, $sourceTime) {
         switch ($delayUnit) {
             case "minute":
@@ -1049,7 +1147,15 @@ class BroadcastInviter extends Command {
         return $simplifiedTime;
     }
 
+    /**
+     * 
+     * @param type $aData
+     * @return boolean
+     */
     public function SG_smtp($aData) {
+        //Instanciate Email Model to access its properties and methods
+        $mInviter = new BroadcastModel();
+
         //pre($aData);
         //For now use detault sendgrid account
         if ($this->use_default_accounts == true) {
@@ -1060,7 +1166,7 @@ class BroadcastInviter extends Command {
             $port = $aSendgridData['port'];
             $type = $aSendgridData['type'];
         } else {
-            $aSendgridData = $this->mInviter->getSendgridAccount($aData['client_id']);
+            $aSendgridData = $mInviter->getSendgridAccount($aData['client_id']);
             $user = $aSendgridData->sg_username;
             $password = $aSendgridData->sg_password;
             $host = 'smtp.sendgrid.net';
@@ -1078,9 +1184,7 @@ class BroadcastInviter extends Command {
         $moduleUnitID = base64_url_encode($aData['moduleUnitId']);
         $subscriberID = base64_url_encode($aData['subscriber_id']);
         $globalSubscriberID = base64_url_encode($aData['globalSubscriberId']);
-        $sendingMethod = $aData['sending_method'];
-
-        $sendingMethod = ($sendingMethod) ? $sendingMethod : 'normal';
+        $sendingMethod = isset($aData['sending_method']) ? $aData['sending_method'] : 'normal';        
 
         $aFooterTags = array('{{MODULENAME}}', '{{MODULEUNITID}}', '{{SUBSCRIBERID}}', '{{GLOBALSUBSCRIBERID}}');
         $aFooterTagValues = array($moduleName, $moduleUnitID, $subscriberID, $globalSubscriberID);
@@ -1120,7 +1224,7 @@ class BroadcastInviter extends Command {
             'api_user' => $user,
             'api_key' => $password,
             'to' => $aData['to'],
-            'subject' => ($aData['subject']) ? $aData['subject'] : $this->config->item('blank_subject'),
+            'subject' => ($aData['subject']) ? $aData['subject'] : config('bbconfig.blank_subject'),
             'html' => $emailContent,
             'text' => $plainText,
             'from' => $aData['from_entity'],
@@ -1161,7 +1265,15 @@ class BroadcastInviter extends Command {
         }
     }
 
+    /**
+     * 
+     * @param type $aData
+     * @return boolean
+     */
     public function send_Twilio($aData) {
+        //Instanciate Email Model to access its properties and methods
+        $mInviter = new BroadcastModel();
+
 
         if ($this->use_default_accounts == true) {
             $aTwilioData = $this->defaultTwilioDetails;
@@ -1169,7 +1281,7 @@ class BroadcastInviter extends Command {
             $token = $aTwilioData['token'];
             $from = $aData['from_entity'];
         } else {
-            $aTwilioAc = $this->mInviter->getTwilioAccount($aData['client_id']);
+            $aTwilioAc = $mInviter->getTwilioAccount($aData['client_id']);
             $sid = $aTwilioAc->account_sid;
             $token = $aTwilioAc->account_token;
             $from = $aTwilioAc->contact_no;
@@ -1219,7 +1331,7 @@ class BroadcastInviter extends Command {
             $qs .= '&bb_sending_method=' . $sendingMethod;
         }
 
-        $smsTrackURL = $this->config->item('sms_track_url');
+        $smsTrackURL = config('bbconfig.sms_track_url');
 
         if (!empty($smsTrackURL)) {
             $smsTrackURL = $smsTrackURL . $qs;

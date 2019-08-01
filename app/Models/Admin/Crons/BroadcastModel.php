@@ -3,6 +3,7 @@
 namespace App\Models\Admin\Crons;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class BroadcastModel extends Model {
 

@@ -77,7 +77,7 @@ if ($activeTab == 'Design Template Edit') {
         <?php
         if (strtolower($oBroadcast->campaign_type) == 'email') { ?>
 
-            @include('admin.broadcast.tabs.template_design_beta', ['activeDesign' => $activeDesign]))
+            @include('admin.broadcast.tabs.template_design_beta', ['activeDesign' => $activeDesign])
         <?php
         } else { ?>
             @include('admin.broadcast.tabs.template_design_sms', ['activeDesign' => $activeDesign])
