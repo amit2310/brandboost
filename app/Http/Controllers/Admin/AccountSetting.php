@@ -13,6 +13,7 @@ use App\Models\Admin\TeamModel;
 use Illuminate\Support\Facades\Input;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\LoginModel;
+use App\Models\Admin\AccountsModel;
 use Session;
 
 
@@ -236,6 +237,116 @@ class AccountSetting extends Controller
         echo json_encode($response);
         exit;
 
+    }
+
+    /**
+     * This function usage
+     * @return type object
+     */
+    public function usage() {
+        $mAccounts = new AccountsModel();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $oUsages = $mAccounts->getUsage($userID);
+        $oTeam = $mAccounts->getAllTeamMembers($userID);
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs">Accounts </a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Account Usages" class="sidebar-control active hidden-xs ">Credit Usages</a></li>
+                    </ul>';
+
+        $aData = array(
+            'title' => 'Account Usage Report',
+            'pagename' => $breadcrumb,
+            'oUsages' => $oUsages,
+            'oUser' => $aUser,
+            'oTeam' => $oTeam
+        );
+
+        return view('admin.accounts.index', $aData);
+    }
+
+    /**
+     * This function usage info
+     * @return type object
+     */
+    public function usageInfo() {
+
+        $mAccounts = new AccountsModel();
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        $post = Input::post();
+        if (empty($post)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $usageID = strip_tags($post['id']);
+
+        $oUsage = $mAccounts->getUsageDetails($usageID, $userID);
+        $mediaType = '';
+        $mediaExt = '';
+        $encodedContent = base64_decode($oUsage->content);
+        $msgExplode = explode('/', $encodedContent);
+        if(count($msgExplode) > 6 && count($msgExplode) == 10) {
+            $mm_id = $msgExplode[7];
+            $msg_sid = $msgExplode[9];
+            $oTwilioDetails = getTwilioAccount($oUsage->spend_to);
+
+            $sid = $oTwilioDetails->account_sid;
+            $token = $oTwilioDetails->account_token;
+            $client = new Client($sid, $token);
+            $media = $client->messages($mm_id)
+                    ->media($msg_sid)
+                    ->fetch();
+            $contentExplode = explode('/', $media->contentType);
+            $mediaType = $contentExplode[0];
+            $mediaExt = $contentExplode[1];
+        }
+        
+        
+        $usagetype = ucfirst($oUsage->usage_type);
+        $spentto = (strtolower($usagetype) == 'sms' || strtolower($usagetype) == 'mms') ? phoneNoFormat($oUsage->spend_to) : $oUsage->spend_to;
+        $chargedcredits = $oUsage->balance_deducted;
+        $chargedate = dataFormat($oUsage->created);
+        $moduleName = $oUsage->module_name;
+        $moduleUnitID = $oUsage->module_unit_id;
+        $campaignTitle = '';
+        $campaignLink = '';
+        if(!empty($moduleName) && !empty($moduleUnitID)){
+            $oCampaign = $this->mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
+            if($moduleName == 'onsite' || $moduleName == 'offsite' || $moduleName == 'brandboost'){
+                $campaignTitle = $oCampaign->brand_title;
+                $campaignLink = base_url()."admin/brandboost/details/".$moduleUnitID;
+                
+            }else if($moduleName == 'autoamtion' || $moduleName == 'broadcast' || $moduleName == 'nps' || $moduleName == 'referral'){
+                $campaignTitle = $oCampaign->title;
+                if($moduleName == 'automation'){
+                    $campaignLink = base_url()."admin/modules/emails/setupAutomation/".$moduleUnitID;
+                }else if($moduleName == 'broadcast'){
+                    $campaignLink = base_url()."admin/broadcast/edit/".$moduleUnitID;
+                }else if($moduleName == 'nps'){
+                    $campaignLink = base_url()."admin/modules/nps/setup/".$moduleUnitID;
+                }else if($moduleName == 'referral'){
+                    $campaignLink = base_url()."admin/modules/referral/setup/".$moduleUnitID;
+                }
+                
+                
+            }
+        }
+        
+        $preparedCampaignLink = (!empty($campaignLink)) ? '<a href="'.$campaignLink.'" target="_blank">'.$campaignTitle.'</a>' : $campaignTitle;
+        
+        $response = array('status' => 'success', 'content'=> $encodedContent,  'usagetype'=> $usagetype, 'spentto'=>$spentto,  'chargedate' => $chargedate, 'chargedcredits'=>$chargedcredits, 'usagemodulename'=> $moduleName, 'usagecampaignLink' => $preparedCampaignLink, 'msg' => "Record deleted successfully!","mediaType" => $mediaType, 'mediaExt'=>$mediaExt);
+
+        echo json_encode($response);
+        exit;
     }
 
 }
