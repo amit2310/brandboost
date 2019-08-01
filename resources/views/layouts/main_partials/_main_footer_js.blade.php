@@ -138,7 +138,11 @@
         $.ajax({
             url: "{{ URL::asset('admin/subscriber/getSubscriberDetail') }}",
             type: "POST",
-            data: {module_name: module_name, module_subscriber_id: module_subscriber_id},
+            data: {
+                    module_name: module_name, 
+                    module_subscriber_id: module_subscriber_id,
+                    _token: "<?php echo csrf_token(); ?>"
+                },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -173,7 +177,7 @@
         $.ajax({
             url: "{{ URL::asset('admin/subscriber/getSubscriberDetail') }}",
             type: "POST",
-            data: {module_name: module_name, module_subscriber_id: module_subscriber_id},
+            data: {module_name: module_name, module_subscriber_id: module_subscriber_id, _token: "<?php echo csrf_token(); ?>"},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -209,7 +213,7 @@
         $.ajax({
             url: "{{ URL::asset('admin/subscriber/getSubscriberDetail') }}",
             type: "POST",
-            data: {module_name: module_name, module_subscriber_id: module_subscriber_id},
+            data: {module_name: module_name, module_subscriber_id: module_subscriber_id, _token: "<?php echo csrf_token(); ?>"},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -245,6 +249,7 @@
         e.preventDefault();
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
+        formData.append('_token', '<?php echo csrf_token(); ?>');
         $.ajax({
             url: "{{ URL::asset('admin/subscriber/updateSubscriberDetails') }}",
             type: "POST",

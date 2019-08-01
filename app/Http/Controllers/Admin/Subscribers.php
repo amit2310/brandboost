@@ -101,13 +101,14 @@ class Subscribers extends Controller {
      */
     public function getSubscriberDetail() {
         $response = array();
-        $post = $this->input->post();
+        $mSubscriber = new SubscriberModel();
+        $post = Input::post();
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $moduleName = strip_tags($post['module_name']);
         $moduleSubscriberID = strip_tags($post['module_subscriber_id']);
 
-        $oContactsDetail = $this->mSubscriber->getModuleSubscriberInfo($moduleName, $moduleSubscriberID);
+        $oContactsDetail = $mSubscriber->getModuleSubscriberInfo($moduleName, $moduleSubscriberID);
 
 
         if (!empty($oContactsDetail)) {
@@ -187,7 +188,7 @@ class Subscribers extends Controller {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
+        $post = Input::post();
 
         $firstName = strip_tags($post['edit_firstname']);
         $lastName = strip_tags($post['edit_lastname']);
@@ -209,7 +210,7 @@ class Subscribers extends Controller {
         $bInsertedNewGlobalSubscriber = false;
 
         if (!empty($email)) {
-            $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
+            $oGlobalUser = SubscriberModel::checkIfGlobalSubscriberExists($userID, 'email', $email);
             if (!empty($oGlobalUser)) {
                 $iSubscriberID = $oGlobalUser->id;
                 $aGlobalUserData = array(
@@ -231,7 +232,7 @@ class Subscribers extends Controller {
                     'updated' => date("Y-m-d H:i:s")
                 );
 
-                $this->mSubscriber->updateGlobalSubscriber($aGlobalUserData, $iSubscriberID);
+                $mSubscriber->updateGlobalSubscriber($aGlobalUserData, $iSubscriberID);
                 $response = array('status' => 'success', 'msg' => "Subscriber updated successfully!");
             } else {
                 //Add global subscriber

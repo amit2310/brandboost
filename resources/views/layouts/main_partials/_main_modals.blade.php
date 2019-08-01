@@ -985,8 +985,8 @@
                                 <label class="control-label">Gender</label>
                                 <div class="">
                                     <select class="form-control h52" name="edit_gender" id="edit_gender">
-                                        <option>Select Gender</option>
-                                        <option value="male">Male</option>
+                                        <option value="">Select Gender</option>
+                                        <option value="male" selected="selected">Male</option>
                                         <option value="female">Female</option>
                                     </select>
                                 </div>
