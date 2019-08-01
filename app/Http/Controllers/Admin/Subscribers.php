@@ -884,7 +884,6 @@ class Subscribers extends Controller {
             $aData = array(
                 'status' => 1
             );
-
             $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
         }
 
