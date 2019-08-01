@@ -1064,11 +1064,24 @@
                                             $totalFeedbackNum = $positive + $nutral + $negetive;
 
 
+                                           
+                                            if(!empty($oProgram->NPS[0])) {
+                                                $score = ($oProgram->NPS[0]->score) ? '<a target="_blank" href="'.base_url('admin/modules/nps/score/' . $oProgram->hashcode).'">'.$oProgram->NPS[0]->score * 10 .'</a>' : displayNoData();
+                                            }
+                                            else {
+                                                $score = '';
+                                            }
 
-                                            //$score = ($oProgram->NPS[0]->score) ? '<a target="_blank" href="'.base_url('admin/modules/nps/score/' . $oProgram->hashcode).'">'.$oProgram->NPS[0]->score * 10 .'</a>' : displayNoData();
-                                            //$aScoreSummery = $this->mNPS->getNPSScoreSummery($oProgram->hashcode);
-                                            //$score = number_format($aScoreSummery['NPSScore'], 1);
-                                            $score = '';
+                                            $aScoreSummery = App\Models\Admin\Modules\NpsModel::getNPSScoreSummery($oProgram->hashcode);
+                                           
+                                            if($aScoreSummery['NPSScore'] > 0) {
+                                                $score = number_format($aScoreSummery['NPSScore'], 1);
+                                            }
+                                            else {
+                                                $score = 0;
+                                            }
+                                            
+                                           
                                             //pre($oProgram);
                                             if ($oProgram->status != 'archive') {
                                                 ?>
