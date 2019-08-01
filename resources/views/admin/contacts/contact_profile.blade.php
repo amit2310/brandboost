@@ -1047,7 +1047,7 @@
                                             $negetive = 0;
                                             $totalFeedbackNum = 0;
                                             $hashcode = $oProgram->hashcode;
-                                            $oContactsT = $this->mNPS->getMyUsers($hashcode);
+                                            //$oContactsT = $this->mNPS->getMyUsers($hashcode);
                                             $totalFeedback = $oProgram->NPS;
                                             //pre($totalFeedback);
                                             foreach ($totalFeedback as $value) {
@@ -1066,8 +1066,9 @@
 
 
                                             //$score = ($oProgram->NPS[0]->score) ? '<a target="_blank" href="'.base_url('admin/modules/nps/score/' . $oProgram->hashcode).'">'.$oProgram->NPS[0]->score * 10 .'</a>' : displayNoData();
-                                            $aScoreSummery = $this->mNPS->getNPSScoreSummery($oProgram->hashcode);
-                                            $score = number_format($aScoreSummery['NPSScore'], 1);
+                                            //$aScoreSummery = $this->mNPS->getNPSScoreSummery($oProgram->hashcode);
+                                            //$score = number_format($aScoreSummery['NPSScore'], 1);
+                                            $score = '';
                                             //pre($oProgram);
                                             if ($oProgram->status != 'archive') {
                                                 ?>
@@ -1229,7 +1230,17 @@
                                                                     echo $icon;
                                                                     ?> 
                                                             </div>
-                                                            <div class="text-muted text-size-small"><?php echo $totalFeedback->firstname; ?> <?php echo $totalFeedback->lastname; ?></div>
+                                                            <div class="text-muted text-size-small">
+                                                            <?php if(!empty($totalFeedback)) {
+                                                                if(!empty($totalFeedback->firstname)) {
+                                                                    echo $totalFeedback->firstname;
+                                                                }
+                                                                if(!empty($totalFeedback->lastname)) {
+                                                                    echo $totalFeedback->lastname;
+                                                                }
+                                                             ?>
+                                                            <?php } ?>
+                                                            </div>
                                                         </div>
                                                     </td>
 
