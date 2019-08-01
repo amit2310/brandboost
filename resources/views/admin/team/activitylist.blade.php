@@ -240,6 +240,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmEditTeamMember" name="frmEditTeamMember">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Edit Team Member</h5>
@@ -311,7 +312,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmaddTeamMemberModal" id="frmaddTeamMemberModal" action="javascript:void();">
-                <div class="modal-header">
+                {{ csrf_field() }}
+                    <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add Team Member</h5>
                 </div>
@@ -395,7 +397,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/team/getTeamMember'); ?>',
                 type: "POST",
-                data: {'member_id': memberID},
+                data: {'member_id': memberID,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 					$('.overlaynew').hide();
@@ -460,7 +462,7 @@
 					$.ajax({
 						url: '<?php echo base_url('admin/team/deleteTeamMember'); ?>',
 						type: "POST",
-						data: {member_id: memberID},
+						data: {member_id: memberID,_token: '{{csrf_token()}}'},
 						dataType: "json",
 						success: function (data) {
 							$('.overlaynew').hide();
