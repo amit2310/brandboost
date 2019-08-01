@@ -35,33 +35,46 @@ class NpsModel extends Model {
      */
     public function getNpsLists($userID) {
         $aData =  DB::table('tbl_nps_main')
-        ->select('tbl_nps_main.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
-        ->join('tbl_users', 'tbl_nps_main.user_id','=','tbl_users.id')
-        ->where('tbl_nps_main.user_id', $userID)
-        ->get();
+			->select('tbl_nps_main.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
+			->join('tbl_users', 'tbl_nps_main.user_id','=','tbl_users.id')
+			->where('tbl_nps_main.user_id', $userID)
+			->get();
         
         return $aData;
     }
 	
 	/**
-     * Used to get nps widget list by user id
-     * @param type $userID
+     * Used to get my user by survey info
+     * @param type $accountID
      * @return type
      */
 	public static function getMyUsers($accountID) {
-        $oNPS = $this->getSurveyInfoByRef($accountID);
+        $oNPS = self::getSurveyInfoByRef($accountID);
+		
         $npsID = $oNPS->id;
         if ($npsID > 0) {
-            $this->db->select("tbl_nps_campaign_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.status AS globalStatus, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id");
-            $this->db->join("tbl_subscribers", "tbl_nps_campaign_users.subscriber_id=tbl_subscribers.id", "LEFT");
-            $this->db->where("tbl_nps_campaign_users.nps_id", $npsID);
-            $result = $this->db->get("tbl_nps_campaign_users");
-            if ($result->num_rows() > 0) {
-                $response = $result->result();
-            }
-        }
-
-        return $response;
+			$aData =  DB::table('tbl_nps_campaign_users')
+				->select('tbl_nps_campaign_users.*', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.facebook_profile', 'tbl_subscribers.twitter_profile', 'tbl_subscribers.linkedin_profile', 'tbl_subscribers.instagram_profile', 'tbl_subscribers.socialProfile', 'tbl_subscribers.id AS global_user_id')
+				->join('tbl_subscribers', 'tbl_nps_campaign_users.subscriber_id','=','tbl_subscribers.id')
+				->where('tbl_nps_campaign_users.nps_id', $npsID)
+				->get();
+			
+			return $aData;
+		}
+    }
+	
+	/**
+     * Used to get survey info by refKey
+     * @param type $refKey
+     * @return type
+     */
+	public static function getSurveyInfoByRef($refKey) {
+		$aData =  DB::table('tbl_nps_main')
+			->where('hashcode', $refKey)
+			->first();
+        
+        return $aData;
+		
     }
 
     public function getNpsListsByDate($userID) {
@@ -350,14 +363,7 @@ class NpsModel extends Model {
         }
     }
 
-    public function getSurveyInfoByRef($refKey) {
-        $this->db->where("hashcode", $refKey);
-        $result = $this->db->get("tbl_nps_main");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
+    
 
     public function updateSurveyFeedback($aData, $id) {
         $this->db->where("id", $id);

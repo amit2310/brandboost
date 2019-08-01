@@ -234,7 +234,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/setOnsiteWidget'); ?>',
                 type: "POST",
-                data: {widgetTypeID: widgetTypeID, widgetID: '<?php echo $widgetData->id; ?>'},
+                data: {widgetTypeID: widgetTypeID, widgetID: '<?php echo $widgetData->id; ?>', _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -302,7 +302,7 @@
 			$.ajax({
                 url: '<?php echo base_url('admin/brandboost/setOnsiteWidget'); ?>',
                 type: "POST",
-                data: {widgetTypeID: widgetTypeID, widgetID: '<?php echo $widgetData->id; ?>'},
+                data: {widgetTypeID: widgetTypeID, widgetID: '<?php echo $widgetData->id; ?>', _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

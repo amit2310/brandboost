@@ -1,10 +1,3 @@
-@extends('layouts.main_template') 
-
-@section('title')
-<?php echo $title; ?>
-@endsection
-
-@section('contents')
 <?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign'); ?>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <?php
@@ -151,22 +144,28 @@
 			}
 		}
 		
-		$totalRecords = count($oStats);
-		$totalViews = count($aViews);
-		$totalClicks = count($aClicks);
-		$totalComments = count($aComments);
-		$totalHelpful = count($aHelpful);
+		//$totalRecords = count($oStats);
+		//$totalViews = count($aViews);
+		//$totalClicks = count($aClicks);
+		//$totalComments = count($aComments);
+		//$totalHelpful = count($aHelpful);
 		//$totalToday = count($aViewsToday) + count($aClicksToday) + count($aCommentsToday) + count($aHelpfulToday);
 		//$totalYesterday = count($aViewsYesterday) + count($aClicksYesterday) + count($aCommentsYesterday) + count($aHelpfulYesterday);
 		//$totalWeek = count($aViewsWeek) + count($aClicksWeek) + count($aCommentsWeek) + count($aHelpfulWeek);
 		//$totalMonth = count($aViewsMonth) + count($aClicksMonth) + count($aCommentsMonth) + count($aHelpfulMonth);
 		//$total3Month = count($aViews3Months) + count($aClicks3Months) + count($aComments3Months) + count($aHelpful3Months);
+		
+		$totalRecords = 1;
+		$totalViews = 1;
+		$totalClicks = 1;
+		$totalComments = 1;
+		$totalHelpful = 1;
+		
 		$totalToday = 1;
 		$totalYesterday = 1;
 		$totalWeek = 1;
 		$totalMonth = 1;
 		$total3Month = 1;
-		$StatsClass = 'active';
 	}
 ?>
 <div class="tab-pane <?php echo $StatsClass; ?>" id="right-icon-tab4">
@@ -348,8 +347,8 @@
 								<div class="row">
 									<div class="col-xs-12">
 										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aClicks)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aClicks) / count($oStats)) * 100), 1) ?>%</p>
+										<h1 class="m0"><?php //echo number_format(count($aClicks)); ?></h1>
+										<p class="txt_teal"><?php //echo number_format(((count($aClicks) / count($oStats)) * 100), 1) ?>%</p>
 									</div>
 								</div>
 							</div>
@@ -369,8 +368,8 @@
 								<div class="row">
 									<div class="col-xs-12">
 										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aComments)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aComments) / count($oStats)) * 100), 1) ?>%</p>
+										<h1 class="m0"><?php //echo number_format(count($aComments)); ?></h1>
+										<p class="txt_teal"><?php //echo number_format(((count($aComments) / count($oStats)) * 100), 1) ?>%</p>
 									</div>
 								</div>
 							</div>
@@ -391,8 +390,8 @@
 								<div class="row">
 									<div class="col-xs-12">
 										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_green.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aHelpful)); ?></h1>
-										<p class="txt_green"><?php echo number_format(((count($aHelpful) / count($oStats)) * 100), 1) ?>%</p>
+										<h1 class="m0"><?php //echo number_format(count($aHelpful)); ?></h1>
+										<p class="txt_green"><?php //echo number_format(((count($aHelpful) / count($oStats)) * 100), 1) ?>%</p>
 									</div>
 								</div>
 							</div>
@@ -3306,5 +3305,4 @@
 			}]
 		}
 	});
-</script>  
-@endsection
+</script>

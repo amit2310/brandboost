@@ -55,8 +55,6 @@ Route::get('admin/brandboost/widget_overview','Admin\Brandboost@widgetOverview')
 Route::get('admin/brandboost/widgets','Admin\Brandboost@widgets');
 Route::post('reviews/saveNewReview','Reviews@saveNewReview');
 Route::post('admin/brandboost/switchTemplate','Admin\Brandboost@switchTemplate');
-
-
 Route::post('admin/brandboost/campaignPreferences','Admin\Brandboost@campaignPreferences');
 Route::post('admin/brandboost/add_offsite_edit','Admin\Brandboost@addOffsiteEdit');
 Route::post('admin/brandboost/add_offsite_resources','Admin\Brandboost@addOffsiteResources');
@@ -64,6 +62,16 @@ Route::post('admin/brandboost/add_offsite_url','Admin\Brandboost@addOffsiteUrl')
 Route::post('admin/brandboost/continueStepOffsite','Admin\Brandboost@continueStepOffsite');
 Route::post('admin/brandboost/update_subscriber_status','Admin\Brandboost@updateSubscriberStatus');
 Route::post('admin/brandboost/deleteRRrecord','Admin\Brandboost@deleteRRrecord');
+Route::get('admin/brandboost/onsite_widget_setup/{id}','Admin\Brandboost@onsiteWidgetSetup');
+Route::post('admin/brandboost/setOnsiteWidget','Admin\Brandboost@setOnsiteWidget');
+Route::post('admin/brandboost/addBrandBoostWidgetData','Admin\Brandboost@addBrandBoostWidgetData');
+Route::post('admin/brandboost/savePreviewData','Admin\Brandboost@savePreviewData');
+Route::post('admin/brandboost/addBrandBoostWidgetDesign','Admin\Brandboost@addBrandBoostWidgetDesign');
+Route::post('admin/brandboost/addBrandBoostWidgetCampaign','Admin\Brandboost@addBrandBoostWidgetCampaign');
+
+
+
+Route::post('dropzone/upload_image','Dropzone\@upload_image');
 
 
 Route::post('admin/reviews/updateReviewStatus','Admin\Reviews@updateReviewStatus');
