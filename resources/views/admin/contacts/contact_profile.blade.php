@@ -728,7 +728,7 @@
                                     <div class="media-left media-middle"> <a style="cursor: text;">
                                             <img src="<?php echo base_url(); ?>assets/images/<?php echo $smileyImage; ?>.png" class="img-circle img-xs" alt=""></a> </div>
                                     <div class="media-left">
-                                        <div class=""><a style="cursor: text;" class="text-default text-semibold"><?php  if(!empty($rating)) { echo $rating; } ?></a>
+                                        <div class=""><a style="cursor: text;" class="text-default text-semibold"><?php  //if(!empty($rating)) { echo $rating; } ?></a>
                                         </div>
                                         <div class="text-muted text-size-small"><?php echo $getFeedback[0]->category; ?></div>
                                     </div>
