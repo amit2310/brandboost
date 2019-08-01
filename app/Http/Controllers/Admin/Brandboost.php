@@ -174,8 +174,8 @@ class Brandboost extends Controller {
 	*/
 	public function onsiteSetup(Request $request) {
 		$brandboostID = $request->id;
-        $selectedTab = Input::get("t"); //$this->input->get('t');
-        $selectedCategory = Input::get("cate"); //$this->input->get('cate');
+        $selectedTab = Input::get("t");
+        $selectedCategory = Input::get("cate");
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 		
@@ -188,16 +188,18 @@ class Brandboost extends Controller {
 		//$mInviter = new InviterModel();
 
         if (!empty($selectedTab)) {
-            if (in_array($selectedTab, ['Review Sources', 'Campaign Preferences', 'Rewards & Gifts', 'Configure Widgets', 'Email Workflow', 'Campaign Clients', 'Reviews', 'Integration', 'Image', 'Video'])) {
+            if (in_array($selectedTab, ['Campaign Preferences', 'Review Sources', 'Rewards & Gifts', 'Configure Widgets', 'Email Workflow', 'Campaign Clients', 'Reviews', 'Integration', 'Image', 'Video'])) {
                 //set required session
-                //$this->session->set_userdata("setTab", $selectedTab);
+                Session::put("setTab", $selectedTab);
             }
         } else {
             $setTab = Session::get("setTab");
             if ($setTab == '') {
-                //Session::set("setTab", 'Campaign Preferences');
+                Session::put("setTab", 'Campaign Preferences');
             }
         }
+		
+		Session::put("setTab", 'Campaign Preferences');
 
         if (empty($brandboostID)) {
             redirect("admin/brandboost/onsite");
@@ -206,11 +208,7 @@ class Brandboost extends Controller {
 
         $bbProductsData = $mBrandboost->getProductData($brandboostID);
         $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
-
-        if (empty($getBrandboost) || $getBrandboost[0]->user_id != $userID) {
-            redirect("admin/brandboost/onsite");
-            exit;
-        }
+		
         $getBrandboostFR = $mFeedback->getFeedbackResponse($brandboostID);
         $moduleName = 'brandboost';
         $moduleUnitID = '';
@@ -1677,8 +1675,32 @@ class Brandboost extends Controller {
         exit;
     }
 	
-	
-	
+	/**
+	* Used to publish onsite brandboost status
+	* @return type
+	*/
+	public function publishOnsiteStatusBB() {
+
+        $response = array();
+        $brandboostID = Input::post('brandboostID');
+        $status = Input::post('status');
+		
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        if (!empty($brandboostID)) {
+            $aData = array(
+                'status' => $status,
+            );
+
+            $result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
+			
+            $response['status'] = 'success';
+        }
+
+        echo json_encode($response);
+        exit;
+    }
 	
 	
 	
@@ -4088,36 +4110,6 @@ class Brandboost extends Controller {
         if (!empty($brandboostID)) {
             $aData = array(
                 'status' => 1,
-            );
-
-            $result = $this->mBrandboost->update($userID, $aData, $brandboostID);
-            if ($result) {
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function publishOnsiteStatusBB() {
-
-        $response = array();
-
-        $post = $this->input->post();
-
-        //$brandboostID = $this->session->userdata('brandboostID');
-        $brandboostID = strip_tags($post['brandboostID']);
-        $status = $post['status'];
-        //$userID = $this->session->userdata("current_user_id");
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-
-        if (!empty($brandboostID)) {
-            $aData = array(
-                'status' => $status,
             );
 
             $result = $this->mBrandboost->update($userID, $aData, $brandboostID);

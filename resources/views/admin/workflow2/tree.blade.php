@@ -173,11 +173,16 @@ $aSelectedContacts = array();
                                             $currentID = $oEvent->id;
                                             $currentEventType = $oEvent->event_type;
                                             $currentEventIndex = array_keys($oEventsType, $currentEventType);
-                                            if (array_key_exists($currentEventIndex[0] + 1, $oEventsType)) {
-                                                $nextEventType = $oEventsType[$currentEventIndex[0] + 1];
-                                            } else {
-                                                $nextEventType = $currentEventType;
-                                            }
+                                            
+											if(!empty($currentEventIndex)){
+												if (array_key_exists($currentEventIndex[0] + 1, $oEventsType)) {
+													$nextEventType = $oEventsType[$currentEventIndex[0] + 1];
+												} else {
+													$nextEventType = $currentEventType;
+												}
+											}else{
+												$nextEventType = $currentEventType;
+											}
 
                                             if ($oCampaign->id != '') {
 
