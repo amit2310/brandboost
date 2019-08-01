@@ -279,7 +279,7 @@ if ($oUser->avatar == '') {
             $.ajax({
                 url: '<?php echo base_url('admin/accounts/usageInfo'); ?>',
                 type: "POST",
-                data: {id: id, _token: "<?php echo csrf_token(); ?>"},
+                data: {id: id, _token: "{{csrf_token()}}"},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
