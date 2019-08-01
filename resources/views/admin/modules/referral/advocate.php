@@ -280,7 +280,7 @@
                                                         }
                                                         ?>
 
-                                                        <li><a class="deleteModuleSubscriber" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" href="javascript:void(0);"><i class="icon-trash"></i> Delete</a></li>
+                                                        <li><a class="deleteModuleSubscriber" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" csrf_token="<?php echo csrf_token(); ?>" href="javascript:void(0);"><i class="icon-trash"></i> Delete</a></li>
                                                     </ul>
                                                 </div>
                                             </td>

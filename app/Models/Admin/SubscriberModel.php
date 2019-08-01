@@ -1411,7 +1411,6 @@ FROM
 
         if ($subscriberID > 0 && !empty($moduleName)) {
 
-
             if ($moduleName == 'automation' || $moduleName == 'broadcast' || $moduleName == 'list') {
                 $this->db->where("id", $subscriberID);
                 $bUpdated = $this->db->delete("tbl_automation_users");
@@ -1435,20 +1434,15 @@ FROM
                     $this->deleteModuleCampaignSubscriber($subscriberID, $moduleName, $moduleUnitID);
                 }
             } else if ($moduleName == 'people') {
-                //$this->db->where("account_id", $moduleUnitID);
-                $this->db->where("id", $subscriberID);
-                $bUpdated = $this->db->delete("tbl_subscribers");
+
+                DB::table('tbl_subscribers')->where('id', '=', $subscriberID)->delete();
             } else {
                 //Do nothing
             }
             //echo $this->db->last_query(); exit;
         }
-
-        if ($bUpdated) {
-            return true;
-        } else {
-            return false;
-        }
+        
+        return true;
     }
 
     public function deleteModuleCampaignSubscriber($subscriberID, $moduleName, $moduleUnitID) {
