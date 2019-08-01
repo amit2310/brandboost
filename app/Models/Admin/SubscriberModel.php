@@ -416,11 +416,7 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         $oData = DB::table('tbl_subscribers')
         ->where("id", $id)
          ->update($aData);
-        if ($result>-1) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -1110,6 +1106,7 @@ FROM
     }
 
     public function getModuleSubscriberInfo($moduleName, $moduleSubsID) {
+
         if ($moduleName == 'list') {
             $oDetails = $this->getListContactInfo($moduleSubsID);
         } else if ($moduleName == 'brandboost') {
