@@ -1858,6 +1858,263 @@ class Brandboost extends Controller {
 		exit;
     }
 	
+	/**
+	* Used to save onsite widget
+	* @return type
+	*/
+	public function addOnsiteWidget(Request $request) {
+
+        $response = array();
+        $post = array();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $user_role = $oUser->user_role;
+
+		$campaignName = $request->campaignName;
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$hashcode = '';
+		for ($i = 0; $i < 20; $i++) {
+			$hashcode .= $characters[rand(0, strlen($characters))];
+		}
+		$hashcode = $hashcode . date('Ymdhis');
+		$aData = array(
+			'review_type' => 'onsite',
+			'user_id' => $userID,
+			'widget_title' => $campaignName,
+			'status' => 0,
+			'hashcode' => md5($hashcode),
+			'created' => date("Y-m-d H:i:s")
+		);
+
+		$widgetID = BrandboostModel::addWidget($aData);
+
+		if ($widgetID) {
+
+			Session::put('widgetID', $widgetID);
+			$response['status'] = 'success';
+			$response['widgetID'] = $widgetID;
+
+			//Add userActivity
+			$aActivityData = array(
+				'user_id' => $userID,
+				'event_type' => 'brandboost_onsite_widget',
+				'action_name' => 'added_brandboost_widget',
+				'widget_id' => $widgetID,
+				'campaign_id' => '',
+				'inviter_id' => '',
+				'subscriber_id' => '',
+				'feedback_id' => '',
+				'activity_message' => 'New On Site Widget added',
+				'activity_created' => date("Y-m-d H:i:s")
+			);
+			logUserActivity($aActivityData);
+			//Notify about this to admin
+			$notificationData = array(
+				'event_type' => 'added_onsite_widget',
+				'event_id' => 0,
+				'link' => base_url() . 'admin/brandboost/onsite_widget_setup/' . $widgetID,
+				'message' => 'Created new on site widget.',
+				'user_id' => $userID,
+				'status' => 1,
+				'created' => date("Y-m-d H:i:s")
+			);
+			$eventName = 'added_onsite_widget';
+			add_notifications($notificationData, $eventName, $userID);
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
+	
+	/**
+	* Used to delete onsite widget
+	* @return type
+	*/
+	public function deleteBrandboostWidget(Request $request) {
+
+        $response = array();
+        $post = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+		$widgetID = $request->widget_id;
+
+		$aData = array(
+			'delete_status' => '1'
+		);
+
+		$result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+
+		if ($result) {
+			//Add Useractivity log
+
+			$aActivityData = array(
+				'user_id' => $userID,
+				'event_type' => 'brandboost_onsite_offsite',
+				'action_name' => 'deleted_widget',
+				'widget_id' => $widgetID,
+				'campaign_id' => '',
+				'inviter_id' => '',
+				'subscriber_id' => '',
+				'feedback_id' => '',
+				'activity_message' => 'Brandboost Widget Deleted',
+				'activity_created' => date("Y-m-d H:i:s")
+			);
+			logUserActivity($aActivityData);
+			$response['status'] = 'success';
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
+
+	/**
+	* Used to get onsite widget embedded code
+	* @return type
+	*/
+    public function getOnsiteWidgetEmbedCode(Request $request) {
+
+        $response = array();
+        $post = array();
+		$widgetID = $request->widget_id;
+
+		$result = BrandboostModel::getBBWidgets($widgetID);
+
+		if ($result) {
+			$response['status'] = 'success';
+			$campaign_key = $result[0]->hashcode;
+			$sWidget = $result[0]->widget_type;
+			$response['result'] = htmlentities('<script type="text/javascript" id="bbscriptloader" data-key="' . $campaign_key . '" data-widgets="' . $sWidget . '" async="" src="' . base_url('assets/js/widgets.js') . '"></script>');
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
+	
+	/**
+	* Used to update onsite widget status
+	* @return type
+	*/
+	public function updateOnsiteWidgetStatus(Request $request) {
+
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $widgetID = $request->widgetID;
+        $status = $request->status;
+        $aData = array(
+            'status' => $status,
+        );
+        $result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+        if ($result) {
+            $response = array('status' => 'success');
+        } else {
+            $response = array('status' => 'error');
+        }
+        echo json_encode($response);
+        exit;
+    }
+	
+	/**
+	* Used to update onsite widget as a archive
+	* @return type
+	*/
+	public function archiveMultipalBrandboostWidget(Request $request) {
+
+        $response = array();
+        $post = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+		$multi_widget_id = $request->multi_brandboost_widget_id;
+
+		$aData = array(
+			'status' => '3'
+		);
+
+		foreach ($multi_widget_id as $widgetID) {
+
+			$result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+
+			if ($result) {
+				//Add Useractivity log
+
+				$aActivityData = array(
+					'user_id' => $userID,
+					'event_type' => 'brandboost_onsite_offsite',
+					'action_name' => 'archive_brandboost_widget',
+					'widget_id' => $widgetID,
+					'campaign_id' => '',
+					'inviter_id' => '',
+					'subscriber_id' => '',
+					'feedback_id' => '',
+					'activity_message' => 'Brandboost Widget Archive',
+					'activity_created' => date("Y-m-d H:i:s")
+				);
+				logUserActivity($aActivityData);
+				$response['status'] = 'success';
+			} else {
+				$response['status'] = "Error";
+			}
+		}
+        
+        echo json_encode($response);
+        exit;
+    }
+	
+	/**
+	* Used to delete multiple onsite widget
+	* @return type
+	*/
+	public function deleteMultipalBrandboostWidget(Request $request) {
+
+        $response = array();
+        $post = array();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+		$multi_widget_id = $request->multi_widget_id;
+
+		$aData = array(
+			'delete_status' => '1'
+		);
+
+		foreach ($multi_widget_id as $widgetID) {
+
+			$result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+
+			if ($result) {
+				//Add User activity log
+
+				$aActivityData = array(
+					'user_id' => $userID,
+					'event_type' => 'brandboost_onsite_widget',
+					'action_name' => 'deleted_brandboost_widget',
+					'widget_id' => $widgetID,
+					'campaign_id' => '',
+					'inviter_id' => '',
+					'subscriber_id' => '',
+					'feedback_id' => '',
+					'activity_message' => 'Brandboost Widget Deleted',
+					'activity_created' => date("Y-m-d H:i:s")
+				);
+				logUserActivity($aActivityData);
+				$response['status'] = 'success';
+			} else {
+				$response['status'] = "Error";
+			}
+		}
+        
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	
+	
 	
 	
 	
@@ -2823,48 +3080,6 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template', 'admin/brandboost/edit_onsite', array('aBrandbosts' => $getBrandboost[0], 'brandId' => $brandId));
     }
 
-    public function onsite_step_2() {
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $breadcrumb = '<ul class="breadcrumb">
-			<li><a href="' . base_url('admin/') . '"><i class="icon-home2 position-left"></i> Home</a></li>
-			<li class="active">On Site Review Campaigns</li>
-            </ul>';
-        $this->template->load('admin/admin_template', 'admin/brandboost/onsite_step_2', array('title' => 'On Site Review Campaigns', 'pagename' => $breadcrumb, 'bActiveSubsription' => $bActiveSubsription));
-    }
-
-    public function onsite_step_3() {
-
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $brandId = $this->session->userdata('brandboostID');
-        $getBrandboost = $this->mBrandboost->getBrandboost($brandId);
-        $rating = $getBrandboost[0]->min_ratings_display;
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $this->template->load('admin/admin_template', 'admin/brandboost/onsite_step_3', array('rating' => $rating, 'bActiveSubsription' => $bActiveSubsription));
-    }
-
-    public function onsite_step_4() {
-
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $brandId = $this->session->userdata('brandboostID');
-        $getBrandboost = $this->mBrandboost->getBrandboost($brandId);
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-
-        $this->template->load('admin/admin_template', 'admin/brandboost/onsite_step_4', array('getBrandboost' => $getBrandboost[0], 'userID' => $userID, 'bActiveSubsription' => $bActiveSubsription));
-    }
-
-    public function onsite_step_5() {
-        $response = array();
-        $post = $this->input->post();
-        $userID = $this->session->userdata("current_user_id");
-        $brandId = $this->session->userdata('brandboostID');
-        $getBrandboost = $this->mBrandboost->getBrandboost($brandId);
-        $eventsdata = $this->mBrandboost->getBrandboostEvents($brandId);
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $this->template->load('admin/admin_template', 'admin/brandboost/onsite_step_5', array('brandboostData' => $getBrandboost[0], 'eventsData' => $eventsdata, 'bActiveSubsription' => $bActiveSubsription));
-    }
-
     public function onsite_allset() {
         $brandId = $this->session->userdata('brandboostID');
         $getBrandboost = $this->mBrandboost->getBrandboost($brandId);
@@ -2880,140 +3095,6 @@ class Brandboost extends Controller {
         $getBrandboost = $this->mBrandboost->getBrandboost($brandId);
         $bActiveSubsription = $this->mUser->isActiveSubscription();
         $this->template->load('admin/admin_template', 'admin/brandboost/reward_step_5a', array('rewardsData' => $rewardsData, 'brandboostData' => $getBrandboost[0], 'bActiveSubsription' => $bActiveSubsription));
-    }
-
-    public function add_step_3() {
-
-        $response = array();
-        $post = $this->input->post();
-        $brandboost_id = strip_tags($post['brandboost_id']);
-        $rating_limit = strip_tags($post['rating_limit']);
-        if ($brandboost_id > 0 && $rating_limit > 0) {
-            $result = $this->mBrandboost->updateStep3($brandboost_id, $rating_limit);
-            if ($result) {
-                $response = array('status' => 'ok');
-            } else {
-                $response = array('status' => 'error');
-            }
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function add_step_4() {
-
-        $response = array();
-        $post = $this->input->post();
-        $brandboost_id = strip_tags($post['brandboost_id']);
-        $tags_data = strip_tags($post['tags_data']);
-        if ($brandboost_id > 0) {
-            $result = $this->mBrandboost->updateStep4($brandboost_id, $tags_data);
-            if ($result) {
-                $response = array('status' => 'ok');
-            } else {
-                $response = array('status' => 'error');
-            }
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function add_step_5() {
-        $response = array();
-        $post = $this->input->post();
-        $userID = $this->session->userdata("current_user_id");
-        $brandId = $this->session->userdata('brandboostID');
-        if ($post) {
-
-            $delay_value = strip_tags($post['delay_value']);
-            $delay_unit = strip_tags($post['delay_unit']);
-            $welcome_event_id = strip_tags($post['welcome_event_id']);
-            if ($brandId) {
-
-                $dateTimeData = array("delay_type" => 'after', "delay_value" => $delay_value, "delay_unit" => $delay_unit);
-                $dateTimeData = json_encode($dateTimeData);
-                if ($welcome_event_id > 0) {
-                    $eData = array(
-                        'data' => $dateTimeData,
-                        'updated' => date("Y-m-d H:i:s")
-                    );
-                    $this->mBrandboost->updateEvent($eData, $welcome_event_id);
-                    $eventId = $welcome_event_id;
-                } else {
-                    $brandBoostData = $this->mBrandboost->getBrandboost($brandId);
-                    $brandBoostData = $brandBoostData[0];
-
-                    if ($brandBoostData->review_type == 'onsite') {
-                        /// create first email template Onsite invitation Email /////
-                        $eData = array(
-                            'brandboost_id' => $brandId,
-                            'event_type' => 'send-invite',
-                            'data' => $dateTimeData,
-                            'created' => date("Y-m-d H:i:s")
-                        );
-                        $emailTempalteID = 6;
-                        $eventId = $this->mBrandboost->addEvent($eData);
-                        $resultData = $this->mBrandboost->getAllCampaignTemplates($emailTempalteID);
-                        $resultData = $resultData[0];
-                        $aUser = getLoggedUser();
-                        if ($eventId) {
-                            $cData = array(
-                                'event_id' => $eventId,
-                                'content_type' => 'Regular',
-                                'campaign_type' => 'Email',
-                                'name' => $resultData->template_name,
-                                'subject' => $resultData->template_subject,
-                                'html' => $resultData->template_content,
-                                'template_source' => $emailTempalteID,
-                                'status' => 1,
-                                'from_email' => $aUser->email,
-                                'from_name' => $aUser->firstname . ' ' . $aUser->lastname,
-                                'reply_to' => $aUser->email,
-                                'created' => date("Y-m-d H:i:s")
-                            );
-                            $campaignId = $this->mBrandboost->addCampaign($cData);
-                        }
-                    } else {
-                        /// create first email template Onsite invitation Email /////
-                        $eData = array(
-                            'brandboost_id' => $brandId,
-                            'event_type' => 'send-invite',
-                            'data' => $dateTimeData,
-                            'created' => date("Y-m-d H:i:s")
-                        );
-                        $emailTempalteID = 7;
-                        $eventId = $this->mBrandboost->addEvent($eData);
-                        $resultData = $this->mBrandboost->getAllCampaignTemplates($emailTempalteID);
-                        $resultData = $resultData[0];
-                        $aUser = getLoggedUser();
-                        if ($eventId) {
-                            $cData = array(
-                                'event_id' => $eventId,
-                                'content_type' => 'Regular',
-                                'campaign_type' => 'Email',
-                                'name' => $resultData->template_name,
-                                'subject' => $resultData->template_subject,
-                                'html' => $resultData->template_content,
-                                'template_source' => $emailTempalteID,
-                                'status' => 1,
-                                'from_email' => $aUser->email,
-                                'from_name' => $aUser->firstname . ' ' . $aUser->lastname,
-                                'reply_to' => $aUser->email,
-                                'created' => date("Y-m-d H:i:s")
-                            );
-                            $campaignId = $this->mBrandboost->addCampaign($cData);
-                        }
-                    }
-                }
-                if ($eventId) {
-                    $response['status'] = 'success';
-                } else {
-                    $response['status'] = "Error";
-                }
-            }
-            echo json_encode($response);
-            exit;
-        }
     }
 
     public function addDefaultFollowupEvent($brandboostID, $type = 'main', $previousEventID = '', $addDefaultContent = true, $campaignType = 'Email') {
@@ -3754,27 +3835,6 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function updateOnsiteWidgetStatus() {
-
-        $response = array();
-        $post = $this->input->post();
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $widgetID = $post['widgetID'];
-        $status = $post['status'];
-        $aData = array(
-            'status' => $status,
-        );
-        $result = $this->mBrandboost->updateWidget($userID, $aData, $widgetID);
-        if ($result) {
-            $response = array('status' => 'success');
-        } else {
-            $response = array('status' => 'error');
-        }
-        echo json_encode($response);
-        exit;
-    }
-
     public function updateBrandBoost() {
 
         $aUser = getLoggedUser();
@@ -4479,74 +4539,6 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template', 'admin/brandboost/offsite_step_3', array('getOffsite' => $result, 'bActiveSubsription' => $bActiveSubsription));
     }
 
-    public function addOnsiteWidget() {
-
-        $response = array();
-        $post = array();
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-        $user_role = $oUser->user_role;
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $campaignName = $post['campaignName'];
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $hashcode = '';
-            for ($i = 0; $i < 20; $i++) {
-                $hashcode .= $characters[rand(0, strlen($characters))];
-            }
-            $hashcode = $hashcode . date('Ymdhis');
-            $aData = array(
-                'review_type' => 'onsite',
-                'user_id' => $userID,
-                'widget_title' => $campaignName,
-                'status' => 0,
-                'hashcode' => md5($hashcode),
-                'created' => date("Y-m-d H:i:s")
-            );
-
-            $widgetID = $this->mBrandboost->addWidget($aData);
-
-            if ($widgetID) {
-
-                $this->session->set_userdata('widgetID', $widgetID);
-                $response['status'] = 'success';
-                $response['widgetID'] = $widgetID;
-
-                //Add userActivity
-                $aActivityData = array(
-                    'user_id' => $userID,
-                    'event_type' => 'brandboost_onsite_widget',
-                    'action_name' => 'added_brandboost_widget',
-                    'widget_id' => $widgetID,
-                    'campaign_id' => '',
-                    'inviter_id' => '',
-                    'subscriber_id' => '',
-                    'feedback_id' => '',
-                    'activity_message' => 'New On Site Widget added',
-                    'activity_created' => date("Y-m-d H:i:s")
-                );
-                logUserActivity($aActivityData);
-                //Notify about this to admin
-                $notificationData = array(
-                    'event_type' => 'added_onsite_widget',
-                    'event_id' => 0,
-                    'link' => base_url() . 'admin/brandboost/onsite_widget_setup/' . $widgetID,
-                    'message' => 'Created new on site widget.',
-                    'user_id' => $userID,
-                    'status' => 1,
-                    'created' => date("Y-m-d H:i:s")
-                );
-                $eventName = 'added_onsite_widget';
-                add_notifications($notificationData, $eventName, $userID);
-            } else {
-                $response['status'] = "Error";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
-
     public function addOnsite() {
 
         $response = array();
@@ -4803,161 +4795,11 @@ class Brandboost extends Controller {
         }
     }
 
-    public function delete_multipal_brandboost_widget() {
+    
 
-        $response = array();
-        $post = array();
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-        //$userID = $this->session->userdata("current_user_id");
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $multi_widget_id = $post['multi_widget_id'];
+    
 
-            $aData = array(
-                'delete_status' => '1'
-            );
-
-            foreach ($multi_widget_id as $widgetID) {
-
-                $result = $this->mBrandboost->updateWidget($userID, $aData, $widgetID);
-
-                if ($result) {
-                    //Add User activity log
-
-                    $aActivityData = array(
-                        'user_id' => $userID,
-                        'event_type' => 'brandboost_onsite_widget',
-                        'action_name' => 'deleted_brandboost_widget',
-                        'widget_id' => $widgetID,
-                        'campaign_id' => '',
-                        'inviter_id' => '',
-                        'subscriber_id' => '',
-                        'feedback_id' => '',
-                        'activity_message' => 'Brandboost Widget Deleted',
-                        'activity_created' => date("Y-m-d H:i:s")
-                    );
-                    logUserActivity($aActivityData);
-                    $response['status'] = 'success';
-                } else {
-                    $response['status'] = "Error";
-                }
-            }
-        }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function archive_multipal_brandboost_widget() {
-
-        $response = array();
-        $post = array();
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $multi_widget_id = $post['multi_brandboost_widget_id'];
-
-            $aData = array(
-                'status' => '3'
-            );
-
-            foreach ($multi_widget_id as $widgetID) {
-
-                $result = $this->mBrandboost->updateWidget($userID, $aData, $widgetID);
-
-                if ($result) {
-                    //Add Useractivity log
-
-                    $aActivityData = array(
-                        'user_id' => $userID,
-                        'event_type' => 'brandboost_onsite_offsite',
-                        'action_name' => 'archive_brandboost_widget',
-                        'widget_id' => $widgetID,
-                        'campaign_id' => '',
-                        'inviter_id' => '',
-                        'subscriber_id' => '',
-                        'feedback_id' => '',
-                        'activity_message' => 'Brandboost Widget Archive',
-                        'activity_created' => date("Y-m-d H:i:s")
-                    );
-                    logUserActivity($aActivityData);
-                    $response['status'] = 'success';
-                } else {
-                    $response['status'] = "Error";
-                }
-            }
-        }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function delete_brandboost_widget() {
-
-        $response = array();
-        $post = array();
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        //$userID = $this->session->userdata("current_user_id");
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $widgetID = $post['widget_id'];
-
-            $aData = array(
-                'delete_status' => '1'
-            );
-
-            $result = $this->mBrandboost->updateWidget($userID, $aData, $widgetID);
-
-            if ($result) {
-                //Add Useractivity log
-
-                $aActivityData = array(
-                    'user_id' => $userID,
-                    'event_type' => 'brandboost_onsite_offsite',
-                    'action_name' => 'deleted_widget',
-                    'widget_id' => $widgetID,
-                    'campaign_id' => '',
-                    'inviter_id' => '',
-                    'subscriber_id' => '',
-                    'feedback_id' => '',
-                    'activity_message' => 'Brandboost Widget Deleted',
-                    'activity_created' => date("Y-m-d H:i:s")
-                );
-                logUserActivity($aActivityData);
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function getOnsiteWidgetEmbedCode() {
-
-        $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $widgetID = $post['widget_id'];
-
-            $result = $this->mBrandboost->getBBWidgets($widgetID);
-
-            if ($result) {
-                $response['status'] = 'success';
-                $campaign_key = $result[0]->hashcode;
-                $sWidget = $result[0]->widget_type;
-                $response['result'] = htmlentities('<script type="text/javascript" id="bbscriptloader" data-key="' . $campaign_key . '" data-widgets="' . $sWidget . '" async="" src="' . base_url('assets/js/widgets.js') . '"></script>');
-            } else {
-                $response['status'] = "Error";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
+    
 
     public function delete_multipal_brandboost() {
 

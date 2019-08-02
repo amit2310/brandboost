@@ -70,6 +70,12 @@ Route::post('admin/brandboost/addBrandBoostWidgetDesign','Admin\Brandboost@addBr
 Route::post('admin/brandboost/addBrandBoostWidgetCampaign','Admin\Brandboost@addBrandBoostWidgetCampaign');
 Route::post('admin/brandboost/publishOnsiteStatusBB','Admin\Brandboost@publishOnsiteStatusBB');
 Route::post('admin/brandboost/saveOnsitePreferences','Admin\Brandboost@saveOnsitePreferences');
+Route::post('admin/brandboost/addOnsiteWidget','Admin\Brandboost@addOnsiteWidget');
+Route::post('admin/brandboost/delete_brandboost_widget','Admin\Brandboost@deleteBrandboostWidget');
+Route::post('admin/brandboost/getOnsiteWidgetEmbedCode','Admin\Brandboost@getOnsiteWidgetEmbedCode');
+Route::post('admin/brandboost/updateOnsiteWidgetStatus','Admin\Brandboost@updateOnsiteWidgetStatus');
+Route::post('admin/brandboost/archive_multipal_brandboost_widget','Admin\Brandboost@archiveMultipalBrandboostWidget');
+Route::post('admin/brandboost/delete_multipal_brandboost_widget','Admin\Brandboost@deleteMultipalBrandboostWidget');
 
 
 Route::post('dropzone/upload_image','Dropzone\@upload_image');

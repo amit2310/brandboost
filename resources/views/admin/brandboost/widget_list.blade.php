@@ -882,7 +882,7 @@ $aHelpful2 = array();
 						$.ajax({
 							url: '<?php echo base_url('admin/brandboost/delete_multipal_brandboost_widget'); ?>',
 							type: "POST",
-							data: {multi_widget_id: val},
+							data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -970,7 +970,7 @@ $aHelpful2 = array();
 						$.ajax({
 							url: '<?php echo base_url('admin/brandboost/delete_multipal_brandboost_widget'); ?>',
 							type: "POST",
-							data: {multi_widget_id: val},
+							data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -1013,7 +1013,7 @@ $aHelpful2 = array();
 						$.ajax({
 							url: '<?php echo base_url('admin/brandboost/archive_multipal_brandboost_widget'); ?>',
 							type: "POST",
-							data: {multi_brandboost_widget_id: val},
+							data: {multi_brandboost_widget_id: val, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -1053,7 +1053,7 @@ $aHelpful2 = array();
 						$.ajax({
 							url: '<?php echo base_url('admin/brandboost/archive_multipal_brandboost_widget'); ?>',
 							type: "POST",
-							data: {multi_brandboost_widget_id: val},
+							data: {multi_brandboost_widget_id: val, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -1081,7 +1081,7 @@ $aHelpful2 = array();
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/addOnsiteWidget'); ?>',
                 type: "POST",
-                data: {'campaignName': campaignName},
+                data: {'campaignName': campaignName, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1102,7 +1102,7 @@ $aHelpful2 = array();
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/updateOnsiteWidgetStatus'); ?>',
                 type: "POST",
-                data: {'widgetID': widgetID, 'status': status},
+                data: {'widgetID': widgetID, 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1125,7 +1125,7 @@ $aHelpful2 = array();
 				$.ajax({
 					url: '<?php echo base_url('admin/brandboost/delete_brandboost_widget'); ?>',
 					type: "POST",
-					data: {widget_id: widgetID},
+					data: {widget_id: widgetID, _token: '{{csrf_token()}}'},
 					dataType: "json",
 					success: function (data) {
 						if (data.status == 'success') {
@@ -1142,7 +1142,7 @@ $aHelpful2 = array();
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/getOnsiteWidgetEmbedCode'); ?>',
                 type: "POST",
-                data: {widget_id: widgetID},
+                data: {widget_id: widgetID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
