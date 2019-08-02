@@ -1702,7 +1702,161 @@ class Brandboost extends Controller {
         exit;
     }
 	
-	
+	/**
+	* Used to save onsite preference
+	* @return type
+	*/
+	public function saveOnsitePreferences(Request $request) {
+
+        $response = array();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+		
+		$brandboostID = $request->brandboostId;
+		$review_expire = $request->review_expire;
+		$review_expire_link = $request->review_expire_link;
+
+		$productName = $request->brand_product_name;
+		$productDesc = $request->brand_product_desc;
+		$productImg = $request->product_img;
+		$productType = $request->product_type;
+		$productId = $request->product_id;
+		$pData = array();
+
+		if (!empty($productName)) {
+			$pData['brandboost_id'] = $brandboostID;
+			$pData['user_id'] = $userID;
+			foreach ($productName as $key => $productData) {
+				if ($productData != '') {
+					$bbProductsData = BrandboostModel::getProductDataByOrder($brandboostID, $key);
+					$pData['product_name'] = $productData;
+					$pData['product_description'] = $productDesc[$key];
+					$pData['product_image'] = $productImg[$key];
+					$pData['product_type'] = $productType[$key];
+					$pData['product_order'] = $key;
+					if ($productId[$key] == '') {
+						if (!empty($bbProductsData)) {
+							BrandboostModel::updateProductData($pData, $brandboostID, $key);
+						} else {
+							BrandboostModel::insertProductData($pData);
+						}
+					} else {
+						BrandboostModel::updateProductByProductId($pData, $brandboostID, $productId[$key]);
+					}
+				}
+			}
+		}
+
+
+		$revExpireLink = array();
+		if ($review_expire_link == 'custom') {
+
+			$txtInteger = $request->txtInteger;
+			$exp_duration = $request->exp_duration;
+			$revExpireLink['delay_value'] = $txtInteger;
+			$revExpireLink['delay_unit'] = $exp_duration;
+		} else {
+
+			$revExpireLink['delay_value'] = 'never';
+			$revExpireLink['delay_unit'] = 'never';
+		}
+		$aData = array(
+			'link_expire_review' => $review_expire,
+			'link_expire_custom' => json_encode($revExpireLink)
+		);
+
+		$result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
+
+		// Update a image
+
+		$title = $request->title;
+		$desc = $request->desc;
+		$domainName = $request->domain_name;
+		$barndFileData = $request->brand_img;
+		$brandFileArray = array();
+
+		foreach ($barndFileData['media_url'] as $key => $fileData) {
+			$brandFileArray[$key]['media_url'] = $fileData;
+			$brandFileArray[$key]['media_type'] = $barndFileData['media_type'][$key];
+		}
+
+		$logoImageFileName = $request->logo_img == '' ? $request->edit_logo_img : $request->logo_img;
+		$brandImageFileName = empty($request->brand_img) ? $request->edit_brand_img : serialize($brandFileArray);
+
+		$aDataBrandboost = array(
+			'user_id' => $userID,
+			'brand_title' => $title,
+			'brand_desc' => $desc,
+			'domain_name' => $domainName,
+			'brand_img' => $brandImageFileName,
+			'logo_img' => $logoImageFileName
+		);
+		$result = BrandboostModel::updateBrandBoost($userID, $aDataBrandboost, $brandboostID);
+
+		// Update image
+
+
+		$feedback_type = $request->feedback_type;
+		$ratings_type = $request->ratings_type;
+		$from_name = $request->from_name;
+		$from_email = $request->from_email;
+		$sender_name = $request->sender_name;
+		$offsite_url = $request->offsite_url;
+		$positive_title = $request->positive_title;
+		$positive_subtitle = $request->positive_subtitle;
+		$negetive_title = $request->negetive_title;
+		$negetive_subtitle = $request->negetive_subtitle;
+		$neutral_title = $request->neutral_title;
+		$neutral_subtitle = $request->neutral_subtitle;
+
+		$feedbackData = array(
+			'brandboost_id' => $brandboostID,
+			'feedback_type' => $feedback_type,
+			'ratings_type' => $ratings_type,
+			'from_name' => $from_name,
+			'from_email' => $from_email,
+			'sms_sender' => $sender_name,
+			'pos_title' => $positive_title,
+			'pos_sub_title' => $positive_subtitle,
+			'neg_title' => $negetive_title,
+			'neg_sub_title' => $negetive_subtitle,
+			'neu_title' => $neutral_title,
+			'neu_sub_title' => $neutral_subtitle,
+			'created' => date("Y-m-d H:i:s")
+		);
+		$aResponse = FeedbackModel::getFeedbackResponse($brandboostID);
+		if (count($aResponse) > 0) {
+			$result = BrandboostModel::updateBrandboostFeedbackResponse($feedbackData, $brandboostID);
+			$aActivityData = array(
+				'user_id' => $userID,
+				'event_type' => 'brandboost_onsite',
+				'action_name' => 'updated_preferrences',
+				'brandboost_id' => $brandboostID,
+				'campaign_id' => '',
+				'inviter_id' => '',
+				'subscriber_id' => '',
+				'feedback_id' => '',
+				'activity_message' => 'Updated On site Brandboost Preferrences',
+				'activity_created' => date("Y-m-d H:i:s")
+			);
+			logUserActivity($aActivityData);
+		} else {
+			$result = BrandboostModel::addBrandboostFeedbackResponse($feedbackData);
+		}
+
+		if ($result) {
+			//Okay We also need to update "From" info into the campaigns
+
+			$this->updateWorkflowFromInfo($feedbackData, $brandboostID);
+
+			$response['status'] = 'success';
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
 	
 	
 	
@@ -5440,162 +5594,6 @@ class Brandboost extends Controller {
             } else {
                 $response['status'] = "Error";
             }
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function saveOnsitePreferences() {
-
-        $response = array();
-        $post = array();
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-        if ($this->input->post()) {
-            $post = $this->input->post();
-
-            $brandboostID = $post['brandboostId'];
-            $review_expire = $post['review_expire'];
-            $review_expire_link = $post['review_expire_link'];
-
-            $productName = $post['brand_product_name'];
-            $productDesc = $post['brand_product_desc'];
-            $productImg = $post['product_img'];
-            $productType = $post['product_type'];
-            $productId = $post['product_id'];
-            $pData = array();
-
-            if (!empty($productName)) {
-                $pData['brandboost_id'] = $brandboostID;
-                $pData['user_id'] = $userID;
-                foreach ($productName as $key => $productData) {
-                    if ($productData != '') {
-                        $bbProductsData = $this->mBrandboost->getProductDataByOrder($brandboostID, $key);
-                        $pData['product_name'] = $productData;
-                        $pData['product_description'] = $productDesc[$key];
-                        $pData['product_image'] = $productImg[$key];
-                        $pData['product_type'] = $productType[$key];
-                        $pData['product_order'] = $key;
-                        if ($productId[$key] == '') {
-                            if (!empty($bbProductsData)) {
-                                $this->mBrandboost->updateProductData($pData, $brandboostID, $key);
-                            } else {
-                                $this->mBrandboost->insertProductData($pData);
-                            }
-                        } else {
-                            $this->mBrandboost->updateProductByProductId($pData, $brandboostID, $productId[$key]);
-                        }
-                    }
-                }
-            }
-
-
-            $revExpireLink = array();
-            if ($review_expire_link == 'custom') {
-
-                $txtInteger = $post['txtInteger'];
-                $exp_duration = $post['exp_duration'];
-                $revExpireLink['delay_value'] = $txtInteger;
-                $revExpireLink['delay_unit'] = $exp_duration;
-            } else {
-
-                $revExpireLink['delay_value'] = 'never';
-                $revExpireLink['delay_unit'] = 'never';
-            }
-            $aData = array(
-                'link_expire_review' => $review_expire,
-                'link_expire_custom' => json_encode($revExpireLink)
-            );
-
-            $result = $this->mBrandboost->update($userID, $aData, $brandboostID);
-
-            // Update a image
-
-            $title = strip_tags($post['title']);
-            $desc = strip_tags($post['desc']);
-            $domainName = strip_tags($post['domain_name']);
-            $barndFileData = $post['brand_img'];
-            $brandFileArray = array();
-
-            foreach ($barndFileData['media_url'] as $key => $fileData) {
-                $brandFileArray[$key]['media_url'] = $fileData;
-                $brandFileArray[$key]['media_type'] = $barndFileData['media_type'][$key];
-            }
-
-            $logoImageFileName = $post['logo_img'] == '' ? $post['edit_logo_img'] : $post['logo_img'];
-            $brandImageFileName = empty($post['brand_img']) ? $post['edit_brand_img'] : serialize($brandFileArray);
-
-            $aDataBrandboost = array(
-                'user_id' => $userID,
-                'brand_title' => $title,
-                'brand_desc' => $desc,
-                'domain_name' => $domainName,
-                'brand_img' => $brandImageFileName,
-                'logo_img' => $logoImageFileName
-            );
-            $result = $this->mBrandboost->update($userID, $aDataBrandboost, $brandboostID);
-
-            // Update image
-
-
-            $feedback_type = $post['feedback_type'];
-            $ratings_type = $post['ratings_type'];
-            $from_name = $post['from_name'];
-            $from_email = $post['from_email'];
-            $sender_name = $post['sender_name'];
-            $offsite_url = $post['offsite_url'];
-            $positive_title = $post['positive_title'];
-            $positive_subtitle = $post['positive_subtitle'];
-            $negetive_title = $post['negetive_title'];
-            $negetive_subtitle = $post['negetive_subtitle'];
-            $neutral_title = $post['neutral_title'];
-            $neutral_subtitle = $post['neutral_subtitle'];
-
-            $feedbackData = array(
-                'brandboost_id' => $brandboostID,
-                'feedback_type' => $feedback_type,
-                'ratings_type' => $ratings_type,
-                'from_name' => $from_name,
-                'from_email' => $from_email,
-                'sms_sender' => $sender_name,
-                'pos_title' => $positive_title,
-                'pos_sub_title' => $positive_subtitle,
-                'neg_title' => $negetive_title,
-                'neg_sub_title' => $negetive_subtitle,
-                'neu_title' => $neutral_title,
-                'neu_sub_title' => $neutral_subtitle,
-                'created' => date("Y-m-d H:i:s")
-            );
-            $aResponse = $this->mFeedback->getFeedbackResponse($brandboostID);
-            if (count($aResponse) > 0) {
-                $result = $this->mBrandboost->updateBrandboostFeedbackResponse($feedbackData, $brandboostID);
-                $aActivityData = array(
-                    'user_id' => $userID,
-                    'event_type' => 'brandboost_onsite',
-                    'action_name' => 'updated_preferrences',
-                    'brandboost_id' => $brandboostID,
-                    'campaign_id' => '',
-                    'inviter_id' => '',
-                    'subscriber_id' => '',
-                    'feedback_id' => '',
-                    'activity_message' => 'Updated On site Brandboost Preferrences',
-                    'activity_created' => date("Y-m-d H:i:s")
-                );
-                logUserActivity($aActivityData);
-            } else {
-                $result = $this->mBrandboost->addBrandboostFeedbackResponse($feedbackData);
-            }
-
-            if ($result) {
-                //Okay We also need to update "From" info into the campaigns
-
-                $this->updateWorkflowFromInfo($feedbackData, $brandboostID);
-
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-
             echo json_encode($response);
             exit;
         }
