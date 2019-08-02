@@ -25,6 +25,10 @@ class Invoice extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/invoices/index', $data);
     }
     
+    /**
+     * Get the list of Invoice
+     * @return type
+     */
     public function view($clientID){
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
