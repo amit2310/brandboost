@@ -96,7 +96,7 @@ class BroadcastInviter extends Command {
             foreach ($aEvents as $aEvent) {
                 $bActiveSubsription = false;
                 $automationID = $aEvent->automation_id;
-                if ($automationID == 208) {
+                //if ($automationID == 208) {
                     $userID = $aEvent->client_id;
                     if ($userID > 0) {
                         $bActiveSubsription = UsersModel::isActiveSubscription($userID);
@@ -115,7 +115,7 @@ class BroadcastInviter extends Command {
                             }
                         }
                     }
-                }
+                //}
             }
         }
 
