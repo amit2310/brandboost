@@ -1284,7 +1284,7 @@ class BroadcastModel extends Model {
         $oData = DB::table('tbl_broadcast_emails_tracking_twillio')
                 ->leftJoin('tbl_broadcast_users', 'tbl_broadcast_users.id', '=', 'tbl_broadcast_emails_tracking_twillio.subscriber_id')
                 ->leftJoin('tbl_subscribers', 'tbl_broadcast_users.subscriber_id', '=', 'tbl_subscribers.id')
-                ->select('tbl_broadcast_users.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone','tbl_broadcast_emails_tracking_sendgrid.id as tracking_id',  'tbl_broadcast_emails_tracking_sendgrid.event_name', 'tbl_broadcast_emails_tracking_sendgrid.email as e_email', 'tbl_broadcast_emails_tracking_sendgrid.created as e_created')
+                ->select('tbl_broadcast_users.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_broadcast_emails_tracking_twillio.event_name', 'tbl_broadcast_emails_tracking_twillio.to_number as e_number', 'tbl_broadcast_emails_tracking_twillio.created as e_created')
                 ->where('tbl_broadcast_emails_tracking_twillio.event_id', $eventId)
                 ->where('tbl_broadcast_emails_tracking_twillio.event_name', $eventType)
                 ->groupBy('tbl_broadcast_emails_tracking_twillio.subscriber_id')
