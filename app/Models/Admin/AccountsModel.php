@@ -33,7 +33,7 @@ class AccountsModel extends Model {
         $oData = DB::table('tbl_account_usage_tracking')
                 ->where('user_id', $userID)
                 ->where('id', $id)
-                ->get();
+                ->first();
         return $oData;
     }
     
