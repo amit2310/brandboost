@@ -46,15 +46,17 @@ class Invoice extends Controller {
         return view('admin.invoice.index', $data);
     }
     
-    public function get(){
-        $post = $this->input->post();
-        if(empty($post)){
-            //show error
-        }
-        $invoiceID = $post['invoice_id'];
-        $invoiceDetails = $this->mInvoices->getInvoiceDetails($invoiceID);
-        if(!empty($invoiceDetails)){
-            $content = $this->load->view('admin/invoices/get', array('userdata' => $invoiceDetails, 'invoiceID' => $invoiceID), true);
+    /**
+     * Get the detail of Invoice
+     * @return type object
+     */
+    public function get(Request $request){
+
+        $invoiceID = $request->invoice_id;
+        $invoiceDetails = InvoicesModel::getInvoiceDetails($invoiceID);
+        
+        if($invoiceDetails->count() > 0){
+            $content = view('admin.invoice.get', array('userdata' => $invoiceDetails, 'invoiceID' => $invoiceID))->render();
             echo json_encode(array('status' => 'success', 'content'=> $content));
         }
     }
