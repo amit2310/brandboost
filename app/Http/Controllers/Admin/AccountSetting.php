@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Input;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\LoginModel;
 use App\Models\Admin\AccountsModel;
+use App\Models\Admin\WorkflowModel;
 use Session;
 
 
@@ -274,20 +275,20 @@ class AccountSetting extends Controller
      * This function usage info
      * @return type object
      */
-    public function usageInfo() {
+    public function usageInfo(Request $request) {
 
         $mAccounts = new AccountsModel();
+        $mWorkflow = new WorkflowModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
-        if (empty($post)) {
+        $usageID = strip_tags($request->id);
+        if (empty($usageID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-
-        $usageID = strip_tags($post['id']);
 
         $oUsage = $mAccounts->getUsageDetails($usageID, $userID);
         $mediaType = '';
@@ -320,7 +321,7 @@ class AccountSetting extends Controller
         $campaignTitle = '';
         $campaignLink = '';
         if(!empty($moduleName) && !empty($moduleUnitID)){
-            $oCampaign = $this->mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
+            $oCampaign = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
             if($moduleName == 'onsite' || $moduleName == 'offsite' || $moduleName == 'brandboost'){
                 $campaignTitle = $oCampaign->brand_title;
                 $campaignLink = base_url()."admin/brandboost/details/".$moduleUnitID;
