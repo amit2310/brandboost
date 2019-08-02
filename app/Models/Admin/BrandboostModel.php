@@ -2620,7 +2620,7 @@ class BrandboostModel extends Model {
     public function campaignSiteReview($campaignID, $limit = 5, $offsite = 0) {
         $aData =  DB::table('tbl_reviews_site')
         ->select('tbl_reviews_site.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
-        ->leftjoin('tbl_users', 'tbl_reviews_site.user_id','=','tbl_users.id')
+        ->leftJoin('tbl_users', 'tbl_reviews_site.user_id','=','tbl_users.id')
         ->where('tbl_reviews_site.campaign_id', $campaignID)
         ->orderBy("tbl_reviews_site.id", "DESC")
          ->limit($limit, $offsite)->get();
