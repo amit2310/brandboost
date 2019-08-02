@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Admin\Crons\ManagerModel;
-use App\Models\Admin\Crons\BroadcastModel;
+use App\Models\Admin\Crons\EmailModel;
 use App\Models\Admin\UsersModel;
 
 class EmailInviter extends Command {
