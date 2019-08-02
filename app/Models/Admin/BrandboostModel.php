@@ -485,7 +485,7 @@ class BrandboostModel extends Model {
     }
 	
 	/**
-	* Used to update widget by userID
+	* Used to update onsite widget by brandboostID
 	* @param type $userID
 	* @param type $brandboostID
 	* @return type
@@ -501,7 +501,19 @@ class BrandboostModel extends Model {
         }
     }
 	
+	/**
+	* Used to add onsite widget
+	* @return type
+	*/
+	public static function addWidget($aData) {
+		$insert_id = DB::table('tbl_brandboost_widgets')->insertGetId($aData);
 	
+        if ($insert_id) {
+            return $insert_id;
+        } else {
+            return false;
+        }
+    }
 	
 	
 	
@@ -598,16 +610,6 @@ class BrandboostModel extends Model {
         $result = $this->db->update('tbl_brandboost_products', $aData);
         if ($result) {
             return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function addWidget($aData) {
-        $result = $this->db->insert('tbl_brandboost_widgets', $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
         } else {
             return false;
         }
