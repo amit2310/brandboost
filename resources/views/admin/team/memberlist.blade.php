@@ -488,7 +488,7 @@
                         <span class="display-inline-block pull-left fsize13">Show team member web chat?</span>
                         <span class="display-inline-block pull-right fsize13">
                         <label class="custom-form-switch pull-left">
-                        <input class="field" value="" type="checkbox" name="edit_webchat_config" id="edit_webchat_config">
+                        <input class="field"  type="checkbox" name="edit_webchat_config" id="edit_webchat_config">
                         <span class="toggle blue"></span>
                         </label>
                         </span>
@@ -812,7 +812,7 @@ $('#bb_area_code_listing').html(' <figure style="margin:15px 0;"><img style="wid
                        $.ajax({
                             url: '<?php echo base_url('admin/team/twilioNumberlisting');?>',
                             type: "POST",
-                            data: {area_code : $('#area_code').val()},
+                            data: {area_code : $('#area_code').val(),_token: '{{csrf_token()}}'},
                             dataType: "html",
                             success: function (data) {
                                 setTimeout(function(){ 
@@ -861,7 +861,7 @@ $('#edit_bb_area_code_listing').html(' <figure style="margin:15px 0;"><img style
                        $.ajax({
                             url: '<?php echo base_url('admin/team/twilioNumberlisting');?>',
                             type: "POST",
-                            data: {area_code : $('#edit_area_code').val()},
+                            data: {area_code : $('#edit_area_code').val(),_token: '{{csrf_token()}}'},
                             dataType: "html",
                             success: function (data) {
                                 setTimeout(function(){ 
@@ -1084,7 +1084,7 @@ $('#edit_bb_area_code_listing').html(' <figure style="margin:15px 0;"><img style
 
 
         $('#frmEditTeamMember').on('submit', function () {
-            $('.overlaynew').show();
+            //$('.overlaynew').show();
             var formdata = $("#frmEditTeamMember").serialize();
             $.ajax({
                 url: '<?php echo base_url('admin/team/updateTeamMember'); ?>',
