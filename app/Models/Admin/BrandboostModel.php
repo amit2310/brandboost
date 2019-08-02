@@ -520,7 +520,7 @@ class BrandboostModel extends Model {
 	* @return type
 	*/
 	public static function add($aData) {
-        $insert_id = DB::table('tbl_brandboost_widgets')->insertGetId($aData);
+        $insert_id = DB::table('tbl_brandboost')->insertGetId($aData);
         if ($insert_id) {
             return $insert_id;
         } else {
@@ -530,7 +530,8 @@ class BrandboostModel extends Model {
 
     
 	/**
-	* Used to delete onsite campaign
+	* Used to delete onsite campaign by campaign id
+	* @param type $id
 	* @return type
 	*/
     public static function deleteBrandboost($id) {
@@ -544,6 +545,124 @@ class BrandboostModel extends Model {
             return false;
         }
     }
+	
+	/**
+	* Used to get campaign product by campaign id
+	* @param type $brandboostID
+	* @param type $type
+	* @return type
+	*/
+	public function getProductDataByType($brandboostID, $type = 'product') {
+        if (!empty($brandboostID)) {
+			$oData = DB::table('tbl_brandboost_products')
+				->where('brandboost_id', $brandboostID)
+				->where('product_type', $type)
+				->orderBy('product_order', 'asc')
+				->get();
+			return $oData;
+        }
+    }
+
+    /**
+	* Used to delete campaign product by campaign id
+	* @param type $bbId
+	* @param type $dataOrder
+	* @return type
+	*/
+    public static function deleteProduct($bbId, $dataOrder) {
+		$result = DB::table('tbl_brandboost_products')
+               ->where('brandboost_id', $bbId)
+               ->where('product_order', $dataOrder)
+               ->delete();
+			
+			if ($result) {
+                return true;
+            } else {
+                return false;
+            }
+    }
+	
+	/**
+	* Used to get campaign product by campaign id and order
+	* @param type $brandboostID
+	* @param type $order
+	* @return type
+	*/
+    public static function getProductDataByOrder($brandboostID, $order) {
+        if (!empty($brandboostID)) {
+			$oData = DB::table('tbl_brandboost_products')
+				->where('brandboost_id', $brandboostID)
+				->where('product_order', $order)
+				->get();
+			return $oData;
+        }
+    }
+
+	/**
+	* Used to add campaign product
+	* @param type $brandboostID
+	* @param type $order
+	* @return type
+	*/
+    public static function insertProductData($aData) {
+		$insert_id = DB::table('tbl_brandboost_products')->insertGetId($aData);
+        if ($insert_id) {
+            return $insert_id;
+        } else {
+            return false;
+        }
+    }
+
+	/**
+	* Used to update campaign product by brandboost id
+	* @param type $brandboostID
+	* @param type $order
+	* @return type
+	*/
+    public static function updateProductData($aData, $brandboostID, $order) {
+		$result = DB::table('tbl_brandboost_products')
+           ->where('brandboost_id', $brandboostID)
+           ->where('product_order', $order)
+           ->update($aData);
+        if ($result > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	
+	/**
+	* Used to update campaign product by product id
+	* @param type $brandboostID
+	* @param type $productId
+	* @return type
+	*/
+    public static function updateProductByProductId($aData, $brandboostID, $productId) {
+		$result = DB::table('tbl_brandboost_products')
+           ->where('brandboost_id', $brandboostID)
+           ->where('id', $productId)
+           ->update($aData);
+        if ($result > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -570,80 +689,7 @@ class BrandboostModel extends Model {
 
     
 
-    public function getProductDataByType($brandboostID, $type = 'product') {
-        if (!empty($brandboostID)) {
-            $this->db->where('brandboost_id', $brandboostID);
-            $this->db->where('product_type', $type);
-            $this->db->order_by('product_order', 'ASC');
-            $result = $this->db->get('tbl_brandboost_products');
-            //echo $this->db->last_query();exit;
-            if ($result->num_rows() > 0) {
-                $aData = $result->result();
-            }
-        }
-        return $aData;
-    }
-
     
-
-    public function deleteProduct($bbId, $dataOrder) {
-        if (!empty($bbId)) {
-            $this->db->where('brandboost_id', $bbId);
-            $this->db->where('product_order', $dataOrder);
-            $result = $this->db->delete('tbl_brandboost_products');
-            if ($result) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
-    public function getProductDataByOrder($brandboostID, $order) {
-        if (!empty($brandboostID)) {
-            $this->db->where('brandboost_id', $brandboostID);
-            $this->db->where('product_order', $order);
-            $result = $this->db->get('tbl_brandboost_products');
-            //echo $this->db->last_query();exit;
-            if ($result->num_rows() > 0) {
-                $aData = $result->result();
-            }
-        }
-        return $aData;
-    }
-
-    public function insertProductData($aData) {
-        $result = $this->db->insert('tbl_brandboost_products', $aData);
-        //echo $this->db->last_query();exit;
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function updateProductData($aData, $brandboostID, $order) {
-        $this->db->where('brandboost_id', $brandboostID);
-        $this->db->where('product_order', $order);
-        $result = $this->db->update('tbl_brandboost_products', $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function updateProductByProductId($aData, $brandboostID, $productId) {
-        $this->db->where('brandboost_id', $brandboostID);
-        $this->db->where('id', $productId);
-        $result = $this->db->update('tbl_brandboost_products', $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public function creatWidgetTheme($aData) {
         $result = $this->db->insert('tbl_brandboost_widget_theme_settings', $aData);

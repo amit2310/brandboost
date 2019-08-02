@@ -16,6 +16,7 @@
 <div class="tab-pane <?php echo $camp; ?>" id="right-icon-tab11">
     <form method="post" id="addOnsiteStepList" action="#" >
         <input name="brandboostId" id="brandboostId" value="<?php echo $brandboostData->id; ?>" type="hidden">
+		{{ csrf_field() }}
         <div class="row">
             <div class="col-md-3">
                 <div style="margin: 0;" class="panel panel-flat">
@@ -509,7 +510,7 @@
 				$.ajax({
 					url: '<?php echo base_url('admin/brandboost/deleteProduct'); ?>',
 					type: "POST",
-					data: {dataOrder: dataOrder, bb_id: '<?php echo $brandboostData->id; ?>'},
+					data: {dataOrder: dataOrder, bb_id: '<?php echo $brandboostData->id; ?>', _token: '{{csrf_token()}}'},
 					dataType: "json",
 					success: function (data) {
 						if (data.status == 'success') {
