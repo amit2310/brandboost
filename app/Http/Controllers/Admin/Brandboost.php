@@ -2112,8 +2112,180 @@ class Brandboost extends Controller {
         exit;
     }
 	
+	/**
+	* Used to add onsite campaign
+	* @return type
+	*/
+	public function addOnsite(Request $request) {
+
+        $response = array();
+        $post = array();
+        $userID = Session::get("current_user_id");
+		$campaignName = $request->campaignName;
+		$OnsitecampaignDescription = $request->OnsitecampaignDescription;
+
+		/*$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$hashcode = '';
+		for ($i = 0; $i < 20; $i++) {
+			$hashcode .= $characters[rand(0, strlen($characters))];
+		}
+		$hashcode = $hashcode . date('Ymdhis');*/
+		
+		$str=rand(); 
+		$hashcode = sha1($str); 
+        $hashcode = $hashcode . date('Ymdhis');
+		
+		$aData = array(
+			'review_type' => 'onsite',
+			'user_id' => $userID,
+			'brand_title' => $campaignName,
+			'brand_desc' => $OnsitecampaignDescription,
+			'status' => 0,
+			'hashcode' => md5($hashcode),
+			'created' => date("Y-m-d H:i:s")
+		);
+
+		$brandboostID = BrandboostModel::add($aData);
+
+		if ($brandboostID) {
+			$aBrandboostData = array(
+				'brandboost_id' => $brandboostID
+			);
+			$bData = BrandModel::getBrandConfigurationData($brandboostID);
+			if ((count($bData) > 0) && $bData != '') {
+				
+			} else {
+				$result = BrandModel::addBrandConfiguration($aBrandboostData);
+			}
+
+			//$this->addDefaultFollowupCampaigns($brandboostID);
+			Session::put("setTab", 'Campaign Preferences');
+			Session::put('brandboostID', $brandboostID);
+			$response['status'] = 'success';
+			$response['brandboostID'] = $brandboostID;
+
+			//Add userActivity
+			$aActivityData = array(
+				'user_id' => $userID,
+				'event_type' => 'brandboost_onsite',
+				'action_name' => 'added_brandboost',
+				'brandboost_id' => $brandboostID,
+				'campaign_id' => '',
+				'inviter_id' => '',
+				'subscriber_id' => '',
+				'feedback_id' => '',
+				'activity_message' => 'New On Site Brandboost added',
+				'activity_created' => date("Y-m-d H:i:s")
+			);
+			logUserActivity($aActivityData);
+			//Notify about this to admin
+			$notificationData = array(
+				'event_type' => 'added_onsite_brandboost',
+				'event_id' => 0,
+				'link' => base_url() . 'admin/brandboost/onsite_setup/' . $brandboostID,
+				'message' => 'Created new onsite brandboost.',
+				'user_id' => $userID,
+				'status' => 1,
+				'created' => date("Y-m-d H:i:s")
+			);
+			$eventName = 'sys_onsite_added';
+			//add_notifications($notificationData, $eventName, $userID);
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
 	
+	/**
+	* Used to add offsite campaign
+	* @return type
+	*/
+    public function addOffsite(Request $request) {
+
+        $response = array();
+        $post = array();
+        $userID = Session::get("current_user_id");
+
+		$campaignName = $request->campaignName;
+		$brand_desc = $request->campaignDescription;
+		
+		/*$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$hashcode = '';
+		for ($i = 0; $i < 20; $i++) {
+			$hashcode .= $characters[rand(0, strlen($characters))];
+		}
+		$hashcode = $hashcode . date('Ymdhis');*/
+		
+		$str=rand(); 
+		$hashcode = sha1($str); 
+        $hashcode = $hashcode . date('Ymdhis');
+		
+		$aData = array(
+			'review_type' => 'offsite',
+			'user_id' => $userID,
+			'brand_title' => $campaignName,
+			'status' => 0,
+			'brand_desc' => $brand_desc,
+			'hashcode' => md5($hashcode),
+			'created' => date("Y-m-d H:i:s")
+		);
+
+		$brandboostID = BrandboostModel::add($aData);
+
+		if ($brandboostID) {
+			//Add Useractivity log
+			$aActivityData = array(
+				'user_id' => $userID,
+				'event_type' => 'brandboost_offsite',
+				'action_name' => 'added_brandboost',
+				'brandboost_id' => $brandboostID,
+				'campaign_id' => '',
+				'inviter_id' => '',
+				'subscriber_id' => '',
+				'feedback_id' => '',
+				'activity_message' => 'New Offsite Brandboost added',
+				'activity_created' => date("Y-m-d H:i:s")
+			);
+			logUserActivity($aActivityData);
+
+
+			//$this->addDefaultFollowupCampaigns($brandboostID);
+			$response['status'] = 'success';
+			$response['brandboostID'] = $brandboostID;
+
+			$notificationData = array(
+				'event_type' => 'added_offsite_brandboost',
+				'event_id' => 0,
+				'link' => base_url() . 'admin/brandboost/offsite_setup/' . $brandboostID,
+				'message' => 'Created new offsite brandboost.',
+				'user_id' => $userID,
+				'status' => 1,
+				'created' => date("Y-m-d H:i:s")
+			);
+			$eventName = 'sys_offsite_added';
+			//add_notifications($notificationData, $eventName, $userID);
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
 	
+	/**
+	* Used to add default followup campaign
+	* @return type
+	*/
+	public function addDefaultFollowupCampaigns($brandboostID) {
+        $eventID = 0;
+        if (!empty($brandboostID)) {
+            // Generate main event 
+            $eventID = $this->addDefaultFollowupEvent($brandboostID, 'main', 0, true, 'Email');
+        }
+        return $eventID;
+    }
 	
 	
 	
@@ -3247,14 +3419,7 @@ class Brandboost extends Controller {
         return $eventID;
     }
 
-    public function addDefaultFollowupCampaigns($brandboostID) {
-        $eventID = 0;
-        if (!empty($brandboostID)) {
-            // Generate main event 
-            $eventID = $this->addDefaultFollowupEvent($brandboostID, 'main', 0, true, 'Email');
-        }
-        return $eventID;
-    }
+    
 
     public function addDefaultFollowupCampaigns_old_new($brandboostID) {
         $eventID = 0;
@@ -4539,154 +4704,7 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template', 'admin/brandboost/offsite_step_3', array('getOffsite' => $result, 'bActiveSubsription' => $bActiveSubsription));
     }
 
-    public function addOnsite() {
-
-        $response = array();
-        $post = array();
-        $userID = $this->session->userdata("current_user_id");
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $campaignName = $post['campaignName'];
-            $OnsitecampaignDescription = $post['OnsitecampaignDescription'];
-
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $hashcode = '';
-            for ($i = 0; $i < 20; $i++) {
-                $hashcode .= $characters[rand(0, strlen($characters))];
-            }
-            $hashcode = $hashcode . date('Ymdhis');
-            $aData = array(
-                'review_type' => 'onsite',
-                'user_id' => $userID,
-                'brand_title' => $campaignName,
-                'brand_desc' => $OnsitecampaignDescription,
-                'status' => 0,
-                'hashcode' => md5($hashcode),
-                'created' => date("Y-m-d H:i:s")
-            );
-
-            $brandboostID = $this->mBrandboost->add($aData);
-
-            if ($brandboostID) {
-                $aBrandboostData = array(
-                    'brandboost_id ' => $brandboostID
-                );
-                $bData = $this->mBrand->getBrandConfigurationData($brandboostID);
-                if ((count($bData) > 0) && $bData != '') {
-                    
-                } else {
-                    $result = $this->mBrand->addBrandConfiguration($aBrandboostData);
-                }
-
-                $this->addDefaultFollowupCampaigns($brandboostID);
-                $this->session->set_userdata("setTab", 'Campaign Preferences');
-                $this->session->set_userdata('brandboostID', $brandboostID);
-                $response['status'] = 'success';
-                $response['brandboostID'] = $brandboostID;
-
-                //Add userActivity
-                $aActivityData = array(
-                    'user_id' => $userID,
-                    'event_type' => 'brandboost_onsite',
-                    'action_name' => 'added_brandboost',
-                    'brandboost_id' => $brandboostID,
-                    'campaign_id' => '',
-                    'inviter_id' => '',
-                    'subscriber_id' => '',
-                    'feedback_id' => '',
-                    'activity_message' => 'New On Site Brandboost added',
-                    'activity_created' => date("Y-m-d H:i:s")
-                );
-                logUserActivity($aActivityData);
-                //Notify about this to admin
-                $notificationData = array(
-                    'event_type' => 'added_onsite_brandboost',
-                    'event_id' => 0,
-                    'link' => base_url() . 'admin/brandboost/onsite_setup/' . $brandboostID,
-                    'message' => 'Created new onsite brandboost.',
-                    'user_id' => $userID,
-                    'status' => 1,
-                    'created' => date("Y-m-d H:i:s")
-                );
-                $eventName = 'sys_onsite_added';
-                add_notifications($notificationData, $eventName, $userID);
-            } else {
-                $response['status'] = "Error";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function addOffsite() {
-
-        $response = array();
-        $post = array();
-        $userID = $this->session->userdata("current_user_id");
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $campaignName = $post['campaignName'];
-            $brand_desc = $post['campaignDescription'];
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $hashcode = '';
-            for ($i = 0; $i < 20; $i++) {
-                $hashcode .= $characters[rand(0, strlen($characters))];
-            }
-            $hashcode = $hashcode . date('Ymdhis');
-            $aData = array(
-                'review_type' => 'offsite',
-                'user_id' => $userID,
-                'brand_title' => $campaignName,
-                'status' => 0,
-                'brand_desc' => $brand_desc,
-                'hashcode' => md5($hashcode),
-                'created' => date("Y-m-d H:i:s")
-            );
-
-            $brandboostID = $this->mBrandboost->add($aData);
-
-            if ($brandboostID) {
-                //Add Useractivity log
-                $aActivityData = array(
-                    'user_id' => $userID,
-                    'event_type' => 'brandboost_offsite',
-                    'action_name' => 'added_brandboost',
-                    'brandboost_id' => $brandboostID,
-                    'campaign_id' => '',
-                    'inviter_id' => '',
-                    'subscriber_id' => '',
-                    'feedback_id' => '',
-                    'activity_message' => 'New Offsite Brandboost added',
-                    'activity_created' => date("Y-m-d H:i:s")
-                );
-                logUserActivity($aActivityData);
-
-
-                $this->addDefaultFollowupCampaigns($brandboostID);
-                //$this->session->set_userdata('brandboostID', $brandboostID);
-                $response['status'] = 'success';
-                $response['brandboostID'] = $brandboostID;
-
-                $notificationData = array(
-                    'event_type' => 'added_offsite_brandboost',
-                    'event_id' => 0,
-                    'link' => base_url() . 'admin/brandboost/offsite_setup/' . $brandboostID,
-                    'message' => 'Created new offsite brandboost.',
-                    'user_id' => $userID,
-                    'status' => 1,
-                    'created' => date("Y-m-d H:i:s")
-                );
-                $eventName = 'sys_offsite_added';
-                add_notifications($notificationData, $eventName, $userID);
-            } else {
-                $response['status'] = "Error";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
+    
 
     // This method is deprecated now
     public function update_offsite_step1() {
