@@ -422,4 +422,5 @@ Route::post('admin/team/updateTeamMember','Admin\Team@updateTeamMember');
 Route::get('admin/team/activitylist','Admin\Team@activitylist');
 Route::post('admin/team/deleteTeamMember','Admin\Team@deleteTeamMember');
 
-
+//Live
+Route::get('admin/live','Admin\Live@index');
