@@ -313,15 +313,15 @@ class Invoice extends Controller {
     public function download_invoice($invoiceID) {
 
         //load mPDF library
+        $invoiceDetails = InvoicesModel::getInvoiceDetails($invoiceID);
+
         
-        
-        $invoiceDetails = $this->mInvoices->getInvoiceDetails($invoiceID);
-        
-        if(!empty($invoiceDetails)){
-        $html = $this->load->view('admin/invoices/download_invoice', array('userdata' => $invoiceDetails, 'invoiceID' => $invoiceID), true);
-            //$html = $this->load->view("admin/invoices/partials/invoice_content_email", array('userdata' => $invoiceDetails, 'invoiceID' => $invoiceID), true);
-			//$html = $this->load->view("admin/invoices/partials/invoice_content_email_pdf", array('userdata' => $invoiceDetails, 'invoiceID' => $invoiceID), true);
+        if($invoiceDetails->count() > 0){
+        	$html = view('admin.invoice.download_invoice', array('userdata' => $invoiceDetails, 'invoiceID' => $invoiceID))->render();
+        	echo $html;
         }
+
+        die();
 
         //die();
 

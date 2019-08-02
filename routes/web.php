@@ -165,6 +165,7 @@ Route::post('admin/accounts/usageInfo','Admin\AccountSetting@usageInfo');
 
 // Invoice
 Route::get('admin/invoices/view/{clientID}','Admin\Invoice@view');
+Route::get('admin/invoices/download_invoice/{invoiceID}','Admin\Invoice@download_invoice');
 Route::post('admin/invoices/get','Admin\Invoice@get');
 
 //Setting 
