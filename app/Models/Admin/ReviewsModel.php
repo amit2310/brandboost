@@ -139,8 +139,8 @@ class ReviewsModel extends Model
 
         $aData =  DB::table('tbl_reviews')
         ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_brandboost.brand_title')
-        ->leftjoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
-        ->leftjoin('tbl_brandboost', 'tbl_reviews.campaign_id','=','tbl_brandboost.id')
+        ->leftJoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
+        ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id','=','tbl_brandboost.id')
          ->where("tbl_reviews.campaign_id", $campaignID)
         ->where("tbl_reviews.review_type", $productType)
         ->where("tbl_reviews.status", '1')

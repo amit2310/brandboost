@@ -1,3 +1,10 @@
+ @extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
   <?php list($canRead, $canWrite) = fetchPermissions('Reviews'); ?>
 
 				
@@ -227,9 +234,8 @@ if (!empty($tReview)) {
       
         $getComm = getCampaignCommentCount($oReview->id);
         $reviewTags = getTagsByReviewID($oReview->id);
-        $CI = & get_instance();
-        $CI->load->model("Reviews_model", "mReviews");
-        $reviewLikeCount = $CI->mReviews->countHelpful($oReview->id);
+        
+        $reviewLikeCount = \App\Models\ReviewsModel::countHelpful($oReview->id);
         if(!empty($oReview->avatar)) {
 	        $avatarImage = $oReview->avatar;
 	    }
@@ -239,7 +245,7 @@ if (!empty($tReview)) {
 
 		$smilyImage = ratingView($oReview->ratings);
 
-		$reviewCommentsData = $this->mReviews->getReviewAllComments($oReview->id,0, 100);
+		$reviewCommentsData = \App\Models\ReviewsModel::getReviewAllComments($oReview->id,0, 100);
 
 		$approved = 0;
 		$pending = 0;
@@ -308,7 +314,7 @@ if (!empty($tReview)) {
             <?php } ?>
         </div>
         <?php if($canWrite): ?>
-        <a href="javascript:void(0);" class="applyInsightTags btn btn-xs btn_white_table" action_name="review-tag" reviewid="<?php echo $oReview->id; ?>" > <i class="icon-plus3"></i> </a>
+        <a href="javascript:void(0);" class="applyInsightTags btn btn-xs btn_white_table" action_name="review-tag" reviewid="<?php echo base64_url_encode($oReview->id); ?>" > <i class="icon-plus3"></i> </a>
         <!-- <button class="btn btn-xs btn_white_table"><i class="icon-plus3"></i></button> -->
         <?php endif; ?>
 
@@ -356,12 +362,12 @@ if (!empty($tReview)) {
             } else {
                 echo "<li><a review_id='" . $oReview->id . "' change_status = '1' title='Approved this review.' class='chg_status green'><i class='icon-file-locked'></i> Approved</a></li>";
             }
-            echo '<li><a href="javascript:void(0);" class="applyInsightTags" action_name="review-tag" reviewid="' . $oReview->id . '" ><i class="icon-file-locked"></i> Apply Tags</a></li>';
+            echo '<li><a href="javascript:void(0);" class="applyInsightTags" action_name="review-tag" reviewid="' . base64_url_encode($oReview->id) . '" ><i class="icon-file-locked"></i> Apply Tags</a></li>';
             echo '<li><a href="javascript:void(0);" class="displayReview" action_name="review-tag" tab_type="note" reviewid="' . $oReview->id . '" review_time="' . date("M d, Y h:i A", strtotime($oReview->created)) . '(' . timeAgo($oReview->created) . ')" ><i class="icon-file-locked"></i> Add Notes</a></li>';
         }
         echo '<li><a href="javascript:void(0);" class="showReviewPopup" tab_type="info" reviewid="' . $oReview->id . '" ><i class="icon-file-locked"></i> View Review Popup</a></li>';
 
-        echo '<li><a target="_blank" href="' . site_url('admin/brandboost/reviewdetails/' . $oReview->id) . '"><i class="icon-file-locked"></i> View Review</a></li>';
+        echo '<li><a target="_blank" href="' . base_url('admin/brandboost/reviewdetails/' . $oReview->id) . '"><i class="icon-file-locked"></i> View Review</a></li>';
         if ($canWrite) {
             if ($oReview->review_type == 'text') {
 
@@ -470,8 +476,8 @@ if (!empty($tReview)) {
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-                        <?php echo validation_errors(); ?></div>
+                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?>
+                        <?php //echo validation_errors(); ?></div>
 
                     <div class="form-group">
                         <label class="control-label col-lg-3">Title</label>
@@ -557,8 +563,8 @@ if (!empty($tReview)) {
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-                        <?php echo validation_errors(); ?></div>
+                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?>
+                        <?php //echo validation_errors(); ?></div>
 
                     <div class="form-group">
                         <label class="control-label col-lg-3">Title</label>
@@ -681,7 +687,7 @@ if (!empty($tReview)) {
 
 
             <form method="post" name="frmReviewTagListModal" id="frmReviewTagListModal" action="javascript:void();">
-
+             {{ csrf_field() }}
                 <!--   <div class="modal-header">
                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                        <h5 class="modal-title">Apply Tags</h5>
@@ -1000,7 +1006,7 @@ if (!empty($tReview)) {
             $.ajax({
                 url: "<?php echo base_url('/admin/reviews/getReviewPopupData'); ?>",
                 type: "POST",
-                data: {rid: reviewId},
+                data: {rid: reviewId,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -1025,7 +1031,7 @@ if (!empty($tReview)) {
             $.ajax({
                 url: "<?php echo base_url('/admin/reviews/displayreview'); ?>",
                 type: "POST",
-                data: {rid: reviewid},
+                data: {rid: reviewid,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -1144,7 +1150,7 @@ if (!empty($tReview)) {
             $.ajax({
                 url: '<?php echo base_url('admin/reviews/getReviewById'); ?>',
                 type: "POST",
-                data: {reviewid: reviewID},
+                data: {reviewid: reviewID,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
@@ -1176,7 +1182,7 @@ if (!empty($tReview)) {
             $.ajax({
                 url: '<?php echo base_url('admin/reviews/getReviewById'); ?>',
                 type: "POST",
-                data: {reviewid: reviewID},
+                data: {reviewid: reviewID,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
@@ -1272,9 +1278,9 @@ if (!empty($tReview)) {
             var status = $(this).attr('change_status');
             var review_id = $(this).attr('review_id');
             $.ajax({
-                url: '<?php echo base_url('admin/reviews/update_review_status'); ?>',
+                url: '<?php echo base_url('admin/reviews/updateReviewStatus'); ?>',
                 type: "POST",
-                data: {status: status, review_id: review_id},
+                data: {status: status, review_id: review_id,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
@@ -1321,7 +1327,7 @@ if (!empty($tReview)) {
             $.ajax({
                 url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
                 type: "POST",
-                data: {review_id: review_id},
+                data: {review_id: review_id,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1355,3 +1361,4 @@ if (!empty($tReview)) {
 
 
 </script>
+@endsection
