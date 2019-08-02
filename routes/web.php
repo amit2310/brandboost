@@ -69,6 +69,7 @@ Route::post('admin/brandboost/savePreviewData','Admin\Brandboost@savePreviewData
 Route::post('admin/brandboost/addBrandBoostWidgetDesign','Admin\Brandboost@addBrandBoostWidgetDesign');
 Route::post('admin/brandboost/addBrandBoostWidgetCampaign','Admin\Brandboost@addBrandBoostWidgetCampaign');
 Route::post('admin/brandboost/publishOnsiteStatusBB','Admin\Brandboost@publishOnsiteStatusBB');
+Route::post('admin/brandboost/saveOnsitePreferences','Admin\Brandboost@saveOnsitePreferences');
 
 
 Route::post('dropzone/upload_image','Dropzone\@upload_image');
