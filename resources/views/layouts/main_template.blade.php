@@ -181,7 +181,12 @@ if ($uriSegment == 'offsite') {
         $pageColor = 'onsite_sec';
     } else if (\Request::segment(3) == 'reviews' || \Request::segment(3) == 'emails' || \Request::segment(3) == 'automationStats' || \Request::segment(3) == 'tagsreview' || \Request::segment(2) == 'dashboard') {
         $pageColor = 'onsite_sec';
-    } else if (\Request::segment(3) == 'statistics' || \Request::segment(3) == 'subscribers') {
+    } 
+   else if (\Request::segment(2) == 'tags' && \Request::segment(3) == '') {
+        $pageColor = 'onsite_sec';
+    }
+
+    else if (\Request::segment(3) == 'statistics' || \Request::segment(3) == 'subscribers') {
         $pageColor = 'email_sec';
     } else if (\Request::segment(3) == 'stats' || \Request::segment(4) == 'onsite' || \Request::segment(3) == 'mycontacts') {
         $pageColor = 'people_sec';

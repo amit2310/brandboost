@@ -308,7 +308,7 @@ class TagsModel extends Model {
      * @return type boolean
      */
 
-    
+
     public function addReviewTag($aData) {
         $aTagIDs = $aData['aTagIDs'];
         if (!empty($aTagIDs)) {
@@ -486,13 +486,18 @@ class TagsModel extends Model {
     * @return type
     */
 
-    public function getFeedbackByTagID($tagID) {
-        $oData = DB::table('tbl_feedback_tags')->distinct()->select('feedback_id')->where("tag_id", $tagID)->get();
+    public static function getFeedbackByTagID($tagID) {
+        $oData = DB::table('tbl_feedback_tags')->distinct()->where("tag_id", $tagID)->get();
         if ($oData->count() > 0) {
             $aData = $oData;
+            return $aData;
+        }
+        else
+        {
+          return false;
         }
 
-        return $aData;
+        
     }
 
 
@@ -505,25 +510,19 @@ class TagsModel extends Model {
     */
 
     public function getTagFeedback($userID, $user_role, $tagId) {
-        $response = array();
-        $oData = DB::table('tbl_brandboost_feedback')
-        ->select('tbl_brandboost_feedback.*', 'tbl_users.avatar', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname','tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_img')
-            ->when($user_role > 1, function($query) use ($userId){
-            return $query->where("tbl_brandboost_feedback.client_id", $userID);
-            })
-        
-            ->where('tbl_brandboost.brand_title !=', '')
-            ->where('tbl_brandboost_feedback.id IN(SELECT feedback_id FROM tbl_feedback_tags WHERE tag_id=$tagId)')
-            ->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.id','=','tbl_brandboost_feedback.subscriber_id')
-            ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id','=','tbl_subscribers.id')
-             ->leftJoin('tbl_users', 'tbl_users.id','=','tbl_brandboost_users.user_id')
-             ->leftJoin('tbl_brandboost', 'tbl_brandboost.id','=','tbl_brandboost_feedback.brandboost_id')
-              ->orderBy('tbl_brandboost_feedback.id', 'DESC')->get();
-        
-        if ($oData->count() > 0) {
-            $response = $oData;
+        if(!empty($userID))
+        {
+         $oData = DB::select(DB::raw("SELECT `tbl_brandboost_feedback`.*, `tbl_users`.`avatar`, `tbl_subscribers`.`firstname`, `tbl_subscribers`.`lastname`, `tbl_subscribers`.`email`, `tbl_subscribers`.`phone`, `tbl_brandboost`.`brand_title`, `tbl_brandboost`.`brand_img` FROM `tbl_brandboost_feedback` LEFT JOIN `tbl_brandboost_users` ON `tbl_brandboost_users`.`id` = `tbl_brandboost_feedback`.`subscriber_id` LEFT JOIN `tbl_subscribers` ON `tbl_brandboost_users`.`subscriber_id` = `tbl_subscribers`.`id` LEFT JOIN `tbl_users` ON `tbl_users`.`id` = `tbl_brandboost_users`.`user_id` LEFT JOIN `tbl_brandboost` ON `tbl_brandboost`.`id` = `tbl_brandboost_feedback`.`brandboost_id` WHERE `tbl_brandboost_feedback`.`client_id` = '".$userID."' AND `tbl_brandboost`.`brand_title` != '' AND `tbl_brandboost_feedback`.`id` IN(SELECT feedback_id FROM tbl_feedback_tags WHERE tag_id=$tagId) ORDER BY `tbl_brandboost_feedback`.`id` DESC"));
         }
-        return $response;
+        else
+        {
+            $oData = DB::select(DB::raw("SELECT `tbl_brandboost_feedback`.*, `tbl_users`.`avatar`, `tbl_subscribers`.`firstname`, `tbl_subscribers`.`lastname`, `tbl_subscribers`.`email`, `tbl_subscribers`.`phone`, `tbl_brandboost`.`brand_title`, `tbl_brandboost`.`brand_img` FROM `tbl_brandboost_feedback` LEFT JOIN `tbl_brandboost_users` ON `tbl_brandboost_users`.`id` = `tbl_brandboost_feedback`.`subscriber_id` LEFT JOIN `tbl_subscribers` ON `tbl_brandboost_users`.`subscriber_id` = `tbl_subscribers`.`id` LEFT JOIN `tbl_users` ON `tbl_users`.`id` = `tbl_brandboost_users`.`user_id` LEFT JOIN `tbl_brandboost` ON `tbl_brandboost`.`id` = `tbl_brandboost_feedback`.`brandboost_id`  AND `tbl_brandboost`.`brand_title` != '' AND `tbl_brandboost_feedback`.`id` IN(SELECT feedback_id FROM tbl_feedback_tags WHERE tag_id=$tagId) ORDER BY `tbl_brandboost_feedback`.`id` DESC"));
+
+        }
+    if (count($oData)> 0) {
+    $response = $oData;
+    }
+    return $response;
     }
 
     /**

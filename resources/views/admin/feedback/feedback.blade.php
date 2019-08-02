@@ -5,13 +5,13 @@
 @endsection
 
 @section('contents')
-<?php list($canRead, $canWrite) = fetchPermissions('Feedbacks'); ?>
+<?php error_reporting(0);list($canRead, $canWrite) = fetchPermissions('Feedbacks'); ?>
 <?php
 $aData['allTab'] = '';
 $aData['postiveTab'] = '';
 $aData['neutralTab'] = '';
 $aData['negativeTag'] = '';
-
+$selected_tab="";
 
 if ($selected_tab == 'all') {
     $allTab = 'active';

@@ -457,3 +457,5 @@ Route::post('admin/reviews/saveReviewNotes','Admin\Reviews@saveReviewNotes');
 Route::post('admin/reviews/getReviewPopupData','Admin\Reviews@getReviewPopupData');
 Route::post('admin/reviews/getReviewById','Admin\Reviews@getReviewById');
 Route::post('admin/reviews/update_video_review','Admin\Reviews@update_video_review');
+Route::get('admin/tags/tagsfeedback','Admin\Tags@tagsfeedback');
+Route::get('admin/tags/feedback/{id}','Admin\Tags@feedback');

@@ -1,4 +1,11 @@
-<?php list($canRead, $canWrite) = fetchPermissions('Tags'); ?>
+ @extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
+<?php error_reporting(0); list($canRead, $canWrite) = fetchPermissions('Tags'); ?>
 <div class="content">
 	<!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
 
@@ -177,7 +184,7 @@
                             <?php
                             if (count($tagData) > 0) {
                                 foreach ($tagData as $data) {
-                                    $tagData = $this->mTag->getFeedbackByTagID($data->id);
+                                    $tagData = \App\Models\Admin\TagsModel::getFeedbackByTagID($data->id);
                                     if (count($tagData) > 0) {
                                         $feedbackCount = '<a href="' . base_url('admin/tags/feedback/' . $data->id) . '" target="_blank"><span class="text-muted reviewnum">(' . count($tagData) . ' Feedback)</span></a>';
                                     } else {
@@ -437,3 +444,4 @@ var elem = $(this);
     });
     
 </script>
+@endsection

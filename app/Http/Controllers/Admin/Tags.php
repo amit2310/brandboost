@@ -52,10 +52,18 @@ class Tags extends Controller {
         return view ('admin.tags.review_list', array('title' => 'Review List', 'pagename' => $breadcrumb, 'tag_id' => $tagID, 'tReview' => $getTagsReview));
     }
 
+
+    /**
+    * This function is used to list all the feedback tags list
+    * @param type $clientID
+    * @return type
+    */
+
     public function feedback($tagID) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mTag  = new TagsModel();
 
         $user_role = $aUser->user_role;
         $tagFeedback = $mTag->getTagFeedback($userID, $user_role, $tagID);
@@ -72,7 +80,7 @@ class Tags extends Controller {
             'result' => $tagFeedback
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/feedback/feedback', $data);
+        return view ('admin.feedback.feedback', $data);
     }
 
     public function tagsreview() {
@@ -93,12 +101,18 @@ class Tags extends Controller {
         return view ('admin.tags.tagsreview', array('title' => 'Tags Review', 'pagename' => $breadcrumb, 'tagData' => $tagData));
     }
 
+
+    /**
+    * This function is used to list all feedback tags
+    * @param type $clientID
+    * @return type
+    */
     public function tagsfeedback() {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-
+       $mTag = new TagsModel();
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -108,7 +122,7 @@ class Tags extends Controller {
                     </ul>';
 
         $tagData = $mTag->getAllClientTags($userID);
-        $this->template->load('admin/admin_template_new', 'admin/tags/tagsfeedback', array('title' => 'Tags Feedback', 'pagename' => $breadcrumb, 'tagData' => $tagData));
+        return view ('admin.tags.tagsfeedback', array('title' => 'Tags Feedback', 'pagename' => $breadcrumb, 'tagData' => $tagData));
     }
 
     public function listAllTags(Request $request) {
