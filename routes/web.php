@@ -430,4 +430,18 @@ Route::get('admin/team/activitylist','Admin\Team@activitylist');
 Route::post('admin/team/deleteTeamMember','Admin\Team@deleteTeamMember');
 Route::post('admin/team/twilioNumberlisting','Admin\Team@twilioNumberlisting');
 
-
+//Tag Module
+Route::get('admin/tags','Admin\Tags@index');
+Route::post('admin/tags/addgroupentity','Admin\Tags@addgroupentity');
+Route::post('admin/tags/addgroup','Admin\Tags@addgroup');
+Route::get('admin/tags/tagsreview','Admin\Tags@tagsreview');
+Route::post('admin/tags/deleteTagGroupEntity','Admin\Tags@deleteTagGroupEntity');
+Route::get('admin/tags/review/{id}','Admin\Tags@review');
+Route::get('admin/tags/listAllTags','Admin\Tags@listAllTags');
+Route::post('admin/tags/applyReviewTag','Admin\Tags@applyReviewTag');
+Route::post('admin/reviews/update_review_status','Admin\Reviews@updateReviewStatus');
+Route::post('admin/reviews/displayreview','Admin\Reviews@displayreview');
+Route::post('admin/reviews/saveReviewNotes','Admin\Reviews@saveReviewNotes');
+Route::post('admin/reviews/getReviewPopupData','Admin\Reviews@getReviewPopupData');
+Route::post('admin/reviews/getReviewById','Admin\Reviews@getReviewById');
+Route::post('admin/reviews/update_video_review','Admin\Reviews@update_video_review');

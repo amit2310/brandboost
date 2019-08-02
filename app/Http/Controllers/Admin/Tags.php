@@ -10,6 +10,13 @@ use Session;
 
 class Tags extends Controller {
 
+
+    /**
+    * tags index function to load initial view of the module
+    * @param type 
+    * @return type
+    */
+
     public function index() {
 
         $aUser = getLoggedUser();
@@ -24,13 +31,14 @@ class Tags extends Controller {
                     </ul>';
 
         $aTag = TagsModel::getClientTags($userID);
-        $this->template->load('admin/admin_template_new', 'admin/tags/index.php', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
+        return view ('admin.tags.index', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
     }
 
     public function review($tagID) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mTag = new TagsModel();
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -41,7 +49,7 @@ class Tags extends Controller {
         $aTag = TagsModel::getClientTags($userID);
         $getTagsReview = $mTag->getTagsReview($tagID);
 
-        $this->template->load('admin/admin_template_new', 'admin/tags/review_list', array('title' => 'Review List', 'pagename' => $breadcrumb, 'tag_id' => $tagID, 'tReview' => $getTagsReview));
+        return view ('admin.tags.review_list', array('title' => 'Review List', 'pagename' => $breadcrumb, 'tag_id' => $tagID, 'tReview' => $getTagsReview));
     }
 
     public function feedback($tagID) {
@@ -71,6 +79,7 @@ class Tags extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mTag = new TagsModel();
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -81,7 +90,7 @@ class Tags extends Controller {
                     </ul>';
 
         $tagData = $mTag->getAllClientTags($userID);
-        $this->template->load('admin/admin_template_new', 'admin/tags/tagsreview', array('title' => 'Tags Review', 'pagename' => $breadcrumb, 'tagData' => $tagData));
+        return view ('admin.tags.tagsreview', array('title' => 'Tags Review', 'pagename' => $breadcrumb, 'tagData' => $tagData));
     }
 
     public function tagsfeedback() {
@@ -102,11 +111,12 @@ class Tags extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/tags/tagsfeedback', array('title' => 'Tags Feedback', 'pagename' => $breadcrumb, 'tagData' => $tagData));
     }
 
-    public function listAllTags() {
+    public function listAllTags(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mTag = new TagsModel();
         
-        if (empty($post) || empty($userID)) {
+        if (empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -126,7 +136,7 @@ class Tags extends Controller {
             $aAppliedTags = $mTag->getTagsDataByQuestionID($questionID);
         }
         $aTag = TagsModel::getClientTags($userID);
-        $sTags = $this->load->view('admin/tags/mytags', array('oTags' => $aTag, 'aAppliedTags' => $aAppliedTags), true);
+        $sTags = view('admin.tags.mytags', array('oTags' => $aTag, 'aAppliedTags' => $aAppliedTags))->render();
         $response = array('status' => 'success', 'list_tags' => $sTags);
         echo json_encode($response);
         exit;
@@ -178,11 +188,19 @@ class Tags extends Controller {
         exit;
     }
 
-    public function addgroup() {
+
+    /**
+    * This function is used to add the new tag Group
+    * @param type $clientID
+    * @return type
+    */
+
+    public function addgroup(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mTag  = new TagsModel();
         
-        if (empty($post) || empty($userID)) {
+        if (empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -208,11 +226,18 @@ class Tags extends Controller {
         }
     }
 
-    public function addgroupentity() {
+    /**
+    * This function is used to add the tag to the group
+    * @param type $clientID
+    * @return type
+    */
+
+    public function addgroupentity(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mTag = new TagsModel();
         
-        if (empty($post) || empty($userID)) {
+        if (empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -469,11 +494,17 @@ class Tags extends Controller {
         exit;
     }
 
-    public function deleteTagGroupEntity() {
+    /**
+    * This function is used to delete Group Entity on the behaof of the group entity id
+     * @param type $id
+    * @return type
+    */
+
+    public function deleteTagGroupEntity(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+        $mTag = new TagsModel();
+        if (empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -521,18 +552,19 @@ class Tags extends Controller {
         }
     }
 
-    public function applyReviewTag() {
+
+    /**
+     * this function is used to add the tags in the system
+     * @return type boolean
+     */
+
+    public function applyReviewTag(Request $request) {
 
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-
+        $mTag = new TagsModel();
+       
         $reviewID = base64_url_decode(strip_tags($request->review_id));
         $aTagID = $request->applytag;
         $aInput = array(
@@ -547,7 +579,7 @@ class Tags extends Controller {
             //Get refreshed tag list
             $oTags = $mTag->getTagsDataByReviewID($reviewID);
 
-            $sTagDropdown = $this->load->view("admin/tags/tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'reviewid', 'fieldValue' => base64_url_encode($reviewID), 'actionName' => 'review-tag', 'actionClass' => 'applyInsightTagsReviews'), true);
+            $sTagDropdown = view("admin/tags/tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'reviewid', 'fieldValue' => base64_url_encode($reviewID), 'actionName' => 'review-tag', 'actionClass' => 'applyInsightTagsReviews'))->render();
 
             $response = array('status' => 'success', 'msg' => 'Tag added successfully!', 'refreshTags' => $sTagDropdown, 'id' => $reviewID);
             echo json_encode($response);

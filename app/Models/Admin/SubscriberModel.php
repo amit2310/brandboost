@@ -1613,7 +1613,7 @@ FROM
     public function getSubscriberBBCampaigns($subscriberID) {
         $aData =  DB::table('tbl_brandboost_users')->
         select('tbl_brandboost_users.*', 'tbl_brandboost.brand_title', 'tbl_brandboost.review_type')
-        ->leftjoin('tbl_brandboost', 'tbl_brandboost_users.brandboost_id','=','tbl_brandboost.id')
+        ->leftJoin('tbl_brandboost', 'tbl_brandboost_users.brandboost_id','=','tbl_brandboost.id')
         ->where("tbl_brandboost_users.subscriber_id", $subscriberID)->get();
         
         return $aData;
@@ -1622,7 +1622,7 @@ FROM
     public function getSubscriberNPSCampaigns($subscriberID) {
         $aData =  DB::table('tbl_nps_users')->
          select('tbl_nps_users.*', 'tbl_nps_main.title')
-        ->leftjoin('tbl_nps_main', 'tbl_nps_users.account_id','=','tbl_nps_main.hashcode')
+        ->leftJoin('tbl_nps_main', 'tbl_nps_users.account_id','=','tbl_nps_main.hashcode')
         ->where('tbl_nps_users.subscriber_id', $subscriberID)->get();
         return $aData;
     }
@@ -1630,7 +1630,7 @@ FROM
     public function getSubscriberReferralCampaigns($subscriberID) {
         $aData =  DB::table('tbl_referral_users')
         ->select('tbl_referral_users.*', 'tbl_referral_rewards.title')
-        ->leftjoin('tbl_referral_rewards', 'tbl_referral_users.account_id','=','tbl_referral_rewards.hashcode')
+        ->leftJoin('tbl_referral_rewards', 'tbl_referral_users.account_id','=','tbl_referral_rewards.hashcode')
          ->where('tbl_referral_users.subscriber_id', $subscriberID)->get();
        
         return $aData;

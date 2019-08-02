@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php list($canRead, $canWrite) = fetchPermissions('Tags'); ?>
 <!-- Content area -->
 
@@ -202,7 +209,7 @@
                                 if (count($tagData) > 0) {
                                     foreach ($tagData as $data) {
 
-                                        $tData = $this->mTag->getReviewsByTagID($data->id);
+                                        $tData = \App\Models\Admin\TagsModel::getReviewsByTagID($data->id);
                                         if (count($tData) > 0) {
                                             $reviewCount = '<a href="' . base_url('admin/tags/review/' . $data->id) . '"><span class="text-muted reviewnum">(' . count($tData) . ' Reviews)</span></a>';
                                         } else {
@@ -428,7 +435,7 @@ var elem = $(this);
                             $.ajax({
                                 url: '<?php echo base_url('admin/tags/deleteTagGroupEntity'); ?>',
                                 type: "POST",
-                                data: {id: tagID},
+                                data: {id: tagID,_token: '{{csrf_token()}}'},
                                 dataType: "json",
                                 success: function (data) {
                                     if (data.status == 'success') {
@@ -443,3 +450,4 @@ var elem = $(this);
 
     });
     </script>
+@endsection

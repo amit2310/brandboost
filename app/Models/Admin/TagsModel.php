@@ -14,7 +14,7 @@ class TagsModel extends Model {
      * @param type $userid
      * @return type object
      */
-    public static function getClientTags($userID = 0) {
+    public static function getClientTags($userID = "") {
 
         $oData = DB::table('tbl_tag_groups')
                 ->leftJoin('tbl_tag_groups_entity', 'tbl_tag_groups.id', '=', 'tbl_tag_groups_entity.group_id')
@@ -46,90 +46,116 @@ class TagsModel extends Model {
         return $oData;
     }
 
+
+     /**
+    * This function will return tags reviews
+    * @param type $tagID
+    * @return type
+    */
+
     public function getTagsReview($tagID) {
 
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
-        $this->db->join("tbl_reviews_tags", "tbl_reviews.id=tbl_reviews_tags.review_id", "LEFT");
-        $this->db->where("tbl_reviews_tags.tag_id", $tagID);
-        $rResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
-        if ($rResponse->num_rows() > 0) {
-            $aReviews = $rResponse->result();
-        }
-        return $aReviews;
+         $oData = DB::table('tbl_reviews')
+           ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
+             ->leftJoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
+              ->leftJoin('tbl_reviews_tags', 'tbl_reviews.id','=','tbl_reviews_tags.review_id')
+               ->where('tbl_reviews_tags.tag_id', $tagID)->get();
+        return $oData;
     }
+
+
+     /**
+    * This function will return all tags by subscriber id 
+    * @param type $subscriberId
+    * @return type
+    */
 
     public function getTagsBySubscriberID($subscriberId) {
         $this->db->select("tbl_tag_groups_entity.*");
         $this->db->join("tbl_reviews_tags", "tbl_reviews.id=tbl_reviews_tags.review_id", "LEFT");
     }
 
-    public function getAllClientTags($userID = 0) {
+   
+     /**
+    * This function will return all client tags 
+    * @param type $userID
+    * @return type
+    */
 
-        $this->db->select("tbl_tag_groups_entity.*, tbl_tag_groups.group_name, tbl_tag_groups.user_id");
-        $this->db->join("tbl_tag_groups", "tbl_tag_groups.id=tbl_tag_groups_entity.group_id", "LEFT");
-        if ($userID > 0) {
-            $this->db->where("tbl_tag_groups.user_id", $userID);
-        }
-        $this->db->order_by("tbl_tag_groups.id", "DESC");
-        $result = $this->db->get('tbl_tag_groups_entity');
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
+    public function getAllClientTags($userID = "") {
 
-        return $aData;
+       $oData = DB::table('tbl_tag_groups_entity')
+        ->select('tbl_tag_groups_entity.*', 'tbl_tag_groups.group_name', 'tbl_tag_groups.user_id')
+        ->leftJoin('tbl_tag_groups', 'tbl_tag_groups.id','=','tbl_tag_groups_entity.group_id')
+        ->when($userID > 0, function($query) use ($userID){
+        return $query->where("tbl_tag_groups.user_id", $userID);
+        })
+        
+         ->orderBy('tbl_tag_groups.id', 'DESC')->get();
+        return $oData;
     }
+
+
+      /**
+    * This function will add Group
+    * @param type $aData
+    * @return type
+    */
 
     public function addTagGroup($aData) {
-        $result = $this->db->insert('tbl_tag_groups', $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
+         $oData = DB::table('tbl_tag_groups')->insertGetId($aData);
+        return $oData;
     }
+
+
+    /**
+    * This function will add Group Entity
+    * @param type $aData
+    * @return type
+    */
 
     public function addTagGroupEntity($aData) {
-        $result = $this->db->insert('tbl_tag_groups_entity', $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
+        $oData = DB::table('tbl_tag_groups_entity')->insertGetId($aData);
+       return $oData;
     }
+
+
+    /**
+    * This function will return Group information
+    * @param type $reviewID
+    * @return type
+    */
+
 
     public function getTagGroupInfo($id) {
-        $this->db->where('id', $id);
-        $this->db->limit(1);
-        $result = $this->db->get('tbl_tag_groups');
-        if ($result->num_rows() > 0) {
-            $aData = $result->row();
-        }
-
-        return $aData;
+         $oData = DB::table('tbl_tag_groups')->where('id', $id)->limit(1)->first();
+        return $oData;
     }
+
+
+    /**
+    * This function will return Group Entity information
+    * @param type $reviewID
+    * @return type
+    */
+
 
     public function getTagGroupEntityInfo($id) {
-        $this->db->where('id', $id);
-        $this->db->limit(1);
-        $result = $this->db->get('tbl_tag_groups_entity');
-        if ($result->num_rows() > 0) {
-            $aData = $result->row();
-        }
-
-        return $aData;
+         $oData = DB::table('tbl_tag_groups_entity')
+         ->where('id', $id)->limit(1)->first();
+          return $oData;
     }
+
+
 
     /**
      * This function will tagids 
      * @param type $aTagID
-      @param type $reviewID
+     * @param type $reviewID
      * @return type
      */
+
+
     public function getTagByReviewIDTagID($aTagID, $reviewID) {
 
         $oData = DB::table('tbl_reviews_tags')
@@ -139,54 +165,77 @@ class TagsModel extends Model {
         return $oData;
     }
 
+
+   
+   
+    /**
+    * This function is used to get the feedback tag 
+    * @param type $aTagID
+    * @param type $feedbackID
+    * @return type
+    */
+
     public function getTagByFeedbackIDTagID($aTagID, $feedbackID) {
-        $this->db->where('tag_id', $aTagID);
-        $this->db->where('feedback_id', $feedbackID);
-        $result = $this->db->get('tbl_feedback_tags');
-        if ($result->num_rows() > 0) {
-            $aData = $result->row();
-        }
-        return $aData;
+        $oData = DB::table('tbl_feedback_tags')
+        ->where('tag_id', $aTagID)
+         ->where('feedback_id', $feedbackID)->first();
+         return $oData;
     }
+
+
+    /**
+    * This function will return tags on the behalf of tag and question id
+    * @param type $aTagID
+    * @param type $questionID
+    * @return type
+    */
 
     public function getTagByQuestionIDTagID($aTagID, $questionID) {
-        $this->db->where('tag_id', $aTagID);
-        $this->db->where('question_id', $questionID);
-        $result = $this->db->get('tbl_reviews_question_tags');
-        if ($result->num_rows() > 0) {
-            $aData = $result->row();
-        }
-        return $aData;
+        $oData = DB::table('tbl_reviews_question_tags')
+          ->where('tag_id', $aTagID)
+            ->where('question_id', $questionID)
+             ->first();
+              return $oData;
     }
+
+
+    /**
+    * This function is used to update the tagGroups
+    * @param type $id
+    * @return type
+    */
 
     public function updateTagGroup($aData, $id) {
-        $this->db->where('id', $id);
-        $result = $this->db->update('tbl_tag_groups', $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+         $oData = DB::table('tbl_tag_groups')
+            ->where('id', $id)->update($aData);
+             return true;
     }
+
+    
+    /**
+    * This function is used to update the Tag Group entity
+    * @param type $id
+    * @return type
+    */
 
     public function updateTagGroupEntity($aData, $id) {
-        $this->db->where('id', $id);
-        $result = $this->db->update('tbl_tag_groups_entity', $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $oData = DB::table('tbl_tag_groups_entity')
+          ->where('id', $id)->update($aData);
+       return true;
     }
 
+
+    /**
+    * This function is used to delete the tag Group
+    * @param type $id
+    * @return type
+    */
+
     public function deleteTagGroup($id) {
-        $this->db->where('id', $id);
-        $result = $this->db->delete('tbl_tag_groups');
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $oData = DB::table('tbl_tag_groups')
+         ->where('id', $id)->delete();
+          return true;
+
     }
 
     public function deleteReviewTagByID($id, $reviewID) {
@@ -197,36 +246,49 @@ class TagsModel extends Model {
         return $oData;
     }
 
+
+    /**
+    * This function is used to delete feedback tags by id
+    * @param type $feedbackID
+     * @param type $id
+    * @return type
+    */
+
     public function deleteFeedbackTagByID($id, $feedbackID) {
-        $this->db->where('tag_id', $id);
-        $this->db->where('feedback_id', $feedbackID);
-        $result = $this->db->delete('tbl_feedback_tags');
-        if ($result) {
+        $oData = DB::table('tbl_feedback_tags')
+          ->where('tag_id', $id)->where('feedback_id', $feedbackID)->delete();
             return true;
-        } else {
-            return false;
-        }
+
     }
+
+
+   /**
+    * This function is used to delete Question tags by id
+    * @param type $feedbackID
+     * @param type $id
+    * @return type
+    */
 
     public function deleteQuestionTagByID($id, $questionID) {
-        $this->db->where('tag_id', $id);
-        $this->db->where('question_id', $questionID);
-        $result = $this->db->delete('tbl_reviews_question_tags');
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+         $oData = DB::table('tbl_reviews_question_tags')
+         ->where('tag_id', $id)
+         ->where('question_id', $questionID)->delete();
+           return true;
     }
 
+
+
+   /**
+    * This function is used to delete Group Entity on the behaof of the group entity id
+     * @param type $id
+    * @return type
+    */
+
     public function deleteTagGroupEntity($id) {
-        $this->db->where('id', $id);
-        $result = $this->db->delete('tbl_tag_groups_entity');
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+         $oData = DB::table('tbl_tag_groups_entity')
+         ->where('id', $id)->delete();
+        return true;
+
     }
 
     /**
@@ -245,6 +307,8 @@ class TagsModel extends Model {
      * this function is used to add the tags in the system
      * @return type boolean
      */
+
+    
     public function addReviewTag($aData) {
         $aTagIDs = $aData['aTagIDs'];
         if (!empty($aTagIDs)) {
@@ -340,6 +404,14 @@ class TagsModel extends Model {
         }
     }
 
+
+   
+    /**
+    * This function is used to add Questions tags
+    * @param type array
+    * @return type
+    */
+
     public function addQuestionTag($aData) {
         $aTagIDs = $aData['aTagIDs'];
         if (!empty($aTagIDs)) {
@@ -382,63 +454,74 @@ class TagsModel extends Model {
         }
     }
 
+
+    /**
+    * This function will return Tags list
+    * @param type $groupID
+    * @return type
+    */
+
     public function getTagList($groupID) {
-        $this->db->where("group_id", $groupID);
-        $result = $this->db->get('tbl_tag_groups_entity');
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
+        $oData = DB::table('tbl_tag_groups_entity')
+        ->where("group_id", $groupID)->get();
+        return  $oData;
     }
 
-    public function getReviewsByTagID($tagID) {
-        $this->db->distinct();
-        $this->db->select('review_id');
-        $this->db->where("tag_id", $tagID);
-        $this->db->join("tbl_reviews", "tbl_reviews.id=tbl_reviews_tags.review_id", "right");
-        $result = $this->db->get('tbl_reviews_tags');
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
+     /**
+    * This function will return Reviews on the behalf of the tag id
+    * @param type $clientID
+    * @return type
+    */
 
-        return $aData;
+    public static function getReviewsByTagID($tagID) {
+        $oData = DB::table('tbl_reviews_tags')->distinct()->select('review_id')->where("tag_id", $tagID)
+        ->rightJoin('tbl_reviews', 'tbl_reviews.id','=','tbl_reviews_tags.review_id')
+         ->get();
+         return $oData;
     }
+
+    /**
+    * This function will return feedback on the behalf of the tag id
+    * @param type $clientID
+    * @return type
+    */
 
     public function getFeedbackByTagID($tagID) {
-        $this->db->distinct();
-        $this->db->select('feedback_id');
-        $this->db->where("tag_id", $tagID);
-        $result = $this->db->get('tbl_feedback_tags');
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
+        $oData = DB::table('tbl_feedback_tags')->distinct()->select('feedback_id')->where("tag_id", $tagID)->get();
+        if ($oData->count() > 0) {
+            $aData = $oData;
         }
 
         return $aData;
     }
+
+
+    /**
+    * This function is used to get all the feedback tags
+    * @param type $userID
+    * @param type $user_role
+    * @param type $tagId
+    * @return type
+    */
 
     public function getTagFeedback($userID, $user_role, $tagId) {
         $response = array();
-        $this->db->select('tbl_brandboost_feedback.*, tbl_users.avatar, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_brandboost.brand_title, tbl_brandboost.brand_img');
-        $this->db->from('tbl_brandboost_feedback');
-        if ($user_role > 1) {
-            $this->db->where("tbl_brandboost_feedback.client_id", $userID);
-        }
-        $this->db->where("tbl_brandboost.brand_title !=", "");
-        $this->db->where("tbl_brandboost_feedback.id IN(SELECT feedback_id FROM tbl_feedback_tags WHERE tag_id=$tagId)");
-        $this->db->join('tbl_brandboost_users', 'tbl_brandboost_users.id = tbl_brandboost_feedback.subscriber_id', 'left');
-        $this->db->join('tbl_subscribers', 'tbl_brandboost_users.subscriber_id = tbl_subscribers.id', 'left');
-        $this->db->join('tbl_users', 'tbl_users.id = tbl_brandboost_users.user_id', 'left');
-        $this->db->join('tbl_brandboost', 'tbl_brandboost.id = tbl_brandboost_feedback.brandboost_id', 'left');
-        $this->db->order_by('tbl_brandboost_feedback.id', 'DESC');
-        $result = $this->db->get();
-        //echo $this->db->last_query();
-        //die;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
+        $oData = DB::table('tbl_brandboost_feedback')
+        ->select('tbl_brandboost_feedback.*', 'tbl_users.avatar', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname','tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_img')
+            ->when($user_role > 1, function($query) use ($userId){
+            return $query->where("tbl_brandboost_feedback.client_id", $userID);
+            })
+        
+            ->where('tbl_brandboost.brand_title !=', '')
+            ->where('tbl_brandboost_feedback.id IN(SELECT feedback_id FROM tbl_feedback_tags WHERE tag_id=$tagId)')
+            ->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.id','=','tbl_brandboost_feedback.subscriber_id')
+            ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id','=','tbl_subscribers.id')
+             ->leftJoin('tbl_users', 'tbl_users.id','=','tbl_brandboost_users.user_id')
+             ->leftJoin('tbl_brandboost', 'tbl_brandboost.id','=','tbl_brandboost_feedback.brandboost_id')
+              ->orderBy('tbl_brandboost_feedback.id', 'DESC')->get();
+        
+        if ($oData->count() > 0) {
+            $response = $oData;
         }
         return $response;
     }
@@ -471,17 +554,30 @@ class TagsModel extends Model {
         return $oData;
     }
 
+
+    /**
+    * This function is used to check tag groups exists or not
+    * @param type $clientID
+    * @return type
+    */
+
     public function checkifGroupExist($name, $userID) {
-        $this->db->where("group_name", $name);
-        $this->db->where("user_id", $userID);
-        $result = $this->db->get('tbl_tag_groups');
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
+        $oData = DB::table('tbl_tag_groups')
+         ->where("group_name", $name)
+         ->where("user_id", $userID)->get();
+        if ($oData->count() > 0) {
             return true;
         } else {
             return false;
         }
     }
+
+
+    /**
+    * This function is used to check group tags/entity exists or not
+    * @param type $clientID
+    * @return type
+    */
 
     public function checkifGroupEntityExist($name, $userID) {
         $oGroups = $this->getClientTagGroups($userID);
@@ -492,9 +588,10 @@ class TagsModel extends Model {
         }
 
         if (!empty($aGroupID)) {
-            $sql = "SELECT * FROM tbl_tag_groups_entity WHERE tag_name='$name' AND group_id IN(" . implode(",", $aGroupID) . ")";
-            $result = $this->db->query($sql);
-            if ($result->num_rows() > 0) {
+
+            $oData = DB::select(DB::raw("SELECT * FROM tbl_tag_groups_entity WHERE tag_name='$name' AND group_id IN(" . implode(",", $aGroupID) . ")"));
+            
+            if (!empty($oData)) {
                 return true;
             } else {
                 return false;
@@ -503,38 +600,48 @@ class TagsModel extends Model {
         return false;
     }
 
-    public function getClientTagGroups($userID = 0) {
-        $this->db->where("tbl_tag_groups.user_id", $userID);
-        $result = $this->db->get('tbl_tag_groups');
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
 
-        return $aData;
+    /**
+    * This function will return tags groups on the behalf of the client / user id
+    * @param type $userID
+    * @return type
+    */
+
+    public function getClientTagGroups($userID = 0) {
+        $oData = DB::table('tbl_tag_groups')
+         ->where("tbl_tag_groups.user_id", $userID)->get();
+        
+        return $oData;
     }
+
+
+     /**
+    * This function is used to delete the review tags
+    * @param type $reviewID
+    * @param type $tagID
+    * @return type
+    */
 
     public function removeReviewTag($tagID, $reviewID) {
-        $this->db->where("review_id", $reviewID);
-        $this->db->where("tag_id", $tagID);
-        $result = $this->db->delete('tbl_reviews_tags');
-        //echo $this->db->last_query(); exit;
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $oData = DB::table('tbl_reviews_tags')
+        ->where("review_id", $reviewID);
+         where("tag_id", $tagID)->delete();
+        return true;
     }
 
+
+     /**
+    * This function is used to delete the feedback tags
+    * @param type $feedbackID
+    * @param type $tagID
+    * @return type
+    */
+
     public function removeFeedbackTag($tagID, $feedbackID) {
-        $this->db->where("feedback_id", $feedbackID);
-        $this->db->where("id", $tagID);
-        $result = $this->db->delete('tbl_feedback_tags');
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $oData = DB::table('tbl_feedback_tags')
+          ->where("feedback_id", $feedbackID)
+           ->where("id", $tagID)->delete();
+             return false;
     }
 
     /**
@@ -548,7 +655,7 @@ class TagsModel extends Model {
                 ->select('tbl_tag_groups_entity.*', 'tbl_subscriber_tags.tag_id', 'tbl_subscriber_tags.subscriber_id')
                 ->where('tbl_subscriber_tags.subscriber_id', $subscriberID)
                 ->get();
-        return $oData;        
+                 return $oData;        
     }
 
     /**

@@ -654,7 +654,7 @@ class ReviewsModel extends Model {
         return $aData;
     }
 
-    public function countHelpful($reviewID) {
+    public static function countHelpful($reviewID) {
         $result = array();
         $rResponse = DB::table('tbl_reviews_helpful')
         ->where("review_id", $reviewID)->get();
@@ -1073,15 +1073,10 @@ class ReviewsModel extends Model {
             return false;
     }
 
-    public function getReviewByReviewID($reviewid) {
-
-        $this->db->where('id', $reviewid);
-        $this->db->from('tbl_reviews');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+    public static function getReviewByReviewID($reviewid) {
+          $aData =  DB::table('tbl_reviews')
+        ->where('id', $reviewid)->get();
+        return $aData;
     }
 
     public function getReviewDetailsByReviewID($reviewid) {
