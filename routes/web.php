@@ -417,5 +417,6 @@ Route::post('admin/team/getTeamMember','Admin\Team@getTeamMember');
 Route::post('admin/team/updateTeamMember','Admin\Team@updateTeamMember');
 Route::get('admin/team/activitylist','Admin\Team@activitylist');
 Route::post('admin/team/deleteTeamMember','Admin\Team@deleteTeamMember');
+Route::post('admin/team/twilioNumberlisting','Admin\Team@twilioNumberlisting');
 
 

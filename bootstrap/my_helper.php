@@ -1891,12 +1891,20 @@ if (!function_exists('createTwilioSA')) {
 
 }
 
+
+    /**
+    * This function is used to get the twilio numbers
+    * @param type 
+    * @return type
+    */
+
 if (!function_exists('getTwilioPNByAreaCodeTeam')) {
 
 
     function getTwilioPNByAreaCodeTeam($contryName = '', $areacode) {
         $aUser = getLoggedUser();
         $TwilioData = currentUserTwilioData($aUser->id);
+
 
         $contryName = $contryName == '' ? 'US' : strtoupper($contryName);
 //$areacode = $areacode == '' ? 510 : $areacode;
@@ -1909,7 +1917,7 @@ if (!function_exists('getTwilioPNByAreaCodeTeam')) {
             $numbers = $client->availablePhoneNumbers($contryName)->local->read(
                     array("areaCode" => $areacode)
             );
-
+            
             $returnData = array();
             if (count($numbers) > 0) {
                 $returnData['status'] = 'success';

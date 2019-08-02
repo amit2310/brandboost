@@ -93,10 +93,17 @@ class Team extends Controller {
         
     }
 
+
+    /**
+    * This function is used to get the twilio numbers
+    * @param type 
+    * @return type
+    */
+      
      public function twilioNumberlisting()
      {
 
-      $post = $this->input->post();
+      $post = Input::post();
       $area_code = strip_tags($post['area_code']);
       $res  = getTwilioPNByAreaCodeTeam($contryName = '', $area_code);
       return $res;
@@ -505,6 +512,7 @@ class Team extends Controller {
     public function updateTeamMember() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $post = Input::post();
+       
         if(empty($post)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -518,7 +526,7 @@ class Team extends Controller {
         $email = strip_tags($post['edit_email']);
         $phone = strip_tags($post['edit_phone']);
         if(isset($post['edit_webchat_config']) && $post['edit_webchat_config']=='on') { $web_chat=1; } else { $web_chat=0;}
-        if(isset($post['edit_webchat_config']) && $post['edit_smschat_config']=='on') { $sms_chat=1; } else { $sms_chat=0;}
+        if(isset($post['edit_smschat_config']) && $post['edit_smschat_config']=='on') { $sms_chat=1; } else { $sms_chat=0;}
 
         $edit_gender = $post['edit_gender'];
         $edit_countryCode = $post['edit_countryCode'];
@@ -527,6 +535,12 @@ class Team extends Controller {
         $edit_zipCode = $post['edit_zipCode'];
         $edit_socialProfile = $post['edit_socialProfile'];
         $edit_tags = $post['edit_tags'];
+        $twilioMobileNo="";
+        if(!empty($post['twilioMobileNo']))
+        {
+             $twilioMobileNo = $post['twilioMobileNo'];
+        }
+
 
         
         $aUser = getLoggedUser();
@@ -549,14 +563,13 @@ class Team extends Controller {
             'socialProfile' => $edit_socialProfile,
             'tagID' => $edit_tags
         );
-        
-
-       if(isset($post['edit_smschat_config']) && $post['edit_smschat_config']=='on' && $post['twilioMobileNo']!="" )
+   
+       if(isset($post['edit_smschat_config']) && $post['edit_smschat_config']=='on' && $twilioMobileNo!="" )
        {
-           $response = createTwilioCNTeam($post['twilioMobileNo']);
+           $response = createTwilioCNTeam($twilioMobileNo);
            if($response['status']=='success')
             {
-                $aData['bb_number']= $post['twilioMobileNo'];
+                $aData['bb_number']= $twilioMobileNo;
                 $aData['contact_sid']= $response['contact_sid'];
 
                 $bUpdated = $mTeam->updateTeamMember($aData, $memberID, $userID);
