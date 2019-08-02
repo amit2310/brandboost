@@ -163,6 +163,8 @@ Route::post('admin/account_setting/account_deleted','Admin\AccountSetting@accoun
 Route::get('admin/accounts/usage','Admin\AccountSetting@usage');
 Route::post('admin/accounts/usageInfo','Admin\AccountSetting@usageInfo');
 
+// Invoice
+Route::get('admin/invoices/view/{clientID}','Admin\Invoice@view');
 
 //Setting 
 Route::get('admin/settings','Admin\Settings@index');
