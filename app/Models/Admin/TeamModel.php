@@ -424,7 +424,7 @@ class TeamModel extends Model {
         } else if ($type == 'user') {
             $oData = DB::table('tbl_users_team')
             ->select('tbl_users_team.*', 'tbl_users_team.id AS activityID', 'tbl_users_team.activity_created AS activityTime', 'tbl_users.*')
-               ->leftjoin('tbl_users', 'tbl_users_team.user_id','=','tbl_users.id')
+               ->leftJoin('tbl_users', 'tbl_users_team.user_id','=','tbl_users.id')
                  ->orderBy('tbl_users_team.id', 'DESC')->get();
         }
 
@@ -443,8 +443,8 @@ class TeamModel extends Model {
         $oData = DB::table('tbl_users_team')
          ->select('tbl_team_role_permission.permission', 'tbl_team_permission.title')
          ->join('tbl_team_role', 'tbl_users_team.team_role_id' ,'=','tbl_team_role.id')
-         ->leftjoin('tbl_team_role_permission', 'tbl_team_role_permission.role_id','=','tbl_team_role.id')
-          ->leftjoin('tbl_team_permission', 'tbl_team_role_permission.permission_id','=','tbl_team_permission.id')
+         ->leftJoin('tbl_team_role_permission', 'tbl_team_role_permission.role_id','=','tbl_team_role.id')
+          ->leftJoin('tbl_team_permission', 'tbl_team_role_permission.permission_id','=','tbl_team_permission.id')
             ->where('tbl_users_team.id', $userID)->get();
         
         return $oData;
