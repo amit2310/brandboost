@@ -329,60 +329,65 @@ class ReviewsModel extends Model {
         return true;
     }
 	
-	public function getCampReviewsWithFiveRatings($brandboostID) {
-
-        $this->db->select("tbl_brandboost.*, ut.firstname, ut.lastname, ut.email, tu.firstname as bb_u_firstname, tu.lastname as bb_u_lastname, tu.email as bb_u_email, tbl_reviews.comment_text, tbl_reviews.ratings, tbl_reviews.id as reviewId");
-        $this->db->join("tbl_reviews", "tbl_brandboost.id=tbl_reviews.campaign_id", "LEFT");
-        $this->db->join("tbl_users as ut", "tbl_reviews.user_id=ut.id", "LEFT");
-        $this->db->join("tbl_users as tu", "tbl_brandboost.user_id=tu.id", "LEFT");
-        $this->db->where("tbl_brandboost.id", $brandboostID);
-        $this->db->where("tbl_reviews.ratings", 5);
-        $this->db->where("tbl_reviews.status", 1);
-        $this->db->where("tbl_reviews.review_type", 'text');
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $this->db->limit(5);
-        $rResponse = $this->db->get("tbl_brandboost");
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
+    /**
+     * Get campaign's review five star ratings
+     * @param type $brandboostID
+     * @return type
+     */
+    public function getCampReviewsWithFiveRatings($brandboostID) {
+            $oData = DB::table('tbl_brandboost')
+                ->leftJoin('tbl_reviews', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
+                ->leftJoin('tbl_users as ut', 'tbl_reviews.user_id', '=', 'ut.id')
+                ->leftJoin('tbl_users as tu', 'tbl_brandboost.user_id', '=', 'tu.id')    
+                ->select('tbl_brandboost.*', 'ut.firstname', 'ut.lastname', 'ut.email', 'tu.firstname as bb_u_firstname', 'tu.lastname as bb_u_lastname', 'tu.email as bb_u_email', 'tbl_reviews.comment_text', 'tbl_reviews.ratings', 'tbl_reviews.id as reviewId')
+                ->where('tbl_brandboost.id', $brandboostID)
+                ->where('tbl_reviews.ratings', 5)                
+                ->where('tbl_reviews.status', 1)
+                ->where('tbl_reviews.review_type', 'text')
+                ->orderBy('tbl_reviews.id', 'desc')    
+                ->get();
+            return $oData;
     }
 
+    /**
+     * Get campaigns review four star ratings
+     * @param type $brandboostID
+     * @return type
+     */
     public function getCampReviewsWithFourRatings($brandboostID) {
-
-        $this->db->select("tbl_brandboost.*, ut.firstname, ut.lastname, ut.email, tu.firstname as bb_u_firstname, tu.lastname as bb_u_lastname, tu.email as bb_u_email, tbl_reviews.comment_text, tbl_reviews.ratings, tbl_reviews.id as reviewId");
-        $this->db->join("tbl_reviews", "tbl_brandboost.id=tbl_reviews.campaign_id", "LEFT");
-        $this->db->join("tbl_users as ut", "tbl_reviews.user_id=ut.id", "LEFT");
-        $this->db->join("tbl_users as tu", "tbl_brandboost.user_id=tu.id", "LEFT");
-        $this->db->where("tbl_brandboost.id", $brandboostID);
-        $this->db->where("tbl_reviews.ratings", 5);
-        $this->db->where("tbl_reviews.status", 1);
-        $this->db->where("tbl_reviews.review_type", 'text');
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $this->db->limit(5);
-        $rResponse = $this->db->get("tbl_brandboost");
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_brandboost')
+                ->leftJoin('tbl_reviews', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
+                ->leftJoin('tbl_users as ut', 'tbl_reviews.user_id', '=', 'ut.id')
+                ->leftJoin('tbl_users as tu', 'tbl_brandboost.user_id', '=', 'tu.id')    
+                ->select('tbl_brandboost.*', 'ut.firstname', 'ut.lastname', 'ut.email', 'tu.firstname as bb_u_firstname', 'tu.lastname as bb_u_lastname', 'tu.email as bb_u_email', 'tbl_reviews.comment_text', 'tbl_reviews.ratings', 'tbl_reviews.id as reviewId')
+                ->where('tbl_brandboost.id', $brandboostID)
+                ->where('tbl_reviews.ratings', 4)                
+                ->where('tbl_reviews.status', 1)
+                ->where('tbl_reviews.review_type', 'text')
+                ->orderBy('tbl_reviews.id', 'desc')    
+                ->get();
+            return $oData;
     }
 
+    /**
+     * Get Top star review ratings
+     * @param type $brandboostID
+     * @return type
+     */
     public function getCampReviewsWithTopRatings($brandboostID) {
-
-        $this->db->select("tbl_brandboost.*, ut.firstname, ut.lastname, ut.email, tu.firstname as bb_u_firstname, tu.lastname as bb_u_lastname, tu.email as bb_u_email, tbl_reviews.comment_text, tbl_reviews.ratings, tbl_reviews.id as reviewId");
-        $this->db->join("tbl_reviews", "tbl_brandboost.id=tbl_reviews.campaign_id", "LEFT");
-        $this->db->join("tbl_users as ut", "tbl_reviews.user_id=ut.id", "LEFT");
-        $this->db->join("tbl_users as tu", "tbl_brandboost.user_id=tu.id", "LEFT");
-        $this->db->where("tbl_brandboost.id", $brandboostID);
-        $this->db->where("tbl_reviews.status", 1);
-        $this->db->where("tbl_reviews.review_type", 'text');
-        $this->db->order_by("tbl_reviews.ratings", "DESC");
-        $this->db->limit(5);
-        $rResponse = $this->db->get("tbl_brandboost");
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_brandboost')
+                ->leftJoin('tbl_reviews', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
+                ->leftJoin('tbl_users as ut', 'tbl_reviews.user_id', '=', 'ut.id')
+                ->leftJoin('tbl_users as tu', 'tbl_brandboost.user_id', '=', 'tu.id')    
+                ->select('tbl_brandboost.*', 'ut.firstname', 'ut.lastname', 'ut.email', 'tu.firstname as bb_u_firstname', 'tu.lastname as bb_u_lastname', 'tu.email as bb_u_email', 'tbl_reviews.comment_text', 'tbl_reviews.ratings', 'tbl_reviews.id as reviewId')
+                ->where('tbl_brandboost.id', $brandboostID)
+                ->where('tbl_reviews.status', 1)
+                ->where('tbl_reviews.review_type', 'text')
+                ->orderBy('tbl_reviews.ratings', 'desc')
+                ->limit(5)
+                ->get();
+            return $oData;
+        
     }
 
     public function getReviews($campaignID, $aSettings = array()) {
