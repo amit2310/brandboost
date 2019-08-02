@@ -3,7 +3,7 @@
 /* require 'aws/aws-autoloader.php';
   use Aws\S3\S3Client;
   use Aws\Exception\AwsException; */
-require_once 'vendor/autoload.php'; // Loads the library
+//require_once 'vendor/autoload.php'; // Loads the library
 
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
