@@ -194,7 +194,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/invoices/get'); ?>',
                 type: "POST",
-                data: {invoice_id: invoiceid},
+                data: {invoice_id: invoiceid, _token:"{{csrf_token()}}"},
                 dataType: "json",
                 success: function (data) {
 
