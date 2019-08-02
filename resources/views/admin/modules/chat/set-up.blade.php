@@ -1,15 +1,19 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
+
 <link href="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
 <script src="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/pickers/color/spectrum.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/picker_color.js"></script>
 	
-	<style>
-	.panel-heading .nav-tabs > li.active > a, .panel-heading .nav-tabs > li.active > a:hover, .panel-heading .nav-tabs > li.active > a:focus {color: #3680dc;}
-	/*.sp-replacer{display: block;	border-radius: 5px;	box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);	background-color: #ffffff;	border: solid 1px #e3e9f3;	appearance: none;	-webkit-appearance: none;	-moz-appearance: none;	position: relative;	height: 40px;}
-	.sp-preview {	position: relative;	width: 15px;	height: 15px;	margin-right: 10px;	float: right;	margin-top: 6px;}
-		.sp-dd{display: none!important;}	
-		.sp-preview-inner{box-shadow: none!important; border-radius: 50px;}*/
-	</style>
+<style>
+.panel-heading .nav-tabs > li.active > a, .panel-heading .nav-tabs > li.active > a:hover, .panel-heading .nav-tabs > li.active > a:focus {color: #3680dc;}
+</style>
 
 <?php 
     $widget = '';
@@ -51,23 +55,27 @@
 	<div class="tab-content"> 
 
 	  <!--===========TAB 1===========-->
-       <div class="tab-pane <?php echo ($defalutTab == 'customize')? 'active': '';?>" id="right-icon-tab2">
-        <?php $this->load->view("admin/modules/chat/chat-tabs/availability", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat)); ?>
+       <div class="tab-pane <?php echo ($defalutTab == 'customize') ? 'active': ''; ?>" id="right-icon-tab2">
+        <?php //$this->load->view("admin/modules/chat/chat-tabs/availability", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat)); ?>
+		@include('admin.modules.chat.chat-tabs.availability', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat))
       </div>
 
        <!--===========TAB 2====Chat Widget=======-->
-      <div class="tab-pane <?php echo ($defalutTab == 'chat_widget')? 'active': '';?>" id="right-icon-tab3">
-        <?php $this->load->view("admin/modules/chat/chat-tabs/chat-widget", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat)); ?>
+      <div class="tab-pane <?php echo ($defalutTab == 'chat_widget') ? 'active': ''; ?>" id="right-icon-tab3">
+        <?php //$this->load->view("admin/modules/chat/chat-tabs/chat-widget", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat)); ?>
+		@include('admin.modules.chat.chat-tabs.chat-widget', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat))
       </div>
 
       <!--===========TAB 3====Preferences=======-->
 	  <div class="tab-pane" id="right-icon-tab1">
-		<?php $this->load->view("admin/modules/chat/chat-tabs/chat-contact", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat)); ?>
+		<?php //$this->load->view("admin/modules/chat/chat-tabs/chat-contact", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat)); ?>
+		@include('admin.modules.chat.chat-tabs.chat-contact', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat))
 	  </div>
 
 	  <!--===========TAB 4===========-->
 	  <div class="tab-pane <?php echo ($defalutTab == 'widgets') ? 'active' : ''; ?>" id="right-icon-tab4">
-		<?php $this->load->view("admin/modules/chat/chat-tabs/widget", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat)); ?>
+		<?php //$this->load->view("admin/modules/chat/chat-tabs/widget", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat)); ?>
+		@include('admin.modules.chat.chat-tabs.widget', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oChat' => $oChat))
 	  </div>
 	</div>
 	<!--&&&&&&&&&&&& TABBED CONTENT  END &&&&&&&&&&-->
@@ -351,7 +359,7 @@
         var myDropzoneLogoImg = new Dropzone(
             '#myDropzone_logo_img', //id of drop zone element 1
             {
-                url: '<?php echo site_url("/dropzone/upload_chat_image"); ?>',
+                url: '<?php echo base_url("/dropzone/upload_chat_image"); ?>',
                 uploadMultiple: false,
                 maxFiles: 3,
                 maxFilesize: 600,
@@ -783,5 +791,4 @@
 	
 </script>
 
-</body>
-</html>
+@endsection

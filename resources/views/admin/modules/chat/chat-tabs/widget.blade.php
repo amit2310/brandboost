@@ -42,10 +42,10 @@
 	id='bbscriptloader' 
 	data-key='<?php echo $oChat->hashcode; ?>' 
 	data-widgets='chat' async='' 
-	src='<?php echo site_url(); ?>assets/js/chat_widgets.js' &gt; 
+	src='<?php echo base_url(); ?>assets/js/chat_widgets.js' &gt; 
 &lt;/script&gt;
 			</pre>
-	<div style="display: none;" class="prettyprintDiv">&lt;script type='text/javascript' id='bbscriptloader' data-key='<?php echo $oChat->hashcode; ?>' data-widgets='chat' async='' src='<?php echo site_url(); ?>assets/js/chat_widgets.js' &gt; &lt;/script&gt;</div>					
+	<div style="display: none;" class="prettyprintDiv">&lt;script type='text/javascript' id='bbscriptloader' data-key='<?php echo $oChat->hashcode; ?>' data-widgets='chat' async='' src='<?php echo base_url(); ?>assets/js/chat_widgets.js' &gt; &lt;/script&gt;</div>					
 		</div>
 		<div class="p20 text-right">
 		<button class="btn btn-xs btn_white_table pl10 pr10" id="btnCopyWidget" onclick="copyToClipboard('.prettyprintDiv')">Copy Code</button>

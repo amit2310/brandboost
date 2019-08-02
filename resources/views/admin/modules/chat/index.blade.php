@@ -15,7 +15,7 @@
                 <h3><img src="/assets/images/chat_icon.png"> &nbsp; Chat Widgets</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Chat Widgets</a></li>
-                    <li><a href="<?php echo base_url('admin/chat'); ?>" >Live Chat</a></li>
+                    <!-- <li><a href="<?php echo base_url('admin/webchat'); ?>" >Live Chat</a></li> -->
                     <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li>
 				</ul>
 			</div>
@@ -205,36 +205,7 @@
 								<tbody>
 									<?php
 										foreach ($oPrograms as $oProgram):
-
-											$positive = 0;
-											$nutral = 0;
-											$negetive = 0;
-											$totalFeedbackNum = 0;
-											$hashcode = $oProgram->hashcode;
-											$oContactsT = \App\Models\Admin\Modules\NpsModel::getMyUsers($hashcode);
-											$totalFeedback = $oProgram->NPS;
-											//pre($totalFeedback);
-											foreach ($totalFeedback as $value) {
-												$scoreVal = $value->score;
-												if($scoreVal >= 8) {
-													$positive = $positive + 1;
-												}
-												else if($scoreVal > 4) {
-													$nutral = $nutral + 1;
-												}
-												else {
-													$negetive = $negetive + 1;
-												}
-											}
-
-											$totalFeedbackNum = $positive + $nutral + $negetive;
-
-											
-
-										//$score = ($oProgram->NPS[0]->score) ? '<a target="_blank" href="'.base_url('admin/modules/nps/score/' . $oProgram->hashcode).'">'.$oProgram->NPS[0]->score * 10 .'</a>' : 'N/A';
-										$aScoreSummery = $this->mNPS->getNPSScoreSummery($oProgram->hashcode);
-										$score = number_format($aScoreSummery['NPSScore'], 1);
-										//pre($oProgram);
+										
 										if ($oProgram->status != 'archive') {
 										?>
 										<tr id="append-<?php echo $oProgram->id; ?>" class="selectedClass">
@@ -245,7 +216,7 @@
 												<div class="media-left media-middle"> <a class="icons square" href="javascript:void(0);"><i class="icon-checkmark3 txt_blue"></i></a> </div>
 												<div class="media-left">
                                                     <div class="pt-5"><a class="text-default text-semibold" href="<?php echo base_url() ?>admin/modules/chat/setup/<?php echo $oProgram->id; ?>"><?php echo $oProgram->title; ?></a></div>
-                                                    <div class="text-muted text-size-small"><?php echo (ucfirst($oProgram->platform)) ? ucfirst($oProgram->platform) : 'NA'; ?></div>
+                                                    <div class="text-muted text-size-small"><?php //echo (ucfirst($oProgram->platform)) ? ucfirst($oProgram->platform) : 'NA'; ?></div>
 												</div>
 												
 											</td>
@@ -323,7 +294,7 @@
                                                     <div style="margin: 20px 0px 0;" class="text-center">
 
                                                     	<h5 class="mb-20">
-															Looks Like You Don’t Have Created Any Chat widget Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+															Looks Like You Don’t Have Created Any Chat widget Yet <img src="<?php echo base_url('assets/images/smiley.png'); ?>"> <br>
 															Lets Create Your First Chat Widget
 														</h5>
 														<button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription" <?php } else { ?> id="addChatSurveryButtton" <?php } ?> class="btn bl_cust_btn btn-default dark_btn ml20 mb40 addChatSurvery" type="button"><i class="icon-plus3"></i> Add Chat</button>
@@ -395,7 +366,7 @@
 												<div class="media-left media-middle"> <a class="icons square" href="javascript:void(0);"><i class="icon-checkmark3 txt_blue"></i></a> </div>
 												<div class="media-left">
                                                     <div class="pt-5"><a class="text-default text-semibold" href="<?php echo base_url() ?>admin/modules/chat/setup/<?php echo $oProgram->id; ?>"><?php echo $oProgram->title; ?></a></div>
-                                                    <div class="text-muted text-size-small"><?php echo (ucfirst($oProgram->platform)) ? ucfirst($oProgram->platform) : 'NA'; ?></div>
+                                                    <div class="text-muted text-size-small"><?php //echo (ucfirst($oProgram->platform)) ? ucfirst($oProgram->platform) : 'NA'; ?></div>
 												</div>
 												
 											</td>
@@ -450,21 +421,7 @@
 		</div>
 	</div>
 </div>
-<?php //else: ?>
-<!-- <div class="row">
-	<div class="col-md-12">
-		<div style="margin: 200px 0px 0;" class="text-center">
-		
-			<h5 class="mb-20">
-				Looks Like You Don’t Have Created Any Chat widget Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
-				Lets Create a New Survey.
-			</h5>
-			<button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default pDisplayNoActiveSubscription" <?php } else { ?> id="addChatSurvery" <?php } ?> class="btn bl_cust_btn mb-10 btn-default addChatSurvery" type="button"><i class="icon-make-group position-left"></i> Add Chat</button>
-			
-		</div>
-	</div>
-</div> -->
-<?php //endif; ?>
+
 <!-- /dashboard content -->
 
 <!-- /content area -->
@@ -487,6 +444,7 @@
 					
 					<div class="modal-footer">
 						<input type="hidden" name="chat_id" id="hidchatid" value="" />
+						{{ csrf_field() }}
 						<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary">Continue</button>
 					</div>
@@ -515,6 +473,7 @@
 					</div>
 					
 					<div class="modal-footer">
+						{{ csrf_field() }}
 						<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary">Create</button>
 					</div>
@@ -595,7 +554,7 @@
 						$.ajax({
 							url: '<?php echo base_url('admin/modules/chat/bulkDeleteChat'); ?>',
 							type: "POST",
-							data: {bulk_chat_id: val},
+							data: {bulk_chat_id: val, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -636,7 +595,7 @@
 						$.ajax({
 							url: '<?php echo base_url('admin/modules/chat/bulkArchiveChat'); ?>',
 							type: "POST",
-							data: {bulk_chat_id: val},
+							data: {bulk_chat_id: val, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -690,7 +649,7 @@
 			$.ajax({
 				url: '<?php echo base_url('admin/modules/chat/getChat'); ?>',
 				type: "POST",
-				data: {'chat_id': chat_id},
+				data: {'chat_id': chat_id, _token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'success') {
@@ -711,7 +670,7 @@
 			$.ajax({
 				url: '<?php echo base_url('admin/modules/chat/moveToArchiveChat'); ?>',
 				type: "POST",
-				data: {'chat_id': chat_id},
+				data: {'chat_id': chat_id, _token: '{{csrf_token()}}'},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'success') {
@@ -758,7 +717,7 @@
 					$.ajax({
 						url: '<?php echo base_url('admin/modules/chat/deleteChat'); ?>',
 						type: "POST",
-						data: {chat_id: chat_id},
+						data: {chat_id: chat_id, _token: '{{csrf_token()}}'},
 						dataType: "json",
 						success: function (data) {
 							if (data.status == 'success') {
@@ -777,7 +736,7 @@
 			$.ajax({
 				url: '<?php echo base_url('admin/modules/chat/changeStatus'); ?>',
 				type: "POST",
-				data: {'chatID': chatID, 'status': status},
+				data: {'chatID': chatID, 'status': status, _token: '{{csrf_token()}}'},
 				dataType: "html",
 				success: function (data) {
 					window.location.href = '<?php echo base_url("/admin/modules/chat/") ?>';

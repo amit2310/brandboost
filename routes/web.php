@@ -78,6 +78,12 @@ Route::post('admin/brandboost/archive_multipal_brandboost_widget','Admin\Brandbo
 Route::post('admin/brandboost/delete_multipal_brandboost_widget','Admin\Brandboost@deleteMultipalBrandboostWidget');
 
 
+
+Route::post('admin/modules/chat/addChat','Admin\Modules\Chat@addChat');
+Route::get('admin/modules/chat/setup/{id}','Admin\Modules\Chat@setup');
+Route::get('admin/modules/chat/updateChatPreferences','Admin\Modules\Chat@updateChatPreferences');
+
+
 Route::post('dropzone/upload_image','Dropzone\@upload_image');
 
 
