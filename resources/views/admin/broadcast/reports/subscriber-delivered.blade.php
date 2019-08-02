@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <!-- Marketing campaigns -->
             <div class="panel panel-flat">
-                <?php $this->load->view("admin/broadcast/reports/subscriber-data", array('tableId'=>$tableId)); ?>
+                @include('admin.broadcast.reports.subscriber-data', ['tableId'=>$tableId])
             </div>
         </div>
     </div>

@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php
 $allStatus = '';
 $openStatus = '';
@@ -39,11 +46,11 @@ if ($selected_tab == 'delivered') {
     <div class="tab-content">
 
         <!--########################TAB 1 ##########################-->
-        <?php $this->load->view("admin/broadcast/reports/subscriber-delivered", array('delivered' => $oBroadcastSub['delivered'], 'allStatus'=> $allStatus, 'tableId'=>'emailDelivered')); ?>
+        @include('admin.broadcast.reports.subscriber-delivered', ['delivered' => $oBroadcastSub['delivered'], 'allStatus'=> $allStatus, 'tableId'=>'emailDelivered'])
         <!--########################TAB 2 ##########################-->
-        <?php $this->load->view("admin/broadcast/reports/subscriber-open", array('delivered' => $oBroadcastSub['open'], 'openStatus' => $openStatus, 'tableId'=>'emailOpen')); ?>
+        @include('admin.broadcast.reports.subscriber-open', ['delivered' => $oBroadcastSub['open'], 'openStatus' => $openStatus, 'tableId'=>'emailOpen'])
         <!--########################TAB 3 ##########################-->
-        <?php $this->load->view("admin/broadcast/reports/subscriber-click", array('delivered' => $oBroadcastSub['click'], 'clickStatus' => $clickStatus, 'tableId'=>'emailClick')); ?>
+        @include('admin.broadcast.reports.subscriber-click', ['delivered' => $oBroadcastSub['click'], 'clickStatus' => $clickStatus, 'tableId'=>'emailClick'])
 
     </div>
 
@@ -54,30 +61,7 @@ if ($selected_tab == 'delivered') {
 <script type="text/javascript">
 
     $(document).ready(function() {
-
-        /*$(document).on('click', '.emailRecord', function() {
-            //$('.show_email_report').html(' ');
-            var report = $(this).attr('record');
-            var broadcastId = $(this).attr('broadcastId');
-            $.ajax({
-                url: "<?php echo base_url('admin/broadcast/getEmailReport'); ?>",
-                type: "POST",
-                data: {report: report, broadcastId: broadcastId},
-                dataType: "html",
-                success: function (data) {
-                    $('.show_email_report').html(`
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-flat">${data}</div></div></div>`);
-
-                    $('.dataTables_filter input').addClass('search_item');
-
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });*/
+        
 
         $(document).on('click', '.editDataList', function () {
             $('.editAction').toggle();
@@ -141,7 +125,7 @@ if ($selected_tab == 'delivered') {
                     $.ajax({
                         url: "<?php echo base_url('admin/broadcast/multipalDeleteRecord'); ?>",
                         type: "POST",
-                        data: {multi_record_id: nRecord},
+                        data: {_token: '{{csrf_token()}}', multi_record_id: nRecord},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {
@@ -161,7 +145,7 @@ if ($selected_tab == 'delivered') {
 
     });
 </script>
-
+@endsection
 
 
 

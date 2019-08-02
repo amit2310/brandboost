@@ -2918,7 +2918,8 @@ class Broadcast extends Controller {
      * @param type $email_sms
      * @param type $broadcast_id
      */
-    public function records($email_sms, $broadcast_id) {
+    public function records($email_sms, $broadcast_id) {       
+        
 
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
@@ -2942,7 +2943,7 @@ class Broadcast extends Controller {
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-                    <li><a class="sidebar-control hidden-xs"">Broadcast</a></li>
+                    <li><a class="sidebar-control hidden-xs"" href="'.base_url('admin/broadcast/'.$email_sms).'">Broadcast</a></li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
                     <li><a data-toggle="tooltip" data-placement="bottom" title="Records" class="sidebar-control active hidden-xs ">Records</a></li>
                 </ul>';
