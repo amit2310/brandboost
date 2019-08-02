@@ -251,7 +251,6 @@ class Brandboost extends Controller {
 			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
 			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $getBrandboost[0]->brand_title . '" class="sidebar-control active hidden-xs ">' . $getBrandboost[0]->brand_title . '</a></li>
 			</ul>';
-        //pre($getBrandboost[0]);
 
         $aData = array(
             'title' => 'Onsite Brand Boost Campaign',
@@ -1721,6 +1720,7 @@ class Brandboost extends Controller {
 		$productImg = $request->product_img;
 		$productType = $request->product_type;
 		$productId = $request->product_id;
+		
 		$pData = array();
 
 		if (!empty($productName)) {
@@ -1734,8 +1734,8 @@ class Brandboost extends Controller {
 					$pData['product_image'] = $productImg[$key];
 					$pData['product_type'] = $productType[$key];
 					$pData['product_order'] = $key;
-					if ($productId[$key] == '') {
-						if (!empty($bbProductsData)) {
+					if ($productName[$key] != '') {
+						if ((!empty($bbProductsData)) && (count($bbProductsData) > 0)) {
 							BrandboostModel::updateProductData($pData, $brandboostID, $key);
 						} else {
 							BrandboostModel::insertProductData($pData);
@@ -1772,16 +1772,17 @@ class Brandboost extends Controller {
 		$title = $request->title;
 		$desc = $request->desc;
 		$domainName = $request->domain_name;
-		$barndFileData = $request->brand_img;
+		/*$barndFileData = $request->brand_img;
 		$brandFileArray = array();
 
 		foreach ($barndFileData['media_url'] as $key => $fileData) {
 			$brandFileArray[$key]['media_url'] = $fileData;
 			$brandFileArray[$key]['media_type'] = $barndFileData['media_type'][$key];
-		}
+		}*/
 
 		$logoImageFileName = $request->logo_img == '' ? $request->edit_logo_img : $request->logo_img;
-		$brandImageFileName = empty($request->brand_img) ? $request->edit_brand_img : serialize($brandFileArray);
+		//$brandImageFileName = empty($request->brand_img) ? $request->edit_brand_img : serialize($brandFileArray);
+		$brandImageFileName = '';
 
 		$aDataBrandboost = array(
 			'user_id' => $userID,
@@ -2287,8 +2288,27 @@ class Brandboost extends Controller {
         return $eventID;
     }
 	
-	
-	
+	/**
+	* Used to delete product
+	* @return type
+	*/
+	public function deleteProduct(Request $request) {
+
+        $response = array();
+        $post = array();
+
+		$dataOrder = $request->dataOrder;
+		$bbId = $request->bb_id;
+		$result = BrandboostModel::deleteProduct($bbId, $dataOrder);
+		if ($result) {
+			$response['status'] = 'success';
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
 	
 	
 	
@@ -2734,27 +2754,6 @@ class Brandboost extends Controller {
                 $response['message'] = "Status has been updated successfully.";
             } else {
                 $response['message'] = "Error: Something went wrong, try again";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function deleteProduct() {
-
-        $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-
-            $dataOrder = strip_tags($post['dataOrder']);
-            $bbId = strip_tags($post['bb_id']);
-            $result = $this->mBrandboost->deleteProduct($bbId, $dataOrder);
-            if ($result) {
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
             }
 
             echo json_encode($response);

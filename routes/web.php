@@ -77,6 +77,7 @@ Route::post('admin/brandboost/updateOnsiteWidgetStatus','Admin\Brandboost@update
 Route::post('admin/brandboost/archive_multipal_brandboost_widget','Admin\Brandboost@archiveMultipalBrandboostWidget');
 Route::post('admin/brandboost/delete_multipal_brandboost_widget','Admin\Brandboost@deleteMultipalBrandboostWidget');
 Route::post('admin/brandboost/addOnsite','Admin\Brandboost@addOnsite');
+Route::post('admin/brandboost/deleteProduct','Admin\Brandboost@deleteProduct');
 
 
 
