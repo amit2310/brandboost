@@ -439,6 +439,7 @@ Route::post('admin/team/twilioNumberlisting','Admin\Team@twilioNumberlisting');
 
 //Live
 Route::get('admin/live','Admin\Live@index');
+Route::get('admin/live/details/{id}','Admin\Live@details');
 
 //Tag Module
 Route::get('admin/tags','Admin\Tags@index');
