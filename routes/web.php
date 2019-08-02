@@ -437,6 +437,9 @@ Route::get('admin/team/activitylist','Admin\Team@activitylist');
 Route::post('admin/team/deleteTeamMember','Admin\Team@deleteTeamMember');
 Route::post('admin/team/twilioNumberlisting','Admin\Team@twilioNumberlisting');
 
+//Live
+Route::get('admin/live','Admin\Live@index');
+
 //Tag Module
 Route::get('admin/tags','Admin\Tags@index');
 Route::post('admin/tags/addgroupentity','Admin\Tags@addgroupentity');
