@@ -41,7 +41,13 @@ class Live extends Controller {
 		$this->template->load('admin/admin_template_new', 'admin/live/overview', array('title' => 'Live Details', 'pagename' => $breadcrumb, 'oLiveData' => $oLiveData, 'oCurrentLiveData' => $oCurrentLiveData));
     }
 	
+	/**
+     * Live detail page
+     * @return type
+     */
 	public function details($id) {
+
+		$mLive = new LiveModel();
 		$breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
 			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
@@ -50,10 +56,9 @@ class Live extends Controller {
 			
         $aUser = getLoggedUser();
         $clientID = $aUser->id;
-		$oData = $this->mLive->getLiveDataById($id);
-        $oLiveData = $this->mLive->getLiveDataDetails($clientID, $oData->user_id, $oData->ip_address);
-		//pre($oLiveData);
-        $this->template->load('admin/admin_template_new', 'admin/live/details.php', array('title' => 'Live Details', 'pagename' => $breadcrumb, 'oLiveData' => $oLiveData));
+		$oData = $mLive->getLiveDataById($id);
+        $oLiveData = $mLive->getLiveDataDetails($clientID, $oData->source_client_id, $oData->ip_address);
+        return view('admin.live.details', array('title' => 'Live Details', 'pagename' => $breadcrumb, 'oLiveData' => $oLiveData));
     }
 }
 

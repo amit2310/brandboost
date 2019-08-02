@@ -35,13 +35,24 @@ class LiveModel extends Model {
         return false;
 	}
 	
+	/**
+     * Get live data by Id
+     * @param id
+     * @return type object
+     */
 	public function getLiveDataById($id){
 		$oData = DB::table('tbl_visitor_logs')
 			->where('id', $id)
-			->get();
+			->first();
 		return $oData;
 	}
 	
+
+	/**
+     * Get live data details
+     * @param clientId, userId, ipAddress
+     * @return type object
+     */
 	public function getLiveDataDetails($clientId, $userId, $ipAddress){
 		$oData = DB::table('tbl_visitor_logs')
 			->where('source_client_id', $clientId)
