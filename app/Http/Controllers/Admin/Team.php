@@ -686,6 +686,7 @@ class Team extends Controller {
     
     public function updateRolePermission() {
         $mTeam = new TeamModel();
+        $aPermissionData = array();
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $post = Input::post();
         if(empty($post)){
@@ -696,7 +697,10 @@ class Team extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $roleID = strip_tags($post['role_id']);
-        $aPermission = $post['permission_id'];
+        if(!empty($post['permission_id']))
+        {
+          $aPermission = $post['permission_id'];
+         }
         if(!empty($aPermission)){
             foreach($aPermission as $iPerID){
                $aPermissionData[] = array(
