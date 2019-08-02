@@ -18,8 +18,7 @@
 		$mainWigetClassName = "toTop";
 	}else if($colorOrientation == 'circle'){
 		$mainWigetClassName = "orientationCircle";
-	}	
-	
+	}
 ?>
 
 <style>
@@ -690,12 +689,12 @@
 										<div class="p10 bbot">
 											<p class="mb0">
 												<strong>
-													<input name="company_title" id="custom_company_name" class="form-control" placeholder="Company Name" type="text" style="border:none; background:#FBFBFD; padding-left:10px;" value="<?php echo $brandData->company_info_name == '' ? $oChat->company_title : $brandData->company_info_name;?>">
+													<input name="company_title" id="custom_company_name" class="form-control" placeholder="Company Name" type="text" style="border:none; background:#FBFBFD; padding-left:10px;" value="<?php //echo $brandData->company_info_name == '' ? $oChat->company_title : $brandData->company_info_name;?>">
 												</strong>
 											</p>
 										</div>
 										<div class="p10">
-											<textarea name="company_description" style="border:none; background:#FBFBFD; padding-left:10px; padding-top:10px;" id="custom_company_description" class="form-control"><?php echo $brandData->company_info_description == '' ? $oChat->company_description : $brandData->company_info_description;?></textarea>
+											<textarea name="company_description" style="border:none; background:#FBFBFD; padding-left:10px; padding-top:10px;" id="custom_company_description" class="form-control"><?php //echo $brandData->company_info_description == '' ? $oChat->company_description : $brandData->company_info_description;?></textarea>
 										</div>
 									</div>
 									

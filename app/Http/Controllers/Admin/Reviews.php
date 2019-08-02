@@ -244,14 +244,20 @@ class Reviews extends Controller {
         exit;
     }
 
+    /**
+    * This function is used to get the reviews on the behalf of id
+    * @param type $clientID
+    * @return type
+    */
+
     public function getReviewById() {
 
         $response = array();
         $response['status'] = 'error';
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $aUsers = $this->mReviews->getReviewByReviewID($post['reviewid']);
+        if (Input::post()) {
+            $post = Input::post();
+            $aUsers = ReviewsModel::getReviewByReviewID($post['reviewid']);
             if ($aUsers) {
                 $response['status'] = 'success';
                 $response['result'] = $aUsers;
@@ -407,18 +413,25 @@ class Reviews extends Controller {
         }
     }
     
+
+    /**
+    * This function is used to display the reivew popup
+    * @param type $clientID
+    * @return type
+    */
+
     public function displayreview() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
+        $post = Input::post();
         if (!empty($post)) {
             $reviewID = strip_tags($post['rid']);
-            $campaginTitle = strip_tags($post['cTitle']);
+            $campaginTitle = "";
             if ($reviewID > 0) {
-                $oReviewData = $this->mReviews->getReviewInfo($reviewID);
+                $oReviewData = ReviewsModel::getReviewInfo($reviewID);
                 //pre($oReviewData);
-                $oReviewNotes = $this->mReviews->listReviewNotes($reviewID);
+                $oReviewNotes = ReviewsModel::listReviewNotes($reviewID);
                 //pre($oReviewNotes);
-                $popupContent = $this->load->view("admin/reviews/review_popup", array('oReview' => $oReviewData, 'oNotes' => $oReviewNotes, 'campaignTitle' => $campaginTitle), true);
+                $popupContent = view("admin.reviews.review_popup", array('oReview' => $oReviewData, 'oNotes' => $oReviewNotes, 'campaignTitle' => $campaginTitle))->render();
                 $response = array('status' => 'success', 'popup_data' => $popupContent);
             }
         }
@@ -426,18 +439,25 @@ class Reviews extends Controller {
         exit;
     }
 	
+
+     /**
+    * This function is used to get review data
+    * @param type $clientID
+    * @return type
+    */
+
 	public function getReviewPopupData() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
+        $post = Input::post();
         if (!empty($post)) {
             $reviewID = strip_tags($post['rid']);
             if ($reviewID > 0) {
-                $oReviewData = $this->mReviews->getReviewInfo($reviewID);
-                $oReviewNotes = $this->mReviews->listReviewNotes($reviewID);
+                $oReviewData = ReviewsModel::getReviewInfo($reviewID);
+                $oReviewNotes = ReviewsModel::listReviewNotes($reviewID);
 				$reviewCommentCount = getCampaignCommentCount($reviewID);
 				$reviewTags = getTagsByReviewID($reviewID);
 				
-                $popupContent = $this->load->view("admin/brandboost/review_details_popup", array('reviewData' => $oReviewData, 'reviewCommentCount' => $reviewCommentCount, 'reviewNotesData' => $oReviewNotes, 'reviewTags' => $reviewTags), true);
+                $popupContent = view("admin.brandboost.review_details_popup", array('reviewData' => $oReviewData, 'reviewCommentCount' => $reviewCommentCount, 'reviewNotesData' => $oReviewNotes, 'reviewTags' => $reviewTags))->render();
                 $response = array('status' => 'success', 'popupData' => $popupContent);
             }
         }

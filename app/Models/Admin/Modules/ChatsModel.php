@@ -23,30 +23,48 @@ class ChatsModel extends Model {
         
         return $oData;
     }
-
-    public function getChat($userID, $id = '') {
-        $response = "";
-        $this->db->select("tbl_chat_main.*");
-        $this->db->where("tbl_chat_main.user_id", $userID);
-        if (!empty($id)) {
-            $this->db->where("tbl_chat_main.id", $id);
-        }
-        $result = $this->db->get("tbl_chat_main");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function addChat($aData) {
-        $result = $this->db->insert("tbl_chat_main", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
+	
+	/**
+     * Used to add chat widget data
+	 * @param type $recordId
+     * @return type
+     */
+	public static function addChat($aData) {
+		$insert_id = DB::table('tbl_chat_main')->insertGetId($aData);
+        if ($insert_id) {
+            return $insert_id;
         } else {
             return false;
         }
     }
+	
+	/**
+     * Used to get chat widget data by user id
+	 * @param type $userID
+     * @return type
+     */
+	public static function getChat($userID, $id = '') {
+		$oData = DB::table('tbl_chat_main')
+			->select('tbl_chat_main.*')
+			->when(($id > 0), function ($query) use ($id) {
+				return $query->where('tbl_chat_main.id', $id);
+			})
+			->where('tbl_chat_main.user_id', $userID)
+			->first();
+        return $oData;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+    
 
     public function saveNPSEvents($eData, $npsID) {
         if ($npsID != '') {

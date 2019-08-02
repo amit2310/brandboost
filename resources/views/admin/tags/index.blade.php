@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php list($canRead, $canWrite) = fetchPermissions('Tags'); ?>
 <?php
 	//pre($aTag); die;  
@@ -215,8 +222,8 @@
 									
 										<!--================================================-->
 										<tr>
-											<td style="display: none;"><?php echo date('m/d/Y', strtotime($oContact->created)); ?></td>
-											<td style="display: none;"><?php echo $oContact->id; ?></td>
+											<td style="display: none;"><?php //echo date('m/d/Y', strtotime($oContact->created)); ?></td>
+											<td style="display: none;"><?php //echo $oContact->id; ?></td>
 											<td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="<?php echo $iGroupID; ?>" ><span class="custmo_checkmark"></span></label></td>
 											<td class="width-320" width="320"><div class="media-left media-middle"> <a class="icons square" href="#"><i class="icon-folder2 txt_blue"></i></a> </div>
 												<div class="media-left">
@@ -243,6 +250,7 @@
 												<button class="btn btn-xs btn_white_table addnewtag" data-group-id="<?php echo $iGroupID; ?>"><i class="icon-plus3"></i></button>    
 												<span id="addnewtag_<?php echo $iGroupID; ?>" class="addnewtagcontainer" style="display:none;">
 													<form method="post" name="frmaddTagGroupEntityModal" id="frmaddTagGroupEntityModal" action="javascript:void();" style="display:inline-block;">
+														{{ csrf_field() }}
 														<div class="input_box"><input class="form-control input-sm h26" name="txtTagName" placeholder="Enter tag name" type="text" required="required"></div>
 														<button class="btn btn-xs btn_white_table hideaddnewtag"><i class="icon-cross2 txt_red"></i></button>
 														<button type="submit" class="btn btn-xs btn_white_table"><i class="icon-checkmark3 txt_green"></i></button>
@@ -349,8 +357,8 @@
 									
 										<!--================================================-->
 										<tr>
-											<td style="display: none;"><?php echo date('m/d/Y', strtotime($oContact->created)); ?></td>
-											<td style="display: none;"><?php echo $oContact->id; ?></td>
+											<td style="display: none;"><?php //echo date('m/d/Y', strtotime($oContact->created)); ?></td>
+											<td style="display: none;"><?php //echo $oContact->id; ?></td>
 											<td style="display: none;" class="editArchiveAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRowsArchive" value="<?php echo $iGroupID; ?>" ><span class="custmo_checkmark"></span></label></td>
 											<td class="width-320" width="320"><div class="media-left media-middle"> <a class="icons square" href="#"><i class="icon-folder2 txt_blue"></i></a> </div>
 												<div class="media-left">
@@ -377,6 +385,7 @@
 												<button class="btn btn-xs btn_white_table addnewtag" data-group-id="<?php echo $iGroupID; ?>"><i class="icon-plus3"></i></button>    
 												<span id="addnewtag_<?php echo $iGroupID; ?>" class="addnewtagcontainer" style="display:none;">
 													<form method="post" name="frmaddTagGroupEntityModal" id="frmaddTagGroupEntityModal" action="javascript:void();" style="display:inline-block;">
+														{{ csrf_field() }}
 														<div class="input_box"><input class="form-control input-sm h26" name="txtTagName" placeholder="Enter tag name" type="text" required="required"></div>
 														<button class="btn btn-xs btn_white_table hideaddnewtag"><i class="icon-cross2 txt_red"></i></button>
 														<button type="submit" class="btn btn-xs btn_white_table"><i class="icon-checkmark3 txt_green"></i></button>
@@ -486,6 +495,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmaddTagGroupModal" id="frmaddTagGroupModal" action="javascript:void();">
+            	{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add New Tag Group</h5>
@@ -510,6 +520,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmaddTagGroupEntityModal" id="frmaddTagGroupEntityModal" action="javascript:void();">
+            	{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add New Tag</h5>
@@ -1176,5 +1187,6 @@
 		}
 	});
 	</script>
+	@endsection
 	
 		

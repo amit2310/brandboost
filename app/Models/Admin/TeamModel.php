@@ -63,7 +63,7 @@ class TeamModel extends Model {
     public static function getTwilioAccountInfo($clientID) {
         $oData = DB::table('tbl_twilio_accounts')
         ->where('user_id', $clientID)
-        ->where("status", 1);
+        ->where("status", 1)->first();
         return $oData;
     }
 

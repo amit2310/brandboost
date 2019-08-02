@@ -69,6 +69,20 @@ Route::post('admin/brandboost/savePreviewData','Admin\Brandboost@savePreviewData
 Route::post('admin/brandboost/addBrandBoostWidgetDesign','Admin\Brandboost@addBrandBoostWidgetDesign');
 Route::post('admin/brandboost/addBrandBoostWidgetCampaign','Admin\Brandboost@addBrandBoostWidgetCampaign');
 Route::post('admin/brandboost/publishOnsiteStatusBB','Admin\Brandboost@publishOnsiteStatusBB');
+Route::post('admin/brandboost/saveOnsitePreferences','Admin\Brandboost@saveOnsitePreferences');
+Route::post('admin/brandboost/addOnsiteWidget','Admin\Brandboost@addOnsiteWidget');
+Route::post('admin/brandboost/delete_brandboost_widget','Admin\Brandboost@deleteBrandboostWidget');
+Route::post('admin/brandboost/getOnsiteWidgetEmbedCode','Admin\Brandboost@getOnsiteWidgetEmbedCode');
+Route::post('admin/brandboost/updateOnsiteWidgetStatus','Admin\Brandboost@updateOnsiteWidgetStatus');
+Route::post('admin/brandboost/archive_multipal_brandboost_widget','Admin\Brandboost@archiveMultipalBrandboostWidget');
+Route::post('admin/brandboost/delete_multipal_brandboost_widget','Admin\Brandboost@deleteMultipalBrandboostWidget');
+Route::post('admin/brandboost/addOnsite','Admin\Brandboost@addOnsite');
+
+
+
+Route::post('admin/modules/chat/addChat','Admin\Modules\Chat@addChat');
+Route::get('admin/modules/chat/setup/{id}','Admin\Modules\Chat@setup');
+Route::get('admin/modules/chat/updateChatPreferences','Admin\Modules\Chat@updateChatPreferences');
 
 
 Route::post('dropzone/upload_image','Dropzone\@upload_image');
@@ -421,6 +435,23 @@ Route::post('admin/team/getTeamMember','Admin\Team@getTeamMember');
 Route::post('admin/team/updateTeamMember','Admin\Team@updateTeamMember');
 Route::get('admin/team/activitylist','Admin\Team@activitylist');
 Route::post('admin/team/deleteTeamMember','Admin\Team@deleteTeamMember');
+Route::post('admin/team/twilioNumberlisting','Admin\Team@twilioNumberlisting');
 
 //Live
 Route::get('admin/live','Admin\Live@index');
+
+//Tag Module
+Route::get('admin/tags','Admin\Tags@index');
+Route::post('admin/tags/addgroupentity','Admin\Tags@addgroupentity');
+Route::post('admin/tags/addgroup','Admin\Tags@addgroup');
+Route::get('admin/tags/tagsreview','Admin\Tags@tagsreview');
+Route::post('admin/tags/deleteTagGroupEntity','Admin\Tags@deleteTagGroupEntity');
+Route::get('admin/tags/review/{id}','Admin\Tags@review');
+Route::get('admin/tags/listAllTags','Admin\Tags@listAllTags');
+Route::post('admin/tags/applyReviewTag','Admin\Tags@applyReviewTag');
+Route::post('admin/reviews/update_review_status','Admin\Reviews@updateReviewStatus');
+Route::post('admin/reviews/displayreview','Admin\Reviews@displayreview');
+Route::post('admin/reviews/saveReviewNotes','Admin\Reviews@saveReviewNotes');
+Route::post('admin/reviews/getReviewPopupData','Admin\Reviews@getReviewPopupData');
+Route::post('admin/reviews/getReviewById','Admin\Reviews@getReviewById');
+Route::post('admin/reviews/update_video_review','Admin\Reviews@update_video_review');

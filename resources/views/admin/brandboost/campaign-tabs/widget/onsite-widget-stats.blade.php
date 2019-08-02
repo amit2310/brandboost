@@ -205,7 +205,7 @@
 							<div class="row">
 								<div class="col-xs-12">
 									<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_red.png"); ?>"/>
-									<h1 class="m0"><?php echo number_format(count($aWidgets['widget_id'])); ?></h1>                                        
+									<h1 class="m0"><?php //echo number_format(count($aWidgets['widget_id'])); ?></h1>                                        
 								</div>
 							</div>
 						</div>
@@ -224,7 +224,7 @@
 							<div class="row">
 								<div class="col-xs-12">
 									<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-									<h1 class="m0"><?php echo number_format(count($aWidgets['campaign'])); ?></h1>
+									<h1 class="m0"><?php //echo number_format(count($aWidgets['campaign'])); ?></h1>
 								</div>
 							</div>
 						</div>
@@ -324,8 +324,8 @@
 								<div class="row">
 									<div class="col-xs-12">
 										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_red.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aViews)); ?></h1>
-										<p class="txt_red"><?php echo number_format(((count($aViews) / count($oStats)) * 100), 1) ?>%</p>
+										<h1 class="m0"><?php //echo number_format(count($aViews)); ?></h1>
+										<p class="txt_red"><?php //echo number_format(((count($aViews) / count($oStats)) * 100), 1) ?>%</p>
 									</div>
 								</div>
 							</div>

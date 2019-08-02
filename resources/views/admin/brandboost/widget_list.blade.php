@@ -283,16 +283,21 @@ $aHelpful2 = array();
                                                 $user_id = $data->user_id;
                                                 
                                                 //Attached camapaign brand Image
-                                                $campaignImgArray = unserialize($data->campaignImg);
-                                                $campaign_img = $campaignImgArray[0]['media_url'];
+												if(empty($data->campaignImg)){
+													$campaignImgArray = unserialize($data->campaignImg);
+													$campaign_img = $campaignImgArray[0]['media_url'];
 
-                                                if (empty($campaign_img)) {
-                                                    $campaignImgSrc = base_url('assets/images/default_table_img2.png');
+													if (empty($campaign_img)) {
+														$campaignImgSrc = base_url('assets/images/default_table_img2.png');
+														$imgSrc = base_url('assets/images/default_table_img2.png');
+													} else {
+														$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
+														$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
+													}
+												}else{
+													$campaignImgSrc = base_url('assets/images/default_table_img2.png');
 													$imgSrc = base_url('assets/images/default_table_img2.png');
-                                                } else {
-                                                    $campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
-													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
-                                                }
+												}
                                                 ?>
 
                                                 <tr id="append-<?php echo $data->id; ?>" class="selectedClass">
@@ -877,7 +882,7 @@ $aHelpful2 = array();
 						$.ajax({
 							url: '<?php echo base_url('admin/brandboost/delete_multipal_brandboost_widget'); ?>',
 							type: "POST",
-							data: {multi_widget_id: val},
+							data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -965,7 +970,7 @@ $aHelpful2 = array();
 						$.ajax({
 							url: '<?php echo base_url('admin/brandboost/delete_multipal_brandboost_widget'); ?>',
 							type: "POST",
-							data: {multi_widget_id: val},
+							data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -1008,7 +1013,7 @@ $aHelpful2 = array();
 						$.ajax({
 							url: '<?php echo base_url('admin/brandboost/archive_multipal_brandboost_widget'); ?>',
 							type: "POST",
-							data: {multi_brandboost_widget_id: val},
+							data: {multi_brandboost_widget_id: val, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -1048,7 +1053,7 @@ $aHelpful2 = array();
 						$.ajax({
 							url: '<?php echo base_url('admin/brandboost/archive_multipal_brandboost_widget'); ?>',
 							type: "POST",
-							data: {multi_brandboost_widget_id: val},
+							data: {multi_brandboost_widget_id: val, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -1076,7 +1081,7 @@ $aHelpful2 = array();
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/addOnsiteWidget'); ?>',
                 type: "POST",
-                data: {'campaignName': campaignName},
+                data: {'campaignName': campaignName, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1097,7 +1102,7 @@ $aHelpful2 = array();
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/updateOnsiteWidgetStatus'); ?>',
                 type: "POST",
-                data: {'widgetID': widgetID, 'status': status},
+                data: {'widgetID': widgetID, 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1120,7 +1125,7 @@ $aHelpful2 = array();
 				$.ajax({
 					url: '<?php echo base_url('admin/brandboost/delete_brandboost_widget'); ?>',
 					type: "POST",
-					data: {widget_id: widgetID},
+					data: {widget_id: widgetID, _token: '{{csrf_token()}}'},
 					dataType: "json",
 					success: function (data) {
 						if (data.status == 'success') {
@@ -1137,7 +1142,7 @@ $aHelpful2 = array();
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/getOnsiteWidgetEmbedCode'); ?>',
                 type: "POST",
-                data: {widget_id: widgetID},
+                data: {widget_id: widgetID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

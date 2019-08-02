@@ -44,25 +44,23 @@ class Chat extends Controller {
 		return view('admin.modules.chat.index', $aData);
     }
 	
-	
-	
-
-    public function addChat() {
+	/**
+	* Used to get chat data list
+	* @return type
+	*/
+    public function addChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $title = strip_tags($post['title']);
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $hashcode = '';
-        for ($i = 0; $i < 20; $i++) {
-            $hashcode .= $characters[rand(0, strlen($characters))];
-        }
+        $title = $request->title;
+        //$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        //$hashcode = '';
+		/*for ($i = 0; $i < 20; $i++) {
+            $hashcode .= $characters[rand(0, 61)];
+        }*/
+		$str=rand(); 
+		$hashcode = sha1($str); 
         $hashcode = $hashcode . date('Ymdhis');
         $aData = array(
             'hashcode' => $hashcode,
@@ -71,13 +69,11 @@ class Chat extends Controller {
             'status' => 'draft',
             'created' => date("Y-m-d H:i:s")
         );
-        $insertID = $this->mChat->addChat($aData);
+        $insertID = ChatsModel::addChat($aData);
 
         if ($insertID) {
-
             $response = array('status' => 'success', 'id' => $insertID, 'msg' => "Success");
 
-            
             //Send notification only to admin
             $notificationData = array(
                 'event_type' => 'configured_new_chat',
@@ -88,19 +84,26 @@ class Chat extends Controller {
                 'status' => 1,
                 'created' => date("Y-m-d H:i:s")
             );
+			
             $eventName = 'sys_chat_configured';
-            add_notifications($notificationData, $eventName, $userID);
+			
+            //add_notifications($notificationData, $eventName, $userID);
         }
         echo json_encode($response);
         exit;
     }
 
-    public function setup($chatID) {
+	/**
+	* Used to get setup configuration data
+	* @param type $chatID
+	* @return type
+	*/
+    public function setup($chatID, Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $selectedTab = $this->input->get('t');
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $selectedTab = $request->t;
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -111,35 +114,67 @@ class Chat extends Controller {
                     </ul>';
 
         //NPS related account details
-        $oChat = $this->mChat->getChat($userID, $chatID);
+        $oChat = ChatsModel::getChat($userID, $chatID);
         
        if (!empty($oChat)) {
             // Do nothing for now
             $programID = $oChat->id;
             $defaultTab = !empty($selectedTab) ? $selectedTab : 'customize';
-            $oContacts = $this->mNPS->getMyUsers($oNPS->hashcode);
         }
         $defaultTab = !empty($selectedTab) ? $selectedTab : 'customize';
         //List of Advocates related data 
         $hashCode = $oChat->hashcode;
 
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
+        $bActiveSubsription = UsersModel::isActiveSubscription();
         $aData = array(
             'bActiveSubsription' => $bActiveSubsription,
             'title' => 'Survery Setup',
             'pagename' => $breadcrumb,
             'defalutTab' => $defaultTab,
             'programID' => $programID,
-            'campaignTemplates' => $campaignTemplates,
+            //'campaignTemplates' => $campaignTemplates,
             'oChat' => $oChat,
             'userID' => $userID,
             'userData' => $aUser,
             'user_role' => $user_role
         );
 
-        //$this->template->load('admin/admin_template_new', 'admin/modules/chat/setup-beta', $aData);
-        $this->template->load('admin/admin_template_new', 'admin/modules/chat/set-up', $aData);
+		return view('admin.modules.chat.set-up', $aData);
     }
+	
+	/**
+	* Used to get setup configuration data
+	* @param type $chatID
+	* @return type
+	*/
+	public function publishChatCampaign(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $chatId = $request->chatId;
+        $aData = array(
+            'status' => 'active',
+        );
+        if ($chatId > 0) {
+            $bUpdateID = ChatsModel::updateChat($aData, $userID, $chatId);
+            if ($bUpdateID) {
+                $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
     public function updateChatDesign() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -352,31 +387,6 @@ class Chat extends Controller {
             $eventId = $eventData[0]->id;
             $this->mNPS->updateCampaignByEventId($cData, $eventId);*/
             $bUpdateID = $this->mChat->updateChat($aData, $userID, $chatID);
-            if ($bUpdateID) {
-                $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
-            }
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function publishChatCampaign() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $chatId = strip_tags($post['chatId']);
-        $aData = array(
-            'status' => 'active',
-        );
-        if ($chatId > 0) {
-            $bUpdateID = $this->mChat->updateChat($aData, $userID, $chatId);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }

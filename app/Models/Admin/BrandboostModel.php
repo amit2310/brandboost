@@ -485,7 +485,7 @@ class BrandboostModel extends Model {
     }
 	
 	/**
-	* Used to update widget by userID
+	* Used to update onsite widget by brandboostID
 	* @param type $userID
 	* @param type $brandboostID
 	* @return type
@@ -501,7 +501,49 @@ class BrandboostModel extends Model {
         }
     }
 	
+	/**
+	* Used to add onsite widget
+	* @return type
+	*/
+	public static function addWidget($aData) {
+		$insert_id = DB::table('tbl_brandboost_widgets')->insertGetId($aData);
 	
+        if ($insert_id) {
+            return $insert_id;
+        } else {
+            return false;
+        }
+    }
+	
+	/**
+	* Used to add onsite campaign
+	* @return type
+	*/
+	public static function add($aData) {
+        $insert_id = DB::table('tbl_brandboost_widgets')->insertGetId($aData);
+        if ($insert_id) {
+            return $insert_id;
+        } else {
+            return false;
+        }
+    }
+
+    
+	/**
+	* Used to delete onsite campaign
+	* @return type
+	*/
+    public static function deleteBrandboost($id) {
+		$result = DB::table('tbl_brandboost')
+               ->where('id', $id)
+               ->delete();
+			   
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 	
 	
 	
@@ -603,16 +645,6 @@ class BrandboostModel extends Model {
         }
     }
 
-    public function addWidget($aData) {
-        $result = $this->db->insert('tbl_brandboost_widgets', $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
     public function creatWidgetTheme($aData) {
         $result = $this->db->insert('tbl_brandboost_widget_theme_settings', $aData);
         $inset_id = $this->db->insert_id();
@@ -665,30 +697,7 @@ class BrandboostModel extends Model {
         return $response;
     }
 
-    public function add($aData) {
-        $result = $this->db->insert('tbl_brandboost', $aData);
-        $inset_id = $this->db->insert_id();
-        //$last_query = $this->db->last_query();
-        //pre($last_query);
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
     
-
-    //public function delete($id) {
-    public function deleteBrandboost($id) {
-        $this->db->where('id', $id);
-        $result = $this->db->delete('tbl_brandboost');
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public function deleteCampaign($id) {
         $this->db->where('id', $id);

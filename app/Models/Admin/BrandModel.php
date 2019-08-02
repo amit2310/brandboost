@@ -9,7 +9,7 @@ use Session;
 
 class BrandModel extends Model
 {
-        public function addBrandConfiguration($aData,$aThemeData='',$theme_title=''){
+        public static function addBrandConfiguration($aData, $aThemeData='',$theme_title=''){
         
         if(!empty($theme_title))
         {
@@ -19,7 +19,7 @@ class BrandModel extends Model
         }
 
         $inset_id = DB::table('tbl_brand_configurations')
-	    ->insertGetId("tbl_brand_configurations", $aData);
+	    ->insertGetId($aData);
         if ($inset_id) {
             return $inset_id;
         } else {
@@ -152,7 +152,7 @@ class BrandModel extends Model
 	*/
 
 
-    public function getBrandConfigurationData($userId) {
+    public static function getBrandConfigurationData($userId) {
 
 			$oData = DB::table('tbl_brand_configurations')
 			->where('user_id', $userId)

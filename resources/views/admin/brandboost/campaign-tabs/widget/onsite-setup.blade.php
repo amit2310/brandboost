@@ -832,7 +832,7 @@
 										</div>
                                         
 										<div class="form-group">
-											<label class="control-label">Company logo</label>
+											<label class="control-label">Widget logo</label>
 											<label class="display-block">
 												<input type="hidden" name="logo_img" id="logo_img" class="autoSaveConfig" value="">
 												<div class="img_vid_upload_small">
@@ -840,7 +840,7 @@
 												</div>
 											</label>
 										</div>
-										<div class="form-group">
+										<div class="form-group hidden">
 											<label class="control-label">Product image</label>
 											<label class="display-block">
 												<input type="hidden" name="product_img" id="product_img" class="autoSaveConfig" value="">
