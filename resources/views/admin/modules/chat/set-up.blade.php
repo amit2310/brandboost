@@ -42,7 +42,7 @@
 		  </ul>
 		</div>
 		<!--=============Button Area Right Side==============-->
-		<div class="col-md-5 text-right btn_area">
+		<div class="col-md-5 text-right btn_area hidden">
 			<button type="button" class="btn light_btn ml20" data-toggle="modal" data-target="#addPeopleList"><i class="icon-plus3"></i><span> &nbsp;  Add Contact</span> </button>
 		 	<button type="button" class="btn dark_btn ml20" data-toggle="modal" data-target="#addPeopleList"><i class="icon-plus3"></i><span> &nbsp;  New Chat</span> </button>
 		</div>
@@ -346,7 +346,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/modules/chat/publishChatCampaign'); ?>',
                 type: "POST",
-                data: {'chatId': '<?php echo $oChat->id; ?>'},
+                data: {'chatId': '<?php echo $oChat->id; ?>', _token: '{{csrf_token()}}'},
                 dataType: "html",
                 success: function (data) {
                     window.location.href = '<?php echo base_url("/admin/modules/chat/") ?>';

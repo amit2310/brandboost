@@ -83,7 +83,18 @@ Route::post('admin/brandboost/deleteProduct','Admin\Brandboost@deleteProduct');
 
 Route::post('admin/modules/chat/addChat','Admin\Modules\Chat@addChat');
 Route::get('admin/modules/chat/setup/{id}','Admin\Modules\Chat@setup');
-Route::get('admin/modules/chat/updateChatPreferences','Admin\Modules\Chat@updateChatPreferences');
+Route::post('admin/modules/chat/updateChatPreferences','Admin\Modules\Chat@updateChatPreferences');
+Route::post('admin/modules/chat/updateChatCustomize','Admin\Modules\Chat@updateChatCustomize');
+Route::post('admin/modules/chat/publishChatCampaign','Admin\Modules\Chat@publishChatCampaign');
+Route::post('admin/modules/chat/changeStatus','Admin\Modules\Chat@changeStatus');
+Route::post('admin/modules/chat/getChat','Admin\Modules\Chat@getChat');
+Route::post('admin/modules/chat/deleteChat','Admin\Modules\Chat@deleteChat');
+Route::post('admin/modules/chat/moveToArchiveChat','Admin\Modules\Chat@moveToArchiveChat');
+Route::post('admin/modules/chat/deleteChat','Admin\Modules\Chat@deleteChat');
+Route::post('admin/modules/chat/bulkDeleteChat','Admin\Modules\Chat@bulkDeleteChat');
+Route::post('admin/modules/chat/bulkArchiveChat','Admin\Modules\Chat@bulkArchiveChat');
+Route::post('admin/modules/chat/updateChat','Admin\Modules\Chat@updateChat');
+Route::post('admin/modules/chat/updateChatDesign','Admin\Modules\Chat@updateChatDesign');
 
 
 Route::post('dropzone/upload_image','Dropzone\@upload_image');

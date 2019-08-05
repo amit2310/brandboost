@@ -505,6 +505,7 @@
 					
 					<div class="tab-pane active" id="Configurations">
 						<form method="post" name="frmSubmit" id="frmSubmit" action="javascript:void(0);"  enctype="multipart/form-data">
+							{{ csrf_field() }}
 							<div class="profile_headings fsize12 fw500">Components <a class="pull-right plus_icon" href="#"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
 							<div class="p20">
 								<div class="row">
@@ -639,6 +640,7 @@
 					<div class="tab-pane" id="Design">
 						<div class="profile_headings fsize12 fw500">Chat appearance <a class="pull-right plus_icon" href="#"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
 						<form method="post" name="frmSubmitDesign" id="frmSubmitDesign" action="javascript:void(0);"  enctype="multipart/form-data">
+							{{ csrf_field() }}
 							<div class="p20">
 								<div class="barand_avatar mb20">
 									<?php if(!empty($oChat->chat_logo)) {?>
