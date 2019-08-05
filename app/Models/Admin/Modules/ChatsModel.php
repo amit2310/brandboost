@@ -54,7 +54,42 @@ class ChatsModel extends Model {
         return $oData;
     }
 	
+	/**
+     * Used to update chat widget data by chat id
+	 * @param type $userID
+	 * @param type $id
+     * @return type
+     */
+	public static function updateChat($aData, $userID, $id) {
+		$result = DB::table('tbl_chat_main')
+           ->where('id', $id)
+           ->where('user_id', $userID)
+           ->update($aData);
+		   
+        if ($result > -1) {
+            return $id;
+        } else {
+            return false;
+        }
+    }
 	
+	/**
+     * Used to delete chat widget
+	 * @param type $userID
+	 * @param type $id
+     * @return type
+     */
+    public static function deleteChat($userID, $id) {
+		$result = DB::table('tbl_chat_main')
+		   ->where('id', $id)
+		   ->where('user_id', $userID)
+		   ->delete();
+		if ($result) {
+			return true;
+		} else {
+			return false;
+		}
+    }
 	
 	
 	
@@ -240,29 +275,6 @@ class ChatsModel extends Model {
         $this->db->where("id", $id);
         $result = $this->db->update("tbl_nps_automations_events", $aData);
         //echo $this->db->last_query();
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function updateChat($aData, $userID, $id) {
-        $this->db->where("id", $id);
-        $this->db->where("user_id", $userID);
-        $result = $this->db->update("tbl_chat_main", $aData);
-        //echo $this->db->last_query();
-        if ($result) {
-            return $id;
-        } else {
-            return false;
-        }
-    }
-
-    public function deleteChat($userID, $id) {
-        $this->db->where('id', $id);
-        $this->db->where('user_id', $userID);
-        $result = $this->db->delete("tbl_chat_main");
         if ($result) {
             return true;
         } else {

@@ -167,152 +167,31 @@ class Chat extends Controller {
         exit;
     }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-
-    public function updateChatDesign() {
+	/**
+	* Used to update customize chat settings
+	* @return type
+	*/
+	public function updateChatCustomize(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $chatID = $post['chat_id'];
-        $chat_logo = $post['chat_logo'];
-        $company_info_switch = $post['company_info_switch'];
-        $company_title = $post['company_title'];
-        $company_description = $post['company_description'];
-        $position = $post['position'];
+        $chatID = $request->chat_id;
+        $title = $request->title;
+        $description = $request->description;
+        $domain = $request->domain;
 
-        $solid_color = $post['solid_color'];
-        $color_orientation = $post['color_orientation'];
-        $main_colors = $post['main_colors'];
-        $custom_colors1 = $post['custom_colors1'];
-        $custom_colors2 = $post['custom_colors2'];
-        //$company_info_switch = $post['company_info_switch'] != '' ? '1' : '0';
-        $main_color_switch = $post['main_color_switch'] != '' ? '1' : '0';
-        $custom_color_switch = $post['custom_color_switch'] != '' ? '1' : '0';
-        $solid_color_switch = $post['solid_color_switch'] != '' ? '1' : '0';
-
-        $chat_icon = $post['chat_icon'];
-        $branding = $post['branding'] != '' ? '1' : '0';
-        $notification = $post['notification'] != '' ? '1' : '0';
-
-
-        $aData = array(
-            'updated' => date("Y-m-d H:i:s")
-        );
-
-        if(!empty($chat_logo)) {
-            $aData['chat_logo'] = $chat_logo;
-        }
-       /* if(!empty($company_info_switch)) {
-            $aData['company_info'] = 1;
-        }
-        else {
-            $aData['company_info'] = 0;
-        }*/
-        if(!empty($company_title)) {
-            $aData['company_title'] = $company_title;
-        }
-        if(!empty($company_description)) {
-            $aData['company_description'] = $company_description;
-        }
-        $aData['position'] = $position;
-        $aData['header_color'] = $main_colors;
-        $aData['header_solid_color'] = $solid_color;
-        $aData['header_custom_color1'] = $custom_colors1;
-        $aData['header_custom_color2'] = $custom_colors2;
-        $aData['header_color_solid'] = $solid_color_switch;
-        $aData['header_color_fix'] = $main_color_switch;
-        $aData['header_color_custom'] = $custom_color_switch;
-        $aData['chat_icon'] = trim($chat_icon);
-        $aData['branding'] = $branding;
-        $aData['color_orientation'] = $color_orientation;
-        $aData['notification'] = $notification;
-
-        if ($chatID > 0) {
-            /*$eventData = $this->mNPS->getNPSEventsByNPSIdEventType($npsID, 'invite-email');
-            $eventId = $eventData[0]->id;
-            $this->mNPS->updateCampaignByEventId($cData, $eventId);*/
-            $bUpdateID = $this->mChat->updateChat($aData, $userID, $chatID);
-            if ($bUpdateID) {
-                $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
-            }
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function updateChatPreferences() {
-
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $chatID = $post['chat_id'];
-        $contactDetails = $post['contact_details_config'];
-        $messages = serialize($post['messages']);
-        $time = serialize($post['time']);
-        $automated_message = $post['automated_message'] != '' ? '1' : '0';
-        //pre($post);
-        $aData['automated_message'] = $automated_message;
-        $aData['messages'] = $messages;
-        $aData['time'] = $time;
-        $aData['contact_details_config'] = $contactDetails == 'on' ? 1 : 0;
-
-        if ($chatID > 0) {
-            $bUpdateID = $this->mChat->updateChat($aData, $userID, $chatID);
-            if ($bUpdateID) {
-                $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
-            }
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function updateChatCustomize() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $chatID = $post['chat_id'];
-        $title = $post['title'];
-        $description = $post['description'];
-        $domain = $post['domain'];
-
-        $logo_show = $post['logo_show'];
-        $title_show = $post['title_show'];
-        $subtitle_show = $post['subtitle_show'];
-        $atttachment_show = $post['atttachment_show'];
-        $smilie_show = $post['smilie_show'];
-        $trigger_time = $post['trigger_time'];
-        $trigger_message = $post['trigger_message'];
-		$gift_message = $post['gift_message'];
-        $allow_gift_message = $post['allow_gift_message'];
-        $desktop_visiable = $post['desktop_visiable'];
-        $mobile_visiable = $post['mobile_visiable'];
+        $logo_show = $request->logo_show;
+        $title_show = $request->title_show;
+        $subtitle_show = $request->subtitle_show;
+        $atttachment_show = $request->atttachment_show;
+        $smilie_show = $request->smilie_show;
+        $trigger_time = $request->trigger_time;
+        $trigger_message = $request->trigger_message;
+		$gift_message = $request->gift_message;
+        $allow_gift_message = $request->allow_gift_message;
+        $desktop_visiable = $request->desktop_visiable;
+        $mobile_visiable = $request->mobile_visiable;
 
         $aData = array(
             'updated' => date("Y-m-d H:i:s")
@@ -383,10 +262,7 @@ class Chat extends Controller {
 
         
         if ($chatID > 0) {
-            /*$eventData = $this->mNPS->getNPSEventsByNPSIdEventType($npsID, 'invite-email');
-            $eventId = $eventData[0]->id;
-            $this->mNPS->updateCampaignByEventId($cData, $eventId);*/
-            $bUpdateID = $this->mChat->updateChat($aData, $userID, $chatID);
+            $bUpdateID = ChatsModel::updateChat($aData, $userID, $chatID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
@@ -395,24 +271,23 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
-
-    public function changeStatus() {
+	
+	/**
+	* Used to update chat status
+	* @return type
+	*/
+    public function changeStatus(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $chatID = strip_tags($post['chatID']);
-        $status = strip_tags($post['status']);
+        $chatID = $request->chatID;
+        $status = $request->status;
         $aData = array(
             'status' => $status,
         );
         if ($chatID > 0) {
-            $bUpdateID = $this->mChat->updateChat($aData, $userID, $chatID);
+            $bUpdateID = ChatsModel::updateChat($aData, $userID, $chatID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
@@ -421,6 +296,113 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
+	
+	/**
+	* Used to update chat design page data
+	* @return type
+	*/
+    public function updateChatDesign(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $chatID = $request->chat_id;
+        $chat_logo = $request->chat_logo;
+        $company_info_switch = $request->company_info_switch;
+        $company_title = $request->company_title;
+        $company_description = $request->company_description;
+        $position = $request->position;
+
+        $solid_color = $request->solid_color;
+        $color_orientation = $request->color_orientation;
+        $main_colors = $request->main_colors;
+        $custom_colors1 = $request->custom_colors1;
+        $custom_colors2 = $request->custom_colors2;
+        $main_color_switch = $request->main_color_switch != '' ? '1' : '0';
+        $custom_color_switch = $request->custom_color_switch != '' ? '1' : '0';
+        $solid_color_switch = $request->solid_color_switch != '' ? '1' : '0';
+
+        $chat_icon = $request->chat_icon;
+        $branding = $request->branding != '' ? '1' : '0';
+        $notification = $request->notification != '' ? '1' : '0';
+
+
+        $aData = array(
+            'updated' => date("Y-m-d H:i:s")
+        );
+
+        if(!empty($chat_logo)) {
+            $aData['chat_logo'] = $chat_logo;
+        }
+       
+        if(!empty($company_title)) {
+            $aData['company_title'] = $company_title;
+        }
+        if(!empty($company_description)) {
+            $aData['company_description'] = $company_description;
+        }
+        $aData['position'] = $position;
+        $aData['header_color'] = $main_colors;
+        $aData['header_solid_color'] = $solid_color;
+        $aData['header_custom_color1'] = $custom_colors1;
+        $aData['header_custom_color2'] = $custom_colors2;
+        $aData['header_color_solid'] = $solid_color_switch;
+        $aData['header_color_fix'] = $main_color_switch;
+        $aData['header_color_custom'] = $custom_color_switch;
+        $aData['chat_icon'] = trim($chat_icon);
+        $aData['branding'] = $branding;
+        $aData['color_orientation'] = $color_orientation;
+        $aData['notification'] = $notification;
+
+        if ($chatID > 0) {
+            $bUpdateID = ChatsModel::updateChat($aData, $userID, $chatID);
+            if ($bUpdateID) {
+                $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+    public function updateChatPreferences(Request $request) {
+
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $chatID = $request->chat_id;
+        $contactDetails = $request->contact_details_config;
+        $messages = serialize($request->messages);
+        $time = serialize($request->time);
+        $automated_message = $request->automated_message != '' ? '1' : '0';
+        //pre($post);
+        $aData['automated_message'] = $automated_message;
+        $aData['messages'] = $messages;
+        $aData['time'] = $time;
+        $aData['contact_details_config'] = $contactDetails == 'on' ? 1 : 0;
+
+        if ($chatID > 0) {
+            $bUpdateID = ChatsModel::updateChat($aData, $userID, $chatID);
+            if ($bUpdateID) {
+                $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    
 
     public function getChat() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
