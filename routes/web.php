@@ -19,6 +19,10 @@ Route::get('admin/login','Admin\Login@index');
 Route::post('admin/login','Admin\Login@index');
 Route::get('admin/login/logout','Admin\Login@logout');
 
+// User Section
+Route::get('user/login','User\Login@index');
+Route::post('user/login','User\Login@index');
+
 //Dashborad 
 Route::get('admin/dashboard','Admin\Dashboard@index');
 Route::post('admin/dashboard/getReviewData','Admin\Dashboard@getReviewData');

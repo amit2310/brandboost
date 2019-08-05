@@ -106,6 +106,7 @@ class LoginModel extends Model {
      * @return user Object
      */
     public function validateTeamMember($email, $password) {
+        $client = '';
         if (!empty($email) && !empty($password)) {
             $user = DB::table('tbl_users_team')
                     ->where('email', $email)
