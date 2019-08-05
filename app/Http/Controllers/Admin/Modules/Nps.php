@@ -1,31 +1,34 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+namespace App\Http\Controllers\Admin\Modules;
 
-class Nps extends CI_Controller {
+use App\Http\Controllers\Controller;
+use App\Models\Admin\Modules\NpsModel;
+use App\Models\Admin\UsersModel;
+use App\Models\Admin\ListsModel;
+use App\Models\Admin\WorkflowModel;
+use App\Models\Admin\TemplatesModel;
+use Session;
 
-    public function __construct() {
-        parent::__construct();
-        $this->load->model("admin/modules/Nps_model", "mNPS");
-        $this->load->model("admin/Workflow_model", "mWorkflow");
-        $this->load->model("admin/Users_model", "mUser");
-        $this->load->model("admin/Subscriber_model", "mSubscriber");
-        $this->load->library('csvimport');
-        $this->load->model("admin/crons/Nps_inviter_model", "mInviter");
-        $this->load->model("admin/Templates_model", "mTemplates");
-    }
+class Nps extends Controller {
 
+    /**
+     * Default NPS controller
+     */
     public function index() {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $oPrograms = $this->mNPS->getNpsLists($userID);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $oPrograms = $mNPS->getNpsLists($userID);
 
 
         if (!empty($oPrograms)) {
             foreach ($oPrograms as $oProgram) {
                 $hashCode = $oProgram->hashcode;
-                $aScore = $this->mNPS->getNPSScore($hashCode);
+                $aScore = $mNPS->getNPSScore($hashCode);
                 $oProgram->NPS = $aScore;
                 //pre($aScore);
             }
@@ -49,20 +52,27 @@ class Nps extends CI_Controller {
             'bActiveSubsription' => $bActiveSubsription,
             'moduleName' => $moduleName
         );
-        $this->template->load('admin/admin_template_new', 'admin/modules/nps/index', $aPageData);
+        return view('admin.modules.nps.index', $aPageData);
     }
 
+    /**
+     * Overview of NPS campaigns
+     * 
+     */
     public function overview() {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $oPrograms = $this->mNPS->getNpsLists($userID);
-        $oProgramsDate = $this->mNPS->getNpsListsByDate($userID);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $oPrograms = $mNPS->getNpsLists($userID);
+        $oProgramsDate = $mNPS->getNpsListsByDate($userID);
 
         if (!empty($oPrograms)) {
             foreach ($oPrograms as $oProgram) {
                 $hashCode = $oProgram->hashcode;
-                $aScore = $this->mNPS->getNPSScore($hashCode);
+                $aScore = $mNPS->getNPSScore($hashCode);
                 $oProgram->NPS = $aScore;
                 //pre($aScore);
             }
@@ -83,20 +93,36 @@ class Nps extends CI_Controller {
             'bActiveSubsription' => $bActiveSubsription,
             'oProgramsDate' => $oProgramsDate
         );
-        $this->template->load('admin/admin_template_new', 'admin/modules/nps/overview', $aPageData);
+        return view('admin.modules.nps.overview', $aPageData);
     }
 
-    public function setup($npsID) {
+    /**
+     * 
+     * @param type $npsIDUsed to setup nps campaign
+     */
+    public function setup(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
+        // Instanciate workflow model to get its properties and methods
+        $mWorkflow = new WorkflowModel();
+        
+        // Instanciate Templates model to get its properties and methods
+        $mTemplates = new TemplatesModel();
+        
+        $npsID = $request->npsID;
+        
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
+        $bActiveSubsription = UsersModel::isActiveSubscription();
         $selectedTab = $this->input->get('t');
 
 
 
         //NPS related account details
-        $oNPS = $this->mNPS->getNps($userID, $npsID);
+        $oNPS = $mNPS->getNps($userID, $npsID);
         $moduleUnitID = $npsID;
         if ($oNPS->user_id != $userID) {
             redirect('admin/modules/nps');
@@ -106,7 +132,7 @@ class Nps extends CI_Controller {
             // Do nothing for now
             $programID = $oNPS->id;
             //$defaultTab = !empty($selectedTab) ? $selectedTab : 'platform';
-            $oContacts = $this->mNPS->getMyUsers($oNPS->hashcode);
+            $oContacts = $mNPS->getMyUsers($oNPS->hashcode);
         }
         if (empty($oNPS->platform)) {
             $defaultTab = !empty($selectedTab) ? $selectedTab : 'platform';
@@ -118,18 +144,18 @@ class Nps extends CI_Controller {
         //List of Advocates related data 
         $hashCode = $oNPS->hashcode;
         if (!empty($hashCode)) {
-            //$oContacts = $this->mNPS->getMyAdvocates($hashCode);
+            //$oContacts = $mNPS->getMyAdvocates($hashCode);
         }
         $moduleName = 'nps';
-        $eventsData = $this->mNPS->getNPSEvents($oNPS->id);
-        $campaignTemplates = $this->mNPS->getNPSCampaignTemplates($oNPS->id);
+        $eventsData = $mNPS->getNPSEvents($oNPS->id);
+        $campaignTemplates = $mNPS->getNPSCampaignTemplates($oNPS->id);
         $userTwilioData = $this->mUser->getUserTwilioData($userID);
 
         
-        $oEvents = $this->mWorkflow->getWorkflowEvents($npsID, $moduleName);
+        $oEvents = $mWorkflow->getWorkflowEvents($npsID, $moduleName);
         $oEventsType = array('main', 'followup');
-        $oCampaignTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
-        $oDefaultTemplates = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName); 
+        $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
+        $oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName); 
         //pre($oDefaultTemplates);
         //exit;
         $surveyType = $oNPS->platform;
@@ -137,17 +163,17 @@ class Nps extends CI_Controller {
             $sSurveyTypeTitle = ucfirst($surveyType). ' Survey';
             
         }
-        $sEmailPreview = $this->load->view("admin/modules/nps/nps-templates/email/templates", array('template_slug' => 'nps_email_invite', 'oNPS' => $oNPS), true);
+        $sEmailPreview = view('admin.modules.nps.nps-templates.email.templates', array('template_slug' => 'nps_email_invite', 'oNPS' => $oNPS))->render();
         $compiledEmailPriviewCode = $this->parseNPStemplate($sEmailPreview, 'email', $oNPS);
         $compiledEmailPriviewCode = str_replace(array('wf_edit_template_greeting'), array('wf_edit_template_greeting_preview'), $compiledEmailPriviewCode);
 
-        $sSmsPreview = $this->load->view("admin/modules/nps/nps-templates/sms/templates", array('template_slug' => 'nps_sms_invite', 'oNPS' => $oNPS), true);
+        $sSmsPreview = view('admin.modules.nps.nps-templates.sms.templates', array('template_slug' => 'nps_sms_invite', 'oNPS' => $oNPS))->render();
         $compiledSmsPriviewCode = $this->parseNPStemplate($sSmsPreview, 'sms', $oNPS);
         $compiledSmsPriviewCode = str_replace(array('wf_edit_sms_template_greeting', 'wf_edit_sms_template_introduction'), array('wf_edit_sms_template_greeting_preview', 'wf_edit_sms_template_introduction_preview'), $compiledSmsPriviewCode);
-        $oFeedbacks = $this->mNPS->getNPSScore($hashCode);
+        $oFeedbacks = $mNPS->getNPSScore($hashCode);
 
-        $oTemplates = $this->mTemplates->getCommonTemplates();
-        $oCategories = $this->mTemplates->getCommonTemplateCategories();
+        $oTemplates = $mTemplates->getCommonTemplates();
+        $oCategories = $mTemplates->getCommonTemplateCategories();
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -155,7 +181,7 @@ class Nps extends CI_Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Setup" class="sidebar-control active hidden-xs ">Setup</a></li>
                     </ul>';
-        //$oCampaignSubscribers = $this->mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+        //$oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
         //pre($oFeedback);
         //pre($campaignTemplates);
         $aData = array(
@@ -185,49 +211,62 @@ class Nps extends CI_Controller {
             'smsPreview' => $compiledSmsPriviewCode
         );
 
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $this->template->load('admin/admin_template_new', 'admin/modules/nps/setup-beta', $aData);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        return view('admin.modules.nps.setup-beta', $aData);
     }
 
-    public function updateNPSCustomize() {
+    
+    /**
+     * Update NPS campaign customization
+     */
+    public function updateNPSCustomize(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
+        // Instanciate workflow model to get its properties and methods
+        $mWorkflow = new WorkflowModel();
+        
+        // Instanciate Templates model to get its properties and methods
+        $mTemplates = new TemplatesModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        //pre($post);
-        $npsID = strip_tags($post['nps_id']);
-        $title = strip_tags($post['title']);
-        $platform = strip_tags($post['platform']);
-        $brand = strip_tags($post['brand_name']);
-        $logo = strip_tags($post['brand_logo']);
-        $from = strip_tags($post['email_from']);
-        $replyto = strip_tags($post['email_replyto']);
-        $subject = strip_tags($post['email_subject']);
-        $btnColor = strip_tags($post['web_button_color']);
-        $btnTextColor = strip_tags($post['web_text_color']);
-
-        $intTextColor = strip_tags($post['web_int_text_color']);
-        $buttonTextColor = strip_tags($post['web_button_text_color']);
-        $buttonOverTextColor = strip_tags($post['web_button_over_text_color']);
-        $buttonOverColor = strip_tags($post['web_button_over_color']);
-
-        $btnStyle = strip_tags($post['web_button_style']);
-        $btnShape = strip_tags($post['web_button_shape']);
-        $description = $post['description'];
-        $question = $post['question'];
-        $emailPreviewData = $post['emailPreviewData'];
-
-        $displayLogo = strip_tags($post['display_logo']);
-        $displayIntro = strip_tags($post['display_intro']);
         
-        $displayName = strip_tags($post['display_name']);
-        $displayEmail = strip_tags($post['display_email']);
-        $displayAdditional = strip_tags($post['display_additional']);
+        $npsID = strip_tags($request->nps_id);
+        $title = strip_tags($request->title);
+        $platform = strip_tags($request->platform);
+        $brand = strip_tags($request->brand_name);
+        $logo = strip_tags($request->brand_logo);
+        $from = strip_tags($request->email_from);
+        $replyto = strip_tags($request->email_replyto);
+        $subject = strip_tags($request->email_subject);
+        $btnColor = strip_tags($request->web_button_color);
+        $btnTextColor = strip_tags($request->web_text_color);
+
+        $intTextColor = strip_tags($request->web_int_text_color);
+        $buttonTextColor = strip_tags($request->web_button_text_color);
+        $buttonOverTextColor = strip_tags($request->web_button_over_text_color);
+        $buttonOverColor = strip_tags($request->web_button_over_color);
+
+        $btnStyle = strip_tags($request->web_button_style);
+        $btnShape = strip_tags($request->web_button_shape);
+        $description = $request->description;
+        $question = $request->question;
+        $emailPreviewData = $request->emailPreviewData;
+
+        $displayLogo = strip_tags($request->display_logo);
+        $displayIntro = strip_tags($request->display_intro);
+        
+        $displayName = strip_tags($request->display_name);
+        $displayEmail = strip_tags($request->display_email);
+        $displayAdditional = strip_tags($request->display_additional);
 
 
 
@@ -307,15 +346,15 @@ class Nps extends CI_Controller {
         if ($npsID > 0) {
 
 
-            $bUpdateID = $this->mNPS->updateNPS($aData, $userID, $npsID);
+            $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
 
-            $oNPS = $this->mNPS->getNps($userID, $npsID);
+            $oNPS = $mNPS->getNps($userID, $npsID);
             if (!empty($oNPS)) {
-                $eventData = $this->mNPS->getNPSEventsByNPSIdEventType($npsID);
-                $oEndCampaigns = $this->mNPS->getNPSEndCampaigns($npsID);
+                $eventData = $mNPS->getNPSEventsByNPSIdEventType($npsID);
+                $oEndCampaigns = $mNPS->getNPSEndCampaigns($npsID);
                 //pre($oEndCampaigns);
                 //die;
                 if (empty($eventData) || empty($oEndCampaigns)) {
@@ -338,28 +377,28 @@ class Nps extends CI_Controller {
 
 
                     if (!empty($templateSlug)) {
-                        $oTemplate = $this->mTemplates->getCommonTemplateInfo('', $templateSlug);
+                        $oTemplate = $mTemplates->getCommonTemplateInfo('', $templateSlug);
                         $templateID = $oTemplate->id;
                         if ($templateID > 0) {
                             $triggerParams = array('delay_type' => "after", 'delay_value' => '10', 'delay_unit' => 'minute', 'template_slug' => $templateSlug);
-                            $eventID = $this->mWorkflow->createWorkflowEvent($moduleUnitID, $eventType, $previousEventId, $triggerParams, $moduleName);
+                            $eventID = $mWorkflow->createWorkflowEvent($moduleUnitID, $eventType, $previousEventId, $triggerParams, $moduleName);
 
                             if ($eventID > 0) {
-                                $aResponse = $this->mWorkflow->addEndCampaign($eventID, $templateID, $moduleUnitID, $moduleName, $isDraft);
+                                $aResponse = $mWorkflow->addEndCampaign($eventID, $templateID, $moduleUnitID, $moduleName, $isDraft);
                             }
                             if (!empty($aResponse)) {
-                                $eventData = $this->mNPS->getNPSEventsByNPSIdEventType($npsID);
+                                $eventData = $mNPS->getNPSEventsByNPSIdEventType($npsID);
                             }
                         }
                     }
                 }
 
                 //Process Preview for Email
-                $sEmailPreview = $this->load->view("admin/modules/nps/nps-templates/email/templates", array('template_slug' => 'nps_email_invite', 'oNPS' => $oNPS), true);
+                $sEmailPreview = view('admin.modules.nps.nps-templates.email.templates', array('template_slug' => 'nps_email_invite', 'oNPS' => $oNPS))->render();
                 $compiledEmailPriviewCode = $this->parseNPStemplate($sEmailPreview, 'email', $oNPS);
 
                 //Process Preview for SMS
-                $sSmsPreview = $this->load->view("admin/modules/nps/nps-templates/sms/templates", array('template_slug' => 'nps_sms_invite', 'oNPS' => $oNPS), true);
+                $sSmsPreview = view('admin.modules.nps.nps-templates.sms.templates', array('template_slug' => 'nps_sms_invite', 'oNPS' => $oNPS))->render();
 
                 $question = (!empty($oNPS->question)) ? $oNPS->question : 'How likely are you to recommend My Store to a friend?';
                 $aTemplateTags = array(
@@ -380,15 +419,15 @@ class Nps extends CI_Controller {
 
                         $eventSlug = $eveData->template_slug;
                         if (!empty($eventSlug)) {
-                            $oTemplateInfo = $this->mTemplates->getCommonTemplateInfo('', $eventSlug);
+                            $oTemplateInfo = $mTemplates->getCommonTemplateInfo('', $eventSlug);
                             $templateID = $oTemplateInfo->id;
                         }
                         //pre($eveData);
                         if ($eventSlug != 'nps_email_link_invite' && $eventSlug != 'nps_sms_link_invite') {
-                            //$this->mNPS->updateCampaignByEventId(array('stripo_compiled_html' => base64_encode($compiledEmailPriviewCode), 'introduction'=> $description), $eventID, 'Email', $templateID);
-                            //$this->mNPS->updateCampaignByEventId(array('stripo_compiled_html' => base64_encode($compiledSmsPriviewCode), 'introduction'=> $description), $eventID, 'Sms', $templateID);
-                            $this->mNPS->updateCampaignByEventId(array('introduction' => $description), $eventID, 'Email', $templateID);
-                            $this->mNPS->updateCampaignByEventId(array('introduction' => $description), $eventID, 'Sms', $templateID);
+                            //$mNPS->updateCampaignByEventId(array('stripo_compiled_html' => base64_encode($compiledEmailPriviewCode), 'introduction'=> $description), $eventID, 'Email', $templateID);
+                            //$mNPS->updateCampaignByEventId(array('stripo_compiled_html' => base64_encode($compiledSmsPriviewCode), 'introduction'=> $description), $eventID, 'Sms', $templateID);
+                            $mNPS->updateCampaignByEventId(array('introduction' => $description), $eventID, 'Email', $templateID);
+                            $mNPS->updateCampaignByEventId(array('introduction' => $description), $eventID, 'Sms', $templateID);
                         }
                     }
                 }
@@ -399,12 +438,19 @@ class Nps extends CI_Controller {
         exit;
     }
 
+    
+    /**
+     * Used to get NPS widgets
+     */
     public function widgets() {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $user_role = $oUser->user_role;
-        $oWidgetsList = $this->mNPS->getNPSWidgets($userID);
-        //$oStats = $this->mNPS->getNPSWidgetStats($userID);
+        $oWidgetsList = $mNPS->getNPSWidgets($userID);
+        //$oStats = $mNPS->getNPSWidgetStats($userID);
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -414,8 +460,8 @@ class Nps extends CI_Controller {
 			<li><a data-toggle="tooltip" data-placement="bottom" title="NPS Widgets" class="sidebar-control active hidden-xs ">NPS Widgets</a></li>
 			</ul>';
 
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $this->session->set_userdata('setTab', '');
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        Session::put('setTab', '');
         $aData = array(
             'title' => 'NPS Widgets',
             'pagename' => $breadcrumb,
@@ -423,21 +469,28 @@ class Nps extends CI_Controller {
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role
         );
-        $this->template->load('admin/admin_template_new', 'admin/modules/nps/widget_list', $aData);
+        return view('admin.modules.nps.widget_list', $aData);
     }
 
-    public function addNPSWidget() {
+    
+    /**
+     * Used to add new nps campaign
+     */
+    public function addNPSWidget(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        $npsTitle = $post['npsTitle'];
+        
+        $npsTitle = $request->npsTitle;
         $aData = array(
             'widget_title' => $npsTitle,
             'user_id' => $userID,
             'created' => date("Y-m-d H:i:s")
         );
 
-        $response = $this->mNPS->createNPSWidget($aData);
+        $response = $mNPS->createNPSWidget($aData);
 
         if ($response) {
             $response = array('status' => 'success', 'widgetId' => $response);
@@ -448,17 +501,24 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function updatNPSWidgetStatus() {
+    
+    /**
+     * Used to update NPS widget status
+     */
+    public function updatNPSWidgetStatus(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        $widgetID = $post['widgetID'];
-        $status = $post['status'];
+        
+        $widgetID = $request->widgetID;
+        $status = $request->status;
         $aData = array(
             'status' => $status
         );
 
-        $response = $this->mNPS->updateNPSWidget($aData, $widgetID);
+        $response = $mNPS->updateNPSWidget($aData, $widgetID);
 
         if ($response) {
             $response = array('status' => 'success');
@@ -469,22 +529,26 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function delete_nps_widget() {
+    
+    /**
+     * Used to delete a nps widget
+     */
+    public function delete_nps_widget(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
 
         $response = array();
-        $post = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        //$userID = $this->session->userdata("current_user_id");
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $widgetID = $post['widget_id'];
+        if (!empty($request)) {
+            
+            $widgetID = $request->widget_id;
 
             $aData = array(
                 'delete_status' => '1'
             );
 
-            $result = $this->mNPS->updateNPSWidget($aData, $widgetID);
+            $result = $mNPS->updateNPSWidget($aData, $widgetID);
 
             if ($result) {
 
@@ -511,16 +575,23 @@ class Nps extends CI_Controller {
         }
     }
 
-    public function getNPSWidgetEmbedCode() {
+    
+    /**
+     * USed to get nps widget embed code
+     */   
+    public function getNPSWidgetEmbedCode(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $widgetID = $post['widget_id'];
+        
+        if (!empty($request)) {
+            
+            $widgetID = $request->widget_id;
 
-            $result = $this->mNPS->getNPSWidgets($userID, $widgetID);
+            $result = $mNPS->getNPSWidgets($userID, $widgetID);
             $campaign_key = $result[0]->hashcode;
             if (!empty($result)) {
                 $response['status'] = 'success';
@@ -539,8 +610,17 @@ class Nps extends CI_Controller {
         }
     }
 
-    public function nps_widget_setup($widgetID) {
-        $selectedTab = $this->input->get('t');
+    
+    /**
+     * 
+     * @param type $widgetIDSetup NPS widget
+     */
+    public function nps_widget_setup(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
+        $widgetID = $request->widgetID;
+        
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
@@ -549,11 +629,10 @@ class Nps extends CI_Controller {
             exit;
         }
 
-        $oNPSList = $this->mNPS->getNpsLists($userID);
-        $widgetData = $this->mNPS->getNPSWidgets($userID, $widgetID);
-        $npsData = $this->mNPS->getNps($userID, $widgetData[0]->nps_id);
-        //$sEmailPreview = $this->load->view("admin/modules/nps/nps-templates/email/widget_preview", array('oNPS' => $npsData), true);
-        $sEmailPreview = $this->load->view("admin/modules/nps/nps-tabs/partials/web-customization", array('oNPS' => $npsData), true);
+        $oNPSList = $mNPS->getNpsLists($userID);
+        $widgetData = $mNPS->getNPSWidgets($userID, $widgetID);
+        $npsData = $mNPS->getNps($userID, $widgetData[0]->nps_id);
+        $sEmailPreview = view('admin.modules.nps.nps-tabs.partials.web-customization', array('oNPS' => $npsData))->render();
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -572,19 +651,25 @@ class Nps extends CI_Controller {
             'sEmailPreview' => $sEmailPreview
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/modules/nps/nps_widget_setup', $aData);
+        return view('admin.modules.nps.nps_widget_setup', $aData);
     }
 
-    public function addNPSWidgetSurvey() {
+    
+    /**
+     * Used to add NPS widget survey
+     */
+    public function addNPSWidgetSurvey(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        $post = $this->input->post();
+        
 
-        $widgetID = $post['widget_id'];
-        $npsId = $post['nps_id'];
-        $hashcode = $post['hashcode'];
+        $widgetID = $request->widget_id;
+        $npsId = $request->nps_id;
+        $hashcode = $request->hashcode;
 
         $aData = array(
             'nps_id' => $npsId,
@@ -592,10 +677,10 @@ class Nps extends CI_Controller {
         );
 
 
-        $result = $this->mNPS->updateNPSWidget($aData, $widgetID);
-        $npsData = $this->mNPS->getNps($userID, $npsId);
+        $result = $mNPS->updateNPSWidget($aData, $widgetID);
+        $npsData = $mNPS->getNps($userID, $npsId);
         //pre($npsData);
-        $sEmailPreview = $this->load->view("admin/modules/nps/nps-templates/email/widget_preview", array('oNPS' => $npsData), true);
+        $sEmailPreview = view('admin.modules.nps.nps-templates.email.widget_preview', array('oNPS' => $npsData))->render();
         $npsScriptCode = '<pre class="prettyprint" id="prettyprint">
 							&lt;script 
 							type="text/javascript" 
@@ -617,23 +702,30 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function deleteBulkNPSWidgets() {
+    
+    /**
+     * Used to delete nps widgets in bulk
+     */
+    public function deleteBulkNPSWidgets(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsIDs = $post['multi_widget_id'];
+        $npsIDs = $request->multi_widget_id;
         $aData = array(
             'delete_status' => 1
         );
         if (!empty($npsIDs)) {
             foreach ($npsIDs as $npsID) {
-                $bDeleted = $this->mNPS->updateNPSWidget($aData, $npsID);
+                $bDeleted = $mNPS->updateNPSWidget($aData, $npsID);
             }
         }
         if ($bDeleted) {
@@ -643,23 +735,30 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function archiveBulkNPSWidgets() {
+    
+    /**
+     * Used to archive NPS widgets in bulk
+     */
+    public function archiveBulkNPSWidgets(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsIDs = $post['multi_widget_id'];
+        $npsIDs = $request->multi_widget_id;
         $aData = array(
             'status' => 3
         );
         if (!empty($npsIDs)) {
             foreach ($npsIDs as $npsID) {
-                $bDeleted = $this->mNPS->updateNPSWidget($aData, $npsID);
+                $bDeleted = $mNPS->updateNPSWidget($aData, $npsID);
             }
         }
         if ($bDeleted) {
@@ -669,17 +768,24 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function bulkArchiveNPSWidgets() {
+    
+    /**
+     * Used to archive NPS widgets in bulk
+     */
+    public function bulkArchiveNPSWidgets(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsIDs = $post['bulk_nps_id'];
+        $npsIDs = $request->bulk_nps_id;
         $aData = array(
             'status' => 'archive',
             'updated' => date("Y-m-d H:i:s")
@@ -687,7 +793,7 @@ class Nps extends CI_Controller {
 
         if (!empty($npsIDs)) {
             foreach ($npsIDs as $npsID) {
-                $bUpdateID = $this->mNPS->updateNPS($aData, $userID, $npsID);
+                $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             }
         }
 
@@ -698,21 +804,27 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function publishNPSWidgetSurvey() {
+    
+    /**
+     * Used to publish NPS survey
+     */
+    public function publishNPSWidgetSurvey(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        $post = $this->input->post();
+        
 
-        $widgetID = $post['widget_id'];
+        $widgetID = $request->widget_id;
 
         $aData = array(
             'status' => '1'
         );
 
 
-        $result = $this->mNPS->updateNPSWidget($aData, $widgetID);
+        $result = $mNPS->updateNPSWidget($aData, $widgetID);
 
         if ($result) {
             $response = array('status' => 'success');
@@ -724,63 +836,16 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function setup_old($npsID) {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $user_role = $aUser->user_role;
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $selectedTab = $this->input->get('t');
-        $breadcrumb = '<ul class="breadcrumb">
-			<li><a href="' . base_url('admin/') . '"><i class="icon-home2 position-left"></i> Home</a></li>
-			<li class=""><a href="' . base_url('admin/modules/nps') . '">NPS Module</a></li>
-                        <li class="">Setup</li>
-            </ul>';
+    /**
+     * Used to get NPS contacts by id
+     */
+    public function getNpsUserById(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
 
-        //NPS related account details
-        $oNPS = $this->mNPS->getNps($userID, $npsID);
-//        pre($oSettings);
-//        die;
-        if (!empty($oNPS)) {
-            // Do nothing for now
-            $programID = $oNPS->id;
-            $defaultTab = !empty($selectedTab) ? $selectedTab : 'platform';
-            $oContacts = $this->mNPS->getMyUsers($oNPS->hashcode);
-        }
-        $defaultTab = !empty($selectedTab) ? $selectedTab : 'platform';
-        //List of Advocates related data 
-        $hashCode = $oNPS->hashcode;
-        if (!empty($hashCode)) {
-            //$oContacts = $this->mNPS->getMyAdvocates($hashCode);
-        }
-        $eventsData = $this->mNPS->getNPSEvents($oNPS->id);
-        $campaignTemplates = $this->mNPS->getNPSCampaignTemplates($oNPS->id);
-        $userTwilioData = $this->mUser->getUserTwilioData($userID);
-        //pre($campaignTemplates);
-        $aData = array(
-            'bActiveSubsription' => $bActiveSubsription,
-            'title' => 'Survery Setup',
-            'pagename' => $breadcrumb,
-            'defalutTab' => $defaultTab,
-            'programID' => $programID,
-            'campaignTemplates' => $campaignTemplates,
-            'oNPS' => $oNPS,
-            'userTwilioData' => $userTwilioData,
-            'eventsData' => $eventsData,
-            'oContacts' => $oContacts,
-            'userID' => $userID,
-            'userData' => $aUser,
-            'user_role' => $user_role
-        );
-
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $this->template->load('admin/admin_template_new', 'admin/modules/nps/setup', $aData);
-    }
-
-    public function getNpsUserById() {
-
-        $post = $this->input->post();
-        $subscriberID = $post['subscriberID'];
-        $bResponse = $this->mNPS->getNpsUserById($subscriberID);
+        
+        $subscriberID = $request->subscriberID;
+        $bResponse = $mNPS->getNpsUserById($subscriberID);
 
         if ($bResponse) {
             $response = array('status' => 'success', 'result' => $bResponse);
@@ -789,19 +854,26 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function updateNpsSubscriber() {
+    
+    /**
+     * Used to update NPS subscribers
+     */
+    public function updateNpsSubscriber(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        $email = $post['edit_email'];
-        $firstName = $post['edit_firstname'];
-        $lastName = $post['edit_lastname'];
-        $phone = $post['edit_phone'];
-        $subscriberID = $post['edit_subscriberID'];
+        
+        $email = $request->edit_email;
+        $firstName = $request->edit_firstname;
+        $lastName = $request->edit_lastname;
+        $phone = $request->edit_phone;
+        $subscriberID = $request->edit_subscriberID;
         $bInsertedNewGlobalSubscriber = false;
 
         if (!empty($email)) {
-            $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
+            $oGlobalUser = $mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
             if (!empty($oGlobalUser)) {
                 $iSubscriberID = $oGlobalUser->id;
                 $aGlobalUserData = array(
@@ -811,7 +883,7 @@ class Nps extends CI_Controller {
                     'phone' => $phone,
                     'updated' => date("Y-m-d H:i:s")
                 );
-                $this->mSubscriber->updateGlobalSubscriber($aGlobalUserData, $iSubscriberID);
+                $mSubscriber->updateGlobalSubscriber($aGlobalUserData, $iSubscriberID);
             } else {
                 //Add global subscriber
                 $aSubscriberData = array(
@@ -822,7 +894,7 @@ class Nps extends CI_Controller {
                     'phone' => $phone,
                     'created' => date("Y-m-d H:i:s")
                 );
-                $iSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
+                $iSubscriberID = $mSubscriber->addGlobalSubscriber($aSubscriberData);
                 $bInsertedNewGlobalSubscriber = true;
             }
         }
@@ -832,7 +904,7 @@ class Nps extends CI_Controller {
                 'subscriber_id' => $iSubscriberID
             );
 
-            $bResponse = $this->mNPS->updateNpsUser($aData, $subscriberID);
+            $bResponse = $mNPS->updateNpsUser($aData, $subscriberID);
         }
 
         $response = array('status' => 'success', 'result' => $bResponse);
@@ -840,12 +912,18 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function bulkDeleteNpsUser() {
+    /**
+     * Used to delete NPS subsribers in bulk
+     */
+    public function bulkDeleteNpsUser(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
 
-        $post = $this->input->post();
-        $bulk_nps_id = $post['bulk_nps_id'];
+        
+        $bulk_nps_id = $request->bulk_nps_id;
         foreach ($bulk_nps_id as $subscriberID) {
-            $bResponse = $this->mNPS->deleteNpsUser($subscriberID);
+            $bResponse = $mNPS->deleteNpsUser($subscriberID);
         }
 
         $response = array('status' => 'success', 'result' => $bResponse);
@@ -853,28 +931,41 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function deleteNpsUser() {
+    
+    /**
+     * Used to delete NPS subscriber
+     */
+    public function deleteNpsUser(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
 
-        $post = $this->input->post();
-        $subscriberID = $post['subscriberId'];
-        $bResponse = $this->mNPS->deleteNpsUser($subscriberID);
+        
+        $subscriberID = $request->subscriberId;
+        $bResponse = $mNPS->deleteNpsUser($subscriberID);
 
         $response = array('status' => 'success', 'result' => $bResponse);
         echo json_encode($response);
         exit;
     }
 
-    public function addNPS() {
+   
+    /**
+     * Used to add a new nps campaign
+     */
+    public function addNPS(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $title = strip_tags($post['title']);
+        $title = strip_tags($request->title);
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $hashcode = '';
         for ($i = 0; $i < 20; $i++) {
@@ -888,7 +979,7 @@ class Nps extends CI_Controller {
             'status' => 'draft',
             'created' => date("Y-m-d H:i:s")
         );
-        $insertID = $this->mNPS->addNPS($aData);
+        $insertID = $mNPS->addNPS($aData);
 
         if ($insertID) {
             //Update in automation table to take effect in email/sms settings
@@ -898,7 +989,7 @@ class Nps extends CI_Controller {
                 'reminder-email' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'day')),
                 'reminder-sms' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'day'))
             );
-            //$bSavedEvent = $this->mNPS->saveNPSEvents($aEvent, $insertID);
+            //$bSavedEvent = $mNPS->saveNPSEvents($aEvent, $insertID);
 
             $response = array('status' => 'success', 'id' => $insertID, 'msg' => "Success");
 
@@ -918,22 +1009,30 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function updateAllCampaign() {
+    
+    /**
+     * Used to update NPS campaigns in bulk
+     */
+    public function updateAllCampaign(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $post = $this->input->post();
+        
 
-        if (!empty($post)) {
-            $npsId = strip_tags($post['nps_id']);
+        if (!empty($request)) {
+            $npsId = strip_tags($request->nps_id);
 
             if (!empty($npsId)) {
                 $aData = array(
                     'status' => 'active'
                 );
-                $eventsData = $this->mNPS->getNPSEvents($npsId);
+                $eventsData = $mNPS->getNPSEvents($npsId);
                 foreach ($eventsData as $eventData) {
-                    $bSaved = $this->mNPS->updataCampaignByEventID($aData, $eventData->id);
+                    $bSaved = $mNPS->updataCampaignByEventID($aData, $eventData->id);
                 }
                 if ($bSaved) {
                     $response = array('status' => 'success', 'msg' => "Success");
@@ -944,26 +1043,33 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function updateUserCampaign() {
+    
+    /**
+     * Used to update NPS campaign
+     */
+    public function updateUserCampaign(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $post = $this->input->post();
+        
 
-        if (!empty($post)) {
-            $campaignID = strip_tags($post['campaignId']);
-            $campaingType = strip_tags($post['campaignType']);
+        if (!empty($request)) {
+            $campaignID = strip_tags($request->campaignId);
+            $campaingType = strip_tags($request->campaignType);
             if ($campaingType == 'Email') {
-                $content = $post['emailtemplate'];
+                $content = $request->emailtemplate;
             } else {
-                $content = $post['smstemplate'];
+                $content = $request->smstemplate;
             }
 
             if (!empty($campaignID)) {
                 $aData = array(
                     'html' => base64_encode($content)
                 );
-                $bSaved = $this->mNPS->updateUserCampaign($aData, $campaignID);
+                $bSaved = $mNPS->updateUserCampaign($aData, $campaignID);
                 if ($bSaved) {
                     $response = array('status' => 'success', 'msg' => "Success");
                 }
@@ -973,15 +1079,22 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function updateNPSEvent() {
+    
+    /**
+     * Used to update NPS event
+     */
+    public function updateNPSEvent(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        $post = $this->input->post();
+        
 
-        if (!empty($post)) {
-            $eventID = strip_tags($post['event_id']);
-            $timeValue = strip_tags($post['delay_value']);
-            $timeUnit = strip_tags($post['delay_unit']);
+        if (!empty($request)) {
+            $eventID = strip_tags($request->event_id);
+            $timeValue = strip_tags($request->delay_value);
+            $timeUnit = strip_tags($request->delay_unit);
 
             if (!empty($eventID)) {
                 $timeData = json_encode(array('delay_type' => 'after', 'delay_value' => $timeValue, 'delay_unit' => $timeUnit));
@@ -989,7 +1102,7 @@ class Nps extends CI_Controller {
                     'data' => $timeData
                 );
 
-                $bSaved = $this->mNPS->updateAutoEvent($aData, $eventID);
+                $bSaved = $mNPS->updateAutoEvent($aData, $eventID);
                 if ($bSaved) {
                     $response = array('status' => 'success', 'msg' => "Success");
                 }
@@ -999,19 +1112,26 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function deleteNPSCampaign() {
+    
+    /**
+     * Used to delete NPS campaign
+     */
+    public function deleteNPSCampaign(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        $post = $this->input->post();
+        
 
-        if (!empty($post)) {
-            $campaignID = strip_tags($post['campaign_id']);
+        if (!empty($request)) {
+            $campaignID = strip_tags($request->campaign_id);
 
             if (!empty($campaignID)) {
                 $aData = array(
                     'delete_status' => 1
                 );
-                $bSaved = $this->mNPS->updateUserCampaign($aData, $campaignID);
+                $bSaved = $mNPS->updateUserCampaign($aData, $campaignID);
                 if ($bSaved) {
                     $response = array('status' => 'success', 'msg' => "Success");
                 }
@@ -1021,21 +1141,28 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function updateNPSReminderCampaign() {
+    
+    /**
+     * Used to update NPS reminder campaign
+     */
+    public function updateNPSReminderCampaign(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        $post = $this->input->post();
+        
 
-        if (!empty($post)) {
-            $eventID = strip_tags($post['event_id']);
-            $reminderLoopStatus = strip_tags($post['reminder_loop_status']);
+        if (!empty($request)) {
+            $eventID = strip_tags($request->event_id);
+            $reminderLoopStatus = strip_tags($request->reminder_loop_status);
 
             if (!empty($eventID)) {
                 $aData = array(
                     'reminder_loop_status' => $reminderLoopStatus
                 );
 
-                $bSaved = $this->mNPS->updateEvent($aData, $eventID);
+                $bSaved = $mNPS->updateEvent($aData, $eventID);
                 if ($bSaved) {
                     $response = array('status' => 'success', 'msg' => "Success");
                 }
@@ -1045,14 +1172,21 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function updateNPSReminderLoop() {
+    
+    /**
+     * Updated to update NPS reminder loop
+     */
+    public function updateNPSReminderLoop(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        $post = $this->input->post();
+        
 
-        if (!empty($post)) {
-            $eventID = strip_tags($post['event_id']);
-            $loopValue = strip_tags($post['loop_value']);
+        if (!empty($request)) {
+            $eventID = strip_tags($request->event_id);
+            $loopValue = strip_tags($request->loop_value);
 
             if (!empty($eventID)) {
                 $aData = array(
@@ -1060,7 +1194,7 @@ class Nps extends CI_Controller {
                     'total_reminder_loop' => $loopValue
                 );
 
-                $bSaved = $this->mNPS->updateEvent($aData, $eventID);
+                $bSaved = $mNPS->updateEvent($aData, $eventID);
                 if ($bSaved) {
                     $response = array('status' => 'success', 'msg' => "Success");
                 }
@@ -1070,17 +1204,24 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function updateNPSCampaign() {
+    
+    /**
+     * Used to update NPS campaign
+     */
+    public function updateNPSCampaign(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $post = $this->input->post();
+        
 
-        if (!empty($post)) {
-            $campaignID = strip_tags($post['campaign_id']);
-            $subject = strip_tags($post['subject']);
-            $content = $post['template_content'];
-            $campaignType = $post['campaign_type'];
+        if (!empty($request)) {
+            $campaignID = strip_tags($request->campaign_id);
+            $subject = strip_tags($request->subject);
+            $content = $request->template_content;
+            $campaignType = $request->campaign_type;
 
             if (!empty($campaignID)) {
                 if ($campaignType == 'Email') {
@@ -1098,7 +1239,7 @@ class Nps extends CI_Controller {
                     );
                 }
 
-                $bSaved = $this->mNPS->updateUserCampaign($aData, $campaignID);
+                $bSaved = $mNPS->updateUserCampaign($aData, $campaignID);
                 if ($bSaved) {
                     $response = array('status' => 'success', 'msg' => "Success");
                 }
@@ -1108,22 +1249,29 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function getNPSCampaign() {
+    
+    /**
+     * Used to get NPS campaign
+     */
+    public function getNPSCampaign(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $oUser = getLoggedUser();
         //pre($oUser);
-        $campaignID = $post['campaign_id'];
-        $npsID = $post['nps_id'];
+        $campaignID = $request->campaign_id;
+        $npsID = $request->nps_id;
         if ($campaignID > 0) {
-            $oCampaign = $this->mNPS->getNPSCampaign($campaignID);
+            $oCampaign = $mNPS->getNPSCampaign($campaignID);
             if (!empty($oCampaign)) {
-                $content = $this->mInviter->emailTagReplace($npsID, '', base64_decode($oCampaign[0]->html), 'email', $oUser);
+                $content = $mInviter->emailTagReplace($npsID, '', base64_decode($oCampaign[0]->html), 'email', $oUser);
                 $response = array('status' => 'success', 'campData' => $oCampaign[0], 'description' => base64_decode($oCampaign[0]->html), 'content' => $content);
             } else {
                 $response = array('status' => 'error', 'msg' => 'Campaign not found');
@@ -1135,18 +1283,25 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function getNPS() {
+    
+    /**
+     * Used to get NPS campaign Info
+     */
+    public function getNPS(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsID = strip_tags($post['nps_id']);
-        $oNPS = $this->mNPS->getNps($userID, $npsID);
+        $npsID = strip_tags($request->nps_id);
+        $oNPS = $mNPS->getNps($userID, $npsID);
         if (!empty($oNPS)) {
             $response = array('status' => 'success', 'id' => $oNPS->id, 'title' => $oNPS->title);
         } else {
@@ -1157,23 +1312,30 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function changeStatus() {
+    
+    /**
+     * Used to update nps campaign status
+     */
+    public function changeStatus(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsID = strip_tags($post['npsId']);
-        $status = strip_tags($post['status']);
+        $npsID = strip_tags($request->npsId);
+        $status = strip_tags($request->status);
         $aData = array(
             'status' => $status,
         );
         if ($npsID > 0) {
-            $bUpdateID = $this->mNPS->updateNPS($aData, $userID, $npsID);
+            $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
@@ -1183,22 +1345,29 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function publishNPSCampaign() {
+    
+    /**
+     * Used to publish NPS campaign
+     */
+    public function publishNPSCampaign(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsID = strip_tags($post['npsId']);
+        $npsID = strip_tags($request->npsId);
         $aData = array(
             'status' => 'active',
         );
         if ($npsID > 0) {
-            $bUpdateID = $this->mNPS->updateNPS($aData, $userID, $npsID);
+            $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
@@ -1208,23 +1377,30 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function publishNPSCampaignStatus() {
+    
+    /**
+     * Used to publish NPS campaign status
+     */
+    public function publishNPSCampaignStatus(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsID = strip_tags($post['npsId']);
-        $status = $post['status'];
+        $npsID = strip_tags($request->npsId);
+        $status = $request->status;
         $aData = array(
             'status' => $status,
         );
         if ($npsID > 0) {
-            $bUpdateID = $this->mNPS->updateNPS($aData, $userID, $npsID);
+            $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
@@ -1234,24 +1410,31 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function updateNPS() {
+    
+    /**
+     * Used to update NPS campaign
+     */
+    public function updateNPS(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsID = strip_tags($post['nps_id']);
-        $title = strip_tags($post['title']);
+        $npsID = strip_tags($request->nps_id);
+        $title = strip_tags($request->title);
         $aData = array(
             'title' => $title,
             'updated' => date("Y-m-d H:i:s")
         );
         if ($npsID > 0) {
-            $bUpdateID = $this->mNPS->updateNPS($aData, $userID, $npsID);
+            $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
@@ -1261,19 +1444,26 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function deleteNPS() {
+    
+    /**
+     * Used to delete NPS campaign
+     */
+    public function deleteNPS(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsID = strip_tags($post['nps_id']);
+        $npsID = strip_tags($request->nps_id);
         if ($npsID > 0) {
-            $bDeleted = $this->mNPS->deleteNPS($userID, $npsID);
+            $bDeleted = $mNPS->deleteNPS($userID, $npsID);
             if ($bDeleted) {
                 $response = array('status' => 'success', 'msg' => "Success");
             }
@@ -1283,24 +1473,31 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function moveToArchiveNPS() {
+    
+    /**
+     * Used to archive NPS campaigns
+     */
+    public function moveToArchiveNPS(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsID = strip_tags($post['nps_id']);
+        $npsID = strip_tags($request->nps_id);
         $aData = array(
             'status' => 'archive',
             'updated' => date("Y-m-d H:i:s")
         );
 
         if ($npsID > 0) {
-            $bUpdateID = $this->mNPS->updateNPS($aData, $userID, $npsID);
+            $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'msg' => "Success");
             }
@@ -1310,20 +1507,27 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function bulkDeleteNPS() {
+    
+    /**
+     * Used to delete NPS in bulk
+     */
+    public function bulkDeleteNPS(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsIDs = $post['bulk_nps_id'];
+        $npsIDs = $request->bulk_nps_id;
         if (!empty($npsIDs)) {
             foreach ($npsIDs as $npsID) {
-                $bDeleted = $this->mNPS->deleteNPS($userID, $npsID);
+                $bDeleted = $mNPS->deleteNPS($userID, $npsID);
             }
         }
         if ($bDeleted) {
@@ -1333,17 +1537,24 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function bulkArchiveNPS() {
+    
+    /**
+     * Used to archive NPS campaigns in bulk
+     */
+    public function bulkArchiveNPS(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsIDs = $post['bulk_nps_id'];
+        $npsIDs = $request->bulk_nps_id;
         $aData = array(
             'status' => 'archive',
             'updated' => date("Y-m-d H:i:s")
@@ -1351,7 +1562,7 @@ class Nps extends CI_Controller {
 
         if (!empty($npsIDs)) {
             foreach ($npsIDs as $npsID) {
-                $bUpdateID = $this->mNPS->updateNPS($aData, $userID, $npsID);
+                $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             }
         }
 
@@ -1362,24 +1573,31 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function choosePlatform() {
+    
+    /**
+     * Used to save choosing platform related changes
+     */
+    public function choosePlatform(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $npsID = strip_tags($post['nps_id']);
+        $npsID = strip_tags($request->nps_id);
         if ($npsID > 0) {
-            $platform = strip_tags($post['platform']);
+            $platform = strip_tags($request->platform);
             $aData = array(
                 'platform' => $platform,
                 'updated' => date("Y-m-d H:i:s")
             );
-            $bUpdateID = $this->mNPS->updateNPS($aData, $userID, $npsID);
+            $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
@@ -1389,25 +1607,47 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function template($platform, $hashKey) {
+    
+    /**
+     * Get the list of NPS templates
+     * @param type $platform
+     * @param type $hashKey
+     */
+    public function template(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
+        $platform = $request->platform;
+        
+        $hashKey = $request->hashKey;
+        
         if (!empty($platform)) {
             if (!empty($hashKey)) {
-                $oNPS = $this->mNPS->getSurveyInfoByRef($hashKey);
+                $oNPS = $mNPS->getSurveyInfoByRef($hashKey);
             }
         }
 
-        $this->load->view('admin/modules/nps/email-content-survey.php', array('oNPS' => $oNPS));
+        return view('admin.modules.nps.email-content-survey', array('oNPS' => $oNPS));
     }
 
-    public function score($hashKey = '') {
+    
+    /**
+     * Used to get the score of NPS campaign
+     */
+    public function score(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
+        $hashKey = $request->hashKey;
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if (!empty($hashKey)) {
-            $oFeedback = $this->mNPS->getNPSScore($hashKey);
-            $aScoreSummery = $this->mNPS->getNPSScoreSummery($hashKey);
+            $oFeedback = $mNPS->getNPSScore($hashKey);
+            $aScoreSummery = $mNPS->getNPSScoreSummery($hashKey);
         } else {
-            $oFeedback = $this->mNPS->getNPSScore('', $userID);
-            $aScoreSummery = $this->mNPS->getNPSScoreSummery($userID);
+            $oFeedback = $mNPS->getNPSScore('', $userID);
+            $aScoreSummery = $mNPS->getNPSScoreSummery($userID);
         }
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -1425,16 +1665,25 @@ class Nps extends CI_Controller {
             'aSummary' => $aScoreSummery
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/modules/nps/list-scores', $aPageData);
+        return view('admin.modules.nps.list-scores', $aPageData);
     }
 
-    public function feedbackdetails($scoreID = 0) {
+    
+    /**
+     * Used to get Feedback details
+     * @param type $scoreID
+     */
+    public function feedbackdetails(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
+        $scoreID = $request->$scoreID;
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $oNotes = $this->mNPS->getNPSNotes($scoreID);
-        $oScore = $this->mNPS->getScoreDetails($scoreID);
-        $oTags = $this->mNPS->getTagsByScoreID($scoreID);
+        $oNotes = $mNPS->getNPSNotes($scoreID);
+        $oScore = $mNPS->getScoreDetails($scoreID);
+        $oTags = $mNPS->getTagsByScoreID($scoreID);
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -1444,7 +1693,7 @@ class Nps extends CI_Controller {
                     <li><a data-toggle="tooltip" data-placement="bottom" title="Feedback Details" class="sidebar-control active hidden-xs ">Feedback Details</a></li>
                 </ul>';
 
-        $this->template->load('admin/admin_template_new', 'admin/modules/nps/feedback_details', array(
+        return view('admin.modules.nps.feedback_details', array(
             'title' => 'Feedback Details',
             'userID' => $userID,
             'pagename' => $breadcrumb,
@@ -1455,41 +1704,20 @@ class Nps extends CI_Controller {
         ));
     }
 
-    public function feedbackdetails_old($scoreID = 0) {
-
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $oNotes = $this->mNPS->getNPSNotes($scoreID);
-        $oScore = $this->mNPS->getScoreDetails($scoreID);
-        $oTags = $this->mNPS->getTagsByScoreID($scoreID);
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/modules/nps/') . '">NPS</a></li>
-                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-                    <li><a data-toggle="tooltip" data-placement="bottom" title="Feedback Details" class="sidebar-control active hidden-xs ">Feedback Details</a></li>
-                </ul>';
-
-        $this->template->load('admin/admin_template_new', 'admin/modules/nps/feedback_details_old', array(
-            'title' => 'Feedback Details',
-            'userID' => $userID,
-            'pagename' => $breadcrumb,
-            'oScore' => $oScore,
-            'oNotes' => $oNotes,
-            'oTags' => $oTags,
-            'scoreID' => $scoreID
-        ));
-    }
-
-    public function saveNPSNotes() {
+    /**
+     * Used to update NPS notes
+     */
+    public function saveNPSNotes(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $scoreID = strip_tags($post['scoreid']);
-            $npsID = strip_tags($post['npsid']);
-            $userID = strip_tags($post['uid']);
-            $sNotes = $post['notes'];
+        
+        if (!empty($request)) {
+            $scoreID = strip_tags($request->scoreid);
+            $npsID = strip_tags($request->npsid);
+            $userID = strip_tags($request->uid);
+            $sNotes = $request->notes;
             $aNotesData = array(
                 'score_id' => $scoreID,
                 'user_id' => $userID,
@@ -1498,7 +1726,7 @@ class Nps extends CI_Controller {
                 'created' => date("Y-m-d H:i:s")
             );
 
-            $bSaved = $this->mNPS->saveNPSNotes($aNotesData);
+            $bSaved = $mNPS->saveNPSNotes($aNotesData);
             if ($bSaved) {
                 $response = array('status' => 'success', 'message' => 'Note has been added succesfully.');
             }
@@ -1507,24 +1735,31 @@ class Nps extends CI_Controller {
         }
     }
 
-    public function applyNPSTag() {
+    
+    /**
+     * Used to apply NPS tags
+     */
+    public function applyNPSTag(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        if (empty($post) || empty($userID)) {
+        
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $scoreID = strip_tags($post['score_id']);
-        $aTagID = $post['applytag'];
+        $scoreID = strip_tags($request->score_id);
+        $aTagID = $request->applytag;
         $aInput = array(
             'aTagIDs' => $aTagID,
             'score_id' => $scoreID
         );
 
-        $bAdded = $this->mNPS->addNPSTag($aInput);
+        $bAdded = $mNPS->addNPSTag($aInput);
 
         if ($bAdded) {
             $response = array('status' => 'success', 'msg' => 'Tag added successfully!');
@@ -1537,21 +1772,28 @@ class Nps extends CI_Controller {
         }
     }
 
-    public function removeNPSTag() {
+    
+    /**
+     * Used to remove nps tags
+     */
+    public function removeNPSTag(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        if (empty($post) || empty($userID)) {
+        
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
-        $scoreID = strip_tags($post['score_id']);
-        $npsID = strip_tags($post['nps_id']);
-        $tagID = strip_tags($post['tag_id']);
+        $scoreID = strip_tags($request->score_id);
+        $npsID = strip_tags($request->nps_id);
+        $tagID = strip_tags($request->tag_id);
 
         if (!empty($scoreID) && $scoreID > 0) {
-            $bDeleted = $this->mNPS->removeNPSTag($tagID, $scoreID);
+            $bDeleted = $mNPS->removeNPSTag($tagID, $scoreID);
         }
 
 
@@ -1566,15 +1808,21 @@ class Nps extends CI_Controller {
         }
     }
 
-    public function getNPSNoteById() {
-
+    
+    /**
+     * Used to get NPS notes by id
+     */
+    public function getNPSNoteById(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $noteID = strip_tags($post['noteid']);
-            $noteData = $this->mNPS->getNPSNoteByID($noteID);
+        
+        if (!empty($request)) {
+            
+            $noteID = strip_tags($request->noteid);
+            $noteData = $mNPS->getNPSNoteByID($noteID);
             if ($noteData) {
                 $response['status'] = 'success';
                 $response['result'] = $noteData;
@@ -1587,11 +1835,18 @@ class Nps extends CI_Controller {
         }
     }
 
-    public function deleteNPSNote() {
+    
+    /**
+     * Used to delete NPS notes
+     */
+    public function deleteNPSNote(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array();
-        $post = $this->input->post();
-        $noteid = strip_tags($post['noteid']);
-        $result = $this->mNPS->deleteNPSNoteByID($noteid);
+        
+        $noteid = strip_tags($request->noteid);
+        $result = $mNPS->deleteNPSNoteByID($noteid);
         if ($result) {
             $response['status'] = 'success';
         } else {
@@ -1602,17 +1857,24 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function updatNotes() {
+    
+    /**
+     * Used to update NPS notes
+     */
+    public function updatNotes(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $noteId = strip_tags($post['edit_noteid']);
-            $sNotes = $post['edit_note_content'];
+        
+        if (!empty($request)) {
+            $noteId = strip_tags($request->edit_noteid);
+            $sNotes = $request->edit_note_content;
             $aNotesData = array(
                 'notes' => $sNotes
             );
 
-            $bSaved = $this->mNPS->updateNPSNote($aNotesData, $noteId);
+            $bSaved = $mNPS->updateNPSNote($aNotesData, $noteId);
             if ($bSaved) {
                 $response = array('status' => 'success', 'message' => 'Note has been updated succesfully.');
             }
@@ -1621,39 +1883,53 @@ class Nps extends CI_Controller {
         }
     }
 
-    public function listAllTags() {
+    
+    /**
+     * Used to get the list of all nps tags
+     */
+    public function listAllTags(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        if (empty($post) || empty($userID)) {
+        
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
-        $scoreID = $post['score_id'];
+        $scoreID = $request->score_id;
         if ($scoreID > 0) {
-            $aAppliedTags = $this->mNPS->getTagsByScoreID($scoreID);
+            $aAppliedTags = $mNPS->getTagsByScoreID($scoreID);
         }
 
-        $aTag = $this->mNPS->getClientTags($userID);
-        $sTags = $this->load->view('admin/tags/mytags', array('oTags' => $aTag, 'aAppliedTags' => $aAppliedTags), true);
+        $aTag = $mNPS->getClientTags($userID);
+        $sTags = view('admin.tags.mytags', array('oTags' => $aTag, 'aAppliedTags' => $aAppliedTags))->render();
         $response = array('status' => 'success', 'list_tags' => $sTags);
         echo json_encode($response);
         exit;
     }
 
-    public function registerInvite() {
+    
+    /**
+     * Used to register NPS invites
+     */
+    public function registerInvite(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $accountID = strip_tags($post['bbaid']);
-            $firstName = strip_tags($post['firstname']);
-            $lastName = strip_tags($post['lastname']);
-            $email = strip_tags($post['email']);
-            $phone = strip_tags($post['phone']);
-            $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
+        
+        if (!empty($request)) {
+            $accountID = strip_tags($request->bbaid);
+            $firstName = strip_tags($request->firstname);
+            $lastName = strip_tags($request->lastname);
+            $email = strip_tags($request->email);
+            $phone = strip_tags($request->phone);
+            $oGlobalUser = $mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
             if (!empty($oGlobalUser)) {
                 $iSubscriberID = $oGlobalUser->id;
             } else {
@@ -1666,7 +1942,7 @@ class Nps extends CI_Controller {
                     'phone' => $phone,
                     'created' => date("Y-m-d H:i:s")
                 );
-                $iSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
+                $iSubscriberID = $mSubscriber->addGlobalSubscriber($aSubscriberData);
             }
             $aData = array(
                 'subscriber_id' => $iSubscriberID,
@@ -1682,36 +1958,50 @@ class Nps extends CI_Controller {
         exit;
     }
 
+    
+    /**
+     * 
+     * @param type $aData
+     * @return type
+     */
     public function registerNow($aData) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $userID = 0;
         if (!empty($aData)) {
             $subscriberID = $aData['subscriber_id'];
             $accountID = $aData['account_id'];
             if (!empty($subscriberID)) {
-                $oExistingUser = $this->mNPS->checkIfExistingUser($subscriberID, $accountID);
+                $oExistingUser = $mNPS->checkIfExistingUser($subscriberID, $accountID);
                 if (!empty($oExistingUser)) {
                     $userID = $oExistingUser->id;
                 } else {
                     //Ok we are good now, go ahead and register a new user
-                    $userID = $this->mNPS->addNPSUser($aData);
+                    $userID = $mNPS->addNPSUser($aData);
                 }
             }
         }
         return $userID;
     }
 
-    // Export data in CSV format 
-    public function exportCSV() {
+    /**
+     * Used to export NPS subscribers
+     */
+    public function exportCSV(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         // file name 
         $filename = 'users_' . time() . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
 
-        $post = $this->input->post();
-        $npsHashId = $post['nps_hash_id'];
-        $userID = $this->session->userdata("current_user_id");
-        $allSubscribers = $this->mNPS->getNPSSubscribers($npsHashId);
+        
+        $npsHashId = $request->nps_hash_id;
+        $userID = Session::get("current_user_id");
+        $allSubscribers = $mNPS->getNPSSubscribers($npsHashId);
 
         // file creation 
         $file = fopen('php://output', 'w');
@@ -1740,15 +2030,22 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function importInviteCSV() {
+    
+    /**
+     * Used to import NPS subscribers
+     */
+    public function importInviteCSV(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $post = $this->input->post();
+        
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'csv';
         $config['max_size'] = '1000';
-        $accountID = strip_tags($post['bbaid']);
+        $accountID = strip_tags($request->bbaid);
 
 
 
@@ -1770,7 +2067,7 @@ class Nps extends CI_Controller {
                     $email = $row['EMAIL'];
                     $phone = $row['PHONE'];
 
-                    $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
+                    $oGlobalUser = $mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
                     if (!empty($oGlobalUser)) {
                         $iSubscriberID = $oGlobalUser->id;
                     } else {
@@ -1783,7 +2080,7 @@ class Nps extends CI_Controller {
                             'phone' => $phone,
                             'created' => date("Y-m-d H:i:s")
                         );
-                        $iSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
+                        $iSubscriberID = $mSubscriber->addGlobalSubscriber($aSubscriberData);
                     }
 
                     $aData = array(
@@ -1803,8 +2100,17 @@ class Nps extends CI_Controller {
         exit;
     }
 
-    public function stats($npsID) {
-
+    
+    /**
+     * 
+     * @param type $npsID
+     */
+    public function stats(Request $request) {
+        // Instanciate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+        
+        $npsID = $request->$npsID;
+        
         $oUser = getLoggedUser();
         $userID = $oUser->id;
       
@@ -1814,7 +2120,7 @@ class Nps extends CI_Controller {
                         <li><a data-toggle="tooltip" data-placement="bottom" title="NPS Stats" class="sidebar-control active hidden-xs ">NPS Stats</a></li>
                     </ul>';
 
-        $oNPSEvents = $this->mNPS->getNPSEvents($npsID);
+        $oNPSEvents = $mNPS->getNPSEvents($npsID);
 
         $data = array(
             'title' => 'NPS Stats',
@@ -1824,9 +2130,17 @@ class Nps extends CI_Controller {
             'type' => 'email'
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/modules/nps/nps-stats', $data);
+        return view('admin.modules.nps.nps-stats', $data);
     }
 
+    
+    /**
+     * Used to parse template tags of a nps template
+     * @param type $sCode
+     * @param type $type
+     * @param type $oNPS
+     * @return type
+     */
     public function parseNPStemplate($sCode, $type, $oNPS) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
