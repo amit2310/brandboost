@@ -364,16 +364,11 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
+		
+	/**
+	* Used to update chat preferences page data
+	* @return type
+	*/
     public function updateChatPreferences(Request $request) {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -402,20 +397,17 @@ class Chat extends Controller {
         exit;
     }
 
-    
-
-    public function getChat() {
+	/**
+	* Used to update chat preferences page data
+	* @return type
+	*/
+    public function getChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $chatID = strip_tags($post['chat_id']);
-        $oChat = $this->mChat->getChat($userID, $chatID);
+        $chatID = $request->chat_id;
+        $oChat = ChatsModel::getChat($userID, $chatID);
         if (!empty($oChat)) {
             $response = array('status' => 'success', 'id' => $oChat->id, 'title' => $oChat->title);
         } else {
@@ -425,25 +417,24 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
-
-    public function updateChat() {
+	
+	/**
+	* Used to update chat page data
+	* @return type
+	*/
+    public function updateChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $chatID = strip_tags($post['chat_id']);
-        $title = strip_tags($post['title']);
+        $chatID = $request->chat_id;
+        $title = $request->title;
         $aData = array(
             'title' => $title,
             'updated' => date("Y-m-d H:i:s")
         );
         if ($chatID > 0) {
-            $bUpdateID = $this->mChat->updateChat($aData, $userID, $chatID);
+            $bUpdateID = ChatsModel::updateChat($aData, $userID, $chatID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
@@ -452,25 +443,24 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
-
-    public function moveToArchiveChat() {
+	
+	/**
+	* Used to update chat archive status
+	* @return type
+	*/
+    public function moveToArchiveChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $chatID = strip_tags($post['chat_id']);
+        $chatID = $request->chat_id;
         $aData = array(
             'status' => 'archive',
             'updated' => date("Y-m-d H:i:s")
         );
 
         if ($chatID > 0) {
-            $bUpdateID = $this->mChat->updateChat($aData, $userID, $chatID);
+            $bUpdateID = ChatsModel::updateChat($aData, $userID, $chatID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'msg' => "Success");
             }
@@ -480,19 +470,18 @@ class Chat extends Controller {
         exit;
     }
 
-    public function deleteChat() {
+	/**
+	* Used to delete chat data
+	* @return type
+	*/
+    public function deleteChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $chatID = strip_tags($post['chat_id']);
+        $chatID = $request->chat_id;
         if ($chatID > 0) {
-            $bDeleted = $this->mChat->deleteChat($userID, $chatID);
+            $bDeleted = ChatsModel::deleteChat($userID, $chatID);
             if ($bDeleted) {
                 $response = array('status' => 'success', 'msg' => "Success");
             }
@@ -502,20 +491,19 @@ class Chat extends Controller {
         exit;
     }
 
-    public function bulkDeleteChat() {
+	/**
+	* Used to delete bulk chat data
+	* @return type
+	*/
+    public function bulkDeleteChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $chatIDs = $post['bulk_chat_id'];
+        $chatIDs = $request->bulk_chat_id;
         if (!empty($chatIDs)) {
             foreach ($chatIDs as $chatID) {
-                $bDeleted = $this->mChat->deleteChat($userID, $chatID);
+                $bDeleted = ChatsModel::deleteChat($userID, $chatID);
             }
         }
         if ($bDeleted) {
@@ -525,17 +513,16 @@ class Chat extends Controller {
         exit;
     }
 
-    public function bulkArchiveChat() {
+	/**
+	* Used to update bulk chat archive data
+	* @return type
+	*/
+    public function bulkArchiveChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $chatIDs = $post['bulk_chat_id'];
+        $chatIDs = $request->bulk_chat_id;
         $aData = array(
             'status' => 'archive',
             'updated' => date("Y-m-d H:i:s")
@@ -543,7 +530,7 @@ class Chat extends Controller {
 
         if (!empty($chatIDs)) {
             foreach ($chatIDs as $chatID) {
-                $bUpdateID = $this->mChat->updateChat($aData, $userID, $chatID);
+                $bUpdateID = ChatsModel::updateChat($aData, $userID, $chatID);
             }
         }
 
