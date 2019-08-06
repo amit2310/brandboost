@@ -1,4 +1,4 @@
-<?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign'); ?>
+<?php error_reporting(0);list($canRead, $canWrite) = fetchPermissions('Onsite Campaign'); ?>
 
 <link href="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
 <script src="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.js"></script>

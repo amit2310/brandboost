@@ -2288,6 +2288,7 @@ class Broadcast extends Controller {
 
         //Instanciate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
+        $mWorkflow = new WorkflowModel();
 
 
         $oSegments = $mBroadcast->getSegments($userID);
@@ -2305,7 +2306,7 @@ class Broadcast extends Controller {
             'pagename' => $breadcrumb
         );
 
-        return view('admin.broadcast.segments', $aData);
+        return view('admin.broadcast.segments', $aData)->with(['mWorkflow'=> $mWorkflow]);
     }
 
     /**
@@ -2375,7 +2376,8 @@ class Broadcast extends Controller {
           exit;
           } */
 
-        $userDetail = $this->mUser->getAllUsers($userID);
+        $mUser  =  new UsersModel();
+        $userDetail = $mUser->getAllUsers($userID);
         $userRole = $userDetail[0]->user_role;
         if ($userRole != '1') {
             $bUpdated = $mBroadcast->updateSegment($aData, $segmentID, $userID);

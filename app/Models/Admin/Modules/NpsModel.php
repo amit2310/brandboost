@@ -89,20 +89,15 @@ class NpsModel extends Model {
         return $response;
     }
 
-    public function getNps($userID, $id = '') {
-        $response = "";
-        $this->db->select("tbl_nps_main.*");
-        $this->db->where("tbl_nps_main.user_id", $userID);
-        if (!empty($id)) {
-            $this->db->where("tbl_nps_main.id", $id);
-        }
-        $result = $this->db->get("tbl_nps_main");
-        //echo $this->db->last_query(); exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
+   public function getNps($userID, $id = '') {
+       $oData = DB::table('tbl_nps_main')
+               ->where('user_id', $userID)
+               ->when(!empty($id), function($query) use($id) {
+                   return $query->where('id', $id);
+               })
+               ->first();
+       return $oData;
+   }
 
     public function addNPS($aData) {
         $result = $this->db->insert("tbl_nps_main", $aData);
