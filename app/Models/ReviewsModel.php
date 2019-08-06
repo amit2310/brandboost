@@ -390,6 +390,25 @@ class ReviewsModel extends Model {
         
     }
 
+    /**
+     * Get user reviews
+     * @param type $userID
+     * @return type object
+     */
+    public function getUserReviews($userID) {
+   
+        $oData = DB::table('tbl_reviews')
+                ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
+                ->join('tbl_users', 'tbl_brandboost.user_id', '=', 'tbl_users.id')
+                ->select('tbl_reviews.*', 'tbl_brandboost.brand_title', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
+                ->where('tbl_reviews.user_id', $userID)
+               
+                ->orderBy('tbl_reviews.id', 'desc')
+                ->get();
+            return $oData;
+    }
+
+
     public function getReviews($campaignID, $aSettings = array()) {
         $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_brandboost.brand_title");
         $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
@@ -1018,21 +1037,6 @@ class ReviewsModel extends Model {
         $this->db->order_by("tbl_reviews.id", "ASC");
         $oResponse = $this->db->get("tbl_reviews");
         //echo $this->db->last_query();
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        return $aData;
-    }
-
-    public function getUserReviews($userID) {
-        $this->db->select("tbl_reviews.*, tbl_brandboost.brand_title, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_brandboost.user_id=tbl_users.id");
-        //$this->db->group_by("tbl_reviews.campaign_id");
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $this->db->where("tbl_reviews.user_id", $userID);
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
         if ($oResponse->num_rows() > 0) {
             $aData = $oResponse->result();
         }
