@@ -90,6 +90,7 @@ class NpsModel extends Model {
         return $oData;
     }
 
+
     /**
      * get nps campaign details
      * @param type $userID

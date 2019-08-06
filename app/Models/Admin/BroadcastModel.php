@@ -867,7 +867,7 @@ class BroadcastModel extends Model {
      * @param type $userID
      * @return type
      */
-    public function getSegmentSubscribers($segmentID, $userID) {
+    public static function getSegmentSubscribers($segmentID, $userID) {
         $oData = DB::table('tbl_segments_users')
                 ->leftJoin('tbl_subscribers', 'tbl_segments_users.subscriber_id', '=', 'tbl_subscribers.id')
                 ->select('tbl_segments_users.*', 'tbl_subscribers.id as globalSubscriberId', 'tbl_subscribers.user_id as subUserId', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status')
@@ -935,9 +935,6 @@ class BroadcastModel extends Model {
     public function updateSegment($aData, $segmentId, $userID) {
         $result = DB::table('tbl_segments')
                 ->where('id', $segmentId)
-                ->when((!empty($userID)), function($query) use ($userID) {
-                    return $query->orderBy('user_id', $userID);
-                })
                 ->update($aData);
         return $result;
     }
