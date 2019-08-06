@@ -5,25 +5,20 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ReviewsModel;
 use Session;
-use App\Libraries\Custom\Mobile_Detect;
 
-class Profile extends Controller {
+class Media extends Controller {
 
-    
     public function Index() {
 
-    	$aUInfo = getLoggedUser();
-        $userID = $aUInfo->id;
-
+    	$aUser = getLoggedUser();
+        $userID = $aUser->id;
         $mReviews = new ReviewsModel();
         $oReviews = $mReviews->getUserReviews($userID);
-
         $aData = array(
-        	'aUInfo' => $aUInfo,
-        	'oReviews' => $oReviews
+        	'myReview' => $oReviews
         );
 
-    	return view('user.profile', $aData);
+    	return view('user.media', $aData);
     }
 
 }

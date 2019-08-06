@@ -1,6 +1,23 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php //echo $title;
+ ?>
+@endsection
+
+@section('contents')
 
 <!-- Content area -->
-
+<?php
+ if(!empty($campaignType))
+ {
+    $campaignType = $campaignType;
+ }
+ else
+ {
+    $campaignType="";
+ }
+?>
 <div class="content">
 
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -233,7 +250,7 @@
                                         $aUser = getLoggedUser();
                                         $userID = $aUser->id;
                                         foreach ($oSegments as $oSegment) {
-                                            $oSubscribers = $this->mBroadcast->getSegmentSubscribers($oSegment->id, $userID);
+                                            $oSubscribers = \App\Models\Admin\BroadcastModel::getSegmentSubscribers($oSegment->id, $userID);
                                             $aCampaignIDs = unserialize($oSegment->source_campaign_id);
                                             $moduleName = $oSegment->source_module_name;
                                             if (!empty($aCampaignIDs)) {
@@ -248,7 +265,7 @@
                                                     if (in_array($moduleName, array('nps-feedback'))) {
                                                         $modName = 'nps';
                                                     }
-                                                    $oCampaign = $this->mWorkflow->getModuleUnitInfo($modName, $campaignId);
+                                                    $oCampaign = $mWorkflow->getModuleUnitInfo($modName, $campaignId);
                                                     if (!empty($oCampaign)) {
                                                         //$campaignCollection[] = "<a target='_blank' href='" . base_url("admin/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
                                                         if ($moduleName == 'brandboost') {
@@ -525,6 +542,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="addBroadcastSegment" id="addBroadcastSegment" action="javascript:void();">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Add Segment &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
@@ -641,6 +659,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmeditSegmentModel" name="frmeditSegmentModel">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="/assets/images/menu_icons/List_Color.svg"/> Edit Segment &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
@@ -840,7 +859,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/broadcast/getSegment'); ?>',
                 type: "POST",
-                data: {'segment_id': segmentID},
+                data: {'segment_id': segmentID,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -944,7 +963,7 @@
                             $.ajax({
                                 url: "<?php echo base_url('admin/broadcast/archive_multipal_segment'); ?>",
                                 type: "POST",
-                                data: {multi_segment_id: val},
+                                data: {multi_segment_id: val,_token: '{{csrf_token()}}'},
                                 dataType: "json",
                                 success: function (data) {
                                     if (data.status == 'success') {
@@ -1031,7 +1050,7 @@
                         $.ajax({
                             url: "<?php echo base_url('admin/broadcast/archive_multipal_segment'); ?>",
                             type: "POST",
-                            data: {multi_segment_id: val},
+                            data: {multi_segment_id: val,_token: '{{csrf_token()}}'},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {
@@ -1060,7 +1079,7 @@
                         $.ajax({
                             url: '<?php echo base_url('admin/broadcast/deleteSegment'); ?>',
                             type: "POST",
-                            data: {segmentID: segmentID},
+                            data: {segmentID: segmentID,_token: '{{csrf_token()}}'},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {
@@ -1188,7 +1207,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/segments/syncSegment'); ?>',
                 type: "POST",
-                data: {segmentID: segmentID},
+                data: {segmentID: segmentID,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1223,7 +1242,7 @@
                 $.ajax({
                     url: '<?php echo base_url('admin/broadcast/syncSegmentMultiple'); ?>',
                     type: "POST",
-                    data: {segmentCollection: val},
+                    data: {segmentCollection: val,_token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -1253,3 +1272,4 @@
 
     });
 </script>		
+@endsection

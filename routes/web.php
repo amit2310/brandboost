@@ -22,6 +22,9 @@ Route::get('admin/login/logout','Admin\Login@logout');
 // User Section
 Route::get('user/login','User\Login@index');
 Route::post('user/login','User\Login@index');
+Route::get('user/profile','User\Profile@Index');
+Route::get('user/review','User\Review@Index');
+Route::get('user/media','User\Media@Index');
 
 //Dashborad 
 Route::get('admin/dashboard','Admin\Dashboard@index');
@@ -169,6 +172,12 @@ Route::post('webchat/readMessages','Admin\WebChat@readMessages');
 Route::post('admin/webchat/favouriteUser','Admin\WebChat@favouriteUser');
 Route::post('admin/webchat/smallwfilter','Admin\WebChat@smallwfilter');
 Route::post('admin/webchat/bigwfilter','Admin\WebChat@bigwfilter');
+Route::get('admin/chatshortcut','Admin\Chatshortcut@index');
+Route::post('admin/chatshortcut/addShortCut','Admin\Chatshortcut@addShortCut');
+Route::post('admin/chatshortcut/getChatShortcutById','Admin\Chatshortcut@getChatShortcutById');
+Route::post('admin/chatshortcut/updateShortCut','Admin\Chatshortcut@updateShortCut');
+Route::post('admin/chatshortcut/deleteChatShortcut','Admin\Chatshortcut@deleteChatShortcut');
+Route::post('admin/chatshortcut/deleteMultipalChatShortcut','Admin\Chatshortcut@deleteMultipalChatShortcut');
 
 
 
@@ -533,5 +542,18 @@ Route::post('admin/modules/nps/registerInvite','Admin\Modules\Nps@registerInvite
 Route::post('admin/modules/nps/exportCSV','Admin\Modules\Nps@exportCSV');
 Route::post('admin/modules/nps/importInviteCSV','Admin\Modules\Nps@importInviteCSV');
 Route::get('admin/modules/nps/stats/{npsID}','Admin\Modules\Nps@stats');
+
+//Segment Module
+Route::get('admin/broadcast/mysegments','Admin\Broadcast@mysegments');
+Route::post('admin/segments/syncSegment','Admin\Segments@syncSegment');
+Route::post('admin/broadcast/getSegment','Admin\Broadcast@getSegment');
+Route::post('admin/broadcast/updateSegment','Admin\Broadcast@updateSegment');
+Route::post('admin/broadcast/archive_multipal_segment','Admin\Broadcast@archive_multipal_segment');
+Route::post('admin/broadcast/deleteSegment','Admin\Broadcast@deleteSegment');
+
+
+
+
+
 
 

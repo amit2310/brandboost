@@ -27,113 +27,125 @@ class NpsModel extends Model {
 
         return $oData;
     }
-	
-	/**
+
+    /**
      * Used to get nps widget list by user id
      * @param type $userID
      * @return type
      */
     public function getNpsLists($userID) {
-        $aData =  DB::table('tbl_nps_main')
-			->select('tbl_nps_main.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
-			->join('tbl_users', 'tbl_nps_main.user_id','=','tbl_users.id')
-			->where('tbl_nps_main.user_id', $userID)
-			->get();
-        
+        $aData = DB::table('tbl_nps_main')
+                ->select('tbl_nps_main.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
+                ->join('tbl_users', 'tbl_nps_main.user_id', '=', 'tbl_users.id')
+                ->where('tbl_nps_main.user_id', $userID)
+                ->get();
+
         return $aData;
     }
-	
-	/**
+
+    /**
      * Used to get my user by survey info
      * @param type $accountID
      * @return type
      */
-	public static function getMyUsers($accountID) {
+    public static function getMyUsers($accountID) {
         $oNPS = self::getSurveyInfoByRef($accountID);
-		
+
         $npsID = $oNPS->id;
         if ($npsID > 0) {
-			$aData =  DB::table('tbl_nps_campaign_users')
-				->select('tbl_nps_campaign_users.*', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.facebook_profile', 'tbl_subscribers.twitter_profile', 'tbl_subscribers.linkedin_profile', 'tbl_subscribers.instagram_profile', 'tbl_subscribers.socialProfile', 'tbl_subscribers.id AS global_user_id')
-				->join('tbl_subscribers', 'tbl_nps_campaign_users.subscriber_id','=','tbl_subscribers.id')
-				->where('tbl_nps_campaign_users.nps_id', $npsID)
-				->get();
-			
-			return $aData;
-		}
+            $aData = DB::table('tbl_nps_campaign_users')
+                    ->select('tbl_nps_campaign_users.*', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.facebook_profile', 'tbl_subscribers.twitter_profile', 'tbl_subscribers.linkedin_profile', 'tbl_subscribers.instagram_profile', 'tbl_subscribers.socialProfile', 'tbl_subscribers.id AS global_user_id')
+                    ->join('tbl_subscribers', 'tbl_nps_campaign_users.subscriber_id', '=', 'tbl_subscribers.id')
+                    ->where('tbl_nps_campaign_users.nps_id', $npsID)
+                    ->get();
+
+            return $aData;
+        }
     }
-	
-	/**
+
+    /**
      * Used to get survey info by refKey
      * @param type $refKey
      * @return type
      */
-	public static function getSurveyInfoByRef($refKey) {
-		$aData =  DB::table('tbl_nps_main')
-			->where('hashcode', $refKey)
-			->first();
-        
+    public static function getSurveyInfoByRef($refKey) {
+        $aData = DB::table('tbl_nps_main')
+                ->where('hashcode', $refKey)
+                ->first();
+
         return $aData;
-		
     }
 
+    /**
+     * Get nps list by date
+     * @param type $userID
+     * @return type
+     */
     public function getNpsListsByDate($userID) {
-        $response = "";
-        $this->db->select("*, COUNT(created) as createdTotal");
-        $this->db->where("user_id", $userID);
-        $this->db->group_by('DATE(created)');
-        $result = $this->db->get("tbl_nps_main");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_nps_main')
+                ->where('user_id', $userID)
+                ->select('tbl_nps_main.*', DB::raw('COUNT(created) as createdTotal'))
+                ->groupBy(DB::raw('DATE(created)'))
+                ->get();
+        return $oData;
     }
 
+
+    /**
+     * get nps campaign details
+     * @param type $userID
+     * @param type $id
+     * @return type
+     */
     public function getNps($userID, $id = '') {
-        $response = "";
-        $this->db->select("tbl_nps_main.*");
-        $this->db->where("tbl_nps_main.user_id", $userID);
-        if (!empty($id)) {
-            $this->db->where("tbl_nps_main.id", $id);
-        }
-        $result = $this->db->get("tbl_nps_main");
-        //echo $this->db->last_query(); exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_nps_main')
+                ->where('user_id', $userID)
+                ->when(!empty($id), function($query) use($id) {
+                    return $query->where('id', $id);
+                })
+                ->first();
+        return $oData;
     }
 
+    /**
+     * Used to add new nps campaign
+     * @param type $aData
+     * @return boolean
+     */
     public function addNPS($aData) {
-        $result = $this->db->insert("tbl_nps_main", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
+        $insert_id = DB::table('tbl_nps_main')->insertGetId($aData);
+        return $insert_id;
     }
 
+    /**
+     * Used to create nps widget
+     * @param type $aData
+     * @return boolean
+     */
     public function createNPSWidget($aData) {
-        $result = $this->db->insert("tbl_nps_widgets", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
+        $insert_id = DB::table('tbl_nps_widgets')->insertGetId($aData);
+        return $insert_id;
     }
 
+    /**
+     * Used to update nps widget data
+     * @param type $aData
+     * @param type $id
+     * @return boolean
+     */
     public function updateNPSWidget($aData, $id) {
-        $this->db->where("id", $id);
-        $result = $this->db->update("tbl_nps_widgets", $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $result = DB::table('tbl_nps_widgets')
+                ->where('id', $id)
+                ->update($aData);
+        return true;
     }
 
+    /**
+     * Used to save NPS campaign events
+     * @param type $eData
+     * @param type $npsID
+     * @return boolean
+     */
     public function saveNPSEvents($eData, $npsID) {
         if ($npsID != '') {
             //Invite Email
@@ -144,8 +156,7 @@ class NpsModel extends Model {
                 'previous_event_id' => 0,
                 'created' => date("Y-m-d H:i:s ")
             );
-            $this->db->insert("tbl_nps_automations_events", $aData);
-            $inviteEmailInsertID = $this->db->insert_id();
+            $inviteEmailInsertID = DB::table('tbl_nps_automations_events')->insertGetId($aData);
 
             //Invite SMS
             $aData = array(
@@ -155,8 +166,8 @@ class NpsModel extends Model {
                 'previous_event_id' => $inviteEmailInsertID,
                 'created' => date("Y-m-d H:i:s ")
             );
-            $this->db->insert("tbl_nps_automations_events", $aData);
-            $inviteSMSInsertID = $this->db->insert_id();
+
+            $inviteSMSInsertID = DB::table('tbl_nps_automations_events')->insertGetId($aData);
 
             //Reminder Email
             $aData = array(
@@ -166,8 +177,8 @@ class NpsModel extends Model {
                 'previous_event_id' => $inviteSMSInsertID,
                 'created' => date("Y-m-d H:i:s ")
             );
-            $this->db->insert("tbl_nps_automations_events", $aData);
-            $reminderEmailInsertID = $this->db->insert_id();
+
+            $reminderEmailInsertID = DB::table('tbl_nps_automations_events')->insertGetId($aData);
 
             //Reminder SMS
             $aData = array(
@@ -177,8 +188,8 @@ class NpsModel extends Model {
                 'previous_event_id' => $reminderEmailInsertID,
                 'created' => date("Y-m-d H:i:s ")
             );
-            $this->db->insert("tbl_nps_automations_events", $aData);
-            $reminderSMSInsertID = $this->db->insert_id();
+
+            $reminderSMSInsertID = DB::table('tbl_nps_automations_events')->insertGetId($aData);
 
             $oTemplates = $this->getDefaultNPSTemplates();
             if (!empty($oTemplates)) {
@@ -221,161 +232,194 @@ class NpsModel extends Model {
         }
     }
 
+    /**
+     * Used to get NPS campaign
+     * @param type $id
+     * @return boolean
+     */
     public function getNPSCampaign($id) {
-        $this->db->where("id", $id);
-        $result = $this->db->get("tbl_nps_automations_campaigns");
-        if ($result->num_rows() > 0) {
-            //echo $this->db->last_query();
-            return $result->result();
-        }
-        return false;
+        $oData = DB::table('tbl_nps_automations_campaigns')
+                ->where('id', $id)
+                ->get();
+        return $oData;
     }
 
+    /**
+     * Used to get NPS events
+     * @param type $npsID
+     * @return boolean
+     */
     public function getNPSEvents($npsID) {
-        $this->db->where("nps_id", $npsID);
-        $this->db->order_by("id", "ASC");
-        $result = $this->db->get("tbl_nps_automations_events");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            return $result->result();
-        }
-        return false;
+        $oData = DB::table('tbl_nps_automations_events')
+                ->where('nps_id', $npsID)
+                ->orderBy('id', 'asc')
+                ->get();
+        return $oData;
     }
 
+    /**
+     * Get Nps events by various parameters
+     * @param type $npsID
+     * @param type $eventType
+     * @return boolean
+     */
     public function getNPSEventsByNPSIdEventType($npsID, $eventType = '') {
-        $this->db->where("nps_id", $npsID);
-        if (!empty($eventType)) {
-            $this->db->where("event_type", $eventType);
-        }
-        $result = $this->db->get("tbl_nps_automations_events");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            return $result->result();
-        }
-        return false;
+        $oData = DB::table('tbl_nps_automations_events')
+                ->where('nps_id', $npsID)
+                ->when(!empty($eventType), function ($query) use ($eventType) {
+                    return $query->where('event_type', $eventType);
+                })
+                ->get();
+        return $oData;
     }
 
+    /**
+     * Used to get end campaign for the nps campaign
+     * @param type $npsID
+     * @return boolean
+     */
     public function getNPSEndCampaigns($npsID) {
-
-        $this->db->select("tbl_nps_automations_campaigns.*");
-        $this->db->join("tbl_nps_automations_events", "tbl_nps_automations_events.id=tbl_nps_automations_campaigns.event_id", "LEFT");
-        $this->db->where("tbl_nps_automations_events.nps_id", $npsID);
-        $this->db->where("tbl_nps_automations_campaigns.delete_status", 0);
-        $result = $this->db->get("tbl_nps_automations_campaigns");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            return $result->result();
-        }
-        return false;
+        $oData = DB::table('tbl_nps_automations_campaigns')
+                ->leftJoin('tbl_nps_automations_events', 'tbl_nps_automations_events.id', '=', 'tbl_nps_automations_campaigns.event_id')
+                ->select('tbl_nps_automations_campaigns.*')
+                ->where('tbl_nps_automations_events.nps_id', $npsID)
+                ->where('tbl_nps_automations_campaigns.delete_status', 0)
+                ->when(!empty($eventType), function ($query) use ($eventType) {
+                    return $query->where('event_type', $eventType);
+                })
+                ->get();
+        return $oData;
     }
 
+    /**
+     * Use to get nps campaign by event id
+     * @param type $eventID
+     * @return boolean
+     */
     public function getCampaignsByEventID($eventID) {
-        $this->db->where("event_id", $eventID);
-        $this->db->where("delete_status", 0);
-        $result = $this->db->get("tbl_nps_automations_campaigns");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            return $result->result();
-        }
-        return false;
+        $oData = DB::table('tbl_nps_automations_campaigns')
+                ->where('event_id', $eventID)
+                ->where('delete_status', 0)
+                ->get();
+        return $oData;
     }
 
+    /**
+     * Get nps default templates
+     * @return boolean
+     */
     public function getDefaultNPSTemplates() {
-        $this->db->where("status", "active");
-        $this->db->where("user_id", "0");
-        $result = $this->db->get("tbl_nps_automations_templates");
-        if ($result->num_rows() > 0) {
-            return $result->result();
-        }
-        return false;
+        $oData = DB::table('tbl_nps_automations_templates')
+                ->where('user_id', 0)
+                ->where('status', 'active')
+                ->get();
+        return $oData;
     }
 
+    /**
+     * Add new nps end campaign
+     * @param type $tempData
+     * @return boolean
+     */
     public function insertNPSCampaigns($tempData) {
-        $this->db->insert("tbl_nps_automations_campaigns", $tempData);
-        $campaignID = $this->db->insert_id();
-        if ($campaignID) {
-            return $campaignID;
-        } else {
-            return false;
-        }
+        $insert_id = DB::table('tbl_nps_automations_campaigns')->insertGetId($aData);
+        return $insert_id;
     }
 
+    /**
+     * Used to update user campaign
+     * @param type $aData
+     * @param type $id
+     * @return boolean
+     */
     public function updateUserCampaign($aData, $id) {
-        $this->db->where("id", $id);
-        $result = $this->db->update("tbl_nps_automations_campaigns", $aData);
-        //echo $this->db->last_query();
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $result = DB::table('tbl_nps_automations_campaigns')
+                ->where('id', $id)
+                ->update($aData);
+        return true;
     }
 
+    /**
+     * Update campaign by event id
+     * @param type $aData
+     * @param type $eventId
+     * @param type $type
+     * @param type $templateSourceID
+     * @return boolean
+     */
     public function updateCampaignByEventId($aData, $eventId, $type = '', $templateSourceID = '') {
-        $this->db->where("event_id", $eventId);
-        if (!empty($type)) {
-            $this->db->where("campaign_type", $type);
-        }
-
-        if ($templateSourceID > 0) {
-            $this->db->where("template_source", $templateSourceID);
-        }
-        $result = $this->db->update("tbl_nps_automations_campaigns", $aData);
-        //echo $this->db->last_query();
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $result = DB::table('tbl_nps_automations_campaigns')
+                ->where('event_id', $eventId)
+                ->when(!empty($type), function($query) use ($type) {
+                    return $query->where('campaign_type', $type);
+                })
+                ->when(($templateSourceID > 0), function($query) use ($templateSourceID) {
+                    return $query->where('template_source', $templateSourceID);
+                })
+                ->update($aData);
+        return true;
     }
 
+    /**
+     * Used to update nps campaign event
+     * @param type $aData
+     * @param type $id
+     * @return boolean
+     */
     public function updateEvent($aData, $id) {
-        $this->db->where("id", $id);
-        $result = $this->db->update("tbl_nps_automations_events", $aData);
-        //echo $this->db->last_query();
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $result = DB::table('tbl_nps_automations_events')
+                ->where('id', $id)
+                ->update($aData);
+        return true;
     }
 
+    /**
+     * Used to update NPS campaign
+     * @param type $aData
+     * @param type $userID
+     * @param type $id
+     * @return boolean
+     */
     public function updateNPS($aData, $userID, $id) {
-        $this->db->where("id", $id);
-        $this->db->where("user_id", $userID);
-        $result = $this->db->update("tbl_nps_main", $aData);
-        //echo $this->db->last_query();
-        if ($result) {
-            return $id;
-        } else {
-            return false;
-        }
+        $result = DB::table('tbl_nps_main')
+                ->where('id', $id)
+                ->where('user_id', $userID)
+                ->update($aData);
+        return true;
     }
 
+    /**
+     * Deletes NPS campaign
+     * @param type $userID
+     * @param type $id
+     * @return boolean
+     */
     public function deleteNPS($userID, $id) {
-        $this->db->where('id', $id);
-        $this->db->where('user_id', $userID);
-        $result = $this->db->delete("tbl_nps_main");
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $result = DB::table('tbl_nps_main')
+                ->where('id', $id)
+                ->where('user_id', $userID)
+                ->delete();
+        return true;
     }
 
-    
-
+    /**
+     * Update survery feedback
+     * @param type $aData
+     * @param type $id
+     * @return boolean
+     */
     public function updateSurveyFeedback($aData, $id) {
-        $this->db->where("id", $id);
-        $result = $this->db->update("tbl_nps_score", $aData);
-        //echo $this->db->last_query();
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $result = DB::table('tbl_nps_score')
+                ->where('id', $id)
+                ->update($aData);
+        return true;
     }
 
+    /**
+     * Used to save survey feedback
+     * @param type $aData
+     * @return type
+     */
     public function saveSurveyFeedback($aData) {
         $refKey = $aData['refkey'];
         $ip = $aData['ip_address'];
@@ -389,95 +433,77 @@ class NpsModel extends Model {
             }
         } else {
             //Insert
-            $result = $this->db->insert("tbl_nps_score", $aData);
-            $responseID = $this->db->insert_id();
+            $responseID = DB::table('tbl_nps_score')->insertGetId($aData);
         }
         return $responseID;
     }
 
+    /**
+     * Checks if survey was recorded
+     * @param type $refkey
+     * @param type $ip
+     * @param type $subscriberID
+     * @return type
+     */
     public function checkIfRecordedSurvey($refkey, $ip, $subscriberID = '') {
-        if (!empty($subscriberID)) {
-            $this->db->where("subscriber_id", $subscriberID);
-        }
-        $this->db->where("refkey", $refkey);
-        $this->db->where("ip_address", $ip);
-        $result = $this->db->get("tbl_nps_score");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_nps_score')
+                ->where('refkey', $refkey)
+                ->where('ip_address', $ip)
+                ->when(!empty($subscriberID), function ($query) use ($subscriberID) {
+                    return $query->where('subscriber_id', $subscriberID);
+                })
+                ->first();
+        return $oData;
     }
 
+    /**
+     * Used to get NPS program info
+     * @param type $accountID
+     * @return type
+     */
     public function getNPSProgramInfo($accountID) {
-        $this->db->where("hashcode", $accountID);
-        $result = $this->db->get("tbl_nps_main");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_nps_main')
+                ->where('hashcode', $accountID)
+                ->first();
+        return $oData;
     }
 
+    /**
+     * Used to get NPS score
+     * @param type $hashKey
+     * @param type $userID
+     * @return type
+     */
     public function getNPSScore($hashKey = '', $userID = '') {
 
-      $aData =  DB::table('tbl_nps_score')
-        ->select('tbl_nps_score.*', 'tbl_nps_main.title as campaignTitle', 'tbl_nps_main.id as npsID', 'tbl_nps_main.platform', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone', 'tbl_subscribers.id AS subscriberId')
-        ->leftjoin('tbl_subscribers', 'tbl_nps_score.subscriber_id','=','tbl_subscribers.id')
-        ->leftjoin('tbl_nps_main', 'tbl_nps_main.hashcode','=','tbl_nps_score.refkey')
-        ->when(!empty($hashKey), function($query) use ($hashKey){
-        return $query->where('tbl_nps_score.refkey',$hashKey);
-        })
-         ->when(!empty($userID), function($query) use ($userID){
-        return $query->where('tbl_nps_main.user_id',$userID);
-        })
-       
-        ->orderBy('tbl_nps_score.id', 'DESC')->get();
-       
+        $aData = DB::table('tbl_nps_score')
+                        ->select('tbl_nps_score.*', 'tbl_nps_main.title as campaignTitle', 'tbl_nps_main.id as npsID', 'tbl_nps_main.platform', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone', 'tbl_subscribers.id AS subscriberId')
+                        ->leftjoin('tbl_subscribers', 'tbl_nps_score.subscriber_id', '=', 'tbl_subscribers.id')
+                        ->leftjoin('tbl_nps_main', 'tbl_nps_main.hashcode', '=', 'tbl_nps_score.refkey')
+                        ->when(!empty($hashKey), function($query) use ($hashKey) {
+                            return $query->where('tbl_nps_score.refkey', $hashKey);
+                        })
+                        ->when(!empty($userID), function($query) use ($userID) {
+                            return $query->where('tbl_nps_main.user_id', $userID);
+                        })
+                        ->orderBy('tbl_nps_score.id', 'DESC')->get();
+
         return $aData;
     }
 
-    public function getNPSScore_old($hashKey = '') {
-        //$response = "";
-        $this->db->select("tbl_nps_score.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.id AS subscriberId");
-        $this->db->join("tbl_nps_users", "tbl_nps_users.id=tbl_nps_score.subscriber_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_nps_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        if ($hashKey != '') {
-            $this->db->where("tbl_nps_score.refkey", $hashKey);
-        }
-        $this->db->order_by("tbl_nps_score.id", 'DESC');
-        $result = $this->db->get("tbl_nps_score");
-        //echo $this->db->last_query();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
+    /**
+     * get Nps score by user id
+     * @param type $userId
+     * @return type
+     */
     public function getNPSScoreByUserId($userId = '') {
-        $response = "";
-        $this->db->select("tbl_nps_score.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.id AS subscriberId");
-        $this->db->join("tbl_subscribers", "tbl_nps_score.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_subscribers.user_id", $userId);
-        $this->db->order_by("tbl_nps_score.id", 'DESC');
-        $result = $this->db->get("tbl_nps_score");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getNPSScoreByUserId_old($userId = '') {
-        $response = "";
-        $this->db->select("tbl_nps_score.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.id AS subscriberId");
-        $this->db->join("tbl_nps_users", "tbl_nps_users.id=tbl_nps_score.subscriber_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_nps_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_subscribers.user_id", $userId);
-        $this->db->order_by("tbl_nps_score.id", 'DESC');
-        $result = $this->db->get("tbl_nps_score");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_nps_score')
+                ->leftJoin('tbl_subscribers', 'tbl_nps_score.subscriber_id', '=', 'tbl_subscribers.id')
+                ->select('tbl_nps_score.*', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone', 'tbl_subscribers.id AS subscriberId')
+                ->where('tbl_subscribers.user_id', $userId)
+                ->orderBy('tbl_nps_score.id', 'desc')
+                ->get();
+        return $oData;
     }
 
     /**
@@ -491,8 +517,8 @@ class NpsModel extends Model {
         $positive = $nuetral = $negative = 0;
         $pScore = $nScore = $negScore = 0;
 
-         $response = DB::table('tbl_nps_score')
-                ->when(!empty($refKey), function($query) use ($refKey){
+        $response = DB::table('tbl_nps_score')
+                ->when(!empty($refKey), function($query) use ($refKey) {
                     return $query->where('tbl_nps_score.refkey', $refKey);
                 })
                 ->get();
@@ -528,122 +554,104 @@ class NpsModel extends Model {
             'Promoters' => $positiveScore,
             'Passive' => $nuetralScore,
             'Detractors' => $negativeScore,
-            'NPSScore' => (count($response) > 0)?(($pScore + $nScore + $negScore) * 10) / count($response) : 0
+            'NPSScore' => (count($response) > 0) ? (($pScore + $nScore + $negScore) * 10) / count($response) : 0
         );
 
         return $aData;
     }
 
+    /**
+     * 
+     * @param type $scoreID
+     * @return typeused to get score details
+     */
     public function getScoreDetails($scoreID) {
-        $this->db->select("tbl_nps_score.*, tbl_nps_main.title AS npstitle, "
-                . "tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone");
-        $this->db->join("tbl_nps_main", "tbl_nps_main.hashcode=tbl_nps_score.refkey", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_nps_score.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_nps_score.id", $scoreID);
-        $result = $this->db->get("tbl_nps_score");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_nps_score')
+                ->leftJoin('tbl_nps_main', 'tbl_nps_main.hashcode', '=', 'tbl_nps_score.refkey')
+                ->leftJoin('tbl_subscribers', 'tbl_nps_score.subscriber_id', '=', 'tbl_subscribers.id')
+                ->select('tbl_nps_score.*', 'tbl_nps_main.title AS npstitle', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone')
+                ->where('tbl_nps_score.id', $scoreID)
+                ->first();
+        return $oData;
     }
 
-    public function getScoreDetails_old($scoreID) {
-        $this->db->select("tbl_nps_score.*, tbl_nps_main.title AS npstitle, "
-                . "tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone");
-        $this->db->join("tbl_nps_main", "tbl_nps_main.hashcode=tbl_nps_score.refkey", "LEFT");
-        $this->db->join("tbl_nps_users", "tbl_nps_users.id=tbl_nps_score.subscriber_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_nps_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_nps_score.id", $scoreID);
-        $result = $this->db->get("tbl_nps_score");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
+    /**
+     * 
+     */
     public function getNPSSubscribers($accountID) {
         $oNPS = $this->getSurveyInfoByRef($accountID);
         $npsID = $oNPS->id;
         if ($npsID > 0) {
-            $this->db->select('tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone');
-            $this->db->join("tbl_subscribers", "tbl_nps_campaign_users.subscriber_id=tbl_subscribers.id", "LEFT");
-            $this->db->where("tbl_nps_campaign_users.nps_id", $npsID);
-            $this->db->order_by('tbl_nps_campaign_users.id', 'DESC');
-            $result = $this->db->get("tbl_nps_campaign_users");
-            //echo $this->db->last_query();
-            if ($result->num_rows() > 0) {
-                $response = $result->result_array();
-            }
+
+            $oData = DB::table('tbl_nps_campaign_users')
+                    ->leftJoin('tbl_subscribers', 'tbl_nps_campaign_users.subscriber_id.subscriber_id', '=', 'tbl_subscribers.id')
+                    ->select('tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone')
+                    ->where('tbl_nps_campaign_users.nps_id', $npsID)
+                    ->orderBy('tbl_nps_campaign_users.id', 'desc')
+                    ->get();
+            return $oData->toArray();
         }
 
         return $response;
     }
 
-    public function getNPSSubscribers_old($accountID) {
-        $this->db->select('tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone');
-        $this->db->join("tbl_subscribers", "tbl_nps_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_nps_users.account_id", $accountID);
-        $this->db->order_by('tbl_nps_users.id', 'DESC');
-        $result = $this->db->get("tbl_nps_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result_array();
-        }
-        return $response;
-    }
-
+    /**
+     * Used to get NPS subscriber by subscriber id
+     */
     public function getNPSSubscriberDataBySubId($subId) {
-        $this->db->select('tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone');
-        $this->db->join("tbl_subscribers", "tbl_nps_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_nps_users.id", $subId);
-        $this->db->order_by('tbl_nps_users.id', 'DESC');
-        $result = $this->db->get("tbl_nps_users");
-        //echo $this->db->last_query(); exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_nps_users')
+                ->leftJoin('tbl_subscribers', 'tbl_nps_users.subscriber_id', '=', 'tbl_subscribers.id')
+                ->select('tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone')
+                ->where('tbl_nps_users.id', $subId)
+                ->orderBy('tbl_nps_users.id', 'desc')
+                ->first();
+        return $oData;
     }
 
+    /**
+     * 
+     */
     public function getNPSNotes($id) {
         if (!empty($id)) {
-            $this->db->select("tbl_nps_notes.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email");
-            $this->db->join("tbl_users", "tbl_nps_notes.user_id=tbl_users.id", "LEFT");
-            $this->db->where("tbl_nps_notes.score_id", $id);
-            $this->db->order_by("tbl_nps_notes.id", "DESC");
-            $result = $this->db->get("tbl_nps_notes");
-            //echo $this->db->last_query();
-            //die;
-            if ($result->num_rows() > 0) {
-                $response = $result->result();
-            }
-            return $response;
+            $oData = DB::table('tbl_nps_notes')
+                    ->leftJoin('tbl_users', 'tbl_nps_notes.user_id', '=', 'tbl_users.id')
+                    ->select('tbl_nps_notes.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email')
+                    ->where('tbl_nps_notes.score_id', $id)
+                    ->orderBy('tbl_nps_notes.id', 'desc')
+                    ->get();
+            return $oData;
         }
     }
 
+    /**
+     * Used to get Tags by score id
+     * @param type $scoreID
+     * @return type
+     */
     public function getTagsByScoreID($scoreID) {
-
-        $this->db->select("tbl_tag_groups_entity.*, tbl_nps_tags.tag_id, tbl_nps_tags.score_id");
-        $this->db->join("tbl_tag_groups_entity", "tbl_tag_groups_entity.id=tbl_nps_tags.tag_id", "LEFT");
-        $this->db->where("tbl_nps_tags.score_id", $scoreID);
-        $result = $this->db->get("tbl_nps_tags");
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
+        $oData = DB::table('tbl_nps_tags')
+                ->leftJoin('tbl_tag_groups_entity', 'tbl_tag_groups_entity.id', '=', 'tbl_nps_tags.tag_id')
+                ->select('tbl_tag_groups_entity.*', 'tbl_nps_tags.tag_id', 'tbl_nps_tags.score_id')
+                ->where('tbl_nps_tags.score_id', $scoreID)
+                ->get();
+        return $oData;
     }
 
+    /**
+     * Used to save NPS notes
+     * @param type $aData
+     * @return boolean
+     */
     public function saveNPSNotes($aData) {
-        $bSaved = $this->db->insert("tbl_nps_notes", $aData);
-        $insert_id = $this->db->insert_id();
-        //echo $this->db->last_query();
-        if ($bSaved)
-            return $insert_id;
-        return false;
+        $insert_id = DB::table('tbl_nps_notes')->insertGetId($aData);
+        return $insert_id;
     }
 
+    /**
+     * Used to add NPS tags
+     * @param type $aData
+     * @return boolean
+     */
     public function addNPSTag($aData) {
         $aTagIDs = $aData['aTagIDs'];
         if (!empty($aTagIDs)) {
@@ -677,154 +685,184 @@ class NpsModel extends Model {
         }
     }
 
+    /**
+     * Used to detete NPS tags By id
+     * @param type $id
+     * @param type $scoreID
+     * @return boolean
+     */
     public function deleteNPSTagByID($id, $scoreID) {
-        $this->db->where('tag_id', $id);
-        $this->db->where('score_id', $scoreID);
-        $result = $this->db->delete('tbl_nps_tags');
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function getTagByScoreIDTagID($aTagID, $scoreID) {
-        $this->db->where('tag_id', $aTagID);
-        $this->db->where('score_id', $scoreID);
-        $result = $this->db->get('tbl_nps_tags');
-        if ($result->num_rows() > 0) {
-            $aData = $result->row();
-        }
-        return $aData;
-    }
-
-    public function removeNPSTag($tagID, $scoreID) {
-        $this->db->where("score_id", $scoreID);
-        $this->db->where("tag_id", $tagID);
-        $result = $this->db->delete('tbl_nps_tags');
-        //echo $this->db->last_query(); exit;
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function getNPSNoteByID($noteId) {
-
-        $this->db->where('id', $noteId);
-        $this->db->from('tbl_nps_notes');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function deleteNPSNoteByID($noteId) {
-        $this->db->where('id', $noteId);
-        $result = $this->db->delete('tbl_nps_notes');
+        $result = DB::table('tbl_nps_tags')
+                ->where('tag_id', $id)
+                ->where('score_id', $scoreID)
+                ->delete();
         return true;
     }
 
+    /**
+     * 
+     * @param type $aTagID
+     * @param type $scoreID
+     * @return type
+     */
+    public function getTagByScoreIDTagID($aTagID, $scoreID) {
+        $oData = DB::table('tbl_nps_tags')
+                ->where('tag_id', $aTagID)
+                ->where('score_id', $scoreID)
+                ->first();
+        return $oData;
+    }
+
+    /**
+     * Used to remove NPS tags
+     * @param type $tagID
+     * @param type $scoreID
+     * @return boolean
+     */
+    public function removeNPSTag($tagID, $scoreID) {
+        $result = DB::table('tbl_nps_tags')
+                ->where('tag_id', $tagID)
+                ->where('score_id', $scoreID)
+                ->delete();
+        return true;
+    }
+
+    /**
+     * 
+     * @param type $noteId
+     * @return typeUsed to NPS Notes by note id
+     */
+    public function getNPSNoteByID($noteId) {
+        $oData = DB::table('tbl_nps_notes')
+                ->where('id', $noteId)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Used to delete NPS notes by id
+     */
+    public function deleteNPSNoteByID($noteId) {
+        $result = DB::table('tbl_nps_notes')
+                ->where('id', $noteId)
+                ->delete();
+        return true;
+    }
+
+    /**
+     * Used to update NPS notes
+     */
     public function updateNPSNote($aData, $noteId) {
-
-        $this->db->where('id', $noteId);
-        $result = $this->db->update('tbl_nps_notes', $aData);
-        if ($result)
-            return true;
-        else
-            return false;
+        $result = DB::table('tbl_nps_notes')
+                ->where('id', $noteId)
+                ->update($aData);
+        return true;
     }
 
+    /**
+     * Used to get Clients tags
+     * @param type $userID
+     * @return type
+     */
     public function getClientTags($userID = 0) {
-
-        $this->db->select("tbl_tag_groups.*, tbl_tag_groups_entity.id AS tagid, tbl_tag_groups_entity.tag_name, tbl_tag_groups_entity.tag_created ");
-        $this->db->join("tbl_tag_groups_entity", "tbl_tag_groups.id=tbl_tag_groups_entity.group_id", "LEFT");
-        if ($userID > 0) {
-            $this->db->where("tbl_tag_groups.user_id", $userID);
-        }
-        $this->db->order_by("tbl_tag_groups.id", "DESC");
-        $result = $this->db->get('tbl_tag_groups');
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
+        $oData = DB::table('tbl_tag_groups')
+                ->leftJoin('tbl_tag_groups_entity', 'tbl_tag_groups.id', '=', 'tbl_tag_groups_entity.group_id')
+                ->select('tbl_tag_groups.*', 'tbl_tag_groups_entity.id AS tagid', 'tbl_tag_groups_entity.tag_name', 'tbl_tag_groups_entity.tag_created')
+                ->when(($userID > 0), function ($query) use ($userID) {
+                    return $query->where('tbl_tag_groups.user_id', $userID);
+                })
+                ->orderBy('tbl_tag_groups.id', 'desc')
+                ->get();
+        return $oData;        
     }
 
+    /**
+     * Checks if users exists
+     * @param type $subscriberID
+     * @param type $accountID
+     * @return type
+     */
     public function checkIfExistingUser($subscriberID, $accountID = '') {
-        $this->db->select("tbl_nps_users.*");
-        $this->db->where("tbl_nps_users.subscriber_id", $subscriberID);
-        if (!empty($accountID)) {
-            $this->db->where("tbl_nps_users.account_id", $accountID);
-        }
-        $result = $this->db->get("tbl_nps_users");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_nps_users')
+                ->where('subscriber_id', $subscriberID)
+                ->when(!empty($accountID), function ($query) use ($accountID) {
+                    return $query->where('account_id', $accountID);
+                })
+                ->first();
+        return $oData;
     }
 
+    /**
+     * Used to add NPS users
+     * @param type $aData
+     * @return boolean
+     */
     public function addNPSUser($aData) {
-
-        $result = $this->db->insert('tbl_nps_users', $aData);
-        $insertID = $this->db->insert_id();
-        //echo $this->db->last_query();
-        if ($result)
-            return $insertID;
-        else
-            return false;
+        $insert_id = DB::table('tbl_nps_users')->insertGetId($aData);
+        return $insert_id;
     }
 
-    
-
+    /**
+     * Used to get NPS user by id
+     * @param type $userID
+     * @return type
+     */
     public function getNpsUserById($userID) {
-        $this->db->select("tbl_nps_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id, tbl_subscribers.user_id AS bb_user_id");
-        $this->db->join("tbl_subscribers", "tbl_nps_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_nps_users.id", $userID);
-        $result = $this->db->get("tbl_nps_users");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_nps_users')
+                ->leftJoin('tbl_subscribers', 'tbl_nps_users.subscriber_id', '=', 'tbl_subscribers.id')
+                ->select('tbl_nps_users.*', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone', 'tbl_subscribers.facebook_profile', 'tbl_subscribers.twitter_profile', 'tbl_subscribers.linkedin_profile','tbl_subscribers.instagram_profile', 'tbl_subscribers.socialProfile', 'tbl_subscribers.id AS global_user_id', 'tbl_subscribers.user_id AS bb_user_id')
+                ->where('tbl_nps_users.id', $userID)
+                ->get();
+        return $oData;         
     }
 
+    /**
+     * Used to update NPS users
+     * @param type $aData
+     * @param type $userID
+     * @return boolean
+     */
     public function updateNpsUser($aData, $userID) {
-
-        $this->db->where('id', $userID);
-        $result = $this->db->update('tbl_nps_users', $aData);
-        if ($result)
-            return true;
-        else
-            return false;
+        $result = DB::table('tbl_nps_users')
+                ->where('id', $userID)
+                ->update($aData);
+        return true;
     }
 
+    /**
+     * used to detete NPS user
+     * @param type $userID
+     * @return boolean
+     */
     public function deleteNpsUser($userID) {
-
-        $this->db->where('id', $userID);
-        $result = $this->db->delete('tbl_nps_users');
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $result = DB::table('tbl_nps_users')
+                ->where('id', $userID)
+                ->delete();
+        return true;
     }
 
+    /**
+     * used to unsubscriber user
+     * @param type $accountID
+     * @param type $subscriberID
+     * @return boolean
+     */
     public function unsubscribeUser($accountID, $subscriberID) {
-        $response = array();
-        $this->db->set(array('status' => 0));
-        $this->db->where('id', $subscriberID);
-        $this->db->where('account_id', $accountID);
-        $result = $this->db->update('tbl_nps_users');
-        //echo $this->db->last_query();;
-        if ($result)
-            return true;
-        else
-            return false;
+        $aData = array('status' => 0);
+        $result = DB::table('tbl_nps_users')
+                ->where('id', $subscriberID)
+                ->where('account_id', $accountID)
+                ->update($aData);
+        return true;
     }
 
+    /**
+     * Used to get NPS sendgrid stats
+     * @param type $param
+     * @param type $id
+     * @param type $eventType
+     * @return type
+     */
     public function getNPSSendgridStats($param, $id, $eventType = '') {
         $sql = "SELECT tbl_nps_automations_tracking_sendgrid.* FROM tbl_nps_automations_tracking_sendgrid "
                 . "LEFT JOIN tbl_nps_main ON tbl_nps_automations_tracking_sendgrid.nps_id = tbl_nps_main.id "
@@ -869,15 +907,17 @@ class NpsModel extends Model {
         }
 
         $sql .= "ORDER BY tbl_nps_automations_tracking_sendgrid.id DESC";
-
-        $result = $this->db->query($sql);
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        //echo $this->db->last_query();
-        return $response;
+        
+        $oData = DB::select(DB::raw($sql));
+        return $oData;
+        
     }
 
+    /**
+     * Get sendgrid stats data
+     * @param type $oData
+     * @return array
+     */
     public function getEmailSendgridCategorizedStatsData($oData) {
 
         if (!empty($oData)) {
@@ -1075,6 +1115,12 @@ class NpsModel extends Model {
         return $aCatogerizedData;
     }
 
+    /**
+     * Used to check duplicates in the stats
+     * @param type $aSearch
+     * @param type $tableData
+     * @return boolean
+     */
     public function checkIfDuplicateExistsInSendgridStat($aSearch, $tableData) {
         if (!empty($tableData)) {
             foreach ($tableData as $oData) {
@@ -1086,6 +1132,13 @@ class NpsModel extends Model {
         }
     }
 
+    /**
+     * Used to get stats data
+     * @param type $param
+     * @param type $id
+     * @param type $eventType
+     * @return type
+     */
     public function getEmailTwilioStats($param, $id, $eventType = '') {
         $sql = "SELECT tbl_nps_automations_tracking_twillio.* FROM tbl_nps_automations_tracking_twillio "
                 . "LEFT JOIN tbl_nps_main ON tbl_nps_automations_tracking_twillio.nps_id = tbl_nps_main.id "
@@ -1126,14 +1179,13 @@ class NpsModel extends Model {
 
         $sql .= "ORDER BY tbl_nps_automations_tracking_twillio.id DESC";
 
-        $result = $this->db->query($sql);
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        //echo $this->db->last_query();
-        return $response;
+        $oData = DB::select(DB::raw($sql));
+        return $oData;
     }
 
+    /**
+     * Used to filter categorized stats
+     */
     public function getEmailTwilioCategorizedStatsData($oData) {
         if (!empty($oData)) {
 
@@ -1299,39 +1351,45 @@ class NpsModel extends Model {
         return $aCatogerizedData;
     }
 
+    /**
+     * Used to get NPS campaing templates
+     * @param type $npsId
+     * @return boolean
+     */
     public function getNPSCampaignTemplates($npsId) {
-        $this->db->select("tbl_nps_automations_campaigns.*");
-        $this->db->join("tbl_nps_automations_events", "tbl_nps_automations_events.id=tbl_nps_automations_campaigns.event_id", "INNER");
-        $this->db->where("tbl_nps_automations_events.nps_id", $npsId);
-        $result = $this->db->get("tbl_nps_automations_campaigns");
-        if ($result->num_rows() > 0) {
-            //echo $this->db->last_query();
-            return $result->result();
-        }
-        return false;
+        $oData = DB::table('tbl_nps_automations_campaigns')
+                ->join('tbl_nps_automations_events', 'tbl_nps_automations_events.id',  '=' , 'tbl_nps_automations_campaigns.event_id')
+                ->select('tbl_nps_automations_campaigns.*')
+                ->where('tbl_nps_automations_events.nps_id', $npsId)
+                ->get();
+        return $oData;        
     }
 
+    /**
+     * Used to update nps campaign by event id
+     * @param type $cData
+     * @param type $eventID
+     * @return boolean
+     */
     public function updataCampaignByEventID($cData, $eventID) {
-        $this->db->where("event_id", $eventID);
-        $result = $this->db->update("tbl_nps_automations_campaigns", $cData);
-        //echo $this->db->last_query();
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $result = DB::table('tbl_nps_automations_campaigns')
+                ->where('event_id', $eventID)
+                ->update($cData);
+        return true;
     }
 
+    /**
+     * Used to update auto event 
+     * @param type $aData
+     * @param type $id
+     * @return boolean
+     */
     public function updateAutoEvent($aData, $id) {
         if ($id > 0) {
-            $this->db->where("id", $id);
-            $result = $this->db->update("tbl_nps_automations_events", $aData);
-            //echo $this->db->last_query();
-            if ($result) {
-                return true;
-            } else {
-                return false;
-            }
+            $result = DB::table('tbl_nps_automations_events')
+                    ->where('id', $id)
+                    ->update($aData);
+            return true;
         }
         return false;
     }

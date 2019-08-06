@@ -424,7 +424,7 @@ var elem = $(this);
                     $.ajax({
                         url: '<?php echo base_url('admin/tags/deleteTagGroupEntity'); ?>',
                         type: "POST",
-                        data: {id: tagID},
+                        data: {id: tagID,_token: '{{csrf_token()}}'},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {

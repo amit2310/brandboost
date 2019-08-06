@@ -1,4 +1,10 @@
+@extends('layouts.user_template') 
 
+@section('title')
+<?php //echo $title; ?>
+@endsection
+
+@section('contents')
   
   <div class="content_area">
     <div class="row">
@@ -40,6 +46,7 @@
     <div class="row profile_media_outer">
     <?php
     if(!empty($myReview)) {
+      $inc = 1;
     foreach ($myReview as $key => $value) {
        $media_url = $value->media_url;
        if(!empty($media_url)) {
@@ -52,10 +59,10 @@
               <div class="col-md-3">
                   <div class="profile_media"><?php
                   if($media['media_type'] == 'image') {
-                    $imageUrl = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'.$media['media_url'];
+                    $imageUrl = 'https://s3-us-west-2.amazonaws.com/brandboost.io/'.$media['media_url'];
                     ?><img src="<?php echo $imageUrl; ?>"/><?php
                   } else if($media['media_type'] == 'video') {
-                    $imageUrl = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'.$media['media_url'];
+                    $imageUrl = 'https://s3-us-west-2.amazonaws.com/brandboost.io/'.$media['media_url'];
                     ?>
                     <video width="100%">
                       <source src="<?php echo $imageUrl; ?>" type="video/mp4">
@@ -66,6 +73,13 @@
                  </div>
               </div>
               <?php
+              if($inc%4 == 0) {
+                ?>
+                </div>
+                <div class="row profile_media_outer">
+                <?php
+              }
+              $inc++;
             }
          }
        }
@@ -125,3 +139,5 @@
     </div> -->
     
   </div>
+
+  @endsection
