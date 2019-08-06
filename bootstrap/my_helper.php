@@ -2595,12 +2595,9 @@ if (!function_exists('getTeamMemberById')) {
 
     function getTeamMemberById($TeamId) {
         $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Subscriber_model", "mSubscriber");
-        $subscribersData = $CI->mSubscriber->getTeamMemberById($TeamId);
+        $subscribersData = \App\Models\Admin\SubscriberModel::getTeamMemberById($TeamId);
         return $subscribersData[0];
     }
-
 }
 
 
