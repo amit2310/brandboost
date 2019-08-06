@@ -1,25 +1,29 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+namespace App\Http\Controllers\User;
 
-class Profile extends CI_Controller {
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\ReviewsModel;
+use Session;
+use App\Libraries\Custom\Mobile_Detect;
 
-    public function __construct() {
-        parent::__construct();
-        $this->load->model("Reviews_model", "mReviews");
-    }
+class Profile extends Controller {
 
-    public function index() {
+    
+    public function Index() {
 
     	$aUInfo = getLoggedUser();
         $userID = $aUInfo->id;
-        $oReviews = $this->mReviews->getUserReviews($userID);
+
+        $mReviews = new ReviewsModel();
+        $oReviews = $mReviews->getUserReviews($userID);
 
         $aData = array(
         	'aUInfo' => $aUInfo,
         	'oReviews' => $oReviews
         );
 
-    	$this->template->load('user/user_template', 'user/profile', $aData);
+    	return view('user.profile', $aData);
     }
 
 }

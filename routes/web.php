@@ -22,6 +22,7 @@ Route::get('admin/login/logout','Admin\Login@logout');
 // User Section
 Route::get('user/login','User\Login@index');
 Route::post('user/login','User\Login@index');
+Route::get('user/profile','User\Profile@Index');
 
 //Dashborad 
 Route::get('admin/dashboard','Admin\Dashboard@index');
@@ -82,6 +83,9 @@ Route::post('admin/brandboost/archive_multipal_brandboost_widget','Admin\Brandbo
 Route::post('admin/brandboost/delete_multipal_brandboost_widget','Admin\Brandboost@deleteMultipalBrandboostWidget');
 Route::post('admin/brandboost/addOnsite','Admin\Brandboost@addOnsite');
 Route::post('admin/brandboost/deleteProduct','Admin\Brandboost@deleteProduct');
+Route::post('admin/brandboost/addOffsite','Admin\Brandboost@addOffsite');
+Route::get('admin/brandboost/addreview/{id}','Admin\Brandboost@addReview');
+Route::post('admin/brandboost/delete_multipal_brandboost','Admin\Brandboost@deleteMultipalBrandboost');
 
 
 
@@ -99,7 +103,7 @@ Route::post('admin/modules/chat/bulkDeleteChat','Admin\Modules\Chat@bulkDeleteCh
 Route::post('admin/modules/chat/bulkArchiveChat','Admin\Modules\Chat@bulkArchiveChat');
 Route::post('admin/modules/chat/updateChat','Admin\Modules\Chat@updateChat');
 Route::post('admin/modules/chat/updateChatDesign','Admin\Modules\Chat@updateChatDesign');
-
+Route::get('admin/modules/chat','Admin\Modules\Chat@index');
 
 Route::post('dropzone/upload_image','Dropzone\@upload_image');
 
@@ -131,7 +135,7 @@ Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
 Route::get('admin/questions','Admin\Questions@index');
 
 
-Route::get('admin/modules/chat','Admin\Modules\Chat@index');
+Route::get('admin/mediagallery','Admin\Mediagallery@index');
 
 
 
