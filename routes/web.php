@@ -22,6 +22,7 @@ Route::get('admin/login/logout','Admin\Login@logout');
 // User Section
 Route::get('user/login','User\Login@index');
 Route::post('user/login','User\Login@index');
+Route::get('user/profile','User\Profile@Index');
 
 //Dashborad 
 Route::get('admin/dashboard','Admin\Dashboard@index');
