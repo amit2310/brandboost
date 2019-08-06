@@ -135,6 +135,8 @@ Route::get('admin/questions','Admin\Questions@index');
 
 
 Route::get('admin/mediagallery','Admin\Mediagallery@index');
+Route::post('admin/mediagallery/updateStatus','Admin\Mediagallery@updateStatus');
+Route::post('admin/mediagallery/deleteGallery','Admin\Mediagallery@deleteGallery');
 
 
 

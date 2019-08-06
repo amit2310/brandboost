@@ -492,6 +492,22 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         return $oData;
         
     }
+	
+	
+	public function getTeamMemberById($TeamId) {
+		
+		$oData = DB::table('tbl_users_team')
+			->select('firstname', 'lastname', 'parent_user_id')
+			->where('id', $TeamId)
+			->get();
+        return $oData;
+    }
+
+
+
+
+
+
 
     public function webchatUsersDetails($userID) {
 
@@ -520,15 +536,7 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
         return $response;
     }
 
-    public function getTeamMemberById($TeamId) {
-
-        $result = $this->db->query(" SELECT firstname,lastname,parent_user_id from tbl_users_team WHERE id = '" . $TeamId . "'");
-        $response = $result->result();
-
-        //echo $this->db->last_query();die;
-        return $response;
-    }
-
+    
 
     /**
      * This function will return Twilio related account details based on the Phone number
