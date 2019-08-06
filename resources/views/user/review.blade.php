@@ -1,3 +1,10 @@
+@extends('layouts.user_template') 
+
+@section('title')
+<?php //echo $title; ?>
+@endsection
+
+@section('contents')
   <style type="text/css">
   	.icons.fl_letters { background-image: linear-gradient(259deg, #9b83ff, #6145d4) !important; }
   	span.icons.fl_letters { width: 32px; height: 32px; box-shadow: none !important; background: #7a8dae; background-image: none; text-align: center; text-transform: uppercase; line-height: 32px; color: #fff; border-radius: 100px; font-size: 12px; font-weight: 500; display: block; }
@@ -67,6 +74,8 @@
       		foreach ($myReview as $key => $aReview) {
       		 	
       		 	$profileImg = $aReview['user_data']['avatar'] == '' ? base_url('assets/images/userp.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'.$aReview['user_data']['avatar'];
+
+
 											
 				$brandImgArray = unserialize($aReview['media_url']);
 				
@@ -96,7 +105,7 @@
 					$mediaType = '';
 				}
 
-				//pre($aReview);
+
 				$aUser = getLoggedUser();
         		$userID = $aUser->id;
         		
@@ -109,13 +118,14 @@
       		 		<td>
       		 	
        	   <!--================Review 1=================-->
-       	   
+
         	<div class="white_box p0" id="review<?php echo $aReview['id']; ?>">
 			  <div class="bb_rw01">
 				<div class="bb_white_box">
 			  <div class="review_edit">
 			  	<a href="<?php echo base_url().'user/review/edit/'.$aReview['id']; ?>" style="cursor:pointer;"><img src="<?php echo base_url(); ?>assets/profile_images/edit_40.png"/></a>
 			  </div>
+
 				  <div class="bb_comment_header">
 					<div class="bb_avatar01"> <i class="fa bb_check_green"><!-- fa-check-circle --></i><!--  <img src="<?php echo $profileImg; ?>"> --> 
 						<div class="media-left media-middle pr10"> 	
@@ -137,12 +147,18 @@
 
 					    <span class="bb_thingrey"><?php echo $aReview['ratings']; ?>/5</span> </p>
 					</div>
+
 					<div class="bb_fleft">
-					  <p class="bb_para"><span class="bb_dot"><i class="fa fa-circle"></i></span> <span class="bb_thingrey"> <?php echo ucwords($aReview['review_type']); ?> - <?php echo $aReview['product_data']->product_name == '' ? $aReview['brand_title'] : $aReview['product_data']->product_name; ?></span></p>
+					  <p class="bb_para"><span class="bb_dot"><i class="fa fa-circle"></i></span> <span class="bb_thingrey"> <?php echo ucwords($aReview['review_type']); ?> - <?php 
+					  if(!empty($aReview['product_data'])) {
+					  	echo $aReview['product_data']->product_name == '' ? $aReview['brand_title'] : $aReview['product_data']->product_name;
+					  }
+					  ?></span></p>
 					  <p class="bb_para"><span class="bb_dot"><i class="fa fa-circle"></i></span> <span class="bb_thingrey"><?php echo timeAgo($aReview['created']); ?></span></p>
 					</div>
 					<div class="bb_clear"></div>
 				  </div>
+
 				  <div class="bb_pad25">
 					<p class="bb_para heading_txt"><?php echo $aReview['review_title']; ?><!-- Widget heading text... --></p>
 					<p class="bb_para"><?php echo nl2br($aReview['comment_text']); ?><!-- But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. --></p>
@@ -159,10 +175,10 @@
 
 				  <a class="bb_fright" style="cursor: pointer;"><i><img src="<?php echo base_url(); ?>assets/profile_images/shareicon.png" width="15"></i> &nbsp; Share</a>
 				  </div>
-				  
+				   
 				  <!-- **********Comment area********* -->
 				  <?php 
-				  $reviewCommentsData = $this->mReviews->getReviewAllParentsComments($aReview['id'], $start = 0);
+				  $reviewCommentsData = App\Models\ReviewsModel::getReviewAllParentsComments($aReview['id'], $start = 0);
 				  ?>
 				  <div class="p20 pt0 commentarea">
 				  	<div class="commentarea_inner p0">
@@ -273,14 +289,6 @@
 					  	<div class="p20">
 					  		<p><strong>Leave a comment</strong></p>
 					  		<form method="post" class="form-horizontal addComment" action="#">
-						  		<!-- <div class="form-group mb10">
-							  		<label>Name</label>
-							  		<input class="form-control" type="text" name="" value="" placeholder="Enter your name" />
-						  		</div>
-						  		<div class="form-group mb10">
-							  		<label>Email</label>
-							  		<input class="form-control" type="text" name="" value="" placeholder="Enter your email" />
-						  		</div> -->
 						  		<div class="form-group mb20">
 							  		<label>Your Comment</label>
 							  		<textarea name="comment_content" id="comment_content" required class="form-control addnote" placeholder="Start typing to leave a comment..."></textarea>
@@ -319,29 +327,6 @@
       </div>
     </div>
 
-    <!-- <div class="row">
-    	<div class="col-md-6">
-    		<ul class="custom_pagination">
-    			<li><a href="#">View</a></li>
-    			<li><a class="number active" href="#">10</a></li>
-    			<li><a class="number" href="#">20</a></li>
-    			<li><a class="number" href="#">40</a></li>
-    			<li><a href="#">All</a></li>
-    		</ul>
-    	  </div>
-    	  <div class="col-md-6">
-    	<ul class="custom_pagination pull-right">
-    			<li><a href="#">Prev</a></li>
-    			<li><a class="number active" href="#">1</a></li>
-    			<li><a class="number" href="#">2</a></li>
-    			<li><a class="number" href="#">3</a></li>
-    			<li><a class="number" href="#">4</a></li>
-    			<li><a class="number" href="#">5</a></li>
-    			<li><a href="#">Next</a></li>
-    		</ul>
-    	  </div>
-	</div> -->
-    
   </div>
 
 <div id="editComment" class="modal fade">
@@ -380,8 +365,6 @@ $(document).ready(function(){
     var tableBase = custom_user_data_table(tableId, 0, 'desc');
 
     $(".comment_show").click(function(){
-        //$(".commentarea").slideToggle();
-	    //$(this).parent().next().slideToggle();
 	    $(this).parent().parent().find('.commentarea').slideToggle();
     });
 
@@ -550,3 +533,5 @@ function saveCommentLikeStatus(commentID, statusType) {
 }
 
 </script>
+
+@endsection
