@@ -24,6 +24,7 @@ Route::get('user/login','User\Login@index');
 Route::post('user/login','User\Login@index');
 Route::get('user/profile','User\Profile@Index');
 Route::get('user/review','User\Review@Index');
+Route::get('user/media','User\Media@Index');
 
 //Dashborad 
 Route::get('admin/dashboard','Admin\Dashboard@index');
