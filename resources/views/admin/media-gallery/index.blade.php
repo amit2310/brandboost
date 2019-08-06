@@ -153,7 +153,7 @@
 										$reviewList .= '<button class="btn btn-xs btn_white_table pr10">'.$review->review_title.'</button>';
 									}
 								}
-							}*/
+							}
 							
 							if(count($reviewsIdArray) > 0){
 								$reviewCount = '<div class="media-left pl30 blef">
@@ -181,7 +181,9 @@
 														</ul>
 													</div>
 												</div>';
-							}
+							}*/
+							
+							$reviewCount = '';
 							
 							if($galleryData->team_id != ''){
 								//echo '1';
