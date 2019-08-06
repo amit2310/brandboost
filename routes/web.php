@@ -169,6 +169,12 @@ Route::post('webchat/readMessages','Admin\WebChat@readMessages');
 Route::post('admin/webchat/favouriteUser','Admin\WebChat@favouriteUser');
 Route::post('admin/webchat/smallwfilter','Admin\WebChat@smallwfilter');
 Route::post('admin/webchat/bigwfilter','Admin\WebChat@bigwfilter');
+Route::get('admin/chatshortcut','Admin\Chatshortcut@index');
+Route::post('admin/chatshortcut/addShortCut','Admin\Chatshortcut@addShortCut');
+Route::post('admin/chatshortcut/getChatShortcutById','Admin\Chatshortcut@getChatShortcutById');
+Route::post('admin/chatshortcut/updateShortCut','Admin\Chatshortcut@updateShortCut');
+Route::post('admin/chatshortcut/deleteChatShortcut','Admin\Chatshortcut@deleteChatShortcut');
+Route::post('admin/chatshortcut/deleteMultipalChatShortcut','Admin\Chatshortcut@deleteMultipalChatShortcut');
 
 
 
