@@ -100,7 +100,7 @@ class NpsModel extends Model {
     public function getNps($userID, $id = '') {
         $oData = DB::table('tbl_nps_main')
                 ->where('user_id', $userID)
-                ->where(!empty($id), function($query) use($id) {
+                ->when(!empty($id), function($query) use($id) {
                     return $query->where('id', $id);
                 })
                 ->first();
