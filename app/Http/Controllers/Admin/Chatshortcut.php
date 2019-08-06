@@ -122,7 +122,7 @@ class Chatshortcut extends Controller {
 
 
    /**
-    * This function is used to get the chatshortcut for edit the shortcut
+    * This function is used to get the chatshortcut for edit function 
     * @param type 
     * @return type
     */
@@ -179,7 +179,7 @@ class Chatshortcut extends Controller {
 
 
     /**
-    * This function is used to multile delete the chatshortcuts
+    * This function is used to multile delete function
     * @param type 
     * @return type
     */
