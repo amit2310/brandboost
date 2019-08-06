@@ -8,7 +8,14 @@ use Illuminate\Support\Facades\Input;
 
 class Chatshortcut extends Controller {
 
-    
+
+
+/**
+* index call 
+* @param type $clientID
+* @return type
+*/
+
     public function index() {
        
         $aUser = getLoggedUser();
@@ -33,6 +40,13 @@ class Chatshortcut extends Controller {
 
         return view ('admin.chatshortcut.shortcut_list', $data);
     }
+
+
+    /**
+    * This function is used to add chat shortcut 
+    * @param type 
+    * @return type
+    */
 
     public function addShortCut() {
         $aUser = getLoggedUser();
@@ -67,6 +81,12 @@ class Chatshortcut extends Controller {
         exit;
     }
 
+    /**
+    * This function is used to update the chatshortcut
+    * @param type 
+    * @return type
+    */
+
     public function updateShortCut() {
 
         $aUser = getLoggedUser();
@@ -100,6 +120,14 @@ class Chatshortcut extends Controller {
         exit;
     }
 
+
+   /**
+    * This function is used to get the chatshortcut for edit the shortcut
+    * @param type 
+    * @return type
+    */
+
+
     public function getChatShortcutById() {
 
         $aUser = getLoggedUser();
@@ -123,6 +151,13 @@ class Chatshortcut extends Controller {
         }
     }
 
+    /**
+    * This function is used to delete the chatshortcut
+    * @param type 
+    * @return type
+    */
+
+
     public function deleteChatShortcut() {
 
         $aUser = getLoggedUser();
@@ -141,6 +176,13 @@ class Chatshortcut extends Controller {
             exit;
         }
     }
+
+
+    /**
+    * This function is used to multile delete the chatshortcuts
+    * @param type 
+    * @return type
+    */
 
     public function deleteMultipalChatShortcut() {
         $response = array();
