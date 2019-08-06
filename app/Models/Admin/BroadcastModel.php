@@ -739,11 +739,7 @@ class BroadcastModel extends Model {
                 $sql = "INSERT INTO `tbl_segments_users` (`user_id`, `segment_id`, `subscriber_id`, `created`) VALUES " . implode(",", $aSqlParam);
 
                 $result = DB::statement($sql);
-                if ($result) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return true;                
             }
         }
 
