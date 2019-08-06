@@ -193,7 +193,7 @@ class ReviewsModel extends Model {
      * @param type $campaignID
      * @return campaign all reviews 
      */
-	public function getBrandBoostCampaign($campaignID, $hash = false) {
+	public static function getBrandBoostCampaign($campaignID, $hash = false) {
 		$oData = DB::table('tbl_brandboost')
 			->leftJoin('tbl_users', 'tbl_brandboost.user_id', '=', 'tbl_users.id')
 			->select('tbl_brandboost.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.address as user_address', 'tbl_users.city as user_city', 'tbl_users.country as user_country')

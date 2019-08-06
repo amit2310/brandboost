@@ -2309,6 +2309,123 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
+		
+	/**
+	* Used to add custom review by client product
+	* @return type
+	*/
+	public function addReview($campaignId = 0) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $user_role = $aUser->user_role;
+        if ($user_role == 1) {
+            $aBrandboostList = BrandboostModel::getBrandboost('', 'onsite');
+        } else {
+            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite');
+        }
+
+        if (!empty($campaignId)) {
+
+            $oCampaign = ReviewsModel::getBrandBoostCampaign($campaignId);
+
+            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+				<li><a href="' . base_url('admin/brandboost/onsite_setup/' . $campaignId) . '" class="sidebar-control hidden-xs">' . $oCampaign->brand_title . '</a></li>
+				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+				<li><a data-toggle="tooltip" data-placement="bottom" title="Add Reviews" class="sidebar-control active hidden-xs ">Add Reviews</a></li>
+				</ul>';
+
+            $aData = array(
+                'title' => 'Brand Boost add Review',
+                'pagename' => $breadcrumb,
+                'aBrandboostList' => $aBrandboostList,
+                'oCampaign' => $oCampaign,
+                'aUser' => $aUser
+            );
+        } else {
+
+            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+				<li><a data-toggle="tooltip" data-placement="bottom" title="Add Reviews" class="sidebar-control active hidden-xs ">Add Reviews</a></li>
+				</ul>';
+
+            $aData = array(
+                'title' => 'Brand Boost add Review',
+                'pagename' => $breadcrumb,
+                'aBrandboostList' => $aBrandboostList,
+                //'oCampaign' => $oCampaign,
+                'aUser' => $aUser
+            );
+        }
+		
+		return view('admin.brandboost.add_review', $aData);
+        //$this->template->load('admin/admin_template_new', 'admin/brandboost/add_review', $aData);
+    }
+	
+	/**
+	* Used to delete multiple brandboost data list
+	* @return type
+	*/
+	public function deleteMultipalBrandboost(Request $request) {
+
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        
+		$multi_brandboost_id = $request->multi_brandboost_id;
+
+		$aData = array(
+			'delete_status' => '1'
+		);
+
+		foreach ($multi_brandboost_id as $brandboostID) {
+
+			$result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
+
+			if ($result) {
+				//Add Useractivity log
+
+				$aActivityData = array(
+					'user_id' => $userID,
+					'event_type' => 'brandboost_onsite_offsite',
+					'action_name' => 'deleted_brandboost',
+					'brandboost_id' => $brandboostID,
+					'campaign_id' => '',
+					'inviter_id' => '',
+					'subscriber_id' => '',
+					'feedback_id' => '',
+					'activity_message' => 'Brandboost Deleted',
+					'activity_created' => date("Y-m-d H:i:s")
+				);
+				logUserActivity($aActivityData);
+				$response['status'] = 'success';
+			} else {
+				$response['status'] = "Error";
+			}
+		}
+      
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -4225,56 +4342,6 @@ class Brandboost extends Controller {
         }
     }
 
-    public function addreview($campaignId = 0) {
-
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $user_role = $aUser->user_role;
-        if ($user_role == 1) {
-            $aBrandboostList = $this->mBrandboost->getBrandboost('', 'onsite');
-        } else {
-            $aBrandboostList = $this->mBrandboost->getBrandboostByUserId($userID, 'onsite');
-        }
-
-        if (!empty($campaignId)) {
-
-            $oCampaign = $this->mReviews->getBrandBoostCampaign($campaignId);
-
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a href="' . base_url('admin/brandboost/onsite_setup/' . $campaignId) . '" class="sidebar-control hidden-xs">' . $oCampaign->brand_title . '</a></li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a data-toggle="tooltip" data-placement="bottom" title="Add Reviews" class="sidebar-control active hidden-xs ">Add Reviews</a></li>
-				</ul>';
-
-            $aData = array(
-                'title' => 'Brand Boost add Review',
-                'pagename' => $breadcrumb,
-                'aBrandboostList' => $aBrandboostList,
-                'oCampaign' => $oCampaign,
-                'aUser' => $aUser
-            );
-        } else {
-
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a data-toggle="tooltip" data-placement="bottom" title="Add Reviews" class="sidebar-control active hidden-xs ">Add Reviews</a></li>
-				</ul>';
-
-            $aData = array(
-                'title' => 'Brand Boost add Review',
-                'pagename' => $breadcrumb,
-                'aBrandboostList' => $aBrandboostList,
-                //'oCampaign' => $oCampaign,
-                'aUser' => $aUser
-            );
-        }
-
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/add_review', $aData);
-    }
-
     public function sitereviews($campaignId) {
 
         if (!empty($campaignId)) {
@@ -4818,50 +4885,7 @@ class Brandboost extends Controller {
 
     
 
-    public function delete_multipal_brandboost() {
-
-        $response = array();
-        $post = array();
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        //$userID = $this->session->userdata("current_user_id");
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $multi_brandboost_id = $post['multi_brandboost_id'];
-
-            $aData = array(
-                'delete_status' => '1'
-            );
-
-            foreach ($multi_brandboost_id as $brandboostID) {
-
-                $result = $this->mBrandboost->update($userID, $aData, $brandboostID);
-
-                if ($result) {
-                    //Add Useractivity log
-
-                    $aActivityData = array(
-                        'user_id' => $userID,
-                        'event_type' => 'brandboost_onsite_offsite',
-                        'action_name' => 'deleted_brandboost',
-                        'brandboost_id' => $brandboostID,
-                        'campaign_id' => '',
-                        'inviter_id' => '',
-                        'subscriber_id' => '',
-                        'feedback_id' => '',
-                        'activity_message' => 'Brandboost Deleted',
-                        'activity_created' => date("Y-m-d H:i:s")
-                    );
-                    logUserActivity($aActivityData);
-                    $response['status'] = 'success';
-                } else {
-                    $response['status'] = "Error";
-                }
-            }
-        }
-        echo json_encode($response);
-        exit;
-    }
+    
 
     public function subscribers($listId) {
         $aUser = getLoggedUser();
