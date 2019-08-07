@@ -974,6 +974,34 @@ class ReviewsModel extends Model {
         return false;
     }
 
+    /**
+    * This function is used to save the save helpful 
+    * @param type $clientID
+    * @return type
+    */
+    public function saveHelpful($aData) {
+
+        $oData = DB::table('tbl_reviews_helpful')
+        ->insertGetId($aData);
+        if (!empty($oData))
+            return $oData;
+        return false;
+    }
+
+    /**
+    * This function is used to update 
+    * @param type $clientID
+    * @return type
+    */
+    public function updateHelpful($aData, $id) {
+
+        $res = DB::table('tbl_reviews_helpful')
+                ->where("id", $id)
+                ->update($aData);
+
+        return true;
+    }
+
     public function saveSiteReview($aData) {
         $bSaved = $this->db->insert("tbl_reviews_site", $aData);
         if ($bSaved)
@@ -1052,12 +1080,6 @@ class ReviewsModel extends Model {
         return false;
     }
 
-    public function saveHelpful($aData) {
-        $bSaved = $this->db->insert("tbl_reviews_helpful", $aData);
-        if ($bSaved)
-            return true;
-        return false;
-    }
 
     public function saveSiteReviewHelpful($aData) {
         $bSaved = $this->db->insert("tbl_site_reviews_helpful", $aData);
@@ -1083,15 +1105,6 @@ class ReviewsModel extends Model {
             return false;
     }
 
-    public function updateHelpful($aData, $id) {
-        $this->db->where("id", $id);
-        $bUpdated = $this->db->update("tbl_reviews_helpful", $aData);
-        //echo $this->db->last_query();
-        if ($bUpdated)
-            return true;
-        else
-            return false;
-    }
 
     public function updateSiteReviewHelpful($aData, $id) {
         $this->db->where("id", $id);

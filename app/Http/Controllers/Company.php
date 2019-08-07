@@ -132,7 +132,8 @@ class Company extends Controller {
 				$reviewData = ReviewsModel::getReviewByReviewID($reviewID);
 				
 				addPageAndVisitorInfo($reviewData[0]->user_id, 'Brand Page Review', serialize($reviewData[0]->campaign_id), 'Helpful Action');
-				$bSaved = $this->mReviews->saveHelpful($aVoteData);
+
+				$bSaved = $mReviews->saveHelpful($aVoteData);
 				} else {
 				//Already voted for the same review
 				if ($alreadyVoted['action'] == 'helpful_yes') {
@@ -150,10 +151,10 @@ class Company extends Controller {
 					} else if ($alreadyVoted['action'] == 'helpful_null') {
 					//Do nothing
 				}
-				$bUpdated = $this->mReviews->updateHelpful($aVoteData, $alreadyVoted['vote_id']);
+				$bUpdated = $mReviews->updateHelpful($aVoteData, $alreadyVoted['vote_id']);
 			}
 			
-			$aHelpful = $this->mReviews->countHelpful($reviewID);
+			$aHelpful = ReviewsModel::countHelpful($reviewID);
 			$response = array('status' => 'ok', 'yes' => $aHelpful['yes'], 'no' => $aHelpful['no']);
 			
 			echo json_encode($response);
