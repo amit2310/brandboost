@@ -546,6 +546,9 @@ Route::post('admin/modules/nps/registerInvite','Admin\Modules\Nps@registerInvite
 Route::post('admin/modules/nps/exportCSV','Admin\Modules\Nps@exportCSV');
 Route::post('admin/modules/nps/importInviteCSV','Admin\Modules\Nps@importInviteCSV');
 Route::get('admin/modules/nps/stats/{npsID}','Admin\Modules\Nps@stats');
+Route::get('admin/modules/nps/feedbackdetails/{scoreID}','Admin\Modules\Nps@feedbackdetails');
+Route::get('admin/modules/nps/score/{hashKey}','Admin\Modules\Nps@score');
+Route::get('admin/modules/nps/score','Admin\Modules\Nps@score');
 
 //Segment Module
 Route::get('admin/broadcast/mysegments','Admin\Broadcast@mysegments');
