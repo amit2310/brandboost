@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php
 $disableRemaining = false;
 $rewards = '';
@@ -5,6 +12,12 @@ $emailWorkflow = '';
 $campaign = '';
 $reviews = '';
 $integrationClass = '';
+$setTab = !(empty($setTab)) ? $setTab : '';
+$selectedTab = !(empty($selectedTab)) ? $selectedTab : '';
+$bCustomizeTab = !empty($bCustomizeTab) ? $bCustomizeTab : '';
+$bWidgetTab = !empty($bWidgetTab) ? $bWidgetTab : '';
+$bWorkflowTab = !empty($bWorkflowTab) ? $bWorkflowTab : '';
+$bPeopleTab = !empty($bPeopleTab) ? $bPeopleTab : '';
 if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
     $rs = 'active';
 } else if ($setTab == 'Campaign Preferences' || $selectedTab == 'Campaign Preferences') {
@@ -155,34 +168,32 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
     <div class="tab-content">
         <!--########################TAB 1 ##########################-->
         <?php if (empty($oNPS->platform)): ?>  
-            <?php $this->load->view("admin/modules/nps/nps-tabs/choose-platform", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oAccountSettings' => $oAccountSettings)); ?>
+            @include('admin.modules.nps.nps-tabs.choose-platform', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID))
         <?php endif; ?>
         <!--########################TAB 2 ##########################-->
         <?php if ($bCustomizeTab == true): ?>
-            <?php $this->load->view("admin/modules/nps/nps-tabs/customization", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS)); ?>
+            @include('admin.modules.nps.nps-tabs.customization', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS))
         <?php endif; ?>
         <!--########################TAB 3 ##########################-->
         <?php if ($bWidgetTab == true): ?>
-            <?php $this->load->view("admin/modules/nps/nps-tabs/widget_code", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS)); ?>
+            @include('admin.modules.nps.nps-tabs.widget_code', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS))
         <?php endif; ?>
         <!--########################TAB 4 ##########################-->
         <?php if ($bWorkflowTab == true): ?>
-            <?php //$this->load->view("admin/modules/nps/nps-tabs/reward-workflow", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS)); ?>
-            <?php $this->load->view("admin/modules/nps/nps-tabs/reward-workflow-beta", array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents)); ?>
+            @include('admin.modules.nps.nps-tabs.reward-workflow-beta', array('emailWorkflow' => $emailWorkflow, 'oEvents' => $oEvents))
         <?php endif; ?>
         <!--########################TAB 5 ##########################--> 
         <?php if ($bPeopleTab == true): ?>
-            <?php $this->load->view("admin/modules/nps/nps-tabs/contacts", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS, 'oContacts' => $oContacts)); ?>
+            @include('admin.modules.nps.nps-tabs.contacts', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS, 'oContacts' => $oContacts))
         <?php endif; ?>
         <!--########################TAB 6 ##########################--> 
         <?php //if ($bScoreTab == true):  ?>
-        <?php $this->load->view("admin/modules/nps/nps-tabs/score", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS, 'oFeedbacks' => $oFeedbacks)); ?>
+        @include('admin.modules.nps.nps-tabs.score', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS, 'oFeedbacks' => $oFeedbacks))
         <?php //endif; ?>
     </div>
 </div>
 
-<?php //$this->load->view("admin/modals/workflow/workflow-popup", array('oDefaultTemplates' => $oDefaultTemplates));  ?>
-<?php $this->load->view("admin/modals/workflow2/workflow-popup", array('oDefaultTemplates' => $oDefaultTemplates)); ?>
+@include('admin.modals.workflow2.workflow-popup', array('oDefaultTemplates' => $oDefaultTemplates))
 
 <div id="addSubscriber" class="modal fade">
     <div class="modal-dialog modal-md">
@@ -195,6 +206,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 <div class="panel-body">
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
+                        {{ csrf_field() }}
                         <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
                         <input type="hidden" name="bbaid" value="<?php echo $oNPS->hashcode; ?>" />
                         <div class="col-md-12">
@@ -253,6 +265,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             <div class="modal-body">
                 <div class="panel-body">
                     <form name="frmInviteBulkCustomer" id="frmInviteBulkCustomer"  method="post" action="" enctype="multipart/form-data" >
+                        {{ csrf_field() }}
                         <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
                         <input type="hidden" name="bbaid" value="<?php echo $oNPS->hashcode; ?>" />
 
@@ -372,7 +385,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/modules/nps/publishNPSCampaign'); ?>',
                 type: "POST",
-                data: {'npsId': '<?php echo $oNPS->id; ?>'},
+                data: {_token: '{{csrf_token()}}', 'npsId': '<?php echo $oNPS->id; ?>'},
                 dataType: "html",
                 success: function (data) {
                     window.location.href = '<?php echo base_url("/admin/modules/nps/") ?>';
@@ -388,7 +401,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $.ajax({
                 url: '<?php echo base_url('admin/modules/nps/publishNPSCampaignStatus'); ?>',
                 type: "POST",
-                data: {'npsId': '<?php echo $oNPS->id; ?>', 'status': status},
+                data: {_token: '{{csrf_token()}}', 'npsId': '<?php echo $oNPS->id; ?>', 'status': status},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -410,7 +423,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
     });
 </script>	
-
+@endsection
 
 
 

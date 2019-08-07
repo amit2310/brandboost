@@ -2076,7 +2076,7 @@ class WorkFlow extends Controller {
         //Instanciate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         $mLists = new ListsModel();
-        
+        $oAutomationLists = '';
         if ($moduleName == 'automation') {
             //get Lists
             $oLists = $mLists->getLists($userID, '', 'active');

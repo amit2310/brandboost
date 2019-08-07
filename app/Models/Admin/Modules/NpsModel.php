@@ -284,9 +284,6 @@ class NpsModel extends Model {
                 ->select('tbl_nps_automations_campaigns.*')
                 ->where('tbl_nps_automations_events.nps_id', $npsID)
                 ->where('tbl_nps_automations_campaigns.delete_status', 0)
-                ->when(!empty($eventType), function ($query) use ($eventType) {
-                    return $query->where('event_type', $eventType);
-                })
                 ->get();
         return $oData;
     }

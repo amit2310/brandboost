@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Modules;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
 use App\Models\Admin\Modules\NpsModel;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\ListsModel;
@@ -52,7 +54,7 @@ class Nps extends Controller {
             'bActiveSubsription' => $bActiveSubsription,
             'moduleName' => $moduleName
         );
-        return view('admin.modules.nps.index', $aPageData);
+        return view('admin.modules.nps.index', $aPageData)->with(['mNPS'=>$mNPS]);
     }
 
     /**
@@ -93,7 +95,7 @@ class Nps extends Controller {
             'bActiveSubsription' => $bActiveSubsription,
             'oProgramsDate' => $oProgramsDate
         );
-        return view('admin.modules.nps.overview', $aPageData);
+        return view('admin.modules.nps.overview', $aPageData)->with(['mNPS'=>$mNPS]);
     }
 
     /**
@@ -110,6 +112,9 @@ class Nps extends Controller {
         // Instanciate Templates model to get its properties and methods
         $mTemplates = new TemplatesModel();
         
+        // Instanciate Users model to get its properties and methods
+        $mUser = new UsersModel();
+        
         $npsID = $request->npsID;
         
         
@@ -117,8 +122,9 @@ class Nps extends Controller {
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         $bActiveSubsription = UsersModel::isActiveSubscription();
-        $selectedTab = $this->input->get('t');
-
+        $selectedTab = $request->t;
+        
+        
 
 
         //NPS related account details
@@ -149,7 +155,7 @@ class Nps extends Controller {
         $moduleName = 'nps';
         $eventsData = $mNPS->getNPSEvents($oNPS->id);
         $campaignTemplates = $mNPS->getNPSCampaignTemplates($oNPS->id);
-        $userTwilioData = $this->mUser->getUserTwilioData($userID);
+        $userTwilioData = $mUser->getUserTwilioData($userID);
 
         
         $oEvents = $mWorkflow->getWorkflowEvents($npsID, $moduleName);
@@ -159,6 +165,7 @@ class Nps extends Controller {
         //pre($oDefaultTemplates);
         //exit;
         $surveyType = $oNPS->platform;
+        $sSurveyTypeTitle = '';
         if(!empty($surveyType)){
             $sSurveyTypeTitle = ucfirst($surveyType). ' Survey';
             
@@ -1003,7 +1010,7 @@ class Nps extends Controller {
                 'created' => date("Y-m-d H:i:s")
             );
             $eventName = 'sys_nps_added';
-            add_notifications($notificationData, $eventName, $userID);
+            @add_notifications($notificationData, $eventName, $userID);
         }
         echo json_encode($response);
         exit;

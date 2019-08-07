@@ -490,7 +490,7 @@ Route::get('admin/tags/tagsfeedback','Admin\Tags@tagsfeedback');
 Route::get('admin/tags/feedback/{id}','Admin\Tags@feedback');
 
 //NPS Module
-Route::get('admin/modules/Nps','Admin\Modules\Nps@index');
+Route::get('admin/modules/nps','Admin\Modules\Nps@index');
 Route::get('admin/modules/nps/overview','Admin\Modules\Nps@overview');
 Route::get('admin/modules/nps/setup/{npsID}','Admin\Modules\Nps@setup');
 Route::post('admin/modules/nps/updateNPSCustomize','Admin\Modules\Nps@updateNPSCustomize');
