@@ -30,7 +30,7 @@ class BroadcastInviter extends Command {
      */
     public function __construct() {
         parent::__construct();
-        $this->trackServer = 'http://brandboost.io/trck';
+        $this->trackServer = 'http://brandboostx.com/trck';
         $this->enableQueue = false;
         $this->defaultSendgridDetails = array(
             'user' => config('bbconfig.sandgriduser'),
