@@ -11,6 +11,12 @@ use Session;
 
 class ReportModel extends Model {
 
+  /**
+* index call
+* @param type 
+* @return type
+*/
+
     public static function getEmailSend($date) {
 
         $response = array();
@@ -36,6 +42,13 @@ class ReportModel extends Model {
         return $oData;
     }
 
+
+    /**
+    * This function will email field count
+    * @param type $date
+    * @return type
+    */
+
     public static function getEmailFailed($date) {
 
         $response = array();
@@ -60,6 +73,13 @@ class ReportModel extends Model {
        $oData = DB::select(DB::raw($sql));
        return $oData;
     }
+
+
+   /**
+    * This function is used to get email open count
+    * @param type $date
+    * @return type
+    */
 
     public static function getEmailOpen($date) {
 
@@ -87,7 +107,11 @@ class ReportModel extends Model {
 
     }
 
-
+   /**
+    * This function 
+    * @param type $date
+    * @return type
+    */
     public static function getFormOpen($date) {
 
         $dateFilter = date("Y-m-d",strtotime($date));
@@ -107,6 +131,13 @@ class ReportModel extends Model {
         return $oData;
     }
 
+
+    /**
+    * This function is used to get the feedback review for single user
+    * @param type $date
+    * @return type
+    */
+
     public static function getFeedbackReview($date) {
 
         $response = array();
@@ -121,6 +152,14 @@ class ReportModel extends Model {
        return $oData;
 
     }
+
+   
+
+   /**
+    * This function is used to get all feedback review
+    * @param type $date
+    * @return type
+    */
 
     public static function getAllFeedbackReview() {
 
@@ -137,6 +176,12 @@ class ReportModel extends Model {
        return $oData;
 
     }
+
+    /**
+    * This function is used to get five rating for single user
+    * @param type $date
+    * @return type
+    */
 
     public static function getFiveRating($date) {
 
@@ -155,6 +200,13 @@ class ReportModel extends Model {
         return $oData;
     }
 
+
+    /**
+    * This function is used to get all five rating
+    * @param type $date
+    * @return type
+    */
+
     public static function getAllFiveRating() {
 
         $response = array();
@@ -170,6 +222,12 @@ class ReportModel extends Model {
        return $oData;
     }
 
+
+   /**
+    * This function is used to get three rating count for single user
+    * @param type $date
+    * @return type
+    */
     public static function getThreeRating($date) {
 
         $response = array();
@@ -188,6 +246,12 @@ class ReportModel extends Model {
         
     }
 
+   /**
+    * This function is used to get three rating counts
+    * @param type $date
+    * @return type
+    */
+
     public static function getAllThreeRating() {
 
         $response = array();
@@ -201,6 +265,15 @@ class ReportModel extends Model {
 
         return  $oData;
     }
+
+
+    
+    
+    /**
+    * This function is used to get one rating counts
+    * @param type $date
+    * @return type
+    */
 
     public static function getOneRating($date) {
 
@@ -218,6 +291,13 @@ class ReportModel extends Model {
         return $oData;
     }
 
+
+    /**
+    * This function is used to get ratings
+    * @param type $date
+    * @return type
+    */
+
     public static function getAllOneRating() {
 
         $response = array();
@@ -232,6 +312,13 @@ class ReportModel extends Model {
 
        return $oData;
     }
+
+
+    /**
+    * This function is used to get total email send count
+    * @param type $date
+    * @return type
+    */
 
     public static function getAllEmailSend() {
 
@@ -262,6 +349,12 @@ class ReportModel extends Model {
 
         
     }
+
+     /**
+    * This function is used to get email record 
+    * @param type $date
+    * @return type
+    */
 
     public static function getSmsRecordSend($date) {
 
@@ -300,6 +393,13 @@ class ReportModel extends Model {
 
     }
 
+
+     /**
+    * This function is used to get email record 
+    * @param type $date
+    * @return type
+    */
+
     public static function getAllSmsRecordSend() {
 
         $response = array();
@@ -333,6 +433,13 @@ class ReportModel extends Model {
         return $oData;
     }
 
+
+    /**
+    * This function is used to get open sms record count
+    * @param type $date
+    * @return type
+    */
+
     public static function getSmsRecordOpen($date) {
 
         $response = array();
@@ -360,6 +467,13 @@ class ReportModel extends Model {
         return $oData;
 
     }
+
+
+     /**
+    * This function is used to get sms record clicks count
+    * @param type $date
+    * @return type
+    */
 
     public static function getSmsRecordClick($date) {
 
@@ -389,6 +503,11 @@ class ReportModel extends Model {
 
     }
 
+  /**
+    * This function is used to get sms failed count
+    * @param type $date
+    * @return type
+    */
 
     public static function getSmsRecordFailed($date) {
 
@@ -418,6 +537,13 @@ class ReportModel extends Model {
 
     }
 
+    
+     /**
+    * This function is used to get client tags 
+    * @param type $date
+    * @return type
+    */
+
     public static function getClientTags() {
 
         $userID = Session::get('current_user_id');
@@ -432,6 +558,14 @@ class ReportModel extends Model {
         return $oData;
        
     }
+
+
+    
+    /**
+    * This function is used to get all tags 
+    * @param type $date
+    * @return type
+    */
 
     public static function getTags($tagId = 0) {
 
@@ -449,6 +583,12 @@ class ReportModel extends Model {
        
     }
 
+
+    /**
+    * This function is used to get number of tags in a single group
+    * @param type $date
+    * @return type
+    */
 
     public static function numberOfTagInGroup($tagGroupId = 0) {
 
@@ -469,6 +609,12 @@ class ReportModel extends Model {
     }
 
 
+    /**
+    * This function is used to get tag feedbacks 
+    * @param type $date
+    * @return type
+    */
+
     public static function getTagFeedback($tagId = 0) {
 
         $oData = DB::table('tbl_feedback_tags')
@@ -479,6 +625,14 @@ class ReportModel extends Model {
 
        
     }
+
+
+
+    /**
+    * This function is used to get top three tag group
+    * @param type $date
+    * @return type
+    */
 
     public static function getTopThreeTagGroup() {
 
@@ -497,6 +651,14 @@ class ReportModel extends Model {
        
         return $oData;
     }
+
+
+
+    /**
+    * This function is used to get list of subscribers 
+    * @param type $date
+    * @return type
+    */
 
     public static function getListSubscriber($status = 1) {
 
@@ -517,6 +679,13 @@ class ReportModel extends Model {
         return $oData;
     }
 
+
+    /**
+    * This function is used 
+    * @param type $date
+    * @return type
+    */
+
     public static function getNegativeTime() {
 
         $response = array();
@@ -536,6 +705,15 @@ class ReportModel extends Model {
        return $oData;
        
     }
+
+
+
+
+    /**
+    * This function is used to get 
+    * @param type $date
+    * @return type
+    */
 
     public static function getBusyTime() {
 
