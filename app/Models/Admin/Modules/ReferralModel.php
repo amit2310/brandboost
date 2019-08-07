@@ -26,6 +26,25 @@ class ReferralModel extends Model {
         return $oWidgets;
     }
 
+    /**
+     * Get Referral data by userId
+     * @param type $userID
+     * @return type object
+     */
+    public function getReferralDataBySId($userId) {
+
+        $oData = DB::table('tbl_referral_users')
+            ->select('tbl_referral_users.*', 'tbl_referral_rewards.title', 'tbl_referral_rewards.source_type', 'tbl_subscribers.user_id', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email')  
+            ->Join('tbl_referral_rewards', 'tbl_referral_users.account_id', '=' , 'tbl_referral_rewards.hashcode') 
+            ->leftJoin('tbl_referral_reflinks', 'tbl_referral_reflinks.advocate_id', '=' , 'tbl_referral_users.id')    
+            ->leftJoin('tbl_subscribers', 'tbl_subscribers.id', '=' , 'tbl_referral_users.subscriber_id')
+            ->where("tbl_subscribers.user_id", $userId)
+            ->get();
+
+        return $oData;
+
+    }
+
     public function getReferralLists($userID) {
           $aData =  DB::table('tbl_referral_rewards')
         ->select('tbl_referral_rewards.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
@@ -1334,21 +1353,6 @@ class ReferralModel extends Model {
         } else {
             return false;
         }
-    }
-
-    public function getReferralDataBySId($userId) {
-        $this->db->select("tbl_referral_users.*, tbl_referral_rewards.title, tbl_referral_rewards.source_type, tbl_subscribers.user_id, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email");
-        $this->db->join("tbl_referral_rewards", "tbl_referral_users.account_id = tbl_referral_rewards.hashcode", "INNER");
-        $this->db->join("tbl_referral_reflinks", "tbl_referral_reflinks.advocate_id=tbl_referral_users.id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_subscribers.id=tbl_referral_users.subscriber_id", "LEFT");
-        $this->db->where("tbl_subscribers.user_id", $userId);
-        //$this->db->where("tbl_referral_reflinks.referral_id", "tbl_referral_rewards.id");
-        $result = $this->db->get("tbl_referral_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
     }
 
     public function checkIfExistingAdvocate_old($email) {
