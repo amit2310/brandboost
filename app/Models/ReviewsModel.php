@@ -567,6 +567,32 @@ class ReviewsModel extends Model {
         return $aData;
     }
 
+    /**
+    * Used to check if voted
+    * @param type $reviewID
+    * @param type $ip
+    * @return type object
+    */
+    public function checkIfVoted($reviewID, $ip) {
+
+        $oResult = DB::table('tbl_reviews_helpful')
+            ->where('review_id', $reviewID)  
+            ->where('ip', $ip)     
+            ->first();
+
+        if($oResult->count > 0) {
+            if ($oResult->helpful_yes == 1) {
+                $action = 'h_yes';
+            } else if ($oResult->helpful_no == 1) {
+                $action = 'h_no';
+            } else {
+                $action = 'h_null';
+            }
+            return array('action' => $action, 'vote_id' => $oResult->id);
+        }
+        return false;
+    }
+
     
 	/**
 	* Used to get the multireviews for campaign id
@@ -834,25 +860,7 @@ class ReviewsModel extends Model {
         return $result;
     }
 
-    public function checkIfVoted($reviewID, $ip) {
-        $this->db->where('review_id', $reviewID);
-        $this->db->where('ip', $ip);
-        $this->db->limit(1);
-        $rResponse = $this->db->get("tbl_reviews_helpful");
-        //echo $this->db->last_query();
-        if ($rResponse->num_rows() > 0) {
-            $oResult = $rResponse->row();
-            if ($oResult->helpful_yes == 1) {
-                $action = 'h_yes';
-            } else if ($oResult->helpful_no == 1) {
-                $action = 'h_no';
-            } else {
-                $action = 'h_null';
-            }
-            return array('action' => $action, 'vote_id' => $oResult->id);
-        }
-        return false;
-    }
+    
 
     public function checkIfSiteVoted($reviewID, $ip) {
         $this->db->where('review_id', $reviewID);

@@ -376,7 +376,7 @@ $(document).ready(function(){
 		$.ajax({  
 			url:"<?php echo base_url(); ?>company/saveHelpful",  
 			method:"POST",  
-			data: {action:actionName, review_id:reviewId},
+			data: {action:actionName, review_id:reviewId, _token:'{{csrf_token()}}' },
 			dataType: "json", 
 			success:function(data)  
 			{  

@@ -223,6 +223,9 @@ Route::get('admin/invoices/view/{clientID}','Admin\Invoice@view');
 Route::get('admin/invoices/download_invoice/{invoiceID}','Admin\Invoice@download_invoice');
 Route::post('admin/invoices/get','Admin\Invoice@get');
 
+// Company
+Route::post('company/saveHelpful','Company@saveHelpful');
+
 //Setting 
 Route::get('admin/settings','Admin\Settings@index');
 Route::post('webchat/settings/updateCompanyFormData','Admin\Settings@updateCompanyFormData');
