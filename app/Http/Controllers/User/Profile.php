@@ -9,7 +9,10 @@ use App\Libraries\Custom\Mobile_Detect;
 
 class Profile extends Controller {
 
-    
+    /**
+     * Profile Index function
+     *
+     */
     public function Index() {
 
     	$aUInfo = getLoggedUser();
