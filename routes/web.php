@@ -26,6 +26,7 @@ Route::get('user/profile','User\Profile@Index');
 Route::get('user/review','User\Review@Index');
 Route::get('user/media','User\Media@Index');
 Route::get('user/setting','User\Setting@Index');
+Route::get('user/nps','User\Nps@Index');
 
 
 //Dashborad 
