@@ -1,4 +1,10 @@
+@extends('layouts.user_template') 
 
+@section('title')
+<?php //echo $title; ?>
+@endsection
+
+@section('contents')
   
   <div class="content_area">
     <div class="row">
@@ -122,3 +128,5 @@
 		var tableBase = custom_user_data_table(tableId, 0, 'desc');
     });
   </script>
+
+  @endsection
