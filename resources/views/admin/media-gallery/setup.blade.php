@@ -936,17 +936,14 @@ $(document).ready(function(){
                         $.ajax({
                             url: '<?php echo base_url(); ?>/admin/mediagallery/updateMediaImage',
                             type: "POST",
-                            data: {imageName : ImageURL, mainImageName : mainImageName, reviewId : reviewId},
+                            data: {imageName : ImageURL, mainImageName : mainImageName, reviewId : reviewId, _token: '{{csrf_token()}}'},
                             dataType: "json",
                             success: function (data) {
                                 if(data.status = 'status'){
 									$('#cropImageModal').modal('hide');
 									window.location.href = window.location.href;
-                                    //$('#cropFileName').val(data.filename);
-                                    //$('#crop_new').html('<img src="/uploads/'+data.filename+'" width="100%">');
                                 }
                                 else{
-                                    //$('#cropFileName').val(data.filename);
                                 }
                             }
                         });
@@ -989,7 +986,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo base_url(); ?>/admin/mediagallery/updateWidgetType",
 			method: "POST",
-			data: {'gallery_id': <?php echo $galleryData->id; ?>, 'gallery_type': currentClass},
+			data: {'gallery_id': <?php echo $galleryData->id; ?>, 'gallery_type': currentClass, _token: '{{csrf_token()}}'},
 			dataType: "json",
 			success: function (data)
 			{
@@ -1107,7 +1104,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo base_url(); ?>/admin/mediagallery/getReviewData",
 			method: "POST",
-			data: {'review_id' : reviewId},
+			data: {'review_id' : reviewId, _token: '{{csrf_token()}}'},
 			dataType: "json",
 			success: function (data)
 			{

@@ -37,7 +37,7 @@ $reviewIDArray = unserialize($galleryData->reviews_id);
 		if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0){
 			foreach($reviewIDArray as $reviewId){
 				$reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);
-				//pre($reviewData); die;
+
 				$reviewImageArray = unserialize($reviewData[0]->media_url);
 				$imageUrl = $reviewImageArray[0]['media_url'];
 				$cropedImageUrl = $reviewData[0]->croped_image_url;

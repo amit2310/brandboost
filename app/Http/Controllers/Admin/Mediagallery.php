@@ -320,6 +320,125 @@ class Mediagallery extends Controller {
         exit;
 	}
 	
+	/**
+     * Used to update widget type
+     * @return type
+     */
+	public function updateWidgetType(Request $request){
+		$response = array('status' => 'error', 'msg' => 'Something went wrong');
+				
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+		
+        $galleryId = $request->gallery_id;
+        $galleryType = $request->gallery_type;
+		
+		$aData = array(
+            'gallery_design_type' => $galleryType
+        );
+
+        $result = MediaModel::updateGallery($galleryId, $aData);
+		
+		$galleryData = MediaModel::getGalleryData($galleryId);			
+		
+		
+		if($result){
+			$notificationData = array(
+				'event_type' => 'update_gallery_data',
+				'event_id' => 0,
+				'link' => base_url() . 'admin/mediagallery/setup/' . $galleryId,
+				'message' => 'Update gallery data.',
+				'user_id' => $userID,
+				'status' => 1,
+				'created' => date("Y-m-d H:i:s")
+			);
+			
+			$eventName = 'sys_gallery_update';
+			
+			//add_notifications($notificationData, $eventName, $userID);
+		}
+		
+		$sliderData = view('admin.media-gallery.preview', array('galleryData' => $galleryData))->render();
+
+        if ($result == true) {
+            $response = array('status' => 'success');
+			$response['sliderView'] = utf8_encode($sliderData);
+        }
+
+        echo json_encode($response);
+        exit;
+	}
+	
+	
+	/**
+     * Used to get widget review data
+     * @return type
+     */
+	public function getReviewData(Request $request){
+		$response = array('status' => 'error', 'msg' => 'Something went wrong');
+		
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+		$reviewRatings = 0;
+        $reviewId = $request->review_id;
+		$reviewData = ReviewsModel::getReviewDetailsByReviewID($reviewId);
+		$ratingsVal = '';
+		for ($i = 1; $i <= 5; $i++) {
+			if ($i <= $reviewData[0]->ratings) {
+				$ratingsVal .= '<img src="'.base_url().'assets/images/widget/yellow_icon.png"> ';
+			} else {
+				$ratingsVal .= '<img src="'.base_url().'assets/images/widget/grey_icon.png"> ';
+			}
+		}
+		
+		$reviewImageArray = unserialize($reviewData[0]->media_url);
+		$reviewRatings = $reviewData[0]->ratings + $reviewRatings;
+		$imageUrl = $reviewImageArray[0]['media_url'];
+		
+		$reviewPopupData = '<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h5 class="modal-title">'.$reviewData[0]->brand_title.'</h5>
+				</div>
+				<div class="modal-body">
+				   
+				<div class="box_inner">
+			<div class="left_box showCropImagePopup" data-img-name="'.$imageUrl.'" data-review-id="'.$reviewId.'" data-img="data:image/jpg;base64,'.base64_encode(file_get_contents('https://s3-us-west-2.amazonaws.com/brandboost.io/'.$imageUrl.'')).'" title="Click To Crop Image" style="cursor:pointer;"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/'.$imageUrl.'" ></div><!--left_box--->
+			<div class="right_box">
+			<h1 class="heading_pop">'.$reviewData[0]->review_title.'</h1>
+				<div class="box_2">
+					<div class="top_div">
+						<div class="left"><i class="circle"></i><a class="icons" href="javascript:void(0);">'.showUserAvtar($reviewData[0]->avatar, $reviewData[0]->firstname, $reviewData[0]->lastname).'</a></div>
+						<div class="right">
+							<div class="client_n"><p>'.$reviewData[0]->firstname . ' ' . $reviewData[0]->lastname.'</p></div>
+							<div class="client_review">
+							'.$ratingsVal.'
+							<span>'.dataFormat($reviewData[0]->created).'</span></div>
+						</div>
+					</div>
+					
+					<div class="bottom_div">
+						<p>'.$reviewData[0]->comment_text.'</p>
+					</div>
+					<div class="footer_div2">
+						<div class="comment_div"><p><img src="'.base_url().'assets/images/widget/comment_icon.jpg">3 Comments <span>'.number_format($reviewData[0]->ratings, 1).' Our of 5 Stars</span></p></div>
+						<!-- <div class="liked_icon"><img src="'.base_url().'assets/images/widget/like_icon.jpg"> <img src="'.base_url().'assets/images/widget/dislike_icon.jpg"></div> -->
+					</div>
+				</div>
+			</div>
+		</div></div>';
+		$response = array('status' => 'success', 'popupData' => $reviewPopupData);
+		echo json_encode($response);
+        exit;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public function updateMediaData() {
 
         $post = $this->input->post();
@@ -516,58 +635,7 @@ class Mediagallery extends Controller {
 		exit;
 	}
 	
-	public function updateWidgetType(){
-		$response = array('status' => 'error', 'msg' => 'Something went wrong');
-		
-        $post = $this->input->post();
-		
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-		
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-		
-        $galleryId = $post['gallery_id'];
-        $galleryType = $post['gallery_type'];
-		
-		$aData = array(
-            'gallery_design_type' => $galleryType
-        );
-
-        $result = $this->mMedia->updateGallery($galleryId, $aData);
-		
-		$galleryData = $this->mMedia->getGalleryData($galleryId);			
-		
-		
-		if($result){
-			$notificationData = array(
-				'event_type' => 'update_gallery_data',
-				'event_id' => 0,
-				'link' => base_url() . 'admin/mediagallery/setup/' . $galleryId,
-				'message' => 'Update gallery data.',
-				'user_id' => $userID,
-				'status' => 1,
-				'created' => date("Y-m-d H:i:s")
-			);
-			
-			$eventName = 'sys_gallery_update';
-			
-			add_notifications($notificationData, $eventName, $userID);
-		}
-		
-		$sliderData = $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData), true);
-
-        if ($result == true) {
-            $response = array('status' => 'success');
-			$response['sliderView'] = utf8_encode($sliderData);
-        }
-
-        echo json_encode($response);
-        exit;
-	}
+	
 	
 	public function updateMediaImage(){
 		$response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -618,78 +686,6 @@ class Mediagallery extends Controller {
         exit;
 	}
 	
-	
-	
-	
-	public function getReviewData(){
-		$response = array('status' => 'error', 'msg' => 'Something went wrong');
-		
-        $post = $this->input->post();
-		
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-		
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-		
-        $reviewId = $post['review_id'];
-		$reviewData = $this->mReviews->getReviewDetailsByReviewID($reviewId);
-		$ratingsVal = '';
-		for ($i = 1; $i <= 5; $i++) {
-			if ($i <= $reviewData[0]->ratings) {
-				$ratingsVal .= '<img src="'.base_url().'assets/images/widget/yellow_icon.png"> ';
-			} else {
-				$ratingsVal .= '<img src="'.base_url().'assets/images/widget/grey_icon.png"> ';
-			}
-		}
-		
-		$reviewImageArray = unserialize($reviewData[0]->media_url);
-		$reviewRatings = $reviewData[0]->ratings + $reviewRatings;
-		$imageUrl = $reviewImageArray[0]['media_url'];
-		//<p class="heading_pop2">'.$reviewData[0]->brand_desc.'</p>
-		
-		$reviewPopupData = '<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h5 class="modal-title">'.$reviewData[0]->brand_title.'</h5>
-			</div>
-			<div class="modal-body">
-			   
-			<div class="box_inner">
-    	<div class="left_box showCropImagePopup" data-img-name="'.$imageUrl.'" data-review-id="'.$reviewId.'" data-img="data:image/jpg;base64,'.base64_encode(file_get_contents('https://s3-us-west-2.amazonaws.com/brandboost.io/'.$imageUrl.'')).'" title="Click To Crop Image" style="cursor:pointer;"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/'.$imageUrl.'" ></div><!--left_box--->
-    	<div class="right_box">
-    	<h1 class="heading_pop">'.$reviewData[0]->review_title.'</h1>
-    		<div class="box_2">
-				<div class="top_div">
-					<div class="left"><i class="circle"></i><a class="icons" href="javascript:void(0);">'.showUserAvtar($reviewData[0]->avatar, $reviewData[0]->firstname, $reviewData[0]->lastname).'</a></div>
-					<div class="right">
-						<div class="client_n"><p>'.$reviewData[0]->firstname . ' ' . $reviewData[0]->lastname.'</p></div>
-						<div class="client_review">
-						'.$ratingsVal.'
-						<span>'.dataFormat($reviewData[0]->created).'</span></div>
-					</div>
-				</div>
-				
-				<div class="bottom_div">
-					<p>'.$reviewData[0]->comment_text.'</p>
-				</div>
-				<div class="footer_div2">
-					<div class="comment_div"><p><img src="'.base_url().'assets/images/widget/comment_icon.jpg">3 Comments <span>'.number_format($reviewData[0]->ratings, 1).' Our of 5 Stars</span></p></div>
-					<!-- <div class="liked_icon"><img src="'.base_url().'assets/images/widget/like_icon.jpg"> <img src="'.base_url().'assets/images/widget/dislike_icon.jpg"></div> -->
-				</div>
-			</div>
-    	</div>
-    </div></div>';
-		$response = array('status' => 'success', 'popupData' => $reviewPopupData);
-		echo json_encode($response);
-        exit;
-	}
-	
-	public function test(){
-		echo 'test';
-	}
 }
 
 ?>
