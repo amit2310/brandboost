@@ -7,6 +7,7 @@ use App\Models\Admin\LoginModel;
 use Cookie;
 use Session;
 use App\Libraries\Custom\Mobile_Detect;
+use App\Models\Admin\WebChatModel;
 
 
 class Login extends Controller {
@@ -145,13 +146,21 @@ class Login extends Controller {
         }*/
     }
 
+
+    /**
+     * Logout function
+     *
+     * @return user Object
+     */
     public function logout() {
 
+        $webChatModel = new WebChatModel();
         $aUser = getLoggedUser();
         $aData = array('login_status' => '0');
-        $this->Adminlogin->lastLoginDetail($aUser->id, $aData);
-        $this->session->sess_destroy();
-        redirect('../../user/login');
+        $webChatModel->lastLoginDetail($aUser->id, $aData);
+        Session::flush();
+        Session::regenerate(true);
+        return redirect('/user/login'); 
     }
 
     public function forgot_password() {
