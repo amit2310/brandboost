@@ -115,8 +115,8 @@
 					<a href="#" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="<?php echo base_url(); ?>assets/images/icon_refresh.png"/></i></a>
 					<a href="javascript:void(0)"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_calender.png"/></i></a>
 					
-					<a href="javascript:void(0)" id="deleteMediaWidget" class="custom_action_box hidden"><i class="icon-trash position-left"></i></a>
-					<a href="javascript:void(0)" id="archiveButtonMediaWidget" class="custom_action_box hidden"><i class="icon-gear position-left"></i></a>
+					<a href="javascript:void(0)" id="deleteMediaWidget" class="custom_action_box" style="display:none;"><i class="icon-trash position-left"></i></a>
+					<a href="javascript:void(0)" id="archiveButtonMediaWidget" class="custom_action_box" style="display:none;"><i class="icon-gear position-left"></i></a>
 					
 					<a href="javascript:void(0)" class="editDataList"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_edit.png"/></i></a>
 				</div>			
@@ -422,7 +422,7 @@ function showSlides(n=1) {
 			if(slides.length == sliderBoxCount + slideIndex){
 				document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#eee';
 			}
-			}else{
+		}else{
 			document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#eee';
 		}
 	}else{
@@ -436,7 +436,7 @@ function showSlides(n=1) {
 			if(sliderBoxCount == sliderBoxCount + slideIndex){
 				document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#eee';
 			}
-			}else{
+		}else{
 			document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#eee';
 		}
 	}
@@ -448,18 +448,18 @@ $(document).ready(function () {
 
    $('#mediaGalleryDataList thead tr').clone(true).appendTo('#mediaGalleryDataList thead');        
    $('#mediaGalleryDataList thead tr:eq(1) th').each(function (i) {            
-	if (i === 10) {
-		   var title = $(this).text();
-		   $(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" />');                
-		   $('input', this).on('keyup change', function () {
-				if (tableBase.column(i).search() !== this.value) {
+		if (i === 10) {
+			var title = $(this).text();
+			$(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" />');                
+			$('input', this).on('keyup change', function () {
+			if (tableBase.column(i).search() !== this.value) {
 					tableBase
 					.column(i)
 					.search(this.value, $('#colStatus').prop('checked', true))
 					.draw();
 				}
-		   });
-	   }
+			});
+		}
    });
 	
 	var tableId = 'mediaGalleryDataList';
@@ -554,6 +554,7 @@ $(document).ready(function () {
 	$(document).on('click', '.checkRows', function () {
 		var inc = 0;
 		var rowId = $(this).val();
+		
 		if (false == $(this).prop("checked")) {
 			$('#append-' + rowId).removeClass('success');
 		} else {
@@ -563,7 +564,7 @@ $(document).ready(function () {
 		$('.checkRows:checkbox:checked').each(function (i) {
 			inc++;
 		});
-
+		
 		if (inc == 0) {
 			$('.custom_action_box').hide();
 		} else {
