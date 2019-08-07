@@ -112,6 +112,16 @@ Route::post('admin/modules/chat/updateChat','Admin\Modules\Chat@updateChat');
 Route::post('admin/modules/chat/updateChatDesign','Admin\Modules\Chat@updateChatDesign');
 Route::get('admin/modules/chat','Admin\Modules\Chat@index');
 
+
+
+Route::get('admin/modules/referral/overview','Admin\Modules\Referral@overview');
+Route::get('admin/modules/referral','Admin\Modules\Referral@index');
+Route::post('admin/modules/referral/changeStatus','Admin\Modules\Referral@changeStatus');
+Route::post('admin/modules/referral/moveToArchiveReferral','Admin\Modules\Referral@moveToArchiveReferral');
+Route::post('admin/modules/referral/deleteReferral','Admin\Modules\Referral@deleteReferral');
+
+
+
 Route::post('dropzone/upload_image','Dropzone\@upload_image');
 
 
