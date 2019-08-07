@@ -2908,6 +2908,180 @@ if (!function_exists('getBrowserN')) {
 
 }
 
+ 
+        /**
+        * This function is used to get the email send count
+        * @param type $clientID
+        * @return type
+        */
+
+        function emailSend($date) {
+        $aEmail = \App\Models\Admin\ReportModel::getEmailSend($date);
+        return $aEmail;
+        }
+
+        function emailFailed($date) {
+
+            $aEmail = \App\Models\Admin\ReportModel::getEmailFailed($date);
+            return $aEmail;
+        }
+
+        function emailOpen($date) {
+
+            
+            $aEmail = \App\Models\Admin\ReportModel::getEmailOpen($date);
+            return $aEmail;
+        }
+
+        function formOpen($date) {
+
+            
+            $aEmail = \App\Models\Admin\ReportModel::getFormOpen($date);
+            return $aEmail;
+        }
+
+        function feedbackReview($date) {
+
+            
+            $aEmail = \App\Models\Admin\ReportModel::getFeedbackReview($date);
+            return $aEmail;
+        }
+        
+        function getAllFeedbackReview() {
+
+            
+            $aEmail = \App\Models\Admin\ReportModel::getAllFeedbackReview();
+            return $aEmail;
+        }
+
+        function fiveRating($date='') {
+
+            
+            $aEmail = \App\Models\Admin\ReportModel::getFiveRating($date);
+            return $aEmail;
+        }
+
+        function fiveRatingAll($date='') {
+
+          
+            $aEmail = \App\Models\Admin\ReportModel::getAllFiveRating($date);
+            return $aEmail;
+        }
+
+        function threeRating($date='') {
+
+            
+            $aEmail = \App\Models\Admin\ReportModel::getThreeRating($date);
+            return $aEmail;
+        }
+
+        function threeRatingAll($date='') {
+            
+           
+            $aEmail = \App\Models\Admin\ReportModel::getAllThreeRating($date);
+            return $aEmail;
+        }
+
+        function oneRating($date='') {
+
+            $aEmail = \App\Models\Admin\ReportModel::getOneRating($date);
+            return $aEmail;
+        }
+
+        function oneRatingAll($date='') {
+
+            
+            $aEmail = \App\Models\Admin\ReportModel::getAllOneRating($date);
+            return $aEmail;
+        }
+
+        function getAllEmailCount() {
+
+            $aEmail = \App\Models\Admin\ReportModel::getAllEmailSend();
+            return $aEmail;
+        }
+
+        function smsRecordSend($date='') {
+
+            $aSms = \App\Models\Admin\ReportModel::getSmsRecordSend($date);
+            return $aSms;
+        }
+
+        function smsRecordFailed($date='') {
+
+            $aSms = \App\Models\Admin\ReportModel::getSmsRecordFailed($date);
+            return $aSms;
+        }
+
+        function smsRecordOpen($date='') {
+
+            $aSms = \App\Models\Admin\ReportModel::getSmsRecordOpen($date);
+            return $aSms;
+        }
+
+        function smsRecordClick($date='') {
+
+            $aSms = \App\Models\Admin\ReportModel::getSmsRecordClick($date);
+            return $aSms;
+        }
+
+        function getAllSmsRecordSend() {
+
+            $aSms = \App\Models\Admin\ReportModel::getAllSmsRecordSend();
+            return $aSms;
+        }
+
+
+        function getUserTag() {
+          
+            $aTags = \App\Models\Admin\ReportModel::getClientTags();
+            return $aTags;
+        }
+
+        function getTags() {
+
+          
+            $aTags = \App\Models\Admin\ReportModel::getTags();
+            return $aTags;
+        }
+
+        function getTagFeedback($tagID) {
+
+            $aTags = \App\Models\Admin\ReportModel::getTagFeedback($tagID);
+            return $aTags;
+        }
+
+        function topThreeTagGroup() {
+            
+            $aTags = \App\Models\Admin\ReportModel::getTopThreeTagGroup();
+            return $aTags;
+        }
+
+        function numberOfTagInGroup($groupId) {
+            
+            $aTags = \App\Models\Admin\ReportModel::numberOfTagInGroup($groupId);
+            return $aTags;
+        }
+
+        function getListSubscriber($status) {
+            
+            $aListSubs = \App\Models\Admin\ReportModel::getListSubscriber($status);
+            return $aListSubs;
+        }
+
+        function getNegativeTime() {
+     
+            $aListSubs = \App\Models\Admin\ReportModel::getNegativeTime();
+            return $aListSubs;
+        }
+
+        function getBusyTime() {
+          
+            $aListSubs = \App\Models\Admin\ReportModel::getBusyTime();
+            return $aListSubs;
+        }
+
+    
 
 if (!function_exists('ratingView')) {
 

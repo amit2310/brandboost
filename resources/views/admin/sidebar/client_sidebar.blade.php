@@ -134,14 +134,14 @@ if(empty($oBroadcast)){
                                 $activeChildClass = 'menu-analytics-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="{{ url('admin/report/brandboost/responseperformance') }}"><i class="fa fa-circle"></i> Response Report</a></li>
+                            ?>"><a href="{{ url('admin/brandboost/responseperformance') }}"><i class="fa fa-circle"></i> Response Report</a></li>
                             <li class="<?php
                             if ($pageName == 'report' && $pageSeName == 'brandboost' && $pageThName == 'repResTimeTrends') {
                                 $activeParentClass = 'menu-analytics';
                                 $activeChildClass = 'menu-analytics-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="{{ url('admin/report/brandboost/repResTimeTrends') }}"><i class="fa fa-circle"></i> Response Trends</a></li>
+                            ?>"><a href="{{ url('admin/brandboost/repResTimeTrends') }}"><i class="fa fa-circle"></i> Response Trends</a></li>
                             <li class="<?php
                             if ($pageName == 'brandboost' && $pageSeName == 'servicereports') {
                                 $activeParentClass = 'menu-analytics';
@@ -155,14 +155,14 @@ if(empty($oBroadcast)){
                                 $activeChildClass = 'menu-analytics-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="{{ url('admin/report/brandboost/reportsOptOut') }}"><i class="fa fa-circle"></i>Opt Out</a></li>
+                            ?>"><a href="{{ url('admin/brandboost/reportsOptOut') }}"><i class="fa fa-circle"></i>Opt Out</a></li>
                             <li class="<?php
                             if ($pageName == 'report' && $pageSeName == 'brandboost' && $pageThName == 'insightTags') {
                                 $activeParentClass = 'menu-analytics';
                                 $activeChildClass = 'menu-analytics-submenu';
                                 echo 'active';
                             }
-                            ?>"><a href="{{ url('admin/report/brandboost/insightTags') }}"><i class="fa fa-circle"></i> Insight Tags Report</a></li>
+                            ?>"><a href="{{ url('admin/brandboost/insightTags') }}"><i class="fa fa-circle"></i> Insight Tags Report</a></li>
 
                         </ul>
                     </li>
