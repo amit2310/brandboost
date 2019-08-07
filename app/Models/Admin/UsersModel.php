@@ -622,12 +622,10 @@ class UsersModel extends Model {
     }
 
     public function getUserTwilioData($userID) {
-        $this->db->where('user_id', $userID);
-        $result = $this->db->get('tbl_twilio_accounts');
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_twilio_accounts')
+            ->where('user_id', $userID)
+            ->first();
+        return $oData;        
     }
 
     public function getSubscriberInfo($id) {

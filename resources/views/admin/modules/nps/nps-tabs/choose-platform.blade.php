@@ -82,7 +82,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/modules/nps/choosePlatform'); ?>',
                 type: "POST",
-                data: {nps_id:nps_id, platform:selectedPlatform},
+                data: {_token: '{{csrf_token()}}', nps_id:nps_id, platform:selectedPlatform},
                 dataType: "json",
                 success: function (data) {
                     $('.overlaynew').hide();

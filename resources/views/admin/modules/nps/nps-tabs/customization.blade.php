@@ -1,21 +1,6 @@
-<?php
-$tab = $this->input->get()['tab'];
-?>
 <script type="text/javascript" src="<?php echo base_url("/assets/js/plugins/pickers/color/spectrum.js"); ?>"></script>
 <link href="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
 <script src="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.js"></script>
-
-<!-- <style type="text/css">
-    .dropzone .dz-default.dz-message:before { content: ''!important; }
-    .dropzone {min-height:40px;}
-    .dropzone .dz-default.dz-message{ top: 0%!important; height:40px;  margin-top:0px;}
-    .dropzone .dz-default.dz-message span {    font-size: 13px;    margin-top: -10px;}
-    .product_icon img{ width: 50px; height: 50px; border-radius: 100px;}
-    .dropzone{padding: 15px!important}
-    .dropzone .dz-preview {	margin: 0px auto !important;width: 109px;float: none;display: block;}
-    .dropzone .dz-preview a.dz-remove, .dropzone-previews .dz-preview a.dz-remove {	margin-top: 8px!important;}
-    .dropzone .dz-preview .dz-image {width: 90px!important;height: 90px!important;}
-</style> -->
 
 <style type="text/css">
     .dropzone .dz-default.dz-message:before { content: ''!important; }
@@ -38,7 +23,7 @@ $tab = $this->input->get()['tab'];
                         <div class="profile_headings">Components <a class="pull-right plus_icon txt_green" href="#"><i class="icon-arrow-down12 txt_green"></i></a></div>
 
                         <form method="post" name="frmSubmit" id="frmSubmit" action="javascript:void(0);"  enctype="multipart/form-data">
-
+                            {{ csrf_field() }}
                             <div class="interactions configurations p25">
                                 <ul class="chatwidgetsettings">
                                     <?php if ($oNPS->platform != 'sms'): ?>
@@ -138,30 +123,7 @@ $tab = $this->input->get()['tab'];
                                     </div>
 
 
-                                    <!-- <div class="form-group" id="uploadbrandlogo" style="display:<?php echo (empty($oNPS->brand_logo)) ? 'block' : 'none'; ?>;">
-                                        <label class="control-label">Upload Brand/Product Logo:</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="icon-upload7"></i></span>
-                                            <div class="dropzone" id="myDropzone_logo_img"></div>
-
-                                        </div>
-                                    </div> -->
-                                    <!-- <div class="form-group" id="uploadedbrandlogo"  style="display:<?php echo (!empty($oNPS->brand_logo)) ? 'block' : 'none'; ?>;">
-                                        <label class="control-label">Upload Brand/Product Logo:</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="icon-upload7"></i></span>
-                                            <div class="dropzone dz-clickable dz-started dz-max-files-reached" id="myDropzone_logo_img">
-                                                <div class="dz-default dz-message"><span>Drop files here to upload</span></div>
-                                                <div class="dz-preview dz-processing dz-image-preview dz-complete">  
-                                                    <div class="dz-image"><img data-dz-thumbnail="" width="90" height="90" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $oNPS->brand_logo; ?>"></div>  
-                                                    <a class="dz-remove" href="javascript:undefined;" data-dz-remove="">Remove file</a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div> -->
-
-                                    <!-- <input style="display: none;" type="text" name="brand_logo" id="logo_img" value="<?php echo (!empty($oNPS->brand_logo)) ? $oNPS->brand_logo : ''; ?>" > -->
+                                    
                                 <?php endif; ?>
 
 
@@ -170,33 +132,7 @@ $tab = $this->input->get()['tab'];
                                 <div class="profile_headings">Settings <a class="pull-right plus_icon" href="#"><i class="icon-arrow-down12 txt_green"></i></a></div>
 
                                 <div class="p25 review_setting">
-                                    <!--
-                                    <div class="row mb20">
-                                        <div class="col-xs-7">
-                                            <p class="text-muted text-size-small mb0 mt10">Rating style</p>
-                                        </div>
-                                        <div class="col-xs-5">
-                                            <select class="form-control">
-                                                <option>Numbers</option>
-                                                <option>11</option>
-                                                <option>10</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row mb20">
-                                        <div class="col-xs-9">
-                                            <p class="text-muted text-size-small mb0 mt10">How often to show popup</p>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <select class="form-control">
-                                                <option>4</option>
-                                                <option>5</option>
-                                                <option>6</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    -->
-
+                                    
                                     <div class="row mb20">
                                         <?php //pre($oNPS); ?>
                                         <input type="hidden" value="<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>" name='web_text_color' id="text_color">
@@ -283,9 +219,9 @@ $tab = $this->input->get()['tab'];
             </div>
         </div>
         <?php if ($oNPS->platform == 'web' || $oNPS->platform == 'link'): ?>
-            <?php $this->load->view("admin/modules/nps/nps-tabs/partials/web-customization"); ?>
+            @include('admin.modules.nps.nps-tabs.partials.web-customization')
         <?php else: ?>
-            <?php $this->load->view("admin/modules/nps/nps-tabs/partials/email-sms-customization"); ?>
+            @include('admin.modules.nps.nps-tabs.partials.email-sms-customization')
         <?php endif; ?>
 
     </div>
@@ -352,7 +288,7 @@ $tab = $this->input->get()['tab'];
             var myDropzoneLogoImg = new Dropzone(
             '#myDropzone_logo_img', //id of drop zone element 1
             {
-                url: '<?php echo site_url("/dropzone/upload_s3_attachment"); ?>/<?php echo $userID; ?>/nps',
+                url: '<?php echo base_url("/dropzone/upload_s3_attachment"); ?>/<?php echo $userID; ?>/nps',
                 uploadMultiple: false,
                 maxFiles: 1,
                 maxFilesize: 600,

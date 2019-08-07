@@ -1,6 +1,5 @@
 <div class="tab-pane <?php echo ($defalutTab == 'people') ? 'active' : ''; ?>" id="right-icon-tab4">
-    <?php //$this->load->view('admin/workflow/workflow_subscribers'); ?>
-    <?php $this->load->view('admin/workflow2/workflow_subscribers'); ?>
+    @include('admin.workflow2.workflow_subscribers')
 
 
     <div class="row pull-right">

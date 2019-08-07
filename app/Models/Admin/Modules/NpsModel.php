@@ -99,7 +99,7 @@ class NpsModel extends Model {
     public function getNps($userID, $id = '') {
         $oData = DB::table('tbl_nps_main')
                 ->where('user_id', $userID)
-                ->where(!empty($id), function($query) use($id) {
+                ->when(!empty($id), function($query) use($id) {
                     return $query->where('id', $id);
                 })
                 ->first();
@@ -283,9 +283,6 @@ class NpsModel extends Model {
                 ->select('tbl_nps_automations_campaigns.*')
                 ->where('tbl_nps_automations_events.nps_id', $npsID)
                 ->where('tbl_nps_automations_campaigns.delete_status', 0)
-                ->when(!empty($eventType), function ($query) use ($eventType) {
-                    return $query->where('event_type', $eventType);
-                })
                 ->get();
         return $oData;
     }
