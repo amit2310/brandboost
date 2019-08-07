@@ -9,6 +9,7 @@
             <div class="tab-pane">
                 <div class="profile_headings txt_upper p20 fsize11 fw600">Select NPS Survey <a class="pull-right plus_icon" href="javascript:void(0);"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
                 <form method="post" name="frmSubmitNPSWidget" id="frmSubmitNPSWidget" action="javascript:void(0);">
+                    {{ csrf_field() }}
                     <div class="p20">
                         <div class="row">
                             <div class="col-md-12">
@@ -40,13 +41,7 @@
                 <div class="heading-elements"><a href="javascript:void(0);"><i class="icon-more2"></i></a></div>
             </div>
             <div class="panel-body p20">
-                <!--				<div class="widget_sec">
-                                                        <div id="npsWidgetSection">
-                <?php //echo ($widgetData->nps_id == '' || $widgetData->nps_id == 0) ? '' : $sEmailPreview; ?>
-                                                        </div>
-                                                        <img class="w100" src="<?php echo base_url(); ?>assets/images/config_bkg_bk2_overlay.png">
-                                                </div>-->
-                <?php $this->load->view("admin/modules/nps/nps-tabs/partials/web-widget-only"); ?>
+                @include('admin.modules.nps.nps-tabs.partials.web-widget-only')
             </div>
         </div>
     </div>
@@ -81,7 +76,7 @@
             $.ajax({
                 url: "<?php echo base_url(); ?>/admin/modules/nps/addNPSWidgetSurvey",
                 method: "POST",
-                data: {'hashcode': hashcodeVal, 'nps_id': npsId, 'widget_id': widgetId},
+                data: {_token: '{{csrf_token()}}', 'hashcode': hashcodeVal, 'nps_id': npsId, 'widget_id': widgetId},
                 dataType: "json",
                 success: function (data)
                 {

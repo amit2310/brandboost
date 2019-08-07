@@ -1,4 +1,4 @@
-<div class="tab-pane <?php echo $integrationClass; ?>" id="right-icon-tab3">
+<div class="tab-pane <?php echo isset($integrationClass)? $integrationClass : ''; ?>" id="right-icon-tab3">
     <div class="row">
         <div class="col-md-3">
             <div style="margin: 0;" class="panel panel-flat">
@@ -80,7 +80,7 @@ src="<?php echo base_url('assets/js/nps_widgets.js'); ?>"&gt;
 		$.ajax({
 			url: "<?php echo base_url(); ?>/admin/modules/nps/publishNPSWidgetSurvey",
 			method: "POST",
-			data: {'widget_id' : widgetId},
+			data: {_token: '{{csrf_token()}}', 'widget_id' : widgetId},
 			dataType: "json",
 			success: function (data)
 			{
