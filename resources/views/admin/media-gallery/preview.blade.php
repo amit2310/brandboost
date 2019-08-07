@@ -24,7 +24,7 @@ $reviewIDArray = unserialize($galleryData->reviews_id);
     .previewWidgetBox .bbw_purple_color{background-image: linear-gradient(<?php echo $colorOrientation; ?>, #4d4d7c 1%, #1e1e40)!important;}
 </style>
 
-<div class="gallery_slider_widget <?php echo $mainWigetClassName; ?> slides<?php echo ($galleryType == '') ? '' : $galleryType; ?> imgSize<?php echo ($imageSize == '') ? 'Medium' : ucfirst($imageSize); ?> galleryType<?php if($galleryDesign == 'onerow'){ echo ''; }else{ echo $galleryDesign == 'horizontal' ? 3 : 2; } ?>" id="bbColorOrientationSection">
+<div class="gallery_slider_widget <?php //echo $mainWigetClassName; ?> slides<?php echo ($galleryType == '') ? '' : $galleryType; ?> imgSize<?php echo ($imageSize == '') ? 'Medium' : ucfirst($imageSize); ?> galleryType<?php if($galleryDesign == 'onerow'){ echo ''; }else{ echo $galleryDesign == 'horizontal' ? 3 : 2; } ?>" id="bbColorOrientationSection">
 	<h2 class="reviewTitleBH <?php echo $allowTitle != '0' ? '' : 'hidden'; ?>"><strong class="reviewTitle"><?php echo $name == '' ? 'Gallery' : $name; ?></strong> <span><?php echo count($reviewIDArray); ?> photos</span></h2>
 	<?php if($galleryDesign == 'onerow'){ ?>
 	<div class="arrow reviewArrowBH <?php echo $allowArrows != '0' ? '' : 'hidden'; ?>">
@@ -36,7 +36,8 @@ $reviewIDArray = unserialize($galleryData->reviews_id);
 		<?php
 		if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0){
 			foreach($reviewIDArray as $reviewId){
-				$reviewData = $this->mReviews->getReviewDetailsByReviewID($reviewId);
+				$reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);
+				//pre($reviewData); die;
 				$reviewImageArray = unserialize($reviewData[0]->media_url);
 				$imageUrl = $reviewImageArray[0]['media_url'];
 				$cropedImageUrl = $reviewData[0]->croped_image_url;
@@ -100,7 +101,7 @@ $reviewIDArray = unserialize($galleryData->reviews_id);
 		if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0){
 			foreach($reviewIDArray as $key=>$reviewId){
 				if($key <= 3){
-				$reviewData = $this->mReviews->getReviewDetailsByReviewID($reviewId);
+				$reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);
 				$reviewImageArray = unserialize($reviewData[0]->media_url);
 				$imageUrl = $reviewImageArray[0]['media_url'];
 				$cropedImageUrl = $reviewData[0]->croped_image_url;
@@ -167,7 +168,7 @@ $reviewIDArray = unserialize($galleryData->reviews_id);
 		if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0){
 			foreach($reviewIDArray as $key=>$reviewId){
 				if($key <= 5){
-				$reviewData = $this->mReviews->getReviewDetailsByReviewID($reviewId);
+				$reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);
 				$reviewImageArray = unserialize($reviewData[0]->media_url);
 				$imageUrl = $reviewImageArray[0]['media_url'];
 				$cropedImageUrl = $reviewData[0]->croped_image_url;
@@ -234,7 +235,7 @@ $reviewIDArray = unserialize($galleryData->reviews_id);
 		if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0){
 			foreach($reviewIDArray as $key=>$reviewId){
 				if($key <= 5){
-				$reviewData = $this->mReviews->getReviewDetailsByReviewID($reviewId);
+				$reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);
 				$reviewImageArray = unserialize($reviewData[0]->media_url);
 				$imageUrl = $reviewImageArray[0]['media_url'];
 				$cropedImageUrl = $reviewData[0]->croped_image_url;

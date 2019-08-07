@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <link href="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
 <script src="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/pickers/color/spectrum.js"></script>
@@ -260,7 +267,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
   
   <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
 	<div class="page_header">
-		<?php $this->load->view("admin/components/smart-popup/smart-gallery-widget-type", array('galleryData' => $galleryData)); ?>
+		@include('admin.components.smart-popup.smart-gallery-widget-type', array('galleryData' => $galleryData))
 	  <div class="row">
 	  <!--=============Headings & Tabs menu==============-->
 		<div class="col-md-7">
@@ -273,7 +280,6 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 		</div>
 		<!--=============Button Area Right Side==============-->
 		<div class="col-md-5 text-right btn_area">
-		  <!-- <button type="button" class="btn light_btn ml10" ><span> &nbsp;  Save Widget</span> </button> -->
 		  <button type="button" class="btn dark_btn ml10"><span> &nbsp;  Publish Widget</span> </button>
 		</div>
 	  </div>
@@ -299,12 +305,13 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 				  <div class="tab-content"> 
 				  <div class="tab-pane active" id="Configurations">
 					<form method="post" name="frmWidgetConfSubmit" id="frmWidgetConfSubmit" action="javascript:void(0);"  enctype="multipart/form-data">
+					{{ csrf_field() }}
 					<div class="profile_headings">DESIGN <a class="pull-right plus_icon" href="#"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
 					<div class="configurations p20">
 						<div class="form-group">
 							<div class="">
 								<label class="control-label">Template</label>
-								<button id="galleryDesignType" type="button" class="btn h52 form-control w100" style="text-align: left; padding: 7px 23px!important;"><span>Galley Type</span> <i class="pull-right txt_grey"><img src="<?php echo base_url(); ?>new_pages/assets/images/icon_grid.png"></i></button>
+								<button id="galleryDesignType" type="button" class="btn h52 form-control w100" style="text-align: left; padding: 7px 23px!important;"><span>Galley Type</span> <i class="pull-right txt_grey"><img src="<?php echo base_url(); ?>assets/images/icon_grid.png"></i></button>
 							</div>
 						</div>
 					</div>
@@ -382,13 +389,13 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 				  </div>
 				  
 				  <div class="tab-pane" id="Design">
-				  <!-- <div class="profile_headings">Page appearance <a class="pull-right plus_icon" href="#"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div> -->
+				  
 				  <form method="post" name="frmWidgetDesignSubmit" id="frmWidgetDesignSubmit" action="javascript:void(0);"  enctype="multipart/form-data">
 				  <div class="p20" style="display:none;">
 					<div class="barand_avatar mb20">
 						<img width="64" class="rounded galleryImage" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $galleryData->gallery_logo; ?>" onerror="this.src='<?php echo base_url('assets/images/wakerslogo.png'); ?>'" />
 					</div>
-					<!--<p class="txt_upper fsize11 fw500 text-muted">Company Avatar</p>-->
+					
 					<div class="form-group">
 						  <label class="control-label txt_upper fsize11 fw500 text-muted">Company Avatar</label>
 						  <label class="display-block">
@@ -465,13 +472,13 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 						<!-- <div class="form-group">
 							<div class="row">
 								<div class="position-relative mt-5 col-md-6">
-									<input name="custom_colors1" class="form-control h52 autoSaveDesign" id="custom_colors1" placeholder="#000000" type="text" value="<?php echo $galleryData->gradient_start_color == '' ? '#000000' : $galleryData->gradient_start_color; ?>" <?php echo $galleryData->color_custom < 1 ? 'readonly' : ''; ?>>
-									<a style="position: absolute; top: 17px; right: 25px;" class="colorpicker1 colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php echo $galleryData->gradient_start_color == '' ? 'style="color:#000000"' : 'style="color:' . $galleryData->gradient_start_color . '"'; ?>></i></a>
+									<input name="custom_colors1" class="form-control h52 autoSaveDesign" id="custom_colors1" placeholder="#000000" type="text" value="<?php //echo $galleryData->gradient_start_color == '' ? '#000000' : $galleryData->gradient_start_color; ?>" <?php //echo $galleryData->color_custom < 1 ? 'readonly' : ''; ?>>
+									<a style="position: absolute; top: 17px; right: 25px;" class="colorpicker1 colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php //echo $galleryData->gradient_start_color == '' ? 'style="color:#000000"' : 'style="color:' . $galleryData->gradient_start_color . '"'; ?>></i></a>
 								</div>
 								
 								<div class="position-relative mt-5 col-md-6">
-									<input name="custom_colors2" class="form-control h52 autoSaveDesign" id="custom_colors2" placeholder="#FF0000" type="text" value="<?php echo $galleryData->gradient_end_color == '' ? '#FF0000' : $galleryData->gradient_end_color; ?>" <?php echo $galleryData->color_custom < 1 ? 'readonly' : ''; ?>>
-									<a style="position: absolute; top: 17px; right: 25px;" class="colorpicker2 colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php echo $galleryData->gradient_end_color == '' ? 'style="color:#FF0000"' : 'style="color:' . $galleryData->gradient_end_color . '"'; ?>></i></a>
+									<input name="custom_colors2" class="form-control h52 autoSaveDesign" id="custom_colors2" placeholder="#FF0000" type="text" value="<?php //echo $galleryData->gradient_end_color == '' ? '#FF0000' : $galleryData->gradient_end_color; ?>" <?php //echo $galleryData->color_custom < 1 ? 'readonly' : ''; ?>>
+									<a style="position: absolute; top: 17px; right: 25px;" class="colorpicker2 colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php //echo $galleryData->gradient_end_color == '' ? 'style="color:#FF0000"' : 'style="color:' . $galleryData->gradient_end_color . '"'; ?>></i></a>
 								</div>
 							</div>
 						</div> -->
@@ -511,6 +518,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 					</div>
 				  </div>
 				  <div class="p20 btop">
+					{{ csrf_field() }}
 					<input name="editGalleryId" type="hidden" value="<?php echo $galleryData->id; ?>">
 					<button type="submit" class="btn dark_btn bkg_dred w100 h52 saveWidgetDesign" >Save</button>
 				  </div>
@@ -521,6 +529,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 				  <div class="tab-pane" id="Reviews">
 					  <div class="profile_headings txt_upper p20 fsize11 fw600">Select Reviews <a class="pull-right plus_icon" href="javascript:void(0);"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
 					  <form method="post" name="frmWidgetReviewsSelect" id="frmWidgetReviewsSelect" action="javascript:void(0);">
+						{{ csrf_field() }}
 						<div class="p20" style="height:790px; overflow-x:hidden;">
 							<div class="row">
 								<div class="col-md-12">
@@ -540,22 +549,19 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 													}
 												}
 											}
-											//echo $mediaImageUrl.'<br>';
 											
 											if($mediaImageUrl != ''){
-												$brandImgArray = unserialize($review->brand_img);
-												$brand_img = "https://s3-us-west-2.amazonaws.com/brandboost.io/".$brandImgArray[0]['media_url'];
 												
-												$reviewsIdArray = unserialize($galleryData->reviews_id);
 												$checked = false;
+												/*$reviewsIdArray = unserialize($galleryData->reviews_id);
 												if (in_array($review->id, $reviewsIdArray))
 												{
 													$checked = true;
-												}
+												}*/
 												
-												$reviewData = $this->mReviews->getReviewDetailsByReviewID($review->id);
+												$reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($review->id);
 												$ratingsVal = '';
-												for ($i = 1; $i <= 5; $i++) {
+												/*for ($i = 1; $i <= 5; $i++) {
 													if ($i <= $reviewData[0]->ratings) {
 														$ratingsVal .= '<img src="'.base_url().'assets/images/widget/yellow_icon.png"> ';
 													} else {
@@ -565,8 +571,8 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 												
 												$reviewImageArray = unserialize($reviewData[0]->media_url);
 												$reviewRatings = $reviewData[0]->ratings + $reviewRatings;
-												$imageUrl = $reviewImageArray[0]['media_url'];
-												
+												$imageUrl = $reviewImageArray[0]['media_url'];*/
+												$imageUrl = '';
 												?>
 										<div class="form-group mb10" style="padding-bottom:8px; margin-bottom:8px; border-bottom:1px solid #f4f6fa;">
 											<div class="pull-left mb0 showReviewPopup" review-id="<?php echo $review->id; ?>">
@@ -585,12 +591,12 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 													
 													<div class="review_section_user">
 													<div class="top_div" style="border: none;">
-														<div class="left"><i class="circle"></i><a class="icons" href="javascript:void(0);"><?php echo showUserAvtar($reviewData[0]->avatar, $reviewData[0]->firstname, $reviewData[0]->lastname); ?></a></div>
+														<div class="left"><i class="circle"></i><a class="icons" href="javascript:void(0);"><?php //echo showUserAvtar($reviewData[0]->avatar, $reviewData[0]->firstname, $reviewData[0]->lastname); ?></a></div>
 														<div class="right">
-															<div class="client_n"><p><?php echo $reviewData[0]->firstname . ' ' . $reviewData[0]->lastname; ?></p></div>
+															<div class="client_n"><p><?php //echo $reviewData[0]->firstname . ' ' . $reviewData[0]->lastname; ?></p></div>
 															<div class="client_review">
 															<?php echo $ratingsVal; ?>
-															<span><?php echo dataFormat($reviewData[0]->created); ?></span></div>
+															<span><?php //echo dataFormat($reviewData[0]->created); ?></span></div>
 														</div>
 													</div>
 													</div>
@@ -629,8 +635,10 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 				</ul>
 			  </div>				
 			  <div class="panel-body p20">
-				  <img class="img-responsive w100" src="<?php echo base_url(); ?>assets/images/config_bkg_bk2.png"/>
-				  <div id="mediaGalleryPreview"><?php $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData)); ?></div>
+					<img class="img-responsive w100" src="<?php echo base_url(); ?>assets/images/config_bkg_bk2.png"/>
+					<div id="mediaGalleryPreview">
+						@include('admin.media-gallery.preview', array('galleryData' => $galleryData))
+					</div>
 			  </div>
 			</div>
 
@@ -1041,7 +1049,7 @@ $(document).ready(function(){
 	var myDropzoneLogoImg = new Dropzone(
 		'#myDropzone_logo_img', //id of drop zone element 1
 		{
-			url: '<?php echo site_url("/dropzone/upload_image"); ?>',
+			url: '<?php echo base_url("/dropzone/upload_image"); ?>',
 			uploadMultiple: false,
 			maxFiles: 1,
 			maxFilesize: 600,
@@ -1319,3 +1327,4 @@ $(document).ready(function(){
 	
 });
 </script>
+@endsection

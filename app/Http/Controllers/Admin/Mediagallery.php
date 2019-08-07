@@ -155,25 +155,18 @@ class Mediagallery extends Controller {
     }
 	
 	
-	
-	
-	
-	public function addList(){
+	/**
+     * Used to add media galley widget
+     * @return type
+     */
+	public function addList(Request $request){
 		
 		$response = array('status' => 'error', 'msg' => 'Something went wrong');
-		
-        $post = $this->input->post();
-		
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-		
+				
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 		
-        $title = strip_tags($post['title']);
+        $title = $request->title;
         $dateTime = date("Y-m-d H:i:s");
 		
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -182,7 +175,8 @@ class Mediagallery extends Controller {
 			$hashcode .= $characters[rand(0, strlen($characters))];
 		}
 		$hashcode = $hashcode . date('Ymdhis');
-		$isLoggedInTeam = $this->session->userdata("team_user_id");
+		
+		$isLoggedInTeam = Session::get("team_user_id");
 		
         $aData = array(
             'name' => $title,
@@ -192,7 +186,7 @@ class Mediagallery extends Controller {
             'created' => $dateTime
         );
 
-        $insertID = $this->mMedia->addGallery($aData);
+        $insertID = MediaModel::addGallery($aData);
 		
         if ($insertID > 0) {
             $aActivityData = array(
@@ -225,14 +219,106 @@ class Mediagallery extends Controller {
 			
             $eventName = 'sys_gallery_added';
 			
-            add_notifications($notificationData, $eventName, $userID);
+            //add_notifications($notificationData, $eventName, $userID);
         }
 
         echo json_encode($response);
         exit;
 	}
 	
+	/**
+     * Used to setup media galley widget
+     * @return type
+     */
+	public function setup($galleryId){
+		$breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Media Gallery" class="sidebar-control active hidden-xs ">Media Gallery</a></li>
+			</ul>';
+			
+        $aUser = getLoggedUser();
+        $userId = $aUser->id;
+		$galleryData = MediaModel::getGalleryData($galleryId);
+		$reviewsData = ReviewsModel::getAllReviewsByUserId($userId);
+        
+		return view('admin.media-gallery.setup', array('title' => 'Media Gallery', 'pagename' => $breadcrumb, 'galleryData' => $galleryData, 'reviewsData' => $reviewsData));
+	}
 	
+	/**
+     * Used to save reviews list
+     * @return type
+     */
+	public function saveReviewsList(Request $request){
+		$response = array('status' => 'error', 'msg' => 'Something went wrong');
+		
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+		
+        $reviewsId = serialize($request->reviewsId);
+        $galleryId = $request->galleryId;
+		
+		$aData = array(
+            'reviews_id' => $reviewsId
+        );
+
+        $result = MediaModel::updateGallery($galleryId, $aData);
+		
+		$galleryData = MediaModel::getGalleryData($galleryId);			
+		$reviewsIdArray = unserialize($galleryData->reviews_id);
+		$reviewsData = ReviewsModel::getAllReviewsByUserId($userID);
+		$reviewList = '';
+		foreach ($reviewsData as $review) {
+			$checked = false;
+			if (in_array($review->id, $reviewsIdArray))
+			{
+				if($review->review_title != ''){
+					$reviewList .= '<button class="btn btn-xs btn_white_table pr10">'.$review->review_title.'</button>';
+				}
+			}
+		}
+		
+		$reviewCount = '<div class="media-left pl30 blef">
+							<div class=""><a href="javascript:void(0);" class="text-default text-semibold bbot">'.count($reviewsIdArray).' Media</a> </div>
+						</div>
+						<div class="media-left pr30 brig">
+							<div class="tdropdown">
+								<button class="btn btn-xs plus_icon dropdown-toggle ml10" data-toggle="dropdown" aria-expanded="false"><i class="icon-plus3"></i></button>
+								<ul style="right: 0px!important;" class="dropdown-menu dropdown-menu-right tagss">
+									'.$reviewList.'
+									<button class="btn btn-xs plus_icon addMedia" data-id="'.$galleryId.'"><i class="icon-plus3"></i></button>
+								</ul>
+							</div>
+						</div>';
+		
+		if($result){
+			$notificationData = array(
+				'event_type' => 'update_gallery_data',
+				'event_id' => 0,
+				'link' => base_url() . 'admin/mediagallery/setup/' . $galleryId,
+				'message' => 'Update gallery data.',
+				'user_id' => $userID,
+				'status' => 1,
+				'created' => date("Y-m-d H:i:s")
+			);
+			
+			$eventName = 'sys_gallery_update';
+			
+			//add_notifications($notificationData, $eventName, $userID);
+		}
+		
+		//$sliderData = $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData), true);
+		$sliderData = view('admin.media-gallery.preview', array('galleryData' => $galleryData))->render();
+
+        if ($result == true) {
+            $response = array('status' => 'success');
+			$response['reviewCount'] = $reviewCount;
+			$response['sliderView'] = utf8_encode($sliderData);
+        }
+
+        echo json_encode($response);
+        exit;
+	}
 	
 	public function updateMediaData() {
 
@@ -533,97 +619,7 @@ class Mediagallery extends Controller {
 	}
 	
 	
-	public function saveReviewsList(){
-		$response = array('status' => 'error', 'msg' => 'Something went wrong');
-		
-        $post = $this->input->post();
-		
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-		
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-		
-        $reviewsId = serialize($post['reviewsId']);
-        $galleryId = $post['galleryId'];
-		
-		$aData = array(
-            'reviews_id' => $reviewsId
-        );
-
-        $result = $this->mMedia->updateGallery($galleryId, $aData);
-		
-		$galleryData = $this->mMedia->getGalleryData($galleryId);			
-		$reviewsIdArray = unserialize($galleryData->reviews_id);
-		$reviewsData = $this->mReviews->getAllReviewsByUserId($userID);
-		$reviewList = '';
-		foreach ($reviewsData as $review) {
-			$checked = false;
-			if (in_array($review->id, $reviewsIdArray))
-			{
-				if($review->review_title != ''){
-					$reviewList .= '<button class="btn btn-xs btn_white_table pr10">'.$review->review_title.'</button>';
-				}
-			}
-		}
-		
-		$reviewCount = '<div class="media-left pl30 blef">
-							<div class=""><a href="javascript:void(0);" class="text-default text-semibold bbot">'.count($reviewsIdArray).' Media</a> </div>
-						</div>
-						<div class="media-left pr30 brig">
-							<div class="tdropdown">
-								<button class="btn btn-xs plus_icon dropdown-toggle ml10" data-toggle="dropdown" aria-expanded="false"><i class="icon-plus3"></i></button>
-								<ul style="right: 0px!important;" class="dropdown-menu dropdown-menu-right tagss">
-									'.$reviewList.'
-									<button class="btn btn-xs plus_icon addMedia" data-id="'.$galleryId.'"><i class="icon-plus3"></i></button>
-								</ul>
-							</div>
-						</div>';
-		
-		if($result){
-			$notificationData = array(
-				'event_type' => 'update_gallery_data',
-				'event_id' => 0,
-				'link' => base_url() . 'admin/mediagallery/setup/' . $galleryId,
-				'message' => 'Update gallery data.',
-				'user_id' => $userID,
-				'status' => 1,
-				'created' => date("Y-m-d H:i:s")
-			);
-			
-			$eventName = 'sys_gallery_update';
-			
-			add_notifications($notificationData, $eventName, $userID);
-		}
-		
-		$sliderData = $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData), true);
-
-        if ($result == true) {
-            $response = array('status' => 'success');
-			$response['reviewCount'] = $reviewCount;
-			$response['sliderView'] = utf8_encode($sliderData);
-        }
-
-        echo json_encode($response);
-        exit;
-	}
 	
-	public function setup($galleryId){
-		$breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Media Gallery" class="sidebar-control active hidden-xs ">Media Gallery</a></li>
-			</ul>';
-			
-        $aUser = getLoggedUser();
-        $userId = $aUser->id;
-		$galleryData = $this->mMedia->getGalleryData($galleryId);
-		$reviewsData = $this->mReviews->getAllReviewsByUserId($userId);
-        $this->template->load('admin/admin_template_new', 'admin/media-gallery/setup', array('title' => 'Media Gallery', 'pagename' => $breadcrumb, 'galleryData' => $galleryData, 'reviewsData' => $reviewsData));
-	}
 	
 	public function getReviewData(){
 		$response = array('status' => 'error', 'msg' => 'Something went wrong');
