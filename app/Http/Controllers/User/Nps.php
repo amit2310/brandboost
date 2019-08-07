@@ -8,6 +8,10 @@ use Session;
 
 class Nps extends Controller {
 
+    /**
+     * NPS Index function
+     *
+     */
     public function Index() {
 
     	$response = array();
