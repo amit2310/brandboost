@@ -63,9 +63,9 @@ a.filterByColumn.active{
 						foreach ($oFeedbacks as $oFeedback) {
 							$score = ($oFeedback->score) ? $oFeedback->score : 0;
 							$feedback = ($oFeedback->feedback) ? $oFeedback->feedback : 'N/A';
-							$oTags = $this->mNPS->getTagsByScoreID($oFeedback->id);
+							$oTags = $mNPS->getTagsByScoreID($oFeedback->id);
 							
-							$profileImg = $oFeedback->avatar == '' ? base_url('assets/images/userp.png') : base_url('profile_images/' . $oFeedback->avatar);
+							//$profileImg = $oFeedback->avatar == '' ? base_url('assets/images/userp.png') : base_url('profile_images/' . $oFeedback->avatar);
 							
 						?>
 						<tr>
