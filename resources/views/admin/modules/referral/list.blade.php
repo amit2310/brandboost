@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php
 $iActiveCount = $iArchiveCount = 0;
 
@@ -20,8 +27,6 @@ if (!empty($oPrograms)) {
             <div class="col-md-7">
                 <h3><img style="width: 16px;" src="/assets/images/refferal_icon.png"> Referral Programs</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
-                    <!-- <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Active Programs</a></li>
-                    <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li> -->
                     <li class="active"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="active">Active Campaigns</a></li>
                     <li><a style="javascript:void();" class="filterByColumn" fil="archive">Archive</a></li>
                 </ul>
@@ -194,8 +199,6 @@ if (!empty($oPrograms)) {
                                     </div>
                                     <div class="table_action_tool">
                                         <a href="#"><i class="icon-calendar52"></i></a>
-                                        <!-- <a href="#"><i class="icon-arrow-down16"></i></a>
-                                        <a href="#"><i class="icon-arrow-up16"></i></a> -->
                                         <a style="cursor: pointer;" class="editDataList"><i class="icon-pencil"></i></a>
                                         <a style="cursor: pointer; display: none;" id="deleteBulkReferral" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                         <a style="cursor: pointer; display: none;" id="archiveBulkReferral" class="custom_action_box"><i class="icon-gear position-left"></i> </a>
@@ -226,10 +229,9 @@ if (!empty($oPrograms)) {
 
                                         <!--================================================-->
                                         <?php
+										$newPositive = 0;
                                         foreach ($oPrograms as $oProgram):
-                                            //if ($oProgram->status != 'archive') {
-
-                                            $oContacts = $this->mReferral->getMyAdvocates($oProgram->hashcode);
+                                            $oContacts = \App\Models\Admin\Modules\ReferralModel::getMyAdvocates($oProgram->hashcode);
                                             $lastContactList = end($oContacts);
 
                                             if (!empty($lastContactList->created)) {
@@ -241,9 +243,8 @@ if (!empty($oPrograms)) {
                                                         </div>';
                                             }
 
-                                            $oTotalReferralSent = $this->mReferral->getStatsTotalSent($oProgram->id);
-                                            //$oTotalReferralTwillio = $this->mReferral->getStatsTotalTwillio($oProgram->id);
-                                            $oTotalReferralTwillio = $this->mReferral->getSendgridStats($oProgram->id);
+                                            $oTotalReferralSent = \App\Models\Admin\Modules\ReferralModel::getStatsTotalSent($oProgram->id);
+                                            $oTotalReferralTwillio = \App\Models\Admin\Modules\ReferralModel::getSendgridStats($oProgram->id);
 
                                             $totalEmailSent = $totalSmsSent = 0;
                                             if (!empty($oTotalReferralSent)) {
@@ -259,10 +260,9 @@ if (!empty($oPrograms)) {
                                                     }
                                                 }
                                             }
-                                            $totalDelivered = $totalOpened = $totalProcessed = $totalClicked = 0;
+                                            $totalDelivered = $totalOpened = $totalProcessed = $totalClicked = 1;
                                             if (!empty($oTotalReferralTwillio)) {
                                                 foreach ($oTotalReferralTwillio as $twilliRec) {
-                                                    //pre($twilliRec);
                                                     if ($twilliRec->event_name == 'delivered') {
                                                         $totalDelivered =  $totalDelivered + $twilliRec->totalCount;
                                                     } else if ($twilliRec->event_name == 'open') {
@@ -315,7 +315,7 @@ if (!empty($oPrograms)) {
                                                             <?php
                                                             if ($positiveRating > 0) {
                                                                 ?>
-                                                                <a href="javascript:void(0);<?php //echo base_url('admin/modules/referral/reports/'.$oProgram->id);   ?>" class="text-default text-semibold"><?php echo $positiveRating; ?></a>
+                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $positiveRating; ?></a>
                                                                 <?php
                                                             } else {
                                                                 ?>
@@ -358,7 +358,7 @@ if (!empty($oPrograms)) {
                                                             <?php
                                                             if ($positiveRating > 0) {
                                                                 ?>
-                                                                <a href="javascript:void(0);<?php //echo base_url('admin/modules/referral/reports/'.$oProgram->id);   ?>" class="text-default text-semibold"><?php echo $positiveRating; ?></a>
+                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $positiveRating; ?></a>
                                                                 <?php
                                                             } else {
                                                                 ?>
@@ -396,7 +396,7 @@ if (!empty($oPrograms)) {
                                                             <?php
                                                             if ($totalClicked > 0) {
                                                                 ?>
-                                                                <a href="javascript:void(0);<?php //echo base_url('admin/modules/referral/reports/'.$oProgram->id);   ?>" class="text-default text-semibold"><?php echo $totalClicked; ?></a>
+                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $totalClicked; ?></a>
                                                                 <?php
                                                             } else {
                                                                 ?>
@@ -474,7 +474,6 @@ if (!empty($oPrograms)) {
                                                     ?></td>
                                             </tr>
                                             <?php
-                                            //}
                                         endforeach;
                                         ?>
 
@@ -542,14 +541,11 @@ if (!empty($oPrograms)) {
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div style="margin: 20px 0px 0;" class="text-center">
-                                                            <!--<h5 class="mb-20" >Create Your First Offsite Brand Boost.</h5>-->
-
                                                             <h5 class="mb-20 mt40">
-                                                                Looks Like You Don’t Have Created Any Referral Program Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+                                                                Looks Like You Don’t Have Created Any Referral Program Yet <img src="<?php echo base_url('assets/images/smiley.png'); ?>"> <br>
                                                                 Lets Create a Referral Program.
                                                             </h5>
-                                           <!--  <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default pDisplayNoActiveSubscription" <?php } else { ?> id="addReferral" <?php } ?> class="btn bl_cust_btn mb-10 btn-default addReferral" type="button"><i class="icon-make-group position-left"></i> Add New Survey</button> -->
-
+                                           
                                                             <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addReferral" <?php } ?> type="button" class="btn dark_btn ml20 mb40"><i class="icon-plus3 txt_teal"></i> &nbsp; New Program</button>
 
                                                         </div>
@@ -600,8 +596,6 @@ if (!empty($oPrograms)) {
 
                     <div class="modal-footer">
                         <input type="hidden" name="ref_id" id="hidrefid" value="" />
-                        <!-- <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Continue</button> -->
                         <button data-toggle="modal" type="submit" class="btn dark_btn bkg_sblue fsize14 h52">Create</button>
                         <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
                     </div>
@@ -639,7 +633,7 @@ if (!empty($oPrograms)) {
     </div>
 </div>
 
-<?php $this->load->view("admin/modals/segments/segments-popup");?>
+@include('admin.modals.segments.segments-popup')
 <script src="<?php echo base_url(); ?>assets/js/modules/segments/segments.js" type="text/javascript"></script>
 <script type="text/javascript">
 
@@ -661,14 +655,12 @@ if (!empty($oPrograms)) {
                 $('input', this).on('keyup change', function () {
                     if (tableBase.column(i).search() !== this.value) {
                         tableBase
-                                .column(i)
-                                .search(this.value, $('#colStatus').prop('checked', true))
-                                .draw();
+						.column(i)
+						.search(this.value, $('#colStatus').prop('checked', true))
+						.draw();
                     }
                 });
             }
-
-
         });
 
         setTimeout(function () {
@@ -902,71 +894,31 @@ if (!empty($oPrograms)) {
             } else {
 
                 deleteConfirmationPopup(
-                        "This list will deleted immediately.<br>You can't undo this action.",
-                        function () {
+				"This list will deleted immediately.<br>You can't undo this action.",
+				function () {
 
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: "<?php echo base_url('admin/modules/referral/bulkDeleteReferrals'); ?>",
-                                type: "POST",
-                                data: {bulk_referral_id: val},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        location.reload();
-                                    } else {
-                                        alert("Having some error.");
-                                    }
-                                },
-                                error: function (error) {
-                                    console.log(error);
-                                }
-                            });
-                        });
-
+					$('.overlaynew').show();
+					$.ajax({
+						url: "<?php echo base_url('admin/modules/referral/bulkDeleteReferrals'); ?>",
+						type: "POST",
+						data: {bulk_referral_id: val, _token: '{{csrf_token()}}'},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								location.reload();
+							} else {
+								alert("Having some error.");
+							}
+						},
+						error: function (error) {
+							console.log(error);
+						}
+					});
+				});
             }
         });
 
-        /*$(document).on('click', '#deleteBulkArchiveReferral', function () {
-         var val = [];
-         $('.checkRowsArchive:checkbox:checked').each(function (i) {
-         val[i] = $(this).val();
-         });
-         if (val.length === 0) {
-         alert('Please select a row.')
-         } else {
-         
-         var elem = $(this);
-         swal({
-         title: "Are you sure? You want to delete this record!",
-         text: "You will not be able to recover this record!",
-         type: "warning",
-         showCancelButton: true,
-         confirmButtonColor: "#EF5350",
-         confirmButtonText: "Yes, delete it!",
-         cancelButtonText: "No, cancel pls!",
-         closeOnConfirm: true,
-         closeOnCancel: true
-         },
-         function (isConfirm) {
-         if (isConfirm) {
-         $('.overlaynew').show();
-         $.ajax({
-         url: '<?php echo base_url('admin/modules/referral/bulkDeleteReferrals'); ?>',
-         type: "POST",
-         data: {bulk_referral_id: val},
-         dataType: "json",
-         success: function (data) {
-         if (data.status == 'success') {
-         $('.overlaynew').hide();
-         window.location.href = window.location.href;
-         }
-         }
-         });
-         }
-         });
-         }
-         });*/
+        
 
         $(document).on('click', '#archiveBulkReferral', function () {
             var val = [];
@@ -978,27 +930,27 @@ if (!empty($oPrograms)) {
             } else {
 
                 archiveConfirmationPopup(
-                        "This list will move to archive immediately.<br>You can't undo this action.",
-                        function () {
+				"This list will move to archive immediately.<br>You can't undo this action.",
+				function () {
 
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: "<?php echo base_url('admin/modules/referral/bulkArchiveReferrals'); ?>",
-                                type: "POST",
-                                data: {bulk_referral_id: val},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        location.reload();
-                                    } else {
-                                        alert("Having some error.");
-                                    }
-                                },
-                                error: function (error) {
-                                    console.log(error);
-                                }
-                            });
-                        });
+					$('.overlaynew').show();
+					$.ajax({
+						url: "<?php echo base_url('admin/modules/referral/bulkArchiveReferrals'); ?>",
+						type: "POST",
+						data: {bulk_referral_id: val, _token: '{{csrf_token()}}'},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								location.reload();
+							} else {
+								alert("Having some error.");
+							}
+						},
+						error: function (error) {
+							console.log(error);
+						}
+					});
+				});
             }
         });
 
@@ -1038,7 +990,7 @@ if (!empty($oPrograms)) {
             $.ajax({
                 url: '<?php echo base_url('admin/modules/referral/getReferral'); ?>',
                 type: "POST",
-                data: {'ref_id': ref_id},
+                data: {'ref_id': ref_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1058,27 +1010,26 @@ if (!empty($oPrograms)) {
 
             var ref_id = $(this).attr('ref_id');
             archiveConfirmationPopup(
-                    "This list will move to archive immediately.<br>You can't undo this action.",
-                    function () {
+			"This list will move to archive immediately.<br>You can't undo this action.",
+			function () {
 
-                        $('.overlaynew').show();
+				$('.overlaynew').show();
 
-                        $.ajax({
-                            url: '<?php echo base_url('admin/modules/referral/moveToArchiveReferral'); ?>',
-                            type: "POST",
-                            data: {'ref_id': ref_id},
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    window.location.href = window.location.href;
-                                } else {
-                                    alertMessage('Error: Some thing wrong!');
-                                    $('.overlaynew').hide();
-                                }
-                            }
-                        });
-                    });
-
+				$.ajax({
+					url: '<?php echo base_url('admin/modules/referral/moveToArchiveReferral'); ?>',
+					type: "POST",
+					data: {'ref_id': ref_id, _token: '{{csrf_token()}}'},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							window.location.href = window.location.href;
+						} else {
+							alertMessage('Error: Some thing wrong!');
+							$('.overlaynew').hide();
+						}
+					}
+				});
+			});
         });
 
         $('#frmeditReferralModel').on('submit', function () {
@@ -1109,24 +1060,23 @@ if (!empty($oPrograms)) {
             var elem = $(this);
 
             deleteConfirmationPopup(
-                    "This campaign will deleted immediately.<br>You can't undo this action.",
-                    function () {
-                        $('.overlaynew').show();
-                        var ref_id = $(elem).attr('ref_id');
-                        $.ajax({
-                            url: '<?php echo base_url('admin/modules/referral/deleteReferral'); ?>',
-                            type: "POST",
-                            data: {ref_id: ref_id},
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    $('.overlaynew').hide();
-                                    window.location.href = window.location.href;
-                                }
-                            }
-                        });
-                    });
-
+			"This campaign will deleted immediately.<br>You can't undo this action.",
+			function () {
+				$('.overlaynew').show();
+				var ref_id = $(elem).attr('ref_id');
+				$.ajax({
+					url: '<?php echo base_url('admin/modules/referral/deleteReferral'); ?>',
+					type: "POST",
+					data: {ref_id: ref_id, _token: '{{csrf_token()}}'},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							$('.overlaynew').hide();
+							window.location.href = window.location.href;
+						}
+					}
+				});
+			});
         });
 
         $(document).on('click', '.chg_status', function () {
@@ -1135,7 +1085,7 @@ if (!empty($oPrograms)) {
             $.ajax({
                 url: '<?php echo base_url('admin/modules/referral/changeStatus'); ?>',
                 type: "POST",
-                data: {'refID': refID, 'status': status},
+                data: {'refID': refID, 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "html",
                 success: function (data) {
                     window.location.href = '<?php echo base_url("/admin/modules/referral/") ?>';
@@ -1152,7 +1102,7 @@ if (!empty($oPrograms)) {
             $.ajax({
                 url: '<?php echo base_url('admin/modules/referral/changeStatus'); ?>',
                 type: "POST",
-                data: {'refID': refID, 'status': status},
+                data: {'refID': refID, 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "html",
                 success: function (data) {
                     //window.location.href = '<?php echo base_url("/admin/modules/referral/") ?>';
@@ -1208,5 +1158,5 @@ if (!empty($oPrograms)) {
     });
 
 </script>
-
+@endsection
 

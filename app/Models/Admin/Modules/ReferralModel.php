@@ -45,20 +45,169 @@ class ReferralModel extends Model {
 
     }
 
-    public function getReferralLists($userID) {
-          $aData =  DB::table('tbl_referral_rewards')
-        ->select('tbl_referral_rewards.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
-        ->leftjoin('tbl_users', 'tbl_referral_rewards.user_id','=','tbl_users.id')
-        ->where('tbl_referral_rewards.user_id', $userID)
-        ->get();
+	/**
+     * Used to get referral all data by user id
+     * @param type $userID
+     * @return type
+     */
+    public static function getReferralLists($userID) {
+        $aData =  DB::table('tbl_referral_rewards')
+			->select('tbl_referral_rewards.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
+			->leftjoin('tbl_users', 'tbl_referral_rewards.user_id','=','tbl_users.id')
+			->where('tbl_referral_rewards.user_id', $userID)
+			->get();
         
         return $aData;
     }
+	
+	/**
+     * Used to get referral total sale by user id
+     * @param type $userID
+     * @return type
+     */
+	public static function referredTotalSalesByUserId($userId) {
+		$aData =  DB::table('tbl_referral_sales')
+			->select('tbl_referral_sales.*')
+			->leftjoin('tbl_referral_users', 'tbl_referral_sales.affiliateid','=','tbl_referral_users.id')
+			->where('tbl_referral_users.user_id', $userId)
+			->where('tbl_referral_sales.affiliateid', '!=', NULL)
+			->orderBy('tbl_referral_sales.id', 'desc')
+			->get();
+        
+        return $aData;
+    }
+	
+	/**
+     * Used to get referral total visits by user id
+     * @param type $userId
+     * @return type
+     */
+	public static function referredTotalVisitsByUserId($userId) {
+		$aData =  DB::table('tbl_referral_reflinks_visit_logs')
+			->select('tbl_referral_reflinks_visit_logs.*')
+			->leftjoin('tbl_referral_reflinks', 'tbl_referral_reflinks.refkey','=','tbl_referral_reflinks_visit_logs.refkey')
+			->leftjoin('tbl_referral_rewards', 'tbl_referral_rewards.id','=','tbl_referral_reflinks.referral_id')
+			->where('tbl_referral_rewards.user_id', $userId)
+			->get();
+        
+        return $aData;
+    }
+	
+	/**
+     * Used to get total sent email by user id
+     * @param type $userId
+     * @return type
+     */
+	public static function getStatsTotalSentByUserId($userId) {
+        $sql = "SELECT COUNT(tbl_referral_automations_tracking_logs.id) AS totalCount, tbl_referral_automations_tracking_logs.`campaign_type` "
+                . "FROM tbl_referral_automations_tracking_logs "
+                . "WHERE tbl_referral_automations_tracking_logs.campaign_id "
+                . "IN(SELECT tbl_referral_automations_campaigns.id FROM tbl_referral_automations_campaigns "
+                . "INNER JOIN tbl_referral_automations_events ON tbl_referral_automations_events.id=tbl_referral_automations_campaigns.event_id "
+                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_rewards.id = tbl_referral_automations_events.referral_id "
+                . "WHERE tbl_referral_rewards.user_id='$userId') "
+                . "GROUP BY tbl_referral_automations_tracking_logs.campaign_type";
+		
+		$oData = DB::select(DB::raw($sql));
+        return $oData;
+    }
+	
+	/**
+     * Used to get total click by user id
+     * @param type $userId
+     * @return type
+     */
+	public static function getStatsTotalClickByUserId($userId) {
+        $sql = "SELECT COUNT(tbl_referral_automations_tracking_logs_click.id) AS totalCount "
+                . "FROM tbl_referral_automations_tracking_logs_click "
+                . "WHERE tbl_referral_automations_tracking_logs_click.referral_id "
+                . "IN(SELECT tbl_referral_automations_campaigns.id FROM tbl_referral_automations_campaigns "
+                . "INNER JOIN tbl_referral_automations_events ON tbl_referral_automations_events.id=tbl_referral_automations_campaigns.event_id "
+                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_rewards.id = tbl_referral_automations_events.referral_id "
+                . "WHERE tbl_referral_rewards.user_id='$userId') ";
 
-    public function deleteReferral($userID, $id) {
-        $this->db->where('id', $id);
-        $this->db->where('user_id', $userID);
-        $result = $this->db->delete("tbl_referral_rewards");
+        $oData = DB::select(DB::raw($sql));
+        return $oData;
+    }
+	
+	/**
+     * Used to get advocate data by user id
+     * @param type $userId
+     * @return type
+     */
+	public static function getMyAdvocates($accountID = '') {
+		$aData =  DB::table('tbl_referral_users')
+			->select('tbl_referral_users.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.facebook_profile', 'tbl_subscribers.twitter_profile', 'tbl_subscribers.linkedin_profile', 'tbl_subscribers.instagram_profile', 'tbl_subscribers.socialProfile', 'tbl_subscribers.id AS global_user_id')
+			->leftjoin('tbl_subscribers', 'tbl_referral_users.subscriber_id','=','tbl_subscribers.id')
+			->when((!empty($accountID)), function ($query) use ($accountID) {
+				return $query->where('tbl_referral_users.account_id', $accountID);
+			})
+			->where('tbl_referral_users.subscriber_id', '!=', NULL)
+			->get();
+        
+        return $aData;
+    }
+	
+	/**
+     * Used to get total sent by referralID id
+     * @param type $referralID
+     * @return type
+     */
+	public static function getStatsTotalSent($referralID) {
+        $sql = "SELECT COUNT(tbl_referral_automations_tracking_logs.id) AS totalCount, tbl_referral_automations_tracking_logs.`campaign_type` "
+                . "FROM tbl_referral_automations_tracking_logs "
+                . "WHERE tbl_referral_automations_tracking_logs.campaign_id "
+                . "IN(SELECT tbl_referral_automations_campaigns.id FROM tbl_referral_automations_campaigns "
+                . "INNER JOIN tbl_referral_automations_events ON tbl_referral_automations_events.id=tbl_referral_automations_campaigns.event_id "
+                . "WHERE tbl_referral_automations_events.referral_id='$referralID') "
+                . "GROUP BY tbl_referral_automations_tracking_logs.campaign_type";
+
+        $oData = DB::select(DB::raw($sql));
+        return $oData;
+    }
+	
+	/**
+     * Used to get total twillio by referral id
+     * @param type $referralID
+     * @return type
+     */
+	public static function getStatsTotalTwillio($referralID) {
+        $sql = "SELECT COUNT(tbl_referral_automations_tracking_sendgrid.id) AS totalCount, tbl_referral_automations_tracking_sendgrid.`event_name` "
+                . "FROM tbl_referral_automations_tracking_sendgrid "
+                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_rewards.id=tbl_referral_automations_tracking_sendgrid.referral_id "
+                . "WHERE tbl_referral_rewards.id='$referralID'"
+                . "GROUP BY tbl_referral_automations_tracking_sendgrid.event_name";
+        $oData = DB::select(DB::raw($sql));
+        return $oData;
+    }
+	
+	/**
+     * Used to get total twillio by referral id
+     * @param type $referralID
+     * @return type
+     */
+	public static function getSendgridStats($referralID) {
+        $sql = "SELECT COUNT(DISTINCT tbl_referral_automations_tracking_sendgrid.ip) AS totalCount, tbl_referral_automations_tracking_sendgrid.`event_name` "
+                . "FROM tbl_referral_automations_tracking_sendgrid "
+                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_rewards.id=tbl_referral_automations_tracking_sendgrid.referral_id "
+                . "WHERE tbl_referral_rewards.id='$referralID'"
+                . "GROUP BY tbl_referral_automations_tracking_sendgrid.event_name, tbl_referral_automations_tracking_sendgrid.campaign_id";
+		$oData = DB::select(DB::raw($sql));
+        return $oData;
+    }
+	
+	/**
+     * Used to delete referral by id and user id
+     * @param type $id
+     * @param type $userID
+     * @return type
+     */
+	public static function deleteReferral($userID, $id) {
+		$result = DB::table('tbl_referral_rewards')
+               ->where('user_id', $userID)
+               ->where('id', $id)
+               ->delete();
+			 
         if ($result) {
             return true;
         } else {
@@ -66,16 +215,36 @@ class ReferralModel extends Model {
         }
     }
 
-    public function updateReferral($aData, $userID, $id) {
-        $this->db->where("id", $id);
-        $this->db->where("user_id", $userID);
-        $result = $this->db->update("tbl_referral_rewards", $aData);
-        if ($result) {
+	/**
+     * Used to update referral by id and user id
+     * @param type $id
+     * @param type $userID
+     * @return type
+     */
+    public static function updateReferral($aData, $userID, $id) {
+		$result = DB::table('tbl_referral_rewards')
+           ->where('id', $id)
+           ->where('user_id', $userID)
+           ->update($aData);
+		   
+        if ($result > -1) {
             return $id;
         } else {
             return false;
         }
     }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+    
 
     public function updateReferralWidget($aData, $id) {
         $this->db->where("id", $id);
@@ -1273,23 +1442,6 @@ class ReferralModel extends Model {
             return false;
     }
 
-    public function getMyAdvocates($accountID = '') {
-        $this->db->select("tbl_referral_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_subscribers.status AS globalStatus, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id");
-        $this->db->join("tbl_subscribers", "tbl_referral_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        if ($accountID != '') {
-            $this->db->where("tbl_referral_users.account_id", $accountID);
-        }
-
-        $this->db->where("tbl_referral_users.subscriber_id !=", NULL);
-        $result = $this->db->get("tbl_referral_users");
-        //echo $this->db->last_query();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
     public function getAllAdvocates($accountID = '') {
         $this->db->select("tbl_referral_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_subscribers.status AS globalStatus, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id");
         $this->db->join("tbl_subscribers", "tbl_referral_users.subscriber_id=tbl_subscribers.id", "LEFT");
@@ -1498,18 +1650,7 @@ class ReferralModel extends Model {
         return $response;
     }
 
-    public function referredTotalVisitsByUserId($userId) {
-        $this->db->select("tbl_referral_reflinks_visit_logs.*");
-        $this->db->join("tbl_referral_reflinks", "tbl_referral_reflinks.refkey = tbl_referral_reflinks_visit_logs.refkey", "LEFT");
-        $this->db->join("tbl_referral_rewards", "tbl_referral_rewards.id=tbl_referral_reflinks.referral_id", "LEFT");
-        $this->db->where("tbl_referral_rewards.user_id", $userId);
-        $result = $this->db->get("tbl_referral_reflinks_visit_logs");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
     public function referredSalesByAdvocateId($advocateId, $accountID) {
         $this->db->select("tbl_referral_sales.*, tbl_subscribers.firstname AS aff_firstname, tbl_subscribers.lastname AS aff_lastname, tbl_subscribers.email AS aff_email, tbl_subscribers.phone AS aff_phone");
@@ -1533,21 +1674,6 @@ class ReferralModel extends Model {
         $this->db->join("tbl_subscribers", "tbl_referral_users.subscriber_id = tbl_subscribers.id", "LEFT");
         $this->db->where("tbl_referral_users.subscriber_id", $advocateId);
         $this->db->where("tbl_referral_users.account_id", $accountID);
-        $this->db->where("tbl_referral_sales.affiliateid !=", NULL);
-        $this->db->order_by("tbl_referral_sales.id", "DESC");
-        $result = $this->db->get("tbl_referral_sales");
-        //echo $this->db->last_query();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function referredTotalSalesByUserId($userId) {
-        $this->db->select("tbl_referral_sales.*");
-        $this->db->join("tbl_referral_users", "tbl_referral_sales.affiliateid = tbl_referral_users.id", "LEFT");
-        $this->db->where("tbl_referral_users.user_id", $userId);
         $this->db->where("tbl_referral_sales.affiliateid !=", NULL);
         $this->db->order_by("tbl_referral_sales.id", "DESC");
         $result = $this->db->get("tbl_referral_sales");
@@ -2048,89 +2174,15 @@ class ReferralModel extends Model {
         return $aCatogerizedData;
     }
 
-    public function getStatsTotalSent($referralID) {
-        $sql = "SELECT COUNT(tbl_referral_automations_tracking_logs.id) AS totalCount, tbl_referral_automations_tracking_logs.`campaign_type` "
-                . "FROM tbl_referral_automations_tracking_logs "
-                . "WHERE tbl_referral_automations_tracking_logs.campaign_id "
-                . "IN(SELECT tbl_referral_automations_campaigns.id FROM tbl_referral_automations_campaigns "
-                . "INNER JOIN tbl_referral_automations_events ON tbl_referral_automations_events.id=tbl_referral_automations_campaigns.event_id "
-                //. "LEFT JOIN tbl_referral_settings ON tbl_referral_settings.id = tbl_referral_automations_events.settings_id "
-                . "WHERE tbl_referral_automations_events.referral_id='$referralID') "
-                . "GROUP BY tbl_referral_automations_tracking_logs.campaign_type";
+    
 
-        $result = $this->db->query($sql);
-        //echo $this->db->last_query();
+    
 
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
-    public function getStatsTotalSentByUserId($userId) {
-        $sql = "SELECT COUNT(tbl_referral_automations_tracking_logs.id) AS totalCount, tbl_referral_automations_tracking_logs.`campaign_type` "
-                . "FROM tbl_referral_automations_tracking_logs "
-                . "WHERE tbl_referral_automations_tracking_logs.campaign_id "
-                . "IN(SELECT tbl_referral_automations_campaigns.id FROM tbl_referral_automations_campaigns "
-                . "INNER JOIN tbl_referral_automations_events ON tbl_referral_automations_events.id=tbl_referral_automations_campaigns.event_id "
-                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_rewards.id = tbl_referral_automations_events.referral_id "
-                . "WHERE tbl_referral_rewards.user_id='$userId') "
-                . "GROUP BY tbl_referral_automations_tracking_logs.campaign_type";
+    
 
-        $result = $this->db->query($sql);
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getStatsTotalClickByUserId($userId) {
-        $sql = "SELECT COUNT(tbl_referral_automations_tracking_logs_click.id) AS totalCount "
-                . "FROM tbl_referral_automations_tracking_logs_click "
-                . "WHERE tbl_referral_automations_tracking_logs_click.referral_id "
-                . "IN(SELECT tbl_referral_automations_campaigns.id FROM tbl_referral_automations_campaigns "
-                . "INNER JOIN tbl_referral_automations_events ON tbl_referral_automations_events.id=tbl_referral_automations_campaigns.event_id "
-                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_rewards.id = tbl_referral_automations_events.referral_id "
-                . "WHERE tbl_referral_rewards.user_id='$userId') ";
-
-        $result = $this->db->query($sql);
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getStatsTotalTwillio($referralID) {
-        $sql = "SELECT COUNT(tbl_referral_automations_tracking_sendgrid.id) AS totalCount, tbl_referral_automations_tracking_sendgrid.`event_name` "
-                . "FROM tbl_referral_automations_tracking_sendgrid "
-                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_rewards.id=tbl_referral_automations_tracking_sendgrid.referral_id "
-                . "WHERE tbl_referral_rewards.id='$referralID'"
-                . "GROUP BY tbl_referral_automations_tracking_sendgrid.event_name";
-        $result = $this->db->query($sql);
-        //echo $this->db->last_query();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getSendgridStats($referralID) {
-        $sql = "SELECT COUNT(DISTINCT tbl_referral_automations_tracking_sendgrid.ip) AS totalCount, tbl_referral_automations_tracking_sendgrid.`event_name` "
-                . "FROM tbl_referral_automations_tracking_sendgrid "
-                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_rewards.id=tbl_referral_automations_tracking_sendgrid.referral_id "
-                . "WHERE tbl_referral_rewards.id='$referralID'"
-                . "GROUP BY tbl_referral_automations_tracking_sendgrid.event_name, tbl_referral_automations_tracking_sendgrid.campaign_id";
-
-
-        $result = $this->db->query($sql);
-        //echo $this->db->last_query();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
     public function getEmailReferralSendgridStats($param, $referralID, $id, $eventType = '') {
 

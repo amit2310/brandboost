@@ -1,58 +1,26 @@
 <?php
+namespace App\Http\Controllers\Admin\Modules;
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Admin\UsersModel;
+use App\Models\Admin\MediaModel;
+use App\Models\Admin\Modules\ReferralModel;
+use App\Models\Admin\WorkflowModel;
+use App\Models\Admin\SubscriberModel;
+use App\Models\Admin\TemplatesModel;
+use App\Models\Admin\Crons\InviterModel;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Contracts\Filesystem\Filesystem;
+use Session;
 
-class Referral extends CI_Controller {
-
-    public function __construct() {
-        parent::__construct();
-        $this->load->model("admin/modules/Referral_model", "mReferral");
-        $this->load->model("admin/Workflow_model", "mWorkflow");
-        $this->load->model("admin/Subscriber_model", "mSubscriber");
-        $this->load->model("admin/Users_model", "mUser");
-        $this->load->model("admin/crons/Inviter_model", "mInviter");
-        $this->load->model("admin/Templates_model", "mTemplates");
-        $this->load->library('csvimport');
-    }
-
-    public function index_old() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $oSettings = $this->mReferral->getReferralSettings($userID);
-        if (!empty($oSettings)) {
-            $advCouponID = $oSettings->advCouponID;
-            $refCouponID = $oSettings->refCouponID;
-            if ($advCouponID > 0) {
-                $oAdvCouponCodes = $this->mReferral->getAdvocateCouponCodes($advCouponID);
-            }
-            if ($refCouponID > 0) {
-                $oRefCouponCodes = $this->mReferral->getReferralCouponCodes($refCouponID);
-            }
-        }
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-                    <li><a data-toggle="tooltip" data-placement="bottom" title="Reward" class="sidebar-control active hidden-xs ">Reward</a></li>
-                </ul>';
-
-        $aPageData = array(
-            'title' => 'Referral Module',
-            'pagename' => $breadcrumb,
-            'oSettings' => $oSettings,
-            'oAdvCouponCodes' => $oAdvCouponCodes,
-            'oRefCouponCodes' => $oRefCouponCodes,
-            'bActiveSubsription' => $bActiveSubsription
-        );
-        $this->template->load('admin/admin_template_new', 'admin/modules/referral/index.php', $aPageData);
-    }
+class Referral extends Controller {
 
     public function index() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $oPrograms = $this->mReferral->getReferralLists($userID);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $oPrograms = ReferralModel::getReferralLists($userID);
         $moduleName = 'referral';
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -68,10 +36,12 @@ class Referral extends CI_Controller {
             'bActiveSubsription' => $bActiveSubsription,
             'moduleName' => $moduleName
         );
-        $this->template->load('admin/admin_template_new', 'admin/modules/referral/list', $aPageData);
+		
+		return view('admin.modules.referral.list', $aPageData);
     }
 
-    public function overview() {
+    
+	public function overview() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -81,11 +51,11 @@ class Referral extends CI_Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Overview" class="sidebar-control active hidden-xs "> Overview</a></li>
                     </ul>';
-        $oPrograms = $this->mReferral->getReferralLists($userID);
-        $oSales = $this->mReferral->referredTotalSalesByUserId($userID);
-        $oVisite = $this->mReferral->referredTotalVisitsByUserId($userID);
-        $oEmail = $this->mReferral->getStatsTotalSentByUserId($userID);
-        $oClick = $this->mReferral->getStatsTotalClickByUserId($userID);
+        $oPrograms = ReferralModel::getReferralLists($userID);
+        $oSales = ReferralModel::referredTotalSalesByUserId($userID);
+        $oVisite = ReferralModel::referredTotalVisitsByUserId($userID);
+        $oEmail = ReferralModel::getStatsTotalSentByUserId($userID);
+        $oClick = ReferralModel::getStatsTotalClickByUserId($userID);
         $aPageData = array(
             'title' => 'Referral Module',
             'pagename' => $breadcrumb,
@@ -95,9 +65,83 @@ class Referral extends CI_Controller {
             'oEmail' => $oEmail,
             'oClick' => $oClick
         );
-        $this->template->load('admin/admin_template_new', 'admin/modules/referral/overview', $aPageData);
+		return view('admin.modules.referral.overview', $aPageData);
+    }
+	
+	
+	public function changeStatus(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $referralID = $request->refID;
+        $status = $request->status;
+        $aData = array(
+            'status' => $status,
+        );
+        if ($referralID > 0) {
+            $bUpdateID = ReferralModel::updateReferral($aData, $userID, $referralID);
+            if ($bUpdateID) {
+                $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+	public function moveToArchiveReferral(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $referralID = $request->ref_id;
+        $aData = array(
+            'status' => 'archive',
+            'updated' => date("Y-m-d H:i:s")
+        );
+
+        if ($referralID > 0) {
+            $bUpdateID = ReferralModel::updateReferral($aData, $userID, $referralID);
+            if ($bUpdateID) {
+                $response = array('status' => 'success', 'msg' => "Success");
+            }
+        }
+
+        echo json_encode($response);
+        exit;
     }
 
+
+    public function deleteReferral(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $referralID = $request->ref_id;
+        if ($referralID > 0) {
+            $bDeleted = ReferralModel::deleteReferral($userID, $referralID);
+            if ($bDeleted) {
+                $response = array('status' => 'success', 'msg' => "Success");
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     public function advocates($referralId = '') {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -281,54 +325,7 @@ class Referral extends CI_Controller {
         exit;
     }
 
-    public function moveToArchiveReferral() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $referralID = strip_tags($post['ref_id']);
-        $aData = array(
-            'status' => 'archive',
-            'updated' => date("Y-m-d H:i:s")
-        );
-
-        if ($referralID > 0) {
-            $bUpdateID = $this->mReferral->updateReferral($aData, $userID, $referralID);
-            if ($bUpdateID) {
-                $response = array('status' => 'success', 'msg' => "Success");
-            }
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function deleteReferral() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $referralID = strip_tags($post['ref_id']);
-        if ($referralID > 0) {
-            $bDeleted = $this->mReferral->deleteReferral($userID, $referralID);
-            if ($bDeleted) {
-                $response = array('status' => 'success', 'msg' => "Success");
-            }
-        }
-
-        echo json_encode($response);
-        exit;
-    }
+    
 
     public function addReferral() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -396,60 +393,7 @@ class Referral extends CI_Controller {
         exit;
     }
 
-    public function addReferral_old_new() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $title = strip_tags($post['title']);
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $hashcode = '';
-        for ($i = 0; $i < 20; $i++) {
-            $hashcode .= $characters[rand(0, strlen($characters))];
-        }
-        $hashcode = $hashcode . date('Ymdhis');
-        $aData = array(
-            'hashcode' => $hashcode,
-            'user_id' => $userID,
-            'title' => $title,
-            'status' => 'draft',
-            'created' => date("Y-m-d H:i:s")
-        );
-        $insertID = $this->mReferral->addReferral($aData);
-
-        if ($insertID) {
-            //Update in automation table to take effect in email/sms settings
-            $aEvent = array(
-                'invite-email' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
-                'invite-sms' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
-                'invite-email-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days')),
-                'invite-sms-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days')),
-                'sale-email' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
-                'sale-sms' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
-                'sale-email-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days')),
-                'sale-sms-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days'))
-            );
-            $bSavedEvent = $this->mReferral->saveReferralEvents($aEvent, $insertID);
-
-            //Save Settings
-            $aDefaultSettings = array(
-                'user_id' => $userID,
-                'referral_id' => $insertID,
-                'created' => date("Y-m-d H:i:s")
-            );
-
-            $bUpdated = $this->mReferral->updateStoreSettings($aDefaultSettings, $insertID);
-
-            $response = array('status' => 'success', 'id' => $insertID, 'msg' => "Success");
-        }
-        echo json_encode($response);
-        exit;
-    }
+    
 
     public function updateAllCampaign() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -473,32 +417,6 @@ class Referral extends CI_Controller {
                 }
             }
         }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function changeStatus() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $referralID = strip_tags($post['refID']);
-        $status = strip_tags($post['status']);
-        $aData = array(
-            'status' => $status,
-        );
-        if ($referralID > 0) {
-            $bUpdateID = $this->mReferral->updateReferral($aData, $userID, $referralID);
-            if ($bUpdateID) {
-                $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
-            }
-        }
-
         echo json_encode($response);
         exit;
     }
