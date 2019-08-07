@@ -95,6 +95,70 @@ class Company extends Controller {
 			}
 			
 		}
+
+		/**
+		* This function is for save helpful
+		* @return type
+		*/
+		public function saveHelpful(Request $request) {
+
+			$response = array();
+			
+			$reviewID = strip_tags($request->review_id);
+			$action = strip_tags($request->action);
+			$ip = $request->ip();
+			
+			$aVoteData = array(
+            'review_id' => $reviewID,
+            'ip' => $ip,
+            'created' => date("Y-m-d H:i:s")
+			);
+			
+			if ($action == 'Yes') {
+				$aVoteData['helpful_yes'] = 1;
+				$aVoteData['helpful_no'] = 0;
+			}
+			
+			if ($action == 'No') {
+				$aVoteData['helpful_yes'] = 0;
+				$aVoteData['helpful_no'] = 1;
+			}
+
+			$mReviews = new ReviewsModel();
+			$alreadyVoted = $mReviews->checkIfVoted($reviewID, $ip);
+			//pre($alreadyVoted);
+			
+			if ($alreadyVoted == false || $alreadyVoted['action'] == 'h_null') { 
+				$reviewData = ReviewsModel::getReviewByReviewID($reviewID);
+				
+				addPageAndVisitorInfo($reviewData[0]->user_id, 'Brand Page Review', serialize($reviewData[0]->campaign_id), 'Helpful Action');
+				$bSaved = $this->mReviews->saveHelpful($aVoteData);
+				} else {
+				//Already voted for the same review
+				if ($alreadyVoted['action'] == 'helpful_yes') {
+					if ($action == 'Yes') {
+						$aVoteData['helpful_yes'] = `tbl_reviews_helpful` . `helpful_yes` - 1;
+						} else {
+						$aVoteData['helpful_yes'] = `tbl_reviews_helpful` . `helpful_yes` + 1;
+					}
+					} else if ($alreadyVoted['action'] == 'helpful_no') {
+					if ($action == 'No') {
+						$aVoteData['helpful_no'] = `tbl_reviews_helpful` . `helpful_no` - 1;
+						} else {
+						$aVoteData['helpful_no'] = `tbl_reviews_helpful` . `helpful_no` + 1;
+					}
+					} else if ($alreadyVoted['action'] == 'helpful_null') {
+					//Do nothing
+				}
+				$bUpdated = $this->mReviews->updateHelpful($aVoteData, $alreadyVoted['vote_id']);
+			}
+			
+			$aHelpful = $this->mReviews->countHelpful($reviewID);
+			$response = array('status' => 'ok', 'yes' => $aHelpful['yes'], 'no' => $aHelpful['no']);
+			
+			echo json_encode($response);
+			exit;
+		}
 		
 		
 		public function getReviewQuestionsAndAnswers($campaignId){
@@ -723,64 +787,7 @@ class Company extends Controller {
 			
 		}
 		
-		public function saveHelpful() {
-			$response = array();
-			$post = $this->input->post();
-			if (!empty($post)) {
-				$reviewID = strip_tags($post['review_id']);
-				$action = strip_tags($post['action']);
-				$ip = $this->input->ip_address();
-				
-				$aVoteData = array(
-                'review_id' => $reviewID,
-                'ip' => $ip,
-                'created' => date("Y-m-d H:i:s")
-				);
-				
-				if ($action == 'Yes') {
-					$aVoteData['helpful_yes'] = 1;
-					$aVoteData['helpful_no'] = 0;
-				}
-				
-				if ($action == 'No') {
-					$aVoteData['helpful_yes'] = 0;
-					$aVoteData['helpful_no'] = 1;
-				}
-				
-				$alreadyVoted = $this->mReviews->checkIfVoted($reviewID, $ip);
-				//pre($alreadyVoted);
-				
-				if ($alreadyVoted == false || $alreadyVoted['action'] == 'h_null') { 
-					$reviewData = $this->mReviews->getReviewByReviewID($reviewID);
-					
-					addPageAndVisitorInfo($reviewData[0]->user_id, 'Brand Page Review', serialize($reviewData[0]->campaign_id), 'Helpful Action');
-					$bSaved = $this->mReviews->saveHelpful($aVoteData);
-					} else {
-					//Already voted for the same review
-					if ($alreadyVoted['action'] == 'helpful_yes') {
-						if ($action == 'Yes') {
-							$aVoteData['helpful_yes'] = `tbl_reviews_helpful` . `helpful_yes` - 1;
-							} else {
-							$aVoteData['helpful_yes'] = `tbl_reviews_helpful` . `helpful_yes` + 1;
-						}
-						} else if ($alreadyVoted['action'] == 'helpful_no') {
-						if ($action == 'No') {
-							$aVoteData['helpful_no'] = `tbl_reviews_helpful` . `helpful_no` - 1;
-							} else {
-							$aVoteData['helpful_no'] = `tbl_reviews_helpful` . `helpful_no` + 1;
-						}
-						} else if ($alreadyVoted['action'] == 'helpful_null') {
-						//Do nothing
-					}
-					$bUpdated = $this->mReviews->updateHelpful($aVoteData, $alreadyVoted['vote_id']);
-				}
-				
-				$aHelpful = $this->mReviews->countHelpful($reviewID);
-				$response = array('status' => 'ok', 'yes' => $aHelpful['yes'], 'no' => $aHelpful['no']);
-			}
-			echo json_encode($response);
-			exit;
-		}
+		
 		
 		public function saveSiteHelpful() {
 			$response = array();
