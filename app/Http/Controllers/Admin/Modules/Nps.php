@@ -1635,7 +1635,7 @@ class Nps extends Controller {
             'aSummary' => $aScoreSummery
         );
 
-        return view('admin.modules.nps.list-scores', $aPageData);
+        return view('admin.modules.nps.list-scores', $aPageData)->with(['mNPS'=>$mNPS]);
     }
 
     /**
@@ -1646,7 +1646,7 @@ class Nps extends Controller {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
-        $scoreID = $request->$scoreID;
+        $scoreID = $request->scoreID;
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -2068,17 +2068,19 @@ class Nps extends Controller {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
-        $npsID = $request->$npsID;
+        $npsID = $request->npsID;
 
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-
+        
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="NPS Stats" class="sidebar-control active hidden-xs ">NPS Stats</a></li>
-                    </ul>';
-
+                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
+                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/modules/nps/') . '">NPS</a></li>
+                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
+                    <li><a data-toggle="tooltip" data-placement="bottom" title="Feedback Details" class="sidebar-control active hidden-xs ">NPS Stats</a></li>
+                </ul>';
+        
         $oNPSEvents = $mNPS->getNPSEvents($npsID);
 
         $data = array(
@@ -2089,7 +2091,7 @@ class Nps extends Controller {
             'type' => 'email'
         );
 
-        return view('admin.modules.nps.nps-stats', $data);
+        return view('admin.modules.nps.nps-stats', $data)->with(['mNPS' => $mNPS]);
     }
 
     /**

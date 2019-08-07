@@ -382,7 +382,7 @@ class NpsModel extends Model {
                 ->where('id', $id)
                 ->where('user_id', $userID)
                 ->update($aData);
-        return true;
+        return $id;
     }
 
     /**
@@ -919,6 +919,7 @@ class NpsModel extends Model {
 
         if (!empty($oData)) {
             $openCount = $clickCount = $processedCount = $deliveredCount = $bounceCount = $unsubscribeCount = $droppedCount = $spamCount = $groupResubscribeCount = $groupUnsubscribeCount = $deferredCount = array();
+            $openUniqueCount = $deliveredUniqueCount = $processedUniqueCount = $clickTotalCount = $clickUniqueCount = $bounceTotalCount = $bounceUniqueCount = $unsubscribeTotalCount = $unsubscribeUniqueCount = $droppedTotalCount = $droppedUniqueCount = $spamTotalCount = $spamUniqueCount = $groupResubscribeTotalCount = $groupResubscribeUniqueCount = $groupUnsubscribeTotalCount = $groupUnsubscribeUniqueCount = $deferredTotalCount = $deferredUniqueCount = $otherTotalCount = $otherUniqueCount = $otherDuplicateCount = $openTotalCount = $processedTotalCount = $deliveredTotalCount = array();
             $openDuplicateCount = $clickDuplicateCount = $processedDuplicateCount = $deliveredDuplicateCount = $bounceDuplicateCount = $unsubscribeDuplicateCount = $droppedDuplicateCount = $spamDuplicateCount = $groupResubscribeDuplicateCount = $groupUnsubscribeDuplicateCount = $deferredDuplicateCount = array();
             foreach ($oData as $oRow) {
 
@@ -1184,6 +1185,17 @@ class NpsModel extends Model {
      * Used to filter categorized stats
      */
     public function getEmailTwilioCategorizedStatsData($oData) {
+        $acceptedTotalCount = $acceptedUniqueCount = $acceptedDuplicateCount = array();
+        $sentTotalCount = $sentUniqueCount = $sentDuplicateCount = array();
+        $deliveredTotalCount = $deliveredUniqueCount = $deliveredDuplicateCount = array();
+        $undeliveredTotalCount = $undeliveredUniqueCount = $undeliveredDuplicateCount = array();
+        $failedTotalCount = $failedUniqueCount = $failedDuplicateCount = array();
+        $receivingTotalCount = $receivingUniqueCount = $receivingDuplicateCount = array();
+        $receivedTotalCount = $receivedUniqueCount = $receivedDuplicateCount = array();
+        $queuedTotalCount = $queuedUniqueCount = $queuedDuplicateCount = array();
+        $sendingTotalCount = $sendingUniqueCount = $sendingDuplicateCount = array();
+        $otherTotalCount = $otherUniqueCount = $otherDuplicateCount = array();
+        
         if (!empty($oData)) {
 
             foreach ($oData as $oRow) {

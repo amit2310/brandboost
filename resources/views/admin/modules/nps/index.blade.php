@@ -750,6 +750,7 @@ if (!empty($oPrograms)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmeditSurveyModel" name="frmeditSurveyModel">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Edit Survey</h5>

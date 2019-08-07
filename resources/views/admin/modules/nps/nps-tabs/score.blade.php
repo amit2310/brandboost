@@ -174,6 +174,7 @@ a.filterByColumn.active{
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form method="post" id="frmeditSurveyModel" name="frmeditSurveyModel">
+                                    {{ csrf_field() }}
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">×</button>
 						<h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Edit Survey</h5>
@@ -203,7 +204,8 @@ a.filterByColumn.active{
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form method="post" name="frmaddNPSModal" id="frmaddNPSModal" action="javascript:void();">
-					<div class="modal-header">
+				{{ csrf_field() }}	
+                                    <div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h5 class="modal-title">Add New Survey</h5>
 					</div>
@@ -229,8 +231,9 @@ a.filterByColumn.active{
 	<div id="NPSTagListModal" class="modal fade">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<form method="post" name="frmNPSTagListModal" id="frmNPSTagListModal" action="javascript:void();">
-					<div class="modal-header">
+                            <form method="post" name="frmNPSTagListModal" id="frmNPSTagListModal" action="javascript:void();">
+				{{ csrf_field() }}	
+                                    <div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h5 class="modal-title">Apply Tags</h5>
 					</div>
@@ -356,7 +359,7 @@ a.filterByColumn.active{
 						$.ajax({
 							url: '<?php echo base_url('admin/modules/nps/bulkDeleteNPS'); ?>',
 							type: "POST",
-							data: {bulk_nps_id: val},
+							data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -397,7 +400,7 @@ a.filterByColumn.active{
 						$.ajax({
 							url: '<?php echo base_url('admin/modules/nps/bulkArchiveNPS'); ?>',
 							type: "POST",
-							data: {bulk_nps_id: val},
+							data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
 							dataType: "json",
 							success: function (data) {
 								if (data.status == 'success') {
@@ -447,7 +450,7 @@ a.filterByColumn.active{
 			$.ajax({
 				url: '<?php echo base_url('admin/modules/nps/getNPS'); ?>',
 				type: "POST",
-				data: {'nps_id': nps_id},
+				data: {_token: '{{csrf_token()}}', 'nps_id': nps_id},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'success') {
@@ -468,7 +471,7 @@ a.filterByColumn.active{
 			$.ajax({
 				url: '<?php echo base_url('admin/modules/nps/moveToArchiveNPS'); ?>',
 				type: "POST",
-				data: {'nps_id': nps_id},
+				data: {_token: '{{csrf_token()}}', 'nps_id': nps_id},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'success') {
@@ -524,7 +527,7 @@ a.filterByColumn.active{
 					$.ajax({
 						url: '<?php echo base_url('admin/modules/nps/deleteNPS'); ?>',
 						type: "POST",
-						data: {nps_id: nps_id},
+						data: {_token: '{{csrf_token()}}', nps_id: nps_id},
 						dataType: "json",
 						success: function (data) {
 							if (data.status == 'success') {
@@ -544,7 +547,7 @@ a.filterByColumn.active{
 			$.ajax({
 				url: '<?php echo base_url('admin/modules/nps/listAllTags'); ?>',
 				type: "POST",
-				data: {score_id: score_id},
+				data: {_token: '{{csrf_token()}}', score_id: score_id},
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'success') {

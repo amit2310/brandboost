@@ -1,4 +1,11 @@
-<script type="text/javascript" src="<?php echo site_url('assets/js/viewbox.min.js'); ?>"></script>
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
+<script type="text/javascript" src="<?php echo base_url('assets/js/viewbox.min.js'); ?>"></script>
 <style type="text/css">
 	.loadMoreRecord{ text-align: center; padding: 15px 0 0 0; margin: 20px -20px 0; border-top: 1px solid #eee; }
 	.thumbnail2 img{border-radius: 4px; max-width: 100%; width: 100%; margin-bottom: 20px; border: 1px dotted #eeeeee; box-shadow: 0 1px 2px 0 rgba(0,0,0,.02),0 6px 18px 0 rgba(0,0,0,.055);}
@@ -317,7 +324,7 @@
 										<div class="row">
 										    <div class="col-md-12">
 										    	<?php 
-												$mediaArray = unserialize($reviewData->media_url);
+												$mediaArray = !empty($reviewData) ? unserialize($reviewData->media_url) : array();
 											    if (!empty($mediaArray)) {
 											        foreach ($mediaArray as $key => $data) :
 											        	
@@ -416,7 +423,7 @@
 			  <p class="fsize14 mb20"><?php echo $oScore->title != ''? $oScore->title: 'N/A'; ?></p>
 			  
 			  <?php 
-			    if($reviewData->avatar){
+			    if(@$reviewData->avatar){
 			  		$avatarImage = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/profile_image_9672_e3abdb9b595bb7fd46f89f7716447f38266ef481.jpg";
 				}
 				else {
@@ -456,7 +463,7 @@
 						<li><small>Ref</small> <strong>N/A</strong></li>
 						<li><small>Name</small> <strong><?php echo $oScore->firstname.' '.$oScore->lastname; ?></strong></li>
 						<li><small>Email</small> <strong><?php echo $oScore->email; ?></strong></li>
-						<li><small>Phone</small> <strong><?php echo $oScore->mobile == '' ? 'N/A' : $oScore->mobile; ?></strong></li>
+						<li><small>Phone</small> <strong><?php echo isset($oScore->mobile)  ? $oScore->mobile : 'N/A'; ?></strong></li>
 						<!-- <li><small>Reviews</small> <strong>3</strong></li>
 						<li><small>Notification</small> <strong>On</strong></li>
 						<li><small>Id</small> <strong>310282</strong></li>
@@ -513,6 +520,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateComment" action="javascript:void();">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Comment</h5>
@@ -540,6 +548,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateNote" action="javascript:void();">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Comment</h5>
@@ -575,6 +584,7 @@
                 <div class="row">
                     
                     <form method="post" class="form-horizontal" id="frmSaveNote" action="javascript:void();">
+                        {{ csrf_field() }}
                         <div class="col-md-12 mb-15">
                             <textarea class="form-control" name="notes" style="padding: 20px; height: 75px;" placeholder="Add Note"></textarea>
                         </div>
@@ -595,6 +605,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmReviewTagListModal" id="frmReviewTagListModal" action="javascript:void();">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Apply Tags</h5>
@@ -622,7 +633,7 @@
         $.ajax({
             url: '<?php echo base_url('admin/brandboost/getreviwecomments/'); ?>',
             type: "POST",
-            data: {'reviewId': reviewID, 'startinglimitVal': startinglimitVal},
+            data: {_token: '{{csrf_token()}}', 'reviewId': reviewID, 'startinglimitVal': startinglimitVal},
             dataType: "json",
             success: function (data) {
                 $('.overlaynew').hide();
@@ -650,7 +661,7 @@
         $.ajax({
             url: '<?php echo base_url("admin/reviews/saveCommentLikeStatus/"); ?>',
             type: "POST",
-            data: {'commentId': commentID, 'status': statusType},
+            data: {_token: '{{csrf_token()}}', 'commentId': commentID, 'status': statusType},
             dataType: "json",
             success: function (data) {
                 $('.overlaynew').hide();
@@ -676,7 +687,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/tags/removeTag'); ?>',
                 type: "POST",
-                data: {review_id: reviewID, tag_id: tagID},
+                data: {_token: '{{csrf_token()}}', review_id: reviewID, tag_id: tagID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -693,7 +704,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/comments/update_comment_status'); ?>',
                 type: "POST",
-                data: {status: status, comment_id: comment_id},
+                data: {_token: '{{csrf_token()}}', status: status, comment_id: comment_id},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -712,7 +723,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/comments/getCommentById'); ?>',
                 type: "POST",
-                data: {commentID: commentID},
+                data: {_token: '{{csrf_token()}}', commentID: commentID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -732,7 +743,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/modules/nps/getNPSNoteById'); ?>',
                 type: "POST",
-                data: {noteid: noteId},
+                data: {_token: '{{csrf_token()}}', noteid: noteId},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -755,7 +766,7 @@
                 $.ajax({
                     url: '<?php echo base_url('admin/modules/nps/deleteNPSNote'); ?>',
                     type: "POST",
-                    data: {noteid: noteId},
+                    data: {_token: '{{csrf_token()}}', noteid: noteId},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -802,7 +813,7 @@
             $.ajax({
                 url: '<?php echo base_url("admin/comments/add_comment"); ?>',
                 type: "POST",
-                data: {'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent},
+                data: {_token: '{{csrf_token()}}', 'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -867,7 +878,7 @@
                 $.ajax({
                     url: '<?php echo base_url('admin/comments/deleteComment'); ?>',
                     type: "POST",
-                    data: {commentId: commentId},
+                    data: {_token: '{{csrf_token()}}', commentId: commentId},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -890,7 +901,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
                 type: "POST",
-                data: {review_id: review_id},
+                data: {_token: '{{csrf_token()}}', review_id: review_id},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -960,7 +971,7 @@
 	        $.ajax({
 	            url: '<?php echo base_url("admin/brandboost/loadComment"); ?>',
 	            type: "POST",
-	            data: {'reviewId': revId, 'offset': numOfComment},
+	            data: {_token: '{{csrf_token()}}', 'reviewId': revId, 'offset': numOfComment},
 	            dataType: "html",
 	            success: function (data) {
 	           
@@ -983,3 +994,4 @@
         });
     });
 </script>
+@endsection
