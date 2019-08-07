@@ -14,7 +14,7 @@
 
         </div>
         <div class="panel-body p20">
-            <?php $this->load->view("admin/modules/nps/nps-tabs/partials/web-widget-only"); ?>
+            @include('admin.modules.nps.nps-tabs.partials.web-widget-only')
         </div>
     </div>
 </div>

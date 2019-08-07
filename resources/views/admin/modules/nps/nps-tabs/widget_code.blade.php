@@ -46,10 +46,10 @@ type='text/javascript'
 id='bbscriptloader' 
 data-key='<?php echo $oNPS->hashcode; ?>' 
 data-widgets='nps' async='' 
-src='<?php echo site_url(); ?>assets/js/nps_widgets.js' &gt; 
+src='<?php echo base_url(); ?>assets/js/nps_widgets.js' &gt; 
 &lt;/script&gt;
 </pre>
-							<div style="display: none;" class="prettyprintDiv">&lt;script type='text/javascript' id='bbscriptloader' data-key='<?php echo $oNPS->hashcode; ?>' data-widgets='nps' async='' src='<?php echo site_url(); ?>assets/js/nps_widgets.js' &gt; &lt;/script&gt;</div>
+							<div style="display: none;" class="prettyprintDiv">&lt;script type='text/javascript' id='bbscriptloader' data-key='<?php echo $oNPS->hashcode; ?>' data-widgets='nps' async='' src='<?php echo base_url(); ?>assets/js/nps_widgets.js' &gt; &lt;/script&gt;</div>
 							
 							</div>
 							<div class="p20 text-right">

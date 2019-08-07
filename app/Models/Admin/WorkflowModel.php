@@ -1368,34 +1368,34 @@ class WorkflowModel extends Model {
             if ($categoryStatus == 2) {
                 if ($moduleName == 'nps') {
                     if (strtolower($resultData->template_type) == 'email') {
-                        $compiledTemplatePriviewCode = $this->load->view("admin/modules/nps/nps-templates/email/templates", array('oNPS' => $oAccountData, 'template_slug' => $resultData->template_slug), true);
+                        $compiledTemplatePriviewCode = view('admin.modules.nps.nps-templates.email.templates', array('oNPS' => $oAccountData, 'template_slug' => $resultData->template_slug))->render();
                         //$compiledTemplatePriviewCode = $this->parseModuleStatictemplate($moduleName, $sEmailPreview, 'email', $oAccountData);
                     } else if (strtolower($resultData->template_type) == 'sms') {
-                        $compiledTemplatePriviewCode = $this->load->view("admin/modules/nps/nps-templates/sms/templates", array('oNPS' => $oAccountData, 'template_slug' => $resultData->template_slug), true);
+                        $compiledTemplatePriviewCode = view('admin.modules.nps.nps-templates.sms.templates', array('oNPS' => $oAccountData, 'template_slug' => $resultData->template_slug))->render();
                         //$compiledTemplatePriviewCode = $this->parseModuleStatictemplate($moduleName, $sSMSPreview, 'sms', $oAccountData);
                     }
                 } else if ($moduleName == 'referral') {
                     if (strtolower($resultData->template_type) == 'email') {
-                        $compiledTemplatePriviewCode = $this->load->view("admin/modules/referral/referral-templates/email/templates", array('template_slug' => $resultData->template_slug), true);
+                        $compiledTemplatePriviewCode = view('admin.modules.referral.referral-templates.email.templates', array('template_slug' => $resultData->template_slug))->render();
                     } else if (strtolower($resultData->template_type) == 'sms') {
-                        $compiledTemplatePriviewCode = $this->load->view("admin/modules/referral/referral-templates/sms/templates", array('template_slug' => $resultData->template_slug), true);
+                        $compiledTemplatePriviewCode = view('admin.modules.referral.referral-templates.sms.templates', array('template_slug' => $resultData->template_slug))->render();
                     }
                 } else if ($moduleName == 'onsite' || $moduleName == 'offsite' || $moduleName == 'brandboost') {
                     $brandboostType = $oAccountData->review_type;
 
                     if ($brandboostType == 'onsite') {
                         if (strtolower($resultData->template_type) == 'email') {
-                            $compiledTemplatePriviewCode = $this->load->view("admin/brandboost/brand-templates/onsite/email/templates", array('template_slug' => $resultData->template_slug), true);
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.email.templates', array('template_slug' => $resultData->template_slug))->render();
                         } else if (strtolower($resultData->template_type) == 'sms') {
-                            $compiledTemplatePriviewCode = $this->load->view("admin/brandboost/brand-templates/onsite/sms/templates", array('template_slug' => $resultData->template_slug), true);
+                            $compiledTemplatePriviewCode = $this->load->view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $resultData->template_slug))->render();
                         }
                     }
 
                     if ($brandboostType == 'offsite') {
                         if (strtolower($resultData->template_type) == 'email') {
-                            $compiledTemplatePriviewCode = $this->load->view("admin/brandboost/brand-templates/offsite/email/templates", array('template_slug' => $resultData->template_slug), true);
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.email.templates', array('template_slug' => $resultData->template_slug))->render();
                         } else if (strtolower($resultData->template_type) == 'sms') {
-                            $compiledTemplatePriviewCode = $this->load->view("admin/brandboost/brand-templates/offsite/sms/templates", array('template_slug' => $resultData->template_slug), true);
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.sms.templates', array('template_slug' => $resultData->template_slug))->render();
                         }
                     }
                 }

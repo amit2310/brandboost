@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Modules;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Models\Admin\Modules\NpsModel;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\ListsModel;
@@ -20,7 +19,7 @@ class Nps extends Controller {
     public function index() {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $bActiveSubsription = UsersModel::isActiveSubscription();
@@ -54,7 +53,7 @@ class Nps extends Controller {
             'bActiveSubsription' => $bActiveSubsription,
             'moduleName' => $moduleName
         );
-        return view('admin.modules.nps.index', $aPageData)->with(['mNPS'=>$mNPS]);
+        return view('admin.modules.nps.index', $aPageData)->with(['mNPS' => $mNPS]);
     }
 
     /**
@@ -64,7 +63,7 @@ class Nps extends Controller {
     public function overview() {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $bActiveSubsription = UsersModel::isActiveSubscription();
@@ -95,7 +94,7 @@ class Nps extends Controller {
             'bActiveSubsription' => $bActiveSubsription,
             'oProgramsDate' => $oProgramsDate
         );
-        return view('admin.modules.nps.overview', $aPageData)->with(['mNPS'=>$mNPS]);
+        return view('admin.modules.nps.overview', $aPageData)->with(['mNPS' => $mNPS]);
     }
 
     /**
@@ -105,26 +104,26 @@ class Nps extends Controller {
     public function setup(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         // Instanciate workflow model to get its properties and methods
         $mWorkflow = new WorkflowModel();
-        
+
         // Instanciate Templates model to get its properties and methods
         $mTemplates = new TemplatesModel();
-        
+
         // Instanciate Users model to get its properties and methods
         $mUser = new UsersModel();
-        
+
         $npsID = $request->npsID;
-        
-        
+
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         $bActiveSubsription = UsersModel::isActiveSubscription();
         $selectedTab = $request->t;
-        
-        
+
+
 
 
         //NPS related account details
@@ -157,18 +156,17 @@ class Nps extends Controller {
         $campaignTemplates = $mNPS->getNPSCampaignTemplates($oNPS->id);
         $userTwilioData = $mUser->getUserTwilioData($userID);
 
-        
+
         $oEvents = $mWorkflow->getWorkflowEvents($npsID, $moduleName);
         $oEventsType = array('main', 'followup');
         $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
-        $oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName); 
+        $oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName);
         //pre($oDefaultTemplates);
         //exit;
         $surveyType = $oNPS->platform;
         $sSurveyTypeTitle = '';
-        if(!empty($surveyType)){
-            $sSurveyTypeTitle = ucfirst($surveyType). ' Survey';
-            
+        if (!empty($surveyType)) {
+            $sSurveyTypeTitle = ucfirst($surveyType) . ' Survey';
         }
         $sEmailPreview = view('admin.modules.nps.nps-templates.email.templates', array('template_slug' => 'nps_email_invite', 'oNPS' => $oNPS))->render();
         $compiledEmailPriviewCode = $this->parseNPStemplate($sEmailPreview, 'email', $oNPS);
@@ -222,22 +220,21 @@ class Nps extends Controller {
         return view('admin.modules.nps.setup-beta', $aData);
     }
 
-    
     /**
      * Update NPS campaign customization
      */
     public function updateNPSCustomize(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         // Instanciate workflow model to get its properties and methods
         $mWorkflow = new WorkflowModel();
-        
+
         // Instanciate Templates model to get its properties and methods
         $mTemplates = new TemplatesModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -245,7 +242,7 @@ class Nps extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         $npsID = strip_tags($request->nps_id);
         $title = strip_tags($request->title);
         $platform = strip_tags($request->platform);
@@ -270,7 +267,7 @@ class Nps extends Controller {
 
         $displayLogo = strip_tags($request->display_logo);
         $displayIntro = strip_tags($request->display_intro);
-        
+
         $displayName = strip_tags($request->display_name);
         $displayEmail = strip_tags($request->display_email);
         $displayAdditional = strip_tags($request->display_additional);
@@ -344,9 +341,9 @@ class Nps extends Controller {
         $aData['display_intro'] = ($displayIntro == 'on') ? 1 : 0;
 
         $aData['display_name'] = ($displayName == 'on') ? 1 : 0;
-        
+
         $aData['display_email'] = ($displayEmail == 'on') ? 1 : 0;
-        
+
         $aData['display_intro'] = ($displayIntro == 'on') ? 1 : 0;
 
 
@@ -364,15 +361,15 @@ class Nps extends Controller {
                 $oEndCampaigns = $mNPS->getNPSEndCampaigns($npsID);
                 //pre($oEndCampaigns);
                 //die;
+                $moduleName = 'nps';
+                $moduleUnitID = $npsID;
+                $eventType = 'main';
+                $previousEventId = '';
+                $templateID = '';
+                $isDraft = false;
+                $templateSlug = '';
                 if (empty($eventData) || empty($oEndCampaigns)) {
                     //Add new event
-                    $moduleName = 'nps';
-                    $moduleUnitID = $npsID;
-                    $eventType = 'main';
-                    $previousEventId = '';
-                    $templateID = '';
-                    $isDraft = false;
-                    $templateSlug = '';
 
                     if ($oNPS->platform == 'email') {
                         $templateSlug = 'nps_email_invite';
@@ -445,14 +442,13 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to get NPS widgets
      */
     public function widgets() {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $user_role = $oUser->user_role;
@@ -479,17 +475,16 @@ class Nps extends Controller {
         return view('admin.modules.nps.widget_list', $aData);
     }
 
-    
     /**
      * Used to add new nps campaign
      */
     public function addNPSWidget(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         $npsTitle = $request->npsTitle;
         $aData = array(
             'widget_title' => $npsTitle,
@@ -508,17 +503,16 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update NPS widget status
      */
     public function updatNPSWidgetStatus(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         $widgetID = $request->widgetID;
         $status = $request->status;
         $aData = array(
@@ -536,7 +530,6 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete a nps widget
      */
@@ -548,7 +541,7 @@ class Nps extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if (!empty($request)) {
-            
+
             $widgetID = $request->widget_id;
 
             $aData = array(
@@ -582,20 +575,19 @@ class Nps extends Controller {
         }
     }
 
-    
     /**
      * USed to get nps widget embed code
-     */   
+     */
     public function getNPSWidgetEmbedCode(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        
+
         if (!empty($request)) {
-            
+
             $widgetID = $request->widget_id;
 
             $result = $mNPS->getNPSWidgets($userID, $widgetID);
@@ -617,7 +609,6 @@ class Nps extends Controller {
         }
     }
 
-    
     /**
      * 
      * @param type $widgetIDSetup NPS widget
@@ -625,9 +616,9 @@ class Nps extends Controller {
     public function nps_widget_setup(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $widgetID = $request->widgetID;
-        
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
@@ -661,7 +652,6 @@ class Nps extends Controller {
         return view('admin.modules.nps.nps_widget_setup', $aData);
     }
 
-    
     /**
      * Used to add NPS widget survey
      */
@@ -672,7 +662,7 @@ class Nps extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        
+
 
         $widgetID = $request->widget_id;
         $npsId = $request->nps_id;
@@ -709,16 +699,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete nps widgets in bulk
      */
     public function deleteBulkNPSWidgets(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -742,16 +731,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to archive NPS widgets in bulk
      */
     public function archiveBulkNPSWidgets(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -775,16 +763,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to archive NPS widgets in bulk
      */
     public function bulkArchiveNPSWidgets(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -811,7 +798,6 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to publish NPS survey
      */
@@ -822,7 +808,7 @@ class Nps extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        
+
 
         $widgetID = $request->widget_id;
 
@@ -850,7 +836,7 @@ class Nps extends Controller {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
-        
+
         $subscriberID = $request->subscriberID;
         $bResponse = $mNPS->getNpsUserById($subscriberID);
 
@@ -861,17 +847,16 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update NPS subscribers
      */
     public function updateNpsSubscriber(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         $email = $request->edit_email;
         $firstName = $request->edit_firstname;
         $lastName = $request->edit_lastname;
@@ -925,9 +910,9 @@ class Nps extends Controller {
     public function bulkDeleteNpsUser(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
 
-        
+
+
         $bulk_nps_id = $request->bulk_nps_id;
         foreach ($bulk_nps_id as $subscriberID) {
             $bResponse = $mNPS->deleteNpsUser($subscriberID);
@@ -938,7 +923,6 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete NPS subscriber
      */
@@ -946,7 +930,7 @@ class Nps extends Controller {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
-        
+
         $subscriberID = $request->subscriberId;
         $bResponse = $mNPS->deleteNpsUser($subscriberID);
 
@@ -955,16 +939,15 @@ class Nps extends Controller {
         exit;
     }
 
-   
     /**
      * Used to add a new nps campaign
      */
     public function addNPS(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1016,19 +999,18 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update NPS campaigns in bulk
      */
     public function updateAllCampaign(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
-        
+
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        
+
 
         if (!empty($request)) {
             $npsId = strip_tags($request->nps_id);
@@ -1050,18 +1032,17 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update NPS campaign
      */
     public function updateUserCampaign(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        
+
 
         if (!empty($request)) {
             $campaignID = strip_tags($request->campaignId);
@@ -1086,17 +1067,16 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update NPS event
      */
     public function updateNPSEvent(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        
+
 
         if (!empty($request)) {
             $eventID = strip_tags($request->event_id);
@@ -1119,17 +1099,16 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete NPS campaign
      */
     public function deleteNPSCampaign(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        
+
 
         if (!empty($request)) {
             $campaignID = strip_tags($request->campaign_id);
@@ -1148,17 +1127,16 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update NPS reminder campaign
      */
     public function updateNPSReminderCampaign(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        
+
 
         if (!empty($request)) {
             $eventID = strip_tags($request->event_id);
@@ -1179,17 +1157,16 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Updated to update NPS reminder loop
      */
     public function updateNPSReminderLoop(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        
+
 
         if (!empty($request)) {
             $eventID = strip_tags($request->event_id);
@@ -1211,18 +1188,17 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update NPS campaign
      */
     public function updateNPSCampaign(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        
+
 
         if (!empty($request)) {
             $campaignID = strip_tags($request->campaign_id);
@@ -1256,16 +1232,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to get NPS campaign
      */
     public function getNPSCampaign(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1290,16 +1265,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to get NPS campaign Info
      */
     public function getNPS(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1319,16 +1293,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update nps campaign status
      */
     public function changeStatus(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1352,16 +1325,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to publish NPS campaign
      */
     public function publishNPSCampaign(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1384,16 +1356,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to publish NPS campaign status
      */
     public function publishNPSCampaignStatus(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1417,16 +1388,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update NPS campaign
      */
     public function updateNPS(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1451,16 +1421,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete NPS campaign
      */
     public function deleteNPS(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1480,16 +1449,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to archive NPS campaigns
      */
     public function moveToArchiveNPS(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1514,16 +1482,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to delete NPS in bulk
      */
     public function bulkDeleteNPS(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1544,16 +1511,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to archive NPS campaigns in bulk
      */
     public function bulkArchiveNPS(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1580,16 +1546,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to save choosing platform related changes
      */
     public function choosePlatform(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1614,7 +1579,6 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Get the list of NPS templates
      * @param type $platform
@@ -1623,11 +1587,11 @@ class Nps extends Controller {
     public function template(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $platform = $request->platform;
-        
+
         $hashKey = $request->hashKey;
-        
+
         if (!empty($platform)) {
             if (!empty($hashKey)) {
                 $oNPS = $mNPS->getSurveyInfoByRef($hashKey);
@@ -1637,16 +1601,15 @@ class Nps extends Controller {
         return view('admin.modules.nps.email-content-survey', array('oNPS' => $oNPS));
     }
 
-    
     /**
      * Used to get the score of NPS campaign
      */
     public function score(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $hashKey = $request->hashKey;
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if (!empty($hashKey)) {
@@ -1675,7 +1638,6 @@ class Nps extends Controller {
         return view('admin.modules.nps.list-scores', $aPageData);
     }
 
-    
     /**
      * Used to get Feedback details
      * @param type $scoreID
@@ -1683,7 +1645,7 @@ class Nps extends Controller {
     public function feedbackdetails(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $scoreID = $request->$scoreID;
 
         $aUser = getLoggedUser();
@@ -1717,9 +1679,9 @@ class Nps extends Controller {
     public function saveNPSNotes(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (!empty($request)) {
             $scoreID = strip_tags($request->scoreid);
             $npsID = strip_tags($request->npsid);
@@ -1742,17 +1704,16 @@ class Nps extends Controller {
         }
     }
 
-    
     /**
      * Used to apply NPS tags
      */
     public function applyNPSTag(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1779,17 +1740,16 @@ class Nps extends Controller {
         }
     }
 
-    
     /**
      * Used to remove nps tags
      */
     public function removeNPSTag(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1815,19 +1775,18 @@ class Nps extends Controller {
         }
     }
 
-    
     /**
      * Used to get NPS notes by id
      */
     public function getNPSNoteById(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array();
         $response['status'] = 'error';
-        
+
         if (!empty($request)) {
-            
+
             $noteID = strip_tags($request->noteid);
             $noteData = $mNPS->getNPSNoteByID($noteID);
             if ($noteData) {
@@ -1842,16 +1801,15 @@ class Nps extends Controller {
         }
     }
 
-    
     /**
      * Used to delete NPS notes
      */
     public function deleteNPSNote(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array();
-        
+
         $noteid = strip_tags($request->noteid);
         $result = $mNPS->deleteNPSNoteByID($noteid);
         if ($result) {
@@ -1864,16 +1822,15 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to update NPS notes
      */
     public function updatNotes(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (!empty($request)) {
             $noteId = strip_tags($request->edit_noteid);
             $sNotes = $request->edit_note_content;
@@ -1890,17 +1847,16 @@ class Nps extends Controller {
         }
     }
 
-    
     /**
      * Used to get the list of all nps tags
      */
     public function listAllTags(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1918,18 +1874,17 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to register NPS invites
      */
     public function registerInvite(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        
+
         if (!empty($request)) {
             $accountID = strip_tags($request->bbaid);
             $firstName = strip_tags($request->firstname);
@@ -1965,7 +1920,6 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * 
      * @param type $aData
@@ -1974,7 +1928,7 @@ class Nps extends Controller {
     public function registerNow($aData) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $userID = 0;
         if (!empty($aData)) {
             $subscriberID = $aData['subscriber_id'];
@@ -1998,14 +1952,14 @@ class Nps extends Controller {
     public function exportCSV(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         // file name 
         $filename = 'users_' . time() . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
 
-        
+
         $npsHashId = $request->nps_hash_id;
         $userID = Session::get("current_user_id");
         $allSubscribers = $mNPS->getNPSSubscribers($npsHashId);
@@ -2037,18 +1991,17 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * Used to import NPS subscribers
      */
     public function importInviteCSV(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        
+
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'csv';
         $config['max_size'] = '1000';
@@ -2107,7 +2060,6 @@ class Nps extends Controller {
         exit;
     }
 
-    
     /**
      * 
      * @param type $npsID
@@ -2115,12 +2067,12 @@ class Nps extends Controller {
     public function stats(Request $request) {
         // Instanciate NPS model to get its properties and methods
         $mNPS = new NpsModel();
-        
+
         $npsID = $request->$npsID;
-        
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-      
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -2140,7 +2092,6 @@ class Nps extends Controller {
         return view('admin.modules.nps.nps-stats', $data);
     }
 
-    
     /**
      * Used to parse template tags of a nps template
      * @param type $sCode
@@ -2179,7 +2130,7 @@ class Nps extends Controller {
                 '{{RATE_LINK}}',
                 '{{INTRODUCTION_TEXT_COLOR}}'
             );
-            $greeting = "Hi, ". $aUser->firstname. ' ' . $aUser->lastname;
+            $greeting = "Hi, " . $aUser->firstname . ' ' . $aUser->lastname;
             $brandLogo = !(empty($brandLogoURL)) ? 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $brandLogoURL : base_url() . 'assets/images/face2.jpg';
             $description = (!empty($desc)) != '' ? $desc : '{{INTRODUCTION}}';
             $textColor = !(empty($txtColor)) ? $txtColor : '#000000';
