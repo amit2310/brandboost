@@ -8,6 +8,10 @@ use Session;
 
 class Media extends Controller {
 
+    /**
+     * Media Index function
+     *
+     */
     public function Index() {
 
     	$aUser = getLoggedUser();

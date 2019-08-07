@@ -11,6 +11,10 @@ use App\Libraries\Custom\Mobile_Detect;
 
 class Review extends Controller {
 
+    /**
+     * Review Index function
+     *
+     */
     public function Index() {
 
     	$aUser = getLoggedUser();
