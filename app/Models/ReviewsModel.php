@@ -408,6 +408,55 @@ class ReviewsModel extends Model {
             return $oData;
     }
 
+	/**
+     * Used to get brandboost reviews contacts by user id
+     * @param type $userID
+     * @return type 
+     */
+	public function getContactBranboostReviews($userID) {
+		$aData =  DB::table('tbl_reviews')
+			->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country', 'tbl_subscribers.id as subscriberId', 'tbl_brandboost.brand_title')
+			->leftjoin('tbl_brandboost', 'tbl_reviews.campaign_id' ,'=', 'tbl_brandboost.id')
+			->join('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
+			->join('tbl_subscribers', 'tbl_subscribers.user_id','=','tbl_users.id')
+			->orderBy('tbl_reviews.id', 'DESC')
+			->where('tbl_reviews.user_id', $userID)
+			->where('tbl_brandboost.delete_status', 0)
+			->get();
+        return $aData;
+    }
+	
+	/**
+     * Used to get reviews by review id
+     * @param type $reviewid
+     * @return type 
+     */
+	public static function getReviewByReviewID($reviewid) {
+          $aData =  DB::table('tbl_reviews')
+        ->where('id', $reviewid)->get();
+        return $aData;
+    }
+
+	/**
+     * Used to get reviews details by review id
+     * @param type $reviewid
+     * @return type 
+     */
+    public static function getReviewDetailsByReviewID($reviewid) {
+		$aData =  DB::table('tbl_reviews')
+			->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc')
+			->leftjoin('tbl_brandboost', 'tbl_reviews.campaign_id' ,'=', 'tbl_brandboost.id')
+			->leftjoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
+			->where('tbl_reviews.id', $reviewid)
+			->get();
+        return $aData;
+		
+    }
+	
+	
+	
+	
+	
 
     public function getReviews($campaignID, $aSettings = array()) {
         $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_brandboost.brand_title");
@@ -909,7 +958,6 @@ class ReviewsModel extends Model {
     * @param type $clientID
     * @return type
     */
-
     public function saveReview($aData) {
         $oData = DB::table('tbl_reviews')
         ->insertGetId($aData);
@@ -1089,19 +1137,7 @@ class ReviewsModel extends Model {
 
     
 
-    public function getContactBranboostReviews($userID) {
-       $aData =  DB::table('tbl_reviews')
-        ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country', 'tbl_subscribers.id as subscriberId', 'tbl_brandboost.brand_title')
-        ->leftjoin('tbl_brandboost', 'tbl_reviews.campaign_id' ,'=', 'tbl_brandboost.id')
-        ->join('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
-        ->join('tbl_subscribers', 'tbl_subscribers.user_id','=','tbl_users.id')
-        ->orderBy('tbl_reviews.id', 'DESC')
-        ->where('tbl_reviews.user_id', $userID)
-        ->where('tbl_brandboost.delete_status', 0)
-        ->get();
-       
-        return $aData;
-    }
+    
 
     
 
@@ -1126,24 +1162,7 @@ class ReviewsModel extends Model {
             return false;
     }
 
-    public static function getReviewByReviewID($reviewid) {
-          $aData =  DB::table('tbl_reviews')
-        ->where('id', $reviewid)->get();
-        return $aData;
-    }
-
-    public function getReviewDetailsByReviewID($reviewid) {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_brandboost.brand_title, tbl_brandboost.brand_desc");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_users.id = tbl_reviews.user_id", "LEFT");
-        $this->db->where('tbl_reviews.id', $reviewid);
-        $this->db->from('tbl_reviews');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
     public function getSiteReviewByReviewID($reviewid) {
 

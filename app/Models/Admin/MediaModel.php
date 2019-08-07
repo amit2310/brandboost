@@ -52,7 +52,7 @@ class MediaModel extends Model {
      * Used to add media gallery data
      * @return type
      */
-	public function addGallery($aData) {
+	public static function addGallery($aData) {
 		$insert_id = DB::table('tbl_gallery')->insertGetId($aData);
         if ($insert_id) {
             return $insert_id;
