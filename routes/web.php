@@ -148,6 +148,9 @@ Route::post('admin/mediagallery/deleteGallery','Admin\Mediagallery@deleteGallery
 Route::post('admin/mediagallery/addList','Admin\Mediagallery@addList');
 Route::get('admin/mediagallery/setup/{id}','Admin\Mediagallery@setup');
 Route::post('admin/mediagallery/saveReviewsList','Admin\Mediagallery@saveReviewsList');
+Route::post('admin/mediagallery/updateWidgetType','Admin\Mediagallery@updateWidgetType');
+Route::post('admin/mediagallery/getReviewData','Admin\Mediagallery@getReviewData');
+Route::post('admin/mediagallery/updateGallery','Admin\Mediagallery@updateGallery');
 
 
 
