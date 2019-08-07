@@ -217,7 +217,7 @@ class Nps extends Controller {
         );
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
-        return view('admin.modules.nps.setup-beta', $aData);
+        return view('admin.modules.nps.setup-beta', $aData)->with(['mNPS' => $mNPS]);
     }
 
     /**
@@ -421,7 +421,7 @@ class Nps extends Controller {
                         $eventID = $oEvent->id;
                         $eveData = json_decode($oEvent->data);
 
-                        $eventSlug = $eveData->template_slug;
+                        $eventSlug = isset($eveData->template_slug) ? $eveData->template_slug : '';
                         if (!empty($eventSlug)) {
                             $oTemplateInfo = $mTemplates->getCommonTemplateInfo('', $eventSlug);
                             $templateID = $oTemplateInfo->id;
