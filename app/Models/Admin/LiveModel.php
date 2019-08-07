@@ -27,12 +27,9 @@ class LiveModel extends Model {
 	}
 	
 	public function addVisitorInfo($aData){
-		$bSaved = $this->db->insert("tbl_visitor_logs", $aData);
-        $insert_id = $this->db->insert_id();
-        if ($insert_id){
-            return $insert_id;
-		}
-        return false;
+
+        $insert_id = DB::table('tbl_visitor_logs')->insertGetId($aData);
+        return $insert_id;
 	}
 	
 	/**
