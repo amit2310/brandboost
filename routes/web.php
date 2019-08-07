@@ -565,9 +565,14 @@ Route::post('admin/broadcast/updateSegment','Admin\Broadcast@updateSegment');
 Route::post('admin/broadcast/archive_multipal_segment','Admin\Broadcast@archive_multipal_segment');
 Route::post('admin/broadcast/deleteSegment','Admin\Broadcast@deleteSegment');
 
-
-
-
+//Analytics Reports
+Route::get('admin/brandboost/reports','Admin\Brandboost@reports');
+Route::get('admin/brandboost/feedbackreports','Admin\Brandboost@feedbackreports');
+Route::get('admin/brandboost/responseperformance','Admin\Brandboost@responseperformance');
+Route::get('admin/brandboost/repResTimeTrends','Admin\Brandboost@repResTimeTrends');
+Route::get('admin/brandboost/servicereports','Admin\Brandboost@servicereports');
+Route::get('admin/brandboost/reportsOptOut','Admin\Brandboost@reportsOptOut');
+Route::get('admin/brandboost/insightTags','Admin\Brandboost@insightTags');
 
 
 

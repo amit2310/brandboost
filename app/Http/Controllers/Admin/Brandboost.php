@@ -5736,10 +5736,17 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/brandboost/campaigns', $aData);
     }
 
+    /**
+    * This function is used to get the reports 
+    * @param type $clientID
+    * @return type
+    */
+
     public function reports($bbId = '') {
         $aUser = getLoggedUser();
         $currentUserId = $aUser->id;
-        $bbStatsData = $this->mBrandboost->getBBStatsByIdAndUserId($currentUserId, $bbId = '');
+        $mBrandboost  = new BrandboostModel();
+        $bbStatsData = $mBrandboost->getBBStatsByIdAndUserId($currentUserId, $bbId = '');
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -5758,13 +5765,21 @@ class Brandboost extends Controller {
             'pagename' => $breadcrumb
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/campaign_reports', $aData);
+        return view('admin.brandboost.campaign_reports', $aData);
     }
+
+
+    /**
+    * This function is used to get the feedback reports
+    * @param type $clientID
+    * @return type
+    */
 
     public function feedbackreports($bbId = '') {
         $aUser = getLoggedUser();
         $currentUserId = $aUser->id;
-        $bbStatsData = $this->mBrandboost->getBBStatsByIdAndUserId($currentUserId, $bbId = '');
+         $mBrandboost  = new BrandboostModel();
+        $bbStatsData = $mBrandboost->getBBStatsByIdAndUserId($currentUserId, $bbId = '');
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -5782,7 +5797,7 @@ class Brandboost extends Controller {
             'pagename' => $breadcrumb
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/campaign_feedback_reports', $aData);
+        return view('admin.brandboost.campaign_feedback_reports', $aData);
     }
 
     /* public function reportsResponsePerformance() {
@@ -5803,10 +5818,11 @@ class Brandboost extends Controller {
       } */
 
     public function servicereports($bbId = '') {
-        $currentUserId = $this->session->userdata("current_user_id");
-        $bbStatsData = $this->mBrandboost->getBBStatsByIdAndUserId($currentUserId, $bbId = '');
-        $positiveComments = $this->mBrandboost->recentComments($currentUserId, 'positive');
-        $nagetiveComments = $this->mBrandboost->recentComments($currentUserId, 'nagetive');
+        $currentUserId = Session::get('current_user_id');
+        $mBrandboost  = new BrandboostModel();
+        $bbStatsData = $mBrandboost->getBBStatsByIdAndUserId($currentUserId, $bbId = '');
+        $positiveComments = $mBrandboost->recentComments($currentUserId, 'positive');
+        $nagetiveComments = $mBrandboost->recentComments($currentUserId, 'nagetive');
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -5826,8 +5842,93 @@ class Brandboost extends Controller {
             'pagename' => $breadcrumb
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/campaign_service_reports', $aData);
+        return view('admin.brandboost.campaign_service_reports', $aData);
     }
+
+    public function reportsOptOut() {
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs">Analytics </a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Report Opt Out" class="sidebar-control active hidden-xs ">Report Opt Out</a></li>
+                    </ul>';
+       $oBrandboost = array();
+        $aData = array(
+            'aData' => array(
+                'oBrandboost' => $oBrandboost
+            ),
+            'title' => 'Brand Boost Report Opt Out',
+            'pagename' => $breadcrumb
+        );
+
+        return view('admin.brandboost.reportoptout', $aData);
+    }
+
+    public function insightTags() {
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs">Analytics </a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Report Insight Tags" class="sidebar-control active hidden-xs ">Report Insight Tags</a></li>
+                    </ul>';
+      $oBrandboost = array();
+        $aData = array(
+            'aData' => array(
+                'oBrandboost' => $oBrandboost
+            ),
+            'title' => 'Brand Boost Report Insight Tags',
+            'pagename' => $breadcrumb
+        );
+
+        return view('admin.brandboost.insighttags', $aData);
+    }
+
+    public function responseperformance() {
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs">Analytics </a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Response Performance" class="sidebar-control active hidden-xs ">Response Performance</a></li>
+                    </ul>';
+         $oBrandboost = array();
+        $aData = array(
+            'aData' => array(
+                'oBrandboost' => $oBrandboost
+            ),
+            'title' => 'Brand Boost Report Response Performance',
+            'pagename' => $breadcrumb
+        );
+
+        return view('admin.brandboost.reportresponse', $aData);
+    }
+
+       public function repResTimeTrends() {
+        
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs">Analytics </a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Report Time Trends" class="sidebar-control active hidden-xs ">Report Time Trends</a></li>
+                    </ul>';
+        $oBrandboost = array();
+        $aData = array(
+            'aData' => array(
+                'oBrandboost' => $oBrandboost
+            ),
+            'title' => 'Brand Boost Report Response Time Trends',
+            'pagename' => $breadcrumb
+        );
+
+        return view('admin.brandboost.reportsresponsetimetrends', $aData);
+    }
+
 
     public function getEmailTempByID() {
         $post = $this->input->post();

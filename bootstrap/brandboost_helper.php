@@ -133,15 +133,10 @@ if (!function_exists('getAllCountries')) {
 if (!function_exists('getBBReportStats')) {
 
     function getBBReportStats($cDate = '') {
-        $bbData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Brandboost_model", "mmBrandboost");
+        
+        $bbData = \App\Models\Admin\BrandboostModel::getBBStatsByDate($cDate);
+        return $bbData;
 
-        $bbData = $CI->mmBrandboost->getBBStatsByDate($cDate);
-
-        if (!empty($bbData)) {
-            return $bbData;
-        }
     }
 
 }

@@ -2472,22 +2472,20 @@ class BrandboostModel extends Model {
         }
     }
 
-    public function getBBStatsByDate($cDate = '') {
-        $aData = array();
-        $this->db->select("tbl_reviews.*");
-        $this->db->order_by("tbl_reviews.id", "desc");
-        $this->db->where('tbl_brandboost.review_type', 'onsite');
-        $this->db->like('tbl_reviews.created', $cDate);
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        if ($aData)
-            return $aData;
-        else
-            return false;
+
+	/**
+	* This function is used to get the datewise stats
+	* @param type $cDate
+	* @return type
+	*/
+
+    public static function getBBStatsByDate($cDate = '') {
+        $aData =  DB::table('tbl_reviews')
+        ->orderBy('tbl_reviews.id', 'desc')
+        ->where('tbl_brandboost.review_type', 'onsite')
+        ->where('tbl_reviews.created','like'. $cDate)
+        ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id','=','tbl_brandboost.id')->get();
+          return $aData;
     }
 
     public function getBBTotalSendSmsData($userID) {
@@ -2518,30 +2516,32 @@ class BrandboostModel extends Model {
             return false;
     }
 
+
+/**
+* This function is used to get the recent comments
+* @param type $userID
+* @param type $reviewType
+* @return type
+*/
+
     public function recentComments($userID, $reviewType) {
         $aData = array();
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar");
-        $this->db->where('tbl_brandboost.user_id', $userID);
-        if ($reviewType == 'positive') {
-            $this->db->where('tbl_reviews.ratings', 4);
-            $this->db->or_where('tbl_reviews.ratings', 5);
-        } else {
-            $this->db->where('tbl_reviews.ratings', 1);
-            $this->db->or_where('tbl_reviews.ratings', 2);
-        }
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_reviews.user_id = tbl_users.id", "LEFT");
-        //$this->db->limit(0, 4);
-        $this->db->order_by("tbl_reviews.id", "desc");
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        if ($aData)
-            return $aData;
-        else
-            return false;
+        $aData =  DB::table('tbl_reviews')
+        ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar')
+       ->where('tbl_brandboost.user_id', $userID)
+		->when($reviewType == 'positive', function($query) {
+		   return $query->where('tbl_reviews.ratings', 4)->orWhere('tbl_reviews.ratings', 5);
+		})
+		->when($reviewType != 'positive', function($query) {
+		return $query->where('tbl_reviews.ratings', 1)->orWhere('tbl_reviews.ratings', 2);
+
+		})
+
+       
+         ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id' ,'=','tbl_brandboost.id')
+         ->leftJoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
+          ->orderBy('tbl_reviews.id', 'desc')->get();
+          return $aData;
     }
 
     public function isMainEvent($id) {
