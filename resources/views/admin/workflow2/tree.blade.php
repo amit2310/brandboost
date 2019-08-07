@@ -161,165 +161,167 @@ $aSelectedContacts = array();
                                             }
 
                                             $oCampaignData = App\Models\Admin\WorkflowModel::getEventCampaign($oEvent->id, $moduleName);
-                                            
-                                            if($oCampaignData->isNotEmpty()){
-                                                
+
+                                            if ($oCampaignData->isNotEmpty()) {
+
                                                 $oCampaign = $oCampaignData[0];
                                             }
-                                                                                       
-                                           
+
+
                                             $isSMSAdded = $isEmailAdded = false;
                                             $previousID = $oEvent->previous_event_id;
                                             $currentID = $oEvent->id;
                                             $currentEventType = $oEvent->event_type;
                                             $currentEventIndex = array_keys($oEventsType, $currentEventType);
-                                            
-											if(!empty($currentEventIndex)){
-												if (array_key_exists($currentEventIndex[0] + 1, $oEventsType)) {
-													$nextEventType = $oEventsType[$currentEventIndex[0] + 1];
-												} else {
-													$nextEventType = $currentEventType;
-												}
-											}else{
-												$nextEventType = $currentEventType;
-											}
 
-                                            if ($oCampaign->id != '') {
-
-                                                $aStatsSms = App\Models\Admin\WorkflowModel::getEventTwilioStats($oCampaign->id, $moduleName);
-                                                $aCategorizedStatsSms = App\Models\Admin\WorkflowModel::getEventTwilioCategorizedStats($aStatsSms);
-
-                                                $sentSmsCount = $aCategorizedStatsSms['sent']['UniqueCount'];
-                                                $deliveredSmsCount = $aCategorizedStatsSms['delivered']['UniqueCount'];
-                                                $acceptedSmsCount = $aCategorizedStatsSms['accepted']['UniqueCount'];
-                                                $failedSmsCount = $aCategorizedStatsSms['failed']['UniqueCount'];
-                                                $queuedSmsCount = $aCategorizedStatsSms['queued']['UniqueCount'];
-
-                                                $sentSms = $sentSmsCount == '' ? '0' : $sentSmsCount;
-                                                $deliveredSms = $deliveredSmsCount == '' ? '0' : $deliveredSmsCount;
-                                                $acceptedSms = $acceptedSmsCount == '' ? '0' : $acceptedSmsCount;
-                                                $failedSms = $failedSmsCount == '' ? '0' : $failedSmsCount;
-                                                $queuedSms = $queuedSmsCount == '' ? '0' : $queuedSmsCount;
-
-                                                if (strtolower($oCampaign->campaign_type) == 'email') {
-                                                    $sNodeType = 'email';
-                                                    $isSMSAdded = true;
-                                                    $aStats = App\Models\Admin\WorkflowModel::getEventSendgridStats($oCampaign->id, $moduleName);
-                                                    $aCategorizedStats = App\Models\Admin\WorkflowModel::getEventSendgridCategorizedStats($aStats);
-
-                                                    $processedCount = $aCategorizedStats['processed']['UniqueCount'];
-                                                    $deliveredCount = $aCategorizedStats['delivered']['UniqueCount'];
-                                                    $openCount = $aCategorizedStats['open']['UniqueCount'];
-                                                    $clickCount = $aCategorizedStats['click']['UniqueCount'];
-                                                    $unsubscribeCount = $aCategorizedStats['unsubscribe']['UniqueCount'];
-                                                    $bounceCount = $aCategorizedStats['bounce']['UniqueCount'];
-                                                    $droppedCount = $aCategorizedStats['dropped']['UniqueCount'];
-                                                    $spamReportCount = $aCategorizedStats['spam_report']['UniqueCount'];
-
-                                                    $processed = $processedCount == '' ? '0' : $processedCount;
-                                                    $delivered = $deliveredCount == '' ? '0' : $deliveredCount;
-                                                    $open = $openCount == '' ? '0' : $openCount;
-                                                    $click = $clickCount == '' ? '0' : $clickCount;
-                                                    $unsubscribe = $unsubscribeCount == '' ? '0' : $unsubscribeCount;
-                                                    $bounce = $bounceCount == '' ? '0' : $bounceCount;
-                                                    $dropped = $droppedCount == '' ? '0' : $droppedCount;
-                                                    $spamReport = $spamReportCount == '' ? '0' : $spamReportCount;
-
-                                                    $aNodeData = array(
-                                                        'oEvent' => $oEvent,
-                                                        'oCampaign' => $oCampaign,
-                                                        'moduleName' => $moduleName,
-                                                        'subscribersData' => $subscribersData,
-                                                        'eventNo' => $eventNo,
-                                                        'oTwilioAc' => $oTwilioAc,
-                                                        'processed' => $processed,
-                                                        'delivered' => $delivered,
-                                                        'bMulitpleBranches' => $bMulitpleBranches,
-                                                        'bBranchDrawn' => $bBranchDrawn,
-                                                        'open' => $open,
-                                                        'click' => $click,
-                                                        'bounce' => $bounce,
-                                                        'dropped' => $dropped,
-                                                        'unsubscribe' => $unsubscribe,
-                                                        'spamReport' => $spamReport,
-                                                        'iActiveSelectedCount' => $iActiveSelectedCount
-                                                    );
-                                                } else if (strtolower($oCampaign->campaign_type) == 'sms') {
-                                                    $sNodeType = 'sms';
-                                                    $aNodeData = array(
-                                                        'oEvent' => $oEvent,
-                                                        'oCampaign' => $oCampaign,
-                                                        'moduleName' => $moduleName,
-                                                        'subscribersData' => $subscribersData,
-                                                        'bMulitpleBranches' => $bMulitpleBranches,
-                                                        'bBranchDrawn' => $bBranchDrawn,
-                                                        'eventNo' => $eventNo,
-                                                        'oTwilioAc' => $oTwilioAc,
-                                                        'sentSms' => $sentSms,
-                                                        'deliveredSms' => $deliveredSms,
-                                                        'failedSms' => $failedSms,
-                                                        'queuedSms' => $queuedSms,
-                                                        'acceptedSms' => $acceptedSms,
-                                                        'sentSms' => $sentSms,
-                                                        'iActiveSelectedCount' => $iActiveSelectedCount
-                                                    );
+                                            if (!empty($currentEventIndex)) {
+                                                if (array_key_exists($currentEventIndex[0] + 1, $oEventsType)) {
+                                                    $nextEventType = $oEventsType[$currentEventIndex[0] + 1];
+                                                } else {
+                                                    $nextEventType = $currentEventType;
                                                 }
-                                                ?>
+                                            } else {
+                                                $nextEventType = $currentEventType;
+                                            }
 
-                                                <?php if ($bBranchDrawn == false) { ?>
-                                                    <div class="timeline-date button">
-                                                        <button type="button" class="btn white_btn wf_timer" id="wf_waitTime_<?php echo $oEvent->id; ?>" event_id="<?php echo $oEvent->id; ?>" delay_value="<?php echo @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value); ?>" delay_unit="<?php echo @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit); ?>" delay_time="<?php echo!empty($aEventData->delay_time) ? $aEventData->delay_time : '9 PM'; ?>"><span class="txt_grey">Wait for</span> <?php echo @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value); ?> <?php echo @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit); ?></button>
-                                                        <a class="icons iconsab br8 dark t30 wf_timer" id="wf_waitTime_<?php echo $oEvent->id; ?>" event_id="<?php echo $oEvent->id; ?>" delay_value="<?php echo @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value); ?>" delay_unit="<?php echo @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit); ?>" delay_time="<?php echo!empty($aEventData->delay_time) ? $aEventData->delay_time : '9 PM'; ?>"  href="javascript:void(0)"><img src="<?php echo base_url(); ?>assets/images/clock_white14.png"></a>
-                                                    </div>
+                                            if (!empty($oCampaign)) {
+                                                if ($oCampaign->id != '') {
 
-                                                    <?php if ($bMulitpleBranches == true): ?>
-                                                        <div class="timeline-date button mb0">
-                                                            <img src="<?php echo base_url(); ?>assets/images/timeline_top_border_grey.jpg"/>
+                                                    $aStatsSms = App\Models\Admin\WorkflowModel::getEventTwilioStats($oCampaign->id, $moduleName);
+                                                    $aCategorizedStatsSms = App\Models\Admin\WorkflowModel::getEventTwilioCategorizedStats($aStatsSms);
+
+                                                    $sentSmsCount = $aCategorizedStatsSms['sent']['UniqueCount'];
+                                                    $deliveredSmsCount = $aCategorizedStatsSms['delivered']['UniqueCount'];
+                                                    $acceptedSmsCount = $aCategorizedStatsSms['accepted']['UniqueCount'];
+                                                    $failedSmsCount = $aCategorizedStatsSms['failed']['UniqueCount'];
+                                                    $queuedSmsCount = $aCategorizedStatsSms['queued']['UniqueCount'];
+
+                                                    $sentSms = $sentSmsCount == '' ? '0' : $sentSmsCount;
+                                                    $deliveredSms = $deliveredSmsCount == '' ? '0' : $deliveredSmsCount;
+                                                    $acceptedSms = $acceptedSmsCount == '' ? '0' : $acceptedSmsCount;
+                                                    $failedSms = $failedSmsCount == '' ? '0' : $failedSmsCount;
+                                                    $queuedSms = $queuedSmsCount == '' ? '0' : $queuedSmsCount;
+
+                                                    if (strtolower($oCampaign->campaign_type) == 'email') {
+                                                        $sNodeType = 'email';
+                                                        $isSMSAdded = true;
+                                                        $aStats = App\Models\Admin\WorkflowModel::getEventSendgridStats($oCampaign->id, $moduleName);
+                                                        $aCategorizedStats = App\Models\Admin\WorkflowModel::getEventSendgridCategorizedStats($aStats);
+
+                                                        $processedCount = $aCategorizedStats['processed']['UniqueCount'];
+                                                        $deliveredCount = $aCategorizedStats['delivered']['UniqueCount'];
+                                                        $openCount = $aCategorizedStats['open']['UniqueCount'];
+                                                        $clickCount = $aCategorizedStats['click']['UniqueCount'];
+                                                        $unsubscribeCount = $aCategorizedStats['unsubscribe']['UniqueCount'];
+                                                        $bounceCount = $aCategorizedStats['bounce']['UniqueCount'];
+                                                        $droppedCount = $aCategorizedStats['dropped']['UniqueCount'];
+                                                        $spamReportCount = $aCategorizedStats['spam_report']['UniqueCount'];
+
+                                                        $processed = $processedCount == '' ? '0' : $processedCount;
+                                                        $delivered = $deliveredCount == '' ? '0' : $deliveredCount;
+                                                        $open = $openCount == '' ? '0' : $openCount;
+                                                        $click = $clickCount == '' ? '0' : $clickCount;
+                                                        $unsubscribe = $unsubscribeCount == '' ? '0' : $unsubscribeCount;
+                                                        $bounce = $bounceCount == '' ? '0' : $bounceCount;
+                                                        $dropped = $droppedCount == '' ? '0' : $droppedCount;
+                                                        $spamReport = $spamReportCount == '' ? '0' : $spamReportCount;
+
+                                                        $aNodeData = array(
+                                                            'oEvent' => $oEvent,
+                                                            'oCampaign' => $oCampaign,
+                                                            'moduleName' => $moduleName,
+                                                            'subscribersData' => $subscribersData,
+                                                            'eventNo' => $eventNo,
+                                                            'oTwilioAc' => $oTwilioAc,
+                                                            'processed' => $processed,
+                                                            'delivered' => $delivered,
+                                                            'bMulitpleBranches' => $bMulitpleBranches,
+                                                            'bBranchDrawn' => $bBranchDrawn,
+                                                            'open' => $open,
+                                                            'click' => $click,
+                                                            'bounce' => $bounce,
+                                                            'dropped' => $dropped,
+                                                            'unsubscribe' => $unsubscribe,
+                                                            'spamReport' => $spamReport,
+                                                            'iActiveSelectedCount' => $iActiveSelectedCount
+                                                        );
+                                                    } else if (strtolower($oCampaign->campaign_type) == 'sms') {
+                                                        $sNodeType = 'sms';
+                                                        $aNodeData = array(
+                                                            'oEvent' => $oEvent,
+                                                            'oCampaign' => $oCampaign,
+                                                            'moduleName' => $moduleName,
+                                                            'subscribersData' => $subscribersData,
+                                                            'bMulitpleBranches' => $bMulitpleBranches,
+                                                            'bBranchDrawn' => $bBranchDrawn,
+                                                            'eventNo' => $eventNo,
+                                                            'oTwilioAc' => $oTwilioAc,
+                                                            'sentSms' => $sentSms,
+                                                            'deliveredSms' => $deliveredSms,
+                                                            'failedSms' => $failedSms,
+                                                            'queuedSms' => $queuedSms,
+                                                            'acceptedSms' => $acceptedSms,
+                                                            'sentSms' => $sentSms,
+                                                            'iActiveSelectedCount' => $iActiveSelectedCount
+                                                        );
+                                                    }
+                                                    ?>
+
+                                                    <?php if ($bBranchDrawn == false) { ?>
+                                                        <div class="timeline-date button">
+                                                            <button type="button" class="btn white_btn wf_timer" id="wf_waitTime_<?php echo $oEvent->id; ?>" event_id="<?php echo $oEvent->id; ?>" delay_value="<?php echo @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value); ?>" delay_unit="<?php echo @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit); ?>" delay_time="<?php echo!empty($aEventData->delay_time) ? $aEventData->delay_time : '9 PM'; ?>"><span class="txt_grey">Wait for</span> <?php echo @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value); ?> <?php echo @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit); ?></button>
+                                                            <a class="icons iconsab br8 dark t30 wf_timer" id="wf_waitTime_<?php echo $oEvent->id; ?>" event_id="<?php echo $oEvent->id; ?>" delay_value="<?php echo @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value); ?>" delay_unit="<?php echo @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit); ?>" delay_time="<?php echo!empty($aEventData->delay_time) ? $aEventData->delay_time : '9 PM'; ?>"  href="javascript:void(0)"><img src="<?php echo base_url(); ?>assets/images/clock_white14.png"></a>
                                                         </div>
-                                                    <?php endif; ?>
-                                                <?php } ?>
+
+                                                        <?php if ($bMulitpleBranches == true): ?>
+                                                            <div class="timeline-date button mb0">
+                                                                <img src="<?php echo base_url(); ?>assets/images/timeline_top_border_grey.jpg"/>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    <?php } ?>
 
 
-                                                <?php if ($bBranchDrawn == false): ?>
-                                                    <div class="timeline-content mb0">
-                                                        <div class="<?php if ($bMulitpleBranches == true): ?>bkg_image<?php endif; ?> pt0 pb0">
-                                                            <div class="row">
-                                                            <?php endif; ?>
-                                                            <?php if ($sNodeType == 'sms'): ?>
-                                                                <!-- Draw Tree Node -->
-                                                                @include('admin.workflow2.partials.sms_node', $aNodeData)
+                                                    <?php if ($bBranchDrawn == false): ?>
+                                                        <div class="timeline-content mb0">
+                                                            <div class="<?php if ($bMulitpleBranches == true): ?>bkg_image<?php endif; ?> pt0 pb0">
+                                                                <div class="row">
+                                                                <?php endif; ?>
+                                                                <?php if ($sNodeType == 'sms'): ?>
+                                                                    <!-- Draw Tree Node -->
+                                                                    @include('admin.workflow2.partials.sms_node', $aNodeData)
 
-                                                            <?php elseif ($sNodeType == 'email'): ?>
-                                                                <!-- Draw Tree Node -->
-                                                                @include('admin.workflow2.partials.email_node', $aNodeData)
-                                                            <?php endif; ?>
-                                                            <?php if ($bMulitpleBranches == false): ?>
+                                                                <?php elseif ($sNodeType == 'email'): ?>
+                                                                    <!-- Draw Tree Node -->
+                                                                    @include('admin.workflow2.partials.email_node', $aNodeData)
+                                                                <?php endif; ?>
+                                                                <?php if ($bMulitpleBranches == false): ?>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                <?php endif; ?>
+                                                    <?php endif; ?>
 
 
-                                                <?php if ($finishBranch == true): ?>
-                                                    <div class="timeline-date button mb0">
-                                                        <img src="<?php echo base_url(); ?>assets/images/timeline_bot_border_grey.png"/>
-                                                    </div>
-                                                <?php endif; ?>
+                                                    <?php if ($finishBranch == true): ?>
+                                                        <div class="timeline-date button mb0">
+                                                            <img src="<?php echo base_url(); ?>assets/images/timeline_bot_border_grey.png"/>
+                                                        </div>
+                                                    <?php endif; ?>
 
-                                                <?php if ($bMulitpleBranches == false): ?>
-                                                    <div class="timeline-date button mt20 mb40">
-                                                        <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle" data-toggle="dropdown" previous_event_id="<?php echo $previousID; ?>" current_event_id="<?php echo $currentID; ?>" event_type="<?php echo $nextEventType; ?>" data-node-type="followup"><i class="icon-plus3"></i></button>
-                                                        @include('admin.workflow2.partials.action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'followup', 'eventType' => $nextEventType])
-                                                    </div>
-                                                <?php endif; ?>
-                                                <?php
-                                                $previousEventID = $oEvent->id;
-                                                $eventNo++;
+                                                    <?php if ($bMulitpleBranches == false): ?>
+                                                        <div class="timeline-date button mt20 mb40">
+                                                            <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle" data-toggle="dropdown" previous_event_id="<?php echo $previousID; ?>" current_event_id="<?php echo $currentID; ?>" event_type="<?php echo $nextEventType; ?>" data-node-type="followup"><i class="icon-plus3"></i></button>
+                                                            @include('admin.workflow2.partials.action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'followup', 'eventType' => $nextEventType])
+                                                        </div>
+                                                    <?php endif; ?>
+                                                    <?php
+                                                    $previousEventID = $oEvent->id;
+                                                    $eventNo++;
 
-                                                if ($bMulitpleBranches == true) {
-                                                    $bBranchDrawn = true;
-                                                } else {
-                                                    $bBranchDrawn = false;
+                                                    if ($bMulitpleBranches == true) {
+                                                        $bBranchDrawn = true;
+                                                    } else {
+                                                        $bBranchDrawn = false;
+                                                    }
                                                 }
                                             }
                                         }
@@ -332,7 +334,7 @@ $aSelectedContacts = array();
                                         $oEvent = new stdClass();
                                         $oEvent->id = '';
                                     }
-                                    if(empty($aEventData)){
+                                    if (empty($aEventData)) {
                                         $aEventData = new stdClass();
                                         $aEventData->delay_value = '';
                                         $aEventData->delay_unit = '';
