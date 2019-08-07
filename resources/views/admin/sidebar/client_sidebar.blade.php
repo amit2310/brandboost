@@ -460,7 +460,7 @@ if(empty($oBroadcast)){
                             ?>"><a href="{{ url('admin/brandboost/widget_overview') }}"><i class="fa fa-circle"></i> <span>Overview</span> </a></li>
 
                             <li class="<?php
-                            if ($pageName == 'brandboost' && $pageSeName == 'widgets') {
+                            if ($pageName == 'brandboost' && ($pageSeName == 'widgets' || $pageSeName == 'onsite_widget_setup')) {
                                 $activeParentClass = 'menu-widgets';
                                 $activeChildClass = 'menu-widgets-submenu';
                                 echo 'active';
@@ -468,7 +468,7 @@ if(empty($oBroadcast)){
                             ?>"><a href="{{ url('admin/brandboost/widgets') }}"><i class="fa fa-circle"></i> <span>Onsite Widgets</span> <?php if(!empty($widgetCount)):?><span class="label bg-blue-400 menubadge"><?php echo $widgetCount;?></span><?php endif;?></a></li>
 
                             <li class="<?php
-                            if ($pageName == 'modules' && $pageSeName == 'chat') {
+                            if ($pageName == 'modules' && $pageSeName == 'chat' || ($pageName == 'modules' && $pageSeName == 'chat' && $pageThName=='setup')) {
                                 $activeParentClass = 'menu-widgets';
                                 $activeChildClass = 'menu-widgets-submenu';
                                 echo 'active';
@@ -476,7 +476,7 @@ if(empty($oBroadcast)){
                             ?>"><a href="{{ url('admin/modules/chat/') }}"><i class="fa fa-circle"></i> <span>Chat Widgets </span> <?php if(!empty($chatCount)):?><span class="label bg-blue-400 menubadge"><?php echo $chatCount;?></span><?php endif;?></a></li>
 							
 							<li class="<?php
-                            if ($pageName == 'modules' && $pageSeName == 'nps' && $pageThName == 'widgets') {
+                            if ($pageName == 'modules' && $pageSeName == 'nps' && ($pageThName == 'widgets' || $pageThName == 'nps_widget_setup')) {
                                 $activeParentClass = 'menu-widgets';
                                 $activeChildClass = 'menu-widgets-submenu';
                                 echo 'active';

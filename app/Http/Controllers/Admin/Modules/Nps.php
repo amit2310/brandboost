@@ -472,7 +472,7 @@ class Nps extends Controller {
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role
         );
-        return view('admin.modules.nps.widget_list', $aData);
+        return view('admin.modules.nps.widget_list', $aData)->with(['mNPS'=>$mNPS]);
     }
 
     /**
@@ -637,11 +637,11 @@ class Nps extends Controller {
 			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
 			<li><a href="' . base_url('admin/modules/nps/widgets') . '" class="sidebar-control hidden-xs">NPS Widgets </a></li>
 			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $oWidgets[0]->widget_title . '" class="sidebar-control active hidden-xs ">' . $oWidgets[0]->widget_title . '</a></li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $widgetData[0]->widget_title . '" class="sidebar-control active hidden-xs ">' . $widgetData[0]->widget_title . '</a></li>
 			</ul>';
 
         $aData = array(
-            'title' => 'Onsite Widget',
+            'title' => 'NPS Widget',
             'pagename' => $breadcrumb,
             'widgetID' => $widgetID,
             'oNPSList' => $oNPSList,
