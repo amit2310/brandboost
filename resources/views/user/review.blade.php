@@ -189,9 +189,10 @@
 
 				  		foreach ($reviewCommentsData as $commentData) {
 
-				  			$likeData = $this->mReviews->getCommentLSByCommentID($commentData->id, 1);
-                            $disLikeData = $this->mReviews->getCommentLSByCommentID($commentData->id, 0);
-                            $childComments = $this->mReviews->getReviewAllChildComments($aReview['id'], $commentData->id);
+				  			$likeData = App\Models\ReviewsModel::getCommentLSByCommentID($commentData->id, 1);
+                            $disLikeData = App\Models\ReviewsModel::getCommentLSByCommentID($commentData->id, 0);
+                            $childComments = App\Models\ReviewsModel::getReviewAllChildComments($aReview['id'], $commentData->id);
+                           	
 				  	?>
 				  	<div class="bbot pb20 mb20" id="parComment<?php echo $commentData->id; ?>">
 				  		<div class="comment_sec">
@@ -391,6 +392,7 @@ $(document).ready(function(){
 		e.preventDefault();
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
+        formData.append('_token', '{{csrf_token()}}');
         $.ajax({
             url: '<?php echo base_url('admin/comments/add_comment'); ?>',
             type: "POST",
