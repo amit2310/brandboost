@@ -487,14 +487,19 @@ class Reviews extends Controller {
         }
     }
 	
-    public function saveCommentLikeStatus() {
+
+    /**
+    * save comment like status
+    * @return type json
+    */
+    public function saveCommentLikeStatus(Request $request) {
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
 		$aUser = getLoggedUser();
         $userID = $aUser->id;
-        if (!empty($post)) {
-            $commentId = strip_tags($post['commentId']);
-            $status = strip_tags($post['status']);
+        
+            $commentId = strip_tags($request->commentId);
+            $status = strip_tags($request->status);
             $aData = array(
                 'comment_id' => $commentId,
                 'user_id' => $userID,
@@ -502,12 +507,12 @@ class Reviews extends Controller {
                 'status' => $status,
                 'created' => date("Y-m-d H:i:s")
             );
-			
-            $dataLS = $this->mReviews->getCommentLSByUserIDAndCommentID($userID, $commentId);
-			if(count($dataLS) > 0){
-				$bSaved = $this->mReviews->updateCommentLS($aData, $userID, $commentId);
+            $mReviews = new ReviewsModel();
+            $dataLS = $mReviews->getCommentLSByUserIDAndCommentID($userID, $commentId);
+			if($dataLS->count() > 0){
+				$bSaved = $mReviews->updateCommentLS($aData, $userID, $commentId);
 			}else{
-				$bSaved = $this->mReviews->saveCommentLikeStatus($aData);
+				$bSaved = $mReviews->saveCommentLikeStatus($aData);
 			}
 			
             if ($bSaved) {
@@ -515,7 +520,7 @@ class Reviews extends Controller {
             }
             echo json_encode($response);
             exit;
-        }
+        
     }
 
 	

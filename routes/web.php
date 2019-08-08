@@ -134,6 +134,7 @@ Route::post('admin/reviews/deleteReview','Admin\Reviews@deleteReview');
 Route::post('admin/reviews/saveReviewNotes','Admin\Reviews@saveReviewNotes');
 Route::post('admin/reviews/deleteReviewNote','Admin\Reviews@deleteReviewNote');
 Route::post('admin/reviews/getReviewMedia','Admin\Reviews@getReviewMedia');
+Route::post('admin/reviews/saveCommentLikeStatus','Admin\Reviews@saveCommentLikeStatus');
 
 
 Route::post('admin/comments/add_comment','Admin\Comments@addComment');
