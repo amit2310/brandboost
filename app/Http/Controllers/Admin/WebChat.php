@@ -1475,4 +1475,43 @@ class WebChat extends Controller {
 
 
 
+    /**
+    * This function is used for chat stats/overview 
+    * @param type
+    * @return type
+    */
+
+    public function overview() {
+
+        $loginUserData = getLoggedUser();
+        $smsChat = new SmsChatModel();
+        $getChatThread = $smsChat->getWebChatThread($loginUserData->id);
+        $supportChat = $smsChat->supportChat($loginUserData->id);
+        $supportChatGroupByDate = $smsChat->supportChatGroupByDate($loginUserData->id);
+        $supportChatCurrent = $smsChat->supportChatCurrent($loginUserData->id);
+        $supportChatGroupByCountry = $smsChat->supportChatGroupByCountry($loginUserData->id);
+        $supportChatCompleted = $smsChat->supportChatCompleted($loginUserData->id);
+        $getWebChatCurrentThread = $smsChat->getWebChatCurrentThread($loginUserData->id);
+
+        $lastfifteendayschat = array();
+        for ($i = 0; $i < 15; $i++) {
+            $showShowData = array();
+            $currentDate = date("Y-m-d", strtotime("-" . $i . " day"));
+            $supportChatByDate = $smsChat->supportChatByDate($loginUserData->id, $currentDate);
+            // $lastfifteendayschat[$currentDate] = $supportChatByDate;
+            $showShowData = array(date('M d', strtotime($currentDate)), $supportChatByDate);
+            $lastfifteendayschat[] = $showShowData;
+        }
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Chat Overview" class="sidebar-control active hidden-xs ">Chat Overview</a></li>
+                    </ul>';
+
+        return view('admin.chat_app.chat_overview', array('title' => 'Chat Overview', 'pagename' => $breadcrumb, 'getChatThread' => $getChatThread, 'getWebChatCurrentThread' => $getWebChatCurrentThread, 'supportChat' => $supportChat, 'supportChatGroupByDate' => $supportChatGroupByDate, 'supportChatCurrent' => $supportChatCurrent, 'supportChatGroupByCountry' => $supportChatGroupByCountry, 'supportChatCompleted' => $supportChatCompleted, 'lastfifteendayschat' => $lastfifteendayschat));
+    }
+
+
+
 }

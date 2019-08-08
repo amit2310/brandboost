@@ -199,6 +199,8 @@ Route::post('admin/chatshortcut/getChatShortcutById','Admin\Chatshortcut@getChat
 Route::post('admin/chatshortcut/updateShortCut','Admin\Chatshortcut@updateShortCut');
 Route::post('admin/chatshortcut/deleteChatShortcut','Admin\Chatshortcut@deleteChatShortcut');
 Route::post('admin/chatshortcut/deleteMultipalChatShortcut','Admin\Chatshortcut@deleteMultipalChatShortcut');
+Route::get('admin/chat/overview','Admin\WebChat@overview');
+
 
 
 
