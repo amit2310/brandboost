@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php
 $totalEmailSent = $totalSmsSent = 0;
 if (!empty($oTotalReferralSent)) {
@@ -379,3 +386,4 @@ $(document).ready(function () {
 		
 
 	</script>
+@endsection

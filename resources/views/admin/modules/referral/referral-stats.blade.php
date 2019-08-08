@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <!-- Content area -->
 <div class="content">
     <!-- Dashboard content -->
@@ -436,3 +443,4 @@ $(document).ready(function () {
 	var tableBase = custom_data_table(tableId, '1' ,'asc'); 
 });
 </script>
+@endsection

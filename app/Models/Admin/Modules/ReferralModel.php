@@ -295,6 +295,7 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
+	
 	public static function getReferralTemplates($referralID) {
 		$aData =  DB::table('tbl_referral_automations_campaigns')
 			->select('tbl_referral_automations_campaigns.*')
@@ -327,7 +328,7 @@ class ReferralModel extends Model {
 			->leftjoin('tbl_referral_rewards_promo_links', 'tbl_referral_rewards_promo_links.reward_id','=','tbl_referral_rewards.id')
 			->when((!empty($hash)), function ($query) use ($id) {
 				return $query->where('tbl_referral_rewards.hashcode', $id);
-			}, function ($query){
+			}, function ($query) use ($id){
 				return $query->where('tbl_referral_rewards.id', $id);
 			})
 			->first();
@@ -353,7 +354,70 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-
+	
+	public static function referredSales($accountID) {
+		$aData =  DB::table('tbl_referral_sales')
+			->select('tbl_referral_sales.*', 'tbl_subscribers.firstname AS aff_firstname', 'tbl_subscribers.lastname AS aff_lastname', 'tbl_subscribers.email AS aff_email', 'tbl_subscribers.phone AS aff_phone')
+			->leftjoin('tbl_subscribers', 'tbl_referral_sales.affiliateid','=','tbl_subscribers.id')
+			->where('tbl_referral_sales.account_id', $accountID)
+			->where('tbl_referral_sales.affiliateid', '!=', NULL)
+			->orderBy('tbl_referral_sales.id', 'desc')
+			->get();
+        
+        return $aData;
+    }
+	
+	
+	public static function untrackedSales($accountID) {
+		$aData =  DB::table('tbl_referral_sales')
+			->select('tbl_referral_sales.*')
+			->where('tbl_referral_sales.account_id', $accountID)
+			->where('tbl_referral_sales.affiliateid', '!=', NULL)
+			->orderBy('tbl_referral_sales.id', 'desc')
+			->get();
+        
+        return $aData;
+    }
+	
+	
+	public static function getReferralLinkVisits($accountID) {
+		$aData =  DB::table('tbl_referral_reflinks_visit_logs')
+			->select('tbl_referral_reflinks_visit_logs.*')
+			->leftjoin('tbl_referral_reflinks', 'tbl_referral_reflinks.refkey','=','tbl_referral_reflinks_visit_logs.refkey')
+			->leftjoin('tbl_referral_rewards', 'tbl_referral_rewards.id','=','tbl_referral_reflinks.referral_id')
+			->where('tbl_referral_rewards.hashcode', $accountID)
+			->get();
+        
+        return $aData;
+    }
+	
+	
+	public static function getAutoEvents($referralID) {
+		$aData =  DB::table('tbl_referral_automations_events')
+			->select('tbl_referral_automations_events.*', 'tbl_referral_automations_campaigns.name as campaign_name')
+			->leftjoin('tbl_referral_automations_campaigns', 'tbl_referral_automations_events.id','=','tbl_referral_automations_campaigns.event_id')
+			->where('tbl_referral_automations_events.referral_id', $referralID)
+			->orderBy('tbl_referral_automations_events.id', 'ASC')
+			->get();
+        
+        return $aData;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     public function updateReferralWidget($aData, $id) {
         $this->db->where("id", $id);
         $result = $this->db->update("tbl_referral_widgets", $aData);
@@ -950,18 +1014,7 @@ class ReferralModel extends Model {
         }
     }
 
-    public function getAutoEvents($referralID) {
-        $this->db->select("tbl_referral_automations_events.*, tbl_referral_automations_campaigns.name as campaign_name");
-        $this->db->join("tbl_referral_automations_campaigns", "tbl_referral_automations_events.id = tbl_referral_automations_campaigns.event_id", "LEFT");
-        $this->db->where("tbl_referral_automations_events.referral_id", $referralID);
-        $this->db->order_by("tbl_referral_automations_events.id", "ASC");
-        $result = $this->db->get("tbl_referral_automations_events");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            return $result->result();
-        }
-        return false;
-    }
+    
 
     public function updateAutoEvent($aData, $id) {
         if ($id > 0) {
@@ -1539,36 +1592,9 @@ class ReferralModel extends Model {
         return $response;
     }
 
-    public function referredSales($accountID) {
-        $this->db->select("tbl_referral_sales.*, tbl_subscribers.firstname AS aff_firstname, tbl_subscribers.lastname AS aff_lastname, tbl_subscribers.email AS aff_email, tbl_subscribers.phone AS aff_phone");
-        //$this->db->join("tbl_referral_users", "tbl_referral_sales.affiliateid = tbl_referral_users.subscriber_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_referral_sales.affiliateid = tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_referral_sales.account_id", $accountID);
-        $this->db->where("tbl_referral_sales.affiliateid !=", NULL);
-        $this->db->order_by("tbl_referral_sales.id", "DESC");
-        $result = $this->db->get("tbl_referral_sales");
-        //echo $this->db->last_query();
+    
 
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getReferralLinkVisits($accountID) {
-        $this->db->select("tbl_referral_reflinks_visit_logs.*");
-        $this->db->join("tbl_referral_reflinks", "tbl_referral_reflinks.refkey = tbl_referral_reflinks_visit_logs.refkey", "LEFT");
-        //$this->db->join("tbl_referral_settings", "tbl_referral_settings.id=tbl_referral_reflinks.settings_id", "LEFT");
-        $this->db->join("tbl_referral_rewards", "tbl_referral_rewards.id=tbl_referral_reflinks.referral_id", "LEFT");
-        $this->db->where("tbl_referral_rewards.hashcode", $accountID);
-        $result = $this->db->get("tbl_referral_reflinks_visit_logs");
-        //echo $this->db->last_query();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
     public function getReferralLinkVisitsByAdvocateId($advocateId, $referralID) {
         $this->db->select("tbl_referral_reflinks_visit_logs.*");
@@ -1619,19 +1645,7 @@ class ReferralModel extends Model {
         return $response;
     }
 
-    public function untrackedSales($accountID) {
-        $this->db->select("tbl_referral_sales.*");
-        $this->db->where("tbl_referral_sales.account_id", $accountID);
-        $this->db->where("tbl_referral_sales.affiliateid", NULL);
-        $this->db->order_by("tbl_referral_sales.id", "DESC");
-        $result = $this->db->get("tbl_referral_sales");
-        //echo $this->db->last_query();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
     public function getReferralSendgridStats($param, $id, $eventType = '') {
         $sql = "SELECT tbl_referral_automations_tracking_sendgrid.* FROM tbl_referral_automations_tracking_sendgrid "

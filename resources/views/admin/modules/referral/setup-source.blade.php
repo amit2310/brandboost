@@ -20,8 +20,6 @@
                 <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishReferralStatus" status="draft"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
 
                 <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishReferralStatus" status="active"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
-
-        <!-- <button style="padding: 7px 15px!important;"  type="button" class="btn dark_btn" data-toggle="modal" data-target="#addPeopleList"><i class="icon-plus3 txt_green3"></i></button> -->
             </div>
         </div>
     </div>
@@ -33,7 +31,6 @@
             <div class="white_box broadcast_menu nps">
                 <ul>
                     <li><a class="active" href="#"><img src="<?php echo base_url(); ?>assets/images/ref_br_icon0_act.png">Select Source</a></li>
-                    <!--<li><a href="#"><img src="assets/images/email_br_icon1_grey.png">Review Contacts</a></li>-->
                     <li><a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/email_br_icon2.png">Rewards</a></li>
                     <li><a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/email_br_icon3.png">Email Workflow</a></li>
                     <li><a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/email_br_icon4.png">Configuration</a></li>
@@ -44,15 +41,7 @@
     </div>
     <!--==================Broadcasts content============-->
     <div class="select_section" style="max-width: 100%;">
-        <!-- <div class="row">
-                <div class="col-md-12 text-center">
-                        <div class="text-center pt40 pb30">
-                                <p class="fsize16 fw500 txt_dark">How do you want to create a referral campaign?</p>
-                                <p class="fsize14 fw300 txt_grey">Email Template</p>
-                        </div>
-                </div>
-                </div> -->
-
+       
         <div class="row">
             <div class="col-md-4 text-center">
                 <label for="temp1" class="m0">
@@ -126,7 +115,7 @@
             </div>
         </div>
         <div class="row">
-                <div class="col-md-6"><!-- <button class="btn btn_white bkg_white h52 txt_dark minw_140 shadow br5"><i class="icon-arrow-left12 mr20"></i> Back</button> -->&nbsp;</div>
+                <div class="col-md-6">&nbsp;</div>
             <input type="hidden" name="refId" id="refId" value="<?php echo $moduleUnitID; ?>">
             <div class="col-md-6 text-right"><button class="btn dark_btn bkg_dgreen2 h52 minw_160 updateSoucre">Next step <i class="icon-arrow-right13 ml20"></i></button></div>
         </div>
@@ -144,6 +133,7 @@
                 <div class="panel-body">
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
+						{{ csrf_field() }}
                         <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
                         <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
                         <div class="col-md-12">
@@ -181,10 +171,8 @@
                             <button class="btn btn-success pull-right" id="btnInvite" type="submit">
                                 Invite Advocates
                             </button>
-
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -200,7 +188,7 @@
             $.ajax({
                 url: "<?php echo base_url('/admin/modules/referral/updateSource'); ?>",
                 type: "POST",
-                data: {source_type: sourceType, ref_id: refId},
+                data: {source_type: sourceType, ref_id: refId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -220,11 +208,10 @@
             $.ajax({
                 url: '<?php echo base_url('admin/modules/referral/publishReferralStatus'); ?>',
                 type: "POST",
-                data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status': status},
+                data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        //window.location.href = '<?php echo base_url('admin/brandboost/onsite'); ?>';
                         if (status == 'active') {
 
                             displayMessagePopup('success', 'Campaign pushlished successfully');
