@@ -131,6 +131,69 @@ class Referral extends Controller {
     }
 	
 	
+	public function addReferral(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $title = $request->title;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $hashcode = '';
+        for ($i = 0; $i < 20; $i++) {
+            $hashcode .= $characters[rand(0, strlen($characters))];
+        }
+        $hashcode = $hashcode . date('Ymdhis');
+        $aData = array(
+            'hashcode' => $hashcode,
+            'user_id' => $userID,
+            'title' => $title,
+            'status' => 'draft',
+            'created' => date("Y-m-d H:i:s")
+        );
+        $insertID = ReferralModel::addReferral($aData);
+
+        if ($insertID) {
+            //Update in automation table to take effect in email/sms settings
+            $aEvent = array(
+                'invite-email' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
+                'invite-sms' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
+                'invite-email-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days')),
+                'invite-sms-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days')),
+                'sale-email' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
+                'sale-sms' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
+                'sale-email-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days')),
+                'sale-sms-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days'))
+            );
+            //$bSavedEvent = $this->mReferral->saveReferralEvents($aEvent, $insertID);
+            //Save Settings
+            $aDefaultSettings = array(
+                'user_id' => $userID,
+                'referral_id' => $insertID,
+                'created' => date("Y-m-d H:i:s")
+            );
+
+            $bUpdated = ReferralModel::updateStoreSettings($aDefaultSettings, $insertID);
+
+            $response = array('status' => 'success', 'id' => $insertID, 'msg' => "Success");
+
+            $notificationData = array(
+                'event_type' => 'added_referral_program',
+                'event_id' => 0,
+                'link' => base_url() . 'admin/modules/referral/setup/' . $insertID,
+                'message' => 'Created new referral.',
+                'user_id' => $userID,
+                'status' => 1,
+                'created' => date("Y-m-d H:i:s")
+            );
+            $eventName = 'sys_referral_added';
+            //add_notifications($notificationData, $eventName, $userID);
+        }
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	
 	
 	
 	
@@ -327,71 +390,7 @@ class Referral extends Controller {
 
     
 
-    public function addReferral() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $title = strip_tags($post['title']);
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $hashcode = '';
-        for ($i = 0; $i < 20; $i++) {
-            $hashcode .= $characters[rand(0, strlen($characters))];
-        }
-        $hashcode = $hashcode . date('Ymdhis');
-        $aData = array(
-            'hashcode' => $hashcode,
-            'user_id' => $userID,
-            'title' => $title,
-            'status' => 'draft',
-            'created' => date("Y-m-d H:i:s")
-        );
-        $insertID = $this->mReferral->addReferral($aData);
-
-        if ($insertID) {
-            //Update in automation table to take effect in email/sms settings
-            $aEvent = array(
-                'invite-email' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
-                'invite-sms' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
-                'invite-email-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days')),
-                'invite-sms-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days')),
-                'sale-email' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
-                'sale-sms' => json_encode(array('delay_type' => 'after', 'delay_value' => 10, 'delay_unit' => 'minutes')),
-                'sale-email-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days')),
-                'sale-sms-reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => 2, 'delay_unit' => 'days'))
-            );
-            //$bSavedEvent = $this->mReferral->saveReferralEvents($aEvent, $insertID);
-            //Save Settings
-            $aDefaultSettings = array(
-                'user_id' => $userID,
-                'referral_id' => $insertID,
-                'created' => date("Y-m-d H:i:s")
-            );
-
-            $bUpdated = $this->mReferral->updateStoreSettings($aDefaultSettings, $insertID);
-
-            $response = array('status' => 'success', 'id' => $insertID, 'msg' => "Success");
-
-            $notificationData = array(
-                'event_type' => 'added_referral_program',
-                'event_id' => 0,
-                'link' => base_url() . 'admin/modules/referral/setup/' . $insertID,
-                'message' => 'Created new referral.',
-                'user_id' => $userID,
-                'status' => 1,
-                'created' => date("Y-m-d H:i:s")
-            );
-            $eventName = 'sys_referral_added';
-            add_notifications($notificationData, $eventName, $userID);
-        }
-        echo json_encode($response);
-        exit;
-    }
+    
 
     
 

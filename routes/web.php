@@ -119,6 +119,7 @@ Route::get('admin/modules/referral','Admin\Modules\Referral@index');
 Route::post('admin/modules/referral/changeStatus','Admin\Modules\Referral@changeStatus');
 Route::post('admin/modules/referral/moveToArchiveReferral','Admin\Modules\Referral@moveToArchiveReferral');
 Route::post('admin/modules/referral/deleteReferral','Admin\Modules\Referral@deleteReferral');
+Route::post('admin/modules/referral/addReferral','Admin\Modules\Referral@addReferral');
 
 
 
