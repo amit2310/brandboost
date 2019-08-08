@@ -61,16 +61,16 @@ class Review extends Controller {
     	return view('user.review', $aData);
     }
 
-    public function edit($reviewId) {
+    public function Edit($reviewId) {
 
-        $aReviewData = $this->mReviews->getReviewByReviewID($reviewId);
-        if(empty($aReviewData)) {
-            redirect('user/review');
+        $aReviewData = ReviewsModel::getReviewByReviewID($reviewId);
+        if($aReviewData->count() == 0) {
+            return redirect('user/review');
         }
         $aData = array(
             'myReview' => $aReviewData[0]
         );
-        $this->template->load('user/user_template', 'user/review_edit', $aData);
+        return view('user.review_edit', $aData);
     }
 
 }

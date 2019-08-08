@@ -29,6 +29,7 @@ Route::get('user/setting','User\Setting@Index');
 Route::get('user/nps','User\Nps@Index');
 Route::get('user/referral','User\Referral@Index');
 Route::get('user/login/logout','User\Login@logout');
+Route::get('user/review/edit/{commentId}','User\Review@Edit');
 
 
 //Dashborad 
@@ -140,6 +141,7 @@ Route::post('admin/reviews/saveReviewNotes','Admin\Reviews@saveReviewNotes');
 Route::post('admin/reviews/deleteReviewNote','Admin\Reviews@deleteReviewNote');
 Route::post('admin/reviews/getReviewMedia','Admin\Reviews@getReviewMedia');
 Route::post('admin/reviews/saveCommentLikeStatus','Admin\Reviews@saveCommentLikeStatus');
+Route::post('admin/reviews/update_review','Admin\Reviews@updateReview');
 
 
 Route::post('admin/comments/add_comment','Admin\Comments@addComment');

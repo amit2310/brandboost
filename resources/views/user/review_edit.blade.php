@@ -1,4 +1,11 @@
-  <!-- <link href="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" /> -->
+@extends('layouts.user_template') 
+
+@section('title')
+<?php //echo $title; ?>
+@endsection
+
+@section('contents')
+
   <script src="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.js"></script>
 
   <style type="text/css">
@@ -125,6 +132,7 @@
 
   		$("#updateReview").submit(function () {
             var formData = new FormData($(this)[0]);
+            formData.append('_token', '{{csrf_token()}}');
             $.ajax({
                 url: '<?php echo base_url("admin/reviews/update_review"); ?>',
                 type: "POST",
@@ -202,3 +210,5 @@
 
   	});
   </script>
+
+  @endsection
