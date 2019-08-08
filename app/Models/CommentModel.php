@@ -53,14 +53,19 @@ class CommentModel extends Model
         return true;
     }
 	
+
+    /**
+     * Used to update comment
+     * @param type $aData, $commentID
+     * @return type boolean
+     */
 	public function updateComment($aData, $commentID) {
 
-        $this->db->where('id', $commentID);
-        $result = $this->db->update('tbl_reviews_comments', $aData);
-        if ($result)
-            return true;
-        else
-            return false;
+        $oData = DB::table('tbl_reviews_comments')
+            ->where('id', $commentID)
+            ->update($aData);
+
+        return true;
     }
 
     public function deleteComment($commentID) {
