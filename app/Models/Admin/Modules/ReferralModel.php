@@ -234,11 +234,43 @@ class ReferralModel extends Model {
         }
     }
 	
+	/**
+     * Used to update store settings by referral id
+     * @param type $referralID
+     * @return type
+     */
+	public function updateStoreSettings($aData, $referralID) {
+        if ($referralID > 0) {
+            $oSettings = $this->getAccountSettings($referralID);
+            if (empty($oSettings)) {
+				$result = DB::table('tbl_referral_settings')->insert($aData);
+            } else {
+				$result = DB::table('tbl_referral_settings')
+				   ->where('referral_id', $referralID)
+				   ->update($aData);
+            }
+            if ($result) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
 	
-	
-	
-	
-	
+	/**
+     * Used to update store settings by referral id
+     * @param type $referralID
+     * @return type
+     */
+	public function getAccountSettings($referralID) {
+		$aData =  DB::table('tbl_referral_settings')
+			->select('tbl_referral_settings.*')
+			->where('referral_id', $referralID)
+			->first();
+        
+        return $aData;
+    }
 	
 	
 	
@@ -301,17 +333,7 @@ class ReferralModel extends Model {
         }
     }
 
-    public function getAccountSettings($referralID) {
-
-        $this->db->select("tbl_referral_settings.*");
-        $this->db->where("tbl_referral_settings.referral_id", $referralID);
-        $result = $this->db->get("tbl_referral_settings");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
+    
 
     public function getAdvocateCouponInfo($referralID) {
         $this->db->select("tbl_referral_rewards_adv_coupons.*");
@@ -457,27 +479,7 @@ class ReferralModel extends Model {
         }
     }
 
-    public function updateStoreSettings($aData, $referralID) {
-        if ($referralID > 0) {
-
-            $oSettings = $this->getAccountSettings($referralID);
-            if (empty($oSettings)) {
-                //Settings do not exists
-                $result = $this->db->insert("tbl_referral_settings", $aData);
-            } else {
-                $this->db->where("referral_id", $referralID);
-                $result = $this->db->update("tbl_referral_settings", $aData);
-            }
-            //echo $this->db->last_query();
-            //die;
-            if ($result) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
+    
 
     public function getReferralSettings($id, $hash = false) {
 
