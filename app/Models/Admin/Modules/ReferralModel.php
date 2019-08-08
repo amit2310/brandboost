@@ -239,9 +239,9 @@ class ReferralModel extends Model {
      * @param type $referralID
      * @return type
      */
-	public function updateStoreSettings($aData, $referralID) {
+	public static function updateStoreSettings($aData, $referralID) {
         if ($referralID > 0) {
-            $oSettings = $this->getAccountSettings($referralID);
+            $oSettings = Self::getAccountSettings($referralID);
             if (empty($oSettings)) {
 				$result = DB::table('tbl_referral_settings')->insert($aData);
             } else {
@@ -263,7 +263,7 @@ class ReferralModel extends Model {
      * @param type $referralID
      * @return type
      */
-	public function getAccountSettings($referralID) {
+	public static function getAccountSettings($referralID) {
 		$aData =  DB::table('tbl_referral_settings')
 			->select('tbl_referral_settings.*')
 			->where('referral_id', $referralID)
@@ -273,10 +273,86 @@ class ReferralModel extends Model {
     }
 	
 	
+	public static function addReferral($aData) {
+		$insert_id = DB::table('tbl_referral_rewards')->insertGetId($aData);
+        if ($insert_id) {
+            return $insert_id;
+        } else {
+            return false;
+        }
+    }
 	
 	
-
+	public static function getReferral($userID, $id = '') {
+		$aData =  DB::table('tbl_referral_rewards')
+			->select('tbl_referral_rewards.*')
+			->when((!empty($id)), function ($query) use ($id) {
+				return $query->where('tbl_referral_rewards.id', $id);
+			})
+			->where('tbl_referral_rewards.user_id', $userID)
+			->first();
+        
+        return $aData;
+    }
+	
+	public static function getReferralTemplates($referralID) {
+		$aData =  DB::table('tbl_referral_automations_campaigns')
+			->select('tbl_referral_automations_campaigns.*')
+			->join('tbl_referral_automations_events', 'tbl_referral_automations_events.id','=','tbl_referral_automations_campaigns.event_id')
+			->where('tbl_referral_automations_events.referral_id', $referralID)
+			->get();
+        
+        return $aData;
+		
+    }
+	
+	
+	public static function getReferralEvents($referralID) {
+		$aData =  DB::table('tbl_referral_automations_events')
+			->where('referral_id', $referralID)
+			->get();
+        
+        return $aData;
+		
+    }
+	
+	
+	public static function getReferralSettings($id, $hash = false) {
+		$aData =  DB::table('tbl_referral_rewards')
+			->select('tbl_referral_rewards.*', 'tbl_referral_rewards.id AS rewardID', 'tbl_referral_rewards.created AS rewardCreated', 'tbl_referral_rewards_adv_coupons.*', 'tbl_referral_rewards_adv_coupons.id AS advCouponID', 'tbl_referral_rewards_adv_coupons.created AS advCouponCreated', 'tbl_referral_rewards_ref_coupons.*', 'tbl_referral_rewards_ref_coupons.id AS refCouponID', 'tbl_referral_rewards_ref_coupons.created AS refCouponCreated', 'tbl_referral_rewards_cash.*', 'tbl_referral_rewards_cash.id AS cashID', 'tbl_referral_rewards_cash.created AS cashCreated', 'tbl_referral_rewards_custom.*', 'tbl_referral_rewards_custom.id AS customID', 'tbl_referral_rewards_custom.created AS customCreated', 'tbl_referral_rewards_promo_links.*', 'tbl_referral_rewards_promo_links.id AS promoID', 'tbl_referral_rewards_promo_links.created AS promoCreated')
+			->leftjoin('tbl_referral_rewards_adv_coupons', 'tbl_referral_rewards_adv_coupons.reward_id','=','tbl_referral_rewards.id')
+			->leftjoin('tbl_referral_rewards_ref_coupons', 'tbl_referral_rewards_ref_coupons.reward_id','=','tbl_referral_rewards.id')
+			->leftjoin('tbl_referral_rewards_cash', 'tbl_referral_rewards_cash.reward_id','=','tbl_referral_rewards.id')
+			->leftjoin('tbl_referral_rewards_custom', 'tbl_referral_rewards_custom.reward_id','=','tbl_referral_rewards.id')
+			->leftjoin('tbl_referral_rewards_promo_links', 'tbl_referral_rewards_promo_links.reward_id','=','tbl_referral_rewards.id')
+			->when((!empty($hash)), function ($query) use ($id) {
+				return $query->where('tbl_referral_rewards.hashcode', $id);
+			}, function ($query){
+				return $query->where('tbl_referral_rewards.id', $id);
+			})
+			->first();
+        
+        return $aData;
+    }
+	
+	
+	public static function getAdvocateCouponCodes($couponID) {
+		$aData =  DB::table('tbl_referral_rewards_adv_coupons_codes')
+			->where('coupon_id', $couponID)
+			->get();
+        
+        return $aData;
+    }
+	
     
+	public static function getReferralCouponCodes($couponID) {
+		$aData =  DB::table('tbl_referral_rewards_ref_coupons_codes')
+			->where('coupon_id', $couponID)
+			->get();
+        
+        return $aData;
+    }
+	
 
     public function updateReferralWidget($aData, $id) {
         $this->db->where("id", $id);
@@ -286,20 +362,6 @@ class ReferralModel extends Model {
         } else {
             return false;
         }
-    }
-
-    public function getReferral($userID, $id = '') {
-        $response = "";
-        $this->db->select("tbl_referral_rewards.*");
-        $this->db->where("tbl_referral_rewards.user_id", $userID);
-        if (!empty($id)) {
-            $this->db->where("tbl_referral_rewards.id", $id);
-        }
-        $result = $this->db->get("tbl_referral_rewards");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
     }
 
     public function getReferralByAccountId($accountID) {
@@ -323,15 +385,7 @@ class ReferralModel extends Model {
         }
     }
 
-    public function addReferral($aData) {
-        $result = $this->db->insert("tbl_referral_rewards", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
+    
 
     
 
@@ -357,18 +411,7 @@ class ReferralModel extends Model {
         return $response;
     }
 
-    public function getReferralTemplates($referralID) {
-        $this->db->select("tbl_referral_automations_campaigns.*");
-        $this->db->join("tbl_referral_automations_events", "tbl_referral_automations_events.id=tbl_referral_automations_campaigns.event_id", "INNER");
-        $this->db->where("tbl_referral_automations_events.referral_id", $referralID);
-        //$this->db->where("tbl_referral_automations_campaigns.delete_status", 0);
-        $result = $this->db->get("tbl_referral_automations_campaigns");
-        if ($result->num_rows() > 0) {
-            //echo $this->db->last_query();
-            return $result->result();
-        }
-        return false;
-    }
+    
 
     public function checkIfExistingAdvocate($subscriberID, $accountID) {
         $this->db->select("tbl_referral_users.*, tbl_referral_reflinks.refkey");
@@ -411,16 +454,7 @@ class ReferralModel extends Model {
         return $response;
     }
 
-    public function getReferralEvents($referralID) {
-        $this->db->where("referral_id", $referralID);
-        $result = $this->db->get("tbl_referral_automations_events");
-        if ($result->num_rows() > 0) {
-            //echo $this->db->last_query();
-            return $result->result();
-        }
-        return false;
-    }
-
+    
     public function getEventDataByEventID($eventID) {
         $this->db->where("id", $eventID);
         $result = $this->db->get("tbl_referral_automations_events");
@@ -481,95 +515,7 @@ class ReferralModel extends Model {
 
     
 
-    public function getReferralSettings($id, $hash = false) {
-
-        $this->db->select("tbl_referral_rewards.*, tbl_referral_rewards.id AS rewardID, tbl_referral_rewards.created AS rewardCreated,"
-                . "tbl_referral_rewards_adv_coupons.*, tbl_referral_rewards_adv_coupons.id AS advCouponID, tbl_referral_rewards_adv_coupons.created AS advCouponCreated,"
-                . "tbl_referral_rewards_ref_coupons.*, tbl_referral_rewards_ref_coupons.id AS refCouponID, tbl_referral_rewards_ref_coupons.created AS refCouponCreated,"
-                . "tbl_referral_rewards_cash.*, tbl_referral_rewards_cash.id AS cashID, tbl_referral_rewards_cash.created AS cashCreated,"
-                . "tbl_referral_rewards_custom.*, tbl_referral_rewards_custom.id AS customID, tbl_referral_rewards_custom.created AS customCreated,"
-                . "tbl_referral_rewards_promo_links.*, tbl_referral_rewards_promo_links.id AS promoID, tbl_referral_rewards_promo_links.created AS promoCreated");
-        $this->db->join("tbl_referral_rewards_adv_coupons", "tbl_referral_rewards_adv_coupons.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_ref_coupons", "tbl_referral_rewards_ref_coupons.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_cash", "tbl_referral_rewards_cash.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_custom", "tbl_referral_rewards_custom.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_promo_links", "tbl_referral_rewards_promo_links.reward_id = tbl_referral_rewards.id", "LEFT");
-        if ($hash == true) {
-            $this->db->where("tbl_referral_rewards.hashcode", $id);
-        } else {
-            $this->db->where("tbl_referral_rewards.id", $id);
-        }
-
-
-        $result = $this->db->get("tbl_referral_rewards");
-
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function getReferralSettings_old($userID, $hash = false) {
-
-        $this->db->select("tbl_referral_rewards.*, tbl_referral_rewards.id AS rewardID, tbl_referral_rewards.created AS rewardCreated,"
-                . "tbl_referral_rewards_adv_coupons.*, tbl_referral_rewards_adv_coupons.id AS advCouponID, tbl_referral_rewards_adv_coupons.created AS advCouponCreated,"
-                . "tbl_referral_rewards_ref_coupons.*, tbl_referral_rewards_ref_coupons.id AS refCouponID, tbl_referral_rewards_ref_coupons.created AS refCouponCreated,"
-                . "tbl_referral_rewards_cash.*, tbl_referral_rewards_cash.id AS cashID, tbl_referral_rewards_cash.created AS cashCreated,"
-                . "tbl_referral_rewards_custom.*, tbl_referral_rewards_custom.id AS customID, tbl_referral_rewards_custom.created AS customCreated,"
-                . "tbl_referral_rewards_promo_links.*, tbl_referral_rewards_promo_links.id AS promoID, tbl_referral_rewards_promo_links.created AS promoCreated");
-        $this->db->join("tbl_referral_rewards_adv_coupons", "tbl_referral_rewards_adv_coupons.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_ref_coupons", "tbl_referral_rewards_ref_coupons.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_cash", "tbl_referral_rewards_cash.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_custom", "tbl_referral_rewards_custom.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_promo_links", "tbl_referral_rewards_promo_links.reward_id = tbl_referral_rewards.id", "LEFT");
-        if ($hash == true) {
-            $this->db->where("tbl_referral_rewards.hashcode", $userID);
-        } else {
-            $this->db->where("tbl_referral_rewards.user_id", $userID);
-        }
-
-
-        $result = $this->db->get("tbl_referral_rewards");
-
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function getAccountSettings_old($userID) {
-
-        $this->db->select("tbl_referral_settings.*");
-        $this->db->where("tbl_referral_settings.user_id", $userID);
-        $result = $this->db->get("tbl_referral_settings");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function updateStoreSettings_old($aData, $userID) {
-        if ($userID > 0) {
-
-            $oSettings = $this->getAccountSettings($userID);
-            if (empty($oSettings)) {
-                //Settings do not exists
-                $result = $this->db->insert("tbl_referral_settings", $aData);
-            } else {
-                $this->db->where("user_id", $userID);
-                $result = $this->db->update("tbl_referral_settings", $aData);
-            }
-            //echo $this->db->last_query();
-            if ($result) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
+    
 
     public function saveReferralEvents($eData, $referralID) {
         if ($referralID != '') {
@@ -1260,23 +1206,9 @@ class ReferralModel extends Model {
         }
     }
 
-    public function getAdvocateCouponCodes($couponID) {
-        $this->db->where("coupon_id", $couponID);
-        $result = $this->db->get("tbl_referral_rewards_adv_coupons_codes");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
-    public function getReferralCouponCodes($couponID) {
-        $this->db->where("coupon_id", $couponID);
-        $result = $this->db->get("tbl_referral_rewards_ref_coupons_codes");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
     public function saveAdvCouponDiscount($aData) {
         $rewardID = $aData['reward_id'];

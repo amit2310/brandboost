@@ -582,6 +582,7 @@ if (!empty($oPrograms)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmeditReferralModel" name="frmeditReferralModel">
+				{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i>&nbsp;&nbsp;Edit Referral Program</h5>
@@ -611,6 +612,7 @@ if (!empty($oPrograms)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmaddReferralModal" id="frmaddReferralModal" action="javascript:void();">
+				{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i>&nbsp;&nbsp;Add New Referral Program</h5>
