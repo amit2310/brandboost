@@ -270,19 +270,23 @@ class Reviews extends Controller {
         }
     }
 
-    public function update_review() {
+
+    /**
+    * This function is used to update review
+    * @param type $clientID
+    * @return type
+    */
+    public function updateReview(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        if ($request->edit_reviewid) {
+           
+            $reviewID = strip_tags($request->edit_reviewid);
+            $ratingValue = strip_tags($request->ratingValue);
+            $edit_content = strip_tags($request->edit_content);
+            $reviewTitle = strip_tags($request->edit_review_title);
 
-            $reviewID = strip_tags($post['edit_reviewid']);
-            $ratingValue = strip_tags($post['ratingValue']);
-            $edit_content = strip_tags($post['edit_content']);
-            $reviewTitle = strip_tags($post['edit_review_title']);
-
-            $siteReviewFile = $post['question_uploaded_name'];
+            $siteReviewFile = $request->question_uploaded_name;
             $siteReviewFileArray = array();
 
             if(!empty($siteReviewFile)) {
@@ -308,7 +312,7 @@ class Reviews extends Controller {
             }
             
 
-            $result = $this->mReviews->updateReview($aData, $reviewID);
+            $result = ReviewsModel::updateReview($aData, $reviewID);
             if ($result) {
                 $response['status'] = 'success';
                 $response['message'] = "Review has been updated successfully.";

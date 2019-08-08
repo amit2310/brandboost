@@ -215,10 +215,7 @@ class ReviewsModel extends Model {
            ->where('id', $reviewID)
            ->update($aData);
 		   
-        if ($result)
-            return true;
-        else
-            return false;
+        return true;
     }
 	
 	/**
@@ -432,8 +429,8 @@ class ReviewsModel extends Model {
      * @return type 
      */
 	public static function getReviewByReviewID($reviewid) {
-          $aData =  DB::table('tbl_reviews')
-        ->where('id', $reviewid)->get();
+        $aData =  DB::table('tbl_reviews')
+            ->where('id', $reviewid)->get();
         return $aData;
     }
 
