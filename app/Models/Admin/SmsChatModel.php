@@ -243,114 +243,130 @@ class SmsChatModel extends Model {
         return $result;
     }
 
+
+   /**
+    * This function is used to get wechat thread details
+    * @param type
+    * @return type
+    */
+
     public function getWebChatThread($userID) {
-        $this->db->select("*, COUNT(created) as createdTotal");
-        $where = '(user_to="' . $userID . '" or user_form = "' . $userID . '")';
-        $this->db->where($where);
-        $this->db->group_by('DATE(created)');
-        $this->db->from('tbl_chat_message');
-        $query = $this->db->get();
-        //echo $this->db->last_query();
-        if ($query->num_rows() > 0) {
-            $result = $query->result();
-        }
-        return $result;
+        $oData = DB::table('tbl_chat_message')
+        ->select(DB::raw('COUNT(created) as createdTotal'))
+        ->where('user_to',$userID)
+        ->orWhere('user_form',$userID)
+        ->groupBy(DB::raw('DATE(created)'))->get();
+        return $oData;
+        
     }
+
+    
+    /**
+    * This function is used for support chat
+    * @param type $userID
+    * @return type
+    */
 
     public function supportChat($userID) {
-        $response = array();
-        $this->db->where('supp_user', $userID);
-        $this->db->from('tbl_chat_supportuser');
-        $result = $this->db->get();
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+     $aData =  DB::table('tbl_chat_supportuser')
+      ->where('supp_user', $userID)->get();
+      return $aData;
+        
     }
+
+
+    /**
+    * This function will return all completed chats
+    * @param type $clientID
+    * @return type
+    */
 
     public function supportChatCompleted($userID) {
-        $response = array();
-        $this->db->where('supp_user', $userID);
-        $this->db->where('completed', '1');
-        $this->db->from('tbl_chat_supportuser');
-        $result = $this->db->get();
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $aData =  DB::table('tbl_chat_supportuser')
+         ->where('supp_user', $userID)
+        ->where('completed', '1')->get();
+        return $aData;
     }
+
+    
+    /**
+    * This function will return chat summary date wise
+    * @param type $userID
+    * @param type $createdDate
+    * @return type
+    */
 
     public function supportChatByDate($userID, $createdDate) {
-        $response = array();
-        $this->db->where('supp_user', $userID);
-        $this->db->where('DATE(created)', $createdDate);
-        $this->db->from('tbl_chat_supportuser');
-        $result = $this->db->get();
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $result->num_rows();
+        $oData = DB::table('tbl_chat_supportuser')
+        ->where('supp_user', $userID)
+        ->where(DB::raw('DATE(created)'), $createdDate)->get();
+        return  $oData ;
     }
+
+
+    /**
+    * This function is used to get the supportchat date wise
+    * @param type $userID
+    * @return type
+    */
+
 
     public function supportChatGroupByDate($userID) {
-        $response = array();
-        $this->db->select("*, COUNT(created) as createdTotal");
-        $this->db->where('supp_user', $userID);
-        $this->db->group_by('DATE(created)');
-        $this->db->from('tbl_chat_supportuser');
-        $result = $this->db->get();
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_chat_supportuser')
+        ->select('tbl_chat_supportuser.*',DB::raw('COUNT(created) as createdTotal'))
+        ->where('supp_user', $userID)
+        ->groupBy(DB::raw('DATE(created)'))->get();
+        return $oData;
+        
     }
+
+ 
+    /**
+    * This function is used to get support chat by countrywise
+    * @param type $clientID
+    * @return type
+    */
 
     public function supportChatGroupByCountry($userID) {
-        $response = array();
-        $this->db->select("*, COUNT(country) as countryTotal");
-        $this->db->where('supp_user', $userID);
-        $this->db->order_by('countryTotal', 'desc');
-        $this->db->group_by('country');
-        $this->db->from('tbl_chat_supportuser');
-        $result = $this->db->get();
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+       $oData = DB::table('tbl_chat_supportuser')
+        ->select('tbl_chat_supportuser.*', DB::raw('COUNT(country) as countryTotal'))
+        ->where('supp_user', $userID)
+        ->orderBy('countryTotal', 'desc')
+         ->groupBy('country')->get();
+         return $oData;
+        
     }
+
+   
+    /**
+    * This function is used to current support chat
+    * @param type $userID
+    * @return type
+    */
 
     public function supportChatCurrent($userID) {
-        $response = array();
-        $this->db->where('supp_user', $userID);
-        $this->db->where("DATE(created) = ", date('Y-m-d'));
-        $this->db->from('tbl_chat_supportuser');
-        $result = $this->db->get();
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $aData =  DB::table('tbl_chat_supportuser')
+        ->where('supp_user', $userID)
+        ->where(DB::raw('DATE(created)'), date('Y-m-d'))->get();
+        return $aData;
+       
     }
 
+  
+    /**
+    * This function will return current web thread 
+    * @param type $userID
+    * @return type
+    */
+
+
     public function getWebChatCurrentThread($userID) {
-        $this->db->select("*");
-        //$this->db->where("user_to", $userID);
-        //$this->db->or_where("user_from", $userID);
-        $where = '(user_to="' . $userID . '" or user_form = "' . $userID . '")';
-        $this->db->where($where);
-        $this->db->where("DATE(created) = ", date('Y-m-d'));
-        $this->db->from('tbl_chat_message');
-        $query = $this->db->get();
-        //echo $this->db->last_query();
-        if ($query->num_rows() > 0) {
-            $result = $query->result();
-        }
-        return $query->num_rows();
+        $aData =  DB::table('tbl_chat_message')
+        ->select('tbl_chat_message.*')
+         ->where('user_to',$userID)
+        ->orWhere('user_form',$userID)
+        ->where(DB::raw('DATE(created)'),date('Y-m-d'))->get();
+          return $aData;
     }
 
 

@@ -1,4 +1,10 @@
+@extends('layouts.main_template') 
 
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 	<link href="<?php echo base_url(); ?>assets/css/percircle.css" rel="stylesheet" type="text/css">
 	<script src = "<?php echo base_url(); ?>assets/js/percircle.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
@@ -598,3 +604,4 @@ Highcharts.chart('linechart_a', {
             });
         });
     </script>
+    @endsection
