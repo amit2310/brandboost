@@ -454,8 +454,38 @@ class ReviewsModel extends Model {
     }
 	
 	
-	
-	
+	/**
+     * Used to get comment by comment id
+     * @param type $commentID, $status
+     * @return type object
+     */
+	 public static function getCommentLSByCommentID($commentID, $status) {
+
+        $oData = DB::table('tbl_comment_likes')
+            ->where('status', $status)
+            ->where('comment_id', $commentID)
+            ->get();
+
+        return $oData;
+    }
+
+    /**
+     * Used to get review all child comments
+     * @param type $reviewId, $parentId
+     * @return type object
+     */
+    public static function getReviewAllChildComments($reviewId, $parentId) {
+
+        $oData = DB::table('tbl_reviews_comments')
+            ->leftJoin('tbl_reviews', 'tbl_reviews_comments.review_id', '=' , 'tbl_reviews.id')
+            ->Join('tbl_users', 'tbl_reviews_comments.user_id', '=' , 'tbl_users.id')    
+            ->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.id as userId')
+            ->where("tbl_reviews_comments.review_id", $reviewId)
+            ->where("tbl_reviews_comments.parent_comment_id", $parentId)
+            ->orderBy("tbl_reviews_comments.id", "DESC")
+            ->get();
+        return $oData; 
+    }
 	
 
     public function getReviews($campaignID, $aSettings = array()) {
@@ -1293,17 +1323,6 @@ class ReviewsModel extends Model {
         return $response;
     }
 
-    public function getCommentLSByCommentID($commentID, $status) {
-        $this->db->where('status', $status);
-        $this->db->where('comment_id', $commentID);
-        $this->db->from('tbl_comment_likes');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
     
 
     public function getAllMainComments($reviewId) {
@@ -1331,24 +1350,6 @@ class ReviewsModel extends Model {
         $this->db->where("tbl_reviews_comments.status", 1);
         $this->db->where("tbl_reviews_comments.parent_comment_id", $parentId);
         $oResponse = $this->db->get("tbl_reviews_comments");
-
-        if ($oResponse->num_rows() > 0) {
-            $aComments = $oResponse->result();
-        }
-
-        return $aComments;
-        exit;
-    }
-
-    public function getReviewAllChildComments($reviewId, $parentId) {
-        $this->db->select("tbl_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.id as userId");
-        $this->db->join("tbl_reviews", "tbl_reviews_comments.review_id = tbl_reviews.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_reviews_comments.user_id=tbl_users.id");
-        $this->db->order_by("tbl_reviews_comments.id", "DESC");
-        $this->db->where("tbl_reviews_comments.review_id", $reviewId);
-        $this->db->where("tbl_reviews_comments.parent_comment_id", $parentId);
-        $oResponse = $this->db->get("tbl_reviews_comments");
-        //echo $this->db->last_query();exit;
 
         if ($oResponse->num_rows() > 0) {
             $aComments = $oResponse->result();

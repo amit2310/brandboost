@@ -42,13 +42,15 @@ class CommentModel extends Model
         return $oData;
     }
 
+    /**
+     * Used to add comment
+     * @param type $aData
+     * @return type boolean
+     */
     public function addComment($aData) {
 
-        $result = $this->db->insert('tbl_reviews_comments', $aData);
-        if ($result)
-            return true;
-        else
-            return false;
+        $result = DB::table('tbl_reviews_comments')->insert($aData);
+        return true;
     }
 	
 	public function updateComment($aData, $commentID) {
@@ -95,7 +97,6 @@ class CommentModel extends Model
 			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
 			->select('tbl_reviews.*', 'tbl_brandboost.user_id AS ownerID')
 			->where('tbl_reviews.id', $id)
-			->orderBy('tbl_reviews_comments.id', 'desc')
             ->first();
 
         return $oData;
