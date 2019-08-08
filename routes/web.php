@@ -122,6 +122,11 @@ Route::post('admin/modules/referral/deleteReferral','Admin\Modules\Referral@dele
 Route::post('admin/modules/referral/addReferral','Admin\Modules\Referral@addReferral');
 Route::get('admin/modules/referral/setup/{id}','Admin\Modules\Referral@setup');
 Route::post('admin/modules/referral/updateSource','Admin\Modules\Referral@updateSource');
+Route::post('admin/modules/referral/getReferral','Admin\Modules\Referral@getReferral');
+Route::post('admin/modules/referral/updateReferral','Admin\Modules\Referral@updateReferral');
+Route::get('admin/modules/referral/reports/{id}','Admin\Modules\Referral@reports');
+Route::get('admin/modules/referral/stats/{id}','Admin\Modules\Referral@stats');
+Route::get('admin/modules/referral/reward/{id}','Admin\Modules\Referral@reward');
 
 
 

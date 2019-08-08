@@ -1,3 +1,11 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
+
 <?php
 if (!empty($oAdvCouponCodes)) {
     foreach ($oAdvCouponCodes as $oCoupon) {
@@ -188,23 +196,21 @@ if (!empty($oRefCouponCodes)) {
                                             <label class="control-label">&nbsp;</label>
                                             <div class="">
                                                 <div class="input-group">
-
-
-<?php
-if ($oSettings->advocate_discount_type == 'dollar') {
-    $dollarCoupon = 'table-cell';
-    $percentCoupon = 'none';
-    $advDisValue = '$';
-} else if ($oSettings->advocate_discount_type == 'percent') {
-    $percentCoupon = 'table-cell';
-    $dollarCoupon = 'none';
-    $advDisValue = '%';
-} else {
-    $dollarCoupon = 'none';
-    $percentCoupon = 'table-cell';
-    $advDisValue = '%';
-}
-?>
+													<?php
+													if ($oSettings->advocate_discount_type == 'dollar') {
+														$dollarCoupon = 'table-cell';
+														$percentCoupon = 'none';
+														$advDisValue = '$';
+													} else if ($oSettings->advocate_discount_type == 'percent') {
+														$percentCoupon = 'table-cell';
+														$dollarCoupon = 'none';
+														$advDisValue = '%';
+													} else {
+														$dollarCoupon = 'none';
+														$percentCoupon = 'table-cell';
+														$advDisValue = '%';
+													}
+													?>
                                                     <input type="hidden" name="advocate_discount_type" class="form-control advocate_discount_type" value="<?php echo (!empty($oSettings->advocate_discount_type)) ? $oSettings->advocate_discount_type : 'percent'; ?>" placeholder="%">
                                                     <input type="text" name="" value="<?php echo $advDisValue; ?>" id="adCouponVal" class="form-control" readonly />
                                                     <span style="display: <?php echo $dollarCoupon; ?>;" class="input-group-addon bkg_dgreen bor_n adCouponType" amtSign="%" amtText="percent"><i class="icon-percent txt_white"></i></span>
@@ -304,7 +310,7 @@ if ($oSettings->advocate_discount_type == 'dollar') {
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon code</label>
                                                     <div class="">
-                                                        <input type="text" class="form-control" name="multipleCouponCodes" value="<?php echo ($oAdvMultipleCoupon->coupon_code) ? $oAdvMultipleCoupon->coupon_code : ''; ?>" id="multipleCouponCodes" placeholder="e.g. REWARD10" />
+                                                        <input type="text" class="form-control" name="multipleCouponCodes" value="<?php //echo ($oAdvMultipleCoupon->coupon_code) ? $oAdvMultipleCoupon->coupon_code : ''; ?>" id="multipleCouponCodes" placeholder="e.g. REWARD10" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -1197,3 +1203,4 @@ $(document).ready(function(){
 	});
 });
 </script>
+@endsection
