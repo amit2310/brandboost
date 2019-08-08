@@ -192,7 +192,7 @@
 				  			$likeData = App\Models\ReviewsModel::getCommentLSByCommentID($commentData->id, 1);
                             $disLikeData = App\Models\ReviewsModel::getCommentLSByCommentID($commentData->id, 0);
                             $childComments = App\Models\ReviewsModel::getReviewAllChildComments($aReview['id'], $commentData->id);
-                           	
+
 				  	?>
 				  	<div class="bbot pb20 mb20" id="parComment<?php echo $commentData->id; ?>">
 				  		<div class="comment_sec">
@@ -518,9 +518,9 @@ $(document).ready(function(){
 function saveCommentLikeStatus(commentID, statusType) {
     $('.overlaynew').show();
     $.ajax({
-        url: '<?php echo base_url("admin/reviews/saveCommentLikeStatus/"); ?>',
+        url: '<?php echo base_url("admin/reviews/saveCommentLikeStatus"); ?>',
         type: "POST",
-        data: {'commentId': commentID, 'status': statusType},
+        data: {'commentId': commentID, 'status': statusType, '_token': '{{csrf_token()}}'},
         dataType: "json",
         success: function (data) {
             $('.overlaynew').hide();

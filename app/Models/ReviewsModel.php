@@ -486,6 +486,33 @@ class ReviewsModel extends Model {
             ->get();
         return $oData; 
     }
+
+
+    /**
+     * Used to update comment
+     * @param type $aData, $userID, $commentID
+     * @return type object
+     */
+    public function updateCommentLS($aData, $userID, $commentID) {
+
+        $oData = DB::table('tbl_comment_likes')
+                ->where('user_id', $userID)
+                ->where('comment_id', $commentID)
+                ->update($aData);
+        return true;
+    }
+
+
+    /**
+     * Used to save comment like status
+     * @param type $aData
+     * @return type insert id
+     */
+    public function saveCommentLikeStatus($aData) {
+
+        $insert_id = DB::table('tbl_comment_likes')->insertGetId($aData);
+        return $insert_id;
+    }
 	
 
     public function getReviews($campaignID, $aSettings = array()) {
@@ -1031,6 +1058,21 @@ class ReviewsModel extends Model {
         return true;
     }
 
+
+    /**
+    * Cet comment by user id and commnet id
+    * @param type $clientID
+    * @return type
+    */
+    public function getCommentLSByUserIDAndCommentID($userID, $commentID) {
+
+        $res = DB::table('tbl_comment_likes')
+                ->where('user_id', $userID)
+                ->where('comment_id', $commentID)
+                ->get();
+        return $res;
+    }
+
     public function saveSiteReview($aData) {
         $bSaved = $this->db->insert("tbl_reviews_site", $aData);
         if ($bSaved)
@@ -1290,37 +1332,6 @@ class ReviewsModel extends Model {
           $aData = $rResponse->result();
           }
           return $aData; */
-    }
-
-    
-
-    public function saveCommentLikeStatus($aData) {
-        $bSaved = $this->db->insert("tbl_comment_likes", $aData);
-        $insert_id = $this->db->insert_id();
-        //echo $this->db->last_query();
-        if ($bSaved)
-            return $insert_id;
-        return false;
-    }
-
-    public function updateCommentLS($aData, $userID, $commentID) {
-        $this->db->where('user_id', $userID);
-        $this->db->where('comment_id', $commentID);
-        $bSaved = $this->db->update("tbl_comment_likes", $aData);
-        if ($bSaved)
-            return true;
-        return false;
-    }
-
-    public function getCommentLSByUserIDAndCommentID($userID, $commentID) {
-        $this->db->where('user_id', $userID);
-        $this->db->where('comment_id', $commentID);
-        $this->db->from('tbl_comment_likes');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
     }
 
     
