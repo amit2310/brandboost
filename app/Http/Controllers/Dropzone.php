@@ -734,7 +734,7 @@ class dropzone extends Controller
     }
 
 
-    public function upload_s3_attachment_product_review($clientId, $folderName,$orderVal) 
+    public function upload_s3_attachment_product_review($clientId, $folderName,$orderVal="") 
     {
 
         $userDetail = getUserDetailsByUserID($clientId);
@@ -781,10 +781,11 @@ class dropzone extends Controller
                             // Put file to AWS S3
                             $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
                             $filekey = $clientId."/".$folderName."/".$mediaType."/".$videoReviewFile;
-                            //$filekey = "chat_attachments/". $videoReviewFile;
                             $filename = $videoReview['name'][0];
                             $input = file_get_contents($videoReview['tmp_name'][0]);
-                            $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            $s3 = \Storage::disk('s3');
+                            $s3->put($filekey,$input, 'public');
+                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
                         }
                     }
 
@@ -824,7 +825,9 @@ class dropzone extends Controller
                             //$filekey = "chat_attachments/". $videoReviewFile;
                             $filename = $videoReview['name'];
                             $input = file_get_contents($videoReview['tmp_name']);
-                            $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            $s3 = \Storage::disk('s3');
+                            $s3->put($filekey,$input, 'public');
                         }
                     }
 
