@@ -249,8 +249,8 @@
 
 							  						$avtarImageChild = $childComment->avatar == 'avatar_image.png' ? base_url('assets/images/userp.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $childComment->avatar;
 
-                                                    $likeChildData = $this->mReviews->getCommentLSByCommentID($childComment->id, 1);
-                                                    $disLikeChildData = $this->mReviews->getCommentLSByCommentID($childComment->id, 0);
+                                                    $likeChildData = App\Models\ReviewsModel::getCommentLSByCommentID($childComment->id, 1);
+                                                    $disLikeChildData = App\Models\ReviewsModel::getCommentLSByCommentID($childComment->id, 0);
 												?>
 								  				<div class="reply_sec mt30">
 								  				<div class="media-left"><!-- <img src="<?php echo base_url(); ?>assets/images/cust2.png" width="36"> -->
@@ -426,7 +426,7 @@ $(document).ready(function(){
             $.ajax({
                 url: '<?php echo base_url("admin/comments/add_comment"); ?>',
                 type: "POST",
-                data: {'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent},
+                data: {'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent, '_token': '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -449,7 +449,7 @@ $(document).ready(function(){
         $.ajax({
             url: '<?php echo base_url('admin/comments/getCommentById'); ?>',
             type: "POST",
-            data: {commentID: commentID},
+            data: {commentID: commentID, '_token': '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -468,6 +468,7 @@ $(document).ready(function(){
     $("#updateComment").submit(function () {
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
+        formData.append('_token', '{{csrf_token()}}');
         $.ajax({
             url: '<?php echo base_url('admin/comments/update_comment'); ?>',
             type: "POST",

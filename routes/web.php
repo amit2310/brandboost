@@ -138,6 +138,8 @@ Route::post('admin/reviews/saveCommentLikeStatus','Admin\Reviews@saveCommentLike
 
 
 Route::post('admin/comments/add_comment','Admin\Comments@addComment');
+Route::post('admin/comments/getCommentById','Admin\Comments@getCommentById');
+Route::post('admin/comments/update_comment','Admin\Comments@update_comment');
 
 
 Route::get('admin/feedback/listall','Admin\Feedback@getAllListingData');

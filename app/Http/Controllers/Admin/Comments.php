@@ -21,15 +21,19 @@ class Comments extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/comments/mylist', array('oMyComments' => $oMyComments));
     }
 
-    public function getCommentById() {
+    /**
+     * Function use for get comment by id
+     *
+     */
+    public function getCommentById(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $aComment = $this->mComment->getComment($post['commentID']);
-            if ($aComment) {
+        if ($request->commentID) {
+            $mComment = new CommentModel();
+            $aComment = $mComment->getComment($request->commentID);
+            if ($aComment->count() > 0) {
                 $response['status'] = 'success';
                 $response['result'] = $aComment;
             } else {
@@ -87,21 +91,20 @@ class Comments extends Controller {
         
     }
 
-    public function update_comment() {
+    public function update_comment(Request $request) {
 
         $response = array();
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        if (!empty($request->edit_commentid)) {
 
-            $commentID = strip_tags($post['edit_commentid']);
-            $edit_content = strip_tags($post['edit_content']);
+            $commentID = strip_tags($request->edit_commentid);
+            $edit_content = strip_tags($request->edit_content);
 
             $aData = array(
                 'content' => $edit_content
             );
-
-            $result = $this->mComment->updateComment($aData, $commentID);
+            $mComment = new CommentModel();
+            $result = $mComment->updateComment($aData, $commentID);
             if ($result) {
                 $response['status'] = 'success';
                 $response['message'] = "Comment has been updated successfully.";
