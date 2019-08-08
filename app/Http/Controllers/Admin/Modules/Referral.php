@@ -137,12 +137,18 @@ class Referral extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $title = $request->title;
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		
+        /*$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $hashcode = '';
         for ($i = 0; $i < 20; $i++) {
             $hashcode .= $characters[rand(0, strlen($characters))];
         }
+        $hashcode = $hashcode . date('Ymdhis');*/
+		
+		$str=rand(); 
+		$hashcode = sha1($str); 
         $hashcode = $hashcode . date('Ymdhis');
+		
         $aData = array(
             'hashcode' => $hashcode,
             'user_id' => $userID,
@@ -193,7 +199,103 @@ class Referral extends Controller {
     }
 	
 	
-	
+	public function setup($referralID) {
+        if (empty($referralID)) {
+            redirect("admin/modules/referral");
+            exit;
+        }
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $selectedTab = Input::get('t');
+        $setReferralTab = Session::get("setReferralTab");
+
+        if (empty($setReferralTab)) {
+            Session::put("setReferralTab", 'config');
+            $setReferralTab = Session::get("setReferralTab");
+        }
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a href="' . base_url('admin/modules/referral/') . '" class="sidebar-control hidden-xs">Referral </a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Setup" class="sidebar-control active hidden-xs ">Setup</a></li>
+                    </ul>';
+
+        $oReferral = ReferralModel::getReferral($userID, $referralID);
+        if ($oReferral->user_id != $userID) {
+            redirect('admin/modules/referral');
+            exit;
+        }
+
+        if (empty($oReferral)) {
+            die("Not authorized to access this page");
+        }
+
+        $accountID = $oReferral->hashcode;
+
+
+        //Configuration Related Data
+        $oAccountSettings = ReferralModel::getAccountSettings($referralID);
+
+        $campaignTemplates = ReferralModel::getReferralTemplates($referralID);
+
+        $eventsData = ReferralModel::getReferralEvents($referralID);
+
+        //Reward related Data
+        $oSettings = ReferralModel::getReferralSettings($accountID, true);
+        $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
+        if (!empty($oSettings)) {
+            $programID = $oSettings->rewardID;
+            $advCouponID = $oSettings->advCouponID;
+            $refCouponID = $oSettings->refCouponID;
+            if ($advCouponID > 0) {
+                $oAdvCouponCodes = ReferralModel::getAdvocateCouponCodes($advCouponID);
+            }
+            if ($refCouponID > 0) {
+                $oRefCouponCodes = ReferralModel::getReferralCouponCodes($refCouponID);
+            }
+        }
+
+        //List of Advocates related data 
+        $oContacts = ReferralModel::getMyAdvocates($accountID);
+
+        $moduleName = 'referral';
+        $oEvents = WorkflowModel::getWorkflowEvents($referralID, $moduleName);
+        $oEventsType = array('main', 'followup');
+        $oCampaignTags = WorkflowModel::getWorkflowCampaignTags($moduleName);
+        $oDefaultTemplates = WorkflowModel::getWorkflowDefaultTemplates($moduleName);
+
+
+        $aData = array(
+            'title' => 'Referral Settings',
+            'pagename' => $breadcrumb,
+            'defalutTab' => $defaultTab,
+            'programID' => $programID,
+            'oReferral' => $oReferral,
+            'oSettings' => $oSettings,
+            'accountID' => $accountID,
+            'campaignTemplates' => $campaignTemplates,
+            'oEvents' => $oEvents,
+            'moduleName' => $moduleName,
+            'moduleUnitID' => $referralID,
+            'oEventsType' => $oEventsType,
+            'oCampaignTags' => $oCampaignTags,
+            'oDefaultTemplates' => $oDefaultTemplates,
+            'eventsData' => $eventsData,
+            'oAccountSettings' => $oAccountSettings,
+            'oAdvCouponCodes' => $oAdvCouponCodes,
+            'oRefCouponCodes' => $oRefCouponCodes,
+            'oContacts' => $oContacts,
+            'setReferralTab' => $setReferralTab,
+            'userID' => $userID
+        );
+
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+		
+		return view('admin.modules.referral.setup-source', $aData);
+    }
 	
 	
 	
@@ -420,109 +522,7 @@ class Referral extends Controller {
         exit;
     }
 
-    public function setup($referralID) {
-        if (empty($referralID)) {
-            redirect("admin/modules/referral");
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $selectedTab = $this->input->get('t');
-        $setReferralTab = $this->session->userdata("setReferralTab");
-
-        if (empty($setReferralTab)) {
-            $this->session->set_userdata("setReferralTab", 'config');
-            $setReferralTab = $this->session->userdata("setReferralTab");
-        }
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/modules/referral/') . '" class="sidebar-control hidden-xs">Referral </a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Setup" class="sidebar-control active hidden-xs ">Setup</a></li>
-                    </ul>';
-
-        $oReferral = $this->mReferral->getReferral($userID, $referralID);
-        if ($oReferral->user_id != $userID) {
-            redirect('admin/modules/referral');
-            exit;
-        }
-
-        if (empty($oReferral)) {
-            die("Not authorized to access this page");
-        }
-
-        $accountID = $oReferral->hashcode;
-
-
-        //Configuration Related Data
-        $oAccountSettings = $this->mReferral->getAccountSettings($referralID);
-
-
-        //$oTemplates = $this->mReferral->getUserReferralTemplates($oAccountSettings->id);
-        $campaignTemplates = $this->mReferral->getReferralTemplates($referralID);
-
-        $eventsData = $this->mReferral->getReferralEvents($referralID);
-
-        //Reward related Data
-        $oSettings = $this->mReferral->getReferralSettings($accountID, true);
-        //echo $userID;
-        //pre($oSettings);
-        $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
-        if (!empty($oSettings)) {
-            $programID = $oSettings->rewardID;
-            $advCouponID = $oSettings->advCouponID;
-            $refCouponID = $oSettings->refCouponID;
-            if ($advCouponID > 0) {
-                $oAdvCouponCodes = $this->mReferral->getAdvocateCouponCodes($advCouponID);
-            }
-            if ($refCouponID > 0) {
-                $oRefCouponCodes = $this->mReferral->getReferralCouponCodes($refCouponID);
-            }
-        }
-
-        //List of Advocates related data 
-        $oContacts = $this->mReferral->getMyAdvocates($accountID);
-
-        $moduleName = 'referral';
-        $oEvents = $this->mWorkflow->getWorkflowEvents($referralID, $moduleName);
-        $oEventsType = array('main', 'followup');
-        $oCampaignTags = $this->mWorkflow->getWorkflowCampaignTags($moduleName);
-        $oDefaultTemplates = $this->mWorkflow->getWorkflowDefaultTemplates($moduleName);
-
-
-        $aData = array(
-            'title' => 'Referral Settings',
-            'pagename' => $breadcrumb,
-            'defalutTab' => $defaultTab,
-            'programID' => $programID,
-            'oReferral' => $oReferral,
-            'oSettings' => $oSettings,
-            'oTemplates' => $oTemplates,
-            'accountID' => $accountID,
-            'campaignTemplates' => $campaignTemplates,
-            'oEvents' => $oEvents,
-            'moduleName' => $moduleName,
-            'moduleUnitID' => $referralID,
-            'oEventsType' => $oEventsType,
-            'oCampaignTags' => $oCampaignTags,
-            'oDefaultTemplates' => $oDefaultTemplates,
-            'eventsData' => $eventsData,
-            'oAccountSettings' => $oAccountSettings,
-            'oAdvCouponCodes' => $oAdvCouponCodes,
-            'oRefCouponCodes' => $oRefCouponCodes,
-            'oContacts' => $oContacts,
-            'setReferralTab' => $setReferralTab,
-            'userID' => $userID
-        );
-
-
-
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $this->template->load('admin/admin_template_new', 'admin/modules/referral/setup-source', $aData);
-    }
+    
 
     public function reward($referralID) {
         if (empty($referralID)) {

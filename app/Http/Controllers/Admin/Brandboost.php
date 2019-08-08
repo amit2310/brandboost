@@ -2356,13 +2356,11 @@ class Brandboost extends Controller {
                 'title' => 'Brand Boost add Review',
                 'pagename' => $breadcrumb,
                 'aBrandboostList' => $aBrandboostList,
-                //'oCampaign' => $oCampaign,
                 'aUser' => $aUser
             );
         }
 		
 		return view('admin.brandboost.add_review', $aData);
-        //$this->template->load('admin/admin_template_new', 'admin/brandboost/add_review', $aData);
     }
 	
 	/**

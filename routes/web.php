@@ -120,6 +120,8 @@ Route::post('admin/modules/referral/changeStatus','Admin\Modules\Referral@change
 Route::post('admin/modules/referral/moveToArchiveReferral','Admin\Modules\Referral@moveToArchiveReferral');
 Route::post('admin/modules/referral/deleteReferral','Admin\Modules\Referral@deleteReferral');
 Route::post('admin/modules/referral/addReferral','Admin\Modules\Referral@addReferral');
+Route::get('admin/modules/referral/setup/{id}','Admin\Modules\Referral@setup');
+Route::post('admin/modules/referral/updateSource','Admin\Modules\Referral@updateSource');
 
 
 
