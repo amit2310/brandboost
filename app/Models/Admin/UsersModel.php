@@ -324,7 +324,7 @@ class UsersModel extends Model {
             $aData =  DB::table('tbl_subscribers')
             ->where($key[0], $val[0])
             ->limit(1)->first();
-            pre($aData); die;
+            return $aData;
            
         }
         return false;

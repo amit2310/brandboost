@@ -1214,7 +1214,7 @@ FROM
             $randstring .= $characters[rand(0, strlen($characters))];
         }
         $password = strip_tags($randstring);
-        $email ='darwin454@123789.org';
+        $email ='regan@123789.org';
         $userID = $this->checkIfBrandboostUserExists(array('email' => $email));
         if ($userID == false) {
             $aChargebeeData = array(
@@ -1310,6 +1310,7 @@ FROM
             exit;
         }
 
+
         $bRegistredSubscriber = false;
         $aSubscriberData = array(
             'owner_id' => $clientID,
@@ -1333,13 +1334,17 @@ FROM
         if (empty($userID)) {
             //Start registration process
             //Check if exists in global subscriber table
+
             $oGlobalUser = $this->checkIfGlobalSubscriberExists($clientID, 'email', $email);
+
             if (!empty($oGlobalUser)) {
+
                 //Subscriber exists already
                 $subscriberID = $oGlobalUser->id;
                 $bRegistredSubscriber = true;
             } else {
                 //Register Subscriber
+
                 $subscriberID = $this->addGlobalSubscriber($aSubscriberData);
                 $bRegistredSubscriber = true;
             }
@@ -1352,7 +1357,9 @@ FROM
                     'email' => $email,
                     'mobile' => $phone
                 );
+
                 $userID = $this->addBrandboostUserAccount($aRegistrationData, 2, true);
+
             }
 
             if ($bRegistredSubscriber == true && $userID > 0) {
@@ -1368,6 +1375,7 @@ FROM
         } else {
             //User already exists
             //check whether or not subscriber exists for the same users
+
             $oGlobalUser = $this->checkIfGlobalSubscriberExists($clientID, 'email', $email);
             if (empty($oGlobalUser)) {
                 //subscriber doesn't exists
@@ -1410,7 +1418,7 @@ FROM
             ->select('*')
             ->where($key[0], $val[0])
             ->limit(1)->first($aParam);
-            return $oData;
+            return $oData->id;
            
         }
     }

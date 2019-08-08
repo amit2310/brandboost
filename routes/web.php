@@ -309,6 +309,7 @@ Route::post('dropzone/upload_editor_image','Dropzone@upload_editor_image');
 Route::post('dropzone/upload_s3_attachment/{clientId}/{folderName}','Dropzone@upload_s3_attachment');
 Route::post('webchat/dropzone/upload_profile_image','Dropzone@upload_profile_image');
 Route::post('webchat/dropzone/upload_s3_attachment/{clientId}/{folderName}','Dropzone@upload_s3_attachment');
+Route::get('dropzone/upload_s3_attachment_product_review/{clientId}/{folderName}','Dropzone@upload_s3_attachment_product_review');
 
 
 //Templates Module
@@ -473,6 +474,11 @@ Route::post('admin/brandboost/addFaqData','Admin\Brandboost@addFaqData');
 Route::get('for/{brand}/{id}','Company@index');
 Route::get('for/{brand}','Company@index');
 Route::post('admin/questions/saveNewQuestion','Admin\Questions@saveNewQuestion');
+Route::post('admin/brandboost/DeleteObjectFromS3','Admin\Brandboost@DeleteObjectFromS3');
+Route::post('reviews/saveNewReview','Reviews@saveNewReview');
+
+
+
 
 
 //Team Module

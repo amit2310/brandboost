@@ -821,7 +821,7 @@ class Questions extends Controller {
                 $showName = 1;
             }
 
-
+          
             //Uploaded Question file
             $questionFile = $post['question_uploaded_name'];
             $aQuestionFiles = array();
@@ -839,12 +839,15 @@ class Questions extends Controller {
             $bRequireGlobalSubs = false;
             //Check if user exist
             $userID = $mUser->checkIfUser(array('email' => $email));
+
             // User does not exists then registration
             if ($userID == false) {
                 //Check if exists in subscriber list
-                $subscriberID = $mUser->checkIfSubscriber(array('email' => $email));
 
+                $subscriberID = $mUser->checkIfSubscriber(array('email' => $email));
+               
                 if ($subscriberID > 0) {
+                     
                     $aSubscriber = $mUser->getSubscriberInfo($subscriberID);
                     $firstName = $aSubscriber->firstname;
                     $lastName = $aSubscriber->lastname;
@@ -860,6 +863,7 @@ class Questions extends Controller {
                     }
                 }
 
+                 
                 if (empty($fullName) || empty($email)) {
                     //Display errors, fields should not be blank
                     $response = array('status' => 'error', 'msg' => 'form fields are not validated!');
@@ -911,6 +915,7 @@ class Questions extends Controller {
                 'allow_show_name' => $showName,
                 'created' => date("Y-m-d H:i:s")
             );
+
 
             $questionID = $mQuestion->addQuestion($aData);
             if ($questionID) {

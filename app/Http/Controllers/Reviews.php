@@ -491,6 +491,7 @@ class Reviews extends Controller {
             } else if ($type == 'product' || $type == 'service') {
 
                 if(!empty($productId)) {
+
                     foreach ($productId as $key => $productData) {
                         $fullName = $post['fullname'][$productData];
                         $aNameChunks = explode(" ", $fullName);
@@ -508,7 +509,8 @@ class Reviews extends Controller {
                             'phone' => $mobile[$productData]
                         );
                         $aRegistrationData['clientID'] = $clientID;
-                        $userID = $this->mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
+
+                        $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 
                         $productReviewFile = $post['uploaded_name_' . $productData];
                         $productReviewFileArray = array();
@@ -551,6 +553,7 @@ class Reviews extends Controller {
                     );
 
                     $aRegistrationData['clientID'] = $clientID;
+                    
                     $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 
                     $productReviewFile = $post['uploaded_name'];
@@ -635,7 +638,7 @@ class Reviews extends Controller {
                 //Update userid of the subscriber in subscriber list
 
                 if ($subscriberID > 0) {
-                    $this->mReviews->updateSubscriber(array('user_id' => $userID), $subscriberID);
+                    $mReviews->updateSubscriber(array('user_id' => $userID), $subscriberID);
                 }
             }
 
