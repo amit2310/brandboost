@@ -4,24 +4,24 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Admin\Crons\ManagerModel;
-use App\Models\Admin\Crons\NpsModel;
+use App\Models\Admin\Crons\ReferralModel;
 use App\Models\Admin\UsersModel;
 
-class NpsInviter extends Command
+class ReferralInviter extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'inviter:nps';
+    protected $signature = 'inviter:referral';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This cron used to send emails/sms for NPS module';
+    protected $description = 'This cron used to send emails/sms for Referral module';
 
     /**
      * Create a new command instance.
@@ -66,65 +66,75 @@ class NpsInviter extends Command
     
     
     /**
-     * Starts the campaign cron
+     * 
      */
     public function startCampaign() {
         
         //Instanciate cron manager model to access its properties and methods
         $mCron = new ManagerModel();
         
-        //Instanciate Nps cron model to access its properties and methods
-        $mInviter = new NpsModel();
+        //Instanciate Referral cron model to access its properties and methods
+        $mInviter = new ReferralModel();
 
         //Check Cron Lock
         $bLocked = false;
-        $oCron = $mCron->checkCronStatus('nps');
+        $oCron = $mCron->checkCronStatus('referral');
         if ($oCron->locked == true) {
             die("Currently cron is locked");
         }
 
         if ($oCron->locked == false) {
             //Lock Cron
-            $bLocked = $mCron->lockCron('nps');
+            $bLocked = $mCron->lockCron('referral');
         }
 
         if ($bLocked == false) {
             die("Currently cron is locked!!");
         }
-
         $aEvents = $mInviter->getInviterEvents();
-        //pre($aEvents);
-        //die;
+        
         if (!empty($aEvents)) {
             foreach ($aEvents as $aEvent) {
                 $bActiveSubsription = false;
                 $userID = $aEvent->client_id;
                 if ($userID > 0) {
                     $bActiveSubsription = UsersModel::isActiveSubscription($userID);
-                    //pre($bActiveSubsription); exit;
                     if ($bActiveSubsription == true) {
-                        
-                        $eventType = $aEvent->event_type;                        
 
-                        //echo "Event Type is ". $eventType;
+                        $eventType = $aEvent->event_type;
+                        $previousEventID = $aEvent->previous_event_id;
+
                         switch ($eventType) {
                             case "main":
-                                $this->processNPSInvite($aEvent);
+                                $this->processInvite($aEvent);
                                 break;
                             case "followup":
-                                $this->processNPSReminder($aEvent);
+                                $this->processInviteReminder($aEvent);
                                 break;
-                            case "invite-email":
-                                $this->processNPSInvite($aEvent);
+
+                            /* case "invite-email":
+                              $this->processInvite($aEvent);
+                              break;
+                              case "invite-sms":
+                              $this->processInvite($aEvent);
+                              break;
+                              case "invite-email-reminder":
+                              $this->processInviteReminder($aEvent);
+                              break;
+                              case "invite-sms-reminder":
+                              $this->processInviteReminder($aEvent);
+                              break; */
+                            case "sale-email":
+                                //$this->processSale($aEvent);
                                 break;
-                            case "invite-sms":
-                                $this->processNPSInvite($aEvent);
+                            case "sale-sms":
+                                //$this->processSale($aEvent);
                                 break;
-                            case "reminder-email":
-                                $this->processNPSReminder($aEvent);
+                            case "sale-email-reminder":
+                                //$this->processSaleReminder($aEvent);
                                 break;
-                            case "reminder-sms":
-                                $this->processNPSReminder($aEvent);
+                            case "sale-sms-reminder":
+                                //$this->processSaleReminder($aEvent);
                                 break;
                         }
                     }
@@ -132,18 +142,23 @@ class NpsInviter extends Command
             }
         }
         //Release Cron
-        $mCron->releaseCron('nps');
+        $mCron->releaseCron('referral');
         print("Script Ended");
     }
 
     
-    public function processNPSInvite($aEvent = array()) {
-        //Instanciate Nps cron model to access its properties and methods
-        $mInviter = new NpsModel();
-        
+    /**
+     * 
+     * @param type $aEvent
+     */
+    public function processInvite($aEvent = array()) {
+        //Instanciate Referral cron model to access its properties and methods
+        $mInviter = new ReferralModel();
+
         if (!empty($aEvent)) {
             //pre($aEvent);
-            $npsID = $aEvent->nps_id;
+
+            $referralID = $aEvent->referral_id;
             $accountID = $aEvent->account_id;
             $inviterID = $aEvent->id;
             $previousEventID = $aEvent->previous_event_id;
@@ -154,24 +169,20 @@ class NpsInviter extends Command
             
             //Get all subscriber and then find eligible subscribers only
             if (empty($previousEventID)) {
-                $oSubscribers = $mInviter->getInviterEligibleSubscribers($inviterID, $npsID);
+                $oSubscribers = $mInviter->getInviterEligibleSubscribers($inviterID, $accountID);
             } else {
                 $oSubscribers = $mInviter->getNextInviterEligibleSubscribers($inviterID, $previousEventID);
             }
-
-            if ($npsID == $this->testCampaignId) {
+            
+            if ($referralID == $this->testCampaignId) {
                 echo "<br>Check 1";
                 pre($oSubscribers);
             }
 
-            //echo "Inviter ID is ". $inviterID;
-            //pre($oSubscribers);
-            //die;
             $timeNow = time();
             $aEligibleSubscriber = array();
             if (!empty($oSubscribers)) {
                 foreach ($oSubscribers as $oSubscriber) {
-
                     if (empty($previousEventID)) {
                         $addedTime = strtotime($oSubscriber->created);
                     } else {
@@ -179,7 +190,7 @@ class NpsInviter extends Command
                     }
                     $deliverAt = $this->simplifiedTime($delayType, $delayUnit, $delayValue, $addedTime);
                     $endTime = $deliverAt + 1800;
-                    if ($npsID == $this->testCampaignId) {
+                    if ($referralID == $this->testCampaignId) {
                         echo "<br>Check 2";
                         echo "<br>=====================Subscriber Details";
                         pre($oSubscriber);
@@ -193,14 +204,12 @@ class NpsInviter extends Command
                     }
                 }
             }
-
-            if ($npsID == $this->testCampaignId) {
+            
+            
+            if ($referralID == $this->testCampaignId) {
                 echo "<br>Check 3";
                 pre($aEligibleSubscriber);
             }
-
-            //pre($aEligibleSubscriber);
-            //die;
 
             if (!empty($aEligibleSubscriber)) {
                 $aFireData = array(
@@ -214,13 +223,16 @@ class NpsInviter extends Command
         }
     }
 
-    public function processNPSReminder($aEvent = array()) {
-        //Instanciate Nps cron model to access its properties and methods
-        $mInviter = new NpsModel();
+    
+    /**
+     * 
+     * @param type $aEvent
+     */
+    public function processInviteReminder($aEvent = array()) {
+        //Instanciate Referral cron model to access its properties and methods
+        $mInviter = new ReferralModel();
         
         if (!empty($aEvent)) {
-            //pre($aEvent);
-            
             $accountID = $aEvent->account_id;
             $inviterID = $aEvent->id;
             $previousEventID = $aEvent->previous_event_id;
@@ -230,9 +242,8 @@ class NpsInviter extends Command
             $delayValue = $oParams->delay_value;
             $frequency = $aEvent->reminder_loop;
             //Get all subscriber and then find eligible subscribers only
-            $oSubscribers = $mInviter->getReminderSubscribers($inviterID, $previousEventID, $frequency);
-            //pre($oSubscribers);
-            //echo "Frequency is ". $frequency;
+            $oSubscribers = $mInviter->getInviteReminderSubscribers($inviterID, $previousEventID, $frequency);
+            
             if ($frequency > 1 && !empty($oSubscribers)) {
                 foreach ($oSubscribers as $oSubscriber) {
                     $oLatestSubscriber[$oSubscriber->subscriber_id] = $oSubscriber;
@@ -240,29 +251,20 @@ class NpsInviter extends Command
             } else {
                 $oLatestSubscriber = $oSubscribers;
             }
-            //pre("===================");
-            //pre($oLatestSubscriber);
-            //die;
-//            die;
+            
             $timeNow = time();
             $aEligibleSubscriber = array();
             if (!empty($oLatestSubscriber)) {
                 foreach ($oLatestSubscriber as $oSubscriber) {
-                    //Check if NPS rating given
-                    //$ifActionTaken = $mInviter->checkIfNPSScoreGiven($accountID, $oSubscriber->id);
-                    $ifActionTaken = false;
-                    if ($ifActionTaken == false) {
-                        $reminderTime = strtotime($oSubscriber->start_at);
-                        $deliverAt = $this->simplifiedTime($delayType, $delayUnit, $delayValue, $reminderTime);
-                        //echo "Next Reminder Date is ". date("Y-m-d H:i:s", $deliverAt);
-                        if ($deliverAt <= $timeNow && $oSubscriber->status == 1) {
-                            $aEligibleSubscriber[] = $oSubscriber;
-                        }
+                    $reminderTime = strtotime($oSubscriber->start_at);
+                    $deliverAt = $this->simplifiedTime($delayType, $delayUnit, $delayValue, $reminderTime);
+                    $endTime = $deliverAt + 1800;
+                    if ($deliverAt <= $timeNow && $timeNow <= $endTime && $oSubscriber->status == 1) {
+                        $aEligibleSubscriber[] = $oSubscriber;
                     }
                 }
             }
-            //pre($aEligibleSubscriber);
-
+            
             if (!empty($aEligibleSubscriber)) {
                 $aFireData = array(
                     'inviter_data' => $aEvent,
@@ -275,78 +277,179 @@ class NpsInviter extends Command
             }
         }
     }
+    
+    
+    /**
+     * 
+     * @param type $aEvent
+     */
+    public function processSale($aEvent = array()) {
+        //Instanciate Referral cron model to access its properties and methods
+        $mInviter = new ReferralModel();
+        
+        if (!empty($aEvent)) {
 
+            $accountID = $aEvent->account_id;
+            $inviterID = $aEvent->id;
+            $previousEventID = $aEvent->previous_event_id;
+            $oParams = json_decode($aEvent->data);
+            $delayType = $oParams->delay_type; //after or before
+            $delayUnit = $oParams->delay_unit; // minute or hour or day or week or year
+            $delayValue = $oParams->delay_value;
+            //Get all subscriber and then find eligible subscribers only
+
+            if (empty($previousEventID)) {
+                $oLatestSales = $mInviter->getLatestSales($accountID);
+
+                if (!empty($oLatestSales)) {
+                    foreach ($oLatestSales as $oSales) {
+                        $aSaleIDs[] = $oSales->id;
+                        $aUsersIDs[] = $oSales->advocate_id;
+                    }
+                }
+
+                $oSubscribers = $mInviter->getSalesSubscribers($accountID, $inviterID, $aUsersIDs, $aSaleIDs, $oLatestSales);
+            }
+
+            if ($previousEventID > 0) {
+                $oSubscribers = $mInviter->getNextSalesSubscribers($inviterID, $previousEventID);
+            }
+
+            $timeNow = time();
+            $aEligibleSubscriber = array();
+            if (!empty($oSubscribers)) {
+                foreach ($oSubscribers as $oSubscriber) {
+
+                    if ($previousEventID > 0) {
+                        $saleTime = strtotime($oSubscriber->start_at);
+                    } else {
+                        $saleTime = strtotime($oSubscriber->created); //sale date  
+                    }
+                    $deliverAt = $this->simplifiedTime($delayType, $delayUnit, $delayValue, $saleTime);
+                    if ($deliverAt <= $timeNow && $oSubscriber->status == 1) {
+                        $aEligibleSubscriber[] = $oSubscriber;
+                    }
+                }
+            }
+
+            if (!empty($aEligibleSubscriber)) {
+                $aFireData = array(
+                    'inviter_data' => $aEvent,
+                    'subscribers' => $aEligibleSubscriber,
+                    'account_id' => $accountID
+                );
+
+                $this->fireAutomationCampaign($aFireData);
+            }
+        }
+    }
+
+    
+    /**
+     * 
+     */
+    public function processSaleReminder($aEvent = array()) {
+        //Instanciate Referral cron model to access its properties and methods
+        $mInviter = new ReferralModel();
+        
+        if (!empty($aEvent)) {
+            $accountID = $aEvent->account_id;
+            $inviterID = $aEvent->id;
+            $previousEventID = $aEvent->previous_event_id;
+            $oParams = json_decode($aEvent->data);
+            $delayType = $oParams->delay_type; //after or before
+            $delayUnit = $oParams->delay_unit; // minute or hour or day or week or year
+            $delayValue = $oParams->delay_value;
+            //Get all subscriber and then find eligible subscribers only
+            $oSubscribers = $mInviter->getReminderSales($accountID, $inviterID, $previousEventID);
+            
+            $timeNow = time();
+            $aEligibleSubscriber = array();
+            if (!empty($oSubscribers)) {
+                foreach ($oSubscribers as $oSubscriber) {
+                    $reminderTime = strtotime($oSubscriber->start_at); //sale date
+                    $deliverAt = $this->simplifiedTime($delayType, $delayUnit, $delayValue, $reminderTime);
+                    if ($deliverAt <= $timeNow && $oSubscriber->status == 1) {
+                        $aEligibleSubscriber[] = $oSubscriber;
+                    }
+                }
+            }
+            
+            if (!empty($aEligibleSubscriber)) {
+                $aFireData = array(
+                    'inviter_data' => $aEvent,
+                    'subscribers' => $aEligibleSubscriber,
+                    'account_id' => $accountID
+                );
+
+                $this->fireAutomationCampaign($aFireData);
+            }
+        }
+    }
+
+    
+    /**
+     * 
+     */
     public function fireAutomationCampaign($aData = array()) {
-        //Instanciate Nps cron model to access its properties and methods
-        $mInviter = new NpsModel();
+        //Instanciate Referral cron model to access its properties and methods
+        $mInviter = new ReferralModel();
         
         $oEvent = $aData['inviter_data'];
-        $npsID = $oEvent->nps_id;
+        $referralID = $oEvent->referral_id;
         $inviterID = $oEvent->id;
         $previousEventID = $oEvent->previous_event_id;
         $clientID = $oEvent->client_id;
         $aSubscribers = $aData['subscribers'];
         $accountID = $aData['account_id'];
         $frequence = $aData['frequency'];
+        
         //Get owner information
-        $this->client_from_email = '';
-        $clientFirstName = $oEvent->client_first_name;
-        $clientLastName = $oEvent->client_last_name;
+        $this->client_from_email = '';        
         $clientEmail = $oEvent->client_email;
-        $clientPhone = $oEvent->client_phone;
+        
         
         if(!empty($clientEmail)){
             $this->client_from_email = $clientEmail;
         }
         
-        
-        //echo "Inviter ID is ". $inviterID;
-        //echo '<br> -------------------- subscriber data ------------------------- <br>';
-        //pre($aData);
-        //echo '<br> -------------------- Campaign data ------------------------- <br>';
         $aCampaigns = $mInviter->getAutomationCampaign($inviterID);
-
-        if ($npsID == $this->testCampaignId) {
+        if ($referralID == $this->testCampaignId) {
             echo "<br>Check 4";
             pre($aCampaigns);
         }
-        //pre($aCampaigns);
-        //die("ok");
         if (!empty($aCampaigns)) {
             foreach ($aCampaigns as $aCampaign) {
                 $campaignType = $aCampaign->campaign_type;
                 $greeting = $aCampaign->greeting;
                 $introduction = $aCampaign->introduction;
                 $content = base64_decode($aCampaign->stripo_compiled_html);
-                $content = str_replace(array('{{GREETING}}','{GREETING}', '{{INTRODUCTION}}', '{INTRODUCTION}'), array($greeting, $greeting, $introduction, $introduction), $content);
-                if ($npsID == $this->testCampaignId) {
+                $content = str_replace(array('{GREETING}', '{INTRODUCTION}'), array($greeting, $introduction), $content);
+                if ($referralID == $this->testCampaignId) {
                     echo "<br>Check 5";
                     echo "Campaign Type is " . $campaignType;
                 }
                 if (strtolower($campaignType) == 'email') {
                     $subject = $aCampaign->subject;
-                    $fromEmail = $aCampaign->from_email;
-                    
+                    $fromEmail = isset($aCampaign->from_email) ? $aCampaign->from_email : '';
                     $defaultFromEmail = (!empty($this->client_from_email)) ? $this->client_from_email : $this->from_email;
                     $fromEmail = empty($fromEmail) ? $defaultFromEmail : $fromEmail;
                     $aEmailData = array(
                         'subject' => $subject,
                         'content' => $content,
                         'from' => $fromEmail,
+                        'referral_id' => $referralID,
                         'account_id' => $accountID,
                         'campaign_id' => $aCampaign->id,
-                        'nps_id' => $npsID,
                         'inviter_id' => $inviterID,
                         'previous_event_id' => $previousEventID,
                         'client_id' => $clientID,
-                        'module_name' => 'nps',
+                        'module_name' => 'referral',
                         'frequence' => $frequence
                     );
                     // Now Send email
                     $this->sendBulkAutomationEmail($aSubscribers, $aEmailData);
                 } else if (strtolower($campaignType) == 'sms') {
-                    //$content = strip_tags(base64_decode($aCampaign->html));
-                    $content = str_replace('<br>', "\n", $content);
                     $content = str_replace('<br/>', "\n", $content);
                     $content = str_replace('<br />', "\n", $content);
                     $content = strip_tags(nl2br($content));
@@ -355,11 +458,11 @@ class NpsInviter extends Command
                         'content' => $content,
                         'campaign_id' => $aCampaign->id,
                         'account_id' => $accountID,
-                        'nps_id' => $npsID,
+                        'referral_id' => $referralID,
                         'inviter_id' => $inviterID,
                         'previous_event_id' => $previousEventID,
                         'client_id' => $clientID,
-                        'module_name' => 'nps',
+                        'module_name' => 'referral',
                         'frequence' => $frequence
                     );
                     $this->sendBulkAutomationSms($aSubscribers, $aSmsData);
@@ -368,18 +471,22 @@ class NpsInviter extends Command
         }
     }
 
+    
+    /**
+     * 
+     */
     public function sendBulkAutomationEmail($oSubscribers, $aData) {
-        //Instanciate Nps cron model to access its properties and methods
-        $mInviter = new NpsModel();
+        //Instanciate Referral cron model to access its properties and methods
+        $mInviter = new ReferralModel();
         
         $content = $aData['content'];
         $fromEmail = $aData['from'];
         $subject = $aData['subject'];
         $clientID = $aData['client_id'];
         $accountID = $aData['account_id'];
+        $referralID = $aData['referral_id'];
         $frequence = $aData['frequence'];
-
-        if ($aData['nps_id'] == $this->testCampaignId) {
+        if ($aData['referral_id'] == $this->testCampaignId) {
             echo "<br>Check 6";
             pre($oSubscribers);
             echo "<br>Check 7";
@@ -387,38 +494,32 @@ class NpsInviter extends Command
         }
         if (!empty($oSubscribers)) {
             foreach ($oSubscribers as $oSubscriber) {
-                //$userCurrentUsage = $mInviter->getCurrentUsage($clientID);
-                //if ($userCurrentUsage->email_balance > 0 || $userCurrentUsage->email_balance_topup > 0) {
+                
                 $emailContent = $content;
                 $messageID = $this->generateMessageId();
                 $to = $oSubscriber->email;
                 $aTrackSetttings = array();
-                $aTrackSetttings['user_id'] = $oSubscriber->id;
+                $aTrackSetttings['user_id'] = $oSubscriber->advocateID;
                 $aTrackSetttings['campaign_id'] = $aData['campaign_id'];
                 $aTrackSetttings['inviter_id'] = $aData['inviter_id'];
-                $aTrackSetttings['nps_id'] = $aData['nps_id'];
+                $aTrackSetttings['referral_id'] = $referralID;
                 $aTrackSetttings['account_id'] = $accountID;
                 $aTrackSetttings['email'] = $oSubscriber->email;
-                $aTrackSetttings['subscriber_id'] = $oSubscriber->subscriber_id;
+                $aTrackSetttings['subscriber_id'] = $oSubscriber->advocateID;
                 $aTrackSetttings['client_id'] = $clientID;
                 $aTrackSetttings['module_name'] = $aData['module_name'];
                 //Replace Tags 
-                $contentReplaced = $mInviter->emailTagReplace($aData['nps_id'], $accountID, $emailContent, 'email', $oSubscriber);
-                $contentReplaced = $mInviter->emailTagReplace($aData['nps_id'], $accountID, $emailContent, 'email', $oSubscriber);
-//                    echo "Content is ". $content;
-//                    die;
-                $msg = '';
-                $msg = $this->prepareHtmlContent($contentReplaced, $messageID, $aTrackSetttings);
-                //pre($aData);
-                //echo $msg;
+                $contentReplaced = $mInviter->emailTagReplace($referralID, $accountID, $emailContent, 'email', $oSubscriber);
 
+                $msg = $this->prepareHtmlContent($contentReplaced, $messageID, $aTrackSetttings);
+                
                 $aEmailData = array(
                     'campaign_type' => 'email',
                     'to' => $to,
                     'from_entity' => $fromEmail,
                     'subject' => $subject,
                     'content' => base64_encode($msg),
-                    'nps_id' => $aData['nps_id'],
+                    'referral_id' => $referralID,
                     'account_id' => $aData['account_id'],
                     'campaign_id' => $aData['campaign_id'],
                     'inviter_id' => $aData['inviter_id'],
@@ -426,9 +527,9 @@ class NpsInviter extends Command
                     'message_id' => $messageID,
                     'client_id' => $clientID,
                     'module_name' => $aData['module_name'],
-                    'moduleName' => 'nps',
-                    'moduleUnitId' => $aData['nps_id'],
-                    'subscriber_id' => $oSubscriber->id,
+                    'moduleName' => 'referral',
+                    'moduleUnitId' => $aData['account_id'],
+                    'subscriber_id' => $oSubscriber->subscriber_id,
                     'globalSubscriberId' => $oSubscriber->subscriber_id,
                     'created' => date("Y-m-d H:i:s")
                 );
@@ -437,31 +538,28 @@ class NpsInviter extends Command
                     $mInviter->saveInviterQueue($aEmailData);
                 } else {
                     //Send email now
-                    //pre($aEmailData);
-                    //die;
                     //Okay final check if campaign sent to the subscriber or not
-                    $bSkipped = false;
+                     $bSkipped = false;
                     if (!empty($frequence) && $frequence > 1) {
-                        $iFrequenceCount = $mInviter->countCampaignSentFrequence($aData['campaign_id'], $oSubscriber->id, 'email');
+                        $iFrequenceCount = $mInviter->countCampaignSentFrequence($aData['campaign_id'], $oSubscriber->advocateID, $oSubscriber->saleID, 'email');
                         if ($iFrequenceCount < $frequence) {
                             $bCampaignAlreadySent = false;
                         } else {
                             $bCampaignAlreadySent = true;
-                            $bSkipped = true;
+                             $bSkipped = true;
                         }
                     } else {
-                        $bCampaignAlreadySent = $mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->id, 'subs_email', $oSubscriber->email);
+                        $bCampaignAlreadySent = $mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->advocateID, $oSubscriber->saleID, 'subs_email', $oSubscriber->email);
                     }
                     
-                    if ($aData['nps_id'] == $this->testCampaignId) {
+                    if ($aData['referral_id'] == $this->testCampaignId) {
                         echo "<br>Check 8";
                         echo "<br> Already Sent " . $bCampaignAlreadySent;
                     }
 
-
                     if ($bCampaignAlreadySent == true) {
-                        $bSkipped = true;
-                        //$bEmailSent = true;
+                        $bEmailSent = true;
+                         $bSkipped = true;
                     } else {
                         $bEmailSent = $this->SG_smtp($aEmailData);
                     }
@@ -471,10 +569,11 @@ class NpsInviter extends Command
                         echo "<br> Email sent successfully";
                         $aLogData = array(
                             'inviter_id' => $aData['inviter_id'],
-                            'subscriber_id' => $oSubscriber->id,
+                            'subscriber_id' => $oSubscriber->advocateID,
                             'preceded_by' => $aData['previous_event_id'],
                             'message_id' => $messageID,
                             'campaign_id' => $aData['campaign_id'],
+                            'sale_id' => $oSubscriber->saleID,
                             'type' => 'email',
                             'subs_email' => $oSubscriber->email,
                             'subs_phone' => $oSubscriber->phone
@@ -487,8 +586,8 @@ class NpsInviter extends Command
                             'content' => $msg,
                             'spend_to' => $to,
                             'spend_from' => '',
-                            'module_name' => 'nps',
-                            'module_unit_id' => $aData['nps_id']
+                            'module_name' => 'referral',
+                            'module_unit_id' => $aData['referral_id']
                         );
                         //$mInviter->updateUsage($aUsage);
                         updateCreditUsage($aUsage);
@@ -499,24 +598,25 @@ class NpsInviter extends Command
         }
     }
 
+    
+    /**
+     * 
+     */
     public function sendBulkAutomationSms($oSubscribers, $aData) {
-        //Instanciate Nps cron model to access its properties and methods
-        $mInviter = new NpsModel();
+        //Instanciate Referral cron model to access its properties and methods
+        $mInviter = new ReferralModel();
         
+        //pre($aData);
         $content = $aData['content'];
         $fromNumber = $aData['from_number'];
         $clientID = $aData['client_id'];
         $accountID = $aData['account_id'];
-        $npsID = $aData['nps_id'];
-        $frequence = $aData['frequency'];
-        //pre($oSubscribers);
-        //exit;
+        $referralID = $aData['referral_id'];
+        $frequence = $aData['frequence'];
+        
         if (!empty($oSubscribers)) {
             foreach ($oSubscribers as $oSubscriber) {
-                //pre($oSubscriber);
-
-                $smsContent = $mInviter->emailTagReplace($npsID, $accountID, $content, 'sms', $oSubscriber);
-
+                $smsContent = $mInviter->emailTagReplace($referralID, $accountID, $content, 'sms', $oSubscriber);
                 //$userCurrentUsage = $mInviter->getCurrentUsage($clientID);
                 //if ($userCurrentUsage->sms_balance > 0 || $userCurrentUsage->sms_balance_topup > 0) {
                 $messageID = $this->generateMessageId();
@@ -526,16 +626,16 @@ class NpsInviter extends Command
                     'to' => $toNumber,
                     'from_entity' => $fromNumber,
                     'content' => $smsContent,
-                    'nps_id' => $npsID,
+                    'referral_id' => $referralID,
                     'account_id' => $accountID,
                     'campaign_id' => $aData['campaign_id'],
                     'inviter_id' => $aData['inviter_id'],
-                    'subscriber_id' => $oSubscriber->subscriber_id,
+                    'subscriber_id' => $oSubscriber->advocateID,
                     'preceded_by' => $aData['previous_event_id'],
                     'message_id' => $messageID,
                     'sending_server_id' => 0,
                     'client_id' => $clientID,
-                    'module_name' => 'nps',
+                    'module_name' => 'referral',
                     'created' => date("Y-m-d H:i:s")
                 );
 
@@ -545,7 +645,7 @@ class NpsInviter extends Command
                     //Send SMS now
                     $bSkipped = false;
                     if (!empty($frequence) && $frequence > 1) {
-                        $iFrequenceCount = $mInviter->countCampaignSentFrequence($aData['campaign_id'], $oSubscriber->id, 'sms');
+                        $iFrequenceCount = $mInviter->countCampaignSentFrequence($aData['campaign_id'], $oSubscriber->advocateID, $oSubscriber->saleID, 'sms');
                         if ($iFrequenceCount < $frequence) {
                             $bCampaignAlreadySent = false;
                         } else {
@@ -553,25 +653,22 @@ class NpsInviter extends Command
                             $bSkipped = true;
                         }
                     } else {
-                        $bCampaignAlreadySent = $mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->id, 'subs_phone', $oSubscriber->phone);
+                        $bCampaignAlreadySent = $mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->advocateID, $oSubscriber->saleID, 'subs_phone', $oSubscriber->phone);
                     }
 
-                    //echo $bCampaignAlreadySent.'Raj';
-                    //exit;
+
+                    
                     if ($bCampaignAlreadySent == true) {
                         $bSmsSent = true;
                         $bSkipped = true;
                     } else {
-                        //echo "Ready to send ";
                         $bSmsSent = $this->send_Twilio($aSmsData);
                     }
-
                     if ($bSmsSent == true && $bSkipped == false) {
-                        //echo "Yes track now";
                         //Track Record
                         $aLogData = array(
                             'inviter_id' => $aData['inviter_id'],
-                            'subscriber_id' => $oSubscriber->id,
+                            'subscriber_id' => $oSubscriber->advocateID,
                             'preceded_by' => $aData['previous_event_id'],
                             'message_id' => $messageID,
                             'campaign_id' => $aData['campaign_id'],
@@ -580,8 +677,6 @@ class NpsInviter extends Command
                             'subs_phone' => $oSubscriber->phone
                         );
                         $this->saveLog($aLogData);
-                        //pre($aLogData);
-                        //Update Client Usage
                         $aUsage = array(
                             'client_id' => $clientID,
                             'usage_type' => 'sms',
@@ -589,15 +684,14 @@ class NpsInviter extends Command
                             'content' => $smsContent,
                             'spend_to' => $toNumber,
                             'spend_from' => $fromNumber,
-                            'module_name' => 'nps',
-                            'module_unit_id' => $aData['nps_id']
+                            'module_name' => 'referral',
+                            'module_unit_id' => $aData['referral_id']
                         );
-                        //$mInviter->updateUsage($aUsage);
                         $charCount = strlen($smsContent);
                         $totatMessageCount = ceil($charCount / 160);
                         if ($totatMessageCount > 1) {
                             for ($i = 0; $i < $totatMessageCount; $i++) {
-                                $aUsage['segment'] = $i + 1;
+                                $aUsage['segment'] = $i+1;
                                 updateCreditUsage($aUsage);
                             }
                         } else {
@@ -606,16 +700,20 @@ class NpsInviter extends Command
                         }
                     }
                 }
-                //}
+                // }
             }
         }
     }
 
+    
+    /**
+     * 
+     */
     public function saveLog($aData) {
-        //Instanciate Nps cron model to access its properties and methods
-        $mInviter = new NpsModel();
+        //Instanciate Referral cron model to access its properties and methods
+        $mInviter = new ReferralModel();
         
-        echo " I a mhere";
+
         $timeNow = date("Y-m-d H:i:s");
         $insertID = 0;
         if (!empty($aData)) {
@@ -623,6 +721,7 @@ class NpsInviter extends Command
                 'auto_event_id' => $aData['inviter_id'],
                 'subscriber_id' => $aData['subscriber_id'],
                 'preceded_by' => $aData['preceded_by'],
+                'sale_id' => $aData['sale_id'],
                 'start_at' => $timeNow,
                 'created_at' => $timeNow
             );
@@ -635,6 +734,7 @@ class NpsInviter extends Command
             'message_id' => $aData['message_id'],
             'subscriber_id' => $aData['subscriber_id'],
             'campaign_id' => $aData['campaign_id'],
+            'sale_id' => $aData['sale_id'],
             'auto_trigger_id' => $insertID,
             'subs_email' => $aData['subs_email'],
             'subs_phone' => $aData['subs_phone'],
@@ -644,6 +744,14 @@ class NpsInviter extends Command
         $mInviter->saveSendingLog($aTrackData);
     }
 
+    
+    /**
+     * 
+     * @param type $sMessage
+     * @param type $msgID
+     * @param type $aTrackSettings
+     * @return type
+     */
     public function prepareHtmlContent($sMessage, $msgID, $aTrackSettings) {
 
         $sMessage = $this->addClickTrackingUrl($sMessage, $msgID, $aTrackSettings);
@@ -652,6 +760,14 @@ class NpsInviter extends Command
         return $sMessage;
     }
 
+    
+    /**
+     * 
+     * @param type $content
+     * @param type $msgId
+     * @param type $aSettingsData
+     * @return type
+     */
     function addClickTrackingUrl($content, $msgId, $aSettingsData = array()) {
         if (preg_match_all('/<a[^>]*href=["\'](?<url>http[^"\']*)["\']/i', $content, $matches)) {
             foreach ($matches[0] as $key => $href) {
@@ -662,7 +778,7 @@ class NpsInviter extends Command
                     $subscriberID = $aSettingsData['subscriber_id'];
                     $campignID = $aSettingsData['campaign_id'];
                     $inviterID = $aSettingsData['inviter_id'];
-                    $npsID = $aSettingsData['nps_id'];
+                    $referralID = $aSettingsData['referral_id'];
                     $accountID = $aSettingsData['account_id'];
                     $clientID = $aSettingsData['client_id'];
                     $moduleName = $aSettingsData['module_name'];
@@ -676,8 +792,8 @@ class NpsInviter extends Command
                     if ($inviterID > 0) {
                         $additionalParams .= '&inid=' . $inviterID;
                     }
-                    if ($npsID > 0) {
-                        $additionalParams .= '&npsid=' . $npsID;
+                    if ($referralID > 0) {
+                        $additionalParams .= '&refid=' . $referralID;
                     }
                     if ($accountID > 0) {
                         $additionalParams .= '&accid=' . $accountID;
@@ -693,7 +809,7 @@ class NpsInviter extends Command
                     }
                     $additionalParams = ($additionalParams) ? $additionalParams : '';
                 }
-                $trackClickUrl = $this->trackServer . '/nps_track.php?click_redirect=' . $encodeURL . '&msgid=' . $this->base64UrlEncode($msgId) . $additionalParams;
+                $trackClickUrl = $this->trackServer . '/referral_track.php?click_redirect=' . $encodeURL . '&msgid=' . $this->base64UrlEncode($msgId) . $additionalParams;
 
                 $newHref = str_replace($url, $trackClickUrl, $href);
                 $content = str_replace($href, $newHref, $content);
@@ -702,23 +818,56 @@ class NpsInviter extends Command
         return $content;
     }
 
+    
+    /**
+     * 
+     * @param type $content
+     * @param type $msgId
+     * @return type
+     */
     public function addOpenTrackingUrl($content, $msgId) {
-        $trackOpenUrl = $this->trackServer . '/nps_track.php?open_track=true&msgid=' . $this->base64UrlEncode($msgId);
+        $trackOpenUrl = $this->trackServer . '/referral_track.php?open_track=true&msgid=' . $this->base64UrlEncode($msgId);
         return $content . '<img src="' . $trackOpenUrl . '" width="0" height="0" alt="" style="visibility:hidden" />';
     }
 
+    
+    /**
+     * 
+     * @return type
+     */
     public function generateMessageId() {
         return time() . rand(100000, 999999) . '.' . uniqid();
     }
 
+    
+    /**
+     * 
+     * @param type $val
+     * @return type
+     */
     public function base64UrlEncode($val) {
         return strtr(base64_encode($val), '+/=', '-_,');
     }
 
+    
+    /**
+     * 
+     * @param type $val
+     * @return type
+     */
     public function base64UrlDecode($val) {
         return base64_decode(strtr($val, '-_,', '+/='));
     }
 
+    
+    /**
+     * 
+     * @param type $delayType
+     * @param type $delayUnit
+     * @param type $delayValue
+     * @param type $sourceTime
+     * @return int
+     */
     public function simplifiedTime($delayType, $delayUnit, $delayValue, $sourceTime) {
         switch ($delayUnit) {
             case "minute":
@@ -760,11 +909,17 @@ class NpsInviter extends Command
         return $simplifiedTime;
     }
 
+    
+    /**
+     * 
+     * @param type $aData
+     * @return boolean
+     */
     public function SG_smtp($aData) {
-        //Instanciate Nps cron model to access its properties and methods
-        $mInviter = new NpsModel();
+        //Instanciate Referral cron model to access its properties and methods
+        $mInviter = new ReferralModel();
         
-        if ($aData['nps_id'] == $this->testCampaignId) {
+        if ($aData['referral_id'] == $this->testCampaignId) {
             echo "<br>Check 10";
             echo "<br> Sending Email ";
         }
@@ -810,7 +965,7 @@ class NpsInviter extends Command
             'unique_args' => array(
                 'bb_subscriber_id' => $aData['subscriber_id'],
                 'bb_event_id' => $aData['inviter_id'],
-                'bb_nps_id' => $aData['nps_id'],
+                'bb_referral_id' => $aData['referral_id'],
                 'bb_account_id' => $aData['account_id'],
                 'bb_campaign_id' => $aData['campaign_id'],
                 'bb_module_name' => $aData['module_name']
@@ -843,8 +998,7 @@ class NpsInviter extends Command
         curl_close($session);
         $result = (array) json_decode($result, True);
         
-        
-        if ($aData['nps_id'] == $this->testCampaignId) {
+        if ($aData['referral_id'] == $this->testCampaignId) {
             echo "<br>Check 11";
             pre($result);
             pre($params);
@@ -856,9 +1010,15 @@ class NpsInviter extends Command
         }
     }
 
+    
+    /**
+     * 
+     * @param type $aData
+     * @return boolean
+     */
     public function send_Twilio($aData) {
-        //Instanciate Nps cron model to access its properties and methods
-        $mInviter = new NpsModel();
+        //Instanciate Referral cron model to access its properties and methods
+        $mInviter = new ReferralModel();
         
         //pre($aData);
         if ($this->use_default_accounts == true) {
@@ -881,7 +1041,7 @@ class NpsInviter extends Command
 
         $msg = $aData['content'];
 
-        $npsID = $aData['nps_id'];
+        $referralID = $aData['referral_id'];
         $accountID = $aData['account_id'];
         $campaignID = $aData['campaign_id'];
         $eventID = $aData['inviter_id'];
@@ -890,16 +1050,16 @@ class NpsInviter extends Command
 
         $qs = '?';
 
-        if (!empty($eventID)) {
-            $qs .= '&bb_event_id=' . $eventID;
-        }
-
-        if (!empty($npsID)) {
-            $qs .= '&bb_nps_id=' . $npsID;
+        if (!empty($referralID)) {
+            $qs .= '&bb_referral_id=' . $referralID;
         }
 
         if (!empty($accountID)) {
             $qs .= '&bb_account_id=' . $accountID;
+        }
+
+        if (!empty($eventID)) {
+            $qs .= '&bb_event_id=' . $eventID;
         }
 
         if (!empty($campaignID)) {
@@ -929,14 +1089,16 @@ class NpsInviter extends Command
             'smsTrackURL' => $smsTrackURL
         );
         //pre($aSmsData);
+        //die;
         //Send Sms now
         $response = sendClinetSMS($aSmsData);
         //'<br>--------------- response -------------------<br>';
         //pre($response);
-        return true;
+
         if ($response)
             return true;
         else
             return false;
-    }
+    } 
+    
 }
