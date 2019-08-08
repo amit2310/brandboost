@@ -579,8 +579,7 @@ class ReviewsModel extends Model {
             ->where('review_id', $reviewID)  
             ->where('ip', $ip)     
             ->first();
-
-        if($oResult->count > 0) {
+        if(!empty($oResult)) {
             if ($oResult->helpful_yes == 1) {
                 $action = 'h_yes';
             } else if ($oResult->helpful_no == 1) {

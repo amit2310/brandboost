@@ -18,7 +18,7 @@ ini_set('display_startup_errors', 0);
 class Company extends Controller {
 
 
-      /**
+    /**
 	* Controller index function
 	* @return type
 	*/
@@ -106,6 +106,7 @@ class Company extends Controller {
 			
 			$reviewID = strip_tags($request->review_id);
 			$action = strip_tags($request->action);
+
 			$ip = $request->ip();
 			
 			$aVoteData = array(
@@ -126,7 +127,6 @@ class Company extends Controller {
 
 			$mReviews = new ReviewsModel();
 			$alreadyVoted = $mReviews->checkIfVoted($reviewID, $ip);
-			//pre($alreadyVoted);
 			
 			if ($alreadyVoted == false || $alreadyVoted['action'] == 'h_null') { 
 				$reviewData = ReviewsModel::getReviewByReviewID($reviewID);
