@@ -1124,7 +1124,7 @@ class ReviewsModel extends Model {
     }
 
     public function updateCommentLike($aData, $id) {
-        $aData =  DB::table('tbl_comment_likes')->update($aData);
+        $aData =  DB::table('tbl_comment_likes')->update($aData)
            ->where("id", $id);
            return true;
        
@@ -1132,14 +1132,14 @@ class ReviewsModel extends Model {
 
 
     public function updateSiteReviewHelpful($aData, $id) {
-         $aData =  DB::table('tbl_site_reviews_helpful')->update($aData);
+         $aData =  DB::table('tbl_site_reviews_helpful')->update($aData)
            ->where("id", $id);
            return true;
     }
 
     public function updateSubscriber($aData, $id) {
         if ($id > 0) {
-            $aData =  DB::table('tbl_brandboost_users')->update($aData);
+            $aData =  DB::table('tbl_brandboost_users')->update($aData)
            ->where("id", $id);
            return true;
         }
