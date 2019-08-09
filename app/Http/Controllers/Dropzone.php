@@ -905,7 +905,7 @@ class dropzone extends Controller
     }
 
 
-    public function upload_s3_attachment_question_review($clientId, $folderName,$orderVal) 
+    public function upload_s3_attachment_question_review($clientId, $folderName,$orderVal="") 
     {
 
         $userDetail = getUserDetailsByUserID($clientId);
