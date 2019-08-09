@@ -123,7 +123,6 @@
      
       </div>
     </div>
-    
   </div>
 
   <script type="text/javascript">
@@ -197,12 +196,36 @@
 		var myDropzone_ = new Dropzone(	
 			'#myDropzone', //id of drop zone element 1
 			{
-				url: '<?php echo base_url("dropzone/uploadQuestionFiles"); ?>',
+				url: '<?php echo base_url("webchat/dropzone/edit_review_image"); ?>',
 				uploadMultiple: false,
 				maxFiles: 5,
 				maxFilesize: 6000,
 				acceptedFiles: 'image/*,video/mp4',
-				addRemoveLinks: false,
+				addRemoveLinks: true,
+        removedfile: function(file) {
+          var _ref;
+          var xmlString = file.xhr.responseText;
+          var totalStr = $('#uploadedReviewFiles').html();
+          var res_str = totalStr.replace(xmlString, " ");
+          $('#uploadedReviewFiles').html(res_str);
+          var res = xmlString.split("||");
+          var dropImage = res[0];
+          $.ajax({
+                    url: '<?php echo base_url('admin/brandboost/DeleteObjectFromS3'); ?>',
+                    type: "POST",
+                    data: {dropImage: dropImage,_token: '{{csrf_token()}}'},
+                    dataType: "json",
+                    success: function (data) {
+                      
+                    }
+                });
+
+                setTimeout(function() {
+                  return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+                }, 1000);
+          
+          
+        },
 				success: function (response) {
 					$('#uploadedReviewFiles').append(response.xhr.responseText);
 				}
