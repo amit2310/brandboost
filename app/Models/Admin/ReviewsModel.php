@@ -589,6 +589,7 @@ class ReviewsModel extends Model
     }
 
     public function saveReview($aData) {
+      
         $bSaved = $this->db->insert("tbl_reviews", $aData);
         $insert_id = $this->db->insert_id();
         //echo $this->db->last_query();
