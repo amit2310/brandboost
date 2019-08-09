@@ -116,6 +116,7 @@
                                         <label class="control-label">Upload Brand/Product Logo:</label>
                                         <label class="display-block">
                                             <input type="hidden" name="brand_logo" id="logo_img" value="<?php echo (!empty($oNPS->brand_logo)) ? $oNPS->brand_logo : ''; ?>">
+                                            {{ csrf_field() }}
                                             <div class="img_vid_upload_small">
                                                 <div class="dropzone" id="myDropzone_logo_img"></div>
                                             </div>
@@ -289,6 +290,9 @@
             '#myDropzone_logo_img', //id of drop zone element 1
             {
                 url: '<?php echo base_url("/dropzone/upload_s3_attachment"); ?>/<?php echo $userID; ?>/nps',
+                params: {
+                    _token: '{{csrf_token()}}'
+                },
                 uploadMultiple: false,
                 maxFiles: 1,
                 maxFilesize: 600,
@@ -303,7 +307,7 @@
                         $.ajax({
                             url: '<?php echo base_url('admin/brandboost/DeleteObjectFromS3'); ?>',
                             type: "POST",
-                            data: {dropImage: dropImage},
+                            data: {_token: '{{csrf_token()}}', dropImage: dropImage},
                             dataType: "json",
                             success: function (data) {
                                 console.log(data);

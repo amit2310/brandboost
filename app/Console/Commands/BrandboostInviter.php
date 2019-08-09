@@ -398,6 +398,7 @@ class BrandboostInviter extends Command
                     $content = str_replace('<br/>', "\n", $content);
                     $content = str_replace('<br />', "\n", $content);
                     $content = strip_tags(nl2br($content));
+                    $fromNumber = $this->defaultTwilioDetails['from_number'];
                     $aSmsData = array(
                         'from_number' => $fromNumber, //We need this from client twillio phone number
                         'content' => $content,
@@ -656,7 +657,6 @@ class BrandboostInviter extends Command
             'subscriber_id' => $aData['subscriber_id'],
             'campaign_id' => $aData['campaign_id'],
             'trigger_id' => $insertID,
-            'sending_server_id' => $aData['sending_server_id'],
             'subs_email' => $aData['subs_email'],
             'subs_phone' => $aData['subs_phone'],
             'status' => 'sent',
@@ -991,7 +991,7 @@ class BrandboostInviter extends Command
 
         $urlID = $mInviter->saveShortURL($urlData);
 
-        $shortURl = site_url('t/' . $urlID);
+        $shortURl = base_url('t/' . $urlID);
 
         $msgBody = base64_decode($msg);
         $msgBody = str_replace("{TEXT_REVIEW_URL}", replaceEmailTags($bbID, '{TEXT_REVIEW_URL}', 'sms'), $msgBody);

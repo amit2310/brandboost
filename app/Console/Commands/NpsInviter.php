@@ -206,7 +206,8 @@ class NpsInviter extends Command
                 $aFireData = array(
                     'inviter_data' => $aEvent,
                     'subscribers' => $aEligibleSubscriber,
-                    'account_id' => $accountID
+                    'account_id' => $accountID,
+                    'frequency' => 1
                 );
 
                 $this->fireAutomationCampaign($aFireData);
@@ -350,6 +351,7 @@ class NpsInviter extends Command
                     $content = str_replace('<br/>', "\n", $content);
                     $content = str_replace('<br />', "\n", $content);
                     $content = strip_tags(nl2br($content));
+                    $fromNumber = $this->defaultTwilioDetails['from_number'];
                     $aSmsData = array(
                         'from_number' => $fromNumber, //We need this from client twillio phone number
                         'content' => $content,
@@ -360,7 +362,7 @@ class NpsInviter extends Command
                         'previous_event_id' => $previousEventID,
                         'client_id' => $clientID,
                         'module_name' => 'nps',
-                        'frequence' => $frequence
+                        'frequency' => $frequence                          
                     );
                     $this->sendBulkAutomationSms($aSubscribers, $aSmsData);
                 }
@@ -458,10 +460,11 @@ class NpsInviter extends Command
                         echo "<br> Already Sent " . $bCampaignAlreadySent;
                     }
 
-
+                    $bSkipped = false;
+                    $bEmailSent = false;
                     if ($bCampaignAlreadySent == true) {
                         $bSkipped = true;
-                        //$bEmailSent = true;
+                        $bEmailSent = true;
                     } else {
                         $bEmailSent = $this->SG_smtp($aEmailData);
                     }

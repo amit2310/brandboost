@@ -131,7 +131,11 @@ class NpsModel extends Model {
             $desc = 'Description goes here';
             $ques = 'Question goes here';
         }
-        $greetings = 'Hi, ' . $aUser->firstname . ' ' . $aUser->lastname . '!';
+        $greetings = 'Hi,';
+        if(!empty($aUser)){
+            $greetings = 'Hi, ' . $aUser->firstname . ' ' . $aUser->lastname . '!';
+        }
+        
         $description = (!empty($desc)) != '' ? $desc : '{{INTRODUCTION}}';
         $question = (!empty($ques)) ? $ques : 'How likely are you to recommend My Store to a friend?';
 
@@ -230,7 +234,7 @@ class NpsModel extends Model {
                         break;
 
                     case '{SITEURL}':
-                        $htmlData = site_url();
+                        $htmlData = base_url();
                         break;
 
                     case '{ACCOUNTHASHCODE}':

@@ -737,7 +737,7 @@ class WorkflowModel extends Model {
     public function getProductDataByBBID($brandboostID) {
         $oData = DB::table('tbl_brandboost_products')
                 ->where('brandboost_id', $brandboostID)
-                ->orderBy('product_order.id', 'asc')
+                ->orderBy('product_order', 'asc')
                 ->get();
         return $oData;
     }
@@ -1387,7 +1387,7 @@ class WorkflowModel extends Model {
                         if (strtolower($resultData->template_type) == 'email') {
                             $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.email.templates', array('template_slug' => $resultData->template_slug))->render();
                         } else if (strtolower($resultData->template_type) == 'sms') {
-                            $compiledTemplatePriviewCode = $this->load->view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $resultData->template_slug))->render();
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $resultData->template_slug))->render();
                         }
                     }
 
