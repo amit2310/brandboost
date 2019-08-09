@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <!--########################TAB 4 ##########################-->
 <style type="text/css">
     .workflow_main_box .panel-heading.bkg_grey_light{display:none!important;}
@@ -42,8 +49,7 @@
         </div>
     </div>
     <div class="select_section" style="max-width: 100%;">
-        <?php //$this->load->view("admin/workflow/tree", array("oEvents" => $oEvents)); ?>
-        <?php $this->load->view("admin/workflow2/tree", array("oEvents" => $oEvents)); ?>
+		@include('admin.workflow2.tree', array('oEvents' => $oEvents))
         <div class="row">
             <input type="hidden" name="refId" id="refId" value="<?php echo $moduleUnitID; ?>">
             <div class="col-md-6"><button class="btn btn_white bkg_white h52 txt_dark minw_140 shadow br5 backPage"><i class="icon-arrow-left12 mr20"></i> Back</button></div>
@@ -111,7 +117,7 @@
         </div>
     </div>
 </div>
-<?php $this->load->view("admin/modals/workflow2/workflow-popup", array('oDefaultTemplates' => $oDefaultTemplates)); ?>
+@include('admin.modals.workflow2.workflow-popup', array('oDefaultTemplates' => $oDefaultTemplates))
 
 <script>
     $(document).ready(function () {
@@ -180,3 +186,4 @@
 
     });
 </script>
+@endsection

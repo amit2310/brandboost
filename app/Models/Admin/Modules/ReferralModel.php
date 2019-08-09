@@ -404,7 +404,32 @@ class ReferralModel extends Model {
     }
 	
 	
+	public static function getAllAdvocates($accountID = '') {
+		$aData =  DB::table('tbl_referral_users')
+			->select('tbl_referral_users.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.facebook_profile', 'tbl_subscribers.twitter_profile', 'tbl_subscribers.linkedin_profile', 'tbl_subscribers.instagram_profile', 'tbl_subscribers.socialProfile', 'tbl_subscribers.id AS global_user_id')
+			->leftjoin('tbl_subscribers', 'tbl_referral_users.subscriber_id','=','tbl_subscribers.id')
+			->join('tbl_referral_rewards', 'tbl_referral_users.account_id','=','tbl_referral_rewards.hashcode')
+			->where('tbl_referral_users.subscriber_id', '!=', NULL)
+			->when((!empty($accountID)), function ($query) use ($accountID) {
+				return $query->where('tbl_referral_users.account_id', $accountID);
+			})
+			->get();
+        
+        return $aData;
+    }
 	
+	
+    public function getAdvocateById($id, $accountID) {
+		$aData =  DB::table('tbl_referral_users')
+			->select('tbl_referral_users.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.facebook_profile', 'tbl_subscribers.twitter_profile', 'tbl_subscribers.linkedin_profile', 'tbl_subscribers.instagram_profile', 'tbl_subscribers.socialProfile', 'tbl_subscribers.id AS global_user_id')
+			->leftjoin('tbl_subscribers', 'tbl_referral_users.subscriber_id','=','tbl_subscribers.id')
+			->join('tbl_referral_rewards', 'tbl_referral_users.account_id','=','tbl_referral_rewards.hashcode')
+			->where('tbl_referral_users.subscriber_id', $id)
+			->where('tbl_referral_users.account_id', $accountID)
+			->first();
+        
+        return $aData;
+    }
 	
 	
 	
@@ -1429,38 +1454,7 @@ class ReferralModel extends Model {
             return false;
     }
 
-    public function getAllAdvocates($accountID = '') {
-        $this->db->select("tbl_referral_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_subscribers.status AS globalStatus, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id");
-        $this->db->join("tbl_subscribers", "tbl_referral_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        if ($accountID != '') {
-            $this->db->where("tbl_referral_users.account_id", $accountID);
-        }
-        $this->db->join("tbl_referral_rewards", "tbl_referral_users.account_id = tbl_referral_rewards.hashcode", "INNER");
-        $this->db->where("tbl_referral_users.subscriber_id !=", NULL);
-        $result = $this->db->get("tbl_referral_users");
-        //echo $this->db->last_query();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function getAdvocateById($id, $accountID) {
-        $this->db->select("tbl_referral_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_subscribers.status AS globalStatus, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id");
-        $this->db->join("tbl_subscribers", "tbl_referral_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->join("tbl_referral_rewards", "tbl_referral_users.account_id = tbl_referral_rewards.hashcode", "INNER");
-        $this->db->where("tbl_referral_users.subscriber_id", $id);
-        $this->db->where("tbl_referral_users.account_id", $accountID);
-        $this->db->where("tbl_referral_users.subscriber_id !=", NULL);
-        $result = $this->db->get("tbl_referral_users");
-        //echo $this->db->last_query();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
+    
 
     public function getReferralUserById($userID) {
         $this->db->select("tbl_referral_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id");

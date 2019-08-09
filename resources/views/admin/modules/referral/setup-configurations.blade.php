@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <div class="content">
 
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -14,7 +21,6 @@
 
                 <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishReferralStatus" status="active"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
 
-                <!-- <button style="padding: 7px 15px!important;"  type="button" class="btn dark_btn" data-toggle="modal" data-target="#addPeopleList"><i class="icon-plus3 txt_green3"></i></button> -->
             </div>
         </div>
     </div>
@@ -454,3 +460,4 @@
 
     });
 </script>
+@endsection

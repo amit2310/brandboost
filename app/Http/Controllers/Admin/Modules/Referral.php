@@ -514,7 +514,7 @@ class Referral extends Controller {
         $oSettings = ReferralModel::getReferralSettings($accountID, true);
 		
         $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
-		$oAdvCouponCodes = $oRefCouponCodes = 0;
+		$oAdvCouponCodes = $oRefCouponCodes = array();
         if (!empty($oSettings)) {
             $programID = $oSettings->rewardID;
             $advCouponID = $oSettings->advCouponID;
@@ -607,7 +607,8 @@ class Referral extends Controller {
 
         //Reward related Data
         $oSettings = ReferralModel::getReferralSettings($accountID, true);
-
+		$oAdvCouponCodes = $oRefCouponCodes = array();
+		
         $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
         if (!empty($oSettings)) {
             $programID = $oSettings->rewardID;
@@ -705,6 +706,7 @@ class Referral extends Controller {
 
         //Reward related Data
         $oSettings = ReferralModel::getReferralSettings($accountID, true);
+		$oAdvCouponCodes = $oRefCouponCodes = array();
 		
         $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
         if (!empty($oSettings)) {
@@ -736,7 +738,6 @@ class Referral extends Controller {
             'programID' => $programID,
             'oReferral' => $oReferral,
             'oSettings' => $oSettings,
-            'oTemplates' => $oTemplates,
             'accountID' => $accountID,
             'campaignTemplates' => $campaignTemplates,
             'oEvents' => $oEvents,
@@ -854,41 +855,7 @@ class Referral extends Controller {
     }
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-
-
-
-	
-	
-	
-	
-	
-	
-    public function advocates($referralId = '') {
+	public function advocates($referralId = '') {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -900,21 +867,53 @@ class Referral extends Controller {
                     </ul>';
 
         if ($referralId != '') {
-            $referralData = $this->mReferral->getReferral($userID, $referralId);
-            $oContacts = $this->mReferral->getAllAdvocates($referralData->hashcode);
+            $referralData = ReferralModel::getReferral($userID, $referralId);
+            $oContacts = ReferralModel::getAllAdvocates($referralData->hashcode);
         } else {
-            $oContacts = $this->mReferral->getAllAdvocates();
+            $oContacts = ReferralModel::getAllAdvocates();
         }
-        //pre($oContacts);
-        $aPageData = array(
+        
+        $aData = array(
             'title' => 'Referral Module',
             'pagename' => $breadcrumb,
             'oContacts' => $oContacts
-                //'oPrograms' => $oPrograms,
-                //'bActiveSubsription' => $bActiveSubsription
         );
-        $this->template->load('admin/admin_template_new', 'admin/modules/referral/advocate', $aPageData);
+		return view('admin.modules.referral.advocate', $aData);
     }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+    
 
     public function bulkDeleteReferrals() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
