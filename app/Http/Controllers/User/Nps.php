@@ -32,18 +32,23 @@ class Nps extends Controller {
     	return view('user.nps', $aPageData);
     }
 	
-	public function reports($npsId) {
+	public function Reports($npsId) {
 		$response = array();
         $aUInfo = getLoggedUser();
         $userID = $aUInfo->id;
-		
-		$npsReportData = $this->mNPS->getNPSScoreByUserId($npsId);
-		
+        $mNPS = new NpsModel();
+
+		$npsReportData = $mNPS->getNPSScoreByUserId($npsId);
+        $totalEmailSent = '';
+        $totalSmsSent = '';
+
 		$aPageData = array(
-            'npsReportData' => $npsReportData
+            'totalEmailSent' => $totalEmailSent,
+            'npsReportData' => $npsReportData,
+            'totalSmsSent' => $totalSmsSent
         );
 
-    	$this->template->load('user/user_template', 'user/nps_reports', $aPageData);
+    	return view('user.nps_reports', $aPageData);
 		
 	}
 
