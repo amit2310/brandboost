@@ -613,4 +613,41 @@ class Reviews extends Controller {
 		exit;
 	}
 
+
+     public function addnew() {
+        $aData = $this->input->get();
+        if (!empty($aData)) {
+            $action = $aData['action'];
+            $rRating = $aData['r']; // Review Rating
+            $campaignID = $aData['bbid']; //Campaign ID
+            $subscriberID = $aData['subid']; //Subscriber ID
+            $inviterID = $aData['invid']; // Inviter ID
+            $aBrandboost = $this->mInviter->getBBInfo($campaignID);
+            $aSubscriber = $this->mUser->getSubscriberInfo($subscriberID);
+            $uSubscribers = $this->rLists->getSubscribersListUser($subscriberID);
+            $getBrandboost = $this->mBrandboost->getBrandboost($campaignID);
+            $productsData = $this->mBrandboost->getProductDataByType($campaignID, 'product');
+            $servicesData = $this->mBrandboost->getProductDataByType($campaignID, 'service');
+            $uniqueID = uniqid() . date('Ymdhis');
+            $aViewData = array(
+                'subscriberID' => $subscriberID,
+                'inviterID' => $inviterID,
+                'uniqueID' => $uniqueID,
+                'brandboostID' => $campaignID,
+                'subscriberData' => $aSubscriber,
+                'brandboostData' => $aBrandboost,
+                'productsData' => $productsData,
+                'servicesData' => $servicesData,
+                'uSubscribers' => $uSubscribers[0],
+                'brandboostdetail' => $getBrandboost[0],
+                'rRating' => $rRating,
+                'action' => $action
+            );
+        }
+
+        $this->load->view('reviews/collect_review', $aViewData);
+    }
+
+    
+
 }

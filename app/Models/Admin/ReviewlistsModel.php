@@ -56,19 +56,21 @@ class ReviewlistsModel extends Model {
         return $response;
     }
 
+
+     /**
+    * This function will return the subscriber list by user id
+    * @param type $userID
+    * @return type
+    */
+
     public function getSubscribersListUser($userID) {
-        $response = array();
-        $this->db->select('tbl_brandboost_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone');
-        $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id= tbl_subscribers.id", "LEFT");
-        $this->db->where('tbl_brandboost_users.id', $userID);
-        $this->db->order_by('tbl_brandboost_users.id', 'DESC');
-        $this->db->from('tbl_brandboost_users');
-        //echo $this->db->last_query();exit;
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_brandboost_users')
+        ->select('tbl_brandboost_users.*', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone')
+        ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id','=','tbl_subscribers.id')
+        ->where('tbl_brandboost_users.id', $userID)
+        ->orderBy('tbl_brandboost_users.id', 'DESC')->get();
+        
+        return $oData;
     }
 
     public function getSubscribers($userID, $brandboostID) {

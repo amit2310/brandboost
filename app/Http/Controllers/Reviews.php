@@ -9,6 +9,7 @@ use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\BrandModel;
 use App\Models\Admin\BrandboostModel;
 use App\Models\Admin\QuestionModel;
+use App\Models\Admin\ReviewlistsModel;
 use Session;
 error_reporting(0);
 
@@ -278,20 +279,30 @@ class Reviews extends Controller {
         }
     }
 
+
+    /**
+    * This function is used to add new reviews
+    * @param type
+    * @return type
+    */
+
     public function addnew() {
-        $aData = $this->input->get();
+        $aData = Input::get();
         if (!empty($aData)) {
             $action = $aData['action'];
             $rRating = $aData['r']; // Review Rating
             $campaignID = $aData['bbid']; //Campaign ID
             $subscriberID = $aData['subid']; //Subscriber ID
             $inviterID = $aData['invid']; // Inviter ID
-            $aBrandboost = $this->mInviter->getBBInfo($campaignID);
-            $aSubscriber = $this->mUser->getSubscriberInfo($subscriberID);
-            $uSubscribers = $this->rLists->getSubscribersListUser($subscriberID);
-            $getBrandboost = $this->mBrandboost->getBrandboost($campaignID);
-            $productsData = $this->mBrandboost->getProductDataByType($campaignID, 'product');
-            $servicesData = $this->mBrandboost->getProductDataByType($campaignID, 'service');
+            $mBrandboost  = new BrandboostModel();
+            $mUser = new UsersModel();
+            $rLists = new ReviewlistsModel();
+            $aBrandboost = $mBrandboost->getBBInfo($campaignID);
+            $aSubscriber = $mUser->getSubscriberInfo($subscriberID);
+            $uSubscribers = $rLists->getSubscribersListUser($subscriberID);
+            $getBrandboost = $mBrandboost->getBrandboost($campaignID);
+            $productsData = $mBrandboost->getProductDataByType($campaignID, 'product');
+            $servicesData = $mBrandboost->getProductDataByType($campaignID, 'service');
             $uniqueID = uniqid() . date('Ymdhis');
             $aViewData = array(
                 'subscriberID' => $subscriberID,
@@ -309,7 +320,7 @@ class Reviews extends Controller {
             );
         }
 
-        $this->load->view('reviews/collect_review', $aViewData);
+        return view('admin.reviews.collect_review', $aViewData);
     }
 
     public function submitOnsiteReview() {

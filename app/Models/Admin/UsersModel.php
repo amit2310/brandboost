@@ -628,15 +628,19 @@ class UsersModel extends Model {
         return $oData;        
     }
 
+   
+    /**
+    * This function will return subscriber information on the behalf of the subscriber id
+    * @param type $id
+    * @return type
+    */
+
     public function getSubscriberInfo($id) {
-        $this->db->select("tbl_subscribers.*");
-        $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where('tbl_brandboost_users.id', $id);
-        $result = $this->db->get('tbl_brandboost_users');
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $aData =  DB::table('tbl_brandboost_users')
+        ->select('tbl_subscribers.*')
+        ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id','=','tbl_subscribers.id')
+          ->where('tbl_brandboost_users.id', $id)->get();
+          return $aData;
     }
 
     public function checkUserProduct($userID, $productID) {

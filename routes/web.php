@@ -144,6 +144,7 @@ Route::post('admin/reviews/saveCommentLikeStatus','Admin\Reviews@saveCommentLike
 Route::post('admin/reviews/update_review','Admin\Reviews@updateReview');
 
 
+
 Route::post('admin/comments/add_comment','Admin\Comments@addComment');
 Route::post('admin/comments/getCommentById','Admin\Comments@getCommentById');
 Route::post('admin/comments/update_comment','Admin\Comments@update_comment');
@@ -489,6 +490,7 @@ Route::get('for/{brand}','Company@index');
 Route::post('admin/questions/saveNewQuestion','Admin\Questions@saveNewQuestion');
 Route::post('admin/brandboost/DeleteObjectFromS3','Admin\Brandboost@DeleteObjectFromS3');
 Route::post('reviews/saveNewReview','Reviews@saveNewReview');
+Route::get('reviews/addnew','Reviews@addnew');
 
 
 
