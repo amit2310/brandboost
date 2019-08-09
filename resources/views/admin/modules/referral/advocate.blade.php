@@ -1,4 +1,10 @@
+@extends('layouts.main_template') 
 
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <div class="content">
 
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -166,7 +172,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-flat">
-                        <?php $this->load->view("admin/components/smart-popup/smart-advocate-widget");?>
+                        <?php //$this->load->view("admin/components/smart-popup/smart-advocate-widget");?>
                         <div class="panel-heading">
                             <h6 class="panel-title">Advocates</h6>
                             <div class="heading-elements">
@@ -179,8 +185,8 @@
                                 <div class="table_action_tool">
                                     <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_calender.png"/></i></a>
                                     <a href="javascript:void(0);" class="editDataList"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_edit.png"/></i></a>
-                                    <a href="javascript:void(0);" id="deleteBulkModuleContacts" class="custom_action_box" style="display:none;" data-modulename="referral" data-moduleaccountid="<?php echo $moduleUnitID; ?>"><i class="icon-trash position-left"></i></a>
-                                    <button id="archiveBulkModuleContacts" class="btn btn-xs custom_action_box" data-modulename="referral" data-moduleaccountid="<?php echo $moduleUnitID; ?>"><i class="icon-gear position-left"></i> Archive</button>
+                                    <a href="javascript:void(0);" id="deleteBulkModuleContacts" class="custom_action_box" style="display:none;" data-modulename="referral" data-moduleaccountid="<?php //echo $moduleUnitID; ?>"><i class="icon-trash position-left"></i></a>
+                                    <button id="archiveBulkModuleContacts" class="btn btn-xs custom_action_box" data-modulename="referral" data-moduleaccountid="<?php //echo $moduleUnitID; ?>"><i class="icon-gear position-left"></i> Archive</button>
                                 </div>
 
                             </div>
@@ -212,9 +218,9 @@
                                         //pre($oContact);
                                         $moduleName = 'referral';
                                         $moduleUnitID = $oContact->account_id;
-                                        $referralData = $this->mReferral->getReferralByAccountId($moduleUnitID);
-                                        $referralTrackData = $this->mReferral->getReferralLinkVisitsByAdvocateId($oContact->subscriber_id, $referralData->id);
-                                        $referralSaleTrackData = $this->mReferral->referredSalesByAdvocateId($oContact->subscriber_id, $moduleUnitID);
+                                        $referralData = \App\Models\Admin\Modules\ReferralModel::getReferralByAccountId($moduleUnitID);
+                                        $referralTrackData = \App\Models\Admin\Modules\ReferralModel::getReferralLinkVisitsByAdvocateId($oContact->subscriber_id, $referralData->id);
+                                        $referralSaleTrackData = \App\Models\Admin\Modules\ReferralModel::referredSalesByAdvocateId($oContact->subscriber_id, $moduleUnitID);
                                         
                                         ?>
                                         <tr>
@@ -242,9 +248,6 @@
                                                     <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oContact->created)); ?></div>
                                                 </div>
                                             </td>
-                                  <!-- <td><a href="#" target="_blank" class="text-default text-semibold"><img class="progress_icon" src="<?php echo base_url(); ?>assets/images/progress_blue.png"/> &nbsp; 98</a></td>
-                                  href="<?php //echo base_url(); ?>admin/modules/referral/advocatereports/<?php echo $oContact->id; ?>"
-                                  href="<?php echo base_url(); ?>admin/modules/referral/advocatereports/<?php echo $oContact->id; ?>" -->
                                             <td><a style="cursor: auto;" class="text-default text-semibold"><img class="progress_icon" src="<?php echo base_url(); ?>assets/images/progress_green.png"/> &nbsp; <?php echo count($referralTrackData); ?></a></td>
                                             <td><a style="cursor: auto;" class="text-default text-semibold"><img class="progress_icon" src="<?php echo base_url(); ?>assets/images/progress_red.png"/> &nbsp; <?php echo count($referralSaleTrackData); ?></a></td>
 
@@ -321,10 +324,7 @@
                                                             Lets Create Your First Advocate.
                                                         </h5>
 
-                                                        <?php //if ($canWrite): ?>
-                                                           <!--  <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add Advocate</button> -->
-                                                        <?php //endif; ?>
-
+                                                    
                                                     </div>
                                                 </div>
                                             </div>
@@ -396,3 +396,4 @@
 
     });
 </script>
+@endsection

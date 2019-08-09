@@ -7,6 +7,14 @@
 @section('contents')
 
 <?php
+$oAdvMultipleCoupon = new stdClass();
+$oRefMultipleCoupon = new stdClass();
+$oAdvMultipleCoupon->expiry = 'never';
+$oAdvMultipleCoupon->expiry_specific_date = '';
+$oRefMultipleCoupon->coupon_code = '';
+$oRefMultipleCoupon->expiry = '';
+$oRefMultipleCoupon->expiry_specific_date = '';
+
 if (!empty($oAdvCouponCodes)) {
     foreach ($oAdvCouponCodes as $oCoupon) {
         if ($oCoupon->usage_type == 'single') {

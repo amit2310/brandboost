@@ -508,6 +508,61 @@ class dropzone extends Controller
         }
     }
 
+    /**
+    * This function used to edit review image to the amazon s3 server 
+    * @return type object
+    */
+    public function edit_review_image() {
+
+        if (!empty($_FILES)) {
+
+            $filesize = getFileSize('filesize');
+            $filesizeInBytes = FileSizeConvertToBytes($filesize);
+
+            $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
+
+            $videoReview = isset($_FILES['file']) ? $_FILES['file'] : false;
+            $mediaName = $videoReview['name'];
+            $ext = pathinfo($videoReview['name'], PATHINFO_EXTENSION);
+
+            if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') 
+            {
+                $mediaType = 'images';
+                $mediaTypeNew = 'image';
+            }
+            else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
+                $mediaType = 'files';
+                $mediaTypeNew = 'file';
+            }
+            else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
+                $mediaType = 'videos';
+                $mediaTypeNew = 'video';
+            }
+
+            if ($videoReview !== false) {
+                if (empty($error) && !in_array($ext, $allowed_types))
+                    $error = "Invalid file format";
+
+                if (empty($error) && (!isset($videoReview['size']) || $videoReview['size'] > ($filesizeInBytes)))
+                    $error = "Maximum filesize limit is " . $filesize . "MB only.";
+
+                if (empty($error)) {
+                    // Put file to AWS S3
+                    $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
+                    $filekey = "campaigns/".$videoReviewFile;
+                    //$filekey = "chat_attachments/". $videoReviewFile;
+                    $filename = $videoReview['name'];
+                    $input = file_get_contents($videoReview['tmp_name']);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                }
+            }
+
+            echo $filekey.'||<input type="hidden" class="imageUrlS3" name="question_uploaded_name[media_url][]" value="' . $filekey . '"><input type="hidden" name="question_uploaded_name[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="question_uploaded_name[media_name][]" value="' . $mediaName . '">';
+                    exit;
+        }
+    }
+
     
 	/**
 	* This function used to upload images to the amazon s3 server 

@@ -2855,7 +2855,7 @@ class WorkflowModel extends Model {
                 $fieldName = 'broadcast_id';
                 break;
             case "referral":
-                $oRefInfo = $this->getReferralModuleInfo($moduleUnitID);
+                $oRefInfo = Self::getReferralModuleInfo($moduleUnitID);
                 $accountID = $oRefInfo->hashcode;
                 $moduleUnitID = $accountID;
                 $tableName = 'tbl_referral_users';
@@ -4242,7 +4242,14 @@ class WorkflowModel extends Model {
         }
     }
 
-    public function getReferralModuleInfo($id) {
+    public static function getReferralModuleInfo($id) {
+		$aData =  DB::table('tbl_referral_rewards')
+			->where('id', $id)
+			->first();
+        
+        return $aData;
+		
+		
         $this->db->where("id", $id);
         $result = $this->db->get("tbl_referral_rewards");
         if ($result->num_rows() > 0) {
