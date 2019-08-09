@@ -323,7 +323,7 @@ Route::post('dropzone/upload_editor_image','Dropzone@upload_editor_image');
 Route::post('dropzone/upload_s3_attachment/{clientId}/{folderName}','Dropzone@upload_s3_attachment');
 Route::post('webchat/dropzone/upload_profile_image','Dropzone@upload_profile_image');
 Route::post('webchat/dropzone/upload_s3_attachment/{clientId}/{folderName}','Dropzone@upload_s3_attachment');
-Route::get('dropzone/upload_s3_attachment_product_review/{clientId}/{folderName}','Dropzone@upload_s3_attachment_product_review');
+Route::post('webchat/dropzone/upload_s3_attachment_product_review/{clientId}/{folderName}','Dropzone@upload_s3_attachment_product_review');
 
 
 //Templates Module

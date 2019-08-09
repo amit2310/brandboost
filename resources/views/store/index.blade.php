@@ -72,7 +72,7 @@
 					var myDropzone_ = new Dropzone(	
 						'#myDropzone_<?php echo $productData->id; ?>', //id of drop zone element 1
 						{
-							url: '<?php echo base_url("/dropzone/upload_s3_attachment_product_review/".$userDetail->id."/reviews/"); ?><?php echo $productData->id; ?>',
+							url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment_product_review/".$userDetail->id."/reviews"); ?><?php echo $productData->id; ?>',
 							uploadMultiple: false,
 							maxFiles: 10,
 							maxFilesize: 600,
@@ -111,7 +111,7 @@
 				var myDropzone2 = new Dropzone(	
 				"#myDropzone2",
 				{
-					url: '<?php echo base_url("dropzone/upload_s3_attachment_product_review/".$userDetail->id."/reviews/"); ?>',
+					url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment_product_review/".$userDetail->id."/reviews"); ?>',
 					uploadMultiple: false,
 					maxFiles: 10,
 					maxFilesize: 600,
