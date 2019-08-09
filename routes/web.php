@@ -245,6 +245,8 @@ Route::get('admin/smschat/SearchSBox','Admin\SmsChat@SearchSBox');
 
 //Profile module
 Route::get('admin/profile','Admin\AccountSetting@index');
+Route::post('admin/profile/changeUsername','User\Setting@changeUsername');
+Route::post('admin/profile/changeUserphone','User\Setting@changeUserphone');
 Route::post('admin/account_setting/saveProfileDetail','Admin\AccountSetting@saveProfileDetail');
 Route::post('admin/profile/changePassword','Admin\AccountSetting@changePassword');
 Route::post('admin/account_setting/account_deleted','Admin\AccountSetting@account_deleted');

@@ -131,9 +131,9 @@
 
             var userphone = $('.userPhoneEditShow').val();
             $.ajax({
-                url: "<?php echo base_url('/admin/profile/changeUserphone'); ?>",
+                url: "<?php echo base_url('admin/profile/changeUserphone'); ?>",
                 type: "POST",
-                data: {'userphone':userphone},
+                data: {'userphone':userphone, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: (response) => {
                    
@@ -168,9 +168,9 @@
 
             var username = $('.userEditShow').val();
             $.ajax({
-                url: "<?php echo base_url('/admin/profile/changeUsername'); ?>",
+                url: "<?php echo base_url('admin/profile/changeUsername'); ?>",
                 type: "POST",
-                data: {'username':username},
+                data: {'username':username, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: (response) => {
                    

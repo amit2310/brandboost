@@ -25,6 +25,11 @@ class Setting extends Controller {
     	return view('user.setting', $aData);
     }
 
+
+    /**
+     * This function is use for update profile
+     *
+     */
     public function updateProfile(Request $request) {
 
         $response = array();
@@ -47,6 +52,92 @@ class Setting extends Controller {
 
         echo json_encode($response);
         exit;
+    }
+
+
+    /**
+     * This function is use for update user name
+     *
+     */
+    public function changeUsername(Request $request) {
+
+        $response = array();
+        $post = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        if (!empty($request->username)) {
+
+
+            $userName = explode(" ",$request->username);
+           
+            if(!empty($userName[0])) {
+                $firstname = $userName[0];
+            }
+
+            $lastname = '';
+            if(!empty($userName[1])) {
+                $lastname = $userName[1];
+            }
+
+            $aData = array(
+                'firstname' => $firstname,
+                'lastname' => $lastname
+            );
+            $mUsers = new UsersModel();
+            $updateUsername = $mUsers->updateUsers($aData, $userID);
+
+            if($updateUsername) {
+                $response['status'] = 'success';
+                $response['msg'] = 'Username has been changed successfully.';
+            }
+            else {
+                $response['status'] = 'error';
+                $response['msg'] = 'Error: Something went wrong, try again';
+            }
+            
+
+            echo json_encode($response);
+            exit;
+        }
+
+    }
+
+
+    /**
+     * This function is use for update user phone
+     *
+     */
+    public function changeUserphone(Request $request) {
+
+        $response = array();
+        $post = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        if (!empty($request->userphone)) {
+
+            $userphone = $request->userphone;
+
+            $aData = array(
+                'mobile' => $userphone
+            );
+
+            $mUsers = new UsersModel();
+            $updateUserphone = $mUsers->updateUsers($aData, $userID);
+
+            if($updateUserphone) {
+                $response['status'] = 'success';
+                $response['msg'] = 'Phone number has been changed successfully.';
+            }
+            else {
+                $response['status'] = 'error';
+                $response['msg'] = 'Error: Something went wrong, try again';
+            }
+
+            echo json_encode($response);
+            exit;
+        }
     }
 
 }
