@@ -569,13 +569,295 @@ class ReferralModel extends Model {
     }
 	
 	
+	public static function saveAdvCouponDiscount($aData) {
+        $rewardID = $aData['reward_id'];
+        if ($rewardID > 0) {
+            $oRec = Self::checkIfAdvCouponExists($rewardID);
+			
+            if (!empty($oRec)) {
+                //Update
+				$result = DB::table('tbl_referral_rewards_adv_coupons')
+				   ->where('reward_id', $rewardID)
+				   ->update($aData);
+				
+                $primaryID = $oRec->id;
+            } else {
+                //Insert
+                $aData['created'] = date("Y-m-d H:i:s");
+				$result = DB::table('tbl_referral_rewards_adv_coupons')->insertGetId($aData);
+                $primaryID = $result;
+            }
+            if ($result) {
+                return $primaryID;
+            }
+        }
+        return false;
+    }
+	
+
+    public static function checkIfAdvCouponExists($rewardID) {
+		$oData = DB::table('tbl_referral_rewards_adv_coupons')
+			->where('reward_id', $rewardID)
+			->first();
+        return $oData;
+    }
+	
+
+    public function saveRefCouponDiscount($aData) {
+        $rewardID = $aData['reward_id'];
+        if ($rewardID > 0) {
+            $oRec = $this->checkIfRefCouponExists($rewardID);
+            if ($oRec->id > 0) {
+                //Update
+				$result = DB::table('tbl_referral_rewards_ref_coupons')
+				   ->where('reward_id', $rewardID)
+				   ->update($aData);
+                $primaryID = $oRec->id;
+            } else {
+                //Insert
+                $aData['created'] = date("Y-m-d H:i:s");
+				$insert_id = DB::table('tbl_referral_rewards_ref_coupons')->insertGetId($aData);
+                $primaryID = $insert_id;
+            }
+            if ($result) {
+                return $primaryID;
+            }
+        }
+        return false;
+    }
+	
+
+    public function checkIfRefCouponExists($rewardID) {
+		$oData = DB::table('tbl_referral_rewards_ref_coupons')
+			->where('reward_id', $rewardID)
+			->first();
+        return $oData;
+    }
+	
+
+    public function saveCashReward($aData) {
+        $rewardID = $aData['reward_id'];
+        if ($rewardID > 0) {
+            $oRec = $this->checkIfCashRewardExists($rewardID);
+            if ($oRec->id > 0) {
+                //Update
+				$result = DB::table('tbl_referral_rewards_cash')
+				   ->where('reward_id', $rewardID)
+				   ->update($aData);
+                $primaryID = $oRec->id;
+            } else {
+                //Insert
+                $aData['created'] = date("Y-m-d H:i:s");
+				$insert_id = DB::table('tbl_referral_rewards_cash')->insertGetId($aData);
+                $primaryID = $insert_id;
+            }
+            if ($result) {
+                return $primaryID;
+            }
+        }
+        return false;
+    }
+	
+
+    public function checkIfCashRewardExists($rewardID) {
+		$oData = DB::table('tbl_referral_rewards_cash')
+			->where('reward_id', $rewardID)
+			->first();
+        return $oData;
+    }
+
+    public function saveCustomReward($aData) {
+        $rewardID = $aData['reward_id'];
+        if ($rewardID > 0) {
+            $oRec = $this->checkIfCustomRewardExists($rewardID);
+            if ($oRec->id > 0) {
+                //Update
+				$result = DB::table('tbl_referral_rewards_custom')
+				   ->where('reward_id', $rewardID)
+				   ->update($aData);
+                $primaryID = $oRec->id;
+            } else {
+                //Insert
+                $aData['created'] = date("Y-m-d H:i:s");
+				$insert_id = DB::table('tbl_referral_rewards_custom')->insertGetId($aData);
+                $primaryID = $insert_id;
+            }
+            if ($result) {
+                return $primaryID;
+            }
+        }
+        return false;
+    }
+	
+
+    public function checkIfCustomRewardExists($rewardID) {
+		$oData = DB::table('tbl_referral_rewards_custom')
+			->where('reward_id', $rewardID)
+			->first();
+        return $oData;
+    }
+	
+
+    public function savePromoLink($aData) {
+        $rewardID = $aData['reward_id'];
+        if ($rewardID > 0) {
+            $oRec = $this->checkIfPromoLinkExists($rewardID);
+            if ($oRec->id > 0) {
+                //Update
+				$result = DB::table('tbl_referral_rewards_promo_links')
+				   ->where('reward_id', $rewardID)
+				   ->update($aData);
+                $primaryID = $oRec->id;
+            } else {
+                //Insert
+                $aData['created'] = date("Y-m-d H:i:s");
+				$insert_id = DB::table('tbl_referral_rewards_promo_links')->insertGetId($aData);
+                $primaryID = $insert_id;
+            }
+            if ($result) {
+                return $primaryID;
+            }
+        }
+        return false;
+    }
+	
+
+    public function checkIfPromoLinkExists($rewardID) {
+		$oData = DB::table('tbl_referral_rewards_promo_links')
+			->where('reward_id', $rewardID)
+			->first();
+        return $oData;
+    }
 	
 	
 	
+	public static function updateReferralSettings($aData, $id) {
+		$result = DB::table('tbl_referral_rewards')
+				   ->where('id', $id)
+				   ->update($aData);
+				   
+        if ($result > -1) {
+			return true;
+		}else{
+			return false;
+		}
+    }
+	
+	
+	public static function getAdvocateCouponInfo($referralID) {
+		$aData =  DB::table('tbl_referral_rewards_adv_coupons')
+			->select('tbl_referral_rewards_adv_coupons.*')
+			->where('tbl_referral_rewards_adv_coupons.reward_id', $referralID)
+			->first();
+        
+        return $aData;
+    }
+	
+	
+	public static function getFriendCouponInfo($referralID) {
+		$aData =  DB::table('tbl_referral_rewards_ref_coupons')
+			->select('tbl_referral_rewards_ref_coupons.*')
+			->where('tbl_referral_rewards_ref_coupons.reward_id', $referralID)
+			->first();
+        
+        return $aData;
+    }
+	
+	
+	public static function addAdvocateCoupon($aData) {
+        $couponID = $aData['coupon_id'];
+        $usageType = $aData['usage_type'];
+        $sCoupons = $aData['coupon_code'];
+        if ($usageType == 'single') {
+            $aCoupons = explode(",", $sCoupons);
+            $oCoupons = Self::getAdvocateCoupons($couponID, $usageType);
+            if (!empty($oCoupons)) {
+                $aExistingCouponsId = $oCoupons[0]->id;
+                foreach ($oCoupons as $oCoupon) {
+                    $aExistingCoupons[] = $oCoupon->coupon_code;
+                    if (!in_array($oCoupon->coupon_code, $aCoupons)) {
+                        Self::deleteAdvocateCoupon($oCoupon->id);
+                    }
+                }
+            }
+
+            //Insert record
+            foreach ($aCoupons as $strCoupon) {
+                if (!in_array($strCoupon, $aExistingCoupons)) {
+                    $aData['coupon_code'] = $strCoupon;
+                    $insert_id = DB::table('tbl_common_templates')->insertGetId($aData);
+					$result = $insert_id;
+                } else {
+
+                    if ($aExistingCouponsId > 0) {
+                        $result = $aExistingCouponsId;
+                        $inset_id = $aExistingCouponsId;
+                    }
+                }
+            }
+        } else if ($usageType == 'multiple') {
+            $oExsits = Self::existsAdvocateCoupon($sCoupons, $couponID);
+            if (!empty($oExsits)) {
+                unset($aData['created']);
+                $aData['updated'] = date("Y-m-d H:i:s");
+				$result = DB::table('tbl_referral_rewards_adv_coupons_codes')
+				   ->where('id', $oExsits->id)
+				   ->update($aData);
+                $insert_id = $oExsits->id;
+            } else {
+				$insert_id = DB::table('tbl_common_templates')->insertGetId($aData);
+				$result = $insert_id;
+            }
+        }
+
+        if ($result) {
+            return $insert_id;
+        } else {
+            return false;
+        }
+    }
+	
+	
+	public static function getAdvocateCoupons($couponID, $usageType) {
+		$oData = DB::table('tbl_referral_rewards_adv_coupons_codes')
+			->where('coupon_id', $couponID)
+			->where('usage_type', $usageType)
+			->get();
+        return $oData;
+    }
+	
+	
+	public static function deleteAdvocateCoupon($id) {
+		$result = DB::table('tbl_referral_rewards_adv_coupons_codes')
+               ->where('id', $id)
+               ->delete();
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	
+	
+	public static function existsAdvocateCoupon($couponCode, $couponID) {
+		$oData = DB::table('tbl_referral_rewards_adv_coupons_codes')
+			->where('coupon_id', $couponID)
+			->where('coupon_code', $couponCode)
+			->first();
+        return $oData;
+    }
 	
 	
 	
-	
+	public function updateAdvocateCouponCode($aData, $id) {
+		$result = DB::table('tbl_referral_rewards_adv_coupons')
+				   ->where('id', $id)
+				   ->update($aData);
+        if ($result > -1) {
+            return true;
+        }
+        return false;
+    }
 	
 	
 	
@@ -636,30 +918,6 @@ class ReferralModel extends Model {
     }
 
     
-
-    
-
-    public function getAdvocateCouponInfo($referralID) {
-        $this->db->select("tbl_referral_rewards_adv_coupons.*");
-        $this->db->where("tbl_referral_rewards_adv_coupons.reward_id", $referralID);
-        $result = $this->db->get("tbl_referral_rewards_adv_coupons");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function getFriendCouponInfo($referralID) {
-        $this->db->select("tbl_referral_rewards_ref_coupons.*");
-        $this->db->where("tbl_referral_rewards_ref_coupons.reward_id", $referralID);
-        $result = $this->db->get("tbl_referral_rewards_ref_coupons");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
 
     
 
@@ -956,16 +1214,7 @@ class ReferralModel extends Model {
         }
     }
 
-    public function updateReferralSettings($aData, $id) {
-        if (!empty($id)) {
-            $this->db->where("id", $id);
-            $result = $this->db->update("tbl_referral_rewards", $aData);
-            if ($result) {
-                return true;
-            }
-        }
-        return false;
-    }
+    
 
     public function setupDefaultReferral($aData) {
         $result = $this->db->insert("tbl_referral_rewards", $aData);
@@ -976,100 +1225,7 @@ class ReferralModel extends Model {
             return false;
         }
     }
-
-    public function addAdvocateCoupon($aData) {
-        $couponID = $aData['coupon_id'];
-        $usageType = $aData['usage_type'];
-        $sCoupons = $aData['coupon_code'];
-        if ($usageType == 'single') {
-
-            $aCoupons = explode(",", $sCoupons);
-            $oCoupons = $this->getAdvocateCoupons($couponID, $usageType);
-            if (!empty($oCoupons)) {
-                $aExistingCouponsId = $oCoupons[0]->id;
-                foreach ($oCoupons as $oCoupon) {
-                    $aExistingCoupons[] = $oCoupon->coupon_code;
-                    if (!in_array($oCoupon->coupon_code, $aCoupons)) {
-                        $this->deleteAdvocateCoupon($oCoupon->id);
-                    }
-                }
-            }
-
-            //Insert record
-            foreach ($aCoupons as $strCoupon) {
-                if (!in_array($strCoupon, $aExistingCoupons)) {
-                    $aData['coupon_code'] = $strCoupon;
-                    $result = $this->db->insert("tbl_referral_rewards_adv_coupons_codes", $aData);
-                    $inset_id = $this->db->insert_id();
-                } else {
-
-                    if ($aExistingCouponsId > 0) {
-                        $result = $aExistingCouponsId;
-                        $inset_id = $aExistingCouponsId;
-                    }
-                }
-            }
-        } else if ($usageType == 'multiple') {
-            $oExsits = $this->existsAdvocateCoupon($sCoupons, $couponID);
-            if ($oExsits->id > 0) {
-                unset($aData['created']);
-                $aData['updated'] = date("Y-m-d H:i:s");
-                $this->db->where("id", $oExsits->id);
-                $this->db->update("tbl_referral_rewards_adv_coupons_codes", $aData);
-                $result = $oExsits->id;
-                $inset_id = $oExsits->id;
-            } else {
-                $result = $this->db->insert("tbl_referral_rewards_adv_coupons_codes", $aData);
-                $inset_id = $this->db->insert_id();
-            }
-        }
-
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function existsAdvocateCoupon($couponCode, $couponID) {
-        $this->db->where("coupon_id", $couponID);
-        $this->db->where("coupon_code", $couponCode);
-        $this->db->limit(1);
-        $result = $this->db->get("tbl_referral_rewards_adv_coupons_codes");
-        if ($result->num_rows() > 0) {
-            return $result->row();
-        }
-        return false;
-    }
-
-    public function deleteAdvocateCoupon($id) {
-        $this->db->where('id', $id);
-        $result = $this->db->delete("tbl_referral_rewards_adv_coupons_codes");
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function updateAdvocateCouponCode($aData, $id) {
-        $this->db->where("id", $id);
-        $result = $this->db->update("tbl_referral_rewards_adv_coupons", $aData);
-        if ($result) {
-            return true;
-        }
-        return false;
-    }
-
-    public function getAdvocateCoupons($couponID, $usageType) {
-        $this->db->where("coupon_id", $couponID);
-        $this->db->where("usage_type", $usageType);
-        $result = $this->db->get("tbl_referral_rewards_adv_coupons_codes");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
     public function addReferredCoupon($aData) {
         $couponID = $aData['coupon_id'];
@@ -1179,160 +1335,7 @@ class ReferralModel extends Model {
 
     
 
-    public function saveAdvCouponDiscount($aData) {
-        $rewardID = $aData['reward_id'];
-        if ($rewardID > 0) {
-            $oRec = $this->checkIfAdvCouponExists($rewardID);
-            if ($oRec->id > 0) {
-                //Update
-                $this->db->where("reward_id", $rewardID);
-                $result = $this->db->update("tbl_referral_rewards_adv_coupons", $aData);
-                $primaryID = $oRec->id;
-            } else {
-                //Insert
-                $aData['created'] = date("Y-m-d H:i:s");
-                $result = $this->db->insert("tbl_referral_rewards_adv_coupons", $aData);
-                $primaryID = $this->db->insert_id();
-            }
-            if ($result) {
-                return $primaryID;
-            }
-        }
-        return false;
-    }
-
-    public function checkIfAdvCouponExists($rewardID) {
-        $this->db->where("reward_id", $rewardID);
-        $result = $this->db->get("tbl_referral_rewards_adv_coupons");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function saveRefCouponDiscount($aData) {
-        $rewardID = $aData['reward_id'];
-        if ($rewardID > 0) {
-            $oRec = $this->checkIfRefCouponExists($rewardID);
-            if ($oRec->id > 0) {
-                //Update
-                $this->db->where("reward_id", $rewardID);
-                $result = $this->db->update("tbl_referral_rewards_ref_coupons", $aData);
-                $primaryID = $oRec->id;
-            } else {
-                //Insert
-                $aData['created'] = date("Y-m-d H:i:s");
-                $result = $this->db->insert("tbl_referral_rewards_ref_coupons", $aData);
-                $primaryID = $this->db->insert_id();
-            }
-            if ($result) {
-                return $primaryID;
-            }
-        }
-        return false;
-    }
-
-    public function checkIfRefCouponExists($rewardID) {
-        $this->db->where("reward_id", $rewardID);
-        $result = $this->db->get("tbl_referral_rewards_ref_coupons");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function saveCashReward($aData) {
-        $rewardID = $aData['reward_id'];
-        if ($rewardID > 0) {
-            $oRec = $this->checkIfCashRewardExists($rewardID);
-            if ($oRec->id > 0) {
-                //Update
-                $this->db->where("reward_id", $rewardID);
-                $result = $this->db->update("tbl_referral_rewards_cash", $aData);
-                $primaryID = $oRec->id;
-            } else {
-                //Insert
-                $aData['created'] = date("Y-m-d H:i:s");
-                $result = $this->db->insert("tbl_referral_rewards_cash", $aData);
-                $primaryID = $this->db->insert_id();
-            }
-            if ($result) {
-                return $primaryID;
-            }
-        }
-        return false;
-    }
-
-    public function checkIfCashRewardExists($rewardID) {
-        $this->db->where("reward_id", $rewardID);
-        $result = $this->db->get("tbl_referral_rewards_cash");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function saveCustomReward($aData) {
-        $rewardID = $aData['reward_id'];
-        if ($rewardID > 0) {
-            $oRec = $this->checkIfCustomRewardExists($rewardID);
-            if ($oRec->id > 0) {
-                //Update
-                $this->db->where("reward_id", $rewardID);
-                $result = $this->db->update("tbl_referral_rewards_custom", $aData);
-                $primaryID = $oRec->id;
-            } else {
-                //Insert
-                $aData['created'] = date("Y-m-d H:i:s");
-                $result = $this->db->insert("tbl_referral_rewards_custom", $aData);
-                $primaryID = $this->db->insert_id();
-            }
-            if ($result) {
-                return $primaryID;
-            }
-        }
-        return false;
-    }
-
-    public function checkIfCustomRewardExists($rewardID) {
-        $this->db->where("reward_id", $rewardID);
-        $result = $this->db->get("tbl_referral_rewards_custom");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function savePromoLink($aData) {
-        $rewardID = $aData['reward_id'];
-        if ($rewardID > 0) {
-            $oRec = $this->checkIfPromoLinkExists($rewardID);
-            if ($oRec->id > 0) {
-                //Update
-                $this->db->where("reward_id", $rewardID);
-                $result = $this->db->update("tbl_referral_rewards_promo_links", $aData);
-                $primaryID = $oRec->id;
-            } else {
-                //Insert
-                $aData['created'] = date("Y-m-d H:i:s");
-                $result = $this->db->insert("tbl_referral_rewards_promo_links", $aData);
-                $primaryID = $this->db->insert_id();
-            }
-            if ($result) {
-                return $primaryID;
-            }
-        }
-        return false;
-    }
-
-    public function checkIfPromoLinkExists($rewardID) {
-        $this->db->where("reward_id", $rewardID);
-        $result = $this->db->get("tbl_referral_rewards_promo_links");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
+    
 
     public function addReferredUser($aData) {
 

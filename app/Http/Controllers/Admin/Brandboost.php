@@ -212,7 +212,8 @@ class Brandboost extends Controller {
         $getBrandboostFR = $mFeedback->getFeedbackResponse($brandboostID);
         $moduleName = 'brandboost';
         $moduleUnitID = '';
-        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $brandboostID);
+		
         $bActiveSubsription = $mUsers->isActiveSubscription();
         $eventsdata = $mBrandboost->getBrandboostEvents($brandboostID);
         $aReviews = $mReviews->getCampaignAllReviews($brandboostID);
