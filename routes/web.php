@@ -251,6 +251,7 @@ Route::post('admin/invoices/get','Admin\Invoice@get');
 
 // Company
 Route::post('company/saveHelpful','Company@saveHelpful');
+Route::post('company/saveComment','Company@saveComment');
 
 //Setting 
 Route::get('admin/settings','Admin\Settings@index');
