@@ -128,6 +128,12 @@ Route::post('admin/modules/referral/updateReferral','Admin\Modules\Referral@upda
 Route::get('admin/modules/referral/reports/{id}','Admin\Modules\Referral@reports');
 Route::get('admin/modules/referral/stats/{id}','Admin\Modules\Referral@stats');
 Route::get('admin/modules/referral/reward/{id}','Admin\Modules\Referral@reward');
+Route::get('admin/modules/referral/advocates','Admin\Modules\Referral@advocates');
+Route::get('admin/modules/referral/workflow/{id}','Admin\Modules\Referral@workflow');
+Route::get('admin/modules/referral/integrations/{id}','Admin\Modules\Referral@integrations');
+Route::get('admin/modules/referral/configurations/{id}','Admin\Modules\Referral@configurations');
+Route::post('admin/modules/referral/saveSettings','Admin\Modules\Referral@saveSettings');
+Route::post('admin/modules/referral/publishReferralStatus','Admin\Modules\Referral@publishReferralStatus');
 
 
 
@@ -325,6 +331,8 @@ Route::post('dropzone/upload_s3_attachment/{clientId}/{folderName}','Dropzone@up
 Route::post('webchat/dropzone/upload_profile_image','Dropzone@upload_profile_image');
 Route::post('webchat/dropzone/upload_s3_attachment/{clientId}/{folderName}','Dropzone@upload_s3_attachment');
 Route::post('webchat/dropzone/upload_s3_attachment_product_review/{clientId}/{folderName}','Dropzone@upload_s3_attachment_product_review');
+Route::post('webchat/dropzone/edit_review_image','Dropzone@edit_review_image');
+
 
 
 //Templates Module

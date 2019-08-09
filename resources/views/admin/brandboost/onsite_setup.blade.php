@@ -7,6 +7,7 @@
 @section('contents')
 
 <?php
+
 $feedbackResponseData = new stdClass();
 if(count($feedbackResponse) > 0){
 	$feedbackResponseData = $feedbackResponse[0];

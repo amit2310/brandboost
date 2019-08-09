@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <div class="content">
 				  
   <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -70,10 +77,10 @@
     id="bbscriptloader" 
     data-key="<?php echo $oSettings->hashcode; ?>" 
     data-widgets="referral" 
-    async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"&gt;
+    async="true" src="<?php echo base_url(); ?>assets/js/ref_widgets.js"&gt;
 &lt;/script&gt;</pre>                        
     </div>
-    <div class="invite_code_copy" style="display: none;">&lt;script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"&gt;&lt;/script&gt;
+    <div class="invite_code_copy" style="display: none;">&lt;script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral" async="true" src="<?php echo base_url(); ?>assets/js/ref_widgets.js"&gt;&lt;/script&gt;
     </div> 
     <div class="p20">
     <button class="btn btn-xs btn_white_table pl10 pr10"  onclick="copyToClipboard('.invite_code_copy')">Copy Code</button>
@@ -104,7 +111,7 @@
          data-key="<?php echo $oSettings->hashcode; ?>" 
          data-widgets="referral-sale" 
          async="true" 
-         src="<?php echo site_url(); ?>assets/js/ref_widgets.js"&gt;
+         src="<?php echo base_url(); ?>assets/js/ref_widgets.js"&gt;
 &lt;/script&gt;
 </pre>                      
 
@@ -124,7 +131,7 @@
          data-key="<?php echo $oSettings->hashcode; ?>" 
          data-widgets="referral-sale" 
          async="true" 
-         src="<?php echo site_url(); ?>assets/js/ref_widgets.js"&gt;
+         src="<?php echo base_url(); ?>assets/js/ref_widgets.js"&gt;
 &lt;/script&gt;
 </pre> 
                                 
@@ -138,34 +145,6 @@
     
   </div>
 </div>
-
-
-<!-- <div  class="panel panel-flat">
-  <div class="panel-heading">
-    <h6 class="panel-title">Embedded Signup Code</h6>
-  </div>
-  <div class="panel-body min_h270 p0">
-  <div class="p20 bbot">
-    <pre class="prettyprint">
-&lt;script
-    type="text/javascript" 
-    id="bbscriptloader" 
-    data-key="<?php echo $oSettings->hashcode; ?>" 
-    data-widgets="referral-embed" 
-    async="true" 
-    src="<?php echo site_url(); ?>assets/js/ref_widgets.js"&gt;
-&lt;/script&gt;
-</pre>
-                                
-        </div>
-        <div class="embSignupCodeCopy" style="display: none;">&lt;script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral-embed" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"&gt; &lt;/script&gt;
-        </div>
-        <div class="p20">
-        <button class="btn btn-xs btn_white_table pl10 pr10" onclick="copyToClipboard('.embSignupCodeCopy')">Copy Code</button>
-        </div>
-        
-      </div>
-    </div> -->
   </div>
   
   
@@ -230,6 +209,7 @@
                 <div class="panel-body">
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
+						{{ csrf_field() }}
                         <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
                         <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
                         <div class="col-md-12">
@@ -341,7 +321,7 @@
         $.ajax({
             url: '<?php echo base_url('admin/modules/referral/publishReferralStatus'); ?>',
             type: "POST",
-            data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status':status},
+            data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status':status, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -374,3 +354,4 @@
 		$temp.remove();
 	}
 </script>
+@endsection

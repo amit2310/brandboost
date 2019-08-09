@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <div class="content">
 
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -14,7 +21,6 @@
 
                 <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishReferralStatus" status="active"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
 
-                <!-- <button style="padding: 7px 15px!important;"  type="button" class="btn dark_btn" data-toggle="modal" data-target="#addPeopleList"><i class="icon-plus3 txt_green3"></i></button> -->
             </div>
         </div>
     </div>
@@ -39,6 +45,7 @@
     </div>
     <div class="select_section" style="max-width: 100%;">
         <form name="frmSettings" method="post" id="frmSettings">
+			{{ csrf_field() }}
             <div class="row">
                 <div class="col-md-3">
                     <div class="panel panel-flat">
@@ -118,29 +125,6 @@
                                                                 <textarea name="facebook_desc" id="facebook_desc" rows="4" class="form-control autoSave" placeholder="The iPhone XR display has rounded corners that follow a beautiful curved design, and these corners are within a standard rectangle. When measured as a standard rectangular shape, the screen is 5.85 inches diagonally (actual viewable area is less)."><?php echo ($oAccountSettings->facebook_desc) ? ($oAccountSettings->facebook_desc) : ''; ?></textarea>
                                                             </div>
                                                         </div>
-                                                        <!--<div class="form-group">
-                                                          <label class="control-label">Image</label>
-                                                          <div class="input-group">
-                                                            <span class="input-group-addon"><i class="icon-upload7"></i></span>
-                                                            <input name="domain" id="domain" class="form-control" required="" placeholder="or drag and drop file" type="text">
-                                                          </div>
-                                                        </div>
-                                                                        
-                                                        <div class="form-group mb10">
-                                                          <label class="control-label">Preview</label>
-                                                        </div>
-                                                        
-                                                        <div class="referral_img">
-                                                        <div>
-                                                            <img class="img-responsive" src="/assets/images/apple_phone.jpg"/>
-                                                        </div>
-                                                            
-                                                            <div class="p20">
-                                                                <h3 class="fsize18 mt0 mb10">Apple iPhone XS</h3>
-                                                                <p class="fsize12">The iPhone XS display has rounded corners that follow a beautiful curved design, and these corners are within a standard rectangle. When measured as a standard rectangular shape, the screen is 5.85 inches diagonally (actual viewable area is less).</p>
-                                                                <a class="text-muted text-uppercase fsize12" href="#">apple.com</a>
-                                                            </div>
-                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -167,29 +151,6 @@
                                                                 <textarea rows="4" name="twitter_desc" id="twitter_desc" class="form-control autoSave" placeholder="The iPhone XR display has rounded corners that follow a beautiful curved design, and these corners are within a standard rectangle. When measured as a standard rectangular shape, the screen is 5.85 inches diagonally (actual viewable area is less)."><?php echo ($oAccountSettings->twitter_desc) ? ($oAccountSettings->twitter_desc) : ''; ?></textarea>
                                                             </div>
                                                         </div>
-                                                        <!--<div class="form-group">
-                                                          <label class="control-label">Image</label>
-                                                          <div class="input-group">
-                                                            <span class="input-group-addon"><i class="icon-upload7"></i></span>
-                                                            <input name="domain" id="domain" class="form-control" required="" placeholder="or drag and drop file" type="text">
-                                                          </div>
-                                                        </div>
-                                                                        
-                                                        <div class="form-group mb10">
-                                                          <label class="control-label">Preview</label>
-                                                        </div>
-                                                        
-                                                        <div class="referral_img">
-                                                        <div>
-                                                            <img class="img-responsive" src="/assets/images/apple_phone.jpg"/>
-                                                        </div>
-                                                            
-                                                            <div class="p20">
-                                                                <h3 class="fsize18 mt0 mb10">Apple iPhone XS</h3>
-                                                                <p class="fsize12">The iPhone XS display has rounded corners that follow a beautiful curved design, and these corners are within a standard rectangle. When measured as a standard rectangular shape, the screen is 5.85 inches diagonally (actual viewable area is less).</p>
-                                                                <a class="text-muted text-uppercase fsize12" href="#">apple.com</a>
-                                                            </div>
-                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -238,57 +199,8 @@
                                     </label>
                                     <div class="clearfix"></div>
                                 </div>
-                                <!--
-                                <div class="form-group">
-                                  <label class="control-label">Display automatically</label>
-                                </div>  
-                <label class="custmo_radiobox mb10">
-                <input type="radio" name="rad1" checked="">
-                <span class="custmo_radiomark"></span>
-                Button Widget
-                </label>
-
-                <label class="custmo_radiobox mb10">
-                <input type="radio" name="rad1">
-                <span class="custmo_radiomark"></span>
-                Automatic Popup
-                </label>
-                
-                <label class="custmo_radiobox mb10">
-                <input type="radio" name="rad1" checked="">
-                <span class="custmo_radiomark"></span>
-                Leave Intent Popup
-                </label>
-                
-                <label class="custmo_radiobox mb10">
-                <input type="radio" name="rad1" checked="">
-                <span class="custmo_radiomark"></span>
-                Slider Widget
-                </label>
-                
-                
-                                -->
                                 <div class="clearfix"></div>
                             </div>
-                            <!--
-                            <div class="p20">
-                            <div class="form-group">
-                                              <label class="control-label">Automatically expire link </label>
-                                            </div>
-                                    
-                            <label class="custmo_radiobox mb10">
-                            <input type="radio" name="rad2" checked="">
-                            <span class="custmo_radiomark"></span>
-                            Never Expire
-                            </label>
-                            
-                            <label class="custmo_radiobox mb10">
-                            <input type="radio" name="rad2" >
-                            <span class="custmo_radiomark"></span>
-                            Expire After
-                            </label>
-                            <div class="clearfix"></div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -313,6 +225,7 @@
                 <div class="panel-body">
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
+						{{ csrf_field() }}
                         <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
                         <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
                         <div class="col-md-12">
@@ -432,11 +345,10 @@
             $.ajax({
                 url: '<?php echo base_url('admin/modules/referral/publishReferralStatus'); ?>',
                 type: "POST",
-                data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status': status},
+                data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        //window.location.href = '<?php echo base_url('admin/brandboost/onsite'); ?>';
                         if (status == 'active') {
 
                             displayMessagePopup('success', 'Campaign pushlished successfully');
@@ -454,3 +366,4 @@
 
     });
 </script>
+@endsection
