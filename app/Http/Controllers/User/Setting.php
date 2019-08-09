@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ReviewsModel;
+use App\Models\Admin\UsersModel;
 use Session;
 
 class Setting extends Controller {
@@ -24,21 +25,20 @@ class Setting extends Controller {
     	return view('user.setting', $aData);
     }
 
-    public function updateProfile() {
+    public function updateProfile(Request $request) {
 
         $response = array();
         $aUInfo = getLoggedUser();
         $userID = $aUInfo->id;
-        $post = $this->input->post();
-        $avatar = $post['avatar'];
+        $avatar = $request->avatar;
       
         if(!empty($avatar)) {
             $aData = array(
                 'avatar' => $avatar
             );
         }
-
-        $result = $this->mUsers->updateUsers($aData, $userID);
+        $mUsers = new UsersModel();
+        $result = $mUsers->updateUsers($aData, $userID);
         if ($result) {
             $response = array('status' => 'ok');
         } else {

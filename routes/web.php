@@ -30,6 +30,7 @@ Route::get('user/nps','User\Nps@Index');
 Route::get('user/referral','User\Referral@Index');
 Route::get('user/login/logout','User\Login@logout');
 Route::get('user/review/edit/{commentId}','User\Review@Edit');
+Route::post('user/setting/updateProfile','User\Setting@updateProfile');
 
 
 //Dashborad 
