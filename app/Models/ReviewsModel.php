@@ -670,42 +670,6 @@ class ReviewsModel extends Model {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public function getSiteReviews($campaignID, $aSettings = array()) {
         $this->db->select("tbl_reviews_site.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile");
         $this->db->join("tbl_users", "tbl_reviews_site.user_id=tbl_users.id", "LEFT");
@@ -1141,58 +1105,43 @@ class ReviewsModel extends Model {
     }
 
     public function saveComment($aData) {
-        $bSaved = $this->db->insert("tbl_reviews_comments", $aData);
-        $insert_id = $this->db->insert_id();
-        //echo $this->db->last_query();
-        if ($bSaved)
-            return $insert_id;
-        return false;
+        $aData =  DB::table('tbl_reviews_comments')->insertGetId($aData);
+        return $aData;
+        
     }
 
 
     public function saveSiteReviewHelpful($aData) {
-        $bSaved = $this->db->insert("tbl_site_reviews_helpful", $aData);
-        if ($bSaved)
-            return true;
-        return false;
+        $aData =  DB::table('tbl_site_reviews_helpful')->insertGetId($aData);
+        return $aData;
+        
     }
 
     public function saveCommentLike($aData) {
-        $bSaved = $this->db->insert("tbl_comment_likes", $aData);
-        if ($bSaved)
-            return true;
-        return false;
+        $aData =  DB::table('tbl_comment_likes')->insertGetId($aData);
+        return $aData;
+
     }
 
     public function updateCommentLike($aData, $id) {
-        $this->db->where("id", $id);
-        $bUpdated = $this->db->update("tbl_comment_likes", $aData);
-        //echo $this->db->last_query();
-        if ($bUpdated)
-            return true;
-        else
-            return false;
+        $aData =  DB::table('tbl_comment_likes')->update($aData);
+           ->where("id", $id);
+           return true;
+       
     }
 
 
     public function updateSiteReviewHelpful($aData, $id) {
-        $this->db->where("id", $id);
-        $bUpdated = $this->db->update("tbl_site_reviews_helpful", $aData);
-        //echo $this->db->last_query();
-        if ($bUpdated)
-            return true;
-        else
-            return false;
+         $aData =  DB::table('tbl_site_reviews_helpful')->update($aData);
+           ->where("id", $id);
+           return true;
     }
 
     public function updateSubscriber($aData, $id) {
         if ($id > 0) {
-            $this->db->where("id", $id);
-            $bUpdated = $this->db->update("tbl_brandboost_users", $aData);
-            if ($bUpdated)
-                return true;
-            else
-                return false;
+            $aData =  DB::table('tbl_brandboost_users')->update($aData);
+           ->where("id", $id);
+           return true;
         }
         return false;
     }
