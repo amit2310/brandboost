@@ -442,6 +442,7 @@ class Referral extends Controller {
         }
     }
 
+	
 	public function stats($referralID,  Request $request) {
 
         $oUser = getLoggedUser();
@@ -954,8 +955,285 @@ class Referral extends Controller {
     }
 	
 	
+	public function saveRewards(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $rewardType = $request->rewardType;
+        $rewardID = $request->rewardID;
+        $advocateCouponDiscount = $request->advocate_discount;
+        $advocateCash = $request->advocate_cash;
+        $advocateCustom = $request->advocate_custom;
+        $referredCouponDiscount = $request->referred_discount;
+        $promoLink = $request->referred_promo_link;
+        $promoDescription = $request->referred_promo_desc;
+        $promoLinkExpiry = $request->promo_expiry;
+        $promoLinkExpirySpecific = $request->specific_expiry_picker;
+        $advocate_discount_price = $request->advocate_discount_price;
+        $advocate_discount_type = $request->advocate_discount_type;
+        $amount_type = $request->amount_type;
+
+        $aData = array(
+            'reward_id' => $rewardID,
+            'updated' => date("Y-m-d H:i:s")
+        );
+
+        if ($rewardType == 'advocate_discount') {
+
+            $aData['advocate_display_msg'] = $advocateCouponDiscount;
+            $aData['advocate_discount'] = $advocate_discount_price;
+            $aData['advocate_discount_type'] = $advocate_discount_type;
+            $iPrimaryID = ReferralModel::saveAdvCouponDiscount($aData);
+            if ($iPrimaryID > 0) {
+                $aUpdateData = array(
+                    'adv_coupon_id' => $iPrimaryID,
+                    'cash_id' => '',
+                    'custom_id' => '',
+                    'updated' => date("Y-m-d H:i:s")
+                );
+            }
+        } else if ($rewardType == 'advocate_cash') {
+            $aData['display_msg'] = $advocateCash;
+            $aData['amount'] = $advocate_discount_price;
+            $aData['amount_type'] = $amount_type;
+            $iPrimaryID = ReferralModel::saveCashReward($aData);
+            if ($iPrimaryID > 0) {
+                $aUpdateData = array(
+                    'adv_coupon_id' => '',
+                    'cash_id' => $iPrimaryID,
+                    'custom_id' => '',
+                    'updated' => date("Y-m-d H:i:s")
+                );
+            }
+        } else if ($rewardType == 'advocate_custom') {
+            $aData['reward_title'] = $advocateCustom;
+            $iPrimaryID = ReferralModel::saveCustomReward($aData);
+            if ($iPrimaryID > 0) {
+                $aUpdateData = array(
+                    'adv_coupon_id' => '',
+                    'cash_id' => '',
+                    'custom_id' => $iPrimaryID,
+                    'updated' => date("Y-m-d H:i:s")
+                );
+            }
+        } else if ($rewardType == 'referred_discount') {
+            $aData['referred_display_msg'] = $referredCouponDiscount;
+            $iPrimaryID = ReferralModel::saveRefCouponDiscount($aData);
+            if ($iPrimaryID > 0) {
+                $aUpdateData = array(
+                    'ref_coupon_id' => $iPrimaryID,
+                    'promo_id' => '',
+                    'no_discount' => '',
+                    'updated' => date("Y-m-d H:i:s")
+                );
+            }
+        } else if ($rewardType == 'referred_promo') {
+            $aData['link_url'] = $promoLink;
+            $aData['link_desc'] = $promoDescription;
+            $aData['expiry'] = $promoLinkExpiry;
+            $aData['expiry_specific_date'] = $promoLinkExpirySpecific;
+
+            $iPrimaryID = ReferralModel::savePromoLink($aData);
+            if ($iPrimaryID > 0) {
+                $aUpdateData = array(
+                    'ref_coupon_id' => '',
+                    'promo_id' => $iPrimaryID,
+                    'no_discount' => '',
+                    'updated' => date("Y-m-d H:i:s")
+                );
+            }
+        } else if ($rewardType == 'referred_no_discount') {
+            $iPrimaryID = 1;  //Just to set any numeric number to make condition true below in order to updte in the main table
+            $aUpdateData = array(
+                'ref_coupon_id' => '',
+                'promo_id' => '',
+                'no_discount' => 'yes',
+                'updated' => date("Y-m-d H:i:s")
+            );
+        }
+
+        if ($iPrimaryID > 0) {
+            if (!empty($aUpdateData)) {
+                $bSaved = ReferralModel::updateReferralSettings($aUpdateData, $rewardID);
+            }
+
+            $response = array('status' => 'success', 'feature_id' => $iPrimaryID, 'msg' => "Success");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+
+    public function contacts() {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        if (!empty($userID)) {
+            $oSettings = ReferralModel::getReferralSettings($userID);
+            $hashCode = $oSettings->hashcode;
+            if (!empty($hashCode)) {
+                $oContacts = ReferralModel::getMyAdvocates($hashCode);
+            }
+        }
+
+        $breadcrumb = '<ul class="breadcrumb">
+                    <li><a href="' . base_url('admin/') . '"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="' . base_url('admin/modules/referral') . '">Referral Module</a></li>
+                    <li class="active">Contacts</li>
+                </ul>';
+
+        $data = array(
+            'title' => 'My Advocates',
+            'pagename' => $breadcrumb,
+            'oContacts' => $oContacts
+        );
+		
+		return view('admin.modules.referral.contacts', $aData);
+    }
 	
 	
+	public function saveCoupons(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $couponType = $request->couponType;
+        $referralID = $request->rewardID;
+        $singleCouponCodes = $request->singleCouponCodes;
+        $multipleCouponCodes = $request->multipleCouponCodes;
+        $couponExpiry = $request->coupon_expiry;
+        $specificExpiryTime = $request->specific_expiry_picker;
+
+        $oAdvocateCoupon = ReferralModel::getAdvocateCouponInfo($referralID);
+        $oFriendCoupon = ReferralModel::getFriendCouponInfo($referralID);
+
+        if ($couponType == 'advocate_single_coupons') {
+            $couponID = $oAdvocateCoupon->id;
+            if (!empty($singleCouponCodes)) {
+                $aData['coupon_id'] = $couponID;
+                $aData['coupon_code'] = str_replace(" ", "", $singleCouponCodes);
+                $aData['usage_type'] = 'single';
+                $aData['updated'] = date("Y-m-d H:i:s");
+                $aData['created'] = date("Y-m-d H:i:s");
+                $aData['coupon_status'] = 1;
+                $bSaved = ReferralModel::addAdvocateCoupon($aData);
+                if ($bSaved) {
+                    $aUpdateData = array(
+                        'advocate_coupon_type' => 'single',
+                        'updated' => date("Y-m-d H:i:s")
+                    );
+                    ReferralModel::updateAdvocateCouponCode($aUpdateData, $couponID);
+                }
+                $response = array('status' => 'success', 'msg' => "Success");
+            }
+        } else if ($couponType == 'advocate_multiple_coupons') {
+            $couponID = $oAdvocateCoupon->id;
+            $aData['coupon_id'] = $couponID;
+            $aData['coupon_code'] = str_replace(" ", "", $multipleCouponCodes);
+            $aData['usage_type'] = 'multiple';
+            $aData['expiry'] = $couponExpiry;
+            $aData['expiry_specific_date'] = $specificExpiryTime;
+            $aData['updated'] = date("Y-m-d H:i:s");
+            $aData['created'] = date("Y-m-d H:i:s");
+            $aData['coupon_status'] = 1;
+            $bSaved = ReferralModel::addAdvocateCoupon($aData);
+            if ($bSaved) {
+                $aUpdateData = array(
+                    'advocate_coupon_type' => 'multiple',
+                    'updated' => date("Y-m-d H:i:s")
+                );
+                ReferralModel::updateAdvocateCouponCode($aUpdateData, $couponID);
+            }
+            $response = array('status' => 'success', 'msg' => "Success");
+        } else if ($couponType == 'referred_single_coupons') {
+            $couponID = $oFriendCoupon->id;
+            if (!empty($singleCouponCodes)) {
+                $aData['coupon_id'] = $couponID;
+                $aData['coupon_code'] = str_replace(" ", "", $singleCouponCodes);
+                $aData['usage_type'] = 'single';
+                $aData['updated'] = date("Y-m-d H:i:s");
+                $aData['created'] = date("Y-m-d H:i:s");
+                $aData['coupon_status'] = 1;
+                $bSaved = ReferralModel::addReferredCoupon($aData);
+                if ($bSaved) {
+                    $aUpdateData = array(
+                        'referred_coupon_type' => 'single',
+                        'updated' => date("Y-m-d H:i:s")
+                    );
+                    ReferralModel::updateReferredCouponCode($aUpdateData, $couponID);
+                }
+                $response = array('status' => 'success', 'msg' => "Success");
+            }
+        } else if ($couponType == 'referred_multiple_coupons') {
+            $couponID = $oFriendCoupon->id;
+            $aData['coupon_id'] = $couponID;
+            $aData['coupon_code'] = str_replace(" ", "", $multipleCouponCodes);
+            $aData['usage_type'] = 'multiple';
+            $aData['expiry'] = $couponExpiry;
+            $aData['expiry_specific_date'] = $specificExpiryTime;
+            $aData['updated'] = date("Y-m-d H:i:s");
+            $aData['created'] = date("Y-m-d H:i:s");
+            $aData['coupon_status'] = 1;
+            $bSaved = ReferralModel::addReferredCoupon($aData);
+            if ($bSaved) {
+                $aUpdateData = array(
+                    'referred_coupon_type' => 'multiple',
+                    'updated' => date("Y-m-d H:i:s")
+                );
+                ReferralModel::updateReferredCouponCode($aUpdateData, $couponID);
+            }
+            $response = array('status' => 'success', 'msg' => "Success");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	public function bulkDeleteReferrals(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $referralIDs = $request->bulk_referral_id;
+        if (!empty($referralIDs)) {
+            foreach ($referralIDs as $refID) {
+                $bDeleted = ReferralModel::deleteReferral($userID, $refID);
+            }
+        }
+        if ($bDeleted) {
+            $response = array('status' => 'success', 'msg' => "Success");
+        }
+        echo json_encode($response);
+        exit;
+    }
+	
+
+    public function bulkArchiveReferrals() {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $referralIDs = $request->bulk_referral_id;
+        $aData = array(
+            'status' => 'archive',
+            'updated' => date("Y-m-d H:i:s")
+        );
+
+        if (!empty($referralIDs)) {
+            foreach ($referralIDs as $refID) {
+
+                $bUpdateID = ReferralModel::updateReferral($aData, $userID, $refID);
+            }
+        }
+
+        if ($bUpdateID) {
+            $response = array('status' => 'success', 'msg' => "Success");
+        }
+        echo json_encode($response);
+        exit;
+    }
 	
 	
 	
@@ -984,58 +1262,7 @@ class Referral extends Controller {
 	
     
 
-    public function bulkDeleteReferrals() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $referralIDs = $post['bulk_referral_id'];
-        if (!empty($referralIDs)) {
-            foreach ($referralIDs as $refID) {
-                $bDeleted = $this->mReferral->deleteReferral($userID, $refID);
-            }
-        }
-        if ($bDeleted) {
-            $response = array('status' => 'success', 'msg' => "Success");
-        }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function bulkArchiveReferrals() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $referralIDs = $post['bulk_referral_id'];
-        $aData = array(
-            'status' => 'archive',
-            'updated' => date("Y-m-d H:i:s")
-        );
-
-        if (!empty($referralIDs)) {
-            foreach ($referralIDs as $refID) {
-
-                $bUpdateID = $this->mReferral->updateReferral($aData, $userID, $refID);
-            }
-        }
-
-        if ($bUpdateID) {
-            $response = array('status' => 'success', 'msg' => "Success");
-        }
-        echo json_encode($response);
-        exit;
-    }
+    
 
     
 
@@ -1131,15 +1358,6 @@ class Referral extends Controller {
 
             $bResponse = $this->mReferral->updateReferralUser($aData, $subscriberID);
         }
-
-        /* $aData = array(
-          'email' => $email,
-          'firstname' => $firstname,
-          'lastname' => $lastname,
-          'mobile' => $phone
-          );
-          $bResponse = $this->mReferral->updateReferralUser($aData, $subscriberID); */
-
         $response = array('status' => 'success', 'result' => $bResponse);
         echo json_encode($response);
         exit;
@@ -1169,378 +1387,7 @@ class Referral extends Controller {
         exit;
     }
 
-    public function setup_old() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $selectedTab = $this->input->get('t');
-        $breadcrumb = '<ul class="breadcrumb">
-			<li><a href="' . base_url('admin/') . '"><i class="icon-home2 position-left"></i> Home</a></li>
-			<li class=""><a href="' . base_url('admin/modules/referral') . '">Referral Module</a></li>
-                        <li class="">Setup</li>
-            </ul>';
-
-        //Configuration Related Data
-        $oAccountSettings = $this->mReferral->getAccountSettings($userID);
-
-        $oTemplates = $this->mReferral->getUserReferralTemplates($oAccountSettings->id);
-        $campaignTemplates = $this->mReferral->getReferralCampaignTemplates($oAccountSettings->id);
-
-        $eventsData = $this->mReferral->getUserReferralEvents($oAccountSettings->id);
-
-        //Reward related Data
-        $oSettings = $this->mReferral->getReferralSettings($userID);
-        //echo $userID;
-        //pre($oSettings);
-        $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
-        if (!empty($oSettings)) {
-            $programID = $oSettings->rewardID;
-            $advCouponID = $oSettings->advCouponID;
-            $refCouponID = $oSettings->refCouponID;
-            if ($advCouponID > 0) {
-                $oAdvCouponCodes = $this->mReferral->getAdvocateCouponCodes($advCouponID);
-            }
-            if ($refCouponID > 0) {
-                $oRefCouponCodes = $this->mReferral->getReferralCouponCodes($refCouponID);
-            }
-        }
-
-        //List of Advocates related data 
-        $hashCode = $oSettings->hashcode;
-        if (!empty($hashCode)) {
-            $oContacts = $this->mReferral->getMyAdvocates($hashCode);
-        }
-
-
-        $aData = array(
-            'title' => 'Referral Settings',
-            'pagename' => $breadcrumb,
-            'defalutTab' => $defaultTab,
-            'programID' => $programID,
-            'oSettings' => $oSettings,
-            'oTemplates' => $oTemplates,
-            'campaignTemplates' => $campaignTemplates,
-            'eventsData' => $eventsData,
-            'oAccountSettings' => $oAccountSettings,
-            'oAdvCouponCodes' => $oAdvCouponCodes,
-            'oRefCouponCodes' => $oRefCouponCodes,
-            'oContacts' => $oContacts,
-            'userID' => $userID
-        );
-
-
-
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $this->template->load('admin/admin_template_new', 'admin/modules/referral/setup.php', $aData);
-    }
-
-    public function addReferral_old() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $actionName = strip_tags($post['doaction']);
-        if ($actionName == 'setupDefault') {
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $hashcode = '';
-            for ($i = 0; $i < 20; $i++) {
-                $hashcode .= $characters[rand(0, strlen($characters))];
-            }
-            $hashcode = $hashcode . date('Ymdhis');
-            if ($userID > 0) {
-                $aData = array(
-                    'user_id' => $userID,
-                    'hashcode' => md5($hashcode),
-                    'updated' => date("Y-m-d H:i:s"),
-                    'created' => date("Y-m-d H:i:s")
-                );
-                $bResponse = $this->mReferral->setupDefaultReferral($aData);
-                if ($bResponse) {
-                    $response = array('status' => 'success', 'msg' => "Success");
-                }
-            }
-        }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function saveCoupons() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $couponType = strip_tags($post['couponType']);
-        $referralID = strip_tags($post['rewardID']);
-        $singleCouponCodes = strip_tags($post['singleCouponCodes']);
-        $multipleCouponCodes = strip_tags($post['multipleCouponCodes']);
-        $couponExpiry = strip_tags($post['coupon_expiry']);
-        $specificExpiryTime = strip_tags($post['specific_expiry_picker']);
-
-        $oAdvocateCoupon = $this->mReferral->getAdvocateCouponInfo($referralID);
-        $oFriendCoupon = $this->mReferral->getFriendCouponInfo($referralID);
-
-        if ($couponType == 'advocate_single_coupons') {
-            $couponID = $oAdvocateCoupon->id;
-            if (!empty($singleCouponCodes)) {
-                $aData['coupon_id'] = $couponID;
-                $aData['coupon_code'] = str_replace(" ", "", $singleCouponCodes);
-                $aData['usage_type'] = 'single';
-                $aData['updated'] = date("Y-m-d H:i:s");
-                $aData['created'] = date("Y-m-d H:i:s");
-                $aData['coupon_status'] = 1;
-                $bSaved = $this->mReferral->addAdvocateCoupon($aData);
-                if ($bSaved) {
-                    $aUpdateData = array(
-                        'advocate_coupon_type' => 'single',
-                        'updated' => date("Y-m-d H:i:s")
-                    );
-                    $this->mReferral->updateAdvocateCouponCode($aUpdateData, $couponID);
-                }
-                $response = array('status' => 'success', 'msg' => "Success");
-            }
-        } else if ($couponType == 'advocate_multiple_coupons') {
-            $couponID = $oAdvocateCoupon->id;
-            $aData['coupon_id'] = $couponID;
-            $aData['coupon_code'] = str_replace(" ", "", $multipleCouponCodes);
-            $aData['usage_type'] = 'multiple';
-            $aData['expiry'] = $couponExpiry;
-            $aData['expiry_specific_date'] = $specificExpiryTime;
-            $aData['updated'] = date("Y-m-d H:i:s");
-            $aData['created'] = date("Y-m-d H:i:s");
-            $aData['coupon_status'] = 1;
-            $bSaved = $this->mReferral->addAdvocateCoupon($aData);
-            if ($bSaved) {
-                $aUpdateData = array(
-                    'advocate_coupon_type' => 'multiple',
-                    'updated' => date("Y-m-d H:i:s")
-                );
-                $this->mReferral->updateAdvocateCouponCode($aUpdateData, $couponID);
-            }
-            $response = array('status' => 'success', 'msg' => "Success");
-        } else if ($couponType == 'referred_single_coupons') {
-            $couponID = $oFriendCoupon->id;
-            if (!empty($singleCouponCodes)) {
-                $aData['coupon_id'] = $couponID;
-                $aData['coupon_code'] = str_replace(" ", "", $singleCouponCodes);
-                $aData['usage_type'] = 'single';
-                $aData['updated'] = date("Y-m-d H:i:s");
-                $aData['created'] = date("Y-m-d H:i:s");
-                $aData['coupon_status'] = 1;
-                $bSaved = $this->mReferral->addReferredCoupon($aData);
-                if ($bSaved) {
-                    $aUpdateData = array(
-                        'referred_coupon_type' => 'single',
-                        'updated' => date("Y-m-d H:i:s")
-                    );
-                    $this->mReferral->updateReferredCouponCode($aUpdateData, $couponID);
-                }
-                $response = array('status' => 'success', 'msg' => "Success");
-            }
-        } else if ($couponType == 'referred_multiple_coupons') {
-            $couponID = $oFriendCoupon->id;
-            $aData['coupon_id'] = $couponID;
-            $aData['coupon_code'] = str_replace(" ", "", $multipleCouponCodes);
-            $aData['usage_type'] = 'multiple';
-            $aData['expiry'] = $couponExpiry;
-            $aData['expiry_specific_date'] = $specificExpiryTime;
-            $aData['updated'] = date("Y-m-d H:i:s");
-            $aData['created'] = date("Y-m-d H:i:s");
-            $aData['coupon_status'] = 1;
-            $bSaved = $this->mReferral->addReferredCoupon($aData);
-            if ($bSaved) {
-                $aUpdateData = array(
-                    'referred_coupon_type' => 'multiple',
-                    'updated' => date("Y-m-d H:i:s")
-                );
-                $this->mReferral->updateReferredCouponCode($aUpdateData, $couponID);
-            }
-            $response = array('status' => 'success', 'msg' => "Success");
-        }
-
-
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function saveRewards() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $rewardType = strip_tags($post['rewardType']);
-        $rewardID = strip_tags($post['rewardID']);
-        $advocateCouponDiscount = strip_tags($post['advocate_discount']);
-        $advocateCash = strip_tags($post['advocate_cash']);
-        $advocateCustom = strip_tags($post['advocate_custom']);
-        $referredCouponDiscount = strip_tags($post['referred_discount']);
-        $promoLink = strip_tags($post['referred_promo_link']);
-        $promoDescription = strip_tags($post['referred_promo_desc']);
-        $promoLinkExpiry = strip_tags($post['promo_expiry']);
-        $promoLinkExpirySpecific = strip_tags($post['specific_expiry_picker']);
-
-        $advocate_discount_price = strip_tags($post['advocate_discount_price']);
-        $advocate_discount_type = strip_tags($post['advocate_discount_type']);
-        $amount_type = strip_tags($post['amount_type']);
-
-        $aData = array(
-            'reward_id' => $rewardID,
-            'updated' => date("Y-m-d H:i:s")
-        );
-
-        if ($rewardType == 'advocate_discount') {
-
-            $aData['advocate_display_msg'] = $advocateCouponDiscount;
-            //$aData['advocate_coupon_type'] = 'single';
-            $aData['advocate_discount'] = $advocate_discount_price;
-            $aData['advocate_discount_type'] = $advocate_discount_type;
-            $iPrimaryID = $this->mReferral->saveAdvCouponDiscount($aData);
-            if ($iPrimaryID > 0) {
-                $aUpdateData = array(
-                    'adv_coupon_id' => $iPrimaryID,
-                    'cash_id' => '',
-                    'custom_id' => '',
-                    'updated' => date("Y-m-d H:i:s")
-                );
-            }
-        } else if ($rewardType == 'advocate_cash') {
-            $aData['display_msg'] = $advocateCash;
-            $aData['amount'] = $advocate_discount_price;
-            $aData['amount_type'] = $amount_type;
-            $iPrimaryID = $this->mReferral->saveCashReward($aData);
-            if ($iPrimaryID > 0) {
-                $aUpdateData = array(
-                    'adv_coupon_id' => '',
-                    'cash_id' => $iPrimaryID,
-                    'custom_id' => '',
-                    'updated' => date("Y-m-d H:i:s")
-                );
-            }
-        } else if ($rewardType == 'advocate_custom') {
-            $aData['reward_title'] = $advocateCustom;
-            $iPrimaryID = $this->mReferral->saveCustomReward($aData);
-            if ($iPrimaryID > 0) {
-                $aUpdateData = array(
-                    'adv_coupon_id' => '',
-                    'cash_id' => '',
-                    'custom_id' => $iPrimaryID,
-                    'updated' => date("Y-m-d H:i:s")
-                );
-            }
-        } else if ($rewardType == 'referred_discount') {
-            $aData['referred_display_msg'] = $referredCouponDiscount;
-            //$aData['referred_coupon_type'] = 'single';
-            $iPrimaryID = $this->mReferral->saveRefCouponDiscount($aData);
-            if ($iPrimaryID > 0) {
-                $aUpdateData = array(
-                    'ref_coupon_id' => $iPrimaryID,
-                    'promo_id' => '',
-                    'no_discount' => '',
-                    'updated' => date("Y-m-d H:i:s")
-                );
-            }
-        } else if ($rewardType == 'referred_promo') {
-            $aData['link_url'] = $promoLink;
-            $aData['link_desc'] = $promoDescription;
-            $aData['expiry'] = $promoLinkExpiry;
-            $aData['expiry_specific_date'] = $promoLinkExpirySpecific;
-
-            $iPrimaryID = $this->mReferral->savePromoLink($aData);
-            if ($iPrimaryID > 0) {
-                $aUpdateData = array(
-                    'ref_coupon_id' => '',
-                    'promo_id' => $iPrimaryID,
-                    'no_discount' => '',
-                    'updated' => date("Y-m-d H:i:s")
-                );
-            }
-        } else if ($rewardType == 'referred_no_discount') {
-            $iPrimaryID = 1;  //Just to set any numeric number to make condition true below in order to updte in the main table
-            $aUpdateData = array(
-                'ref_coupon_id' => '',
-                'promo_id' => '',
-                'no_discount' => 'yes',
-                'updated' => date("Y-m-d H:i:s")
-            );
-        }
-
-
-
-
-        if ($iPrimaryID > 0) {
-            if (!empty($aUpdateData)) {
-                $bSaved = $this->mReferral->updateReferralSettings($aUpdateData, $rewardID);
-            }
-
-            $response = array('status' => 'success', 'feature_id' => $iPrimaryID, 'msg' => "Success");
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function contacts() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        if (!empty($userID)) {
-            $oSettings = $this->mReferral->getReferralSettings($userID);
-            $hashCode = $oSettings->hashcode;
-            if (!empty($hashCode)) {
-                $oContacts = $this->mReferral->getMyAdvocates($hashCode);
-            }
-        }
-
-        $breadcrumb = '<ul class="breadcrumb">
-                    <li><a href="' . base_url('admin/') . '"><i class="icon-home2 position-left"></i> Home</a></li>
-                    <li><a href="' . base_url('admin/modules/referral') . '">Referral Module</a></li>
-                    <li class="active">Contacts</li>
-                </ul>';
-
-        $data = array(
-            'title' => 'My Advocates',
-            'pagename' => $breadcrumb,
-            'oContacts' => $oContacts
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/modules/referral/contacts', $data);
-    }
-
-    public function widgets_old() {
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-        if ($userID > 0) {
-            $oSettings = $this->mReferral->getReferralSettings($userID);
-            $breadcrumb = '<ul class="breadcrumb">
-                    <li><a href="' . base_url('admin/') . '"><i class="icon-home2 position-left"></i> Home</a></li>
-                    <li><a href="' . base_url('admin/modules/referral') . '">Referral Module</a></li>
-                    <li class="active">Widgets</li>
-                </ul>';
-
-            $data = array(
-                'title' => 'Widgets',
-                'pagename' => $breadcrumb,
-                'oSettings' => $oSettings
-            );
-
-            $this->template->load('admin/admin_template_new', 'admin/modules/referral/widget_code', $data);
-        }
-    }
-
+    
     public function widgets() {
         $oUser = getLoggedUser();
         $userID = $oUser->id;

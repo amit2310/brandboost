@@ -11,9 +11,9 @@ if (!empty($subscribersData)) {
     }
 }
 if(empty($subscribersData)){
-   $subscribersData = \App\Models\Admin\WorkflowModel::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
-   
+	$subscribersData = \App\Models\Admin\WorkflowModel::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
 }
+
 
 if(!empty($subscribersData)) { ?>
 
@@ -73,8 +73,6 @@ if(!empty($subscribersData)) { ?>
                         </thead>
                         <tbody>
                             <?php
-                            
-                            
                             if (count($subscribersData) > 0) {
                                 foreach ($subscribersData as $oContact) {
                                     $subscriberID = $oContact->subscriber_id;
@@ -210,8 +208,6 @@ if(!empty($subscribersData)) { ?>
                     </table>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -225,7 +221,6 @@ else {
         <div class="col-lg-12">
             <!-- Marketing campaigns -->
             <div class="panel panel-flat">
-                <?php //$this->load->view("admin/components/smart-popup/smart-contact-widget");?>
 				@include('admin.components.smart-popup.smart-contact-widget')
                 <div class="panel-heading">
                     <span class="pull-left">
@@ -259,7 +254,6 @@ else {
                 <div class="panel-body p0">
                     <table class="table datatable-basic">
                         <thead>
-
                             <tr>
                                 <th style="display: none;"></th>
                                 <th style="display: none;"></th>
@@ -288,11 +282,6 @@ else {
                                                 Looks Like You Don’t Have Any Contact Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
                                                 Lets Create Your First Contact.
                                             </h5>
-
-                                            <?php //if ($canWrite): ?>
-                                                <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addContactForm" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add Contact</button>
-                                            <?php //endif; ?>
-
                                         </div>
                                     </div>
                                 </div>
@@ -309,8 +298,6 @@ else {
                     </table>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -358,7 +345,6 @@ else {
                     <div class="panel-body p0">
                         <table class="table datatable-basic" >
                             <thead>
-
                                 <tr>
                                     <th style="display: none;"></th>
                                     <th style="display: none;"></th>
@@ -479,8 +465,6 @@ else {
                                                         </ul>
                                                     </div>
                                                 </td>
-
-
                                             </tr>
                                             <?php
                                         }
@@ -491,8 +475,6 @@ else {
                         </table>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>

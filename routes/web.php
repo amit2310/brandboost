@@ -134,6 +134,8 @@ Route::get('admin/modules/referral/integrations/{id}','Admin\Modules\Referral@in
 Route::get('admin/modules/referral/configurations/{id}','Admin\Modules\Referral@configurations');
 Route::post('admin/modules/referral/saveSettings','Admin\Modules\Referral@saveSettings');
 Route::post('admin/modules/referral/publishReferralStatus','Admin\Modules\Referral@publishReferralStatus');
+Route::post('admin/modules/referral/saveRewards','Admin\Modules\Referral@saveRewards');
+Route::post('admin/modules/referral/saveCoupons','Admin\Modules\Referral@saveCoupons');
 
 
 

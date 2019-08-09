@@ -2872,7 +2872,7 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-
+		
         $oData = DB::table($tableName)
                 ->leftJoin('tbl_subscribers', "$tableName.subscriber_id", '=', "tbl_subscribers.id")
                 ->select("$tableName.id as local_user_id", "tbl_subscribers.*", "tbl_subscribers.id as subscriber_id", "tbl_subscribers.status AS globalStatus", "tbl_subscribers.id AS global_user_id")

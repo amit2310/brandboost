@@ -189,7 +189,7 @@ if (!empty($oRefCouponCodes)) {
 
                             <div class="advocate_desc" id="advocate-discount-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->adv_coupon_id > 0) ? 'display:block;' : 'display:none;' ?>">
                                 <form name="frmAdvocateDiscount" id="frmAdvocateDiscount" method="post" data-container-id="advocate-free-gift" >
-
+									{{ csrf_field() }}
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label">Amount</label>
@@ -269,9 +269,7 @@ if (!empty($oRefCouponCodes)) {
                                     </div>
                                     <div class="coupon_desc" id="advocate-single-use_code" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->advocate_coupon_type == 'single') ? 'display:block;' : 'display:none;' ?>">
                                         <form name="frmAdvSingleUseCodes" id="frmAdvSingleUseCodes" data-container-id="advocate-coupon-details" method="post" >
-
-
-
+											{{ csrf_field() }}
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon codes here</label>
@@ -295,8 +293,6 @@ if (!empty($oRefCouponCodes)) {
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                         </form>
                                     </div>
                                     <div class="clearfix"></div>
@@ -313,7 +309,7 @@ if (!empty($oRefCouponCodes)) {
                                     </div>
                                     <div class="coupon_desc" id="advocate-multiple-use_code" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->advocate_coupon_type == 'multiple') ? 'display:block;' : 'display:none;' ?>">
                                         <form name="frmAdvMultipleUseCodes" id="frmAdvMultipleUseCodes" data-container-id="advocate-coupon-details" method="post" >
-
+											{{ csrf_field() }}
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon code</label>
@@ -359,9 +355,6 @@ if (!empty($oRefCouponCodes)) {
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
                                         </form>
                                     </div>
                                     <div class="clearfix"></div>
@@ -376,7 +369,7 @@ if (!empty($oRefCouponCodes)) {
 
                             <div class="advocate_desc" id="advocate-cash-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->cash_id > 0) ? 'display:block;' : 'display:none;' ?>">
                                 <form name="frmAdvocateCash" id="frmAdvocateCash" method="post" data-container-id="advocate-free-gift" >
-
+									{{ csrf_field() }}
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label">Amount</label>
@@ -390,23 +383,21 @@ if (!empty($oRefCouponCodes)) {
                                             <label class="control-label">&nbsp;</label>
                                             <div class="">
                                                 <div class="input-group">
-
-
-<?php
-if ($oSettings->amount_type == 'dollar') {
-    $dollarCash = 'table-cell';
-    $percentCash = 'none';
-    $advCashDisValue = '$';
-} else if ($oSettings->amount_type == 'percent') {
-    $percentCash = 'table-cell';
-    $dollarCash = 'none';
-    $advCashDisValue = '%';
-} else {
-    $dollarCash = 'none';
-    $percentCash = 'table-cell';
-    $advCashDisValue = '%';
-}
-?>
+													<?php
+													if ($oSettings->amount_type == 'dollar') {
+														$dollarCash = 'table-cell';
+														$percentCash = 'none';
+														$advCashDisValue = '$';
+													} else if ($oSettings->amount_type == 'percent') {
+														$percentCash = 'table-cell';
+														$dollarCash = 'none';
+														$advCashDisValue = '%';
+													} else {
+														$dollarCash = 'none';
+														$percentCash = 'table-cell';
+														$advCashDisValue = '%';
+													}
+													?>
                                                     <input type="hidden" name="amount_type" class="form-control amount_type" value="<?php echo (!empty($oSettings->amount_type)) ? $oSettings->amount_type : 'percent'; ?>">
 
                                                     <input type="text" name="" value="<?php echo $advCashDisValue; ?>" id="adCashVal" class="form-control" readonly />
@@ -473,9 +464,6 @@ if ($oSettings->amount_type == 'dollar') {
                                             </div>
                                         </div>
                                     </div>
-
-
-
                                 </form>
                             </div>
 
@@ -597,7 +585,7 @@ if ($oSettings->ref_coupon_id > 0) {
                             <div class="referred_desc" id="referred-discount-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->ref_coupon_id > 0) ? 'display:block;' : 'display:none;' ?>">
                                 <form name="frmReferredDiscount" id="frmReferredDiscount" method="post" data-container-id="referred-friend-gift" >
                                     <input type="hidden" name="rewardType" value="referred_discount" />
-
+									{{ csrf_field() }}
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label class="control-label">Reward Message</label>
@@ -619,9 +607,6 @@ if ($oSettings->ref_coupon_id > 0) {
                                             </div>
                                         </div>
                                     </div>
-
-
-
                                 </form>
 
 
@@ -643,8 +628,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                     </div>
                                     <div class="coupon_desc_ref" id="referred-single-use_code" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->referred_coupon_type == 'single') ? 'display:block;' : 'display:none;' ?>">
                                         <form name="frmRefSingleUseCodes" id="frmRefSingleUseCodes" method="post" data-container-id="referred-friend-coupon" >
-
-
+											{{ csrf_field() }}
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon codes here</label>
@@ -689,7 +673,7 @@ if ($oSettings->ref_coupon_id > 0) {
 
                                     <div class="coupon_desc_ref" id="referred-multiple-use_code" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->referred_coupon_type == 'multiple') ? 'display:block;' : 'display:none;' ?>">
                                         <form name="frmRefMultipleUseCodes" id="frmRefMultipleUseCodes" method="post" data-container-id="referred-friend-coupon">
-
+											{{ csrf_field() }}
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon code</label>
@@ -755,8 +739,7 @@ if ($oSettings->ref_coupon_id > 0) {
 
                             <div class="referred_desc" id="referred-promo-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->promo_id > 0) ? 'display:block;' : 'display:none;' ?>">
                                 <form name="frmReferredPromo" id="frmReferredPromo" method="post" data-container-id="referred-friend-gift" >
-
-
+									{{ csrf_field() }}
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label">Promo link</label>
@@ -804,16 +787,12 @@ if ($oSettings->ref_coupon_id > 0) {
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
                                 </form>
                             </div>
 
                             <div class="referred_desc" id="referred-no-discount-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->no_discount == 'yes') ? 'display:block;' : 'display:none;' ?>">
                                 <form name="frmReferredNoDiscount" id="frmReferredNoDiscount" method="post" data-container-id="referred-friend-gift" >
-
+									{{ csrf_field() }}
                                     <div class="col-md-3">
 
                                     </div>
@@ -841,8 +820,6 @@ if ($oSettings->ref_coupon_id > 0) {
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </form>
                             </div>
 
@@ -851,11 +828,7 @@ if ($oSettings->ref_coupon_id > 0) {
                         <div>
 
                         </div>
-
                     </div>
-
-
-
                 </div>
             </div>
         </div>
@@ -891,6 +864,7 @@ if ($oSettings->ref_coupon_id > 0) {
                 <div class="panel-body">
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
+						{{ csrf_field() }}
                         <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
                         <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
                         <div class="col-md-12">
@@ -966,7 +940,7 @@ $(document).ready(function(){
         $.ajax({
             url: '<?php echo base_url('admin/modules/referral/publishReferralStatus'); ?>',
             type: "POST",
-            data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status':status},
+            data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status':status, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
