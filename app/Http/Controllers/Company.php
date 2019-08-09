@@ -708,7 +708,7 @@ class Company extends Controller {
 			$post = Input::post();
 			
 			$userID = $post['userID'];
-			$mReviews = ReviewsModel();
+			$mReviews = new ReviewsModel();
 			$mInviter = new BrandboostModel();
 			
 			if (!empty($post)) {
