@@ -432,6 +432,167 @@ class ReferralModel extends Model {
     }
 	
 	
+	public static function saveAutoEvents($aData, $source, $userID) {
+        //get Settings
+        $oSettings = Self::getAccountSettings($userID);
+
+        if (!empty($oSettings)) {
+            $invite = json_encode(array('delay_type' => 'after', 'delay_value' => $oSettings->invite_delay, 'delay_unit' => 'hour'));
+            $sale = json_encode(array('delay_type' => 'after', 'delay_value' => $oSettings->sale_delay, 'delay_unit' => 'day'));
+            $reminder = json_encode(array('delay_type' => 'after', 'delay_value' => $oSettings->reminder_delay, 'delay_unit' => 'week'));
+            $reminderInvite = json_encode(array('delay_type' => 'after', 'delay_value' => $oSettings->reminder_delay_invite, 'delay_unit' => 'week'));
+
+            $settingID = $oSettings->id;
+            $oEvents = $this->getAutoEvents($settingID);
+            if (!empty($oEvents)) {
+                //Update 
+                $aData = array();
+                foreach ($oEvents as $oEvent) {
+                    if ($oEvent->event_type == 'invite') {
+                        $aData['data'] = $invite;
+                    } else if ($oEvent->event_type == 'sale') {
+                        $aData['data'] = $sale;
+                    } else if ($oEvent->event_type == 'reminder') {
+                        $aData['data'] = $reminder;
+                    } else if ($oEvent->event_type == 'reminder_invite') {
+                        $aData['data'] = $reminderInvite;
+                    }
+
+                    if (!empty($aData)) {
+                        $bSaved = $this->updateAutoEvent($aData, $oEvent->id);
+                        if ($bSaved) {
+                            //Update Campaigns
+                            if ($source == 'both') {
+                                $this->updataCampaignStatus($oEvent->id, '', 'active');
+                            } else if ($source == 'email') {
+                                $this->updataCampaignStatus($oEvent->id, 'Email', 'active');
+                                $this->updataCampaignStatus($oEvent->id, 'Sms', 'draft');
+                            } else if ($source == 'sms') {
+                                $this->updataCampaignStatus($oEvent->id, 'Email', 'draft');
+                                $this->updataCampaignStatus($oEvent->id, 'Sms', 'active');
+                            }
+                        }
+                    }
+                }
+            } else {
+                //Insert
+                //Invite
+                $aData = array(
+                    'settings_id' => $settingID,
+                    'event_type' => 'invite',
+                    'data' => $invite,
+                    'created' => date("Y-m-d H:i:s ")
+                );
+                $insert_id = DB::table('tbl_referral_automations_events')->insertGetId($aData);
+                $inviteInsertID = $insert_id;
+
+                //Sale
+                $aData = array(
+                    'settings_id' => $settingID,
+                    'event_type' => 'sale',
+                    'data' => $sale,
+                    'created' => date("Y-m-d H:i:s ")
+                );
+				$insert_id = DB::table('tbl_referral_automations_events')->insertGetId($aData);
+                $saleInsertID = $insert_id;
+
+                //Reminder
+                $aData = array(
+                    'settings_id' => $settingID,
+                    'event_type' => 'reminder',
+                    'data' => $reminder,
+                    'previous_event_id' => $saleInsertID,
+                    'created' => date("Y-m-d H:i:s ")
+                );
+                
+				$insert_id = DB::table('tbl_referral_automations_events')->insertGetId($aData);
+                $reminderInsertID = $insert_id;
+
+                //Reminder Invite
+                $aData = array(
+                    'settings_id' => $settingID,
+                    'event_type' => 'reminder_invite',
+                    'data' => $reminder,
+                    'previous_event_id' => $inviteInsertID,
+                    'created' => date("Y-m-d H:i:s ")
+                );
+                $insert_id = DB::table('tbl_referral_automations_events')->insertGetId($aData);
+                $reminderInviteInsertID = $insert_id;
+
+                //Insert Default Referral Campaigns
+                //get Default templates
+                $oTemplates = $this->getDefaultReferralTemplates();
+                if (!empty($oTemplates)) {
+                    foreach ($oTemplates as $oTemplate) {
+
+                        $templateName = $oTemplate->template_name;
+                        $templateType = $oTemplate->template_type;
+                        $subject = $oTemplate->template_subject;
+                        $content = $oTemplate->template_content;
+
+                        if ($source == 'both') {
+                            $status = 'active';
+                        } else if ($source == 'email') {
+                            $status = ($templateType == 'Email') ? 'active' : 'draft';
+                        } else if ($source == 'sms') {
+                            $status = ($templateType == 'Sms') ? 'active' : 'draft';
+                        }
+
+                        if ($templateName == 'Join') {
+                            $eventID = $inviteInsertID;
+                        } else if ($templateName == 'Post Purchase') {
+                            $eventID = $saleInsertID;
+                        } else if ($templateName == 'Reminder') {
+                            $eventID = $reminderInsertID;
+                        } else if ($templateName == 'Reminder Invite') {
+                            $eventID = $reminderInviteInsertID;
+                        }
+
+                        $tempData = array(
+                            'event_id' => $eventID,
+                            'content_type' => ($templateType == 'Email') ? 'Regular Html' : 'Plain Text',
+                            'campaign_type' => ($templateType == 'Email') ? 'Email' : 'Sms',
+                            'name' => $templateName,
+                            'subject' => $subject,
+                            'html' => $content,
+                            'status' => $status,
+                            'created' => date("Y-m-d H:i:s")
+                        );
+
+                        $this->insertReferralCampaigns($tempData);
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -656,277 +817,7 @@ class ReferralModel extends Model {
         }
     }
 
-    public function saveReferralEvents_old($eData, $referralID) {
-        if ($referralID != '') {
-            //Invite Email
-            $aData = array(
-                'referral_id' => $referralID,
-                'event_type' => 'invite-email',
-                'data' => $eData['invite-email'],
-                'previous_event_id' => 0,
-                'created' => date("Y-m-d H:i:s ")
-            );
-            $this->db->insert("tbl_referral_automations_events", $aData);
-            $inviteEmailInsertID = $this->db->insert_id();
-
-            //Invite SMS
-            $aData = array(
-                'referral_id' => $referralID,
-                'event_type' => 'invite-sms',
-                'data' => $eData['invite-sms'],
-                'previous_event_id' => $inviteEmailInsertID,
-                'created' => date("Y-m-d H:i:s ")
-            );
-            $this->db->insert("tbl_referral_automations_events", $aData);
-            $inviteSMSInsertID = $this->db->insert_id();
-
-            //Reminder Email
-            $aData = array(
-                'referral_id' => $referralID,
-                'event_type' => 'invite-email-reminder',
-                'data' => $eData['invite-email-reminder'],
-                'previous_event_id' => $inviteSMSInsertID,
-                'created' => date("Y-m-d H:i:s ")
-            );
-            $this->db->insert("tbl_referral_automations_events", $aData);
-            $reminderEmailInsertID = $this->db->insert_id();
-
-            //Reminder SMS
-            $aData = array(
-                'referral_id' => $referralID,
-                'event_type' => 'invite-sms-reminder',
-                'data' => $eData['invite-sms-reminder'],
-                'previous_event_id' => $reminderEmailInsertID,
-                'created' => date("Y-m-d H:i:s ")
-            );
-            $this->db->insert("tbl_referral_automations_events", $aData);
-            $reminderSMSInsertID = $this->db->insert_id();
-
-            //Sale Email
-            $aData = array(
-                'referral_id' => $referralID,
-                'event_type' => 'sale-email',
-                'data' => $eData['sale-email'],
-                'previous_event_id' => 0,
-                'created' => date("Y-m-d H:i:s ")
-            );
-            $this->db->insert("tbl_referral_automations_events", $aData);
-            $saleEmailInsertID = $this->db->insert_id();
-
-            //Sale SMS
-            $aData = array(
-                'referral_id' => $referralID,
-                'event_type' => 'sale-sms',
-                'data' => $eData['sale-sms'],
-                'previous_event_id' => $saleEmailInsertID,
-                'created' => date("Y-m-d H:i:s ")
-            );
-            $this->db->insert("tbl_referral_automations_events", $aData);
-            $saleSMSInsertID = $this->db->insert_id();
-
-            //Sale Reminder Email
-            $aData = array(
-                'referral_id' => $referralID,
-                'event_type' => 'sale-email-reminder',
-                'data' => $eData['sale-email-reminder'],
-                'previous_event_id' => $saleSMSInsertID,
-                'created' => date("Y-m-d H:i:s ")
-            );
-            $this->db->insert("tbl_referral_automations_events", $aData);
-            $saleReminderEmailInsertID = $this->db->insert_id();
-
-            //Sale Reminder SMS
-            $aData = array(
-                'referral_id' => $referralID,
-                'event_type' => 'sale-sms-reminder',
-                'data' => $eData['sale-sms-reminder'],
-                'previous_event_id' => $saleReminderEmailInsertID,
-                'created' => date("Y-m-d H:i:s ")
-            );
-            $this->db->insert("tbl_referral_automations_events", $aData);
-            $saleReminderSMSInsertID = $this->db->insert_id();
-
-            $oTemplates = $this->getDefaultReferralTemplates();
-            if (!empty($oTemplates)) {
-                foreach ($oTemplates as $oTemplate) {
-
-                    $templateName = $oTemplate->template_name;
-                    $templateType = $oTemplate->template_type;
-                    $subject = $oTemplate->template_subject;
-                    $content = $oTemplate->template_content;
-
-                    if ($templateName == 'Invite Email') {
-                        $eventID = $inviteEmailInsertID;
-                    } else if ($templateName == 'Invite SMS') {
-                        $eventID = $inviteSMSInsertID;
-                    } else if ($templateName == 'Invite Email Reminder') {
-                        $eventID = $reminderEmailInsertID;
-                    } else if ($templateName == 'Invite SMS Reminder') {
-                        $eventID = $reminderSMSInsertID;
-                    } else if ($templateName == 'Sale Email') {
-                        $eventID = $saleEmailInsertID;
-                    } else if ($templateName == 'Sale SMS') {
-                        $eventID = $saleSMSInsertID;
-                    } else if ($templateName == 'Sale Email Reminder') {
-                        $eventID = $saleReminderEmailInsertID;
-                    } else if ($templateName == 'Sale SMS Reminder') {
-                        $eventID = $saleReminderSMSInsertID;
-                    }
-
-                    $tempData = array(
-                        'event_id' => $eventID,
-                        'content_type' => ($templateType == 'Email') ? 'Regular Html' : 'Plain Text',
-                        'campaign_type' => ($templateType == 'Email') ? 'Email' : 'Sms',
-                        'name' => $templateName,
-                        'subject' => $subject,
-                        'html' => $content,
-                        'status' => 'draft',
-                        'created' => date("Y-m-d H:i:s")
-                    );
-
-                    $this->insertReferralCampaigns($tempData);
-                }
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function saveAutoEvents($aData, $source, $userID) {
-        //get Settings
-        $oSettings = $this->getAccountSettings($userID);
-
-        if (!empty($oSettings)) {
-            $invite = json_encode(array('delay_type' => 'after', 'delay_value' => $oSettings->invite_delay, 'delay_unit' => 'hour'));
-            $sale = json_encode(array('delay_type' => 'after', 'delay_value' => $oSettings->sale_delay, 'delay_unit' => 'day'));
-            $reminder = json_encode(array('delay_type' => 'after', 'delay_value' => $oSettings->reminder_delay, 'delay_unit' => 'week'));
-            $reminderInvite = json_encode(array('delay_type' => 'after', 'delay_value' => $oSettings->reminder_delay_invite, 'delay_unit' => 'week'));
-
-            $settingID = $oSettings->id;
-            $oEvents = $this->getAutoEvents($settingID);
-            if (!empty($oEvents)) {
-                //Update 
-                $aData = array();
-                foreach ($oEvents as $oEvent) {
-                    if ($oEvent->event_type == 'invite') {
-                        $aData['data'] = $invite;
-                    } else if ($oEvent->event_type == 'sale') {
-                        $aData['data'] = $sale;
-                    } else if ($oEvent->event_type == 'reminder') {
-                        $aData['data'] = $reminder;
-                    } else if ($oEvent->event_type == 'reminder_invite') {
-                        $aData['data'] = $reminderInvite;
-                    }
-
-                    if (!empty($aData)) {
-                        $bSaved = $this->updateAutoEvent($aData, $oEvent->id);
-                        if ($bSaved) {
-                            //Update Campaigns
-                            if ($source == 'both') {
-                                $this->updataCampaignStatus($oEvent->id, '', 'active');
-                            } else if ($source == 'email') {
-                                $this->updataCampaignStatus($oEvent->id, 'Email', 'active');
-                                $this->updataCampaignStatus($oEvent->id, 'Sms', 'draft');
-                            } else if ($source == 'sms') {
-                                $this->updataCampaignStatus($oEvent->id, 'Email', 'draft');
-                                $this->updataCampaignStatus($oEvent->id, 'Sms', 'active');
-                            }
-                        }
-                    }
-                }
-            } else {
-                //Insert
-                //Invite
-                $aData = array(
-                    'settings_id' => $settingID,
-                    'event_type' => 'invite',
-                    'data' => $invite,
-                    'created' => date("Y-m-d H:i:s ")
-                );
-                $this->db->insert("tbl_referral_automations_events", $aData);
-                $inviteInsertID = $this->db->insert_id();
-
-                //Sale
-                $aData = array(
-                    'settings_id' => $settingID,
-                    'event_type' => 'sale',
-                    'data' => $sale,
-                    'created' => date("Y-m-d H:i:s ")
-                );
-                $this->db->insert("tbl_referral_automations_events", $aData);
-                $saleInsertID = $this->db->insert_id();
-
-                //Reminder
-                $aData = array(
-                    'settings_id' => $settingID,
-                    'event_type' => 'reminder',
-                    'data' => $reminder,
-                    'previous_event_id' => $saleInsertID,
-                    'created' => date("Y-m-d H:i:s ")
-                );
-                $this->db->insert("tbl_referral_automations_events", $aData);
-                $reminderInsertID = $this->db->insert_id();
-
-                //Reminder Invite
-                $aData = array(
-                    'settings_id' => $settingID,
-                    'event_type' => 'reminder_invite',
-                    'data' => $reminder,
-                    'previous_event_id' => $inviteInsertID,
-                    'created' => date("Y-m-d H:i:s ")
-                );
-                $this->db->insert("tbl_referral_automations_events", $aData);
-                $reminderInviteInsertID = $this->db->insert_id();
-
-                //Insert Default Referral Campaigns
-                //get Default templates
-                $oTemplates = $this->getDefaultReferralTemplates();
-                if (!empty($oTemplates)) {
-                    foreach ($oTemplates as $oTemplate) {
-
-                        $templateName = $oTemplate->template_name;
-                        $templateType = $oTemplate->template_type;
-                        $subject = $oTemplate->template_subject;
-                        $content = $oTemplate->template_content;
-
-                        if ($source == 'both') {
-                            $status = 'active';
-                        } else if ($source == 'email') {
-                            $status = ($templateType == 'Email') ? 'active' : 'draft';
-                        } else if ($source == 'sms') {
-                            $status = ($templateType == 'Sms') ? 'active' : 'draft';
-                        }
-
-                        if ($templateName == 'Join') {
-                            $eventID = $inviteInsertID;
-                        } else if ($templateName == 'Post Purchase') {
-                            $eventID = $saleInsertID;
-                        } else if ($templateName == 'Reminder') {
-                            $eventID = $reminderInsertID;
-                        } else if ($templateName == 'Reminder Invite') {
-                            $eventID = $reminderInviteInsertID;
-                        }
-
-                        $tempData = array(
-                            'event_id' => $eventID,
-                            'content_type' => ($templateType == 'Email') ? 'Regular Html' : 'Plain Text',
-                            'campaign_type' => ($templateType == 'Email') ? 'Email' : 'Sms',
-                            'name' => $templateName,
-                            'subject' => $subject,
-                            'html' => $content,
-                            'status' => $status,
-                            'created' => date("Y-m-d H:i:s")
-                        );
-
-                        $this->insertReferralCampaigns($tempData);
-                    }
-                }
-            }
-            return true;
-        }
-        return false;
-    }
+    
 
     public function insertReferralCampaigns($aData) {
         $result = $this->db->insert("tbl_referral_automations_campaigns", $aData);

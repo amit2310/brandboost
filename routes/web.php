@@ -130,8 +130,10 @@ Route::get('admin/modules/referral/stats/{id}','Admin\Modules\Referral@stats');
 Route::get('admin/modules/referral/reward/{id}','Admin\Modules\Referral@reward');
 Route::get('admin/modules/referral/advocates','Admin\Modules\Referral@advocates');
 Route::get('admin/modules/referral/workflow/{id}','Admin\Modules\Referral@workflow');
+Route::get('admin/modules/referral/integrations/{id}','Admin\Modules\Referral@integrations');
 Route::get('admin/modules/referral/configurations/{id}','Admin\Modules\Referral@configurations');
 Route::post('admin/modules/referral/saveSettings','Admin\Modules\Referral@saveSettings');
+Route::post('admin/modules/referral/publishReferralStatus','Admin\Modules\Referral@publishReferralStatus');
 
 
 
