@@ -254,10 +254,7 @@ class UsersModel extends Model {
             ->where('id', $userId)
             ->update($aData);
 
-        if ($result)
-            return true;
-        else
-            return false;
+        return true;
     }
 
     public function updateTwilioUserData($aData, $userId) {

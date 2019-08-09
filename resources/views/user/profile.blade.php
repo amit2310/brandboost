@@ -112,7 +112,7 @@
     var myDropzoneLogoImg = new Dropzone(
       '#myDropzone_avatar', //id of drop zone element 1
       {
-          url: '<?php echo base_url("/dropzone/upload_profile_image"); ?>',
+          url: '<?php echo base_url("webchat/dropzone/upload_profile_image"); ?>',
           uploadMultiple: false,
           maxFiles: 1,
           maxFilesize: 60000,
@@ -124,9 +124,9 @@
               $('.img-circle').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'+response.xhr.responseText);
               var logoImage = response.xhr.responseText;
               $.ajax({
-                  url: "<?php echo base_url('/user/setting/updateProfile'); ?>",
+                  url: "<?php echo base_url('user/setting/updateProfile'); ?>",
                   type: "POST",
-                  data: {avatar: logoImage},
+                  data: {avatar: logoImage, _token:"{{csrf_token()}}"},
                   dataType: "json", 
                   success: function (response) {
                        
