@@ -801,7 +801,8 @@ class Referral extends Controller {
 
         //Reward related Data
         $oSettings = ReferralModel::getReferralSettings($accountID, true);
-
+		$oAdvCouponCodes = $oRefCouponCodes = array();
+		
         $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
         if (!empty($oSettings)) {
             $programID = $oSettings->rewardID;
@@ -832,7 +833,6 @@ class Referral extends Controller {
             'programID' => $programID,
             'oReferral' => $oReferral,
             'oSettings' => $oSettings,
-            'oTemplates' => $oTemplates,
             'accountID' => $accountID,
             'campaignTemplates' => $campaignTemplates,
             'oEvents' => $oEvents,
@@ -882,7 +882,76 @@ class Referral extends Controller {
     }
 	
 	
-	
+	public function saveSettings(Request $request) {
+
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $referral_title = $request->referral_title;
+        $storeName = $request->storeName;
+        $storeURL = $request->storeURL;
+        $storeEmail = $request->storeEmail;
+        $referralStatus = $request->referralStatus;
+        $facebookTitle = $request->facebook_title;
+        $facebookDesc = $request->facebook_desc;
+        $twitterTitle = $request->twitter_title;
+        $twitterDesc = $request->twitter_desc;
+        $siteLink = $request->site_link;
+		
+		$source = 'email';
+
+        if (!empty($referralStatus)) {
+            $status = 'active';
+        } else {
+            $status = 'draft';
+        }
+
+        $referralID = $request->refid;
+        if ($referralID > 0 && $userID > 0) {
+
+            $aDataRef = array(
+                'title' => $referral_title,
+                'status' => $status,
+                'updated' => date("Y-m-d H:i:s")
+            );
+
+            $bUpdateID = ReferralModel::updateReferral($aDataRef, $userID, $referralID);
+
+            $aData = array(
+                'user_id' => $userID,
+                'referral_id' => $referralID,
+                'store_name' => $storeName,
+                'store_url' => $storeURL,
+                'store_email' => $storeEmail,
+                'facebook_title' => $facebookTitle,
+                'facebook_desc' => $facebookDesc,
+                'twitter_title' => $twitterTitle,
+                'twitter_desc' => $twitterDesc,
+                'site_link' => $siteLink
+            );
+
+            $bUpdated = ReferralModel::updateStoreSettings($aData, $referralID);
+
+
+            if ($bUpdated) {
+                //Update in automation table to take effect in email/sms settings
+                $aEvent = array(
+                    'invite' => json_encode(array('delay_type' => 'after', 'delay_value' => '', 'delay_unit' => 'hours')),
+                    'sale' => json_encode(array('delay_type' => 'after', 'delay_value' => '', 'delay_unit' => 'days')),
+                    'reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => '', 'delay_unit' => 'weeks')),
+                    'reminder_invite' => json_encode(array('delay_type' => 'after', 'delay_value' => '', 'delay_unit' => 'weeks'))
+                );
+                $bSavedEvent = ReferralModel::saveAutoEvents($aEvent, $source, $userID);
+            }
+
+            $response = array('status' => 'success', 'msg' => "Success");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
 	
 	
 	
@@ -1858,84 +1927,7 @@ class Referral extends Controller {
         exit;
     }
 
-    public function saveSettings() {
-
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-
-        $referral_title = strip_tags($post['referral_title']);
-        $storeName = strip_tags($post['storeName']);
-        $storeURL = strip_tags($post['storeURL']);
-        $storeEmail = strip_tags($post['storeEmail']);
-        $referralStatus = $post['referralStatus'];
-
-        $facebookTitle = $post['facebook_title'];
-        $facebookDesc = $post['facebook_desc'];
-        $twitterTitle = $post['twitter_title'];
-        $twitterDesc = $post['twitter_desc'];
-        $siteLink = $post['site_link'];
-
-
-        if (!empty($referralStatus)) {
-            $status = 'active';
-        } else {
-            $status = 'draft';
-        }
-
-        //$userID = strip_tags($post['uid']);
-        $referralID = strip_tags($post['refid']);
-        if ($referralID > 0 && $userID > 0) {
-
-            $aDataRef = array(
-                'title' => $referral_title,
-                'status' => $status,
-                'updated' => date("Y-m-d H:i:s")
-            );
-
-            $bUpdateID = $this->mReferral->updateReferral($aDataRef, $userID, $referralID);
-
-            $aData = array(
-                'user_id' => $userID,
-                'referral_id' => $referralID,
-                'store_name' => $storeName,
-                'store_url' => $storeURL,
-                'store_email' => $storeEmail,
-                'facebook_title' => $facebookTitle,
-                'facebook_desc' => $facebookDesc,
-                'twitter_title' => $twitterTitle,
-                'twitter_desc' => $twitterDesc,
-                'site_link' => $siteLink
-            );
-
-            $bUpdated = $this->mReferral->updateStoreSettings($aData, $referralID);
-
-
-            if ($bUpdated) {
-                //Update in automation table to take effect in email/sms settings
-                $aEvent = array(
-                    'invite' => json_encode(array('delay_type' => 'after', 'delay_value' => $inviteDelay, 'delay_unit' => 'hours')),
-                    'sale' => json_encode(array('delay_type' => 'after', 'delay_value' => $salesDelay, 'delay_unit' => 'days')),
-                    'reminder' => json_encode(array('delay_type' => 'after', 'delay_value' => $reminderDelay, 'delay_unit' => 'weeks')),
-                    'reminder_invite' => json_encode(array('delay_type' => 'after', 'delay_value' => $reminderDelayInvite, 'delay_unit' => 'weeks'))
-                );
-                $bSavedEvent = $this->mReferral->saveAutoEvents($aEvent, $source, $userID);
-            }
-
-            $response = array('status' => 'success', 'msg' => "Success");
-        }
-
-        echo json_encode($response);
-        exit;
-    }
+    
 
     public function templates() {
         $oUser = getLoggedUser();
