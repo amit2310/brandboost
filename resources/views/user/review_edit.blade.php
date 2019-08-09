@@ -100,7 +100,7 @@
 						</span> -->
 						<div class="dz-message" data-dz-message><span></span></div>
 					</div>
-					<div id="uploadedReviewFiles"></div>
+					<div style="display: none;" id="uploadedReviewFiles"></div>
 				</div>
 								
 										
