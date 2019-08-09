@@ -701,11 +701,15 @@ class Company extends Controller {
 			}
 		}
 		
+
+		
 		public function saveComment() {
 			$response = array();
-			$post = $this->input->post();
+			$post = Input::post();
 			
 			$userID = $post['userID'];
+			$mReviews = ReviewsModel();
+			$mInviter = new BrandboostModel();
 			
 			if (!empty($post)) {
 				$reviewID = strip_tags($post['rid']);
@@ -714,7 +718,7 @@ class Company extends Controller {
 				$email = strip_tags($post['cmtemail']);
 				$commentText = strip_tags($post['cmt']);
 				
-				$getReview = $this->mReviews->getReviewByReviewID($reviewID);
+				$getReview = $mReviews->getReviewByReviewID($reviewID);
 				
 				$reviewCampaignId = $getReview[0]->campaign_id;
 				
@@ -723,7 +727,7 @@ class Company extends Controller {
 				$reviewType = $getReview[0]->review_type;
 				
 				
-				$getBrandboostDetail = $this->mInviter->getBBInfo($reviewCampaignId);
+				$getBrandboostDetail = $mInviter->getBBInfo($reviewCampaignId);
 				$brandBoostUserId = $getBrandboostDetail->user_id;
 				
 				if (empty($userID) && (empty($fullName) || empty($email))) {
@@ -743,7 +747,8 @@ class Company extends Controller {
                     'phone' => $phone
 					);
 					$aRegistrationData['clientID'] = $brandBoostUserId;
-					$userID = $this->mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
+					$mSubscriber  = new SubscriberModel();
+					$userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 					//$userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
 				}
 				
@@ -763,7 +768,7 @@ class Company extends Controller {
 				);
 				
 				addPageAndVisitorInfo($brandBoostUserId, 'Brand Page Review', serialize($reviewCampaignId), 'Add Comment');
-				$bSaved = $this->mReviews->saveComment($aCommentData);
+				$bSaved = $mReviews->saveComment($aCommentData);
 				
 				if ($bSaved) {
 					// Send Notification

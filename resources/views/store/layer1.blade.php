@@ -1055,6 +1055,7 @@
 												<div class="comment_form">
 													
 													<form method="POST" class="cmtformsubmit" action="javascript:void(0)" revId="<?php echo $aReview['id']; ?>" style="position:relative;">
+														{{ csrf_field() }}
 														<div class="form-group">
 															<div class="">
 																<input name="cmtname" placeholder="Your Name" class="form-control cmtname" required="" type="text">
@@ -2036,7 +2037,7 @@
 				$.ajax({  
 					url:"<?php echo base_url(); ?>company/saveHelpful",  
 					method:"POST",  
-					data: {action:actionName, review_id:reviewId},
+					data: {action:actionName, review_id:reviewId,_token: '{{csrf_token()}}'},
 					dataType: "json", 
 					success:function(data)  
 					{  
@@ -2055,7 +2056,7 @@
 				$.ajax({  
 					url:"<?php echo base_url(); ?>admin/questions/saveHelpful",  
 					method:"POST",  
-					data: {ha:actionName, answer_id:answerID},
+					data: {ha:actionName, answer_id:answerID,_token: '{{csrf_token()}}'},
 					dataType: "json", 
 					success:function(data)  
 					{  
@@ -2073,7 +2074,7 @@
 				$.ajax({  
 					url:"<?php echo base_url(); ?>company/saveSiteHelpful",  
 					method:"POST",  
-					data: {action:actionName, review_id:reviewId},
+					data: {action:actionName, review_id:reviewId,_token: '{{csrf_token()}}'},
 					dataType: "json", 
 					success:function(data)  
 					{  
