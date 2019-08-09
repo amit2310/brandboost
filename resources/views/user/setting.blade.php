@@ -199,8 +199,9 @@
             e.preventDefault();
             $('.overlaynew').show();
             var formdata = new FormData(this);
+            formdata.append('_token', '{{csrf_token()}}');
             $.ajax({
-                url: "<?php echo base_url('/admin/profile/changePassword'); ?>",
+                url: "<?php echo base_url('admin/profile/changePassword'); ?>",
                 type: "POST",
                 data: formdata,
                 contentType: false,

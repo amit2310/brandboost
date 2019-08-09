@@ -22,6 +22,7 @@ Route::get('admin/login/logout','Admin\Login@logout');
 // User Section
 Route::get('user/login','User\Login@index');
 Route::post('user/login','User\Login@index');
+Route::post('admin/profile/changePassword','Admin\Profile@changePassword');
 Route::get('user/profile','User\Profile@Index');
 Route::get('user/review','User\Review@Index');
 Route::get('user/media','User\Media@Index');
