@@ -1,3 +1,10 @@
+@extends('layouts.user_template') 
+
+@section('title')
+<?php //echo $title; ?>
+@endsection
+
+@section('contents')
 <style>
 .fsize28{font-size:22px!important;}
 </style>	
@@ -68,7 +75,15 @@
 				  <div class="panel-body p20 pb0 br5 bkg_white text-center ref_stats_sec">
 				  <div class="p20">
 				  	<img width="44" class="br100 mb10" src="<?php echo base_url(); ?>assets/images/ro_icon1.png"/>
-				  	<h1 class="txt_dark fsize28 fw700"><?php echo (count($oUntrackedPurchased)) ? count($oUntrackedPurchased) : 1; ?></h1>
+				  	<?php 
+				  	if(!empty($oUntrackedPurchased)) {
+				  		$oUntrackedPurchased = (count($oUntrackedPurchased)) ? count($oUntrackedPurchased) : 1;
+				  	}
+				  	else {
+				  		$oUntrackedPurchased = '';
+				  	}
+				  	?>
+				  	<h1 class="txt_dark fsize28 fw700"><?php echo $oUntrackedPurchased; ?></h1>
 				  	<p class="fsize14 txt_dgrey mb0">Total Email</p>
 				  </div>
 				  <div class="btop p20">
@@ -82,7 +97,15 @@
 				  <div class="panel-body p20 pb0 br5 bkg_white text-center ref_stats_sec">
 				  <div class="p20">
 				  	<img width="44" class="br100 mb10" src="<?php echo base_url(); ?>assets/images/ro_icon1.png"/>
-				  	<h1 class="txt_dark fsize28 fw700"><?php echo ($untrackedAmount) ? $untrackedAmount : 1; ?></h1>
+				  	<?php 
+				  	if(!empty($untrackedAmount)) {
+				  		$untrackedAmount = ($untrackedAmount) ? $untrackedAmount : 1;
+				  	}
+				  	else {
+				  		$untrackedAmount = '';
+				  	}
+				  	?>
+				  	<h1 class="txt_dark fsize28 fw700"><?php echo $untrackedAmount; ?></h1>
 				  	<p class="fsize14 txt_dgrey mb0">Total SMS</p>
 				  </div>
 				  <div class="btop p20">
@@ -100,7 +123,15 @@
 				  <div class="panel-body p20 pb0 br5 bkg_white text-center ref_stats_sec">
 				  <div class="p20">
 				  	<img width="44" class="br100 mb10" src="<?php echo base_url(); ?>assets/images/ro_icon2.png"/>
-				  	<h1 class="txt_dark fsize28 fw700"><?php echo $totalOpened == '' ? 1 : $totalOpened; ?></h1>
+				  	<?php 
+				  	if(!empty($totalOpened)) {
+				  		$totalOpened = $totalOpened == '' ? 1 : $totalOpened;
+				  	}
+				  	else {
+				  		$totalOpened = '';
+				  	}
+				  	?>
+				  	<h1 class="txt_dark fsize28 fw700"><?php echo $totalOpened; ?></h1>
 				  	<p class="fsize14 txt_dgrey mb0">Opens</p>
 				  </div>
 				  <div class="btop p20">
@@ -114,7 +145,15 @@
 				  <div class="panel-body p20 pb0 br5 bkg_white text-center ref_stats_sec">
 				  <div class="p20">
 				  	<img width="44" class="br100 mb10" src="<?php echo base_url(); ?>assets/images/ro_icon2.png"/>
-				  	<h1 class="txt_dark fsize28 fw700"><?php echo $totalClicked == '' ? 1 : $totalClicked; ?></h1>
+				  	<?php 
+				  	if(!empty($totalClicked)) {
+				  		$totalClicked = $totalClicked == '' ? 1 : $totalClicked;
+				  	}
+				  	else {
+				  		$totalClicked = '';
+				  	}
+				  	?>
+				  	<h1 class="txt_dark fsize28 fw700"><?php echo $totalClicked; ?></h1>
 				  	<p class="fsize14 txt_dgrey mb0">Clicks</p>
 				  </div>
 				  <div class="btop p20">
@@ -127,3 +166,4 @@
 			 
 			<!--====Table====-->
 	  </div>
+@endsection
