@@ -398,7 +398,7 @@ class Templates extends Controller {
         $mTemplates = new TemplatesModel();
         
         $userID = $aUser->id;
-        $templateID = strip_tags($request->template_id);
+        $templateID = ($request->template_id);
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitId);
         //echo "template ID is ". $templateID;
@@ -524,6 +524,7 @@ class Templates extends Controller {
 
                     if (!empty($compiled)) {
                         $compiled = $this->brandboostEmailTagReplace($moduleUnitID, $compiled, strtolower($oResponse[0]->template_type), $aUser);
+                        
                     }
                 }
             }
@@ -967,7 +968,7 @@ class Templates extends Controller {
         }
 
 
-        $aTags = $this->config->item('email_tags');
+        $aTags = config('bbconfig.email_tags');
         if (!empty($aTags)) {
             foreach ($aTags AS $sTag) {
                 $htmlData = '';
@@ -994,7 +995,7 @@ class Templates extends Controller {
                         break;
 
                     case '{OFFSITE_REVIEW_URL}':
-                        $htmlData = $offsiteURL['shorturl'];
+                        $htmlData = isset($offsiteURL) ? $offsiteURL['shorturl'] : '';
                         break;
 
                     case '{BRAND_NAME}':
@@ -1002,7 +1003,7 @@ class Templates extends Controller {
                         break;
 
                     case '{PRODUCTS_LIST}':
-                        $htmlData = view('admin.workflow.partials.products_list', $productsDetails)->render();
+                        $htmlData = view('admin.workflow2.partials.products_list', ['productsDetails'=> $productsDetails])->render();
                         break;
 
                     case '{BRAND_LOGO}':

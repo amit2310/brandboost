@@ -416,7 +416,10 @@ class BrandboostModel extends Model {
         if (!empty($aBrandboost)) {
             $bbType = $aBrandboost->review_type;
             $aOffsiteUrls = unserialize($aBrandboost->offsites_links);
-            $random_keys = array_rand($aOffsiteUrls, 1);
+            $random_keys = 0;
+            if(is_array($aOffsiteUrls)){
+                $random_keys = array_rand($aOffsiteUrls, 1);
+            }            
             $offsiteURL = $aOffsiteUrls[$random_keys];
         }
         if (!empty($aTags)) {
@@ -444,7 +447,7 @@ class BrandboostModel extends Model {
                         break;
 
                     case '{PRODUCTS_LIST}':
-                        $htmlData = view('admin.workflow.partials.products_list', $productsDetails)->render();
+                        $htmlData = view('admin.workflow2.partials.products_list', ['productsDetails'=> $productsDetails])->render();
                         break;
 
                     case '{BRAND_LOGO}':
@@ -542,17 +545,17 @@ class BrandboostModel extends Model {
 				<div class="bb_txt_review">
 				<div class="bb_txt_inner">
 				<div class="bb_txt_head">
-				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->logo_img . '"/>
+				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->logo_img). '"/>
 				</div>
 				<div class="product_details_sec">
 				<div class="bb_product_img">
-				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->brand_img . '"/>
+				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->brand_img). '"/>
 				</div>
 				<div class="bb_slides_text">
-				<h4>' . $aData[0]->brand_title . '</h4>
+				<h4>' . @($aData[0]->brand_title). '</h4>
 				<p><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa fa-star"></i></p>
-				<p><span>' . $aData[0]->brand_desc . '</span></p>
-				<p><a class="green" href="#">' . $aData[0]->bb_u_firstname . ' ' . $aData[0]->bb_u_lastname . '</a></p>
+				<p><span>' . @($aData[0]->brand_desc) . '</span></p>
+				<p><a class="green" href="#">' . @($aData[0]->bb_u_firstname) . ' ' . @($aData[0]->bb_u_lastname). '</a></p>
 				</div>
 				<div class="clearfix"></div>
 				</div>';
@@ -621,17 +624,17 @@ class BrandboostModel extends Model {
 				<div class="bb_txt_review">
 				<div class="bb_txt_inner">
 				<div class="bb_txt_head">
-				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->logo_img . '"/>
+				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->logo_img) . '"/>
 				</div>
 				<div class="product_details_sec">
 				<div class="bb_product_img">
-				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->brand_img . '"/>
+				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->brand_img) . '"/>
 				</div>
 				<div class="bb_slides_text">
-				<h4>' . $aData[0]->brand_title . '</h4>
+				<h4>' . @($aData[0]->brand_title) . '</h4>
 				<p><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa fa-star"></i></p>
-				<p><span>' . $aData[0]->brand_desc . '</span></p>
-				<p><a class="green" href="#">' . $aData[0]->bb_u_firstname . ' ' . $aData[0]->bb_u_lastname . '</a></p>
+				<p><span>' . @($aData[0]->brand_desc) . '</span></p>
+				<p><a class="green" href="#">' . @($aData[0]->bb_u_firstname) . ' ' . @($aData[0]->bb_u_lastname) . '</a></p>
 				</div>
 				<div class="clearfix"></div>
 				</div>';
@@ -700,17 +703,17 @@ class BrandboostModel extends Model {
 				<div class="bb_txt_review">
 				<div class="bb_txt_inner">
 				<div class="bb_txt_head">
-				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->logo_img . '"/>
+				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->logo_img) . '"/>
 				</div>
 				<div class="product_details_sec">
 				<div class="bb_product_img">
-				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->brand_img . '"/>
+				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->brand_img) . '"/>
 				</div>
 				<div class="bb_slides_text">
-				<h4>' . $aData[0]->brand_title . '</h4>
+				<h4>' . @($aData[0]->brand_title) . '</h4>
 				<p><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa fa-star"></i></p>
-				<p><span>' . $aData[0]->brand_desc . '</span></p>
-				<p><a class="green" href="#">' . $aData[0]->bb_u_firstname . ' ' . $aData[0]->bb_u_lastname . '</a></p>
+				<p><span>' . @($aData[0]->brand_desc) . '</span></p>
+				<p><a class="green" href="#">' . @($aData[0]->bb_u_firstname) . ' ' . @($aData[0]->bb_u_lastname) . '</a></p>
 				</div>
 				<div class="clearfix"></div>
 				</div>';
@@ -789,7 +792,7 @@ class BrandboostModel extends Model {
 				</div>
 				<div class="clearfix"></div>
 				</div><div class="bb_txt_write">
-				<form name="writeReview" id="writeReview" method="POST" action="' . site_url("/reviews/saveReviewByEmailTemplate") . '">
+				<form name="writeReview" id="writeReview" method="POST" action="' . base_url("/reviews/saveReviewByEmailTemplate") . '">
 				<p class="green">WRITE A REVIEW</p>
 				<p>Score:</p>
 				<select name="ratingValue" id="ratingValue" required>

@@ -128,6 +128,10 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
 @include('admin.brandboost.campaign-tabs.onsite.onsite-popup')
 <?php //$this->load->view("admin/modals/workflow2/workflow-popup", array('oDefaultTemplates' => $oDefaultTemplates)); @include('admin.modals.workflow2.workflow-popup', array('oDefaultTemplates' => $oDefaultTemplates)) ?>
+<?php 
+ $oDefaultTemplates = !(empty($oDefaultTemplates)) ? $oDefaultTemplates : array();
+?>
+@include('admin.modals.workflow2.workflow-popup', ['oDefaultTemplates' => $oDefaultTemplates])
 
 
 <script type="text/javascript">

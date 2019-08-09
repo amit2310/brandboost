@@ -326,6 +326,7 @@ class BroadcastInviter extends Command {
                     $content = str_replace('<br/>', "\n", $content);
                     $content = str_replace('<br />', "\n", $content);
                     $content = strip_tags(nl2br($content));
+                    $fromNumber = $this->defaultTwilioDetails['from_number'];
                     $aSmsData = array(
                         'from_number' => $fromNumber, //We need this from client twillio phone number
                         'content' => $content,

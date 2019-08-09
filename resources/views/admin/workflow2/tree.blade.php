@@ -1338,7 +1338,7 @@ window.onpopstate = function () {
                             $("#wf_preview_edit_template_subject").val(data.subject);
                             $("#wf_preview_edit_template_greeting").val(data.greeting);
                             $("#wf_preview_edit_template_introduction").val(data.introduction);
-                            $('#workflow_edit_email_campaign_preview').modal();
+                            $('#workflow_edit_email_campaign_preview').modal('show');
                         } else if (campaignType == 'sms') {
                             $("#wf_preview_edit_sms_template_content").html(data.content);
                             $("#wf_preview_edit_sms_template_content_popup").html(data.content.replace(/\r\n|\r|\n/g, "<br />"));

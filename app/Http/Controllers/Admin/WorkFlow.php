@@ -1873,6 +1873,8 @@ class WorkFlow extends Controller {
      * Replaces all the tags of the brandboost campaigns
      */
     public function brandboostEmailTagReplace($brandboostID, $sHtml, $campaignType = 'email', $subscriberInfo) {
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
         $oBrandboost = $mWorkflow->getModuleUnitInfo('brandboost', $brandboostID);
         $productsDetails = $mWorkflow->getProductDataByBBID($brandboostID);
         if ($oBrandboost->review_type == 'offsite') {
@@ -1882,7 +1884,7 @@ class WorkFlow extends Controller {
         }
 
 
-        $aTags = $this->config->item('email_tags');
+        $aTags = config('bbconfig.email_tags');
         if (!empty($aTags)) {
             foreach ($aTags AS $sTag) {
                 $htmlData = '';
@@ -1909,7 +1911,7 @@ class WorkFlow extends Controller {
                         break;
 
                     case '{OFFSITE_REVIEW_URL}':
-                        $htmlData = $offsiteURL['shorturl'];
+                        $htmlData = isset($offsiteURL['shorturl']) ? $offsiteURL['shorturl'] : '';
                         break;
 
                     case '{BRAND_NAME}':
@@ -1917,7 +1919,7 @@ class WorkFlow extends Controller {
                         break;
 
                     case '{PRODUCTS_LIST}':
-                        $htmlData = $this->load->view("admin/workflow/partials/products_list", $productsDetails, true);
+                        $htmlData = view('admin.workflow2.partials.products_list', ['productsDetails'=> $productsDetails])->render();
                         break;
 
                     case '{BRAND_LOGO}':
