@@ -381,10 +381,10 @@
                                 if (!empty($reviewCommentsData)) {
 
                                     foreach ($reviewCommentsData as $commentData) {
-                                        $likeData = $this->mReviews->getCommentLSByCommentID($commentData->id, 1);
-                                        $disLikeData = $this->mReviews->getCommentLSByCommentID($commentData->id, 0);
+                                        $likeData = App\Models\ReviewsModel::getCommentLSByCommentID($commentData->id, 1);
+                                        $disLikeData = App\Models\ReviewsModel::getCommentLSByCommentID($commentData->id, 0);
 
-                                        $childComments = $this->mReviews->getReviewAllChildComments($reviewID, $commentData->id);
+                                        $childComments = App\Models\ReviewsModel::getReviewAllChildComments($reviewID, $commentData->id);
                                         //$avtarImage = $commentData->avatar == 'avatar_image.png' ? base_url('assets/images/userp.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $commentData->avatar;
                                         ?>
                                         <li class="bbot">
@@ -441,8 +441,8 @@
 
                                                         $avtarImageChild = $childComment->avatar == 'avatar_image.png' ? base_url('assets/images/userp.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $childComment->avatar;
 
-                                                        $likeChildData = $this->mReviews->getCommentLSByCommentID($childComment->id, 1);
-                                                        $disLikeChildData = $this->mReviews->getCommentLSByCommentID($childComment->id, 0);
+                                                        $likeChildData = App\Models\ReviewsModel::getCommentLSByCommentID($childComment->id, 1);
+                                                        $disLikeChildData = App\Models\ReviewsModel::getCommentLSByCommentID($childComment->id, 0);
                                                         ?>
 
                                                         <div class="reply_sec mt30">
