@@ -32,6 +32,11 @@ class Nps extends Controller {
     	return view('user.nps', $aPageData);
     }
 	
+    
+     /**
+     * get Nps reports
+     * @param type $npsId
+     */
 	public function Reports($npsId) {
 		$response = array();
         $aUInfo = getLoggedUser();
