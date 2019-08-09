@@ -29,7 +29,7 @@
 			var myDropzone_ = new Dropzone(	
 				"#myDropzone",
 				{
-					url: '<?php echo base_url("dropzone/upload_s3_attachment_question_review/".$userDetail->id."/questions/"); ?>',
+					url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment_question_review/".$userDetail->id."/questions"); ?>',
 					uploadMultiple: false,
 					maxFiles: 10,
 					maxFilesize: 600,
