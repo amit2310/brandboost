@@ -334,6 +334,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateComment" action="javascript:void();">
+            	{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Comment</h5>
