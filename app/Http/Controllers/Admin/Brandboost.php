@@ -428,6 +428,7 @@ class Brandboost extends Controller {
         $product_name = "";
         $brand_title = "";
         $productName="";
+        $bbId="";
 
 
         $reviewID = ($revID > 0) ? $revID : $reviewID;
@@ -446,6 +447,7 @@ class Brandboost extends Controller {
           $product_id = $reviewData->product_id;
           $product_name = $productData->product_name;
           $brand_title = $reviewData->brand_title;
+          $bbId = $reviewData->bbId;
 
          }
         
@@ -456,7 +458,7 @@ class Brandboost extends Controller {
 			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
 			<li><a href="' . base_url('admin/brandboost/onsite') . '" class="sidebar-control hidden-xs">On site </a></li>
 			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a href="' . base_url('admin/brandboost/reviews/') . $reviewData->bbId . '" data-toggle="tooltip" data-placement="bottom" title="' . $productName . ' Review" class="sidebar-control active hidden-xs ">' . $productName . ' Review</a></li>
+			<li><a href="' . base_url('admin/brandboost/reviews/') . $bbId . '" data-toggle="tooltip" data-placement="bottom" title="' . $productName . ' Review" class="sidebar-control active hidden-xs ">' . $productName . ' Review</a></li>
 			</ul>';
 
         $aData = array(
