@@ -327,69 +327,19 @@ class Reviews extends Controller {
 
     public function update_video_review() {
 
-        $this->load->library('S3');
-        $response = array();
-        $post = array();
+        $post = Input::post();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        if ($this->input->post()) {
-
-            $post = $this->input->post();
 
             $reviewID = strip_tags($post['edit_video_reviewid']);
             $ratingValue = strip_tags($post['ratingValueVideo']);
             $reviewTitle = strip_tags($post['edit_review_title']);
-
-            // brand image
-            $fileLogo = isset($_FILES['video']) ? $_FILES['video'] : false;
-            $ext = pathinfo($fileLogo['name'], PATHINFO_EXTENSION);
-            $allowed_types = array("avi", "asf", "mov", "qt", "avchd", "flv", "swf", "mpg", "mp4", "wmv", "h.264", "divx");
-
-            $error = "";
-            $brandImageFileName = '';
-            if ($fileLogo !== false AND ! empty($_FILES['video']['name'])) {
-
-                if (empty($error) && !in_array($ext, $allowed_types))
-                    $error = "Invalid file type.";
-
-                if (empty($error) && (!isset($fileLogo['size']) || $fileLogo['size'] > 6291456))
-                    $error = "Maximum filesize limit is 6MB only.";
-
-                if (empty($error)) {
-                    try {
-                        // Put file to AWS S3
-                        $brandImageFileName = $userID . "_brand_" . sha1(time()) . "." . $ext;
-                        $filekey = "campaigns/" . $brandImageFileName;
-                        $filename = $fileLogo['name'];
-                        $input = file_get_contents($fileLogo['tmp_name']);
-                        $this->s3->putObject($input, AWS_BUCKET, $filekey);
-                    } catch (Exception $e) {
-                        $response['status'] = "error";
-                        $response['msg'] = "Something went wrong. gdfg2";
-                    }
-                } else {
-                    $response['status'] = "error";
-                    $response['msg'] = $error;
-                }
-            } else {
-                $response['status'] = "error";
-                $response['msg'] = 'Please select brandboost logo.';
-            }
-
-            if (!empty($brandImageFileName)) {
-                $aData = array(
-                    'comment_video' => $brandImageFileName,
+            $mReviews  = new ReviewsModel();
+            $aData = array(
                     'ratings' => $ratingValue,
                     'review_title' => $reviewTitle
                 );
-            } else {
-                $aData = array(
-                    'ratings' => $ratingValue,
-                    'review_title' => $reviewTitle
-                );
-            }
-
-            $result = $this->mReviews->updateReview($aData, $reviewID);
+            $result = $mReviews->updateReview($aData, $reviewID);
             if ($result) {
 
                 $aActivityData = array(
@@ -414,7 +364,7 @@ class Reviews extends Controller {
 
             echo json_encode($response);
             exit;
-        }
+        
     }
     
 
