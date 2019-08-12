@@ -229,6 +229,7 @@ class dropzone extends Controller
         }
     }
 
+    
     public function upload_video() {
 
         if (!empty($_FILES)) {
