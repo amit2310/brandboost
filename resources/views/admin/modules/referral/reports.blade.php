@@ -197,9 +197,6 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
                                     </div>
                                     <div class="table_action_tool">
                                         <a href="#"><i class="icon-calendar52"></i></a>
-                                        <!-- <a href="#"><i class="icon-arrow-down16"></i></a>
-                                        <a href="#"><i class="icon-arrow-up16"></i></a>
-                                        <a style="cursor: pointer;" class="editDataList"><i class="icon-pencil"></i></a> -->
                                         <a style="cursor: pointer; display: none;" id="deleteBulkReferral" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                         <a style="cursor: pointer; display: none;" id="archiveBulkReferral" class="custom_action_box"><i class="icon-gear position-left"></i> </a>
                                     </div>
@@ -217,57 +214,31 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
                                 <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_status.png"></i>Amount</th>
                                 <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_status.png"></i>Invoice ID</th>
                                 <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Date</th>
-<!--                                <th class="col-md-2 text-center">Applied Tags</th>
-                                <th class="col-md-2 text-center">Action</th>-->
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $inc = 1;
                             foreach ($oRefPurchased as $data) {
-                                $oTags = $this->mReferral->getTagsBySaleID($data->id);
-                                //pre($data);
-                                //$profileImg = $data->avatar == '' ? base_url('/profile_images/avatar_image.png') : base_url('profile_images/' . $data->avatar);
+                                $oTags = \App\Models\Admin\Modules\ReferralModel::getTagsBySaleID($data->id);
+								
                                 ?>
                                 <tr>
                                 	<td style="display: none;"><?php echo $data->id; ?></td>
                                 	<td style="display: none;"><?php echo $data->id; ?></td>
-                                    <!-- <td>            
-                                        <div style="vertical-align: top!important;" class="media-left media-middle">
-                                            <a href="#">
-                                                <img src="http://brandboost.io/admin_new/images/userp.png" class="img-circle img-xs" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="media-left">
-                                            <a href="javascript:void()" class="text-default text-semibold"><?php echo $data->firstname; ?> <?php echo $data->lastname; ?></a>
-                                            <div class="text-muted text-size-small"><?php echo $data->email; ?></div>
-                                            <div class="text-muted text-size-small"><?php echo $data->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $data->phone; ?></div>
-                                        </div>
-                                    </td> -->
+                                    
 
                                     <td>											
-                                        <div class="media-left media-middle"> <?php echo showUserAvtar($data->avatar, $data->firstname, $data->lastname); ?> </div>
+                                        <div class="media-left media-middle"> <?php echo showUserAvtar('', $data->firstname, $data->lastname); ?> </div>
                                         <div class="media-left">
                                             <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot"><?php echo $data->firstname; ?> <?php echo $data->lastname; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($data->country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
                                             <div class="text-muted text-size-small"><?php echo $data->email; ?></div>
                                         </div>
                                     </td>
 
-                                    <!-- <td>
-                                        <div style="vertical-align: top!important;" class="media-left media-middle">
-                                            <a href="#">
-                                                <img src="http://brandboost.io/admin_new/images/userp.png" class="img-circle img-xs" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="media-left">
-                                            <a href="javascript:void()" class="text-default text-semibold"><?php echo $data->aff_firstname; ?> <?php echo $data->aff_lastname; ?></a>
-                                            <div class="text-muted text-size-small"><?php echo $data->aff_email; ?></div>
-                                            <div class="text-muted text-size-small"><?php echo $data->aff_mobile == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $data->aff_mobile; ?></div>
-                                        </div>
-                                    </td> -->
 
                                     <td>											
-                                        <div class="media-left media-middle"> <?php echo showUserAvtar($data->avatar, $data->aff_firstname, $data->aff_lastname); ?> </div>
+                                        <div class="media-left media-middle"> <?php echo showUserAvtar('', $data->aff_firstname, $data->aff_lastname); ?> </div>
                                         <div class="media-left">
                                             <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot"><?php echo $data->aff_firstname; ?> <?php echo $data->aff_lastname; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($data->country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
                                             <div class="text-muted text-size-small"><?php echo $data->aff_email; ?></div>
@@ -278,28 +249,6 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
                                     <td><h6 class="text-semibold"><?php echo $data->invoice_id; ?></h6></td>
                                     <td><h6 class="text-semibold"><?php echo date('M d, Y', strtotime($data->created)); ?><div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)); ?></div></h6></td>
                                     
-                                    <!--<td class="media_review text-center">
-                                        <span class="label bg-success viewtags">View Tags
-                                            <?php if (count($oTags) > 0) { ?>
-                                                <div class="tagspop">
-                                                    <?php
-                                                    foreach ($oTags as $tagsData) {
-                                                        echo '<span class="label bg-success heading-text">' . $tagsData->tag_name . '</span>';
-                                                    }
-                                                    ?>
-                                                </div>
-                                            <?php } ?>
-                                        </span>
-
-                                        <a href="javascript:void(0);" class="applyInsightTags" action_name="referral-tag" saleid="<?php echo $data->id; ?>" ><span class="label bg-success addtag heading-text">+ Add Tag</span></a>
-
-
-                                    </td>
-                                    <td>
-                                        <a href="<?php echo base_url("admin/modules/referral/saledetails/".$data->id);?>" target="_blank">Details</a>
-                                    </td>-->
-
-
                                 </tr>
                                 <?php
                                 $inc++;

@@ -2671,9 +2671,6 @@ class Referral extends Controller {
             $oTrackSale = $this->mReferral->referredSalesByAdvocateId($subscriberID, $accountID);
             $oReferredFriends = $this->mReferral->getReferredFriends($subscriberID, $referralID);
             
-            
-            
-
 
             $aData = array(
                 'subscribersData' => $subscribersData,
