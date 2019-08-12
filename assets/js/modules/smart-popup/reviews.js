@@ -31,10 +31,11 @@ function loadSmartMoreComments(reviewID, startinglimitVal) {
 
 function saveSmartCommentLikeStatus(commentID, statusType, reviewID) {
     $('.overlaynew').show();
+    var tkn = $('meta[name="_token"]').attr('content');
     $.ajax({
-        url: '/admin/reviews/saveCommentLikeStatus/',
+        url: '/admin/reviews/saveCommentLikeStatus',
         type: "POST",
-        data: {'commentId': commentID, 'status': statusType},
+        data: {'commentId': commentID, 'status': statusType,_token:tkn},
         dataType: "json",
         success: function (data) {
             $('.overlaynew').hide();
