@@ -97,9 +97,9 @@
          $(".notificationSmartPopup").empty();
            $(".notificationSmartPopup").html('<h1 class="text-center" style="margin-top:450px;">Loading....</h1>');
         $.ajax({
-            url: '/admin/notifications/getNotificationSmartPopup/',
+            url: '<?php echo base_url("admin/notifications/getNotificationSmartPopup"); ?>',
             type: "POST",
-            data: {action: 'smart-popup'},
+            data: {action: 'smart-popup', _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
 
