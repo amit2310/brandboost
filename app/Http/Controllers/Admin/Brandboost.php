@@ -428,13 +428,17 @@ class Brandboost extends Controller {
         $reviewID = ($revID > 0) ? $revID : $reviewID;
         $mSubscriber = new SubscriberModel();
         $mReviews = new ReviewsModel();
+        $productData = array();
         $reviewCommentCount = getCampaignCommentCount($reviewID);
         $reviewNotesData = ReviewsModel::listReviewNotes($reviewID);
         $reviewCommentsData = ReviewsModel::getReviewAllParentsComments($reviewID, $start = 0);
         $reviewData = ReviewsModel::getReviewInfo($reviewID);
         $reviewTags = getTagsByReviewID($reviewID);
         $totalComment = ReviewsModel::parentsCommentsCount($reviewID);
-        $productData = BrandboostModel::getProductDataById($reviewData->product_id);
+        if(!empty($reviewData->product_id))
+        {
+          $productData = BrandboostModel::getProductDataById($reviewData->product_id);
+         }
         $productName = $reviewData->product_id > 0 ? $productData->product_name : $reviewData->brand_title;
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
