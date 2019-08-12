@@ -251,15 +251,8 @@ if (!function_exists('getCampaignSiteReviewRA')) {
 if (!function_exists('getCampaignReviewCount')) {
 
     function getCampaignReviewCount($campaignId) {
-        $aUser = array();
-        $CI = & get_instance();
-        $CI->load->model("Reviews_model", "mReviews");
-
-        $aUser = $CI->mReviews->getCampReviews($campaignId);
-
-        if (!empty($aUser)) {
-            return count($aUser);
-        }
+        $aUser = \App\Models\ReviewsModel::getCampReviews($campaignId);
+        return $aUser->count();
     }
 
 }
@@ -267,13 +260,9 @@ if (!function_exists('getCampaignReviewCount')) {
 if (!function_exists('getCampaignReviewRA')) {
 
     function getCampaignReviewRA($campaignId) {
-        $reviewRA = array();
-        $CI = & get_instance();
-        $CI->load->model("Reviews_model", "mReviews");
-
-        $reviewRA = $CI->mReviews->getCampReviewsRA($campaignId);
+        $reviewRA = \App\Models\ReviewsModel::getCampReviewsRA($campaignId);
         $totalRA = 0;
-        if ($reviewRA > 0) {
+        if ($reviewRA->count()>0) {
             foreach ($reviewRA as $data) {
                 $totalRA = $data->ratings + $totalRA;
             }
@@ -371,21 +360,22 @@ if (!function_exists('replaceEmailTags')) {
 
     function replaceEmailTags($brandboostID, $emailTag, $campaignType = 'email') {
         $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("Reviews_model", "mReviews");
-        $CI->load->model("admin/crons/Inviter_model", "mmInviter");
         $htmlData = '';
-        $aBrandboost = $CI->mmInviter->getBBInfo($brandboostID);
+        $aBrandboost = \App\Models\Admin\BrandboostModel::getBBInfo($brandboostID);
         if (!empty($aBrandboost)) {
             $bbType = $aBrandboost->review_type;
             $aOffsiteUrls = unserialize($aBrandboost->offsites_links);
-            $random_keys = array_rand($aOffsiteUrls, 1);
+            $random_keys = 0;
+            if(!empty($aOffsiteUrls)){
+                $random_keys = array_rand($aOffsiteUrls, 1);
+            }
+            
             $offsiteURL = $aOffsiteUrls[$random_keys];
         }
 
         switch ($emailTag) {
             case '{FIVE_STARS_RATINGS}':
-                $aData = $CI->mReviews->getCampReviewsWithFiveRatings($brandboostID);
+                $aData = \App\Models\ReviewsModel::getCampReviewsWithFiveRatings($brandboostID);
                 $htmlData = '<html>
 				<head>
 				<meta charset="utf-8">
@@ -429,27 +419,27 @@ if (!function_exists('replaceEmailTags')) {
 				<div class="bb_txt_review">
 				<div class="bb_txt_inner">
 				<div class="bb_txt_head">
-				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->logo_img . '"/>
+				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->logo_img) . '"/>
 				</div>
 				<div class="product_details_sec">
 				<div class="bb_product_img">
-				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->brand_img . '"/>
+				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->brand_img) . '"/>
 				</div>
 				<div class="bb_slides_text">
-				<h4>' . $aData[0]->brand_title . '</h4>
+				<h4>' . @($aData[0]->brand_title) . '</h4>
 				<p><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa fa-star"></i></p>
-				<p><span>' . $aData[0]->brand_desc . '</span></p>
-				<p><a class="green" href="#">' . $aData[0]->bb_u_firstname . ' ' . $aData[0]->bb_u_lastname . '</a></p>
+				<p><span>' . @($aData[0]->brand_desc) . '</span></p>
+				<p><a class="green" href="#">' . @($aData[0]->bb_u_firstname) . ' ' . @($aData[0]->bb_u_lastname) . '</a></p>
 				</div>
 				<div class="clearfix"></div>
 				</div>';
                 foreach ($aData as $data) {
-                    $helpfulCountArray = $CI->mReviews->countHelpful($data->reviewId);
+                    $helpfulCountArray = \App\Models\ReviewsModel::countHelpful($data->reviewId);
                     $starValue = getReviewStarShow($data->ratings);
                     $htmlData .= '<div class="bb_txt_user">
-					<p><strong>' . $data->firstname . ' ' . $data->lastname . '</strong> <span>Verified Buyer</span></p>
+					<p><strong>' . @($data->firstname) . ' ' . @($data->lastname) . '</strong> <span>Verified Buyer</span></p>
 					<p>' . $starValue . '</p>
-					<div class="bb_txt_user_rev"><p><span>' . $data->comment_text . '</span></p></div>
+					<div class="bb_txt_user_rev"><p><span>' . @($data->comment_text) . '</span></p></div>
 					<div class="bb_date_help">
 					<p>' . date('m/d/Y', strtotime($data->created)) . '</p>
 					<p>Was this review helpful?  <i class="fa green fa-hand-o-up"></i> ' . $helpfulCountArray['yes'] . ' &nbsp; <i class="fa red fa-hand-o-down"></i> ' . $helpfulCountArray['no'] . '</p>
@@ -464,7 +454,7 @@ if (!function_exists('replaceEmailTags')) {
                 break;
 
             case '{FOUR_STARS_RATINGS}':
-                $aData = $CI->mReviews->getCampReviewsWithFourRatings($brandboostID);
+                $aData = \App\Models\ReviewsModel::getCampReviewsWithFourRatings($brandboostID);
                 $htmlData = '<html>
 				<head>
 				<meta charset="utf-8">
@@ -508,22 +498,22 @@ if (!function_exists('replaceEmailTags')) {
 				<div class="bb_txt_review">
 				<div class="bb_txt_inner">
 				<div class="bb_txt_head">
-				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->logo_img . '"/>
+				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->logo_img) . '"/>
 				</div>
 				<div class="product_details_sec">
 				<div class="bb_product_img">
-				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->brand_img . '"/>
+				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->brand_img) . '"/>
 				</div>
 				<div class="bb_slides_text">
-				<h4>' . $aData[0]->brand_title . '</h4>
+				<h4>' . @($aData[0]->brand_title) . '</h4>
 				<p><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa fa-star"></i></p>
-				<p><span>' . $aData[0]->brand_desc . '</span></p>
-				<p><a class="green" href="#">' . $aData[0]->bb_u_firstname . ' ' . $aData[0]->bb_u_lastname . '</a></p>
+				<p><span>' . @($aData[0]->brand_desc) . '</span></p>
+				<p><a class="green" href="#">' . @($aData[0]->bb_u_firstname) . ' ' . @($aData[0]->bb_u_lastname) . '</a></p>
 				</div>
 				<div class="clearfix"></div>
 				</div>';
                 foreach ($aData as $data) {
-                    $helpfulCountArray = $CI->mReviews->countHelpful($data->reviewId);
+                    $helpfulCountArray = \App\Models\ReviewsModel::countHelpful($data->reviewId);
                     $starValue = getReviewStarShow($data->ratings);
                     $htmlData .= '<div class="bb_txt_user">
 					<p><strong>' . $data->firstname . ' ' . $data->lastname . '</strong> <span>Verified Buyer</span></p>
@@ -543,7 +533,7 @@ if (!function_exists('replaceEmailTags')) {
                 break;
 
             case '{TOP_STAR_RATINGS}':
-                $aData = $CI->mReviews->getCampReviewsWithTopRatings($brandboostID);
+                $aData = \App\Models\ReviewsModel::getCampReviewsWithTopRatings($brandboostID);
                 $htmlData = '<html>
 				<head>
 				<meta charset="utf-8">
@@ -587,22 +577,22 @@ if (!function_exists('replaceEmailTags')) {
 				<div class="bb_txt_review">
 				<div class="bb_txt_inner">
 				<div class="bb_txt_head">
-				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->logo_img . '"/>
+				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->logo_img) . '"/>
 				</div>
 				<div class="product_details_sec">
 				<div class="bb_product_img">
-				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $aData[0]->brand_img . '"/>
+				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->brand_img) . '"/>
 				</div>
 				<div class="bb_slides_text">
-				<h4>' . $aData[0]->brand_title . '</h4>
+				<h4>' . @($aData[0]->brand_title) . '</h4>
 				<p><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa fa-star"></i></p>
-				<p><span>' . $aData[0]->brand_desc . '</span></p>
-				<p><a class="green" href="#">' . $aData[0]->bb_u_firstname . ' ' . $aData[0]->bb_u_lastname . '</a></p>
+				<p><span>' . @($aData[0]->brand_desc) . '</span></p>
+				<p><a class="green" href="#">' . @($aData[0]->bb_u_firstname) . ' ' . @($aData[0]->bb_u_lastname) . '</a></p>
 				</div>
 				<div class="clearfix"></div>
 				</div>';
                 foreach ($aData as $data) {
-                    $helpfulCountArray = $CI->mReviews->countHelpful($data->reviewId);
+                    $helpfulCountArray = \App\Models\ReviewsModel::countHelpful($data->reviewId);
                     $starValue = getReviewStarShow($data->ratings);
                     $htmlData .= '<div class="bb_txt_user">
 					<p><strong>' . $data->firstname . ' ' . $data->lastname . '</strong> <span>Verified Buyer</span></p>
@@ -622,7 +612,7 @@ if (!function_exists('replaceEmailTags')) {
                 break;
 
             case '{WRITE_REVIEW_FORM}':
-                $aData = $CI->mReviews->getBrandBoostCampaign($brandboostID);
+                $aData = \App\Models\ReviewsModel::getBrandBoostCampaign($brandboostID);
 
                 $htmlData = '<html>
 				<head>
@@ -676,7 +666,7 @@ if (!function_exists('replaceEmailTags')) {
 				</div>
 				<div class="clearfix"></div>
 				</div><div class="bb_txt_write">
-				<form name="writeReview" id="writeReview" method="POST" action="' . site_url("/reviews/saveReviewByEmailTemplate") . '">
+				<form name="writeReview" id="writeReview" method="POST" action="' . base_url("/reviews/saveReviewByEmailTemplate") . '">
 				<p class="green">WRITE A REVIEW</p>
 				<p>Score:</p>
 				<select name="ratingValue" id="ratingValue" required>
@@ -709,7 +699,7 @@ if (!function_exists('replaceEmailTags')) {
             case '{REVIEW_URL}':
                 if ($bbType == 'offsite') {
                     foreach ($aOffsiteUrls AS $index => $aUrl) {
-                        $aWebsiteInfo = $CI->mmInviter->getOffsiteWebsite($index);
+                        $aWebsiteInfo = \App\Models\Admin\BrandboostModel::getOffsiteWebsite($index);
                         if ($campaignType == 'sms') {
                             $htmlData .= $aUrl['shorturl'] . "<br>";
                         } else {
@@ -730,7 +720,7 @@ if (!function_exists('replaceEmailTags')) {
 
                 if ($bbType == 'offsite') {
                     foreach ($aOffsiteUrls AS $index => $aUrl) {
-                        $aWebsiteInfo = $CI->mmInviter->getOffsiteWebsite($index);
+                        $aWebsiteInfo = \App\Models\Admin\BrandboostModel::getOffsiteWebsite($index);
                         if ($campaignType == 'sms') {
                             $htmlData .= $aUrl['shorturl'] . "<br>";
                         } else {
@@ -883,11 +873,7 @@ if (!function_exists('getSendRequest')) {
 if (!function_exists('getSendResponseCount')) {
 
     function getSendResponseCount($brandboostId) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("Reviews_model", "mReviews");
-
-        $aData = $CI->mReviews->getCampReviewsCount($brandboostId);
+        $aData = \App\Models\ReviewsModel::getCampReviewsCount($brandboostId);
         return $aData;
     }
 
@@ -896,12 +882,8 @@ if (!function_exists('getSendResponseCount')) {
 if (!function_exists('getSendResponse')) {
 
     function getSendResponse($brandboostId, $type) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("Reviews_model", "mReviews");
-
-        $aData = $CI->mReviews->getCampReviewsResponse($brandboostId, $type);
-        return $aData;
+       $aData = \App\Models\ReviewsModel::getCampReviewsResponse($brandboostId, $type);
+       return $aData;
     }
 
 }
@@ -910,12 +892,11 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
 
     $CI = & get_instance();
     $CI->load->model("admin/Users_model", "mmUser");
-    $CI->load->model("admin/crons/Inviter_model", "mmInviter");
-    $CI->load->model("Reviews_model", "mmReviews");
+    
     $aUser = $CI->mmUser->getUserInfo($userID);
 
     $aTags = $CI->config->item('email_tags');
-    $aBrandboost = $CI->mmInviter->getBBInfo($bbID);
+    $aBrandboost = \App\Models\Admin\BrandboostModel::getBBInfo($bbID);
 
     if (!empty($aBrandboost)) {
         $bbType = $aBrandboost->review_type;
@@ -945,7 +926,7 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
                     break;
 
                 case '{FIVE_STARS_RATINGS}':
-                    $aData = $CI->mmReviews->getCampReviewsWithFiveRatings($bbID);
+                    $aData = \App\Models\ReviewsModel::getCampReviewsWithFiveRatings($bbID);
                     $htmlData = '<html>
 					<head>
 					<meta charset="utf-8">
@@ -1004,7 +985,7 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
 					<div class="clearfix"></div>
 					</div>';
                     foreach ($aData as $data) {
-                        $helpfulCountArray = $this->mReviews->countHelpful($data->reviewId);
+                        $helpfulCountArray = \App\Models\ReviewsModel::countHelpful($data->reviewId);
                         $starValue = getReviewStarShow($data->ratings);
                         $htmlData .= '<div class="bb_txt_user">
 						<p><strong>' . $data->firstname . ' ' . $data->lastname . '</strong> <span>Verified Buyer</span></p>
@@ -1024,7 +1005,7 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
                     break;
 
                 case '{FOUR_STARS_RATINGS}':
-                    $aData = $CI->mmReviews->getCampReviewsWithFourRatings($bbID);
+                    $aData = \App\Models\ReviewsModel::getCampReviewsWithFourRatings($bbID);
                     $htmlData = '<html>
 					<head>
 					<meta charset="utf-8">
@@ -1083,7 +1064,7 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
 					<div class="clearfix"></div>
 					</div>';
                     foreach ($aData as $data) {
-                        $helpfulCountArray = $this->mReviews->countHelpful($data->reviewId);
+                        $helpfulCountArray = \App\Models\ReviewsModel::countHelpful($data->reviewId);
                         $starValue = getReviewStarShow($data->ratings);
                         $htmlData .= '<div class="bb_txt_user">
 						<p><strong>' . $data->firstname . ' ' . $data->lastname . '</strong> <span>Verified Buyer</span></p>
@@ -1103,7 +1084,7 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
                     break;
 
                 case '{TOP_STAR_RATINGS}':
-                    $aData = $CI->mmReviews->getCampReviewsWithTopRatings($bbID);
+                    $aData = \App\Models\ReviewsModel::getCampReviewsWithTopRatings($bbID);
                     $htmlData = '<html>
 					<head>
 					<meta charset="utf-8">
@@ -1162,7 +1143,7 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
 					<div class="clearfix"></div>
 					</div>';
                     foreach ($aData as $data) {
-                        $helpfulCountArray = $this->mReviews->countHelpful($data->reviewId);
+                        $helpfulCountArray = \App\Models\ReviewsModel::countHelpful($data->reviewId);
                         $starValue = getReviewStarShow($data->ratings);
                         $htmlData .= '<div class="bb_txt_user">
 						<p><strong>' . $data->firstname . ' ' . $data->lastname . '</strong> <span>Verified Buyer</span></p>
@@ -1182,7 +1163,7 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
                     break;
 
                 case '{WRITE_REVIEW_FORM}':
-                    $aData = $CI->mmReviews->getBrandBoostCampaign($bbID);
+                    $aData = \App\Models\ReviewsModel::getBrandBoostCampaign($bbID);
 
                     $htmlData = '<html>
 					<head>
@@ -1236,7 +1217,7 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
 					</div>
 					<div class="clearfix"></div>
 					</div><div class="bb_txt_write">
-					<form name="writeReview" id="writeReview" method="POST" action="' . site_url("/reviews/saveReviewByEmailTemplate") . '">
+					<form name="writeReview" id="writeReview" method="POST" action="' . base_url("/reviews/saveReviewByEmailTemplate") . '">
 					<p class="green">WRITE A REVIEW</p>
 					<p>Score:</p>
 					<select name="ratingValue" id="ratingValue" required>
@@ -1268,7 +1249,7 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
                 case '{TEXT_REVIEW_URL}':
                     if ($bbType == 'offsite') {
                         foreach ($aOffsiteUrls AS $index => $aUrl) {
-                            $aWebsiteInfo = $CI->mmInviter->getOffsiteWebsite($index);
+                            $aWebsiteInfo = \App\Models\Admin\BrandboostModel::getOffsiteWebsite($index);
                             if ($campaignType == 'sms') {
                                 $htmlData .= "<a href='" . $aUrl['shorturl'] . "'>" . $aWebsiteInfo->name . "</a><br>";
                             } else {
@@ -1285,7 +1266,7 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
 
                     if ($bbType == 'offsite') {
                         foreach ($aOffsiteUrls AS $index => $aUrl) {
-                            $aWebsiteInfo = $CI->mmInviter->getOffsiteWebsite($index);
+                            $aWebsiteInfo = \App\Models\Admin\BrandboostModel::getOffsiteWebsite($index);
                             if ($campaignType == 'sms') {
                                 $htmlData .= "<a href='" . $aUrl['shorturl'] . "'>" . $aWebsiteInfo->name . "</a><br>";
                             } else {
@@ -1299,7 +1280,7 @@ function emailPreviewTagReplace($bbID, $sHtml, $campaignType, $userID) {
                 case '{REVIEW_URL}':
                     if ($bbType == 'offsite') {
                         foreach ($aOffsiteUrls AS $index => $aUrl) {
-                            $aWebsiteInfo = $this->getOffsiteWebsite($index);
+                            $aWebsiteInfo = \App\Models\Admin\BrandboostModel::getOffsiteWebsite($index);
                             if ($campaignType == 'sms') {
                                 $htmlData .= "<a href='" . $aUrl['shorturl'] . "'>" . $aWebsiteInfo->name . "</a><br>";
                             } else {

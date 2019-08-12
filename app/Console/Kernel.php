@@ -31,6 +31,12 @@ class Kernel extends ConsoleKernel
         
         $schedule->command('inviter:broadcast')
                    ->everyMinute();
+        
+        $schedule->command('inviter:brandboost')
+                   ->everyMinute();
+        
+        $schedule->command('inviter:nps')
+                   ->everyMinute();
     }
 
     /**

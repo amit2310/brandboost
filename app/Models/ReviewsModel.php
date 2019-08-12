@@ -331,7 +331,7 @@ class ReviewsModel extends Model {
      * @param type $brandboostID
      * @return type
      */
-    public function getCampReviewsWithFiveRatings($brandboostID) {
+    public static function getCampReviewsWithFiveRatings($brandboostID) {
             $oData = DB::table('tbl_brandboost')
                 ->leftJoin('tbl_reviews', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
                 ->leftJoin('tbl_users as ut', 'tbl_reviews.user_id', '=', 'ut.id')
@@ -351,7 +351,7 @@ class ReviewsModel extends Model {
      * @param type $brandboostID
      * @return type
      */
-    public function getCampReviewsWithFourRatings($brandboostID) {
+    public static function getCampReviewsWithFourRatings($brandboostID) {
         $oData = DB::table('tbl_brandboost')
                 ->leftJoin('tbl_reviews', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
                 ->leftJoin('tbl_users as ut', 'tbl_reviews.user_id', '=', 'ut.id')
@@ -371,7 +371,7 @@ class ReviewsModel extends Model {
      * @param type $brandboostID
      * @return type
      */
-    public function getCampReviewsWithTopRatings($brandboostID) {
+    public static function getCampReviewsWithTopRatings($brandboostID) {
         $oData = DB::table('tbl_brandboost')
                 ->leftJoin('tbl_reviews', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
                 ->leftJoin('tbl_users as ut', 'tbl_reviews.user_id', '=', 'ut.id')
@@ -1214,17 +1214,17 @@ class ReviewsModel extends Model {
         return $response;
     }
 
-    public function getCampReviewsRA($campaignID) {
-        $aData = array();
-        $this->db->select("tbl_reviews.*");
-        $this->db->where("tbl_reviews.campaign_id", $campaignID);
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $rResponse = $this->db->get("tbl_reviews");
-
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
+    /**
+     * 
+     * @param type $campaignID
+     * @return type
+     */
+    public static function getCampReviewsRA($campaignID) {
+        $oData = DB::table('tbl_reviews')
+            ->where('campaign_id', $campaignID)
+            ->orderBy('id', 'desc')    
+            ->get();
+        return $oData;        
     }
 
     public function latestReviews($userID = '') {
@@ -1248,37 +1248,35 @@ class ReviewsModel extends Model {
             return false;
     }
 
-    public function getCampReviewsCount($campaignID) {
-        $aData = array();
-        $this->db->select("tbl_reviews.*");
-        $this->db->where("tbl_reviews.campaign_id", $campaignID);
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        //$this->db->group_by('tbl_reviews.user_id');
-        $rResponse = $this->db->get("tbl_reviews");
-        return $rResponse->num_rows();
-        /* if ($rResponse->num_rows() > 0) {
-          $aData = $rResponse->result();
-          }
-          return $aData; */
+    /**
+     * Get Reviews count
+     * @param type $campaignID
+     * @return type
+     */
+    public static function getCampReviewsCount($campaignID) {
+        $oData = DB::table('tbl_reviews')
+        ->where('campaign_id', $campaignID)
+        ->count();
+        return $oData;        
     }
 
-    public function getCampReviewsResponse($campaignID, $type) {
-        $aData = array();
-        $this->db->select("tbl_reviews.*, tbl_campaigns.campaign_type");
-        $this->db->where("tbl_reviews.campaign_id", $campaignID);
-        $this->db->where("tbl_campaigns.campaign_type", $type);
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        //$this->db->join("tbl_brandboost_events", "tbl_reviews.inviter_id = tbl_brandboost_events.brandboost_id", "LEFT");   
-        $this->db->join("tbl_campaigns", "tbl_campaigns.event_id = tbl_reviews.inviter_id", "LEFT");
-
-        $this->db->group_by('tbl_reviews.id');
-        $rResponse = $this->db->get("tbl_reviews");
-        //return $this->db->last_query();
-        return $rResponse->num_rows();
-        /* if ($rResponse->num_rows() > 0) {
-          $aData = $rResponse->result();
-          }
-          return $aData; */
+    
+    /**
+     * Get campaign review response
+     * @param type $campaignID
+     * @param type $type
+     * @return type
+     */
+    public static function getCampReviewsResponse($campaignID, $type) {
+        $oData = DB::table('tbl_reviews')
+            ->leftJoin('tbl_campaigns', 'tbl_campaigns.event_id', '=', 'tbl_reviews.inviter_id')
+            ->select('tbl_reviews.*', 'tbl_campaigns.campaign_type')
+            ->where('tbl_reviews.campaign_id', $campaignID)
+            ->where('tbl_campaigns.campaign_type', $type)        
+            ->orderBy('tbl_reviews.id', 'desc')
+            ->groupBy('tbl_reviews.id')        
+            ->count();
+        return $oData;        
     }
 
     

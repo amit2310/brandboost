@@ -9,7 +9,9 @@ use Session;
 
 class ReviewsModel extends Model
 {
-     $this->db->select("tbl_brandboost.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.address as user_address, tbl_users.city as user_city, tbl_users.country as user_country");
+     public function getBrandBoostCampaign($campaignID, $hash = false) {
+
+        $this->db->select("tbl_brandboost.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.address as user_address, tbl_users.city as user_city, tbl_users.country as user_country");
         $this->db->join("tbl_users", "tbl_brandboost.user_id=tbl_users.id", "LEFT");
         if($hash == true){
             $this->db->where("tbl_brandboost.hashcode", $campaignID);
@@ -136,6 +138,8 @@ class ReviewsModel extends Model
 
 	public function getReviewsByProductType($campaignID, $aSettings = array(), $productType='product') {
          $start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
+         $minRatings = $aSettings['min_ratings'];
+         $reviewLimit = $aSettings['review_limit'];
 
         $aData =  DB::table('tbl_reviews')
         ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_brandboost.brand_title')
@@ -147,11 +151,11 @@ class ReviewsModel extends Model
         ->when(!empty($aSettings['logged']) && !empty($aSettings['logged_id']), function($query){
            return $query->orWhere("tbl_reviews.status", '2');
         })
-         ->when(!empty($aSettings) && !empty($aSettings['min_ratings']),function($query) use ($aSettings['min_ratings']) {
-           return $query->orWhere('tbl_reviews.ratings >=', $aSettings['min_ratings']);
+         ->when(!empty($aSettings) && !empty($aSettings['min_ratings']) , function($query) use ($minRatings) {
+           return $query->orWhere('tbl_reviews.ratings', '>=', $minRatings);
         })
-          ->when(!empty($aSettings) && !empty($aSettings['review_limit'])),function($query) use ($start) {
-           return $query->limit($aSettings['review_limit'], $start);
+          ->when(!empty($aSettings) && !empty($aSettings['review_limit']),function($query) use ($reviewLimit, $start) {
+           return $query->limit($reviewLimit, $start);
         })
 
         ->orderBy("tbl_reviews.id", "DESC")->get();

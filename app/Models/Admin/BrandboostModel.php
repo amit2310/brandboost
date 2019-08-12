@@ -38,7 +38,7 @@ class BrandboostModel extends Model {
      */
 
 
-    public function getBBInfo($bbID) {
+    public static function getBBInfo($bbID) {
     	$oData = DB::table('tbl_brandboost')
         ->where("id", $bbID)->first();
         return $oData;
@@ -2703,6 +2703,19 @@ class BrandboostModel extends Model {
        
 
         return $aData;
+    }
+    
+    
+    /**
+     * Gets the list of offsite sources website
+     * @param type $id
+     * @return type
+     */
+    public static function getOffsiteWebsite($id) {
+        $oData = DB::table('tbl_offsite_websites')
+                ->where('id', $id)                
+                ->first();
+        return $oData;         
     }
 
 }
