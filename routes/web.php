@@ -262,6 +262,9 @@ Route::get('admin/invoices/view/{clientID}','Admin\Invoice@view');
 Route::get('admin/invoices/download_invoice/{invoiceID}','Admin\Invoice@download_invoice');
 Route::post('admin/invoices/get','Admin\Invoice@get');
 
+// Notification
+Route::post('admin/notifications/getNotificationSmartPopup','Admin\Notification@getNotificationSmartPopup');
+
 // Company
 Route::post('company/saveHelpful','Company@saveHelpful');
 Route::post('company/saveComment','Company@saveComment');
