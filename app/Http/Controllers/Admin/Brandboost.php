@@ -424,6 +424,11 @@ class Brandboost extends Controller {
 		$revID = Input::post("reviewid");
 		$actionName = Input::post("action");
         $mUser = new UsersModel();
+        $product_id = "";
+        $product_name = "";
+        $brand_title = "";
+        $productName="";
+
 
         $reviewID = ($revID > 0) ? $revID : $reviewID;
         $mSubscriber = new SubscriberModel();
@@ -438,8 +443,13 @@ class Brandboost extends Controller {
         if(!empty($reviewData->product_id))
         {
           $productData = BrandboostModel::getProductDataById($reviewData->product_id);
+          $product_id = $reviewData->product_id;
+          $product_name = $productData->product_name;
+          $brand_title = $reviewData->brand_title;
+
          }
-        $productName = $reviewData->product_id > 0 ? $productData->product_name : $reviewData->brand_title;
+        
+        $productName =  $product_id > 0 ? $product_name : $brand_title;
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
