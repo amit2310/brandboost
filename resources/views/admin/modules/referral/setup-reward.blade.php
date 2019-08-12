@@ -435,8 +435,7 @@ if (!empty($oRefCouponCodes)) {
 
                             <div class="advocate_desc " id="advocate-custom-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->custom_id > 0) ? 'display:block;' : 'display:none;' ?>">
                                 <form name="frmAdvocateCustom" id="frmAdvocateCustom" method="post" data-container-id="advocate-free-gift" >
-
-
+									{{ csrf_field() }}
                                     <div class="col-md-3">
 
                                     </div>
