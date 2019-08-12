@@ -926,7 +926,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/comments/getCommentById'); ?>',
                 type: "POST",
-                data: {commentID: commentID},
+                data: {commentID: commentID,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
