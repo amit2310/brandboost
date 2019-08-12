@@ -905,7 +905,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/comments/update_comment_status'); ?>',
                 type: "POST",
-                data: {status: status, comment_id: comment_id},
+                data: {status: status, comment_id: comment_id,_token:'{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
