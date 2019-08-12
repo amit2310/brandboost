@@ -438,7 +438,7 @@
             $.ajax({
                 url: "<?php echo base_url('admin/notifications/getNotificationFilterDate'); ?>",
                 type: "POST",
-                data: {start:start.format('D MMM YYYY'), end:end.format('D MMM YYYY'), readStatus:readStatus, event_type: eventTypeFilter},
+                data: {start:start.format('D MMM YYYY'), end:end.format('D MMM YYYY'), readStatus:readStatus, event_type: eventTypeFilter, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -460,7 +460,7 @@
     $.ajax({
         url: "<?php echo base_url('admin/notifications/getNotificationData'); ?>",
         type: "POST",
-        data: {start:moment().subtract(29, 'days').format('D MMM YYYY'), end:moment().format('D MMM YYYY')},
+        data: {start:moment().subtract(29, 'days').format('D MMM YYYY'), end:moment().format('D MMM YYYY'), _token: '{{csrf_token()}}'},
         dataType: "json",
         success: function (data) {
             if (data.status == 'success') {
@@ -483,7 +483,7 @@
     	$.ajax({
             url: "<?php echo base_url('admin/notifications/getNotificationFilterDate'); ?>",
             type: "POST",
-            data: {start:res[0], end:res[1], readStatus:readStatus, event_type: eventTypeFilter},
+            data: {start:res[0], end:res[1], readStatus:readStatus, event_type: eventTypeFilter, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -507,7 +507,7 @@
     	$.ajax({
             url: "<?php echo base_url('admin/notifications/getNotificationFilterDate'); ?>",
             type: "POST",
-            data: {start:res[0], end:res[1], readStatus:readStatus, event_type: eventTypeFilter},
+            data: {start:res[0], end:res[1], readStatus:readStatus, event_type: eventTypeFilter, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
