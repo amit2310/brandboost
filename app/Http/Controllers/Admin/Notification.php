@@ -180,19 +180,19 @@ class Notification extends Controller {
         exit;
     }
 
-    public function getNotificationFilterDate() {
+    public function getNotificationFilterDate(Request $request) {
 
         $response = array();
         $post = array();
         $aUser = getLoggedUser();
+        $Notifications = new NotificationModel();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        if ($post) {
-            $start = $post['start'];
-            $end = $post['end'];
-            $readStatus = $post['readStatus'];
-            $event_type = $post['event_type'];
-            $allNotifications = $this->Notifications->getNotificationsFilter($userID, $readStatus, $start, $end, $event_type);
+        if ($request->start) {
+            $start = $request->start;
+            $end = $request->end;
+            $readStatus = $request->readStatus;
+            $event_type = $request->event_type;
+            $allNotifications = $Notifications->getNotificationsFilter($userID, $readStatus, $start, $end, $event_type);
             $aData = array(
                 'notifications_data' => $allNotifications,
                 /*'notifications_data_today' => $allNotificationsToday,
@@ -203,7 +203,7 @@ class Notification extends Controller {
                 'aSysNotifyTags' => $aSysNotifyTags*/
             );
 
-            $popupContent = $this->load->view('admin/notification_filter', $aData, true);
+            $popupContent = view('admin.notification_filter', $aData)->render();
             $response['result'] = $popupContent;
         }
         
@@ -212,21 +212,27 @@ class Notification extends Controller {
         exit;
     }
 
-    public function getNotificationData() {
+
+    /**
+    * This function is use to get notification
+    * @param type 
+    * @return type
+    */
+    public function getNotificationData(Request $request) {
 
         $response = array();
         $post = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        if ($post) {
-            $start = $post['start'];
-            $end = $post['end'];
+        $Notifications = new NotificationModel();
+        if ($request->start) {
+            $start = $request->start;
+            $end = $request->end;
             //$allNotifications = $this->Notifications->getNotificationsFilter($userID, $start, $end);
-            $allNotifications = $this->Notifications->getNotifications($userID, $type, $start, $end);
-            $allNotificationsToday = $this->Notifications->getNotificationsToday($userID);
-            $allNotificationsYesterday = $this->Notifications->getNotificationsYesterday($userID);
-            $allNotificationsLastweek = $this->Notifications->getNotificationsLastweek($userID);
+            $allNotifications = NotificationModel::getNotifications($userID, $type = '', $start, $end);
+            $allNotificationsToday = $Notifications->getNotificationsToday($userID);
+            $allNotificationsYesterday = $Notifications->getNotificationsYesterday($userID);
+            $allNotificationsLastweek = $Notifications->getNotificationsLastweek($userID);
             
             $aSysNotifyTags = get_notification_tags();
             if (!empty($allNotifications)) {
@@ -241,7 +247,7 @@ class Notification extends Controller {
                 'aSysNotifyTags' => $aSysNotifyTags
             );
 
-            $popupContent = $this->load->view('admin/notification_filter', $aData, true);
+            $popupContent = view('admin.notification_filter', $aData)->render();
             $response['result'] = $popupContent;
         }
         
