@@ -79,10 +79,11 @@ $(document).ready(function () {
 
     $(document).on('click', '.editSmartComment', function () {
         var commentID = $(this).attr('commentid');
+        var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/comments/getCommentById',
             type: "POST",
-            data: {commentID: commentID},
+            data: {commentID: commentID,_token:tkn},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -99,10 +100,12 @@ $(document).ready(function () {
 
     $(document).on('click', '.editSmartNote', function () {
         var noteId = $(this).attr('noteid');
+        var tkn = $('meta[name="_token"]').attr('content');
+
         $.ajax({
-            url: '/admin/reviews/getReviewNoteById',
+            url: '/reviews/getReviewNoteById',
             type: "POST",
-            data: {noteid: noteId},
+            data: {noteid: noteId,_token: tkn},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -120,6 +123,7 @@ $(document).ready(function () {
     $(document).on('click', '.deleteSmartNote', function () {
         var reviewID = $(this).attr('reviewid');
         var noteId = $(this).attr('noteid');
+        var tkn = $('meta[name="_token"]').attr('content');
         swal({
             title: "Are you sure? You want to delete this note!",
             text: "You will not be able to recover this record!",
@@ -135,9 +139,9 @@ $(document).ready(function () {
 			if (isConfirm) {
 				$('.overlaynew').show();
 				$.ajax({
-					url: '/admin/reviews/deleteReviewNote',
+					url: '/reviews/deleteReviewNote',
 					type: "POST",
-					data: {noteid: noteId},
+					data: {noteid: noteId,_token: tkn},
 					dataType: "json",
 					success: function (data) {
 						if (data.status == 'success') {
@@ -186,12 +190,14 @@ $(document).ready(function () {
         var reviewID = $(this).prev().prev().val();
         var parentCommentId = $(this).prev().val();
         var commentContent = $(this).parent().prev().find('.comment_content').val();
+        var tkn = $('meta[name="_token"]').attr('content');
+
         if (commentContent != '') {
             $('.overlaynew').show();
             $.ajax({
                 url: '/admin/comments/add_comment',
                 type: "POST",
-                data: {'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent},
+                data: {'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent,_token:tkn},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -216,6 +222,7 @@ $(document).ready(function () {
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
         var reviewID = $("#smartpopup_review_id").val();
+
         $.ajax({
             url: '/admin/comments/update_comment/',
             type: "POST",
@@ -240,6 +247,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.deleteSmartComment', function () {
         var reviewID = $("#smartpopup_review_id").val();
+        var tkn = $('meta[name="_token"]').attr('content');
         var commentId = $(this).attr('commentid');
         swal({
             title: "Are you sure? You want to delete this comment!",
@@ -258,7 +266,7 @@ $(document).ready(function () {
 				$.ajax({
 					url: '/admin/comments/deleteComment',
 					type: "POST",
-					data: {commentId: commentId},
+					data: {commentId: commentId,_token:tkn},
 					dataType: "json",
 					success: function (data) {
 						if (data.status == 'success') {
@@ -280,10 +288,11 @@ $(document).ready(function () {
         var review_id = $(this).attr("reviewid");
         var feedback_id = $(this).attr("feedback_id");
         var action_name = $(this).attr("action_name");
+        var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/tags/listAllTags',
             type: "POST",
-            data: {review_id: review_id},
+            data: {review_id: review_id,_token:tkn},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

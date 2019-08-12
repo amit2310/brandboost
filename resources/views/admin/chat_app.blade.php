@@ -4095,7 +4095,7 @@ if ($isLoggedInTeam) {
 			$(document).ready(function() {
 	$('.SmallWebchat .c_link').html('Contacts(<?php echo $contactCount; ?>)');
 	$('.SmallSmschat .c_link').html('Contacts(<?php echo $contactCount; ?>)');
-	$('.closemainchat').html('All Contacts (<?php echo $contactCount; ?>)');
+	$('.closemainchat').html('All Contacts (<?php echo $activeOnlyweb->count(); ?>)');
 	
 
 	   $('#small_web_webContactBox').on("keyup", function() {

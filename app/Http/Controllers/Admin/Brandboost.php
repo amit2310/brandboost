@@ -423,8 +423,11 @@ class Brandboost extends Controller {
         
 		$revID = Input::post("reviewid");
 		$actionName = Input::post("action");
+        $mUser = new UsersModel();
 
         $reviewID = ($revID > 0) ? $revID : $reviewID;
+        $mSubscriber = new SubscriberModel();
+        $mReviews = new ReviewsModel();
         $reviewCommentCount = getCampaignCommentCount($reviewID);
         $reviewNotesData = ReviewsModel::listReviewNotes($reviewID);
         $reviewCommentsData = ReviewsModel::getReviewAllParentsComments($reviewID, $start = 0);
@@ -458,7 +461,7 @@ class Brandboost extends Controller {
         );
 
         if ($actionName == 'smart-popup') {
-            $popupContent = view('admin.components.smart-popup.reviews', $aData)->render();
+            $popupContent = view('admin.components.smart-popup.reviews', $aData)->with(['mUser'=> $mUser,'mSubscriber'=>$mSubscriber,'mReviews'=>$mReviews])->render();
             $response['status'] = 'success';
             $response['content'] = $popupContent;
             echo json_encode($response);

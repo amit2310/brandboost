@@ -68,9 +68,15 @@ class CommentModel extends Model
         return true;
     }
 
+
+     /**
+     * Used to delete comment
+     * @param type $aData, $commentID
+     * @return type boolean
+     */
     public function deleteComment($commentID) {
-        $this->db->where('id', $commentID);
-        $result = $this->db->delete('tbl_reviews_comments');
+        $oData = DB::table('tbl_reviews_comments')
+    ->where('id', $commentID)->delete();
         return true;
     }
 

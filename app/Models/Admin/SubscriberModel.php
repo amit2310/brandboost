@@ -362,14 +362,18 @@ WHERE tbl_chat_supportuser.room = '" . $room . "'"));
     }
 
 
-    public function getGlobalSubscriberInfo($id) {
-        $this->db->where("id", $id);
-        $result = $this->db->get("tbl_subscribers");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
+    /**
+    * This function is used to get the subscirber information 
+    * @param type $id
+    * @return type
+    */
 
-        return $response;
+    public function getGlobalSubscriberInfo($id) {
+        $aData =  DB::table('tbl_subscribers')
+        ->where("id", $id)->get();
+        return $aData;
+
+       
     }
 
     public function getGlobalSubscriberInfoByUsrid($id) {

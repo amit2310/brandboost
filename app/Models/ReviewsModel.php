@@ -1176,29 +1176,25 @@ class ReviewsModel extends Model {
 
     
 
-    
-
-    
+    /**
+    * This function is used to get the review notes by the notes id
+    * @param type $noteId
+    * @return type
+    */
 
     public function getReviewNoteByID($noteId) {
 
-        $this->db->where('id', $noteId);
-        $this->db->from('tbl_reviews_notes');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+       $oData = DB::table('tbl_reviews_notes')
+        ->where('id', $noteId)->get();
+        return $oData;
+       
     }
 
     public function updateReviewNote($aData, $noteId) {
 
-        $this->db->where('id', $noteId);
-        $result = $this->db->update('tbl_reviews_notes', $aData);
-        if ($result)
-            return true;
-        else
-            return false;
+        $oData = DB::table('tbl_reviews_notes')
+        ->where('id', $noteId)->update($aData);
+        return true;
     }
 
     

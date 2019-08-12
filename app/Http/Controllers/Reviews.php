@@ -32,6 +32,53 @@ class Reviews extends Controller {
         }
     }
 
+
+    /**
+    * This function is used to get the review notes by the notes id
+    * @param type 
+    * @return type
+    */
+
+     public function getReviewNoteById() {
+
+        $response = array();
+        $response['status'] = 'error';
+        $post = array();
+        if (Input::post()) {
+            $post = Input::post();
+            $mReviews = new ReviewsModel();
+            $noteData = $mReviews->getReviewNoteByID($post['noteid']);
+            if ($noteData) {
+                $response['status'] = 'success';
+                $response['result'] = $noteData;
+            } else {
+                $response['message'] = "Error: Something went wrong, try again";
+            }
+
+            echo json_encode($response);
+            exit;
+        }
+    }
+
+    /**
+     * Used to delete review note
+     * @param type
+     */
+    public function deleteReviewNote() {
+        $response = array();
+        
+        $noteid = Input::post("noteid");
+        $result = ReviewsModel::deleteReviewNoteByID($noteid);
+        if ($result) {
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
     public function queslists($campaignId) {
 
         $oCampaign = $this->mReviews->getBrandBoostCampaign($campaignId);
