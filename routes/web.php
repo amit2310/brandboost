@@ -155,6 +155,7 @@ Route::get('admin/reviews/saveCommentLikeStatus','Admin\Reviews@saveCommentLikeS
 Route::post('admin/reviews/update_review','Admin\Reviews@updateReview');
 Route::post('admin/comments/deleteComment','Admin\Comments@deleteComment');
 Route::post('admin/reviews/deleteReviewNote','Admin\Reviews@deleteReviewNote');
+Route::post('admin/comments/update_comment_status','Admin\Comments@update_comment_status');
 
 
 
