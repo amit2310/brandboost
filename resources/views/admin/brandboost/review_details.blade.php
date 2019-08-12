@@ -849,9 +849,9 @@
     function saveCommentLikeStatus(commentID, statusType) {
         $('.overlaynew').show();
         $.ajax({
-            url: '<?php echo base_url("admin/reviews/saveCommentLikeStatus/"); ?>',
+            url: '<?php echo base_url("admin/reviews/saveCommentLikeStatus"); ?>',
             type: "POST",
-            data: {'commentId': commentID, 'status': statusType},
+            data: {'commentId': commentID, 'status': statusType,_token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 $('.overlaynew').hide();
