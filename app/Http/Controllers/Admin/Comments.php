@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CommentModel;
 use Session;
 use App\Libraries\Custom\Mobile_Detect;
+use Illuminate\Support\Facades\Input;
 
 class Comments extends Controller {
 
@@ -145,9 +146,10 @@ class Comments extends Controller {
 
     public function deleteComment() {
         $response = array();
-        $post = $this->input->post();
+        $mComment = new CommentModel();
+        $post =Input::post();
         $commentId = strip_tags($post['commentId']);
-        $result = $this->mComment->deleteComment($commentId);
+        $result = $mComment->deleteComment($commentId);
         if ($result) {
             $response['status'] = 'success';
         } else {

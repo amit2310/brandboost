@@ -3,10 +3,11 @@
 var startingLimit = 0;
 function loadSmartMoreAnswer(questionID, startinglimitVal) {
     $('.overlaynew').show();
+    var tkn = $('meta[name="_token"]').attr('content');
     $.ajax({
         url: '/admin/questions/getAnswer/',
         type: "POST",
-        data: {'questionId': questionID, 'startinglimitVal': startinglimitVal, 'source': 'smartpopup'},
+        data: {'questionId': questionID, 'startinglimitVal': startinglimitVal, 'source': 'smartpopup',_token: tkn},
         dataType: "json",
         success: function (data) {
             $('.overlaynew').hide();
@@ -171,13 +172,14 @@ $(document).ready(function () {
 
         var reviewID = $(this).prev().prev().val();
         var parentCommentId = $(this).prev().val();
+        var tkn = $('meta[name="_token"]').attr('content');
         var commentContent = $(this).parent().prev().find('.comment_content').val();
         if (commentContent != '') {
             $('.overlaynew').show();
             $.ajax({
                 url: '/admin/comments/add_comment',
                 type: "POST",
-                data: {'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent},
+                data: {'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent,_token:tkn},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

@@ -149,10 +149,12 @@ Route::post('admin/reviews/updateReviewStatus','Admin\Reviews@updateReviewStatus
 Route::post('admin/reviews/updateReviewCategory','Admin\Reviews@updateReviewCategory');
 Route::post('admin/reviews/deleteReview','Admin\Reviews@deleteReview');
 Route::post('admin/reviews/saveReviewNotes','Admin\Reviews@saveReviewNotes');
-Route::post('admin/reviews/deleteReviewNote','Admin\Reviews@deleteReviewNote');
+Route::post('reviews/deleteReviewNote','Reviews@deleteReviewNote');
 Route::post('admin/reviews/getReviewMedia','Admin\Reviews@getReviewMedia');
-Route::post('admin/reviews/saveCommentLikeStatus','Admin\Reviews@saveCommentLikeStatus');
+Route::get('admin/reviews/saveCommentLikeStatus','Admin\Reviews@saveCommentLikeStatus');
 Route::post('admin/reviews/update_review','Admin\Reviews@updateReview');
+Route::post('admin/comments/deleteComment','Admin\Comments@deleteComment');
+Route::post('admin/reviews/deleteReviewNote','Admin\Reviews@deleteReviewNote');
 
 
 
@@ -507,6 +509,9 @@ Route::post('admin/questions/saveNewQuestion','Admin\Questions@saveNewQuestion')
 Route::post('admin/brandboost/DeleteObjectFromS3','Admin\Brandboost@DeleteObjectFromS3');
 Route::post('reviews/saveNewReview','Reviews@saveNewReview');
 Route::get('reviews/addnew','Reviews@addnew');
+Route::post('reviews/getReviewNoteById','Reviews@getReviewNoteById');
+
+
 
 
 

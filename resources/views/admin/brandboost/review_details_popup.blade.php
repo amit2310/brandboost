@@ -358,7 +358,7 @@
 		$(document).on('click', '.editNote', function(){
 			var noteId = $(this).attr('noteid');
 			$.ajax({
-				url: '<?php echo base_url('admin/reviews/getReviewNoteById');?>',
+				url: '<?php echo base_url('reviews/getReviewNoteById');?>',
 				type: "POST",
 				data: { noteid:noteId },
 				dataType: "json",
@@ -400,9 +400,9 @@
 			if(conf == true){
 				var noteId = $(this).attr('noteid');
 				$.ajax({
-					url: '<?php echo base_url('admin/reviews/deleteReviewNote');?>',
+					url: '<?php echo base_url('/reviews/deleteReviewNote');?>',
 					type: "POST",
-					data: { noteid:noteId },
+					data: { noteid:noteId,_token: '{{csrf_token()}}'},
 					dataType: "json",
 					success: function (data) {
 						if(data.status == 'success'){

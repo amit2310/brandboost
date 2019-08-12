@@ -1,3 +1,4 @@
+<?php error_reporting(0); ?>
 <style>
     .enlarge {
         cursor: pointer;
@@ -85,9 +86,11 @@ $mediaArray = unserialize($reviewData->media_url);
                 <div class="p20">
 
                     <?php
-                    $subscriberID = $this->mUser->checkIfSubscriber(array('email' => $reviewData->email));
-                    if ($subscriberID > 0) {
-                        $oSubscriber = $this->mSubscriber->getGlobalSubscriberInfo($subscriberID);
+                    $subscriberID = $mUser->checkIfSubscriber(array('email' => $reviewData->email));
+                   
+                    if (!empty($subscriberID)) {
+                        $oSubscriber = $mSubscriber->getGlobalSubscriberInfo($subscriberID->id);
+
                     }
 
                     $mediaArray = unserialize($reviewData->media_url);
@@ -219,10 +222,10 @@ $mediaArray = unserialize($reviewData->media_url);
                                 if (!empty($reviewCommentsData)) {
 
                                     foreach ($reviewCommentsData as $commentData) {
-                                        $likeData = $this->mReviews->getCommentLSByCommentID($commentData->id, 1);
-                                        $disLikeData = $this->mReviews->getCommentLSByCommentID($commentData->id, 0);
+                                        $likeData = $mReviews->getCommentLSByCommentID($commentData->id, 1);
+                                        $disLikeData = $mReviews->getCommentLSByCommentID($commentData->id, 0);
 
-                                        $childComments = $this->mReviews->getReviewAllChildComments($reviewID, $commentData->id);
+                                        $childComments = $mReviews->getReviewAllChildComments($reviewID, $commentData->id);
                                         //$avtarImage = $commentData->avatar == 'avatar_image.png' ? base_url('assets/images/userp.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $commentData->avatar;
                                         ?>
                                         <li class="bbot">
@@ -278,8 +281,8 @@ $mediaArray = unserialize($reviewData->media_url);
                                                 if (!empty($childComments)) {
                                                     foreach ($childComments as $childComment) {
 
-                                                        $likeChildData = $this->mReviews->getCommentLSByCommentID($childComment->id, 1);
-                                                        $disLikeChildData = $this->mReviews->getCommentLSByCommentID($childComment->id, 0);
+                                                        $likeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 1);
+                                                        $disLikeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 0);
                                                         ?>
 
                                                         <div class="reply_sec mt30">
@@ -331,6 +334,7 @@ $mediaArray = unserialize($reviewData->media_url);
         </div>
 
         <form method="post" class="form-horizontal" id="addSmartComment" action="javascript:void();">
+            {{ csrf_field() }}
             <div class="smartStickyFooter">
                 <div class="box_heading bbot ">
                     <p class="fsize14 fw500 m0">Add Comment</p>
@@ -380,6 +384,7 @@ $mediaArray = unserialize($reviewData->media_url);
 
 
         <form method="post" class="form-horizontal" id="frmSmartSaveNote">
+            {{ csrf_field() }}
             <div class="smartStickyFooter">
                 <div class="box_heading bbot ">
                     <p class="fsize14 fw500 m0">Add Notes</p>

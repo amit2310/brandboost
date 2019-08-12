@@ -491,6 +491,7 @@
 <?php } ?>
             <!--=========Add Comment===========-->
             <form method="post" class="form-horizontal" id="addComment" action="javascript:void();">
+                {{ csrf_field() }}
                 <div class="panel panel-flat">
                     <div class="panel-heading">
                         <h6 class="panel-title">Add Comment</h6>
@@ -665,6 +666,7 @@
                 <div class="row">
 
                     <form method="post" class="form-horizontal" id="frmSaveNote" action="javascript:void();">
+                        {{ csrf_field() }}
                         <div class="col-md-12 mb-15">
                             <textarea class="form-control" name="notes" style="padding: 20px; height: 75px;" placeholder="Add Note"></textarea>
                         </div>
@@ -939,9 +941,9 @@
         $(document).on('click', '.editNote', function () {
             var noteId = $(this).attr('noteid');
             $.ajax({
-                url: '<?php echo base_url('admin/reviews/getReviewNoteById'); ?>',
+                url: '<?php echo base_url('reviews/getReviewNoteById'); ?>',
                 type: "POST",
-                data: {noteid: noteId},
+                data: {noteid: noteId,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1014,7 +1016,7 @@
                 $.ajax({
                     url: '<?php echo base_url("admin/comments/add_comment"); ?>',
                     type: "POST",
-                    data: {'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent},
+                    data: {'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent,_token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {

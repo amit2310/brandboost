@@ -85,7 +85,7 @@
         $.ajax({
             url: '/admin/brandboost/reviewdetails/' + reviewID + '?t=' + selectedTab,
             type: "POST",
-            data: {reviewid: reviewID, action: 'smart-popup'},
+            data: {reviewid: reviewID, action: 'smart-popup',_token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
 
