@@ -60,10 +60,11 @@ $(document).ready(function () {
         $('.overlaynew').show();
         var status = $(this).attr('change_status');
         var comment_id = $(this).attr('comment_id');
+        var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/comments/update_comment_status',
             type: "POST",
-            data: {status: status, comment_id: comment_id},
+            data: {status: status, comment_id: comment_id,_token:tkn},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
