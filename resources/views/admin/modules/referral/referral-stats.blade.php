@@ -222,8 +222,8 @@
 										foreach ($oRefEvents as $oEvent) {
 											//pre($oEvent);
 											
-											$aStats = $this->mReferral->getEmailReferralSendgridStats('event', $oEvent->referral_id, $oEvent->id, '');
-											$aCategorizedStats = $this->mReferral->getEmailSendgridCategorizedStatsData($aStats);
+											$aStats = \App\Models\Admin\Modules\ReferralModel::getEmailReferralSendgridStats('event', $oEvent->referral_id, $oEvent->id, '');
+											$aCategorizedStats = \App\Models\Admin\Modules\ReferralModel::getEmailSendgridCategorizedStatsData($aStats);
 											
 											$processed = $aCategorizedStats['processed']['UniqueCount'];
 											$delivered = $aCategorizedStats['delivered']['UniqueCount'];
@@ -233,6 +233,8 @@
 											$bounce = $aCategorizedStats['bounce']['UniqueCount'];
 											$dropped = $aCategorizedStats['dropped']['UniqueCount'];
 											$spamReport = $aCategorizedStats['spam_report']['UniqueCount'];
+											
+											$processed = $processed == 0 ? 1 : $processed;
 											
 											$deliveredGraph =  $delivered * 100 / $processed;
 											$openGraph =  $open * 100 / $processed;
@@ -252,7 +254,6 @@
 												</div>
 												<div class="media-left">
 												  <div><a href="#" class="text-default text-semibold"><?php  echo $oEvent->event_type == '' ? '<span style="color:#999999">No Data</span>' : setStringLimit($oEvent->campaign_name); ?></a></div>
-												  <!-- <div class="text-muted text-size-small"><?php echo setStringLimit($oCampaigns->name); ?></div> -->
 												</div>
 											</td>
 											<td>
@@ -361,14 +362,15 @@
 										<?php
 											foreach ($oRefEvents as $oEvent) {
 												
-												$aStats = $this->mReferral->getEmailTwilioStats('event', $oEvent->settings_id, $oEvent->id, '');
-												$aCategorizedStatsSms = $this->mReferral->getEmailTwilioCategorizedStatsData($aStats);
+												$aStats = \App\Models\Admin\Modules\ReferralModel::getEmailTwilioStats('event', $oEvent->settings_id, $oEvent->id, '');
+												$aCategorizedStatsSms = \App\Models\Admin\Modules\ReferralModel::getEmailTwilioCategorizedStatsData($aStats);
 												
 												$sentSms = $aCategorizedStatsSms['sent']['UniqueCount'];
 												$deliveredSms = $aCategorizedStatsSms['delivered']['UniqueCount'];
 												$acceptedSms = $aCategorizedStatsSms['accepted']['UniqueCount'];
 												$failedSms = $aCategorizedStatsSms['failed']['UniqueCount'];
 												$queuedSms = $aCategorizedStatsSms['queued']['UniqueCount'];
+												$sentSms = $sentSms < 1 ? 1 : $sentSms;
 												
 												$deliveredSmsGraph = $deliveredSms * 100 / $sentSms;
 												$acceptedSmsGraph = $acceptedSms * 100 / $sentSms;
@@ -384,7 +386,6 @@
 													</div>
 													<div class="media-left">
 													  <div><a href="#" class="text-default text-semibold"><?php  echo $oEvent->event_type == '' ? '<span style="color:#999999">No Data</span>' : setStringLimit($oEvent->event_type); ?></a></div>
-													  <!-- <div class="text-muted text-size-small"><?php echo setStringLimit($oCampaigns->name); ?></div> -->
 													</div>
 												</td>
 												<td>

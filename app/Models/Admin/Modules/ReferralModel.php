@@ -731,7 +731,6 @@ class ReferralModel extends Model {
     }
 	
 	
-	
 	public static function updateReferralSettings($aData, $id) {
 		$result = DB::table('tbl_referral_rewards')
 				   ->where('id', $id)
@@ -847,8 +846,7 @@ class ReferralModel extends Model {
 			->first();
         return $oData;
     }
-	
-	
+		
 	
 	public function updateAdvocateCouponCode($aData, $id) {
 		$result = DB::table('tbl_referral_rewards_adv_coupons')
@@ -965,19 +963,475 @@ class ReferralModel extends Model {
     }
 	
 	
+	public static function getEmailTwilioCategorizedStatsData($oData) {
+		$acceptedTotalCount = $acceptedUniqueCount = $acceptedDuplicateCount = $sentTotalCount = $sentUniqueCount = $sentDuplicateCount = $deliveredTotalCount = $deliveredUniqueCount = $deliveredDuplicateCount = $undeliveredTotalCount = $undeliveredUniqueCount = $undeliveredDuplicateCount = $failedTotalCount = $failedUniqueCount = $failedDuplicateCount = $receivingTotalCount = $receivingUniqueCount = $receivingDuplicateCount = $receivedTotalCount = $receivedUniqueCount = $receivedDuplicateCount = $queuedTotalCount = $queuedUniqueCount = $queuedDuplicateCount = $sendingTotalCount = $sendingUniqueCount = $sendingDuplicateCount = $otherTotalCount = $otherUniqueCount = $otherDuplicateCount = array();
+        if (!empty($oData)) {
+			
+            foreach ($oData as $oRow) {
+
+                if ($oRow->event_name == 'accepted') {
+                    $acceptedTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $acceptedUniqueCount) == true) {
+                        $acceptedDuplicateCount[] = $oRow;
+                    } else {
+                        $acceptedUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'sent') {
+                    $sentTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $sentUniqueCount) == true) {
+                        $sentDuplicateCount[] = $oRow;
+                    } else {
+                        $sentUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'delivered') {
+                    $deliveredTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $deliveredUniqueCount) == true) {
+                        $deliveredDuplicateCount[] = $oRow;
+                    } else {
+                        $deliveredUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'undelivered') {
+                    $undeliveredTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $undeliveredUniqueCount) == true) {
+                        $undeliveredDuplicateCount[] = $oRow;
+                    } else {
+                        $undeliveredUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'failed') {
+                    $failedTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $failedUniqueCount) == true) {
+                        $failedDuplicateCount[] = $oRow;
+                    } else {
+                        $failedUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'receiving') {
+                    $receivingTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $receivingUniqueCount) == true) {
+                        $receivingDuplicateCount[] = $oRow;
+                    } else {
+                        $receivingUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'received') {
+                    $receivedTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $receivedUniqueCount) == true) {
+                        $receivedDuplicateCount[] = $oRow;
+                    } else {
+                        $receivedUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'queued') {
+                    $queuedTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $queuedUniqueCount) == true) {
+                        $queuedDuplicateCount[] = $oRow;
+                    } else {
+                        $queuedUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'sending') {
+                    $sendingTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $sendingUniqueCount) == true) {
+                        $sendingDuplicateCount[] = $oRow;
+                    } else {
+                        $sendingUniqueCount[] = $oRow;
+                    }
+                } else {
+                    $otherTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $otherUniqueCount) == true) {
+                        $otherDuplicateCount[] = $oRow;
+                    } else {
+                        $otherUniqueCount[] = $oRow;
+                    }
+                }
+            }
+        }
+        //Okay Now print result
+        $aCatogerizedData = array(
+            'accepted' => array(
+                'TotalCount' => count($acceptedTotalCount),
+                'UniqueCount' => count($acceptedUniqueCount),
+                'DuplicateCount' => count($acceptedDuplicateCount),
+                'totalData' => $acceptedTotalCount,
+                'UniqueData' => $acceptedUniqueCount,
+                'DuplicateData' => $acceptedDuplicateCount
+            ),
+            'sent' => array(
+                'TotalCount' => count($sentTotalCount),
+                'UniqueCount' => count($sentUniqueCount),
+                'DuplicateCount' => count($sentDuplicateCount),
+                'totalData' => $sentTotalCount,
+                'UniqueData' => $sentUniqueCount,
+                'DuplicateData' => $sentDuplicateCount
+            ),
+            'delivered' => array(
+                'TotalCount' => count($deliveredTotalCount),
+                'UniqueCount' => count($deliveredUniqueCount),
+                'DuplicateCount' => count($deliveredDuplicateCount),
+                'totalData' => $deliveredTotalCount,
+                'UniqueData' => $deliveredUniqueCount,
+                'DuplicateData' => $deliveredDuplicateCount
+            ),
+            'undelivered' => array(
+                'TotalCount' => count($undeliveredTotalCount),
+                'UniqueCount' => count($undeliveredUniqueCount),
+                'DuplicateCount' => count($undeliveredDuplicateCount),
+                'totalData' => $undeliveredTotalCount,
+                'UniqueData' => $undeliveredUniqueCount,
+                'DuplicateData' => $undeliveredDuplicateCount
+            ),
+            'failed' => array(
+                'TotalCount' => count($failedTotalCount),
+                'UniqueCount' => count($failedUniqueCount),
+                'DuplicateCount' => count($failedDuplicateCount),
+                'totalData' => $failedTotalCount,
+                'UniqueData' => $failedUniqueCount,
+                'DuplicateData' => $failedDuplicateCount
+            ),
+            'receiving' => array(
+                'TotalCount' => count($receivingTotalCount),
+                'UniqueCount' => count($receivingUniqueCount),
+                'DuplicateCount' => count($receivingDuplicateCount),
+                'totalData' => $receivingTotalCount,
+                'UniqueData' => $receivingUniqueCount,
+                'DuplicateData' => $receivingDuplicateCount
+            ),
+            'received' => array(
+                'TotalCount' => count($receivedTotalCount),
+                'UniqueCount' => count($receivedUniqueCount),
+                'DuplicateCount' => count($receivedDuplicateCount),
+                'totalData' => $receivedTotalCount,
+                'UniqueData' => $receivedUniqueCount,
+                'DuplicateData' => $receivedDuplicateCount
+            ),
+            'queued' => array(
+                'TotalCount' => count($queuedTotalCount),
+                'UniqueCount' => count($queuedUniqueCount),
+                'DuplicateCount' => count($queuedDuplicateCount),
+                'totalData' => $queuedTotalCount,
+                'UniqueData' => $queuedUniqueCount,
+                'DuplicateData' => $queuedDuplicateCount
+            ),
+            'sending' => array(
+                'TotalCount' => count($sendingTotalCount),
+                'UniqueCount' => count($sendingUniqueCount),
+                'DuplicateCount' => count($sendingDuplicateCount),
+                'totalData' => $sendingTotalCount,
+                'UniqueData' => $sendingUniqueCount,
+                'DuplicateData' => $sendingDuplicateCount
+            ),
+            'other' => array(
+                'TotalCount' => count($otherTotalCount),
+                'UniqueCount' => count($otherUniqueCount),
+                'DuplicateCount' => count($otherDuplicateCount),
+                'totalData' => $otherTotalCount,
+                'UniqueData' => $otherUniqueCount,
+                'DuplicateData' => $otherDuplicateCount
+            )
+        );
+
+        return $aCatogerizedData;
+    }
 	
 	
+	public static function getEmailReferralSendgridStats($param, $referralID, $id, $eventType = '') {
+
+        $sql = "SELECT tbl_referral_automations_tracking_sendgrid.* FROM tbl_referral_automations_tracking_sendgrid "
+                . "LEFT JOIN tbl_referral_automations_events ON tbl_referral_automations_tracking_sendgrid.event_id = tbl_referral_automations_events.id "
+                . "LEFT JOIN tbl_referral_automations_campaigns ON tbl_referral_automations_tracking_sendgrid.campaign_id= tbl_referral_automations_campaigns.id "
+                . "LEFT JOIN tbl_referral_users ON tbl_referral_automations_tracking_sendgrid.subscriber_id = tbl_referral_users.id ";
+
+
+        $sql .= "WHERE tbl_referral_automations_tracking_sendgrid.referral_id='{$referralID}' ";
+
+        if ($param == 'campaign') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.campaign_id='{$id}' ";
+        } else if ($param == 'event') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_id='{$id}' ";
+        } else if ($param == 'subscriber') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.subscriber_id='{$id}' ";
+        } else {
+            $sql .= "AND 1 ";
+        }
+
+        if ($eventType == 'open') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='open' ";
+        } else if ($eventType == 'click') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='click' ";
+        } else if ($eventType == 'processed') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='processed' ";
+        } else if ($eventType == 'delivered') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='delivered' ";
+        } else if ($eventType == 'bounce') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='bounce' ";
+        } else if ($eventType == 'unsubscribe') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='unsubscribe' ";
+        } else if ($eventType == 'dropped') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='dropped' ";
+        } else if ($eventType == 'spam_report') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='spam_report' ";
+        } else if ($eventType == 'group_resubscribe') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='group_resubscribe' ";
+        } else if ($eventType == 'group_unsubscribe') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='group_unsubscribe' ";
+        } else if ($eventType == 'deferred') {
+            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='deferred' ";
+        }
+
+        $sql .= "ORDER BY tbl_referral_automations_tracking_sendgrid.id DESC";
+        
+        $oData = DB::select(DB::raw($sql));
+		return $oData;
+    }
 	
 	
+	public static function getEmailSendgridCategorizedStatsData($oData) {
+
+        if (!empty($oData)) {
+            $openCount = $clickCount = $processedCount = $deliveredCount = $bounceCount = $unsubscribeCount = $droppedCount = $spamCount = $groupResubscribeCount = $groupUnsubscribeCount = $deferredCount = array();
+            $openDuplicateCount = $clickDuplicateCount = $processedDuplicateCount = $deliveredDuplicateCount = $bounceDuplicateCount = $unsubscribeDuplicateCount = $droppedDuplicateCount = $spamDuplicateCount = $groupResubscribeDuplicateCount = $groupUnsubscribeDuplicateCount = $deferredDuplicateCount = $openTotalCount = $openUniqueCount = $clickUniqueCount = $processedUniqueCount = $deliveredUniqueCount = $bounceTotalCount = $bounceUniqueCount = $unsubscribeTotalCount = $unsubscribeUniqueCount = $droppedTotalCount = $droppedTotalCount = $droppedUniqueCount = $spamTotalCount = $spamUniqueCount = $groupResubscribeTotalCount = $groupResubscribeUniqueCount = $groupUnsubscribeTotalCount = $groupUnsubscribeUniqueCount = $deferredTotalCount = $deferredUniqueCount = $otherUniqueCount = $otherDuplicateCount = $otherTotalCount = array();
+            foreach ($oData as $oRow) {
+                if ($oRow->event_name == 'open') {
+                    $openTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $openTotalCount) == true) {
+                        $openDuplicateCount[] = $oRow;
+                    } else {
+                        $openUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'click') {
+                    $clickTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $clickTotalCount) == true) {
+                        $clickDuplicateCount[] = $oRow;
+                    } else {
+                        $clickUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'processed') {
+                    $processedTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $processedTotalCount) == true) {
+                        $processedDuplicateCount[] = $oRow;
+                    } else {
+                        $processedUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'delivered') {
+                    $deliveredTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $deliveredTotalCount) == true) {
+                        $deliveredDuplicateCount[] = $oRow;
+                    } else {
+                        $deliveredUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'bounce') {
+                    $bounceTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $bounceTotalCount) == true) {
+                        $bounceDuplicateCount[] = $oRow;
+                    } else {
+                        $bounceUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'unsubscribe') {
+                    $unsubscribeTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $unsubscribeTotalCount) == true) {
+                        $unsubscribeDuplicateCount[] = $oRow;
+                    } else {
+                        $unsubscribeUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'dropped') {
+                    $droppedTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $droppedTotalCount) == true) {
+                        $droppedDuplicateCount[] = $oRow;
+                    } else {
+                        $droppedUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'spam_report') {
+                    $spamTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $spamTotalCount) == true) {
+                        $spamDuplicateCount[] = $oRow;
+                    } else {
+                        $spamUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'group_resubscribe') {
+                    $groupResubscribeTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $groupResubscribeTotalCount) == true) {
+                        $groupResubscribeDuplicateCount[] = $oRow;
+                    } else {
+                        $groupResubscribeUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'group_unsubscribe') {
+                    $groupUnsubscribeTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $groupUnsubscribeTotalCount) == true) {
+                        $groupUnsubscribeDuplicateCount[] = $oRow;
+                    } else {
+                        $groupUnsubscribeUniqueCount[] = $oRow;
+                    }
+                } else if ($oRow->event_name == 'deferred') {
+                    $deferredTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $deferredTotalCount) == true) {
+                        $deferredDuplicateCount[] = $oRow;
+                    } else {
+                        $deferredUniqueCount[] = $oRow;
+                    }
+                } else {
+                    $otherTotalCount[] = $oRow;
+                    if (Self::checkIfDuplicateExistsInSendgridStat($oRow, $otherTotalCount) == true) {
+                        $otherDuplicateCount[] = $oRow;
+                    } else {
+                        $otherUniqueCount[] = $oRow;
+                    }
+                }
+            }
+        }
+        //Okay Now print result
+        $aCatogerizedData = array(
+            'open' => array(
+                'TotalCount' => count($openTotalCount),
+                'UniqueCount' => count($openUniqueCount),
+                'DuplicateCount' => count($openDuplicateCount),
+                'totalData' => $openTotalCount,
+                'UniqueData' => $openUniqueCount,
+                'DuplicateData' => $openDuplicateCount
+            ),
+            'click' => array(
+                'TotalCount' => count($clickTotalCount),
+                'UniqueCount' => count($clickUniqueCount),
+                'DuplicateCount' => count($clickDuplicateCount),
+                'totalData' => $clickTotalCount,
+                'UniqueData' => $clickUniqueCount,
+                'DuplicateData' => $clickDuplicateCount
+            ),
+            'processed' => array(
+                'TotalCount' => count($processedTotalCount),
+                'UniqueCount' => count($processedUniqueCount),
+                'DuplicateCount' => count($processedDuplicateCount),
+                'totalData' => $processedTotalCount,
+                'UniqueData' => $processedUniqueCount,
+                'DuplicateData' => $processedDuplicateCount
+            ),
+            'delivered' => array(
+                'TotalCount' => count($deliveredTotalCount),
+                'UniqueCount' => count($deliveredUniqueCount),
+                'DuplicateCount' => count($deliveredDuplicateCount),
+                'totalData' => $deliveredTotalCount,
+                'UniqueData' => $deliveredUniqueCount,
+                'DuplicateData' => $deliveredDuplicateCount
+            ),
+            'bounce' => array(
+                'TotalCount' => count($bounceTotalCount),
+                'UniqueCount' => count($bounceUniqueCount),
+                'DuplicateCount' => count($bounceDuplicateCount),
+                'totalData' => $bounceTotalCount,
+                'UniqueData' => $bounceUniqueCount,
+                'DuplicateData' => $bounceDuplicateCount
+            ),
+            'unsubscribe' => array(
+                'TotalCount' => count($unsubscribeTotalCount),
+                'UniqueCount' => count($unsubscribeUniqueCount),
+                'DuplicateCount' => count($unsubscribeDuplicateCount),
+                'totalData' => $unsubscribeTotalCount,
+                'UniqueData' => $unsubscribeUniqueCount,
+                'DuplicateData' => $unsubscribeDuplicateCount
+            ),
+            'dropped' => array(
+                'TotalCount' => count($droppedTotalCount),
+                'UniqueCount' => count($droppedUniqueCount),
+                'DuplicateCount' => count($droppedDuplicateCount),
+                'totalData' => $droppedTotalCount,
+                'UniqueData' => $droppedUniqueCount,
+                'DuplicateData' => $droppedDuplicateCount
+            ),
+            'spam_report' => array(
+                'TotalCount' => count($spamTotalCount),
+                'UniqueCount' => count($spamUniqueCount),
+                'DuplicateCount' => count($spamDuplicateCount),
+                'totalData' => $spamTotalCount,
+                'UniqueData' => $spamUniqueCount,
+                'DuplicateData' => $spamDuplicateCount
+            ),
+            'group_resubscribe' => array(
+                'TotalCount' => count($groupResubscribeTotalCount),
+                'UniqueCount' => count($groupResubscribeUniqueCount),
+                'DuplicateCount' => count($groupResubscribeDuplicateCount),
+                'totalData' => $groupResubscribeTotalCount,
+                'UniqueData' => $groupResubscribeUniqueCount,
+                'DuplicateData' => $groupResubscribeDuplicateCount
+            ),
+            'group_unsubscribe' => array(
+                'TotalCount' => count($groupUnsubscribeTotalCount),
+                'UniqueCount' => count($groupUnsubscribeUniqueCount),
+                'DuplicateCount' => count($groupUnsubscribeDuplicateCount),
+                'totalData' => $groupUnsubscribeTotalCount,
+                'UniqueData' => $groupUnsubscribeUniqueCount,
+                'DuplicateData' => $groupUnsubscribeDuplicateCount
+            ),
+            'deferred' => array(
+                'TotalCount' => count($deferredTotalCount),
+                'UniqueCount' => count($deferredUniqueCount),
+                'DuplicateCount' => count($deferredDuplicateCount),
+                'totalData' => $deferredTotalCount,
+                'UniqueData' => $deferredUniqueCount,
+                'DuplicateData' => $deferredDuplicateCount
+            ),
+            'other' => array(
+                'TotalCount' => count($otherTotalCount),
+                'UniqueCount' => count($otherUniqueCount),
+                'DuplicateCount' => count($otherDuplicateCount),
+                'totalData' => $otherTotalCount,
+                'UniqueData' => $otherUniqueCount,
+                'DuplicateData' => $otherDuplicateCount
+            )
+        );
+
+        return $aCatogerizedData;
+    }
 	
 	
+	public static function checkIfDuplicateExistsInSendgridStat($aSearch, $tableData) {
+        if (!empty($tableData)) {
+            foreach ($tableData as $oData) {
+                if ($oData->subscriber_id == $aSearch->subscriber_id && $oData->campaign_id == $aSearch->campaign_id) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 	
 	
-	
-	
-	
-	
-	
+	public static function getEmailTwilioStats($param, $id, $eventType = '') {
+        $sql = "SELECT tbl_referral_automations_tracking_twillio.* FROM tbl_referral_automations_tracking_twillio "
+                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_automations_tracking_twillio.referral_id = tbl_referral_rewards.id "
+                . "LEFT JOIN tbl_referral_automations_events ON tbl_referral_automations_tracking_twillio.event_id = tbl_referral_automations_events.id "
+                . "LEFT JOIN tbl_referral_automations_campaigns ON tbl_referral_automations_tracking_twillio.campaign_id= tbl_referral_automations_campaigns.id "
+                . "LEFT JOIN tbl_referral_users ON tbl_referral_automations_tracking_twillio.subscriber_id = tbl_referral_users.id ";
+
+        if ($param == 'campaign') {
+            $sql .= "WHERE tbl_referral_automations_tracking_twillio.campaign_id='{$id}' ";
+        } else if ($param == 'event') {
+            $sql .= "WHERE tbl_referral_automations_tracking_twillio.event_id='{$id}' ";
+        } else if ($param == 'subscriber') {
+            $sql .= "WHERE tbl_referral_automations_tracking_twillio.subscriber_id='{$id}' ";
+        } else {
+            $sql .= "WHERE 1 ";
+        }
+
+        if ($eventType == 'accepted') {
+            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='accepted' ";
+        } else if ($eventType == 'sent') {
+            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='sent' ";
+        } else if ($eventType == 'delivered') {
+            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='delivered' ";
+        } else if ($eventType == 'undelivered') {
+            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='undelivered' ";
+        } else if ($eventType == 'failed') {
+            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='failed' ";
+        } else if ($eventType == 'receiving') {
+            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='receiving' ";
+        } else if ($eventType == 'received') {
+            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='received' ";
+        } else if ($eventType == 'queued') {
+            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='queued' ";
+        } else if ($eventType == 'sending') {
+            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='sending' ";
+        }
+
+        $sql .= "ORDER BY tbl_referral_automations_tracking_twillio.id DESC";
+
+        $oData = DB::select(DB::raw($sql));
+		return $oData;
+    }
 	
 	
 	
@@ -1591,493 +2045,7 @@ class ReferralModel extends Model {
         //echo $this->db->last_query();
         return $response;
     }
-
-    public function getEmailSendgridCategorizedStatsData($oData) {
-
-        if (!empty($oData)) {
-            $openCount = $clickCount = $processedCount = $deliveredCount = $bounceCount = $unsubscribeCount = $droppedCount = $spamCount = $groupResubscribeCount = $groupUnsubscribeCount = $deferredCount = array();
-            $openDuplicateCount = $clickDuplicateCount = $processedDuplicateCount = $deliveredDuplicateCount = $bounceDuplicateCount = $unsubscribeDuplicateCount = $droppedDuplicateCount = $spamDuplicateCount = $groupResubscribeDuplicateCount = $groupUnsubscribeDuplicateCount = $deferredDuplicateCount = array();
-            foreach ($oData as $oRow) {
-
-                if ($oRow->event_name == 'open') {
-                    $openTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $openUniqueCount) == true) {
-                        $openDuplicateCount[] = $oRow;
-                    } else {
-                        $openUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'click') {
-                    $clickTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $clickUniqueCount) == true) {
-                        $clickDuplicateCount[] = $oRow;
-                    } else {
-                        $clickUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'processed') {
-                    $processedTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $processedUniqueCount) == true) {
-                        $processedDuplicateCount[] = $oRow;
-                    } else {
-                        $processedUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'delivered') {
-                    $deliveredTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $deliveredUniqueCount) == true) {
-                        $deliveredDuplicateCount[] = $oRow;
-                    } else {
-                        $deliveredUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'bounce') {
-                    $bounceTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $bounceUniqueCount) == true) {
-                        $bounceDuplicateCount[] = $oRow;
-                    } else {
-                        $bounceUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'unsubscribe') {
-                    $unsubscribeTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $unsubscribeUniqueCount) == true) {
-                        $unsubscribeDuplicateCount[] = $oRow;
-                    } else {
-                        $unsubscribeUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'dropped') {
-                    $droppedTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $droppedUniqueCount) == true) {
-                        $droppedDuplicateCount[] = $oRow;
-                    } else {
-                        $droppedUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'spam_report') {
-                    $spamTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $spamUniqueCount) == true) {
-                        $spamDuplicateCount[] = $oRow;
-                    } else {
-                        $spamUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'group_resubscribe') {
-                    $groupResubscribeTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $groupResubscribeUniqueCount) == true) {
-                        $groupResubscribeDuplicateCount[] = $oRow;
-                    } else {
-                        $groupResubscribeUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'group_unsubscribe') {
-                    $groupUnsubscribeTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $groupUnsubscribeUniqueCount) == true) {
-                        $groupUnsubscribeDuplicateCount[] = $oRow;
-                    } else {
-                        $groupUnsubscribeUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'deferred') {
-                    $deferredTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $deferredUniqueCount) == true) {
-                        $deferredDuplicateCount[] = $oRow;
-                    } else {
-                        $deferredUniqueCount[] = $oRow;
-                    }
-                } else {
-                    $otherTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $otherUniqueCount) == true) {
-                        $otherDuplicateCount[] = $oRow;
-                    } else {
-                        $otherUniqueCount[] = $oRow;
-                    }
-                }
-            }
-        }
-        //Okay Now print result
-        $aCatogerizedData = array(
-            'open' => array(
-                'TotalCount' => count($openTotalCount),
-                'UniqueCount' => count($openUniqueCount),
-                'DuplicateCount' => count($openDuplicateCount),
-                'totalData' => $openTotalCount,
-                'UniqueData' => $openUniqueCount,
-                'DuplicateData' => $openDuplicateCount
-            ),
-            'click' => array(
-                'TotalCount' => count($clickTotalCount),
-                'UniqueCount' => count($clickUniqueCount),
-                'DuplicateCount' => count($clickDuplicateCount),
-                'totalData' => $clickTotalCount,
-                'UniqueData' => $clickUniqueCount,
-                'DuplicateData' => $clickDuplicateCount
-            ),
-            'processed' => array(
-                'TotalCount' => count($processedTotalCount),
-                'UniqueCount' => count($processedUniqueCount),
-                'DuplicateCount' => count($processedDuplicateCount),
-                'totalData' => $processedTotalCount,
-                'UniqueData' => $processedUniqueCount,
-                'DuplicateData' => $processedDuplicateCount
-            ),
-            'delivered' => array(
-                'TotalCount' => count($deliveredTotalCount),
-                'UniqueCount' => count($deliveredUniqueCount),
-                'DuplicateCount' => count($deliveredDuplicateCount),
-                'totalData' => $deliveredTotalCount,
-                'UniqueData' => $deliveredUniqueCount,
-                'DuplicateData' => $deliveredDuplicateCount
-            ),
-            'bounce' => array(
-                'TotalCount' => count($bounceTotalCount),
-                'UniqueCount' => count($bounceUniqueCount),
-                'DuplicateCount' => count($bounceDuplicateCount),
-                'totalData' => $bounceTotalCount,
-                'UniqueData' => $bounceUniqueCount,
-                'DuplicateData' => $bounceDuplicateCount
-            ),
-            'unsubscribe' => array(
-                'TotalCount' => count($unsubscribeTotalCount),
-                'UniqueCount' => count($unsubscribeUniqueCount),
-                'DuplicateCount' => count($unsubscribeDuplicateCount),
-                'totalData' => $unsubscribeTotalCount,
-                'UniqueData' => $unsubscribeUniqueCount,
-                'DuplicateData' => $unsubscribeDuplicateCount
-            ),
-            'dropped' => array(
-                'TotalCount' => count($droppedTotalCount),
-                'UniqueCount' => count($droppedUniqueCount),
-                'DuplicateCount' => count($droppedDuplicateCount),
-                'totalData' => $droppedTotalCount,
-                'UniqueData' => $droppedUniqueCount,
-                'DuplicateData' => $droppedDuplicateCount
-            ),
-            'spam_report' => array(
-                'TotalCount' => count($spamTotalCount),
-                'UniqueCount' => count($spamUniqueCount),
-                'DuplicateCount' => count($spamDuplicateCount),
-                'totalData' => $spamTotalCount,
-                'UniqueData' => $spamUniqueCount,
-                'DuplicateData' => $spamDuplicateCount
-            ),
-            'group_resubscribe' => array(
-                'TotalCount' => count($groupResubscribeTotalCount),
-                'UniqueCount' => count($groupResubscribeUniqueCount),
-                'DuplicateCount' => count($groupResubscribeDuplicateCount),
-                'totalData' => $groupResubscribeTotalCount,
-                'UniqueData' => $groupResubscribeUniqueCount,
-                'DuplicateData' => $groupResubscribeDuplicateCount
-            ),
-            'group_unsubscribe' => array(
-                'TotalCount' => count($groupUnsubscribeTotalCount),
-                'UniqueCount' => count($groupUnsubscribeUniqueCount),
-                'DuplicateCount' => count($groupUnsubscribeDuplicateCount),
-                'totalData' => $groupUnsubscribeTotalCount,
-                'UniqueData' => $groupUnsubscribeUniqueCount,
-                'DuplicateData' => $groupUnsubscribeDuplicateCount
-            ),
-            'deferred' => array(
-                'TotalCount' => count($deferredTotalCount),
-                'UniqueCount' => count($deferredUniqueCount),
-                'DuplicateCount' => count($deferredDuplicateCount),
-                'totalData' => $deferredTotalCount,
-                'UniqueData' => $deferredUniqueCount,
-                'DuplicateData' => $deferredDuplicateCount
-            ),
-            'other' => array(
-                'TotalCount' => count($otherTotalCount),
-                'UniqueCount' => count($otherUniqueCount),
-                'DuplicateCount' => count($otherDuplicateCount),
-                'totalData' => $otherTotalCount,
-                'UniqueData' => $otherUniqueCount,
-                'DuplicateData' => $otherDuplicateCount
-            )
-        );
-
-        return $aCatogerizedData;
-    }
-
-    public function checkIfDuplicateExistsInSendgridStat($aSearch, $tableData) {
-        if (!empty($tableData)) {
-            foreach ($tableData as $oData) {
-                if ($oData->subscriber_id == $aSearch->subscriber_id && $oData->campaign_id == $aSearch->campaign_id) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
-    public function getEmailTwilioStats($param, $id, $eventType = '') {
-        $sql = "SELECT tbl_referral_automations_tracking_twillio.* FROM tbl_referral_automations_tracking_twillio "
-                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_automations_tracking_twillio.referral_id = tbl_referral_rewards.id "
-                . "LEFT JOIN tbl_referral_automations_events ON tbl_referral_automations_tracking_twillio.event_id = tbl_referral_automations_events.id "
-                . "LEFT JOIN tbl_referral_automations_campaigns ON tbl_referral_automations_tracking_twillio.campaign_id= tbl_referral_automations_campaigns.id "
-                . "LEFT JOIN tbl_referral_users ON tbl_referral_automations_tracking_twillio.subscriber_id = tbl_referral_users.id ";
-
-        //$sql .= "WHERE tbl_referral_automations_tracking_twillio.settings_id='{$settingId}' ";
-
-        if ($param == 'campaign') {
-            $sql .= "WHERE tbl_referral_automations_tracking_twillio.campaign_id='{$id}' ";
-        } else if ($param == 'event') {
-            $sql .= "WHERE tbl_referral_automations_tracking_twillio.event_id='{$id}' ";
-        } else if ($param == 'subscriber') {
-            $sql .= "WHERE tbl_referral_automations_tracking_twillio.subscriber_id='{$id}' ";
-        } else {
-            $sql .= "WHERE 1 ";
-        }
-
-        if ($eventType == 'accepted') {
-            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='accepted' ";
-        } else if ($eventType == 'sent') {
-            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='sent' ";
-        } else if ($eventType == 'delivered') {
-            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='delivered' ";
-        } else if ($eventType == 'undelivered') {
-            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='undelivered' ";
-        } else if ($eventType == 'failed') {
-            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='failed' ";
-        } else if ($eventType == 'receiving') {
-            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='receiving' ";
-        } else if ($eventType == 'received') {
-            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='received' ";
-        } else if ($eventType == 'queued') {
-            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='queued' ";
-        } else if ($eventType == 'sending') {
-            $sql .= "AND tbl_referral_automations_tracking_twillio.event_name='sending' ";
-        }
-
-        $sql .= "ORDER BY tbl_referral_automations_tracking_twillio.id DESC";
-
-        $result = $this->db->query($sql);
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        //echo $this->db->last_query();
-        return $response;
-    }
-
-    public function getEmailTwilioCategorizedStatsData($oData) {
-        if (!empty($oData)) {
-
-            foreach ($oData as $oRow) {
-
-                if ($oRow->event_name == 'accepted') {
-                    $acceptedTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $acceptedUniqueCount) == true) {
-                        $acceptedDuplicateCount[] = $oRow;
-                    } else {
-                        $acceptedUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'sent') {
-                    $sentTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $sentUniqueCount) == true) {
-                        $sentDuplicateCount[] = $oRow;
-                    } else {
-                        $sentUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'delivered') {
-                    $deliveredTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $deliveredUniqueCount) == true) {
-                        $deliveredDuplicateCount[] = $oRow;
-                    } else {
-                        $deliveredUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'undelivered') {
-                    $undeliveredTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $undeliveredUniqueCount) == true) {
-                        $undeliveredDuplicateCount[] = $oRow;
-                    } else {
-                        $undeliveredUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'failed') {
-                    $failedTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $failedUniqueCount) == true) {
-                        $failedDuplicateCount[] = $oRow;
-                    } else {
-                        $failedUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'receiving') {
-                    $receivingTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $receivingUniqueCount) == true) {
-                        $receivingDuplicateCount[] = $oRow;
-                    } else {
-                        $receivingUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'received') {
-                    $receivedTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $receivedUniqueCount) == true) {
-                        $receivedDuplicateCount[] = $oRow;
-                    } else {
-                        $receivedUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'queued') {
-                    $queuedTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $queuedUniqueCount) == true) {
-                        $queuedDuplicateCount[] = $oRow;
-                    } else {
-                        $queuedUniqueCount[] = $oRow;
-                    }
-                } else if ($oRow->event_name == 'sending') {
-                    $sendingTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $sendingUniqueCount) == true) {
-                        $sendingDuplicateCount[] = $oRow;
-                    } else {
-                        $sendingUniqueCount[] = $oRow;
-                    }
-                } else {
-                    $otherTotalCount[] = $oRow;
-                    if ($this->checkIfDuplicateExistsInSendgridStat($oRow, $otherUniqueCount) == true) {
-                        $otherDuplicateCount[] = $oRow;
-                    } else {
-                        $otherUniqueCount[] = $oRow;
-                    }
-                }
-            }
-        }
-        //Okay Now print result
-        $aCatogerizedData = array(
-            'accepted' => array(
-                'TotalCount' => count($acceptedTotalCount),
-                'UniqueCount' => count($acceptedUniqueCount),
-                'DuplicateCount' => count($acceptedDuplicateCount),
-                'totalData' => $acceptedTotalCount,
-                'UniqueData' => $acceptedUniqueCount,
-                'DuplicateData' => $acceptedDuplicateCount
-            ),
-            'sent' => array(
-                'TotalCount' => count($sentTotalCount),
-                'UniqueCount' => count($sentUniqueCount),
-                'DuplicateCount' => count($sentDuplicateCount),
-                'totalData' => $sentTotalCount,
-                'UniqueData' => $sentUniqueCount,
-                'DuplicateData' => $sentDuplicateCount
-            ),
-            'delivered' => array(
-                'TotalCount' => count($deliveredTotalCount),
-                'UniqueCount' => count($deliveredUniqueCount),
-                'DuplicateCount' => count($deliveredDuplicateCount),
-                'totalData' => $deliveredTotalCount,
-                'UniqueData' => $deliveredUniqueCount,
-                'DuplicateData' => $deliveredDuplicateCount
-            ),
-            'undelivered' => array(
-                'TotalCount' => count($undeliveredTotalCount),
-                'UniqueCount' => count($undeliveredUniqueCount),
-                'DuplicateCount' => count($undeliveredDuplicateCount),
-                'totalData' => $undeliveredTotalCount,
-                'UniqueData' => $undeliveredUniqueCount,
-                'DuplicateData' => $undeliveredDuplicateCount
-            ),
-            'failed' => array(
-                'TotalCount' => count($failedTotalCount),
-                'UniqueCount' => count($failedUniqueCount),
-                'DuplicateCount' => count($failedDuplicateCount),
-                'totalData' => $failedTotalCount,
-                'UniqueData' => $failedUniqueCount,
-                'DuplicateData' => $failedDuplicateCount
-            ),
-            'receiving' => array(
-                'TotalCount' => count($receivingTotalCount),
-                'UniqueCount' => count($receivingUniqueCount),
-                'DuplicateCount' => count($receivingDuplicateCount),
-                'totalData' => $receivingTotalCount,
-                'UniqueData' => $receivingUniqueCount,
-                'DuplicateData' => $receivingDuplicateCount
-            ),
-            'received' => array(
-                'TotalCount' => count($receivedTotalCount),
-                'UniqueCount' => count($receivedUniqueCount),
-                'DuplicateCount' => count($receivedDuplicateCount),
-                'totalData' => $receivedTotalCount,
-                'UniqueData' => $receivedUniqueCount,
-                'DuplicateData' => $receivedDuplicateCount
-            ),
-            'queued' => array(
-                'TotalCount' => count($queuedTotalCount),
-                'UniqueCount' => count($queuedUniqueCount),
-                'DuplicateCount' => count($queuedDuplicateCount),
-                'totalData' => $queuedTotalCount,
-                'UniqueData' => $queuedUniqueCount,
-                'DuplicateData' => $queuedDuplicateCount
-            ),
-            'sending' => array(
-                'TotalCount' => count($sendingTotalCount),
-                'UniqueCount' => count($sendingUniqueCount),
-                'DuplicateCount' => count($sendingDuplicateCount),
-                'totalData' => $sendingTotalCount,
-                'UniqueData' => $sendingUniqueCount,
-                'DuplicateData' => $sendingDuplicateCount
-            ),
-            'other' => array(
-                'TotalCount' => count($otherTotalCount),
-                'UniqueCount' => count($otherUniqueCount),
-                'DuplicateCount' => count($otherDuplicateCount),
-                'totalData' => $otherTotalCount,
-                'UniqueData' => $otherUniqueCount,
-                'DuplicateData' => $otherDuplicateCount
-            )
-        );
-
-        return $aCatogerizedData;
-    }
-
     
-
-    
-
-    
-
-    
-
-    
-
-    public function getEmailReferralSendgridStats($param, $referralID, $id, $eventType = '') {
-
-        $sql = "SELECT tbl_referral_automations_tracking_sendgrid.* FROM tbl_referral_automations_tracking_sendgrid "
-                . "LEFT JOIN tbl_referral_automations_events ON tbl_referral_automations_tracking_sendgrid.event_id = tbl_referral_automations_events.id "
-                . "LEFT JOIN tbl_referral_automations_campaigns ON tbl_referral_automations_tracking_sendgrid.campaign_id= tbl_referral_automations_campaigns.id "
-                . "LEFT JOIN tbl_referral_users ON tbl_referral_automations_tracking_sendgrid.subscriber_id = tbl_referral_users.id ";
-
-
-        $sql .= "WHERE tbl_referral_automations_tracking_sendgrid.referral_id='{$referralID}' ";
-
-        if ($param == 'campaign') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.campaign_id='{$id}' ";
-        } else if ($param == 'event') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_id='{$id}' ";
-        } else if ($param == 'subscriber') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.subscriber_id='{$id}' ";
-        } else {
-            $sql .= "AND 1 ";
-        }
-
-        if ($eventType == 'open') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='open' ";
-        } else if ($eventType == 'click') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='click' ";
-        } else if ($eventType == 'processed') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='processed' ";
-        } else if ($eventType == 'delivered') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='delivered' ";
-        } else if ($eventType == 'bounce') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='bounce' ";
-        } else if ($eventType == 'unsubscribe') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='unsubscribe' ";
-        } else if ($eventType == 'dropped') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='dropped' ";
-        } else if ($eventType == 'spam_report') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='spam_report' ";
-        } else if ($eventType == 'group_resubscribe') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='group_resubscribe' ";
-        } else if ($eventType == 'group_unsubscribe') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='group_unsubscribe' ";
-        } else if ($eventType == 'deferred') {
-            $sql .= "AND tbl_referral_automations_tracking_sendgrid.event_name='deferred' ";
-        }
-
-        $sql .= "ORDER BY tbl_referral_automations_tracking_sendgrid.id DESC";
-        //echo $sql;
-        //die;
-        $result = $this->db->query($sql);
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-
-        return $response;
-    }
 
     public function getReferralNotes($id) {
         if (!empty($id)) {
