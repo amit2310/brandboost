@@ -11,16 +11,24 @@ use Session;
 class Notification extends Controller {
 
   
-    public function index() {
+    /**
+    * This is a index function
+    * @param type 
+    * @return type
+    */
+    public function Index() {
+
         $allNotifications = array();
         $aUser = getLoggedUser();
+        $Notifications = new NotificationModel();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
+
         if ($userID != '') {
-            $allNotifications = $this->Notifications->getNotifications($userID);
-            $allNotificationsToday = $this->Notifications->getNotificationsToday($userID);
-            $allNotificationsYesterday = $this->Notifications->getNotificationsYesterday($userID);
-            $allNotificationsLastweek = $this->Notifications->getNotificationsLastweek($userID);
+            $allNotifications = NotificationModel::getNotifications($userID);
+            $allNotificationsToday = $Notifications->getNotificationsToday($userID);
+            $allNotificationsYesterday = $Notifications->getNotificationsYesterday($userID);
+            $allNotificationsLastweek = $Notifications->getNotificationsLastweek($userID);
             
             
             $aSysNotifyTags = get_notification_tags();
@@ -45,7 +53,7 @@ class Notification extends Controller {
             'aSysNotifyTags' => $aSysNotifyTags
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/notifications', $aData);
+        return view('admin.notification', $aData);
     }
 
 

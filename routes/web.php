@@ -264,6 +264,7 @@ Route::post('admin/invoices/get','Admin\Invoice@get');
 
 // Notification
 Route::post('admin/notifications/getNotificationSmartPopup','Admin\Notification@getNotificationSmartPopup');
+Route::get('admin/notifications','Admin\Notification@Index');
 
 // Company
 Route::post('company/saveHelpful','Company@saveHelpful');
