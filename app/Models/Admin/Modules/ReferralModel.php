@@ -357,7 +357,7 @@ class ReferralModel extends Model {
 	
 	public static function referredSales($accountID) {
 		$aData =  DB::table('tbl_referral_sales')
-			->select('tbl_referral_sales.*', 'tbl_subscribers.firstname AS aff_firstname', 'tbl_subscribers.lastname AS aff_lastname', 'tbl_subscribers.email AS aff_email', 'tbl_subscribers.phone AS aff_phone')
+			->select('tbl_referral_sales.*', 'tbl_subscribers.firstname AS aff_firstname', 'tbl_subscribers.lastname AS aff_lastname', 'tbl_subscribers.email AS aff_email', 'tbl_subscribers.phone AS aff_phone', 'tbl_subscribers.country_code')
 			->leftjoin('tbl_subscribers', 'tbl_referral_sales.affiliateid','=','tbl_subscribers.id')
 			->where('tbl_referral_sales.account_id', $accountID)
 			->where('tbl_referral_sales.affiliateid', '!=', NULL)
@@ -955,7 +955,14 @@ class ReferralModel extends Model {
     }
 	
 	
-	
+	public static function getTagsBySaleID($id) {
+		$oData = DB::table('tbl_referral_tags')
+			->select('tbl_tag_groups_entity.*', 'tbl_referral_tags.tag_id', 'tbl_referral_tags.referral_response_id')
+			->leftJoin('tbl_tag_groups_entity', 'tbl_tag_groups_entity.id', '=' , 'tbl_referral_tags.tag_id')
+			->where('tbl_referral_tags.referral_response_id', $id)
+			->get();
+        return $oData;
+    }
 	
 	
 	
@@ -1019,10 +1026,7 @@ class ReferralModel extends Model {
         }
     }
 
-    
-
-    
-
+   
     public function checkIfExistingAdvocate($subscriberID, $accountID) {
         $this->db->select("tbl_referral_users.*, tbl_referral_reflinks.refkey");
         $this->db->join("tbl_referral_reflinks", "tbl_referral_reflinks.subscriber_id=tbl_referral_users.subscriber_id", "LEFT");
@@ -1123,9 +1127,6 @@ class ReferralModel extends Model {
         }
     }
 
-    
-
-    
 
     public function saveReferralEvents($eData, $referralID) {
         if ($referralID != '') {
@@ -1329,14 +1330,6 @@ class ReferralModel extends Model {
     }
     
 
-    
-
-    
-
-    
-
-    
-
     public function addReferralCoupon($aData) {
         $result = $this->db->insert("tbl_referral_rewards_ref_coupons_codes", $aData);
         $inset_id = $this->db->insert_id();
@@ -1347,11 +1340,6 @@ class ReferralModel extends Model {
         }
     }
 
-    
-
-    
-
-    
 
     public function addReferredUser($aData) {
 
@@ -2107,19 +2095,7 @@ class ReferralModel extends Model {
         }
     }
 
-    public function getTagsBySaleID($id) {
-
-        $this->db->select("tbl_tag_groups_entity.*, tbl_referral_tags.tag_id, tbl_referral_tags.referral_response_id");
-        $this->db->join("tbl_tag_groups_entity", "tbl_tag_groups_entity.id=tbl_referral_tags.tag_id", "LEFT");
-        $this->db->where("tbl_referral_tags.referral_response_id", $id);
-        $result = $this->db->get("tbl_referral_tags");
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
-    }
+    
 
     public function getResponseDetails($id) {
         $this->db->select("tbl_referral_sales.*, tbl_referral_sales.id AS saleID, tbl_referral_rewards.*, "
