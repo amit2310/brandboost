@@ -1145,7 +1145,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/reviews/getReviewById'); ?>',
                 type: "POST",
-                data: {reviewid: reviewID},
+                data: {reviewid: reviewID,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 					
@@ -1177,7 +1177,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/reviews/getReviewById'); ?>',
                 type: "POST",
-                data: {reviewid: reviewID},
+                data: {reviewid: reviewID,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 					
