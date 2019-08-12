@@ -357,7 +357,7 @@ class ReferralModel extends Model {
 	
 	public static function referredSales($accountID) {
 		$aData =  DB::table('tbl_referral_sales')
-			->select('tbl_referral_sales.*', 'tbl_subscribers.firstname AS aff_firstname', 'tbl_subscribers.lastname AS aff_lastname', 'tbl_subscribers.email AS aff_email', 'tbl_subscribers.phone AS aff_phone')
+			->select('tbl_referral_sales.*', 'tbl_subscribers.firstname AS aff_firstname', 'tbl_subscribers.lastname AS aff_lastname', 'tbl_subscribers.email AS aff_email', 'tbl_subscribers.phone AS aff_phone', 'tbl_subscribers.country_code')
 			->leftjoin('tbl_subscribers', 'tbl_referral_sales.affiliateid','=','tbl_subscribers.id')
 			->where('tbl_referral_sales.account_id', $accountID)
 			->where('tbl_referral_sales.affiliateid', '!=', NULL)
@@ -603,11 +603,11 @@ class ReferralModel extends Model {
     }
 	
 
-    public function saveRefCouponDiscount($aData) {
+    public static function saveRefCouponDiscount($aData) {
         $rewardID = $aData['reward_id'];
         if ($rewardID > 0) {
-            $oRec = $this->checkIfRefCouponExists($rewardID);
-            if ($oRec->id > 0) {
+            $oRec = Self::checkIfRefCouponExists($rewardID);
+            if (!empty($oRec)) {
                 //Update
 				$result = DB::table('tbl_referral_rewards_ref_coupons')
 				   ->where('reward_id', $rewardID)
@@ -619,7 +619,7 @@ class ReferralModel extends Model {
 				$insert_id = DB::table('tbl_referral_rewards_ref_coupons')->insertGetId($aData);
                 $primaryID = $insert_id;
             }
-            if ($result) {
+            if ($primaryID) {
                 return $primaryID;
             }
         }
@@ -627,7 +627,7 @@ class ReferralModel extends Model {
     }
 	
 
-    public function checkIfRefCouponExists($rewardID) {
+    public static function checkIfRefCouponExists($rewardID) {
 		$oData = DB::table('tbl_referral_rewards_ref_coupons')
 			->where('reward_id', $rewardID)
 			->first();
@@ -635,11 +635,12 @@ class ReferralModel extends Model {
     }
 	
 
-    public function saveCashReward($aData) {
+    public static function saveCashReward($aData) {
         $rewardID = $aData['reward_id'];
         if ($rewardID > 0) {
-            $oRec = $this->checkIfCashRewardExists($rewardID);
-            if ($oRec->id > 0) {
+            $oRec = Self::checkIfCashRewardExists($rewardID);
+			
+            if (!empty($oRec)) {
                 //Update
 				$result = DB::table('tbl_referral_rewards_cash')
 				   ->where('reward_id', $rewardID)
@@ -651,7 +652,7 @@ class ReferralModel extends Model {
 				$insert_id = DB::table('tbl_referral_rewards_cash')->insertGetId($aData);
                 $primaryID = $insert_id;
             }
-            if ($result) {
+            if ($primaryID) {
                 return $primaryID;
             }
         }
@@ -659,18 +660,18 @@ class ReferralModel extends Model {
     }
 	
 
-    public function checkIfCashRewardExists($rewardID) {
+    public static function checkIfCashRewardExists($rewardID) {
 		$oData = DB::table('tbl_referral_rewards_cash')
 			->where('reward_id', $rewardID)
 			->first();
         return $oData;
     }
 
-    public function saveCustomReward($aData) {
+    public static function saveCustomReward($aData) {
         $rewardID = $aData['reward_id'];
         if ($rewardID > 0) {
-            $oRec = $this->checkIfCustomRewardExists($rewardID);
-            if ($oRec->id > 0) {
+            $oRec = Self::checkIfCustomRewardExists($rewardID);
+            if (!empty($oRec)) {
                 //Update
 				$result = DB::table('tbl_referral_rewards_custom')
 				   ->where('reward_id', $rewardID)
@@ -682,7 +683,7 @@ class ReferralModel extends Model {
 				$insert_id = DB::table('tbl_referral_rewards_custom')->insertGetId($aData);
                 $primaryID = $insert_id;
             }
-            if ($result) {
+            if ($primaryID) {
                 return $primaryID;
             }
         }
@@ -690,7 +691,7 @@ class ReferralModel extends Model {
     }
 	
 
-    public function checkIfCustomRewardExists($rewardID) {
+    public static function checkIfCustomRewardExists($rewardID) {
 		$oData = DB::table('tbl_referral_rewards_custom')
 			->where('reward_id', $rewardID)
 			->first();
@@ -698,11 +699,11 @@ class ReferralModel extends Model {
     }
 	
 
-    public function savePromoLink($aData) {
+    public static function savePromoLink($aData) {
         $rewardID = $aData['reward_id'];
         if ($rewardID > 0) {
-            $oRec = $this->checkIfPromoLinkExists($rewardID);
-            if ($oRec->id > 0) {
+            $oRec = Self::checkIfPromoLinkExists($rewardID);
+            if (!empty($oRec)) {
                 //Update
 				$result = DB::table('tbl_referral_rewards_promo_links')
 				   ->where('reward_id', $rewardID)
@@ -714,7 +715,7 @@ class ReferralModel extends Model {
 				$insert_id = DB::table('tbl_referral_rewards_promo_links')->insertGetId($aData);
                 $primaryID = $insert_id;
             }
-            if ($result) {
+            if ($primaryID) {
                 return $primaryID;
             }
         }
@@ -722,7 +723,7 @@ class ReferralModel extends Model {
     }
 	
 
-    public function checkIfPromoLinkExists($rewardID) {
+    public static function checkIfPromoLinkExists($rewardID) {
 		$oData = DB::table('tbl_referral_rewards_promo_links')
 			->where('reward_id', $rewardID)
 			->first();
@@ -860,6 +861,114 @@ class ReferralModel extends Model {
     }
 	
 	
+	public static function addReferredCoupon($aData) {
+        $couponID = $aData['coupon_id'];
+        $usageType = $aData['usage_type'];
+        $sCoupons = $aData['coupon_code'];
+		$aExistingCoupons = array();
+        if ($usageType == 'single') {
+            $aCoupons = explode(",", $sCoupons);
+            $oCoupons = Self::getReferredCoupons($couponID, $usageType);
+            if ($oCoupons->count() > 0) {
+                $aExistingCouponsId = $oCoupons[0]->id;
+                foreach ($oCoupons as $oCoupon) {
+                    $aExistingCoupons[] = $oCoupon->coupon_code;
+                    if (!in_array($oCoupon->coupon_code, $aCoupons)) {
+                        Self::deleteReferredCoupon($oCoupon->id);
+                    }
+                }
+            }
+
+            //Insert record
+            foreach ($aCoupons as $strCoupon) {
+                if (!in_array($strCoupon, $aExistingCoupons)) {
+                    $aData['coupon_code'] = $strCoupon;
+					$insert_id = DB::table('tbl_referral_rewards_ref_coupons_codes')->insertGetId($aData);
+                } else {
+
+                    if ($aExistingCouponsId > 0) {
+                        $result = $aExistingCouponsId;
+                        $insert_id = $aExistingCouponsId;
+                    }
+                }
+            }
+        } else if ($usageType == 'multiple') {
+            $oExsits = Self::existsReferredCoupon($sCoupons, $couponID);
+            if (!empty($oExsits)) {
+                unset($aData['created']);
+                $aData['updated'] = date("Y-m-d H:i:s");
+				$result = DB::table('tbl_referral_rewards_ref_coupons_codes')
+				   ->where('id', $oExsits->id)
+				   ->update($aData);
+                $insert_id = $oExsits->id;
+            } else {
+				$insert_id = DB::table('tbl_referral_rewards_ref_coupons_codes')->insertGetId($aData);
+            }
+        }
+
+        if ($insert_id) {
+            return $insert_id;
+        } else {
+            return false;
+        }
+    }
+	
+	
+	public static function existsReferredCoupon($couponCode, $couponID) {
+		$oData = DB::table('tbl_referral_rewards_ref_coupons_codes')
+			->where('coupon_id', $couponID)
+			->where('coupon_code', $couponCode)
+			->first();
+        return $oData;
+    }
+	
+
+    public function deleteReferredCoupon($id) {
+		$result = DB::table('tbl_referral_rewards_ref_coupons_codes')
+               ->where('id', $id)
+               ->delete();
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	
+	
+	public static function getReferredCoupons($couponID, $usageType) {
+		$oData = DB::table('tbl_referral_rewards_ref_coupons_codes')
+			->where('coupon_id', $couponID)
+			->where('usage_type', $usageType)
+			->get();
+        return $oData;
+    }
+	
+	
+	public static function updateReferredCouponCode($aData, $id) {
+		$result = DB::table('tbl_referral_rewards_ref_coupons')
+				   ->where('id', $id)
+				   ->update($aData);
+        if ($result > -1) {
+            return true;
+        }
+        return false;
+    }
+	
+	
+	public static function getTagsBySaleID($id) {
+		$oData = DB::table('tbl_referral_tags')
+			->select('tbl_tag_groups_entity.*', 'tbl_referral_tags.tag_id', 'tbl_referral_tags.referral_response_id')
+			->leftJoin('tbl_tag_groups_entity', 'tbl_tag_groups_entity.id', '=' , 'tbl_referral_tags.tag_id')
+			->where('tbl_referral_tags.referral_response_id', $id)
+			->get();
+        return $oData;
+    }
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -917,10 +1026,7 @@ class ReferralModel extends Model {
         }
     }
 
-    
-
-    
-
+   
     public function checkIfExistingAdvocate($subscriberID, $accountID) {
         $this->db->select("tbl_referral_users.*, tbl_referral_reflinks.refkey");
         $this->db->join("tbl_referral_reflinks", "tbl_referral_reflinks.subscriber_id=tbl_referral_users.subscriber_id", "LEFT");
@@ -1021,9 +1127,6 @@ class ReferralModel extends Model {
         }
     }
 
-    
-
-    
 
     public function saveReferralEvents($eData, $referralID) {
         if ($referralID != '') {
@@ -1227,100 +1330,6 @@ class ReferralModel extends Model {
     }
     
 
-    public function addReferredCoupon($aData) {
-        $couponID = $aData['coupon_id'];
-        $usageType = $aData['usage_type'];
-        $sCoupons = $aData['coupon_code'];
-        if ($usageType == 'single') {
-
-            $aCoupons = explode(",", $sCoupons);
-            $oCoupons = $this->getReferredCoupons($couponID, $usageType);
-            if (!empty($oCoupons)) {
-                $aExistingCouponsId = $oCoupons[0]->id;
-                foreach ($oCoupons as $oCoupon) {
-                    $aExistingCoupons[] = $oCoupon->coupon_code;
-                    if (!in_array($oCoupon->coupon_code, $aCoupons)) {
-                        $this->deleteReferredCoupon($oCoupon->id);
-                    }
-                }
-            }
-
-            //Insert record
-            foreach ($aCoupons as $strCoupon) {
-                if (!in_array($strCoupon, $aExistingCoupons)) {
-                    $aData['coupon_code'] = $strCoupon;
-                    $result = $this->db->insert("tbl_referral_rewards_ref_coupons_codes", $aData);
-                    $inset_id = $this->db->insert_id();
-                } else {
-
-                    if ($aExistingCouponsId > 0) {
-                        $result = $aExistingCouponsId;
-                        $inset_id = $aExistingCouponsId;
-                    }
-                }
-            }
-        } else if ($usageType == 'multiple') {
-            $oExsits = $this->existsReferredCoupon($sCoupons, $couponID);
-            if ($oExsits->id > 0) {
-                unset($aData['created']);
-                $aData['updated'] = date("Y-m-d H:i:s");
-                $this->db->where("id", $oExsits->id);
-                $this->db->update("tbl_referral_rewards_ref_coupons_codes", $aData);
-                $result = $oExsits->id;
-                $inset_id = $oExsits->id;
-            } else {
-                $result = $this->db->insert("tbl_referral_rewards_ref_coupons_codes", $aData);
-                $inset_id = $this->db->insert_id();
-            }
-        }
-
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function existsReferredCoupon($couponCode, $couponID) {
-        $this->db->where("coupon_id", $couponID);
-        $this->db->where("coupon_code", $couponCode);
-        $this->db->limit(1);
-        $result = $this->db->get("tbl_referral_rewards_ref_coupons_codes");
-        if ($result->num_rows() > 0) {
-            return $result->row();
-        }
-        return false;
-    }
-
-    public function deleteReferredCoupon($id) {
-        $this->db->where('id', $id);
-        $result = $this->db->delete("tbl_referral_rewards_ref_coupons_codes");
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function updateReferredCouponCode($aData, $id) {
-        $this->db->where("id", $id);
-        $result = $this->db->update("tbl_referral_rewards_ref_coupons", $aData);
-        if ($result) {
-            return true;
-        }
-        return false;
-    }
-
-    public function getReferredCoupons($couponID, $usageType) {
-        $this->db->where("coupon_id", $couponID);
-        $this->db->where("usage_type", $usageType);
-        $result = $this->db->get("tbl_referral_rewards_ref_coupons_codes");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
     public function addReferralCoupon($aData) {
         $result = $this->db->insert("tbl_referral_rewards_ref_coupons_codes", $aData);
         $inset_id = $this->db->insert_id();
@@ -1331,11 +1340,6 @@ class ReferralModel extends Model {
         }
     }
 
-    
-
-    
-
-    
 
     public function addReferredUser($aData) {
 
@@ -2091,19 +2095,7 @@ class ReferralModel extends Model {
         }
     }
 
-    public function getTagsBySaleID($id) {
-
-        $this->db->select("tbl_tag_groups_entity.*, tbl_referral_tags.tag_id, tbl_referral_tags.referral_response_id");
-        $this->db->join("tbl_tag_groups_entity", "tbl_tag_groups_entity.id=tbl_referral_tags.tag_id", "LEFT");
-        $this->db->where("tbl_referral_tags.referral_response_id", $id);
-        $result = $this->db->get("tbl_referral_tags");
-        //echo $this->db->last_query();exit;
-        if ($result->num_rows() > 0) {
-            $aData = $result->result();
-        }
-
-        return $aData;
-    }
+    
 
     public function getResponseDetails($id) {
         $this->db->select("tbl_referral_sales.*, tbl_referral_sales.id AS saleID, tbl_referral_rewards.*, "

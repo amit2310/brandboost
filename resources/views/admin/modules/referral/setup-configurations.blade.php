@@ -71,19 +71,19 @@
                                 <div class="form-group">
                                     <label>Store Name <?php echo $defalutTab; ?></label>
                                     <div class="">
-                                        <input type="text" class="form-control autoSave" name="storeName" value="<?php echo ($oAccountSettings->store_name) ? ($oAccountSettings->store_name) : ''; ?>" placeholder="Your store name">
+                                        <input type="text" class="form-control autoSave" name="storeName" value="<?php if(!empty($oAccountSettings)){ echo $oAccountSettings->store_name != '' ? $oAccountSettings->store_name : ''; } ?>" placeholder="Your store name">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Store URL</label>
                                     <div class="">
-                                        <input type="text" class="form-control autoSave" name="storeURL" value="<?php echo ($oAccountSettings->store_url) ? ($oAccountSettings->store_url) : ''; ?>" placeholder="Your store url e.g. http://mystorename.com">
+                                        <input type="text" class="form-control autoSave" name="storeURL" value="<?php if(!empty($oAccountSettings)){ echo ($oAccountSettings->store_url) ? ($oAccountSettings->store_url) : ''; } ?>" placeholder="Your store url e.g. http://mystorename.com">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Email Address</label>
                                     <div class="">
-                                        <input type="text" class="form-control autoSave" name="storeEmail" value="<?php echo ($oAccountSettings->store_email) ? ($oAccountSettings->store_email) : ''; ?>" placeholder="Your store email address">
+                                        <input type="text" class="form-control autoSave" name="storeEmail" value="<?php if(!empty($oAccountSettings)){ echo ($oAccountSettings->store_email) ? ($oAccountSettings->store_email) : ''; } ?>" placeholder="Your store email address">
                                     </div>
                                 </div>
 
@@ -115,14 +115,14 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Facebook Title</label>
                                                             <div class="">
-                                                                <input name="facebook_title" id="facebook_title" class="form-control autoSave" type="text" placeholder="Apple iPhone XR" value="<?php echo ($oAccountSettings->facebook_title) ? ($oAccountSettings->facebook_title) : ''; ?>">
+                                                                <input name="facebook_title" id="facebook_title" class="form-control autoSave" type="text" placeholder="Apple iPhone XR" value="<?php if(!empty($oAccountSettings)){ echo ($oAccountSettings->facebook_title) ? ($oAccountSettings->facebook_title) : ''; } ?>">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="control-label">Facebook Descriptions</label>
                                                             <div class="">
 
-                                                                <textarea name="facebook_desc" id="facebook_desc" rows="4" class="form-control autoSave" placeholder="The iPhone XR display has rounded corners that follow a beautiful curved design, and these corners are within a standard rectangle. When measured as a standard rectangular shape, the screen is 5.85 inches diagonally (actual viewable area is less)."><?php echo ($oAccountSettings->facebook_desc) ? ($oAccountSettings->facebook_desc) : ''; ?></textarea>
+                                                                <textarea name="facebook_desc" id="facebook_desc" rows="4" class="form-control autoSave" placeholder="The iPhone XR display has rounded corners that follow a beautiful curved design, and these corners are within a standard rectangle. When measured as a standard rectangular shape, the screen is 5.85 inches diagonally (actual viewable area is less)."><?php if(!empty($oAccountSettings)){ echo ($oAccountSettings->facebook_desc) ? ($oAccountSettings->facebook_desc) : ''; } ?></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -141,14 +141,14 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Twitter Title</label>
                                                             <div class="">
-                                                                <input name="twitter_title" id="twitter_title" class="form-control autoSave" type="text" placeholder="Apple iPhone XR" value="<?php echo ($oAccountSettings->twitter_title) ? ($oAccountSettings->twitter_title) : ''; ?>">
+                                                                <input name="twitter_title" id="twitter_title" class="form-control autoSave" type="text" placeholder="Apple iPhone XR" value="<?php if(!empty($oAccountSettings)){ echo ($oAccountSettings->twitter_title) ? ($oAccountSettings->twitter_title) : ''; } ?>">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="control-label">Twitter Descriptions</label>
                                                             <div class="">
 
-                                                                <textarea rows="4" name="twitter_desc" id="twitter_desc" class="form-control autoSave" placeholder="The iPhone XR display has rounded corners that follow a beautiful curved design, and these corners are within a standard rectangle. When measured as a standard rectangular shape, the screen is 5.85 inches diagonally (actual viewable area is less)."><?php echo ($oAccountSettings->twitter_desc) ? ($oAccountSettings->twitter_desc) : ''; ?></textarea>
+                                                                <textarea rows="4" name="twitter_desc" id="twitter_desc" class="form-control autoSave" placeholder="The iPhone XR display has rounded corners that follow a beautiful curved design, and these corners are within a standard rectangle. When measured as a standard rectangular shape, the screen is 5.85 inches diagonally (actual viewable area is less)."><?php if(!empty($oAccountSettings)){ echo ($oAccountSettings->twitter_desc) ? ($oAccountSettings->twitter_desc) : ''; } ?></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -167,7 +167,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Email Id / Link</label>
                                                             <div class="">
-                                                                <input name="site_link" id="site_link" class="form-control autoSave" type="text" placeholder="" value="<?php echo ($oAccountSettings->site_link) ? ($oAccountSettings->site_link) : ''; ?>">
+                                                                <input name="site_link" id="site_link" class="form-control autoSave" type="text" placeholder="" value="<?php if(!empty($oAccountSettings)){ echo ($oAccountSettings->site_link) ? ($oAccountSettings->site_link) : ''; } ?>">
                                                             </div>
                                                         </div>
 
