@@ -1835,14 +1835,13 @@ if (!function_exists('sendClinetSMS')) {
                 $charCount = strlen($msg);
                 $client = new Client($sid, $token);
                 $aRequest = array('from' => $fromNum, 'body' => $msg);
-
+                
                 if ($toNum != '' && $msg != '') {
-
                     if ($charCount > 500) {
                         $chunks = explode("||||", wordwrap($msg, 500, "||||", false));
 
                         $total = count($chunks);
-
+                        
                         foreach ($chunks as $page => $chunk) {
                             $res = $client->messages->create(
                                     $toNum, array(
@@ -1852,8 +1851,11 @@ if (!function_exists('sendClinetSMS')) {
                             );
                         }
                     } else {
-
+                        
+                        //echo "\nYes , I am in now";
                         $res = $client->messages->create($toNum, $aRequest);
+                        //echo "Res is ". $res;
+                        
                         //$res->sid;
                     }
 
@@ -1863,6 +1865,7 @@ if (!function_exists('sendClinetSMS')) {
                 }
             }
         } catch (Exception $ex) {
+            //echo $ex->getMessage();
             return 0;
         }
 

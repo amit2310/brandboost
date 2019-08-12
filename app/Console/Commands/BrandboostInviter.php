@@ -7,9 +7,8 @@ use App\Models\Admin\Crons\ManagerModel;
 use App\Models\Admin\Crons\BrandboostModel;
 use App\Models\Admin\UsersModel;
 
+class BrandboostInviter extends Command {
 
-class BrandboostInviter extends Command
-{
     /**
      * The name and signature of the console command.
      *
@@ -29,8 +28,7 @@ class BrandboostInviter extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->trackServer = 'http://brandboostx.com/trck';
         $this->enableQueue = false;
@@ -47,7 +45,7 @@ class BrandboostInviter extends Command
             'token' => config('bbconfig.token'),
             'from_number' => '+14695027654'
         );
-        
+
         $this->use_default_accounts = false;
         $this->from_email = 'request@brandboost.io';
         $this->client_from_email = '';
@@ -59,22 +57,21 @@ class BrandboostInviter extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $this->startCampaign();
     }
-    
+
     /**
      * Default function responsible to initiate the cron
      */
     public function startCampaign() {
-        
+
         //Instanciate cron manager model to access its properties and methods
         $mCron = new ManagerModel();
 
         //Instanciate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
-        
+
         //Check Cron Lock
         $bLocked = false;
         $oCron = $mCron->checkCronStatus('brandboost');
@@ -136,7 +133,6 @@ class BrandboostInviter extends Command
         echo "Script Ended";
     }
 
-    
     /**
      * Process Thank you Invites
      * @param type $aEvent
@@ -144,8 +140,8 @@ class BrandboostInviter extends Command
     public function processThankyouInvites($aEvent = array()) {
         //Instanciate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
-        
-        
+
+
         if (!empty($aEvent)) {
             $bbID = $aEvent->brandboost_id;
             $inviterID = $aEvent->id;
@@ -182,7 +178,6 @@ class BrandboostInviter extends Command
         }
     }
 
-    
     /**
      * Processes all followup end campaigns
      * @param type $aEvent
@@ -190,7 +185,7 @@ class BrandboostInviter extends Command
     public function processFollowup($aEvent = array()) {
         //Instanciate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
-        
+
         if (!empty($aEvent)) {
             $bbID = $aEvent->brandboost_id;
             $inviterID = $aEvent->id;
@@ -243,7 +238,6 @@ class BrandboostInviter extends Command
         }
     }
 
-    
     /**
      * Processes Send Invites(Main Event)
      * @param type $aEvent
@@ -252,7 +246,7 @@ class BrandboostInviter extends Command
     public function processSendInvites($aEvent = array()) {
         //Instanciate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
-        
+
         if (!empty($aEvent)) {
 
             $bbID = $aEvent->brandboost_id;
@@ -324,7 +318,6 @@ class BrandboostInviter extends Command
         }
     }
 
-    
     /**
      * Fires Automation end Campaigns
      * @param type $aData
@@ -332,7 +325,7 @@ class BrandboostInviter extends Command
     public function fireAutomationCampaign($aData = array()) {
         //Instanciate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
-        
+
         $oEvent = $aData['inviter_data'];
         $bbID = $oEvent->brandboost_id;
         $inviterID = $oEvent->id;
@@ -343,12 +336,12 @@ class BrandboostInviter extends Command
         if (!empty($aBrandboost)) {
             $bbType = $aBrandboost->review_type;
         }
-        
+
         //Get owner information
         $this->client_from_email = '';
         $clientEmail = $oEvent->client_email;
-                
-        if(!empty($clientEmail)){
+
+        if (!empty($clientEmail)) {
             $this->client_from_email = $clientEmail;
         }
 
@@ -414,8 +407,6 @@ class BrandboostInviter extends Command
         }
     }
 
-    
-    
     /**
      * Sends Emails in bulk
      * @param type $oSubscribers
@@ -424,8 +415,8 @@ class BrandboostInviter extends Command
     public function sendBulkAutomationEmail($oSubscribers, $aData) {
         //Instanciate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
-        
-        
+
+
         $content = $aData['content'];
         $fromEmail = $aData['from'];
         $subject = $aData['subject'];
@@ -534,7 +525,6 @@ class BrandboostInviter extends Command
         }
     }
 
-    
     /**
      * Sends Sms in bulk
      * @param type $oSubscribers
@@ -543,11 +533,12 @@ class BrandboostInviter extends Command
     public function sendBulkAutomationSms($oSubscribers, $aData) {
         //Instanciate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
-        
+
         $content = $aData['content'];
         $fromNumber = $aData['from_number'];
         $clientID = $aData['client_id'];
         $subject = '';
+
         if (!empty($oSubscribers)) {
             foreach ($oSubscribers as $oSubscriber) {
 
@@ -628,7 +619,6 @@ class BrandboostInviter extends Command
         }
     }
 
-    
     /**
      * Saves sending log
      * @param type $aData
@@ -636,7 +626,7 @@ class BrandboostInviter extends Command
     public function saveLog($aData) {
         //Instanciate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
-        
+
         $timeNow = date("Y-m-d H:i:s");
         $insertID = 0;
         if (!empty($aData)) {
@@ -665,7 +655,6 @@ class BrandboostInviter extends Command
         $mInviter->saveSendingLog($aTrackData);
     }
 
-    
     /**
      * Adds click/open tracking links
      * @param type $sMessage
@@ -681,7 +670,6 @@ class BrandboostInviter extends Command
         return $sMessage;
     }
 
-    
     /**
      * Used to add click tracking link in all links present in the email
      * @param type $content
@@ -724,7 +712,6 @@ class BrandboostInviter extends Command
                     if (!empty($bbType)) {
                         $additionalParams .= '&bbtype=' . $bbType;
                     }
-                    
                 }
                 $trackClickUrl = $this->trackServer . '/track.php?click_redirect=' . $encodeURL . '&msgid=' . $this->base64UrlEncode($msgId) . $additionalParams;
 
@@ -735,7 +722,6 @@ class BrandboostInviter extends Command
         return $content;
     }
 
-    
     /**
      * Used to add Open tracking link in all links present in the email
      * @param type $content
@@ -747,7 +733,6 @@ class BrandboostInviter extends Command
         return $content . '<img src="' . $trackOpenUrl . '" width="0" height="0" alt="" style="visibility:hidden" />';
     }
 
-    
     /**
      * Generates unique email id for each email being sent out 
      * @return type
@@ -756,7 +741,6 @@ class BrandboostInviter extends Command
         return time() . rand(100000, 999999) . '.' . uniqid();
     }
 
-    
     /**
      * Utility function to convert url entities into the base64 encode algorithm
      * @param type $val
@@ -766,7 +750,6 @@ class BrandboostInviter extends Command
         return strtr(base64_encode($val), '+/=', '-_,');
     }
 
-    
     /**
      * Utility function to convert url entities into the base64 decode algorithm
      * @param type $val
@@ -776,7 +759,6 @@ class BrandboostInviter extends Command
         return base64_decode(strtr($val, '-_,', '+/='));
     }
 
-    
     /**
      * Gets simplified times returns date and time in seconds
      * @param type $delayType
@@ -820,7 +802,6 @@ class BrandboostInviter extends Command
         return $simplifiedTime;
     }
 
-    
     /**
      * Used to send email using sendgrid
      * @param type $aData
@@ -829,7 +810,7 @@ class BrandboostInviter extends Command
     public function SG_smtp($aData) {
         //Instanciate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
-        
+
         if ($aData['brandboost_id'] == $this->testCampaignId) {
             echo "<br>Check 11";
             echo "<br> Sending Email ";
@@ -901,8 +882,8 @@ class BrandboostInviter extends Command
         $result = curl_exec($session);
         curl_close($session);
         $result = (array) json_decode($result, True);
-        
-         if ($aData['brandboost_id'] == $this->testCampaignId) {
+
+        if ($aData['brandboost_id'] == $this->testCampaignId) {
             echo "<br>Check 12";
             pre($result);
             pre($params);
@@ -916,7 +897,6 @@ class BrandboostInviter extends Command
         }
     }
 
-    
     /**
      * Used to send sms using Twilio
      * @param type $aData
@@ -925,7 +905,7 @@ class BrandboostInviter extends Command
     public function send_Twilio($aData) {
         //Instanciate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
-        
+
 
         if ($this->use_default_accounts == true) {
             $aTwilioData = $this->defaultTwilioDetails;
@@ -993,8 +973,8 @@ class BrandboostInviter extends Command
 
         $shortURl = base_url('t/' . $urlID);
 
-        $msgBody = base64_decode($msg);
-        $msgBody = str_replace("{TEXT_REVIEW_URL}", replaceEmailTags($bbID, '{TEXT_REVIEW_URL}', 'sms'), $msgBody);
+        //$msgBody = base64_decode($msg);
+        $msgBody = str_replace("{TEXT_REVIEW_URL}", replaceEmailTags($bbID, '{TEXT_REVIEW_URL}', 'sms'), $msg);
         $msgBody = str_replace("{REVIEW_URL}", replaceEmailTags($bbID, '{REVIEW_URL}', 'sms'), $msgBody);
 
         $aSmsData = array(
@@ -1007,10 +987,13 @@ class BrandboostInviter extends Command
         );
         //Send Sms now
         $response = sendClinetSMS($aSmsData);
-        if ($response)
-            return true;
-        else
-            return false;
+
+        if ($aData['brandboost_id'] == '280') {
+            //echo "\n Preparing for sending sms, Ok Response is ". $response;
+            //pre($aSmsData);
+        }
+        return true;
+        
     }
-    
+
 }
