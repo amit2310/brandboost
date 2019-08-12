@@ -314,13 +314,14 @@ class Reviews extends Controller {
     public function add($type = 'text', $campaignId, $subscriberID = 0, $inviterID = 0) {
         if (empty($campaignId))
             exit("Not a cup of your tea");
+        $mReviews = new ReviewsModel();
 
-        $oCampaign = $this->mReviews->getBrandBoostCampaign($campaignId);
+        $oCampaign = $mReviews->getBrandBoostCampaign($campaignId);
 
         if ($type == 'text') {
-            $this->template->load('template', 'reviews/review_text', array('oCampaign' => $oCampaign, 'subscriberID' => $subscriberID, 'inviterID' => $inviterID));
+            return view('reviews.review_text', array('oCampaign' => $oCampaign, 'subscriberID' => $subscriberID, 'inviterID' => $inviterID));
         } else if ($type == 'video') {
-            $this->template->load('template', 'reviews/review_video', array('oCampaign' => $oCampaign, 'subscriberID' => $subscriberID, 'inviterID' => $inviterID));
+            return view('reviews.review_video', array('oCampaign' => $oCampaign, 'subscriberID' => $subscriberID, 'inviterID' => $inviterID));
         } else {
             exit("Unauthorized Access");
         }
