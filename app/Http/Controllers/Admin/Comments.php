@@ -118,12 +118,19 @@ class Comments extends Controller {
         }
     }
 
+
+    /**
+    * This function is used to update the comment 
+    * @param type 
+    * @return type
+    */
+
     public function updateComment() {
 
         $response = array();
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        if (Input::post()) {
+            $post = Input::post();
 
             $commentID = strip_tags($post['comment_id']);
             $commentMsg = strip_tags($post['commentMsg']);
@@ -132,7 +139,7 @@ class Comments extends Controller {
                 'content' => $commentMsg
             );
 
-            $result = $this->mComment->updateComment($aData, $commentID);
+            $result = $mComment->updateComment($aData, $commentID);
             if ($result) {
                 $response['status'] = 'success';
             } else {
@@ -143,6 +150,13 @@ class Comments extends Controller {
             exit;
         }
     }
+
+
+     /**
+    * This function is used to delete the comment 
+    * @param type 
+    * @return type
+    */
 
     public function deleteComment() {
         $response = array();
@@ -160,12 +174,20 @@ class Comments extends Controller {
         exit;
     }
 
+
+    /**
+    * This function is used to update the comment status
+    * @param type 
+    * @return type
+    */
+
     public function update_comment_status() {
 
         $response = array();
+        $mComment = new CommentModel();
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        if (Input::post()) {
+            $post = Input::post();
 
             $commentID = strip_tags($post['comment_id']);
             $status = strip_tags($post['status']);
@@ -174,7 +196,7 @@ class Comments extends Controller {
                 'status' => $status
             );
 
-            $result = $this->mComment->updateComment($aData, $commentID);
+            $result = $mComment->updateComment($aData, $commentID);
             if ($result) {
                 $response['status'] = 'success';
                 $response['message'] = "Status has been updated successfully.";
