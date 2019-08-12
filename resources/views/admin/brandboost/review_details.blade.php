@@ -5,6 +5,7 @@
 @endsection
 
 @section('contents')
+<?php error_reporting(0); ?>
 <script type="text/javascript" src="<?php echo base_url('assets/js/viewbox.min.js'); ?>"></script>
 <style>
     .viewbox-container{
