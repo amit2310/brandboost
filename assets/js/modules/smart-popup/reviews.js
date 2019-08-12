@@ -164,6 +164,8 @@ $(document).ready(function () {
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
         var reviewID = $("#smartpopup_review_id").val();
+        
+
         $.ajax({
             url: '/admin/reviews/update_note',
             type: "POST",

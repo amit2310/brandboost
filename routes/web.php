@@ -151,12 +151,12 @@ Route::post('admin/reviews/deleteReview','Admin\Reviews@deleteReview');
 Route::post('admin/reviews/saveReviewNotes','Admin\Reviews@saveReviewNotes');
 Route::post('reviews/deleteReviewNote','Reviews@deleteReviewNote');
 Route::post('admin/reviews/getReviewMedia','Admin\Reviews@getReviewMedia');
- Route::post('admin/reviews/saveCommentLikeStatus','Admin\Reviews@saveCommentLikeStatus');
+Route::post('admin/reviews/saveCommentLikeStatus','Admin\Reviews@saveCommentLikeStatus');
 Route::post('admin/reviews/update_review','Admin\Reviews@updateReview');
 Route::post('admin/comments/deleteComment','Admin\Comments@deleteComment');
 Route::post('admin/reviews/deleteReviewNote','Admin\Reviews@deleteReviewNote');
 Route::post('admin/comments/update_comment_status','Admin\Comments@update_comment_status');
-
+Route::post('admin/reviews/update_note','Admin\Reviews@update_note');
 
 
 Route::post('admin/comments/add_comment','Admin\Comments@addComment');

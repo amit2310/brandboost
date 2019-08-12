@@ -547,11 +547,19 @@ class Reviews extends Controller {
         }
     }
 	
+
+
+    /**
+    * This function is used to update the notes
+    * @param type 
+    * @return type
+    */
 	public function update_note() {
         $aUser = getLoggedUser();
-        $userID = $aUser->id;    
+        $userID = $aUser->id;  
+        $mReviews = new ReviewsModel();  
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
+        $post = Input::post();
         if (!empty($post)) {
             $noteId = strip_tags($post['edit_noteid']);
             $sNotes = $post['edit_note_content'];
@@ -561,7 +569,7 @@ class Reviews extends Controller {
                 'updated' => date("Y-m-d H:i:s")
             );
 
-            $bSaved = $this->mReviews->updateReviewNote($aNotesData, $noteId);
+            $bSaved = $mReviews->updateReviewNote($aNotesData, $noteId);
             if ($bSaved) {
                 $response = array('status' => 'success', 'message' => 'Note has been updated succesfully.');
             }
