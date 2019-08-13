@@ -528,17 +528,7 @@ class SettingsModel extends Model {
         return false;
     }
 
-    public function updateNotificationContent($aData, $id) {
-        if ($id > 0) {
-            $this->db->where('id', $id);
-            $result = $this->db->update('tbl_notifications_manager', $aData);
-            if ($result)
-                return true;
-            else
-                return false;
-        }
-        return false;
-    }
+    
 
    /**
     * This function is used to update the amazon s3 settings 
@@ -549,6 +539,23 @@ class SettingsModel extends Model {
     public function updateS3StorageDetails($aData, $id) {
         if ($id > 0) {
             $aData =  DB::table('tbl_users')->where('id', $id)->update($aData);
+            return true;
+            
+        }
+        return false;
+    }
+
+
+    /**
+    * This function is used to update notification content
+    * @param type $aData, $id
+    * @return type
+    */
+
+    public function updateNotificationContent($aData, $id) {
+        if ($id > 0) {
+
+            $aData =  DB::table('tbl_notifications_manager')->where('id', $id)->update($aData);
             return true;
             
         }
