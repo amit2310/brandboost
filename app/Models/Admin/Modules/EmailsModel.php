@@ -378,26 +378,29 @@ class EmailsModel extends Model {
         return false;
     }
 
+    /**
+     * Checks if Automation campaign exists
+     * @param type $automationName
+     * @param type $userID
+     * @return boolean
+     */
     public function checkIfEmailAutomationExists($automationName, $userID) {
-        $this->db->where("user_id", $userID);
-        $this->db->where("title", $automationName);
-        $this->db->where("deleted", 0);
-        $result = $this->db->get('tbl_automations_emails');
-        if ($result->num_rows() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        $oData = DB::table('tbl_automations_emails')
+        ->where('user_id', $userID)
+        ->where('title', $automationName)
+        ->where('deleted', 0)
+        ->exists();
+        return $oData;
     }
 
+    /**
+     * Used to add Email automation
+     * @param type $aData
+     * @return boolean
+     */
     public function addEmailAutomation($aData) {
-        $result = $this->db->insert("tbl_automations_emails", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
+        $insert_id = DB::table('tbl_automations_emails')->insertGetId($aData);
+        return $insert_id;
     }
 
     public function updateEmailAutomation($aData, $id, $userID = '') {

@@ -380,23 +380,27 @@ class Emails extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/modules/emails/email-stats', $pageData);
     }
 
-    public function addAutiomation() {
+    public function addAutiomation(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        
+        //Instanciate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $title = strip_tags($post['title']);
-        $description = strip_tags($post['description']);
-        $automation_type = strip_tags($post['automation_type']);
+        $title = $request->title;
+        $description = $request->description;
+        $automation_type = $request->automation_type;
         $dateTime = date("Y-m-d H:i:s");
         $aData = array(
-            'title' => $title,
-            'description' => $description,
+            'title' => !empty($title) ? $title : '',
+            'description' => !empty($description) ? $description : '',
             'email_type' => 'automation',
             'automation_type' => $automation_type,
             'user_id' => $userID,
@@ -440,7 +444,7 @@ class Emails extends Controller {
                 'created' => date("Y-m-d H:i:s")
             );
             $eventName = 'sys_automation_added';
-            add_notifications($notificationData, $eventName, $userID);
+            @add_notifications($notificationData, $eventName, $userID);
         }
 
         echo json_encode($response);
