@@ -856,7 +856,7 @@ if (!empty($oAutomations)) {
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url('admin/modules/emails/setupAutiomation/'); ?>' + data.id;
+                        window.location.href = '<?php echo base_url('admin/modules/emails/setupAutomation/'); ?>' + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         $("#editAutomationValidation").html(data.msg).show();
