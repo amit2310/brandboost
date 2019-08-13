@@ -1,6 +1,6 @@
 <!--########################TAB 4 ##########################-->
 <div class="tab-pane <?php echo ($defalutTab == 'workflow') ? 'active' : ''; ?>" id="right-icon-tab4">
-    <?php $this->load->view("admin/workflow/tree", array("oEvents" => $oEvents)); ?>
+    <?php $this->load->view("admin/workflow2/tree", array("oEvents" => $oEvents)); ?>
 
     <!-- <div class="row pull-right">
         <a href="javascript:void(0);" class="btn bl_cust_btn bg-blue-600 updateAllCampaign">Continue</a>
