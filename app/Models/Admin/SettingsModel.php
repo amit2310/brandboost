@@ -524,14 +524,17 @@ class SettingsModel extends Model {
         return false;
     }
 
+   /**
+    * This function is used to update the amazon s3 settings 
+    * @param type 
+    * @return type
+    */
+
     public function updateS3StorageDetails($aData, $id) {
         if ($id > 0) {
-            $this->db->where('id', $id);
-            $result = $this->db->update('tbl_users', $aData);
-            if ($result)
-                return true;
-            else
-                return false;
+            $aData =  DB::table('tbl_users')->where('id', $id)->update($aData);
+            return true;
+            
         }
         return false;
     }
@@ -563,16 +566,19 @@ class SettingsModel extends Model {
         return $oData;        
     }
 
+    /**
+    * This function is used to get the notification content
+    * @param type 
+    * @return type
+    */
+
     public function getEmailNotificationContent($id = "") {
-        if ($id > 0) {
-            $this->db->where("id", $id);
-        }
-        $this->db->order_by("id", "DESC");
-        $result = $this->db->get("tbl_notifications_manager");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_notifications_manager')
+        ->when($id > 0, function($query) use ($id){
+        return $query->where("id", $id);
+        })->orderBy('id', 'DESC')->get();
+        return  $oData;
+       
     }
 
     public function addEmailNotificationTemplate($aData) {
@@ -583,17 +589,12 @@ class SettingsModel extends Model {
             return false;
     }
 
-    public function listNotifications($userId, $type = '') {
-        $aData = array();
-        $this->db->select("tbl_notifications_manager.*");
-        $this->db->where('tbl_notifications_manager.status', '1');
-        $query = $this->db->get('tbl_notifications_manager');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-
-        return $aData;
+    public function listNotifications($userId="", $type = '') {
+        $oData = DB::table('tbl_notifications_manager')
+        ->select('tbl_notifications_manager.*')
+         ->where('tbl_notifications_manager.status', '1')->get();
+       
+        return $oData;
     }
 
     public function updateNotificationPermissions($aData) {

@@ -473,7 +473,7 @@ if (!function_exists('getactiveChatbox')) {
  */
 if (!function_exists('getAllUser')) {
 
-    function getAllUser($userId) {
+    function getAllUser($userId="") {
         $oData = \App\Models\Admin\UsersModel::getAllUsers($userId);
         return $oData;
     }

@@ -640,4 +640,9 @@ Route::get('admin/brandboost/reportsOptOut','Admin\Brandboost@reportsOptOut');
 Route::get('admin/brandboost/insightTags','Admin\Brandboost@insightTags');
 
 
+//superadmin Area
+Route::get('admin/settings/amazon_s3_storage','Admin\Settings@amazon_s3_storage');
+Route::post('admin/settings/getEmailNotificationContent','Admin\Settings@getEmailNotificationContent');
+Route::post('admin/settings/getuserbyid','Admin\Settings@getuserbyid');
+Route::post('admin/settings/updateS3setting','Admin\Settings@updateS3setting');
 

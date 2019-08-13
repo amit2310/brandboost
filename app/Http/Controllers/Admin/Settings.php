@@ -204,4 +204,97 @@ class Settings extends Controller {
         exit;
     }
 
+
+    /**
+    * This function is used for amazon storage service
+    * @param type 
+    * @return type
+    */
+
+
+    public function amazon_s3_storage() {
+
+        $mSetting = new SettingsModel();
+        $breadcrumb="";
+        $oUser= array();
+        $userID="";
+        $getNotifications = $mSetting->listNotifications($userID,'admin');
+        $aData = array(
+            'title' => 'System Notifications',
+            'pagename' => $breadcrumb,
+            'notifications' => $getNotifications,
+            'oUser' => $oUser
+        );
+        return view('admin.settings.s3_storage', $aData);
+    }
+
+
+
+ 
+
+    /**
+    * This function is used to get user setting by user id
+    * @param type 
+    * @return type
+    */
+
+     public function getuserbyid(){
+
+       $post = Input::post();
+       $userid = strip_tags($post['userid']);
+       $userDetails = getAllUser($userid);
+       if ($userDetails[0]->id!="") {
+                $response['status'] = 'success';
+                $response['datarow'] = $userDetails[0];
+            } else {
+                $response['status'] = 'error';
+            }
+
+            echo json_encode($response);
+            exit;
+
+
+    }
+  
+
+   /**
+    * This function is used to update the amazon s3 settings 
+    * @param type 
+    * @return type
+    */
+
+    public function updateS3setting() {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            $response['status'] = 'error';
+            $response['msg'] = 'Not Authorise to access this page';
+            echo json_encode($response);
+            exit;
+        }
+        $post = Input::post();
+      
+        if ($post) {
+            $user_id_input = strip_tags($post['user_id_input']);
+            $s3_allow_size = $post['s3_allow_size'];
+            $aData = array(
+                's3_allow_size' => $s3_allow_size
+                
+            );
+            $mSetting  = new SettingsModel();
+            
+            $bUpdated = $mSetting->updateS3StorageDetails($aData, $user_id_input);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+                $response['msg'] = 'Settings save successfully!';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
 }
