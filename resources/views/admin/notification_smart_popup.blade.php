@@ -7,8 +7,6 @@
     .overlaynew {z-index:999999999999999999999999999!important;}
 </style>
 
-<?php if(!empty($oEmailTemplates)) {?>
-
 <div class="box emailNotificationShow" style="width: 900px;">
     <div style="width: 900px;overflow: hidden; height: 100%;">
         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
@@ -37,9 +35,12 @@
                                         <div class="form-group hidden">
                                           <label>Email template</label>
                                           <select class="form-control h52 eventEmailTag" name="template_tag">
-                                            <?php foreach ($oEmailTemplates as $oTemplate) {
+                                            <?php 
+                                            if(!empty($oEmailTemplates)) {
+                                                foreach ($oEmailTemplates as $oTemplate) {
                                                     ?><option value="<?php echo $oTemplate->template_tag; ?>"><?php echo $oTemplate->title; ?></option><?php
-                                                } ?>
+                                                }
+                                            } ?>
                                           </select>
                                         </div>
 
@@ -166,9 +167,12 @@ Wasn't so happy with the quality of my purchase... no questions asked, they imme
                                         <div class="form-group hidden">
                                           <label>Email template</label>
                                           <select class="form-control h52 eventEmailTag" name="template_tag">
-                                            <?php foreach ($oEmailTemplates as $oTemplate) {
+                                            <?php 
+                                            if(!empty($oEmailTemplates)) {
+                                               foreach ($oEmailTemplates as $oTemplate) {
                                                     ?><option value="<?php echo $oTemplate->template_tag; ?>"><?php echo $oTemplate->title; ?></option><?php
-                                                } ?>
+                                                } 
+                                            }?>
                                           </select>
                                         </div>
 
@@ -357,6 +361,4 @@ Wasn't so happy with the quality of my purchase... no questions asked, they imme
     background-color: #5d7df3;
 }
 </style>
-<a style="position: fixed; top: 50%; right: 12px;" class="reviewsNoti slide-toggle visible emailNotiSmartPopup"  type="admin" template_id="<?php echo $oEmailTemplates[0]->id; ?>" ><i class="icon-arrow-left5"></i></a>
-
-<?php } ?>
+<a style="position: fixed; top: 50%; right: 12px;" class="reviewsNoti slide-toggle visible emailNotiSmartPopup"  type="admin" template_id="<?php if(!empty($oEmailTemplates)) { echo $oEmailTemplates[0]->id; } ?>" ><i class="icon-arrow-left5"></i></a>
