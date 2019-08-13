@@ -46,6 +46,7 @@ Route::get('admin/modules/emails/setupAutomation/{id}','Admin\Modules\Emails@set
 Route::post('admin/modules/emails/publishAsDraft','Admin\Modules\Emails@publishAsDraft');
 Route::post('admin/modules/emails/publishAutomationEvent','Admin\Modules\Emails@publishAutomationEvent');
 Route::get('admin/modules/emails/sms','Admin\Modules\Emails@sms');
+Route::post('admin/modules/emails/addAutiomation','Admin\Modules\Emails@addAutiomation');
 
 
 //Onsite and Offsite Modules
