@@ -769,9 +769,10 @@ class ReferralModel extends Model {
         $usageType = $aData['usage_type'];
         $sCoupons = $aData['coupon_code'];
         if ($usageType == 'single') {
+			$aExistingCoupons = array();
             $aCoupons = explode(",", $sCoupons);
             $oCoupons = Self::getAdvocateCoupons($couponID, $usageType);
-            if (!empty($oCoupons)) {
+            if ($oCoupons->count() > 0) {
                 $aExistingCouponsId = $oCoupons[0]->id;
                 foreach ($oCoupons as $oCoupon) {
                     $aExistingCoupons[] = $oCoupon->coupon_code;
@@ -785,13 +786,13 @@ class ReferralModel extends Model {
             foreach ($aCoupons as $strCoupon) {
                 if (!in_array($strCoupon, $aExistingCoupons)) {
                     $aData['coupon_code'] = $strCoupon;
-                    $insert_id = DB::table('tbl_common_templates')->insertGetId($aData);
+                    $insert_id = DB::table('tbl_referral_rewards_adv_coupons_codes')->insertGetId($aData);
 					$result = $insert_id;
                 } else {
 
                     if ($aExistingCouponsId > 0) {
                         $result = $aExistingCouponsId;
-                        $inset_id = $aExistingCouponsId;
+                        $insert_id = $aExistingCouponsId;
                     }
                 }
             }
@@ -805,7 +806,7 @@ class ReferralModel extends Model {
 				   ->update($aData);
                 $insert_id = $oExsits->id;
             } else {
-				$insert_id = DB::table('tbl_common_templates')->insertGetId($aData);
+				$insert_id = DB::table('tbl_referral_rewards_adv_coupons_codes')->insertGetId($aData);
 				$result = $insert_id;
             }
         }
@@ -848,7 +849,7 @@ class ReferralModel extends Model {
     }
 		
 	
-	public function updateAdvocateCouponCode($aData, $id) {
+	public static function updateAdvocateCouponCode($aData, $id) {
 		$result = DB::table('tbl_referral_rewards_adv_coupons')
 				   ->where('id', $id)
 				   ->update($aData);

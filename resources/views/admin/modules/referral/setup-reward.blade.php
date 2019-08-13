@@ -11,6 +11,7 @@ $oAdvMultipleCoupon = new stdClass();
 $oRefMultipleCoupon = new stdClass();
 $oAdvMultipleCoupon->expiry = 'never';
 $oAdvMultipleCoupon->expiry_specific_date = '';
+$oAdvMultipleCoupon->coupon_code = '';
 $oRefMultipleCoupon->coupon_code = '';
 $oRefMultipleCoupon->expiry = '';
 $oRefMultipleCoupon->expiry_specific_date = '';
@@ -314,7 +315,7 @@ if (!empty($oRefCouponCodes)) {
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon code</label>
                                                     <div class="">
-                                                        <input type="text" class="form-control" name="multipleCouponCodes" value="<?php //echo ($oAdvMultipleCoupon->coupon_code) ? $oAdvMultipleCoupon->coupon_code : ''; ?>" id="multipleCouponCodes" placeholder="e.g. REWARD10" />
+                                                        <input type="text" class="form-control" name="multipleCouponCodes" value="<?php echo ($oAdvMultipleCoupon->coupon_code) ? $oAdvMultipleCoupon->coupon_code : ''; ?>" id="multipleCouponCodes" placeholder="e.g. REWARD10" />
                                                     </div>
                                                 </div>
                                             </div>

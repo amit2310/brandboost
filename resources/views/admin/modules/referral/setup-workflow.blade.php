@@ -73,8 +73,9 @@
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
                         <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
                         <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
+						{{ csrf_field() }}
                         <div class="col-md-12">
-
+							
                             <div class="form-group">
                                 <label class="control-label">First Name</label>
                                 <div class="">
@@ -164,7 +165,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/modules/referral/publishReferralStatus'); ?>',
                 type: "POST",
-                data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status': status},
+                data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
