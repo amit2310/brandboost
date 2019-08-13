@@ -18,6 +18,7 @@ class ReferralModel extends Model {
     public static function getReferralWidgets($userID, $id = '') {
         $oWidgets = DB::table('tbl_referral_widgets')
                 ->where('user_id', $userID)
+                ->where('delete_status', 0)
                 ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('id', $id);
                 })
@@ -1435,30 +1436,47 @@ class ReferralModel extends Model {
     }
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    public function updateReferralWidget($aData, $id) {
-        $this->db->where("id", $id);
-        $result = $this->db->update("tbl_referral_widgets", $aData);
-        if ($result) {
+	public function updateReferralWidget($aData, $id) {
+		$result = DB::table('tbl_referral_widgets')
+				   ->where('id', $id)
+				   ->update($aData);
+        if ($result > -1) {
             return $id;
         } else {
             return false;
         }
     }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
     public function getReferralByAccountId($accountID) {
         $response = "";
