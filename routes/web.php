@@ -47,6 +47,16 @@ Route::post('admin/modules/emails/publishAsDraft','Admin\Modules\Emails@publishA
 Route::post('admin/modules/emails/publishAutomationEvent','Admin\Modules\Emails@publishAutomationEvent');
 Route::get('admin/modules/emails/sms','Admin\Modules\Emails@sms');
 Route::post('admin/modules/emails/addAutiomation','Admin\Modules\Emails@addAutiomation');
+Route::get('admin/modules/emails/automationStats/{id}','Admin\Modules\Emails@automationStats');
+Route::post('admin/modules/emails/getAutomation','Admin\Modules\Emails@getAutomation');
+Route::post('admin/modules/emails/updateAutomation','Admin\Modules\Emails@updateAutomation');
+Route::post('admin/modules/emails/changeAutomationStatus','Admin\Modules\Emails@changeAutomationStatus');
+Route::post('admin/modules/emails/deleteAutomation','Admin\Modules\Emails@deleteAutomation');
+
+
+
+
+
 
 
 //Onsite and Offsite Modules
