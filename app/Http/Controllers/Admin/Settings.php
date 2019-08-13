@@ -213,6 +213,43 @@ class Settings extends Controller {
     }
 
     /**
+     * Get email notification content
+     * @param type
+     */
+
+    public function getEmailNotificationContent(Request $request){
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            $response['status'] = 'error';
+            $response['msg'] = 'Not Authorise to access this page';
+            echo json_encode($response);
+            exit;
+        }
+    
+        $mSetting = new SettingsModel();
+        if ($request->templateId) {
+            $templateID = $request->templateId;
+            $oTemplate = $mSetting->getEmailNotificationContent($templateID);
+            //base64_decode
+            $oTemplate[0]->email_content_admin = base64_decode($oTemplate[0]->email_content_admin);
+            $oTemplate[0]->email_content_client = base64_decode($oTemplate[0]->email_content_client);
+            $oTemplate[0]->email_content_user = base64_decode($oTemplate[0]->email_content_user);
+           
+            if ($oTemplate) {
+                $response['status'] = 'success';
+                $response['datarow'] = $oTemplate[0];
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
      * Update notification setting
      * @param type
      */

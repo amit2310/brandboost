@@ -383,6 +383,22 @@ class SettingsModel extends Model {
                 ->insert($aData);
     }
 
+    /**
+     * Get email notification content
+     * @param type $id
+     * @return type object
+     */
+    public function getEmailNotificationContent($id = "") {
+
+        $response = DB::table('tbl_notifications_manager')
+                ->when(($id > 0), function ($query) use ($id) {
+                    return $query->where('id', $id);
+                })
+                ->orderBy('id', 'desc')
+                ->get();
+        return $response;
+    }
+
     public function getSystemNotifyPermissions($userID, $eventName) {
         $bSystemNotification = true;
         $bPermission = false;
@@ -580,6 +596,7 @@ class SettingsModel extends Model {
         return  $oData;
        
     }
+
 
     public function addEmailNotificationTemplate($aData) {
         $result = $this->db->insert('tbl_notifications_email_templates', $aData);
