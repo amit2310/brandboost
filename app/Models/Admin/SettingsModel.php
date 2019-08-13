@@ -540,14 +540,17 @@ class SettingsModel extends Model {
         return false;
     }
 
+   /**
+    * This function is used to update the amazon s3 settings 
+    * @param type 
+    * @return type
+    */
+
     public function updateS3StorageDetails($aData, $id) {
         if ($id > 0) {
-            $this->db->where('id', $id);
-            $result = $this->db->update('tbl_users', $aData);
-            if ($result)
-                return true;
-            else
-                return false;
+            $aData =  DB::table('tbl_users')->where('id', $id)->update($aData);
+            return true;
+            
         }
         return false;
     }
@@ -579,6 +582,21 @@ class SettingsModel extends Model {
         return $oData;        
     }
 
+    /**
+    * This function is used to get the notification content
+    * @param type 
+    * @return type
+    */
+
+    public function getEmailNotificationContent($id = "") {
+        $oData = DB::table('tbl_notifications_manager')
+        ->when($id > 0, function($query) use ($id){
+        return $query->where("id", $id);
+        })->orderBy('id', 'DESC')->get();
+        return  $oData;
+       
+    }
+
 
     public function addEmailNotificationTemplate($aData) {
         $result = $this->db->insert('tbl_notifications_email_templates', $aData);
@@ -588,6 +606,14 @@ class SettingsModel extends Model {
             return false;
     }
 
+   /**
+* This function is used to get all notifications 
+* @param type $userId
+* @param type $type
+* @return type
+*/
+  
+  
     public function listNotifications($userId, $type = '') {
 
         $oData = DB::table('tbl_notifications_manager')

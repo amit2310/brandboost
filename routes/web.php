@@ -46,6 +46,17 @@ Route::get('admin/modules/emails/setupAutomation/{id}','Admin\Modules\Emails@set
 Route::post('admin/modules/emails/publishAsDraft','Admin\Modules\Emails@publishAsDraft');
 Route::post('admin/modules/emails/publishAutomationEvent','Admin\Modules\Emails@publishAutomationEvent');
 Route::get('admin/modules/emails/sms','Admin\Modules\Emails@sms');
+Route::post('admin/modules/emails/addAutiomation','Admin\Modules\Emails@addAutiomation');
+Route::get('admin/modules/emails/automationStats/{id}','Admin\Modules\Emails@automationStats');
+Route::post('admin/modules/emails/getAutomation','Admin\Modules\Emails@getAutomation');
+Route::post('admin/modules/emails/updateAutomation','Admin\Modules\Emails@updateAutomation');
+Route::post('admin/modules/emails/changeAutomationStatus','Admin\Modules\Emails@changeAutomationStatus');
+Route::post('admin/modules/emails/deleteAutomation','Admin\Modules\Emails@deleteAutomation');
+
+
+
+
+
 
 
 //Onsite and Offsite Modules
@@ -644,4 +655,9 @@ Route::get('admin/brandboost/reportsOptOut','Admin\Brandboost@reportsOptOut');
 Route::get('admin/brandboost/insightTags','Admin\Brandboost@insightTags');
 
 
+//superadmin Area
+Route::get('admin/settings/amazon_s3_storage','Admin\Settings@amazon_s3_storage');
+Route::post('admin/settings/getEmailNotificationContent','Admin\Settings@getEmailNotificationContent');
+Route::post('admin/settings/getuserbyid','Admin\Settings@getuserbyid');
+Route::post('admin/settings/updateS3setting','Admin\Settings@updateS3setting');
 

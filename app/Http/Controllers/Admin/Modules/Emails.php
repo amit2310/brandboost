@@ -26,9 +26,8 @@ class Emails extends Controller {
             $userID = '';
         }
         $mEmails = new EmailsModel();
-        $mUsers = new UsersModel();
         $oAutomations = $mEmails->getEmailAutomations($userID);
-        $bActiveSubsription = $mUsers->isActiveSubscription();
+        $bActiveSubsription = UsersModel::isActiveSubscription();
         $oEvents = $mEmails->getAllAutomationEvents($userID);
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -62,9 +61,8 @@ class Emails extends Controller {
             $userID = '';
         }
         $mEmails = new EmailsModel();
-        $mUsers = new UsersModel();
         $oAutomations = $mEmails->getEmailAutomations($userID, '', 'email');
-        $bActiveSubsription = $mUsers->isActiveSubscription();
+        $bActiveSubsription = UsersModel::isActiveSubscription();
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -99,11 +97,10 @@ class Emails extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $mEmails = new EmailsModel();
-        $mUsers = new UsersModel();
         $mLists = new ListsModel();
         $mWorkflow = new WorkflowModel();
         $mTemplates = new TemplatesModel();
-        $bActiveSubsription = $mUsers->isActiveSubscription();
+        $bActiveSubsription = UsersModel::isActiveSubscription();
         //get Automation Info
         $oAutomations = $mEmails->getEmailAutomations($userID, $id);
         if (empty($oAutomations)) {
@@ -166,20 +163,22 @@ class Emails extends Controller {
         
     }
 
+    /**
+     * 
+     * @return type
+     */
     public function sms() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
         $mEmails = new EmailsModel();
         
-        $mUsers = new UsersModel();
-        
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
             $userID = '';
         }
         $oAutomations = $mEmails->getEmailAutomations($userID, '', 'sms');
-        $bActiveSubsription = $mUsers->isActiveSubscription();
+        $bActiveSubsription = UsersModel::isActiveSubscription();
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -202,6 +201,11 @@ class Emails extends Controller {
         return view('admin.modules.emails.index', $aData);
     }
 
+    
+    /**
+     * 
+     * @param type $id
+     */
     public function setupSMSAutomation($id = '') {
         if (empty($id)) {
             redirect("admin/modules/emails/sms");
@@ -210,18 +214,18 @@ class Emails extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
-        $bActiveSubsription = $mUsers->isActiveSubscription();
+        $bActiveSubsription = UsersModel::isActiveSubscription();
         //get Automation Info
         $oAutomations = $mEmails->getEmailAutomations($userID, $id);
 
         //get Lists
-        $oLists = $this->mLists->getLists($userID, '', 'active');
+        $oLists = $mLists->getLists($userID, '', 'active');
 
         //get Automation Events
         $oEvents = $mEmails->getAutomationEvents($id);
 
         //get Automation Lists
-        $oAutomationLists = $this->mLists->getAutomationLists($id);
+        $oAutomationLists = $mLists->getAutomationLists($id);
 
 
         $moduleName = 'automation';
@@ -255,88 +259,43 @@ class Emails extends Controller {
             'oUser' => $oUser
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/modules/emails/email-workflow-beta', $pageData);
+        return view('admin.modules.emails.email-workflow-beta', $pageData);
     }
 
-    public function setupAutiomation_old($id = '') {
+    
+    /**
+     * 
+     */
+    public function automationStats(Request $request) {
+        $id = $request->id;
         if (empty($id)) {
             redirect("admin/modules/emails");
             exit;
         }
+        
+        $mLists = new ListsModel();
+        
+        //Instanciate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+        
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
-        $bActiveSubsription = $mUsers->isActiveSubscription();
-        //get Automation Info
-        $oAutomations = $mEmails->getEmailAutomations($userID, $id);
+        $type = $request->type;
 
-        //get Lists
-        $oLists = $this->mLists->getLists($userID, '', 'active');
-
-        //get Automation Events
-        $oEvents = $mEmails->getAutomationEvents($id);
-
-        //get Automation Lists
-        $oAutomationLists = $this->mLists->getAutomationLists($id);
-
-        //get Default Email Templates
-        $oDefaultTemplates = $mEmails->getEmailMoudleTemplates(0, 'email'); //empty or 0 for default templates
-        //get Default Other Email Templates
-        $oUsedOtherTemplates = $mEmails->getEmailMoudleTemplates($userID, 'email'); // for own other templates
-        //get Default Sms Templates
-        $oDefaultSMSTemplates = $mEmails->getEmailMoudleTemplates(0, 'sms'); //empty or 0 for default templates
-        //get Default Other Sms Templates
-        $oUsedOtherSMSTemplates = $mEmails->getEmailMoudleTemplates($userID, 'sms'); // for own other templates
-
-
-        $breadcrumb = '<ul class="breadcrumb">
-			<li><a href="' . base_url('admin/') . '"><i class="icon-home2 position-left"></i> Home</a></li>
-                        <li class=""><a href="' . base_url('admin/modules/emails/') . '">Email Automations</a></li>    
-			<li class="">Setup Automation</li>
-                        
-            </ul>';
-
-        $pageData = array(
-            'title' => 'Setup Email Automation',
-            'pagename' => $breadcrumb,
-            'bActiveSubsription' => $bActiveSubsription,
-            'oAutomations' => $oAutomations,
-            'oLists' => $oLists,
-            'oAutomationLists' => $oAutomationLists,
-            'oEvents' => $oEvents,
-            'oDefaultTemplates' => $oDefaultTemplates,
-            'oUsedOtherTemplates' => $oUsedOtherTemplates,
-            'oDefaultSMSTemplates' => $oDefaultSMSTemplates,
-            'oUsedOtherSMSTemplates' => $oUsedOtherSMSTemplates,
-            'oUser' => $oUser
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/modules/emails/email-workflow', $pageData);
-    }
-
-    public function automationStats($id = '') {
-        if (empty($id)) {
-            redirect("admin/modules/emails");
-            exit;
-        }
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-
-        $type = $_GET['type'];
-
-        $bActiveSubsription = $mUsers->isActiveSubscription();
+        $bActiveSubsription = UsersModel::isActiveSubscription();
         //get Automation Info
         $oAutomations = $mEmails->getEmailAutomations($userID, $id);
 
 
         //get Lists
-        $oLists = $this->mLists->getLists($userID);
+        $oLists = $mLists->getLists($userID);
 
         //get Automation Events
         $oEvents = $mEmails->getAutomationEvents($id);
 
         //get Automation Lists
-        $oAutomationLists = $this->mLists->getAutomationLists($id);
+        $oAutomationLists = $mLists->getAutomationLists($id);
 
         //get Default Email Templates
         $oDefaultTemplates = $mEmails->getEmailMoudleTemplates(0, 'email'); //empty or 0 for default templates
@@ -377,26 +336,34 @@ class Emails extends Controller {
             'type' => $type
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/modules/emails/email-stats', $pageData);
+        return view('admin.modules.emails.email-stats', $pageData)->with(['mEmails' => $mEmails]);
     }
 
-    public function addAutiomation() {
+    /**
+     * 
+     * @param Request $request
+     */
+    public function addAutiomation(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        
+        //Instanciate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $title = strip_tags($post['title']);
-        $description = strip_tags($post['description']);
-        $automation_type = strip_tags($post['automation_type']);
+        $title = $request->title;
+        $description = $request->description;
+        $automation_type = $request->automation_type;
         $dateTime = date("Y-m-d H:i:s");
         $aData = array(
-            'title' => $title,
-            'description' => $description,
+            'title' => !empty($title) ? $title : '',
+            'description' => !empty($description) ? $description : '',
             'email_type' => 'automation',
             'automation_type' => $automation_type,
             'user_id' => $userID,
@@ -440,24 +407,30 @@ class Emails extends Controller {
                 'created' => date("Y-m-d H:i:s")
             );
             $eventName = 'sys_automation_added';
-            add_notifications($notificationData, $eventName, $userID);
+            @add_notifications($notificationData, $eventName, $userID);
         }
 
         echo json_encode($response);
         exit;
     }
 
-    public function getAutomation() {
+    
+    /**
+     * 
+     */
+    public function getAutomation(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        //Instanciate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $automationID = strip_tags($post['automation_id']);
+        $automationID = $request->automation_id;
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
             $userID = '';
@@ -473,23 +446,29 @@ class Emails extends Controller {
         exit;
     }
 
-    public function updateAutomation() {
+    
+    /**
+     * 
+     */
+    public function updateAutomation(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        //Instanciate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
             $userID = '';
         }
-        $automationID = strip_tags($post['automation_id']);
-        $title = strip_tags($post['title']);
-        $description = strip_tags($post['description']);
+        $automationID = $request->automation_id;
+        $title = $request->title;
+        $description = $request->description;
         $dateTime = date("Y-m-d H:i:s");
         $aData = array(
             'title' => $title,
@@ -528,6 +507,10 @@ class Emails extends Controller {
         exit;
     }
 
+    
+    /**
+     * 
+     */
     public function publishAutomationEvent(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         if (empty($request)) {
@@ -573,6 +556,10 @@ class Emails extends Controller {
         exit;
     }
 
+    
+    /**
+     * 
+     */
     public function publishAsDraft(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         if (empty($request)) {
@@ -618,6 +605,10 @@ class Emails extends Controller {
         exit;
     }
 
+    
+    /**
+     * 
+     */
     public function addAutomationFollowup() {
         //This would work just like linked list
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -843,102 +834,9 @@ class Emails extends Controller {
         exit;
     }
 
-    public function addAutomationFollowup_OLD() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $bCampaignExists = true;
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $templateID = strip_tags($post['template_id']);
-        $automationID = strip_tags($post['automation_id']);
-        $previousEventID = strip_tags($post['previous_event_id']);
-        $currentEventID = strip_tags($post['current_event_id']);
-        $eventType = strip_tags($post['event_type']);
-
-        if (empty($previousEventID) || ($previousEventID == 0)) {
-            //check if campaing added
-            $bCampaignExists = $mEmails->getEmailCampaignInfo($currentEventID);
-        }
-
-        if ($templateID > 0) {
-            $oTemplate = $mEmails->getEmailMoudleTemplateInfo($templateID);
-            //pre($oTemplate);
-            //die;
-            if (!empty($oTemplate)) {
-                $templateName = $oTemplate->template_name;
-                $campaignType = ucfirst($oTemplate->template_type);
-                $subject = $oTemplate->template_subject;
-                $content = $oTemplate->template_content;
-                $from = $aUser->email;
-                $fromName = $aUser->firstname . ' ' . $aUser->lastname;
-                $replyTo = $from;
-
-                $aEventData = array(
-                    'automation_id' => $automationID,
-                    'event_type' => 'followup',
-                    'data' => json_encode(array("delay_type" => 'after', "delay_value" => '10', "delay_unit" => 'minute')),
-                    'previous_event_id' => $currentEventID,
-                    'status' => 'draft',
-                    'created' => date("Y-m-d H:i:s")
-                );
-                if ($bCampaignExists == true) {
-                    $eventID = $mEmails->addEmailAutomationEvent($aEventData);
-                } else {
-                    $eventID = $currentEventID;
-                }
-
-                if ($eventID > 0) {
-                    $aManageOrderData = array(
-                        'previous_event_id' => $eventID
-                    );
-                    if ($bCampaignExists == true) {
-                        //$mEmails->manageEmailAutomationEventOrder($aManageOrderData, $previousEventID, $eventID);
-                    }
-
-                    $aCampaignData = array(
-                        'event_id' => $eventID,
-                        'content_type' => ($campaignType == 'Email') ? 'Regular' : 'Plain Text',
-                        'campaign_type' => $campaignType,
-                        'name' => $templateName,
-                        'subject' => $subject,
-                        'html' => $content,
-                        'template_source' => $templateID,
-                        'from_email' => $from,
-                        'from_name' => $fromName,
-                        'reply_to' => $replyTo,
-                        'status' => 1,
-                        'created' => date("Y-m-d H:i:s")
-                    );
-
-                    $campaignID = $mEmails->addEmailAutomationCampaign($aCampaignData);
-                    //Add Segment Data 
-
-                    $aSegmentData = array(
-                        'auto_event_id' => $eventID,
-                        'campaign_id' => $campaignID,
-                        'created' => date("Y-m-d H:i:s")
-                    );
-
-                    $mEmails->addEmailAutomationSegment($aSegmentData);
-
-                    $response = array('status' => 'success', 'msg' => "Added successfully");
-                    if ($campaignID) {
-                        $response['campaignId'] = $campaignID;
-                        $response['temp_subject'] = $subject;
-                        $response['temp_content'] = base64_decode($content);
-                    }
-                }
-            }
-        }
-        echo json_encode($response);
-        exit;
-    }
-
+    /**
+     * 
+     */
     public function manageOrder($automationID, $firstEventID, $secondEventID) {
         
     }
@@ -1413,15 +1311,16 @@ class Emails extends Controller {
         exit;
     }
 
-    public function changeAutomationStatus() {
+    public function changeAutomationStatus(Request $request) {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        $mEmails = new EmailsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
@@ -1431,8 +1330,8 @@ class Emails extends Controller {
 
 
 
-        $automationID = strip_tags($post['automation_id']);
-        $status = strip_tags($post['status']);
+        $automationID = $request->automation_id;
+        $status = $request->status;
 
         $aData = array(
             'status' => $status
@@ -1445,7 +1344,7 @@ class Emails extends Controller {
                 'user_id' => $aUser->id,
                 'event_type' => 'manage_automation_lists',
                 'action_name' => 'update_automation_status',
-                'list_id' => $listID,
+                'list_id' => !empty($listID) ?  $listID : '',
                 'brandboost_id' => '',
                 'campaign_id' => '',
                 'inviter_id' => '',
@@ -1508,21 +1407,22 @@ class Emails extends Controller {
         exit;
     }
 
-    public function deleteAutomation() {
+    public function deleteAutomation(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        $mEmails = new EmailsModel();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
             $userID = '';
         }
-        $automationID = strip_tags($post['automation_id']);
+        $automationID = $request->automation_id;
         $bDeleted = $mEmails->deleteEmailAutomation($automationID, $userID);
         if ($bDeleted == true) {
             //Add Useractivity log
@@ -1530,7 +1430,7 @@ class Emails extends Controller {
                 'user_id' => $userID,
                 'event_type' => 'manage_lists',
                 'action_name' => 'deleted_list',
-                'list_id' => $listID,
+                'list_id' => !empty($listID) ? $listID : '',
                 'brandboost_id' => '',
                 'campaign_id' => '',
                 'inviter_id' => '',
