@@ -372,4 +372,58 @@ class Settings extends Controller {
         exit;
     }
 
+
+    /**
+    * This function is used to update email notification content
+    * @param type 
+    * @return type
+    */
+    public function updateEmailNotificationContent() {
+        $oUser = getLoggedUser();
+        pre($oUser);
+        die();
+        $userID = $oUser->id;
+        $response = array();
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            $response['status'] = 'error';
+            $response['msg'] = 'Not Authorise to access this page';
+            echo json_encode($response);
+            exit;
+        }
+        $post = $this->input->post();
+       
+        if ($post) {
+            $templateID = strip_tags($post['template_id']);
+            $email_subject_admin = strip_tags($post['admin_subject']);
+            $email_subject_client = strip_tags($post['subject']);
+            $email_subject_user = strip_tags($post['user_subject']);
+             
+            $email_content_admin = base64_encode($post['admin_text']);
+            $email_content_user = base64_encode($post['user_text']);
+            $email_content_client = base64_encode($post['plain_text']);
+            
+            
+            
+            $aData = array(
+                'email_subject_admin' => $email_subject_admin,
+                'email_content_admin' => $email_content_admin,
+                'email_subject_client' => $email_subject_client,
+                'email_content_client' => $email_content_client,
+                'email_subject_user' => $email_subject_user,
+                'email_content_user' => $email_content_user
+            );
+            
+            $bUpdated = $this->mSetting->updateNotificationContent($aData, $templateID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+                $response['msg'] = 'Template save successfully!';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
 }
