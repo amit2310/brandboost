@@ -9,8 +9,10 @@
 <?php
 
 $feedbackResponseData = new stdClass();
-if(count($feedbackResponse) > 0){
+if($feedbackResponse->count() > 0){
 	$feedbackResponseData = $feedbackResponse[0];
+}else{
+	$feedbackResponseData = array();
 }
 
 if(count($bbProductsData) > 0){

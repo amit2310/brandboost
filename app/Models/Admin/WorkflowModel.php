@@ -1409,7 +1409,7 @@ class WorkflowModel extends Model {
                 'subject' => $resultData->template_subject,
                 'greeting' => $defaultGreeting,
                 'introduction' => $defaultIntroduction,
-                'html' => $compiledContent,
+                'html' => !empty($compiledContent) ? $compiledContent : '', 
                 'stripo_html' => $resultData->stripo_html,
                 'stripo_css' => $resultData->stripo_css,
                 'stripo_compiled_html' => $compiledContent,
@@ -2300,15 +2300,17 @@ class WorkflowModel extends Model {
         return $response;
     }
 
+    
+    /**
+     * Used to get referral testing info
+     * @param type $referralID
+     * @return type
+     */
     public function getReferralSettingsInfo($referralID) {
-
-        $this->db->select("tbl_referral_settings.*");
-        $this->db->where("tbl_referral_settings.referral_id", $referralID);
-        $result = $this->db->get("tbl_referral_settings");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_referral_settings')
+                ->where('referral_id', $referralID)
+                ->first();
+        return $oData;
     }
 
     /**
@@ -4276,7 +4278,7 @@ class WorkflowModel extends Model {
                     );
                     $bAdded = $this->createAdvocateReferralLink($aRefData);
                     if ($bAdded) {
-                        $refLink = site_url() . 'ref/t/' . $refKey;
+                        $refLink = base_url() . 'ref/t/' . $refKey;
                     }
                 }
             }
@@ -4287,27 +4289,30 @@ class WorkflowModel extends Model {
         }
         return false;
     }
-
+    
+    
+    /**
+     * Used to create advocate referral link
+     * @param type $aData
+     * @return type
+     */
     public function createAdvocateReferralLink($aData) {
-        $result = $this->db->insert("tbl_referral_reflinks", $aData);
-        $inset_id = $this->db->insert_id();
-        //echo $this->db->last_query();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
+        $insert_id = DB::table('tbl_referral_reflinks')->insertGetId($aData);
+        return $insert_id;        
     }
 
+    /**
+     * Checks if a referral link exists
+     * @param type $subscriberID
+     * @param type $referralID
+     * @return type
+     */
     public function checkIfReferralLinkExists($subscriberID, $referralID) {
-
-        $this->db->where("subscriber_id", $subscriberID);
-        $this->db->where("referral_id", $referralID);
-        $result = $this->db->get("tbl_referral_reflinks");
-        if ($result->num_rows() > 0) {
-            return true;
-        }
-        return false;
+        $oData = DB::table('tbl_referral_reflinks')
+            ->where('subscriber_id', $subscriberID)
+            ->where('referral_id', $referralID)    
+            ->exists();
+        return $oData;        
     }
 
 }

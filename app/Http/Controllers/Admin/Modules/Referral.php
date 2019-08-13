@@ -1106,11 +1106,13 @@ class Referral extends Controller {
         $specificExpiryTime = $request->specific_expiry_picker;
 
         $oAdvocateCoupon = ReferralModel::getAdvocateCouponInfo($referralID);
+		//pre($oAdvocateCoupon); die;
         $oFriendCoupon = ReferralModel::getFriendCouponInfo($referralID);
 
         if ($couponType == 'advocate_single_coupons') {
             $couponID = $oAdvocateCoupon->id;
-            if (!empty($singleCouponCodes)) {
+            if ($singleCouponCodes != '') {
+				
                 $aData['coupon_id'] = $couponID;
                 $aData['coupon_code'] = str_replace(" ", "", $singleCouponCodes);
                 $aData['usage_type'] = 'single';
@@ -1118,6 +1120,7 @@ class Referral extends Controller {
                 $aData['created'] = date("Y-m-d H:i:s");
                 $aData['coupon_status'] = 1;
                 $bSaved = ReferralModel::addAdvocateCoupon($aData);
+				
                 if ($bSaved) {
                     $aUpdateData = array(
                         'advocate_coupon_type' => 'single',

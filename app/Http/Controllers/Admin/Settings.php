@@ -145,6 +145,44 @@ class Settings extends Controller {
     }
 
     /**
+     * System Notification Template
+     * @param type
+     */
+    public function setup_system_notifications(Request $request) {
+
+        $seletedTab = $request->t;
+        if(empty($seletedTab)) {
+            $seletedTab = 'email';
+        }
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            exit('Not Authorise to access this page');
+            return;
+        }
+      
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
+                    <li><a data-toggle="tooltip" data-placement="bottom" title="System Notifications" class="sidebar-control active hidden-xs ">System Notifications</a></li>
+                </ul>';
+        $mSetting = new SettingsModel();
+        //$oTemplates = $this->mSetting->getSystemNotificationTemplates();
+        $getNotifications = $mSetting->listNotifications($userID,'admin');
+        //$oEmailTemplates = $this->mSetting->getEmailNotificationTemplates();
+        $aData = array(
+            'title' => 'System Notifications',
+            'pagename' => $breadcrumb,
+            'notifications' => $getNotifications,
+            'oUser' => $oUser
+        );
+        //$this->template->load('admin/admin_template_new', 'admin/settings/system_notifications', $aData);
+
+        return view('admin.settings.general_notifications', $aData);
+    }
+
+    /**
      * Update notification permission
      * @param type
      */

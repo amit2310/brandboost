@@ -402,7 +402,7 @@ class ReferralInviter extends Command
         $clientID = $oEvent->client_id;
         $aSubscribers = $aData['subscribers'];
         $accountID = $aData['account_id'];
-        $frequence = $aData['frequency'];
+        $frequence = isset($aData['frequency']) ? $aData['frequency'] : 1;
         
         //Get owner information
         $this->client_from_email = '';        
@@ -453,6 +453,7 @@ class ReferralInviter extends Command
                     $content = str_replace('<br/>', "\n", $content);
                     $content = str_replace('<br />', "\n", $content);
                     $content = strip_tags(nl2br($content));
+                    $fromNumber = $this->defaultTwilioDetails['from_number'];
                     $aSmsData = array(
                         'from_number' => $fromNumber, //We need this from client twillio phone number
                         'content' => $content,
@@ -549,7 +550,7 @@ class ReferralInviter extends Command
                              $bSkipped = true;
                         }
                     } else {
-                        $bCampaignAlreadySent = $mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->advocateID, $oSubscriber->saleID, 'subs_email', $oSubscriber->email);
+                        $bCampaignAlreadySent = @($mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->advocateID, $oSubscriber->saleID, 'subs_email', $oSubscriber->email));
                     }
                     
                     if ($aData['referral_id'] == $this->testCampaignId) {
@@ -573,7 +574,7 @@ class ReferralInviter extends Command
                             'preceded_by' => $aData['previous_event_id'],
                             'message_id' => $messageID,
                             'campaign_id' => $aData['campaign_id'],
-                            'sale_id' => $oSubscriber->saleID,
+                            'sale_id' => isset($oSubscriber->saleID) ? $oSubscriber->saleID : '',
                             'type' => 'email',
                             'subs_email' => $oSubscriber->email,
                             'subs_phone' => $oSubscriber->phone
@@ -653,7 +654,7 @@ class ReferralInviter extends Command
                             $bSkipped = true;
                         }
                     } else {
-                        $bCampaignAlreadySent = $mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->advocateID, $oSubscriber->saleID, 'subs_phone', $oSubscriber->phone);
+                        $bCampaignAlreadySent = @($mInviter->checkIfCampaignSent($aData['campaign_id'], $oSubscriber->advocateID, $oSubscriber->saleID, 'subs_phone', $oSubscriber->phone));
                     }
 
 
@@ -721,7 +722,7 @@ class ReferralInviter extends Command
                 'auto_event_id' => $aData['inviter_id'],
                 'subscriber_id' => $aData['subscriber_id'],
                 'preceded_by' => $aData['preceded_by'],
-                'sale_id' => $aData['sale_id'],
+                'sale_id' => isset($aData['sale_id']) ? $aData['sale_id'] : '',
                 'start_at' => $timeNow,
                 'created_at' => $timeNow
             );
@@ -734,7 +735,7 @@ class ReferralInviter extends Command
             'message_id' => $aData['message_id'],
             'subscriber_id' => $aData['subscriber_id'],
             'campaign_id' => $aData['campaign_id'],
-            'sale_id' => $aData['sale_id'],
+            'sale_id' => isset($aData['sale_id']) ? $aData['sale_id'] : '',
             'auto_trigger_id' => $insertID,
             'subs_email' => $aData['subs_email'],
             'subs_phone' => $aData['subs_phone'],
@@ -1094,11 +1095,8 @@ class ReferralInviter extends Command
         $response = sendClinetSMS($aSmsData);
         //'<br>--------------- response -------------------<br>';
         //pre($response);
+        return true;
 
-        if ($response)
-            return true;
-        else
-            return false;
     } 
     
 }

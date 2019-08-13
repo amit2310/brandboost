@@ -589,11 +589,21 @@ class SettingsModel extends Model {
             return false;
     }
 
-    public function listNotifications($userId="", $type = '') {
+   /**
+* This function is used to get all notifications 
+* @param type $userId
+* @param type $type
+* @return type
+*/
+  
+  
+    public function listNotifications($userId, $type = '') {
+
         $oData = DB::table('tbl_notifications_manager')
-        ->select('tbl_notifications_manager.*')
-         ->where('tbl_notifications_manager.status', '1')->get();
-       
+                ->select('tbl_notifications_manager.*')
+                ->where('tbl_notifications_manager.status', '1')
+                ->get();
+
         return $oData;
     }
 

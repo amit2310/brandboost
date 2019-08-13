@@ -63,12 +63,12 @@
                         <div class="p25 bbot">
                             <div class="form-group mb0">
                                 <label class="custmo_radiobox pull-left mb20">
-                                    <input name="feedback_type" class="autoSave" value="public" type="radio" <?php //echo ($feedbackResponseData->feedback_type == '' || $feedbackResponseData->feedback_type == 'public') ? 'checked' : ''; ?>>
+                                    <input name="feedback_type" class="autoSave" value="public" type="radio" <?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->feedback_type == '' || $feedbackResponseData->feedback_type == 'public') ? 'checked' : ''; } ?>>
                                     <span class="custmo_radiomark"></span>
                                     Public
                                 </label>
                                 <label class="custmo_radiobox pull-left mb20 ml10">
-                                    <input  name="feedback_type" class="autoSave" value="private" type="radio" <?php //echo $feedbackResponseData->feedback_type == 'private' ? 'checked' : ''; ?>>
+                                    <input  name="feedback_type" class="autoSave" value="private" type="radio" <?php if(!empty($feedbackResponseData)){ echo $feedbackResponseData->feedback_type == 'private' ? 'checked' : ''; } ?>>
                                     <span class="custmo_radiomark"></span>
                                     Private
                                 </label>
@@ -79,14 +79,14 @@
                             <div class="form-group">
                                 <label class="control-label">Home Page URL</label>
                                 <div class="">
-                                    <input value="<?php echo ($brandboostData->store_url) ? $brandboostData->store_url : ''; ?>" name="store_url" id="store_url" class="form-control autoSave" type="text">
+                                    <input value="<?php if(!empty($feedbackResponseData)){ echo ($brandboostData->store_url) ? $brandboostData->store_url : ''; } ?>" name="store_url" id="store_url" class="form-control autoSave" type="text">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">Review Request "Form" Name</label>
                                 <div class="">
-                                    <input value="<?php //echo ($feedbackResponseData->from_name) ? $feedbackResponseData->from_name : $aUserInfo->firstname . ' ' . $aUserInfo->lastname; ?>" name="from_name" id="from_name" class="form-control autoSave" type="text" onkeypress="return IsAlphabet(event);">
+                                    <input value="<?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->from_name) ? $feedbackResponseData->from_name : $aUserInfo->firstname . ' ' . $aUserInfo->lastname; } ?>" name="from_name" id="from_name" class="form-control autoSave" type="text" onkeypress="return IsAlphabet(event);">
                                     <div class="errorMsg"></div>
                                 </div>
                             </div>
@@ -94,14 +94,14 @@
                             <div class="form-group">
                                 <label class="control-label">Review Request "Form" Email</label>
                                 <div class="">
-                                    <input value="<?php //echo ($feedbackResponseData->from_email) ? $feedbackResponseData->from_email : $aUserInfo->email; ?>" name="from_email" id="from_email" class="form-control autoSave" type="text">
+                                    <input value="<?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->from_email) ? $feedbackResponseData->from_email : $aUserInfo->email; } ?>" name="from_email" id="from_email" class="form-control autoSave" type="text">
                                     <div class="errorMsg"></div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">SMS Sender Name</label>
                                 <div class="">
-                                    <input value="<?php //echo ($feedbackResponseData->sms_sender) ? $feedbackResponseData->sms_sender : $aUserInfo->firstname . ' ' . $aUserInfo->lastname; ?>" name="sender_name" id="sender_name" class="form-control autoSave" required="" type="text">
+                                    <input value="<?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->sms_sender) ? $feedbackResponseData->sms_sender : $aUserInfo->firstname . ' ' . $aUserInfo->lastname; } ?>" name="sender_name" id="sender_name" class="form-control autoSave" required="" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -117,19 +117,19 @@
                         <div class="p25 bbot">
                             <div class="form-group mb0">
                                 <label class="custmo_radiobox pull-left mb20">
-                                    <input name="ratings_type" class="autoSave" value="happy" <?php //echo ($feedbackResponseData->ratings_type == '' || $feedbackResponseData->ratings_type == 'happy') ? 'checked' : ''; ?> type="radio">
+                                    <input name="ratings_type" class="autoSave" value="happy" <?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->ratings_type == '' || $feedbackResponseData->ratings_type == 'happy') ? 'checked' : ''; } ?> type="radio">
                                     <span class="custmo_radiomark"></span>
                                     Happy Ratings
                                 </label>
                                 <label class="custmo_radiobox pull-left mb20 ml10">
-                                    <input name="ratings_type" class="autoSave" value="star" <?php //echo $feedbackResponseData->ratings_type == 'star' ? 'checked' : ''; ?> type="radio">
+                                    <input name="ratings_type" class="autoSave" value="star" <?php if(!empty($feedbackResponseData)){ echo $feedbackResponseData->ratings_type == 'star' ? 'checked' : ''; } ?> type="radio">
                                     <span class="custmo_radiomark"></span>
                                     Star Ratings
                                 </label>
                             </div>
                         </div>
 
-                        <div class="p25" id="happyDiv" style="display:<?php //echo ($feedbackResponseData->ratings_type == '' || $feedbackResponseData->ratings_type == 'happy') ? 'block' : 'none'; ?>">
+                        <div class="p25" id="happyDiv" style="display:<?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->ratings_type == '' || $feedbackResponseData->ratings_type == 'happy') ? 'block' : 'none'; } ?>">
                             <div class="review_button text-center">
                                 <button class="btn dark_btn bkg_blue_light mr10 sh_no"><img width="12" src="<?php echo base_url("assets/images/rating5.png"); ?>"/>&nbsp;  I'm happy</button>
                                 <button class="btn light_btn bkg_grey_light ml10 txt_dark sh_no"><img src="<?php echo base_url("assets/images/icons/rating2.svg"); ?>"/> &nbsp;  Unhappy</button>
@@ -138,7 +138,7 @@
                             <span class="pull-right"><a href="javascript:void(0)" data-toggle="modal" data-target="#previewHappy">Preview</a></span>
                         </div>
 
-                        <div class="p25 text-center" id="starDiv" style="display:<?php //echo $feedbackResponseData->ratings_type == 'star' ? 'block' : 'none'; ?>">
+                        <div class="p25 text-center" id="starDiv" style="display:<?php if(!empty($feedbackResponseData)){ echo $feedbackResponseData->ratings_type == 'star' ? 'block' : 'none'; } ?>">
                             <a class="mr10" href="#"><img src="<?php echo base_url(); ?>assets/images/fill-start.png" width="26"></a>
                             <a class="mr10" href="#"><img src="<?php echo base_url(); ?>assets/images/fill-start.png" width="26"></a>
                             <a class="mr10" href="#"><img src="<?php echo base_url(); ?>assets/images/fill-start.png" width="26"></a>
@@ -305,13 +305,13 @@
                             <div class="form-group">
                                 <label class="control-label">Positive Title</label>
                                 <div class="">
-                                    <input class="form-control thankMsgTitle autoSave" name="positive_title" id="positive_title" value="<?php //echo ($feedbackResponseData->pos_title) ? $feedbackResponseData->pos_title : 'Thanks for leaving positive review'; ?>" required="" type="text">
+                                    <input class="form-control thankMsgTitle autoSave" name="positive_title" id="positive_title" value="<?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->pos_title) ? $feedbackResponseData->pos_title : 'Thanks for leaving positive review'; } ?>" required="" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Positive Subtitle</label>
                                 <div class="">
-                                    <input  class="form-control thankMsgSubTitle autoSave" name="positive_subtitle" id="positive_subtitle" value="<?php //echo ($feedbackResponseData->pos_sub_title) ? $feedbackResponseData->pos_sub_title : 'We will revert back to you soon'; ?>" required="" type="text">
+                                    <input  class="form-control thankMsgSubTitle autoSave" name="positive_subtitle" id="positive_subtitle" value="<?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->pos_sub_title) ? $feedbackResponseData->pos_sub_title : 'We will revert back to you soon'; } ?>" required="" type="text">
                                 </div>
                             </div>
                             <div class="alert bkg_green txt_white mt30 mb0 preview">
@@ -319,8 +319,8 @@
                                     <img src="<?php echo base_url(); ?>assets/images/thankyou_smiley_green.png"/>
                                 </div>
                                 <div class="media-left">
-                                    <div class="thanksTitlePreview"><?php //echo $feedbackResponseData->pos_title == '' ? 'Thanks for leaving positive review' : $feedbackResponseData->pos_title; ?></div>
-                                    <div><small class="thanksSubTitlePreview"><?php //echo $feedbackResponseData->pos_sub_title == '' ? 'We will revert back to you soon' : $feedbackResponseData->pos_sub_title; ?></small></div>
+                                    <div class="thanksTitlePreview"><?php if(!empty($feedbackResponseData)){ echo $feedbackResponseData->pos_title == '' ? 'Thanks for leaving positive review' : $feedbackResponseData->pos_title; } ?></div>
+                                    <div><small class="thanksSubTitlePreview"><?php if(!empty($feedbackResponseData)){ echo $feedbackResponseData->pos_sub_title == '' ? 'We will revert back to you soon' : $feedbackResponseData->pos_sub_title; } ?></small></div>
                                 </div>
                             </div>
                         </div>
@@ -331,13 +331,13 @@
                             <div class="form-group">
                                 <label class="control-label">Neutral Title</label>
                                 <div class="">
-                                    <input class="form-control thankMsgTitle autoSave" name="neutral_title" id="neutral_title" value="<?php //echo ($feedbackResponseData->neu_title) ? $feedbackResponseData->neu_title : 'Thanks for leaving your review'; ?>" required="" type="text">
+                                    <input class="form-control thankMsgTitle autoSave" name="neutral_title" id="neutral_title" value="<?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->neu_title) ? $feedbackResponseData->neu_title : 'Thanks for leaving your review'; } ?>" required="" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Neutral Subtitle</label>
                                 <div class="">
-                                    <input class="form-control thankMsgSubTitle autoSave" name="neutral_subtitle"  id="neutral_subtitle" value="<?php //echo ($feedbackResponseData->neu_sub_title) ? $feedbackResponseData->neu_sub_title : 'We will revert back to you soon'; ?>" required="" type="text">
+                                    <input class="form-control thankMsgSubTitle autoSave" name="neutral_subtitle"  id="neutral_subtitle" value="<?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->neu_sub_title) ? $feedbackResponseData->neu_sub_title : 'We will revert back to you soon'; } ?>" required="" type="text">
                                 </div>
                             </div>
                             <div class="alert bkg_grey txt_white mt30 mb0 preview">
@@ -345,8 +345,8 @@
                                     <img src="<?php echo base_url(); ?>assets/images/thankyou_smiley_grey.png"/>
                                 </div>
                                 <div class="media-left">
-                                    <div class="thanksTitlePreview"><?php //echo $feedbackResponseData->neu_title == '' ? 'Thanks for leaving positive review' : $feedbackResponseData->neu_title; ?></div>
-                                    <div><small class="thanksSubTitlePreview"><?php //echo $feedbackResponseData->neu_sub_title == '' ? 'We will revert back to you soon' : $feedbackResponseData->neu_sub_title; ?></small></div>
+                                    <div class="thanksTitlePreview"><?php if(!empty($feedbackResponseData)){ echo $feedbackResponseData->neu_title == '' ? 'Thanks for leaving positive review' : $feedbackResponseData->neu_title; } ?></div>
+                                    <div><small class="thanksSubTitlePreview"><?php if(!empty($feedbackResponseData)){ echo $feedbackResponseData->neu_sub_title == '' ? 'We will revert back to you soon' : $feedbackResponseData->neu_sub_title; } ?></small></div>
                                 </div>
                             </div>
                         </div>
@@ -356,13 +356,13 @@
                             <div class="form-group">
                                 <label class="control-label">Negative Title</label>
                                 <div class="">
-                                    <input class="form-control thankMsgTitle autoSave" name="negetive_title" id="negetive_title" value="<?php //echo ($feedbackResponseData->neg_title) ? $feedbackResponseData->neg_title : 'Thanks for leaving your review'; ?>" required="" type="text">
+                                    <input class="form-control thankMsgTitle autoSave" name="negetive_title" id="negetive_title" value="<?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->neg_title) ? $feedbackResponseData->neg_title : 'Thanks for leaving your review'; } ?>" required="" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Negative Subtitle</label>
                                 <div class="">
-                                    <input class="form-control thankMsgSubTitle autoSave" name="negetive_subtitle"  id="negetive_subtitle" value="<?php //echo ($feedbackResponseData->neg_sub_title) ? $feedbackResponseData->neg_sub_title : 'We will revert back to you soon'; ?>" required="" type="text">
+                                    <input class="form-control thankMsgSubTitle autoSave" name="negetive_subtitle"  id="negetive_subtitle" value="<?php if(!empty($feedbackResponseData)){ echo ($feedbackResponseData->neg_sub_title) ? $feedbackResponseData->neg_sub_title : 'We will revert back to you soon'; } ?>" required="" type="text">
                                 </div>
                             </div>							
 
@@ -371,8 +371,8 @@
                                     <img src="<?php echo base_url(); ?>assets/images/thankyou_smiley_red.png"/>
                                 </div>
                                 <div class="media-left">
-                                    <div class="thanksTitlePreview"><?php //echo $feedbackResponseData->neg_title == '' ? 'Thanks for leaving positive review' : $feedbackResponseData->neg_title; ?></div>
-                                    <div><small class="thanksSubTitlePreview"><?php //echo $feedbackResponseData->neg_sub_title == '' ? 'We will revert back to you soon' : $feedbackResponseData->neg_sub_title; ?></small></div>
+                                    <div class="thanksTitlePreview"><?php if(!empty($feedbackResponseData)){ echo $feedbackResponseData->neg_title == '' ? 'Thanks for leaving positive review' : $feedbackResponseData->neg_title; } ?></div>
+                                    <div><small class="thanksSubTitlePreview"><?php if(!empty($feedbackResponseData)){ echo $feedbackResponseData->neg_sub_title == '' ? 'We will revert back to you soon' : $feedbackResponseData->neg_sub_title; } ?></small></div>
                                 </div>
                             </div>
                         </div>
