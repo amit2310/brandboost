@@ -584,16 +584,13 @@ class SettingsModel extends Model {
     }
 
     public function listNotifications($userId, $type = '') {
-        $aData = array();
-        $this->db->select("tbl_notifications_manager.*");
-        $this->db->where('tbl_notifications_manager.status', '1');
-        $query = $this->db->get('tbl_notifications_manager');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
 
-        return $aData;
+        $oData = DB::table('tbl_notifications_manager')
+                ->select('tbl_notifications_manager.*')
+                ->where('tbl_notifications_manager.status', '1')
+                ->get();
+
+        return $oData;
     }
 
     public function updateNotificationPermissions($aData) {
