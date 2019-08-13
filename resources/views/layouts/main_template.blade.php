@@ -4,6 +4,11 @@
 //$CI->load->model("admin/Team_model", "mmT");
 $aUInfo = getLoggedUser();
 userRoleAdmin($aUInfo->user_role);
+$additionalPriceToPay="";
+$oUpgradePlanData = array();
+$aAnnualUpgradeData = array();
+$oCurrentPlanData = array();
+$billedCycle ="";
 if ($aUInfo->id == '') {
     Session::put('admin_redirect_url', \Request::fullUrl());
 }
@@ -27,7 +32,14 @@ if ($isLoggedInTeam) {
 admin_account();
 page_auth();
 $objMembership = getAllActiveMembership();
+if(isset($aUInfo->plan_id))
+{
 $loggedPlanID = $aUInfo->plan_id;
+}
+else
+{
+    $loggedPlanID='';
+}
 $aLevelUpgrades = getMembershipLevelUpgrades($objMembership, $loggedPlanID);
 
 if (!empty($aLevelUpgrades)) {

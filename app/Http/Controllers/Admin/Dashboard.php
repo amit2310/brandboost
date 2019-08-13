@@ -22,7 +22,8 @@ class Dashboard extends Controller {
             $oUser = getLoggedUser();
             $userID = $oUser->id;
         }
-   
+        $oMembershipData = array();
+        $oMembershipTopupData  = array();
         $mBrandboost = new BrandboostModel();
         $mMembership = new MembershipModel();
         $mDashboard = new DashboardModel();
@@ -35,15 +36,32 @@ class Dashboard extends Controller {
 
         $bbStatsData = $mBrandboost->getBBStatsByIdAndUserId($userID, $bbId = '');
 
-        $subscriptionID = $oUser->plan_id;
-        $topupSubscriptionID = $oUser->topup_plan_id;
+        if(isset($oUser->plan_id))
+        {
+            $subscriptionID = $oUser->plan_id; 
+        }
+        else
+        {
+            $subscriptionID='';
+        }
+        
+        if(isset($oUser->topup_plan_id))
+        {
+            $topupSubscriptionID = $oUser->topup_plan_id;
+        }
+        else
+        {
+            $topupSubscriptionID ='';
+        }
+        
+        
 
 
-        if (!empty($subscriptionID)) {
+        if (isset($subscriptionID)) {
             $oMembershipData = $mMembership->getMembershipInfo($subscriptionID);
         }
 
-        if (!empty($topupSubscriptionID)) {
+        if (isset($topupSubscriptionID)) {
             $oMembershipTopupData = $mMembership->getMembershipInfo($topupSubscriptionID);
         }
 

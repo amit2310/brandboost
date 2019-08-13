@@ -39,7 +39,7 @@
         <div class="modal-content" style="border-top: 3px solid #0ea0dd">
             <div class="modal-header mb-20 text-center">
                 <button style="top: 20px;" type="button" class="close" data-dismiss="modal">&times;</button>
-                <h1 style="font-size: 35px;  font-style: italic; margin:30px 0 0;"><strong>Upgrade to <?php echo $oUpgradePlanData->level_name; ?></strong></h1>
+                <h1 style="font-size: 35px;  font-style: italic; margin:30px 0 0;"><strong>Upgrade to <?php if(isset($oUpgradePlanData->level_name)) { echo $oUpgradePlanData->level_name;  }  ?></strong></h1>
                 <h2 class="modal-title">Get these amazing features:</h2>
             </div>
 
@@ -57,7 +57,7 @@
                                 </dt>
 
                                 <dd>Total Email Invites :
-                                    <?php echo $oUpgradePlanData->email_limit; ?>
+                                    <?php  if(isset($oUpgradePlanData->email_limit)) { echo $oUpgradePlanData->email_limit; } ?>
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -66,7 +66,7 @@
                                 </dt>
 
                                 <dd>Total Sms Invites :
-                                    <?php echo $oUpgradePlanData->sms_limit; ?>
+                                    <?php if(isset($oUpgradePlanData->sms_limit)) { echo $oUpgradePlanData->sms_limit; } ?>
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -75,7 +75,7 @@
                                 </dt>
 
                                 <dd>Total Text Reviews :
-                                    <?php echo $oUpgradePlanData->text_review_limit; ?>
+                                    <?php if(isset($oUpgradePlanData->text_review_limit)) { echo $oUpgradePlanData->text_review_limit; } ?>
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -84,7 +84,7 @@
                                 </dt>
 
                                 <dd>Total Video Reviews :
-                                    <?php echo $oUpgradePlanData->video_review_limit; ?>
+                                    <?php if(isset($oUpgradePlanData->video_review_limit)) { echo $oUpgradePlanData->video_review_limit; } ?>
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -93,7 +93,9 @@
                                 </dt>
 
                                 <dd>Get social invites on :
-                                    <?php echo $oUpgradePlanData->social_invite_sources; ?>
+                                
+                                    <?php if(isset($oUpgradePlanData->social_invite_sources)) { echo $oUpgradePlanData->social_invite_sources; } ?>
+
                                 </dd>
                             </dl>
                         </div>
@@ -110,7 +112,7 @@
                         </p>
                     </div>
                     <div class="col-md-3 pt-20 text-center">
-                        <button type="button" class="btn btn-primary mb-10" id="btnLevelUpgrade" plan_name="<?php echo $oUpgradePlanData->level_name; ?>" plan_id="<?php echo $oUpgradePlanData->plan_id; ?>" data-toggle="modal" data-target="#confirm_level_upgrade"><i class="icon-cart"></i> &nbsp; Confirm Upgrade</button>
+                        <button type="button" class="btn btn-primary mb-10" id="btnLevelUpgrade" plan_name="<?php if(isset($oUpgradePlanData->level_name)) { echo $oUpgradePlanData->level_name; } ?>" plan_id="<?php if(isset($oUpgradePlanData->plan_id)) { echo $oUpgradePlanData->plan_id;} ?>" data-toggle="modal" data-target="#confirm_level_upgrade"><i class="icon-cart"></i> &nbsp; Confirm Upgrade</button>
                         <p>Your Card will be automatically charged</p>
                     </div>
                 </div>
@@ -245,32 +247,62 @@
                     <tr>
                         <td>Name :</td>
                         <td>
-                            <?php echo $aUInfo->firstname . ' ' . $aUInfo->lastname ?>
+                            <?php 
+                            if(isset($aUInfo->firstname) || isset($aUInfo->lastname))
+                            {
+                            echo $aUInfo->firstname . ' ' . $aUInfo->lastname ;
+
+                        }?>
                         </td>
                     </tr>
                     <tr>
                         <td>Email :</td>
                         <td>
-                            <?php echo $aUInfo->email; ?>
+                            <?php
+                             if(isset($aUInfo->email))
+                             {
+                                echo $aUInfo->email;
+                              }
+
+
+                              ?>
                         </td>
                     </tr>
                     <tr>
                         <td>Phone :</td>
                         <td>
-                            <?php echo $aUInfo->mobile; ?>
+                            <?php
+                             if(isset($aUInfo->mobile))
+                                {
+                                 echo $aUInfo->mobile;
+                              }
+
+
+                              ?>
                         </td>
                     </tr>
                     <tr>
                         <td>Current Plan :</td>
                         <td>
-                            <?php echo $oCurrentPlanData->level_name; ?>
+                            <?php 
+                             if(isset($oCurrentPlanData->level_name))
+                             {
+                                echo $oCurrentPlanData->level_name;
+
+                            }
+                             ?>
                         </td>
                     </tr>
                     <tr>
                         <td>Upgrade to :</td>
                         <td>
                             <span id="upgradedPlanTitle">
-                                <?php echo $oUpgradePlanData->level_name; ?>
+                                <?php 
+                                if(isset($oUpgradePlanData->level_name))
+                                {
+                                  echo $oUpgradePlanData->level_name;
+                                }
+                                 ?>
                             </span>
                         </td>
                     </tr>
@@ -287,7 +319,7 @@
             </div>
 
             <div class="modal-footer">
-                <input type="hidden" name="hidLevelPlanId" id="hidLevelPlanId" value="<?php echo $oUpgradePlanData->plan_id; ?>"/>
+                <input type="hidden" name="hidLevelPlanId" id="hidLevelPlanId" value="<?php if(isset($oUpgradePlanData->plan_id)) {echo $oUpgradePlanData->plan_id; } ?>"/>
                 <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancel</button>
                 <button type="button" id="confirmLevelUpdate" class="btn btn-primary">Yes, Upgrade Now</button>
             </div>
