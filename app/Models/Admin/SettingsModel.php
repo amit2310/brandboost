@@ -386,7 +386,7 @@ class SettingsModel extends Model {
     /**
      * Get email notification content
      * @param type $id
-     * @return type object
+     * @return type object 
      */
     public function getEmailNotificationContent($id = "") {
 
@@ -580,21 +580,6 @@ class SettingsModel extends Model {
                 ->orderBy('id', 'desc')
                 ->get();
         return $oData;        
-    }
-
-    /**
-    * This function is used to get the notification content
-    * @param type 
-    * @return type
-    */
-
-    public function getEmailNotificationContent($id = "") {
-        $oData = DB::table('tbl_notifications_manager')
-        ->when($id > 0, function($query) use ($id){
-        return $query->where("id", $id);
-        })->orderBy('id', 'DESC')->get();
-        return  $oData;
-       
     }
 
 
