@@ -374,11 +374,73 @@ class Settings extends Controller {
 
 
     /**
-    * This function is used to update email notification content
+    * This function is used for creditvalues 
     * @param type 
     * @return type
     */
-    public function updateEmailNotificationContent(Request $request) {
+
+    public function creditValues(){
+        $seletedTab = Input::get('t');
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            exit('Not Authorise to access this page');
+            return;
+        }
+        
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
+                    <li><a data-toggle="tooltip" data-placement="bottom" title="Manage Credit Values" class="sidebar-control active hidden-xs ">Manage Credit Values</a></li>
+                </ul>';
+                $mSetting  = new SettingsModel();
+        
+        $oCrValues = $mSetting->getCreditValues();
+        
+        $oCrValuesHistory = $mSetting->getCreditValuesHistory();
+        
+        
+        $aData = array(
+            'title' => 'Credit Values Management',
+            'pagename' => $breadcrumb,
+            'oCrValues' => $oCrValues,
+            'oCrValuesHistory' => $oCrValuesHistory,
+            'seletedTab' => $seletedTab,
+            'oUser' => $oUser
+        );
+      return view('admin.settings.credit_management', $aData);
+        
+    }
+
+
+    /**
+    * This function is used for credit propertey 
+    * @param type 
+    * @return type
+    */
+      public function getCreditPropery(){
+    
+        $post = Input::post();
+        $mSetting  = new SettingsModel();
+        if ($post) {
+            $creditID = base64_url_decode(strip_tags($post['creditID']));
+             $oCrValue = $mSetting->getCreditValues($creditID);
+            if ($oCrValue) {
+                $response['status'] = 'success';
+                $response['datarow'] = $oCrValue[0];
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+
+   
+
+    public function updateCreditPropery(){
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
@@ -389,6 +451,39 @@ class Settings extends Controller {
             echo json_encode($response);
             exit;
         }
+        $post = Input::post();
+        if ($post) {
+            $creditID = base64_url_decode(strip_tags($post['creditID']));
+            $propertyName = strip_tags($post['title']);
+            $creditValue = strip_tags($post['feature_credits']);
+            $mSetting  = new SettingsModel();
+            
+            //Get data for history
+            $oCrValue = $mSetting->getCreditValues($creditID);
+            
+            
+            $aData = array(
+                'feature_name' => $propertyName,
+                'credit_value' => $creditValue,
+                'updated' => date("Y-m-d H:i:s")                    
+            );
+            
+            $bUpdated = $mSetting->updateCreditValues($aData, $creditID);
+            if ($bUpdated) {
+                //Log History
+                if(!empty($oCrValue)){
+                    $aHistoryData = array(
+                        'id' => $oCrValue[0]->id,
+                        'feature_key' => $oCrValue[0]->feature_key,
+                        'feature_name' => $oCrValue[0]->feature_name,
+                        'credit_value' => $oCrValue[0]->credit_value,
+                        'status' => $oCrValue[0]->status,
+                        'created' => date("Y-m-d H:i:s")                        
+                    );
+                    $addUpdateHistory = $mSetting->addCreditHistory($aHistoryData);
+                }
+                $response['status'] = 'success';
+=======
        
         if ($request->template_id) {
             $templateID = strip_tags($request->template_id);
@@ -416,6 +511,7 @@ class Settings extends Controller {
             if ($bUpdated) {
                 $response['status'] = 'success';
                 $response['msg'] = 'Template save successfully!';
+>>>>>>> b4687a2f6ae99fe7f2f379f1691fabfac3d78ee1
             } else {
                 $response['status'] = 'error';
             }

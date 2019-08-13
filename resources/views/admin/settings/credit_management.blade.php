@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <div class="content">
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
     <div class="page_header">
@@ -21,12 +28,12 @@
     <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
     <div class="tab-content">
-        <?php $this->load->view("admin/settings/credit-tabs/manage-credit"); ?>
+        @include("admin.settings.credit-tabs/manage-credit")
+        @include("admin.settings.credit-tabs.credit-history")
 
-        
-        <?php $this->load->view("admin/settings/credit-tabs/credit-history"); ?>
     </div>    
 
 </div>
+@endsection
 
 
