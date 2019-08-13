@@ -378,10 +378,8 @@ class Settings extends Controller {
     * @param type 
     * @return type
     */
-    public function updateEmailNotificationContent() {
+    public function updateEmailNotificationContent(Request $request) {
         $oUser = getLoggedUser();
-        pre($oUser);
-        die();
         $userID = $oUser->id;
         $response = array();
         $userRole = $oUser->user_role;
@@ -391,17 +389,16 @@ class Settings extends Controller {
             echo json_encode($response);
             exit;
         }
-        $post = $this->input->post();
        
-        if ($post) {
-            $templateID = strip_tags($post['template_id']);
-            $email_subject_admin = strip_tags($post['admin_subject']);
-            $email_subject_client = strip_tags($post['subject']);
-            $email_subject_user = strip_tags($post['user_subject']);
+        if ($request->template_id) {
+            $templateID = strip_tags($request->template_id);
+            $email_subject_admin = strip_tags($request->admin_subject);
+            $email_subject_client = strip_tags($request->subject);
+            $email_subject_user = strip_tags($request->user_subject);
              
-            $email_content_admin = base64_encode($post['admin_text']);
-            $email_content_user = base64_encode($post['user_text']);
-            $email_content_client = base64_encode($post['plain_text']);
+            $email_content_admin = base64_encode($request->admin_text);
+            $email_content_user = base64_encode($request->user_text);
+            $email_content_client = base64_encode($request->plain_text);
             
             
             
@@ -413,8 +410,9 @@ class Settings extends Controller {
                 'email_subject_user' => $email_subject_user,
                 'email_content_user' => $email_content_user
             );
-            
-            $bUpdated = $this->mSetting->updateNotificationContent($aData, $templateID);
+            $mSetting  = new SettingsModel();
+
+            $bUpdated = $mSetting->updateNotificationContent($aData, $templateID);
             if ($bUpdated) {
                 $response['status'] = 'success';
                 $response['msg'] = 'Template save successfully!';
