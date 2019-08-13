@@ -299,7 +299,7 @@
             $.ajax({
             url: '<?php echo base_url("admin/settings/updateNotification");?>',
             type: "POST",
-            data: {id: notificationId,permission:permission,user_type:'admin',permission_value:flag},
+            data: {id: notificationId,permission:permission,user_type:'admin',permission_value:flag, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -761,7 +761,7 @@
             $.ajax({
                 url: '<?php echo base_url("admin/settings/getEmailNotificationContent"); ?>',
                 type: "POST",
-                data: {templateId: templateId},
+                data: {templateId: templateId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -804,7 +804,7 @@
             $.ajax({
                 url: '<?php echo base_url("admin/settings/getEmailNotificationContent"); ?>',
                 type: "POST",
-                data: {templateId: templateId},
+                data: {templateId: templateId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1040,7 +1040,7 @@
                 $.ajax({
                     url: '<?php echo base_url('admin/settings/sendTestEmailPreview'); ?>',
                     type: "POST",
-                    data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser},
+                    data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
