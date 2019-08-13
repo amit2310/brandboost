@@ -9,7 +9,7 @@ use App\Models\Admin\TagsModel;
 use App\Models\Admin\ListsModel;
 use Cookie;
 use Session;
-
+use DB;
 class WorkFlow extends Controller {
 
     public function index() {
@@ -1733,38 +1733,31 @@ class WorkFlow extends Controller {
      * Used to get Referral Campaign Info
      */
     public function getReferralUnitInfo($id, $hash = false) {
-
-        $this->db->select("tbl_referral_rewards.*, tbl_referral_rewards.id AS rewardID, tbl_referral_rewards.created AS rewardCreated,"
-                . "tbl_referral_rewards_adv_coupons.*, tbl_referral_rewards_adv_coupons.id AS advCouponID, tbl_referral_rewards_adv_coupons.created AS advCouponCreated,"
-                . "tbl_referral_rewards_ref_coupons.*, tbl_referral_rewards_ref_coupons.id AS refCouponID, tbl_referral_rewards_ref_coupons.created AS refCouponCreated,"
-                . "tbl_referral_rewards_cash.*, tbl_referral_rewards_cash.id AS cashID, tbl_referral_rewards_cash.created AS cashCreated,"
-                . "tbl_referral_rewards_custom.*, tbl_referral_rewards_custom.id AS customID, tbl_referral_rewards_custom.created AS customCreated,"
-                . "tbl_referral_rewards_promo_links.*, tbl_referral_rewards_promo_links.id AS promoID, tbl_referral_rewards_promo_links.created AS promoCreated");
-        $this->db->join("tbl_referral_rewards_adv_coupons", "tbl_referral_rewards_adv_coupons.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_ref_coupons", "tbl_referral_rewards_ref_coupons.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_cash", "tbl_referral_rewards_cash.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_custom", "tbl_referral_rewards_custom.reward_id = tbl_referral_rewards.id", "LEFT");
-        $this->db->join("tbl_referral_rewards_promo_links", "tbl_referral_rewards_promo_links.reward_id = tbl_referral_rewards.id", "LEFT");
-        if ($hash == true) {
-            $this->db->where("tbl_referral_rewards.hashcode", $id);
-        } else {
-            $this->db->where("tbl_referral_rewards.id", $id);
-        }
-
-
-        $result = $this->db->get("tbl_referral_rewards");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $aData =  DB::table('tbl_referral_rewards')
+			->select('tbl_referral_rewards.*', 'tbl_referral_rewards.id AS rewardID', 'tbl_referral_rewards.created AS rewardCreated', 'tbl_referral_rewards_adv_coupons.*', 'tbl_referral_rewards_adv_coupons.id AS advCouponID', 'tbl_referral_rewards_adv_coupons.created AS advCouponCreated', 'tbl_referral_rewards_ref_coupons.*', 'tbl_referral_rewards_ref_coupons.id AS refCouponID', 'tbl_referral_rewards_ref_coupons.created AS refCouponCreated', 'tbl_referral_rewards_cash.*', 'tbl_referral_rewards_cash.id AS cashID', 'tbl_referral_rewards_cash.created AS cashCreated', 'tbl_referral_rewards_custom.*', 'tbl_referral_rewards_custom.id AS customID', 'tbl_referral_rewards_custom.created AS customCreated', 'tbl_referral_rewards_promo_links.*', 'tbl_referral_rewards_promo_links.id AS promoID', 'tbl_referral_rewards_promo_links.created AS promoCreated')
+			->leftjoin('tbl_referral_rewards_adv_coupons', 'tbl_referral_rewards_adv_coupons.reward_id','=','tbl_referral_rewards.id')
+			->leftjoin('tbl_referral_rewards_ref_coupons', 'tbl_referral_rewards_ref_coupons.reward_id','=','tbl_referral_rewards.id')
+			->leftjoin('tbl_referral_rewards_cash', 'tbl_referral_rewards_cash.reward_id','=','tbl_referral_rewards.id')
+			->leftjoin('tbl_referral_rewards_custom', 'tbl_referral_rewards_custom.reward_id','=','tbl_referral_rewards.id')
+			->leftjoin('tbl_referral_rewards_promo_links', 'tbl_referral_rewards_promo_links.reward_id','=','tbl_referral_rewards.id')
+			->when((!empty($hash)), function ($query) use ($id) {
+				return $query->where('tbl_referral_rewards.hashcode', $id);
+			}, function ($query) use ($id){
+				return $query->where('tbl_referral_rewards.id', $id);
+			})
+			->first();
+        
+        return $aData;
     }
 
     /**
      * Replaces all the tags of the referral module
      */
     public function referralEmailTagReplace($referralID, $sHtml, $campaignType = 'email', $subscriberInfo) {
-        $aTags = $this->config->item('email_tags');
+        //Instanciate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        
+        $aTags = config('bbconfig.email_tags');
 
         $oReferral = $oRewardSettings = $this->getReferralUnitInfo($referralID);
 
@@ -1776,7 +1769,7 @@ class WorkFlow extends Controller {
         }
 
         if (!empty($subscriberInfo)) {
-            $advocateID = $subscriberInfo->advocateID;
+            $advocateID = isset($subscriberInfo->advocateID) ? $subscriberInfo->advocateID : '';
             if ($advocateID > 0) {
                 $oRefLink = $mWorkflow->getReferralLink($advocateID);
                 $refKey = $oRefLink->refkey;
@@ -1859,7 +1852,7 @@ class WorkFlow extends Controller {
                         break;
 
                     case '{UNSUBSCRIBE_LINK}':
-                        $htmlData = "<a href='" . base_url() . "admin/brandboost/unsubscribeUser/" . $bbID . "/" . $subscriberInfo->id . "'>Click Here</a> to unsubscribe.";
+                        $htmlData = "<a href='" . base_url() . "admin/brandboost/unsubscribeUser/" . @($bbID) . "/" . $subscriberInfo->id . "'>Click Here</a> to unsubscribe.";
 
                         break;
                 }

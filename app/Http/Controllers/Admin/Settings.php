@@ -145,6 +145,44 @@ class Settings extends Controller {
     }
 
     /**
+     * System Notification Template
+     * @param type
+     */
+    public function setup_system_notifications(Request $request) {
+
+        $seletedTab = $request->t;
+        if(empty($seletedTab)) {
+            $seletedTab = 'email';
+        }
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            exit('Not Authorise to access this page');
+            return;
+        }
+      
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
+                    <li><a data-toggle="tooltip" data-placement="bottom" title="System Notifications" class="sidebar-control active hidden-xs ">System Notifications</a></li>
+                </ul>';
+        $mSetting = new SettingsModel();
+        //$oTemplates = $this->mSetting->getSystemNotificationTemplates();
+        $getNotifications = $mSetting->listNotifications($userID,'admin');
+        //$oEmailTemplates = $this->mSetting->getEmailNotificationTemplates();
+        $aData = array(
+            'title' => 'System Notifications',
+            'pagename' => $breadcrumb,
+            'notifications' => $getNotifications,
+            'oUser' => $oUser
+        );
+        //$this->template->load('admin/admin_template_new', 'admin/settings/system_notifications', $aData);
+
+        return view('admin.settings.general_notifications', $aData);
+    }
+
+    /**
      * Update notification permission
      * @param type
      */
@@ -166,6 +204,43 @@ class Settings extends Controller {
             $bUpdated = SettingsModel::updateNotificationPermissonData($aData, $userID);
             if ($bUpdated) {
                 $response['status'] = 'success';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+     * Get email notification content
+     * @param type
+     */
+
+    public function getEmailNotificationContent(Request $request){
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            $response['status'] = 'error';
+            $response['msg'] = 'Not Authorise to access this page';
+            echo json_encode($response);
+            exit;
+        }
+    
+        $mSetting = new SettingsModel();
+        if ($request->templateId) {
+            $templateID = $request->templateId;
+            $oTemplate = $mSetting->getEmailNotificationContent($templateID);
+            //base64_decode
+            $oTemplate[0]->email_content_admin = base64_decode($oTemplate[0]->email_content_admin);
+            $oTemplate[0]->email_content_client = base64_decode($oTemplate[0]->email_content_client);
+            $oTemplate[0]->email_content_user = base64_decode($oTemplate[0]->email_content_user);
+           
+            if ($oTemplate) {
+                $response['status'] = 'success';
+                $response['datarow'] = $oTemplate[0];
             } else {
                 $response['status'] = 'error';
             }
@@ -298,7 +373,6 @@ class Settings extends Controller {
     }
 
 
-   
     /**
     * This function is used for creditvalues 
     * @param type 
@@ -346,16 +420,7 @@ class Settings extends Controller {
     * @return type
     */
       public function getCreditPropery(){
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-        $response = array();
-        $userRole = $oUser->user_role;
-        if($userRole != '1'){
-            $response['status'] = 'error';
-            $response['msg'] = 'Not Authorise to access this page';
-            echo json_encode($response);
-            exit;
-        }
+    
         $post = Input::post();
         $mSetting  = new SettingsModel();
         if ($post) {
@@ -372,6 +437,8 @@ class Settings extends Controller {
         exit;
     }
 
+
+   
 
     public function updateCreditPropery(){
         $oUser = getLoggedUser();
@@ -416,6 +483,35 @@ class Settings extends Controller {
                     $addUpdateHistory = $mSetting->addCreditHistory($aHistoryData);
                 }
                 $response['status'] = 'success';
+=======
+       
+        if ($request->template_id) {
+            $templateID = strip_tags($request->template_id);
+            $email_subject_admin = strip_tags($request->admin_subject);
+            $email_subject_client = strip_tags($request->subject);
+            $email_subject_user = strip_tags($request->user_subject);
+             
+            $email_content_admin = base64_encode($request->admin_text);
+            $email_content_user = base64_encode($request->user_text);
+            $email_content_client = base64_encode($request->plain_text);
+            
+            
+            
+            $aData = array(
+                'email_subject_admin' => $email_subject_admin,
+                'email_content_admin' => $email_content_admin,
+                'email_subject_client' => $email_subject_client,
+                'email_content_client' => $email_content_client,
+                'email_subject_user' => $email_subject_user,
+                'email_content_user' => $email_content_user
+            );
+            $mSetting  = new SettingsModel();
+
+            $bUpdated = $mSetting->updateNotificationContent($aData, $templateID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+                $response['msg'] = 'Template save successfully!';
+>>>>>>> b4687a2f6ae99fe7f2f379f1691fabfac3d78ee1
             } else {
                 $response['status'] = 'error';
             }

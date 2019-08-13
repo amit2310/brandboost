@@ -256,7 +256,6 @@ class ReferralModel extends Model {
                 }, function ($query) use ($id) {
                     return $query->where('tbl_referral_rewards.id', $id);
                 })
-                ->orderBy('tbl_nps_automations_events.id', 'asc')
                 ->first();
         return $oData;
     }
@@ -271,7 +270,7 @@ class ReferralModel extends Model {
      * @return type
      */
     public function emailTagReplace($referralID, $accountID, $sHtml, $campaignType = 'email', $subscriberInfo) {
-        $aTags = $this->config->item('email_tags');
+        $aTags = config('bbconfig.email_tags');
 
         if (!empty($referralID)) {
             $aSettings = $this->getSettingsInfo($referralID);
@@ -285,8 +284,8 @@ class ReferralModel extends Model {
         if (!empty($subscriberInfo)) {
             $subscriberID = $subscriberInfo->subscriber_id;
             $oRefLink = $this->getReferralLink($subscriberID, $referralID);
-            $refKey = $oRefLink->refkey;
-            $refLink = site_url() . 'ref/t/' . $refKey;
+            $refKey = isset($oRefLink->refkey) ? $oRefLink->refkey : '';
+            $refLink = base_url() . 'ref/t/' . $refKey;
         }
         if (!empty($aTags)) {
             foreach ($aTags AS $sTag) {
@@ -362,7 +361,7 @@ class ReferralModel extends Model {
                         break;
 
                     case '{UNSUBSCRIBE_LINK}':
-                        $htmlData = "<a href='" . base_url() . "admin/brandboost/unsubscribeUser/" . $bbID . "/" . $subscriberInfo->id . "'>Click Here</a> to unsubscribe.";
+                        $htmlData = "<a href='" . base_url() . "admin/brandboost/unsubscribeUser/" . @($bbID) . "/" . $subscriberInfo->id . "'>Click Here</a> to unsubscribe.";
 
                         break;
                 }

@@ -378,52 +378,71 @@ class EmailsModel extends Model {
         return false;
     }
 
+    /**
+     * Checks if Automation campaign exists
+     * @param type $automationName
+     * @param type $userID
+     * @return boolean
+     */
     public function checkIfEmailAutomationExists($automationName, $userID) {
-        $this->db->where("user_id", $userID);
-        $this->db->where("title", $automationName);
-        $this->db->where("deleted", 0);
-        $result = $this->db->get('tbl_automations_emails');
-        if ($result->num_rows() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        $oData = DB::table('tbl_automations_emails')
+                ->where('user_id', $userID)
+                ->where('title', $automationName)
+                ->where('deleted', 0)
+                ->exists();
+        return $oData;
     }
 
+    /**
+     * Used to add Email automation
+     * @param type $aData
+     * @return boolean
+     */
     public function addEmailAutomation($aData) {
-        $result = $this->db->insert("tbl_automations_emails", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
+        $insert_id = DB::table('tbl_automations_emails')->insertGetId($aData);
+        return $insert_id;
     }
 
+    /**
+     * 
+     * @param type $aData
+     * @param type $id
+     * @param type $userID
+     * @return boolean
+     */
     public function updateEmailAutomation($aData, $id, $userID = '') {
-        $this->db->where("id", $id);
-        if ($userID > 0) {
-            $this->db->where("user_id", $userID);
-        }
-        $result = $this->db->update("tbl_automations_emails", $aData);
-        if ($result) {
+        $oData = DB::table('tbl_automations_emails')
+        ->where('id', $id)
+        ->when(($userID > 0), function($query) use ($userID) {
+            return $query->where('user_id', $userID);
+        })        
+        ->update($aData);
+        if($oData>-1){
             return true;
-        } else {
+        }else{
             return false;
         }
     }
 
+    
+    /**
+     * 
+     * @param type $id
+     * @param type $userID
+     * @return boolean
+     */
     public function deleteEmailAutomation($id, $userID = '') {
-        $this->db->where("id", $id);
-        if ($userID > 0) {
-            $this->db->where("user_id", $userID);
-        }
-        $result = $this->db->update("tbl_automations_emails", array('deleted' => '1'));
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $aData = array(
+           'deleted' => '1' 
+        );
+        $oData = DB::table('tbl_automations_emails')
+        ->where('id', $id)
+        ->when(($userID > 0), function($query) use ($userID) {
+            return $query->where('user_id', $userID);
+        })        
+        ->delete();
+        return true;
+        
     }
 
     /**
@@ -442,7 +461,7 @@ class EmailsModel extends Model {
             }
         }
     }
-    
+
     /**
      * Update automation excluded list
      * @param type $automationID
@@ -552,7 +571,7 @@ class EmailsModel extends Model {
             return false;
         }
     }
-    
+
     /**
      * Used to delete automation list
      * @param type $automationID
@@ -572,7 +591,7 @@ class EmailsModel extends Model {
             }
         }
     }
-    
+
     /**
      * Used to delete automation excluded list
      * @param type $automationID
@@ -584,7 +603,7 @@ class EmailsModel extends Model {
             $result = DB::table('tbl_automations_emails_lists_excluded')
                     ->where('automation_id', $automationID)
                     ->where('list_id', $listId)
-                    ->delete();            
+                    ->delete();
             if ($result) {
                 return true;
             } else {
@@ -652,20 +671,22 @@ class EmailsModel extends Model {
         }
     }
 
+    /**
+     * Used to get Email module template
+     * @param type $userID
+     * @param type $type
+     * @return type
+     */
     public function getEmailMoudleTemplates($userID = 0, $type = 'email') {
-        if ($userID > 0) {
-            $this->db->where("user_id", $userID);
-        } else {
-            $this->db->where("user_id", 0);
-        }
-
-        $this->db->where('template_type', $type);
-
-        $result = $this->db->get("tbl_automations_emails_campaigns_templates");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_automations_emails_campaigns_templates')
+                ->where('template_type', $type)
+                ->when(($userID > 0), function ($query) use ($type) {
+                    return $query->where('user_id', $type);
+                }, function ($query){
+                    return $query->where('user_id', 0);
+                })
+                ->get();
+        return $oData;        
     }
 
     public function getEmailMoudleTemplateInfo($id) {
@@ -732,12 +753,8 @@ class EmailsModel extends Model {
 
         $sql .= "ORDER BY tbl_automations_emails_tracking_twillio.id DESC";
 
-        $result = $this->db->query($sql);
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        //echo $this->db->last_query();
-        return $response;
+        $oData = DB::select(DB::raw($sql));
+        return $oData;
     }
 
     public function getEmailTwilioCategorizedStatsData($oData) {

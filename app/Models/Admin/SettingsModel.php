@@ -384,6 +384,22 @@ class SettingsModel extends Model {
                 ->insert($aData);
     }
 
+    /**
+     * Get email notification content
+     * @param type $id
+     * @return type object 
+     */
+    public function getEmailNotificationContent($id = "") {
+
+        $response = DB::table('tbl_notifications_manager')
+                ->when(($id > 0), function ($query) use ($id) {
+                    return $query->where('id', $id);
+                })
+                ->orderBy('id', 'desc')
+                ->get();
+        return $response;
+    }
+
     public function getSystemNotifyPermissions($userID, $eventName) {
         $bSystemNotification = true;
         $bPermission = false;
@@ -513,17 +529,7 @@ class SettingsModel extends Model {
         return false;
     }
 
-    public function updateNotificationContent($aData, $id) {
-        if ($id > 0) {
-            $this->db->where('id', $id);
-            $result = $this->db->update('tbl_notifications_manager', $aData);
-            if ($result)
-                return true;
-            else
-                return false;
-        }
-        return false;
-    }
+    
 
    /**
     * This function is used to update the amazon s3 settings 
@@ -534,6 +540,23 @@ class SettingsModel extends Model {
     public function updateS3StorageDetails($aData, $id) {
         if ($id > 0) {
             $aData =  DB::table('tbl_users')->where('id', $id)->update($aData);
+            return true;
+            
+        }
+        return false;
+    }
+
+
+    /**
+    * This function is used to update notification content
+    * @param type $aData, $id
+    * @return type
+    */
+
+    public function updateNotificationContent($aData, $id) {
+        if ($id > 0) {
+
+            $aData =  DB::table('tbl_notifications_manager')->where('id', $id)->update($aData);
             return true;
             
         }
@@ -567,20 +590,6 @@ class SettingsModel extends Model {
         return $oData;        
     }
 
-    /**
-    * This function is used to get the notification content
-    * @param type 
-    * @return type
-    */
-
-    public function getEmailNotificationContent($id = "") {
-        $oData = DB::table('tbl_notifications_manager')
-        ->when($id > 0, function($query) use ($id){
-        return $query->where("id", $id);
-        })->orderBy('id', 'DESC')->get();
-        return  $oData;
-       
-    }
 
     public function addEmailNotificationTemplate($aData) {
         $result = $this->db->insert('tbl_notifications_email_templates', $aData);
@@ -590,11 +599,21 @@ class SettingsModel extends Model {
             return false;
     }
 
-    public function listNotifications($userId="", $type = '') {
+   /**
+* This function is used to get all notifications 
+* @param type $userId
+* @param type $type
+* @return type
+*/
+  
+  
+    public function listNotifications($userId, $type = '') {
+
         $oData = DB::table('tbl_notifications_manager')
-        ->select('tbl_notifications_manager.*')
-         ->where('tbl_notifications_manager.status', '1')->get();
-       
+                ->select('tbl_notifications_manager.*')
+                ->where('tbl_notifications_manager.status', '1')
+                ->get();
+
         return $oData;
     }
 

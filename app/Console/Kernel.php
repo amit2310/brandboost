@@ -37,6 +37,9 @@ class Kernel extends ConsoleKernel
         
         $schedule->command('inviter:nps')
                    ->everyMinute();
+        
+        $schedule->command('inviter:referral')
+                   ->everyMinute();
     }
 
     /**
