@@ -12,9 +12,9 @@
 	else{
 		$srcUserImg = '/profile_images/avatar_image.png';
 	}
-	$pageName = $this->uri->segment(2);
-    $pageSeName = $this->uri->segment(3);
-    $pageThName = $this->uri->segment(4);
+	$pageName = \Request::segment(2);
+    $pageSeName = \Request::segment(3);
+    $pageThName = \Request::segment(4);
 
 		
 	$onBrandBoostCount = getBBCount(0, 'onsite');

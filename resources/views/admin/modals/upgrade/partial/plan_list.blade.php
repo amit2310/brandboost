@@ -1,4 +1,4 @@
-<?php //pre($oCurrentPlanData); die;   ?>
+<?php error_reporting(0);//pre($oCurrentPlanData); die;   ?>
 
 <div class="row monthly_pricing_plan" <?php if (!empty($oCurrentPlanData) && !(($oCurrentPlanData->subs_cycle == 'month' || $oCurrentPlanData->subs_cycle == 'monthly') && ($oCurrentPlanData->level_name != 'Pro'))): ?> style="display:none;"<?php endif; ?>> 
     <?php if (!empty($oMemberships)): $isMembershipActive = false; ?>
@@ -41,13 +41,17 @@
                                 <li <?php if ($oMembership->level_name != 'Pro'): ?> class="disabled"<?php endif; ?>><i class="<?php if ($oMembership->level_name != 'Pro'): ?>icon-cancel-circle2<?php else: ?>icon-checkmark-circle<?php endif; ?>"></i> Analytics</li>
                             </ul>
                             <?php
+                            if(isset($oUser->plan_id) && isset($oMembership->plan_id) )
+                            {
                             if ($oUser->plan_id == $oMembership->plan_id) {
-                                $isMembershipActive = true;
+                                  $isMembershipActive = true;
                                 ?>
                                 <button type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
                             <?php } else { ?>
                                 <button type="button" type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" plan_id="<?php echo $oMembership->plan_id; ?>" plan_name="<?php echo $oMembership->level_name; ?>"><span><?php if (empty($oCurrentPlanData)): ?>Buy<?php elseif ($isMembershipActive): ?>Upgrade<?php else: ?>Downgrade<?php endif; ?></span> </button>
-                            <?php } ?>
+                            <?php } 
+                            }
+                        ?>
                         </div>
                     </div>
                 </div>
