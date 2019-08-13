@@ -279,6 +279,9 @@ Route::post('company/saveComment','Company@saveComment');
 //Setting 
 Route::get('admin/settings','Admin\Settings@index');
 Route::get('admin/settings/setup_system_notifications','Admin\Settings@setup_system_notifications');
+Route::post('admin/settings/getEmailNotificationContent','Admin\Settings@getEmailNotificationContent');
+
+
 Route::post('webchat/settings/updateCompanyFormData','Admin\Settings@updateCompanyFormData');
 Route::post('admin/settings/updateCompanyProfile','Admin\Settings@updateCompanyProfile');
 Route::post('admin/settings/updateNotificationPermisson','Admin\Settings@updateNotificationPermisson');

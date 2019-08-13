@@ -12,7 +12,7 @@
     .toggle { cursor:pointer!important; }
 </style>
 
-<?php //$this->load->view('admin/notification_smart_popup'); ?>
+@include('admin.notification_smart_popup')
 
 
        <div class="content">
@@ -719,7 +719,7 @@
             $.ajax({
                 url: '<?php echo base_url("admin/settings/getEmailNotificationContent"); ?>',
                 type: "POST",
-                data: {templateId: templateId},
+                data: {templateId: templateId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
