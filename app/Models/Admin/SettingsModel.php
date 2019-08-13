@@ -222,29 +222,30 @@ class SettingsModel extends Model {
     }
 
 
+    /**
+    * This function will return all credit values 
+    * @param type $clientID
+    * @return type
+    */
+
     public function getCreditValuesHistory() {
-        $result = $this->db->get('tbl_credit_values_history');
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $aData =  DB::table('tbl_credit_values_history')->get();
+        
+        return $aData;
     }
 
     public function updateCreditValues($aData, $id) {
         if ($id > 0) {
-            $response = array();
-            $this->db->where('id', $id);
-            $result = $this->db->update('tbl_credit_values', $aData);
-            if ($result)
-                return true;
-            else
-                return false;
+            $aData =  DB::table('tbl_credit_values')
+             ->where('id', $id)->update($aData);
+             return true;
+           
         }
         return false;
     }
 
     public function addCreditHistory($aData) {
-        $result = $this->db->insert('tbl_credit_values_history', $aData);
+        $result = DB::table('tbl_credit_values_history')->insert($aData);
         if ($result)
             return true;
         else
