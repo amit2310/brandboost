@@ -1,6 +1,4 @@
-<?php
-namespace App\Chargebee\Lib;
-
+<?php 
 
 function checkExtentions() {
     $extensions = array('curl', 'json');
