@@ -299,6 +299,8 @@ Route::get('admin/settings','Admin\Settings@index');
 Route::get('admin/settings/setup_system_notifications','Admin\Settings@setup_system_notifications');
 Route::post('admin/settings/getEmailNotificationContent','Admin\Settings@getEmailNotificationContent');
 Route::post('admin/settings/updateEmailNotificationContent','Admin\Settings@updateEmailNotificationContent');
+Route::post('admin/settings/updateSMSNotificationContent','Admin\Settings@updateSMSNotificationContent');
+Route::post('admin/settings/updateSystemNotificationContent','Admin\Settings@updateSystemNotificationContent');
 
 
 Route::post('webchat/settings/updateCompanyFormData','Admin\Settings@updateCompanyFormData');

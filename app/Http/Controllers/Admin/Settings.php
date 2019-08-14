@@ -488,6 +488,89 @@ class Settings extends Controller {
         echo json_encode($response);
         exit;
     }
+
+
+    /**
+    * This function is used for update sms notification content
+    * @param type 
+    * @return type
+    */
+    public function updateSMSNotificationContent(Request $request) {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            $response['status'] = 'error';
+            $response['msg'] = 'Not Authorise to access this page';
+            echo json_encode($response);
+            exit;
+        }
+
+        if ($request->template_id) {
+            $templateID = strip_tags($request->template_id);
+            $admin_sms_content = $request->admin_sms_content;
+            $client_sms_content = $request->client_sms_content;
+            $user_sms_content = $request->user_sms_content;
+            $aData = array(
+                'admin_sms_content' => $admin_sms_content,
+                'client_sms_content' => $client_sms_content,
+                'user_sms_content' => $user_sms_content
+            );
+            
+            $mSetting  = new SettingsModel();
+            $bUpdated = $mSetting->updateNotificationContent($aData, $templateID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+                $response['msg'] = 'Template save successfully!';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+    * This function is used for update system notification content
+    * @param type 
+    * @return type
+    */
+    public function updateSystemNotificationContent(Request $request) {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            $response['status'] = 'error';
+            $response['msg'] = 'Not Authorise to access this page';
+            echo json_encode($response);
+            exit;
+        }
+      
+        if ($request->template_id) {
+            $templateID = strip_tags($request->template_id);
+            $admin_system_content = $request->admin_system_content;
+            $client_system_content = $request->client_system_content;
+            $user_system_content = $request->user_system_content;
+            $aData = array(
+                'admin_system_content' => $admin_system_content,
+                'client_system_content' => $client_system_content,
+                'user_system_content' => $user_system_content
+            );
+            
+            $mSetting  = new SettingsModel();
+            $bUpdated = $mSetting->updateNotificationContent($aData, $templateID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+                $response['msg'] = 'Template save successfully!';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
      
 
 }
