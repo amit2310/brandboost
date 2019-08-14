@@ -1223,15 +1223,21 @@ class Emails extends Controller {
         exit;
     }
 
-    public function multipalDeleteAutomation() {
+    /**
+     * Used to delete Automation campaigns in bulk
+     * @param Request $request
+     */
+    public function multipalDeleteAutomation(Request $request) {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        
+        $mEmails = new EmailsModel();
+        
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
@@ -1239,7 +1245,7 @@ class Emails extends Controller {
             $userID = '';
         }
 
-        $multiAutomationID = $post['multipal_automation_id'];
+        $multiAutomationID = $request->multipal_automation_id;
         foreach ($multiAutomationID as $automationID) {
             $bDeleted = $mEmails->deleteEmailAutomation($automationID, $userID);
             if ($bDeleted == true) {
@@ -1248,7 +1254,7 @@ class Emails extends Controller {
                     'user_id' => $aUser->id,
                     'event_type' => 'manage_automation_lists',
                     'action_name' => 'deleted_automation_list',
-                    'list_id' => $listID,
+                    'list_id' => !empty($listID) ? $listID : '',
                     'brandboost_id' => '',
                     'campaign_id' => '',
                     'inviter_id' => '',

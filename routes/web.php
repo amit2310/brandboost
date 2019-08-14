@@ -52,6 +52,8 @@ Route::post('admin/modules/emails/getAutomation','Admin\Modules\Emails@getAutoma
 Route::post('admin/modules/emails/updateAutomation','Admin\Modules\Emails@updateAutomation');
 Route::post('admin/modules/emails/changeAutomationStatus','Admin\Modules\Emails@changeAutomationStatus');
 Route::post('admin/modules/emails/deleteAutomation','Admin\Modules\Emails@deleteAutomation');
+Route::post('admin/modules/emails/multipalDeleteAutomation','Admin\Modules\Emails@multipalDeleteAutomation');
+
 
 
 
