@@ -426,14 +426,14 @@ class Settings extends Controller {
         if ($post) {
             $creditID = base64_url_decode(strip_tags($post['creditID']));
              $oCrValue = $mSetting->getCreditValues($creditID);
-            if ($oCrValue) {
+             if ($oCrValue) {
                 $response['status'] = 'success';
                 $response['datarow'] = $oCrValue[0];
-            } else {
+             } else {
                 $response['status'] = 'error';
-            }
-        }
-        echo json_encode($response);
+             }
+         }
+         echo json_encode($response);
         exit;
     }
 
