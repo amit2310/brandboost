@@ -361,4 +361,4 @@ Wasn't so happy with the quality of my purchase... no questions asked, they imme
     background-color: #5d7df3;
 }
 </style>
-<a style="position: fixed; top: 50%; right: 12px;" class="reviewsNoti slide-toggle visible emailNotiSmartPopup"  type="admin" template_id="<?php if(!empty($oEmailTemplates)) { echo $oEmailTemplates[0]->id; } ?>" ><i class="icon-arrow-left5"></i></a>
+<a style="position: fixed; top: 50%; right: 12px; display: none;" class="reviewsNoti slide-toggle visible emailNotiSmartPopup"  type="admin" template_id="<?php if(!empty($oEmailTemplates)) { echo $oEmailTemplates[0]->id; } ?>" ><i class="icon-arrow-left5"></i></a>

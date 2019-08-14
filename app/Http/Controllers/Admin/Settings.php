@@ -286,7 +286,6 @@ class Settings extends Controller {
     * @return type
     */
 
-
     public function amazon_s3_storage() {
 
         $mSetting = new SettingsModel();
@@ -575,7 +574,7 @@ class Settings extends Controller {
 
 
     /**
-    * This function is used to get the client twilio number details 
+     * This function is used to get the client twilio number details 
     * @param id 
     * @return type
     */
@@ -608,6 +607,45 @@ class Settings extends Controller {
       return view('admin.settings.twillo_log', $aData);
     }
 
+
+    /**
+    * This function is used for update notification
+    * @param type 
+    * @return type
+    */
+    public function updateNotification(Request $request)
+    {
+        $response = array();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        if ($request->id) {
+        $id = strip_tags($request->id);
+        $userId = $userID;
+        $user_type=$request->user_type;
+        $permission_type=$request->permission;
+        $permission_value=$request->permission_value;
+     
+            $aData = array(
+                'id' => $id,
+                'userId' => $userId,
+                'user_type' => $user_type,
+                'permission' => $permission_type,
+                'permission_value'=>$permission_value 
+            );
+            
+            $mSetting  = new SettingsModel();
+            $bAdded = $mSetting->updateNotificationPermissions($aData);
+            if ($bAdded) {
+                $response['status'] = 'success';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+
+
+    }
      
 
 }
