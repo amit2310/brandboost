@@ -673,4 +673,12 @@ Route::post('admin/settings/updateS3setting','Admin\Settings@updateS3setting');
 Route::get('admin/settings/creditValues','Admin\Settings@creditValues');
 Route::post('admin/settings/getCreditPropery','Admin\Settings@getCreditPropery');
 Route::post('admin/settings/updateCreditPropery','Admin\Settings@updateCreditPropery');
+Route::get('admin/users','Admin\Users@index');
+Route::post('admin/users/update_status','Admin\Users@update_status');
+Route::post('admin/users/getUserById','Admin\Users@getUserById');
+Route::post('admin/users/user_delete','Admin\Users@user_delete');
+Route::post('admin/users/getUserInfo','Admin\Users@getUserInfo');
+Route::get('admin/users/sendgriddata/{ID}','Admin\Users@sendgriddata');
+Route::get('admin/settings/list_client_details/{ID}','Admin\Users@twiliomessage');
+
 
