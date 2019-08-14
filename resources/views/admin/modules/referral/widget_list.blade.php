@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <?php
 	$iActiveCount = $iArchiveCount = 0;
 	
@@ -222,7 +229,9 @@
                                         $currentUserId = $aUser->id;
 										
                                         foreach ($oWidgetsList as $data) {
-                                            $referralData = $this->mReferral->getReferral($currentUserId, $data->referral_id);
+                                            $referralData = \App\Models\Admin\Modules\ReferralModel::getReferral($currentUserId, $data->referral_id);
+											//pre($referralData); die;
+											
 										?>
 										
 										<tr id="append-<?php echo $data->id; ?>" class="selectedClass">
@@ -235,9 +244,9 @@
 													<img src="<?php echo base_url('assets/images/default_table_img2.png'); ?>" class="img-circle img-xs br5" alt="Img"></a>
 												</div>
 												<div class="media-left">
-													<div class=""><a href="<?php echo base_url('admin/modules/referral/referral_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>" class="text-default text-semibold"><?php echo $data->widget_title; ?></a></div>
+													<div class=""><a href="<?php echo base_url('admin/modules/referral/referral_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->widget_title; ?>" class="text-default text-semibold"><?php echo $data->widget_title; ?></a></div>
 													<div class="text-muted text-size-small">
-														<?php //echo setStringLimit($data->widget_desc); ?>
+														<?php echo setStringLimit($data->widget_desc); ?>
 													</div>
 												</div>
 											</td>
@@ -256,7 +265,7 @@
 												</div>
 												<div class="media-left">
 													<a href="<?php echo base_url("admin/modules/referral/setup/" . $data->referral_id); ?>" target="_blank">
-														<?php echo $referralData->title; ?>
+														<?php if(!empty($referralData)){ echo $referralData->title; } ?>
 													</a>
 												</div>
 												<?php } ?>
@@ -303,13 +312,13 @@
 																<?php if ($data->status == 2) { ?>
 																	<li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="1"><i class="icon-file-stats"></i> Start</a></li>
 																<?php } ?>
-																<li><a href="<?php echo base_url('admin/modules/referral/referral_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
+																<li><a href="<?php echo base_url('admin/modules/referral/referral_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->widget_title; ?>" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
 																
 																<li><a href="javascript:void(0);" class="deleteCampaign" widgetID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
 																<li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="3"><i class="icon-file-text2"></i> Move to Archive</a></li>
 																<?php //endif; ?>
 																<li><a href="javascript:void(0);" class="viewECode" widgetID="<?php echo $data->id; ?>"><i class="icon-file-locked"></i> Get Embedded Code</a></li>
-																<!-- <li><a href="<?php echo base_url('admin/modules/referral/referral_widget_setup/' . $data->id); ?>" target="_blank"><i class="icon-file-locked"></i> Statistics</a></li> -->
+																
 															</ul>
 														</div>
 														<?php
@@ -409,6 +418,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmAddReferralWidget" id="frmAddReferralWidget" action="javascript:void();">
+				{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add Referral Widget</h5>
@@ -532,7 +542,7 @@
 					$.ajax({
 						url: '<?php echo base_url('admin/modules/referral/deleteBulkReferralWidgets'); ?>',
 						type: "POST",
-						data: {multi_widget_id: val},
+						data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
 						dataType: "json",
 						success: function (data) {
 							if (data.status == 'success') {
@@ -562,7 +572,7 @@
 					$.ajax({
 						url: '<?php echo base_url('admin/modules/referral/archiveBulkReferralWidgets'); ?>',
 						type: "POST",
-						data: {multi_widget_id: val},
+						data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
 						dataType: "json",
 						success: function (data) {
 							if (data.status == 'success') {
@@ -635,7 +645,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/modules/referral/addReferralWidget'); ?>',
                 type: "POST",
-                data: {'referralTitle': referralTitle},
+                data: {'referralTitle': referralTitle, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -656,7 +666,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/modules/referral/updatReferralWidgetStatus'); ?>',
                 type: "POST",
-                data: {'widgetID': widgetID, 'status': status},
+                data: {'widgetID': widgetID, 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -678,7 +688,7 @@
 				$.ajax({
 					url: '<?php echo base_url('admin/modules/referral/delete_referral_widget'); ?>',
 					type: "POST",
-					data: {widget_id: widgetID},
+					data: {widget_id: widgetID, _token: '{{csrf_token()}}'},
 					dataType: "json",
 					success: function (data) {
 						if (data.status == 'success') {
@@ -695,7 +705,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/modules/referral/getReferralWidgetEmbedCode'); ?>',
                 type: "POST",
-                data: {widget_id: widgetID},
+                data: {widget_id: widgetID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -712,11 +722,6 @@
 		});
 		
         $('[data-toggle="tooltip"]').tooltip();
-		
 	});
-	
-	
-	
-	
 </script>
-
+@endsection

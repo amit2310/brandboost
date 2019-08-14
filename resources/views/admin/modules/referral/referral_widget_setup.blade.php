@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <!-- Content area -->
 <div class="content">
 	
@@ -22,12 +29,12 @@
     <div class="tab-content">
 		<!--===========TAB 1===========-->
 		<div class="tab-pane active" id="right-icon-tab_setup">
-			<?php $this->load->view('admin/modules/referral/widget-tabs/referral-setup'); ?>
+			@include('admin.modules.referral.widget-tabs.referral-setup')
 		</div>
 		
 		<!--===========TAB 2===========-->
-		<div class="tab-pane <?php echo $integrationClass; ?>" id="right-icon-tab_integration">
-			<?php $this->load->view('admin/modules/referral/widget-tabs/referral-integration'); ?>
+		<div class="tab-pane" id="right-icon-tab_integration">
+			@include('admin.modules.referral.widget-tabs.referral-integration')
 		</div>
 	</div>            
 	
@@ -47,3 +54,4 @@ function copyToClipboard(element) {
 	$temp.remove();
 }
 </script>
+@endsection

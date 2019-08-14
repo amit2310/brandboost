@@ -150,6 +150,13 @@ Route::post('admin/modules/referral/saveSettings','Admin\Modules\Referral@saveSe
 Route::post('admin/modules/referral/publishReferralStatus','Admin\Modules\Referral@publishReferralStatus');
 Route::post('admin/modules/referral/saveRewards','Admin\Modules\Referral@saveRewards');
 Route::post('admin/modules/referral/saveCoupons','Admin\Modules\Referral@saveCoupons');
+Route::get('admin/modules/referral/widgets','Admin\Modules\Referral@widgets');
+Route::post('admin/modules/referral/updatReferralWidgetStatus','Admin\Modules\Referral@updatReferralWidgetStatus');
+Route::post('admin/modules/referral/delete_referral_widget','Admin\Modules\Referral@deleteReferralWidget');
+Route::post('admin/modules/referral/getReferralWidgetEmbedCode','Admin\Modules\Referral@getReferralWidgetEmbedCode');
+Route::get('admin/modules/referral/referral_widget_setup/{id}','Admin\Modules\Referral@referralWidgetSetup');
+Route::post('admin/modules/referral/addReferralWidgetApp','Admin\Modules\Referral@addReferralWidgetApp');
+Route::post('admin/modules/referral/publishReferralWidget','Admin\Modules\Referral@publishReferralWidget');
 
 
 
@@ -292,6 +299,8 @@ Route::get('admin/settings','Admin\Settings@index');
 Route::get('admin/settings/setup_system_notifications','Admin\Settings@setup_system_notifications');
 Route::post('admin/settings/getEmailNotificationContent','Admin\Settings@getEmailNotificationContent');
 Route::post('admin/settings/updateEmailNotificationContent','Admin\Settings@updateEmailNotificationContent');
+Route::post('admin/settings/updateSMSNotificationContent','Admin\Settings@updateSMSNotificationContent');
+Route::post('admin/settings/updateSystemNotificationContent','Admin\Settings@updateSystemNotificationContent');
 
 
 Route::post('webchat/settings/updateCompanyFormData','Admin\Settings@updateCompanyFormData');

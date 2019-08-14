@@ -851,6 +851,7 @@
         $(document).on('submit', '#frmEditEmailTemplate', function (e) {
             
             var formdata = $("#frmEditEmailTemplate").serialize();
+            formdata += '&_token={{csrf_token()}}';
             $.ajax({
                 url: '<?php echo base_url('admin/settings/updateEmailNotificationContent'); ?>',
                 type: "POST",
@@ -872,6 +873,7 @@
         $(document).on('submit', '#frmEditSMSTemplate', function (e) {
             
             var formdata = $("#frmEditSMSTemplate").serialize();
+            formdata += '&_token={{csrf_token()}}';
             $.ajax({
                 url: '<?php echo base_url('admin/settings/updateSMSNotificationContent'); ?>',
                 type: "POST",
@@ -893,6 +895,7 @@
         $(document).on('submit', '#frmEditSystemTemplate', function (e) {
             
             var formdata = $("#frmEditSystemTemplate").serialize();
+            formdata += '&_token={{csrf_token()}}';
             $.ajax({
                 url: '<?php echo base_url('admin/settings/updateSystemNotificationContent'); ?>',
                 type: "POST",
