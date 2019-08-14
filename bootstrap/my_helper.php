@@ -3,6 +3,7 @@
 /* require 'aws/aws-autoloader.php';
   use Aws\S3\S3Client;
   use Aws\Exception\AwsException; */
+
 //require_once 'vendor/autoload.php'; // Loads the library
 
 use Illuminate\Http\Request;
@@ -473,7 +474,7 @@ if (!function_exists('getactiveChatbox')) {
  */
 if (!function_exists('getAllUser')) {
 
-    function getAllUser($userId="") {
+    function getAllUser($userId = "") {
         $oData = \App\Models\Admin\UsersModel::getAllUsers($userId);
         return $oData;
     }
@@ -776,7 +777,7 @@ if (!function_exists('updateCreditUsage')) {
                         'segment' => !empty($aData['segment']) ? $aData['segment'] : '',
                         'spend_to' => !empty($aData['spend_to']) ? $aData['spend_to'] : '',
                         'spend_from' => !empty($aData['spend_from']) ? $aData['spend_from'] : '',
-                        'module_name' => !empty($aData['module_name']) ? $aData['module_name'] : '', 
+                        'module_name' => !empty($aData['module_name']) ? $aData['module_name'] : '',
                         'module_unit_id' => !empty($aData['module_unit_id']) ? $aData['module_unit_id'] : '',
                         'content' => base64_encode($aData['content']),
                         'opening_balance' => $totalCredits,
@@ -900,27 +901,25 @@ if (!function_exists('updateCreditUsageOLD')) {
 
 
 /**
-* Get uploaded file size
-*/
+ * Get uploaded file size
+ */
 if (!function_exists('getFileSize')) {
 
-   function getFileSize($oName) {
-       $oData = \App\Models\Admin\SettingsModel::getFilesizeSettings($oName);
-       return $oData;
-   }
+    function getFileSize($oName) {
+        $oData = \App\Models\Admin\SettingsModel::getFilesizeSettings($oName);
+        return $oData;
+    }
 
 }
 
 /**
-* this function is used to conver the file to bytes
-*/
-
-
+ * this function is used to conver the file to bytes
+ */
 if (!function_exists('FileSizeConvertToBytes')) {
 
-   function FileSizeConvertToBytes($Megabytes) {
-       return $Megabytes * 1048576;
-   }
+    function FileSizeConvertToBytes($Megabytes) {
+        return $Megabytes * 1048576;
+    }
 
 }
 
@@ -1200,12 +1199,10 @@ if (!function_exists('getFavSmsUser')) {
 
 
 /**
-* This function is used to get/check twilio data 
-* @param type 
-* @return type
-*/
-
-
+ * This function is used to get/check twilio data 
+ * @param type 
+ * @return type
+ */
 if (!function_exists('currentUserTwilioData')) {
 
     function currentUserTwilioData($currentUser) {
@@ -1259,17 +1256,16 @@ if (!function_exists('getMembershipUpsell')) {
 }
 
 /**
-    * Get user detail by user id
-    * @param type $userId
-    * @return type object
-    */
-
+ * Get user detail by user id
+ * @param type $userId
+ * @return type object
+ */
 function getUserDetailsByUserID($userId) {
-   $aUser = '';
-   if ($userId > 0) {
-       $aUser = $oData = \App\Models\Admin\UsersModel::getUserInfo($userId);
-   }
-   return $aUser;
+    $aUser = '';
+    if ($userId > 0) {
+        $aUser = $oData = \App\Models\Admin\UsersModel::getUserInfo($userId);
+    }
+    return $aUser;
 }
 
 if (!function_exists('user_account')) {
@@ -1466,7 +1462,7 @@ if (!function_exists('add_notifications')) {
 
         if (!empty($ownerID) && !empty($eventName)) {
 
-            
+
             if ($isLoggedInTeam) {
                 $aTeamInfo = \App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $ownerID);
                 $teamMemberName = $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname;
@@ -1588,7 +1584,7 @@ if (!function_exists('sendEmailPreview')) {
         $sandgriduser = config('bbconfig.sandgriduser');
         $sandgridpass = config('bbconfig.sandgridpass');
         $url = config('bbconfig.api_url');
-        
+
         //echo "Sendgrid User ={$sandgriduser} And Sendgrid password = {$sandgridpass} and URL = {$url}";
 
         $fromEmail = config('bbconfig.previewFromEmailAddress') == '' ? $fromEmail : Session::get('previewFromEmailAddress');
@@ -1795,7 +1791,7 @@ if (!function_exists('sendClinetMMS')) {
                 $msg = $aData['msg'];
                 $client = new Client($sid, $token);
                 $aRequest = array('from' => $fromNum, 'mediaUrl' => $msg);
-                
+
                 if ($toNum != '' && $msg != '') {
 //echo 'testing data';
                     $res = $client->messages->create($toNum, $aRequest);
@@ -1835,13 +1831,13 @@ if (!function_exists('sendClinetSMS')) {
                 $charCount = strlen($msg);
                 $client = new Client($sid, $token);
                 $aRequest = array('from' => $fromNum, 'body' => $msg);
-                
+
                 if ($toNum != '' && $msg != '') {
                     if ($charCount > 500) {
                         $chunks = explode("||||", wordwrap($msg, 500, "||||", false));
 
                         $total = count($chunks);
-                        
+
                         foreach ($chunks as $page => $chunk) {
                             $res = $client->messages->create(
                                     $toNum, array(
@@ -1851,11 +1847,10 @@ if (!function_exists('sendClinetSMS')) {
                             );
                         }
                     } else {
-                        
+
                         //echo "\nYes , I am in now";
                         $res = $client->messages->create($toNum, $aRequest);
                         //echo "Res is ". $res;
-                        
                         //$res->sid;
                     }
 
@@ -1895,12 +1890,11 @@ if (!function_exists('createTwilioSA')) {
 }
 
 
-    /**
-    * This function is used to get the twilio numbers
-    * @param type 
-    * @return type
-    */
-
+/**
+ * This function is used to get the twilio numbers
+ * @param type 
+ * @return type
+ */
 if (!function_exists('getTwilioPNByAreaCodeTeam')) {
 
 
@@ -1920,7 +1914,7 @@ if (!function_exists('getTwilioPNByAreaCodeTeam')) {
             $numbers = $client->availablePhoneNumbers($contryName)->local->read(
                     array("areaCode" => $areacode)
             );
-            
+
             $returnData = array();
             if (count($numbers) > 0) {
                 $returnData['status'] = 'success';
@@ -1986,11 +1980,10 @@ if (!function_exists('getTwilioPNByAreaCode')) {
 
 
 /**
-* This function is used to create the twilio account for the team members
-* @param type
-* @return type
-*/
-
+ * This function is used to create the twilio account for the team members
+ * @param type
+ * @return type
+ */
 if (!function_exists('createTwilioCNTeam')) {
 
     function createTwilioCNTeam($phoneNumber) {
@@ -2254,7 +2247,7 @@ if (!function_exists('sendClientEmail')) {
             $messageBody = $aData['message'];
             $messageSubject = $aData['subject'];
             $from = (!empty($aData['from_email'])) ? $aData['from_email'] : '';
-            $fromName = (!empty($aData['from_name'])) ? $aData['from_name'] : ''; 
+            $fromName = (!empty($aData['from_name'])) ? $aData['from_name'] : '';
 
             $siteemail = config('bbconfig.siteemail');
 
@@ -2571,23 +2564,19 @@ if (!function_exists('getTeamTwilioAccount')) {
 
 
 
-     /**
-     * this function is used get the room details
-     * @return type
-     */
-
+/**
+ * this function is used get the room details
+ * @return type
+ */
 if (!function_exists('getTeamByroom')) {
 
     function getTeamByroom($room) {
-        
+
         $oData = \App\Models\Admin\WebChatModel::getTeamByroomDetails($room);
-        if(!empty($oData))
-        {
+        if (!empty($oData)) {
             $userval = $oData[0]->userval;
-        }
-        else
-        {
-          $userval = "";
+        } else {
+            $userval = "";
         }
         return $userval;
     }
@@ -2601,6 +2590,7 @@ if (!function_exists('getTeamMemberById')) {
         $subscribersData = \App\Models\Admin\SubscriberModel::getTeamMemberById($TeamId);
         return $subscribersData[0];
     }
+
 }
 
 
@@ -2626,13 +2616,11 @@ if (!function_exists('smsteam_member_name')) {
 
     function smsteam_member_name($usrid) {
         $oData = \App\Models\Admin\SubscriberModel::get_sms_team_member_name($userID);
-        if(!empty($oData)) {
+        if (!empty($oData)) {
             return $oData[0]->teamName;
-        }
-        else {
+        } else {
             return '';
         }
-        
     }
 
 }
@@ -2660,14 +2648,12 @@ if (!function_exists('getlastChatMessage')) {
  * @param type $inputval
  * @return type
  */
-
 if (!function_exists('smallwfilterInput')) {
 
     function smallwfilterInput($userID, $inputval) {
-      
+
         $oData = \App\Models\Admin\WebChatModel::smallwfilterModel($userID, $inputval);
         return $oData;
-        
     }
 
 }
@@ -2911,180 +2897,175 @@ if (!function_exists('getBrowserN')) {
 
 }
 
- 
-        /**
-        * This function is used to get the email send count
-        * @param type $clientID
-        * @return type
-        */
+/**
+ * This function is used to get the email send count
+ * @param type $clientID
+ * @return type
+ */
+function emailSend($date) {
+    $aEmail = \App\Models\Admin\ReportModel::getEmailSend($date);
+    return $aEmail;
+}
 
-        function emailSend($date) {
-        $aEmail = \App\Models\Admin\ReportModel::getEmailSend($date);
-        return $aEmail;
-        }
+function emailFailed($date) {
 
-        function emailFailed($date) {
+    $aEmail = \App\Models\Admin\ReportModel::getEmailFailed($date);
+    return $aEmail;
+}
 
-            $aEmail = \App\Models\Admin\ReportModel::getEmailFailed($date);
-            return $aEmail;
-        }
-
-        function emailOpen($date) {
-
-            
-            $aEmail = \App\Models\Admin\ReportModel::getEmailOpen($date);
-            return $aEmail;
-        }
-
-        function formOpen($date) {
-
-            
-            $aEmail = \App\Models\Admin\ReportModel::getFormOpen($date);
-            return $aEmail;
-        }
-
-        function feedbackReview($date) {
-
-            
-            $aEmail = \App\Models\Admin\ReportModel::getFeedbackReview($date);
-            return $aEmail;
-        }
-        
-        function getAllFeedbackReview() {
-
-            
-            $aEmail = \App\Models\Admin\ReportModel::getAllFeedbackReview();
-            return $aEmail;
-        }
-
-        function fiveRating($date='') {
-
-            
-            $aEmail = \App\Models\Admin\ReportModel::getFiveRating($date);
-            return $aEmail;
-        }
-
-        function fiveRatingAll($date='') {
-
-          
-            $aEmail = \App\Models\Admin\ReportModel::getAllFiveRating($date);
-            return $aEmail;
-        }
-
-        function threeRating($date='') {
-
-            
-            $aEmail = \App\Models\Admin\ReportModel::getThreeRating($date);
-            return $aEmail;
-        }
-
-        function threeRatingAll($date='') {
-            
-           
-            $aEmail = \App\Models\Admin\ReportModel::getAllThreeRating($date);
-            return $aEmail;
-        }
-
-        function oneRating($date='') {
-
-            $aEmail = \App\Models\Admin\ReportModel::getOneRating($date);
-            return $aEmail;
-        }
-
-        function oneRatingAll($date='') {
-
-            
-            $aEmail = \App\Models\Admin\ReportModel::getAllOneRating($date);
-            return $aEmail;
-        }
-
-        function getAllEmailCount() {
-
-            $aEmail = \App\Models\Admin\ReportModel::getAllEmailSend();
-            return $aEmail;
-        }
-
-        function smsRecordSend($date='') {
-
-            $aSms = \App\Models\Admin\ReportModel::getSmsRecordSend($date);
-            return $aSms;
-        }
-
-        function smsRecordFailed($date='') {
-
-            $aSms = \App\Models\Admin\ReportModel::getSmsRecordFailed($date);
-            return $aSms;
-        }
-
-        function smsRecordOpen($date='') {
-
-            $aSms = \App\Models\Admin\ReportModel::getSmsRecordOpen($date);
-            return $aSms;
-        }
-
-        function smsRecordClick($date='') {
-
-            $aSms = \App\Models\Admin\ReportModel::getSmsRecordClick($date);
-            return $aSms;
-        }
-
-        function getAllSmsRecordSend() {
-
-            $aSms = \App\Models\Admin\ReportModel::getAllSmsRecordSend();
-            return $aSms;
-        }
+function emailOpen($date) {
 
 
-        function getUserTag() {
-          
-            $aTags = \App\Models\Admin\ReportModel::getClientTags();
-            return $aTags;
-        }
+    $aEmail = \App\Models\Admin\ReportModel::getEmailOpen($date);
+    return $aEmail;
+}
 
-        function getTags() {
+function formOpen($date) {
 
-          
-            $aTags = \App\Models\Admin\ReportModel::getTags();
-            return $aTags;
-        }
 
-        function getTagFeedback($tagID) {
+    $aEmail = \App\Models\Admin\ReportModel::getFormOpen($date);
+    return $aEmail;
+}
 
-            $aTags = \App\Models\Admin\ReportModel::getTagFeedback($tagID);
-            return $aTags;
-        }
+function feedbackReview($date) {
 
-        function topThreeTagGroup() {
-            
-            $aTags = \App\Models\Admin\ReportModel::getTopThreeTagGroup();
-            return $aTags;
-        }
 
-        function numberOfTagInGroup($groupId) {
-            
-            $aTags = \App\Models\Admin\ReportModel::numberOfTagInGroup($groupId);
-            return $aTags;
-        }
+    $aEmail = \App\Models\Admin\ReportModel::getFeedbackReview($date);
+    return $aEmail;
+}
 
-        function getListSubscriber($status) {
-            
-            $aListSubs = \App\Models\Admin\ReportModel::getListSubscriber($status);
-            return $aListSubs;
-        }
+function getAllFeedbackReview() {
 
-        function getNegativeTime() {
-     
-            $aListSubs = \App\Models\Admin\ReportModel::getNegativeTime();
-            return $aListSubs;
-        }
 
-        function getBusyTime() {
-          
-            $aListSubs = \App\Models\Admin\ReportModel::getBusyTime();
-            return $aListSubs;
-        }
+    $aEmail = \App\Models\Admin\ReportModel::getAllFeedbackReview();
+    return $aEmail;
+}
 
-    
+function fiveRating($date = '') {
+
+
+    $aEmail = \App\Models\Admin\ReportModel::getFiveRating($date);
+    return $aEmail;
+}
+
+function fiveRatingAll($date = '') {
+
+
+    $aEmail = \App\Models\Admin\ReportModel::getAllFiveRating($date);
+    return $aEmail;
+}
+
+function threeRating($date = '') {
+
+
+    $aEmail = \App\Models\Admin\ReportModel::getThreeRating($date);
+    return $aEmail;
+}
+
+function threeRatingAll($date = '') {
+
+
+    $aEmail = \App\Models\Admin\ReportModel::getAllThreeRating($date);
+    return $aEmail;
+}
+
+function oneRating($date = '') {
+
+    $aEmail = \App\Models\Admin\ReportModel::getOneRating($date);
+    return $aEmail;
+}
+
+function oneRatingAll($date = '') {
+
+
+    $aEmail = \App\Models\Admin\ReportModel::getAllOneRating($date);
+    return $aEmail;
+}
+
+function getAllEmailCount() {
+
+    $aEmail = \App\Models\Admin\ReportModel::getAllEmailSend();
+    return $aEmail;
+}
+
+function smsRecordSend($date = '') {
+
+    $aSms = \App\Models\Admin\ReportModel::getSmsRecordSend($date);
+    return $aSms;
+}
+
+function smsRecordFailed($date = '') {
+
+    $aSms = \App\Models\Admin\ReportModel::getSmsRecordFailed($date);
+    return $aSms;
+}
+
+function smsRecordOpen($date = '') {
+
+    $aSms = \App\Models\Admin\ReportModel::getSmsRecordOpen($date);
+    return $aSms;
+}
+
+function smsRecordClick($date = '') {
+
+    $aSms = \App\Models\Admin\ReportModel::getSmsRecordClick($date);
+    return $aSms;
+}
+
+function getAllSmsRecordSend() {
+
+    $aSms = \App\Models\Admin\ReportModel::getAllSmsRecordSend();
+    return $aSms;
+}
+
+function getUserTag() {
+
+    $aTags = \App\Models\Admin\ReportModel::getClientTags();
+    return $aTags;
+}
+
+function getTags() {
+
+
+    $aTags = \App\Models\Admin\ReportModel::getTags();
+    return $aTags;
+}
+
+function getTagFeedback($tagID) {
+
+    $aTags = \App\Models\Admin\ReportModel::getTagFeedback($tagID);
+    return $aTags;
+}
+
+function topThreeTagGroup() {
+
+    $aTags = \App\Models\Admin\ReportModel::getTopThreeTagGroup();
+    return $aTags;
+}
+
+function numberOfTagInGroup($groupId) {
+
+    $aTags = \App\Models\Admin\ReportModel::numberOfTagInGroup($groupId);
+    return $aTags;
+}
+
+function getListSubscriber($status) {
+
+    $aListSubs = \App\Models\Admin\ReportModel::getListSubscriber($status);
+    return $aListSubs;
+}
+
+function getNegativeTime() {
+
+    $aListSubs = \App\Models\Admin\ReportModel::getNegativeTime();
+    return $aListSubs;
+}
+
+function getBusyTime() {
+
+    $aListSubs = \App\Models\Admin\ReportModel::getBusyTime();
+    return $aListSubs;
+}
 
 if (!function_exists('ratingView')) {
 
@@ -3686,7 +3667,6 @@ if (!function_exists('getNotificationLang')) {
 
     }
 
-
     /**
      * Get's location data
      */
@@ -3716,7 +3696,7 @@ if (!function_exists('getNotificationLang')) {
         return $aData;
     }
 
-     /**
+    /**
      * Get's location data by ipaddress
      */
     function getLocationInfoByIp() {
@@ -3748,7 +3728,6 @@ if (!function_exists('getNotificationLang')) {
 
 }
 
-
 /**
  * Used to display formatted phone number
  * @param type $num
@@ -3778,22 +3757,21 @@ function mobileNoFormatChat($mobileNo) {
     switch ($length) {
         case 7:
             return preg_replace("/([0-9]{3})([0-9]{4})/", "$1-$2", $mobileNo);
-        break;
+            break;
         case 10:
             return preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "($1) $2-$3", $mobileNo);
-        break;
+            break;
         case 11:
             return preg_replace("/([0-9]{1})([0-9]{3})([0-9]{3})([0-9]{4})/", "($2) $3-$4", $mobileNo);
-        break;
+            break;
         case 12:
             return preg_replace("/([0-9]{2})([0-9]{3})([0-9]{3})([0-9]{4})/", "($2) $3-$4", $mobileNo);
-        break;
+            break;
         default:
             return $mobileNo;
-        break;
+            break;
     }
 }
-
 
 /**
  * Used to get browser data
@@ -3866,26 +3844,25 @@ function getBrowser() {
     );
 }
 
-
 /**
  * Used to add page and visitor info
  * @param type $clientId, $sourcePage, $sourceId, $sourceType
  */
-function addPageAndVisitorInfo($clientId, $sourcePage, $sourceId, $sourceType='Visit'){
-    
+function addPageAndVisitorInfo($clientId, $sourcePage, $sourceId, $sourceType = 'Visit') {
+
     $locationData = getLocationData();
     $aUser = getLoggedUser(false);
     $userID = $aUser->id;
     //pre($locationData);
     //exit;
-        
+
     $dateArray = array(
         'user_id' => $userID,
         'source_client_id' => $clientId,
         'source_page' => $sourcePage,
         'source_id' => $sourceId,
         'source_type' => $sourceType,
-        'ip_address'=> $locationData['ip_address'],
+        'ip_address' => $locationData['ip_address'],
         'platform' => $locationData['platform'],
         'platform_device' => $locationData['platform_device'],
         'browser' => $locationData['name'],
@@ -3898,7 +3875,52 @@ function addPageAndVisitorInfo($clientId, $sourcePage, $sourceId, $sourceType='V
         'latitude' => $locationData['latitude'],
         'created' => date("Y-m-d H:i:s")
     );
-    
+
     $bResult = \App\Models\Admin\LiveModel::addVisitorInfo($dateArray);
 }
+
+function cbTest() {
+    $file = 'chargebee-php/lib/ChargeBee.php';
+    if (file_exists($file)) {
+        echo "File Exists";
+
+        require_once($file);
+        $cbSite = config('bbconfig.cb_site_name');
+        $cbSiteToken = config('bbconfig.cb_access_token');
+        ChargeBee_Environment::configure($cbSite, $cbSiteToken);
+         $aInputBilling = array(
+            'firstName' => 'Mr',
+            'lastName' => 'Dean',
+            'line1' => 'Avantika',
+            'city' => 'Delhi',
+            'state' => 'Delhi',
+            'zip' => '110085',
+            'country' => 'India'
+        );
+         
+        $aInput = array(
+            'firstName' => 'Mr',
+            'lastName' => 'Dean',
+            'email' => 'faketo@gmail.com',
+            'phone' => '9654365662',
+            //'billingAddress' => $aInputBilling
+        );
+        
+       
+        $aResponse = ChargeBee_Customer::create($aInput);
+
+        //$oRes = $aResponse->customer();
+        pre($aResponse);
+        echo "All done";
+//        if (class_exists('ChargeBee_Environment')) {
+//            $method = get_class_methods('ChargeBee_Environment');
+//            
+//            die('class exists');
+//        }
+        //ChargeBee_Environment::configure($cbSite, $cbSiteToken);
+    }else{
+        echo "file not exists";
+    }
+}
+
 ?>
