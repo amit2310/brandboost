@@ -423,6 +423,7 @@ if (empty($feedbackTags)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateNote" action="javascript:void();">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Notes</h5>
@@ -480,6 +481,7 @@ if (empty($feedbackTags)) {
                 <div class="row">
 
                     <form method="post" class="form-horizontal" id="frmSaveNote" action="javascript:void();">
+                        {{ csrf_field() }}
                         <div class="col-md-12 mb-15">
                             <textarea class="form-control" id="add_feedback_popup" name="notes" style="padding: 20px; height: 75px;" placeholder="Add Note"></textarea>
                         </div>
@@ -584,7 +586,7 @@ if (empty($feedbackTags)) {
             $.ajax({
                 url: '<?php echo base_url('admin/feedback/getFeedbackNotes'); ?>',
                 type: "POST",
-                data: {noteid: noteId},
+                data: {noteid: noteId,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -604,6 +606,7 @@ if (empty($feedbackTags)) {
         $("#updateNote").submit(function () {
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
+            formData.append('_token','{{csrf_token()}}');
             $.ajax({
                 url: '<?php echo base_url('admin/feedback/updateFeedbackNote'); ?>',
                 type: "POST",
@@ -644,7 +647,7 @@ if (empty($feedbackTags)) {
 					$.ajax({
 						url: '<?php echo base_url('admin/feedback/deleteFeedbackNote'); ?>',
 						type: "POST",
-						data: {noteid: noteId},
+						data: {noteid: noteId,_token: '{{csrf_token()}}'},
 						dataType: "json",
 						success: function (data) {
 							if (data.status == 'success') {

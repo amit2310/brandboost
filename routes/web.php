@@ -683,5 +683,10 @@ Route::get('admin/users/sendgriddata/{ID}','Admin\Users@sendgriddata');
 Route::get('admin/settings/list_client_details/{ID}','Admin\Settings@list_client_details');
 Route::get('admin/settings/twillo_log','Admin\Settings@twillo_log');
 Route::get('admin/feedback','Admin\Feedback@index');
+Route::post('admin/feedback/saveFeedbackNotes','Admin\Feedback@saveFeedbackNotes');
+Route::post('admin/feedback/getFeedbackNotes','Admin\Feedback@getFeedbackNotes');
+Route::post('admin/feedback/updateFeedbackNote','Admin\Feedback@updateFeedbackNote');
+Route::post('admin/feedback/deleteFeedbackNote','Admin\Feedback@deleteFeedbackNote');
+
 
 
