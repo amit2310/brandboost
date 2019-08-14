@@ -314,7 +314,7 @@ Route::post('admin/settings/updateNotification','Admin\Settings@updateNotificati
 Route::post('payment/upgradeMembership','Payment@upgradeMembership');
 
 // Membership
-Route::get('admin/membership','Membership@Index');
+Route::get('admin/membership','Membership@Index'); 
 
 //Users module
 Route::post('admin/users/updateUserData','Admin\Users@updateUserData');
