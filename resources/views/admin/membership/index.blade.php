@@ -399,8 +399,7 @@
                                                                     <td>$<?php echo number_format($data->price, 2); ?></td>
                                                                     <td><?php echo number_format($data->credits); ?></td>
                                                                     <td><?php echo number_format($data->contact_limit); ?></td>
-                                                                    <!--<td><?php echo number_format($data->topup_email_limit, 0); ?></td>
-                                                                    <td><?php echo number_format($data->topup_sms_limit, 0); ?></td>-->
+                                                                  
                                                                     <td><h6 class="text-semibold"><?php echo date('M d, Y', strtotime($data->created)); ?><div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)) . ' (' . timeAgo($data->created) . ')'; ?></div></h6></td>
                                                                     <td class="text-center">
                                                                         <?php

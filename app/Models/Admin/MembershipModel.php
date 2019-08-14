@@ -101,12 +101,11 @@ class MembershipModel extends Model {
      */
     public function getMembership($id = '') {
         $oData = DB::table('tbl_cc_membership')
-        ->when(!empty($id), function ($query) use ($id) {
-                    return $query->where('id', $id);
-                })  
         ->where('delete_status', '0')
+        ->when(!empty($id), function ($query) use ($id) {
+                    return $query->where('id', $id)->limit(1);
+                })
         ->orderBy('id', 'ASC')
-        ->limit(1)
         ->get();
 
         return $oData;
