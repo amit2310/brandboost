@@ -600,12 +600,11 @@ class SettingsModel extends Model {
     }
 
    /**
-* This function is used to get all notifications 
-* @param type $userId
-* @param type $type
-* @return type
-*/
-  
+    * This function is used to get all notifications 
+    * @param type $userId
+    * @param type $type
+    * @return type
+    */
   
     public function listNotifications($userId, $type = '') {
 
@@ -617,16 +616,21 @@ class SettingsModel extends Model {
         return $oData;
     }
 
+
+    /**
+    * This function is used to update notification permissions 
+    * @param type $aData
+    * @return type boolean
+    */
+
     public function updateNotificationPermissions($aData) {
 
         if ($aData['id'] > 0 && !empty($aData['permission']) && !empty($aData['userId']) && !empty($aData['user_type'])) {
+
             $query = "update tbl_notifications_manager set " . $aData['permission'] . " ='" . $aData['permission_value'] . "' where id='" . $aData['id'] . "' AND user_type='" . $aData['user_type'] . "' AND user_id='" . $aData['userId'] . "'  ";
 
-            $result = $this->db->query($query);
-            if ($result)
-                return true;
-            else
-                return false;
+            $oData = DB::select(DB::raw($query));
+            return true;
         }
         return false;
     }

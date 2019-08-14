@@ -859,11 +859,8 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                      alert('Save successfully.');
-                       /*$(".emailTitle").val('');
-                       $(".emailSubjectAdmin").val('');
-                       $(".emailTextAdmin").summernote('code', '');*/
-                        
+                      displayMessagePopup(); 
+                     
                     }
                 }
             });
@@ -881,11 +878,8 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                      alert('Save successfully.');
-                       /*$(".emailTitle").val('');
-                       $(".emailSubjectAdmin").val('');
-                       $(".emailTextAdmin").summernote('code', '');*/
-                        
+                      displayMessagePopup(); 
+                      
                     }
                 }
             });
@@ -903,11 +897,8 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                      alert('Save successfully.');
-                       /*$(".emailTitle").val('');
-                       $(".emailSubjectAdmin").val('');
-                       $(".emailTextAdmin").summernote('code', '');*/
-                        
+                      displayMessagePopup(); 
+                      
                     }
                 }
             });

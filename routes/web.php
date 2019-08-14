@@ -307,6 +307,7 @@ Route::post('webchat/settings/updateCompanyFormData','Admin\Settings@updateCompa
 Route::post('admin/settings/updateCompanyProfile','Admin\Settings@updateCompanyProfile');
 Route::post('admin/settings/updateNotificationPermisson','Admin\Settings@updateNotificationPermisson');
 Route::post('admin/settings/updateNotificationSettings','Admin\Settings@updateNotificationSettings');
+Route::post('admin/settings/updateNotification','Admin\Settings@updateNotification');
 
 
 //Payment 
