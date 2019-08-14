@@ -851,6 +851,7 @@
         $(document).on('submit', '#frmEditEmailTemplate', function (e) {
             
             var formdata = $("#frmEditEmailTemplate").serialize();
+            formdata += '&_token={{csrf_token()}}';
             $.ajax({
                 url: '<?php echo base_url('admin/settings/updateEmailNotificationContent'); ?>',
                 type: "POST",
