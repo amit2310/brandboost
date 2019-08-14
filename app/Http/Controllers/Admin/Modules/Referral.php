@@ -90,6 +90,7 @@ class Referral extends Controller {
         exit;
     }
 	
+	
 	public function moveToArchiveReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         
@@ -1106,7 +1107,7 @@ class Referral extends Controller {
         $specificExpiryTime = $request->specific_expiry_picker;
 
         $oAdvocateCoupon = ReferralModel::getAdvocateCouponInfo($referralID);
-		//pre($oAdvocateCoupon); die;
+		
         $oFriendCoupon = ReferralModel::getFriendCouponInfo($referralID);
 
         if ($couponType == 'advocate_single_coupons') {
@@ -1393,7 +1394,6 @@ class Referral extends Controller {
     }
 	
 	
-	
 	public function getReferralWidgetEmbedCode(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -1492,10 +1492,73 @@ class Referral extends Controller {
     }
 	
 	
+	public function addReferralWidget(Request $request) {
+		$mReferral = new ReferralModel();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        
+        $referralTitle = $request->referralTitle;
+        $aData = array(
+            'widget_title' => $referralTitle,
+            'user_id' => $userID,
+            'created' => date("Y-m-d H:i:s")
+        );
+
+        $response = $mReferral->createReferralWidget($aData);
+
+        if ($response) {
+            $response = array('status' => 'success', 'widgetId' => $response);
+        } else {
+            $response = array('status' => 'error');
+        }
+        echo json_encode($response);
+        exit;
+    }
 	
 	
-	
-	
+	public function deleteBulkReferralWidgets(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        $mReferral = new ReferralModel();
+		
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $referralIDs = $request->multi_widget_id;
+        $aData = array(
+            'delete_status' => 1
+        );
+        if (!empty($referralIDs)) {
+            foreach ($referralIDs as $referralID) {
+                $bDeleted = $mReferral->updateReferralWidget($aData, $referralID);
+            }
+        }
+        if ($bDeleted) {
+            $response = array('status' => 'success', 'msg' => "Success");
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+    public function archiveBulkReferralWidgets(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        $mReferral = new ReferralModel();
+		
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $referralIDs = $request->multi_widget_id;
+        $aData = array(
+            'status' => 3
+        );
+        if (!empty($referralIDs)) {
+            foreach ($referralIDs as $referralID) {
+                $bDeleted = $mReferral->updateReferralWidget($aData, $referralID);
+            }
+        }
+        if ($bDeleted) {
+            $response = array('status' => 'success', 'msg' => "Success");
+        }
+        echo json_encode($response);
+        exit;
+    }
     
 
     
@@ -1643,9 +1706,6 @@ class Referral extends Controller {
         exit;
     }
 
-    
-    
-
     public function configuration() {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
@@ -1668,89 +1728,8 @@ class Referral extends Controller {
         }
     }
 
-    public function deleteBulkReferralWidgets() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $referralIDs = $post['multi_widget_id'];
-        $aData = array(
-            'delete_status' => 1
-        );
-        if (!empty($referralIDs)) {
-            foreach ($referralIDs as $referralID) {
-                $bDeleted = $this->mReferral->updateReferralWidget($aData, $referralID);
-            }
-        }
-        if ($bDeleted) {
-            $response = array('status' => 'success', 'msg' => "Success");
-        }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function archiveBulkReferralWidgets() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $referralIDs = $post['multi_widget_id'];
-        $aData = array(
-            'status' => 3
-        );
-        if (!empty($referralIDs)) {
-            foreach ($referralIDs as $referralID) {
-                $bDeleted = $this->mReferral->updateReferralWidget($aData, $referralID);
-            }
-        }
-        if ($bDeleted) {
-            $response = array('status' => 'success', 'msg' => "Success");
-        }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function addReferralWidget() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $post = $this->input->post();
-        $referralTitle = $post['referralTitle'];
-        $aData = array(
-            'widget_title' => $referralTitle,
-            'user_id' => $userID,
-            'created' => date("Y-m-d H:i:s")
-        );
-
-        $response = $this->mReferral->createReferralWidget($aData);
-
-        if ($response) {
-            $response = array('status' => 'success', 'widgetId' => $response);
-        } else {
-            $response = array('status' => 'error');
-        }
-        echo json_encode($response);
-        exit;
-    }
-
     
 
-    
-
-    
-
-    
-
-    
     public function saveEmailWorkflow() {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
