@@ -128,7 +128,7 @@
                                     $output .= '<li><a href="javascript:void(0);" class="userEdit" userID="' . $data->id . '"><i class="icon-gear"></i> Edit</a></li>
                                         <li><a href="javascript:void(0);" class="userDelete" userID="' . $data->id . '" contactID="' . $data->infusion_user_id . '"><i class="icon-cross2"></i> Delete</a></li>';
                                     if ($userRole != 2) {
-                                        $output .= '<li><a href="' . base_url('admin/settings/twillo_log/' . $data->id) . '"><i class="icon-file-stats"></i> Twilio Stats</a></li>
+                                        $output .= '<li><a href="' . base_url('admin/settings/list_client_details/' . $data->id) . '"><i class="icon-file-stats"></i> Twilio Stats</a></li>
 											<li><a href="' . base_url('admin/users/sendgriddata/' . $data->id) . '"><i class="icon-file-stats"></i> Send Grid Stats</a></li>';
                                     }
                                     if ($isAdmin) {

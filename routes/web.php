@@ -680,6 +680,7 @@ Route::post('admin/users/getUserById','Admin\Users@getUserById');
 Route::post('admin/users/user_delete','Admin\Users@user_delete');
 Route::post('admin/users/getUserInfo','Admin\Users@getUserInfo');
 Route::get('admin/users/sendgriddata/{ID}','Admin\Users@sendgriddata');
-Route::get('admin/settings/list_client_details/{ID}','Admin\Users@twiliomessage');
+Route::get('admin/settings/list_client_details/{ID}','Admin\Settings@list_client_details');
+Route::get('admin/settings/twillo_log','Admin\Settings@twillo_log');
 
 

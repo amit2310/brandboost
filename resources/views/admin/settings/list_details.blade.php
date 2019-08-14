@@ -1,4 +1,10 @@
+@extends('layouts.main_template') 
 
+@section('title')
+<?php $title=""; echo $title; ?>
+@endsection
+
+@section('contents')
        <div class="content">
                   
                   <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -67,11 +73,11 @@
                                 <tbody>
                                 <!--========== ROW START =============-->
                                 <?php if(!empty($twilio_number_log)) {
-
+                                 
                                 	$teamMemArr = array();
                                 	foreach($twilio_number_log as $detail) {
                                     $dateSent = explode(" ", $detail->dateSent);
-                                		$getUsage = $this->mSetting->getUsageSingleNumber($detail->bb_number);
+                                    
                                 		
                                 ?>
                                	<tr>
@@ -79,7 +85,7 @@
                                		<td style="display:none;"><?php echo $detail->id; ?></td>
                                		<td><?php echo $detail->sent_from ?></td>
                                		<td><?php echo $detail->sent_to ?></td>
-                                  <td><?php echo '$'.number_format($detail->price,2); ?></td>
+                                  <td><?php echo '$'.$detail->price; ?></td>
                                		<td><?php echo $detail->direction; ?></td>
                                	   <td><?php echo $detail->status; ?></td>
                                     <td><?php echo $dateSent[0]; ?></td>
@@ -117,3 +123,4 @@
 
 
 </script>
+@endsection 

@@ -425,16 +425,17 @@ class Settings extends Controller {
         if ($post) {
             $creditID = base64_url_decode(strip_tags($post['creditID']));
              $oCrValue = $mSetting->getCreditValues($creditID);
-            if ($oCrValue) {
+             if ($oCrValue) {
                 $response['status'] = 'success';
                 $response['datarow'] = $oCrValue[0];
-            } else {
+             } else {
                 $response['status'] = 'error';
-            }
-        }
-        echo json_encode($response);
+             }
+         }
+         echo json_encode($response);
         exit;
     }
+
 
 
     /**
@@ -569,6 +570,41 @@ class Settings extends Controller {
         }
         echo json_encode($response);
         exit;
+    }
+
+
+    /**
+     * This function is used to get the client twilio number details 
+    * @param id 
+    * @return type
+    */
+
+    public function list_client_details($id)
+    {
+
+    $mSetting = new SettingsModel();
+    $twilio_number_log = $mSetting->getClientNumberlogs($id);
+    $aData = array(
+    'twilio_number_log' => $twilio_number_log
+    );
+    return view('admin.settings.list_details', $aData);
+
+    }
+
+
+    /**
+    * This function is used to get the client twilio logs
+    * @param 
+    * @return type
+    */
+
+    public function twillo_log() {
+        $mSetting  = new SettingsModel();
+        $twillo_account_detail = $mSetting->twillo_account();
+        $aData = array(
+            'twillo_account_detail' => $twillo_account_detail
+        );
+      return view('admin.settings.twillo_log', $aData);
     }
 
 

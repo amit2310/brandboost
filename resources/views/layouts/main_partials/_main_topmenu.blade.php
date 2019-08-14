@@ -12,7 +12,7 @@
         </ul>
 
 
-        <?php echo $pagename; ?>
+        <?php if(isset($pagename)){ echo $pagename; } ?>
 
 
         <ul class="nav navbar-nav navbar-right">
