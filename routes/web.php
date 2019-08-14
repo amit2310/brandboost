@@ -685,5 +685,6 @@ Route::post('admin/users/getUserInfo','Admin\Users@getUserInfo');
 Route::get('admin/users/sendgriddata/{ID}','Admin\Users@sendgriddata');
 Route::get('admin/settings/list_client_details/{ID}','Admin\Settings@list_client_details');
 Route::get('admin/settings/twillo_log','Admin\Settings@twillo_log');
+Route::get('admin/feedback','Admin\Feedback@index');
 
 

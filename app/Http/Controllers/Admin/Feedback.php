@@ -152,12 +152,14 @@ class Feedback extends Controller {
         $user_role = $aUser->user_role;
         $selectedTab = 'all';
         $getBrandboost = '';
+        $mBrandboost  = new BrandboostModel();
+        $mFeedback  =  new FeedbackModel();
         if ($brandboostID > 0) {
-            $getBrandboost = $this->mBrandboost->getBrandboost($brandboostID);
-            $result = $this->mFeedback->getFeedbackByBrandboostID($brandboostID);
-            $selectedTab = $this->input->get('t');
+            $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
+            $result = $mFeedback->getFeedbackByBrandboostID($brandboostID);
+            $selectedTab = Input::get('t');
         } else {
-            $result = $this->mFeedback->getFeedback($userID, $user_role);
+            $result = $mFeedback->getFeedback($userID, $user_role);
         }
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -176,7 +178,7 @@ class Feedback extends Controller {
             'result' => $result
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/feedback/feedback', $data);
+        return view('admin.feedback.feedback', $data);
     }
 
     public function my() {

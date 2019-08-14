@@ -68,9 +68,10 @@ class FeedbackModel extends Model
 	* @return type
 	*/
 	public static function getFeedback($userID, $user_role='') {
+       
 		$oData = DB::table('tbl_brandboost_feedback')
 			->select('tbl_brandboost_feedback.*', 'tbl_users.avatar', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img', 'tbl_brandboost_users.subscriber_id as subscriber_id')
-			->when(($user_role > 0), function($query) use ($userID) {
+			->when(($user_role > 1), function($query) use ($userID) {
 				return $query->where('tbl_brandboost_feedback.client_id', $userID);
 			})
 			->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.id', '=' , 'tbl_brandboost_feedback.subscriber_id')
