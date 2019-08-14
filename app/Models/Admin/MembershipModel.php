@@ -93,18 +93,23 @@ class MembershipModel extends Model {
         return $oData;
     }
 
+
+    /**
+     * Get membership
+     * @param type $id
+     * @return type
+     */
     public function getMembership($id = '') {
-        $aData = array();
-        if ($id > 0) {
-            $this->db->order_by('id', 'ASC');
-            $this->db->where('id', $id);
-        }
-        $this->db->where('delete_status', '0');
-        $query = $this->db->get('tbl_cc_membership');
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_cc_membership')
+        ->when(!empty($id), function ($query) use ($id) {
+                    return $query->where('id', $id);
+                })  
+        ->where('delete_status', '0')
+        ->orderBy('id', 'ASC')
+        ->limit(1)
+        ->get();
+
+        return $oData;
     }
 
     public function saveMembership($aData) {
