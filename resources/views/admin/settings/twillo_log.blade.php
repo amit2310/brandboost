@@ -1,4 +1,10 @@
+@extends('layouts.main_template') 
 
+@section('title')
+<?php $title=""; echo $title; ?>
+@endsection
+
+@section('contents')
        <div class="content">
                   
                   <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -73,12 +79,12 @@
                                 		//pre($detail); 
                                 		
                                 		$teamMemArr[] = $detail->contact_no;
-                                		$getTeamMember = $this->mSetting->getTeamMember($detail->user_id);
+                                		$getTeamMember = \App\Models\Admin\SettingsModel::getTeamMember($detail->user_id);
                                 		
                                 		foreach ($getTeamMember as $getTeamMem) {
                                 			$teamMemArr[] = $getTeamMem->bb_number;
                                 		}
-                                		$getUsage = $this->mSetting->getUsage($teamMemArr);
+                                		$getUsage = \App\Models\Admin\SettingsModel::getUsage($teamMemArr);
                                 		
                                 ?>
                                	<tr>
@@ -131,3 +137,4 @@
 
 
 </script>
+@endsection 

@@ -631,19 +631,22 @@ class SettingsModel extends Model {
         return false;
     }
 
+
+    /**
+    * This function is used to get the client twilio logs
+    * @param 
+    * @return type
+    */
+
     public function twillo_account() {
 
         $aData = array();
-        $this->db->select("tbl_twilio_accounts.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile");
-        $this->db->where('tbl_twilio_accounts.contact_no IS NOT NULL', null, false);
-        $this->db->where('tbl_twilio_accounts.user_id != ', '1');
-        $this->db->join("tbl_users", "tbl_twilio_accounts.user_id = tbl_users.id", "LEFT");
-        $query = $this->db->get('tbl_twilio_accounts');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-
+        $aData =  DB::table('tbl_twilio_accounts')
+        ->select('tbl_twilio_accounts.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
+        ->whereNotNull('tbl_twilio_accounts.contact_no')
+         ->where('tbl_twilio_accounts.user_id','!=', '1')
+        ->leftJoin('tbl_users', 'tbl_twilio_accounts.user_id','=','tbl_users.id')->get();
+        
         return $aData;
     }
 
@@ -680,38 +683,43 @@ class SettingsModel extends Model {
         return $response;
     }
 
-//*** model function is used to get only client twilio number details and response back to the controller 
+
+    /**
+    * This function is used to get the client twilio number details 
+    * @param id 
+    * @return type
+    */
+
     public function getClientNumberlogs($id) {
+ 
+        $aData =  DB::table('tbl_twilio_accounts')
+        ->select("tbl_twilio_accounts.contact_no")
+         ->where('tbl_twilio_accounts.user_id', $id)->get();
+        if ($aData->count()>0) {
 
-        $this->db->select("tbl_twilio_accounts.contact_no");
-        $this->db->where('tbl_twilio_accounts.user_id', $id);
-        $query = $this->db->get('tbl_twilio_accounts');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-
-            $result = $this->db->query("SELECT * FROM `tbl_twilio_logs` WHERE ( `sent_from` = '" . $aData[0]->contact_no . "' or `sent_to` ='" . $aData[0]->contact_no . "' )");
-            $response = $result->result();
+            $result = DB::select(DB::raw("SELECT * FROM `tbl_twilio_logs` WHERE ( `sent_from` = '" . $aData[0]->contact_no . "' or `sent_to` ='" . $aData[0]->contact_no . "' )"));
         }
 
-        return $response;
+        return $result;
     }
 
-//*** function is used to get the Usage for single twilio number 
-    public function getUsageSingleNumber($tNumber) {
+   /**
+    * This function will return the single number twilio usage details 
+    * @param id 
+    * @return type
+    */
+
+    public static function getUsageSingleNumber($tNumber) {
 
         $aData = array();
         $totalPrice = array();
 
-
-        $this->db->select("SUM(price) AS price");
-        $this->db->where('tbl_twilio_logs.sent_from', $tNumber);
-        $query = $this->db->get('tbl_twilio_logs');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-            if (!empty($aData[0]->price)) {
-                $totalPrice[] = $aData[0]->price;
+        $oData = DB::table('tbl_twilio_logs')
+         ->select("SUM(price) AS price")
+         ->where('tbl_twilio_logs.sent_from', $tNumber)->get();
+        if ($oData->count() > 0) {
+            if (!empty($oData[0]->price)) {
+                $totalPrice[] = $oData[0]->price;
             }
         }
 
@@ -734,20 +742,23 @@ class SettingsModel extends Model {
         return array_sum($totalPrice);
     }
 
-    public function getUsage($teamMemArr) {
+    /**
+    * This function will return Twilio total usage for team members
+    * @param type
+    * @return type
+    */
+
+    public static function getUsage($teamMemArr) {
 
         $aData = array();
         $totalPrice = array();
         foreach ($teamMemArr as $memTeam) {
-
-            $this->db->select("SUM(price) AS price");
-            $this->db->where('tbl_twilio_logs.sent_from', $memTeam);
-            $query = $this->db->get('tbl_twilio_logs');
-            //echo $this->db->last_query();exit;
-            if ($query->num_rows() > 0) {
-                $aData = $query->result();
-                if (!empty($aData[0]->price)) {
-                    $totalPrice[] = $aData[0]->price;
+            $oData = DB::table('tbl_twilio_logs')
+             ->select(DB::raw("SUM(price) AS price"))
+             ->where('tbl_twilio_logs.sent_from', $memTeam)->get();
+            if ($oData->count() > 0) {
+                if (!empty($oData[0]->price)) {
+                    $totalPrice[] = $oData[0]->price;
                 }
             }
         }
@@ -755,14 +766,12 @@ class SettingsModel extends Model {
         $aData = array();
         foreach ($teamMemArr as $memTeam) {
 
-            $this->db->select("SUM(price) AS price");
-            $this->db->where('tbl_twilio_logs.sent_to', $memTeam);
-            $query = $this->db->get('tbl_twilio_logs');
-            //echo $this->db->last_query();exit;
-            if ($query->num_rows() > 0) {
-                $aData = $query->result();
-                if (!empty($aData[0]->price)) {
-                    $totalPrice[] = $aData[0]->price;
+             $oData = DB::table('tbl_twilio_logs')
+              ->select(DB::raw("SUM(price) AS price"))
+                ->where('tbl_twilio_logs.sent_to', $memTeam)->get();
+            if ($oData->count() > 0) {
+                if (!empty($oData[0]->price)) {
+                    $totalPrice[] = $oData[0]->price;
                 }
             }
         }
@@ -770,18 +779,21 @@ class SettingsModel extends Model {
         return array_sum($totalPrice);
     }
 
-    public function getTeamMember($parentUserId) {
+
+    /**
+    * This function will return all team members by the parent userid
+    * @param type $parentUserId
+    * @return type
+    */
+
+    public static function getTeamMember($parentUserId) {
 
         $aData = array();
-        $this->db->select("bb_number");
-        $this->db->where('tbl_users_team.bb_number != ', ' ');
-        $this->db->where('tbl_users_team.parent_user_id', $parentUserId);
-        $query = $this->db->get('tbl_users_team');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-
+        $aData =  DB::table('tbl_users_team')
+         ->select("bb_number")
+          ->whereNotNull('tbl_users_team.bb_number')
+         ->where('tbl_users_team.parent_user_id', $parentUserId)->get();
+       
         return $aData;
     }
 

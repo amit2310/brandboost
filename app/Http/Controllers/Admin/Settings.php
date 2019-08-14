@@ -437,7 +437,177 @@ class Settings extends Controller {
         exit;
     }
 
-   
+
+
+    /**
+    * This function is used for update email notification content
+    * @param type 
+    * @return type
+    */
+    public function updateEmailNotificationContent(Request $request) {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            $response['status'] = 'error';
+            $response['msg'] = 'Not Authorise to access this page';
+            echo json_encode($response);
+            exit;
+        }
+       
+        if ($request->template_id) {
+            $templateID = strip_tags($request->template_id);
+            $email_subject_admin = strip_tags($request->admin_subject);
+            $email_subject_client = strip_tags($request->subject);
+            $email_subject_user = strip_tags($request->user_subject);
+             
+            $email_content_admin = base64_encode($request->admin_text);
+            $email_content_user = base64_encode($request->user_text);
+            $email_content_client = base64_encode($request->plain_text);
+            
+            
+            
+            $aData = array(
+                'email_subject_admin' => $email_subject_admin,
+                'email_content_admin' => $email_content_admin,
+                'email_subject_client' => $email_subject_client,
+                'email_content_client' => $email_content_client,
+                'email_subject_user' => $email_subject_user,
+                'email_content_user' => $email_content_user
+            );
+            
+            $mSetting  = new SettingsModel();
+            $bUpdated = $mSetting->updateNotificationContent($aData, $templateID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+                $response['msg'] = 'Template save successfully!';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+
+    /**
+    * This function is used for update sms notification content
+    * @param type 
+    * @return type
+    */
+    public function updateSMSNotificationContent(Request $request) {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            $response['status'] = 'error';
+            $response['msg'] = 'Not Authorise to access this page';
+            echo json_encode($response);
+            exit;
+        }
+
+        if ($request->template_id) {
+            $templateID = strip_tags($request->template_id);
+            $admin_sms_content = $request->admin_sms_content;
+            $client_sms_content = $request->client_sms_content;
+            $user_sms_content = $request->user_sms_content;
+            $aData = array(
+                'admin_sms_content' => $admin_sms_content,
+                'client_sms_content' => $client_sms_content,
+                'user_sms_content' => $user_sms_content
+            );
+            
+            $mSetting  = new SettingsModel();
+            $bUpdated = $mSetting->updateNotificationContent($aData, $templateID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+                $response['msg'] = 'Template save successfully!';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+    * This function is used for update system notification content
+    * @param type 
+    * @return type
+    */
+    public function updateSystemNotificationContent(Request $request) {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        $userRole = $oUser->user_role;
+        if($userRole != '1'){
+            $response['status'] = 'error';
+            $response['msg'] = 'Not Authorise to access this page';
+            echo json_encode($response);
+            exit;
+        }
+      
+        if ($request->template_id) {
+            $templateID = strip_tags($request->template_id);
+            $admin_system_content = $request->admin_system_content;
+            $client_system_content = $request->client_system_content;
+            $user_system_content = $request->user_system_content;
+            $aData = array(
+                'admin_system_content' => $admin_system_content,
+                'client_system_content' => $client_system_content,
+                'user_system_content' => $user_system_content
+            );
+            
+            $mSetting  = new SettingsModel();
+            $bUpdated = $mSetting->updateNotificationContent($aData, $templateID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+                $response['msg'] = 'Template save successfully!';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+
+    /**
+    * This function is used to get the client twilio number details 
+    * @param id 
+    * @return type
+    */
+
+    public function list_client_details($id)
+    {
+
+    $mSetting = new SettingsModel();
+    $twilio_number_log = $mSetting->getClientNumberlogs($id);
+    $aData = array(
+    'twilio_number_log' => $twilio_number_log
+    );
+    return view('admin.settings.list_details', $aData);
+
+    }
+
+
+    /**
+    * This function is used to get the client twilio logs
+    * @param 
+    * @return type
+    */
+
+    public function twillo_log() {
+        $mSetting  = new SettingsModel();
+        $twillo_account_detail = $mSetting->twillo_account();
+        $aData = array(
+            'twillo_account_detail' => $twillo_account_detail
+        );
+      return view('admin.settings.twillo_log', $aData);
+    }
+
      
 
 }

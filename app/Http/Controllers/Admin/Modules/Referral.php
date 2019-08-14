@@ -1239,24 +1239,257 @@ class Referral extends Controller {
     }
 	
 	
+	public function widgets() {
+		$mReferral = new ReferralModel();
+		$mUser = new UsersModel();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $userRole = $oUser->user_role;
+        if ($userID > 0) {
+            $oWidgetsList = $mReferral->getReferralWidgets($userID);
+
+            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+				<li><a style="cursor:text;" class="sidebar-control hidden-xs">Widgets </a></li>
+				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+				<li><a data-toggle="tooltip" data-placement="bottom" title="Referral Widgets" class="sidebar-control active hidden-xs ">Referral Widgets</a></li>
+				</ul>';
+
+            $bActiveSubsription = $mUser->isActiveSubscription();
+            Session::put('setTab', '');
+
+            $aData = array(
+                'title' => 'Referral Widgets',
+                'pagename' => $breadcrumb,
+                'oWidgetsList' => $oWidgetsList,
+                'bActiveSubsription' => $bActiveSubsription,
+                'user_role' => $userRole
+            );
+			
+			return view('admin.modules.referral.widget_list', $aData);
+        }
+    }
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public function updatReferralWidgetStatus(Request $request) {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+		$mReferral = new ReferralModel();
+		$mUser = new UsersModel();
+		
+        $widgetID = $request->widgetID;
+        $status = $request->status;
+		
+        $aData = array(
+            'status' => $status
+        );
+
+        $response = $mReferral->updateReferralWidget($aData, $widgetID);
+
+        if ($response) {
+            $response = array('status' => 'success');
+        } else {
+            $response = array('status' => 'error');
+        }
+        echo json_encode($response);
+        exit;
+    }
 	
 
+    public function publishReferralWidget(Request $request) {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+		$mReferral = new ReferralModel();
+		$mUser = new UsersModel();
+		
+        $widgetID = $request->widget_id;
+        $status = 1;
+        $aData = array(
+            'status' => $status
+        );
+
+        $response = $mReferral->updateReferralWidget($aData, $widgetID);
+
+        if ($response) {
+            $response = array('status' => 'success');
+        } else {
+            $response = array('status' => 'error');
+        }
+        echo json_encode($response);
+        exit;
+    }
+	
+
+    public function addReferralWidgetApp(Request $request) {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+		$mReferral = new ReferralModel();
+		$mUser = new UsersModel();
+		
+        $hashcode = $request->hashcode;
+        $referralId = $request->referral_id;
+        $widgetID = $request->widget_id;
+		
+        $aData = array(
+            'hashcode' => $hashcode,
+            'referral_id' => $referralId
+        );
+
+        $result = $mReferral->updateReferralWidget($aData, $widgetID);
+
+        $referralData = $this->getReferralTagLines($hashcode);
+		
+        $sEmailPreview = view('admin.modules.referral.widgets.widget_preview', array('oReferral' => $referralData))->render();
+		
+        $referralScriptCode = '';
+        if ($result) {
+            $response = array('status' => 'success', 'preview' => $sEmailPreview, 'referralScriptCode' => $referralScriptCode);
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	public function deleteReferralWidget(Request $request) {
+
+        $response = array();
+        $post = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+		$mReferral = new ReferralModel();
+		$widgetID = $request->widget_id;
+
+		$aData = array(
+			'delete_status' => '1'
+		);
+
+		$result = $mReferral->updateReferralWidget($aData, $widgetID);
+
+		if ($result) {
+			$aActivityData = array(
+				'user_id' => $userID,
+				'event_type' => 'referral_widget',
+				'action_name' => 'deleted_referral_widget',
+				'widget_id' => $widgetID,
+				'campaign_id' => '',
+				'inviter_id' => '',
+				'subscriber_id' => '',
+				'feedback_id' => '',
+				'activity_message' => 'Referral Widget Deleted',
+				'activity_created' => date("Y-m-d H:i:s")
+			);
+			logUserActivity($aActivityData);
+			$response['status'] = 'success';
+		} else {
+			$response['status'] = "Error";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
+	
+	
+	
+	public function getReferralWidgetEmbedCode(Request $request) {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $response = array();
+        $mReferral = new ReferralModel();
+		$widgetID = $request->widget_id;
+
+		$result = $mReferral->getReferralWidgets($userID, $widgetID);
+		$campaign_key = $result[0]->hashcode;
+		if (!empty($result)) {
+			$response['status'] = 'success';
+			if ($campaign_key != '') {
+				$sWidget = 'referral';
+				$response['result'] = htmlentities('<script type="text/javascript" id="bbscriptloader" data-key="' . $campaign_key . '" data-widgets="' . $sWidget . '" async="" src="' . base_url('assets/js/ref_widgets.js') . '"></script>');
+			} else {
+				$response['status'] = "Error";
+			}
+		} else {
+			$response['status'] = "Errors";
+		}
+
+		echo json_encode($response);
+		exit;
+    }
+	
+
+	public function referralWidgetSetup($widgetID, Request $request) {
+        $selectedTab = $request->t;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+		$mReferral = new ReferralModel();
+		
+        $oReferralList = $mReferral->getReferralLists($userID);
+        $widgetData = $mReferral->getReferralWidgets($userID, $widgetID);
+       
+        $referralData = $this->getReferralTagLines($widgetData[0]->hashcode);
+		
+        $sEmailPreview = view('admin.modules.referral.widgets.widget_preview', array('oReferral' => $referralData))->render();
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a href="' . base_url('admin/modules/referral/widgets') . '" class="sidebar-control hidden-xs">Referral Widgets </a></li>
+			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $widgetData[0]->widget_title . '" class="sidebar-control active hidden-xs ">' . $widgetData[0]->widget_title . '</a></li>
+			</ul>';
+
+        $aData = array(
+            'title' => 'Referral Widget',
+            'pagename' => $breadcrumb,
+            'widgetID' => $widgetID,
+            'oReferralList' => $oReferralList,
+            'widgetData' => $widgetData[0],
+            'sEmailPreview' => $sEmailPreview
+        );
+		return view('admin.modules.referral.referral_widget_setup', $aData);
+    }
 
 
+	public function getReferralTagLines($accountID) {
+		$mReferral = new ReferralModel();
+        $oRewardSettings = $mReferral->getReferralSettings($accountID, $hash = true);
+		$tagTitle = '';
+		$completeTagLine = '';
+        //Get Advocate related reward details
+        if (!empty($oRewardSettings->cash_id)) {
+            $advTagline = 'get ' . $oRewardSettings->display_msg;
+        } else if (!empty($oRewardSettings->custom_id)) {
+            $advTagline = 'get ' . $oRewardSettings->reward_title;
+        } else if (!empty($oRewardSettings->adv_coupon_id)) {
+            $advTagline = 'get ' . $oRewardSettings->advocate_display_msg;
+        }
 
 
+        //Get Referred friend related reward details
+        if (!empty($oRewardSettings->promo_id)) {
+            $refTagline = 'Give your friend ' . $oRewardSettings->link_desc;
+        } else if (!empty($oRewardSettings->ref_coupon_id)) {
+            $refTagline = 'Give your friend ' . $oRewardSettings->referred_display_msg;
+        }
 
+
+        if (!empty($refTagline)) {
+            $tagTitle = 'Refer your friends and ' . $advTagline;
+            $completeTagLine = $refTagline . ' And when your friends buy from your invite link, you ' . $advTagline;
+        }
+
+
+        $widgetData = array(
+            'accountID' => $accountID,
+            'tagTitle' => $tagTitle,
+            'tagLineDesc' => $completeTagLine
+        );
+
+        return $widgetData;
+    }
 	
 	
 	
@@ -1266,6 +1499,26 @@ class Referral extends Controller {
     
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
 
@@ -1391,34 +1644,7 @@ class Referral extends Controller {
     }
 
     
-    public function widgets() {
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-        if ($userID > 0) {
-            $oWidgetsList = $this->mReferral->getReferralWidgets($userID);
-
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs">Widgets </a></li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a data-toggle="tooltip" data-placement="bottom" title="Referral Widgets" class="sidebar-control active hidden-xs ">Referral Widgets</a></li>
-				</ul>';
-
-            $bActiveSubsription = $this->mUser->isActiveSubscription();
-            $this->session->set_userdata('setTab', '');
-
-            $aData = array(
-                'title' => 'Referral Widgets',
-                'pagename' => $breadcrumb,
-                'oWidgetsList' => $oWidgetsList,
-                'bActiveSubsription' => $bActiveSubsription,
-                'user_role' => $user_role
-            );
-
-            $this->template->load('admin/admin_template_new', 'admin/modules/referral/widget_list', $aData);
-        }
-    }
+    
 
     public function configuration() {
         $oUser = getLoggedUser();
@@ -1516,221 +1742,15 @@ class Referral extends Controller {
         exit;
     }
 
-    public function updatReferralWidgetStatus() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $post = $this->input->post();
-        $widgetID = $post['widgetID'];
-        $status = $post['status'];
-        $aData = array(
-            'status' => $status
-        );
+    
 
-        $response = $this->mReferral->updateReferralWidget($aData, $widgetID);
+    
 
-        if ($response) {
-            $response = array('status' => 'success');
-        } else {
-            $response = array('status' => 'error');
-        }
-        echo json_encode($response);
-        exit;
-    }
+    
 
-    public function publishReferralWidget() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $post = $this->input->post();
-        $widgetID = $post['widget_id'];
-        $status = 1;
-        $aData = array(
-            'status' => $status
-        );
+    
 
-        $response = $this->mReferral->updateReferralWidget($aData, $widgetID);
-
-        if ($response) {
-            $response = array('status' => 'success');
-        } else {
-            $response = array('status' => 'error');
-        }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function addReferralWidgetApp() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $post = $this->input->post();
-        $hashcode = $post['hashcode'];
-        $referralId = $post['referral_id'];
-        $widgetID = $post['widget_id'];
-        $aData = array(
-            'hashcode' => $hashcode,
-            'referral_id' => $referralId
-        );
-
-        $result = $this->mReferral->updateReferralWidget($aData, $widgetID);
-
-        //$referralData = $this->mReferral->getReferral($userID, $referralId);
-        //pre($referralData);
-        $referralData = $this->getReferralTagLines($hashcode);
-        $sEmailPreview = $this->load->view("admin/modules/referral/widgets/widget_preview", array('oReferral' => $referralData), true);
-        $referralScriptCode = 'test';
-        if ($result) {
-            $response = array('status' => 'success', 'preview' => $sEmailPreview, 'referralScriptCode' => $referralScriptCode);
-        } else {
-            $response = array('status' => 'error');
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function delete_referral_widget() {
-
-        $response = array();
-        $post = array();
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        //$userID = $this->session->userdata("current_user_id");
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $widgetID = $post['widget_id'];
-
-            $aData = array(
-                'delete_status' => '1'
-            );
-
-            $result = $this->mReferral->updateReferralWidget($aData, $widgetID);
-
-            if ($result) {
-
-                $aActivityData = array(
-                    'user_id' => $userID,
-                    'event_type' => 'referral_widget',
-                    'action_name' => 'deleted_referral_widget',
-                    'widget_id' => $widgetID,
-                    'campaign_id' => '',
-                    'inviter_id' => '',
-                    'subscriber_id' => '',
-                    'feedback_id' => '',
-                    'activity_message' => 'Referral Widget Deleted',
-                    'activity_created' => date("Y-m-d H:i:s")
-                );
-                logUserActivity($aActivityData);
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function getReferralWidgetEmbedCode() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $widgetID = $post['widget_id'];
-
-            $result = $this->mReferral->getReferralWidgets($userID, $widgetID);
-            $campaign_key = $result[0]->hashcode;
-            if (!empty($result)) {
-                $response['status'] = 'success';
-                if ($campaign_key != '') {
-                    $sWidget = 'referral';
-                    $response['result'] = htmlentities('<script type="text/javascript" id="bbscriptloader" data-key="' . $campaign_key . '" data-widgets="' . $sWidget . '" async="" src="' . base_url('assets/js/ref_widgets.js') . '"></script>');
-                } else {
-                    $response['status'] = "Error";
-                }
-            } else {
-                $response['status'] = "Errors";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
-
-    public function getReferralTagLines($accountID) {
-
-        $oRewardSettings = $this->mReferral->getReferralSettings($accountID, $hash = true);
-        //Get Advocate related reward details
-        if (!empty($oRewardSettings->cash_id)) {
-            $advTagline = 'get ' . $oRewardSettings->display_msg;
-        } else if (!empty($oRewardSettings->custom_id)) {
-            $advTagline = 'get ' . $oRewardSettings->reward_title;
-        } else if (!empty($oRewardSettings->adv_coupon_id)) {
-            $advTagline = 'get ' . $oRewardSettings->advocate_display_msg;
-        }
-
-
-        //Get Referred friend related reward details
-        if (!empty($oRewardSettings->promo_id)) {
-            $refTagline = 'Give your friend ' . $oRewardSettings->link_desc;
-        } else if (!empty($oRewardSettings->ref_coupon_id)) {
-            $refTagline = 'Give your friend ' . $oRewardSettings->referred_display_msg;
-        }
-
-
-        if (!empty($refTagline)) {
-            $tagTitle = 'Refer your friends and ' . $advTagline;
-            $completeTagLine = $refTagline . ' And when your friends buy from your invite link, you ' . $advTagline;
-        }
-
-
-        $widgetData = array(
-            'accountID' => $accountID,
-            'tagTitle' => $tagTitle,
-            'tagLineDesc' => $completeTagLine
-        );
-
-        return $widgetData;
-    }
-
-    public function referral_widget_setup($widgetID) {
-        $selectedTab = $this->input->get('t');
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-
-        if (empty($widgetID)) {
-            redirect("admin/modules/referral/widgets");
-            exit;
-        }
-
-        $oReferralList = $this->mReferral->getReferralLists($userID);
-        $widgetData = $this->mReferral->getReferralWidgets($userID, $widgetID);
-        //pre($widgetData);
-        //$referralData = $this->mReferral->getReferral($userID, $widgetData[0]->referral_id);
-        $referralData = $this->getReferralTagLines($widgetData[0]->hashcode);
-        //pre($referralData);
-        $sEmailPreview = $this->load->view("admin/modules/referral/widgets/widget_preview", array('oReferral' => $referralData), true);
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a href="' . base_url('admin/modules/referral/widgets') . '" class="sidebar-control hidden-xs">Referral Widgets </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $widgetData[0]->widget_title . '" class="sidebar-control active hidden-xs ">' . $widgetData[0]->widget_title . '</a></li>
-			</ul>';
-
-        $aData = array(
-            'title' => 'Referral Widget',
-            'pagename' => $breadcrumb,
-            'widgetID' => $widgetID,
-            'oReferralList' => $oReferralList,
-            'widgetData' => $widgetData[0],
-            'sEmailPreview' => $sEmailPreview
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/modules/referral/referral_widget_setup', $aData);
-    }
-
+    
     public function saveEmailWorkflow() {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');

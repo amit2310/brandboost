@@ -66,7 +66,7 @@ function publishReferralWidget(widgetId){
 	$.ajax({
 		url: "<?php echo base_url(); ?>admin/modules/referral/publishReferralWidget",
 		method: "POST",
-		data: {'widget_id' : widgetId},
+		data: {'widget_id' : widgetId, _token: '{{csrf_token()}}'},
 		dataType: "json",
 		success: function (data)
 		{
