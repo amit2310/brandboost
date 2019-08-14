@@ -281,11 +281,17 @@ class UsersModel extends Model {
             return false;
     }
 
-    public function deleteUsers($userId) {
+     /**
+     * This function is used to delete the user from the system 
+     * @return type 
+     */
 
-        $this->db->where('id', $userId);
+    public function deleteUsers($userId) {
         $aData = array('deleted_status' => 1);
-        $result = $this->db->update('tbl_users', $aData);
+
+        $oData = DB::table('tbl_users')
+         ->where('id', $userId)
+         ->update($aData);
 
         return true;
     }

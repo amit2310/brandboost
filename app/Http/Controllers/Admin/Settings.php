@@ -437,7 +437,22 @@ class Settings extends Controller {
         exit;
     }
 
+    /**
+    * This function is used to get the client twilio number details 
+    * @param id 
+    * @return type
+    */
 
+    public function list_client_details($id)
+    {
+
+    $twilio_number_log = $this->mSetting->getClientNumberlogs($id);
+    $aData = array(
+    'twilio_number_log' => $twilio_number_log
+    );
+    $this->template->load('admin/admin_template_new', 'admin/settings/list_details', $aData);
+
+    }
 
      
 
