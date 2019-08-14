@@ -273,7 +273,10 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to add referral
+     * @return type
+     */
 	public static function addReferral($aData) {
 		$insert_id = DB::table('tbl_referral_rewards')->insertGetId($aData);
         if ($insert_id) {
@@ -283,7 +286,12 @@ class ReferralModel extends Model {
         }
     }
 	
-	
+	/**
+     * Used to get referral all data by user id
+     * @param type $userID
+     * @param type $id
+     * @return type
+     */
 	public static function getReferral($userID, $id = '') {
 		$aData =  DB::table('tbl_referral_rewards')
 			->select('tbl_referral_rewards.*')
@@ -296,7 +304,11 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to get referral template by referralID
+     * @param type $referralID
+     * @return type
+     */
 	public static function getReferralTemplates($referralID) {
 		$aData =  DB::table('tbl_referral_automations_campaigns')
 			->select('tbl_referral_automations_campaigns.*')
@@ -308,7 +320,11 @@ class ReferralModel extends Model {
 		
     }
 	
-	
+	/**
+     * Used to get referral events data by referral ID
+     * @param type $referralID
+     * @return type
+     */
 	public static function getReferralEvents($referralID) {
 		$aData =  DB::table('tbl_referral_automations_events')
 			->where('referral_id', $referralID)
@@ -318,7 +334,11 @@ class ReferralModel extends Model {
 		
     }
 	
-	
+	/**
+     * Used to get referral settings data by id
+     * @param type $id
+     * @return type
+     */
 	public static function getReferralSettings($id, $hash = false) {
 		$aData =  DB::table('tbl_referral_rewards')
 			->select('tbl_referral_rewards.*', 'tbl_referral_rewards.id AS rewardID', 'tbl_referral_rewards.created AS rewardCreated', 'tbl_referral_rewards_adv_coupons.*', 'tbl_referral_rewards_adv_coupons.id AS advCouponID', 'tbl_referral_rewards_adv_coupons.created AS advCouponCreated', 'tbl_referral_rewards_ref_coupons.*', 'tbl_referral_rewards_ref_coupons.id AS refCouponID', 'tbl_referral_rewards_ref_coupons.created AS refCouponCreated', 'tbl_referral_rewards_cash.*', 'tbl_referral_rewards_cash.id AS cashID', 'tbl_referral_rewards_cash.created AS cashCreated', 'tbl_referral_rewards_custom.*', 'tbl_referral_rewards_custom.id AS customID', 'tbl_referral_rewards_custom.created AS customCreated', 'tbl_referral_rewards_promo_links.*', 'tbl_referral_rewards_promo_links.id AS promoID', 'tbl_referral_rewards_promo_links.created AS promoCreated')
@@ -337,7 +357,11 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to get Advocate Coupon Codes by couponID
+     * @param type $couponID
+     * @return type
+     */
 	public static function getAdvocateCouponCodes($couponID) {
 		$aData =  DB::table('tbl_referral_rewards_adv_coupons_codes')
 			->where('coupon_id', $couponID)
@@ -346,7 +370,11 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-    
+    /**
+     * Used to get referral coupon code by couponID
+     * @param type $couponID
+     * @return type
+     */
 	public static function getReferralCouponCodes($couponID) {
 		$aData =  DB::table('tbl_referral_rewards_ref_coupons_codes')
 			->where('coupon_id', $couponID)
@@ -355,7 +383,11 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to get referral sale all data by accountID
+     * @param type $accountID
+     * @return type
+     */
 	public static function referredSales($accountID) {
 		$aData =  DB::table('tbl_referral_sales')
 			->select('tbl_referral_sales.*', 'tbl_subscribers.firstname AS aff_firstname', 'tbl_subscribers.lastname AS aff_lastname', 'tbl_subscribers.email AS aff_email', 'tbl_subscribers.phone AS aff_phone', 'tbl_subscribers.country_code')
@@ -368,7 +400,11 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to get referral sale track data by accountID
+     * @param type $accountID
+     * @return type
+     */
 	public static function untrackedSales($accountID) {
 		$aData =  DB::table('tbl_referral_sales')
 			->select('tbl_referral_sales.*')
@@ -380,7 +416,11 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to get Referral Link Visits by accountID
+     * @param type $accountID
+     * @return type
+     */
 	public static function getReferralLinkVisits($accountID) {
 		$aData =  DB::table('tbl_referral_reflinks_visit_logs')
 			->select('tbl_referral_reflinks_visit_logs.*')
@@ -392,7 +432,11 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to get AutoEvents by referralID
+     * @param type $referralID
+     * @return type
+     */
 	public static function getAutoEvents($referralID) {
 		$aData =  DB::table('tbl_referral_automations_events')
 			->select('tbl_referral_automations_events.*', 'tbl_referral_automations_campaigns.name as campaign_name')
@@ -404,7 +448,11 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to get All Advocates by accountID
+     * @param type $accountID
+     * @return type
+     */
 	public static function getAllAdvocates($accountID = '') {
 		$aData =  DB::table('tbl_referral_users')
 			->select('tbl_referral_users.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.facebook_profile', 'tbl_subscribers.twitter_profile', 'tbl_subscribers.linkedin_profile', 'tbl_subscribers.instagram_profile', 'tbl_subscribers.socialProfile', 'tbl_subscribers.id AS global_user_id')
@@ -419,7 +467,12 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to get referral Advocate by id
+     * @param type $id
+     * @param type $accountID
+     * @return type
+     */
     public function getAdvocateById($id, $accountID) {
 		$aData =  DB::table('tbl_referral_users')
 			->select('tbl_referral_users.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.facebook_profile', 'tbl_subscribers.twitter_profile', 'tbl_subscribers.linkedin_profile', 'tbl_subscribers.instagram_profile', 'tbl_subscribers.socialProfile', 'tbl_subscribers.id AS global_user_id')
@@ -432,7 +485,11 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to save Auto Events by userID
+     * @param type $userID
+     * @return type
+     */
 	public static function saveAutoEvents($aData, $source, $userID) {
         //get Settings
         $oSettings = Self::getAccountSettings($userID);
@@ -569,7 +626,10 @@ class ReferralModel extends Model {
         return false;
     }
 	
-	
+	/**
+     * Used to save Advocate Coupon Discount
+     * @return type
+     */
 	public static function saveAdvCouponDiscount($aData) {
         $rewardID = $aData['reward_id'];
         if ($rewardID > 0) {
@@ -595,7 +655,11 @@ class ReferralModel extends Model {
         return false;
     }
 	
-
+	/**
+     * Used to get referral Advocate Coupon Exists by rewardID
+     * @param type $rewardID
+     * @return type
+     */
     public static function checkIfAdvCouponExists($rewardID) {
 		$oData = DB::table('tbl_referral_rewards_adv_coupons')
 			->where('reward_id', $rewardID)
@@ -603,7 +667,10 @@ class ReferralModel extends Model {
         return $oData;
     }
 	
-
+	/**
+     * Used to save Referral Coupon Discount
+     * @return type
+     */
     public static function saveRefCouponDiscount($aData) {
         $rewardID = $aData['reward_id'];
         if ($rewardID > 0) {
@@ -627,7 +694,11 @@ class ReferralModel extends Model {
         return false;
     }
 	
-
+	/**
+     * Used to get referral Coupon Exists by rewardID
+     * @param type $rewardID
+     * @return type
+     */
     public static function checkIfRefCouponExists($rewardID) {
 		$oData = DB::table('tbl_referral_rewards_ref_coupons')
 			->where('reward_id', $rewardID)
@@ -635,7 +706,10 @@ class ReferralModel extends Model {
         return $oData;
     }
 	
-
+	/**
+     * Used to save Cash Reward
+     * @return type
+     */
     public static function saveCashReward($aData) {
         $rewardID = $aData['reward_id'];
         if ($rewardID > 0) {
@@ -660,7 +734,11 @@ class ReferralModel extends Model {
         return false;
     }
 	
-
+	/**
+     * Used to get referral Cash Reward Exists by rewardID
+     * @param type $rewardID
+     * @return type
+     */
     public static function checkIfCashRewardExists($rewardID) {
 		$oData = DB::table('tbl_referral_rewards_cash')
 			->where('reward_id', $rewardID)
@@ -668,6 +746,10 @@ class ReferralModel extends Model {
         return $oData;
     }
 
+	/**
+     * Used to get save Custom Reward
+     * @return type
+     */
     public static function saveCustomReward($aData) {
         $rewardID = $aData['reward_id'];
         if ($rewardID > 0) {
@@ -691,7 +773,11 @@ class ReferralModel extends Model {
         return false;
     }
 	
-
+	/**
+     * Used to get custom reward by rewardID
+     * @param type $rewardID
+     * @return type
+     */
     public static function checkIfCustomRewardExists($rewardID) {
 		$oData = DB::table('tbl_referral_rewards_custom')
 			->where('reward_id', $rewardID)
@@ -699,7 +785,11 @@ class ReferralModel extends Model {
         return $oData;
     }
 	
-
+	/**
+     * Used to add promo link
+     * @param type $userID
+     * @return type
+     */
     public static function savePromoLink($aData) {
         $rewardID = $aData['reward_id'];
         if ($rewardID > 0) {
@@ -723,7 +813,11 @@ class ReferralModel extends Model {
         return false;
     }
 	
-
+	/**
+     * Used to get promotion link by rewardID
+     * @param type $rewardID
+     * @return type
+     */
     public static function checkIfPromoLinkExists($rewardID) {
 		$oData = DB::table('tbl_referral_rewards_promo_links')
 			->where('reward_id', $rewardID)
@@ -731,7 +825,11 @@ class ReferralModel extends Model {
         return $oData;
     }
 	
-	
+	/**
+     * Used to update Referral Settings by id
+     * @param type $id
+     * @return type
+     */
 	public static function updateReferralSettings($aData, $id) {
 		$result = DB::table('tbl_referral_rewards')
 				   ->where('id', $id)
@@ -744,7 +842,11 @@ class ReferralModel extends Model {
 		}
     }
 	
-	
+	/**
+     * Used to get Advocate Coupon Info by referralID
+     * @param type $referralID
+     * @return type
+     */
 	public static function getAdvocateCouponInfo($referralID) {
 		$aData =  DB::table('tbl_referral_rewards_adv_coupons')
 			->select('tbl_referral_rewards_adv_coupons.*')
@@ -754,7 +856,11 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to get referral Friend Coupon Info by referralID
+     * @param type $userID
+     * @return type
+     */
 	public static function getFriendCouponInfo($referralID) {
 		$aData =  DB::table('tbl_referral_rewards_ref_coupons')
 			->select('tbl_referral_rewards_ref_coupons.*')
@@ -764,7 +870,10 @@ class ReferralModel extends Model {
         return $aData;
     }
 	
-	
+	/**
+     * Used to add Advocate Coupon
+     * @return type
+     */
 	public static function addAdvocateCoupon($aData) {
         $couponID = $aData['coupon_id'];
         $usageType = $aData['usage_type'];
@@ -819,7 +928,11 @@ class ReferralModel extends Model {
         }
     }
 	
-	
+	/**
+     * Used to get referral Advocate Coupons by couponID
+     * @param type $couponID
+     * @return type
+     */
 	public static function getAdvocateCoupons($couponID, $usageType) {
 		$oData = DB::table('tbl_referral_rewards_adv_coupons_codes')
 			->where('coupon_id', $couponID)
@@ -828,7 +941,11 @@ class ReferralModel extends Model {
         return $oData;
     }
 	
-	
+	/**
+     * Used to delete Advocate Coupon by id
+     * @param type $id
+     * @return type
+     */
 	public static function deleteAdvocateCoupon($id) {
 		$result = DB::table('tbl_referral_rewards_adv_coupons_codes')
                ->where('id', $id)
@@ -840,7 +957,11 @@ class ReferralModel extends Model {
         }
     }
 	
-	
+	/**
+     * Used to get exists Advocate Coupon by couponID
+     * @param type $couponID
+     * @return type
+     */
 	public static function existsAdvocateCoupon($couponCode, $couponID) {
 		$oData = DB::table('tbl_referral_rewards_adv_coupons_codes')
 			->where('coupon_id', $couponID)
@@ -849,7 +970,11 @@ class ReferralModel extends Model {
         return $oData;
     }
 		
-	
+	/**
+     * Used to update Advocate Coupon Code by id
+     * @param type $userID
+     * @return type
+     */
 	public static function updateAdvocateCouponCode($aData, $id) {
 		$result = DB::table('tbl_referral_rewards_adv_coupons')
 				   ->where('id', $id)
@@ -860,7 +985,11 @@ class ReferralModel extends Model {
         return false;
     }
 	
-	
+	/**
+     * Used to add referral coupon
+     * @param type $userID
+     * @return type
+     */
 	public static function addReferredCoupon($aData) {
         $couponID = $aData['coupon_id'];
         $usageType = $aData['usage_type'];
@@ -913,7 +1042,11 @@ class ReferralModel extends Model {
         }
     }
 	
-	
+	/**
+     * Used to get exists Referred Coupon by user id
+     * @param type $couponID
+     * @return type
+     */
 	public static function existsReferredCoupon($couponCode, $couponID) {
 		$oData = DB::table('tbl_referral_rewards_ref_coupons_codes')
 			->where('coupon_id', $couponID)
@@ -922,7 +1055,11 @@ class ReferralModel extends Model {
         return $oData;
     }
 	
-
+	/**
+     * Used to delete referral coupon by id
+     * @param type $id
+     * @return type
+     */
     public function deleteReferredCoupon($id) {
 		$result = DB::table('tbl_referral_rewards_ref_coupons_codes')
                ->where('id', $id)
@@ -933,8 +1070,12 @@ class ReferralModel extends Model {
             return false;
         }
     }
-	
-	
+		
+	/**
+     * Used to get referral coupon code by coupon id
+     * @param type $couponID
+     * @return type
+     */
 	public static function getReferredCoupons($couponID, $usageType) {
 		$oData = DB::table('tbl_referral_rewards_ref_coupons_codes')
 			->where('coupon_id', $couponID)
@@ -943,7 +1084,11 @@ class ReferralModel extends Model {
         return $oData;
     }
 	
-	
+	/**
+     * Used to update referral coupon code by referral id
+     * @param type $id
+     * @return type
+     */
 	public static function updateReferredCouponCode($aData, $id) {
 		$result = DB::table('tbl_referral_rewards_ref_coupons')
 				   ->where('id', $id)
@@ -954,7 +1099,11 @@ class ReferralModel extends Model {
         return false;
     }
 	
-	
+	/**
+     * Used to get referral tag by sale id
+     * @param type $id
+     * @return type
+     */
 	public static function getTagsBySaleID($id) {
 		$oData = DB::table('tbl_referral_tags')
 			->select('tbl_tag_groups_entity.*', 'tbl_referral_tags.tag_id', 'tbl_referral_tags.referral_response_id')
@@ -964,7 +1113,11 @@ class ReferralModel extends Model {
         return $oData;
     }
 	
-	
+	/**
+     * Used to get Email Twilio Categorized Stats
+     * @param type $userID
+     * @return type
+     */
 	public static function getEmailTwilioCategorizedStatsData($oData) {
 		$acceptedTotalCount = $acceptedUniqueCount = $acceptedDuplicateCount = $sentTotalCount = $sentUniqueCount = $sentDuplicateCount = $deliveredTotalCount = $deliveredUniqueCount = $deliveredDuplicateCount = $undeliveredTotalCount = $undeliveredUniqueCount = $undeliveredDuplicateCount = $failedTotalCount = $failedUniqueCount = $failedDuplicateCount = $receivingTotalCount = $receivingUniqueCount = $receivingDuplicateCount = $receivedTotalCount = $receivedUniqueCount = $receivedDuplicateCount = $queuedTotalCount = $queuedUniqueCount = $queuedDuplicateCount = $sendingTotalCount = $sendingUniqueCount = $sendingDuplicateCount = $otherTotalCount = $otherUniqueCount = $otherDuplicateCount = array();
         if (!empty($oData)) {
@@ -1131,7 +1284,13 @@ class ReferralModel extends Model {
         return $aCatogerizedData;
     }
 	
-	
+	/**
+     * Used to get referral sendgrid email stats by id
+     * @param type $id
+     * @param type $referralID
+     * @param type $eventType
+     * @return type
+     */
 	public static function getEmailReferralSendgridStats($param, $referralID, $id, $eventType = '') {
 
         $sql = "SELECT tbl_referral_automations_tracking_sendgrid.* FROM tbl_referral_automations_tracking_sendgrid "
@@ -1182,7 +1341,10 @@ class ReferralModel extends Model {
 		return $oData;
     }
 	
-	
+	/**
+     * Used to get sendgrid email stats
+     * @return type
+     */
 	public static function getEmailSendgridCategorizedStatsData($oData) {
 
         if (!empty($oData)) {
@@ -1379,7 +1541,10 @@ class ReferralModel extends Model {
         return $aCatogerizedData;
     }
 	
-	
+	/**
+     * Used to check duplicate existing sendgrid stats
+     * @return type
+     */
 	public static function checkIfDuplicateExistsInSendgridStat($aSearch, $tableData) {
         if (!empty($tableData)) {
             foreach ($tableData as $oData) {
@@ -1391,7 +1556,11 @@ class ReferralModel extends Model {
         }
     }
 	
-	
+	/**
+     * Used to get twilio email stats by id
+     * @param type $id
+     * @return type
+     */
 	public static function getEmailTwilioStats($param, $id, $eventType = '') {
         $sql = "SELECT tbl_referral_automations_tracking_twillio.* FROM tbl_referral_automations_tracking_twillio "
                 . "LEFT JOIN tbl_referral_rewards ON tbl_referral_automations_tracking_twillio.referral_id = tbl_referral_rewards.id "
@@ -1435,7 +1604,11 @@ class ReferralModel extends Model {
 		return $oData;
     }
 	
-	
+	/**
+     * Used to update referral widget data by referral id
+     * @param type $id
+     * @return type
+     */
 	public function updateReferralWidget($aData, $id) {
 		$result = DB::table('tbl_referral_widgets')
 				   ->where('id', $id)
@@ -1448,8 +1621,14 @@ class ReferralModel extends Model {
     }
 	
 	
-	
-	
+	public function createReferralWidget($aData) {
+		$insert_id = DB::table('tbl_referral_widgets')->insertGetId($aData);
+        if ($insert_id) {
+            return $insert_id;
+        } else {
+            return false;
+        }
+    }
 	
 	
 	
@@ -1489,15 +1668,7 @@ class ReferralModel extends Model {
         return $response;
     }
 
-    public function createReferralWidget($aData) {
-        $result = $this->db->insert("tbl_referral_widgets", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
+    
 
    
     public function checkIfExistingAdvocate($subscriberID, $accountID) {

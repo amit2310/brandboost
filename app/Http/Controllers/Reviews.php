@@ -172,7 +172,7 @@ class Reviews extends Controller {
         exit;
     }
 
-    public function displayreivew($widgetHash) {
+    public function displayReview($widgetHash) {
         if (!empty($widgetHash)) {
             $oCampaign = $this->mBrandboost->getWidgetInfo($widgetHash, $hash = true);
             //pre($oCampaign);

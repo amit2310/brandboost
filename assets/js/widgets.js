@@ -116,7 +116,7 @@ BB = function (t) {
     t.prototype.g_reviews = function () {
         var e = this;
         var bb_key = this.userbbkey;
-        var bbsrc = this.userSettings.host + "/reviews/displayreivew/" + bb_key;
+        var bbsrc = this.userSettings.host + "/reviews/displayReview/" + bb_key;
         var a = {};
         //i = call back function
         //a = POST data
@@ -1203,7 +1203,7 @@ if (bbkey != 'undefined' && bbwidgets != 'undefined') {
 	//console.log(bbwidget);
     // Include Css
     var oBB = new BB(bbkey, {
-        "host": "http://brandboost.io",
+        "host": "http://dev.brandboostx.com",
         "center_popup_widget": (bbwidget.indexOf("cpw") > -1) ? true : false,
         "bottom_fixed_widget": (bbwidget.indexOf("bfw") > -1) ? true : false,
         "vertical_popup_widget": (bbwidget.indexOf("vpw") > -1) ? true : false,

@@ -157,6 +157,9 @@ Route::post('admin/modules/referral/getReferralWidgetEmbedCode','Admin\Modules\R
 Route::get('admin/modules/referral/referral_widget_setup/{id}','Admin\Modules\Referral@referralWidgetSetup');
 Route::post('admin/modules/referral/addReferralWidgetApp','Admin\Modules\Referral@addReferralWidgetApp');
 Route::post('admin/modules/referral/publishReferralWidget','Admin\Modules\Referral@publishReferralWidget');
+Route::post('admin/modules/referral/addReferralWidget','Admin\Modules\Referral@addReferralWidget');
+Route::post('admin/modules/referral/deleteBulkReferralWidgets','Admin\Modules\Referral@deleteBulkReferralWidgets');
+Route::post('admin/modules/referral/archiveBulkReferralWidgets','Admin\Modules\Referral@archiveBulkReferralWidgets');
 
 
 
@@ -175,6 +178,7 @@ Route::post('admin/comments/deleteComment','Admin\Comments@deleteComment');
 Route::post('admin/reviews/deleteReviewNote','Admin\Reviews@deleteReviewNote');
 Route::post('admin/comments/update_comment_status','Admin\Comments@update_comment_status');
 Route::post('admin/reviews/update_note','Admin\Reviews@update_note');
+Route::post('reviews/displayReview/{id}','Reviews@displayReview');
 
 
 Route::post('admin/comments/add_comment','Admin\Comments@addComment');
