@@ -12,7 +12,7 @@
     .dropzone .dz-default.dz-message span {    font-size: 13px;    margin-top: -10px;}
 	.productSectionNew{margin-top: 30px; border-top: 3px solid #ECECEC; padding-top: 20px;}
 </style>
-
+<?php error_reporting(0); ?>
 <div class="tab-pane <?php echo $camp; ?>" id="right-icon-tab11">
     <form method="post" id="addOnsiteStepList" action="#" >
         <input name="brandboostId" id="brandboostId" value="<?php echo $brandboostData->id; ?>" type="hidden">
