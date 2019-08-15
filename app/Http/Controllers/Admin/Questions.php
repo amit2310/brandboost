@@ -961,6 +961,40 @@ class Questions extends Controller {
         }
     }
 
+
+    /**
+    * This function is used to update answer status
+    * @param type 
+    * @return type
+    */
+    public function update_answer_status(Request $request) {
+
+        $response = array();
+        $post = array();
+        if ($request->answer_id) {
+           
+            $answerID = base64_url_decode(strip_tags($request->answer_id));
+            $status = strip_tags($request->status);
+
+            $aData = array(
+                'status' => $status,
+                'updated' => date("Y-m-d H:i:s")
+            );
+            $mQuestion = new QuestionModel();
+            $result = $mQuestion->updateAnswer($aData, $answerID);
+            if ($result) {
+                $response['status'] = 'success';
+                $response['message'] = "Status has been updated successfully.";
+            } else {
+                $response['message'] = "Error: Something went wrong, try again";
+            }
+
+            echo json_encode($response);
+            exit;
+        }
+    }
+
+
     public function getAnswer() {
 
         $response = array();
@@ -1138,33 +1172,6 @@ class Questions extends Controller {
         }
     }
 
-    public function update_answer_status() {
-
-        $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-
-            $answerID = base64_url_decode(strip_tags($post['answer_id']));
-            $status = strip_tags($post['status']);
-
-            $aData = array(
-                'status' => $status,
-                'updated' => date("Y-m-d H:i:s")
-            );
-
-            $result = $this->mQuestion->updateAnswer($aData, $answerID);
-            if ($result) {
-                $response['status'] = 'success';
-                $response['message'] = "Status has been updated successfully.";
-            } else {
-                $response['message'] = "Error: Something went wrong, try again";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
 
     public function get_question_by_Id() {
 

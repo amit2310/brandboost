@@ -42,13 +42,14 @@ $(document).ready(function () {
 
     $(document).on('click', '.chg_smart_status', function () {
         $('.overlaynew').show();
+        var tkn = $('meta[name="_token"]').attr('content');
         var status = $(this).attr('change_status');
         var answer_id = $(this).attr('answer_id');
         var questionID = $("#smartpopup_question_id").val();
         $.ajax({
             url: '/admin/questions/update_answer_status',
             type: "POST",
-            data: {status: status, answer_id: answer_id},
+            data: {status: status, answer_id: answer_id, _token:tkn},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

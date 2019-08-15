@@ -202,6 +202,7 @@ Route::get('admin/questions/view/{id}','Admin\Questions@questionView');
 Route::get('admin/questions/details/{id}','Admin\Questions@questionDetails');
 Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
 Route::post('admin/questions/add_answer','Admin\Questions@add_answer');
+Route::post('admin/questions/update_answer_status','Admin\Questions@update_answer_status');
 Route::get('admin/questions','Admin\Questions@index');
 
 

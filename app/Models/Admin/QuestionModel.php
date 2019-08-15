@@ -319,16 +319,17 @@ class QuestionModel extends Model
         return true;
     }
 
+    /**
+    * This function is used to update answer
+    * @param type $aData, $answerID
+    * @return type boolean
+    */
     public function updateAnswer($aData, $answerID) {
 
-        $this->db->where('id', $answerID);
-        $result = $this->db->update('tbl_reviews_question_answers', $aData);
-        /* echo $this->db->last_query();
-          exit; */
-        if ($result)
-            return true;
-        else
-            return false;
+        $result = DB::table('tbl_reviews_question_answers')
+                ->where('id', $answerID)
+                ->update($aData);
+        return true;
     }
 
     public function deleteAnswer($ansId) {
