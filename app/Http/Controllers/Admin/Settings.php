@@ -7,11 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\SettingsModel;
 use App\Models\Admin\MembershipModel;
 use App\Models\Admin\InvoicesModel;
-/*use App\Models\Admin\UsersModel;
-use App\Models\ReviewsModel;
-use App\Models\SignupModel;
-use App\Models\InfusionModel;
-use App\Models\Admin\Crons\InviterModel;*/
 use Illuminate\Support\Facades\Input;
 use Session;
 
@@ -216,7 +211,6 @@ class Settings extends Controller {
      * Get email notification content
      * @param type
      */
-
     public function getEmailNotificationContent(Request $request){
         $oUser = getLoggedUser();
         $userID = $oUser->id;
@@ -285,7 +279,6 @@ class Settings extends Controller {
     * @param type 
     * @return type
     */
-
     public function amazon_s3_storage() {
 
         $mSetting = new SettingsModel();
@@ -311,7 +304,6 @@ class Settings extends Controller {
     * @param type 
     * @return type
     */
-
      public function getuserbyid(){
 
        $post = Input::post();
@@ -336,7 +328,6 @@ class Settings extends Controller {
     * @param type 
     * @return type
     */
-
     public function updateS3setting() {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
@@ -377,7 +368,6 @@ class Settings extends Controller {
     * @param type 
     * @return type
     */
-
     public function creditValues(){
         $seletedTab = Input::get('t');
         $oUser = getLoggedUser();
@@ -506,7 +496,6 @@ class Settings extends Controller {
             echo json_encode($response);
             exit;
         }
-
         if ($request->template_id) {
             $templateID = strip_tags($request->template_id);
             $admin_sms_content = $request->admin_sms_content;
@@ -578,7 +567,6 @@ class Settings extends Controller {
     * @param id 
     * @return type
     */
-
     public function list_client_details($id)
     {
 
@@ -597,7 +585,6 @@ class Settings extends Controller {
     * @param 
     * @return type
     */
-
     public function twillo_log() {
         $mSetting  = new SettingsModel();
         $twillo_account_detail = $mSetting->twillo_account();
@@ -646,6 +633,60 @@ class Settings extends Controller {
 
 
     }
+
+
+    /**
+    * This function is used for update credit property
+    * @param type 
+    * @return type
+    */
+    public function updateCreditPropery(){
+       $oUser = getLoggedUser();
+       $userID = $oUser->id;
+       $response = array();
+       $userRole = $oUser->user_role;
+       $mSetting  = new SettingsModel();
+       if($userRole != '1'){
+           $response['status'] = 'error';
+           $response['msg'] = 'Not Authorise to access this page';
+           echo json_encode($response);
+           exit;
+       }
+
+       $post = Input::post();
+       if ($post) {
+           $creditID = base64_url_decode(strip_tags($post['creditID']));
+           $propertyName = strip_tags($post['title']);
+           $creditValue = strip_tags($post['feature_credits']);
+           //Get data for history
+           $oCrValue = SettingsModel::getCreditValues($creditID);
+           $aData = array(
+               'feature_name' => $propertyName,
+               'credit_value' => $creditValue,
+               'updated' => date("Y-m-d H:i:s")
+           );
+           $bUpdated = $mSetting->updateCreditValues($aData, $creditID);
+           if ($bUpdated) {
+               //Log History
+               if(!empty($oCrValue)){
+                   $aHistoryData = array(
+                       /*'id' => $oCrValue[0]->id,*/
+                       'feature_key' => $oCrValue[0]->feature_key,
+                       'feature_name' => $oCrValue[0]->feature_name,
+                       'credit_value' => $oCrValue[0]->credit_value,
+                       'status' => $oCrValue[0]->status,
+                       'created' => date("Y-m-d H:i:s")
+                   );
+                   $addUpdateHistory = $mSetting->addCreditHistory($aHistoryData);
+               }
+               $response['status'] = 'success';
+           } else {
+               $response['status'] = 'error';
+           }
+       }
+       echo json_encode($response);
+       exit;
+   }
      
 
 }
