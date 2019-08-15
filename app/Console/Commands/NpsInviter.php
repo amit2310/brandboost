@@ -70,10 +70,10 @@ class NpsInviter extends Command
      */
     public function startCampaign() {
         
-        //Instanciate cron manager model to access its properties and methods
+        //Instantiate cron manager model to access its properties and methods
         $mCron = new ManagerModel();
         
-        //Instanciate Nps cron model to access its properties and methods
+        //Instantiate Nps cron model to access its properties and methods
         $mInviter = new NpsModel();
 
         //Check Cron Lock
@@ -138,7 +138,7 @@ class NpsInviter extends Command
 
     
     public function processNPSInvite($aEvent = array()) {
-        //Instanciate Nps cron model to access its properties and methods
+        //Instantiate Nps cron model to access its properties and methods
         $mInviter = new NpsModel();
         
         if (!empty($aEvent)) {
@@ -216,7 +216,7 @@ class NpsInviter extends Command
     }
 
     public function processNPSReminder($aEvent = array()) {
-        //Instanciate Nps cron model to access its properties and methods
+        //Instantiate Nps cron model to access its properties and methods
         $mInviter = new NpsModel();
         
         if (!empty($aEvent)) {
@@ -278,7 +278,7 @@ class NpsInviter extends Command
     }
 
     public function fireAutomationCampaign($aData = array()) {
-        //Instanciate Nps cron model to access its properties and methods
+        //Instantiate Nps cron model to access its properties and methods
         $mInviter = new NpsModel();
         
         $oEvent = $aData['inviter_data'];
@@ -371,7 +371,7 @@ class NpsInviter extends Command
     }
 
     public function sendBulkAutomationEmail($oSubscribers, $aData) {
-        //Instanciate Nps cron model to access its properties and methods
+        //Instantiate Nps cron model to access its properties and methods
         $mInviter = new NpsModel();
         
         $content = $aData['content'];
@@ -503,7 +503,7 @@ class NpsInviter extends Command
     }
 
     public function sendBulkAutomationSms($oSubscribers, $aData) {
-        //Instanciate Nps cron model to access its properties and methods
+        //Instantiate Nps cron model to access its properties and methods
         $mInviter = new NpsModel();
         
         $content = $aData['content'];
@@ -615,7 +615,7 @@ class NpsInviter extends Command
     }
 
     public function saveLog($aData) {
-        //Instanciate Nps cron model to access its properties and methods
+        //Instantiate Nps cron model to access its properties and methods
         $mInviter = new NpsModel();
         
         echo " I a mhere";
@@ -764,7 +764,7 @@ class NpsInviter extends Command
     }
 
     public function SG_smtp($aData) {
-        //Instanciate Nps cron model to access its properties and methods
+        //Instantiate Nps cron model to access its properties and methods
         $mInviter = new NpsModel();
         
         if ($aData['nps_id'] == $this->testCampaignId) {
@@ -860,7 +860,7 @@ class NpsInviter extends Command
     }
 
     public function send_Twilio($aData) {
-        //Instanciate Nps cron model to access its properties and methods
+        //Instantiate Nps cron model to access its properties and methods
         $mInviter = new NpsModel();
         
         //pre($aData);

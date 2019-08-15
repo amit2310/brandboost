@@ -116,12 +116,11 @@ class UsersModel extends Model {
                         ->orderBy('tbl_cc_subscriptions.id', 'desc')
                         ->limit(1)
                         ->exists();
-                
-                if($bData)
+
+                if ($bData)
                     return true;
                 else
                     return false;
-                
             } else {
                 return false;
             }
@@ -130,7 +129,7 @@ class UsersModel extends Model {
         }
     }
 
-     /**
+    /**
      * This method is for get all country
      * @return object
      */
@@ -140,7 +139,7 @@ class UsersModel extends Model {
                 ->get();
         return $oData;
     }
-    
+
     /**
      * This function used to get Sendgrid Account info
      * @param type $clientID
@@ -148,10 +147,10 @@ class UsersModel extends Model {
      */
     public static function getSendgridAccount($clientID) {
         $oData = DB::table('tbl_sendgrid_accounts')
-        ->where('user_id', $clientID)
-        ->where('status', 1)        
-        ->first();
-        
+                ->where('user_id', $clientID)
+                ->where('status', 1)
+                ->first();
+
         return $oData;
     }
 
@@ -163,9 +162,9 @@ class UsersModel extends Model {
     public static function checkEmailExist($emailID) {
 
         $oData = DB::table('tbl_users')
-        ->where('email', $emailID)
-        ->get();
-        
+                ->where('email', $emailID)
+                ->get();
+
         return $oData;
     }
 
@@ -251,8 +250,8 @@ class UsersModel extends Model {
     public function updateUsers($aData, $userId) {
 
         $result = DB::table('tbl_users')
-            ->where('id', $userId)
-            ->update($aData);
+                ->where('id', $userId)
+                ->update($aData);
 
         return true;
     }
@@ -281,54 +280,50 @@ class UsersModel extends Model {
             return false;
     }
 
-     /**
+    /**
      * This function is used to delete the user from the system 
      * @return type 
      */
-
     public function deleteUsers($userId) {
         $aData = array('deleted_status' => 1);
 
         $oData = DB::table('tbl_users')
-         ->where('id', $userId)
-         ->update($aData);
+                ->where('id', $userId)
+                ->update($aData);
 
         return true;
     }
 
     /**
-    * This function is used to check the user found or not in the bb system
-    * @param type $clientID
-    * @return type
-    */
+     * This function is used to check the user found or not in the bb system
+     * @param type $clientID
+     * @return type
+     */
     public function checkIfUser($aParam) {
         if (!empty($aParam)) {
             $key = array_keys($aParam);
             $val = array_values($aParam);
             $oData = DB::table('tbl_users')
-             ->where($key[0], $val[0])
-            ->limit(1)->first();
-             return $oData->id;           
+                            ->where($key[0], $val[0])
+                            ->limit(1)->first();
+            return $oData->id;
         }
         return false;
     }
 
-  
-        /**
-        * This function is used to check the subscriber exists or not
-        * @param type $clientID
-        * @return type
-        */
-
+    /**
+     * This function is used to check the subscriber exists or not
+     * @param type $clientID
+     * @return type
+     */
     public function checkIfSubscriber($aParam) {
         if (!empty($aParam)) {
             $key = array_keys($aParam);
             $val = array_values($aParam);
-            $aData =  DB::table('tbl_subscribers')
-            ->where($key[0], $val[0])
-            ->limit(1)->first();
+            $aData = DB::table('tbl_subscribers')
+                            ->where($key[0], $val[0])
+                            ->limit(1)->first();
             return $aData;
-           
         }
         return false;
     }
@@ -574,32 +569,40 @@ class UsersModel extends Model {
         return $response;
     }
 
-
- 
     /**
      * Used to get the username on the behalf of the company name
      * @param type $companyName
      * @return username
      */
-
-
     public function getUserByCompanyName($companyName) {
 
         $companyName = str_replace("-", " ", $companyName);
         $oData = DB::table('tbl_users')
-        ->where('tbl_users.company_name','like', '%'.$companyName.'%')->first();
-        
+                        ->where('tbl_users.company_name', 'like', '%' . $companyName . '%')->first();
+
         return $oData;
     }
 
-    public function updateUser($userID, $data) {
-        $this->db->where('id', $userID);
-        $this->db->update('tbl_users', $data);
+    /**
+     * Update user data
+     * @param type $userID
+     * @param type $aData
+     * @return boolean
+     */
+    public function updateUser($userID, $aData) {
+        $result = DB::table('tbl_users')
+                ->where('id', $userID)
+                ->update($aData);
         return true;
     }
 
-    public function addUserSendGridData($data) {
-        $bResult = $this->db->insert('tbl_sendgrid_accounts', $data);
+    /**
+     * Add User sendgrid data
+     * @param type $aData
+     * @return boolean
+     */
+    public function addUserSendGridData($aData) {
+        $bResult = DB::table('tbl_sendgrid_accounts')->insert($aData);
         if ($bResult) {
             return true;
         } else {
@@ -607,17 +610,25 @@ class UsersModel extends Model {
         }
     }
 
+    /**
+     * Get user sendgrid data
+     * @param type $userID
+     * @return type
+     */
     public function getUserSendGridData($userID) {
-        $this->db->where('user_id', $userID);
-        $result = $this->db->get('tbl_sendgrid_accounts');
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_sendgrid_accounts')
+                ->where('user_id', $userID)
+                ->first();
+        return $oData;
     }
 
-    public function addUserTwilioData($data) {
-        $result = $this->db->insert('tbl_twilio_accounts', $data);
+    /**
+     * Add user Twilio data
+     * @param type $aData
+     * @return boolean
+     */
+    public function addUserTwilioData($aData) {
+        $result = DB::table('tbl_twilio_accounts')->insert($aData);
         if ($result)
             return true;
         else
@@ -626,24 +637,22 @@ class UsersModel extends Model {
 
     public function getUserTwilioData($userID) {
         $oData = DB::table('tbl_twilio_accounts')
-            ->where('user_id', $userID)
-            ->first();
-        return $oData;        
+                ->where('user_id', $userID)
+                ->first();
+        return $oData;
     }
 
-   
     /**
-    * This function will return subscriber information on the behalf of the subscriber id
-    * @param type $id
-    * @return type
-    */
-
-    public function getSubscriberInfo($id) {
-        $aData =  DB::table('tbl_brandboost_users')
-        ->select('tbl_subscribers.*')
-        ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id','=','tbl_subscribers.id')
-          ->where('tbl_brandboost_users.id', $id)->get();
-          return $aData;
+     * This function will return subscriber information on the behalf of the subscriber id
+     * @param type $id
+     * @return type
+     */
+    public static function getSubscriberInfo($id) {
+        $aData = DB::table('tbl_brandboost_users')
+                        ->select('tbl_subscribers.*')
+                        ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=', 'tbl_subscribers.id')
+                        ->where('tbl_brandboost_users.id', $id)->get();
+        return $aData;
     }
 
     public function checkUserProduct($userID, $productID) {
@@ -660,13 +669,16 @@ class UsersModel extends Model {
         return $response;
     }
 
-    public function getCurrentAccountUsage($userID) {
-        $this->db->where("user_id", $userID);
-        $result = $this->db->get('tbl_account_usage');
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+    /**
+     * 
+     * @param type $userID
+     * @return type
+     */
+    public static function getCurrentAccountUsage($userID) {
+        $oData = DB::table('tbl_account_usage')
+                ->where('user_id', $userID)
+                ->first();
+        return $oData;
     }
 
 }

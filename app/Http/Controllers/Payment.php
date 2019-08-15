@@ -1,48 +1,43 @@
 <?php
 
 namespace App\Http\Controllers;
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Models\PaymentModel;
+use App\Models\ChargeBeeModel;
+use App\Models\SignupModel;
+use App\Models\Admin\UsersModel;
+use App\Models\Admin\LoginModel;
+use App\Models\ProductsModel;
+
 use Session;
 
 class Payment extends Controller {
 
     //var $merchant_id = '14';
 
-    //public function __construct() {
-        //parent::__construct();
-        /*$this->load->model("Payment_model", "mPayment");
-        $this->load->model("Infusion_model", "mInfusion");
-        $this->load->model("CBee_model", "mChargeBee");
-        $this->load->model("Product_model", "mProduct");
-        $this->load->model("admin/Users_model", "mUser");
-        $this->load->model("Signup_model", "mSignup");
-        $this->load->model("admin/Login_model", "Adminlogin");
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/infusionsoft-php-sdk/Infusionsoft/infusionsoft.php';
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/chargebee-php/lib/ChargeBee.php';
-        $cbSite = $this->config->item('cb_site_name');
-        $cbSiteToken = $this->config->item('cb_access_token');
-        ChargeBee_Environment::configure($cbSite, $cbSiteToken);
-        $calledMethod = $this->uri->segment(2);*/
-    //}
 
-    public function index() {
-
-        /* $userID = 5;
-          $productID = 880;
-          $this->refillAccount($userID, $productID); */
-    }
-
+    /**
+     * 
+     * @param type $aData
+     * @return string
+     */
     public function cbChargeInvoice($aData) {
         $bSuccess = false;
         $response = array();
-        $userID = $this->session->userdata('customer_user_id');
+        $userID = Session::get('customer_user_id');
         $planID = $aData['plan_id'];
         $ccID = $aData['cc_id'];
         $ccCustomerID = $aData['cb_customer_id'];
         $quantity = $aData['quantity'];
-        $aProduct = $this->mProduct->getPlanDetails($planID);
+        
+        //Instantiate product model to get its properites and methods
+        $mProducts = new ProductsModel();
+        
+        $aProduct = $mProducts->getPlanDetails($planID);
         if (!empty($aProduct)) {
             $productName = $aProduct['product_name'];
             $productType = $aProduct['product_type'];
@@ -53,17 +48,17 @@ class Payment extends Controller {
             //Okay lets begin
             if ($userID > 0 && $ccCustomerID > 0) {
                 if ($productType == 'membership' || $productType == 'topup-membership') {
-                    $subscriptionID = $this->mChargeBee->ccCreateSubscription($ccCustomerID, array('planId' => $planID), $productType);
+                    $subscriptionID = $mChargeBee->ccCreateSubscription($ccCustomerID, array('planId' => $planID), $productType);
                     if (!empty($subscriptionID)) {
                         $bSuccess = true;
                     }
                 } else if ($productType == 'topup') {
                     $aInvoiceInput = array(
                         'customerId' => $ccCustomerID,
-                        'addons' => array(array('id' => $planID, 'quantity'=>$quantity)),
-                        //'charges' => array(array('amount' => $productPrice, 'description' => 'Initial Topup Details goes here'))
+                        'addons' => array(array('id' => $planID, 'quantity' => $quantity)),
+                            //'charges' => array(array('amount' => $productPrice, 'description' => 'Initial Topup Details goes here'))
                     );
-                    $transactionStatus = $this->mChargeBee->ccChargeInvoice($aInvoiceInput);
+                    $transactionStatus = $mChargeBee->ccChargeInvoice($aInvoiceInput);
                     if ($transactionStatus == 'success' || strtolower($transactionStatus) == 'paid') {
                         $bSuccess = true;
                     }
@@ -73,7 +68,6 @@ class Payment extends Controller {
                     //Send notification to user & admin
                     //Send Email
                     //sendEmailTemplate('order-temp', $userID);
-
                     //Send Notification
                     $aNotificationDataCus = array(
                         'user_id' => $userID,
@@ -83,8 +77,7 @@ class Payment extends Controller {
                         'created' => date("Y-m-d H:i:s")
                     );
                     $eventName = 'new_sale';
-                    add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin=true);
-                    
+                    @add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin = true);
                 }
             } else {
                 $response = array('status' => 'error', 'msg' => 'Local userid or chargebee userid is missing');
@@ -96,10 +89,22 @@ class Payment extends Controller {
         return $response;
     }
 
+    
+    /**
+     * 
+     * @param type $aData
+     * @return boolean
+     */
     public function userRegistration($aData = array()) {
-
+        
+        //Instantiate Chargebee model to get its properties and methods
+        $mChargeBee = new ChargeBeeModel();
+        
+        //Instantiate Signup model to get its properties and methods
+        $mSignup = new SignupModel();
+        
         $response = array();
-        $post = $this->input->post();
+
         $firstName = $aData['firstname'];
         $lastName = $aData['lastname'];
         $email = $aData['email'];
@@ -121,7 +126,7 @@ class Payment extends Controller {
         );
 
         //$infusionUserID = $this->mInfusion->createContact($aInfusionData);
-        $chargebeeUserID = $this->mChargeBee->createContact($aChargebeeData);
+        $chargebeeUserID = $mChargeBee->createContact($aChargebeeData);
         $data = array(
             'cb_contact_id' => $chargebeeUserID,
             'firstname' => $firstName,
@@ -134,26 +139,32 @@ class Payment extends Controller {
             'created' => date("Y-m-d H:i:s")
         );
 
-        $userID = $this->mSignup->addUser($data);
+        $userID = $mSignup->addUser($data);
 
         if ($userID) {
-            $this->session->set_userdata("customer_user_id", $userID);
+            Session::put("customer_user_id", $userID);
             return $chargebeeUserID;
         } else {
             return false;
         }
     }
 
+    /**
+     * This function has deprecated now
+     * @param type $aData
+     * @return type
+     */
     public function saveInfusionCC($aData = array()) {
+        $mUser = new UsersModel();
         $creditCardID = 0;
         $response = array();
-        $userID = $this->session->userdata('customer_user_id');
+        $userID = Session::get('customer_user_id');
         $cc = $aData['ccNum'];
         $cctype = $aData['ccType'];
         $expMonth = $aData['expMonth'];
         $expYear = $aData['expYear'];
         $cvvCode = $aData['cvv'];
-        $aUser = $this->mUser->getUserInfo($userID);
+        $aUser = UsersModel::getUserInfo($userID);
 
         if (!empty($aUser)) {
             $contactID = $aUser->infusion_user_id;
@@ -170,7 +181,7 @@ class Payment extends Controller {
                             "infusion_cc_id" => $ccID,
                             "cc_last_four" => $cardLastNumber
                         );
-                        $bIsUpdated = $this->mUser->updateUser($userID, $userData);
+                        $bIsUpdated = $mUser->updateUser($userID, $userData);
                         $creditCardID = $ccID;
                     }
                 }
@@ -179,43 +190,58 @@ class Payment extends Controller {
         return $creditCardID;
     }
 
-    public function storeCreditCard() {
+    /**
+     * This function used to store CC details
+     */
+    public function storeCreditCard(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        $cc = strip_tags($post['ccNum']);
-        $expMonth = strip_tags($post['expMonth']);
-        $expYear = strip_tags($post['expYear']);
-        $cvvCode = strip_tags($post['cvv']);
-        
+
+        $cc = $request->ccNum;
+        $expMonth = $request->expMonth;
+        $expYear = $request->expYear;
+        $cvvCode = $request->cvv;
+
         $aData = array(
-          'ccNum' => $cc,
-          'expMonth' => $expMonth,
-          'expYear' => $expYear,
-          'cvv' => $cvvCode  
+            'ccNum' => $cc,
+            'expMonth' => $expMonth,
+            'expYear' => $expYear,
+            'cvv' => $cvvCode
         );
         $creditCardID = $this->cbStoreCC($aData);
-        if(!empty($creditCardID)){
+        if (!empty($creditCardID)) {
             $oUser = getLoggedUser();
             $response['status'] = 'success';
             $response['info'] = $oUser;
-        }else{
+        } else {
             $response['status'] = 'error';
         }
         echo json_encode($response);
         exit;
-        
     }
 
+    
+    /**
+     * 
+     * @param type $aData
+     * @return int
+     */
     public function cbStoreCC($aData = array()) {
+        
+        //Instantiate Chargebee model to get its properties and methods
+        $mChargeBee = new ChargeBeeModel();
+        
+        //Instantiate Users Model to get its properties and methods
+        $mUser = new UsersModel();
+        
         try {
             $creditCardID = 0;
-            $userID = $this->session->userdata('customer_user_id');
+            $userID = Session::get('customer_user_id');
             $cc = $aData['ccNum'];
             $cctype = $aData['ccType'];
             $expMonth = $aData['expMonth'];
             $expYear = $aData['expYear'];
             $cvvCode = $aData['cvv'];
-            $aUser = $this->mUser->getUserInfo($userID);
+            $aUser = UsersModel::getUserInfo($userID);
             if (!empty($aUser)) {
                 $contactID = $aUser->cb_contact_id;
 
@@ -229,7 +255,7 @@ class Payment extends Controller {
                         'cvv' => $cvvCode
                     );
 
-                    $aCCResponse = $this->mChargeBee->AddCreditCart($contactID, $ccData);
+                    $aCCResponse = $mChargeBee->AddCreditCart($contactID, $ccData);
 
                     if ($aCCResponse['status'] == 'valid') {
                         $paymentSourceID = $aCCResponse['payment_source_id'];
@@ -240,7 +266,7 @@ class Payment extends Controller {
                             "cc_exp_month" => $expMonth,
                             "cc_exp_year" => $expYear
                         );
-                        $bIsUpdated = $this->mUser->updateUser($userID, $userData);
+                        $bIsUpdated = $mUser->updateUser($userID, $userData);
                         $creditCardID = $paymentSourceID;
                     }
                 }
@@ -251,6 +277,12 @@ class Payment extends Controller {
         }
     }
 
+    
+    /**
+     * This method has deprecated now
+     * @param type $ccID
+     * @return boolean
+     */
     public function validateInfusionCC($ccID) {
         $validateCC = $this->mInfusion->validateCC($ccID);
         if ($validateCC['Valid'] == 'true') {
@@ -260,30 +292,34 @@ class Payment extends Controller {
         }
     }
 
-//Used Function
-    public function charging() {
+    /**
+     * 
+     * @param Request $request
+     * @return type
+     */
+    public function charging(Request $request) {
         $response = array();
-        $post = $this->input->post();
 
-        if (empty($post)) {
-            $this->session->set_flashdata('error_msg', "<strong>Unauthorized Access</strong>");
+
+        if (empty($request)) {
+            Session::flash('error_msg', "<strong>Unauthorized Access</strong>");
             redirect('price');
         }
 
-        $firstName = (isset($post['firstname']) && !empty($post['firstname'])) ? strip_tags($post['firstname']) : '';
-        $lastName = (isset($post['lastname']) && !empty($post['lastname'])) ? strip_tags($post['lastname']) : '';
-        $email = (isset($post['email']) && !empty($post['email'])) ? strip_tags($post['email']) : '';
-        $country = (isset($post['country']) && !empty($post['country'])) ? strip_tags($post['country']) : '';
-        $phone = (isset($post['phone_number']) && !empty($post['phone_number'])) ? strip_tags($post['phone_number']) : '';
-        $zip = (isset($post['postal_code']) && !empty($post['postal_code'])) ? strip_tags($post['phone_number']) : '';
+        $firstName = (isset($request->firstname) && !empty($request->firstname)) ? $request->firstname : '';
+        $lastName = (isset($request->lastname) && !empty($request->lastname)) ? $request->lastname : '';
+        $email = (isset($request->email) && !empty($request->email)) ? $request->email : '';
+        $country = (isset($request->country) && !empty($request->country)) ? $request->country : '';
+        $phone = (isset($request->phone_number) && !empty($request->phone_number)) ? $request->phone_number : '';
+        $zip = (isset($request->postal_code) && !empty($request->postal_code)) ? $request->phone_number : '';
 
-        $planID = (isset($post['plan_id']) && !empty($post['plan_id'])) ? strip_tags($post['plan_id']) : '';
-        $contactID = (isset($post['contact_id']) && !empty($post['contact_id'])) ? strip_tags($post['contact_id']) : 0;
-        $cc = (isset($post['cardNumber']) && !empty($post['cardNumber'])) ? strip_tags($post['cardNumber']) : false;
-        $cctype = (isset($post['creditCardType']) && !empty($post['creditCardType'])) ? strip_tags($post['creditCardType']) : false;
-        $expMonth = (isset($post['creditCardExpirationMonth']) && !empty($post['creditCardExpirationMonth'])) ? strip_tags($post['creditCardExpirationMonth']) : false;
-        $expYear = (isset($post['creditCardExpirationYear']) && !empty($post['creditCardExpirationYear'])) ? strip_tags($post['creditCardExpirationYear']) : false;
-        $cvvCode = (isset($post['creditCardVerificationNumber']) && !empty($post['creditCardVerificationNumber'])) ? strip_tags($post['creditCardVerificationNumber']) : false;
+        $planID = (isset($request->plan_id) && !empty($request->plan_id)) ? $request->plan_id : '';
+        $contactID = (isset($request->contact_id) && !empty($request->contact_id)) ? $request->contact_id : 0;
+        $cc = (isset($request->cardNumber) && !empty($request->cardNumber)) ? $request->cardNumber : false;
+        $cctype = (isset($request->creditCardType) && !empty($request->creditCardType)) ? $request->creditCardType : false;
+        $expMonth = (isset($request->creditCardExpirationMonth) && !empty($request->creditCardExpirationMonth)) ? $request->creditCardExpirationMonth : false;
+        $expYear = (isset($request->creditCardExpirationYear) && !empty($request->creditCardExpirationYear)) ? $request->creditCardExpirationYear : false;
+        $cvvCode = (isset($request->creditCardVerificationNumber) && !empty($request->creditCardVerificationNumber)) ? $request->creditCardVerificationNumber : false;
         $aOrderFormData = array(
             'orderFormData' => array(
                 'firstname' => $firstName,
@@ -300,33 +336,37 @@ class Payment extends Controller {
                 'planid' => $planID
             )
         );
-        $this->session->set_userdata($aOrderFormData);
+        Session::put($aOrderFormData);
 
-        $this->template->load('template', 'payment_processing', array('haveData' => 'yes'));
+        return view('payment_processing', array('haveData' => 'yes'));
     }
 
-    //Used function
-    public function chargedecline() {
+    /**
+     * 
+     * @param Request $request
+     * @return type
+     */
+    public function chargedecline(Request $request) {
         $response = array();
-        $post = $this->input->post();
 
-        if (empty($post)) {
-            $this->session->set_flashdata('error_msg', "<strong>Unauthorized Access</strong>");
+
+        if (empty($request)) {
+            Session::flash('error_msg', "<strong>Unauthorized Access</strong>");
             redirect('price');
         }
-        $aData = $this->session->userdata['orderFormData'];
+        $aData = Session::get['orderFormData'];
         if (!empty($aData)) {
             $cbContactID = $aData['cb_contact_id'];
         }
 
         if (empty($cbContactID)) {
 
-            $firstName = (isset($post['firstname']) && !empty($post['firstname'])) ? strip_tags($post['firstname']) : '';
-            $lastName = (isset($post['lastname']) && !empty($post['lastname'])) ? strip_tags($post['lastname']) : '';
-            $email = (isset($post['email']) && !empty($post['email'])) ? strip_tags($post['email']) : '';
-            $country = (isset($post['country']) && !empty($post['country'])) ? strip_tags($post['country']) : '';
-            $phone = (isset($post['phone_number']) && !empty($post['phone_number'])) ? strip_tags($post['phone_number']) : '';
-            $zip = (isset($post['postal_code']) && !empty($post['postal_code'])) ? strip_tags($post['phone_number']) : '';
+            $firstName = (isset($request->firstname) && !empty($request->firstname)) ? $request->firstname : '';
+            $lastName = (isset($request->lastname) && !empty($request->lastname)) ? $request->lastname : '';
+            $email = (isset($request->email) && !empty($request->email)) ? $request->email : '';
+            $country = (isset($request->country) && !empty($request->country)) ? $request->country : '';
+            $phone = (isset($request->phone_number) && !empty($request->phone_number)) ? $request->phone_number : '';
+            $zip = (isset($request->postal_code) && !empty($request->postal_code)) ? $request->phone_number : '';
         } else {
             $firstName = $aData['firstname'];
             $lastName = $aData['lastname'];
@@ -336,12 +376,12 @@ class Payment extends Controller {
             $zip = $aData['zip'];
         }
 
-        $planID = (isset($post['plan_id']) && !empty($post['plan_id'])) ? strip_tags($post['plan_id']) : '';
-        $cc = (isset($post['cardNumber']) && !empty($post['cardNumber'])) ? strip_tags($post['cardNumber']) : false;
-        $cctype = (isset($post['creditCardType']) && !empty($post['creditCardType'])) ? strip_tags($post['creditCardType']) : false;
-        $expMonth = (isset($post['creditCardExpirationMonth']) && !empty($post['creditCardExpirationMonth'])) ? strip_tags($post['creditCardExpirationMonth']) : false;
-        $expYear = (isset($post['creditCardExpirationYear']) && !empty($post['creditCardExpirationYear'])) ? strip_tags($post['creditCardExpirationYear']) : false;
-        $cvvCode = (isset($post['creditCardVerificationNumber']) && !empty($post['creditCardVerificationNumber'])) ? strip_tags($post['creditCardVerificationNumber']) : false;
+        $planID = (isset($request->plan_id) && !empty($request->plan_id)) ? $request->plan_id : '';
+        $cc = (isset($request->cardNumber) && !empty($request->cardNumber)) ? $request->cardNumber : false;
+        $cctype = (isset($request->creditCardType) && !empty($request->creditCardType)) ? $request->creditCardType : false;
+        $expMonth = (isset($request->creditCardExpirationMonth) && !empty($request->creditCardExpirationMonth)) ? $request->creditCardExpirationMonth : false;
+        $expYear = (isset($request->creditCardExpirationYear) && !empty($request->creditCardExpirationYear)) ? $request->creditCardExpirationYear : false;
+        $cvvCode = (isset($request->creditCardVerificationNumber) && !empty($request->creditCardVerificationNumber)) ? $request->creditCardVerificationNumber : false;
 
 
         $aOrderFormData = array(
@@ -364,20 +404,29 @@ class Payment extends Controller {
 
 
 
-        $this->session->set_userdata($aOrderFormData);
+        Session::put($aOrderFormData);
 
-        $this->template->load('template', 'payment_processing', array('haveData' => 'yes'));
+        return view('payment_processing', array('haveData' => 'yes'));
     }
 
-//Used Function
-    public function cbCharge() {
+    /**
+     * 
+     * @param Request $request
+     */
+    public function cbCharge(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
+        
+        //Instantiate Users Model to get its properties and methods
+        $mUser = new UsersModel();
+        
+        //Instantiate Login Model to get its properties and methods
+        $mLogin = new LoginModel();
 
-        $aData = $this->session->userdata['orderFormData'];
 
-        if (empty($post) || empty($aData)) {
+        $aData = Session::get('orderFormData');
+
+        if (empty($request) || empty($request)) {
             //return error
             $response = array('status' => 'error', 'error_type' => 'common', 'msg' => 'Empty request');
             echo json_encode($response);
@@ -487,63 +536,63 @@ class Payment extends Controller {
 
         if ($response['status'] == 'success') {
 
-            $userID = $this->session->userdata('customer_user_id');
+            $userID = Session::get('customer_user_id');
             //Create a amazon s3 folder
-            if($this->Adminlogin->checkS3server()) {
+            if ($mLogin->checkS3server()) {
 
                 $s3Client = new S3Client([
-                   'region' => 'us-west-2',
-                   'version' => '2006-03-01',
-                   'credentials' => [
-                       'key' => 'AKIAJ52XK7ZH7VCR7XHQ',
-                       'secret' => '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'
-                   ],
-                   // Set the S3 class to use objects.dreamhost.com/bucket
-                   // instead of bucket.objects.dreamhost.com
-                   'use_path_style_endpoint' => true
+                    'region' => 'us-west-2',
+                    'version' => '2006-03-01',
+                    'credentials' => [
+                        'key' => 'AKIAJ52XK7ZH7VCR7XHQ',
+                        'secret' => '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'
+                    ],
+                    // Set the S3 class to use objects.dreamhost.com/bucket
+                    // instead of bucket.objects.dreamhost.com
+                    'use_path_style_endpoint' => true
                 ]);
-              
+
                 $res = $s3Client->putObject(array(
-                  'Bucket'       => 'brandboost.io', // Defines name of Bucket
-                  'Key'          =>  $userID."/", //Defines Folder name
-                  'Body'       => "",
-                  'ACL'          => 'public-read' // Defines Permission to that folder
+                    'Bucket' => 'brandboost.io', // Defines name of Bucket
+                    'Key' => $userID . "/", //Defines Folder name
+                    'Body' => "",
+                    'ACL' => 'public-read' // Defines Permission to that folder
                 ));
 
-                $folderName = ['onsite', 'offsite', 'automation', 'broadcast', 'referral', 'nps','webchat', 'smschat', 'reviews', 'questions'];
+                $folderName = ['onsite', 'offsite', 'automation', 'broadcast', 'referral', 'nps', 'webchat', 'smschat', 'reviews', 'questions'];
 
                 $subfolder = ['images', 'videos', 'files'];
 
-                foreach ($folderName as  $value) {
+                foreach ($folderName as $value) {
                     $s3Client->putObject(array(
-                      'Bucket'       => 'brandboost.io', // Defines name of Bucket
-                      'Key'          =>  $userID."/".$value.'/', //Defines Folder name
-                      'Body'       => "",
-                      'ACL'          => 'public-read' // Defines Permission to that folder
+                        'Bucket' => 'brandboost.io', // Defines name of Bucket
+                        'Key' => $userID . "/" . $value . '/', //Defines Folder name
+                        'Body' => "",
+                        'ACL' => 'public-read' // Defines Permission to that folder
                     ));
 
                     foreach ($subfolder as $subvalue) {
                         $s3Client->putObject(array(
-                          'Bucket'       => 'brandboost.io', // Defines name of Bucket
-                          'Key'          =>  $userID."/".$value.'/'.$subvalue.'/', //Defines Folder name
-                          'Body'       => "",
-                          'ACL'          => 'public-read' // Defines Permission to that folder
+                            'Bucket' => 'brandboost.io', // Defines name of Bucket
+                            'Key' => $userID . "/" . $value . '/' . $subvalue . '/', //Defines Folder name
+                            'Body' => "",
+                            'ACL' => 'public-read' // Defines Permission to that folder
                         ));
                     }
                 }
 
-                $this->Adminlogin->updateS3server();
+                $mLogin->updateS3server();
             }
             //End a amazon s3 folder
 
- 
+
 
             $localErrors = array();
             //Credit account usage limit as per the plan or other operation
             //Create subaccount on Twilio
-            
+
             $newUserName = 1000000 + $userID . '@brandboost.io';
-            $userData = $this->mUser->getUserTwilioData($userID);
+            $userData = $mUser->getUserTwilioData($userID);
             if (empty($userData)) {
                 //Create Twilio sub account
                 $twilioSubAccountData = createTwilioSA($userID, $newUserName);
@@ -551,7 +600,7 @@ class Payment extends Controller {
 
                 if (!empty($twilioData->sid)) {
                     $data = array('account_sid' => $twilioData->sid, 'account_token' => $twilioData->authToken, 'user_id' => $userID, 'account_status' => 'active', 'created' => date("Y-m-d H:i:s"));
-                    $bAdded = $this->mUser->addUserTwilioData($data);
+                    $bAdded = $mUser->addUserTwilioData($data);
                     if (!$bAdded) {
                         $localErrors[] = 'Twilio sub account created successfully but failed to store into the database locally';
                     }
@@ -561,7 +610,7 @@ class Payment extends Controller {
             }
 
             //Create subaccount at sendgrid
-            $addUserData = $this->mUser->getUserSendGridData($userID);
+            $addUserData = $mUser->getUserSendGridData($userID);
 
             if (empty($addUserData)) {
                 $ip = "168.245.71.20";
@@ -585,10 +634,10 @@ class Payment extends Controller {
                     'sg_password' => $password,
                     'sg_ip' => $ip,
                     'status' => 1,
-                    'created' => date("Y-m-d H:i:s") 
+                    'created' => date("Y-m-d H:i:s")
                 );
 
-                $bAdded = $this->mUser->addUserSendGridData($sdData);
+                $bAdded = $mUser->addUserSendGridData($sdData);
                 if (!$bAdded) {
                     $localErrors[] = 'Sendgrid sub account created successfully but failed to store into the database locally';
                 }
@@ -606,8 +655,8 @@ class Payment extends Controller {
                 'created' => date("Y-m-d H:i:s")
             );
             $eventName = "sys_new_user_registration";
-            add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin = true);
-            
+            @add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin = true);
+
             //$bRefilled = $this->refillAccount($userID, $planID);
             $bRefilled = refillPlanBenefits($userID, $planID);
 
@@ -623,22 +672,28 @@ class Payment extends Controller {
                     'event_type' => 'post_payment_account_setup_errors',
                     'message' => "Client with id {$userID} needs to setup these errors manaually: " . implode("<br>", $localErrors),
                     'link' => base_url() . 'admin/notifications',
-                    'meta_data' => json_encode(array('failed_user_id' => $userIDs, 'errors' => $localErrors)),        
+                    'meta_data' => json_encode(array('failed_user_id' => $userIDs, 'errors' => $localErrors)),
                     'created' => date("Y-m-d H:i:s")
                 );
-                $eventName = 'error';    
-                add_notifications($aNotificationAdmin, $eventName, 1);
+                $eventName = 'error';
+                @add_notifications($aNotificationAdmin, $eventName, 1);
             }
             //Clear order form session data
-            $this->session->unset_userdata('orderFormData');
+            Session::forget('orderFormData');
         }
 
         echo json_encode($response);
         exit;
     }
+
     // cb charge end
 
     public function cbUserRegistration($aData = array()) {
+        //Instantiate Chargebee model to get its properties and methods
+        $mChargeBee = new ChargeBeeModel();
+        
+        //Instantiate Signup model to get its properties and methods
+        $mSignup = new SignupModel();
 
         $response = array();
         $firstName = $aData['firstname'];
@@ -656,21 +711,21 @@ class Payment extends Controller {
             'firstname' => $firstName,
             'lastname' => $lastName,
             'email' => $email,
-            'country' => $country,
+            //'country' => $country,
             'phone' => $phone,
             'zip' => $zip
         );
 
-        $chargebeeUserID = $this->mChargeBee->createContact($aChargebeeData);
+        $chargebeeUserID = $mChargeBee->createContact($aChargebeeData);
 
         if ($chargebeeUserID > 0) {
             //Add the same in orderFormData session
-            $aData = $this->session->userdata['orderFormData'];
+            $aData = Session::get['orderFormData'];
             $aData['cb_contact_id'] = $chargebeeUserID;
             $aOrderFormData = array(
                 'orderFormData' => $aData,
             );
-            $this->session->set_userdata($aOrderFormData);
+            Session::put($aOrderFormData);
             $data = array(
                 'cb_contact_id' => $chargebeeUserID,
                 'firstname' => $firstName,
@@ -684,11 +739,11 @@ class Payment extends Controller {
             );
 
             //Add User locally in BB database
-            $userID = $this->mSignup->addUser($data);
+            $userID = $mSignup->addUser($data);
 
             if ($userID > 0) {
 
-                $this->session->set_userdata("customer_user_id", $userID);
+                Session::put("customer_user_id", $userID);
                 return $chargebeeUserID;
             } else {
                 return false;
@@ -698,9 +753,17 @@ class Payment extends Controller {
         }
     }
 
+    
+    /**
+     * 
+     * @param type $planID
+     * @return type
+     */
     public function getAccountUsageforRecharge($planID) {
+        //Instantiate product model to get its properites and methods
+        $mProducts = new ProductsModel();
 
-        $aProduct = $this->mProduct->getCBPlanInfo($planID);
+        $aProduct = $mProducts->getCBPlanInfo($planID);
         if (!empty($aProduct)) {
             $productName = $aProduct['product_name'];
             $productType = $aProduct['data']->type;
@@ -724,10 +787,13 @@ class Payment extends Controller {
         }
     }
 
-    public function refillAccount($userID, $planID, $quantity=0) {
+    public function refillAccount($userID, $planID, $quantity = 0) {
+        //Instantiate Users Model to get its properties and methods
+        $mUser = new UsersModel();
+        
         //Check if member purchased the product
         $bDone = false;
-        $aUser = $this->mUser->getCurrentAccountUsage($userID);
+        $aUser = $mUser->getCurrentAccountUsage($userID);
 
         if (!empty($aUser)) {
             //Available Credits
@@ -763,7 +829,7 @@ class Payment extends Controller {
             $rTopEmailLimit = $aUsage['topup_email_limit'];
             $rTopupSmsLimit = $aUsage['topup_sms_limit'];
             $rTopupMMSLimit = $aUsage['topup_mms_limit'];
-            $qty = ($quantity>0) ? $quantity : 1;
+            $qty = ($quantity > 0) ? $quantity : 1;
             $aHistory = array(
                 'user_id' => $userID,
                 'refill_type' => $productType,
@@ -774,7 +840,7 @@ class Payment extends Controller {
                 'mms_limit' => $rMMSLimit,
                 'text_review_limit' => $rTextReviewLimit,
                 'video_review_limit' => $rVideoReviewLimit,
-                'credits_topup' => ($productType == 'membership') ? 0 : $aUsage['credits']*$qty,
+                'credits_topup' => ($productType == 'membership') ? 0 : $aUsage['credits'] * $qty,
                 'contact_limit_topup' => ($productType == 'membership') ? 0 : $aUsage['contact_limit'],
                 'email_topup' => $rTopEmailLimit,
                 'sms_topup' => $rTopupSmsLimit,
@@ -808,10 +874,10 @@ class Payment extends Controller {
                     'last_updated' => date("Y-m-d H:i:s")
                 );
             } else if ($productType == 'topup' || $productType == 'topup-membership') {
-                $qty = ($quantity>0) ? $quantity : 1;
+                $qty = ($quantity > 0) ? $quantity : 1;
                 $aRefill = array(
                     'user_id' => $userID,
-                    'credits_topup' => $rCreditsTopup*$qty,
+                    'credits_topup' => $rCreditsTopup * $qty,
                     'contact_limit_topup' => $rContactLimitTopup,
                     'email_balance_topup' => ($rTopEmailLimit + $emailTopupLimit),
                     'sms_balance_topup' => ($rTopupSmsLimit + $smsTopupLimit),
@@ -833,25 +899,25 @@ class Payment extends Controller {
         return $bDone;
     }
 
-    public function processdecline() {
+    public function processdecline(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        $firstName = (isset($post['firstname']) && !empty($post['firstname'])) ? strip_tags($post['firstname']) : '';
-        $lastName = (isset($post['lastname']) && !empty($post['lastname'])) ? strip_tags($post['lastname']) : '';
-        $email = (isset($post['email']) && !empty($post['email'])) ? strip_tags($post['email']) : '';
-        $country = (isset($post['country']) && !empty($post['country'])) ? strip_tags($post['country']) : '';
-        $phone = (isset($post['phone_number']) && !empty($post['phone_number'])) ? strip_tags($post['phone_number']) : '';
-        $zip = (isset($post['postal_code']) && !empty($post['postal_code'])) ? strip_tags($post['phone_number']) : '';
 
-        $cc = (isset($post['cardNumber']) && !empty($post['cardNumber'])) ? strip_tags($post['cardNumber']) : false;
-        $cctype = (isset($post['creditCardType']) && !empty($post['creditCardType'])) ? strip_tags($post['creditCardType']) : false;
-        $expMonth = (isset($post['creditCardExpirationMonth']) && !empty($post['creditCardExpirationMonth'])) ? strip_tags($post['creditCardExpirationMonth']) : false;
-        $expYear = (isset($post['creditCardExpirationYear']) && !empty($post['creditCardExpirationYear'])) ? strip_tags($post['creditCardExpirationYear']) : false;
-        $cvvCode = (isset($post['creditCardVerificationNumber']) && !empty($post['creditCardVerificationNumber'])) ? strip_tags($post['creditCardVerificationNumber']) : false;
+        $firstName = (isset($request->firstname) && !empty($request->firstname)) ? $request->firstname : '';
+        $lastName = (isset($request->lastname) && !empty($request->lastname)) ? $request->lastname : '';
+        $email = (isset($request->email) && !empty($request->email)) ? $request->email : '';
+        $country = (isset($request->country) && !empty($request->country)) ? $request->country : '';
+        $phone = (isset($request->phone_number) && !empty($request->phone_number)) ? $request->phone_number : '';
+        $zip = (isset($request->postal_code) && !empty($request->postal_code)) ? $request->phone_number : '';
 
-        $invoiceID = (isset($post['invoice_id']) && !empty($post['invoice_id'])) ? strip_tags($post['invoice_id']) : 0;
-        $subscriptionID = (isset($post['subscription_id']) && !empty($post['subscription_id'])) ? strip_tags($post['subscription_id']) : 0;
-        $paymentType = (isset($post['payment_type']) && !empty($post['payment_type'])) ? strip_tags($post['payment_type']) : 0;
+        $cc = (isset($request->cardNumber) && !empty($request->cardNumber)) ? $request->cardNumber : false;
+        $cctype = (isset($request->creditCardType) && !empty($request->creditCardType)) ? $request->creditCardType : false;
+        $expMonth = (isset($request->creditCardExpirationMonth) && !empty($request->creditCardExpirationMonth)) ? $request->creditCardExpirationMonth : false;
+        $expYear = (isset($request->creditCardExpirationYear) && !empty($request->creditCardExpirationYear)) ? $request->creditCardExpirationYear : false;
+        $cvvCode = (isset($request->creditCardVerificationNumber) && !empty($request->creditCardVerificationNumber)) ? $request->creditCardVerificationNumber : false;
+
+        $invoiceID = (isset($request->invoice_id) && !empty($request->invoice_id)) ? $request->invoice_id : 0;
+        $subscriptionID = (isset($request->subscription_id) && !empty($request->subscription_id)) ? $request->subscription_id : 0;
+        $paymentType = (isset($request->payment_type) && !empty($request->payment_type)) ? $request->payment_type : 0;
 
         if ($invoiceID > 0) {
 
@@ -878,16 +944,16 @@ class Payment extends Controller {
                     $planID = $response['plan_id'];
                     $subscriptionID = $response['subscription_id'];
                     //Credit account usage limit as per the plan or other operation
-                    $userID = $this->session->userdata('customer_user_id');
+                    $userID = Session::get('customer_user_id');
                     $this->refillAccount($userID, $planID, $subscriptionID);
-                    $this->session->set_flashdata('success_msg', "<strong>" . $response['msg'] . "</strong>");
+                    Session::flash('success_msg', "<strong>" . $response['msg'] . "</strong>");
                     redirect('thankyou');
                 } else {
                     if ($response['status'] == 'error' && $response['invoice_id'] > 0) {
                         $queryString = '?inv_id=' . $response['invoice_id'] . '&pid=' . $response['product_id'] . '&sid=' . $response['subscription_id'];
                     }
                     $q = (!empty($queryString)) ? $queryString : '';
-                    $this->session->set_flashdata('error_msg', "<strong>" . $response['msg'] . "</strong>");
+                    Session::flash('error_msg', "<strong>" . $response['msg'] . "</strong>");
                     redirect('decline' . $q);
                 }
             }
@@ -897,7 +963,7 @@ class Payment extends Controller {
     public function chargeDeclinedInvoice($aData) {
 
         $response = array();
-        $userID = $this->session->userdata('customer_user_id');
+        $userID = Session::get('customer_user_id');
         $invoiceID = $aData['invoice_id'];
         $subscriptionId = $aData['subscription_id'];
         $ccID = $aData['cc_id'];
@@ -991,15 +1057,20 @@ class Payment extends Controller {
     }
 
     /*
-        // This function is use for upgrade membership
-    */
-    public function upgradeMembership() {
+      // This function is use for upgrade membership
+     */
+
+    public function upgradeMembership(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
+        //Instantiate Chargebee model to get its properties and methods
+        $mChargeBee = new ChargeBeeModel();
+
+
         $subscriptionID = $oUser->subscription_id;
         $post = Input::post();
-        if (!empty($post)) {
-            $planID = $post['plan_id'];
+        if (!empty($request)) {
+            $planID = $request->plan_id;
             $userID = Session::get('customer_user_id');
             $mPayment = new PaymentModel();
             $aUserSubscription = $mPayment->getCurrentUserSubscription($userID, $subscriptionID);
@@ -1007,27 +1078,25 @@ class Payment extends Controller {
             //pre($aUserSubscription);
             //die;
             if (!empty($aUserSubscription)) {
-              
-                if(!empty($aUserSubscription[0])) {
+
+                if (!empty($aUserSubscription[0])) {
                     $aUserSubscription = $aUserSubscription[0];
                 }
                 $subscriptionID = $aUserSubscription->subscription_id;
                 //echo "Subscription id is ". $subscriptionID;
                 if (!empty($subscriptionID)) {
                     $userID = Session::get('customer_user_id');
-                    //$aUser = $this->mUser->getUserInfo($userID);
                     $cbContactID = $oUser->cb_contact_id;
                     $cbPaymentSourceID = $oUser->chargebee_cc_id;
                     //echo "Payment Source ID is ". $cbPaymentSourceID;
                     if (!empty($cbPaymentSourceID)) {
                         if (!empty($planID)) {
                             //Upgrade Membership now
-                            $result = ChargeBee_Subscription::update($subscriptionID, array(
-                                        "planId" => $planID,
-                                        "trialEnd" => 0
-                            ));
-                            $oRes = $result->subscription();
-                            $invoice = $result->invoice();
+                            $aInput = array(
+                                "planId" => $planID,
+                                "trialEnd" => 0
+                            );
+                            list($invoice, $oRes) = cbHelperUpdateSubscription($subscriptionID, $aInput);
                             //pre($oRes);
                             //die;
                             if (!empty($oRes)) {
@@ -1035,13 +1104,12 @@ class Payment extends Controller {
                                 $updatedTime = $oRes->updatedAt;
                                 if ($subscriptionID == $subsID) {
                                     //End subscription locally
-                                    $bEnded = $this->mChargeBee->endSubscription($subscriptionID, $updatedTime);
+                                    $bEnded = $mChargeBee->endSubscription($subscriptionID, $updatedTime);
                                     if ($bEnded) {
                                         //Save subscription locally
-                                        $bSaveSubscription = $this->mChargeBee->saveCBSubscription($oRes, 'membership');
+                                        $bSaveSubscription = $mChargeBee->saveCBSubscription($oRes, 'membership');
                                         if ($bSaveSubscription) {
                                             //update previous membership status
-
                                             //$bRefilled = $this->refillAccount($userID, $planID);
                                             $bRefilled = refillPlanBenefits($userID, $planID);
                                             if ($bRefilled) {
@@ -1074,9 +1142,7 @@ class Payment extends Controller {
                                                     'created' => date("Y-m-d H:i:s")
                                                 );
                                                 $eventName = 'sys_upgraded_membership';
-                                                add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin=1);
-
-                                                
+                                                add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin = 1);
                                             } else {
                                                 $response = array('status' => 'error', 'msg' => 'Account upgraded successfully, but credtis could not updated');
                                             }
@@ -1112,15 +1178,18 @@ class Payment extends Controller {
         exit;
     }
 
-    public function upgradeTopupMembership() {
+    public function upgradeTopupMembership(Request $request) {
 
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $planID = $post['toup_plan_id'];
+
+        if (!empty($request)) {
+            $planID = $request->toup_plan_id;
         }
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $user_role = $oUser->user_role;
+
+        //Instantiate Chargebee model to get its properties and methods
+        $mChargeBee = new ChargeBeeModel();
 
         if ($user_role != 1 && !empty($planID)) {
             //Do not do anything if admin logged in
@@ -1138,7 +1207,7 @@ class Payment extends Controller {
                 if ($result['status'] == 'success') {
                     //$bRefilled = $this->refillAccount($userID, $planID);
                     $bRefilled = refillPlanBenefits($userID, $planID);
-                    
+
                     if ($bRefilled) {
                         //Add Useractivity log
                         $aActivityData = array(
@@ -1169,9 +1238,7 @@ class Payment extends Controller {
                             'created' => date("Y-m-d H:i:s")
                         );
                         $eventName = 'sys_upgraded_topup_membership';
-                        add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin=1);
-
-                       
+                        add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin = 1);
                     } else {
                         $response = array('status' => 'error', 'msg' => 'Account upgraded successfully, but credtis could not updated');
                     }
@@ -1183,25 +1250,25 @@ class Payment extends Controller {
             } else {
                 //upgrade topup subscription plan
                 if (!empty($cbUserID) && !empty($ccID)) {
-                    $result = ChargeBee_Subscription::update($topupSubscriptionID, array(
-                                "planId" => $planID,
-                                "trialEnd" => 0
-                    ));
-                    $oRes = $result->subscription();
-                    $invoice = $result->invoice();
+                    $aInput = array(
+                        "planId" => $planID,
+                        "trialEnd" => 0
+                    );
+
+                    list($invoice, $oRes) = cbHelperUpdateSubscription($topupSubscriptionID, $aInput);
+
                     if (!empty($oRes)) {
                         $subsID = $oRes->id;
                         $updatedTime = $oRes->updatedAt;
                         if ($topupSubscriptionID == $subsID) {
-                            $bEnded = $this->mChargeBee->endSubscription($topupSubscriptionID, $updatedTime);
+                            $bEnded = $mChargeBee->endSubscription($topupSubscriptionID, $updatedTime);
                             if ($bEnded) {
-                                $bSaveSubscription = $this->mChargeBee->saveCBSubscription($oRes, 'topup-membership');
+                                $bSaveSubscription = $mChargeBee->saveCBSubscription($oRes, 'topup-membership');
                                 if ($bSaveSubscription) {
                                     //update previous membership status
-
                                     //$bRefilled = $this->refillAccount($userID, $planID);
                                     $bRefilled = refillPlanBenefits($userID, $planID);
-                                    
+
                                     if ($bRefilled) {
                                         //Add Useractivity log
                                         $aActivityData = array(
@@ -1232,8 +1299,7 @@ class Payment extends Controller {
                                             'created' => date("Y-m-d H:i:s")
                                         );
                                         $eventName = 'sys_upgraded_topup_membership';
-                                        add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin="1");
-                                        
+                                        add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin = "1");
                                     } else {
                                         $response = array('status' => 'error', 'msg' => 'Account upgraded successfully, but credtis could not updated');
                                     }
@@ -1256,13 +1322,13 @@ class Payment extends Controller {
         echo json_encode($response);
         exit;
     }
-    
-    public function buyCreditAddons() {
 
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $planID = $post['toup_plan_id'];
-            $quantity = $post['quantity'];
+    public function buyCreditAddons(Request $request) {
+
+
+        if (!empty($request)) {
+            $planID = $request->toup_plan_id;
+            $quantity = $request->quantity;
         }
         $oUser = getLoggedUser();
         $userID = $oUser->id;
@@ -1278,13 +1344,13 @@ class Payment extends Controller {
                     'plan_id' => $planID,
                     'cc_id' => $ccID,
                     'cb_customer_id' => $cbUserID,
-                    'quantity' => ($quantity>0) ? $quantity : 1
+                    'quantity' => ($quantity > 0) ? $quantity : 1
                 );
                 $result = $this->cbChargeInvoice($aPaymentData);
                 if ($result['status'] == 'success') {
                     //$bRefilled = $this->refillAccount($userID, $planID, $quantity);
                     $bRefilled = refillPlanBenefits($userID, $planID, $quantity);
-                    
+
                     if ($bRefilled) {
                         //Add Useractivity log
                         $aActivityData = array(
@@ -1315,9 +1381,7 @@ class Payment extends Controller {
                             'created' => date("Y-m-d H:i:s")
                         );
                         $eventName = 'sys_upgraded_topup_membership';
-                        add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin=1);
-
-                       
+                        add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin = 1);
                     } else {
                         $response = array('status' => 'error', 'msg' => 'Addon Pack purchased successfully, but credtis could not updated');
                     }
@@ -1326,25 +1390,28 @@ class Payment extends Controller {
                 } else {
                     $response = array('status' => 'error', 'error_type' => 'decline', 'msg' => 'No Response from chargebee');
                 }
-            } 
+            }
         }
 
         echo json_encode($response);
         exit;
     }
 
-    public function changeSubscription() {
+    public function changeSubscription(Request $request) {
         try {
+
+            //Instantiate Chargebee model to get its properties and methods
+            $mChargeBee = new ChargeBeeModel();
+
             $response = array();
-            $post = $this->input->post();
-            if (!empty($post)) {
-                $subscriptionID = $post['subid'];
-                $actionName = $post['action'];
-                $adminID = $this->session->userdata('admin_user_id');
+
+            if (!empty($request)) {
+                $subscriptionID = $request->subid;
+                $actionName = $request->action;
+                $adminID = Session::get('admin_user_id');
                 if ($adminID > 0) {
                     if ($actionName == 'cancel') {
-                        $result = ChargeBee_Subscription::cancel($subscriptionID);
-                        $oRes = $result->subscription();
+                        $oRes = cbHelperCancelSubscription($subscriptionID);
                         if (!empty($oRes)) {
                             $changedStatus = $oRes->status;
                             $updatedTime = $oRes->updatedAt;
@@ -1352,13 +1419,12 @@ class Payment extends Controller {
                             $response = array('status' => 'error', 'msg' => 'No response from merchant');
                         }
                     } else if ($actionName == 'reactivate') {
-                        $result = ChargeBee_Subscription::reactivate($subscriptionID);
-                        $oRes = $result->subscription();
+                        $oRes = cbHelperCancelSubscription($subscriptionID);
                         if (!empty($oRes)) {
                             $changedStatus = $oRes->status;
                             $updatedTime = $oRes->updatedAt;
                             if (!empty($changedStatus)) {
-                                $bUpdated = $this->mChargeBee->updateSubsription($subscriptionID, $changedStatus);
+                                $bUpdated = $mChargeBee->updateSubscription($subscriptionID, $changedStatus);
                                 if ($bUpdated) {
                                     $response = array('status' => 'success', 'msg' => 'Membership cancelled succesfully');
                                 }
@@ -1367,8 +1433,7 @@ class Payment extends Controller {
                             $response = array('status' => 'error', 'msg' => 'No response from merchant');
                         }
                     } else if ($actionName == 'pause') {
-                        $result = ChargeBee_Subscription::pause($subscriptionID);
-                        $oRes = $result->subscription();
+                        $oRes = cbHelperPauseSubscription($subscriptionID);
                         //pre($oRes);
                         if (!empty($oRes)) {
                             $changedStatus = $oRes->status;
@@ -1377,8 +1442,7 @@ class Payment extends Controller {
                             $response = array('status' => 'error', 'msg' => 'No response from merchant');
                         }
                     } else if ($actionName == 'resume') {
-                        $result = ChargeBee_Subscription::resume($subscriptionID);
-                        $oRes = $result->subscription();
+                        $oRes = cbHelperResumeSubscription($subscriptionID);
                         //pre($oRes);
                         if (!empty($oRes)) {
                             $changedStatus = $oRes->status;
@@ -1387,8 +1451,7 @@ class Payment extends Controller {
                             $response = array('status' => 'error', 'msg' => 'No response from merchant');
                         }
                     } else if ($actionName == 'delete') {
-                        $result = ChargeBee_Subscription::delete($subscriptionID);
-                        $oRes = $result->subscription();
+                        $oRes = cbHelperDeleteSubscription($subscriptionID);
                         if (!empty($oRes)) {
                             $changedStatus = (!empty($oRes->status)) ? 'deleted' : $oRes->status;
                             $updatedTime = $oRes->updatedAt;
@@ -1398,7 +1461,7 @@ class Payment extends Controller {
                     }
 
                     if (!empty($changedStatus)) {
-                        $bUpdated = $this->mChargeBee->updateSubsription($subscriptionID, $changedStatus, $updatedTime);
+                        $bUpdated = $mChargeBee->updateSubscription($subscriptionID, $changedStatus, $updatedTime);
                         if ($bUpdated) {
                             $response = array('status' => 'success', 'msg' => 'Membership updated succesfully. Current status: ' . $changedStatus);
                         }

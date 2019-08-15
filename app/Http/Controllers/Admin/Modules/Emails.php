@@ -275,7 +275,7 @@ class Emails extends Controller {
         
         $mLists = new ListsModel();
         
-        //Instanciate Email model to get its methods and properties
+        //Instantiate Email model to get its methods and properties
         $mEmails = new EmailsModel();
         
         $oUser = getLoggedUser();
@@ -352,7 +352,7 @@ class Emails extends Controller {
             exit;
         }
         
-        //Instanciate Email model to get its methods and properties
+        //Instantiate Email model to get its methods and properties
         $mEmails = new EmailsModel();
         
         $aUser = getLoggedUser();
@@ -425,7 +425,7 @@ class Emails extends Controller {
             echo json_encode($response);
             exit;
         }
-        //Instanciate Email model to get its methods and properties
+        //Instantiate Email model to get its methods and properties
         $mEmails = new EmailsModel();
         
         $aUser = getLoggedUser();
@@ -457,7 +457,7 @@ class Emails extends Controller {
             echo json_encode($response);
             exit;
         }
-        //Instanciate Email model to get its methods and properties
+        //Instantiate Email model to get its methods and properties
         $mEmails = new EmailsModel();
         
         $aUser = getLoggedUser();
@@ -521,7 +521,7 @@ class Emails extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Email model to get its methods and properties
+        //Instantiate Email model to get its methods and properties
         $mEmails = new EmailsModel();
         
         $automationID = $request->automation_id;
@@ -570,7 +570,7 @@ class Emails extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Email model to get its methods and properties
+        //Instantiate Email model to get its methods and properties
         $mEmails = new EmailsModel();
         
         $automationID = strip_tags($request->automation_id);

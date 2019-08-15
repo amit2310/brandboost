@@ -66,10 +66,10 @@ class BrandboostInviter extends Command {
      */
     public function startCampaign() {
 
-        //Instanciate cron manager model to access its properties and methods
+        //Instantiate cron manager model to access its properties and methods
         $mCron = new ManagerModel();
 
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
 
         //Check Cron Lock
@@ -138,7 +138,7 @@ class BrandboostInviter extends Command {
      * @param type $aEvent
      */
     public function processThankyouInvites($aEvent = array()) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
 
 
@@ -183,7 +183,7 @@ class BrandboostInviter extends Command {
      * @param type $aEvent
      */
     public function processFollowup($aEvent = array()) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
 
         if (!empty($aEvent)) {
@@ -244,7 +244,7 @@ class BrandboostInviter extends Command {
      * @param type $aEvent 
      */
     public function processSendInvites($aEvent = array()) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
 
         if (!empty($aEvent)) {
@@ -323,7 +323,7 @@ class BrandboostInviter extends Command {
      * @param type $aData
      */
     public function fireAutomationCampaign($aData = array()) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
 
         $oEvent = $aData['inviter_data'];
@@ -413,7 +413,7 @@ class BrandboostInviter extends Command {
      * @param type $aData
      */
     public function sendBulkAutomationEmail($oSubscribers, $aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
 
 
@@ -531,7 +531,7 @@ class BrandboostInviter extends Command {
      * @param type $aData
      */
     public function sendBulkAutomationSms($oSubscribers, $aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
 
         $content = $aData['content'];
@@ -624,7 +624,7 @@ class BrandboostInviter extends Command {
      * @param type $aData
      */
     public function saveLog($aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
 
         $timeNow = date("Y-m-d H:i:s");
@@ -808,7 +808,7 @@ class BrandboostInviter extends Command {
      * @return boolean
      */
     public function SG_smtp($aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
 
         if ($aData['brandboost_id'] == $this->testCampaignId) {
@@ -903,7 +903,7 @@ class BrandboostInviter extends Command {
      * @return boolean
      */
     public function send_Twilio($aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
 
 

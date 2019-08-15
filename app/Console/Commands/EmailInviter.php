@@ -68,10 +68,10 @@ class EmailInviter extends Command {
     public function startCampaign() {
         //Check Cron Lock
         $bLocked = false;
-        //Instanciate cron manager model to access its properties and methods
+        //Instantiate cron manager model to access its properties and methods
         $mCron = new ManagerModel();
 
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
 
         $oCron = $mCron->checkCronStatus('automation');
@@ -148,7 +148,7 @@ class EmailInviter extends Command {
      */
     public function processFollowup($aEvent = array()) {
         //pre($aEvent);
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
 
         if (!empty($aEvent)) {
@@ -207,7 +207,7 @@ class EmailInviter extends Command {
      * @param type $aEvent
      */
     public function processPrimaryContacts($aEvent = array()) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
 
         if (!empty($aEvent)) {
@@ -275,7 +275,7 @@ class EmailInviter extends Command {
      */
     public function fireAutomationCampaign($aData = array()) {
         //echo "Okay I am inside";
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
 
         $oEvent = $aData['inviter_data'];
@@ -356,7 +356,7 @@ class EmailInviter extends Command {
      * @param type $aEventUsed to process thank you invite
      */
     public function processThankyouInvites($aEvent = array()) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
 
 
@@ -403,7 +403,7 @@ class EmailInviter extends Command {
      * @param type $aEvent
      */
     public function processReminderInvites($aEvent = array()) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
 
         if (!empty($aEvent)) {
@@ -463,7 +463,7 @@ class EmailInviter extends Command {
      * Process Specific Events
      */
     public function processSpecificDateTime($aEvent = array()) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
 
         if (!empty($aEvent)) {
@@ -515,7 +515,7 @@ class EmailInviter extends Command {
      * Used to send Emails in bulk
      */
     public function sendBulkAutomationEmail($oSubscribers, $aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
 
         $content = $aData['content'];
@@ -630,7 +630,7 @@ class EmailInviter extends Command {
      * Used to send SMS in bulk
      */
     public function sendBulkAutomationSms($oSubscribers, $aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
         $content = $aData['content'];
         $fromNumber = $aData['from_number'];
@@ -721,7 +721,7 @@ class EmailInviter extends Command {
      * Used to save log of a cron
      */
     public function saveLog($aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
 
         $timeNow = date("Y-m-d H:i:s");
@@ -912,7 +912,7 @@ class EmailInviter extends Command {
      * @return boolean
      */
     public function SG_smtp($aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
         //For now use detault sendgrid account
         if ($this->use_default_accounts == true) {
@@ -1021,7 +1021,7 @@ class EmailInviter extends Command {
      * @return booleanUsed to sent Twilio SMS
      */
     public function send_Twilio($aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
 
         if ($this->use_default_accounts == true) {
@@ -1102,7 +1102,7 @@ class EmailInviter extends Command {
      * Old Method no more in use
      */
     public function emailTagReplace_OLD($bbID, $sHtml, $campaignType = 'email', $subscriberInfo) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
 
         $aTags = config('bbconfig.email_tags');
@@ -1496,7 +1496,7 @@ class EmailInviter extends Command {
 
     //Unused Methods
     public function processListSubscription($aEvent = array(), $subscriberAction) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new EmailModel();
         if (!empty($aEvent)) {
 

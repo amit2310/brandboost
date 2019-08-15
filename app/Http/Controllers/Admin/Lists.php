@@ -23,10 +23,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Users model to get its methods and properties
+        //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
         
         
@@ -67,10 +67,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Users model to get its methods and properties
+        //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
         
         
@@ -114,13 +114,13 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Users model to get its methods and properties
+        //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
         
-        //Instanciate Workflow model to get its methods and properties
+        //Instantiate Workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         $moduleName = 'list';
@@ -169,13 +169,13 @@ class Lists extends Controller {
         $listID = strip_tags($request->list_id);
         $aUser = getLoggedUser();
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Users model to get its methods and properties
+        //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
         
-        //Instanciate Workflow model to get its methods and properties
+        //Instantiate Workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         
@@ -221,7 +221,7 @@ class Lists extends Controller {
      */
     public function getContactDetail(Request $request) {
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
         
@@ -254,13 +254,13 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Users model to get its methods and properties
+        //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
         
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
         
         
@@ -339,7 +339,7 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
         $title = strip_tags($request->title);
@@ -410,10 +410,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Users model to get its methods and properties
+        //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
         
         
@@ -454,10 +454,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Users model to get its methods and properties
+        //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
         
         
@@ -526,7 +526,7 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
         
@@ -580,7 +580,7 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
         
@@ -633,7 +633,7 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
         
@@ -675,13 +675,13 @@ class Lists extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Users model to get its methods and properties
+        //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
         
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
         
         
@@ -781,13 +781,13 @@ class Lists extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Users model to get its methods and properties
+        //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
         
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
         
         
@@ -889,10 +889,10 @@ class Lists extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Users model to get its methods and properties
+        //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
         
         
@@ -948,13 +948,13 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Users model to get its methods and properties
+        //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -977,10 +977,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1003,10 +1003,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1029,10 +1029,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1062,10 +1062,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1128,10 +1128,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1174,10 +1174,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1208,10 +1208,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1253,10 +1253,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1284,10 +1284,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1326,10 +1326,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1366,10 +1366,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         $memberID = strip_tags($request->member_id);
@@ -1396,10 +1396,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1432,10 +1432,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         
@@ -1472,10 +1472,10 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
-        //Instanciate Team model to get its methods and properties
+        //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
         
         $roleID = strip_tags($request->role_id);
@@ -1518,7 +1518,7 @@ class Lists extends Controller {
      */
     public function updateContactStatus(Request $request) {
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
 
@@ -1547,7 +1547,7 @@ class Lists extends Controller {
      */
     public function deleteMultipalListContact(Request $request) {
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
 
@@ -1577,7 +1577,7 @@ class Lists extends Controller {
      */
     public function archiveMultipalListContact(Request $request) {
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
         
@@ -1608,7 +1608,7 @@ class Lists extends Controller {
      */
     public function moveToArchiveListContact(Request $request) {
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
         
@@ -1637,7 +1637,7 @@ class Lists extends Controller {
      */
     public function moveToArchiveList(Request $request) {
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
 
@@ -1690,7 +1690,7 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
         
         
@@ -1716,7 +1716,7 @@ class Lists extends Controller {
      */
     public function deleteListContact(Request $request) {
         
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
         

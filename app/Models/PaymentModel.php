@@ -20,7 +20,6 @@ class PaymentModel extends Model {
         }
     }
 
-    
     public function saveInvoice($aData) {
         $this->db->insert("tbl_invoices", $aData);
         $inset_id = $this->db->insert_id();
@@ -36,7 +35,7 @@ class PaymentModel extends Model {
             return $inset_id;
         }
     }
-    
+
     public function saveInvoiceDetails($data) {
         $this->db->insert("tbl_invoices_details", $data);
         //echo $this->db->last_query();
@@ -80,7 +79,7 @@ class PaymentModel extends Model {
         }
         return $response;
     }
-    
+
     public function getJobId($id) {
         $response = false;
         $this->db->where('id', $id);
@@ -90,39 +89,55 @@ class PaymentModel extends Model {
         }
         return $response;
     }
-    
-    public function refillAccount($userID, $aData=array()){
-        
-        if(empty($userID) || !($userID))
+
+    /**
+     * Used to refill client credits
+     * @param type $userID
+     * @param type $aData
+     * @return boolean
+     */
+    public function refillAccount($userID, $aData = array()) {
+
+        if (empty($userID) || !($userID))
             return false;
-        
+
         $bHaveAccount = $this->checkRefillAccount($userID);
-        
-        $this->db->where('user_id', $userID);
-        if($bHaveAccount){
-            $result = $this->db->update('tbl_account_usage', $aData);
-        }else{
-            $aData['created'] = date("Y-m-d H:i:s");
-            $result =  $this->db->insert('tbl_account_usage', $aData);
-        }
-        if($result)
+
+
+        if ($bHaveAccount) {
+            $result = DB::table('tbl_account_usage')
+                    ->where('user_id', $userID)
+                    ->update($aData);
             return true;
-        else
-            return false;       
-                
-    }
-    
-    public function checkRefillAccount($userID){
-        $this->db->where('user_id', $userID);
-        $result = $this->db->get('tbl_account_usage');
-        if ($result->num_rows() > 0) {
+        } else {
+            $aData['created'] = date("Y-m-d H:i:s");
+            $result = DB::table('tbl_account_usage')
+                    ->insert($aData);
             return true;
         }
         return false;
-               
     }
+
+    /**
+     * Check for refill Account
+     * @param type $userID
+     * @return type
+     */
+    public function checkRefillAccount($userID) {
+        $result = DB::table('tbl_account_usage')
+                    ->where('user_id', $userID)
+                    ->exists($aData);
+        return $result;
+    }
+
     
-    public function getCurrentUserSubscription($userID, $subscriptionID=0){
+    /**
+     * Get Current User subscription
+     * @param type $userID
+     * @param type $subscriptionID
+     * @return type
+     */
+    public function getCurrentUserSubscription($userID, $subscriptionID = 0) {
 
         $sql = "SELECT `tbl_cc_subscriptions`.* FROM `tbl_cc_subscriptions` 
             LEFT JOIN  `tbl_users` ON `tbl_cc_subscriptions`.`customer_id` = `tbl_users`.`cb_contact_id`
@@ -133,10 +148,9 @@ class PaymentModel extends Model {
         $oData = DB::select(DB::raw($sql));
 
         return $oData;
-                
     }
-    
-   public function getCurrentUserSubscription_OLD($userID, $subscriptionID=0){
+
+    public function getCurrentUserSubscription_OLD($userID, $subscriptionID = 0) {
         $this->db->select("tbl_cc_subscriptions.*");
         $this->db->join("tbl_users", "tbl_cc_subscriptions.customer_id=tbl_users.cb_contact_id", "LEFT");
         $this->db->where("tbl_users.id", $userID);
@@ -151,10 +165,9 @@ class PaymentModel extends Model {
             $response = $result->row();
         }
         return $response;
-                
-    } 
-    
-    public function getCurrentUserTopupSubscription($userID, $subscriptionID){
+    }
+
+    public function getCurrentUserTopupSubscription($userID, $subscriptionID) {
         $this->db->select("tbl_cc_subscriptions.*");
         $this->db->join("tbl_users", "tbl_cc_subscriptions.customer_id=tbl_users.cb_contact_id", "LEFT");
         $this->db->where("tbl_users.id", $userID);
@@ -169,23 +182,19 @@ class PaymentModel extends Model {
         }
         return $response;
     }
-    
-    
-    
-    public function logRefillHistory($aData){
-        
-        $result =  $this->db->insert('tbl_account_refill_history', $aData);
-        //echo $this->db->last_query();
-        if($result)
+
+    /**
+     * Log Refill History
+     * @param type $aData
+     * @return boolean
+     */
+    public function logRefillHistory($aData) {
+        $result = DB::table('tbl_account_refill_history')->insert($aData);
+        if ($result)
             return true;
         else
             return false;
-        
     }
-    
-    
-
-   
 
     public function sendEmail($emailData) {
 
@@ -209,7 +218,7 @@ class PaymentModel extends Model {
             $json_string = array(
                 'to' => array($emailData['adminemail'])
             );
-            $plainText =  convertHtmlToPlain($emailContent);
+            $plainText = convertHtmlToPlain($emailContent);
             $params = array(
                 'api_user' => $user,
                 'api_key' => $pass,
@@ -240,7 +249,5 @@ class PaymentModel extends Model {
             mail($to, $subject, $emailContent, $headers);
         }
     }
-    
-    
 
 }

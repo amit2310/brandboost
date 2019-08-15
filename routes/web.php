@@ -708,3 +708,8 @@ Route::post('admin/feedback/deleteFeedbackNote','Admin\Feedback@deleteFeedbackNo
 
 
 
+//Front Website
+Route::get('price','Price@index');
+Route::get('checkout/buy/{plan_id}','Checkout@buy');
+Route::post('payment/charging','Payment@charging');
+Route::post('payment/cbCharge','Payment@cbCharge');

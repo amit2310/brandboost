@@ -78,7 +78,7 @@ class WorkFlow extends Controller {
     public function addWorkflowEventToTree(Request $request) {
         $response = array();
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         $moduleName = strip_tags($request->moduleName);
@@ -192,7 +192,7 @@ class WorkFlow extends Controller {
         $smsTemplateID = strip_tags($request->smsTemplateId);
         $source = strip_tags($request->source);
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         $isDraft = ($source == 'draft') ? true : false;
@@ -289,7 +289,7 @@ class WorkFlow extends Controller {
     public function connectWorkflowNode($currentEventID, $newEventID, $nodeType, $moduleName) {
         $nextEventID = '';
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         if ($nodeType == 'main' && $currentEventID > 0 && $newEventID > 0) {
@@ -357,7 +357,7 @@ class WorkFlow extends Controller {
     public function createEventNode($id, $moduleName, $eventType, $previousID, $templateID = '', $triggerParam = '', $isDraft = false) {
         $response = array();
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         $eventID = $mWorkflow->createWorkflowEvent($id, $eventType, $previousID, $triggerParam, $moduleName);
@@ -433,7 +433,7 @@ class WorkFlow extends Controller {
         $introduction = db_in($request->introduction);
         $template_source = strip_tags($request->template_source);
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         $aData = array();
@@ -648,7 +648,7 @@ class WorkFlow extends Controller {
         $introduction = db_in($request->introduction);
         $myTemplateID = strip_tags($request->myTemplateId);
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
 
@@ -877,7 +877,7 @@ class WorkFlow extends Controller {
         $moduleUnitID = strip_tags($request->moduleUnitID);
         $emailAddress = strip_tags($request->email);
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
@@ -983,7 +983,7 @@ class WorkFlow extends Controller {
         $moduleUnitID = strip_tags($request->moduleUnitID);
         $number = strip_tags($request->number);
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
@@ -1085,7 +1085,7 @@ class WorkFlow extends Controller {
         $outputType = strip_tags($request->returnMethod);
         $previewType = strip_tags($request->previewType);
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         $previewPrefix = ($previewType == 'onlyPreview') ? 'PREVIEW' : 'EDITOR';
@@ -1224,7 +1224,7 @@ class WorkFlow extends Controller {
         $eventID = strip_tags($request->event_id);
         $moduleName = strip_tags($request->moduleName);
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         $previousID = '';
         if ($eventID > 0) {
@@ -1318,7 +1318,7 @@ class WorkFlow extends Controller {
         $campaignID = $request->campaign_id;
         $moduleUnitID = $request->module_unit_id;
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
@@ -1348,7 +1348,7 @@ class WorkFlow extends Controller {
         $campaignID = $request->campaign_id;
         $moduleUnitID = $request->module_unit_id;
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
@@ -1754,7 +1754,7 @@ class WorkFlow extends Controller {
      * Replaces all the tags of the referral module
      */
     public function referralEmailTagReplace($referralID, $sHtml, $campaignType = 'email', $subscriberInfo) {
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         $aTags = config('bbconfig.email_tags');
@@ -1866,7 +1866,7 @@ class WorkFlow extends Controller {
      * Replaces all the tags of the brandboost campaigns
      */
     public function brandboostEmailTagReplace($brandboostID, $sHtml, $campaignType = 'email', $subscriberInfo) {
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         $oBrandboost = $mWorkflow->getModuleUnitInfo('brandboost', $brandboostID);
         $productsDetails = $mWorkflow->getProductDataByBBID($brandboostID);
@@ -1945,7 +1945,7 @@ class WorkFlow extends Controller {
         $request->moduleUnitId = $moduleUnitID;
         $request->returnMethod = 'return';
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         if ($campaignID > 0 && !empty($moduleName)) {
@@ -2000,7 +2000,7 @@ class WorkFlow extends Controller {
      */
     public function loadWorkflowSMSStats(Request $request) {
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         $response = array();
@@ -2068,7 +2068,7 @@ class WorkFlow extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         $mLists = new ListsModel();
         $oAutomationLists = '';
@@ -2124,7 +2124,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         if ($actionValue == 'addRecord') {
@@ -2165,7 +2165,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         if ($actionValue == 'addRecord') {
@@ -2225,7 +2225,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         if ($actionValue == 'addRecord') {
@@ -2270,7 +2270,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
 
@@ -2316,7 +2316,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         if ($actionValue == 'addRecord') {
@@ -2355,7 +2355,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         if ($actionValue == 'addRecord') {
@@ -2410,7 +2410,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         if ($actionValue == 'addRecord') {
@@ -2449,7 +2449,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         if ($actionValue == 'addRecord') {
@@ -2518,7 +2518,7 @@ class WorkFlow extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
         if ($request) {

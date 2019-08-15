@@ -6,11 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use Cookie;
 use Session;
+
 //require_once $_SERVER['DOCUMENT_ROOT'] . '/app/chargebee/lib/ChargeBee.php';
 //use App\ChargeBee\Lib;
 
 class ChargeBeeModel extends Model {
 
+    /**
+     * Used to create contact at chargebee
+     * @param type $aData
+     * @return boolean
+     */
     public function createContact($aData = array()) {
         //ChargeBee_Environment::configure("https://brandboost.chargebee.com","live_AAWPsatYm8HgEGQflS02Wbcu2cSMAY6uI");
         $firstName = ($aData['firstname']) ? $aData['firstname'] : '';
@@ -41,11 +47,8 @@ class ChargeBeeModel extends Model {
             'phone' => $phone,
             'billingAddress' => $aInputBilling
         );
-        pre(get_declared_classes());
-        die;
-        $aResponse = ChargeBee_Customer::create($aInput);
 
-        $oRes = $aResponse->customer();
+        $oRes = cbHelperCreateContact($aInput);
 
         if (!empty($oRes)) {
             $contactID = $oRes->id;
@@ -55,10 +58,14 @@ class ChargeBeeModel extends Model {
         }
     }
 
+    /**
+     * Used to add CC related info
+     * @param type $contactID
+     * @param type $aInput
+     * @return type
+     */
     public function AddCreditCart($contactID, $aInput) {
-        $aRes = array();
-        $aResponse = ChargeBee_Card::updateCardForCustomer($contactID, $aInput);
-        $oRes = $aResponse->card();
+        $oRes = cbHelperAddCC($contactID, $aInput);
         if (!empty($oRes)) {
             $status = $oRes->status;
             $paymentSourceID = $oRes->paymentSourceId;
@@ -73,10 +80,16 @@ class ChargeBeeModel extends Model {
         return $aRes;
     }
 
+    /**
+     * Create chargebee subscription
+     * @param type $contactID
+     * @param type $aInput
+     * @param type $productType
+     * @return type
+     */
     public function ccCreateSubscription($contactID, $aInput, $productType) {
         $subscriptionID = 0;
-        $aResponse = ChargeBee_Subscription::createForCustomer($contactID, $aInput);
-        $oRes = $aResponse->subscription();
+        $oRes = cbHelperCreateSubscription($contactID, $aInput);
         if (!empty($oRes)) {
             $bSaveSubscription = $this->saveCBSubscription($oRes, $productType);
             $subscriptionID = $oRes->id;
@@ -90,46 +103,76 @@ class ChargeBeeModel extends Model {
         }
     }
 
+    /**
+     * Used to end subscription locally
+     * @param type $subscriptionID
+     * @param type $updatedTime
+     * @return boolean
+     */
     public function endSubscription($subscriptionID, $updatedTime) {
         if (!empty($subscriptionID)) {
-            $data = array('subscription_status'=> 'ended_on_upgrade', 'subscription_id' => $subscriptionID.'__OLD', 'updated_at'=> $updatedTime);
-            $this->db->where("subscription_id", $subscriptionID);
-            $this->db->update("tbl_cc_subscriptions", $data);
+            $aData = array(
+                'subscription_status' => 'ended_on_upgrade',
+                'subscription_id' => $subscriptionID . '__OLD',
+                'updated_at' => $updatedTime
+            );
+
+            DB::table('tbl_cc_subscriptions')
+                    ->where('subscription_id', $subscriptionID)
+                    ->update($aData);
             return true;
         } else {
             return false;
         }
     }
-    
-    public function updateSubsription($subscriptionID, $status, $updateTime){
-        if(!empty($subscriptionID)){
-            $data = array("subscription_status" => $status, 'updated_at'=> $updateTime);
-            $this->db->where("subscription_id", $subscriptionID);
-            $result = $this->db->update("tbl_cc_subscriptions", $data);
-            //echo $this->db->last_query();
-            if($result){
-                return true;
-            }else{
-                return false;
-            }
+
+    /**
+     * Used to update subscription locally
+     * @param type $subscriptionID
+     * @param type $status
+     * @param type $updateTime
+     * @return boolean
+     */
+    public function updateSubscription($subscriptionID, $status, $updateTime) {
+        if (!empty($subscriptionID)) {
+            $aData = array(
+                "subscription_status" => $status,
+                'updated_at' => $updateTime
+            );
+            DB::table('tbl_cc_subscriptions')
+                    ->where('subscription_id', $subscriptionID)
+                    ->update($aData);
+            return true;
+        } else {
+            return false;
         }
     }
 
+    /**
+     * Used to charge invoice 
+     * @param type $aInput
+     * @return type
+     */
     public function ccChargeInvoice($aInput) {
         $transactionStatus = '';
-        $aResponse = ChargeBee_Invoice::create($aInput);
-        $oRes = $aResponse->invoice();
+        $oRes = cbHelperCreateInvoice($aInput);
         //Call savelog function here
         if (!empty($oRes)) {
             $bSavedInvoices = $this->logInvoiceData($oRes);
             $aTransactionData = $oRes->linkedPayments;
             $transactionID = (is_array($aTransactionData)) ? $aTransactionData[0]->txnId : '';
-            $transactionStatus = (is_array($aTransactionData)) ?  $aTransactionData[0]->txnStatus : $oRes->status;
+            $transactionStatus = (is_array($aTransactionData)) ? $aTransactionData[0]->txnStatus : $oRes->status;
         }
 
         return $transactionStatus;
     }
 
+    /**
+     * Save Chagebee subscription related data
+     * @param type $oRes
+     * @param type $productType
+     * @return type
+     */
     public function saveCBSubscription($oRes, $productType) {
         if (!empty($oRes)) {
             $aData = array(
@@ -147,13 +190,18 @@ class ChargeBeeModel extends Model {
             );
 
             $bLocalSubscriptionID = $this->saveSubscription($aData);
-            if(!empty($bLocalSubscriptionID)){
+            if (!empty($bLocalSubscriptionID)) {
                 $this->updateClientMembership($aData['customer_id'], $aData['subscription_id'], $productType);
             }
             return $bLocalSubscriptionID;
         }
     }
 
+    /**
+     * Used to save invoice data locally
+     * @param type $oRes
+     * @return boolean
+     */
     public function logInvoiceData($oRes) {
         if (!empty($oRes)) {
             //pre($oRes);
@@ -162,7 +210,7 @@ class ChargeBeeModel extends Model {
             //pre($aTransactionData);
             $aBillingData = $oRes->billingAddress;
             $transactionID = (is_array($aTransactionData)) ? $aTransactionData[0]->txnId : '';
-            $transactionStatus = (is_array($aTransactionData)) ? $aTransactionData[0]->txnStatus : $oRes->status ;
+            $transactionStatus = (is_array($aTransactionData)) ? $aTransactionData[0]->txnStatus : $oRes->status;
             $aInvoiceItems = $oRes->lineItems;
             $billingFN = $oRes->billingAddress->firstName;
             $billingLN = $oRes->billingAddress->lastName;
@@ -199,16 +247,21 @@ class ChargeBeeModel extends Model {
         return false;
     }
 
+    /**
+     * Used to save CB invoice data locally
+     * @param type $aData
+     * @return type
+     */
     public function saveCBInvoice($aData) {
-        $invoiceID = 0;
-        $result = $this->db->insert('tbl_cc_invoices', $aData);
-        //echo $this->db->last_query();
-        if ($result) {
-            $invoiceID = $this->db->insert_id();
-        }
-        return $invoiceID;
+        $insert_id = DB::table('tbl_cc_invoices')->insertGetId($aData);
+        return $insert_id;
     }
 
+    /**
+     * Used to save Invoice Items locally
+     * @param type $id
+     * @param type $aData
+     */
     public function saveCBInvoiceItems($id, $aData) {
         if (!empty($aData)) {
             foreach ($aData as $aRowData) {
@@ -224,41 +277,49 @@ class ChargeBeeModel extends Model {
                     'date_from' => $aRowData->dateFrom,
                     'date_to' => $aRowData->dateTo
                 );
-                $this->db->insert('tbl_cc_invoices_items', $aItemData);
-                //echo $this->db->last_query();
+                DB::table('tbl_cc_invoices_items')->insert($aItemData);
             }
         }
     }
 
+    /**
+     * Used to save Subscription
+     * @param type $aData
+     * @return type
+     */
     public function saveSubscription($aData) {
-        $result = $this->db->insert('tbl_cc_subscriptions', $aData);
-        //echo $this->db->last_query();
-        if ($result) {
-            $localSubscriptionID = $this->db->insert_id();
-        }
-        return $localSubscriptionID;
+        $insert_id = DB::table('tbl_cc_subscriptions')->insertGetId($aData);
+        return $insert_id;
     }
-    
-    public function updateClientMembership($customerID, $subscriptionID, $productType){
-        if(!empty($customerID)){
-            $this->db->where("cb_contact_id", $customerID);
-            if($productType == 'membership'){
-                $result = $this->db->update("tbl_users", array('subscription_id'=>$subscriptionID));
+
+    /**
+     * Used to update client membership locally
+     * @param type $customerID
+     * @param type $subscriptionID
+     * @param type $productType
+     * @return boolean
+     */
+    public function updateClientMembership($customerID, $subscriptionID, $productType) {
+        if (!empty($customerID)) {
+
+            if ($productType == 'membership') {
+                $fieldName = 'subscription_id';
+            }
+
+            if ($productType == 'topup-membership') {
+                $fieldName = 'topup_subscription_id';
             }
             
-            if($productType == 'topup-membership'){
-                $result = $this->db->update("tbl_users", array('topup_subscription_id'=>$subscriptionID));
-            }
+            $aData = array(
+                $fieldName => $subscriptionID
+            );
+
+            DB::table('tbl_users')
+                    ->where('cb_contact_id', $customerID)
+                    ->update($aData);
             
-            if($result){
-                return true;
-            }else{
-                return false;
-            }
+            return true;
         }
-        
     }
-    
-    
 
 }
