@@ -548,7 +548,7 @@
                 $.ajax({
                     url: "<?php echo base_url('admin/questions/deleteQuestion'); ?>",
                     type: "POST",
-                    data: {questionID: questionID},
+                    data: {questionID: questionID, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -574,7 +574,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/questions/update_question_status'); ?>',
                 type: "POST",
-                data: {status: status, question_id: question_id},
+                data: {status: status, question_id: question_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

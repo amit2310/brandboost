@@ -211,6 +211,8 @@ Route::post('admin/questions/saveQuestionNotes','Admin\Questions@saveQuestionNot
 Route::post('admin/questions/getQuestionNotes','Admin\Questions@getQuestionNotes');
 Route::post('admin/questions/updateQuestionNote','Admin\Questions@updateQuestionNote');
 Route::post('admin/questions/deleteQuestionNote','Admin\Questions@deleteQuestionNote');
+Route::post('admin/questions/update_question_status','Admin\Questions@update_question_status');
+Route::post('admin/questions/deleteQuestion','Admin\Questions@delete_question');
 
 
 
