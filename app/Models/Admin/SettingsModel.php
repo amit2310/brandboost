@@ -238,12 +238,15 @@ class SettingsModel extends Model {
         if ($id > 0) {
             $aData =  DB::table('tbl_credit_values')
              ->where('id', $id)->update($aData);
-             return true;
-           
         }
-        return false;
+        return true;
     }
 
+    /**
+    * This function will add credit history
+    * @param type $aData
+    * @return type
+    */
     public function addCreditHistory($aData) {
         $result = DB::table('tbl_credit_values_history')->insert($aData);
         if ($result)
