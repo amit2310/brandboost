@@ -404,7 +404,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/questions/update_answer_status'); ?>',
                 type: "POST",
-                data: {status: status, answer_id: answer_id},
+                data: {status: status, answer_id: answer_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
