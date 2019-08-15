@@ -320,7 +320,9 @@ $(document).ready(function () {
 
     $(document).on("submit", "#frmSmartSaveNote", function () {
         var formdata = $("#frmSmartSaveNote").serialize();
+        var tkn = $('meta[name="_token"]').attr('content');
         $('.overlaynew').show();
+        formdata += "&_token="+tkn;
         var questionID = $("#smartpopup_question_id").val();
         //$('.overlaynew').show();
         $.ajax({
