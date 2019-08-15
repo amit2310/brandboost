@@ -207,6 +207,7 @@ Route::post('admin/questions/getAnswer','Admin\Questions@getAnswer');
 Route::post('admin/questions/updateAnswer','Admin\Questions@updateAnswer');
 Route::post('admin/questions/delete_answer','Admin\Questions@delete_answer');
 Route::get('admin/questions','Admin\Questions@index');
+Route::post('admin/questions/saveQuestionNotes','Admin\Questions@saveQuestionNotes');
 
 
 Route::get('admin/mediagallery','Admin\Mediagallery@index');

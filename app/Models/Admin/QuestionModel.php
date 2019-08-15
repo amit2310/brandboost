@@ -133,6 +133,18 @@ class QuestionModel extends Model
             ->first();
         return $oData;
     }
+
+
+    /**
+     * This function is for save question notes
+     * @param type $aData
+     * @return type array
+     */
+    public function saveQuestionNotes($aData) {
+
+        $insert_id = DB::table('tbl_reviews_question_notes')->insertGetId($aData);
+        return $insert_id;
+    }
 	
 
     public function getReviewAnswerHelpful($answerID){
@@ -149,19 +161,6 @@ class QuestionModel extends Model
         }
         return $response;
     }
-	
-	
-    
-    public function saveQuestionNotes($aData) {
-        $bSaved = $this->db->insert("tbl_reviews_question_notes", $aData);
-        $insert_id = $this->db->insert_id();
-        //echo $this->db->last_query();
-        if ($bSaved)
-            return $insert_id;
-        return false;
-    }
-    
-    
     
     
     public function getQuestionNoteInfo($noteId) {

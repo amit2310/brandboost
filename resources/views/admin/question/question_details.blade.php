@@ -884,9 +884,10 @@ $questionDescription = $oQuestion->question;
 
         $(document).on("click", "#saveQuestionNotes", function () {
             var formdata = $("#frmSaveNote").serialize();
+            formdata += '&_token={{csrf_token()}}';
             $('.overlaynew').show();
             $.ajax({
-                url: "<?php echo base_url('/admin/questions/saveQuestionNotes'); ?>",
+                url: "<?php echo base_url('admin/questions/saveQuestionNotes'); ?>",
                 type: "POST",
                 data: formdata,
                 dataType: "json",

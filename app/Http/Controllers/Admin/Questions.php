@@ -1053,11 +1053,16 @@ class Questions extends Controller {
         }
     }
 
+    /**
+    * This function is used to save question notes
+    * @param type 
+    * @return type
+    */
     public function saveQuestionNotes() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
+        $post = Input::post();
         if (!empty($post)) {
             $questionID = base64_url_decode(strip_tags($post['question_id']));
             $brandboostID = strip_tags($post['bid']);
@@ -1070,8 +1075,8 @@ class Questions extends Controller {
                 'notes' => $sNotes,
                 'created' => date("Y-m-d H:i:s")
             );
-
-            $bSaved = $this->mQuestion->saveQuestionNotes($aNotesData);
+            $mQuestion = new QuestionModel();
+            $bSaved = $mQuestion->saveQuestionNotes($aNotesData);
             if ($bSaved) {
                 $response = array('status' => 'success', 'message' => 'Note has been added succesfully.');
             }
