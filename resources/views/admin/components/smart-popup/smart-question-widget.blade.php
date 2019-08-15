@@ -83,12 +83,11 @@
 
     });
     function loadQuestionSmartPopup(questionID, selectedTab) {
-//        $("#questionSmartPopup").empty();
-//        $("#questionSmartPopup").html('<h1 class="text-center" style="margin-top:450px;">Loading....</h1>');
+
         $.ajax({
-            url: '/admin/questions/details/' + questionID + '?t=' + selectedTab,
+            url: '<?php echo base_url("admin/questions/details/"); ?>' + questionID + '?t=' + selectedTab ,
             type: "POST",
-            data: {questionID: questionID, action: 'smart-popup'},
+            data: {questionID: questionID, action: 'smart-popup', _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
 
