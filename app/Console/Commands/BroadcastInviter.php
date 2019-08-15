@@ -67,10 +67,10 @@ class BroadcastInviter extends Command {
         //Check Cron Lock
         $bLocked = false;
 
-        //Instanciate cron manager model to access its properties and methods
+        //Instantiate cron manager model to access its properties and methods
         $mCron = new ManagerModel();
 
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BroadcastModel();
 
         $oCron = $mCron->checkCronStatus('broadcast');
@@ -130,7 +130,7 @@ class BroadcastInviter extends Command {
      * @param type $aEvent
      */
     public function processSpecificDateTime($aEvent = array()) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BroadcastModel();
 
         if (!empty($aEvent)) {
@@ -206,7 +206,7 @@ class BroadcastInviter extends Command {
      * @param type $aData
      */
     public function fireAutomationCampaign($aData = array()) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BroadcastModel();
 
         $oEvent = $aData['inviter_data'];
@@ -538,7 +538,7 @@ class BroadcastInviter extends Command {
      * @param type $aData
      */
     public function sendBroadcastEmail($oSubscriber, $aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BroadcastModel();
 
 
@@ -657,7 +657,7 @@ class BroadcastInviter extends Command {
      * @param type $aData
      */
     public function sendBroadcastSms($oSubscriber, $aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BroadcastModel();
 
         $content = $aData['content'];
@@ -750,7 +750,7 @@ class BroadcastInviter extends Command {
      * @param type $aData
      */
     public function sendBulkBroadcastEmail($oSubscribers, $aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BroadcastModel();
 
 
@@ -868,7 +868,7 @@ class BroadcastInviter extends Command {
      * @param type $aData
      */
     public function sendBulkBroadcastSms($oSubscribers, $aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BroadcastModel();
 
         $content = $aData['content'];
@@ -960,7 +960,7 @@ class BroadcastInviter extends Command {
      * @param type $aData
      */
     public function saveLog($aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BroadcastModel();
 
         $timeNow = date("Y-m-d H:i:s");
@@ -1154,7 +1154,7 @@ class BroadcastInviter extends Command {
      * @return boolean
      */
     public function SG_smtp($aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BroadcastModel();
 
         //pre($aData);
@@ -1272,7 +1272,7 @@ class BroadcastInviter extends Command {
      * @return boolean
      */
     public function send_Twilio($aData) {
-        //Instanciate Email Model to access its properties and methods
+        //Instantiate Email Model to access its properties and methods
         $mInviter = new BroadcastModel();
 
 

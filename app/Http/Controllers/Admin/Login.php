@@ -24,8 +24,7 @@ class Login extends Controller {
      * @return display login page and redirect to dashboard page after authorization
      */
     public function index(Request $request) {
-        cbTest();
-        die('done');
+
         $detect = new Mobile_Detect;
         if ($detect->isMobile()) {
             $platform_device = "Mobile";

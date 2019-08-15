@@ -160,4 +160,72 @@ class TemplatesModel extends Model {
         return false;
     }
 
+    /**
+     * Add Template
+     * @param type $aData
+     * @return boolean
+     */
+    public function addTemplate($aData) {
+
+        $result = DB::table('tbl_templates')->insert($aData);
+        //echo $this->db->last_query();exit;
+        if ($result)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * Used to get all templates
+     * @param type $id
+     * @return type
+     */
+    public function getAllTemplate($id = '') {
+        $oData = DB::table('tbl_templates')
+                ->when(($id > 0), function ($query) use ($id) {
+                    return $query->where('id', $id);
+                })
+                ->orderBy('id', 'asc')
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Get template by slug
+     * @param type $slug
+     * @return type
+     */
+    public function getTemplateBySlug($slug) {
+        $oData = DB::table('tbl_templates')
+                ->where('slug', $slug)
+                ->get();
+        return $oData;
+    }
+
+    /**
+     * Update Template
+     * @param type $tempId
+     * @param type $aData
+     * @return boolean
+     */
+    public function updateTemplate($tempId, $aData) {
+        $oData = DB::table('tbl_templates')
+                ->where('id', $tempId)
+                ->update($aData);
+        return true;
+    }
+    
+    
+    /**
+     * Delete template
+     * @param type $tempId
+     * @return boolean
+     */
+    public function deleteTemplate($tempId) {
+        $oData = DB::table('tbl_templates')
+                ->where('id', $tempId)
+                ->delete();
+        return true;        
+    }
+
 }

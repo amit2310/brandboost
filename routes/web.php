@@ -694,3 +694,8 @@ Route::get('admin/settings/twillo_log','Admin\Settings@twillo_log');
 Route::get('admin/feedback','Admin\Feedback@index');
 
 
+//Front Website
+Route::get('price','Price@index');
+Route::get('checkout/buy/{plan_id}','Checkout@buy');
+Route::post('payment/charging','Payment@charging');
+Route::post('payment/cbCharge','Payment@cbCharge');

@@ -31,7 +31,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
         $activeTab = Session::put("setTab", "");
         $campaignType = '';
@@ -59,7 +59,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $activeTab = Session::put("setTab", "");
@@ -85,7 +85,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $activeTab = Session::put("setTab", "");
@@ -109,13 +109,13 @@ class Broadcast extends Controller {
             $userID = '';
         }
         
-        //Instanciate Email model to get its methods and properties
+        //Instantiate Email model to get its methods and properties
         $mEmails = new EmailsModel();
         
-        //Instanciate User model to get its methods and properties
+        //Instantiate User model to get its methods and properties
         $mUsers = new UsersModel();
         
-        //Instanciate subscriber model to get its methods and properties
+        //Instantiate subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
         
         
@@ -161,22 +161,22 @@ class Broadcast extends Controller {
         $userID = $aUser->id;
 
         $id = $request->id;
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate Workflow model to get its methods and properties
+        //Instantiate Workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
-        //Instanciate subscriber model to get its methods and properties
+        //Instantiate subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
 
-        //Instanciate Tags model to get its methods and properties
+        //Instantiate Tags model to get its methods and properties
         $mTag = new TagsModel();
 
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
 
@@ -396,13 +396,13 @@ class Broadcast extends Controller {
         $response = array();
         $aUser = getLoggedUser();
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
 
@@ -467,7 +467,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -500,10 +500,10 @@ class Broadcast extends Controller {
         $response = array();
         $aUser = getLoggedUser();
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
 
@@ -591,10 +591,10 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
         if (!empty($request)) {
@@ -647,7 +647,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -674,10 +674,10 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate Tag model to get its methods and properties
+        //Instantiate Tag model to get its methods and properties
         $mTag = new TagsModel();
 
 
@@ -748,7 +748,7 @@ class Broadcast extends Controller {
      */
     public function deleteBroadcastAudience(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -775,7 +775,7 @@ class Broadcast extends Controller {
      */
     public function deleteBroadcastBulkAudience(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -883,7 +883,7 @@ class Broadcast extends Controller {
      */
     public function moveArchive(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $response = array();
@@ -910,7 +910,7 @@ class Broadcast extends Controller {
      */
     public function multipalArchiveAutomation(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $response = array();
@@ -948,19 +948,19 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
 
-        //Instanciate Tag model to get its methods and properties
+        //Instantiate Tag model to get its methods and properties
         $mTag = new TagsModel();
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
         $contactId = strip_tags($request->contactId);
@@ -1000,7 +1000,7 @@ class Broadcast extends Controller {
      */
     public function addAudienceToBraodcast($aData) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -1024,16 +1024,16 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate List model to get its methods and properties
+        //Instantiate List model to get its methods and properties
         $mLists = new ListsModel();
 
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
 
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
         //Imported Properites
@@ -1201,13 +1201,13 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
 
         //Imported Properites
@@ -1396,7 +1396,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $contactId = strip_tags($request->contactId);
@@ -1437,10 +1437,10 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
 
 
@@ -1486,7 +1486,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $tagId = strip_tags($request->tagId);
@@ -1524,7 +1524,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $segmentId = strip_tags($request->segmentId);
@@ -1582,7 +1582,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -1621,13 +1621,13 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
-        //Instanciate Email model to get its methods and properties
+        //Instantiate Email model to get its methods and properties
         $mEmails = new EmailsModel();
 
 
@@ -1690,10 +1690,10 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate Email model to get its methods and properties
+        //Instantiate Email model to get its methods and properties
         $mEmails = new EmailsModel();
 
         $aSelectedLists = $request->selectedLists;
@@ -1739,7 +1739,7 @@ class Broadcast extends Controller {
      */
     public function updateBroadcastTempalte(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -1782,7 +1782,7 @@ class Broadcast extends Controller {
      */
     public function updateBroadcastFromEmail(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $response = array();
@@ -1811,7 +1811,7 @@ class Broadcast extends Controller {
      */
     public function updateBroadcastClone(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $response = array();
@@ -1839,7 +1839,7 @@ class Broadcast extends Controller {
      */
     public function updateBroadcast(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -1874,7 +1874,7 @@ class Broadcast extends Controller {
      */
     public function updateBroadcastData(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -1908,7 +1908,7 @@ class Broadcast extends Controller {
      */
     public function updateAutomationScheduleDate(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -1944,7 +1944,7 @@ class Broadcast extends Controller {
      */
     public function updateBroadcastSubject(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -1974,7 +1974,7 @@ class Broadcast extends Controller {
      */
     public function updateBroadcastSettings(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2015,10 +2015,10 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
         
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
 
@@ -2176,7 +2176,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2286,7 +2286,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
         $mWorkflow = new WorkflowModel();
 
@@ -2324,7 +2324,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2355,7 +2355,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2404,7 +2404,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2434,7 +2434,7 @@ class Broadcast extends Controller {
      */
     public function deleteMultipalSegment(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2460,7 +2460,7 @@ class Broadcast extends Controller {
      */
     public function deleteMultipalSegmentUser(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2486,7 +2486,7 @@ class Broadcast extends Controller {
      */
     public function deleteSegment(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $response = array();
@@ -2513,7 +2513,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         //$userID = Session::get("current_user_id");
@@ -2542,7 +2542,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2603,7 +2603,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2654,7 +2654,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $response = array();
@@ -2689,13 +2689,13 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
 
@@ -2815,10 +2815,10 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
 
@@ -2847,7 +2847,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2881,7 +2881,7 @@ class Broadcast extends Controller {
      */
     public function setTab(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2923,7 +2923,7 @@ class Broadcast extends Controller {
     public function records($email_sms, $broadcast_id) {       
         
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -2984,7 +2984,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -3002,7 +3002,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
 
@@ -3026,7 +3026,7 @@ class Broadcast extends Controller {
      */
     public function loadExcludeOption(Request $request) {
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $response = array();
@@ -3051,19 +3051,19 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate Subscriber model to get its methods and properties
+        //Instantiate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
 
-        //Instanciate Tag model to get its methods and properties
+        //Instantiate Tag model to get its methods and properties
         $mTag = new TagsModel();
 
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
 
@@ -3102,13 +3102,13 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        //Instanciate Lists model to get its methods and properties
+        //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
-        //Instanciate Tags model to get its methods and properties
+        //Instantiate Tags model to get its methods and properties
         $mTag = new TagsModel();
 
         $response = array();
@@ -3153,19 +3153,19 @@ class Broadcast extends Controller {
                 $aUser = getLoggedUser();
                 $userID = $aUser->id;
 
-                //Instanciate Broadcast model to get its methods and properties
+                //Instantiate Broadcast model to get its methods and properties
                 $mBroadcast = new BroadcastModel();
 
-                //Instanciate Subscriber model to get its methods and properties
+                //Instantiate Subscriber model to get its methods and properties
                 $mSubscriber = new SubscriberModel();
 
-                //Instanciate Tag model to get its methods and properties
+                //Instantiate Tag model to get its methods and properties
                 $mTag = new TagsModel();
 
-                //Instanciate workflow model to get its methods and properties
+                //Instantiate workflow model to get its methods and properties
                 $mWorkflow = new WorkflowModel();
 
-                //Instanciate Lists model to get its methods and properties
+                //Instantiate Lists model to get its methods and properties
                 $mLists = new ListsModel();
 
                 $duplicateCount = 0;
@@ -3316,7 +3316,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $user_role = $aUser->user_role;
@@ -3359,7 +3359,7 @@ class Broadcast extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $broadcastID);

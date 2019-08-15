@@ -31,7 +31,7 @@ class Templates extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         $oTemplates = $mTemplates->getCommonTemplates('', '', '', 'email');
@@ -64,7 +64,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         $oTemplates = $mTemplates->getCommonTemplates('', '', '', 'sms');
@@ -96,7 +96,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         
@@ -168,7 +168,7 @@ class Templates extends Controller {
         $userID = $aUser->id;
         
         $id=$request->id;
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         $oTemplate = $mTemplates->getCommonTemplates($userID, '', $id, '');
@@ -210,7 +210,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
         $compiledHtml = $request->compiled_html;
@@ -246,7 +246,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
         $compiledHtml = $request->compiled_html;
@@ -288,7 +288,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         $id = $request->id;
@@ -310,7 +310,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $id = $request->id;
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         $oTemplate = $mTemplates->getCommonTemplates($userID, '', $id, '');
@@ -330,7 +330,7 @@ class Templates extends Controller {
         $response = array();
         $aUser = getLoggedUser();
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         $userID = $aUser->id;
@@ -394,7 +394,7 @@ class Templates extends Controller {
         
         $aUser = getLoggedUser();
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         $userID = $aUser->id;
@@ -455,7 +455,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         $mWorkflow = new WorkflowModel();
@@ -687,7 +687,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         $templateID = strip_tags($request->templateId);
@@ -749,7 +749,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
         $templateID = strip_tags($request->templateId);
@@ -831,7 +831,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
         $templateID = strip_tags($request->templateId);
@@ -862,7 +862,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
         $templateID = strip_tags($request->templateId);
@@ -888,7 +888,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $templateID = $request->id;
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
         
         $oTemplate = $mTemplates->getCommonTemplates($userID, '', $templateID, '');
@@ -921,7 +921,7 @@ class Templates extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Templates model to get its methods and properties
+        //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
         $templateID = strip_tags($request->templateId);
@@ -953,7 +953,7 @@ class Templates extends Controller {
      * @return type
      */
     public function brandboostEmailTagReplace($brandboostID, $sHtml, $campaignType = 'email', $subscriberInfo) {
-        //Instanciate workflow model to get its methods and properties
+        //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         
         $oBrandboost = $mWorkflow->getModuleUnitInfo('brandboost', $brandboostID);

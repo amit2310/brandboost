@@ -70,10 +70,10 @@ class ReferralInviter extends Command
      */
     public function startCampaign() {
         
-        //Instanciate cron manager model to access its properties and methods
+        //Instantiate cron manager model to access its properties and methods
         $mCron = new ManagerModel();
         
-        //Instanciate Referral cron model to access its properties and methods
+        //Instantiate Referral cron model to access its properties and methods
         $mInviter = new ReferralModel();
 
         //Check Cron Lock
@@ -152,7 +152,7 @@ class ReferralInviter extends Command
      * @param type $aEvent
      */
     public function processInvite($aEvent = array()) {
-        //Instanciate Referral cron model to access its properties and methods
+        //Instantiate Referral cron model to access its properties and methods
         $mInviter = new ReferralModel();
 
         if (!empty($aEvent)) {
@@ -229,7 +229,7 @@ class ReferralInviter extends Command
      * @param type $aEvent
      */
     public function processInviteReminder($aEvent = array()) {
-        //Instanciate Referral cron model to access its properties and methods
+        //Instantiate Referral cron model to access its properties and methods
         $mInviter = new ReferralModel();
         
         if (!empty($aEvent)) {
@@ -284,7 +284,7 @@ class ReferralInviter extends Command
      * @param type $aEvent
      */
     public function processSale($aEvent = array()) {
-        //Instanciate Referral cron model to access its properties and methods
+        //Instantiate Referral cron model to access its properties and methods
         $mInviter = new ReferralModel();
         
         if (!empty($aEvent)) {
@@ -349,7 +349,7 @@ class ReferralInviter extends Command
      * 
      */
     public function processSaleReminder($aEvent = array()) {
-        //Instanciate Referral cron model to access its properties and methods
+        //Instantiate Referral cron model to access its properties and methods
         $mInviter = new ReferralModel();
         
         if (!empty($aEvent)) {
@@ -392,7 +392,7 @@ class ReferralInviter extends Command
      * 
      */
     public function fireAutomationCampaign($aData = array()) {
-        //Instanciate Referral cron model to access its properties and methods
+        //Instantiate Referral cron model to access its properties and methods
         $mInviter = new ReferralModel();
         
         $oEvent = $aData['inviter_data'];
@@ -477,7 +477,7 @@ class ReferralInviter extends Command
      * 
      */
     public function sendBulkAutomationEmail($oSubscribers, $aData) {
-        //Instanciate Referral cron model to access its properties and methods
+        //Instantiate Referral cron model to access its properties and methods
         $mInviter = new ReferralModel();
         
         $content = $aData['content'];
@@ -604,7 +604,7 @@ class ReferralInviter extends Command
      * 
      */
     public function sendBulkAutomationSms($oSubscribers, $aData) {
-        //Instanciate Referral cron model to access its properties and methods
+        //Instantiate Referral cron model to access its properties and methods
         $mInviter = new ReferralModel();
         
         //pre($aData);
@@ -711,7 +711,7 @@ class ReferralInviter extends Command
      * 
      */
     public function saveLog($aData) {
-        //Instanciate Referral cron model to access its properties and methods
+        //Instantiate Referral cron model to access its properties and methods
         $mInviter = new ReferralModel();
         
 
@@ -917,7 +917,7 @@ class ReferralInviter extends Command
      * @return boolean
      */
     public function SG_smtp($aData) {
-        //Instanciate Referral cron model to access its properties and methods
+        //Instantiate Referral cron model to access its properties and methods
         $mInviter = new ReferralModel();
         
         if ($aData['referral_id'] == $this->testCampaignId) {
@@ -1018,7 +1018,7 @@ class ReferralInviter extends Command
      * @return boolean
      */
     public function send_Twilio($aData) {
-        //Instanciate Referral cron model to access its properties and methods
+        //Instantiate Referral cron model to access its properties and methods
         $mInviter = new ReferralModel();
         
         //pre($aData);

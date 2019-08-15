@@ -17,7 +17,7 @@ class Nps extends Controller {
      * Default NPS controller
      */
     public function index() {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
@@ -61,7 +61,7 @@ class Nps extends Controller {
      * 
      */
     public function overview() {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
@@ -102,16 +102,16 @@ class Nps extends Controller {
      * @param type $npsIDUsed to setup nps campaign
      */
     public function setup(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
-        // Instanciate workflow model to get its properties and methods
+        // Instantiate workflow model to get its properties and methods
         $mWorkflow = new WorkflowModel();
 
-        // Instanciate Templates model to get its properties and methods
+        // Instantiate Templates model to get its properties and methods
         $mTemplates = new TemplatesModel();
 
-        // Instanciate Users model to get its properties and methods
+        // Instantiate Users model to get its properties and methods
         $mUser = new UsersModel();
 
         $npsID = $request->npsID;
@@ -224,13 +224,13 @@ class Nps extends Controller {
      * Update NPS campaign customization
      */
     public function updateNPSCustomize(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
-        // Instanciate workflow model to get its properties and methods
+        // Instantiate workflow model to get its properties and methods
         $mWorkflow = new WorkflowModel();
 
-        // Instanciate Templates model to get its properties and methods
+        // Instantiate Templates model to get its properties and methods
         $mTemplates = new TemplatesModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -446,7 +446,7 @@ class Nps extends Controller {
      * Used to get NPS widgets
      */
     public function widgets() {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $oUser = getLoggedUser();
@@ -479,7 +479,7 @@ class Nps extends Controller {
      * Used to add new nps campaign
      */
     public function addNPSWidget(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
@@ -507,7 +507,7 @@ class Nps extends Controller {
      * Used to update NPS widget status
      */
     public function updatNPSWidgetStatus(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
@@ -534,7 +534,7 @@ class Nps extends Controller {
      * Used to delete a nps widget
      */
     public function delete_nps_widget(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array();
@@ -579,7 +579,7 @@ class Nps extends Controller {
      * USed to get nps widget embed code
      */
     public function getNPSWidgetEmbedCode(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
@@ -614,7 +614,7 @@ class Nps extends Controller {
      * @param type $widgetIDSetup NPS widget
      */
     public function nps_widget_setup(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $widgetID = $request->widgetID;
@@ -656,7 +656,7 @@ class Nps extends Controller {
      * Used to add NPS widget survey
      */
     public function addNPSWidgetSurvey(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
@@ -703,7 +703,7 @@ class Nps extends Controller {
      * Used to delete nps widgets in bulk
      */
     public function deleteBulkNPSWidgets(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -735,7 +735,7 @@ class Nps extends Controller {
      * Used to archive NPS widgets in bulk
      */
     public function archiveBulkNPSWidgets(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -767,7 +767,7 @@ class Nps extends Controller {
      * Used to archive NPS widgets in bulk
      */
     public function bulkArchiveNPSWidgets(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -802,7 +802,7 @@ class Nps extends Controller {
      * Used to publish NPS survey
      */
     public function publishNPSWidgetSurvey(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
@@ -833,7 +833,7 @@ class Nps extends Controller {
      * Used to get NPS contacts by id
      */
     public function getNpsUserById(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
 
@@ -851,7 +851,7 @@ class Nps extends Controller {
      * Used to update NPS subscribers
      */
     public function updateNpsSubscriber(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
@@ -908,7 +908,7 @@ class Nps extends Controller {
      * Used to delete NPS subsribers in bulk
      */
     public function bulkDeleteNpsUser(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
 
@@ -927,7 +927,7 @@ class Nps extends Controller {
      * Used to delete NPS subscriber
      */
     public function deleteNpsUser(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
 
@@ -943,7 +943,7 @@ class Nps extends Controller {
      * Used to add a new nps campaign
      */
     public function addNPS(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1003,7 +1003,7 @@ class Nps extends Controller {
      * Used to update NPS campaigns in bulk
      */
     public function updateAllCampaign(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
 
@@ -1036,7 +1036,7 @@ class Nps extends Controller {
      * Used to update NPS campaign
      */
     public function updateUserCampaign(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1071,7 +1071,7 @@ class Nps extends Controller {
      * Used to update NPS event
      */
     public function updateNPSEvent(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1103,7 +1103,7 @@ class Nps extends Controller {
      * Used to delete NPS campaign
      */
     public function deleteNPSCampaign(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1131,7 +1131,7 @@ class Nps extends Controller {
      * Used to update NPS reminder campaign
      */
     public function updateNPSReminderCampaign(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1161,7 +1161,7 @@ class Nps extends Controller {
      * Updated to update NPS reminder loop
      */
     public function updateNPSReminderLoop(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1192,7 +1192,7 @@ class Nps extends Controller {
      * Used to update NPS campaign
      */
     public function updateNPSCampaign(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1236,7 +1236,7 @@ class Nps extends Controller {
      * Used to get NPS campaign
      */
     public function getNPSCampaign(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1269,7 +1269,7 @@ class Nps extends Controller {
      * Used to get NPS campaign Info
      */
     public function getNPS(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1297,7 +1297,7 @@ class Nps extends Controller {
      * Used to update nps campaign status
      */
     public function changeStatus(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1329,7 +1329,7 @@ class Nps extends Controller {
      * Used to publish NPS campaign
      */
     public function publishNPSCampaign(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1360,7 +1360,7 @@ class Nps extends Controller {
      * Used to publish NPS campaign status
      */
     public function publishNPSCampaignStatus(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1392,7 +1392,7 @@ class Nps extends Controller {
      * Used to update NPS campaign
      */
     public function updateNPS(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1425,7 +1425,7 @@ class Nps extends Controller {
      * Used to delete NPS campaign
      */
     public function deleteNPS(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1453,7 +1453,7 @@ class Nps extends Controller {
      * Used to archive NPS campaigns
      */
     public function moveToArchiveNPS(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1486,7 +1486,7 @@ class Nps extends Controller {
      * Used to delete NPS in bulk
      */
     public function bulkDeleteNPS(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1515,7 +1515,7 @@ class Nps extends Controller {
      * Used to archive NPS campaigns in bulk
      */
     public function bulkArchiveNPS(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1550,7 +1550,7 @@ class Nps extends Controller {
      * Used to save choosing platform related changes
      */
     public function choosePlatform(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1585,7 +1585,7 @@ class Nps extends Controller {
      * @param type $hashKey
      */
     public function template(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $platform = $request->platform;
@@ -1605,7 +1605,7 @@ class Nps extends Controller {
      * Used to get the score of NPS campaign
      */
     public function score(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $hashKey = $request->hashKey;
@@ -1643,7 +1643,7 @@ class Nps extends Controller {
      * @param type $scoreID
      */
     public function feedbackdetails(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $scoreID = $request->scoreID;
@@ -1677,7 +1677,7 @@ class Nps extends Controller {
      * Used to update NPS notes
      */
     public function saveNPSNotes(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1708,7 +1708,7 @@ class Nps extends Controller {
      * Used to apply NPS tags
      */
     public function applyNPSTag(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
@@ -1744,7 +1744,7 @@ class Nps extends Controller {
      * Used to remove nps tags
      */
     public function removeNPSTag(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
@@ -1779,7 +1779,7 @@ class Nps extends Controller {
      * Used to get NPS notes by id
      */
     public function getNPSNoteById(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array();
@@ -1805,7 +1805,7 @@ class Nps extends Controller {
      * Used to delete NPS notes
      */
     public function deleteNPSNote(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array();
@@ -1826,7 +1826,7 @@ class Nps extends Controller {
      * Used to update NPS notes
      */
     public function updatNotes(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1851,7 +1851,7 @@ class Nps extends Controller {
      * Used to get the list of all nps tags
      */
     public function listAllTags(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $aUser = getLoggedUser();
@@ -1878,7 +1878,7 @@ class Nps extends Controller {
      * Used to register NPS invites
      */
     public function registerInvite(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1926,7 +1926,7 @@ class Nps extends Controller {
      * @return type
      */
     public function registerNow($aData) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $userID = 0;
@@ -1950,7 +1950,7 @@ class Nps extends Controller {
      * Used to export NPS subscribers
      */
     public function exportCSV(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         // file name 
@@ -1995,7 +1995,7 @@ class Nps extends Controller {
      * Used to import NPS subscribers
      */
     public function importInviteCSV(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -2065,7 +2065,7 @@ class Nps extends Controller {
      * @param type $npsID
      */
     public function stats(Request $request) {
-        // Instanciate NPS model to get its properties and methods
+        // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
         $npsID = $request->npsID;

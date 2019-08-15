@@ -626,9 +626,7 @@ if (!function_exists('make_links_clickable')) {
 if (!function_exists('refillPlanBenefits')) {
 
     function refillPlanBenefits($userID, $planID, $qty = 0, $actiontype = '') {
-        $CI = & get_instance();
-        $CI->load->model("admin/Transactions_model", "mTrans");
-        $bResponse = $CI->mTrans->autoRefillAccount($userID, $planID, $qty);
+        $bResponse = \App\Models\Admin\TransactionsModel::autoRefillAccount($userID, $planID, $qty);
         return $bResponse;
     }
 
@@ -1290,11 +1288,11 @@ if (!function_exists('emailTemplate')) {
 
         /** send email start * */
         $CI = & get_instance();
-        $mailFrom = $CI->config->item('mailFrom');
-        $siteemail = $CI->config->item('siteemail');
-        $sandgriduser = $CI->config->item('sandgriduser');
-        $sandgridpass = $CI->config->item('sandgridpass');
-        $url = $CI->config->item('api_url');
+        $mailFrom = config('bbconfig.mailFrom');
+        $siteemail = config('bbconfig.siteemail');
+        $sandgriduser = config('bbconfig.sandgriduser');
+        $sandgridpass = config('bbconfig.sandgridpass');
+        $url = config('bbconfig.api_url');
 
         if ($mailFrom == 'sandgrid') {
             $user = $sandgriduser;
@@ -1308,7 +1306,7 @@ if (!function_exists('emailTemplate')) {
                 'api_key' => $pass,
                 'x-smtpapi' => json_encode($json_string),
                 'to' => $userDetail->email,
-                'subject' => ($subject) ? $subject : $CI->config->item('blank_subject'),
+                'subject' => ($subject) ? $subject : config('bbconfig.blank_subject'),
                 'html' => $body,
                 'text' => $plainText,
                 'from' => $siteemail,
@@ -1332,27 +1330,23 @@ if (!function_exists('emailTemplate')) {
 
 if (!function_exists('sendEmailTemplate')) {
 
-    function sendEmailTemplate($slug, $userId, $subscriber = 0) {
+    function sendEmailTemplate($slug, $userId, $subscriber = 0) {        
 
-        $CI = & get_instance();
-        $CI->load->model("admin/Users_model", 'mmUser');
-        $CI->load->model("admin/Template_model", "mmTemp");
-
-        $aTemp = $CI->mmTemp->getTemplateBySlug($slug);
+        $aTemp = \App\Models\Admin\TemplatesModel::getTemplateBySlug($slug);
         if ($subscriber == 1) {
-            $aUser = $CI->mmUser->getSubscriberInfo($userId);
+            $aUser = \App\Models\Admin\UsersModel::getSubscriberInfo($userId);
         } else {
-            $aUser = $CI->mmUser->getUserInfo($userId);
+            $aUser = \App\Models\Admin\UsersModel::getUserInfo($userId);
         }
         $aTemp = $aTemp[0];
 
         $template = base64_decode($aTemp->template);
-        $website_name = $CI->config->item('website_name');
+        $website_name = config('bbconfig.website_name');
 
         $tag = ["{FIRST_NAME}", "{LAST_NAME}", "{EMAIL}", "{WEBSITE}", "{PASSWORD}"];
 
         $password = base64_decode($aUser->password);
-        $password_hash = $CI->config->item('password_hash');
+        $password_hash = config('bbconfig.password_hash');
         $newPassword = explode($password_hash, $password);
         $newPass = $newPassword[0];
 
@@ -1366,12 +1360,12 @@ if (!function_exists('sendEmailTemplate')) {
         );
 
         /** send email start * */
-        $website_name = $CI->config->item('website_name');
-        $mailFrom = $CI->config->item('mailFrom');
-        $siteemail = $CI->config->item('siteemail');
-        $sandgriduser = $CI->config->item('sandgriduser');
-        $sandgridpass = $CI->config->item('sandgridpass');
-        $url = $CI->config->item('api_url');
+        $website_name = config('bbconfig.website_name');
+        $mailFrom = config('bbconfig.mailFrom');
+        $siteemail = config('bbconfig.siteemail');
+        $sandgriduser = config('bbconfig.sandgriduser');
+        $sandgridpass = config('bbconfig.sandgridpass');
+        $url = config('bbconfig.api_url');
 
         if ($mailFrom == 'sandgrid') {
             $user = $sandgriduser;
@@ -1385,7 +1379,7 @@ if (!function_exists('sendEmailTemplate')) {
                 'api_key' => $pass,
                 'x-smtpapi' => json_encode($json_string),
                 'to' => $aUser->email,
-                'subject' => ($aTemp->subject) ? $aTemp->subject : $CI->config->item('blank_subject'),
+                'subject' => ($aTemp->subject) ? $aTemp->subject : config('bbconfig.blank_subject'),
                 'html' => $newTemp,
                 'text' => $plainText,
                 'from' => $siteemail,
@@ -1706,8 +1700,8 @@ if (!function_exists('sendSMS')) {
     function sendSMS($to, $message) {
 
         $CI = & get_instance();
-        $sid = $CI->config->item('sid');
-        $token = $CI->config->item('token');
+        $sid = config('bbconfig.sid');
+        $token = config('bbconfig.token');
         $client = new Client($sid, $token);
 
         $res = $client->messages->create(
@@ -1744,8 +1738,8 @@ if (!function_exists('sendClientSMS')) {
         $aUserTagsVal = array($remanning_limit, $remanning_credit);
         $message = str_replace($aUserTags, $aUserTagsVal, $message);
         $CI = & get_instance();
-        $sid = $CI->config->item('sid');
-        $token = $CI->config->item('token');
+        $sid = config('bbconfig.sid');
+        $token = config('bbconfig.token');
         $client = new Client($sid, $token);
 
         $res = $client->messages->create(
@@ -1764,8 +1758,8 @@ if (!function_exists('sendAdminSMS')) {
     function sendAdminSMS($to, $message) {
 
         $CI = & get_instance();
-        $sid = $CI->config->item('sid');
-        $token = $CI->config->item('token');
+        $sid = config('bbconfig.sid');
+        $token = config('bbconfig.token');
         $client = new Client($sid, $token);
 
         $res = $client->messages->create(
@@ -1872,9 +1866,8 @@ if (!function_exists('sendClinetSMS')) {
 if (!function_exists('createTwilioSA')) {
 
     function createTwilioSA($userID, $name) {
-        $CI = & get_instance();
-        $sid = $CI->config->item('sid');
-        $token = $CI->config->item('token');
+        $sid = config('bbconfig.sid');
+        $token = config('bbconfig.token');
         $client = new Client($sid, $token);
 
         $account = $client->api->accounts->create(array(
@@ -2206,9 +2199,9 @@ if (!function_exists('getSendGridUserData')) {
     function getSendGridUserData() {
         $CI = & get_instance();
 
-        $sandgriduser = $CI->config->item('sandgriduser');
-        $sandgridpass = $CI->config->item('sandgridpass');
-        $url = $CI->config->item('api_url');
+        $sandgriduser = config('bbconfig.sandgriduser');
+        $sandgridpass = config('bbconfig.sandgridpass');
+        $url = config('bbconfig.api_url');
 
         $user = $sandgriduser;
         $pass = $sandgridpass;

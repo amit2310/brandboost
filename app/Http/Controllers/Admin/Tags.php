@@ -755,7 +755,7 @@ class Tags extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mTag = new TagsModel();
         
         
@@ -777,7 +777,7 @@ class Tags extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         
-        //Instanciate Broadcast model to get its methods and properties
+        //Instantiate Broadcast model to get its methods and properties
         $mTag = new TagsModel();
         
         if (empty($request) || empty($userID)) {
