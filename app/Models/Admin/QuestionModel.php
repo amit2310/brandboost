@@ -145,6 +145,33 @@ class QuestionModel extends Model
         $insert_id = DB::table('tbl_reviews_question_notes')->insertGetId($aData);
         return $insert_id;
     }
+
+
+    /**
+     * This function is for get question notes info
+     * @param type $noteId
+     * @return type object
+     */
+    public function getQuestionNoteInfo($noteId) {
+
+        $oData = DB::table('tbl_reviews_question_notes')
+            ->where('id', $noteId)
+            ->first();
+        return $oData;
+    }
+
+    /**
+     * This function is for update question notes
+     * @param type $aData, $noteId
+     * @return type boolean
+     */
+    public function updateQuestionNote($aData, $noteId) {
+
+        $oData = DB::table('tbl_reviews_question_notes')
+                ->where('id', $noteId)
+                ->update($aData);
+        return true;
+    }
 	
 
     public function getReviewAnswerHelpful($answerID){
@@ -162,27 +189,7 @@ class QuestionModel extends Model
         return $response;
     }
     
-    
-    public function getQuestionNoteInfo($noteId) {
 
-        $this->db->where('id', $noteId);
-        $this->db->from('tbl_reviews_question_notes');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-    
-    public function updateQuestionNote($aData, $noteId) {
-
-        $this->db->where('id', $noteId);
-        $result = $this->db->update('tbl_reviews_question_notes', $aData);
-        if ($result)
-            return true;
-        else
-            return false;
-    }
     
     public function deleteQuestionNote($noteId) {
         $this->db->where('id', $noteId);
