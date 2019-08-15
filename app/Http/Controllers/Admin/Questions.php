@@ -100,6 +100,7 @@ class Questions extends Controller {
         $oNotes = QuestionModel::getQuestionNotes($questionID);
         $mUser = new UsersModel();
         $mSubscriber = new SubscriberModel();
+        $mQuestion = new QuestionModel();
 
         /*if (!empty($oAnswers)) {
             $brandboostID = $oAnswers[0]->campaign_id;
@@ -126,7 +127,7 @@ class Questions extends Controller {
         );
         
         if ($actionName == 'smart-popup') {
-			$popupContent =  view('admin.components.smart-popup.questions', $aData)->with(['mUser'=> $mUser, 'mSubscriber'=>$mSubscriber])->render();
+			$popupContent =  view('admin.components.smart-popup.questions', $aData)->with(['mUser'=> $mUser, 'mSubscriber'=>$mSubscriber, 'mQuestion'=>$mQuestion])->render();
             $response['status'] = 'success';
             $response['content'] = $popupContent;
             echo json_encode($response);

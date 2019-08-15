@@ -178,7 +178,8 @@ $mediaArray = unserialize($oQuestion->media_url);
                                         foreach ($oAnswers as $oAnswer) {
                                             $defaultAvatar = base_url() . "assets/images/userp.png";
                                             $avtarImage = $oAnswer->avatar == 'avatar_image.png' ? $defaultAvatar : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oAnswer->avatar;
-                                            $aHelpful = $this->mQuestion->countAnsHelpful($oAnswer->id);
+                                            $aHelpful = $mQuestion->countAnsHelpful($oAnswer->id);
+                                          
                                             ?>
                                             <li class="bbot">
 
