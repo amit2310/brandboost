@@ -1162,12 +1162,18 @@ class Questions extends Controller {
         exit;
     }
 
+
+    /**
+    * This function is used to update question status
+    * @param type 
+    * @return type
+    */
     public function update_question_status() {
 
         $response = array();
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        $post = Input::post();
+        if ($post) {
             $aUser = getLoggedUser();
             $userID = $aUser->id;
             $questionID = strip_tags($post['question_id']);
@@ -1176,8 +1182,8 @@ class Questions extends Controller {
             $aData = array(
                 'status' => $status
             );
-
-            $result = $this->mQuestion->updateQuestion($aData, $questionID);
+            $mQuestion = new QuestionModel();
+            $result = $mQuestion->updateQuestion($aData, $questionID);
             if ($result) {
 
                 $aActivityData = array(
@@ -1192,7 +1198,7 @@ class Questions extends Controller {
                     'activity_message' => 'Change question status',
                     'activity_created' => date("Y-m-d H:i:s")
                 );
-                logUserActivity($aActivityData);
+                //logUserActivity($aActivityData);
 
                 $response['status'] = 'success';
                 $response['message'] = "Status has been updated successfully.";
@@ -1258,19 +1264,23 @@ class Questions extends Controller {
         }
     }
 
+    /**
+    * This function is used to delete single question
+    * @param type 
+    * @return type
+    */
     public function delete_question() {
 
         $response = array();
         $post = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $quesID = strip_tags($post['quesID']);
-            $result = $this->mQuestion->deleteQuestion($quesID);
-
+        $post = Input::post();
+        if ($post) {
+            $quesID = strip_tags($post['questionID']);
+            $mQuestion = new QuestionModel();
+            $result = $mQuestion->deleteQuestion($quesID);
             if ($result) {
-
                 $aActivityData = array(
                     'user_id' => $userID,
                     'event_type' => 'question_delete',
@@ -1283,7 +1293,7 @@ class Questions extends Controller {
                     'activity_message' => 'Question deleted',
                     'activity_created' => date("Y-m-d H:i:s")
                 );
-                logUserActivity($aActivityData);
+                //logUserActivity($aActivityData);
 
                 $response['status'] = 'success';
                 $response['result'] = "Question has been delete successfully.";
@@ -1296,20 +1306,25 @@ class Questions extends Controller {
         }
     }
 
+
+    /**
+    * This function is used to delete multipal question
+    * @param type 
+    * @return type
+    */
     public function deleteQuestions() {
 
         $response = array();
         $post = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        $post = Input::post();
+        $mQuestion = new QuestionModel();
+        if ($post) {
             $quesIDs = $post['multipal_record_id'];
-
             foreach ($quesIDs as $quesID) {
-                $result = $this->mQuestion->deleteQuestion($quesID);
+                $result = $mQuestion->deleteQuestion($quesID);
             }
-
             if ($result) {
                 $aActivityData = array(
                     'user_id' => $userID,
@@ -1323,8 +1338,8 @@ class Questions extends Controller {
                     'activity_message' => 'Question deleted',
                     'activity_created' => date("Y-m-d H:i:s")
                 );
-                pre($aActivityData);
-                logUserActivity($aActivityData);
+                
+                //logUserActivity($aActivityData);
                 $response['status'] = 'success';
                 $response['result'] = "Question has been delete successfully.";
             } else {

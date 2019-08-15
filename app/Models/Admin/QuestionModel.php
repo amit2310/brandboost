@@ -186,6 +186,21 @@ class QuestionModel extends Model
                 ->delete();
         return true;
     }
+
+
+    /**
+     * This function is for update question
+     * @param type $aData, $questionID
+     * @return type boolean
+     */
+    public function updateQuestion($aData, $questionID) {
+
+        $oData = DB::table('tbl_reviews_question')
+                ->where('id', $questionID)
+                ->update($aData);
+
+        return true;
+    }
 	
 
     public function getReviewAnswerHelpful($answerID){
@@ -279,27 +294,20 @@ class QuestionModel extends Model
         return $response;
     }
 
-    public function updateQuestion($aData, $questionID) {
-
-        $this->db->where('id', $questionID);
-        $result = $this->db->update('tbl_reviews_question', $aData);
-        /* echo $this->db->last_query();
-          exit; */
-        if ($result)
-            return true;
-        else
-            return false;
-    }
-
+    
+    /**
+    * This function is used to delete the Question
+    * @param type $quesId
+    * @return type boolean
+    */
     public function deleteQuestion($quesId) {
 
-        $this->db->where('id', $quesId);
-        $result = $this->db->delete('tbl_reviews_question');
-        if ($result)
-            return true;
-        else
-            return false;
+        $oData = DB::table('tbl_reviews_question')
+                ->where('id', $quesId)
+                ->delete();
+        return true;
     }
+
 
     /**
     * This function is used to add the Question
