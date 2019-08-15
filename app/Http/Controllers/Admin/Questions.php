@@ -1020,22 +1020,27 @@ class Questions extends Controller {
         }
     }
 
-    public function updateAnswer() {
+    /**
+    * This function is used to update answer
+    * @param type 
+    * @return type
+    */
+    public function updateAnswer(Request $request) {
 
         $response = array();
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        if ($request->txtAnswer) {
 
-            $answer = strip_tags($post['txtAnswer']);
-            $answerID = base64_url_decode(strip_tags($post['answerId']));
+            $answer = strip_tags($request->txtAnswer);
+            $answerID = base64_url_decode(strip_tags($request->answerId));
 
             $aData = array(
                 'answer' => base64_encode($answer),
                 'updated' => date("Y-m-d H:i:s")
             );
 
-            $result = $this->mQuestion->updateAnswer($aData, $answerID);
+            $mQuestion = new QuestionModel();
+            $result = $mQuestion->updateAnswer($aData, $answerID);
             if ($result) {
                 $response['status'] = 'success';
                 $response['message'] = "Answer has been add successfully.";
@@ -1401,15 +1406,21 @@ class Questions extends Controller {
         }
     }
 
-    public function delete_answer() {
+
+    /**
+    * This function is use for delete answer
+    * @param type 
+    * @return type
+    */
+    public function delete_answer(Request $request) {
 
         $response = array();
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            
-            $answerID = base64_url_decode(strip_tags($post['answerId']));
-            $result = $this->mQuestion->deleteAnswer($answerID);
+        $mQuestion = new QuestionModel();
+        if ($request->answerId) {
+
+            $answerID = base64_url_decode(strip_tags($request->answerId));
+            $result = $mQuestion->deleteAnswer($answerID);
 
             if ($result) {
                 $response['status'] = 'success';
