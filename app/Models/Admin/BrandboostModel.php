@@ -649,43 +649,58 @@ class BrandboostModel extends Model {
         }
     }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-    public function getWidgetInfo($id, $hash = false) {
+	/**
+	* Used to get widget info by id
+	* @param type $id
+	* @return type
+	*/
+	public function getWidgetInfo($id, $hash = false) {
         if (!empty($id)) {
-            if ($hash == true) {
-                $this->db->where('hashcode', $id);
-            } else {
-                $this->db->where('id', $id);
-            }
-
-            $result = $this->db->get('tbl_brandboost_widgets');
-            //echo $this->db->last_query();exit;
-            if ($result->num_rows() > 0) {
-                $aData = $result->row();
-            }
+			$oData = DB::table('tbl_brandboost_widgets')
+				->when(($hash == true), function ($query) use ($id) {
+                    return $query->where('hashcode', $id);
+                }, function ($query){
+                    return $query->where('id', $id);
+                })
+				->first();
+			return $oData;
         }
-
-
-        return $aData;
     }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+    
 
     
 

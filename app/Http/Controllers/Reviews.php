@@ -14,10 +14,234 @@ use Session;
 error_reporting(0);
 
 class Reviews extends Controller {
+	
+	public function displayReview($widgetHash) {
+		$mBrandboost = new BrandboostModel();
+		$mReviews = new ReviewsModel();
+		$mUser = new UsersModel();
+        if (!empty($widgetHash)) {
+            $oCampaign = $mBrandboost->getWidgetInfo($widgetHash, $hash = true);
+            $userID = $oCampaign->user_id;
+            $widgetID = $oCampaign->id;
+            if ($userID > 0) {
+                $bActionSubsription = $mUser->isActiveSubscription($userID);
+            } else {
+                echo "No Active subscription";
+                return;
+            }
 
-    public function index() {
-        
+            if ($bActionSubsription == false) {
+                echo "No Active subscription";
+                return;
+            }
+
+            //Collect configurations
+            $oftenBBWD = $oCampaign->often_bb_display;
+            $iReviewsPerPage = $oCampaign->num_of_review;
+            $minRating = $oCampaign->min_ratings_display;
+            $widgetType = $oCampaign->widget_type;
+            $aSettings = array(
+                'review_limit' => $iReviewsPerPage,
+                'min_ratings' => $minRating
+            );
+
+            $center_popup_widget = '';
+            $bottom_fixed_widget = '';
+            $vertical_popup_widget = '';
+            $button_widget = '';
+            $reviews_feed_widget = '';
+
+            $campaignId = $oCampaign->brandboost_id;
+
+            if (!empty($campaignId)) {
+                $this->addWidgetTrackData($widgetID, $userID, '', $widgetType, $campaignId, 'view', 'review');
+
+                $aReviews = $this->getCampaignReviews($campaignId, $aSettings);
+
+                $aPorductReviews = $this->getProductsCampaignReviews($campaignId, 'product', $aSettings);
+                $aServiceReviews = $this->getProductsCampaignReviews($campaignId, 'service', $aSettings);
+                $aSiteReviews = $this->getProductsCampaignReviews($campaignId, 'site', $aSettings);
+                //pre($aServiceReviews);
+                $allPorductsReviews = $mReviews->getActiveCampaignReviewsByType($campaignId, 'product');
+                $allServicesReviews = $mReviews->getActiveCampaignReviewsByType($campaignId, 'service');
+                $allSiteReviews = $mReviews->getActiveCampaignReviewsByType($campaignId, 'site');
+                $allReviews = $mReviews->getReviews($campaignId, $aSettings);
+                $bbData = $mReviews->getBrandBoostCampaign($campaignId, $hash = false);
+
+                $widgetData = $mReviews->getWidgetData($campaignId);
+                if ((sizeof($widgetData) + 1) % $oftenBBWD == 0) {
+                    $aWidgetData = array(
+                        'campaign_id' => $campaignId,
+                        'user_ip' => $_SERVER['REMOTE_ADDR'],
+                        'often_user' => 1,
+                        'widget_type' => $widgetType,
+                        'created_date' => date("Y-m-d H:i:s")
+                    );
+                } else {
+                    $aWidgetData = array(
+                        'campaign_id' => $campaignId,
+                        'user_ip' => $_SERVER['REMOTE_ADDR'],
+                        'widget_type' => $widgetType,
+                        'created_date' => date("Y-m-d H:i:s")
+                    );
+                }
+
+                $mReviews->addWidgetData($aWidgetData);
+                addPageAndVisitorInfo($userID, 'Widget', $campaignId, 'Visit');
+
+                $crWidgetData = $mReviews->getWidgetCRU($campaignId);
+                if ((sizeof($widgetData) + 1) % $oftenBBWD == 0) {
+                    $center_popup_widget = $this->load->view('reviews/center_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'center_popup_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
+
+                    $bottom_fixed_widget = $this->load->view('reviews/bottom_fix_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'bottom_fixed_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
+
+                    $vertical_popup_widget = $this->load->view('reviews/vertical_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'vertical_popup_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
+
+                    $button_widget = $this->load->view('reviews/button_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'button_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
+
+                    $reviews_feed_widget = $this->load->view('reviews/feed_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'reviews_feed_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
+                }
+            }
+        }
+        $aData = array((object) array(
+                'method' => 'list',
+                'center_popup_widget_result' => utf8_encode($center_popup_widget),
+                'bottom_fixed_widget_result' => utf8_encode($bottom_fixed_widget),
+                'vertical_popup_widget_result' => utf8_encode($vertical_popup_widget),
+                'button_widget_result' => utf8_encode($button_widget),
+                'reviews_feed_widget_result' => utf8_encode($reviews_feed_widget),
+        ));
+
+        echo json_encode($aData);
+        exit;
     }
+	
+	
+	public function addWidgetTrackData($widgetID, $ownerID, $reviewID, $widgetType, $brandboostID, $trackType, $sectionType) {
+		$mReviews = new ReviewsModel();
+        //Get Tracking Data
+        //Get Location based data
+        $aLocationData = getLocationData();
+        $widgetTrackData = $mReviews->getWidgetTrackData($widgetID, $aLocationData['ip_address'], $trackType, $reviewID);
+        if (sizeof($widgetTrackData) < 1) {
+            $aTrackData = array(
+                'widget_id' => $widgetID,
+                'owner_id' => $ownerID,
+                'review_id' => $reviewID,
+                'widget_type' => $widgetType,
+                'brandboost_id' => $brandboostID,
+                'track_type' => $trackType,
+                'section_type' => $sectionType,
+                'ip_address' => $aLocationData['ip_address'],
+                'platform' => $aLocationData['platform'],
+                'platform_device' => $aLocationData['platform_device'],
+                'browser' => $aLocationData['name'],
+                'useragent' => $aLocationData['userAgent'],
+                'country' => $aLocationData['country'],
+                'countryCode' => $aLocationData['countryCode'],
+                'region' => $aLocationData['region'],
+                'city' => $aLocationData['city'],
+                'longitude' => $aLocationData['longitude'],
+                'latitude' => $aLocationData['latitude'],
+                'created_at' => date("Y-m-d H:i:s")
+            );
+            $mReviews->addWidgetTrackData($aTrackData);
+        }
+    }
+
+    public function getCampaignReviews($campaignID, $aSettings = array()) {
+		$mBrandboost = new BrandboostModel();
+		$mReviews = new ReviewsModel();
+		$mUser = new UsersModel();
+		
+        $oReviews = $mReviews->getAllActiveReviews($campaignID, $aSettings);
+
+        if (!empty($oReviews)) {
+            foreach ($oReviews as $oReview) {
+                $aReview = (array) $oReview;
+                $reviewID = $aReview['id'];
+                $userID = $aReview['user_id'];
+                $aReviewData[$reviewID] = $aReview;
+                $userData = $mUser->getUserInfo($userID);
+                $oCampaign = $mReviews->getBrandBoostCampaign($oReview->campaign_id);
+
+                // Get Helpful
+                $aHelpful = $mReviews->countHelpful($reviewID);
+                $aReviewData[$reviewID]['brandboost_name'] = $oCampaign->brand_title;
+                $aReviewData[$reviewID]['total_helpful'] = $aHelpful['yes'];
+                $aReviewData[$reviewID]['total_helpful_no'] = $aHelpful['no'];
+                $aReviewData[$reviewID]['user_data'] = (array) $userData;
+
+                //Get Comments Block
+                $oComments = $mReviews->getAllMainComments($reviewID, 0, 1000);
+                $aProductData = $mBrandboost->getProductDataById($oReview->product_id);
+
+                $aCommentsData = array();
+                if (!empty($oComments)) {
+                    foreach ($oComments as $oComment) {
+                        $oCommentLike = $mReviews->countCommentLike($oComment->id);
+                        $aComment = (array) $oComment;
+                        $aCommentsData[$aComment['id']] = $aComment;
+                        $aCommentsData[$aComment['id']]['like'] = $oCommentLike['like'];
+                        $aCommentsData[$aComment['id']]['dislike'] = $oCommentLike['dislike'];
+                        unset($aComment);
+                    }
+                }
+                $aReviewData[$reviewID]['comment_block'] = $aCommentsData;
+                $aReviewData[$reviewID]['product_data'] = $aProductData;
+                unset($aCommentsData);
+            }
+            return $aReviewData;
+        }
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
     public function lists($campaignId) {
         if (empty($campaignId)) {
@@ -86,36 +310,7 @@ class Reviews extends Controller {
         $this->template->load('template', 'admin/reviews/quesList', array('oCampaign' => $oCampaign, 'aReviews' => $aReviews));
     }
 
-    public function addWidgetTrackData($widgetID, $ownerID, $reviewID, $widgetType, $brandboostID, $trackType, $sectionType) {
-        //Get Tracking Data
-        //Get Location based data
-        $aLocationData = getLocationData();
-        $widgetTrackData = $this->mReviews->getWidgetTrackData($widgetID, $aLocationData['ip_address'], $trackType, $reviewID);
-        if (sizeof($widgetTrackData) < 1) {
-            $aTrackData = array(
-                'widget_id' => $widgetID,
-                'owner_id' => $ownerID,
-                'review_id' => $reviewID,
-                'widget_type' => $widgetType,
-                'brandboost_id' => $brandboostID,
-                'track_type' => $trackType,
-                'section_type' => $sectionType,
-                'ip_address' => $aLocationData['ip_address'],
-                'platform' => $aLocationData['platform'],
-                'platform_device' => $aLocationData['platform_device'],
-                'browser' => $aLocationData['name'],
-                'useragent' => $aLocationData['userAgent'],
-                'country' => $aLocationData['country'],
-                'countryCode' => $aLocationData['countryCode'],
-                'region' => $aLocationData['region'],
-                'city' => $aLocationData['city'],
-                'longitude' => $aLocationData['longitude'],
-                'latitude' => $aLocationData['latitude'],
-                'created_at' => date("Y-m-d H:i:s")
-            );
-            $this->mReviews->addWidgetTrackData($aTrackData);
-        }
-    }
+    
 
     public function getCommonCommentPopup($widgetHash) {
         $response = array();
@@ -172,106 +367,7 @@ class Reviews extends Controller {
         exit;
     }
 
-    public function displayReview($widgetHash) {
-        if (!empty($widgetHash)) {
-            $oCampaign = $this->mBrandboost->getWidgetInfo($widgetHash, $hash = true);
-            //pre($oCampaign);
-            $userID = $oCampaign->user_id;
-            $widgetID = $oCampaign->id;
-            if ($userID > 0) {
-                $bActionSubsription = $this->mUser->isActiveSubscription($userID);
-            } else {
-                echo "No Active subscription";
-                return;
-            }
-
-            if ($bActionSubsription == false) {
-                echo "No Active subscription";
-                return;
-            }
-
-            //Collect configurations
-            //pre($oCampaign);
-            $oftenBBWD = $oCampaign->often_bb_display;
-            $iReviewsPerPage = $oCampaign->num_of_review;
-            $minRating = $oCampaign->min_ratings_display;
-            $widgetType = $oCampaign->widget_type;
-            $aSettings = array(
-                'review_limit' => $iReviewsPerPage,
-                'min_ratings' => $minRating
-            );
-
-            $center_popup_widget = '';
-            $bottom_fixed_widget = '';
-            $vertical_popup_widget = '';
-            $button_widget = '';
-            $reviews_feed_widget = '';
-
-            $campaignId = $oCampaign->brandboost_id;
-
-            if (!empty($campaignId)) {
-                $this->addWidgetTrackData($widgetID, $userID, '', $widgetType, $campaignId, 'view', 'review');
-
-                $aReviews = $this->getCampaignReviews($campaignId, $aSettings);
-
-                $aPorductReviews = $this->getProductsCampaignReviews($campaignId, 'product', $aSettings);
-                $aServiceReviews = $this->getProductsCampaignReviews($campaignId, 'service', $aSettings);
-                $aSiteReviews = $this->getProductsCampaignReviews($campaignId, 'site', $aSettings);
-                //pre($aServiceReviews);
-                $allPorductsReviews = $this->mReviews->getActiveCampaignReviewsByType($campaignId, 'product');
-                $allServicesReviews = $this->mReviews->getActiveCampaignReviewsByType($campaignId, 'service');
-                $allSiteReviews = $this->mReviews->getActiveCampaignReviewsByType($campaignId, 'site');
-                $allReviews = $this->mReviews->getReviews($campaignId, $aSettings);
-                //$crWidgetData = $this->mReviews->getWidgetCRU($campaignId);
-                $bbData = $this->mReviews->getBrandBoostCampaign($campaignId, $hash = false);
-
-                $widgetData = $this->mReviews->getWidgetData($campaignId);
-                if ((sizeof($widgetData) + 1) % $oftenBBWD == 0) {
-                    $aWidgetData = array(
-                        'campaign_id' => $campaignId,
-                        'user_ip' => $_SERVER['REMOTE_ADDR'],
-                        'often_user' => 1,
-                        'widget_type' => $widgetType,
-                        'created_date' => date("Y-m-d H:i:s")
-                    );
-                } else {
-                    $aWidgetData = array(
-                        'campaign_id' => $campaignId,
-                        'user_ip' => $_SERVER['REMOTE_ADDR'],
-                        'widget_type' => $widgetType,
-                        'created_date' => date("Y-m-d H:i:s")
-                    );
-                }
-
-                $this->mReviews->addWidgetData($aWidgetData);
-                addPageAndVisitorInfo($userID, 'Widget', $campaignId, 'Visit');
-
-                $crWidgetData = $this->mReviews->getWidgetCRU($campaignId);
-                if ((sizeof($widgetData) + 1) % $oftenBBWD == 0) {
-                    $center_popup_widget = $this->load->view('reviews/center_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'center_popup_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
-
-                    $bottom_fixed_widget = $this->load->view('reviews/bottom_fix_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'bottom_fixed_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
-
-                    $vertical_popup_widget = $this->load->view('reviews/vertical_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'vertical_popup_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
-
-                    $button_widget = $this->load->view('reviews/button_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'button_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
-
-                    $reviews_feed_widget = $this->load->view('reviews/feed_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'reviews_feed_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
-                }
-            }
-        }
-        $aData = array((object) array(
-                'method' => 'list',
-                'center_popup_widget_result' => utf8_encode($center_popup_widget),
-                'bottom_fixed_widget_result' => utf8_encode($bottom_fixed_widget),
-                'vertical_popup_widget_result' => utf8_encode($vertical_popup_widget),
-                'button_widget_result' => utf8_encode($button_widget),
-                'reviews_feed_widget_result' => utf8_encode($reviews_feed_widget),
-        ));
-
-        echo json_encode($aData);
-        exit;
-    }
+    
 
     public function displaypreviewreivew($widgetHash) {
         if (!empty($widgetHash)) {
@@ -1410,48 +1506,7 @@ class Reviews extends Controller {
         }
     }
 
-    public function getCampaignReviews($campaignID, $aSettings = array()) {
-        $oReviews = $this->mReviews->getAllActiveReviews($campaignID, $aSettings);
-
-        if (!empty($oReviews)) {
-            foreach ($oReviews as $oReview) {
-                $aReview = (array) $oReview;
-                $reviewID = $aReview['id'];
-                $userID = $aReview['user_id'];
-                $aReviewData[$reviewID] = $aReview;
-                $userData = $this->mUser->getUserInfo($userID);
-                $oCampaign = $this->mReviews->getBrandBoostCampaign($oReview->campaign_id);
-
-                // Get Helpful
-                $aHelpful = $this->mReviews->countHelpful($reviewID);
-                $aReviewData[$reviewID]['brandboost_name'] = $oCampaign->brand_title;
-                $aReviewData[$reviewID]['total_helpful'] = $aHelpful['yes'];
-                $aReviewData[$reviewID]['total_helpful_no'] = $aHelpful['no'];
-                $aReviewData[$reviewID]['user_data'] = (array) $userData;
-
-                //Get Comments Block
-                //$oComments = $this->getCommentsBlock($reviewID);
-                $oComments = $this->mReviews->getAllMainComments($reviewID, 0, 1000);
-                $aProductData = $this->mBrandboost->getProductDataById($oReview->product_id);
-
-                $aCommentsData = array();
-                if (!empty($oComments)) {
-                    foreach ($oComments as $oComment) {
-                        $oCommentLike = $this->mReviews->countCommentLike($oComment->id);
-                        $aComment = (array) $oComment;
-                        $aCommentsData[$aComment['id']] = $aComment;
-                        $aCommentsData[$aComment['id']]['like'] = $oCommentLike['like'];
-                        $aCommentsData[$aComment['id']]['dislike'] = $oCommentLike['dislike'];
-                        unset($aComment);
-                    }
-                }
-                $aReviewData[$reviewID]['comment_block'] = $aCommentsData;
-                $aReviewData[$reviewID]['product_data'] = $aProductData;
-                unset($aCommentsData);
-            }
-            return $aReviewData;
-        }
-    }
+    
 
     public function saveCommentLike() {
         $response = array();

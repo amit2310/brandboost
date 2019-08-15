@@ -18,5 +18,5 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array
      */
-    protected $except = ['webchat/*'];
+    protected $except = ['webchat/*', 'reviews/*'];
 }
