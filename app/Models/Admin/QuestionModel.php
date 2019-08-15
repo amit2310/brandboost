@@ -93,6 +93,33 @@ class QuestionModel extends Model
 			->get();
         return $oData;
     }
+
+
+    /**
+     * This function is for count answer helpful count
+     * @param type $answerID
+     * @return type array
+     */
+    public function countAnsHelpful($answerID) {
+        $result = array();
+        $oData = DB::table('tbl_reviews_answers_helpful')
+            ->where('answer_id', $answerID)
+            ->get();
+
+        $yes = 0;
+        $no = 0;
+        if ($oData->count() > 0) {
+            foreach ($oData as $row) {
+                if ($row->helpful_yes == 1) {
+                    $yes++;
+                } else if ($row->helpful_no == 1) {
+                    $no++;
+                }
+            }
+        }
+        $result = array('yes' => $yes, 'no' => $no);
+        return $result;
+    }
 	
 
     public function getReviewAnswerHelpful($answerID){
@@ -110,26 +137,7 @@ class QuestionModel extends Model
         return $response;
     }
 	
-	public function countAnsHelpful($answerID) {
-		$result = array();
-		$this->db->where("answer_id", $answerID);
-		$rResponse = $this->db->get("tbl_reviews_answers_helpful");
-		$yes = 0;
-		$no = 0;
-		//echo $this->db->last_query();
-		if ($rResponse->num_rows() > 0) {
-			$oResult = $rResponse->result();
-			foreach ($oResult as $row) {
-				if ($row->helpful_yes == 1) {
-					$yes++;
-				} else if ($row->helpful_no == 1) {
-					$no++;
-				}
-			}
-		}
-		$result = array('yes' => $yes, 'no' => $no);
-		return $result;
-	}
+	
     
     public function saveQuestionNotes($aData) {
         $bSaved = $this->db->insert("tbl_reviews_question_notes", $aData);
