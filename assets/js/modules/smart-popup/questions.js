@@ -5,7 +5,7 @@ function loadSmartMoreAnswer(questionID, startinglimitVal) {
     $('.overlaynew').show();
     var tkn = $('meta[name="_token"]').attr('content');
     $.ajax({
-        url: '/admin/questions/getAnswer/',
+        url: '/admin/questions/getAnswer',
         type: "POST",
         data: {'questionId': questionID, 'startinglimitVal': startinglimitVal, 'source': 'smartpopup',_token: tkn},
         dataType: "json",
@@ -67,10 +67,11 @@ $(document).ready(function () {
 
     $(document).on('click', '.editSmartAnswer', function () {
         var answerID = $(this).attr('answer_id');
+        var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/questions/getAnswer',
             type: "POST",
-            data: {answerID: answerID},
+            data: {answerID: answerID, _token: tkn},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
