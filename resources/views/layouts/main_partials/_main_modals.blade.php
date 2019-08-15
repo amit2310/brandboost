@@ -1315,6 +1315,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="frmShortListModal">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close BoxClose" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="{{ URL::asset('assets/images/menu_icons/Chat_Color.svg') }}"> Add new shortcut &nbsp; <!--<i class="icon-info22 fsize12 txt_grey"></i>--></h5>
