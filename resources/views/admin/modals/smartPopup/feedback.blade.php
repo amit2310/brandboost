@@ -1,4 +1,5 @@
 <div id="editSmartNoteSection" class="modal fade" style="z-index:99999;">
+    {{ csrf_field() }}
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateSmartNote" action="javascript:void();">

@@ -288,9 +288,16 @@ class Feedback extends Controller {
         }
     }
 
+
+    /**
+    * This function is used to add the feedback notes 
+    * @param type 
+    * @return type
+    */
+
     public function saveFeedbackNotes() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
+        $post = Input::post();
         if (!empty($post)) {
             $feedbackID = strip_tags($post['fid']);
             $brandboostID = strip_tags($post['bid']);
@@ -305,8 +312,9 @@ class Feedback extends Controller {
                 'notes' => $sNotes,
                 'created' => date("Y-m-d H:i:s")
             );
+            $mFeedback = new FeedbackModel();
 
-            $bSaved = $this->mFeedback->saveFeedbackNotes($aNotesData);
+            $bSaved = $mFeedback->saveFeedbackNotes($aNotesData);
             if ($bSaved) {
                 $response = array('status' => 'success', 'message' => 'Note has been added succesfully.');
             }
@@ -425,13 +433,21 @@ class Feedback extends Controller {
         exit;
     }
 
+
+    /**
+    * This function will return feedback notes details
+    * @param type 
+    * @return type
+    */
+
     public function getFeedbackNotes() {
         $response = array();
         $response['status'] = 'error';
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $noteData = $this->mFeedback->getFeedbackNoteInfo($post['noteid']);
+        $mFeedback  = new FeedbackModel();
+        if (Input::post()) {
+            $post = Input::post();
+            $noteData = $mFeedback->getFeedbackNoteInfo($post['noteid']);
             if ($noteData) {
                 $response['status'] = 'success';
                 $response['result'] = $noteData;
@@ -444,11 +460,18 @@ class Feedback extends Controller {
         }
     }
 
+
+    /**
+    * This function is used to update the notes
+    * @param type
+    * @return type
+    */
+
     public function updateFeedbackNote() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
+        $post = Input::post();
         if (!empty($post)) {
             $noteId = strip_tags($post['edit_noteid']);
             $sNotes = $post['edit_note_content'];
@@ -457,8 +480,8 @@ class Feedback extends Controller {
                 'client_id' => $userID,
                 'updated' => date("Y-m-d H:i:s")
             );
-
-            $bSaved = $this->mFeedback->updateFeedbackNote($aNotesData, $noteId);
+            $mFeedback  = new FeedbackModel();
+            $bSaved = $mFeedback->updateFeedbackNote($aNotesData, $noteId);
             if ($bSaved) {
                 $response = array('status' => 'success', 'message' => 'Note has been updated succesfully.');
             }
@@ -467,11 +490,19 @@ class Feedback extends Controller {
         }
     }
 
+
+    /**
+    * This function is used to delete the feedback notes 
+    * @param $noteid
+    * @return type
+    */
+
     public function deleteFeedbackNote() {
         $response = array();
-        $post = $this->input->post();
+        $post = Input::post();
         $noteid = strip_tags($post['noteid']);
-        $result = $this->mFeedback->deleteFeedbackNote($noteid);
+        $mFeedback  = new FeedbackModel();
+        $result = $mFeedback->deleteFeedbackNote($noteid);
         if ($result) {
             $response['status'] = 'success';
         } else {

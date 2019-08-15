@@ -308,22 +308,31 @@ class FeedbackModel extends Model
 
     
     
+    /**
+    * This function will return feedback notes details
+    * @param type $noteId
+    * @return type
+    */
+
     public function getFeedbackNoteInfo($noteId) {
 
-        $this->db->where('id', $noteId);
-        $this->db->from('tbl_brandboost_feedback_notes');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+       $oData = DB::table('tbl_brandboost_feedback_notes')
+        ->where('id', $noteId)->get();
+        return $oData;
+       
     }
     
+    /**
+    * This function is used to update the notes
+    * @param type
+    * @return type
+    */
+
     public function updateFeedbackNote($aData, $noteId) {
 
-        $this->db->where('id', $noteId);
-        $result = $this->db->update('tbl_brandboost_feedback_notes', $aData);
-        //echo $this->db->last_query();
+        $result = DB::table('tbl_brandboost_feedback_notes')
+         ->where('id', $noteId)
+          ->update($aData);
         if ($result)
             return true;
         else
@@ -331,7 +340,7 @@ class FeedbackModel extends Model
     }
 
     public function saveFeedbackNotes($aData) {
-        $bInserted = $this->db->insert("tbl_brandboost_feedback_notes", $aData);
+        $bInserted = DB::table('tbl_brandboost_feedback_notes')->insertGetId($aData);
         if ($bInserted)
             return true;
         else
@@ -348,10 +357,19 @@ class FeedbackModel extends Model
         return $response;
     }
     
+
+     /**
+    * This function is used to delete the feedback notes 
+    * @param $noteid
+    * @return type
+    */
+
     public function deleteFeedbackNote($noteId) {
-        $this->db->where('id', $noteId);
-        $result = $this->db->delete('tbl_brandboost_feedback_notes');
-        return true;
+
+        $result = DB::table('tbl_brandboost_feedback_notes')
+         ->where('id', $noteId)->delete();
+         return $result;
+        
     }
     
     
