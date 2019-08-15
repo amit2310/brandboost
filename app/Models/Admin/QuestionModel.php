@@ -338,14 +338,18 @@ class QuestionModel extends Model
         return true;
     }
 
+
+    /**
+    * This function is used to delete answer
+    * @param type $aData, $answerID
+    * @return type boolean
+    */
     public function deleteAnswer($ansId) {
 
-        $this->db->where('id', $ansId);
-        $result = $this->db->delete('tbl_reviews_question_answers');
-        if ($result)
-            return true;
-        else
-            return false;
+        $result = DB::table('tbl_reviews_question_answers')
+                ->where('id', $ansId)
+                ->delete();
+        return true;
     }
 	
 	

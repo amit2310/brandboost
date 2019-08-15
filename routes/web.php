@@ -204,6 +204,8 @@ Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
 Route::post('admin/questions/add_answer','Admin\Questions@add_answer');
 Route::post('admin/questions/update_answer_status','Admin\Questions@update_answer_status');
 Route::post('admin/questions/getAnswer','Admin\Questions@getAnswer');
+Route::post('admin/questions/updateAnswer','Admin\Questions@updateAnswer');
+Route::post('admin/questions/delete_answer','Admin\Questions@delete_answer');
 Route::get('admin/questions','Admin\Questions@index');
 
 

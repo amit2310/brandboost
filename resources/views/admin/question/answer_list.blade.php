@@ -377,7 +377,7 @@
                             $.ajax({
                                 url: '<?php echo base_url('admin/questions/delete_answer'); ?>',
                                 type: "POST",
-                                data: {ansID: ansID},
+                                data: {ansID: ansID, _token, '{{csrf_token()}}'},
                                 dataType: "json",
                                 success: function (data) {
                                     if (data.status == 'success') {

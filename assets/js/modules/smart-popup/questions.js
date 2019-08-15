@@ -206,8 +206,10 @@ $(document).ready(function () {
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
         var questionID = $("#smartpopup_question_id").val();
+        var tkn = $('meta[name="_token"]').attr('content');
+        formData.append('_token', tkn);
         $.ajax({
-            url: '/admin/questions/updateAnswer/',
+            url: '/admin/questions/updateAnswer',
             type: "POST",
             data: formData,
             contentType: false,
@@ -232,6 +234,7 @@ $(document).ready(function () {
     $(document).on('click', '.deleteSmartAnswer', function () {
         var answerID = $(this).attr("smart_answer_id");
         var questionID = $("#smartpopup_question_id").val();
+        var tkn = $('meta[name="_token"]').attr('content');
         swal({
             title: "Are you sure? You want to delete this answer!",
             text: "You will not be able to recover this record!",
@@ -249,7 +252,7 @@ $(document).ready(function () {
                         $.ajax({
                             url: '/admin/questions/delete_answer',
                             type: "POST",
-                            data: {answerId: answerID},
+                            data: {answerId: answerID, '_token': tkn},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {
