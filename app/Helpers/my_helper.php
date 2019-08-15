@@ -3879,48 +3879,6 @@ function addPageAndVisitorInfo($clientId, $sourcePage, $sourceId, $sourceType = 
     $bResult = \App\Models\Admin\LiveModel::addVisitorInfo($dateArray);
 }
 
-function cbTest() {
-    $file = 'chargebee-php/lib/ChargeBee.php';
-    if (file_exists($file)) {
-        echo "File Exists";
 
-        require_once($file);
-        $cbSite = config('bbconfig.cb_site_name');
-        $cbSiteToken = config('bbconfig.cb_access_token');
-        ChargeBee_Environment::configure($cbSite, $cbSiteToken);
-         $aInputBilling = array(
-            'firstName' => 'Mr',
-            'lastName' => 'Dean',
-            'line1' => 'Avantika',
-            'city' => 'Delhi',
-            'state' => 'Delhi',
-            'zip' => '110085',
-            'country' => 'India'
-        );
-         
-        $aInput = array(
-            'firstName' => 'Mr',
-            'lastName' => 'Dean',
-            'email' => 'faketo@gmail.com',
-            'phone' => '9654365662',
-            //'billingAddress' => $aInputBilling
-        );
-        
-       
-        $aResponse = ChargeBee_Customer::create($aInput);
-
-        //$oRes = $aResponse->customer();
-        pre($aResponse);
-        echo "All done";
-//        if (class_exists('ChargeBee_Environment')) {
-//            $method = get_class_methods('ChargeBee_Environment');
-//            
-//            die('class exists');
-//        }
-        //ChargeBee_Environment::configure($cbSite, $cbSiteToken);
-    }else{
-        echo "file not exists";
-    }
-}
 
 ?>
