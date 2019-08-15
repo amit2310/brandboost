@@ -172,6 +172,20 @@ class QuestionModel extends Model
                 ->update($aData);
         return true;
     }
+
+
+    /**
+     * This function is for delete question notes
+     * @param type $aData, $noteId
+     * @return type boolean
+     */
+    public function deleteQuestionNote($noteId) {
+
+        $oData = DB::table('tbl_reviews_question_notes')
+                ->where('id', $noteId)
+                ->delete();
+        return true;
+    }
 	
 
     public function getReviewAnswerHelpful($answerID){
@@ -191,11 +205,7 @@ class QuestionModel extends Model
     
 
     
-    public function deleteQuestionNote($noteId) {
-        $this->db->where('id', $noteId);
-        $result = $this->db->delete('tbl_reviews_question_notes');
-        return true;
-    }
+    
     
    
 
