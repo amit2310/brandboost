@@ -994,15 +994,19 @@ class Questions extends Controller {
         }
     }
 
-
-    public function getAnswer() {
+    /**
+    * This function is used to update answer status
+    * @param type 
+    * @return type
+    */
+    public function getAnswer(Request $request) {
 
         $response = array();
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $answerID = base64_url_decode(strip_tags($post['answerID']));
-            $result = $this->mQuestion->getAnswerInfo($answerID);
+        if ($request->answerID) {
+            $mQuestion = new QuestionModel();
+            $answerID = base64_url_decode(strip_tags($request->answerID));
+            $result = $mQuestion->getAnswerInfo($answerID);
 
             if ($result) {
                 $response['status'] = 'success';

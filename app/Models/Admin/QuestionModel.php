@@ -120,6 +120,19 @@ class QuestionModel extends Model
         $result = array('yes' => $yes, 'no' => $no);
         return $result;
     }
+
+    /**
+     * This function is for get answer info
+     * @param type $answerID
+     * @return type array
+     */
+    public function getAnswerInfo($answerID){
+
+        $oData = DB::table('tbl_reviews_question_answers')
+            ->where('id', $answerID)
+            ->first();
+        return $oData;
+    }
 	
 
     public function getReviewAnswerHelpful($answerID){
@@ -178,14 +191,7 @@ class QuestionModel extends Model
         return true;
     }
     
-   public function getAnswerInfo($answerID){
-       $this->db->where('id', $answerID);
-       $result = $this->db->get("tbl_reviews_question_answers");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-   }
+   
 
     /*public function getBrandboostQuestions($brandboostID) {
         $response = array();
