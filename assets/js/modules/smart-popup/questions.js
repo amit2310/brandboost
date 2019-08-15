@@ -86,13 +86,15 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.editSmartNote', function () {
+        var tkn = $('meta[name="_token"]').attr('content');
         var noteId = $(this).attr('noteid');
         $.ajax({
             url: '/admin/questions/getQuestionNotes',
             type: "POST",
-            data: {noteid: noteId},
+            data: {noteid: noteId, _token:tkn },
             dataType: "json",
             success: function (data) {
+
                 if (data.status == 'success') {
                     var noteData = data.result;
                     $('#edit_smart_note_content').val(noteData.notes);
@@ -146,6 +148,8 @@ $(document).ready(function () {
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
         var questionID = $("#smartpopup_question_id").val();
+        var tkn = $('meta[name="_token"]').attr('content');
+        formData.append('_token', tkn);
         $.ajax({
             url: '/admin/questions/updateQuestionNote',
             type: "POST",

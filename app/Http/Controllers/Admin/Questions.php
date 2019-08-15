@@ -1085,14 +1085,20 @@ class Questions extends Controller {
         }
     }
 
-    public function getQuestionNotes() {
+
+    /**
+    * This function is used to get question notes
+    * @param type 
+    * @return type
+    */
+    public function getQuestionNotes(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $noteData = $this->mQuestion->getQuestionNoteInfo($post['noteid']);
+        if ($request->noteid) {
+            $mQuestion = new QuestionModel();
+            $noteData = $mQuestion->getQuestionNoteInfo($request->noteid);
             if ($noteData) {
                 $response['status'] = 'success';
                 $response['result'] = $noteData;
@@ -1105,21 +1111,27 @@ class Questions extends Controller {
         }
     }
 
-    public function updateQuestionNote() {
+
+    /**
+    * This function is used to update question note
+    * @param type 
+    * @return type
+    */
+    public function updateQuestionNote(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $noteId = strip_tags($post['edit_noteid']);
-            $sNotes = $post['edit_note_content'];
+        if (!empty($request->edit_noteid)) {
+            $noteId = strip_tags($request->edit_noteid);
+            $sNotes = $request->edit_note_content;
             $aNotesData = array(
                 'notes' => $sNotes,
                 'user_id' => $userID,
                 'updated' => date("Y-m-d H:i:s")
             );
-
-            $bSaved = $this->mQuestion->updateQuestionNote($aNotesData, $noteId);
+            
+            $mQuestion = new QuestionModel();
+            $bSaved = $mQuestion->updateQuestionNote($aNotesData, $noteId);
             if ($bSaved) {
                 $response = array('status' => 'success', 'message' => 'Note has been updated succesfully.');
             }

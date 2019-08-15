@@ -909,7 +909,7 @@ $questionDescription = $oQuestion->question;
             $.ajax({
                 url: '<?php echo base_url('admin/questions/getQuestionNotes'); ?>',
                 type: "POST",
-                data: {noteid: noteId},
+                data: {noteid: noteId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -929,6 +929,7 @@ $questionDescription = $oQuestion->question;
         $("#updateNote").submit(function () {
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
+            formData.append('_token','{{csrf_token()}}');
             $.ajax({
                 url: '<?php echo base_url('admin/questions/updateQuestionNote'); ?>',
                 type: "POST",
