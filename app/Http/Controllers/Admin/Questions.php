@@ -1142,9 +1142,10 @@ class Questions extends Controller {
 
     public function deleteQuestionNote() {
         $response = array();
-        $post = $this->input->post();
+        $post = Input::post();
         $noteid = strip_tags($post['noteid']);
-        $result = $this->mQuestion->deleteQuestionNote($noteid);
+        $mQuestion = new QuestionModel();
+        $result = $mQuestion->deleteQuestionNote($noteid);
         if ($result) {
             $response['status'] = 'success';
         } else {

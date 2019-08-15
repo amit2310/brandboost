@@ -210,6 +210,7 @@ Route::get('admin/questions','Admin\Questions@index');
 Route::post('admin/questions/saveQuestionNotes','Admin\Questions@saveQuestionNotes');
 Route::post('admin/questions/getQuestionNotes','Admin\Questions@getQuestionNotes');
 Route::post('admin/questions/updateQuestionNote','Admin\Questions@updateQuestionNote');
+Route::post('admin/questions/deleteQuestionNote','Admin\Questions@deleteQuestionNote');
 
 
 

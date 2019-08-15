@@ -110,6 +110,7 @@ $(document).ready(function () {
     $(document).on('click', '.deleteSmartNote', function () {
         var questionID = $("#smartpopup_question_id").val();
         var noteId = $(this).attr('noteid');
+        var tkn = $('meta[name="_token"]').attr('content');
         swal({
             title: "Are you sure? You want to delete this note!",
             text: "You will not be able to recover this record!",
@@ -127,7 +128,7 @@ $(document).ready(function () {
                         $.ajax({
                             url: '/admin/questions/deleteQuestionNote',
                             type: "POST",
-                            data: {noteid: noteId},
+                            data: {noteid: noteId, _token: tkn},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {
