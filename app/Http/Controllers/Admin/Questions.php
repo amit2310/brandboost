@@ -1140,6 +1140,12 @@ class Questions extends Controller {
         }
     }
 
+
+    /**
+    * This function is used to delete question note
+    * @param type 
+    * @return type
+    */
     public function deleteQuestionNote() {
         $response = array();
         $post = Input::post();
