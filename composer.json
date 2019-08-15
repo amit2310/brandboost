@@ -44,8 +44,9 @@
             "database/factories"
         ],
         "files": [
-            "bootstrap/my_helper.php",
-            "bootstrap/brandboost_helper.php"
+            "app/Helpers/my_helper.php",
+            "app/Helpers/brandboost_helper.php",
+            "app/Helpers/chargebee_helper.php"
         ]
     },
     "autoload-dev": {
