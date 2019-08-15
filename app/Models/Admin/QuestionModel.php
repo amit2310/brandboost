@@ -285,11 +285,12 @@ class QuestionModel extends Model
             return false;
     }
 
+
     /**
-* This function is used to save the question for tracking purpose
-* @param type $clientID
-* @return type
-*/
+    * This function is used to save the question for tracking purpose
+    * @param type $clientID
+    * @return type
+    */
     public function trackQuestionGeo($aData) {
       $oData =   DB::table('tbl_reviews_question_tracking_log')->insertGetId($aData);
         if (!empty($oData))
@@ -298,13 +299,16 @@ class QuestionModel extends Model
             return false;
     }
 
+
+    /**
+    * This function is used to add answer
+    * @param type $aData
+    * @return type boolean
+    */
     public function addAnswer($aData) {
 
-        $result = $this->db->insert('tbl_reviews_question_answers', $aData);
-        if ($result)
-            return true;
-        else
-            return false;
+        $oData =   DB::table('tbl_reviews_question_answers')->insertGetId($aData);
+        return true;
     }
 
     public function updateAnswer($aData, $answerID) {

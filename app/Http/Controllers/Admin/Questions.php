@@ -1310,24 +1310,29 @@ class Questions extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/question/answer_list', array('title' => 'Brand Boost Answers', 'pagename' => $breadcrumb, 'question' => $result[0], 'result' => $answer));
     }
 
-    public function add_answer() {
+    /**
+    * This function is use for add answer
+    * @param type 
+    * @return type
+    */
+    public function add_answer(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $user_role = $oUser->user_role;
         $clientName = $oUser->firstname. ' '. $oUser->lastname;
         $response = array();
         $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        $mQuestion = new QuestionModel();
+        $mUser = new UsersModel();
+        if ($request->question_id) {
 
-
-            $questionID = strip_tags(base64_url_decode($post['question_id']));
+            $questionID = strip_tags(base64_url_decode($request->question_id));
             //get Question details
-            $oQuestion = $this->mQuestion->getQuestionDetails($questionID);
+            $oQuestion = QuestionModel::getQuestionDetails($questionID);
             if (!empty($oQuestion)) {
                 $subscriberID = $oQuestion->user_id;
                 $sQuestion = $oQuestion->question;
-                $oSubscriber = $this->mUser->getUserInfo($subscriberID);
+                $oSubscriber = UsersModel::getUserInfo($subscriberID);
                 if(!empty($oSubscriber)){
                     $subsFirstName = $oSubscriber->firstname;
                     $subsLastName = $oSubscriber->lastname;
@@ -1338,7 +1343,7 @@ class Questions extends Controller {
             }
 
 
-            $answer = strip_tags($post['txtAnswer']);
+            $answer = strip_tags($request->txtAnswer);
 
             $aData = array(
                 'user_id' => $userID,
@@ -1348,12 +1353,12 @@ class Questions extends Controller {
                 'created' => date("Y-m-d H:i:s")
             );
 
-            $result = $this->mQuestion->addAnswer($aData);
+            $result = $mQuestion->addAnswer($aData);
             if ($result) {
                 //Notify only customer
                 if ($subscriberID > 0) {
                     //Send Notification
-                    $aNotificationDataCust = array(
+                    /*$aNotificationDataCust = array(
                         'user_id' => $subscriberID,
                         'event_type' => 'added_onsite_answers_subscriber',
                         'message' => 'You got a reply',
@@ -1370,7 +1375,7 @@ class Questions extends Controller {
                     $answerNotifyHtml = $this->load->view('admin/email_templates/question/answer_notification', array(), true);
                     $compiledHtml = str_replace($aTagsKey, $aTagsVal, $answerNotifyHtml);
                     $subject = 'You got reply on your question at bandboost campaign';
-                    sendEmail($subsEmail, $compiledHtml, $subject);
+                    sendEmail($subsEmail, $compiledHtml, $subject);*/
                 }
 
                 $response['status'] = 'success';
