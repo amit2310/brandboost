@@ -272,7 +272,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="viewQuestionSmartPopup text-left" questionid="<?php echo $oQuestion->id; ?>"><div class="media-left text-right" style="width:250px;">
-                                                        <div class="pt-5"><a href="javascript:void();<?php //echo site_url('admin/questions/details/' . $oQuestion->id); ?>" class="text-default text-semibold bbot"><span><?php echo (!empty($oQuestion->question_title)) ? setStringLimit($oQuestion->question_title, '25') : displayNoData(); ?></span> </a></div>
+                                                        <div class="pt-5"><a href="javascript:void();<?php echo base_url('admin/questions/details/' . $oQuestion->id); ?>" class="text-default text-semibold bbot"><span><?php echo (!empty($oQuestion->question_title)) ? setStringLimit($oQuestion->question_title, '25') : displayNoData(); ?></span> </a></div>
                                                         <div class="text-muted text-size-small"><?php echo (!empty($oQuestion->question)) ? setStringLimit($oQuestion->question, '40') : displayNoData(); ?></div>
                                                     </div>
                                                 </td>
@@ -597,14 +597,11 @@
 
         $('#onsiteQuestion thead tr:eq(1) th').each(function (i) {
 
-            console.log(i);
             if (i === 9) {
-                //console.log(i);
                 var title = $(this).text();
                 $(this).html('<input type="text" id="filterBy" placeholder="Search ' + title + '" />');
 
                 $('input', this).on('keyup change', function () {
-                    console.log(tableBase.column(i).search(), this.value);
                     if (tableBase.column(i).search() != this.value) {
                         tableBase
                                 .column(i)
@@ -613,7 +610,6 @@
                     }
                 });
             }
-          
 
         });
 

@@ -93,12 +93,13 @@ class Questions extends Controller {
         $selectedTab = Input::get('t');             
 		$quesID = Input::post("questionID");
 		$actionName = Input::post("action");
-
         $questionID = ($quesID > 0) ? $quesID : $questionID;
         $oQuestion = QuestionModel::getQuestionDetails($questionID);
         $oAnswers = QuestionModel::getAllAnswer($questionID);
         //$oTags = TagsModel::getTagsDataByQuestionID($questionID);
         $oNotes = QuestionModel::getQuestionNotes($questionID);
+        $mUser = new UsersModel();
+        $mSubscriber = new SubscriberModel();
 
         /*if (!empty($oAnswers)) {
             $brandboostID = $oAnswers[0]->campaign_id;
@@ -125,7 +126,7 @@ class Questions extends Controller {
         );
         
         if ($actionName == 'smart-popup') {
-			$popupContent =  view('admin.components.smart-popup.questions', $aData)->render();
+			$popupContent =  view('admin.components.smart-popup.questions', $aData)->with(['mUser'=> $mUser, 'mSubscriber'=>$mSubscriber])->render();
             $response['status'] = 'success';
             $response['content'] = $popupContent;
             echo json_encode($response);

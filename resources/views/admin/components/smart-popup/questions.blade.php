@@ -62,9 +62,9 @@ $mediaArray = unserialize($oQuestion->media_url);
             <div class="smart_img_gallery p20">
 
                 <?php
-                $subscriberID = $this->mUser->checkIfSubscriber(array('email' => $oQuestion->email));
+                $subscriberID = $mUser->checkIfSubscriber(array('email' => $oQuestion->email));
                 if ($subscriberID > 0) {
-                    $oSubscriber = $this->mSubscriber->getGlobalSubscriberInfo($subscriberID);
+                    $oSubscriber = $mSubscriber->getGlobalSubscriberInfo($subscriberID);
                 }
 
                 $mediaArray = unserialize($oQuestion->media_url);
