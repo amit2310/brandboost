@@ -342,9 +342,10 @@ $mediaArray = unserialize($oQuestion->media_url);
         $("#addSmartAnswer").submit(function () {
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
+            formData.append('_token', '{{csrf_token()}}');
             var questionID = $("#smartpopup_question_id").val();
             $.ajax({
-                url: '/admin/questions/add_answer',
+                url: '<?php echo base_url("admin/questions/add_answer"); ?>',
                 type: "POST",
                 data: formData,
                 contentType: false,

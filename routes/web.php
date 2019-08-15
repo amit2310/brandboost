@@ -201,6 +201,7 @@ Route::post('admin/tags/listAllTags','Admin\Tags@listAllTags');
 Route::get('admin/questions/view/{id}','Admin\Questions@questionView');
 Route::get('admin/questions/details/{id}','Admin\Questions@questionDetails');
 Route::post('admin/questions/details/{id}','Admin\Questions@questionDetails');
+Route::post('admin/questions/add_answer','Admin\Questions@add_answer');
 Route::get('admin/questions','Admin\Questions@index');
 
 
