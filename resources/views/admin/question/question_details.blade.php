@@ -708,6 +708,7 @@ $questionDescription = $oQuestion->question;
         $("#addAnswer, #addAnswerPopup").submit(function () {
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
+            formData.append('_token', '{{csrf_token()}}');
             $.ajax({
                 url: '<?php echo base_url('admin/questions/add_answer'); ?>',
                 type: "POST",

@@ -299,7 +299,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/questions/add_answer'); ?>',
                 type: "POST",
-                data: {question_id: question_id, answer: answer},
+                data: {question_id: question_id, answer: answer, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

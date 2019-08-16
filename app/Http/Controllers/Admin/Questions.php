@@ -96,7 +96,7 @@ class Questions extends Controller {
         $questionID = ($quesID > 0) ? $quesID : $questionID;
         $oQuestion = QuestionModel::getQuestionDetails($questionID);
         $oAnswers = QuestionModel::getAllAnswer($questionID);
-        //$oTags = TagsModel::getTagsDataByQuestionID($questionID);
+        $oTags = TagsModel::getTagsDataByQuestionID($questionID);
         $oNotes = QuestionModel::getQuestionNotes($questionID);
         $mUser = new UsersModel();
         $mSubscriber = new SubscriberModel();
@@ -119,7 +119,7 @@ class Questions extends Controller {
             'pagename' => $breadcrumb,
             'oQuestion' => $oQuestion,
             'oAnswers' => $oAnswers,
-            'oTags' => '',
+            'oTags' => $oTags,
             'oNotes' => $oNotes,
             'selectedTab' => $selectedTab,
             'brandboostID' => '',
