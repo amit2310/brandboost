@@ -8,116 +8,125 @@
     }
 </style>
 <?php
+
 foreach ($aData as $aRec) {
-    if ($aRec['moduleName'] == 'automation'):
-    if ($aRec['moduleName'] == 'onsite') {
-        $tabNumber = 1;
-        $status = 'active';
-    } else if ($aRec['moduleName'] == 'offsite') {
-        $tabNumber = 2;
-        $status = '';
-    } else if ($aRec['moduleName'] == 'automation') {
-        $tabNumber = 3;
-        $status = '';
-    } else if ($aRec['moduleName'] == 'referral') {
-        $tabNumber = 4;
-        $status = '';
-    } else if ($aRec['moduleName'] == 'nps') {
-        $tabNumber = 5;
-        $status = '';
-    }
-    $iActiveRecord = 0;
-    foreach ($aRec['templates'] as $oTemplate) {
-        if ($oTemplate->status == '1') {
-            $iActiveRecord++;
-        }
-    }
-    ?>
+
+    if(!empty($aRec['moduleName'])) {
+        if($aRec['moduleName'] == 'automation') {
+            if(!empty($aRec['moduleName'])) {
+
+                $moduleName = $aRec['moduleName'];
+         
+                if ($aRec['moduleName'] == 'onsite') {
+                    $tabNumber = 1;
+                    $status = 'active';
+                } else if ($aRec['moduleName'] == 'offsite') {
+                    $tabNumber = 2;
+                    $status = '';
+                } else if ($aRec['moduleName'] == 'automation') {
+                    $tabNumber = 3;
+                    $status = '';
+                } else if ($aRec['moduleName'] == 'referral') {
+                    $tabNumber = 4;
+                    $status = '';
+                } else if ($aRec['moduleName'] == 'nps') {
+                    $tabNumber = 5;
+                    $status = '';
+                }
+                $iActiveRecord = 0;
+                foreach ($aRec['templates'] as $oTemplate) {
+                    if ($oTemplate->status == '1') {
+                        $iActiveRecord++;
+                    }
+                }
+                ?>
 
 
-<!--    <div class="tab-pane <?php echo $status; ?>" id="right-icon-tab<?php echo $tabNumber; ?>">-->
-<div class="tab-pane active" id="right-icon-tab3">
-        <div class="row">
-            <div class="col-md-12">
-                <div style="margin: 0;" class="panel panel-flat">
-                    <div class="panel-heading"> <span class="pull-left">
-                            <h6 class="panel-title"><?php echo $iActiveRecord; ?> Templates</h6>
-                        </span>
-                        <div class="heading-elements">
-                            <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-                                <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
-                                <div class="form-control-feedback"> <i class="icon-search4"></i> </div>
+            <!--    <div class="tab-pane <?php echo $status; ?>" id="right-icon-tab<?php echo $tabNumber; ?>">-->
+            <div class="tab-pane active" id="right-icon-tab3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div style="margin: 0;" class="panel panel-flat">
+                                <div class="panel-heading"> <span class="pull-left">
+                                        <h6 class="panel-title"><?php echo $iActiveRecord; ?> Templates</h6>
+                                    </span>
+                                    <div class="heading-elements">
+                                        <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
+                                            <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
+                                            <div class="form-control-feedback"> <i class="icon-search4"></i> </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body p0">
+                                    <table class="table datatable-basic datatable-sorting">
+                                        <thead>
+                                            <tr>
+                                                <th><i class="icon-user"></i> Template Name</th>
+                                                <th><i class="icon-iphone"></i> Type</th>
+                                                <th><i class="icon-iphone"></i> App Name</th>
+                                                <th><i class="icon-iphone"></i> Subject</th>
+                                                <th><i class="icon-calendar"></i> Created</th>
+                                                <th class="text-center"><i class="fa fa-dot-circle-o"></i> Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <!--=======================-->
+                                            <?php foreach ($aRec['templates'] as $oTemplate) { ?>
+                                                <?php if ($oTemplate->status == '1' || $oTemplate->status == 'active'): ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo ucfirst($oTemplate->template_name); ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <?php echo ucfirst($oTemplate->template_type); ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <?php echo ucfirst($aRec['moduleName']); ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <?php echo $oTemplate->template_subject; ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <div class="media-left">
+                                                                <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($oTemplate->created)); ?></a></div>
+                                                                <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oTemplate->created)); ?></div>
+                                                            </div>
+
+                                                        </td>
+
+
+
+
+
+                                                        <td style="text-align: center;">
+                                                            <a class="btn green_cust_btn <?php if (strtolower($oTemplate->template_type) == 'sms'): ?>wf_editSMSTemplate<?php else: ?>editDefaultTemplate<?php endif; ?>" template_id="<?php echo $oTemplate->id; ?>" moduleName="<?php echo $aRec['moduleName']; ?>"><i class="fa fa-eye"></i></a>
+                                                            <?php if ($oTemplate->write_permission): ?>
+                                                                <a class="btn red deleteDefaultTemplate" template_id="<?php echo $oTemplate->id; ?>" moduleName="<?php echo $aRec['moduleName']; ?>"><i class="fa fa-trash"></i></a>
+                                                            <?php else: ?>
+                                                                <a class="btn red"><i class="fa fa-trash" style="color:#ccc;"></i></a>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endif; ?>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel-body p0">
-                        <table class="table datatable-basic datatable-sorting">
-                            <thead>
-                                <tr>
-                                    <th><i class="icon-user"></i> Template Name</th>
-                                    <th><i class="icon-iphone"></i> Type</th>
-                                    <th><i class="icon-iphone"></i> App Name</th>
-                                    <th><i class="icon-iphone"></i> Subject</th>
-                                    <th><i class="icon-calendar"></i> Created</th>
-                                    <th class="text-center"><i class="fa fa-dot-circle-o"></i> Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <!--=======================-->
-                                <?php foreach ($aRec['templates'] as $oTemplate) { ?>
-                                    <?php if ($oTemplate->status == '1' || $oTemplate->status == 'active'): ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo ucfirst($oTemplate->template_name); ?>
-                                            </td>
-
-                                            <td>
-                                                <?php echo ucfirst($oTemplate->template_type); ?>
-                                            </td>
-
-                                            <td>
-                                                <?php echo ucfirst($aRec['moduleName']); ?>
-                                            </td>
-
-                                            <td>
-                                                <?php echo $oTemplate->template_subject; ?>
-                                            </td>
-
-                                            <td>
-                                                <div class="media-left">
-                                                    <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($oTemplate->created)); ?></a></div>
-                                                    <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oTemplate->created)); ?></div>
-                                                </div>
-
-                                            </td>
-
-
-
-
-
-                                            <td style="text-align: center;">
-                                                <a class="btn green_cust_btn <?php if (strtolower($oTemplate->template_type) == 'sms'): ?>wf_editSMSTemplate<?php else: ?>editDefaultTemplate<?php endif; ?>" template_id="<?php echo $oTemplate->id; ?>" moduleName="<?php echo $aRec['moduleName']; ?>"><i class="fa fa-eye"></i></a>
-                                                <?php if ($oTemplate->write_permission): ?>
-                                                    <a class="btn red deleteDefaultTemplate" template_id="<?php echo $oTemplate->id; ?>" moduleName="<?php echo $aRec['moduleName']; ?>"><i class="fa fa-trash"></i></a>
-                                                <?php else: ?>
-                                                    <a class="btn red"><i class="fa fa-trash" style="color:#ccc;"></i></a>
-                                                <?php endif; ?>
-                                            </td>
-                                        </tr>
-                                    <?php endif; ?>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
-            </div>
-        </div>
-
-    </div>
-    <?php
-    endif;
+                <?php
+            }
+        }
+    }
 }
 ?>
 <div id="workflow_template_stripo_modal" class="modal fade">
