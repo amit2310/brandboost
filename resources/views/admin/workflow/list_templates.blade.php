@@ -257,6 +257,14 @@ foreach ($aData as $aRec) {
 
     });
 
+     $('.insert_tag_button').on('click', function () {
+        var tagname = $(this).attr('data-tag-name');
+        var campaignTempBody = $('#smsWorkflowTemplateBody').val();
+        $('#smsWorkflowTemplateBody').val(campaignTempBody + tagname);
+        $('#smsWorkflowTemplateBody').focus();
+        $('#smsWorkflowTemplateBody').keyup();
+    });
+
     $('#smsWorkflowTemplateBody').keyup(function () {
         
         if ($(this).val() == '') {
@@ -279,7 +287,7 @@ foreach ($aData as $aRec) {
         $.ajax({
             url: '/admin/workflow/updateWorkflowTemplate',
             type: "POST",
-            data: {stripo_compiled_html: templateContent, templateId: templateId, moduleName: moduleName, greeting: greeting, introduction: introduction},
+            data: {stripo_compiled_html: templateContent, templateId: templateId, moduleName: moduleName, greeting: greeting, introduction: introduction, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -323,7 +331,7 @@ foreach ($aData as $aRec) {
                         $.ajax({
                             url: '<?php echo base_url('admin/workflow/deleteWorkflowTemplate'); ?>',
                             type: "POST",
-                            data: {moduleName: moduleName, templateID: templateID},
+                            data: {moduleName: moduleName, templateID: templateID, _token: '{{csrf_token()}}'},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {

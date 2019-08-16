@@ -1630,7 +1630,6 @@ class WorkFlow extends Controller {
         }
 
 
-
         if ($userRole == 1) {
             $moduleName = strip_tags($request->moduleName);
             $title = strip_tags($request->template_name);
@@ -1642,14 +1641,12 @@ class WorkFlow extends Controller {
             $stripoCSS = ($request->stripo_css);
 
             $blankStripoContent = $this->getStripoBlankContent();
-
             $blankHtml = $blankStripoContent['html'];
             $blankCss = $blankStripoContent['css'];
 
             $stripoHtml = (!empty($stripoHtml)) ? base64_encode($stripoHtml) : $blankHtml;
             $stripoCSS = (!empty($stripoCSS)) ? base64_encode($stripoCSS) : $blankCss;
             $blankCompiled = (strtolower($type) == 'sms') ? base64_encode('Blank SMS') : $blankStripoContent['compiled'];
-
             $aData = array(
                 'user_id' => 0,
                 'template_name' => $title,
@@ -1669,7 +1666,7 @@ class WorkFlow extends Controller {
             if (in_array($moduleName, array('automation', 'broadcast'))) {
                 $aData['category_id'] = $categoryID;
             }
-
+            $mWorkflow = new WorkflowModel();
             $templateID = $mWorkflow->addWorkflowTemplate($aData, $moduleName);
 
             if ($templateID > 0) {
@@ -1705,6 +1702,7 @@ class WorkFlow extends Controller {
             $templateID = strip_tags($request->templateID);
 
             if (!empty($moduleName) && $templateID > 0) {
+                $mWorkflow = new WorkflowModel();
                 $bDeleted = $mWorkflow->deleteWorkflowTemplate($moduleName, $templateID);
                 if ($bDeleted) {
                     $response['status'] = 'success';
