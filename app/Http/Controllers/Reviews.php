@@ -1650,16 +1650,19 @@ class Reviews extends Controller {
         exit;
     }
 
+
+    
     public function deleteReviewMultipal() {
         $response = array();
-        $post = $this->input->post();
+        $post = Input::post();
         //pre($post);
         $reviewids = $post['reviewid'];
         $mediaName = $post['mediaName'];
+        $mReviews = new ReviewsModel();
         $inc = 0;
         foreach ($reviewids as $reviewid) {
 
-            $getRes = $this->mReviews->getReviewByReviewID($reviewid);
+            $getRes = $mReviews->getReviewByReviewID($reviewid);
             $mUrlArray = unserialize($getRes[0]->media_url);
             $newUrlArray = array();
             foreach ($mUrlArray as $mvalue) {
@@ -1672,7 +1675,7 @@ class Reviews extends Controller {
             }
             $newUrlUn = serialize($newUrlArray);
             $aData = array('media_url' => $newUrlUn);
-            $result = $this->mReviews->updateReview($aData, $reviewid);
+            $result = $mReviews->updateReview($aData, $reviewid);
             $inc++;
         }
 

@@ -815,7 +815,7 @@
 				$.ajax({
 					url: "/reviews/deleteReviewMultipal",
 					type: "POST",
-					data: {reviewid: val, mediaName:mediaName},
+					data: {reviewid: val, mediaName:mediaName,_token: '{{csrf_token()}}'},
 					dataType: "json",
 					success: function (data) {
 						if (data.status == 'success') {
@@ -855,7 +855,7 @@
 					$.ajax({
 						url: "/reviews/deleteReviewMultipal",
 						type: "POST",
-						data: {reviewid: val, mediaName:mediaName},
+						data: {reviewid: val, mediaName:mediaName,_token: '{{csrf_token()}}'},
 						dataType: "json",
 						success: function (data) {
 							if (data.status == 'success') {

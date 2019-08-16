@@ -717,6 +717,7 @@ Route::get('admin/subscriptions','Admin\Subscriptions@index');
 Route::post('payment/changeSubscription','Payment@changeSubscription');
 Route::get('admin/settings/team_accounts/{id}','Admin\Settings@team_accounts');
 Route::get('admin/settings/list_details/{id}','Admin\Settings@list_details');
+Route::post('reviews/deleteReviewMultipal','Reviews@deleteReviewMultipal');
 
 
 
