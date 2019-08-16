@@ -808,6 +808,7 @@ class WorkFlow extends Controller {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mWorkflow = new WorkflowModel();
 
         $subject = strip_tags($request->subject);
         $content = db_in($request->content);
@@ -1182,6 +1183,7 @@ class WorkFlow extends Controller {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mWorkflow  = new WorkflowModel();
 
         $templateID = strip_tags($request->templateId);
         $moduleName = strip_tags($request->moduleName);
@@ -1192,10 +1194,11 @@ class WorkFlow extends Controller {
         //pre($oResponse);
         if (!empty($templateID)) {
             //echo "I am in now";
-
-            $subject = $oResponse->subject;
-            $content = base64_decode($oResponse->html);
-            $compliedHtml = base64_decode($oResponse->stripo_compiled_html);
+            if(isset($oResponse->stripo_compiled_html)) { $stripo_compiled_html = $oResponse->stripo_compiled_html; } else { $stripo_compiled_html='';  }
+            if(isset($oResponse->html)) { $html = $oResponse->html; } else { $html='';  }
+            if(isset($oResponse->subject)) { $subject = $oResponse->subject ;} else { $subject="";  };
+            $content = base64_decode($html);
+            $compliedHtml = base64_decode($stripo_compiled_html);
             $response['status'] = 'success';
             $response['template_id'] = $templateID;
             $response['subject'] = $subject;
@@ -1563,6 +1566,7 @@ class WorkFlow extends Controller {
     public function templates($moduleName = '') {
         //brandboost Templates
         //Onsite Templates
+        $mWorkflow = new WorkflowModel();
         $oOnsiteTemplates = $mWorkflow->getWorkflowDefaultTemplates('brandboost', 'onsite');
 
         //Offsite Templates
@@ -1580,8 +1584,9 @@ class WorkFlow extends Controller {
         //NPS Templates
         $oNPSTemplates = $mWorkflow->getWorkflowDefaultTemplates('nps');
 
-
-        $oCampaignTags = $this->config->item('email_tags');
+       
+        //$oCampaignTags = $this->config->item('email_tags');
+        $oCampaignTags = config('bbconfig.email_tags');
 
         $oCategories = $mWorkflow->getWorkflowTemplateCategories('automation');
 
@@ -1602,11 +1607,11 @@ class WorkFlow extends Controller {
         );
 
         if ($moduleName == 'automation') {
-            $this->template->load('admin/admin_template_new', 'admin/workflow/manage_default_automation_templates', $aData);
+            return view('admin.workflow.manage_default_automation_templates', $aData);
         } else if ($moduleName == 'broadcast') {
-            $this->template->load('admin/admin_template_new', 'admin/workflow/manage_default_broadcast_templates', $aData);
+            return view('admin.workflow.manage_default_broadcast_templates', $aData);
         } else {
-            $this->template->load('admin/admin_template_new', 'admin/workflow/manage_default_templates', $aData);
+            return view('admin.workflow.manage_default_templates', $aData);
         }
     }
 
