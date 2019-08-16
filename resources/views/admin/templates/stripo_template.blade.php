@@ -106,8 +106,8 @@ $template_source = !empty($template_source) ? $template_source : '';
 
             function loadDemoTemplate(callback) {
             //callback({html: <?php echo $html; ?>, css: <?php echo $css; ?>});
-            request('GET', '<?php echo base_url(); ?>/admin/workflow/loadStripoTemplateResources/html/<?php echo $moduleName; ?>/<?php echo $templateID; ?>', null, function (html) {
-                request('GET', '<?php echo base_url(); ?>/admin/workflow/loadStripoTemplateResources/css/<?php echo $moduleName; ?>/<?php echo $templateID; ?>', null, function (css) {
+            request('GET', '<?php echo base_url(); ?>admin/workflow/loadStripoTemplateResources/html/<?php echo $moduleName; ?>/<?php echo $templateID; ?>', null, function (html) {
+                request('GET', '<?php echo base_url(); ?>admin/workflow/loadStripoTemplateResources/css/<?php echo $moduleName; ?>/<?php echo $templateID; ?>', null, function (css) {
                     callback({html: html, css: css});
                     });
                     });

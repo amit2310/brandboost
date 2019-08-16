@@ -145,6 +145,7 @@
 
         $('#frmAddWorkflowTemplate').on('submit', function (e) {
             var formdata = $("#frmAddWorkflowTemplate").serialize();
+            formdata += '&_token={{csrf_token()}}';
             $.ajax({
                 url: '<?php echo base_url('admin/workflow/addWorkflowTemplate'); ?>',
                 type: "POST",

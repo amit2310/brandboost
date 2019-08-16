@@ -96,13 +96,13 @@
             }
 
             function loadDemoTemplate(callback) {
-            //callback({html: <?php echo $html; ?>, css: <?php echo $css; ?>});
-            request('GET', '<?php echo base_url(); ?>/admin/workflow/loadStripoTemplateResources/html/<?php echo $moduleName; ?>/<?php echo $templateID; ?>', null, function (html) {
-                request('GET', '<?php echo base_url(); ?>/admin/workflow/loadStripoTemplateResources/css/<?php echo $moduleName; ?>/<?php echo $templateID; ?>', null, function (css) {
+
+            request('GET', '<?php echo base_url(); ?>admin/workflow/loadStripoTemplateResources/html/<?php echo $moduleName; ?>/<?php echo $templateID; ?>', null, function (html) {
+                request('GET', '<?php echo base_url(); ?>admin/workflow/loadStripoTemplateResources/css/<?php echo $moduleName; ?>/<?php echo $templateID; ?>', null, function (css) {
                     callback({html: html, css: css});
                     });
                     });
-                    }
+            }
         </script>
 
         <script>
@@ -161,8 +161,8 @@
                     getAuthToken: function (callback) {
                     request('POST', 'https://plugins.stripo.email/api/v1/auth',
                             JSON.stringify({
-                            pluginId: '<?php echo $this->config->item("stripo_plugin_id"); ?>',
-                                    secretKey: '<?php echo $this->config->item("stripo_secret_key"); ?>'
+                            pluginId: '<?php echo config('bbconfig.stripo_plugin_id'); ?>',
+                                    secretKey: '<?php echo config('bbconfig.stripo_secret_key'); ?>'
                             }),
                             function (data) {
                             callback(JSON.parse(data).token);
@@ -212,8 +212,8 @@
             window.StripoApi.compileEmail(function (error, compliledHtml) {
             var moduleName = '<?php echo $moduleName; ?>';
             var subject = $("#wf_campaign_subject").val();
-            var campaignId = '<?php echo $campaignID; ?>';
-            var template_source = '<?php echo $template_source;?>';
+            var campaignId = '<?php if(!empty($campaignID)) { echo $campaignID; } else { echo '';} ?>';
+            var template_source = '<?php if(!empty($template_source)) { echo $template_source; } else { echo '';} ?>';
             var draftID = $("#draft_id").val();
                     $.ajax({
                     url: '/admin/workflow/saveWorkflowDraft',
