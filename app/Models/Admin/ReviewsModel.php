@@ -306,22 +306,24 @@ class ReviewsModel extends Model
 
     
 
+    /**
+    * This function will return user review list 
+    * @param type $userID
+    * @return type
+    */
+
     public function getReviewsUserList($userID = 1, $userRole) {
 
-        $this->db->select("tbl_users.*");
-        $this->db->distinct('tbl_users.id');
-        $this->db->join("tbl_reviews", "tbl_brandboost.id=tbl_reviews.campaign_id", "INNER");
-
-        $this->db->join("tbl_users", "tbl_reviews.user_id = tbl_users.id", "INNER");
-
-        if ($userRole != '1') {
-            $this->db->where("tbl_brandboost.user_id", $userID);
-        }
-        $rResponse = $this->db->get("tbl_brandboost");
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
+        $oData = DB::table('tbl_brandboost')
+        ->select('tbl_users.*')
+         ->distinct('tbl_users.id')
+        ->leftJoin('tbl_reviews', 'tbl_brandboost.id','=','tbl_reviews.campaign_id')
+         ->join('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
+        ->when($userRole != '1', function($query) use ($userID){
+        return $query->where("tbl_brandboost.user_id", $userID);
+        })->get();
+        return  $oData;
+        
     }
 
     public function getCampaignReviewsDetail($campaignID = '', $userID='') {

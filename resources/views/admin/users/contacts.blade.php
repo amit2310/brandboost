@@ -1,3 +1,10 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/tables/datatables/datatables.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/datatables_sorting_date_new.js"></script>
@@ -124,8 +131,7 @@
 				
 				<div class="modal-body">
 					
-					<div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-					<?php echo validation_errors(); ?></div>
+					
 					
 					<div class="form-group">
 						<label class="control-label col-lg-3">First Name</label>
@@ -190,8 +196,7 @@
 				</div>
 				<div class="modal-body">
 					
-					<div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-					<?php echo validation_errors(); ?></div>
+					
 					
 					<div class="form-group">
 						<label class="control-label col-lg-3">First Name</label>
@@ -556,4 +561,5 @@
 		});
 		
 	});
-</script>		
+</script>	
+@endsection	
