@@ -178,7 +178,10 @@ Route::post('admin/comments/deleteComment','Admin\Comments@deleteComment');
 Route::post('admin/reviews/deleteReviewNote','Admin\Reviews@deleteReviewNote');
 Route::post('admin/comments/update_comment_status','Admin\Comments@update_comment_status');
 Route::post('admin/reviews/update_note','Admin\Reviews@update_note');
+
+
 Route::post('reviews/displayReview/{id}','Reviews@displayReview');
+Route::get('reviews/addcomment','Reviews@addComment');
 
 
 Route::post('admin/comments/add_comment','Admin\Comments@addComment');

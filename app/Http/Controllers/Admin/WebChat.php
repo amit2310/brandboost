@@ -684,9 +684,6 @@ class WebChat extends Controller {
                 <span style="display:none" id="fav_star_<?php echo $userID; ?>"></span>
                 <span class="slider-username contacts"><?php echo $first_name . ' ' . $last_name; ?> &nbsp; <i class="fa  star_icon <?php echo $value->favourite == 1 ? 'fa-star yellow' : 'fa-star-o'; ?> favouriteUser" userId="<?php echo $value->id; ?>"></i></span>
 
-
-
-
                 <span id="Small_assign_<?php echo $userid; ?>" class="slider-phone contacts"><span style="float: left; width: 100%; font-weight:300!important; color: #6a7995 !important; font-size: 12px; margin-bottom: 3px; ">
                         <?php if (assignto($token) != "") { ?>Assigned to:&nbsp <?php
                             echo assignto($token);
@@ -798,8 +795,6 @@ class WebChat extends Controller {
             $chatName = explode(" ", $value->user_name);
             $chatMessageRes = getLastMessage($token);
             $getlastmessage = $chatMessageRes->message;
-
-
 
             $fileext = explode('.', $getlastmessage);
             $fileext = end($fileext);

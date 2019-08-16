@@ -21,6 +21,7 @@ class Reviews extends Controller {
 		$mUser = new UsersModel();
         if (!empty($widgetHash)) {
             $oCampaign = $mBrandboost->getWidgetInfo($widgetHash, $hash = true);
+			
             $userID = $oCampaign->user_id;
             $widgetID = $oCampaign->id;
             if ($userID > 0) {
@@ -55,19 +56,21 @@ class Reviews extends Controller {
 
             if (!empty($campaignId)) {
                 $this->addWidgetTrackData($widgetID, $userID, '', $widgetType, $campaignId, 'view', 'review');
-
+		
                 $aReviews = $this->getCampaignReviews($campaignId, $aSettings);
-
+				
                 $aPorductReviews = $this->getProductsCampaignReviews($campaignId, 'product', $aSettings);
+				
                 $aServiceReviews = $this->getProductsCampaignReviews($campaignId, 'service', $aSettings);
                 $aSiteReviews = $this->getProductsCampaignReviews($campaignId, 'site', $aSettings);
-                //pre($aServiceReviews);
+               
                 $allPorductsReviews = $mReviews->getActiveCampaignReviewsByType($campaignId, 'product');
                 $allServicesReviews = $mReviews->getActiveCampaignReviewsByType($campaignId, 'service');
                 $allSiteReviews = $mReviews->getActiveCampaignReviewsByType($campaignId, 'site');
+				
                 $allReviews = $mReviews->getReviews($campaignId, $aSettings);
                 $bbData = $mReviews->getBrandBoostCampaign($campaignId, $hash = false);
-
+				
                 $widgetData = $mReviews->getWidgetData($campaignId);
                 if ((sizeof($widgetData) + 1) % $oftenBBWD == 0) {
                     $aWidgetData = array(
@@ -88,28 +91,29 @@ class Reviews extends Controller {
 
                 $mReviews->addWidgetData($aWidgetData);
                 addPageAndVisitorInfo($userID, 'Widget', $campaignId, 'Visit');
-
+				
                 $crWidgetData = $mReviews->getWidgetCRU($campaignId);
+				
                 if ((sizeof($widgetData) + 1) % $oftenBBWD == 0) {
-                    $center_popup_widget = $this->load->view('reviews/center_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'center_popup_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
+					$center_popup_widget = view('reviews.center_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'center_popup_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)))->render();
 
-                    $bottom_fixed_widget = $this->load->view('reviews/bottom_fix_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'bottom_fixed_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
+					$bottom_fixed_widget = view('reviews.bottom_fix_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'bottom_fixed_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)))->render();
 
-                    $vertical_popup_widget = $this->load->view('reviews/vertical_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'vertical_popup_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
+					$vertical_popup_widget = view('reviews.vertical_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'vertical_popup_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)))->render();
 
-                    $button_widget = $this->load->view('reviews/button_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'button_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
+					$button_widget = view('reviews.button_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'button_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)))->render();
 
-                    $reviews_feed_widget = $this->load->view('reviews/feed_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'reviews_feed_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)), true);
+					$reviews_feed_widget = view('reviews.feed_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'aReviews' => $aReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'reviews_feed_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)))->render();
                 }
             }
         }
         $aData = array((object) array(
-                'method' => 'list',
-                'center_popup_widget_result' => utf8_encode($center_popup_widget),
-                'bottom_fixed_widget_result' => utf8_encode($bottom_fixed_widget),
-                'vertical_popup_widget_result' => utf8_encode($vertical_popup_widget),
-                'button_widget_result' => utf8_encode($button_widget),
-                'reviews_feed_widget_result' => utf8_encode($reviews_feed_widget),
+			'method' => 'list',
+			'center_popup_widget_result' => utf8_encode($center_popup_widget),
+			'bottom_fixed_widget_result' => utf8_encode($bottom_fixed_widget),
+			'vertical_popup_widget_result' => utf8_encode($vertical_popup_widget),
+			'button_widget_result' => utf8_encode($button_widget),
+			'reviews_feed_widget_result' => utf8_encode($reviews_feed_widget),
         ));
 
         echo json_encode($aData);
@@ -196,10 +200,137 @@ class Reviews extends Controller {
     }
 	
 	
+	public function getProductsCampaignReviews($campaignID, $productType, $aSettings = array()) {
+		$mBrandboost = new BrandboostModel();
+		$mReviews = new ReviewsModel();
+		$mUser = new UsersModel();
+		
+        $aSettings['start'] = $offset;
+        $aSettings['review_limit'] = $limit;
+
+        $oReviews = $mReviews->getReviewsByProductType($campaignID, $aSettings, $productType);
+        //pre($oReviews);
+        if (!empty($oReviews)) {
+            foreach ($oReviews as $oReview) {
+                $aReview = (array) $oReview;
+                $reviewID = $aReview['id'];
+                $userID = $aReview['user_id'];
+                $aReviewData[$reviewID] = $aReview;
+                $userData = $mUser->getUserInfo($userID);
+                // Get Helpful
+                $aHelpful = $mReviews->countHelpful($reviewID);
+                $aReviewData[$reviewID]['total_helpful'] = $aHelpful['yes'];
+                $aReviewData[$reviewID]['total_helpful_no'] = $aHelpful['no'];
+                $aReviewData[$reviewID]['user_data'] = (array) $userData;
+
+                //Get Comments Block
+                $oComments = $mReviews->getComments($reviewID, $aSettings);
+                $aProductData = $mBrandboost->getProductDataById($oReview->product_id);
+                $aCommentsData = array();
+                if (!empty($oComments)) {
+                    foreach ($oComments as $oComment) {
+                        $aComment = (array) $oComment;
+                        $aCommentsData[$aComment['id']] = $aComment;
+                        unset($aComment);
+                    }
+                }
+                $aReviewData[$reviewID]['comment_block'] = $aCommentsData;
+                $aReviewData[$reviewID]['product_data'] = $aProductData;
+                unset($aCommentsData);
+            }
+            return $aReviewData;
+        }
+    }
 	
 	
-	
-	
+	public function addComment(Request $request) {
+        $mBrandboost = new BrandboostModel();
+		$mReviews = new ReviewsModel();
+		$mUser = new UsersModel();
+		$mSubscriber = new SubscriberModel();
+
+		$reviewID = $request->bbrid;
+		$pCommentID = $request->bbpcid;
+		$fullName = $request->bbcmtname;
+		$email = $request->bbcmtemail;
+		$password = $request->bbcmtpassword;
+		$phone = $request->bbcmtphone;
+		$commentText = $request->bbcmt;
+		
+		$parentCID = $pCommentID == '' ? 0 : $pCommentID;
+
+		$getReview = $mReviews->getReviewByReviewID($reviewID);
+
+		$reviewCampaignId = $getReview[0]->campaign_id;
+
+
+		$reviewUserID = $getReview[0]->user_id;
+		$reviewType = $getReview[0]->review_type;
+		$getBrandboostDetail = $mBrandboost->getBBInfo($reviewCampaignId);
+		$brandBoostUserId = $getBrandboostDetail->user_id;
+		
+		$reviewUD = $mReviews->getBBWidgetUserData($reviewID);
+		$this->addWidgetTrackData($reviewUD[0]->widget_id, $reviewUD[0]->user_id, $reviewID, $reviewUD[0]->widget_type, $reviewUD[0]->campaign_id, 'click', 'review');
+		$this->addWidgetTrackData($reviewUD[0]->widget_id, $reviewUD[0]->user_id, $reviewID, $reviewUD[0]->widget_type, $reviewUD[0]->campaign_id, 'comment', 'review');
+
+		if (empty($userID) && (empty($fullName) || empty($email))) {
+			//Display errors, fields should not be blank
+			$response = array('status' => 'error', 'msg' => 'form fields are not validated!');
+			return json_encode($response);
+		}
+
+		if (empty($userID)) {
+			$aName = explode(' ', $fullName, 2);
+			$firstName = $aName[0];
+			$lastName = $aName[1];
+			$aRegistrationData = array(
+				'firstname' => $firstName,
+				'lastname' => $lastName,
+				'email' => $email,
+				'phone' => $phone
+			);
+			$aRegistrationData['clientID'] = $brandBoostUserId;
+			$userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
+		}
+		
+		
+		if (empty($userID)) {
+			$response = array('status' => 'error', 'msg' => 'User registration has failed');
+			return json_encode($response);
+		}
+
+		// Collect comment
+		$aCommentData = array(
+			'review_id' => $reviewID,
+			'user_id' => $userID,
+			'parent_comment_id' => $parentCID,
+			'content' => $commentText,
+			'status' => 2,
+			'created' => date("Y-m-d H:i:s")
+		);
+
+		$bSaved = $mReviews->saveComment($aCommentData);
+		addPageAndVisitorInfo($brandBoostUserId, 'Widget Review', serialize($reviewCampaignId), 'Add Comment');
+		if ($bSaved) {
+			// Send Notification
+			$aNotificationDataCus = array(
+				'user_id' => $brandBoostUserId,
+				'event_type' => 'added_' . $reviewType . '_comment',
+				'message' => ucfirst($reviewType) . ' Comment has been added successfully',
+				'link' => base_url() . 'admin/brandboost/reviewdetails/' . $reviewID,
+				'created' => date("Y-m-d H:i:s")
+			);
+			$eventName = "sys_onsite_review_add";
+			add_notifications($aNotificationDataCus, $eventName, $brandBoostUserId, $notifyAdmin = '1');
+
+			$response = array('status' => 'ok', 'msg' => 'Thank you for posting your comment. Your review was sent successfully and is now waiting to publish it.');
+		} else {
+			$response = array('status' => 'error', 'msg' => 'Error while posting your comment. Try again');
+		}
+
+		echo json_encode($response);
+		exit;
+    }
 	
 	
 	
@@ -807,214 +938,6 @@ class Reviews extends Controller {
         exit;
     }
 
-    public function saveNewReview_old() {
-        $response = array();
-        $post = $this->input->post();
-
-        if (!empty($post)) {
-
-            $reviewTitle = strip_tags($post['title']);
-            $description = strip_tags($post['description']);
-            $campaignID = strip_tags($post['campaign_id']);
-            $type = $post['reviewType'];
-            $ratingVal = strip_tags($post['ratingValue']);
-
-            $fullName = strip_tags($post['fullname']);
-            $email = strip_tags($post['emailid']);
-            $mobile = strip_tags($post['phone']);
-            $display_name = $post['display_name'];
-            if (!empty($display_name)) {
-                $showName = 0;
-            } else {
-                $showName = 1;
-            }
-
-            $aBrandboost = $this->mInviter->getBBInfo($campaignID);
-            $clientID = $aBrandboost->user_id;
-
-
-
-            $siteReviewFile = $post['question_uploaded_name'];
-            $siteReviewFileArray = array();
-
-            foreach ($siteReviewFile['media_url'] as $key => $fileData) {
-                $siteReviewFileArray[$key]['media_url'] = $fileData;
-                $siteReviewFileArray[$key]['media_type'] = $siteReviewFile['media_type'][$key];
-            }
-
-            $bRequireGlobalSubs = false;
-            //Check if user exist
-            $userID = $this->mUser->checkIfUser(array('email' => $email));
-
-            // User does not exists then registration
-            if (empty($userID)) {
-
-                //Check if exists in subscriber list
-                //$subscriberID = $this->mUser->checkIfSubscriber(array('email' => $email));
-                $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($clientID, 'email', $email);
-                if (!empty($oGlobalUser)) {
-                    $subscriberID = $oGlobalUser->id;
-                }
-
-                if ($subscriberID > 0) {
-                    //$aSubscriber = $this->mUser->getSubscriberInfo($subscriberID);
-                    $firstName = $oGlobalUser->firstname;
-                    $lastName = $oGlobalUser->lastname;
-
-                    $fullName = $firstName . ' ' . $lastName;
-                    $email = $oGlobalUser->email;
-                    $mobile = $oGlobalUser->mobile;
-                    $userID = $oGlobalUser->user_id;
-                    $globalSubscriberID = $oGlobalUser->id;
-
-                    if ($userID > 0) {
-                        $bRequireGlobalSubs = true;
-                    }
-                } else {
-                    //Global Subscriber Not exists yet, add new
-                    $aNameChunks = explode(" ", $fullName);
-                    $firstName = $aNameChunks[0];
-                    $lastName = str_replace($firstName, "", $fullName);
-                    $aSubscriberData = array(
-                        'owner_id' => $clientID,
-                        'firstName' => $firstName,
-                        'lastName' => $lastName,
-                        'email' => $email,
-                        'phone' => $mobile,
-                        'created' => date("Y-m-d H:i:s")
-                    );
-                    $subscriberID = $globalSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
-                }
-
-                if (empty($fullName) || empty($email)) {
-                    //Display errors, fields should not be blank
-                    $response = array('status' => 'error', 'msg' => 'form fields are not validated!');
-                    return json_encode($response);
-                }
-
-                if ($bRequireGlobalSubs == false) { //This means no user_id attached to subscriber
-                    //My Code
-                    $aNameChunks = explode(" ", $fullName);
-                    $firstName = $aNameChunks[0];
-                    $lastName = str_replace($firstName, "", $fullName);
-                    $aRegistrationData = array(
-                        'firstname' => $firstName,
-                        'lastname' => $lastName,
-                        'email' => $email,
-                        'mobile' => $mobile,
-                    );
-                    $userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
-
-                    if ($userID > 0) {
-                        $bRequireGlobalSubs = true;
-                    }
-                }
-
-                if ($userID > 0 && $bRequireGlobalSubs == true) {
-                    $aUpdateGlobalSubsData = array(
-                        'user_id' => $userID,
-                        'updated' => date("Y-m-d H:i:s")
-                    );
-
-                    $bUpdated = $this->mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
-                }
-
-                if (empty($userID)) {
-                    $response = array('status' => 'error', 'msg' => 'User registration has failed');
-                    return json_encode($response);
-                }
-            }
-
-            //Collect Review
-
-            $aReviewData = array(
-                'user_id' => $userID,
-                'review_type' => $reviewType,
-                'campaign_id' => $campaignID,
-                'review_title' => $reviewTitle,
-                'comment_text' => $description,
-                'media_url' => serialize($siteReviewFileArray),
-                'ratings' => $ratingVal,
-                'created' => date("Y-m-d H:i:s")
-            );
-
-            if ($type == 'site') {
-                //Save Site Reviews
-                $bSaved = $this->mReviews->saveSiteReview($aReviewData);
-            } else if ($type == 'product') {
-                //Save Brandboost Reviews
-                $reviewID = $this->mReviews->saveReview($aReviewData);
-                if ($reviewID > 0) {
-                    $bSaved = true;
-                }
-                $this->session->set_userdata('review_id', $reviewID);
-            } else if ($type == 'recomendation') {
-                //Update Recommmendations into brandboost reviews
-                $bSaved = $this->mReviews->updateReview(array('recvalue' => $recommendedValue), $reviewID);
-            }
-
-            if ($bSaved) {
-
-                //Send notification only for brandboost reivews not for the site view
-
-                if ($type == 'product') {
-                    $aNotificationDataCus = array(
-                        'user_id' => $clientID,
-                        'event_type' => 'added_' . $reviewType . '_review',
-                        'message' => 'A review has been added successfully',
-                        'link' => base_url() . 'admin/brandboost/reviews/' . $campaignID,
-                        'created' => date("Y-m-d H:i:s")
-                    );
-                    add_notifications($aNotificationDataCus);
-
-                    $aNotificationDataAd = array(
-                        'user_id' => 1,
-                        'event_type' => 'added_' . $reviewType . '_review',
-                        'message' => 'A review has been added successfully',
-                        'link' => base_url() . 'admin/brandboost/reviews/' . $campaignID,
-                        'created' => date("Y-m-d H:i:s")
-                    );
-                    add_notifications($aNotificationDataAd);
-
-                    if (!empty($ratingVal)) {
-                        if ($ratingVal <= 2) {
-                            $feedType = 'Negative';
-                        } else if ($ratingVal == 3) {
-                            $feedType = 'Neutral';
-                        } else if ($ratingVal >= 4) {
-                            $feedType = 'Positive';
-                        }
-                    }
-
-                    //Send Thank you email
-                    $aFeedbackRes = array(
-                        'feedback_type' => $feedType,
-                        'client_id' => $clientID,
-                        'subscriber_id' => $subscriberID,
-                        'brandboost_id' => $campaignID,
-                        'email' => $email
-                    );
-
-                    //$this->sendFeedbackThankyouEmail($aFeedbackRes);
-                }
-
-                //Update userid of the subscriber in subscriber list
-
-                if ($subscriberID > 0) {
-                    $this->mReviews->updateSubscriber(array('user_id' => $userID), $subscriberID);
-                }
-            }
-
-            // Take them to the next step page in the flow
-            $response = array('status' => 'success', 'redirect_url' => base_url('/store/explore/' . $aBrandboost->hashcode));
-        } else {
-            $response = array('status' => 'error', 'msg' => 'Unauthorized Access!');
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
     public function saveReviewByEmailTemplate() {
 
         $response = array();
@@ -1461,50 +1384,7 @@ class Reviews extends Controller {
         exit;
     }
 
-    public function getProductsCampaignReviews($campaignID, $productType, $aSettings = array()) {
-        //$aUser = getLoggedUser();
-        $aUser = array();
-        if (!empty($aUser)) {
-            $aSettings['logged'] = true;
-            $aSettings['logged_id'] = $aUser->id;
-        }
-        $aSettings['start'] = $offset;
-        $aSettings['review_limit'] = $limit;
-
-        $oReviews = $this->mReviews->getReviewsByProductType($campaignID, $aSettings, $productType);
-        //pre($oReviews);
-        if (!empty($oReviews)) {
-            foreach ($oReviews as $oReview) {
-                $aReview = (array) $oReview;
-                $reviewID = $aReview['id'];
-                $userID = $aReview['user_id'];
-                $aReviewData[$reviewID] = $aReview;
-                $userData = $this->mUser->getUserInfo($userID);
-                // Get Helpful
-                $aHelpful = $this->mReviews->countHelpful($reviewID);
-                $aReviewData[$reviewID]['total_helpful'] = $aHelpful['yes'];
-                $aReviewData[$reviewID]['total_helpful_no'] = $aHelpful['no'];
-                $aReviewData[$reviewID]['user_data'] = (array) $userData;
-
-                //Get Comments Block
-                //$oComments = $this->getCommentsBlock($reviewID);
-                $oComments = $this->mReviews->getComments($reviewID, $aSettings);
-                $aProductData = $this->mBrandboost->getProductDataById($oReview->product_id);
-                $aCommentsData = array();
-                if (!empty($oComments)) {
-                    foreach ($oComments as $oComment) {
-                        $aComment = (array) $oComment;
-                        $aCommentsData[$aComment['id']] = $aComment;
-                        unset($aComment);
-                    }
-                }
-                $aReviewData[$reviewID]['comment_block'] = $aCommentsData;
-                $aReviewData[$reviewID]['product_data'] = $aProductData;
-                unset($aCommentsData);
-            }
-            return $aReviewData;
-        }
-    }
+    
 
     
 
@@ -1741,102 +1621,7 @@ class Reviews extends Controller {
         }
     }
 
-    public function addcomment() {
-        $response = array();
-        $post = $this->input->post();
-
-        $userID = $post['userID'];
-
-        if (!empty($post)) {
-            $reviewID = strip_tags($post['bbrid']);
-            $pCommentID = strip_tags($post['bbpcid']);
-
-            $fullName = strip_tags($post['bbcmtname']);
-            $email = strip_tags($post['bbcmtemail']);
-            $password = strip_tags($post['bbcmtpassword']);
-            $phone = strip_tags($post['bbcmtphone']);
-            $commentText = strip_tags($post['bbcmt']);
-            $parentCID = $pCommentID == '' ? 0 : $pCommentID;
-
-            $getReview = $this->mReviews->getReviewByReviewID($reviewID);
-
-            $reviewCampaignId = $getReview[0]->campaign_id;
-
-
-            $reviewUserID = $getReview[0]->user_id;
-            $reviewType = $getReview[0]->review_type;
-
-            //$getBrandboostDetail = getBrandboostDetail($reviewCampaignId);
-            $getBrandboostDetail = $this->mInviter->getBBInfo($reviewCampaignId);
-            $brandBoostUserId = $getBrandboostDetail->user_id;
-
-            $reviewUD = $this->mReviews->getBBWidgetUserData($reviewID);
-            $this->addWidgetTrackData($reviewUD[0]->widget_id, $reviewUD[0]->user_id, $reviewID, $reviewUD[0]->widget_type, $reviewUD[0]->campaign_id, 'click', 'review');
-            $this->addWidgetTrackData($reviewUD[0]->widget_id, $reviewUD[0]->user_id, $reviewID, $reviewUD[0]->widget_type, $reviewUD[0]->campaign_id, 'comment', 'review');
-
-
-
-            if (empty($userID) && (empty($fullName) || empty($email))) {
-                //Display errors, fields should not be blank
-                $response = array('status' => 'error', 'msg' => 'form fields are not validated!');
-                return json_encode($response);
-            }
-
-            if (empty($userID)) {
-                $aName = explode(' ', $fullName, 2);
-                $firstName = $aName[0];
-                $lastName = $aName[1];
-                $aRegistrationData = array(
-                    'firstname' => $firstName,
-                    'lastname' => $lastName,
-                    'email' => $email,
-                    'phone' => $phone
-                );
-                $aRegistrationData['clientID'] = $brandBoostUserId;
-                $userID = $this->mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
-                //$userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
-            }
-
-
-
-            if (empty($userID)) {
-                $response = array('status' => 'error', 'msg' => 'User registration has failed');
-                return json_encode($response);
-            }
-
-            // Collect comment
-            $aCommentData = array(
-                'review_id' => $reviewID,
-                'user_id' => $userID,
-                'parent_comment_id' => $parentCID,
-                'content' => $commentText,
-                'status' => 2,
-                'created' => date("Y-m-d H:i:s")
-            );
-
-            $bSaved = $this->mReviews->saveComment($aCommentData);
-            addPageAndVisitorInfo($brandBoostUserId, 'Widget Review', serialize($reviewCampaignId), 'Add Comment');
-            if ($bSaved) {
-                // Send Notification
-                $aNotificationDataCus = array(
-                    'user_id' => $brandBoostUserId,
-                    'event_type' => 'added_' . $reviewType . '_comment',
-                    'message' => ucfirst($reviewType) . ' Comment has been added successfully',
-                    'link' => base_url() . 'admin/brandboost/reviewdetails/' . $reviewID,
-                    'created' => date("Y-m-d H:i:s")
-                );
-                $eventName = "sys_onsite_review_add";
-                add_notifications($aNotificationDataCus, $eventName, $brandBoostUserId, $notifyAdmin = '1');
-
-                $response = array('status' => 'ok', 'msg' => 'Thank you for posting your comment. Your review was sent successfully and is now waiting to publish it.');
-            } else {
-                $response = array('status' => 'error', 'msg' => 'Error while posting your comment. Try again');
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
+    
 
     public function sendFeedbackThankyouEmail($aData) {
         if (!empty($aData)) {
