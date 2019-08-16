@@ -609,6 +609,7 @@ class Tags extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mTag = new TagsModel();
         
         if (empty($post) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -642,16 +643,11 @@ class Tags extends Controller {
         }
     }
 
-    public function applyQuestionTag() {
+    public function applyQuestionTag(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mTag = new TagsModel();
         
-        if (empty($post) || empty($userID)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-
         $questionID = base64_url_decode(strip_tags($request->question_id));
         $aTagID = $request->applytag;
         $aInput = array(
@@ -666,7 +662,7 @@ class Tags extends Controller {
             //Get refreshed tag list
             $oTags = $mTag->getTagsDataByQuestionID($questionID);
 
-            $sTagDropdown = $this->load->view("admin/tags/tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'question_id', 'fieldValue' => base64_url_encode($questionID), 'actionName' => 'question-tag'), true);
+            $sTagDropdown = view("admin.tags.tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'question_id', 'fieldValue' => base64_url_encode($questionID), 'actionName' => 'question-tag', 'actionClass' => 'actionClass'))->render();
 
             $response = array('status' => 'success', 'msg' => 'Tag added successfully!', 'refreshTags' => $sTagDropdown, 'id' => $questionID);
             echo json_encode($response);
@@ -780,12 +776,6 @@ class Tags extends Controller {
         //Instantiate Broadcast model to get its methods and properties
         $mTag = new TagsModel();
         
-        if (empty($request) || empty($userID)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-
         $subscriberID = strip_tags($request->tag_subscriber_id);
         $aTagID = $request->applytag;
         $aInput = array(
@@ -794,6 +784,8 @@ class Tags extends Controller {
         );
 
         $bAdded = $mTag->addSubscriberTag($aInput);
+        pre($bAdded);
+        die();
 
         //Get refreshed tag list
         $oTags = $mTag->getSubscriberTags($subscriberID);

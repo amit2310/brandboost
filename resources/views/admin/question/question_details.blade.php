@@ -864,6 +864,7 @@ $questionDescription = $oQuestion->question;
 
         $("#frmQuestionTagListModal").submit(function () {
             var formdata = $("#frmQuestionTagListModal").serialize();
+            formdata += '&_token={{csrf_token()}}';
             $('.overlaynew').show();
             $.ajax({
                 url: '<?php echo base_url('admin/tags/applyQuestionTag'); ?>',
