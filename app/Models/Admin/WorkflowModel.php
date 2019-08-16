@@ -1829,14 +1829,10 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-
-        $this->db->where('id', $id);
-        $result = $this->db->update($tableName, $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        
+        
+         $aData =  DB::table($tableName)->where('id', $id)->update($aData);
+         return true;
     }
 
     public function deleteWorkflowTemplate($moduleName, $id) {

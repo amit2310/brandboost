@@ -709,6 +709,9 @@ Route::post('admin/feedback/getFeedbackNotes','Admin\Feedback@getFeedbackNotes')
 Route::post('admin/feedback/updateFeedbackNote','Admin\Feedback@updateFeedbackNote');
 Route::post('admin/feedback/deleteFeedbackNote','Admin\Feedback@deleteFeedbackNote');
 Route::post('admin/transactions/addManualCredits','Admin\Transactions@addManualCredits');
+Route::get('admin/workflow/templates/{type}','Admin\WorkFlow@templates');
+Route::get('admin/workflow/getWorkflowTemplate','Admin\WorkFlow@getWorkflowTemplate');
+Route::get('admin/workflow/updateWorkflowTemplate','Admin\WorkFlow@updateWorkflowTemplate');
 
 
 

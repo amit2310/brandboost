@@ -231,7 +231,7 @@ foreach ($aData as $aRec) {
         $.ajax({
             url: '/admin/workflow/getWorkflowTemplate',
             type: "POST",
-            data: {templateId: templateId, moduleName: moduleName},
+            data: {templateId: templateId, moduleName: moduleName,_token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

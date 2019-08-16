@@ -1,3 +1,12 @@
+@extends('layouts.main_template') 
+
+@section('title')
+<?php //echo $title; ?>
+@endsection
+
+@section('contents')
+<?php error_reporting(0); ?>
+
 <div class="content">
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
     <div class="page_header">
@@ -25,7 +34,7 @@
     <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
     <div class="tab-content">
-        <?php $this->load->view("admin/workflow/list_broadcast_templates"); ?>
+    @include("admin.workflow.list_broadcast_templates")
     </div>
 </div>
 
@@ -154,4 +163,4 @@
 
     });
 </script>
-
+@endsection
