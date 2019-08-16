@@ -443,6 +443,7 @@ class Lists extends Controller {
     /**
      * Used to update contact lists
      */
+    
     public function updateList(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         

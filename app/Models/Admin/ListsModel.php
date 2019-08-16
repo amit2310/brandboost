@@ -119,33 +119,44 @@ class ListsModel extends Model {
         return $insert_id;        
     }
 
+
+      /**
+     * Used to update a list
+     * @param type $aData
+     * @return boolean
+     */
+
     public function updateLists($aData, $id, $userID = '') {
-        $this->db->where("id", $id);
-        if ($userID > 0) {
-            $this->db->where("user_id", $userID);
-        }
-        $result = $this->db->update("tbl_common_lists", $aData);
-        if ($result) {
+
+        $aData =  DB::table('tbl_common_lists')
+          ->where("id", $id)
+            ->when($userID > 0, function($query) use ($userID){
+            return $query->where("user_id", $userID);
+            })->update($aData);
             return true;
-        } else {
-            return false;
-        }
+        
     }
 
+   
+     /**
+     * Used to delete a list
+     * @param type $aData
+     * @return boolean
+     */
+
     public function deleteLists($id, $userID = '') {
-        $this->db->where("id", $id);
-        if ($userID > 0) {
-            $this->db->where("user_id", $userID);
-        }
-        $result = $this->db->update("tbl_common_lists", array('delete_status' => '1'));
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+         $aData =  DB::table('tbl_common_lists')
+         ->where("id", $id)
+         ->when($userID > 0, function($query) use ($userID){
+            return $query->where("user_id", $userID);
+            })->update(array('delete_status' => '1'));
+         return true;
+
+       
     }
 
     public function archiveLists($id, $userID = '') {
+
         $this->db->where("id", $id);
         if ($userID > 0) {
             $this->db->where("user_id", $userID);
@@ -158,17 +169,21 @@ class ListsModel extends Model {
         }
     }
 
+
+      /**
+     * Used to update a list status
+     * @param type $aData
+     * @return boolean
+     */
+
     public function updateListStatus($id, $userID = '', $status) {
-        $this->db->where("id", $id);
-        if ($userID > 0) {
-            $this->db->where("user_id", $userID);
-        }
-        $result = $this->db->update("tbl_common_lists", array('status' => $status));
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        $aData =  DB::table('tbl_common_lists')
+        ->where("id", $id)
+        ->when($userID > 0, function($query) use ($userID){
+            return $query->where("user_id", $userID);
+            })->update(array('status' => $status));
+        return true;
+        
     }
 
     public function addListSubscriber($aData) {
