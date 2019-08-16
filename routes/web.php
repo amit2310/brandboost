@@ -708,6 +708,7 @@ Route::post('admin/feedback/saveFeedbackNotes','Admin\Feedback@saveFeedbackNotes
 Route::post('admin/feedback/getFeedbackNotes','Admin\Feedback@getFeedbackNotes');
 Route::post('admin/feedback/updateFeedbackNote','Admin\Feedback@updateFeedbackNote');
 Route::post('admin/feedback/deleteFeedbackNote','Admin\Feedback@deleteFeedbackNote');
+Route::post('admin/transactions/addManualCredits','Admin\Transactions@addManualCredits');
 
 
 

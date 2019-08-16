@@ -178,7 +178,7 @@ class Users extends Controller
 
       public function twiliomessage($userID) {
 
-       $mTwillio = new Twillio_model();
+        $mTwillio = new Twillio_model();
         $getTwillioByUser = $mTwillio->getTwillioByUser($userID);
         $result = $getTwillioByUser[0];
         $sid = $result->account_sid;
@@ -189,6 +189,38 @@ class Users extends Controller
         $client = new Client($sid, $token);
 
         return view('admin.users.twilio.index', array('result' => $result, 'client' => $client));
+    }
+
+
+
+     
+        /**
+        * This function is used to fetch the userdetails on the behalf of user id
+        * @return type 
+        */
+
+        public function getUserInfo() {
+        
+        $response = array();
+        $response['status'] = 'error';
+        $post = array();
+        if (Input::post()) {
+            $post = Input::post();
+            $userID = strip_tags($post['uid']);
+            $Users = new UsersModel();
+            $oUsers = $Users->getUserInfo(base64_url_decode($userID));
+           
+            
+            if ($oUsers) {
+                $response['status'] = 'success';
+                $response['datarow'] = $oUsers;
+            } else {
+                $response['message'] = "Error: Something went wrong, try again";
+            }
+
+            echo json_encode($response);
+            exit;
+        }
     }
 
 

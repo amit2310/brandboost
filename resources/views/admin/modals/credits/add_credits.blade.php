@@ -3,6 +3,7 @@
 
         <div class="modal-content">
             <form method="post" name="frmAddUserCredit" class="form-horizontal" id="frmAddUserCredit">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Add User Credits</h5>
@@ -112,7 +113,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/users/getUserInfo'); ?>',
                 type: "POST",
-                data: {uid: userid},
+                data: {uid: userid,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
