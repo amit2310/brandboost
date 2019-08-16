@@ -127,7 +127,7 @@ class TransactionsModel extends Model {
                     $bRefillResult = $mAutoPayment->refillAccount($userID, $aRefill);
                     //Log History
                     if ($bRefillResult) {
-                        $totalCredits = $aRefill['credits'];
+                        $totalCredits = isset($aRefill['credits']) ? $aRefill['credits'] : 0;
                         $aUsage = array(
                             'client_id' => $userID,
                             'usage_type' => 'membership upgrade',
