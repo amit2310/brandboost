@@ -65,6 +65,7 @@ class ChargeBeeModel extends Model {
      * @return type
      */
     public function AddCreditCart($contactID, $aInput) {
+        $aRes = array();
         $oRes = cbHelperAddCC($contactID, $aInput);
         if (!empty($oRes)) {
             $status = $oRes->status;

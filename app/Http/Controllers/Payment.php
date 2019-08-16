@@ -237,7 +237,7 @@ class Payment extends Controller {
             $creditCardID = 0;
             $userID = Session::get('customer_user_id');
             $cc = $aData['ccNum'];
-            $cctype = $aData['ccType'];
+            $cctype = isset($aData['ccType']) ? $aData['ccType'] : '';
             $expMonth = $aData['expMonth'];
             $expYear = $aData['expYear'];
             $cvvCode = $aData['cvv'];
@@ -257,7 +257,7 @@ class Payment extends Controller {
 
                     $aCCResponse = $mChargeBee->AddCreditCart($contactID, $ccData);
 
-                    if ($aCCResponse['status'] == 'valid') {
+                    if (@$aCCResponse['status'] == 'valid') {
                         $paymentSourceID = $aCCResponse['payment_source_id'];
                         $lastFour = $aCCResponse['last4'];
                         $userData = array(

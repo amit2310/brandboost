@@ -520,7 +520,7 @@
                     url: "<?php echo base_url('payment/upgradeTopupMembership'); ?>",
                     type: "POST",
                     data: {
-                        toup_plan_id: hidPlanID
+                        _token: '{{csrf_token()}}', toup_plan_id: hidPlanID
                     },
                     dataType: "json",
                     success: function (data) {
@@ -554,7 +554,7 @@
                     url: "<?php echo base_url('payment/buyCreditAddons'); ?>",
                     type: "POST",
                     data: {
-                        toup_plan_id: hidPlanID
+                        _token: '{{csrf_token()}}', toup_plan_id: hidPlanID
                     },
                     dataType: "json",
                     success: function (data) {
@@ -589,6 +589,7 @@
                     url: "<?php echo base_url('payment/buyCreditAddons'); ?>",
                     type: "POST",
                     data: {
+                        _token: '{{csrf_token()}}', 
                         toup_plan_id: hidPlanID,
                         quantity: qty
                     },
