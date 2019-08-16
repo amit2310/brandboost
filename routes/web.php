@@ -713,6 +713,9 @@ Route::post('admin/transactions/addManualCredits','Admin\Transactions@addManualC
 Route::get('admin/workflow/templates/{type}','Admin\WorkFlow@templates');
 Route::get('admin/workflow/getWorkflowTemplate','Admin\WorkFlow@getWorkflowTemplate');
 Route::get('admin/workflow/updateWorkflowTemplate','Admin\WorkFlow@updateWorkflowTemplate');
+Route::get('admin/subscriptions','Admin\Subscriptions@index');
+Route::post('payment/changeSubscription','Payment@changeSubscription');
+
 
 
 
