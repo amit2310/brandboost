@@ -1397,10 +1397,10 @@ class Payment extends Controller {
         exit;
     }
 
+      
     public function changeSubscription(Request $request) {
         try {
 
-            //Instantiate Chargebee model to get its properties and methods
             $mChargeBee = new ChargeBeeModel();
 
             $response = array();
