@@ -536,7 +536,7 @@ class ReviewsModel extends Model {
 	public function getAllActiveReviews($campaignID, $aSettings = array()) {
 		$oData = DB::table('tbl_reviews')
 			->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_brandboost.brand_title')
-			->when(!empty($aSettings), function($query) use($reviewID) {
+			->when(!empty($aSettings), function($query) use($aSettings) {
 				return $query->where('tbl_reviews.ratings', '>=', $aSettings['min_ratings']);
 			})
 			->leftJoin('tbl_users', 'tbl_reviews.user_id', '=' , 'tbl_users.id')
@@ -549,53 +549,26 @@ class ReviewsModel extends Model {
     }
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
     public function getReviews($campaignID, $aSettings = array()) {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_brandboost.brand_title");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id=tbl_brandboost.id", "LEFT");
-        $this->db->where("tbl_reviews.campaign_id", $campaignID);
-        $this->db->where("tbl_reviews.status", '1');
-        if (!empty($aSettings['logged']) && !empty($aSettings['logged_id'])) {
-            $this->db->or_where("tbl_reviews.status", '2');
-        }
-        if (!empty($aSettings) && !empty($aSettings['min_ratings'])) {
-            $this->db->where("tbl_reviews.ratings >=", $aSettings['min_ratings']);
-        }
-
-        $start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
-
-        if (!empty($aSettings) && !empty($aSettings['review_limit'])) {
-            $this->db->limit($aSettings['review_limit'], $start);
-        }
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $rResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
+		$start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
+		$aData =  DB::table('tbl_reviews')
+			->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_brandboost.brand_title')
+			->leftjoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
+			->leftjoin('tbl_brandboost', 'tbl_reviews.campaign_id','=','tbl_brandboost.id')
+			->where('tbl_reviews.campaign_id', $campaignID)
+			->where('tbl_reviews.status', '1')
+			->when((!empty($aSettings['logged']) && !empty($aSettings['logged_id'])), function($query){
+				return $query->orWhere("tbl_reviews.status", '2');
+			})
+			->when((!empty($aSettings) && !empty($aSettings['min_ratings'])), function($query) use ($aSettings){
+				return $query->orWhere('tbl_reviews.ratings','>=',$aSettings['min_ratings']);
+			})
+			->when((!empty($aSettings) && !empty($aSettings['review_limit'])), function($query) use ($aSettings, $start){
+				return $query->limit($aSettings['review_limit'], $start);
+			})
+			->orderBy("tbl_reviews.id", "DESC")
+			->get();
+			
         return $aData;
     }
 
@@ -605,29 +578,27 @@ class ReviewsModel extends Model {
     * This function is used to get the Reviews by the product type
     * @return type
     */
-
-
     public function getReviewsByProductType($campaignID, $aSettings = array(), $productType='product') {
-         $start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
+        $start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
 
         $aData =  DB::table('tbl_reviews')
-        ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_brandboost.brand_title')
-        ->leftjoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
-        ->leftjoin('tbl_brandboost', 'tbl_reviews.campaign_id','=','tbl_brandboost.id')
-         ->where("tbl_reviews.campaign_id", $campaignID)
-        ->where("tbl_reviews.review_type", $productType)
-        ->where("tbl_reviews.status", '1')
-        ->when(!empty($aSettings['logged']) && !empty($aSettings['logged_id']), function($query){
-           return $query->orWhere("tbl_reviews.status", '2');
-        })
-         ->when(!empty($aSettings) && !empty($aSettings['min_ratings']),function($query) use ($aSettings) {
-           return $query->orWhere('tbl_reviews.ratings','>=',$aSettings['min_ratings']);
-        })
-          ->when(!empty($aSettings) && !empty($aSettings['review_limit']),function($query) use ($start) {
-           return $query->limit($aSettings['review_limit'], $start);
-        })
+			->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_brandboost.brand_title')
+			->leftjoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
+			->leftjoin('tbl_brandboost', 'tbl_reviews.campaign_id','=','tbl_brandboost.id')
+			->where("tbl_reviews.campaign_id", $campaignID)
+			->where("tbl_reviews.review_type", $productType)
+			->where("tbl_reviews.status", '1')
+			->when(!empty($aSettings['logged']) && !empty($aSettings['logged_id']), function($query){
+			   return $query->orWhere("tbl_reviews.status", '2');
+			})
+			 ->when(!empty($aSettings) && !empty($aSettings['min_ratings']),function($query) use ($aSettings) {
+			   return $query->orWhere('tbl_reviews.ratings','>=',$aSettings['min_ratings']);
+			})
+			  ->when(!empty($aSettings) && !empty($aSettings['review_limit']),function($query) use ($start) {
+			   return $query->limit($aSettings['review_limit'], $start);
+			})
 
-        ->orderBy("tbl_reviews.id", "DESC")->get();
+			->orderBy("tbl_reviews.id", "DESC")->get();
       
         return $aData;
     }
@@ -643,7 +614,7 @@ class ReviewsModel extends Model {
         $aData =  DB::table('tbl_reviews')
         ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_brandboost.brand_title')
         ->leftjoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
-        ->join('tbl_brandboost', 'tbl_reviews.campaign_id','=','tbl_brandboost.id')
+        ->leftjoin('tbl_brandboost', 'tbl_reviews.campaign_id','=','tbl_brandboost.id')
         ->whereIn('tbl_reviews.campaign_id', $multiCampaignID)
         ->where('tbl_reviews.status', '1')
         ->when((!empty($aSettings['logged']) && !empty($aSettings['logged_id'])), function($query){
@@ -707,97 +678,72 @@ class ReviewsModel extends Model {
     }
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public function countCommentLike($commentID) {
+		$rResponse =  DB::table('tbl_comment_likes')
+			->where('comment_id', $commentID)
+			->get();
+        
+        $like = 0;
+        $dislike = 0;
+        if ($rResponse->count() > 0) {
+            foreach ($rResponse as $row) {
+                if ($row->status == 1) {
+                    $like++;
+                } else if ($row->status == 0) {
+                    $dislike++;
+                }
+            }
+        }
+        $result = array('like' => $like, 'dislike' => $dislike);
+        return $result;
+    }
 	
 	
 	public function getSiteReviews($campaignID, $aSettings = array()) {
-        $this->db->select("tbl_reviews_site.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile");
-        $this->db->join("tbl_users", "tbl_reviews_site.user_id=tbl_users.id", "LEFT");
-        $this->db->where("tbl_reviews_site.campaign_id", $campaignID);
-        $this->db->where("tbl_reviews_site.status", '1');
-        if (!empty($aSettings['logged']) && !empty($aSettings['logged_id'])) {
-            $this->db->or_where("tbl_reviews.status", '2');
-        }
-        if (!empty($aSettings) && !empty($aSettings['min_ratings'])) {
-            $this->db->where("tbl_reviews_site.ratings >=", $aSettings['min_ratings']);
-        }
-
-        $start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
-
-        if (!empty($aSettings) && !empty($aSettings['review_limit'])) {
-            $this->db->limit($aSettings['review_limit'], $start);
-        }
-        $this->db->order_by("tbl_reviews_site.id", "DESC");
-        $rResponse = $this->db->get("tbl_reviews_site");
-        //echo $this->db->last_query();exit;
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
+		$start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
+        $aData =  DB::table('tbl_reviews_site')
+        ->select('tbl_reviews_site.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
+        ->leftjoin('tbl_users', 'tbl_reviews_site.user_id','=','tbl_users.id')
+        ->where('tbl_reviews_site.campaign_id', $campaignID)
+        ->where('tbl_reviews_site.status', '1')
+        ->when((!empty($aSettings['logged']) && !empty($aSettings['logged_id'])), function($query){
+         return $query->orWhere("tbl_reviews.status", '2');
+        })
+         ->when((!empty($aSettings) && !empty($aSettings['min_ratings'])), function($query) use ($aSettings){
+         return $query->orWhere('tbl_reviews.ratings','>=',$aSettings['min_ratings']);
+        })
+         ->when((!empty($aSettings) && !empty($aSettings['review_limit'])), function($query) use ($aSettings,$start){
+         return $query->limit($aSettings['review_limit'], $start);
+        })
+        ->orderBy("tbl_reviews_site.id", "DESC")
+		->get();
+        
         return $aData;
     }
 
     
 
     public function getActiveCampaignReviewsByType($campaignID, $type = 'product') {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar, tbl_users.country, tbl_subscribers.id as subscriberId, tbl_brandboost.brand_title");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
-        $this->db->join("tbl_brandboost", "tbl_brandboost.id=tbl_reviews.campaign_id", "LEFT");
-        $this->db->join("tbl_subscribers", "tbl_subscribers.user_id=tbl_users.id", "LEFT");
-        $this->db->where("tbl_reviews.review_type", $type);
-        $this->db->where("tbl_reviews.status", 1);
-        if (!empty($campaignID)) {
-            $this->db->where("tbl_reviews.campaign_id", $campaignID);
-        }
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $rResponse = $this->db->get("tbl_reviews");
-
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
+		$aData =  DB::table('tbl_reviews')
+			->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country', 'tbl_subscribers.id as subscriberId', 'tbl_brandboost.brand_title')
+			->leftjoin('tbl_users', 'tbl_reviews.user_id','=','tbl_users.id')
+			->leftjoin('tbl_brandboost', 'tbl_reviews.campaign_id','=','tbl_brandboost.id')
+			->leftjoin('tbl_subscribers', 'tbl_subscribers.user_id','=','tbl_users.id')
+			->where('tbl_reviews.status', '1')
+			->where('tbl_brandboost.review_type', $type)
+			->when(!empty($campaignID), function($query) use ($campaignID){
+				return $query->where('tbl_reviews.campaign_id',$campaignID);
+			})
+			->orderBy("tbl_reviews.id", "DESC")
+			->get();
+        
         return $aData;
     }
+	
 
     public function getCampaignReviewsByUserId($userId) {
-       $aData =  DB::table('tbl_reviews')
-        ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country', 'tbl_subscribers.id as subscriberId', 'tbl_brandboost.brand_title')
+		$aData =  DB::table('tbl_reviews')
+			->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country', 'tbl_subscribers.id as subscriberId', 'tbl_brandboost.brand_title')
            ->leftJoin('tbl_users', 'tbl_reviews.user_id' ,'=', 'tbl_users.id')
             ->leftJoin('tbl_brandboost', 'tbl_brandboost.id','=','tbl_reviews.campaign_id')
            ->leftjoin('tbl_subscribers', 'tbl_subscribers.user_id','=','tbl_users.id')
@@ -808,91 +754,97 @@ class ReviewsModel extends Model {
 
         return $aData;
     }
+	
+	
+	public function getWidgetData($campaignID) {
+		$aData =  DB::table('tbl_widget_data')
+			->where('campaign_id', $campaignID)
+			->get();
+        
+        return $aData;
+    }
+	
+	
+	public function addWidgetData($aData) {
+		$bSaved = DB::table('tbl_widget_data')->insertGetId($aData);
+        if ($bSaved)
+            return true;
+        return false;
+    }
+	
+	
+	/**
+     * Get Number of people currently reading the widget
+     * @param type $campaignID
+     * @return type
+     */
+    public function getWidgetCRU($campaignID) {
+		$aData =  DB::table('tbl_widget_data')
+			->where('campaign_id', $campaignID)
+			->where('often_user', 1)
+			->where("created_date",  ">",  DB::raw("DATE_SUB(NOW(), INTERVAL 1 HOUR)"))
+			->groupBy('tbl_widget_data.campaign_id')
+			->groupBy('tbl_widget_data.user_ip')
+			->get();
 
-    public function getReviewsUserList($userID = 1, $userRole) {
+        return $aData;
+    }
+	
 
-        $this->db->select("tbl_users.*");
-        $this->db->distinct('tbl_users.id');
-        $this->db->join("tbl_reviews", "tbl_brandboost.id=tbl_reviews.campaign_id", "INNER");
+    public function saveComment($aData) {
+        $aData =  DB::table('tbl_reviews_comments')->insertGetId($aData);
+        return $aData;
+        
+    }
 
-        $this->db->join("tbl_users", "tbl_reviews.user_id = tbl_users.id", "INNER");
 
-        if ($userRole != '1') {
-            $this->db->where("tbl_brandboost.user_id", $userID);
-        }
-        $rResponse = $this->db->get("tbl_brandboost");
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
+    public function saveSiteReviewHelpful($aData) {
+        $aData =  DB::table('tbl_site_reviews_helpful')->insertGetId($aData);
         return $aData;
     }
 
-    public function getCampaignReviewsList($userID, $searchValue, $reviewstatus) {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.email, tbl_users.mobile, tbl_users.country, tbl_brandboost.brand_title, tbl_brandboost.brand_desc, tbl_brandboost.brand_img");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
-        $this->db->join("tbl_brandboost", "tbl_brandboost.id=tbl_reviews.campaign_id", "LEFT");
-        $this->db->where("tbl_brandboost.user_id", $userID);
-        $this->db->order_by("tbl_reviews.id", "DESC");
-
-        if ($filterValue != '') {
-            $this->db->like("tbl_reviews.created", $filterValue);
-            $this->db->or_like("tbl_reviews.review_title", $filterValue);
-            $this->db->or_like("tbl_users.email", $filterValue);
-            $this->db->or_where("CONCAT(tbl_users.firstname, ' ', tbl_users.lastname) LIKE '%" . $filterValue . "%'");
-        }
-
-        if (!empty($reviewstatus)) {
-            $this->db->where("tbl_reviews.status", $reviewstatus);
-        }
-
-        $rResponse = $this->db->get("tbl_reviews");
-
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
+    public function saveCommentLike($aData) {
+        $aData =  DB::table('tbl_comment_likes')->insertGetId($aData);
         return $aData;
     }
 
-    public function getCampaignReviewsListFilter($userID, $filterValue = '', $reviewstatus = '', $columnName = '', $columnSortOrder = '', $start = 1, $rowperpage = 10) {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.email, tbl_users.mobile, tbl_users.country, tbl_brandboost.brand_title, tbl_brandboost.brand_desc, tbl_brandboost.brand_img");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
-        $this->db->join("tbl_brandboost", "tbl_brandboost.id=tbl_reviews.campaign_id", "LEFT");
-        $this->db->where("tbl_brandboost.user_id", $userID);
-        $this->db->order_by("tbl_reviews.id", "DESC");
-
-        if ($filterValue != '') {
-            $this->db->like("tbl_reviews.created", $filterValue);
-            $this->db->or_like("tbl_reviews.review_title", $filterValue);
-            $this->db->or_like("tbl_users.email", $filterValue);
-            $this->db->or_where("CONCAT(tbl_users.firstname, ' ', tbl_users.lastname) LIKE '%" . $filterValue . "%'");
-        }
-
-        if (!empty($reviewstatus)) {
-            $this->db->where("tbl_reviews.status", $reviewstatus);
-        }
-        $this->db->limit($rowperpage, $start);
-        $rResponse = $this->db->get("tbl_reviews");
-
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
+    public function updateCommentLike($aData, $id) {
+        $aData =  DB::table('tbl_comment_likes')->update($aData)
+           ->where("id", $id);
+           return true;
     }
 
-    public function getBBWidgetUserData($reviewID) {
-        $this->db->select("tbl_reviews.campaign_id, tbl_brandboost.user_id, tbl_brandboost_widgets.id as widget_id, tbl_brandboost_widgets.widget_type");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id=tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_brandboost_widgets", "tbl_brandboost.id=tbl_brandboost_widgets.brandboost_id", "LEFT");
-        $this->db->where("tbl_reviews.id", $reviewID);
-        $rResponse = $this->db->get("tbl_reviews");
 
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
+    public function updateSiteReviewHelpful($aData, $id) {
+         $aData =  DB::table('tbl_site_reviews_helpful')->update($aData)
+           ->where("id", $id);
+           return true;
     }
 
-    public static function countHelpful($reviewID) {
+    public function updateSubscriber($aData, $id) {
+        if ($id > 0) {
+            $aData =  DB::table('tbl_brandboost_users')->update($aData)
+           ->where("id", $id);
+           return true;
+        }
+        return false;
+    }
+	
+	
+	public function getAllChildComments($parentId) {
+		$oData = DB::table('tbl_reviews_comments')
+            ->leftJoin('tbl_reviews', 'tbl_reviews_comments.review_id', '=', 'tbl_reviews.id')
+            ->leftJoin('tbl_users', 'tbl_reviews_comments.user_id', '=', 'tbl_users.id')
+            ->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.id as userId')
+            ->where('tbl_reviews_comments.status', 1)
+            ->where('tbl_reviews_comments.parent_comment_id', $parentId)        
+            ->orderBy('tbl_reviews_comments.id', 'desc')
+            ->get();
+        return $oData;
+    }
+	
+	
+	public static function countHelpful($reviewID) {
         $result = array();
         $rResponse = DB::table('tbl_reviews_helpful')
         ->where("review_id", $reviewID)->get();
@@ -912,157 +864,30 @@ class ReviewsModel extends Model {
         $result = array('yes' => $yes, 'no' => $no);
         return $result;
     }
-
-    public function countSiteReviewHelpful($reviewID) {
-        $result = array();
-        $this->db->where("review_id", $reviewID);
-        $rResponse = $this->db->get("tbl_site_reviews_helpful");
-        $yes = 0;
-        $no = 0;
-        //echo $this->db->last_query();
-        if ($rResponse->num_rows() > 0) {
-            $oResult = $rResponse->result();
-            foreach ($oResult as $row) {
-                if ($row->helpful_yes == 1) {
-                    $yes++;
-                } else if ($row->helpful_no == 1) {
-                    $no++;
-                }
-            }
-        }
-        $result = array('yes' => $yes, 'no' => $no);
-        return $result;
-    }
-
-    public function countCommentLike($commentID) {
-        $result = array();
-        $this->db->where("comment_id", $commentID);
-        $rResponse = $this->db->get("tbl_comment_likes");
-        $like = 0;
-        $dislike = 0;
-        //echo $this->db->last_query();
-        if ($rResponse->num_rows() > 0) {
-            $oResult = $rResponse->result();
-            foreach ($oResult as $row) {
-                if ($row->status == 1) {
-                    $like++;
-                } else if ($row->status == 0) {
-                    $dislike++;
-                }
-            }
-        }
-        $result = array('like' => $like, 'dislike' => $dislike);
-        return $result;
-    }
-
-    
-
-    public function checkIfSiteVoted($reviewID, $ip) {
-        $this->db->where('review_id', $reviewID);
-        $this->db->where('ip', $ip);
-        $this->db->limit(1);
-        $rResponse = $this->db->get("tbl_site_reviews_helpful");
-        //echo $this->db->last_query();
-        if ($rResponse->num_rows() > 0) {
-            $oResult = $rResponse->row();
-            if ($oResult->helpful_yes == 1) {
-                $action = 'h_yes';
-            } else if ($oResult->helpful_no == 1) {
-                $action = 'h_no';
-            } else {
-                $action = 'h_null';
-            }
-            return array('action' => $action, 'vote_id' => $oResult->id);
-        }
-        return false;
-    }
-
-    public function checkIfCommentVoted($commentID, $ip) {
-        $this->db->where('comment_id', $commentID);
-        $this->db->where('ip', $ip);
-        $this->db->limit(1);
-        $rResponse = $this->db->get("tbl_comment_likes");
-        //echo $this->db->last_query();
-        if ($rResponse->num_rows() > 0) {
-            $oResult = $rResponse->row();
-            if ($oResult->status == 1) {
-                $action = 'h_like';
-            } else if ($oResult->status == 0) {
-                $action = 'h_dislike';
-            } else {
-                $action = 'h_null';
-            }
-            return array('action' => $action, 'vote_id' => $oResult->id);
-        }
-        return false;
-    }
-
-    public function getComments($reviewID, $aSettings = array()) {
+	
+	
+	public function getComments($reviewID, $aSettings = array()) {
        $aData =  DB::table('tbl_reviews_comments')
-        ->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
-        ->leftjoin('tbl_users', 'tbl_reviews_comments.user_id','=','tbl_users.id')
-        ->where('tbl_reviews_comments.review_id', $reviewID)
-         ->where("tbl_reviews_comments.status", "1")
-            ->when((!empty($aSettings['logged']) && !empty($aSettings['logged_id'])), function($query){
-            return $query->orWhere("tbl_reviews_comments.status", "2");
-            })
+			->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
+			->leftjoin('tbl_users', 'tbl_reviews_comments.user_id','=','tbl_users.id')
+			->where('tbl_reviews_comments.review_id', $reviewID)
+			->where("tbl_reviews_comments.status", "1")
+			->when((!empty($aSettings['logged']) && !empty($aSettings['logged_id'])), function($query){
+			return $query->orWhere("tbl_reviews_comments.status", "2");
+			})
 
-        ->orderBy("tbl_reviews_comments.id", "DESC")->get();
+			->orderBy("tbl_reviews_comments.id", "DESC")->get();
        
         return $aData;
     }
-
-    public function getSiteReviewComments($reviewID, $aSettings = array()) {
-        $this->db->select("tbl_site_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile");
-        $this->db->join("tbl_users", "tbl_site_reviews_comments.user_id=tbl_users.id", "LEFT");
-        $this->db->where("tbl_site_reviews_comments.review_id", $reviewID);
-        $this->db->where("tbl_site_reviews_comments.status", "1");
-        if (!empty($aSettings['logged']) && !empty($aSettings['logged_id'])) {
-            $this->db->or_where("tbl_site_reviews_comments.status", "2");
-        }
-        $this->db->order_by("tbl_site_reviews_comments.id", "DESC");
-        //$this->db->limit(3, 0);
-        $rResponse = $this->db->get("tbl_site_reviews_comments");
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
-    }
-
-    /* public function getComments($reviewID){
-      $sql = "SELECT id,
-      review_id,
-      user_id,
-      parent_comment_id
-      FROM   (SELECT * FROM   tbl_reviews_comments WHERE  review_id = {$reviewID} ORDER  BY parent_comment_id, id) comments_sorted,
-      (SELECT @pv := '0') initialisation
-      WHERE  Find_in_set(parent_comment_id, @pv)
-      AND Length(@pv := Concat(@pv, ',', id))";
-      $rResponse = $this->db->query($sql);
-      if ($rResponse->num_rows() > 0) {
-      $aData = $rResponse->result();
-      }
-      return $aData;
-
-      } */
-
-    function displayComments($aComments, $level = 0) {
-        foreach ($aComments as $info) {
-            echo str_repeat('-', $level + 1) . ' comment ' . $info['id'] . "\n";
-            if (!empty($info['childs'])) {
-                $this->displayComments($info['childs'], $level + 1);
-            }
-        }
-    }
-
-
-    /**
+	
+	
+	/**
     * This function is used to save the reviews
     * @param type $clientID
     * @return type
     */
     public function saveReview($aData) {
-       
         $oData = DB::table('tbl_reviews')
         ->insertGetId($aData);
         if (!empty($oData))
@@ -1076,7 +901,6 @@ class ReviewsModel extends Model {
     * @return type
     */
     public function saveHelpful($aData) {
-
         $oData = DB::table('tbl_reviews_helpful')
         ->insertGetId($aData);
         if (!empty($oData))
@@ -1090,7 +914,6 @@ class ReviewsModel extends Model {
     * @return type
     */
     public function updateHelpful($aData, $id) {
-
         $res = DB::table('tbl_reviews_helpful')
                 ->where("id", $id)
                 ->update($aData);
@@ -1105,171 +928,15 @@ class ReviewsModel extends Model {
     * @return type
     */
     public function getCommentLSByUserIDAndCommentID($userID, $commentID) {
-
         $res = DB::table('tbl_comment_likes')
                 ->where('user_id', $userID)
                 ->where('comment_id', $commentID)
                 ->get();
         return $res;
     }
-
-    public function saveSiteReview($aData) {
-        $bSaved = $this->db->insert("tbl_reviews_site", $aData);
-        if ($bSaved)
-            return true;
-        return false;
-    }
-
-    public function addWidgetData($aData) {
-        $bSaved = $this->db->insert("tbl_widget_data", $aData);
-        //echo $this->db->last_query();
-        if ($bSaved)
-            return true;
-        return false;
-    }
-
-    public function getWidgetData($campaignID) {
-        $this->db->where('campaign_id', $campaignID);
-        $this->db->from('tbl_widget_data');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    
-
-    
-
-    /**
-     * Get Number of people currently reading the widget
-     * @param type $campaignID
-     * @return type
-     */
-    public function getWidgetCRU($campaignID) {
-        $this->db->where('campaign_id', $campaignID);
-        $this->db->where('often_user', 1);
-        $this->db->where("(created_date > DATE_SUB(NOW(), INTERVAL 1 HOUR))");
-        $this->db->from('tbl_widget_data');
-        $this->db->group_by("tbl_widget_data.campaign_id");
-        $this->db->group_by("tbl_widget_data.user_ip");
-        $result = $this->db->get();
-        //echo $this->db->last_query();
-        //exit;
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function saveComment($aData) {
-        $aData =  DB::table('tbl_reviews_comments')->insertGetId($aData);
-        return $aData;
-        
-    }
-
-
-    public function saveSiteReviewHelpful($aData) {
-        $aData =  DB::table('tbl_site_reviews_helpful')->insertGetId($aData);
-        return $aData;
-        
-    }
-
-    public function saveCommentLike($aData) {
-        $aData =  DB::table('tbl_comment_likes')->insertGetId($aData);
-        return $aData;
-
-    }
-
-    public function updateCommentLike($aData, $id) {
-        $aData =  DB::table('tbl_comment_likes')->update($aData)
-           ->where("id", $id);
-           return true;
-       
-    }
-
-
-    public function updateSiteReviewHelpful($aData, $id) {
-         $aData =  DB::table('tbl_site_reviews_helpful')->update($aData)
-           ->where("id", $id);
-           return true;
-    }
-
-    public function updateSubscriber($aData, $id) {
-        if ($id > 0) {
-            $aData =  DB::table('tbl_brandboost_users')->update($aData)
-           ->where("id", $id);
-           return true;
-        }
-        return false;
-    }
-
-    public function getOnsiteReviewDetailsByUID($uniqueId) {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar, tbl_brandboost_products.product_name, tbl_brandboost_products.product_image, tbl_brandboost_products.created as product_created");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id");
-        $this->db->join("tbl_brandboost_products", "tbl_reviews.product_id=tbl_brandboost_products.id");
-        $this->db->where("tbl_reviews.unique_review_key", $uniqueId);
-        $this->db->order_by("tbl_reviews.id", "ASC");
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        return $aData;
-    }
-
-    public function getOnsiteSiteReviewDetailsByUID($uniqueId) {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id");
-        $this->db->where("tbl_reviews.review_type", 'site');
-        $this->db->where("tbl_reviews.unique_review_key", $uniqueId);
-        $this->db->order_by("tbl_reviews.id", "ASC");
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        return $aData;
-    }
-
-    
-
-    /**
-    * This function is used to get the review notes by the notes id
-    * @param type $noteId
-    * @return type
-    */
-
-    public function getReviewNoteByID($noteId) {
-
-       $oData = DB::table('tbl_reviews_notes')
-        ->where('id', $noteId)->get();
-        return $oData;
-       
-    }
-
-    public function updateReviewNote($aData, $noteId) {
-
-        $oData = DB::table('tbl_reviews_notes')
-        ->where('id', $noteId)->update($aData);
-        return true;
-    }
-
-    
-
-    public function getSiteReviewByReviewID($reviewid) {
-
-        $this->db->where('id', $reviewid);
-        $this->db->from('tbl_reviews_site');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    /**
+	
+	
+	/**
      * 
      * @param type $campaignID
      * @return type
@@ -1281,27 +948,26 @@ class ReviewsModel extends Model {
             ->get();
         return $oData;        
     }
-
-    public function latestReviews($userID = '') {
-        $aData = array();
-        $this->db->order_by("tbl_reviews.id", "desc");
-        $this->db->where('tbl_brandboost.review_type', 'onsite');
-        if ($userID != '') {
-            $this->db->where('tbl_brandboost.user_id', $userID);
-        }
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_users.id = tbl_reviews.user_id", "LEFT");
-        $this->db->limit(10);
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        if ($aData)
-            return $aData;
-        else
-            return false;
+	
+	/**
+    * This function is used to get the review notes by the notes id
+    * @param type $noteId
+    * @return type
+    */
+    public function getReviewNoteByID($noteId) {
+       $oData = DB::table('tbl_reviews_notes')
+        ->where('id', $noteId)->get();
+        return $oData;
+       
     }
+	
+
+    public function updateReviewNote($aData, $noteId) {
+        $oData = DB::table('tbl_reviews_notes')
+        ->where('id', $noteId)->update($aData);
+        return true;
+    }
+	
 
     /**
      * Get Reviews count
@@ -1333,8 +999,7 @@ class ReviewsModel extends Model {
             ->count();
         return $oData;        
     }
-
-    
+	
 
     public function getAllMainComments($reviewId) {
 		$oData = DB::table('tbl_reviews_comments')
@@ -1350,23 +1015,299 @@ class ReviewsModel extends Model {
     }
 	
 	
-	
-
-    public function getAllChildComments($parentId) {
-        $this->db->select("tbl_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.id as userId");
-        $this->db->join("tbl_reviews", "tbl_reviews_comments.review_id = tbl_reviews.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_reviews_comments.user_id=tbl_users.id");
-        $this->db->order_by("tbl_reviews_comments.id", "DESC");
-        $this->db->where("tbl_reviews_comments.status", 1);
-        $this->db->where("tbl_reviews_comments.parent_comment_id", $parentId);
-        $oResponse = $this->db->get("tbl_reviews_comments");
-
-        if ($oResponse->num_rows() > 0) {
-            $aComments = $oResponse->result();
-        }
-
-        return $aComments;
-        exit;
+	public function getBBWidgetUserData($reviewID) {
+		$oData = DB::table('tbl_reviews')
+            ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
+            ->leftJoin('tbl_brandboost_widgets', 'tbl_brandboost.id', '=', 'tbl_users.id')
+            ->select('tbl_reviews.campaign_id', 'tbl_brandboost.id', 'tbl_brandboost_widgets.id as widget_id', 'tbl_brandboost_widgets.widget_type')
+            ->where('tbl_reviews.id', $reviewID)
+            ->get();
+        return $oData;
+		
     }
 
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+    public function getReviewsUserList($userID = 1, $userRole) {
+
+        $this->db->select("tbl_users.*");
+        $this->db->distinct('tbl_users.id');
+        $this->db->join("tbl_reviews", "tbl_brandboost.id=tbl_reviews.campaign_id", "INNER");
+
+        $this->db->join("tbl_users", "tbl_reviews.user_id = tbl_users.id", "INNER");
+
+        if ($userRole != '1') {
+            $this->db->where("tbl_brandboost.user_id", $userID);
+        }
+        $rResponse = $this->db->get("tbl_brandboost");
+        if ($rResponse->num_rows() > 0) {
+            $aData = $rResponse->result();
+        }
+        return $aData;
+    }
+
+
+    public function getCampaignReviewsList($userID, $searchValue, $reviewstatus) {
+        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.email, tbl_users.mobile, tbl_users.country, tbl_brandboost.brand_title, tbl_brandboost.brand_desc, tbl_brandboost.brand_img");
+        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
+        $this->db->join("tbl_brandboost", "tbl_brandboost.id=tbl_reviews.campaign_id", "LEFT");
+        $this->db->where("tbl_brandboost.user_id", $userID);
+        $this->db->order_by("tbl_reviews.id", "DESC");
+
+        if ($filterValue != '') {
+            $this->db->like("tbl_reviews.created", $filterValue);
+            $this->db->or_like("tbl_reviews.review_title", $filterValue);
+            $this->db->or_like("tbl_users.email", $filterValue);
+            $this->db->or_where("CONCAT(tbl_users.firstname, ' ', tbl_users.lastname) LIKE '%" . $filterValue . "%'");
+        }
+
+        if (!empty($reviewstatus)) {
+            $this->db->where("tbl_reviews.status", $reviewstatus);
+        }
+
+        $rResponse = $this->db->get("tbl_reviews");
+
+        if ($rResponse->num_rows() > 0) {
+            $aData = $rResponse->result();
+        }
+        return $aData;
+    }
+
+
+    public function getCampaignReviewsListFilter($userID, $filterValue = '', $reviewstatus = '', $columnName = '', $columnSortOrder = '', $start = 1, $rowperpage = 10) {
+        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.email, tbl_users.mobile, tbl_users.country, tbl_brandboost.brand_title, tbl_brandboost.brand_desc, tbl_brandboost.brand_img");
+        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
+        $this->db->join("tbl_brandboost", "tbl_brandboost.id=tbl_reviews.campaign_id", "LEFT");
+        $this->db->where("tbl_brandboost.user_id", $userID);
+        $this->db->order_by("tbl_reviews.id", "DESC");
+
+        if ($filterValue != '') {
+            $this->db->like("tbl_reviews.created", $filterValue);
+            $this->db->or_like("tbl_reviews.review_title", $filterValue);
+            $this->db->or_like("tbl_users.email", $filterValue);
+            $this->db->or_where("CONCAT(tbl_users.firstname, ' ', tbl_users.lastname) LIKE '%" . $filterValue . "%'");
+        }
+
+        if (!empty($reviewstatus)) {
+            $this->db->where("tbl_reviews.status", $reviewstatus);
+        }
+        $this->db->limit($rowperpage, $start);
+        $rResponse = $this->db->get("tbl_reviews");
+
+        if ($rResponse->num_rows() > 0) {
+            $aData = $rResponse->result();
+        }
+        return $aData;
+    }
+
+
+    
+    public function countSiteReviewHelpful($reviewID) {
+        $result = array();
+        $this->db->where("review_id", $reviewID);
+        $rResponse = $this->db->get("tbl_site_reviews_helpful");
+        $yes = 0;
+        $no = 0;
+        if ($rResponse->num_rows() > 0) {
+            $oResult = $rResponse->result();
+            foreach ($oResult as $row) {
+                if ($row->helpful_yes == 1) {
+                    $yes++;
+                } else if ($row->helpful_no == 1) {
+                    $no++;
+                }
+            }
+        }
+        $result = array('yes' => $yes, 'no' => $no);
+        return $result;
+    }
+
+
+    public function checkIfSiteVoted($reviewID, $ip) {
+        $this->db->where('review_id', $reviewID);
+        $this->db->where('ip', $ip);
+        $this->db->limit(1);
+        $rResponse = $this->db->get("tbl_site_reviews_helpful");
+        if ($rResponse->num_rows() > 0) {
+            $oResult = $rResponse->row();
+            if ($oResult->helpful_yes == 1) {
+                $action = 'h_yes';
+            } else if ($oResult->helpful_no == 1) {
+                $action = 'h_no';
+            } else {
+                $action = 'h_null';
+            }
+            return array('action' => $action, 'vote_id' => $oResult->id);
+        }
+        return false;
+    }
+
+
+    public function checkIfCommentVoted($commentID, $ip) {
+        $this->db->where('comment_id', $commentID);
+        $this->db->where('ip', $ip);
+        $this->db->limit(1);
+        $rResponse = $this->db->get("tbl_comment_likes");
+        if ($rResponse->num_rows() > 0) {
+            $oResult = $rResponse->row();
+            if ($oResult->status == 1) {
+                $action = 'h_like';
+            } else if ($oResult->status == 0) {
+                $action = 'h_dislike';
+            } else {
+                $action = 'h_null';
+            }
+            return array('action' => $action, 'vote_id' => $oResult->id);
+        }
+        return false;
+    }
+
+    
+    public function getSiteReviewComments($reviewID, $aSettings = array()) {
+        $this->db->select("tbl_site_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile");
+        $this->db->join("tbl_users", "tbl_site_reviews_comments.user_id=tbl_users.id", "LEFT");
+        $this->db->where("tbl_site_reviews_comments.review_id", $reviewID);
+        $this->db->where("tbl_site_reviews_comments.status", "1");
+        if (!empty($aSettings['logged']) && !empty($aSettings['logged_id'])) {
+            $this->db->or_where("tbl_site_reviews_comments.status", "2");
+        }
+        $this->db->order_by("tbl_site_reviews_comments.id", "DESC");
+        //$this->db->limit(3, 0);
+        $rResponse = $this->db->get("tbl_site_reviews_comments");
+        if ($rResponse->num_rows() > 0) {
+            $aData = $rResponse->result();
+        }
+        return $aData;
+    }
+
+    
+	function displayComments($aComments, $level = 0) {
+        foreach ($aComments as $info) {
+            echo str_repeat('-', $level + 1) . ' comment ' . $info['id'] . "\n";
+            if (!empty($info['childs'])) {
+                $this->displayComments($info['childs'], $level + 1);
+            }
+        }
+    }
+
+
+    public function saveSiteReview($aData) {
+        $bSaved = $this->db->insert("tbl_reviews_site", $aData);
+        if ($bSaved)
+            return true;
+        return false;
+    }
+
+
+    public function getOnsiteReviewDetailsByUID($uniqueId) {
+        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar, tbl_brandboost_products.product_name, tbl_brandboost_products.product_image, tbl_brandboost_products.created as product_created");
+        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id");
+        $this->db->join("tbl_brandboost_products", "tbl_reviews.product_id=tbl_brandboost_products.id");
+        $this->db->where("tbl_reviews.unique_review_key", $uniqueId);
+        $this->db->order_by("tbl_reviews.id", "ASC");
+        $oResponse = $this->db->get("tbl_reviews");
+        //echo $this->db->last_query();exit;
+        if ($oResponse->num_rows() > 0) {
+            $aData = $oResponse->result();
+        }
+        return $aData;
+    }
+
+
+    public function getOnsiteSiteReviewDetailsByUID($uniqueId) {
+        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar");
+        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id");
+        $this->db->where("tbl_reviews.review_type", 'site');
+        $this->db->where("tbl_reviews.unique_review_key", $uniqueId);
+        $this->db->order_by("tbl_reviews.id", "ASC");
+        $oResponse = $this->db->get("tbl_reviews");
+        //echo $this->db->last_query();
+        if ($oResponse->num_rows() > 0) {
+            $aData = $oResponse->result();
+        }
+        return $aData;
+    }
+
+    
+    public function getSiteReviewByReviewID($reviewid) {
+
+        $this->db->where('id', $reviewid);
+        $this->db->from('tbl_reviews_site');
+        $result = $this->db->get();
+        if ($result->num_rows() > 0) {
+            $response = $result->result();
+        }
+        return $response;
+    }
+
+    
+    public function latestReviews($userID = '') {
+        $aData = array();
+        $this->db->order_by("tbl_reviews.id", "desc");
+        $this->db->where('tbl_brandboost.review_type', 'onsite');
+        if ($userID != '') {
+            $this->db->where('tbl_brandboost.user_id', $userID);
+        }
+        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id = tbl_brandboost.id", "LEFT");
+        $this->db->join("tbl_users", "tbl_users.id = tbl_reviews.user_id", "LEFT");
+        $this->db->limit(10);
+        $oResponse = $this->db->get("tbl_reviews");
+        //echo $this->db->last_query();
+        if ($oResponse->num_rows() > 0) {
+            $aData = $oResponse->result();
+        }
+        if ($aData)
+            return $aData;
+        else
+            return false;
+    }
 }
