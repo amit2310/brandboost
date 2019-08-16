@@ -1375,8 +1375,9 @@ class WorkFlow extends Controller {
      * Used to load Stripo template
      */
     public function loadStripoTemplate($moduleName, $templateID) {
-        $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
-        $oResponse = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
+
+        $templateTags = WorkflowModel::getWorkflowCampaignTags($moduleName);
+        $oResponse = WorkflowModel::getWorkflowDefaultTemplates($moduleName, '', $templateID);
         $subject = $oResponse[0]->template_subject;
         $aData = array(
             'templateID' => $templateID,
@@ -1386,7 +1387,7 @@ class WorkFlow extends Controller {
             'introduction' => $oResponse[0]->introduction,
             'tags' => $templateTags
         );
-        $this->load->view("admin/workflow/stripo_template.php", $aData);
+        return view("admin.workflow.stripo_template", $aData);
     }
 
     /**
@@ -1504,12 +1505,13 @@ class WorkFlow extends Controller {
         //$moduleName = 'brandboost';
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mWorkflow = new WorkflowModel();
         //$oResponse = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
         if ($isDraft == true) {
             //$moduleName, $templateID, $userID
             $oResponse = $mWorkflow->getWorkflowDraftTemplates($moduleName, $templateID, $userID);
         } else {
-            $oResponse = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateID);
+            $oResponse = WorkflowModel::getWorkflowDefaultTemplates($moduleName, '', $templateID);
         }
 
         if (!empty($oResponse)) {

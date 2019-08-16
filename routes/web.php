@@ -59,8 +59,6 @@ Route::post('admin/modules/emails/multipalDeleteAutomation','Admin\Modules\Email
 
 
 
-
-
 //Onsite and Offsite Modules
 Route::get('admin/brandboost/onsite_overview','Admin\Brandboost@onsiteOverview');
 Route::get('admin/brandboost/onsite','Admin\Brandboost@onsite');
@@ -388,6 +386,8 @@ Route::post('admin/workflow/syncWorkflowAudience','Admin\WorkFlow@syncWorkflowAu
 Route::get('admin/workflow/addAudienceToWorkflowCampaign','Admin\WorkFlow@addAudienceToWorkflowCampaign');
 Route::get('admin/workflow/syncWorkflowAudienceGlobal','Admin\WorkFlow@syncWorkflowAudienceGlobal');
 Route::post('admin/workflow/syncWorkflowAudienceGlobal','Admin\WorkFlow@syncWorkflowAudienceGlobal');
+Route::get('admin/workflow/loadStripoTemplate/{type}/{id}','Admin\WorkFlow@loadStripoTemplate');
+Route::get('admin/workflow/loadStripoTemplateResources/{type}/{module_name}/{temp_id}','Admin\WorkFlow@loadStripoTemplateResources');
 
 
 //Dropzone Section
