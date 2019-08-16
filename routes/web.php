@@ -196,6 +196,7 @@ Route::post('admin/feedback/updateFeedbackRatings','Admin\Feedback@updateFeedbac
 
 
 Route::post('admin/tags/listAllTags','Admin\Tags@listAllTags');
+Route::post('admin/tags/applyQuestionTag','Admin\Tags@applyQuestionTag');
 
 
 Route::get('admin/questions/view/{id}','Admin\Questions@questionView');

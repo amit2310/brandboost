@@ -414,6 +414,7 @@ class TagsModel extends Model {
 
     public function addQuestionTag($aData) {
         $aTagIDs = $aData['aTagIDs'];
+
         if (!empty($aTagIDs)) {
             foreach ($aTagIDs as $iTagID) {
                 $aInput = array(
@@ -423,8 +424,8 @@ class TagsModel extends Model {
                 );
 
                 $tagData = $this->getTagByQuestionIDTagID($iTagID, $aData['question_id']);
-                if ($tagData->id == '') {
-                    $result = $this->db->insert('tbl_reviews_question_tags', $aInput);
+                if (empty($tagData->id)) {
+                    $result = DB::table('tbl_reviews_question_tags')->insert($aInput); 
                 }
 
                 $qustionTagsData = $this->getTagsDataByQuestionID($aData['question_id']);
@@ -447,11 +448,7 @@ class TagsModel extends Model {
             }
         }
 
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
 
