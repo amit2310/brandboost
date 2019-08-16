@@ -687,6 +687,44 @@ class Settings extends Controller {
        echo json_encode($response);
        exit;
    }
+
+
+    /**
+    * This function is used to load team accounts
+    * @param $userid
+    * @return type
+    */
+
+    public function team_accounts($userid)
+    {
+
+        $mSetting = new SettingsModel();
+        $team_account_detail = $mSetting->team_twillo_account($userid);
+        $aData = array(
+        'twillo_account_detail' => $team_account_detail
+        );
+
+        return view('admin.settings.team_accounts', $aData);
+
+    }
+
+
+     /**
+    * This function is used list all team member number usage details 
+    * @param $userid
+    * @return type
+    */
+
+      public function list_details($id)
+      {
+       $mSetting  = new SettingsModel();
+        $twilio_number_log = $mSetting->getNumberlogs($id);
+        $aData = array(
+        'twilio_number_log' => $twilio_number_log
+        );
+        return view('admin.settings.list_details', $aData);
+
+      }
      
 
 }

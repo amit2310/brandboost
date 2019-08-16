@@ -1,4 +1,10 @@
+@extends('layouts.main_template') 
 
+@section('title')
+<?php //echo $title; ?>
+@endsection
+
+@section('contents')
        <div class="content">
                   
                   <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -69,7 +75,7 @@
 
                                 	$teamMemArr = array();
                                 	foreach($twillo_account_detail as $detail) {
-                                		$getUsage = $this->mSetting->getUsageSingleNumber($detail->bb_number);
+                                		$getUsage = \App\Models\Admin\SettingsModel::getUsageSingleNumber($detail->bb_number);
                                 		
                                 ?>
                                	<tr>
@@ -119,3 +125,4 @@
 
 
 </script>
+@endsection 

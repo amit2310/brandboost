@@ -201,27 +201,7 @@ class Users extends Controller {
         return view('admin.users.twilio.index', array('result' => $result, 'client' => $client));
     }
 
-    public function getUserInfo() {
 
-        $response = array();
-        $response['status'] = 'error';
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $userID = strip_tags($post['uid']);
-            $oUsers = $this->Users->getUserInfo(base64_url_decode($userID));
-
-            if ($oUsers) {
-                $response['status'] = 'success';
-                $response['datarow'] = $oUsers;
-            } else {
-                $response['message'] = "Error: Something went wrong, try again";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }
 
     public function contacts() {
         $breadcrumb = '<ul class="breadcrumb">
