@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Models\PaymentModel;
@@ -12,13 +12,10 @@ use App\Models\SignupModel;
 use App\Models\Admin\UsersModel;
 use App\Models\Admin\LoginModel;
 use App\Models\ProductsModel;
-
 use Session;
 
 class Payment extends Controller {
-
     //var $merchant_id = '14';
-
 
     /**
      * 
@@ -29,14 +26,19 @@ class Payment extends Controller {
         $bSuccess = false;
         $response = array();
         $userID = Session::get('customer_user_id');
-        $planID = $aData['plan_id'];
+        $planID = isset($aData['plan_id']) ? $aData['plan_id'] : '';
         $ccID = $aData['cc_id'];
         $ccCustomerID = $aData['cb_customer_id'];
-        $quantity = $aData['quantity'];
-        
+        $quantity = isset($aData['quantity']) ? $aData['quantity'] : 1;
+
         //Instantiate product model to get its properites and methods
         $mProducts = new ProductsModel();
-        
+
+        //Instantiate product model to get its properites and methods
+        $mChargeBee = new ChargeBeeModel();
+
+
+
         $aProduct = $mProducts->getPlanDetails($planID);
         if (!empty($aProduct)) {
             $productName = $aProduct['product_name'];
@@ -89,20 +91,19 @@ class Payment extends Controller {
         return $response;
     }
 
-    
     /**
      * 
      * @param type $aData
      * @return boolean
      */
     public function userRegistration($aData = array()) {
-        
+
         //Instantiate Chargebee model to get its properties and methods
         $mChargeBee = new ChargeBeeModel();
-        
+
         //Instantiate Signup model to get its properties and methods
         $mSignup = new SignupModel();
-        
+
         $response = array();
 
         $firstName = $aData['firstname'];
@@ -219,20 +220,19 @@ class Payment extends Controller {
         exit;
     }
 
-    
     /**
      * 
      * @param type $aData
      * @return int
      */
     public function cbStoreCC($aData = array()) {
-        
+
         //Instantiate Chargebee model to get its properties and methods
         $mChargeBee = new ChargeBeeModel();
-        
+
         //Instantiate Users Model to get its properties and methods
         $mUser = new UsersModel();
-        
+
         try {
             $creditCardID = 0;
             $userID = Session::get('customer_user_id');
@@ -277,7 +277,6 @@ class Payment extends Controller {
         }
     }
 
-    
     /**
      * This method has deprecated now
      * @param type $ccID
@@ -414,276 +413,279 @@ class Payment extends Controller {
      * @param Request $request
      */
     public function cbCharge(Request $request) {
+        try {
+            $response = array();
 
-        $response = array();
-        
-        //Instantiate Users Model to get its properties and methods
-        $mUser = new UsersModel();
-        
-        //Instantiate Login Model to get its properties and methods
-        $mLogin = new LoginModel();
+            //Instantiate Users Model to get its properties and methods
+            $mUser = new UsersModel();
 
-
-        $aData = Session::get('orderFormData');
-
-        if (empty($request) || empty($request)) {
-            //return error
-            $response = array('status' => 'error', 'error_type' => 'common', 'msg' => 'Empty request');
-            echo json_encode($response);
-            exit;
-        }
+            //Instantiate Login Model to get its properties and methods
+            $mLogin = new LoginModel();
 
 
-        $firstName = $aData['firstname'];
-        $lastName = $aData['lastname'];
-        $email = $aData['email'];
-        $country = $aData['country'];
-        $phone = $aData['phone'];
-        $zip = $aData['zip'];
+            $aData = Session::get('orderFormData');
 
-        $cc = $aData['cc'];
-        $cctype = $aData['cctype'];
-        $expMonth = $aData['expmonth'];
-        $expYear = $aData['expyear'];
-        $cvvCode = $aData['ccvcode'];
-        $planID = $aData['planid'];
-        $chargebeeUserID = $aData['cb_contact_id'];
-
-        $addCCData = array(
-            'ccNum' => $cc,
-            'ccType' => $cctype,
-            'expMonth' => $expMonth,
-            'expYear' => $expYear,
-            'cvv' => $cvvCode,
-        );
-
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $randstring = '';
-        for ($i = 0; $i < 8; $i++) {
-            $randstring .= $characters[rand(0, strlen($characters))];
-        }
-
-        if (empty($chargebeeUserID)) {
-            //Lets create user at chargebee + add the same in database locally
-            $aUserData = array(
-                'firstname' => $firstName,
-                'lastname' => $lastName,
-                'email' => $email,
-                'country' => $country,
-                'phone' => $phone,
-                'zip' => $zip,
-                'password' => $randstring
-            );
-
-            //Create registration at chargebee 
-            $chargebeeUserID = $this->cbUserRegistration($aUserData);
-
-            if (empty($chargebeeUserID)) {
-                //Account creation failed at first attempt, make second Attempt
-                $chargebeeUserID = $this->cbUserRegistration($aUserData);
-            }
-
-            if (empty($chargebeeUserID)) {
-                //Account creation failed at second attempt, make third Attempt
-                $chargebeeUserID = $this->cbUserRegistration($aUserData);
-            }
-
-
-            if (empty($chargebeeUserID)) {
+            if (empty($request) || empty($request)) {
                 //return error
-                $response = array('status' => 'error', 'error_type' => 'decline', 'msg' => 'Account creation failed');
+                $response = array('status' => 'error', 'error_type' => 'common', 'msg' => 'Empty request');
                 echo json_encode($response);
                 exit;
             }
-        }
 
 
+            $firstName = $aData['firstname'];
+            $lastName = $aData['lastname'];
+            $email = $aData['email'];
+            $country = $aData['country'];
+            $phone = $aData['phone'];
+            $zip = $aData['zip'];
 
+            $cc = $aData['cc'];
+            $cctype = $aData['cctype'];
+            $expMonth = $aData['expmonth'];
+            $expYear = $aData['expyear'];
+            $cvvCode = $aData['ccvcode'];
+            $planID = $aData['planid'];
+            $chargebeeUserID = isset($aData['cb_contact_id']) ? $aData['cb_contact_id'] : '';
 
-
-        if (!empty($chargebeeUserID)) {
-            $ccID = $this->cbStoreCC($addCCData);
-        }
-
-        if (empty($ccID)) {
-            //Add CC is failed and not validated so lets make second attempt
-            $ccID = $this->cbStoreCC($addCCData);
-        }
-
-        if (empty($ccID)) {
-            //return error
-            $response = array('status' => 'error', 'error_type' => 'decline', 'msg' => 'Credit card not validated');
-            echo json_encode($response);
-            exit;
-        }
-
-        if (!empty($ccID)) {
-            $aPaymentData = array(
-                'plan_id' => $planID,
-                'cc_id' => $ccID,
-                'cb_customer_id' => $chargebeeUserID
+            $addCCData = array(
+                'ccNum' => $cc,
+                'ccType' => $cctype,
+                'expMonth' => $expMonth,
+                'expYear' => $expYear,
+                'cvv' => $cvvCode,
             );
 
-            $result = $this->cbChargeInvoice($aPaymentData);
-            if ($result['status'] == 'success') {
-                $response = array('status' => 'success', 'msg' => 'Transaction was successful!!');
-            } else if ($result['status'] == 'error') {
-                $response = array('status' => 'error', 'error_type' => 'decline', 'msg' => 'Transaction failed or declined');
-            } else {
-                $response = array('status' => 'error', 'error_type' => 'decline', 'msg' => 'No Response from chargebee');
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $randstring = '';
+            for ($i = 0; $i < 8; $i++) {
+                $randstring .= $characters[rand(0, (strlen($characters) - 1))];
             }
-        }
 
-        if ($response['status'] == 'success') {
+            if (empty($chargebeeUserID)) {
+                //Lets create user at chargebee + add the same in database locally
+                $aUserData = array(
+                    'firstname' => $firstName,
+                    'lastname' => $lastName,
+                    'email' => $email,
+                    'country' => $country,
+                    'phone' => $phone,
+                    'zip' => $zip,
+                    'password' => $randstring
+                );
 
-            $userID = Session::get('customer_user_id');
-            //Create a amazon s3 folder
-            if ($mLogin->checkS3server()) {
+                //Create registration at chargebee 
+                $chargebeeUserID = $this->cbUserRegistration($aUserData);
 
-                $s3Client = new S3Client([
-                    'region' => 'us-west-2',
-                    'version' => '2006-03-01',
-                    'credentials' => [
-                        'key' => 'AKIAJ52XK7ZH7VCR7XHQ',
-                        'secret' => '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'
-                    ],
-                    // Set the S3 class to use objects.dreamhost.com/bucket
-                    // instead of bucket.objects.dreamhost.com
-                    'use_path_style_endpoint' => true
-                ]);
+                if (empty($chargebeeUserID)) {
+                    //Account creation failed at first attempt, make second Attempt
+                    $chargebeeUserID = $this->cbUserRegistration($aUserData);
+                }
 
-                $res = $s3Client->putObject(array(
-                    'Bucket' => 'brandboost.io', // Defines name of Bucket
-                    'Key' => $userID . "/", //Defines Folder name
-                    'Body' => "",
-                    'ACL' => 'public-read' // Defines Permission to that folder
-                ));
+                if (empty($chargebeeUserID)) {
+                    //Account creation failed at second attempt, make third Attempt
+                    $chargebeeUserID = $this->cbUserRegistration($aUserData);
+                }
 
-                $folderName = ['onsite', 'offsite', 'automation', 'broadcast', 'referral', 'nps', 'webchat', 'smschat', 'reviews', 'questions'];
 
-                $subfolder = ['images', 'videos', 'files'];
+                if (empty($chargebeeUserID)) {
+                    //return error
+                    $response = array('status' => 'error', 'error_type' => 'decline', 'msg' => 'Account creation failed');
+                    echo json_encode($response);
+                    exit;
+                }
+            }
 
-                foreach ($folderName as $value) {
-                    $s3Client->putObject(array(
+
+
+
+
+            if (!empty($chargebeeUserID)) {
+                $ccID = $this->cbStoreCC($addCCData);
+            }
+
+            if (empty($ccID)) {
+                //Add CC is failed and not validated so lets make second attempt
+                $ccID = $this->cbStoreCC($addCCData);
+            }
+
+            if (empty($ccID)) {
+                //return error
+                $response = array('status' => 'error', 'error_type' => 'decline', 'msg' => 'Credit card not validated');
+                echo json_encode($response);
+                exit;
+            }
+
+            if (!empty($ccID)) {
+                $aPaymentData = array(
+                    'plan_id' => $planID,
+                    'cc_id' => $ccID,
+                    'cb_customer_id' => $chargebeeUserID
+                );
+
+                $result = $this->cbChargeInvoice($aPaymentData);
+                if ($result['status'] == 'success') {
+                    $response = array('status' => 'success', 'msg' => 'Transaction was successful!!');
+                } else if ($result['status'] == 'error') {
+                    $response = array('status' => 'error', 'error_type' => 'decline', 'msg' => 'Transaction failed or declined');
+                } else {
+                    $response = array('status' => 'error', 'error_type' => 'decline', 'msg' => 'No Response from chargebee');
+                }
+            }
+
+            if ($response['status'] == 'success') {
+
+                $userID = Session::get('customer_user_id');
+                //Create a amazon s3 folder
+                if ($mLogin->checkS3server()) {
+
+                    $s3Client = new S3Client([
+                        'region' => 'us-west-2',
+                        'version' => '2006-03-01',
+                        'credentials' => [
+                            'key' => 'AKIAJ52XK7ZH7VCR7XHQ',
+                            'secret' => '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'
+                        ],
+                        // Set the S3 class to use objects.dreamhost.com/bucket
+                        // instead of bucket.objects.dreamhost.com
+                        'use_path_style_endpoint' => true
+                    ]);
+
+                    $res = $s3Client->putObject(array(
                         'Bucket' => 'brandboost.io', // Defines name of Bucket
-                        'Key' => $userID . "/" . $value . '/', //Defines Folder name
+                        'Key' => $userID . "/", //Defines Folder name
                         'Body' => "",
                         'ACL' => 'public-read' // Defines Permission to that folder
                     ));
 
-                    foreach ($subfolder as $subvalue) {
+                    $folderName = ['onsite', 'offsite', 'automation', 'broadcast', 'referral', 'nps', 'webchat', 'smschat', 'reviews', 'questions'];
+
+                    $subfolder = ['images', 'videos', 'files'];
+
+                    foreach ($folderName as $value) {
                         $s3Client->putObject(array(
                             'Bucket' => 'brandboost.io', // Defines name of Bucket
-                            'Key' => $userID . "/" . $value . '/' . $subvalue . '/', //Defines Folder name
+                            'Key' => $userID . "/" . $value . '/', //Defines Folder name
                             'Body' => "",
                             'ACL' => 'public-read' // Defines Permission to that folder
                         ));
+
+                        foreach ($subfolder as $subvalue) {
+                            $s3Client->putObject(array(
+                                'Bucket' => 'brandboost.io', // Defines name of Bucket
+                                'Key' => $userID . "/" . $value . '/' . $subvalue . '/', //Defines Folder name
+                                'Body' => "",
+                                'ACL' => 'public-read' // Defines Permission to that folder
+                            ));
+                        }
+                    }
+
+                    $mLogin->updateS3server();
+                }
+                //End a amazon s3 folder
+
+
+
+                $localErrors = array();
+                //Credit account usage limit as per the plan or other operation
+                //Create subaccount on Twilio
+
+                $newUserName = 1000000 + $userID . '@brandboost.io';
+                $userData = $mUser->getUserTwilioData($userID);
+                if (empty($userData)) {
+                    //Create Twilio sub account
+                    $twilioSubAccountData = createTwilioSA($userID, $newUserName);
+                    $twilioData = json_decode($twilioSubAccountData);
+
+                    if (!empty($twilioData->sid)) {
+                        $data = array('account_sid' => $twilioData->sid, 'account_token' => $twilioData->authToken, 'user_id' => $userID, 'account_status' => 'active', 'created' => date("Y-m-d H:i:s"));
+                        $bAdded = $mUser->addUserTwilioData($data);
+                        if (!$bAdded) {
+                            $localErrors[] = 'Twilio sub account created successfully but failed to store into the database locally';
+                        }
+                    } else {
+                        $localErrors[] = 'Twilio sub account creation failed';
                     }
                 }
 
-                $mLogin->updateS3server();
-            }
-            //End a amazon s3 folder
+                //Create subaccount at sendgrid
+                $addUserData = $mUser->getUserSendGridData($userID);
 
+                if (empty($addUserData)) {
+                    $ip = "168.245.71.20";
+                    $password = $randstring;
+                    $sdResult = createSendGridSubAccount($newUserName, $newUserName, $password, $ip);
 
+                    $sgResponse = json_decode($sdResult);
+                    $sendgridUserID = isset($sgResponse->user_id) ? $sgResponse->user_id : '';
 
-            $localErrors = array();
-            //Credit account usage limit as per the plan or other operation
-            //Create subaccount on Twilio
+                    if (empty($sendgridUserID)) {
+                        $localErrors[] = 'Sendgrid sub account creation failed';
+                    }
 
-            $newUserName = 1000000 + $userID . '@brandboost.io';
-            $userData = $mUser->getUserTwilioData($userID);
-            if (empty($userData)) {
-                //Create Twilio sub account
-                $twilioSubAccountData = createTwilioSA($userID, $newUserName);
-                $twilioData = json_decode($twilioSubAccountData);
+                    //Update Webhook notification settings
+                    $bUpdated = updateSendgridNotificationSettings($newUserName);
 
-                if (!empty($twilioData->sid)) {
-                    $data = array('account_sid' => $twilioData->sid, 'account_token' => $twilioData->authToken, 'user_id' => $userID, 'account_status' => 'active', 'created' => date("Y-m-d H:i:s"));
-                    $bAdded = $mUser->addUserTwilioData($data);
+                    $sdData = array(
+                        'user_id' => $userID,
+                        'sg_username' => $newUserName,
+                        'sg_email' => $newUserName,
+                        'sg_password' => $password,
+                        'sg_ip' => $ip,
+                        'status' => 1,
+                        'created' => date("Y-m-d H:i:s")
+                    );
+
+                    $bAdded = $mUser->addUserSendGridData($sdData);
                     if (!$bAdded) {
-                        $localErrors[] = 'Twilio sub account created successfully but failed to store into the database locally';
+                        $localErrors[] = 'Sendgrid sub account created successfully but failed to store into the database locally';
                     }
-                } else {
-                    $localErrors[] = 'Twilio sub account creation failed';
-                }
-            }
-
-            //Create subaccount at sendgrid
-            $addUserData = $mUser->getUserSendGridData($userID);
-
-            if (empty($addUserData)) {
-                $ip = "168.245.71.20";
-                $password = $randstring;
-                $sdResult = createSendGridSubAccount($newUserName, $newUserName, $password, $ip);
-
-                $sgResponse = json_decode($sdResult);
-                $sendgridUserID = $sgResponse->user_id;
-
-                if (empty($sendgridUserID)) {
-                    $localErrors[] = 'Sendgrid sub account creation failed';
                 }
 
-                //Update Webhook notification settings
-                $bUpdated = updateSendgridNotificationSettings($newUserName);
+                //Send Email
+                sendEmailTemplate('welcome', $userID);
 
-                $sdData = array(
+                //Send Notification
+                $aNotificationDataCus = array(
                     'user_id' => $userID,
-                    'sg_username' => $newUserName,
-                    'sg_email' => $newUserName,
-                    'sg_password' => $password,
-                    'sg_ip' => $ip,
-                    'status' => 1,
+                    'event_type' => 'user_registration',
+                    'message' => 'Welcome to brandboost',
+                    'link' => base_url() . 'admin/profile/',
                     'created' => date("Y-m-d H:i:s")
                 );
+                $eventName = "sys_new_user_registration";
+                @add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin = true);
 
-                $bAdded = $mUser->addUserSendGridData($sdData);
-                if (!$bAdded) {
-                    $localErrors[] = 'Sendgrid sub account created successfully but failed to store into the database locally';
+                //$bRefilled = $this->refillAccount($userID, $planID);
+                $bRefilled = refillPlanBenefits($userID, $planID);
+
+                if (!$bRefilled) {
+                    $localErrors[] = 'Account refilling failed for the purchased product';
                 }
+
+                //Send Notification to admin in case of any failure occured even after successful charge
+                if (!empty($localErrors)) {
+                    //Send notification now
+                    $aNotificationAdmin = array(
+                        'user_id' => 1,
+                        'event_type' => 'post_payment_account_setup_errors',
+                        'message' => "Client with id {$userID} needs to setup these errors manaually: " . implode("<br>", $localErrors),
+                        'link' => base_url() . 'admin/notifications',
+                        'meta_data' => json_encode(array('failed_user_id' => isset($userIDs) ? $userID : '', 'errors' => $localErrors)),
+                        'created' => date("Y-m-d H:i:s")
+                    );
+                    $eventName = 'error';
+                    @add_notifications($aNotificationAdmin, $eventName, 1);
+                }
+                //Clear order form session data
+                Session::put('orderFormData', '');
             }
 
-            //Send Email
-            sendEmailTemplate('welcome', $userID);
-
-            //Send Notification
-            $aNotificationDataCus = array(
-                'user_id' => $userID,
-                'event_type' => 'user_registration',
-                'message' => 'Welcome to brandboost',
-                'link' => base_url() . 'admin/profile/',
-                'created' => date("Y-m-d H:i:s")
-            );
-            $eventName = "sys_new_user_registration";
-            @add_notifications($aNotificationDataCus, $eventName, $userID, $notifyAdmin = true);
-
-            //$bRefilled = $this->refillAccount($userID, $planID);
-            $bRefilled = refillPlanBenefits($userID, $planID);
-
-            if (!$bRefilled) {
-                $localErrors[] = 'Account refilling failed for the purchased product';
-            }
-
-            //Send Notification to admin in case of any failure occured even after successful charge
-            if (!empty($localErrors)) {
-                //Send notification now
-                $aNotificationAdmin = array(
-                    'user_id' => 1,
-                    'event_type' => 'post_payment_account_setup_errors',
-                    'message' => "Client with id {$userID} needs to setup these errors manaually: " . implode("<br>", $localErrors),
-                    'link' => base_url() . 'admin/notifications',
-                    'meta_data' => json_encode(array('failed_user_id' => $userIDs, 'errors' => $localErrors)),
-                    'created' => date("Y-m-d H:i:s")
-                );
-                $eventName = 'error';
-                @add_notifications($aNotificationAdmin, $eventName, 1);
-            }
-            //Clear order form session data
-            Session::forget('orderFormData');
+            echo json_encode($response);
+            exit;
+        } catch (Exception $ex) {
+            echo 'Error Message: ' .$ex->getMessage();
         }
-
-        echo json_encode($response);
-        exit;
     }
 
     // cb charge end
@@ -691,7 +693,7 @@ class Payment extends Controller {
     public function cbUserRegistration($aData = array()) {
         //Instantiate Chargebee model to get its properties and methods
         $mChargeBee = new ChargeBeeModel();
-        
+
         //Instantiate Signup model to get its properties and methods
         $mSignup = new SignupModel();
 
@@ -720,7 +722,7 @@ class Payment extends Controller {
 
         if ($chargebeeUserID > 0) {
             //Add the same in orderFormData session
-            $aData = Session::get['orderFormData'];
+            $aData = Session::get('orderFormData');
             $aData['cb_contact_id'] = $chargebeeUserID;
             $aOrderFormData = array(
                 'orderFormData' => $aData,
@@ -753,7 +755,6 @@ class Payment extends Controller {
         }
     }
 
-    
     /**
      * 
      * @param type $planID
@@ -790,7 +791,7 @@ class Payment extends Controller {
     public function refillAccount($userID, $planID, $quantity = 0) {
         //Instantiate Users Model to get its properties and methods
         $mUser = new UsersModel();
-        
+
         //Check if member purchased the product
         $bDone = false;
         $aUser = $mUser->getCurrentAccountUsage($userID);

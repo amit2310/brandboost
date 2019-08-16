@@ -6,7 +6,7 @@ if (!empty($oMemberships)) {
             $oRegularMembership = $oMembership;
         }
 
-        if ($oMembership->plan_id == $oUser->topup_plan_id) {
+        if (@$oMembership->plan_id == @$oUser->topup_plan_id) {
             $oTopupMembership = $oMembership;
         }
     }

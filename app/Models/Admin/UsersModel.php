@@ -163,7 +163,7 @@ class UsersModel extends Model {
 
         $oData = DB::table('tbl_users')
                 ->where('email', $emailID)
-                ->get();
+                ->exists();
 
         return $oData;
     }

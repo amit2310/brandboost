@@ -19,17 +19,17 @@ class ChargeBeeModel extends Model {
      */
     public function createContact($aData = array()) {
         //ChargeBee_Environment::configure("https://brandboost.chargebee.com","live_AAWPsatYm8HgEGQflS02Wbcu2cSMAY6uI");
-        $firstName = ($aData['firstname']) ? $aData['firstname'] : '';
-        $lastName = ($aData['lastname']) ? $aData['lastname'] : '';
-        $email = ($aData['email']) ? $aData['email'] : '';
-        $phone = ($aData['phone']) ? $aData['phone'] : '';
-        $zip = ($aData['zip']) ? $aData['zip'] : '';
-        $country = ($aData['country']) ? $aData['country'] : '';
-        $address = ($aData['address']) ? $aData['address'] : '';
-        $city = ($aData['city']) ? $aData['city'] : '';
-        $state = ($aData['state']) ? $aData['state'] : '';
-        $password = ($aData['password']) ? $aData['password'] : '';
-        $yesshipping = (!empty($aData['is_shipping_same'])) ? $aData['is_shipping_same'] : 1;
+        $firstName = isset($aData['firstname']) ? $aData['firstname'] : '';
+        $lastName = isset($aData['lastname']) ? $aData['lastname'] : '';
+        $email = isset($aData['email']) ? $aData['email'] : '';
+        $phone = isset($aData['phone']) ? $aData['phone'] : '';
+        $zip = isset($aData['zip']) ? $aData['zip'] : '';
+        $country = isset($aData['country']) ? $aData['country'] : '';
+        $address = isset($aData['address']) ? $aData['address'] : '';
+        $city = isset($aData['city']) ? $aData['city'] : '';
+        $state = isset($aData['state']) ? $aData['state'] : '';
+        $password = isset($aData['password']) ? $aData['password'] : '';
+        $yesshipping = @(!empty($aData['is_shipping_same'])) ? $aData['is_shipping_same'] : 1;
         $aInputBilling = array(
             'firstName' => $firstName,
             'lastName' => $lastName,

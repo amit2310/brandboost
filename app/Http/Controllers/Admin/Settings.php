@@ -27,7 +27,7 @@ class Settings extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $pID =$oUser->plan_id;
-        $topupPlanID = $oUser->topup_plan_id;
+        $topupPlanID = isset($oUser->topup_plan_id) ? $oUser->topup_plan_id : '';
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -71,7 +71,7 @@ class Settings extends Controller {
             'oExportHistory' => $oExportHistory,
             'oMemberships' => $oMemberships,
             'oCurrentPlanData' => $oCurrentPlanData,
-            'oCurrentTopupPlanData' => $oCurrentTopupPlanData,
+            'oCurrentTopupPlanData' => isset($oCurrentTopupPlanData) ? $oCurrentTopupPlanData : '',
             'oInvoices' => InvoicesModel::getInvoices($userID),
             'seletedTab' => $seletedTab,
             'notificationlisting'=>$notificationlisting,

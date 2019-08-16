@@ -94,8 +94,8 @@ class SettingsModel extends Model {
      * @return type
      */
     public static function runCustomQuery($sql) {
-        $oData = DB::raw($sql);
-        return $oData;
+        $oData = DB::statement($sql);
+        return true;
     }
 
     /**

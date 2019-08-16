@@ -39,7 +39,9 @@
         <div class="modal-content" style="border-top: 3px solid #0ea0dd">
             <div class="modal-header mb-20 text-center">
                 <button style="top: 20px;" type="button" class="close" data-dismiss="modal">&times;</button>
-                <h1 style="font-size: 35px;  font-style: italic; margin:30px 0 0;"><strong>Upgrade to <?php if(isset($oUpgradePlanData->level_name)) { echo $oUpgradePlanData->level_name;  }  ?></strong></h1>
+                <h1 style="font-size: 35px;  font-style: italic; margin:30px 0 0;"><strong>Upgrade to <?php if (isset($oUpgradePlanData->level_name)) {
+    echo $oUpgradePlanData->level_name;
+} ?></strong></h1>
                 <h2 class="modal-title">Get these amazing features:</h2>
             </div>
 
@@ -57,7 +59,9 @@
                                 </dt>
 
                                 <dd>Total Email Invites :
-                                    <?php  if(isset($oUpgradePlanData->email_limit)) { echo $oUpgradePlanData->email_limit; } ?>
+<?php if (isset($oUpgradePlanData->email_limit)) {
+    echo $oUpgradePlanData->email_limit;
+} ?>
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -66,7 +70,9 @@
                                 </dt>
 
                                 <dd>Total Sms Invites :
-                                    <?php if(isset($oUpgradePlanData->sms_limit)) { echo $oUpgradePlanData->sms_limit; } ?>
+<?php if (isset($oUpgradePlanData->sms_limit)) {
+    echo $oUpgradePlanData->sms_limit;
+} ?>
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -75,7 +81,9 @@
                                 </dt>
 
                                 <dd>Total Text Reviews :
-                                    <?php if(isset($oUpgradePlanData->text_review_limit)) { echo $oUpgradePlanData->text_review_limit; } ?>
+<?php if (isset($oUpgradePlanData->text_review_limit)) {
+    echo $oUpgradePlanData->text_review_limit;
+} ?>
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -84,7 +92,9 @@
                                 </dt>
 
                                 <dd>Total Video Reviews :
-                                    <?php if(isset($oUpgradePlanData->video_review_limit)) { echo $oUpgradePlanData->video_review_limit; } ?>
+<?php if (isset($oUpgradePlanData->video_review_limit)) {
+    echo $oUpgradePlanData->video_review_limit;
+} ?>
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -93,8 +103,10 @@
                                 </dt>
 
                                 <dd>Get social invites on :
-                                
-                                    <?php if(isset($oUpgradePlanData->social_invite_sources)) { echo $oUpgradePlanData->social_invite_sources; } ?>
+
+<?php if (isset($oUpgradePlanData->social_invite_sources)) {
+    echo $oUpgradePlanData->social_invite_sources;
+} ?>
 
                                 </dd>
                             </dl>
@@ -112,7 +124,11 @@
                         </p>
                     </div>
                     <div class="col-md-3 pt-20 text-center">
-                        <button type="button" class="btn btn-primary mb-10" id="btnLevelUpgrade" plan_name="<?php if(isset($oUpgradePlanData->level_name)) { echo $oUpgradePlanData->level_name; } ?>" plan_id="<?php if(isset($oUpgradePlanData->plan_id)) { echo $oUpgradePlanData->plan_id;} ?>" data-toggle="modal" data-target="#confirm_level_upgrade"><i class="icon-cart"></i> &nbsp; Confirm Upgrade</button>
+                        <button type="button" class="btn btn-primary mb-10" id="btnLevelUpgrade" plan_name="<?php if (isset($oUpgradePlanData->level_name)) {
+    echo $oUpgradePlanData->level_name;
+} ?>" plan_id="<?php if (isset($oUpgradePlanData->plan_id)) {
+    echo $oUpgradePlanData->plan_id;
+} ?>" data-toggle="modal" data-target="#confirm_level_upgrade"><i class="icon-cart"></i> &nbsp; Confirm Upgrade</button>
                         <p>Your Card will be automatically charged</p>
                     </div>
                 </div>
@@ -185,13 +201,13 @@
 
                                         <p> <?php echo $data->description; ?></p>
                                         <ul class="pricing-content list-unstyled">
-                                            <li>Free Trials-<?php echo $data->free_trial_days; ?> Days</li>
+                                            <li>Free Trials-<?php echo @($data->free_trial_days); ?> Days</li>
                                             <li>Email Invites-<?php echo $data->email_limit; ?></li>
                                             <li>Sms Invites-<?php echo $data->sms_limit; ?></li>
                                             <li>Text Reviews-<?php echo $data->text_review_limit; ?></li>
                                             <li>Video Reviews-<?php echo $data->video_review_limit; ?></li>
-                                            <li>Email Topup-<?php if ($data->topup_email_limit): ?> Yes <?php else: ?> No <?php endif; ?></li>
-                                            <li>Sms Topup-<?php if ($data->topup_sms_limit): ?> Yes <?php else: ?> No <?php endif; ?></li>
+                                            <li>Email Topup-<?php if (@($data->topup_email_limit)): ?> Yes <?php else: ?> No <?php endif; ?></li>
+                                            <li>Sms Topup-<?php if (@($data->topup_sms_limit)): ?> Yes <?php else: ?> No <?php endif; ?></li>
                                             <li>Social Invites-<?php if ($data->social_invite_sources): ?> Yes <?php else: ?> No <?php endif; ?></li>
                                             <li>Google Invites-<?php if (strpos($data->social_invite_sources, 'Google') !== false): ?> Yes <?php else: ?> No <?php endif; ?></li>
                                             <li>Facebook Invites-<?php if (strpos($data->social_invite_sources, 'Facebook') !== false): ?> Yes <?php else: ?> No <?php endif; ?></li>
@@ -205,10 +221,10 @@
                                 </label>
 
                             </div>
-                            <?php
-                        }
-                    }
-                    ?>
+        <?php
+    }
+}
+?>
 
                     <!--//End Pricing -->
                 </div>
@@ -231,7 +247,7 @@
 </div>  
 
 <!-- Upgrade plan Modal Confirm -->
-<div id="confirm_level_upgrade" class="modal fade">
+<div id="confirm_level_upgrade" class="modal fade" style="z-index:99999;">
     <div class="modal-dialog">
 
         <div class="modal-content">
@@ -242,71 +258,66 @@
 
             <div class="modal-body">
                 <h6 class="text-semibold">Upgrade Your Account</h6>
+                <div class="row">
+                    <div class="col-md-12">
 
-                <table class="table table-hover table-striped table-bordered text-left mb-20">
-                    <tr>
-                        <td>Name :</td>
-                        <td>
-                            <?php 
-                            if(isset($aUInfo->firstname) || isset($aUInfo->lastname))
-                            {
-                            echo $aUInfo->firstname . ' ' . $aUInfo->lastname ;
+                        <table class="table table-hover table-striped table-bordered text-left mb-20" style="width:100%!important;">
+                            <tr>
+                                <td>Name :</td>
+                                <td>
+                                    <?php
+                                    if (isset($aUInfo->firstname) || isset($aUInfo->lastname)) {
+                                        echo $aUInfo->firstname . ' ' . $aUInfo->lastname;
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Email :</td>
+                                <td>
+                                    <?php
+                                    if (isset($aUInfo->email)) {
+                                        echo $aUInfo->email;
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Phone :</td>
+                                <td>
+                                    <?php
+                                    if (isset($aUInfo->mobile)) {
+                                        echo $aUInfo->mobile;
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Current Plan :</td>
+                                <td>
+<?php
+if (isset($oCurrentPlanData->level_name)) {
+    echo $oCurrentPlanData->level_name;
+}
+?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Upgrade to :</td>
+                                <td>
+                                    <span id="upgradedPlanTitle">
+<?php
+if (isset($oUpgradePlanData->level_name)) {
+    echo $oUpgradePlanData->level_name;
+}
+?>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
 
-                        }?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Email :</td>
-                        <td>
-                            <?php
-                             if(isset($aUInfo->email))
-                             {
-                                echo $aUInfo->email;
-                              }
-
-
-                              ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Phone :</td>
-                        <td>
-                            <?php
-                             if(isset($aUInfo->mobile))
-                                {
-                                 echo $aUInfo->mobile;
-                              }
-
-
-                              ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Current Plan :</td>
-                        <td>
-                            <?php 
-                             if(isset($oCurrentPlanData->level_name))
-                             {
-                                echo $oCurrentPlanData->level_name;
-
-                            }
-                             ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Upgrade to :</td>
-                        <td>
-                            <span id="upgradedPlanTitle">
-                                <?php 
-                                if(isset($oUpgradePlanData->level_name))
-                                {
-                                  echo $oUpgradePlanData->level_name;
-                                }
-                                 ?>
-                            </span>
-                        </td>
-                    </tr>
-                </table>
+                    </div>
+                </div>    
 
 
                 <div class="checkbox">
@@ -319,7 +330,9 @@
             </div>
 
             <div class="modal-footer">
-                <input type="hidden" name="hidLevelPlanId" id="hidLevelPlanId" value="<?php if(isset($oUpgradePlanData->plan_id)) {echo $oUpgradePlanData->plan_id; } ?>"/>
+                <input type="hidden" name="hidLevelPlanId" id="hidLevelPlanId" value="<?php if (isset($oUpgradePlanData->plan_id)) {
+    echo $oUpgradePlanData->plan_id;
+} ?>"/>
                 <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancel</button>
                 <button type="button" id="confirmLevelUpdate" class="btn btn-primary">Yes, Upgrade Now</button>
             </div>
@@ -339,8 +352,8 @@
                 <div class="modal-body">
 
                     <div class="alert-danger" style="margin-bottom:10px;">
-                        <?php echo Session::get('error_message'); ?>
-                        <?php //echo validation_errors(); ?>
+<?php echo Session::get('error_message'); ?>
+<?php //echo validation_errors();  ?>
                     </div>
 
                     <div class="col-md-12">
@@ -537,12 +550,12 @@
                                 <div class="">
                                     <select class="form-control h52" name="country_code" id="country_code">
                                         <option value="">Select Country</option>
-                                        <?php
-                                        $countriesList = getCountriesList();
-                                        foreach ($countriesList as $countryName) {
-                                            ?>
+<?php
+$countriesList = getCountriesList();
+foreach ($countriesList as $countryName) {
+    ?>
                                             <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
-                                        <?php } ?>
+<?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -699,12 +712,12 @@
                                 <div class="">
                                     <select class="form-control h52" name="edit_countryCode" id="edit_countryCode_sms">
                                         <option value="">Select Country</option>
-                                        <?php
-                                        $countriesList = getCountriesList();
-                                        foreach ($countriesList as $countryName) {
-                                            ?>
+<?php
+$countriesList = getCountriesList();
+foreach ($countriesList as $countryName) {
+    ?>
                                             <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
-                                        <?php } ?>
+<?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -866,12 +879,12 @@
                                 <div class="">
                                     <select class="form-control h52" name="edit_countryCode" id="edit_countryCode_main_web">
                                         <option value="">Select Country</option>
-                                        <?php
-                                        $countriesList = getCountriesList();
-                                        foreach ($countriesList as $countryName) {
-                                            ?>
+<?php
+$countriesList = getCountriesList();
+foreach ($countriesList as $countryName) {
+    ?>
                                             <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
-                                        <?php } ?>
+<?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -1032,12 +1045,12 @@
                                 <div class="">
                                     <select class="form-control h52" name="edit_countryCode" id="edit_countryCode">
                                         <option value="">Select Country</option>
-                                        <?php
-                                        $countriesList = getCountriesList();
-                                        foreach ($countriesList as $countryName) {
-                                            ?>
+<?php
+$countriesList = getCountriesList();
+foreach ($countriesList as $countryName) {
+    ?>
                                             <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
-                                        <?php } ?>
+<?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -1142,7 +1155,7 @@
                 <div class="modal-body">
 
                     <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?>
-                        <?php //echo validation_errors(); ?></div>
+<?php //echo validation_errors();  ?></div>
 
                     <!-- <div class="form-group">
                        <label class="control-label col-lg-3">Import CSV</label>

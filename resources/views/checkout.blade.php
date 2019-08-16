@@ -291,7 +291,7 @@
                     $.ajax({
                         url: "<?php echo base_url('admin/users/checkEmailExist'); ?>",
                         type: "POST",
-                        data: {emailID: str},
+                        data: {_token: '{{csrf_token()}}', emailID: str},
                         dataType: "json",
                         success: function (data) {
 
