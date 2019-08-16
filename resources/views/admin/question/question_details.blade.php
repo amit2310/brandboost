@@ -186,7 +186,7 @@ $questionDescription = $oQuestion->question;
                         foreach ($mediaArray as $media) {
                             if ($media['media_type'] == 'image') {
                                 $media_url = $media['media_url'];
-                                $videoImage = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $media_url;
+                                $videoImage = "https://s3-us-west-2.amazonaws.com/brandboost.io/" . $media_url;
                                 $ext = pathinfo($videoImage, PATHINFO_EXTENSION);
                                 $ch = curl_init($videoImage);
                                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
