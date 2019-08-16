@@ -511,6 +511,66 @@ class ReviewsModel extends Model {
         return $insert_id;
     }
 	
+	
+	public function getWidgetTrackData($widgetID, $ipAddress, $trackType, $reviewID) {
+		$oData = DB::table('tbl_brandboost_widget_tracking_log')
+			->when(($reviewID > 0), function($query) use($reviewID) {
+				return $query->where('review_id', $reviewID);
+			})
+			->where('widget_id', $widgetID)
+			->where('ip_address', $ipAddress)
+			->where('track_type', $trackType)
+			->get();				
+        return $oData;
+    }
+	
+	
+	public function addWidgetTrackData($aData) {
+		$bSaved = DB::table('tbl_brandboost_widget_tracking_log')->insertGetId($aData);
+        if ($bSaved)
+            return true;
+        return false;
+    }
+	
+	
+	public function getAllActiveReviews($campaignID, $aSettings = array()) {
+		$oData = DB::table('tbl_reviews')
+			->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_brandboost.brand_title')
+			->when(!empty($aSettings), function($query) use($reviewID) {
+				return $query->where('tbl_reviews.ratings', '>=', $aSettings['min_ratings']);
+			})
+			->leftJoin('tbl_users', 'tbl_reviews.user_id', '=' , 'tbl_users.id')
+			->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=' , 'tbl_brandboost.id')
+            ->orderBy("tbl_reviews.id", "DESC")
+			->where('tbl_reviews.campaign_id', $campaignID)
+			->where('tbl_reviews.status', 1)
+			->get();				
+        return $oData;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
     public function getReviews($campaignID, $aSettings = array()) {
         $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_brandboost.brand_title");
@@ -530,26 +590,6 @@ class ReviewsModel extends Model {
         if (!empty($aSettings) && !empty($aSettings['review_limit'])) {
             $this->db->limit($aSettings['review_limit'], $start);
         }
-        $this->db->order_by("tbl_reviews.id", "DESC");
-        $rResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();
-        if ($rResponse->num_rows() > 0) {
-            $aData = $rResponse->result();
-        }
-        return $aData;
-    }
-
-    public function getAllActiveReviews($campaignID, $aSettings = array()) {
-        $this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_brandboost.brand_title");
-        $this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id", "LEFT");
-        $this->db->join("tbl_brandboost", "tbl_reviews.campaign_id=tbl_brandboost.id", "LEFT");
-        $this->db->where("tbl_reviews.campaign_id", $campaignID);
-        $this->db->where("tbl_reviews.status", '1');
-
-        if (!empty($aSettings) && !empty($aSettings['min_ratings'])) {
-            $this->db->where("tbl_reviews.ratings >=", $aSettings['min_ratings']);
-        }
-
         $this->db->order_by("tbl_reviews.id", "DESC");
         $rResponse = $this->db->get("tbl_reviews");
         //echo $this->db->last_query();
@@ -665,6 +705,44 @@ class ReviewsModel extends Model {
         
         return $aData;
     }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -1060,28 +1138,9 @@ class ReviewsModel extends Model {
         return $response;
     }
 
-    public function addWidgetTrackData($aData) {
-        $bSaved = $this->db->insert("tbl_brandboost_widget_tracking_log", $aData);
-        //echo $this->db->last_query();
-        if ($bSaved)
-            return true;
-        return false;
-    }
+    
 
-    public function getWidgetTrackData($widgetID, $ipAddress, $trackType, $reviewID) {
-        $this->db->where('widget_id', $widgetID);
-        $this->db->where('ip_address', $ipAddress);
-        $this->db->where('track_type', $trackType);
-        if ($reviewID != '') {
-            $this->db->where('review_id', $reviewID);
-        }
-        $this->db->from('tbl_brandboost_widget_tracking_log');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
+    
 
     /**
      * Get Number of people currently reading the widget
@@ -1278,21 +1337,20 @@ class ReviewsModel extends Model {
     
 
     public function getAllMainComments($reviewId) {
-        $this->db->select("tbl_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.id as userId");
-        $this->db->join("tbl_reviews", "tbl_reviews_comments.review_id = tbl_reviews.id", "LEFT");
-        $this->db->join("tbl_users", "tbl_reviews_comments.user_id=tbl_users.id");
-        $this->db->order_by("tbl_reviews_comments.id", "DESC");
-        $this->db->where("tbl_reviews_comments.review_id", $reviewId);
-        $this->db->where("tbl_reviews_comments.parent_comment_id", '0');
-        $this->db->where("tbl_reviews_comments.status", '1');
-        $oResponse = $this->db->get("tbl_reviews_comments");
-        if ($oResponse->num_rows() > 0) {
-            $aComments = $oResponse->result();
-        }
-
-        return $aComments;
-        exit;
+		$oData = DB::table('tbl_reviews_comments')
+            ->leftJoin('tbl_reviews', 'tbl_reviews_comments.review_id', '=', 'tbl_reviews.id')
+            ->leftJoin('tbl_users', 'tbl_reviews_comments.user_id', '=', 'tbl_users.id')
+            ->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.id as userId')
+            ->where('tbl_reviews_comments.review_id', $reviewId)
+            ->where('tbl_reviews_comments.status', 1)
+            ->where('tbl_reviews_comments.parent_comment_id', 0)        
+            ->orderBy('tbl_reviews_comments.id', 'desc')
+            ->get();
+        return $oData;
     }
+	
+	
+	
 
     public function getAllChildComments($parentId) {
         $this->db->select("tbl_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.avatar, tbl_users.id as userId");
