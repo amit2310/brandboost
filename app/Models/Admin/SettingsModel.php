@@ -657,37 +657,41 @@ class SettingsModel extends Model {
         return $aData;
     }
 
-    //*** model function is used to get the team members twilio accounts and response back to the controller 
+    
+
+     /**
+    * This function is used to load team accounts
+    * @param $userid
+    * @return type
+    */
+
     public function team_twillo_account($userid) {
 
         $aData = array();
-        $this->db->select("tbl_users_team.*, tbl_users_team.firstname, tbl_users_team.lastname, tbl_users_team.email");
-        $this->db->where('tbl_users_team.bb_number != ', ' ');
-        $this->db->where('tbl_users_team.parent_user_id', $userid);
-        $query = $this->db->get('tbl_users_team');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-        }
-
-        return $aData;
+        $aData =  DB::table('tbl_users_team')
+         ->select('tbl_users_team.*', 'tbl_users_team.firstname', 'tbl_users_team.lastname', 'tbl_users_team.email')
+          ->where('tbl_users_team.bb_number','!=', ' ')
+          ->where('tbl_users_team.parent_user_id', $userid)->get();
+            return $aData;
     }
 
-    //*** model function is used to get the Twilio number logs details and  response back to the controller 
+     /**
+    * This function is used list all team member number usage details 
+    * @param $userid
+    * @return type
+    */
+
     public function getNumberlogs($id) {
-
-        $this->db->select("tbl_users_team.bb_number");
-        $this->db->where('tbl_users_team.id', $id);
-        $query = $this->db->get('tbl_users_team');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
-
-            $result = $this->db->query("SELECT * FROM `tbl_twilio_logs` WHERE ( `sent_from` = '" . $aData[0]->bb_number . "' or `sent_to` ='" . $aData[0]->bb_number . "' )");
-            $response = $result->result();
+       
+        $aData =  DB::table('tbl_users_team')
+         ->select('tbl_users_team.bb_number')
+         ->where('tbl_users_team.id', $id)->get();
+        if ($aData->count() > 0) {
+            $sql ="SELECT * FROM `tbl_twilio_logs` WHERE ( `sent_from` = '" . $aData[0]->bb_number . "' or `sent_to` ='" . $aData[0]->bb_number . "')";
+            $result = DB::select(DB::raw($sql));
         }
 
-        return $response;
+        return $result;
     }
 
 
@@ -722,7 +726,7 @@ class SettingsModel extends Model {
         $totalPrice = array();
 
         $oData = DB::table('tbl_twilio_logs')
-         ->select("SUM(price) AS price")
+         ->select(DB::raw("SUM(price) AS price"))
          ->where('tbl_twilio_logs.sent_from', $tNumber)->get();
         if ($oData->count() > 0) {
             if (!empty($oData[0]->price)) {
@@ -733,13 +737,10 @@ class SettingsModel extends Model {
 
         $aData = array();
 
-
-        $this->db->select("SUM(price) AS price");
-        $this->db->where('tbl_twilio_logs.sent_to', $tNumber);
-        $query = $this->db->get('tbl_twilio_logs');
-        //echo $this->db->last_query();exit;
-        if ($query->num_rows() > 0) {
-            $aData = $query->result();
+        $oData = DB::table('tbl_twilio_logs')
+         ->select(DB::raw("SUM(price) AS price"))
+          ->where('tbl_twilio_logs.sent_to', $tNumber)->get();
+        if ($oData->count() > 0) {
             if (!empty($aData[0]->price)) {
                 $totalPrice[] = $aData[0]->price;
             }

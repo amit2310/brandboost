@@ -715,6 +715,9 @@ Route::get('admin/workflow/getWorkflowTemplate','Admin\WorkFlow@getWorkflowTempl
 Route::get('admin/workflow/updateWorkflowTemplate','Admin\WorkFlow@updateWorkflowTemplate');
 Route::get('admin/subscriptions','Admin\Subscriptions@index');
 Route::post('payment/changeSubscription','Payment@changeSubscription');
+Route::get('admin/settings/team_accounts/{id}','Admin\Settings@team_accounts');
+Route::get('admin/settings/list_details/{id}','Admin\Settings@list_details');
+
 
 
 
