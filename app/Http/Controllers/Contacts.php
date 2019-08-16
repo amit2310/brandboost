@@ -14,7 +14,7 @@ use App\Libraries\Custom\csvimport;
 use Cookie;
 use Session;  
 
-class Contacts extends Controller {
+class Contacts extends Controller  {
 
 
     /**
@@ -31,6 +31,7 @@ class Contacts extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Tags Group" class="sidebar-control active hidden-xs ">Contacts</a></li>
                     </ul>';
+
         $mUser  = new UsersModel();
         $mReviews  = new ReviewsModel();
         $userID = Session::get("current_user_id");
