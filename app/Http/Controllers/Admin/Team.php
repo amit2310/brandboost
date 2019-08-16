@@ -40,7 +40,7 @@ class Team extends Controller {
         }
         else {
             $userID = '';
-            $oRoles = \App\Models\Admin\UsersModel::getRoleList($userID);
+            $oRoles = $mTeam->getRoleList($userID);
         }
 
         
