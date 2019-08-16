@@ -195,7 +195,7 @@ class TemplatesModel extends Model {
      * @param type $slug
      * @return type
      */
-    public function getTemplateBySlug($slug) {
+    public static function getTemplateBySlug($slug) {
         $oData = DB::table('tbl_templates')
                 ->where('slug', $slug)
                 ->get();

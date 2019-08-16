@@ -761,9 +761,7 @@ if (!function_exists('updateCreditUsage')) {
 
                     if (!empty($sql)) {
                         $result = \App\Models\Admin\SettingsModel::runCustomQuery($sql);
-                        if ($result) {
-                            $bDone = true;
-                        }
+                        $bDone = true;
                     }
 
                     $closingBalance = ($totalCredits - $totalDeduction);
@@ -786,7 +784,7 @@ if (!function_exists('updateCreditUsage')) {
                     if ($bDone == true) {
                         \App\Models\Admin\SettingsModel::saveClientUsageTracking($aTrackingData);
                     }
-                    if ($result) {
+                    if ($bDone == true) {
                         return true;
                     } else {
                         return false;

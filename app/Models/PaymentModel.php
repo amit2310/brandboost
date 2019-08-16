@@ -126,7 +126,7 @@ class PaymentModel extends Model {
     public function checkRefillAccount($userID) {
         $result = DB::table('tbl_account_usage')
                     ->where('user_id', $userID)
-                    ->exists($aData);
+                    ->exists();
         return $result;
     }
 

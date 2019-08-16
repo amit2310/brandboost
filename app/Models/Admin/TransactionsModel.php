@@ -10,7 +10,14 @@ use DB;
 
 class TransactionsModel extends Model {
 
-    public function autoRefillAccount($userID, $planID, $quantity = 0) {
+    /**
+     * Auto Refill Benefits
+     * @param type $userID
+     * @param type $planID
+     * @param type $quantity
+     * @return boolean
+     */
+    public static function autoRefillAccount($userID, $planID, $quantity = 0) {
         
         $mAutoPayment = new PaymentModel();
         if (!empty($userID) && !empty($planID)) {          
@@ -20,7 +27,7 @@ class TransactionsModel extends Model {
             $bDone = false;
             $aUser = UsersModel::getCurrentAccountUsage($userID);
 
-
+            $credits = $contactLimit = $emailLimit = $smsLimit = $mmsLimit = $reviewLimit = $videoLimit = $creditsTopup = $contactLimitTopup =  $emailTopupLimit =  $smsTopupLimit = $mmsTopupLimit = $subscriptionPlanID = 0;
             if (!empty($aUser)) {
                 //Available Credits
                 $credits = $aUser->credits;
@@ -30,16 +37,16 @@ class TransactionsModel extends Model {
                 $mmsLimit = $aUser->mms_balance;
                 $reviewLimit = $aUser->text_review_balance;
                 $videoLimit = $aUser->video_review_balance;
-                $creditsTopup = $aUser->credits_topup;
-                $contactLimitTopup = $aUser->contact_limit_topup;
-                $emailTopupLimit = $aUser->topup_email_limit;
-                $smsTopupLimit = $aUser->sms_balance_topup;
-                $mmsTopupLimit = $aUser->mms_balance_topup;
+                $creditsTopup = isset($aUser->credits_topup) ? $aUser->credits_topup : 0;
+                $contactLimitTopup = isset($aUser->contact_limit_topup) ? $aUser->contact_limit_topup : 0;
+                $emailTopupLimit = isset($aUser->topup_email_limit) ? $aUser->topup_email_limit : 0;
+                $smsTopupLimit = isset($aUser->sms_balance_topup) ? $aUser->sms_balance_topup : 0;
+                $mmsTopupLimit = isset($aUser->mms_balance_topup) ? $aUser->mms_balance_topup : 0;
                 $subscriptionPlanID = $aUser->subscription_plan_id;
             }
             //pre($aUser);
             //Get Account Usage for Refill
-            $aUsage = $this->getPlanBenefits($planID);
+            $aUsage = (new self)->getPlanBenefits($planID);
             //pre($aUsage);
             //die;
             if (!empty($aUsage)) {
@@ -54,9 +61,9 @@ class TransactionsModel extends Model {
                 $rVideoReviewLimit = $aUsage['video_review_limit'];
                 $rCreditsTopup = ($productType == 'membership') ? $creditsTopup : ($creditsTopup + $aUsage['credits'] * $qty);
                 $rContactLimitTopup = ($productType == 'membership') ? $contactLimitTopup : ($contactLimitTopup + $aUsage['contact_limit']);
-                $rTopEmailLimit = $aUsage['topup_email_limit'];
-                $rTopupSmsLimit = $aUsage['topup_sms_limit'];
-                $rTopupMMSLimit = $aUsage['topup_mms_limit'];
+                $rTopEmailLimit = isset($aUsage['topup_email_limit']) ? $aUsage['topup_email_limit'] : 0;
+                $rTopupSmsLimit = isset($aUsage['topup_sms_limit']) ? $aUsage['topup_sms_limit'] : 0;
+                $rTopupMMSLimit = isset($aUsage['topup_mms_limit']) ? $aUsage['topup_mms_limit'] : 0;
 
                 $aHistory = array(
                     'user_id' => $userID,
@@ -159,15 +166,15 @@ class TransactionsModel extends Model {
             $productType = $aProduct['data']->type;
             $duration = $aProduct['data']->subs_cycle;
             $aUsage = array(
-                'credits' => ($aProduct['data']->credits) ? $aProduct['data']->credits : 0,
-                'contact_limit' => ($aProduct['data']->contact_limit) ? $aProduct['data']->contact_limit : 0,
-                'email_limit' => ($aProduct['data']->email_limit) ? $aProduct['data']->email_limit : 0,
-                'sms_limit' => ($aProduct['data']->sms_limit) ? $aProduct['data']->sms_limit : 0,
-                'mms_limit' => ($aProduct['data']->mms_limit) ? $aProduct['data']->mms_limit : 0,
-                'text_review_limit' => ($aProduct['data']->text_review_limit) ? $aProduct['data']->text_review_limit : 0,
-                'video_review_limit' => ($aProduct['data']->video_review_limit) ? $aProduct['data']->video_review_limit : 0,
-                'topup_email_limit' => ($aProduct['data']->topup_email_limit) ? $aProduct['data']->topup_email_limit : 0,
-                'topup_sms_limit' => ($aProduct['data']->topup_sms_limit) ? $aProduct['data']->topup_sms_limit : 0,
+                'credits' => isset($aProduct['data']->credits) ? $aProduct['data']->credits : 0,
+                'contact_limit' => isset($aProduct['data']->contact_limit) ? $aProduct['data']->contact_limit : 0,
+                'email_limit' => isset($aProduct['data']->email_limit) ? $aProduct['data']->email_limit : 0,
+                'sms_limit' => isset($aProduct['data']->sms_limit) ? $aProduct['data']->sms_limit : 0,
+                'mms_limit' => isset($aProduct['data']->mms_limit) ? $aProduct['data']->mms_limit : 0,
+                'text_review_limit' => isset($aProduct['data']->text_review_limit) ? $aProduct['data']->text_review_limit : 0,
+                'video_review_limit' => isset($aProduct['data']->video_review_limit) ? $aProduct['data']->video_review_limit : 0,
+                'topup_email_limit' => isset($aProduct['data']->topup_email_limit) ? $aProduct['data']->topup_email_limit : 0,
+                'topup_sms_limit' => isset($aProduct['data']->topup_sms_limit) ? $aProduct['data']->topup_sms_limit : 0,
                 'subscription_plan_id' => $planID,
                 'product_type' => $productType,
                 'billing_cycle' => $duration

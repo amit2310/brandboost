@@ -721,3 +721,5 @@ Route::get('price','Price@index');
 Route::get('checkout/buy/{plan_id}','Checkout@buy');
 Route::post('payment/charging','Payment@charging');
 Route::post('payment/cbCharge','Payment@cbCharge');
+Route::post('admin/users/checkEmailExist','Admin\Users@checkEmailExist');
+Route::get('thankyou','Thankyou@index');
