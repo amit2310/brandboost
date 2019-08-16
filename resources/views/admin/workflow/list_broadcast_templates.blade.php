@@ -322,7 +322,7 @@ foreach ($aData as $aRec) {
                         $.ajax({
                             url: '<?php echo base_url('admin/workflow/deleteWorkflowTemplate'); ?>',
                             type: "POST",
-                            data: {moduleName: moduleName, templateID: templateID},
+                            data: {moduleName: moduleName, templateID: templateID, _token: '{{csrf_token()}}'},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {

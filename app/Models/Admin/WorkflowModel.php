@@ -1761,6 +1761,10 @@ class WorkflowModel extends Model {
         }
     }
 
+
+    /**
+     * Used to add workflow template
+     */
     public function addWorkflowTemplate($aData, $moduleName) {
         if (empty($aData) || empty($moduleName)) {
             return false;
@@ -1791,15 +1795,14 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $result = $this->db->insert($tableName, $aData);
-        $inset_id = $this->db->insert_id();
-
-        if ($result)
-            return $inset_id;
-        else
-            return false;
+        $insert_id = DB::table($tableName)->insertGetId($aData);
+        return $insert_id;
     }
 
+
+    /**
+     * Used to update workflow template
+     */
     public function updateWorkflowTemplate($aData, $id, $moduleName) {
         if (empty($id) || empty($moduleName)) {
             return false;
@@ -1835,6 +1838,10 @@ class WorkflowModel extends Model {
          return true;
     }
 
+
+    /**
+     * Used to delete workflow template
+     */
     public function deleteWorkflowTemplate($moduleName, $id) {
         if (empty($id) || empty($moduleName)) {
             return false;
@@ -1865,14 +1872,13 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $this->db->where('id', $id);
-        $result = $this->db->delete($tableName);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        DB::table($tableName)
+                ->where('id', $id)
+                ->delete();
+        return true;
+
     }
+
 
     public function deleteWorkflowDraft($moduleName, $id) {
         if (empty($id) || empty($moduleName)) {
