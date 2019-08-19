@@ -15,14 +15,11 @@ use Session;
 class Nps extends Controller {
 
 
-    public function index() {
-        /* $referrerKey = get_cookie("ctrack");
-          echo "Referrer Key is " . $referrerKey;
-          echo '<b><hr>';
-          print_r($_COOKIE);
-          die; */
-    }
-
+    /**
+     * This function is use for diaplay widget
+     * @param type $widgetName, $accountID, $subId
+     * @return type json data
+     */
     public function display_widget($widgetName = '', $accountID = '', $subId = '') {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -48,6 +45,12 @@ class Nps extends Controller {
         }
     }
 
+
+    /**
+     * This function is use for record servey
+     * @param type 
+     * @return type json data
+     */
     public function recordSurvey(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $mNPS = new NpsModel();
@@ -215,92 +218,7 @@ class Nps extends Controller {
         }
     }
 
-    public function t_old($refKey) {
-        $bRequireGlobalSubs = false;
-        if (!empty($refKey)) {
-            $get = $this->input->get();
-            $score = strip_tags($get['s']);
-            $subid = strip_tags($get['subid']);
-            $subid = base64_decode($subid);
-            $oSubscriber = $this->mNPS->getNpsUserById($subid);
-            if (!empty($oSubscriber)) {
-                $firstName = $oSubscriber->firstname;
-                $lastName = $oSubscriber->lastname;
-                $email = $oSubscriber->email;
-                $mobile = $oSubscriber->phone;
-                $bbUserID = $oSubscriber->bb_user_id;
-                $globalSubscriberID = $oSubscriber->global_user_id;
-                if ($bbUserID > 0) {
-                    $bRequireGlobalSubs = true;
-                }
-            }
-            if ($subid > 0 && !empty($refKey)) {
-                $oNPS = $this->mNPS->getSurveyInfoByRef($refKey);
-                if (!empty($oNPS)) {
-                    $storeURL = $oStore->store_url;
-                    //Track visit
-                    $aLocationData = getLocationData();
-                    $aTrackData = array(
-                        'refkey' => $refKey,
-                        'score' => $score,
-                        'subscriber_id' => $subid,
-                        'ip_address' => $aLocationData['ip_address'],
-                        'platform' => $aLocationData['platform'],
-                        'platform_device' => $aLocationData['platform_device'],
-                        'browser' => $aLocationData['name'],
-                        'useragent' => $aLocationData['userAgent'],
-                        'country' => $aLocationData['country'],
-                        'countryCode' => $aLocationData['countryCode'],
-                        'region' => $aLocationData['region'],
-                        'city' => $aLocationData['city'],
-                        'longitude' => $aLocationData['longitude'],
-                        'latitude' => $aLocationData['latitude'],
-                        'created_at' => date("Y-m-d H:i:s")
-                    );
-                    $bResponseID = $this->mNPS->saveSurveyFeedback($aTrackData);
-                    if ($bResponseID > 0) {
-                        //Register as brandboost user if not registered
-                        if ($bRequireGlobalSubs == false) { //This means no user_id attached to subscriber
-                            //My Code
-                            $aRegistrationData = array(
-                                'firstname' => $firstName,
-                                'lastname' => $lastName,
-                                'email' => $email,
-                                'mobile' => $mobile,
-                            );
-                            $userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
-                            if ($userID > 0) {
-                                $bRequireGlobalSubs = true;
-                            }
-                        }
-                        //Send out notification
-                        $notificationData = array(
-                            'event_type' => 'added_nps_score',
-                            'event_id' => 0,
-                            'link' => base_url() . 'admin/modules/nps/setup/' . $oNPS->id,
-                            'message' => 'Added new nps score',
-                            'user_id' => $oNPS->user_id,
-                            'status' => 1,
-                            'created' => date("Y-m-d H:i:s")
-                        );
-                        $eventName = 'sys_nps_score_add';
-                        add_notifications($notificationData, $eventName, $oNPS->user_id);
-
-                        if ($userID > 0 && $bRequireGlobalSubs == true) {
-                            $aUpdateGlobalSubsData = array(
-                                'user_id' => $userID,
-                                'updated' => date("Y-m-d H:i:s")
-                            );
-
-                            $bUpdated = $this->mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
-                        }
-                        $this->load->view('admin/modules/nps/collect-feedback.php', array('oNPS' => $oNPS, 'score' => $score, 'responseID' => $bResponseID));
-                    }
-                }
-            }
-        }
-    }
-
+   
     public function saveFeedback() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $post = $this->input->post();
@@ -326,6 +244,12 @@ class Nps extends Controller {
         exit;
     }
 
+
+    /**
+     * This function is use for register now
+     * @param type $aData
+     * @return type numeric
+     */
     public function registerNow($aData) {
         $userID = 0;
         $mNPS = new NpsModel();
