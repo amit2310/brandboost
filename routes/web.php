@@ -745,6 +745,6 @@ Route::get('recurring/saveCBRecurring','Recurring@saveCBRecurring');
 
 //Mediagallery Front end Module
 Route::post('mediagallery/index/{id}','Mediagallery@index');
-Route::get('mediagallery/getReviewData','Mediagallery@getReviewData');
+Route::post('mediagallery/getReviewData','Mediagallery@getReviewData');
 
 
