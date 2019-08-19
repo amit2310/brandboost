@@ -739,5 +739,5 @@ Route::post('payment/buyCreditAddons','Payment@buyCreditAddons');
 Route::post('payment/storeCreditCard','Payment@storeCreditCard');
 
 //Mediagallery Module
-Route::post('mediagallery/index/{id}','Admin\Mediagallery@index');
+Route::post('mediagallery/index/{id}','Mediagallery@index');
 
