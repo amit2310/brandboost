@@ -1328,7 +1328,7 @@ if (!function_exists('emailTemplate')) {
 
 if (!function_exists('sendEmailTemplate')) {
 
-    function sendEmailTemplate($slug, $userId, $subscriber = 0) {        
+    function sendEmailTemplate($slug, $userId, $subscriber = 0) {
 
         $aTemp = \App\Models\Admin\TemplatesModel::getTemplateBySlug($slug);
         if ($subscriber == 1) {
@@ -1426,8 +1426,8 @@ if (!function_exists('checkPermissionentry')) {
 
     function checkPermissionentry($slug) {
 
-        $aUser = getLoggedUser();
-        $checkEntry = \App\Models\Admin\SettingsModel::checkPermissionentryDetails($aUser->id, $slug);
+        $id = getLoggedUserID();
+        $checkEntry = \App\Models\Admin\SettingsModel::checkPermissionentryDetails($id, $slug);
         if (!empty($checkEntry->id)) {
             return true;
         } else {
@@ -1890,8 +1890,8 @@ if (!function_exists('getTwilioPNByAreaCodeTeam')) {
 
 
     function getTwilioPNByAreaCodeTeam($contryName = '', $areacode) {
-        $aUser = getLoggedUser();
-        $TwilioData = currentUserTwilioData($aUser->id);
+        $id = getLoggedUserID();
+        $TwilioData = currentUserTwilioData($id);
 
 
         $contryName = $contryName == '' ? 'US' : strtoupper($contryName);
@@ -1978,8 +1978,8 @@ if (!function_exists('getTwilioPNByAreaCode')) {
 if (!function_exists('createTwilioCNTeam')) {
 
     function createTwilioCNTeam($phoneNumber) {
-        $aUser = getLoggedUser();
-        $TwilioData = currentUserTwilioData($aUser->id);
+        $id = getLoggedUserID();
+        $TwilioData = currentUserTwilioData($id);
 
         $sid = $TwilioData->account_sid;
         $token = $TwilioData->account_token;
@@ -3842,8 +3842,8 @@ function getBrowser() {
 function addPageAndVisitorInfo($clientId, $sourcePage, $sourceId, $sourceType = 'Visit') {
 
     $locationData = getLocationData();
-    $aUser = getLoggedUser(false);
-    $userID = $aUser->id;
+    $id = getLoggedUserID();
+    $userID = $id;
     //pre($locationData);
     //exit;
 
@@ -3870,6 +3870,28 @@ function addPageAndVisitorInfo($clientId, $sourcePage, $sourceId, $sourceType = 
     $bResult = \App\Models\Admin\LiveModel::addVisitorInfo($dateArray);
 }
 
+/**
+ * 
+ * @param type $redirect
+ * @return int
+ */
+if (!function_exists('getLoggedUserID')) {
 
+    function getLoggedUserID() {
 
+        $oUser = array();
+
+        if (Session::get('admin_user_id') > 0) {
+            $userID = Session::get('admin_user_id');
+        } else if (Session::get('customer_user_id') > 0) {
+            $userID = Session::get('customer_user_id');
+        } else if (Session::get('user_user_id') > 0) {
+            $userID = Session::get('user_user_id');
+        } else {
+            $userID = 0;
+        }
+        return $userID;
+    }
+
+}
 ?>

@@ -265,7 +265,7 @@ $oCountries = getAllCountries();
                                             <?php if (!empty($oInvoices)): ?>
                                                 <?php
                                                 foreach ($oInvoices as $oInvoice):
-                                                    $invoiceData = App\Models\Admin\InvoicesModel::getInvoiceDetails($oInvoice->id);
+                                                    //$invoiceData = App\Models\Admin\InvoicesModel::getInvoiceDetails($oInvoice->id);
                                                     //pre($oInvoice);
                                                     //pre($invoiceData);
                                                     ?>

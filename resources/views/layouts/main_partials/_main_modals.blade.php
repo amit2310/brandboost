@@ -1,3 +1,4 @@
+<?php $countriesList = getCountriesList(); ?>
 <div id="alertMessagePopup" style="z-index: 9999999999" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -551,7 +552,7 @@ if (isset($oUpgradePlanData->level_name)) {
                                     <select class="form-control h52" name="country_code" id="country_code">
                                         <option value="">Select Country</option>
 <?php
-$countriesList = getCountriesList();
+
 foreach ($countriesList as $countryName) {
     ?>
                                             <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
@@ -713,7 +714,7 @@ foreach ($countriesList as $countryName) {
                                     <select class="form-control h52" name="edit_countryCode" id="edit_countryCode_sms">
                                         <option value="">Select Country</option>
 <?php
-$countriesList = getCountriesList();
+
 foreach ($countriesList as $countryName) {
     ?>
                                             <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
@@ -880,7 +881,7 @@ foreach ($countriesList as $countryName) {
                                     <select class="form-control h52" name="edit_countryCode" id="edit_countryCode_main_web">
                                         <option value="">Select Country</option>
 <?php
-$countriesList = getCountriesList();
+
 foreach ($countriesList as $countryName) {
     ?>
                                             <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
@@ -1046,7 +1047,7 @@ foreach ($countriesList as $countryName) {
                                     <select class="form-control h52" name="edit_countryCode" id="edit_countryCode">
                                         <option value="">Select Country</option>
 <?php
-$countriesList = getCountriesList();
+
 foreach ($countriesList as $countryName) {
     ?>
                                             <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
