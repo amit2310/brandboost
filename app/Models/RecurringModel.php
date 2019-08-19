@@ -3,41 +3,56 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class RecurringModel extends Model {
 
+    /**
+     * Used to get Last Recurring ID
+     * @param type $contactID
+     * @return type
+     */
     public function getLastRecurringID($contactID) {
-        $this->db->select('recurring_order_id');
-        $this->db->where('infusion_user_id', $contactID);
-        $this->db->order_by('id', 'DESC');
-        $this->db->limit(1);
-        $result = $this->db->get('tbl_invoices_recurring');
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $lastID = $query->row()->id;
+        $oData = DB::table('tbl_invoices_recurring')
+                ->select('recurring_order_id')
+                ->where('infusion_user_id', $contactID)
+                ->orderBy('id', 'DESC')
+                ->first();
+        if (!empty($oData)) {
+            $lastID = $oData->id;
         }
         return $lastID;
     }
 
+    /**
+     * Used to save Recurring related data locally
+     * @param type $aData
+     * @return boolean
+     */
     public function saveRecurring($aData = array()) {
-        $result = $this->db->insert('tbl_invoices_recurring', $aData);
-        //echo $this->db->last_query();
+        $result = DB::table('tbl_invoices_recurring')->insert($aData);
         if ($result)
             return true;
         else
             return false;
     }
 
+    /**
+     * Used to save chargebee invoice locally
+     * @param type $aData
+     * @return type
+     */
     public function saveCBInvoice($aData) {
-        $invoiceID = 0;
-        $result = $this->db->insert('tbl_cc_invoices', $aData);
-        //echo $this->db->last_query();
-        if ($result) {
-            $invoiceID = $this->db->insert_id();
-        }
+        $invoiceID = DB::table('tbl_cc_invoices')->insertGetId($aData);
         return $invoiceID;
     }
 
+    /**
+     * Used to save invoice items locally
+     * @param type $id
+     * @param type $aData
+     * @return boolean
+     */
     public function saveCBInvoiceItems($id, $aData) {
         if (!empty($aData)) {
             foreach ($aData as $aRow) {
@@ -53,28 +68,38 @@ class RecurringModel extends Model {
                     'date_from' => $aRow['date_from'],
                     'date_to' => $aRow['date_to']
                 );
-                $this->db->insert('tbl_cc_invoices_items', $aItemData);
-                //echo $this->db->last_query();
+                DB::table('tbl_cc_invoices_items')->insert($aItemData);
             }
         }
         return true;
     }
 
+    /**
+     * Used to check if chargebee invoice saved already
+     * @param type $cbInvoiceID
+     * @param type $trasID
+     * @return boolean
+     */
     public function checkIfAlreadyCBInvoiceSaved($cbInvoiceID = 0, $trasID = 0) {
-        $this->db->where("cc_invoice_id", $cbInvoiceID);
-        $this->db->where("txn_id", $trasID);
-        $result = $this->db->get("tbl_cc_invoices");
-        if ($result->num_rows() > 0) {
-            return true;
-        }
-        return false;
+        $oData = DB::table('tbl_cc_invoices')
+                ->where('cc_invoice_id', $cbInvoiceID)
+                ->where('txn_id', $trasID)
+                ->exists();
+        return $oData;
     }
 
+    /**
+     * Used to update subscription related data locally
+     * @param type $subscriptionID
+     * @param type $aData
+     * @return boolean
+     */
     public function updateSubscription($subscriptionID, $aData) {
         if (!empty($subscriptionID)) {
-            $this->db->where("subscription_id", $subscriptionID);
-            $result = $this->db->update("tbl_cc_subscriptions", $aData);
-            if ($result)
+            $oData = DB::table('tbl_cc_subscriptions')
+                    ->where('subscription_id', $subscriptionID)
+                    ->update($aData);
+            if ($oData > -1)
                 return true;
             else
                 return false;
@@ -83,15 +108,18 @@ class RecurringModel extends Model {
         }
     }
 
+    /**
+     * Used to get subscription related datails
+     * @param type $subscriptionID
+     * @return type
+     */
     public function getSubsDetails($subscriptionID) {
-        $this->db->select("tbl_cc_subscriptions.*, tbl_users.id AS user_id");
-        $this->db->join("tbl_cc_subscriptions.customer_id = tbl_users.cb_contact_id", "INNER");
-        $this->db->where("tbl_cc_subscriptions.subscription_id", $subscriptionID);
-        $result = $this->db->get("tbl_cc_subscriptions");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+        $oData = DB::table('tbl_cc_subscriptions')
+                ->join('tbl_users', 'tbl_cc_subscriptions.customer_id', '=', 'tbl_users.cb_contact_id')
+                ->select('tbl_cc_subscriptions.*', 'tbl_users.id AS user_id')
+                ->where('tbl_cc_subscriptions.subscription_id', $subscriptionID)
+                ->first();
+        return $oData;        
     }
 
 }

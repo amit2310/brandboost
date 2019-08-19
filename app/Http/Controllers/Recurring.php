@@ -15,49 +15,6 @@ class Recurring extends Controller {
 
     /**
      * 
-     */
-    public function saverecurring() {
-        $contactID = strip_tags(trim($_REQUEST['Id']));
-        if ($contactID > 0) {
-            $lastID = $this->mRecurring->getLastRecurringID($contactID);
-            //echo "Last ID is ". $lastID;
-            $lastID = ($lastID > 0) ? $lastID : 0;
-            $aInvoices = Infusionsoft_DataService::query(new Infusionsoft_RecurringOrder(), array('ContactId' => $contactID, 'Status' => 'Active', 'Id' => '~>~' . $lastRecurringID));
-
-            if (!empty($aInvoices)) {
-                foreach ($aInvoices as $aInvoice) {
-                    $contactID = $aInvoice->ContactId;
-
-                    $aInvoiceData = array();
-                    $aInvoiceData = array(
-                        'infusion_user_id' => $aInvoice->ContactId,
-                        'infusion_product_id' => $aInvoice->ProductId,
-                        'subscription_plan_id' => $aInvoice->SubscriptionPlanId,
-                        'subscription_start_date' => ($aInvoice->StartDate) ? date("Y-m-d H:i:s", strtotime($aInvoice->StartDate)) : '',
-                        'subscription_end_date' => ($aInvoice->EndDate) ? date("Y-m-d H:i:s", strtotime($aInvoice->EndDate)) : '',
-                        'last_bill_date' => ($aInvoice->LastBillDate) ? date("Y-m-d H:i:s", strtotime($aInvoice->LastBillDate)) : '',
-                        'next_bill_date' => ($aInvoice->NextBillDate) ? date("Y-m-d H:i:s", strtotime($aInvoice->NextBillDate)) : '',
-                        'billing_cycle' => $aInvoice->BillingCycle,
-                        'frequency' => $aInvoice->Frequency,
-                        'merchant_id' => $aInvoice->MerchantAccountId,
-                        'invoice_total' => $aInvoice->BillingAmt,
-                        'quantity' => $aInvoice->Qty,
-                        'recurring_order_id' => $aInvoice->Id,
-                        'dataset' => serialize($aInvoice),
-                        'created' => date("Y-m-d H:i:s")
-                    );
-                    $bAdded = $this->mRecurring->saveRecurring($aInvoiceData);
-                    if ($bAdded) {
-                        //Show Notification
-                    }
-                }
-                echo "Done";
-            }
-        }
-    }
-
-    /**
-     * 
      * @return boolean
      */
     public function saveCBRecurring(Request $request) {
@@ -106,8 +63,7 @@ class Recurring extends Controller {
                         if ($bSaved) {
                             if (!empty($subscriptionID)) {
                                 //Fetch Subscription related information from chargebee
-                                $result = ChargeBee_Subscription::retrieve($subscriptionID);
-                                $oRes = $result->subscription();
+                                $oRes = cbHelperRetrieveSubscription($subscriptionID);
                                 if (!empty($oRes)) {
                                     $updatedAt = $oRes->updatedAt;
                                     $nextBillingAt = $oRes->nextBillingAt;

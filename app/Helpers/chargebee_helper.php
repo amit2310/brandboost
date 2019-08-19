@@ -234,6 +234,26 @@ function cbHelperDeleteSubscription($cbSubscriptionID) {
 }
 
 /**
+ * Used to retrieve subscription details from chargebee
+ * @param type $cbSubscriptionID
+ * @return string
+ */
+function cbHelperRetrieveSubscription($cbSubscriptionID) {
+    $bConfiguredSuccess = initCbConfiguration();
+    if ($bConfiguredSuccess == true) {
+        try {
+            $aResponse = ChargeBee_Subscription::retrieve($cbSubscriptionID);
+            $oRes = $aResponse->subscription();
+            return $oRes;
+        } catch (Exception $ex) {
+            return '';
+        }
+    } else {
+        die('Something went wrong');
+    }
+}
+
+/**
  * Helper chargebee function prototype
  */
 function cbHelperPrototyp($aData) {
