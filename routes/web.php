@@ -738,3 +738,7 @@ Route::post('payment/upgradeTopupMembership','Payment@upgradeTopupMembership');
 Route::post('payment/buyCreditAddons','Payment@buyCreditAddons');
 Route::post('payment/storeCreditCard','Payment@storeCreditCard');
 
+//Webhook URLs
+Route::post('recurring/saveCBRecurring','Recurring@saveCBRecurring');
+Route::get('recurring/saveCBRecurring','Recurring@saveCBRecurring');
+
