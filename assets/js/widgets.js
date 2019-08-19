@@ -1203,7 +1203,7 @@ if (bbkey != 'undefined' && bbwidgets != 'undefined') {
 	//console.log(bbwidget);
     // Include Css
     var oBB = new BB(bbkey, {
-        "host": "http://dev.brandboostx.com",
+        "host": "http://brandboostx.com",
         "center_popup_widget": (bbwidget.indexOf("cpw") > -1) ? true : false,
         "bottom_fixed_widget": (bbwidget.indexOf("bfw") > -1) ? true : false,
         "vertical_popup_widget": (bbwidget.indexOf("vpw") > -1) ? true : false,
