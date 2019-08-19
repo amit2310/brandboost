@@ -146,7 +146,7 @@ BB = function (t) {
 			}
 		}
         a = 'bbrid=' + rid + '&ha=' + ac;
-        var bbsrc = this.userSettings.host + "/reviews/saveHelpful/";
+        var bbsrc = this.userSettings.host + "/reviews/saveHelpful";
         var i = function (o) {
             var rsp = JSON.parse(o);
             if (allclasses.indexOf("bbpw_helpful_action") > -1) {
@@ -237,7 +237,7 @@ BB = function (t) {
         var cc = e.getAttribute("class");
         var allclasses = cc.split(" ");
         a = 'bbrid=' + rid + '&av=' + av + '&bbcid=' + cid;
-        var bbsrc = this.userSettings.host + "/reviews/saveCommentLike/";
+        var bbsrc = this.userSettings.host + "/reviews/saveCommentLike";
         var i = function (o) {
             var rsp = JSON.parse(o);
             if (allclasses.indexOf("bbpw_comment_like_action") > -1) {
@@ -271,7 +271,7 @@ BB = function (t) {
         var ac = e.getAttribute("action-name");
         var rid = e.getAttribute("bb-review-id");
         a = 'bbrid=' + rid + '&ha=' + ac;
-        var bbsrc = this.userSettings.host + "/reviews/saveHelpful/";
+        var bbsrc = this.userSettings.host + "/reviews/saveHelpful";
         var i = function (o) {
             var rsp = JSON.parse(o);
             document.getElementById("bbhelpfulcount").innerHTML = rsp.yes;
@@ -522,7 +522,7 @@ BB = function (t) {
 			document.getElementById("bbcmtreply_"+comment_id).style.border = '1px solid #ddd';
 			
 			a = 'bbpcid=' + comment_id + '&bbrid=' + rid + '&bbcmtname=' + fullname + '&bbcmtphone=' + phoneNo + '&bbcmtemail=' + emailadd + '&bbcmt=' + cmttxt;
-			var bbsrc = this.userSettings.host + "/reviews/addcomment/";
+			var bbsrc = this.userSettings.host + "/reviews/addcomment";
 			var i = function (o) {
 				var rsp = JSON.parse(o);
 				var s = document.getElementById("bb_success_msg_"+comment_id);
@@ -594,7 +594,7 @@ BB = function (t) {
 			document.getElementsByClassName("bbcmt")[classPosition].style.border = '1px solid #ddd';
 			
 			a = 'bbrid=' + rid + '&bbcmtname=' + fullname + '&bbcmtphone=' + phoneNo + '&bbcmtemail=' + emailadd + '&bbcmt=' + cmttxt;
-			var bbsrc = this.userSettings.host + "/reviews/addcomment/";
+			var bbsrc = this.userSettings.host + "/reviews/addcomment";
 			var i = function (o) {
 				var rsp = JSON.parse(o);
 				var s = document.getElementsByClassName('bb-success-msg')[classPosition];
@@ -1203,7 +1203,7 @@ if (bbkey != 'undefined' && bbwidgets != 'undefined') {
 	//console.log(bbwidget);
     // Include Css
     var oBB = new BB(bbkey, {
-        "host": "http://brandboostx.com",
+        "host": "http://dev.brandboostx.com",
         "center_popup_widget": (bbwidget.indexOf("cpw") > -1) ? true : false,
         "bottom_fixed_widget": (bbwidget.indexOf("bfw") > -1) ? true : false,
         "vertical_popup_widget": (bbwidget.indexOf("vpw") > -1) ? true : false,

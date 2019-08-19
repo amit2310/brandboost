@@ -2430,6 +2430,103 @@ class Brandboost extends Controller {
     }
 	
 	
+	public function publishOnsiteWidget(Request $request) {
+		$mBrandboost = BrandboostModel();
+        $response = array();
+        $widgetID = $request->widgetID;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        if (!empty($widgetID)) {
+            $aData = array(
+                'status' => 1,
+            );
+
+            $result = $mBrandboost->updateWidget($userID, $aData, $widgetID);
+            if ($result) {
+                $response['status'] = 'success';
+            } else {
+                $response['status'] = "Error";
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+
+    public function publishOnsiteBB(Request $request) {
+		$mBrandboost = BrandboostModel();
+        $response = array();
+
+        $brandboostID = $request->brandboostID;
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        if (!empty($brandboostID)) {
+            $aData = array(
+                'status' => 1,
+            );
+
+            $result = $mBrandboost->updateBrandBoost($userID, $aData, $brandboostID);
+            if ($result) {
+                $response['status'] = 'success';
+            } else {
+                $response['status'] = "Error";
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -3453,13 +3550,6 @@ class Brandboost extends Controller {
                 }
             }
 
-
-
-
-
-
-
-
             $dateTimeData = json_encode($dateTimeData);
             $aEventData = array(
                 'brandboost_id' => $brandboostID,
@@ -3776,105 +3866,10 @@ class Brandboost extends Controller {
             }
         }
 
-        /* if ($campaignId) {
-          $response['status'] = 'success';
-          $response['campaignId'] = $campaignId;
-          $response['temp_subject'] = $resultData->template_subject;
-          $response['temp_content'] = base64_decode($resultData->template_content);
-          } else {
-          $response['status'] = "Error";
-          } */
-
         echo json_encode($response);
         exit;
     }
 
-    /* public function create_event_thankyou() {
-      $response = array();
-      $userID = $this->session->userdata("current_user_id");
-      $brandId = $this->session->userdata('brandboostID');
-      $getPrevEventId = $this->mBrandboost->getPrevEventId($brandId);
-
-      $dateTimeData = array("delay_type" => 'after', "delay_value" => '10', "delay_unit" => 'minute');
-      $dateTimeData = json_encode($dateTimeData);
-      if (!empty($brandId)) {
-      $brandBoostData = $this->mBrandboost->getBrandboost($brandId);
-      $brandBoostData = $brandBoostData[0];
-
-      if ($brandBoostData->review_type == 'onsite') {
-
-      $eData = array(
-      'brandboost_id' => $brandId,
-      'event_type' => 'thank-you',
-      'data' => $dateTimeData,
-      'previous_event_id' => $getPrevEventId->id,
-      'created' => date("Y-m-d H:i:s")
-      );
-      $emailTempalteID = 10;
-      $eventId = $this->mBrandboost->addEvent($eData);
-      $resultData = $this->mBrandboost->getAllCampaignTemplates($emailTempalteID);
-      $resultData = $resultData[0];
-      $aUser = getLoggedUser();
-      if ($eventId) {
-      $cData = array(
-      'event_id' => $eventId,
-      'content_type' => 'Regular',
-      'campaign_type' => 'Email',
-      'name' => $resultData->template_name,
-      'subject' => $resultData->template_subject,
-      'html' => $resultData->template_content,
-      'template_source' => $emailTempalteID,
-      'status' => 1,
-      'from_email' => $aUser->email,
-      'from_name' => $aUser->firstname . ' ' . $aUser->lastname,
-      'reply_to' => $aUser->email,
-      'created' => date("Y-m-d H:i:s")
-      );
-      $campaignId = $this->mBrandboost->addCampaign($cData);
-      }
-      } else {
-
-      $eData = array(
-      'brandboost_id' => $brandId,
-      'event_type' => 'thank-you',
-      'data' => $dateTimeData,
-      'previous_event_id' => $getPrevEventId->id,
-      'created' => date("Y-m-d H:i:s")
-      );
-      $emailTempalteID = 11;
-      $eventId = $this->mBrandboost->addEvent($eData);
-      $resultData = $this->mBrandboost->getAllCampaignTemplates($emailTempalteID);
-      $resultData = $resultData[0];
-      $aUser = getLoggedUser();
-      if ($eventId) {
-      $cData = array(
-      'event_id' => $eventId,
-      'content_type' => 'Regular',
-      'campaign_type' => 'Email',
-      'name' => $resultData->template_name,
-      'subject' => $resultData->template_subject,
-      'html' => $resultData->template_content,
-      'template_source' => $emailTempalteID,
-      'status' => 1,
-      'from_email' => $aUser->email,
-      'from_name' => $aUser->firstname . ' ' . $aUser->lastname,
-      'reply_to' => $aUser->email,
-      'created' => date("Y-m-d H:i:s")
-      );
-      $campaignId = $this->mBrandboost->addCampaign($cData);
-      }
-      }
-      }
-
-      if ($campaignId) {
-      $response['status'] = 'success';
-      } else {
-      $response['status'] = "Error";
-      }
-
-      echo json_encode($response);
-      exit;
-      } */
 
     public function create_campaign() {
         $response = array();
@@ -4051,22 +4046,7 @@ class Brandboost extends Controller {
     }
 
     public function delete_event() {
-        /* $response = array();
-          $post = $this->input->post();
-          $eventID = strip_tags($post['event_id']);
-          if ($eventID > 0) {
-          $event = $this->mBrandboost->deleteEvent($eventID);
-          if ($event) {
-          $this->mBrandboost->deleteCampaignByEventID($eventID);
-          $response['status'] = 'success';
-          } else {
-          $response['status'] = "Error";
-          }
-
-          echo json_encode($response);
-          exit;
-          } */
-
+        
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $post = $this->input->post();
         if (empty($post)) {
@@ -4531,61 +4511,7 @@ class Brandboost extends Controller {
         }
     }
 
-    public function publishOnsiteWidget() {
-
-        $response = array();
-
-        $post = $this->input->post();
-
-        $widgetID = strip_tags($post['widgetID']);
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-
-        if (!empty($widgetID)) {
-            $aData = array(
-                'status' => 1,
-            );
-
-            $result = $this->mBrandboost->updateWidget($userID, $aData, $widgetID);
-            if ($result) {
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function publishOnsiteBB() {
-
-        $response = array();
-
-        $post = $this->input->post();
-
-        //$brandboostID = $this->session->userdata('brandboostID');
-        $brandboostID = strip_tags($post['brandboostID']);
-        //$userID = $this->session->userdata("current_user_id");
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-
-        if (!empty($brandboostID)) {
-            $aData = array(
-                'status' => 1,
-            );
-
-            $result = $this->mBrandboost->update($userID, $aData, $brandboostID);
-            if ($result) {
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-        }
-
-        echo json_encode($response);
-        exit;
-    }
+    
 
     public function publish_campaign() {
 

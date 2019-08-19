@@ -153,6 +153,7 @@ class Reviews extends Controller {
         }
     }
 
+
     public function getCampaignReviews($campaignID, $aSettings = array()) {
 		$mBrandboost = new BrandboostModel();
 		$mReviews = new ReviewsModel();
@@ -333,7 +334,98 @@ class Reviews extends Controller {
     }
 	
 	
-	
+	public function saveHelpful(Request $request) {
+		$mBrandboost = new BrandboostModel();
+		$mReviews = new ReviewsModel();
+		
+        $response = array();
+		$reviewID = $request->bbrid;
+		$action = $request->ha;
+		$ip = $request->ip();
+
+		$aVoteData = array(
+			'review_id' => $reviewID,
+			'ip' => $ip,
+			'created' => date("Y-m-d H:i:s")
+		);
+
+		if ($action == 'Yes') {
+			$aVoteData['helpful_yes'] = 1;
+			$aVoteData['helpful_no'] = 0;
+		}
+
+		if ($action == 'No') {
+			$aVoteData['helpful_yes'] = 0;
+			$aVoteData['helpful_no'] = 1;
+		}
+
+		$alreadyVoted = $mReviews->checkIfVoted($reviewID, $ip);
+		
+		if ($alreadyVoted == false || $alreadyVoted['action'] == 'h_null') {
+			$bSaved = $mReviews->saveHelpful($aVoteData);
+		} else {
+			//Already voted for the same review
+			if ($alreadyVoted['action'] == 'helpful_yes') {
+				if ($action == 'Yes') {
+					$aVoteData['helpful_yes'] = `tbl_reviews_helpful` . `helpful_yes` - 1;
+				} else {
+					$aVoteData['helpful_yes'] = `tbl_reviews_helpful` . `helpful_yes` + 1;
+				}
+			} else if ($alreadyVoted['action'] == 'helpful_no') {
+				if ($action == 'No') {
+					$aVoteData['helpful_no'] = `tbl_reviews_helpful` . `helpful_no` - 1;
+				} else {
+					$aVoteData['helpful_no'] = `tbl_reviews_helpful` . `helpful_no` + 1;
+				}
+			} else if ($alreadyVoted['action'] == 'helpful_null') {
+				//Do nothing
+			}
+			$bUpdated = $mReviews->updateHelpful($aVoteData, $alreadyVoted['vote_id']);
+		}
+
+		$reviewUD = $mReviews->getBBWidgetUserData($reviewID);
+		addPageAndVisitorInfo($reviewUD[0]->user_id, 'Widget Review', serialize($reviewUD[0]->campaign_id), 'Helpful Action');
+
+		if ($reviewUD) {
+			$this->addWidgetTrackData($reviewUD[0]->widget_id, $reviewUD[0]->user_id, $reviewID, $reviewUD[0]->widget_type, $reviewUD[0]->campaign_id, 'click', 'review');
+			$this->addWidgetTrackData($reviewUD[0]->widget_id, $reviewUD[0]->user_id, $reviewID, $reviewUD[0]->widget_type, $reviewUD[0]->campaign_id, 'helpful', 'review');
+		}
+
+		$aHelpful = $mReviews->countHelpful($reviewID);
+		$response = array('status' => 'ok', 'yes' => $aHelpful['yes'], 'no' => $aHelpful['no']);
+      
+        echo json_encode($response);
+        exit;
+    }
+
+
+    public function getCommentsBlock($reviewID) {
+		$mBrandboost = new BrandboostModel();
+		$mReviews = new ReviewsModel();
+		
+        $oComments = $mReviews->getComments($reviewID);
+        if (!empty($oComments)) {
+            foreach ($oComments as $oComment) {
+                $aComment = (array) $oComment;
+                $aCommentData[$aComments['id']] = $aComment;
+            }
+
+            foreach ($aCommentData as $k => &$v) {
+                if ($v['parent_comment_id'] != 0) {
+                    $aCommentData[$v['parent']]['childs'][] = & $v;
+                }
+            }
+            unset($v);
+
+            foreach ($aCommentData as $k => $v) {
+                if ($v['parent_comment_id'] != 0) {
+                    unset($aCommentData[$k]);
+                }
+            }
+        }
+
+        return $aCommentData;
+    }
 	
 	
 	
@@ -597,6 +689,7 @@ class Reviews extends Controller {
 
         return view('admin.reviews.collect_review', $aViewData);
     }
+
 
     public function submitOnsiteReview() {
         $response = array();
@@ -938,6 +1031,7 @@ class Reviews extends Controller {
         exit;
     }
 
+
     public function saveReviewByEmailTemplate() {
 
         $response = array();
@@ -1025,6 +1119,7 @@ class Reviews extends Controller {
         redirect(site_url("/reviews/thankyou"), 'refresh');
     }
 
+
     public function saveReviewByEmailTemplate_old() {
 
         $response = array();
@@ -1109,6 +1204,33 @@ class Reviews extends Controller {
         }
         redirect(site_url("/reviews/thankyou"), 'refresh');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function thankyou() {
         $this->template->load('template', 'reviews/thankyou');
@@ -1425,95 +1547,7 @@ class Reviews extends Controller {
         exit;
     }
 
-    public function saveHelpful() {
-        $response = array();
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $reviewID = strip_tags($post['bbrid']);
-            $action = strip_tags($post['ha']);
-            $ip = $this->input->ip_address();
-
-            $aVoteData = array(
-                'review_id' => $reviewID,
-                'ip' => $ip,
-                'created' => date("Y-m-d H:i:s")
-            );
-
-            if ($action == 'Yes') {
-                $aVoteData['helpful_yes'] = 1;
-                $aVoteData['helpful_no'] = 0;
-            }
-
-            if ($action == 'No') {
-                $aVoteData['helpful_yes'] = 0;
-                $aVoteData['helpful_no'] = 1;
-            }
-
-            $alreadyVoted = $this->mReviews->checkIfVoted($reviewID, $ip);
-            //pre($alreadyVoted);
-            //$reviewData = $this->mReviews->getReviewByReviewID($reviewID);
-
-            if ($alreadyVoted == false || $alreadyVoted['action'] == 'h_null') {
-                $bSaved = $this->mReviews->saveHelpful($aVoteData);
-            } else {
-                //Already voted for the same review
-                if ($alreadyVoted['action'] == 'helpful_yes') {
-                    if ($action == 'Yes') {
-                        $aVoteData['helpful_yes'] = `tbl_reviews_helpful` . `helpful_yes` - 1;
-                    } else {
-                        $aVoteData['helpful_yes'] = `tbl_reviews_helpful` . `helpful_yes` + 1;
-                    }
-                } else if ($alreadyVoted['action'] == 'helpful_no') {
-                    if ($action == 'No') {
-                        $aVoteData['helpful_no'] = `tbl_reviews_helpful` . `helpful_no` - 1;
-                    } else {
-                        $aVoteData['helpful_no'] = `tbl_reviews_helpful` . `helpful_no` + 1;
-                    }
-                } else if ($alreadyVoted['action'] == 'helpful_null') {
-                    //Do nothing
-                }
-                $bUpdated = $this->mReviews->updateHelpful($aVoteData, $alreadyVoted['vote_id']);
-            }
-
-            $reviewUD = $this->mReviews->getBBWidgetUserData($reviewID);
-            addPageAndVisitorInfo($reviewUD[0]->user_id, 'Widget Review', serialize($reviewUD[0]->campaign_id), 'Helpful Action');
-
-            if ($reviewUD) {
-                $this->addWidgetTrackData($reviewUD[0]->widget_id, $reviewUD[0]->user_id, $reviewID, $reviewUD[0]->widget_type, $reviewUD[0]->campaign_id, 'click', 'review');
-                $this->addWidgetTrackData($reviewUD[0]->widget_id, $reviewUD[0]->user_id, $reviewID, $reviewUD[0]->widget_type, $reviewUD[0]->campaign_id, 'helpful', 'review');
-            }
-
-            $aHelpful = $this->mReviews->countHelpful($reviewID);
-            $response = array('status' => 'ok', 'yes' => $aHelpful['yes'], 'no' => $aHelpful['no']);
-        }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function getCommentsBlock($reviewID) {
-        $oComments = $this->mReviews->getComments($reviewID);
-        if (!empty($oComments)) {
-            foreach ($oComments as $oComment) {
-                $aComment = (array) $oComment;
-                $aCommentData[$aComments['id']] = $aComment;
-            }
-
-            foreach ($aCommentData as $k => &$v) {
-                if ($v['parent_comment_id'] != 0) {
-                    $aCommentData[$v['parent']]['childs'][] = & $v;
-                }
-            }
-            unset($v);
-
-            foreach ($aCommentData as $k => $v) {
-                if ($v['parent_comment_id'] != 0) {
-                    unset($aCommentData[$k]);
-                }
-            }
-        }
-
-        return $aCommentData;
-    }
+    
 
     public function deleteReview() {
         $response = array();
