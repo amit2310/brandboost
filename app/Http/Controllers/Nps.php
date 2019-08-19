@@ -10,6 +10,7 @@ header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Dispo
 use Illuminate\Http\Request;
 use App\Models\Admin\Modules\NpsModel;
 use App\Models\Admin\SubscriberModel;
+use Illuminate\Support\Facades\Input;
 use Session;
 
 class Nps extends Controller {
@@ -134,17 +135,25 @@ class Nps extends Controller {
         exit;
     }
 
+
+    /**
+     * This function is use for tracking
+     * @param type $refKey
+     * @return type numeric
+     */
     public function t($refKey) {
+        $mNPS = new NpsModel();
+        $mSubscriber = new SubscriberModel();
         $bRequireGlobalSubs = false;
         $bAllDone = false;
         if (!empty($refKey)) {
-            $get = $this->input->get();
+            $get = Input::get();
             $score = strip_tags($get['s']);
             $subid = strip_tags($get['subid']);
             $subid = base64_decode($subid);
 
             if ($subid > 0 && !empty($refKey)) {
-                $oNPS = $this->mNPS->getSurveyInfoByRef($refKey);
+                $oNPS = NpsModel::getSurveyInfoByRef($refKey);
                 if (!empty($oNPS)) {
                     $storeURL = $oStore->store_url;
                     //Track visit
@@ -166,13 +175,13 @@ class Nps extends Controller {
                         'latitude' => $aLocationData['latitude'],
                         'created_at' => date("Y-m-d H:i:s")
                     );
-                    $bResponseID = $this->mNPS->saveSurveyFeedback($aTrackData);
+                    $bResponseID = $mNPS->saveSurveyFeedback($aTrackData);
                     if ($bResponseID > 0) {
                         $bAllDone = true;
 
                         if ($bAllDone == true) {
                             //$oSubscriber = $this->mNPS->getNpsUserById($subid);
-                            $oSubscriber = $this->mSubscriber->getSubscribersById($subid);
+                            $oSubscriber = $mSubscriber->getSubscribersById($subid);
                             
                             if (!empty($oSubscriber)) {
                                 $firstName = $oSubscriber->firstname;
@@ -195,7 +204,7 @@ class Nps extends Controller {
                                     'phone' => $mobile
                                 );
                                 $aRegistrationData['clientID'] = $oNPS->user_id;
-                                $userID = $this->mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
+                                $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
                                 //$userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
                             }
                         }
@@ -210,8 +219,8 @@ class Nps extends Controller {
                             'created' => date("Y-m-d H:i:s")
                         );
                         $eventName = 'sys_nps_score_add';
-                        add_notifications($notificationData, $eventName, $oNPS->user_id);
-                        $this->load->view('admin/modules/nps/collect-feedback.php', array('oNPS' => $oNPS, 'score' => $score, 'responseID' => $bResponseID));
+                        //add_notifications($notificationData, $eventName, $oNPS->user_id);
+                        view('admin.modules.nps.collect-feedback', array('oNPS' => $oNPS, 'score' => $score, 'responseID' => $bResponseID));
                     }
                 }
             }

@@ -753,6 +753,7 @@ Route::post('mediagallery/getReviewData','Mediagallery@getReviewData');
 //Npm Front end Module
 Route::post('nps/display_widget/{name}/{key}','Nps@display_widget');
 Route::post('nps/recordSurvey','Nps@recordSurvey');
+Route::get('nps/t/{refKey}','Nps@t');
 
 
 
