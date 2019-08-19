@@ -685,7 +685,8 @@
 												}
 												
 												//Attached camapaign brand Image
-												$campaignImgArray = unserialize($oData->campaignImg);
+												//pre($oData); die;
+												$campaignImgArray = unserialize($oData->brand_img);
 												$campaign_img = $campaignImgArray[0]['media_url'];
 												
 												if (empty($campaign_img)) {
@@ -699,7 +700,7 @@
 											<tr>
 												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id); ?>" widgetID="<?php echo $oData->widget_id; ?>" b_title="<?php echo $oData->bbCTitle; ?>" class="text-default text-semibold">
+														<a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id); ?>" widgetID="<?php echo $oData->widget_id; ?>" b_title="<?php echo $oData->bbBrandTitle; ?>" class="text-default text-semibold">
 														<img src="<?php echo $imgSrc; ?>" class="img-circle img-xs br5" alt="Img"></a>
 													</div>
 													<div class="media-left">
@@ -918,7 +919,7 @@
 												}
 												
 												//Attached camapaign brand Image
-												$campaignImgArray = unserialize($oData->campaignImg);
+												$campaignImgArray = unserialize($oData->brand_img);
 												$campaign_img = $campaignImgArray[0]['media_url'];
 												
 												if (empty($campaign_img)) {
@@ -1381,7 +1382,7 @@
 												}
 												
 												//Attached camapaign brand Image
-												$campaignImgArray = unserialize($oData->campaignImg);
+												$campaignImgArray = unserialize($oData->brand_img);
 												$campaign_img = $campaignImgArray[0]['media_url'];
 												
 												if (empty($campaign_img)) {
@@ -1612,7 +1613,7 @@
 												}
 												
 												//Attached camapaign brand Image
-												$campaignImgArray = unserialize($oData->campaignImg);
+												$campaignImgArray = unserialize($oData->brand_img);
 												$campaign_img = $campaignImgArray[0]['media_url'];
 												
 												if (empty($campaign_img)) {

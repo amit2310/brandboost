@@ -1018,7 +1018,7 @@ class ReviewsModel extends Model {
 	public function getBBWidgetUserData($reviewID) {
 		$oData = DB::table('tbl_reviews')
             ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
-            ->leftJoin('tbl_brandboost_widgets', 'tbl_brandboost.id', '=', 'tbl_users.id')
+            ->leftJoin('tbl_brandboost_widgets', 'tbl_brandboost.id', '=', 'tbl_brandboost_widgets.brandboost_id')
             ->select('tbl_reviews.campaign_id', 'tbl_brandboost.id', 'tbl_brandboost_widgets.id as widget_id', 'tbl_brandboost_widgets.widget_type')
             ->where('tbl_reviews.id', $reviewID)
             ->get();

@@ -274,6 +274,7 @@
 								foreach ($reviewData['comment_block'] as $aComment):
 								$getUserDetail = getUserDetail($aComment['user_id']);
 								$childComments = \App\Models\ReviewsModel::getAllChildComments($aComment['id']);
+								
 								if($key < 3){
 								?>
 								<div class="bb_inner_reply">

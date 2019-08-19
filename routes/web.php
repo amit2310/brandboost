@@ -108,6 +108,7 @@ Route::post('admin/brandboost/deleteProduct','Admin\Brandboost@deleteProduct');
 Route::post('admin/brandboost/addOffsite','Admin\Brandboost@addOffsite');
 Route::get('admin/brandboost/addreview/{id}','Admin\Brandboost@addReview');
 Route::post('admin/brandboost/delete_multipal_brandboost','Admin\Brandboost@deleteMultipalBrandboost');
+Route::post('admin/brandboost/publishOnsiteWidget','Admin\Brandboost@publishOnsiteWidget');
 
 
 
@@ -180,8 +181,9 @@ Route::post('admin/comments/update_comment_status','Admin\Comments@update_commen
 Route::post('admin/reviews/update_note','Admin\Reviews@update_note');
 
 
+Route::post('reviews/saveHelpful','Reviews@saveHelpful');
 Route::post('reviews/displayReview/{id}','Reviews@displayReview');
-Route::get('reviews/addcomment','Reviews@addComment');
+Route::post('reviews/addcomment','Reviews@addComment');
 
 
 Route::post('admin/comments/add_comment','Admin\Comments@addComment');
