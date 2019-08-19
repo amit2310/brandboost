@@ -11,7 +11,7 @@
       <?php if(!empty($tagTitle)): ?>
 	<p><?php echo $tagTitle;?></p>
 	<?php endif; ?>
-      <img width="50" src="http://brandboost.io/assets/images/gift-reward.png"/>
+      <img width="50" src="<?php echo base_url(); ?>/assets/images/gift-reward.png"/>
       <?php if(!empty($tagLineDesc)): ?>
 		<p><?php echo $tagLineDesc;?></p>
 		<?php endif; ?>
