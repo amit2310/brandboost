@@ -26,7 +26,7 @@ $gradientClass = lcfirst($gradientClass);
 	$reviewRatings = 0;
 	$gradientColor = $galleryData->gradient_color;
 	foreach($reviewsIdArray as $reviewId){
-		$reviewData = $this->mReviews->getReviewByReviewID($reviewId);
+		$reviewData = \App\Models\Admin\ReviewsModel::getReviewByReviewID($reviewId);
 		$reviewImageArray = unserialize($reviewData[0]->media_url);
 		$reviewRatings = $reviewData[0]->ratings + $reviewRatings;
 		//pre($reviewImageArray);
@@ -81,7 +81,7 @@ $gradientClass = lcfirst($gradientClass);
 	$reviewRatings = 0;
 	$gradientColor = $galleryData->gradient_color;
 	foreach($reviewsIdArray as $key=>$reviewId){
-		$reviewData = $this->mReviews->getReviewByReviewID($reviewId);
+		$reviewData = \App\Models\Admin\ReviewsModel::getReviewByReviewID($reviewId);
 		$reviewImageArray = unserialize($reviewData[0]->media_url);
 		$reviewRatings = $reviewData[0]->ratings + $reviewRatings;
 		//pre($reviewImageArray);
@@ -140,7 +140,7 @@ $gradientClass = lcfirst($gradientClass);
 	$reviewRatings = 0;
 	$gradientColor = $galleryData->gradient_color;
 	foreach($reviewsIdArray as $key=>$reviewId){
-		$reviewData = $this->mReviews->getReviewByReviewID($reviewId);
+		$reviewData = \App\Models\Admin\ReviewsModel::getReviewByReviewID($reviewId);
 		$reviewImageArray = unserialize($reviewData[0]->media_url);
 		$reviewRatings = $reviewData[0]->ratings + $reviewRatings;
 		//pre($reviewImageArray);
@@ -199,7 +199,7 @@ $gradientClass = lcfirst($gradientClass);
 	$reviewRatings = 0;
 	$gradientColor = $galleryData->gradient_color;
 	foreach($reviewsIdArray as $key=>$reviewId){
-		$reviewData = $this->mReviews->getReviewByReviewID($reviewId);
+		$reviewData = \App\Models\Admin\ReviewsModel::getReviewByReviewID($reviewId);
 		$reviewImageArray = unserialize($reviewData[0]->media_url);
 		$reviewRatings = $reviewData[0]->ratings + $reviewRatings;
 		//pre($reviewImageArray);
