@@ -135,7 +135,7 @@ BB = function (t) {
         
 		document.getElementsByClassName("bb_overlay")[0].style.display = 'block';
         a = 'bbaid=' + aid + '&bbnpsname=' + fullname + '&bbnpsemail=' + emailadd + '&bbnpstitle=' + titleline + '&bbnpsdesc=' + descline + '&score='+selscore;
-        var bbsrc = this.userSettings.host + "/nps/recordSurvey/";
+        var bbsrc = this.userSettings.host + "/nps/recordSurvey";
         var i = function (o) {
             var rsp = JSON.parse(o);
 			document.getElementsByClassName("bb_overlay")[0].style.display = 'none';
