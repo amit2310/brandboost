@@ -1,4 +1,5 @@
 <?php
+namespace App\Http\Controllers;
 
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Credentials: true");
@@ -6,9 +7,8 @@ header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
 
-namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\Admin\QuestionModel;
+use App\Models\Admin\Modules\NpsModel;
 use Session;
 
 class Nps extends Controller {
@@ -23,13 +23,15 @@ class Nps extends Controller {
     }
 
     public function display_widget($widgetName = '', $accountID = '', $subId = '') {
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        $mNPS = new NpsModel();
         if (!empty($accountID) && !empty($widgetName)) {
             if ($widgetName == 'nps') {
-                $oNPS = $this->mNPS->getSurveyInfoByRef($accountID);
+                $oNPS = NpsModel::getSurveyInfoByRef($accountID);
                 $oSubscriber = '';
                 if ($subId != '') {
-                    $oSubscriber = $this->mNPS->getNPSSubscriberDataBySubId($subId);
+                    $oSubscriber = $mNPS->getNPSSubscriberDataBySubId($subId);
                     //pre($oSubscriber);
                 }
                 $widgetData = array(
@@ -37,7 +39,7 @@ class Nps extends Controller {
                     'oNPS' => $oNPS,
                     'oSubscriber' => $oSubscriber
                 );
-                $content = $this->load->view("admin/modules/nps/widgets/nps.php", $widgetData, true);
+                $content = view("admin.modules.nps.widgets.nps", $widgetData)->render();
             }
             $aData = array('content' => utf8_encode($content));
             echo json_encode($aData);
