@@ -7,7 +7,7 @@
                 <!--==================================================scroll==================================================-->
                 <div class="bb_widget_container"> 
                     <!--========bb_logo========-->
-                    <div class="bb_logo"> <a class="fleft" href="#"><img src="<?php echo site_url();?>assets/images/bb_review_logo.png"/></a> <a data-dismiss="modal" class="fright" href="#"><img src="<?php echo site_url();?>assets/images/cross.png"/></a>
+                    <div class="bb_logo"> <a class="fleft" href="#"><img src="<?php echo base_url();?>assets/images/bb_review_logo.png"/></a> <a data-dismiss="modal" class="fright" href="#"><img src="<?php echo base_url();?>assets/images/cross.png"/></a>
                         <div class="cboth"></div>
                     </div>
                     <!--========bb_main========-->
@@ -21,7 +21,7 @@
                                 <?php if(!empty($tagTitle)): ?>
                                 <h2><?php echo $tagTitle;?></h2>
                                 <?php endif; ?>
-                                <img src="<?php echo site_url();?>assets/images/gift-reward.png" style="width:100px;position:relative;left:150px;"/>
+                                <img src="<?php echo base_url();?>assets/images/gift-reward.png" style="width:100px;position:relative;left:150px;"/>
                                 <?php if(!empty($tagLineDesc)): ?>
                                 <h3><?php echo $tagLineDesc;?></h3>
                                 <?php endif; ?>

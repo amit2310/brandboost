@@ -1871,7 +1871,13 @@ class ReferralModel extends Model {
     }
 	
 	
-	
+	public function saveReferralSale($aData) {
+		$result = DB::table('tbl_referral_sales')->insertGetId($aData);
+        if ($result)
+            return true;
+        else
+            return false;
+    }
 	
 	
 	
@@ -2218,18 +2224,6 @@ class ReferralModel extends Model {
         } else {
             return false;
         }
-    }
-
-
-    
-
-    public function saveReferralSale($aData) {
-        $result = $this->db->insert("tbl_referral_sales", $aData);
-        //echo $this->db->last_query();
-        if ($result)
-            return true;
-        else
-            return false;
     }
 
     public function getReferralInvoices($accountID) {

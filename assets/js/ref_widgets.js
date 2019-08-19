@@ -469,7 +469,7 @@ if (bbkey != 'undefined' && bbwidget != 'undefined') {
 
     // Include Css
     var oBB = new BB(bbkey, {
-        "host": "//dev.brandboostx.com",
+        "host": "//brandboostx.com",
         "widget": bbwidget,
         "bbfirstname": bbfirstname,
         "bblastname": bblastname,
