@@ -178,9 +178,7 @@ class Nps extends Controller {
 
                     if ($bResponseID > 0) {
                         $bAllDone = true;
-                        echo 'test1';
                         if ($bAllDone) {
-                            echo 'test2';
                             //$oSubscriber = $this->mNPS->getNpsUserById($subid);
                             $oSubscriber = $mSubscriber->getSubscribersById($subid);
                             
@@ -194,10 +192,9 @@ class Nps extends Controller {
                                     $bRequireGlobalSubs = true;
                                 }
                             }
-                            echo 'test3';
                             //Register as brandboost user if not registered
                             if ($bRequireGlobalSubs == false) { //This means no user_id attached to subscriber
-                                echo 'test4';
+                        
                                 //My Code
                                 $aRegistrationData = array(
                                     'firstname' => $firstName,
@@ -209,7 +206,7 @@ class Nps extends Controller {
                                 $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
                                 //$userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
                             }
-                            echo 'test5';
+                        
                         }
                         //Send out notification
                         $notificationData = array(
@@ -221,11 +218,10 @@ class Nps extends Controller {
                             'status' => 1,
                             'created' => date("Y-m-d H:i:s")
                         );
-                        echo 'test6';
+            
                         $eventName = 'sys_nps_score_add';
                         //add_notifications($notificationData, $eventName, $oNPS->user_id);
                         return view('admin.modules.nps.collect-feedback', array('oNPS' => $oNPS, 'score' => $score, 'responseID' => $bResponseID));
-                        echo 'test7';
                     }
                 }
             }
