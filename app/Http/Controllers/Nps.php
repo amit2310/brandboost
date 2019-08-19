@@ -224,7 +224,7 @@ class Nps extends Controller {
                         echo 'test6';
                         $eventName = 'sys_nps_score_add';
                         //add_notifications($notificationData, $eventName, $oNPS->user_id);
-                        view('admin.modules.nps.collect-feedback', array('oNPS' => $oNPS, 'score' => $score, 'responseID' => $bResponseID));
+                        return view('admin.modules.nps.collect-feedback', array('oNPS' => $oNPS, 'score' => $score, 'responseID' => $bResponseID));
                         echo 'test7';
                     }
                 }
