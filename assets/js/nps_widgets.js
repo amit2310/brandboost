@@ -55,6 +55,7 @@ BB = function (t) {
     }
 
     t.prototype.display_widget = function () {
+
         var e = this;
         var bb_key = this.userbbkey;
         var bb_widget_name = this.userSettings.widget;
@@ -493,7 +494,7 @@ if (bbkey != 'undefined' && bbwidget != 'undefined') {
 
     // Include Css
     var oBB = new BB(bbkey, {
-        "host": "//brandboost.io",
+        "host": "//dev.brandboostx.com",
         "widget": bbwidget,
         "subid": subId
     });
