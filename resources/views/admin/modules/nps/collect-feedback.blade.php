@@ -8,8 +8,8 @@
         <link rel="icon" href="assets/images/icon.ico" sizes="16x16" type="image/ico">
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/core/libraries/jquery.min.js"></script>
         <!-- Global stylesheets -->
-        <link href="<?php echo base_url(); ?>new_pages/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-        <link href="<?php echo base_url(); ?>new_pages/profile_css/profile.css" rel="stylesheet" type="text/css">
+        <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="<?php echo base_url(); ?>profile_css/profile.css" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
     </head>
     <body>
