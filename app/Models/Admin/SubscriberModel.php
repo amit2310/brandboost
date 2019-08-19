@@ -1209,9 +1209,25 @@ FROM
         $lastName = $aData['lastname'];
         $email = $aData['email'];
         $mobile = $aData['mobile'];
-        $country = $aData['country'];
-        $city = $aData['city'];
-        $ext_country_code = $aData['ext_country_code'];
+        if(!empty($aData['country'])) {
+            $country = $aData['country'];
+        }
+        else {
+            $country = '';
+        }
+        if(!empty($aData['city'])) {
+            $city = $aData['city'];
+        }
+        else {
+            $city = '';
+        }
+        if(!empty($aData['ext_country_code'])) {
+            $ext_country_code = $aData['ext_country_code'];
+        }
+        else {
+            $ext_country_code = '';
+        }
+        
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randstring = '';
         for ($i = 0; $i < 7; $i++) {
@@ -1306,9 +1322,30 @@ FROM
         $lastName = $aData['lastname'];
         $email = $aData['email'];
         $phone = $aData['phone'];
-        $countryCode = $aData['country_code'];
-        $cityName = $aData['cityName'];
-        $clientID = $aData['clientID'];
+        if(!empty($aData['country_code']))
+        { 
+            $countryCode = $aData['country_code']; 
+        } 
+        else 
+        { 
+            $countryCode = ''; 
+        } 
+        if(!empty($aData['cityName']))
+        { 
+            $cityName = $aData['cityName']; 
+        } 
+        else 
+        { 
+            $cityName = ''; 
+        } 
+        if(!empty($aData['clientID']))
+        { 
+            $clientID = $aData['clientID']; 
+        } 
+        else 
+        { 
+            $clientID = ''; 
+        } 
         if (empty($email) || empty($clientID)) {
             return false;
             exit;
@@ -1339,7 +1376,7 @@ FROM
             //Start registration process
             //Check if exists in global subscriber table
 
-            $oGlobalUser = $this->checkIfGlobalSubscriberExists($clientID, 'email', $email);
+            $oGlobalUser = self::checkIfGlobalSubscriberExists($clientID, 'email', $email);
 
             if (!empty($oGlobalUser)) {
 
@@ -1349,7 +1386,7 @@ FROM
             } else {
                 //Register Subscriber
 
-                $subscriberID = $this->addGlobalSubscriber($aSubscriberData);
+                $subscriberID = self::addGlobalSubscriber($aSubscriberData);
                 $bRegistredSubscriber = true;
             }
 
@@ -1380,11 +1417,11 @@ FROM
             //User already exists
             //check whether or not subscriber exists for the same users
 
-            $oGlobalUser = $this->checkIfGlobalSubscriberExists($clientID, 'email', $email);
+            $oGlobalUser = self::checkIfGlobalSubscriberExists($clientID, 'email', $email);
             if (empty($oGlobalUser)) {
                 //subscriber doesn't exists
                 $aSubscriberData['user_id'] = $userID;
-                $subscriberID = $this->addGlobalSubscriber($aSubscriberData);
+                $subscriberID = self::addGlobalSubscriber($aSubscriberData);
             } else {
                 //subscriber exists
                 $subscriberID = $oGlobalUser->id;

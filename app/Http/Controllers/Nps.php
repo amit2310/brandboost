@@ -9,6 +9,7 @@ header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Dispo
 
 use Illuminate\Http\Request;
 use App\Models\Admin\Modules\NpsModel;
+use App\Models\Admin\SubscriberModel;
 use Session;
 
 class Nps extends Controller {
@@ -47,24 +48,28 @@ class Nps extends Controller {
         }
     }
 
-    public function recordSurvey() {
+    public function recordSurvey(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-
-
-        if (!empty($post)) {
-            $accountID = strip_tags($post['bbaid']);
-            $fullName = strip_tags($post['bbnpsname']);
+        $mNPS = new NpsModel();
+        $mSubscriber = new SubscriberModel();
+        if (!empty($request->bbaid)) {
+            $accountID = strip_tags($request->bbaid);
+            $fullName = strip_tags($request->bbnpsname);
             $aName = explode(' ', $fullName, 2);
             $firstName = $aName[0];
-            $lastName = $aName[1];
-            $email = strip_tags($post['bbnpsemail']);
-            $title = strip_tags($post['bbnpstitle']);
-            $description = strip_tags($post['bbnpsdesc']);
-            $score = strip_tags($post['score']);
+            if(!empty($aName[1])) {
+                $lastName = $aName[1];
+            }
+            else {
+                $lastName = '';
+            }
+            $email = strip_tags($request->bbnpsemail);
+            $title = strip_tags($request->bbnpstitle);
+            $description = strip_tags($request->bbnpsdesc);
+            $score = strip_tags($request->score);
             //$oNPS = $this->mNPS->getSurveyInfoByRef($accountID);
             if (!empty($accountID)) {
-                $oNPS = $this->mNPS->getNPSProgramInfo($accountID);
+                $oNPS = $mNPS->getNPSProgramInfo($accountID);
             }
 
             
@@ -74,12 +79,12 @@ class Nps extends Controller {
                     'firstname' => $firstName,
                     'lastname' => $lastName,
                     'email' => $email,
-                    'phone' => $mobile
+                    'phone' => ''
                 );
                 $aRegistrationData['clientID'] = $clientID;
 				$userID = '';
 				if($email != ''){
-					$userID = $this->mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
+					$userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 				}
 
                 $aUserData = array(
@@ -116,7 +121,7 @@ class Nps extends Controller {
                     'latitude' => $aLocationData['latitude'],
                     'created_at' => date("Y-m-d H:i:s")
                 );
-                $bResponseID = $this->mNPS->saveSurveyFeedback($aTrackData);
+                $bResponseID = $mNPS->saveSurveyFeedback($aTrackData);
                 if ($bResponseID > 0) {
                     $response = array('status' => 'success', 'msg' => 'Survey submitted successfully!');
                 }
@@ -323,14 +328,22 @@ class Nps extends Controller {
 
     public function registerNow($aData) {
         $userID = 0;
+        $mNPS = new NpsModel();
+        $mSubscriber = new SubscriberModel();
         if (!empty($aData)) {
             $email = $aData['email'];
             $firstName = $aData['firstName'];
             $lastName = $aData['lastName'];
-            $phone = $aData['phone'];
+            if(!empty($aData['phone'])) {
+                $phone = $aData['phone'];
+            }
+            else {
+                $phone = '';
+            }
+            
             $accountID = $aData['accountID'];
             if (!empty($accountID)) {
-                $oNPS = $this->mNPS->getNPSProgramInfo($accountID);
+                $oNPS = $mNPS->getNPSProgramInfo($accountID);
             }
 
             if (!empty($oNPS)) {
@@ -338,7 +351,7 @@ class Nps extends Controller {
             }
 
             if ($userID > 0) {
-                $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
+                $oGlobalUser = SubscriberModel::checkIfGlobalSubscriberExists($userID, 'email', $email);
                 if (!empty($oGlobalUser)) {
                     $iSubscriberID = $oGlobalUser->id;
                 } else {
@@ -351,12 +364,12 @@ class Nps extends Controller {
                         'phone' => $phone,
                         'created' => date("Y-m-d H:i:s")
                     );
-                    $iSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
+                    $iSubscriberID = SubscriberModel::addGlobalSubscriber($aSubscriberData);
                 }
             }
 
             if (!empty($iSubscriberID)) {
-                $oExistingUser = $this->mNPS->checkIfExistingUser($iSubscriberID, $accountID);
+                $oExistingUser = $mNPS->checkIfExistingUser($iSubscriberID, $accountID);
                 if (!empty($oExistingUser)) {
                     $userID = $oExistingUser->id;
                 } else {
@@ -366,7 +379,7 @@ class Nps extends Controller {
                         'account_id' => $accountID,
                         'created' => date("Y-m-d H:i:s")
                     );
-                    $userID = $this->mNPS->addNPSUser($aData);
+                    $userID = $mNPS->addNPSUser($aData);
                 }
             }
         }
