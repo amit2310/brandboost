@@ -155,7 +155,6 @@ class Nps extends Controller {
             if ($subid > 0 && !empty($refKey)) {
                 $oNPS = NpsModel::getSurveyInfoByRef($refKey);
                 if (!empty($oNPS)) {
-                    //$storeURL = $oStore->store_url;
                     //Track visit
                     $aLocationData = getLocationData();
                     $aTrackData = array(
@@ -176,6 +175,8 @@ class Nps extends Controller {
                         'created_at' => date("Y-m-d H:i:s")
                     );
                     $bResponseID = $mNPS->saveSurveyFeedback($aTrackData);
+                    pre($bResponseID);
+                    die();
                     if ($bResponseID > 0) {
                         $bAllDone = true;
 
