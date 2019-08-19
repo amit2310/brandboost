@@ -39,8 +39,16 @@ $reviewIDArray = unserialize($galleryData->reviews_id);
 				$reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);
 
 				$reviewImageArray = unserialize($reviewData[0]->media_url);
+				if(count($reviewImageArray)>0)
+				{
 				$imageUrl = $reviewImageArray[0]['media_url'];
 				$cropedImageUrl = $reviewData[0]->croped_image_url;
+			    }
+			    else
+			    {
+			    	$imageUrl = "";
+				    $cropedImageUrl = "";
+			    }
 				
 				if($cropedImageUrl == ''){
 					$imagePath = "https://s3-us-west-2.amazonaws.com/brandboost.io/".$imageUrl;
