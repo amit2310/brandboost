@@ -46,7 +46,7 @@ class Mediagallery extends Controller {
 	public function getReviewData(){
 		$response = array('status' => 'error', 'msg' => 'Something went wrong');
 		
-        $post = $this->input->post();
+        $post = Input::post();
 		
         if (empty($post)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -56,9 +56,9 @@ class Mediagallery extends Controller {
 		
         //$aUser = getLoggedUser();
         //$userID = $aUser->id;
-		
+		$mReviews  = new ReviewsModel();
         $reviewId = $post['review_id'];
-		$reviewData = $this->mReviews->getReviewDetailsByReviewID($reviewId);
+		$reviewData = $mReviews->getReviewDetailsByReviewID($reviewId);
 		$ratingsVal = '';
 		for ($i = 1; $i <= 5; $i++) {
 			if ($i <= $reviewData[0]->ratings) {
@@ -72,7 +72,7 @@ class Mediagallery extends Controller {
 		$reviewRatings = $reviewData[0]->ratings + $reviewRatings;
 		$imageUrl = $reviewImageArray[0]['media_url'];
 		//<p class="heading_pop2">'.$reviewData[0]->brand_desc.'</p>
-		$oComments = $this->mReviews->getComments($reviewId);
+		$oComments = $mReviews->getComments($reviewId);
 		
 		$reviewPopupData = '<div class="box_inner">
 		<div class="bbw_modal_header">
