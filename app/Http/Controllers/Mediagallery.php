@@ -8,7 +8,7 @@ use App\Models\Admin\MediaModel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
-
+error_reporting(0);
 class Mediagallery extends Controller {
 
     public function index($keyCode) {
