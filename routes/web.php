@@ -108,6 +108,7 @@ Route::post('admin/brandboost/deleteProduct','Admin\Brandboost@deleteProduct');
 Route::post('admin/brandboost/addOffsite','Admin\Brandboost@addOffsite');
 Route::get('admin/brandboost/addreview/{id}','Admin\Brandboost@addReview');
 Route::post('admin/brandboost/delete_multipal_brandboost','Admin\Brandboost@deleteMultipalBrandboost');
+Route::post('admin/brandboost/publishOnsiteWidget','Admin\Brandboost@publishOnsiteWidget');
 
 
 
@@ -180,8 +181,15 @@ Route::post('admin/comments/update_comment_status','Admin\Comments@update_commen
 Route::post('admin/reviews/update_note','Admin\Reviews@update_note');
 
 
+Route::post('reviews/saveHelpful','Reviews@saveHelpful');
 Route::post('reviews/displayReview/{id}','Reviews@displayReview');
-Route::get('reviews/addcomment','Reviews@addComment');
+Route::post('reviews/addcomment','Reviews@addComment');
+
+
+Route::post('referrals/display_widget/{id1}/{id2}','Referrals@displayWidget');
+Route::post('referrals/registerReferral','Referrals@registerReferral');
+Route::post('referrals/recordSale','Referrals@recordSale');
+Route::get('ref/t/{id}','Ref@t');
 
 
 Route::post('admin/comments/add_comment','Admin\Comments@addComment');
@@ -745,7 +753,7 @@ Route::get('recurring/saveCBRecurring','Recurring@saveCBRecurring');
 
 //Mediagallery Front end Module
 Route::post('mediagallery/index/{id}','Mediagallery@index');
-Route::get('mediagallery/getReviewData','Mediagallery@getReviewData');
+Route::post('mediagallery/getReviewData','Mediagallery@getReviewData');
 
 
 //Npm Front end Module

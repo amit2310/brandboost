@@ -86,7 +86,7 @@ BB = function (t) {
 	t.prototype.showGalleryPopup = function (e) {
         var reviewId = e.getAttribute('data-review-id');
         a = 'review_id=' + reviewId;
-        var bbsrc = this.userSettings.host + "/mediagallery/getReviewData/";
+        var bbsrc = this.userSettings.host + "/mediagallery/getReviewData";
         var i = function (o) {
             var rsp = JSON.parse(o);
             if (rsp.status == 'success') {

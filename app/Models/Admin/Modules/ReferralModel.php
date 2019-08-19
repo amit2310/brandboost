@@ -1631,15 +1631,280 @@ class ReferralModel extends Model {
     }
 	
 	
+	public function getReferralProgramInfo($accountID) {
+		$oData = DB::table('tbl_referral_rewards')
+			->where('hashcode', $accountID)
+			->first();
+        return $oData;
+    }
+	
+	public function getLiveReferralLinkTrackData($ip) {
+		$oData = DB::table('tbl_referral_reflinks_live_track')
+			->where('ip_address', $ip)
+			->first();
+        return $oData;
+    }
 	
 	
+	public function checkIfExistingAdvocate($subscriberID, $accountID) {
+		$oData = DB::table('tbl_referral_users')
+			->select('tbl_referral_users.*', 'tbl_referral_reflinks.refkey')
+			->leftJoin('tbl_referral_reflinks', 'tbl_referral_reflinks.subscriber_id', '=' , 'tbl_referral_users.subscriber_id')
+			->where('tbl_referral_users.subscriber_id', $subscriberID)
+			->where('tbl_referral_users.account_id', $accountID)
+			->first();
+        return $oData;
+    }
+	
+	public function addReferredUser($aData) {
+		$insertID = DB::table('tbl_referral_users')->insertGetId($aData);
+        if ($insertID) {
+            return $insertID;
+        } else {
+            return false;
+        }
+    }
 	
 	
+	public function createReferralLink($aData) {
+		$insertID = DB::table('tbl_referral_reflinks')->insertGetId($aData);
+        if ($insertID) {
+            return $insertID;
+        } else {
+            return false;
+        }
+    }
+
+	
+	public function getRefLinkInfo($refCode) {
+		$oData = DB::table('tbl_referral_reflinks')
+			->select('tbl_referral_settings.*', 'tbl_referral_reflinks.*')
+			->leftJoin('tbl_referral_settings', 'tbl_referral_settings.referral_id', '=' , 'tbl_referral_reflinks.referral_id')
+			->where('tbl_referral_reflinks.refkey', $refCode)
+			->first();
+        return $oData;
+		
+    }
 	
 	
+	public function trackReferralVisit($aData) {
+        $refKey = $aData['refkey'];
+        $ip = $aData['ip_address'];
+        $bRecorded = $this->checkIfRecordedReferralVisit($refKey, $ip);
+        if ($bRecorded == false) {
+			$insertID = DB::table('tbl_referral_reflinks_visit_logs')->insertGetId($aData);
+            if ($insertID) {
+                return $insertID;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 	
+	public function checkIfRecordedReferralVisit($refkey, $ip) {
+		$oData = DB::table('tbl_referral_reflinks_visit_logs')
+        ->where("refkey", $refkey)
+        ->where("ip_address", $ip)
+		->get();
+        if ($oData->count() > 0) {
+            return true;
+        }
+        return false;
+    }
+	
+	
+	public function deleteLiveReferralLinkTrackData($ip) {
+		$result = DB::table('tbl_referral_reflinks_live_track')
+               ->where('ip_address', $ip)
+               ->delete();
+        return true;
+    }
+	
+	
+	public function trackLiveRefLink($aData) {
+		$insertID = DB::table('tbl_referral_reflinks_live_track')->insertGetId($aData);
+        if ($insertID) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 	
     
+	/**
+     * To be used for checking duplicate affiliates into the advocate account
+     * @param type $aData
+     * @return boolean
+     */
+    public function checkIfAffilatedExists($aData) {
+		$oData = DB::table('tbl_referral_affiliates')
+			->where("advocate_id", $aData['advocate_id'])
+			->where("advocate_referral_id", $aData['advocate_referral_id'])
+			->where("affiliate_id", $aData['affiliate_id'])
+			->where("affiliate_referral_id", $aData['affiliate_referral_id'])
+			->get();
+			if ($oData->count() > 0) {
+				return true;
+			}
+			return false;
+    }
+	
+	
+	public function getTagBySaleIDTagID($aTagID, $saleID) {
+		$oData = DB::table('tbl_referral_tags')
+			->where("tag_id", $aTagID)
+			->where("referral_response_id", $saleID)
+			->first();
+        return $oData;
+    }
+	
+
+    public function deleteReferralTagByID($id, $responseID) {
+		$result = DB::table('tbl_referral_tags')
+               ->where('tag_id', $id)
+               ->where('referral_response_id', $responseID)
+               ->delete();
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function removeReferralTag($tagID, $responseID) {
+		$result = DB::table('tbl_referral_tags')
+               ->where('tag_id', $tagID)
+               ->where('referral_response_id', $responseID)
+               ->delete();
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getReferralNoteByID($noteId) {
+		$oData = DB::table('tbl_referral_notes')
+			->where("id", $noteId)
+			->get();
+        return $oData;
+    }
+	
+
+    public function updateReferralNote($aData, $noteId) {
+		$result = DB::table('tbl_referral_notes')
+				   ->where('id', $noteId)
+				   ->update($aData);
+        if ($result > -1) {
+            return true;
+		}
+        else{
+            return false;
+		}
+    }
+
+
+    public function saveReferralNotes($aData) {
+		$insertID = DB::table('tbl_referral_notes')->insertGetId($aData);
+        if ($insertID)
+            return $insertID;
+        return false;
+    }
+
+    public function deleteReferralNoteByID($noteId) {
+		$result = DB::table('tbl_referral_notes')
+               ->where('id', $noteId)
+               ->delete();
+        return true;
+    }
+
+    public function getReferralLinkDetails($subscriberID, $referralID) {
+		$oData = DB::table('tbl_referral_reflinks')
+			->where("subscriber_id", $subscriberID)
+			->where("referral_id", $referralID)
+			->first();
+        return $oData;
+    }
+
+    public function getAdvocateSendgridStats($subscriberID, $referralID) {
+        $sql = "SELECT COUNT(DISTINCT tbl_referral_automations_tracking_sendgrid.ip) AS totalCount, tbl_referral_automations_tracking_sendgrid.`event_name` "
+                . "FROM tbl_referral_automations_tracking_sendgrid "
+                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_rewards.id=tbl_referral_automations_tracking_sendgrid.referral_id "
+                . "WHERE tbl_referral_rewards.id='$referralID' AND "
+                . "tbl_referral_automations_tracking_sendgrid.subscriber_id = '$subscriberID' "
+                . "GROUP BY tbl_referral_automations_tracking_sendgrid.event_name, tbl_referral_automations_tracking_sendgrid.campaign_id";
+				
+		$oData = DB::select(DB::get($sql));
+		return $oData;
+    }
+
+    /**
+     * This function used to get the list of all referred friends belongs to an advocate
+     * @param type $subscriberID
+     * @param type $referralID
+     * @return type
+     */
+    public function getReferredFriends($subscriberID, $referralID) {
+		$oData = DB::table('tbl_referral_affiliates')
+			->where("affiliate_id", $subscriberID)
+			->where("affiliate_referral_id", $referralID)
+			->get();
+        return $oData;
+    }
+
+    /**
+     * This function used to add affiliate into the advocate account
+     * @param type $aData
+     * @return boolean
+     */
+    public function addAdvoateAffiliate($aData) {
+        //Apply duplicate check
+        $bAlreadyAdded = $this->checkIfAffilatedExists($aData);
+        if ($bAlreadyAdded == false) {
+			$result = DB::table('tbl_referral_affiliates')->insertGetId($aData);
+        }
+        if ($result)
+            return true;
+        else
+            return false;
+    }
+	
+	
+	public function saveReferralSale($aData) {
+		$result = DB::table('tbl_referral_sales')->insertGetId($aData);
+        if ($result)
+            return true;
+        else
+            return false;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -1662,50 +1927,6 @@ class ReferralModel extends Model {
         $this->db->where("tbl_referral_rewards.hashcode", $accountID);
 
         $result = $this->db->get("tbl_referral_rewards");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    
-
-   
-    public function checkIfExistingAdvocate($subscriberID, $accountID) {
-        $this->db->select("tbl_referral_users.*, tbl_referral_reflinks.refkey");
-        $this->db->join("tbl_referral_reflinks", "tbl_referral_reflinks.subscriber_id=tbl_referral_users.subscriber_id", "LEFT");
-        $this->db->where("tbl_referral_users.subscriber_id", $subscriberID);
-        $this->db->where("tbl_referral_users.account_id", $accountID);
-
-        $result = $this->db->get("tbl_referral_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function checkIfExistingAdvocate_old3($subscriberID, $accountID) {
-        $this->db->select("tbl_referral_users.*, tbl_referral_reflinks.refkey");
-        $this->db->join("tbl_referral_reflinks", "tbl_referral_reflinks.advocate_id=tbl_referral_users.id", "LEFT");
-        $this->db->where("tbl_referral_users.subscriber_id", $subscriberID);
-        $this->db->where("tbl_referral_users.account_id", $accountID);
-
-        $result = $this->db->get("tbl_referral_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function checkIfExistingAdvocate_old2($email, $accountID) {
-        $this->db->select("tbl_referral_users.*, tbl_referral_reflinks.refkey");
-        $this->db->join("tbl_referral_reflinks", "tbl_referral_reflinks.advocate_id=tbl_referral_users.id", "LEFT");
-        $this->db->where("tbl_referral_users.email", $email);
-        $this->db->where("tbl_referral_users.account_id", $accountID);
-
-        $result = $this->db->get("tbl_referral_users");
         if ($result->num_rows() > 0) {
             $response = $result->row();
         }
@@ -1935,7 +2156,6 @@ class ReferralModel extends Model {
         }
     }
 
-    
 
     public function updateAutoEvent($aData, $id) {
         if ($id > 0) {
@@ -1951,17 +2171,6 @@ class ReferralModel extends Model {
         return false;
     }
 
-    public function createReferralLink($aData) {
-        $result = $this->db->insert("tbl_referral_reflinks", $aData);
-        $inset_id = $this->db->insert_id();
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
-    }
-
-    
 
     public function setupDefaultReferral($aData) {
         $result = $this->db->insert("tbl_referral_rewards", $aData);
@@ -1984,19 +2193,6 @@ class ReferralModel extends Model {
         }
     }
 
-
-    public function addReferredUser($aData) {
-
-        $result = $this->db->insert('tbl_referral_users', $aData);
-        $insertID = $this->db->insert_id();
-        //echo $this->db->last_query();
-        if ($result)
-            return $insertID;
-        else
-            return false;
-    }
-
-    
 
     public function getReferralUserById($userID) {
         $this->db->select("tbl_referral_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id");
@@ -2030,90 +2226,6 @@ class ReferralModel extends Model {
         }
     }
 
-    public function checkIfExistingAdvocate_old($email) {
-        $this->db->select("tbl_referral_users.*, tbl_referral_reflinks.refkey");
-        $this->db->join("tbl_referral_reflinks", "tbl_referral_reflinks.advocate_id=tbl_referral_users.id", "LEFT");
-        $this->db->where("tbl_referral_users.email", $email);
-        $result = $this->db->get("tbl_referral_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function getRefLinkInfo($refCode) {
-        $this->db->select("tbl_referral_settings.*, tbl_referral_reflinks.*");
-        $this->db->join("tbl_referral_settings", "tbl_referral_settings.referral_id=tbl_referral_reflinks.referral_id", "LEFT");
-        $this->db->where("tbl_referral_reflinks.refkey", $refCode);
-        $result = $this->db->get("tbl_referral_reflinks");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function trackReferralVisit($aData) {
-        $refKey = $aData['refkey'];
-        $ip = $aData['ip_address'];
-        $bRecorded = $this->checkIfRecordedReferralVisit($refKey, $ip);
-        if ($bRecorded == false) {
-            $result = $this->db->insert("tbl_referral_reflinks_visit_logs", $aData);
-            if ($result) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public function trackLiveRefLink($aData) {
-        $result = $this->db->insert("tbl_referral_reflinks_live_track", $aData);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function getLiveReferralLinkTrackData($ip) {
-        if (!empty($ip)) {
-            $this->db->where("ip_address", $ip);
-            $this->db->order_by("id", "DESC");
-            $result = $this->db->get("tbl_referral_reflinks_live_track");
-            if ($result->num_rows() > 0) {
-                $response = $result->row();
-            }
-        }
-        return $response;
-    }
-
-    public function deleteLiveReferralLinkTrackData($ip) {
-        $this->db->where("ip_address", $ip);
-        $result = $this->db->delete("tbl_referral_reflinks_live_track");
-        return true;
-    }
-
-    public function checkIfRecordedReferralVisit($refkey, $ip) {
-        $this->db->where("refkey", $refkey);
-        $this->db->where("ip_address", $ip);
-        $result = $this->db->get("tbl_referral_reflinks_visit_logs");
-        if ($result->num_rows() > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public function saveReferralSale($aData) {
-        $result = $this->db->insert("tbl_referral_sales", $aData);
-        //echo $this->db->last_query();
-        if ($result)
-            return true;
-        else
-            return false;
-    }
-
     public function getReferralInvoices($accountID) {
         $this->db->select("SUM(tbl_referral_sales.amount) AS total_sale, COUNT(tbl_referral_sales.id) AS sale_count, tbl_referral_sales.*");
         $this->db->where("tbl_referral_sales.account_id", $accountID);
@@ -2129,9 +2241,6 @@ class ReferralModel extends Model {
     }
 
     
-
-    
-
     public function getReferralLinkVisitsByAdvocateId($advocateId, $referralID) {
         $this->db->select("tbl_referral_reflinks_visit_logs.*");
         $this->db->join("tbl_referral_reflinks", "tbl_referral_reflinks.refkey = tbl_referral_reflinks_visit_logs.refkey", "LEFT");
@@ -2274,16 +2383,7 @@ class ReferralModel extends Model {
         return $response;
     }
 
-    public function getReferralProgramInfo($accountID) {
-        $response = "";
-        $this->db->select("tbl_referral_rewards.*");
-        $this->db->where("tbl_referral_rewards.hashcode", $accountID);
-        $result = $this->db->get("tbl_referral_rewards");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
+    
 
     public function getClientTags($userID = 0) {
 
@@ -2334,150 +2434,4 @@ class ReferralModel extends Model {
             return false;
         }
     }
-
-    public function getTagBySaleIDTagID($aTagID, $saleID) {
-        $this->db->where('tag_id', $aTagID);
-        $this->db->where('referral_response_id', $saleID);
-        $result = $this->db->get('tbl_referral_tags');
-        if ($result->num_rows() > 0) {
-            $aData = $result->row();
-        }
-        return $aData;
-    }
-
-    public function deleteReferralTagByID($id, $responseID) {
-        $this->db->where('tag_id', $id);
-        $this->db->where('referral_response_id', $responseID);
-        $result = $this->db->delete('tbl_referral_tags');
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function removeReferralTag($tagID, $responseID) {
-        $this->db->where("referral_response_id", $responseID);
-        $this->db->where("tag_id", $tagID);
-        $result = $this->db->delete('tbl_referral_tags');
-        //echo $this->db->last_query(); exit;
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function getReferralNoteByID($noteId) {
-
-        $this->db->where('id', $noteId);
-        $this->db->from('tbl_referral_notes');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    public function updateReferralNote($aData, $noteId) {
-
-        $this->db->where('id', $noteId);
-        $result = $this->db->update('tbl_referral_notes', $aData);
-        if ($result)
-            return true;
-        else
-            return false;
-    }
-
-    public function saveReferralNotes($aData) {
-        $bSaved = $this->db->insert("tbl_referral_notes", $aData);
-        $insert_id = $this->db->insert_id();
-        //echo $this->db->last_query();
-        if ($bSaved)
-            return $insert_id;
-        return false;
-    }
-
-    public function deleteReferralNoteByID($noteId) {
-        $this->db->where('id', $noteId);
-        $result = $this->db->delete('tbl_referral_notes');
-        return true;
-    }
-
-    public function getReferralLinkDetails($subscriberID, $referralID) {
-        $this->db->where("subscriber_id", $subscriberID);
-        $this->db->where("referral_id", $referralID);
-        $result = $this->db->get("tbl_referral_reflinks");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
-    }
-
-    public function getAdvocateSendgridStats($subscriberID, $referralID) {
-        $sql = "SELECT COUNT(DISTINCT tbl_referral_automations_tracking_sendgrid.ip) AS totalCount, tbl_referral_automations_tracking_sendgrid.`event_name` "
-                . "FROM tbl_referral_automations_tracking_sendgrid "
-                . "LEFT JOIN tbl_referral_rewards ON tbl_referral_rewards.id=tbl_referral_automations_tracking_sendgrid.referral_id "
-                . "WHERE tbl_referral_rewards.id='$referralID' AND "
-                . "tbl_referral_automations_tracking_sendgrid.subscriber_id = '$subscriberID' "
-                . "GROUP BY tbl_referral_automations_tracking_sendgrid.event_name, tbl_referral_automations_tracking_sendgrid.campaign_id";
-        $result = $this->db->query($sql);
-        //echo $this->db->last_query();
-
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    /**
-     * This function used to get the list of all referred friends belongs to an advocate
-     * @param type $subscriberID
-     * @param type $referralID
-     * @return type
-     */
-    public function getReferredFriends($subscriberID, $referralID) {
-        $this->db->where("affiliate_id", $subscriberID);
-        $this->db->where("affiliate_referral_id", $referralID);
-        $result = $this->db->get("tbl_referral_affiliates");
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
-    }
-
-    /**
-     * This function used to add affiliate into the advocate account
-     * @param type $aData
-     * @return boolean
-     */
-    public function addAdvoateAffiliate($aData) {
-        //Apply duplicate check
-        $bAlreadyAdded = $this->checkIfAffilatedExists($aData);
-        if ($bAlreadyAdded == false) {
-            $result = $this->db->insert("tbl_referral_affiliates", $aData);
-        }
-        if ($result)
-            return true;
-        else
-            return false;
-    }
-
-    /**
-     * To be used for checking duplicate affiliates into the advocate account
-     * @param type $aData
-     * @return boolean
-     */
-    public function checkIfAffilatedExists($aData) {
-        $this->db->where("advocate_id", $aData['advocate_id']);
-        $this->db->where("advocate_referral_id", $aData['advocate_referral_id']);
-        $this->db->where("affiliate_id", $aData['affiliate_id']);
-        $this->db->where("affiliate_referral_id", $aData['affiliate_referral_id']);
-        $result = $this->db->get("tbl_referral_affiliates");
-        if ($result->num_rows() > 0) {
-            return true;
-        }
-        return false;
-    }
-
 }
