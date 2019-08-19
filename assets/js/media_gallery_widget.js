@@ -446,7 +446,7 @@ var slideIndex = 0;
 if (bbkey != 'undefined' && bbwidget != 'undefined') { 
 
     var oBB = new BB(bbkey, {
-        "host": "http://brandboost.io",
+        "host": "http://brandboostx.com",
         "widget": bbwidget
     });
 
