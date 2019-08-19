@@ -1227,7 +1227,7 @@ FROM
         else {
             $ext_country_code = '';
         }
-        
+
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randstring = '';
         for ($i = 0; $i < 7; $i++) {
@@ -1547,14 +1547,18 @@ FROM
          return $result;
     }
 
+
+    /**
+    * This function is used to get subscriber by id
+    * @param type $subID
+    * @return type object
+    */
     public function getSubscribersById($subID) {
-        $this->db->select("tbl_subscribers.*");
-        $this->db->where("id", $subID);
-        $result = $this->db->get("tbl_subscribers");
-        if ($result->num_rows() > 0) {
-            $response = $result->row();
-        }
-        return $response;
+
+        $oData =  DB::table('tbl_subscribers')
+            ->where("id", $subID)
+            ->first();
+        return $oData;
     }
 
     public function getUserById($userID) {
