@@ -186,6 +186,11 @@ Route::post('reviews/displayReview/{id}','Reviews@displayReview');
 Route::post('reviews/addcomment','Reviews@addComment');
 
 
+Route::post('referrals/display_widget/{id1}/{id2}','Referrals@displayWidget');
+Route::post('referrals/registerReferral','Referrals@registerReferral');
+Route::get('ref/t/{id}','Ref@t');
+
+
 Route::post('admin/comments/add_comment','Admin\Comments@addComment');
 Route::post('admin/comments/getCommentById','Admin\Comments@getCommentById');
 Route::post('admin/comments/update_comment','Admin\Comments@update_comment');

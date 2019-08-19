@@ -100,7 +100,7 @@ BB = function (t) {
             var bbinvtime = this.userSettings.bbtimestamp;
             var bbdisplaywidget = this.userSettings.bbdisplaywidget;
             a = 'bb_accountid=' + bb_key + '&bb_firstname=' + bbfname + '&bb_lastname=' + bblname + '&bb_email=' + bbemail + '&bb_amount=' + bbamt + '&bb_currency=' + bbcurrency + '&bb_invoiceid=' + bbinvid + '&bb_timestamp=' + bbinvtime + '&show_widget=' + bbdisplaywidget;
-            var bbsrc = this.userSettings.host + "/referrals/recordSale/";
+            var bbsrc = this.userSettings.host + "/referrals/recordSale";
             var i = function (o) {
                 var rsp = JSON.parse(o);
                 if (rsp.status == 'success') {
@@ -133,7 +133,7 @@ BB = function (t) {
             return;
         }
         a = 'bbaid=' + aid + '&bbadvname=' + fullname + '&bbadvemail=' + emailadd;
-        var bbsrc = this.userSettings.host + "/referrals/registerReferral/";
+        var bbsrc = this.userSettings.host + "/referrals/registerReferral";
         var i = function (o) {
             var rsp = JSON.parse(o);
             if (rsp.status == 'success') {
@@ -469,7 +469,7 @@ if (bbkey != 'undefined' && bbwidget != 'undefined') {
 
     // Include Css
     var oBB = new BB(bbkey, {
-        "host": "//brandboost.io",
+        "host": "//dev.brandboostx.com",
         "widget": bbwidget,
         "bbfirstname": bbfirstname,
         "bblastname": bblastname,
