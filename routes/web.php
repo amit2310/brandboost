@@ -738,3 +738,6 @@ Route::post('payment/upgradeTopupMembership','Payment@upgradeTopupMembership');
 Route::post('payment/buyCreditAddons','Payment@buyCreditAddons');
 Route::post('payment/storeCreditCard','Payment@storeCreditCard');
 
+//Mediagallery Module
+Route::post('mediagallery/index/{id}','Admin\Mediagallery@index');
+
