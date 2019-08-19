@@ -228,15 +228,19 @@ class Nps extends Controller {
         }
     }
 
-   
-    public function saveFeedback() {
+
+    /**
+     * This function is use for save feed back
+     * @param type $aData
+     * @return type numeric
+     */
+    public function saveFeedback(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        //pre($post);
-        if (!empty($post)) {
-            $responseID = strip_tags($post['response_id']);
-            $feedbackTitle = strip_tags($post['feedbackTitle']);
-            $feedbackDesc = strip_tags($post['feedbackDesc']);
+        $mNPS = new NpsModel();
+        if (!empty($request->response_id)) {
+            $responseID = strip_tags($request->response_id);
+            $feedbackTitle = strip_tags($request->feedbackTitle);
+            $feedbackDesc = strip_tags($request->feedbackDesc);
             if ($responseID > 0) {
                 $aData = array(
                     'title' => $feedbackTitle,
@@ -244,7 +248,7 @@ class Nps extends Controller {
                     'updated_at' => date("Y-m-d H:i:s")
                 );
 
-                $oResponse = $this->mNPS->updateSurveyFeedback($aData, $responseID);
+                $oResponse = $mNPS->updateSurveyFeedback($aData, $responseID);
                 if ($oResponse) {
                     $response = array('status' => 'success', 'msg' => "Success");
                 }
@@ -320,12 +324,19 @@ class Nps extends Controller {
         return $userID;
     }
 
+
+    /**
+     * This function is use for un subscribe user
+     * @param type $accountID, $subscriberID
+     * @return type json encode
+     */
     public function unsubscribeUser($accountID, $subscriberID) {
         $response = array();
-        $result = $this->mNPS->unsubscribeUser($accountID, $subscriberID);
+        $mNPS = new NpsModel();
+        $result = $mNPS->unsubscribeUser($accountID, $subscriberID);
         if ($result) {
             $slug = 'unsubscribe-subscriber';
-            sendEmailTemplate($slug, $subscriberID);
+            //sendEmailTemplate($slug, $subscriberID);
             $response['status'] = 'success';
         } else {
             $response['status'] = "Error";
