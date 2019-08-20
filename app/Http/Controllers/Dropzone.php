@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 //use App\Libraries\Custom\S3;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
+use Aws\S3\S3Client;
+
 
 class dropzone extends Controller 
 {
@@ -777,8 +779,16 @@ class dropzone extends Controller
                             //$filekey = "chat_attachments/". $videoReviewFile;
                             $filename = $videoReview['name'];
                             $input = file_get_contents($videoReview['tmp_name']);
-                            $s3 = \Storage::disk('s3');
-                            $s3->put($filekey,$input, 'public');
+                            //$s3 = \Storage::disk('s3');
+                            //$s3->put($filekey,$input, 'public');
+
+                            $credentials = new Aws\Credentials\Credentials('key', 'secret');
+
+                            $s3 = new Aws\S3\S3Client([
+                                'version'     => 'latest',
+                                'region'      => 'us-west-2',
+                                'credentials' => $credentials
+                            ]);
                         }
                     }
 
