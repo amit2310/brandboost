@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 foreach ($oEvents as $key => $oEvent) {
 
     $aEventData = json_decode($oEvent->data);
