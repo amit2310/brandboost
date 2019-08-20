@@ -137,12 +137,79 @@ class Questions extends Controller {
         }
     }
 	
+	
+	public function deleteMultipalQuestion(Request $request) {
+		$mQuestion = new QuestionModel();
+		
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $multiQuestionid = $request->multiQuestionid;
+        foreach ($multiQuestionid as $questionid) {
+
+            $result = $mQuestion->deleteQuestion($questionid);
+        }
+        if ($result) {
+            $aActivityData = array(
+                'user_id' => $userID,
+                'event_type' => 'multipal_question_delete',
+                'action_name' => 'question_delete',
+                'brandboost_id' => '',
+                'campaign_id' => '',
+                'inviter_id' => '',
+                'subscriber_id' => '',
+                'feedback_id' => '',
+                'activity_message' => 'Question deleted',
+                'activity_created' => date("Y-m-d H:i:s")
+            );
+            logUserActivity($aActivityData);
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+
+    public function deleteQuestion(Request $request) {
+		$mQuestion = new QuestionModel();
+		
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $questionID = $request->questionID;
+        $result = $mQuestion->deleteQuestion($questionID);
+        if ($result) {
+             $aActivityData = array(
+                'user_id' => $userID,
+                'event_type' => 'question_delete',
+                'action_name' => 'question_delete',
+                'brandboost_id' => '',
+                'campaign_id' => '',
+                'inviter_id' => '',
+                'subscriber_id' => '',
+                'feedback_id' => '',
+                'activity_message' => 'Question deleted',
+                'activity_created' => date("Y-m-d H:i:s")
+            );
+            logUserActivity($aActivityData);
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
 	/**
 	* Used to add questions
 	* @return type
 	*/
     public function add() {
-
+		$mBrandboost = new BrandboostModel();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
@@ -156,9 +223,9 @@ class Questions extends Controller {
                 </ul>';
 
         if ($user_role == 1) {
-            $aBrandboostList = $this->mBrandboost->getBrandboost('', 'onsite');
+            $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite');
         } else {
-            $aBrandboostList = $this->mBrandboost->getBrandboostByUserId($userID, 'onsite');
+            $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite');
         }
 
         $aData = array(
@@ -168,13 +235,17 @@ class Questions extends Controller {
             'aUser' => $aUser
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/question/add_question', $aData);
+		return view('admin.question.add_question', $aData);
     }
+	
 
     public function saveManualQuestion() {
-
+		$mUser = new UsersModel();
+		$mSubscriber = new SubscriberModel();
+		$mQuestion  = new QuestionModel();
+		$mBrandboost = new BrandboostModel();
         $response = array();
-        $post = $this->input->post();
+        $post = Input::post();
         $oUser = getLoggedUser();
         $currentUserID = $oUser->id;
         if (!empty($post)) {
@@ -183,13 +254,14 @@ class Questions extends Controller {
             $question = strip_tags($post['description']);
             $campaignID = strip_tags($post['campaign_id']);
             $quesStatus = $post['questionStatus'];
-
-            $oBrandboost = $this->mBrandboost->getBrandboost($campaignID);
+			
+            $oBrandboost = $mBrandboost->getBrandboost($campaignID);
+			
             if (!empty($oBrandboost)) {
                 $campaignOwnerID = $oBrandboost[0]->user_id;
                 $campaignName = $oBrandboost[0]->brand_title;
                 if ($campaignOwnerID > 0) {
-                    $oOwner = $this->mUser->getUserInfo($campaignOwnerID);
+                    $oOwner = $mUser->getUserInfo($campaignOwnerID);
                     $clientFirstName = $oOwner->firstname;
                     $clientLastName = $oOwner->lastname;
                     $clientEmail = $oOwner->email;
@@ -231,12 +303,6 @@ class Questions extends Controller {
                 return json_encode($response);
             }
 
-
-
-
-
-
-
             if (empty($userID)) {
 
                 $moduleName = 'brandboost';
@@ -244,36 +310,31 @@ class Questions extends Controller {
                 $bAlreadyExists = 0;
                 $bUserAlreadyExists = 0;
 
-                $oUserAccount = $this->mUser->checkEmailExist($email);
-                //pre($oUserAccount);
-                //echo 'checkEmailExist';
+                $oUserAccount = $mUser->checkEmailExist($email);
+                
                 if (!empty($oUserAccount)) {
                     $emailUserId = $oUserAccount[0]->id;
                     $bUserAlreadyExists = 1;
                 }
 
                 
-                $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($currentUserID, 'email', $email);
-                //pre($oGlobalUser);
-                //echo 'oGlobalUser';
+                $oGlobalUser = $mSubscriber->checkIfGlobalSubscriberExists($currentUserID, 'email', $email);
+                
                 if (!empty($oGlobalUser)) {
                     $iSubscriberID = $oGlobalUser->id;
                     $bAlreadyExists = 1;
 
                     // check brandboost user
                     $iUserID = $oGlobalUser->user_id;
-                    $getBrandSubs = $this->mSubscriber->getSubsByBrandboostId($campaignID, $iSubscriberID);
-                    //pre($getBrandSubs);
-                    //echo 'getBrandSubs';
+                    $getBrandSubs = $mSubscriber->getSubsByBrandboostId($campaignID, $iSubscriberID);
+                   
                     if(!empty($getBrandSubs) && $getBrandSubs > 0) {
-                        $updateBrandSubs = $this->mSubscriber->updateSubsByBrandboostId($campaignID, $iSubscriberID, $iUserID);
-                        //pre($updateBrandSubs);
-                        //echo 'updateBrandSubs';
+                        $updateBrandSubs = $mSubscriber->updateSubsByBrandboostId($campaignID, $iSubscriberID, $iUserID);
+                        
                     }
                     else {
-                        $insertBrandSubs = $this->mSubscriber->insertSubsByBrandboostId($campaignID, $iSubscriberID, $iUserID);
-                        //pre($insertBrandSubs);
-                        //echo 'insertBrandSubs';
+                        $insertBrandSubs = $mSubscriber->insertSubsByBrandboostId($campaignID, $iSubscriberID, $iUserID);
+                        
                     }
 
 
@@ -294,13 +355,11 @@ class Questions extends Controller {
                     if (!empty($emailUserId)) {
                         $aSubscriberData['user_id'] = $emailUserId;
                     }
-                    $iSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
-                    //pre($iSubscriberID);
-                    //echo 'iSubscriberID';
+                    $iSubscriberID = $mSubscriber->addGlobalSubscriber($aSubscriberData);
+                    
                 }
 
-                //pre($bUserAlreadyExists);
-                //echo 'bUserAlreadyExists';
+               
                 if ($bUserAlreadyExists == 0) { //This means no user_id attached to subscriber
                     //My Code
                     $aRegistrationData = array(
@@ -313,7 +372,7 @@ class Questions extends Controller {
                         'ext_country_code' => $countryCode
                     );
                     //pre($aRegistrationData);
-                    $emailUserId = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
+                    $emailUserId = $mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
                     if ($emailUserId > 0) {
 
                         $bData = array(
@@ -324,25 +383,17 @@ class Questions extends Controller {
                         );
                         //pre($bData);
 
-                        $getBrandSubs = $this->mSubscriber->getSubsByBrandboostId($campaignID, $iSubscriberID);
-                        //pre($getBrandSubs);
-                        //echo 'getBrandSubs';
+                        $getBrandSubs = $mSubscriber->getSubsByBrandboostId($campaignID, $iSubscriberID);
+                        
                         if(!empty($getBrandSubs) && $getBrandSubs > 0) {
-                            $updateBrandSubs = $this->mSubscriber->updateSubsByBrandboostId($campaignID, $iSubscriberID, $emailUserId);
-                            //pre($updateBrandSubs);
-                            //echo 'updateBrandSubs';
+                            $updateBrandSubs = $mSubscriber->updateSubsByBrandboostId($campaignID, $iSubscriberID, $emailUserId);
+                            
                         }
                         $bRequireGlobalSubs = true;
                     }
 
-                    //pre($emailUserId);
-                    //echo 'emailUserId';
                 }
 
-                //pre($emailUserId);
-                //echo 'emailUserId';
-                //pre($bRequireGlobalSubs);
-                //echo 'bRequireGlobalSubs';
 
                 if ($emailUserId > 0 && $bRequireGlobalSubs == true) {
                     $aUpdateGlobalSubsData = array(
@@ -351,21 +402,15 @@ class Questions extends Controller {
                     );
                     $globalSubscriberID = $iSubscriberID;
 
-                    $bUpdated = $this->mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
-                    //pre($bUpdated);
-                    //echo 'updateGlobalSubscriber';
+                    $bUpdated = $mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
+                   
                 }
-
-                //pre($iSubscriberID);
-                //echo 'test156';
 
                 if (empty($emailUserId)) {
                     $response = array('status' => 'error', 'msg' => 'User registration has failed');
                     return json_encode($response);
                 }
 
-                //pre($iSubscriberID);
-                //echo 'test12';
                 if ($bAlreadyExists == 0) {
                     if (!empty($moduleName)) {
                         $aData = array(
@@ -391,7 +436,7 @@ class Questions extends Controller {
                         //pre($aData);
 
                         if (!empty($tableName)) {
-                            $result = $this->mSubscriber->addModuleSubscriber($aData, $moduleName, $tableName);
+                            $result = $mSubscriber->addModuleSubscriber($aData, $moduleName, $tableName);
                         }
 
 
@@ -422,82 +467,10 @@ class Questions extends Controller {
                     }
                 }
 
-                
                 $subscriberID = $iSubscriberID;
-                //pre($iSubscriberID);
-
             }
 
-
-
-
-
-
-
-            /*$bRequireGlobalSubs = false;
-            //Check if user exist
-            $userID = $this->mUser->checkIfUser(array('email' => $email));
-            // User does not exists then registration
-            if ($userID == false) {
-                //Check if exists in subscriber list
-                $subscriberID = $this->mUser->checkIfSubscriber(array('email' => $email));
-
-                if ($subscriberID > 0) {
-                    $aSubscriber = $this->mUser->getSubscriberInfo($subscriberID);
-                    $firstName = $aSubscriber->firstname;
-                    $lastName = $aSubscriber->lastname;
-
-                    $fullName = $firstName . ' ' . $lastName;
-                    $email = $aSubscriber->email;
-                    $mobile = $aSubscriber->mobile;
-                    $userID = $aSubscriber->user_id;
-                    $globalSubscriberID = $aSubscriber->id;
-
-                    if ($userID > 0) {
-                        $bRequireGlobalSubs = true;
-                    }
-                }
-
-                if (empty($fullName) || empty($email)) {
-                    //Display errors, fields should not be blank
-                    $response = array('status' => 'error', 'msg' => 'form fields are not validated!');
-                    return json_encode($response);
-                }
-
-                if ($bRequireGlobalSubs == false) { //This means no user_id attached to subscriber
-                    //My Code
-                    $aNameChunks = explode(" ", $fullName);
-                    $firstName = $aNameChunks[0];
-                    $lastName = str_replace($firstName, "", $fullName);
-                    $aRegistrationData = array(
-                        'firstname' => $firstName,
-                        'lastname' => $lastName,
-                        'email' => $email,
-                        'mobile' => $mobile,
-                    );
-                    $userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
-                    if ($userID > 0) {
-                        $bRequireGlobalSubs = true;
-                    }
-                }
-
-
-
-                if ($userID > 0 && $bRequireGlobalSubs == true) {
-                    $aUpdateGlobalSubsData = array(
-                        'user_id' => $userID,
-                        'updated' => date("Y-m-d H:i:s")
-                    );
-
-                    $bUpdated = $this->mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
-                }
-
-                if (empty($userID)) {
-                    $response = array('status' => 'error', 'msg' => 'User registration has failed');
-                    return json_encode($response);
-                }
-            }*/
-
+            
             // Add Question
 
             $aData = array(
@@ -511,7 +484,7 @@ class Questions extends Controller {
                 'created' => date("Y-m-d H:i:s")
             );
 
-            $questionID = $this->mQuestion->addQuestion($aData);
+            $questionID = $mQuestion->addQuestion($aData);
             if ($questionID) {
 
                 $aActivityData = array(
@@ -547,7 +520,7 @@ class Questions extends Controller {
                     'created_at' => date("Y-m-d H:i:s")
                 );
 
-                $this->mQuestion->trackQuestionGeo($aTrackData);
+                $mQuestion->trackQuestionGeo($aTrackData);
 
                 //Notify Campaign Owner
                 if ($campaignOwnerID > 0) {
@@ -568,7 +541,8 @@ class Questions extends Controller {
                     $campaignNameURL = '<a href="' . base_url('admin/brandboost/onsite_setup/' . $campaignID) . '">' . $campaignName . '</a>';
                     $replyLink = '<a href="'.base_url('admin/questions/details/' . $questionID) .'">Click here to answer this question</a>';
                     $aTagsVal = array($clientFirstName, $clientLastName, $campaignNameURL, $question, $authorName, $replyLink);
-                    $questionNotifyHtml = $this->load->view('admin/email_templates/question/question_notification', array(), true);
+					
+					$questionNotifyHtml =  view('admin.email_templates.question.question_notification', $aData)->render();
                     $compiledHtml = str_replace($aTagsKey, $aTagsVal, $questionNotifyHtml);
                     $subject = 'You got a question on your bandboost campaign called '.$campaignName;
                     sendEmail($clientEmail, $compiledHtml, $subject);
@@ -598,201 +572,6 @@ class Questions extends Controller {
             exit;
         }
     }
-
-    /*public function saveNewQuestion() {
-
-        $response = array();
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $headLine = strip_tags($post['title']);
-            $question = strip_tags($post['description']);
-            $campaignID = strip_tags($post['campaign_id']);
-
-            $oBrandboost = $this->mBrandboost->getBrandboost($campaignID);
-            if (!empty($oBrandboost)) {
-                $campaignOwnerID = $oBrandboost[0]->user_id;
-                $campaignName = $oBrandboost[0]->brand_title;
-                if ($campaignOwnerID > 0) {
-                    $oOwner = $this->mUser->getUserInfo($campaignOwnerID);
-                    $clientFirstName = $oOwner->firstname;
-                    $clientLastName = $oOwner->lastname;
-                    $clientEmail = $oOwner->email;
-                }
-            }
-
-            $fullName = strip_tags($post['fullname']);
-            $email = strip_tags($post['emailid']);
-            $mobile = strip_tags($post['phone']);
-            $display_name = $post['display_name'];
-            if (!empty($display_name)) {
-                $showName = 0;
-            } else {
-                $showName = 1;
-            }
-
-
-            //Uploaded Question file
-            $questionFile = $post['question_uploaded_name'];
-            $aQuestionFiles = array();
-
-            foreach ($questionFile['media_url'] as $key => $fileData) {
-                $aQuestionFiles[$key]['media_url'] = $fileData;
-                $aQuestionFiles[$key]['media_type'] = $questionFile['media_type'][$key];
-            }
-            if (empty($fullName) || empty($email)) {
-                //Display errors, fields should not be blank
-                $response = array('status' => 'error', 'msg' => 'form fields are not validated!');
-                return json_encode($response);
-            }
-
-            $bRequireGlobalSubs = false;
-            //Check if user exist
-            $userID = $this->mUser->checkIfUser(array('email' => $email));
-            // User does not exists then registration
-            if ($userID == false) {
-                //Check if exists in subscriber list
-                $subscriberID = $this->mUser->checkIfSubscriber(array('email' => $email));
-
-                if ($subscriberID > 0) {
-                    $aSubscriber = $this->mUser->getSubscriberInfo($subscriberID);
-                    $firstName = $aSubscriber->firstname;
-                    $lastName = $aSubscriber->lastname;
-
-                    $fullName = $firstName . ' ' . $lastName;
-                    $email = $aSubscriber->email;
-                    $mobile = $aSubscriber->mobile;
-                    $userID = $aSubscriber->user_id;
-                    $globalSubscriberID = $aSubscriber->id;
-
-                    if ($userID > 0) {
-                        $bRequireGlobalSubs = true;
-                    }
-                }
-
-                if (empty($fullName) || empty($email)) {
-                    //Display errors, fields should not be blank
-                    $response = array('status' => 'error', 'msg' => 'form fields are not validated!');
-                    return json_encode($response);
-                }
-
-                if ($bRequireGlobalSubs == false) { //This means no user_id attached to subscriber
-                    //My Code
-                    $aNameChunks = explode(" ", $fullName);
-                    $firstName = $aNameChunks[0];
-                    $lastName = str_replace($firstName, "", $fullName);
-                    $aRegistrationData = array(
-                        'firstname' => $firstName,
-                        'lastname' => $lastName,
-                        'email' => $email,
-                        'mobile' => $mobile,
-                    );
-                    $userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
-                    if ($userID > 0) {
-                        $bRequireGlobalSubs = true;
-                    }
-                }
-
-
-
-                if ($userID > 0 && $bRequireGlobalSubs == true) {
-                    $aUpdateGlobalSubsData = array(
-                        'user_id' => $userID,
-                        'updated' => date("Y-m-d H:i:s")
-                    );
-
-                    $bUpdated = $this->mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
-                }
-
-                if (empty($userID)) {
-                    $response = array('status' => 'error', 'msg' => 'User registration has failed');
-                    return json_encode($response);
-                }
-            }
-
-            // Add Question
-
-            $aData = array(
-                'user_id' => $userID,
-                'question_title' => $headLine,
-                'question' => $question,
-                'campaign_id' => $campaignID,
-                'media_url' => serialize($aQuestionFiles),
-                'allow_show_name' => $showName,
-                'created' => date("Y-m-d H:i:s")
-            );
-
-            $questionID = $this->mQuestion->addQuestion($aData);
-            if ($questionID) {
-                //Get Tracking Data
-                //Get Location based data
-                $aLocationData = getLocationData();
-                $aTrackData = array(
-                    'question_id' => $questionID,
-                    'ip_address' => $aLocationData['ip_address'],
-                    'platform' => $aLocationData['platform'],
-                    'platform_device' => $aLocationData['platform_device'],
-                    'browser' => $aLocationData['name'],
-                    'useragent' => $aLocationData['userAgent'],
-                    'country' => $aLocationData['country'],
-                    'countryCode' => $aLocationData['countryCode'],
-                    'region' => $aLocationData['region'],
-                    'city' => $aLocationData['city'],
-                    'longitude' => $aLocationData['longitude'],
-                    'latitude' => $aLocationData['latitude'],
-                    'created_at' => date("Y-m-d H:i:s")
-                );
-
-                $this->mQuestion->trackQuestionGeo($aTrackData);
-
-                //Notify Campaign Owner
-                if ($campaignOwnerID > 0) {
-                    //Send Notification
-                    $aNotificationData = array(
-                        'user_id' => $campaignOwnerID,
-                        'event_type' => 'added_onsite_questions',
-                        'message' => 'New Onsite Question',
-                        'link' => base_url() . 'admin/questions/details/' . $questionID,
-                        'created' => date("Y-m-d H:i:s")
-                    );
-                    $eventName = 'added_onsite_questions';
-                    add_notifications($aNotificationData, $eventName, $campaignOwnerID);
-
-                    //Send out email to client
-                    $aTagsKey = array('{FIRST_NAME}', '{LAST_NAME}', '{CAMPAIGN_NAME_URL}', '{QUESTION}', '{AUTHOR_NAME}', '{CLICK_TO_REPLY_LINK}');
-                    $authorName = $firstName . ' '. $lastName;
-                    $campaignNameURL = '<a href="' . base_url('admin/brandboost/onsite_setup/' . $campaignID) . '">' . $campaignName . '</a>';
-                    $replyLink = '<a href="'.base_url('admin/questions/details/' . $questionID) .'">Click here to answer this question</a>';
-                    $aTagsVal = array($clientFirstName, $clientLastName, $campaignNameURL, $question, $authorName, $replyLink);
-                    $questionNotifyHtml = $this->load->view('admin/email_templates/question/question_notification', array(), true);
-                    $compiledHtml = str_replace($aTagsKey, $aTagsVal, $questionNotifyHtml);
-                    $subject = 'You got a question on your bandboost campaign called '.$campaignName;
-                    sendEmail($clientEmail, $compiledHtml, $subject);
-                }
-
-
-                //Notify Subscriber
-                if ($userID > 0) {
-                    //Send Notification
-                    $aNotificationDataCust = array(
-                        'user_id' => $userID,
-                        'event_type' => 'added_onsite_questions_subscriber',
-                        'message' => 'Question posted successfully.',
-                        'link' => base_url() . 'admin/login',
-                        'created' => date("Y-m-d H:i:s")
-                    );
-                    $eventName2 = 'added_onsite_questions_subscriber';
-                    add_notifications($aNotificationDataCust, $eventName2, $userID);
-                }
-
-                $response = array('status' => 'ok', 'msg' => 'Thank you for posting your question. Your question was sent successfully and is now waiting to publish it.');
-            } else {
-                $response = array('status' => 'error', 'msg' => 'Error while posting your question. Try again');
-            }
-
-            echo json_encode($response);
-            exit;
-        }
-    }*/
 
 
     /**
@@ -1593,68 +1372,4 @@ class Questions extends Controller {
             exit;
         }
     }
-
-    public function deleteMultipalQuestion() {
-        $response = array();
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $post = $this->input->post();
-        $multiQuestionid = $post['multiQuestionid'];
-        foreach ($multiQuestionid as $questionid) {
-
-            $result = $this->mQuestion->deleteQuestion($questionid);
-        }
-        if ($result) {
-            $aActivityData = array(
-                'user_id' => $userID,
-                'event_type' => 'multipal_question_delete',
-                'action_name' => 'question_delete',
-                'brandboost_id' => '',
-                'campaign_id' => '',
-                'inviter_id' => '',
-                'subscriber_id' => '',
-                'feedback_id' => '',
-                'activity_message' => 'Question deleted',
-                'activity_created' => date("Y-m-d H:i:s")
-            );
-            logUserActivity($aActivityData);
-            $response['status'] = 'success';
-        } else {
-            $response['status'] = "Error";
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function deleteQuestion() {
-        $response = array();
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        $post = $this->input->post();
-        $questionID = strip_tags($post['questionID']);
-        $result = $this->mQuestion->deleteQuestion($questionID);
-        if ($result) {
-             $aActivityData = array(
-                'user_id' => $userID,
-                'event_type' => 'question_delete',
-                'action_name' => 'question_delete',
-                'brandboost_id' => '',
-                'campaign_id' => '',
-                'inviter_id' => '',
-                'subscriber_id' => '',
-                'feedback_id' => '',
-                'activity_message' => 'Question deleted',
-                'activity_created' => date("Y-m-d H:i:s")
-            );
-            logUserActivity($aActivityData);
-            $response['status'] = 'success';
-        } else {
-            $response['status'] = "Error";
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
 }

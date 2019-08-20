@@ -369,7 +369,7 @@ class BrandboostModel extends Model {
 		$result = DB::table('tbl_brandboost')
 		->where('id', $brandboostID)
 		->update($aData);
-        if ($result) {
+        if ($result > -1) {
             return true;
         } else {
             return false;

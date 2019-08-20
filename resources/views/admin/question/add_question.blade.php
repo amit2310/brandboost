@@ -1,4 +1,11 @@
-<!-- <link href="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" /> -->
+
+@extends('layouts.main_template') 
+
+@section('title')
+<?php echo $title; ?>
+@endsection
+
+@section('contents')
 <style type="text/css">
 	
 	.selected{
@@ -58,6 +65,7 @@
 			<div class="col-md-6">
 
 				<form method="post" name="frmQuestionSubmit" id="frmQuestionSubmit" container_name="sitereview" action="#"  enctype="multipart/form-data">
+				{{ csrf_field() }}
 				<div class="panel panel-flat">
 				  <div class="panel-heading">
 					<h6 class="panel-title">Add Question</h6>
@@ -423,3 +431,4 @@
 		});
 		
 	</script>
+	@endsection
