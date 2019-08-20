@@ -225,6 +225,9 @@ Route::post('admin/questions/updateQuestionNote','Admin\Questions@updateQuestion
 Route::post('admin/questions/deleteQuestionNote','Admin\Questions@deleteQuestionNote');
 Route::post('admin/questions/update_question_status','Admin\Questions@update_question_status');
 Route::post('admin/questions/deleteQuestion','Admin\Questions@delete_question');
+Route::post('admin/questions/deleteMultipalQuestion','Admin\Questions@deleteMultipalQuestion');
+Route::get('admin/questions/add','Admin\Questions@add');
+Route::post('admin/questions/saveManualQuestion','Admin\Questions@saveManualQuestion');
 
 
 

@@ -354,17 +354,17 @@ class BrandboostModel extends Model {
                 ->count();
         return $oData;
     }
-
-    /**
-     * Used to get feedback count by brandboost id
-     * @param type $brandboostID
-     * @return type
-     */
-    public static function updateBrandboost($userID, $aData, $brandboostID) {
-        $result = DB::table('tbl_brandboost')
-                ->where('id', $brandboostID)
-                ->update($aData);
-        if ($result) {
+	
+	/**
+	* Used to get feedback count by brandboost id
+	* @param type $brandboostID
+	* @return type
+	*/
+	public static function updateBrandboost($userID, $aData, $brandboostID) {
+		$result = DB::table('tbl_brandboost')
+		->where('id', $brandboostID)
+		->update($aData);
+        if ($result > -1) {
             return true;
         } else {
             return false;

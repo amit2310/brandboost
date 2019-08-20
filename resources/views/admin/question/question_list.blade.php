@@ -433,6 +433,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmQuestionTagListModal" id="frmQuestionTagListModal" action="javascript:void();">
+				{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Apply Tags</h5>
@@ -517,7 +518,7 @@
                     $.ajax({
                         url: "<?php echo base_url('admin/questions/deleteMultipalQuestion'); ?>",
                         type: "POST",
-                        data: {multiQuestionid: val},
+                        data: {multiQuestionid: val, _token: '{{csrf_token()}}'},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {
@@ -604,9 +605,9 @@
                 $('input', this).on('keyup change', function () {
                     if (tableBase.column(i).search() != this.value) {
                         tableBase
-                                .column(i)
-                                .search(this.value)
-                                .draw();
+						.column(i)
+						.search(this.value)
+						.draw();
                     }
                 });
             }
@@ -669,7 +670,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
                 type: "POST",
-                data: {question_id: question_id},
+                data: {question_id: question_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

@@ -1017,30 +1017,29 @@ FROM
         }
 
         if ($bAddNewEntry == true) {
-            $result = $this->db->insert($tableName, $aData);
-            $inset_id = $this->db->insert_id();
-            if ($result)
-                return $inset_id;
+			$insert_id = DB::table($tableName)->insertGetId($aData);
+            if ($insert_id)
+                return $insert_id;
         }
         return false;
     }
 
     public function checkIfExistingModuleSubscriber($moduleAccountID, $subscriberID, $moduleName, $tableName) {
-
-        if ($moduleName == 'list') {
-            $this->db->where("list_id", $moduleAccountID);
-        } else if ($moduleName == 'brandboost') {
-            $this->db->where("brandboost_id", $moduleAccountID);
-        } else if ($moduleName == 'referral' || $moduleName == 'nps') {
-            $this->db->where("account_id", $moduleAccountID);
-        }
-        $this->db->where("subscriber_id", $subscriberID);
-        $result = $this->db->get("{$tableName}");
-        //echo $this->db->last_query();
-        //die;
-        if ($result->num_rows() > 0) {
-            return true;
-        }
+		$oData = DB::table("{$tableName}")
+			->when(($moduleName == 'list'), function ($query) use ($moduleAccountID) {
+				return $query->where('list_id', $moduleAccountID);
+			})
+			->when(($moduleName == 'brandboost'), function ($query) use ($moduleAccountID) {
+				return $query->where('brandboost_id', $moduleAccountID);
+			})
+			->when(($moduleName == 'referral'), function ($query) use ($moduleAccountID) {
+				return $query->where('account_id', $moduleAccountID);
+			})
+			->where('subscriber_id', $subscriberID)
+			->get();
+			if ($oData->count() > 0) {
+				return true;
+			}
         return false;
     }
 
@@ -1199,11 +1198,6 @@ FROM
     }
 
     public function addBrandboostUserAccount($aData, $iRole = 2, $sendNotification = false) {
-       //require_once $_SERVER['DOCUMENT_ROOT'] . '/chargebee-php/lib/ChargeBee.php';
-        //$cbSite = $this->config->item('cb_site_name');
-        //$cbSiteToken = $this->config->item('cb_access_token');
-        //ChargeBee_Environment::configure($cbSite, $cbSiteToken);
-        //$this->load->model("CBee_model", "mChargebeeModel");
        $mChargebeeModel = new ChargeBeeModel(); 
         $firstName = $aData['firstname'];
         $lastName = $aData['lastname'];
@@ -1244,8 +1238,8 @@ FROM
             $chargebeeUserID = $mChargebeeModel->createContact($aChargebeeData);
 
 
-            $password_hash = $this->config->item('password_hash');
-            $siteSalt = $this->config->item('siteSalt');
+            $password_hash = config('bbconfig.password_hash');
+            $siteSalt = config('bbconfig.siteSalt');
             $pwd = base64_encode($password . $password_hash . $siteSalt);
             $aUserData = array(
                 'cb_contact_id' => $chargebeeUserID,
@@ -1262,11 +1256,9 @@ FROM
                 'created' => date("Y-m-d H:i:s")
             );
 
-            $result = $this->db->insert('tbl_users', $aUserData);
-            if ($result) {
-                $userID = $this->db->insert_id();
-                //Add entry in notification table
-                //$this->db->insert("tbl_users_notification_settings", array('user_id'=> $userID, 'notify_email'=>$email));
+			$insertId = DB::table('tbl_users')->insertGetId($aData);
+            if ($insertId) {
+                $userID = $insertId;
                 $aNotifySetting = array(
                     'user_id' => $userID,
                     'notify_email' => $email,
@@ -1440,7 +1432,7 @@ FROM
     }
 
     public function addUserNotificationSettingsEntry($aData) {
-        $this->db->insert("tbl_users_notification_settings", $aData);
+		$insertId = DB::table('tbl_users_notification_settings')->insertGetId($aData);
     }
 
 
@@ -1569,23 +1561,22 @@ FROM
 
     public function getUserActivities($userID) {
          $oData = DB::table('tbl_user_activities')
-          ->where("user_id", $userID)
-        ->orderBy("id", "DESC")
-          ->limit(15, 0)->get();
-        
+			->where("user_id", $userID)
+			->orderBy("id", "DESC")
+			->limit(15, 0)->get();
         return $oData;
     }
 
     public function getSubscriberEmailSms($subsId, $type = 'email') {
 
        $aData =  DB::table('tbl_brandboost_users')
-        ->select('tbl_brandboost_users.*', 'tbl_brandboost.brand_title', 'tbl_brandboost.id as brand_id', 'tbl_brandboost.review_type as brand_type', 'tbl_tracking_log_email_sms.created as trackdate')
-        ->where('tbl_brandboost_users.subscriber_id', $subsId)
-        ->where('tbl_tracking_log_email_sms.type', $type)
-        ->join('tbl_tracking_log_email_sms', 'tbl_brandboost_users.id','=','tbl_tracking_log_email_sms.subscriber_id')
-         ->join('tbl_brandboost', 'tbl_brandboost.id','=','tbl_brandboost_users.brandboost_id')
-         ->orderBy('tbl_tracking_log_email_sms.created', 'DESC')
-         ->get();
+			->select('tbl_brandboost_users.*', 'tbl_brandboost.brand_title', 'tbl_brandboost.id as brand_id', 'tbl_brandboost.review_type as brand_type', 'tbl_tracking_log_email_sms.created as trackdate')
+			->where('tbl_brandboost_users.subscriber_id', $subsId)
+			->where('tbl_tracking_log_email_sms.type', $type)
+			->join('tbl_tracking_log_email_sms', 'tbl_brandboost_users.id','=','tbl_tracking_log_email_sms.subscriber_id')
+			->join('tbl_brandboost', 'tbl_brandboost.id','=','tbl_brandboost_users.brandboost_id')
+			->orderBy('tbl_tracking_log_email_sms.created', 'DESC')
+			->get();
        
         return $aData;
     }
@@ -1593,13 +1584,13 @@ FROM
     public function getReferalSubscriberEmailSms($subsId, $type = 'email') {
 
        $aData =  DB::table('tbl_referral_users')
-        ->select('tbl_referral_users.*', 'tbl_referral_rewards.title', 'tbl_referral_rewards.id as referral_id', 'tbl_referral_automations_tracking_logs.created_at as trackdate')
-      ->where('tbl_referral_users.subscriber_id', $subsId)
-        ->where('tbl_referral_automations_tracking_logs.campaign_type', $type)
-        ->join('tbl_referral_automations_tracking_logs', 'tbl_referral_users.id','=','tbl_referral_automations_tracking_logs.subscriber_id')
-      ->join('tbl_referral_rewards', 'tbl_referral_rewards.hashcode','=','tbl_referral_users.account_id')
-       ->orderBy('tbl_referral_automations_tracking_logs.created_at', 'DESC')
-        ->get();
+			->select('tbl_referral_users.*', 'tbl_referral_rewards.title', 'tbl_referral_rewards.id as referral_id', 'tbl_referral_automations_tracking_logs.created_at as trackdate')
+			->where('tbl_referral_users.subscriber_id', $subsId)
+			->where('tbl_referral_automations_tracking_logs.campaign_type', $type)
+			->join('tbl_referral_automations_tracking_logs', 'tbl_referral_users.id','=','tbl_referral_automations_tracking_logs.subscriber_id')
+			->join('tbl_referral_rewards', 'tbl_referral_rewards.hashcode','=','tbl_referral_users.account_id')
+			->orderBy('tbl_referral_automations_tracking_logs.created_at', 'DESC')
+			->get();
        
         return $aData;
     }
@@ -1697,21 +1688,21 @@ FROM
     }
 
     public function getSubsByBrandboostId($brandID, $subID) {
-        $this->db->select("tbl_brandboost_users.*");
-        $this->db->where("brandboost_id", $brandID);
-        $this->db->where("subscriber_id", $subID);
-        $result = $this->db->get("tbl_brandboost_users");
-        /* if ($result->num_rows() > 0) {
-          $response = $result->row();userId
-          } */
-        return $result->num_rows();
+		$aData =  DB::table('tbl_brandboost_users')
+		->where('brandboost_id', $brandID)
+		->where('subscriber_id', $subID)
+		->first();
+
+        return $aData;
     }
 
     public function updateSubsByBrandboostId($brandID, $subID, $userId) {
-        $this->db->where("brandboost_id", $brandID);
-        $this->db->where("subscriber_id", $subID);
-        $result = $this->db->update("tbl_brandboost_users", array('user_id' => $userId));
-        if ($result) {
+		$result = DB::table('tbl_brandboost_users')
+        ->where("brandboost_id", $brandID)
+        ->where("subscriber_id", $subID)
+         ->update(array('user_id' => $userId));
+        
+        if ($result > -1) {
             return true;
         } else {
             return false;
@@ -1726,8 +1717,8 @@ FROM
             'subscriber_id' => $subID,
             'created' => date("Y-m-d H:i:s")
         );
-        $result = $this->db->insert("tbl_brandboost_users", $aData);
-        $inset_id = $this->db->insert_id();
+		$result = DB::table('tbl_brandboost_users')->insert($aData);
+	
         if ($result)
             return $inset_id;
     }
