@@ -1234,7 +1234,6 @@ FROM
             $randstring .= $characters[rand(0, strlen($characters))];
         }
         $password = strip_tags($randstring);
-        $email ='regan@123789.org';
         $userID = $this->checkIfBrandboostUserExists(array('email' => $email));
         if ($userID == false) {
             $aChargebeeData = array(
