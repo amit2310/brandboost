@@ -589,7 +589,7 @@
     });
 
     Dropzone.options.myDropzone = {
-		url: '<?php echo base_url("/dropzone/upload_s3_attachment_review/".$aUser->id."/reviews"); ?>',
+		url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment_review/".$aUser->id."/reviews"); ?>',
 		uploadMultiple: false,
 		maxFiles: 5,
 		maxFilesize: 250,
@@ -604,7 +604,7 @@
 	}
 
 	Dropzone.options.myDropzone2 = {
-		url: '<?php echo base_url("/dropzone/upload_s3_attachment_product_review/".$aUser->id."/reviews"); ?>',
+		url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment_product_review/".$aUser->id."/reviews"); ?>',
 		uploadMultiple: false,
 		maxFiles: 5,
 		maxFilesize: 250,
