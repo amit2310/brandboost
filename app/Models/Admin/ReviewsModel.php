@@ -760,32 +760,40 @@ class ReviewsModel extends Model
         return $aData;
     }
 	
+
+    /**
+    * This function is used to get onsite review details by id
+    * @param type $uniqueId
+    * @return type object
+    */
 	public function getOnsiteReviewDetailsByUID($uniqueId) {
-		$this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar, tbl_brandboost_products.product_name, tbl_brandboost_products.product_image, tbl_brandboost_products.created as product_created");
-		$this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id");
-		$this->db->join("tbl_brandboost_products", "tbl_reviews.product_id=tbl_brandboost_products.id");
-        $this->db->where("tbl_reviews.unique_review_key", $uniqueId);
-		$this->db->order_by("tbl_reviews.id", "ASC");
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();exit;
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        return $aData;
+		$oData = DB::table('tbl_reviews')
+            ->Join('tbl_users', 'tbl_reviews.user_id', '=' , 'tbl_users.id')
+            ->Join('tbl_brandboost_products', 'tbl_reviews.product_id', '=' , 'tbl_brandboost_products.id')    
+            ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_brandboost_products.product_name', 'tbl_brandboost_products.product_image', 'tbl_brandboost_products.created as product_created')
+            ->where('tbl_reviews.unique_review_key', $uniqueId)
+            ->orderBy("tbl_reviews.id", "ASC")
+            ->get();
+        return $oData;
     }
-	
+
+
+    /**
+    * This function is used to get onsite review details by user id
+    * @param type $uniqueId
+    * @return type object
+    */
 	public function getOnsiteSiteReviewDetailsByUID($uniqueId) {
-		$this->db->select("tbl_reviews.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile, tbl_users.avatar");
-		$this->db->join("tbl_users", "tbl_reviews.user_id=tbl_users.id");
-		$this->db->where("tbl_reviews.review_type", 'site');
-        $this->db->where("tbl_reviews.unique_review_key", $uniqueId);
-		$this->db->order_by("tbl_reviews.id", "ASC");
-        $oResponse = $this->db->get("tbl_reviews");
-        //echo $this->db->last_query();
-        if ($oResponse->num_rows() > 0) {
-            $aData = $oResponse->result();
-        }
-        return $aData;
+
+        $oData = DB::table('tbl_reviews')
+            ->Join('tbl_users', 'tbl_reviews.user_id', '=' , 'tbl_users.id')
+           
+            ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
+            ->where('tbl_reviews.review_type', 'site')
+            ->where('tbl_reviews.unique_review_key', $uniqueId)
+            ->orderBy("tbl_reviews.id", "ASC")
+            ->get();
+        return $oData;
     }
 	
 	public function getMyReviewsByFilter($userID, $filterValue='', $columnName='id', $columnSortOrder='DESC', $start='1', $limit='10') {
