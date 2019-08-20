@@ -718,13 +718,13 @@ class WorkflowModel extends Model {
         if ($moduleName == 'automation' || $moduleName == 'broadcast') {
             $oSubscribers = $this->getWorkflowAutomationSubscribers($id);
         } else {
-            
+
             $oSubscribers = DB::table($tableName)
                     ->leftJoin("tbl_subscribers", "{$tableName}.subscriber_id", "=", "tbl_subscribers.id")
                     ->select("{$tableName}.*", "tbl_subscribers.email", "tbl_subscribers.firstname", "tbl_subscribers.lastname", "tbl_subscribers.phone", "tbl_subscribers.status AS globalStatus")
                     ->where("{$tableName}.{$filterField}", $id)
                     ->orderBy("{$tableName}.id", "desc")
-                    ->get();            
+                    ->get();
         }
         return $oSubscribers;
     }
@@ -1409,7 +1409,7 @@ class WorkflowModel extends Model {
                 'subject' => $resultData->template_subject,
                 'greeting' => $defaultGreeting,
                 'introduction' => $defaultIntroduction,
-                'html' => !empty($compiledContent) ? $compiledContent : '', 
+                'html' => !empty($compiledContent) ? $compiledContent : '',
                 'stripo_html' => $resultData->stripo_html,
                 'stripo_css' => $resultData->stripo_css,
                 'stripo_compiled_html' => $compiledContent,
@@ -1761,7 +1761,6 @@ class WorkflowModel extends Model {
         }
     }
 
-
     /**
      * Used to add workflow template
      */
@@ -1799,7 +1798,6 @@ class WorkflowModel extends Model {
         return $insert_id;
     }
 
-
     /**
      * Used to update workflow template
      */
@@ -1832,12 +1830,11 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-        
-        
-         $aData =  DB::table($tableName)->where('id', $id)->update($aData);
-         return true;
-    }
 
+
+        $aData = DB::table($tableName)->where('id', $id)->update($aData);
+        return true;
+    }
 
     /**
      * Used to delete workflow template
@@ -1876,9 +1873,7 @@ class WorkflowModel extends Model {
                 ->where('id', $id)
                 ->delete();
         return true;
-
     }
-
 
     public function deleteWorkflowDraft($moduleName, $id) {
         if (empty($id) || empty($moduleName)) {
@@ -2302,7 +2297,6 @@ class WorkflowModel extends Model {
         return $response;
     }
 
-    
     /**
      * Used to get referral testing info
      * @param type $referralID
@@ -2876,7 +2870,7 @@ class WorkflowModel extends Model {
         if (empty($tableName)) {
             return false;
         }
-		
+
         $oData = DB::table($tableName)
                 ->leftJoin('tbl_subscribers', "$tableName.subscriber_id", '=', "tbl_subscribers.id")
                 ->select("$tableName.id as local_user_id", "tbl_subscribers.*", "tbl_subscribers.id as subscriber_id", "tbl_subscribers.status AS globalStatus", "tbl_subscribers.id AS global_user_id")
@@ -4247,13 +4241,13 @@ class WorkflowModel extends Model {
     }
 
     public static function getReferralModuleInfo($id) {
-		$aData =  DB::table('tbl_referral_rewards')
-			->where('id', $id)
-			->first();
-        
+        $aData = DB::table('tbl_referral_rewards')
+                ->where('id', $id)
+                ->first();
+
         return $aData;
-		
-		
+
+
         $this->db->where("id", $id);
         $result = $this->db->get("tbl_referral_rewards");
         if ($result->num_rows() > 0) {
@@ -4291,8 +4285,7 @@ class WorkflowModel extends Model {
         }
         return false;
     }
-    
-    
+
     /**
      * Used to create advocate referral link
      * @param type $aData
@@ -4300,7 +4293,7 @@ class WorkflowModel extends Model {
      */
     public function createAdvocateReferralLink($aData) {
         $insert_id = DB::table('tbl_referral_reflinks')->insertGetId($aData);
-        return $insert_id;        
+        return $insert_id;
     }
 
     /**
@@ -4311,10 +4304,137 @@ class WorkflowModel extends Model {
      */
     public function checkIfReferralLinkExists($subscriberID, $referralID) {
         $oData = DB::table('tbl_referral_reflinks')
-            ->where('subscriber_id', $subscriberID)
-            ->where('referral_id', $referralID)    
-            ->exists();
-        return $oData;        
+                ->where('subscriber_id', $subscriberID)
+                ->where('referral_id', $referralID)
+                ->exists();
+        return $oData;
+    }
+
+    /**
+     * This function used to launch workflow event
+     * @param type $aData
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
+    public function launchWorkflowCampaign($moduleName, $moduleUnitID) {
+
+        if (empty($moduleName) || empty($moduleUnitID)) {
+            return false;
+        }
+
+        $aMainData = $aEventData = array();
+        switch ($moduleName) {
+            case "brandboost":
+            case "onsite":
+            case "offsite":
+                $tableMainTable = 'tbl_brandboost';
+                $tableEventTable = 'tbl_brandboost_events';
+                $tableEventTableID = 'brandboost_id';
+                $tableCampaignTable = 'tbl_campaigns';
+                $aMainData = array(
+                    'status' => 1
+                );
+
+                $aEventData = array(
+                    'status' => 1
+                );
+                break;
+            case "automation":
+                $tableMainTable = 'tbl_automations_emails';
+                $tableEventTable = 'tbl_automations_emails_events';
+                $tableEventTableID = 'automation_id';
+                $tableCampaignTable = 'tbl_automations_emails_campaigns';
+                $aMainData = array(
+                    'status' => 'active'
+                );
+
+                $aEventData = array(
+                    'status' => 'active'
+                );
+                break;
+            case "broadcast":
+                $tableMainTable = 'tbl_automations_emails';
+                $tableEventTable = 'tbl_automations_emails_events';
+                $tableEventTableID = 'automation_id';
+                $tableCampaignTable = 'tbl_automations_emails_campaigns';
+                $tableName = '';
+                $aMainData = array(
+                    'status' => 'active'
+                );
+
+                $aEventData = array(
+                    'status' => 'active'
+                );
+
+                break;
+            case "referral":
+                $tableMainTable = 'tbl_referral_rewards';
+                $tableEventTable = 'tbl_referral_automations_events';
+                $tableEventTableID = 'referral_id';
+                $tableCampaignTable = 'tbl_referral_automations_campaigns';
+                $aMainData = array(
+                    'status' => 'active'
+                );
+
+                $aEventData = array(
+                    'status' => 'active'
+                );
+
+                break;
+            case "nps":
+                $tableMainTable = 'tbl_nps_main';
+                $tableEventTable = 'tbl_nps_automations_events';
+                $tableEventTableID = 'nps_id';
+                $tableCampaignTable = 'tbl_nps_automations_campaigns';
+                $aMainData = array(
+                    'status' => 'active'
+                );
+
+                $aEventData = array(
+                    'status' => 'active'
+                );
+
+                break;
+            default :
+                $tableMainTable = '';
+                $tableEventTable = '';
+                $tableEventTableID = '';
+                $tableCampaignTable = '';
+        }
+        
+        if (empty($tableMainTable) || empty($tableEventTable) ||  empty($tableCampaignTable)){
+            return false;
+        }
+
+        
+        //Update Main Table
+        $oData = DB::table($tableMainTable)
+                ->where('id', $moduleUnitID)
+                ->update($aMainData);
+
+
+
+        //Check if any event exists
+        $bExists = DB::table($tableEventTable)
+                ->where($tableEventTableID, $moduleUnitID)
+                ->exists();
+        
+                      
+        
+        if ($bExists) {
+            //Update Event Table
+            DB::table($tableEventTable)
+                    ->where($tableEventTableID, $moduleUnitID)
+                    ->update($aEventData);
+
+            //Update Campaign Table
+            $sql = "UPDATE {$tableCampaignTable} SET `status`='1' WHERE `event_id` IN (SELECT id FROM {$tableEventTable} WHERE {$tableEventTableID}={$moduleUnitID})";
+            DB::statement($sql);
+        }
+
+
+        return true;
     }
 
 }
