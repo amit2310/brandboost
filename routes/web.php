@@ -110,6 +110,7 @@ Route::post('admin/brandboost/addOffsite','Admin\Brandboost@addOffsite');
 Route::get('admin/brandboost/addreview/{id}','Admin\Brandboost@addReview');
 Route::post('admin/brandboost/delete_multipal_brandboost','Admin\Brandboost@deleteMultipalBrandboost');
 Route::post('admin/brandboost/publishOnsiteWidget','Admin\Brandboost@publishOnsiteWidget');
+Route::post('admin/brandboost/deleteReviewRequest','Admin\Brandboost@deleteReviewRequest');
 
 
 

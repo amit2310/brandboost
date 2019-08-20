@@ -2444,7 +2444,7 @@ class Brandboost extends Controller {
 	
 	
 	public function publishOnsiteWidget(Request $request) {
-		$mBrandboost = BrandboostModel();
+		$mBrandboost = new BrandboostModel();
         $response = array();
         $widgetID = $request->widgetID;
         $oUser = getLoggedUser();
@@ -2469,7 +2469,7 @@ class Brandboost extends Controller {
 	
 
     public function publishOnsiteBB(Request $request) {
-		$mBrandboost = BrandboostModel();
+		$mBrandboost = new BrandboostModel();
         $response = array();
 
         $brandboostID = $request->brandboostID;
@@ -2493,7 +2493,22 @@ class Brandboost extends Controller {
         exit;
     }
 	
-	
+	public function deleteReviewRequest(Request $request) {
+		$mBrandboost = new BrandboostModel();
+        $response = array();
+       
+		$multipalIds = $request->multipal_id;
+		foreach ($multipalIds as $recordId) {
+			$result = $mBrandboost->deleteReviewRequest($recordId);
+		}
+		if ($result) {
+			$response['status'] = 'success';
+		} else {
+			$response['status'] = "Error";
+		}
+        echo json_encode($response);
+        exit;
+    }
 	
 	
 	
@@ -5099,23 +5114,7 @@ class Brandboost extends Controller {
         }
     }
 
-    public function deleteReviewRequest() {
-        $response = array();
-        $post = $this->input->post();
-        if ($post) {
-            $multipalIds = $post['multipal_id'];
-            foreach ($multipalIds as $recordId) {
-                $result = $this->mBrandboost->deleteReviewRequest($recordId);
-            }
-            if ($result) {
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
-            }
-        }
-        echo json_encode($response);
-        exit;
-    }
+    
 
     public function delete_subscriber() {
 
