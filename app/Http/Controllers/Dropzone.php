@@ -699,14 +699,15 @@ class dropzone extends Controller
             $videoReviewFile = '';
             $error = "";
             $filesize = getFileSize('filesize');
-            pre($filesize);
-            die();
+
             if (!empty($_FILES)) {
 
                 $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
-
+                pre($filesizeInBytes);
+                pre($_FILES);
+                die();
 
                 //Collect Text Review(Save Video into S3)
                 if(!empty($_FILES['files'])) {
