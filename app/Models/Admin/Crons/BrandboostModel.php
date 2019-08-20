@@ -19,10 +19,9 @@ class BrandboostModel extends Model {
                 ->where('user_id', $userID)
                 ->where('inviter_campaign_id', $inviterID)
                 ->exists();
-        return $oData;        
+        return $oData;
     }
 
-    
     /**
      * Gets Inviter events for brandboost module
      * @return type
@@ -33,12 +32,11 @@ class BrandboostModel extends Model {
                 ->leftJoin('tbl_users', 'tbl_brandboost.user_id', '=', 'tbl_users.id')
                 ->select('tbl_brandboost_events.*', 'tbl_brandboost.user_id AS client_id', 'tbl_users.firstname AS client_first_name', 'tbl_users.lastname AS client_last_name', 'tbl_users.email AS client_email', 'tbl_users.mobile AS client_phone')
                 ->where('tbl_brandboost.status', 1)
-                ->where('tbl_brandboost_events.status', 1)                
+                ->where('tbl_brandboost_events.status', 1)
                 ->get();
-        return $oData;        
+        return $oData;
     }
 
-    
     /**
      * Get the list of subscribers of a brandboost campaign
      * @param type $bbID
@@ -49,10 +47,9 @@ class BrandboostModel extends Model {
                 ->where('brandboost_id', $bbID)
                 ->where('status', 1)
                 ->get();
-        return $oData;        
+        return $oData;
     }
 
-    
     /**
      * Get Trigger subscribers
      * @param type $inviterID
@@ -64,15 +61,14 @@ class BrandboostModel extends Model {
                 ->select('subscriber_id')
                 ->where('inviter_id', $inviterID)
                 ->get();
-        if($oData->count()>0){
+        if ($oData->count() > 0) {
             foreach ($oData as $oSubs) {
-                    $response[] = $oSubs->subscriber_id;
-                }
+                $response[] = $oSubs->subscriber_id;
+            }
         }
         return $response;
     }
 
-    
     /**
      * Used to get eligible subscribers for selected campaign
      * @param type $bbID
@@ -90,7 +86,6 @@ class BrandboostModel extends Model {
         $oData = DB::select(DB::raw($sql));
         return $oData;
     }
-    
 
     /**
      * Get eligible list of subscribers for selected followup campaign
@@ -112,7 +107,6 @@ class BrandboostModel extends Model {
         return $oData;
     }
 
-    
     /**
      * Get eligible list of subscribers for Reminder campaign
      * @param type $bbID
@@ -135,7 +129,6 @@ class BrandboostModel extends Model {
         return $oData;
     }
 
-    
     /**
      * Get thank you eligible subscribers
      * @param type $bbID
@@ -152,7 +145,6 @@ class BrandboostModel extends Model {
         return $oData;
     }
 
-    
     /**
      * Used to check if a review is given by a subscriber for a specific campaign
      * @param type $bbID
@@ -164,10 +156,9 @@ class BrandboostModel extends Model {
                 ->where('campaign_id', $bbID)
                 ->where('user_id', $userID)
                 ->exists();
-        return $oData;        
+        return $oData;
     }
 
-    
     /**
      * 
      * @param type $bbID
@@ -179,10 +170,9 @@ class BrandboostModel extends Model {
                 ->where('brandboost_id', $bbID)
                 ->where('subscriber_id', $subsID)
                 ->exists();
-        return $oData;        
+        return $oData;
     }
 
-    
     /**
      * Checks if email/sms sent to a subscriber
      * @param type $inviterID
@@ -194,10 +184,9 @@ class BrandboostModel extends Model {
                 ->where('inviter_id', $inviterID)
                 ->where('subscriber_id', $subscriberID)
                 ->exists();
-        return $oData;        
+        return $oData;
     }
 
-    
     /**
      * Used to get Automation campaign
      * @param type $inviterID
@@ -209,7 +198,6 @@ class BrandboostModel extends Model {
         return $oData;
     }
 
-    
     /**
      * Used to save email lists in the queue if enabled
      * @param type $aData
@@ -217,10 +205,9 @@ class BrandboostModel extends Model {
      */
     public function saveInviterQueue($aData) {
         $insertID = DB::table('tbl_inviter_queue')->insertGetId($aData);
-        return $insertID;        
+        return $insertID;
     }
 
-    
     /**
      * Used to save trigger data of a broadcast campaign
      * @param type $aData
@@ -231,7 +218,6 @@ class BrandboostModel extends Model {
         return $insertID;
     }
 
-    
     /**
      * Used to save sending logs
      * @param type $aData
@@ -239,7 +225,7 @@ class BrandboostModel extends Model {
      */
     public function saveSendingLog($aData) {
         $insertID = DB::table('tbl_tracking_log_email_sms')->insertGetId($aData);
-        return $insertID;        
+        return $insertID;
     }
 
     /**
@@ -249,7 +235,7 @@ class BrandboostModel extends Model {
      */
     public function saveSMSTrackLog($aData) {
         $insertID = DB::table('tbl_track_twillio')->insertGetId($aData);
-        return $insertID;        
+        return $insertID;
     }
 
     /**
@@ -259,10 +245,9 @@ class BrandboostModel extends Model {
      */
     public function saveShortURL($aData) {
         $insertID = DB::table('tbl_sms_short_url')->insertGetId($aData);
-        return $insertID;        
+        return $insertID;
     }
 
-    
     /**
      * 
      * @param type $id
@@ -270,11 +255,11 @@ class BrandboostModel extends Model {
      */
     public function getCreditValues($id = '') {
         $oData = DB::table('tbl_credit_values')
-                ->when(($id > 0), function($query) use ($id){
+                ->when(($id > 0), function($query) use ($id) {
                     return $query->where('id', $id);
                 })
                 ->get();
-        return $oData;        
+        return $oData;
     }
 
     /**
@@ -327,7 +312,6 @@ class BrandboostModel extends Model {
         return false;
     }
 
-    
     /**
      * Used to get current usage of client
      * @param type $clientID
@@ -337,10 +321,9 @@ class BrandboostModel extends Model {
         $oData = DB::table('tbl_account_usage')
                 ->where('user_id', $clientID)
                 ->first();
-        return $oData;        
+        return $oData;
     }
 
-    
     /**
      * Used to get Twilio Account related information
      * @param type $clientID
@@ -351,9 +334,8 @@ class BrandboostModel extends Model {
                 ->where('user_id', $clientID)
                 ->where('status', 1)
                 ->first();
-        return $oData;        
+        return $oData;
     }
-    
 
     /**
      * Used to get sendgrid account related information of a client
@@ -368,7 +350,6 @@ class BrandboostModel extends Model {
         return $oData;
     }
 
-    
     /**
      * Used to get brandboost campaign details
      * @param type $bbID
@@ -376,12 +357,11 @@ class BrandboostModel extends Model {
      */
     public function getBBInfo($bbID) {
         $oData = DB::table('tbl_brandboost')
-                ->where('id', $bbID)                
+                ->where('id', $bbID)
                 ->first();
-        return $oData;        
+        return $oData;
     }
 
-    
     /**
      * Gets the list of offsite sources website
      * @param type $id
@@ -389,9 +369,9 @@ class BrandboostModel extends Model {
      */
     public function getOffsiteWebsite($id) {
         $oData = DB::table('tbl_offsite_websites')
-                ->where('id', $id)                
+                ->where('id', $id)
                 ->first();
-        return $oData;         
+        return $oData;
     }
 
     /**
@@ -404,10 +384,9 @@ class BrandboostModel extends Model {
                 ->where('brandboost_id', $brandboostID)
                 ->orderBy('product_order', 'asc')
                 ->get();
-        return $oData;        
+        return $oData;
     }
 
-    
     public function emailTagReplace($bbID, $sHtml, $campaignType = 'email', $subscriberInfo) {
         $mmReviews = new ReviewsModel();
         $aTags = config('bbconfig.email_tags');
@@ -417,9 +396,9 @@ class BrandboostModel extends Model {
             $bbType = $aBrandboost->review_type;
             $aOffsiteUrls = unserialize($aBrandboost->offsites_links);
             $random_keys = 0;
-            if(is_array($aOffsiteUrls)){
+            if (is_array($aOffsiteUrls)) {
                 $random_keys = array_rand($aOffsiteUrls, 1);
-            }            
+            }
             $offsiteURL = $aOffsiteUrls[$random_keys];
         }
         if (!empty($aTags)) {
@@ -447,7 +426,7 @@ class BrandboostModel extends Model {
                         break;
 
                     case '{PRODUCTS_LIST}':
-                        $htmlData = view('admin.workflow2.partials.products_list', ['productsDetails'=> $productsDetails])->render();
+                        $htmlData = view('admin.workflow2.partials.products_list', ['productsDetails' => $productsDetails])->render();
                         break;
 
                     case '{BRAND_LOGO}':
@@ -471,13 +450,17 @@ class BrandboostModel extends Model {
                     case '{TEXT_REVIEW_URL}':
                     case '{REVIEW_URL}':
                         if ($bbType == 'offsite') {
-                            foreach ($aOffsiteUrls AS $index => $aUrl) {
-                                $aWebsiteInfo = $this->getOffsiteWebsite($index);
-                                if ($campaignType == 'sms') {
-                                    $htmlData .= "<a href='" . $aUrl['shorturl'] . "'>" . $aWebsiteInfo->name . "</a><br>";
-                                } else {
-                                    $htmlData .= "<a href='" . $aUrl['longurl'] . "'><img src='" . base_url() . "uploads/" . $aWebsiteInfo->image . "' width='44' height='44' />&nbsp;&nbsp;" . $aWebsiteInfo->name . "</a><br><br>";
+                            if (!empty($aOffsiteUrls)) {
+                                foreach ($aOffsiteUrls AS $index => $aUrl) {
+                                    $aWebsiteInfo = $this->getOffsiteWebsite($index);
+                                    if ($campaignType == 'sms') {
+                                        $htmlData .= "<a href='" . $aUrl['shorturl'] . "'>" . $aWebsiteInfo->name . "</a><br>";
+                                    } else {
+                                        $htmlData .= "<a href='" . $aUrl['longurl'] . "'><img src='" . base_url() . "uploads/" . $aWebsiteInfo->image . "' width='44' height='44' />&nbsp;&nbsp;" . $aWebsiteInfo->name . "</a><br><br>";
+                                    }
                                 }
+                            }else{
+                                 $htmlData = "<a href='" . base_url() . "reviews/addnew'>Review link</a>";
                             }
                         } else {
                             $htmlData = "<a href='" . base_url() . "reviews/addnew'>Review link</a>";
@@ -545,17 +528,17 @@ class BrandboostModel extends Model {
 				<div class="bb_txt_review">
 				<div class="bb_txt_inner">
 				<div class="bb_txt_head">
-				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->logo_img). '"/>
+				<img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->logo_img) . '"/>
 				</div>
 				<div class="product_details_sec">
 				<div class="bb_product_img">
-				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->brand_img). '"/>
+				<img style="width: 100%;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . @($aData[0]->brand_img) . '"/>
 				</div>
 				<div class="bb_slides_text">
-				<h4>' . @($aData[0]->brand_title). '</h4>
+				<h4>' . @($aData[0]->brand_title) . '</h4>
 				<p><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa green fa-star"></i><i class="fa fa-star"></i></p>
 				<p><span>' . @($aData[0]->brand_desc) . '</span></p>
-				<p><a class="green" href="#">' . @($aData[0]->bb_u_firstname) . ' ' . @($aData[0]->bb_u_lastname). '</a></p>
+				<p><a class="green" href="#">' . @($aData[0]->bb_u_firstname) . ' ' . @($aData[0]->bb_u_lastname) . '</a></p>
 				</div>
 				<div class="clearfix"></div>
 				</div>';
@@ -848,9 +831,7 @@ class BrandboostModel extends Model {
                     return $query->where('subscriber_id', $subscriberID);
                 })
                 ->exists();
-        return $oData;        
+        return $oData;
     }
-
-    
 
 }
