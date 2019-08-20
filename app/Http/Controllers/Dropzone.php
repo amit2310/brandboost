@@ -671,15 +671,11 @@ class dropzone extends Controller
                             $s3->put($filekey,$input, 'public');
                         }
                     }
-
                     echo $filekey;
                 }
-                
             }
-            
         }
         exit;
-
     }
 
 
