@@ -169,8 +169,8 @@
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">
-                <button type="button" class="btn light_btn"><i class="icon-bin"></i><span> &nbsp;  Delete</span> </button>
-                <button type="button" class="btn dark_btn ml10"><i class="icon-check2 txt_purple"></i><span> &nbsp;  Resolve</span> </button>
+                <button type="button" class="btn light_btn deleteReview" reviewid="<?php echo $reviewData->id; ?>"><i class="icon-bin"></i><span> &nbsp;  Delete</span> </button>
+                <!-- <button type="button" class="btn dark_btn ml10"><i class="icon-check2 txt_purple"></i><span> &nbsp;  Resolve</span> </button> -->
 
             </div>
         </div>
@@ -831,6 +831,34 @@
     }
 
     $(document).ready(function () {
+		$(document).on('click', '.deleteReview', function () {
+			
+            var reviewID = $(this).attr('reviewid');
+
+            deleteConfirmationPopup(
+            "This review will deleted immediately.<br>You can't undo this action.", 
+            function() {
+
+                $('.overlaynew').show();
+                $.ajax({
+                    url: "<?php echo base_url('admin/reviews/deleteReview'); ?>",
+                    type: "POST",
+                    data: {reviewid: reviewID, _token: '{{csrf_token()}}'},
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            window.location.href = "<?php echo base_url(); ?>admin/brandboost/reviews/";
+                        } else {
+                            alert("Having some error.");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+			
+		});
 
         $(document).on('click', '.videoReview', function () {
             var filepath = $(this).attr('filepath');
