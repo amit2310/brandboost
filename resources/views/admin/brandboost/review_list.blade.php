@@ -22,9 +22,9 @@
 			</div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">
-                <button type="button" class="btn light_btn ml10"><i class="icon-download4"></i><span> &nbsp;  Import Reviews</span> </button>
+                <!-- <button type="button" class="btn light_btn ml10"><i class="icon-download4"></i><span> &nbsp;  Import Reviews</span> </button>
                 <button type="button" class="btn light_btn ml10"><i class="icon-upload4"></i><span> &nbsp;  Export Reviews</span> </button>
-                <button type="button" class="btn dark_btn ml10"><i class="icon-plus3 txt_purple"></i><span> &nbsp;  Add Review</span> </button>
+                <button type="button" class="btn dark_btn ml10"><i class="icon-plus3 txt_purple"></i><span> &nbsp;  Add Review</span> </button> -->
 				
 			</div>
 		</div>
@@ -280,7 +280,7 @@
 																echo "<li><a review_id='" . $oReview->reviewid . "' change_status = '1' class='chg_status green'><i class='icon-file-locked'></i> Active</a></li>";
 															}
 															//echo '<li><a href="javascript:void(0);" class="applyInsightTagsReviews" action_name="review-tag" reviewid="' . $oReview->reviewid . '" ><i class="icon-file-locked"></i> Apply Tags</a></li>';
-															echo '<li><a href="javascript:void(0);" class="displayReview" action_name="review-tag" tab_type="note" reviewid="' . $oReview->reviewid . '" review_time="' . date("M d, Y h:i A", strtotime($oReview->review_created)) . '(' . timeAgo($oReview->review_created) . ')" ><i class="icon-file-locked"></i> Add Notes</a></li>';
+															//echo '<li><a href="javascript:void(0);" class="displayReview" action_name="review-tag" tab_type="note" reviewid="' . $oReview->reviewid . '" review_time="' . date("M d, Y h:i A", strtotime($oReview->review_created)) . '(' . timeAgo($oReview->review_created) . ')" ><i class="icon-file-locked"></i> Add Notes</a></li>';
 														}
 														//echo '<li><a href="javascript:void(0);" class="showReviewPopup" tab_type="info" reviewid="' . $oReview->reviewid . '" ><i class="icon-file-locked"></i> View Review Popup</a></li>';
 														
@@ -322,47 +322,47 @@
 				<?php } 
 				else {
 					?><table class="table datatable-basic">
-                                    <thead>
-                                        <tr>
-                                            <th><i class="icon-user"></i>Name</th>
-	                                        <th><i class="icon-star-full2"></i>Rating</th>
-	                                        <th><i class="icon-paragraph-left3"></i>Review</th>
-	                                        <th><i class="icon-calendar"></i>Created</th>
-	                                        <th><i class="icon-hash"></i>Tags</th>
-	                                        <th><i class="icon-folder2"></i>Category</th>
-	                                        <th><i class="icon-diff-modified"></i>Status</th>
-											<th class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
+						<thead>
+							<tr>
+								<th><i class="icon-user"></i>Name</th>
+								<th><i class="icon-star-full2"></i>Rating</th>
+								<th><i class="icon-paragraph-left3"></i>Review</th>
+								<th><i class="icon-calendar"></i>Created</th>
+								<th><i class="icon-hash"></i>Tags</th>
+								<th><i class="icon-folder2"></i>Category</th>
+								<th><i class="icon-diff-modified"></i>Status</th>
+								<th class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
 
-                                        </tr>
-                                    </thead>
+							</tr>
+						</thead>
 
-                                    <tbody>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td colspan="10">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div style="margin: 20px 0px 0;" class="text-center">
-                                                        <h5 class="mb-20 mt40">
-                                                            Looks Like You Don’t Have Any On Site Review Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
-                                                            Lets Create Your First On Site Review.
-                                                        </h5>
+						<tbody>
+							<td style="display: none"></td>
+							<td style="display: none"></td>
+							<td colspan="10">
+								<div class="row">
+									<div class="col-md-12">
+										<div style="margin: 20px 0px 0;" class="text-center">
+											<h5 class="mb-20 mt40">
+												Looks Like You Don’t Have Any On Site Review Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+												Lets Create Your First On Site Review.
+											</h5>
 
-                                                        <?php if ($canWrite): ?>
-                                                            <!-- <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add On Site Review</button> -->
-                                                        <?php endif; ?>
+											<?php if ($canWrite): ?>
+												<!-- <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add On Site Review</button> -->
+											<?php endif; ?>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                    </tbody>
-                                </table><?php
+										</div>
+									</div>
+								</div>
+							</td>
+							<td style="display: none"></td>
+							<td style="display: none"></td>
+							<td style="display: none"></td>
+							<td style="display: none"></td>
+							<td style="display: none"></td>
+						</tbody>
+					</table><?php
 				}?>
 				</div>
 			</div>
@@ -387,6 +387,7 @@
     <div style="max-width: 440px;ss" class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal">
+			{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Create new campaign</h5>
@@ -409,9 +410,6 @@
 								</div>
 							</div>
 						</div>
-						
-						
-						
 					</div>
 				</div>
                 <div class="modal-footer p40">
@@ -430,6 +428,7 @@
     <div style="max-width: 440px;ss" class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal">
+				{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Create new campaign</h5>
@@ -475,6 +474,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateReview" action="javascript:void();">
+				{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Review</h5>
@@ -572,15 +572,6 @@
                             <input class="form-control" type="text" name="edit_review_title" id="edit_video_review_title" placeholder="Title" required>
 						</div>
 					</div>
-					
-                    <!-- <div class="form-group">
-                        <label class="control-label col-lg-3">Video</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" type="file" name="video"  />
-						</div>
-					</div> -->
-					
-					
                     <div class="form-group">
                         <label class="control-label col-lg-3">Rating</label>
                         <div class="col-lg-9">
@@ -677,6 +668,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmReviewTagListModal" id="frmReviewTagListModal" action="javascript:void();">
+				{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Apply Tags</h5>
@@ -871,7 +863,7 @@
         $.ajax({
             url: '<?php echo base_url('admin/reviews/getCommentsPopup'); ?>',
             type: "POST",
-            data: {review_id: reviewID},
+            data: {review_id: reviewID, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -953,7 +945,7 @@
 	                $.ajax({
 	                    url: "<?php echo base_url('admin/reviews/deleteMultipalReview'); ?>",
 	                    type: "POST",
-	                    data: {multiReviewid: val},
+	                    data: {multiReviewid: val, _token: '{{csrf_token()}}'},
 	                    dataType: "json",
 	                    success: function (data) {
 	                        if (data.status == 'success') {
@@ -1010,7 +1002,7 @@
             $.ajax({
                 url: "<?php echo base_url('/admin/reviews/getReviewPopupData'); ?>",
                 type: "POST",
-                data: {rid: reviewId},
+                data: {rid: reviewId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -1035,7 +1027,7 @@
             $.ajax({
                 url: "<?php echo base_url('/admin/reviews/displayreview'); ?>",
                 type: "POST",
-                data: {rid: reviewid},
+                data: {rid: reviewid, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -1346,7 +1338,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
                 type: "POST",
-                data: {review_id: review_id},
+                data: {review_id: review_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
