@@ -913,7 +913,7 @@
 					$('.overlaynew').show();
 					var recommendurl = $('#recommendurl').val();
 					$.ajax({
-						url: "<?php echo base_url('/reviews/submitOnsiteReview'); ?>",
+						url: "<?php echo base_url('reviews/submitOnsiteReview'); ?>",
 						type: "POST",
 						data: formdata,
 						contentType: false,
