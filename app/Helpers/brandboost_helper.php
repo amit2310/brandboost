@@ -319,11 +319,7 @@ if (!function_exists('getTagsByReviewID')) {
 if (!function_exists('getCampaignsByEventID')) {
 
     function getCampaignsByEventID($eventID) {
-        $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Brandboost_model", "rBrandboost");
-
-        $aData = $CI->rBrandboost->getCampByEventID($eventID);
+        $aData = \App\Models\Admin\BrandboostModel::getCampByEventID($eventID);
         return $aData;
     }
 

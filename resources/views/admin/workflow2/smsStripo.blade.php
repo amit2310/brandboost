@@ -214,9 +214,9 @@ $template_source = !empty($template_source) ? $template_source : '';
     <body>
 
         <div style="display:block;width:100%;float:right;margin-right: 20px;margin-bottom:20px;overflow:hidden;">
-            <?php if ($moduleName == 'automation' || $moduleName == 'broadcast'): ?>
+            <?php //if ($moduleName == 'automation' || $moduleName == 'broadcast'): ?>
                 <button id="backtoTree" class="control-button-red"><&nbsp;&nbsp;<span>Back</span></button>
-            <?php endif; ?>
+            <?php //endif; ?>
             <button id="saveStripoChanges" class="control-button">Save SMS</button>
             <?php if ($moduleName == 'automation' || $moduleName == 'broadcast'): ?>
             <button id="saveToMyTemplates" class="control-button mt20" style="height:40px;">Save to my templates</button>
