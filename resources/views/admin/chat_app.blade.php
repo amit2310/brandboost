@@ -870,7 +870,7 @@
 	left:35%;
 	}
 </style>
-<?php $loginUserData = getLoggedUser(); ?>
+<?php $loginUserData = $aUInfo = getLoggedUser(); ?>
 <?php
 if (empty($loginUserData->avatar)) {
     $currentUserImg = '/assets/images/default_avt.jpeg';
@@ -879,7 +879,7 @@ if (empty($loginUserData->avatar)) {
 } ?>
 
 <?php
-$aUInfo = getLoggedUser();
+
 $isLoggedInTeam = Session::get("team_user_id");
 if ($isLoggedInTeam) {
     $aTeamInfo = \App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
