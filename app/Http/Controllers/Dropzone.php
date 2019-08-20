@@ -781,8 +781,6 @@ class dropzone extends Controller
                             //$filekey = "chat_attachments/". $videoReviewFile;
                             $filename = $videoReview['name'];
                             $input = file_get_contents($videoReview['tmp_name']);
-                            pre($input);
-                            die();
                             $s3 = \Storage::disk('s3');
                             $s3->put($filekey,$input, 'public');
                         }
