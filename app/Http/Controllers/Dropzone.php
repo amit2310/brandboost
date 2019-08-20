@@ -688,15 +688,15 @@ class dropzone extends Controller
      public function upload_s3_attachment_review($clientId, $folderName) 
      {
 
-        pre($clientId);
-        pre($folderName);
-        die();
+
         $userDetail = getUserDetailsByUserID($clientId);
         if($userDetail->s3_allow_size > $userDetail->s3_used_size) {
-        
+            
             $videoReviewFile = '';
             $error = "";
             $filesize = getFileSize('filesize');
+            pre($filesize);
+            die();
             if (!empty($_FILES)) {
 
                 $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
