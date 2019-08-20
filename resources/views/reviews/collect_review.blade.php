@@ -714,7 +714,7 @@
 				});
 				
 				Dropzone.options.myDropzone = {
-					 url: '<?php echo base_url("/dropzone/upload_s3_attachment_review/".$_GET['clid']."/reviews"); ?>',
+					 url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment_review/".$_GET['clid']."/reviews"); ?>',
 					uploadMultiple: false,
 					maxFiles: 10,
 					maxFilesize: 600,
@@ -753,7 +753,7 @@
 				
 				<?php foreach($productsData as $key=>$productData){ ?>
 				Dropzone.options.myDropzone<?php echo $productData->id; ?> = {
-					url: '<?php echo base_url("/dropzone/upload_s3_attachment_product_review/".$_GET['clid']."/reviews"); ?>/<?php echo $productData->id; ?>',
+					url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment_product_review/".$_GET['clid']."/reviews"); ?>/<?php echo $productData->id; ?>',
 					uploadMultiple: false,
 					maxFiles: 5,
 					maxFilesize: 600,
@@ -792,7 +792,7 @@
 				
 				<?php foreach($servicesData as $key=>$productData){ ?>
 				Dropzone.options.myDropzone<?php echo $productData->id; ?> = {
-					url: '<?php echo base_url("/dropzone/upload_s3_attachment_product_review/".$_GET['clid']."/reviews"); ?>/<?php echo $productData->id; ?>',
+					url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment_product_review/".$_GET['clid']."/reviews"); ?>/<?php echo $productData->id; ?>',
 					uploadMultiple: false,
 					maxFiles: 5,
 					maxFilesize: 600,

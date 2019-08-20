@@ -683,7 +683,12 @@ class dropzone extends Controller
     }
 
 
-    
+    /**
+    * This function used to upload images to the amazon s3 server for review
+    * @param type $clientId
+    * @param type $folderName
+    * @return type
+    */
      public function upload_s3_attachment_review($clientId, $folderName) 
      {
 
@@ -698,6 +703,8 @@ class dropzone extends Controller
                 $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
+
+                $isLoggedInTeam = Session::get('team_user_id');
 
 
                 //Collect Text Review(Save Video into S3)
@@ -734,7 +741,8 @@ class dropzone extends Controller
                             //$filekey = "chat_attachments/". $videoReviewFile;
                             $filename = $videoReview['name'][0];
                             $input = file_get_contents($videoReview['tmp_name'][0]);
-                            $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            $s3 = \Storage::disk('s3');
+                            $s3->put($filekey,$input, 'public');
                         }
                     }
 
@@ -774,7 +782,8 @@ class dropzone extends Controller
                             //$filekey = "chat_attachments/". $videoReviewFile;
                             $filename = $videoReview['name'];
                             $input = file_get_contents($videoReview['tmp_name']);
-                            $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            $s3 = \Storage::disk('s3');
+                            $s3->put($filekey,$input, 'public');
                         }
                     }
 
