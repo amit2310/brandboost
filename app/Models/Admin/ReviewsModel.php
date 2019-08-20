@@ -787,7 +787,6 @@ class ReviewsModel extends Model
 
         $oData = DB::table('tbl_reviews')
             ->Join('tbl_users', 'tbl_reviews.user_id', '=' , 'tbl_users.id')
-           
             ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
             ->where('tbl_reviews.review_type', 'site')
             ->where('tbl_reviews.unique_review_key', $uniqueId)
