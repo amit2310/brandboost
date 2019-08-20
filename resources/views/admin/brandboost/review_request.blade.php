@@ -176,7 +176,7 @@ $brandboostID = '';
 						</div>
 					</div>
 
-					<button onclick="calltoReviewPage('<?php echo $brandboostID; ?>')" type="button" class="btn dark_btn ml10"><i class="icon-plus3"></i><span> &nbsp;  Add Review</span> </button>
+					<!-- <button onclick="calltoReviewPage('<?php echo $brandboostID; ?>')" type="button" class="btn dark_btn ml10"><i class="icon-plus3"></i><span> &nbsp;  Add Review</span> </button> -->
 
 				</div>
 				
@@ -233,17 +233,19 @@ $brandboostID = '';
 							<?php
 								
 									foreach ($oData as $data) {
-                                      
-										/*$brandImgArray = unserialize($data->brand_img);
-										$brand_img = $brandImgArray[0]['media_url'];
+										
+										//$brandImgArray = unserialize($data->brand_img);
+										//$brand_img = $brandImgArray[0]['media_url'];
+										$brand_img = $data->brand_img;
 										
 										if (empty($brand_img)) {
 											$imgSrc = base_url('assets/images/default_table_img2.png');
 											} else {
 											$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
-										}*/
+										}
+										
 										$aUser = \App\Models\Admin\UsersModel::getUserInfo($data->user_id);
-										$imgSrc = base_url('assets/images/default_table_img2.png');
+										
 										
 									?>
 									<tr id="append-<?php echo $data->trackinglogid; ?>" class="selectedClass">
@@ -281,14 +283,14 @@ $brandboostID = '';
 								        </div></td>
 
 										<td>
-											<div class="media-left media-middle"><?php //echo showUserAvtar($aUser->avatar, $aUser->firstname, $aUser->lastname); ?></div>
+											<div class="media-left media-middle"><?php if(!empty($aUser)){ echo showUserAvtar($aUser->avatar, $aUser->firstname, $aUser->lastname); }else{ echo showUserAvtar('','',''); } ?></div>
 											
 											<div class="media-left">
-												<?php /*if($aUser->firstname != '') { ?>
+												<?php if(!empty($aUser)) { ?>
 													<div class="pt-5">
                                                      <a href="<?php echo base_url();?>admin/subscriber/activities/<?php echo $aUser->id;?>" target="_blank" class="text-default text-semibold bbot"><span><?php echo $aUser->firstname; ?> <?php echo $aUser->lastname; ?></span></a><img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($aUser->country); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
 													<div class="text-muted text-size-small"><?php echo $aUser->email; ?></div>
-												<?php } else{ echo '<span class="text-muted text-size-small">[No Data]</span>'; } */ ?>
+												<?php } else{ echo '<span class="text-muted text-size-small">[No Data]</span>'; }  ?>
 											</div>
 										</td>
 										
@@ -353,42 +355,42 @@ $brandboostID = '';
 					else {
 						?>
 						<table class="table datatable-basic">
-                                    <thead>
-                                        <tr>
-                                            <th><i class="icon-stack-star"></i>Name</th>
-											<th><i class="icon-atom"></i>Campaign</th>
-											<th><i class="icon-hash"></i>Source</th>
-											<th><i class="icon-user"></i>Contact Details</th>
-											<th><i class="icon-calendar"></i>Created</th>
-											<th><i class="icon-calendar"></i>Request Sent Date</th>
-											<th class="text-center"><i class="fa fa-dot-circle-o"></i>Status</th>
-											<th class="text-center nosort"><i class="fa fa-dot-circle-o"></i>Action</th>
+							<thead>
+								<tr>
+									<th><i class="icon-stack-star"></i>Name</th>
+									<th><i class="icon-atom"></i>Campaign</th>
+									<th><i class="icon-hash"></i>Source</th>
+									<th><i class="icon-user"></i>Contact Details</th>
+									<th><i class="icon-calendar"></i>Created</th>
+									<th><i class="icon-calendar"></i>Request Sent Date</th>
+									<th class="text-center"><i class="fa fa-dot-circle-o"></i>Status</th>
+									<th class="text-center nosort"><i class="fa fa-dot-circle-o"></i>Action</th>
 
-                                        </tr>
-                                    </thead>
+								</tr>
+							</thead>
 
-                                    <tbody>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td colspan="10">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div style="margin: 20px 0px 0;" class="text-center">
-                                                        <h5 class="mb-20 mt40">
-                                                            Looks Like You Don’t Have Any Review Request Yet <img src="<?php echo base_url('assets/images/smiley.png'); ?>"> <br>
-                                                            Lets Create Your First Review Request.
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                    </tbody>
-                                </table>
+							<tbody>
+								<td style="display: none"></td>
+								<td style="display: none"></td>
+								<td colspan="10">
+									<div class="row">
+										<div class="col-md-12">
+											<div style="margin: 20px 0px 0;" class="text-center">
+												<h5 class="mb-20 mt40">
+													Looks Like You Don’t Have Any Review Request Yet <img src="<?php echo base_url('assets/images/smiley.png'); ?>"> <br>
+													Lets Create Your First Review Request.
+												</h5>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td style="display: none"></td>
+								<td style="display: none"></td>
+								<td style="display: none"></td>
+								<td style="display: none"></td>
+								<td style="display: none"></td>
+							</tbody>
+						</table>
 						<?php
 					} ?>
 				</div>
