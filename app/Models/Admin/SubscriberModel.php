@@ -7,7 +7,7 @@ use DB;
 use Cookie;
 use Session;
 
-
+error_reporting(0);
 class SubscriberModel extends Model {
 
     /**
@@ -1128,7 +1128,6 @@ FROM
            $oData =  DB::table('tbl_users')
             ->where($key[0], $val[0])
             ->limit(1)->get();
-            
         }
     }
 

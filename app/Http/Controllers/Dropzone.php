@@ -679,22 +679,28 @@ class dropzone extends Controller
     }
 
 
-    
+    /**
+    * This function used to upload images to the amazon s3 server for review
+    * @param type $clientId
+    * @param type $folderName
+    * @return type
+    */
      public function upload_s3_attachment_review($clientId, $folderName) 
      {
 
+
         $userDetail = getUserDetailsByUserID($clientId);
         if($userDetail->s3_allow_size > $userDetail->s3_used_size) {
-        
+            
             $videoReviewFile = '';
             $error = "";
             $filesize = getFileSize('filesize');
+
             if (!empty($_FILES)) {
 
                 $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
-
 
                 //Collect Text Review(Save Video into S3)
                 if(!empty($_FILES['files'])) {
@@ -730,7 +736,8 @@ class dropzone extends Controller
                             //$filekey = "chat_attachments/". $videoReviewFile;
                             $filename = $videoReview['name'][0];
                             $input = file_get_contents($videoReview['tmp_name'][0]);
-                            $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            $s3 = \Storage::disk('s3');
+                            $s3->put($filekey,$input, 'public');
                         }
                     }
 
@@ -770,7 +777,8 @@ class dropzone extends Controller
                             //$filekey = "chat_attachments/". $videoReviewFile;
                             $filename = $videoReview['name'];
                             $input = file_get_contents($videoReview['tmp_name']);
-                            $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            $s3 = \Storage::disk('s3');
+                            $s3->put($filekey,$input, 'public');
                         }
                     }
 

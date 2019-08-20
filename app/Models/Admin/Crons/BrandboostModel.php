@@ -459,8 +459,8 @@ class BrandboostModel extends Model {
                                         $htmlData .= "<a href='" . $aUrl['longurl'] . "'><img src='" . base_url() . "uploads/" . $aWebsiteInfo->image . "' width='44' height='44' />&nbsp;&nbsp;" . $aWebsiteInfo->name . "</a><br><br>";
                                     }
                                 }
-                            }else{
-                                 $htmlData = "<a href='" . base_url() . "reviews/addnew'>Review link</a>";
+                            } else {
+                                $htmlData = "<a href='" . base_url() . "reviews/addnew'>Review link</a>";
                             }
                         } else {
                             $htmlData = "<a href='" . base_url() . "reviews/addnew'>Review link</a>";
@@ -471,13 +471,17 @@ class BrandboostModel extends Model {
                     case '{VIDEO_REVIEW_URL}':
 
                         if ($bbType == 'offsite') {
-                            foreach ($aOffsiteUrls AS $index => $aUrl) {
-                                $aWebsiteInfo = $this->getOffsiteWebsite($index);
-                                if ($campaignType == 'sms') {
-                                    $htmlData .= "<a href='" . $aUrl['shorturl'] . "'>" . $aWebsiteInfo->name . "</a><br>";
-                                } else {
-                                    $htmlData .= "<a href='" . $aUrl['longurl'] . "'><img src='" . base_url() . "uploads/" . $aWebsiteInfo->image . "' width='44' height='44' />&nbsp;&nbsp;" . $aWebsiteInfo->name . "</a><br><br>";
+                            if (!empty($aOffsiteUrls)) {
+                                foreach ($aOffsiteUrls AS $index => $aUrl) {
+                                    $aWebsiteInfo = $this->getOffsiteWebsite($index);
+                                    if ($campaignType == 'sms') {
+                                        $htmlData .= "<a href='" . $aUrl['shorturl'] . "'>" . $aWebsiteInfo->name . "</a><br>";
+                                    } else {
+                                        $htmlData .= "<a href='" . $aUrl['longurl'] . "'><img src='" . base_url() . "uploads/" . $aWebsiteInfo->image . "' width='44' height='44' />&nbsp;&nbsp;" . $aWebsiteInfo->name . "</a><br><br>";
+                                    }
                                 }
+                            } else {
+                                $htmlData = "<a href='" . base_url() . "reviews/addnew'>Review link</a>";
                             }
                         } else {
                             $htmlData = "<a href='" . base_url() . "reviews/addnew'>Review link</a>";
