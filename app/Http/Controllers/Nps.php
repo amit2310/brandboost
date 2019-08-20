@@ -17,9 +17,10 @@ class Nps extends Controller {
 
 
     /**
-     * This function is use for diaplay widget
+     * This function is use for diaplay widget.
      * @param type $widgetName, $accountID, $subId
      * @return type json data
+     *
      */
     public function display_widget($widgetName = '', $accountID = '', $subId = '') {
 
