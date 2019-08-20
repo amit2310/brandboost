@@ -567,30 +567,11 @@
                     }
                     ?>
 
-                    <!-- <div class="p25 bbot">
-                            <p class="fsize12">So strongly and metaphysically did.</p>
-                            <p><small class="text-muted">On August 09, 2018 09:51 ( 1 week ago )<br>by Dheeraj Maulekhi</small></p>
-                    </div>
-                    
-                    <div class="p25">
-                            <p class="fsize12">So strongly and metaphysically did.</p>
-                            <p><small class="text-muted">On August 09, 2018 09:51 ( 1 week ago )<br>by Dheeraj Maulekhi</small></p>
-                    </div> -->
-
                     <div class="p25 btop">
                         <button data-toggle="modal" data-target="#addnotes" type="button" class="btn dark_btn btn-xs mr20">Add Note</button>	 <!-- <button class="btn btn-link btn-xs mr20">View All Notes</button> -->
                     </div>
-
-
-
-
-
                 </div>
             </div>
-
-
-
-
         </div>
 
     </div>
@@ -679,7 +660,6 @@
                             <input type="hidden" name="cid" id="cid" value="<?php echo $reviewData->user_id; ?>">
                             <input type="hidden" name="bid" id="bid" value="<?php echo $reviewData->bbId; ?>">
                             <button data-toggle="modal" data-target="#addnotes" type="button" id="saveReviewNotes" class="btn dark_btn"> Add Notes &nbsp; <i class="fa fa-angle-double-right"></i> </button>
-							{{ csrf_field() }}
                         </div>
                     </form>
                 </div>
@@ -692,6 +672,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmReviewTagListModal" id="frmReviewTagListModal" action="javascript:void();">
+				{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Apply Tags</h5>
@@ -723,10 +704,7 @@
 
             <form method="post" name="frmReviewTagListModal" id="frmReviewTagListModal" action="javascript:void();">
 
-                <!--   <div class="modal-header">
-                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                       <h5 class="modal-title">Apply Tags</h5>
-                   </div>-->
+               {{ csrf_field() }}
 
                 <div class="modal-body" id="tagEntireList">
 
@@ -766,22 +744,6 @@
 
 
 <script>
-
-    /*$(document).ready(function(){
-     $(".reviews").click(function(){
-     $(".box").animate({
-     width: "toggle"
-     });
-     });
-     
-     $("#newcampaign").click(function(){
-     $(".box").animate({
-     width: "toggle"
-     });
-     });
-     
-     });*/
-
 
     // top navigation fixed on scroll and side bar collasped
 
@@ -826,7 +788,7 @@
         $.ajax({
             url: '<?php echo base_url('admin/brandboost/getreviwecomments/'); ?>',
             type: "POST",
-            data: {'reviewId': reviewID, 'startinglimitVal': startinglimitVal},
+            data: {'reviewId': reviewID, 'startinglimitVal': startinglimitVal, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 $('.overlaynew').hide();
@@ -891,7 +853,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/tags/removeTag'); ?>',
                 type: "POST",
-                data: {review_id: reviewID, tag_id: tagID},
+                data: {review_id: reviewID, tag_id: tagID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -908,7 +870,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/comments/update_comment_status'); ?>',
                 type: "POST",
-                data: {status: status, comment_id: comment_id,_token:'{{csrf_token()}}'},
+                data: {status: status, comment_id: comment_id, _token:'{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -927,7 +889,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/comments/getCommentById'); ?>',
                 type: "POST",
-                data: {commentID: commentID,_token: '{{csrf_token()}}'},
+                data: {commentID: commentID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -947,7 +909,7 @@
             $.ajax({
                 url: '<?php echo base_url('reviews/getReviewNoteById'); ?>',
                 type: "POST",
-                data: {noteid: noteId,_token: '{{csrf_token()}}'},
+                data: {noteid: noteId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1020,7 +982,7 @@
                 $.ajax({
                     url: '<?php echo base_url("admin/comments/add_comment"); ?>',
                     type: "POST",
-                    data: {'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent,_token: '{{csrf_token()}}'},
+                    data: {'reviweId': reviewID, 'parent_comment_id': parentCommentId, 'comment_content': commentContent, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -1113,7 +1075,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
                 type: "POST",
-                data: {review_id: review_id},
+                data: {review_id: review_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1183,7 +1145,7 @@
             $.ajax({
                 url: '<?php echo base_url("admin/reviewdetail/loadComment"); ?>',
                 type: "POST",
-                data: {'reviewId': revId, 'offset': numOfComment},
+                data: {'reviewId': revId, 'offset': numOfComment, _token: '{{csrf_token()}}'},
                 dataType: "html",
                 success: function (data) {
 
