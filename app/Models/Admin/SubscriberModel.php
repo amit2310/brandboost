@@ -7,7 +7,7 @@ use DB;
 use Cookie;
 use Session;
 
-
+error_reporting(0);
 class SubscriberModel extends Model {
 
     /**
@@ -1149,18 +1149,13 @@ FROM
     }
 
     public function getBrandboostContactInfo($id = '') {
-        $response = array();
-        $this->db->select('tbl_brandboost_users.id AS subsID, tbl_brandboost_users.status AS subs_status,tbl_brandboost_users.created AS subs_created, tbl_subscribers.*');
-        $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id= tbl_subscribers.id", "LEFT");
-        $this->db->where('tbl_brandboost_users.id', $id);
-        $this->db->order_by('tbl_brandboost_users.id', 'DESC');
-        $this->db->from('tbl_brandboost_users');
-        $result = $this->db->get();
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $aData =  DB::table('tbl_brandboost_users')
+        ->select('tbl_brandboost_users.id AS subsID','tbl_brandboost_users.status AS subs_status','tbl_brandboost_users.created AS subs_created','tbl_subscribers.*')
+        ->leftJoin('tbl_subscribers','tbl_brandboost_users.subscriber_id','=','tbl_subscribers.id')
+         ->where('tbl_brandboost_users.id', $id)
+         ->orderBy('tbl_brandboost_users.id', 'DESC')->get();
+       return $aData;
+
     }
 
     public function getReferralContactInfo($id = '') {
