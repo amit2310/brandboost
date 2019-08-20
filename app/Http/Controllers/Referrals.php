@@ -156,176 +156,180 @@ class Referrals extends Controller {
         exit;
     }
 
-    public function recordSale() {
-        $referrerKey = $this->session->userdata('bbtrkreferrer');
+
+    public function recordSale(Request $request) {
+		$mSubscriber = new SubscriberModel();
+		$mReferral = new ReferralModel();
+        $referrerKey = Session::get('bbtrkreferrer');
         $publicIP = $_SERVER['REMOTE_ADDR'];
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        $timeNow = time();
-        if (!empty($post)) {
-            $accountID = strip_tags($post['bb_accountid']);
-            $firstName = strip_tags($post['bb_firstname']);
-            $lastName = strip_tags($post['bb_lastname']);
-            $email = strip_tags($post['bb_email']);
-            $amount = strip_tags($post['bb_amount']);
-            $currency = strip_tags($post['bb_currency']);
-            $invoiceID = strip_tags($post['bb_invoiceid']);
-            $created = strip_tags($post['bb_timestamp']);
-            $showWidget = strip_tags($post['show_widget']);
 
-            if (!empty($accountID)) {
-                $oReferral = $this->mReferral->getReferralProgramInfo($accountID);
-                $referralID = $oReferral->id;
-            }
+		$timeNow = time();
+		$accountID = $request->bb_accountid;
+		$firstName = $request->bb_firstname;
+		$lastName = $request->bb_lastname;
+		$email = $request->bb_email;
+		$amount = $request->bb_amount;
+		$currency = $request->bb_currency;
+		$invoiceID = $request->bb_invoiceid;
+		$created = $request->bb_timestamp;
+		$showWidget = $request->show_widget;
+		$affliateID = '';
+		$affiliateID = '';
 
-            if (!empty($oReferral)) {
-                $userID = $oReferral->user_id;
-            }
+		if (!empty($accountID)) {
+			$oReferral = $mReferral->getReferralProgramInfo($accountID);
+			$referralID = $oReferral->id;
+		}
 
-            //Now lookout the referrer cookie if found
-            $oLiveTrackDate = $this->mReferral->getLiveReferralLinkTrackData($publicIP);
+		if (!empty($oReferral)) {
+			$userID = $oReferral->user_id;
+		}
 
-            if (!empty($oLiveTrackDate)) {
-                $referrerKey = $oLiveTrackDate->refkey;
-            }
-            
-            if (!empty($referrerKey)) {
-                //Release live track data now
-                $this->mReferral->deleteLiveReferralLinkTrackData($publicIP);
-                //Get Referrer Info
-                $oReferrer = $this->mReferral->getRefLinkInfo($referrerKey);
-                if (!empty($oReferrer)) {
-                    $advocateID = $oReferrer->subscriber_id;
-                    $affiliateReferralID = $oReferrer->referral_id;
-                    if ($advocateID > 0) {
-                        $affliateID = $advocateID;
-                    }
-                }
-            }
+		//Now lookout the referrer cookie if found
+		$oLiveTrackDate = $mReferral->getLiveReferralLinkTrackData($publicIP);
 
-            $aSaleData = array(
-                'account_id' => $accountID,
-                'affiliateid' => $affliateID,
-                'firstname' => $firstName,
-                'lastname' => $lastName,
-                'email' => $email,
-                'invoice_id' => $invoiceID,
-                'amount' => $amount,
-                'currency' => $currency,
-                'purchase_date' => date("y-m-d H:i:s", $created),
-                'created' => date("Y-m-d H:i:s")
-            );
+		if (!empty($oLiveTrackDate)) {
+			$referrerKey = $oLiveTrackDate->refkey;
+		}
+		
+		if (!empty($referrerKey)) {
+			//Release live track data now
+			$mReferral->deleteLiveReferralLinkTrackData($publicIP);
+			//Get Referrer Info
+			$oReferrer = $mReferral->getRefLinkInfo($referrerKey);
+			if (!empty($oReferrer)) {
+				$advocateID = $oReferrer->subscriber_id;
+				$affiliateReferralID = $oReferrer->referral_id;
+				if ($advocateID > 0) {
+					$affliateID = $advocateID;
+				}
+			}
+		}
 
-            if (!empty($userID)) {
-                $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
-                if (!empty($oGlobalUser)) {
-                    $iSubscriberID = $oGlobalUser->id;
-                } else {
-                    //Add global subscriber
-                    $aSubscriberData = array(
-                        'owner_id' => $userID,
-                        'firstName' => $firstName,
-                        'lastName' => $lastName,
-                        'email' => $email,
-                        'phone' => $phone,
-                        'created' => date("Y-m-d H:i:s")
-                    );
-                    $iSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
-                }
+		$aSaleData = array(
+			'account_id' => $accountID,
+			'affiliateid' => $affliateID,
+			'firstname' => $firstName,
+			'lastname' => $lastName,
+			'email' => $email,
+			'invoice_id' => $invoiceID,
+			'amount' => $amount,
+			'currency' => $currency,
+			'purchase_date' => date("y-m-d H:i:s", $created),
+			'created' => date("Y-m-d H:i:s")
+		);
 
-                if (!empty($iSubscriberID)) {
-                    $oExistingUser = $this->mReferral->checkIfExistingAdvocate($iSubscriberID, $accountID);
-                    //pre($oExistingUser);
-                    if (!empty($oExistingUser)) {
-                        $existingUserID = $oExistingUser->id;
-                        $refKey = $oExistingUser->refkey;
-                        if (empty($refKey)) {
-                            //Add missing Referral link
-                            $refKey = $iSubscriberID . '-' . $timeNow;
-                            $aRData = array(
-                                'referral_id' => $referralID,
-                                'advocate_id' => '',
-                                'subscriber_id' => $iSubscriberID,
-                                'refkey' => $refKey,
-                                'created' => date("Y-m-d H:i:s")
-                            );
-                            $this->mReferral->createReferralLink($aRData);
-                        }
-                        //Mark Sale to this refkey
-                        $aSaleData['refkey'] = $refKey;
-                        $aSaleData['advocate_id'] = $iSubscriberID;
-                        $refLink = site_url() . 'ref/t/' . $refKey;
-                    } else {
-                        //Ok we are good now, go ahead and register a new user
-                        //echo "I am here";
+		if (!empty($userID)) {
+			$oGlobalUser = $mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
+			if (!empty($oGlobalUser)) {
+				$iSubscriberID = $oGlobalUser->id;
+			} else {
+				//Add global subscriber
+				$aSubscriberData = array(
+					'owner_id' => $userID,
+					'firstName' => $firstName,
+					'lastName' => $lastName,
+					'email' => $email,
+					'created' => date("Y-m-d H:i:s")
+				);
+				$iSubscriberID = $mSubscriber->addGlobalSubscriber($aSubscriberData);
+			}
 
-                        $aData = array(
-                            'subscriber_id' => $iSubscriberID,
-                            'user_id' => $userID,
-                            'account_id' => $accountID,
-                            'affiliateid' => $affiliateID,
-                            'created' => date("Y-m-d H:i:s")
-                        );
+			if (!empty($iSubscriberID)) {
+				$oExistingUser = $mReferral->checkIfExistingAdvocate($iSubscriberID, $accountID);
+				
+				if (!empty($oExistingUser)) {
+					$existingUserID = $oExistingUser->id;
+					$refKey = $oExistingUser->refkey;
+					if (empty($refKey)) {
+						//Add missing Referral link
+						$refKey = $iSubscriberID . '-' . $timeNow;
+						$aRData = array(
+							'referral_id' => $referralID,
+							'advocate_id' => '',
+							'subscriber_id' => $iSubscriberID,
+							'refkey' => $refKey,
+							'created' => date("Y-m-d H:i:s")
+						);
+						$mReferral->createReferralLink($aRData);
+					}
+					//Mark Sale to this refkey
+					$aSaleData['refkey'] = $refKey;
+					$aSaleData['advocate_id'] = $iSubscriberID;
+					$refLink = base_url() . 'ref/t/' . $refKey;
+				} else {
+					//Ok we are good now, go ahead and register a new user
+					//echo "I am here";
 
-                        $referredUserID = $this->mReferral->addReferredUser($aData);
+					$aData = array(
+						'subscriber_id' => $iSubscriberID,
+						'user_id' => $userID,
+						'account_id' => $accountID,
+						'affiliateid' => $affiliateID,
+						'created' => date("Y-m-d H:i:s")
+					);
 
-                        if (!empty($referredUserID)) {
-                            //Generate Referral Link
-                            $oSettings = $this->mReferral->getReferralSettings($accountID, $hash = true);
-                            $storeID = $oSettings->rewardID;
-                            if ($storeID > 0) {
-                                $refKey = $iSubscriberID . '-' . $timeNow;
-                                $aRefData = array(
-                                    'referral_id' => $storeID,
-                                    'advocate_id' => $referredUserID,
-                                    'subscriber_id' => $iSubscriberID,
-                                    'refkey' => $refKey,
-                                    'created' => date("Y-m-d H:i:s")
-                                );
-                                $bAdded = $this->mReferral->createReferralLink($aRefData);
-                                if ($bAdded) {
-                                    $aSaleData['refkey'] = $refKey;
-                                    $refLink = site_url() . 'ref/t/' . $refKey;
-                                    $aSaleData['advocate_id'] = $iSubscriberID;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+					$referredUserID = $mReferral->addReferredUser($aData);
 
-            if ($showWidget) {
-                //Get Widget
-                $aTagLineData = $this->getReferralTagLines($accountID);
-                $widgetData = array(
-                    'accountID' => $accountID,
-                    'tagTitle' => $aTagLineData['tagTitle'],
-                    'tagLineDesc' => $aTagLineData['tagLineDesc'],
-                    'refLink' => $refLink
-                );
-                $content = $this->load->view("admin/modules/referral/widgets/post_purchase.php", $widgetData, true);
-            }
+					if (!empty($referredUserID)) {
+						//Generate Referral Link
+						$oSettings = $mReferral->getReferralSettings($accountID, $hash = true);
+						$storeID = $oSettings->rewardID;
+						if ($storeID > 0) {
+							$refKey = $iSubscriberID . '-' . $timeNow;
+							$aRefData = array(
+								'referral_id' => $storeID,
+								'advocate_id' => $referredUserID,
+								'subscriber_id' => $iSubscriberID,
+								'refkey' => $refKey,
+								'created' => date("Y-m-d H:i:s")
+							);
+							$bAdded = $mReferral->createReferralLink($aRefData);
+							if ($bAdded) {
+								$aSaleData['refkey'] = $refKey;
+								$refLink = base_url() . 'ref/t/' . $refKey;
+								$aSaleData['advocate_id'] = $iSubscriberID;
+							}
+						}
+					}
+				}
+			}
+		}
 
-            if (!empty($refKey)) {
-                //Save Sale related data
-                $bSavedSale = $this->mReferral->saveReferralSale($aSaleData);
-                if ($bSavedSale) {
-                    $response = array('status' => 'success', 'display_widget' => true, 'content' => utf8_encode($content), 'reflink' => $refLink, 'msg' => "Success");
-                }
-            }
+		if ($showWidget) {
+			//Get Widget
+			$aTagLineData = $this->getReferralTagLines($accountID);
+			$widgetData = array(
+				'accountID' => $accountID,
+				'tagTitle' => $aTagLineData['tagTitle'],
+				'tagLineDesc' => $aTagLineData['tagLineDesc'],
+				'refLink' => $refLink
+			);
+			
+			$content = view('admin.modules.referral.widgets.post_purchase', $widgetData)->render();
+		}
 
-            if (!empty($affiliateID)) {
-                //Add Affiliate Record into the advocate account
-                $affData = array(
-                    'advocate_id' => $iSubscriberID,
-                    'advocate_referral_id' => $referralID,
-                    'affiliate_id' => $affiliateID,
-                    'affiliate_referral_id' => $affiliateReferralID,
-                    'created' => date("Y-m-d H:i:s")
-                );
-                $this->mReferral->addAdvoateAffiliate($affData);
-            }
-        }
+		if (!empty($refKey)) {
+			//Save Sale related data
+			$bSavedSale = $mReferral->saveReferralSale($aSaleData);
+			if ($bSavedSale) {
+				$response = array('status' => 'success', 'display_widget' => true, 'content' => utf8_encode($content), 'reflink' => $refLink, 'msg' => "Success");
+			}
+		}
+
+		if (!empty($affiliateID)) {
+			//Add Affiliate Record into the advocate account
+			$affData = array(
+				'advocate_id' => $iSubscriberID,
+				'advocate_referral_id' => $referralID,
+				'affiliate_id' => $affiliateID,
+				'affiliate_referral_id' => $affiliateReferralID,
+				'created' => date("Y-m-d H:i:s")
+			);
+			$mReferral->addAdvoateAffiliate($affData);
+		}
+        
         echo json_encode($response);
         exit;
     }

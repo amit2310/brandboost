@@ -188,6 +188,7 @@ Route::post('reviews/addcomment','Reviews@addComment');
 
 Route::post('referrals/display_widget/{id1}/{id2}','Referrals@displayWidget');
 Route::post('referrals/registerReferral','Referrals@registerReferral');
+Route::post('referrals/recordSale','Referrals@recordSale');
 Route::get('ref/t/{id}','Ref@t');
 
 
