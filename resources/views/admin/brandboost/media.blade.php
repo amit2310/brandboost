@@ -340,7 +340,7 @@
 														<ul class="dropdown-menu dropdown-menu-right more_act">
 															<li><a href="<?php echo $filePath; ?>" data-popup="lightbox"><i class="icon-eye txt_purple"></i> View</a></li>
 															<li><a href="<?php echo $filePath; ?>"><i class="icon-download4 txt_red"></i> Download</a></li>
-															<li><a href="javascript:void(0);"><i class="icon-redo2 txt_blue"></i> Share</a></li>
+															<!-- <li><a href="javascript:void(0);"><i class="icon-redo2 txt_blue"></i> Share</a></li> -->
 															<li><a href="javascript:void(0);" class="deleteSingleVideo" reviewId="<?php echo $review->id; ?>"  mediaName="<?php echo $value['media_url']; ?>"><i class="icon-bin txt_grey"></i> Delete</a></li>
 														</ul>
 													</div>
