@@ -701,9 +701,6 @@ class dropzone extends Controller
                 $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
-                pre($filesizeInBytes);
-                pre($_FILES);
-                die();
 
                 //Collect Text Review(Save Video into S3)
                 if(!empty($_FILES['files'])) {
@@ -780,6 +777,8 @@ class dropzone extends Controller
                             //$filekey = "chat_attachments/". $videoReviewFile;
                             $filename = $videoReview['name'];
                             $input = file_get_contents($videoReview['tmp_name']);
+                            pre($input);
+                            die();
                             $s3 = \Storage::disk('s3');
                             $s3->put($filekey,$input, 'public');
                         }
