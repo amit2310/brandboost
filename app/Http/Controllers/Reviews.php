@@ -691,16 +691,21 @@ class Reviews extends Controller {
     }
 
 
-    public function submitOnsiteReview() {
+    /**
+    * This function is used to submit onsite review
+    * @param type
+    * @return type
+    */
+    public function submitOnsiteReview(Request $request) {
         $response = array();
-        $post = $this->input->post();
-
-        $reviewUniqueID = $post['reviewUniqueID'];
-        $campaignID = $post['campaign_id'];
+        $mReviews = new ReviewsModel();
+        $mInviter = new BrandboostModel();
+        $reviewUniqueID = $request->reviewUniqueID;
+        $campaignID = $request->campaign_id;
         if ($reviewUniqueID != '') {
-            $reviewDetails = $this->mReviews->getOnsiteReviewDetailsByUID($reviewUniqueID);
-            $siteReviewDetails = $this->mReviews->getOnsiteSiteReviewDetailsByUID($reviewUniqueID);
-            $aBrandboost = $this->mInviter->getBBInfo($campaignID);
+            $reviewDetails = $mReviews->getOnsiteReviewDetailsByUID($reviewUniqueID);
+            $siteReviewDetails = $mReviews->getOnsiteSiteReviewDetailsByUID($reviewUniqueID);
+            $aBrandboost = $mInviter->getBBInfo($campaignID);
             $clientID = $aBrandboost->user_id;
             //Send Thank you email
             $aReviewRes = array(
@@ -713,7 +718,7 @@ class Reviews extends Controller {
 
             //pre($aReviewRes);
 
-            $this->sendReviewThankyouEmail($aReviewRes);
+            //$this->sendReviewThankyouEmail($aReviewRes);
             $response = array('status' => 'success');
         } else {
             $response = array('status' => 'error');

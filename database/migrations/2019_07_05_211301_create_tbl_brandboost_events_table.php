@@ -21,7 +21,7 @@ class CreateTblBrandboostEventsTable extends Migration {
 			$table->integer('previous_event_id')->nullable();
 			$table->string('created', 50);
 			$table->string('updated', 50);
-			$table->boolean('status')->default(1);
+			$table->boolean('status')->default(0);
 		});
 	}
 

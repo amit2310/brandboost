@@ -1699,7 +1699,7 @@ class Brandboost extends Controller {
 	* @return type
 	*/
 	public function publishOnsiteStatusBB() {
-
+        
         $response = array();
         $brandboostID = Input::post('brandboostID');
         $status = Input::post('status');
@@ -1708,13 +1708,26 @@ class Brandboost extends Controller {
         $userID = $aUser->id;
 
         if (!empty($brandboostID)) {
-            $aData = array(
+            
+            $mWorkflow = new WorkflowModel();
+            $moduleName = 'brandboost';
+            $moduleUnitID = $brandboostID;
+            
+            /**
+             $aData = array(
                 'status' => $status,
             );
 
-            $result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
-			
-            $response['status'] = 'success';
+            $result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID); */
+            
+            $result = $mWorkflow->launchWorkflowCampaign($moduleName, $moduleUnitID);
+            
+            if($result){
+                $response['status'] = 'success';
+            }else{
+                $response['status'] = 'error';
+            }
+            
         }
 
         echo json_encode($response);
