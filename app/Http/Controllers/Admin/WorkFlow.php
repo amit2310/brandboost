@@ -1877,7 +1877,12 @@ class WorkFlow extends Controller {
         $productsDetails = $mWorkflow->getProductDataByBBID($brandboostID);
         if ($oBrandboost->review_type == 'offsite') {
             $aOffsiteUrls = unserialize($oBrandboost->offsites_links);
-            $random_keys = array_rand($aOffsiteUrls, 1);
+            if(!empty($aOffsiteUrls)){
+                $random_keys = array_rand($aOffsiteUrls, 1);
+            }else{
+                $random_keys = $aOffsiteUrls[0];
+            }
+            //$random_keys = array_rand($aOffsiteUrls, 1);
             $offsiteURL = $aOffsiteUrls[$random_keys];
         }
 

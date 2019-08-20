@@ -963,12 +963,7 @@ class Templates extends Controller {
         $sHtml = str_replace(array('{GREETING}', '{INTRODUCTION}'), array($greeting, $introduction), $sHtml);
         if ($oBrandboost->review_type == 'offsite') {
             $aOffsiteUrls = unserialize($oBrandboost->offsites_links);
-            if(!empty($aOffsiteUrls)){
-                $random_keys = array_rand($aOffsiteUrls, 1);
-            }else{
-                $random_keys = $aOffsiteUrls[0];
-            }
-            
+            $random_keys = array_rand($aOffsiteUrls, 1);
             $offsiteURL = $aOffsiteUrls[$random_keys];
         }
 
