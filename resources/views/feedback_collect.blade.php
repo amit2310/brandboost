@@ -173,7 +173,7 @@
                                 data: formdata + "&happy=yes&_token={{csrf_token()}}",
                                 dataType: "text",
                                 success: function () {
-                                    window.location.href = '<?php echo base_url('feedback/index/thankyou/?'.$getParam);?>';                                    
+                                    window.location.href = '<?php echo base_url('feedback/thankyou/?'.$getParam);?>';                                    
                                 }
                             });
                         }

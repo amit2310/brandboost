@@ -77,7 +77,7 @@
                                 <input type="hidden" value="4" id="ratingValue" name="ratingValue">
                             <?php endif; ?>
                             <button type="submit" class="btn dark_btn bkg_blue_light h52 mr10 sh_no">Send feedback <i class="icon-paperplane"></i></button>
-                            <a href="<?php echo base_url('/feedback/index/thankyou/?'.$getParam);?>" class="btn light_btn bkg_grey_light h52 ml10 txt_dark sh_no pt20" data-dismiss="modal">Skip <i class="icon-arrow-right13"></i></a>
+                            <a href="<?php echo base_url('feedback/thankyou/?'.$getParam);?>" class="btn light_btn bkg_grey_light h52 ml10 txt_dark sh_no pt20" data-dismiss="modal">Skip <i class="icon-arrow-right13"></i></a>
                         </div>
                     </div>
 
