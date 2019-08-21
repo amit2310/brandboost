@@ -15,7 +15,7 @@
         <link href="<?php echo base_url("assets/css/core.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/components.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/colors.css"); ?>" rel="stylesheet" type="text/css">
-        <link href="<?php echo base_url("new_pages/assets/css/theme1.css"); ?>" rel="stylesheet" type="text/css">
+        <link href="<?php echo base_url("assets/css/theme1.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/bootstrap.css"); ?>" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
 
@@ -110,13 +110,13 @@
 
                     <?php endif; ?>
                     $.ajax({
-                        url: "<?php echo base_url('/feedback/saveResolution'); ?>",
+                        url: "<?php echo base_url('feedback/saveResolution'); ?>",
                         type: "POST",
-                        data: formdata + "&category=" + cat,
+                        data: formdata + "&category=" + cat+"&_token={{csrf_token()}}",
                         dataType: "json",
                         success: function (response) {
                             if (response.status == "success") {
-                                window.location.href = '<?php echo base_url('/feedback/index/thankyou/?'.$getParam);?>';
+                                window.location.href = '<?php echo base_url('feedback/thankyou/?'.$getParam);?>';
                             }
                         },
                         error: function (response) {

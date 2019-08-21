@@ -15,7 +15,7 @@
         <link href="<?php echo base_url("assets/css/core.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/components.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/colors.css"); ?>" rel="stylesheet" type="text/css">
-        <link href="<?php echo base_url("new_pages/assets/css/theme1.css"); ?>" rel="stylesheet" type="text/css">
+        <link href="<?php echo base_url("assets/css/theme1.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/bootstrap.css"); ?>" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
 
@@ -158,7 +158,7 @@
 
                     <div class="review_button mt30">
                             <!--<button class="btn dark_btn bkg_blue_light h52 mr10 sh_no">Send feedback <i class="icon-paperplane"></i></button>-->
-                        <a href="<?php echo (!empty($oBrandboost->store_url) ? $oBrandboost->store_url : site_url()); ?>" class="btn light_btn bkg_grey_light h52 ml10 txt_dark sh_no" style="padding-top:17px;">Back to the homepage <i class="icon-arrow-right13"></i></a>
+                        <a href="<?php echo (!empty($oBrandboost->store_url) ? $oBrandboost->store_url : base_url()); ?>" class="btn light_btn bkg_grey_light h52 ml10 txt_dark sh_no" style="padding-top:17px;">Back to the homepage <i class="icon-arrow-right13"></i></a>
                     </div>
 
                 </div>

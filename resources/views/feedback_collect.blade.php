@@ -15,7 +15,7 @@
         <link href="<?php echo base_url("assets/css/core.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/components.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/colors.css"); ?>" rel="stylesheet" type="text/css">
-        <link href="<?php echo base_url("new_pages/assets/css/theme1.css"); ?>" rel="stylesheet" type="text/css">
+        <link href="<?php echo base_url("assets/css/theme1.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/bootstrap.css"); ?>" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
 
@@ -173,8 +173,7 @@
                                 data: formdata + "&happy=yes&_token={{csrf_token()}}",
                                 dataType: "text",
                                 success: function () {
-                                    console.log('testing123');
-                                    //window.location.href = '<?php echo base_url('feedback/index/thankyou/?'.$getParam);?>';                                    
+                                    window.location.href = '<?php echo base_url('feedback/index/thankyou/?'.$getParam);?>';                                    
                                 }
                             });
                         }
@@ -184,12 +183,12 @@
                 
                 
 				$("#yesfeed").click(function () {
-					window.location.href = '<?php echo base_url('/feedback/index/thankyou/?'.$getParam);?>';
+					window.location.href = '<?php echo base_url('/feedback/thankyou/?'.$getParam);?>';
                 });
 				
 
                 $("#nothappy").click(function () {
-                    window.location.href = '<?php echo base_url('/feedback/index/resolution/?'.$getParam);?>';  
+                    window.location.href = '<?php echo base_url('/feedback/resolution/?'.$getParam);?>';  
                 });
 				
                 
