@@ -171,8 +171,7 @@ class Feedback extends Controller {
 
             if (!empty($subscriberId)) {
                 $aSubscriberInfo = $mUser->getSubscriberInfo($subscriberId);
-                pre($aSubscriberInfo);
-                die();
+                $aSubscriberInfo = $aSubscriberInfo[0];
                 $firstName = $aSubscriberInfo->firstname;
                 $lastName = $aSubscriberInfo->lastname;
                 $sName = $firstName . ' ' . $lastName;
@@ -200,7 +199,7 @@ class Feedback extends Controller {
                     'created' => date("Y-m-d H:i:s")
                 );
 
-                $result = $this->mFeedback->add($aData);
+                $result = $mFeedback->add($aData);
 
                 $aFeedbackRes = array(
                     'feedback_type' => $category,
@@ -212,7 +211,7 @@ class Feedback extends Controller {
                     'subscriber_name' => $sName,
                     'email' => $email
                 );
-                $this->sendFeedbackThankyouEmail($aFeedbackRes);
+                //$this->sendFeedbackThankyouEmail($aFeedbackRes);
 
                 //Add System Notification
                 $aNotification = array(
@@ -222,7 +221,7 @@ class Feedback extends Controller {
                     'link' => base_url() . 'admin/feedback',
                     'created' => date("Y-m-d H:i:s")
                 );
-                add_notifications($aNotification, $eventName, $ownerID);
+                //add_notifications($aNotification, $eventName, $ownerID);
 
                 if ($result) {
                     $allDone = true;
