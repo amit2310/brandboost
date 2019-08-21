@@ -217,10 +217,9 @@ class Brandboost extends Controller {
         $bActiveSubsription = $mUsers->isActiveSubscription();
         $eventsdata = $mBrandboost->getBrandboostEvents($brandboostID);
         $aReviews = $mReviews->getCampaignAllReviews($brandboostID);
-        //$revCount = getCampaignReviewCount($brandboostID);
-        //$revRA = getCampaignReviewRA($brandboostID);
-		$revCount = 1;
-		$revRA = array();
+        $revCount = getCampaignReviewCount($brandboostID);
+        $revRA = getCampaignReviewRA($brandboostID);
+		
         $emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite');
         $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');
         

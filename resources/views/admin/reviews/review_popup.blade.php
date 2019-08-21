@@ -70,10 +70,6 @@ if (!empty($media_url)) {
     $mediaType = '';
 }
 ?>
-<!--<h5 class="text-semibold no-margin-top row">
-    <div class="col-md-6"><a href="javascript:void(0);"><?php //echo $oReview->brand_title; ?></a></div>
-    <div class="col-md-6">&nbsp;</div>
-</h5>-->
 
 <div class="row">
     <div class="col-md-3">
@@ -100,7 +96,6 @@ if (!empty($media_url)) {
             <div class="tab-pane active" id="review-tab">
                 <div class="w100 <?php if ($oReview->review_type == 'video'): ?>text-center<?php endif; ?>">
                     <?php echo (!empty($oReview->comment_text) ? $oReview->comment_text : ($review_title)); ?>
-    <!--                <iframe src="https://www.youtube-nocookie.com/embed/_BOdEeZmns0" allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0"></iframe>-->
                     <?php if (!empty($aReview->media_url)) { ?>
                         <?php if ($mediaType == 'video'): ?>
                             <video controls class="bb_media_container">

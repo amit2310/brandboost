@@ -7,7 +7,7 @@
 @section('contents')
 
 <?php
-
+error_reporting(0);
 $feedbackResponseData = new stdClass();
 
 if(count($feedbackResponse) > 0){
