@@ -154,7 +154,7 @@ class Feedback extends Controller {
             $bbID = strip_tags($post['bbID']);
             $happy = strip_tags($post['happy']);
             $bRequireGlobalSubs = false;
-            $mFeedback  = FeedbackModel();
+            $mFeedback  = new FeedbackModel();
             $mInviter = new BrandboostModel();
             $mReview  = new ReviewlistsModel();
             $mSubscriber  = new SubscriberModel();
