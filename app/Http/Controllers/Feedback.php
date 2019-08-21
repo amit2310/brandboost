@@ -141,6 +141,8 @@ class Feedback extends Controller {
     */
     public function saveFeedback() {
 
+        echo 'testing';
+        die();
         $response = array();
         $post = array();
         $allDone = false;
