@@ -128,6 +128,7 @@ class Contacts extends Controller  {
     
 
     public function profile($contactId) {
+        die;
         $oUser = getLoggedUser();
         $clientID = $oUser->id;
         $response = array();
