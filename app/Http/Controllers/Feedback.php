@@ -79,12 +79,11 @@ class Feedback extends Controller {
     }
 
 
-        /**
-        * function to get resolution values 
-        * @param type $page
-        * @return type
-        */
-
+    /**
+    * function to get resolution values 
+    * @param type $page
+    * @return type
+    */
     public function resolution() {
         $get = array();
         $get = Input::get();
@@ -140,7 +139,6 @@ class Feedback extends Controller {
     * @param type
     * @return type
     */
-
     public function saveFeedback() {
 
         $response = array();
