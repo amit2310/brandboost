@@ -155,7 +155,7 @@
                         if (selectedRatings <= 2) {
                             //display Resolution popup
                             $("#resolution").modal("show");
-                            window.location.href = '<?php echo base_url('/feedback/index/resolution/?'.$getParam);?>';
+                            window.location.href = '<?php echo base_url('feedback/index/resolution/?'.$getParam);?>';
                         } else {
                             //Proceed further and redirect to destination page
                             if (selectedRatings == 3) {
@@ -173,7 +173,8 @@
                                 data: formdata + "&happy=yes&_token={{csrf_token()}}",
                                 dataType: "text",
                                 success: function () {
-                                    window.location.href = '<?php echo base_url('feedback/index/thankyou/?'.$getParam);?>';                                    
+                                    console.log('testing123');
+                                    //window.location.href = '<?php echo base_url('feedback/index/thankyou/?'.$getParam);?>';                                    
                                 }
                             });
                         }
