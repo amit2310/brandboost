@@ -163,17 +163,17 @@ class BrandboostModel extends Model {
      */
     public static function getBrandboostEmailSendMonth($userId, $type = '') {
         $oData = DB::table('tbl_track_sendgrid')
-                ->when(!empty($userId), function ($query) use ($userId) {
-                    return $query->where('tbl_brandboost.user_id', $userId);
-                })
-                ->when(!empty($type), function ($query) use ($type) {
-                    return $query->where('tbl_brandboost.review_type', $type);
-                })
-                ->where('tbl_brandboost.delete_status', 0)
-                ->where('tbl_track_sendgrid.event_name', 'delivered')
-                ->orderBy('tbl_brandboost.id', 'desc')
-                ->join('tbl_brandboost', 'tbl_brandboost.id', '=', 'tbl_track_sendgrid.brandboost_id')
-                ->get();
+			->when(!empty($userId), function ($query) use ($userId) {
+				return $query->where('tbl_brandboost.user_id', $userId);
+			})
+			->when(!empty($type), function ($query) use ($type) {
+				return $query->where('tbl_brandboost.review_type', $type);
+			})
+			->where('tbl_brandboost.delete_status', 0)
+			->where('tbl_track_sendgrid.event_name', 'delivered')
+			->orderBy('tbl_brandboost.id', 'desc')
+			->join('tbl_brandboost', 'tbl_brandboost.id', '=', 'tbl_track_sendgrid.brandboost_id')
+			->get();
         return $oData;
     }
 

@@ -157,7 +157,7 @@ $(document).ready(function () {
 
         var moduleName = $(this).attr('data-modulename');
         var moduleUnitId = $(this).attr('data-moduleaccountid');
-
+		var tkn = $('meta[name="_token"]').attr('content');
         var val = [];
         $('.checkRows:checkbox:checked').each(function (i) {
             val[i] = $(this).val();
@@ -174,7 +174,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: "/admin/subscriber/deleteBulkModuleContacts",
                     type: "POST",
-                    data: {multipalSubscriberId: val, moduleName: moduleName, moduleUnitId: moduleUnitId},
+                    data: {multipalSubscriberId: val, moduleName: moduleName, moduleUnitId: moduleUnitId, _token:tkn},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -197,6 +197,7 @@ $(document).ready(function () {
 		
         var moduleName = $(this).attr('data-modulename');
         var moduleUnitId = $(this).attr('data-moduleaccountid');
+		var tkn = $('meta[name="_token"]').attr('content');
 
         var val = [];
         $('.checkRows:checkbox:checked').each(function (i) {
@@ -214,7 +215,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: "/admin/subscriber/archiveBulkModuleContacts",
                     type: "POST",
-                    data: {multipalSubscriberId: val, moduleName: moduleName, moduleUnitId: moduleUnitId},
+                    data: {multipalSubscriberId: val, moduleName: moduleName, moduleUnitId: moduleUnitId, _token: tkn},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -346,7 +347,7 @@ $(document).ready(function () {
 
         var moduleName = $(this).attr('data-modulename');
         var moduleUnitId = $(this).attr('data-moduleaccountid');
-
+		var tkn = $('meta[name="_token"]').attr('content');
         var val = [];
         $('.checkArchiveRows:checkbox:checked').each(function (i) {
             val[i] = $(this).val();
@@ -373,7 +374,7 @@ $(document).ready(function () {
                             $.ajax({
                                 url: '/admin/subscriber/deleteBulkModuleContacts',
                                 type: "POST",
-                                data: {multipalSubscriberId: val, moduleName: moduleName, moduleUnitId: moduleUnitId},
+                                data: {multipalSubscriberId: val, moduleName: moduleName, moduleUnitId: moduleUnitId, _token: tkn},
                                 dataType: "json",
                                 success: function (data) {
                                     if (data.status == 'success') {
@@ -394,7 +395,7 @@ $(document).ready(function () {
 
         var moduleName = $(this).attr('data-modulename');
         var moduleUnitId = $(this).attr('data-moduleaccountid');
-
+		var tkn = $('meta[name="_token"]').attr('content');
         var val = [];
         $('.checkArchiveRows:checkbox:checked').each(function (i) {
             val[i] = $(this).val();
@@ -421,7 +422,7 @@ $(document).ready(function () {
                             $.ajax({
                                 url: '/admin/subscriber/activeBulkModuleContacts',
                                 type: "POST",
-                                data: {multipalSubscriberId: val, moduleName: moduleName, moduleUnitId: moduleUnitId},
+                                data: {multipalSubscriberId: val, moduleName: moduleName, moduleUnitId: moduleUnitId, _token:tkn},
                                 dataType: "json",
                                 success: function (data) {
                                     if (data.status == 'success') {
@@ -441,10 +442,11 @@ $(document).ready(function () {
         var subscriberId = $(this).attr('data-modulesubscriberid');
         var moduleName = $(this).attr('data-modulename');
         var moduleUnitId = $(this).attr('data-moduleaccountid');
+		var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/subscriber/moveToActiveModuleContact',
             type: "POST",
-            data: {subscriberId: subscriberId, moduleName: moduleName, moduleUnitId: moduleUnitId},
+            data: {subscriberId: subscriberId, moduleName: moduleName, moduleUnitId: moduleUnitId, _token:tkn},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
