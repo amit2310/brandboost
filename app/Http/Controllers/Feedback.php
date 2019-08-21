@@ -141,8 +141,6 @@ class Feedback extends Controller {
     */
     public function saveFeedback() {
 
-        echo 'testing';
-        die();
         $response = array();
         $post = array();
         $allDone = false;
@@ -162,7 +160,7 @@ class Feedback extends Controller {
             $mSubscriber  = new SubscriberModel();
 
             if (!empty($bbID)) {
-                $oBrandboost = $mInviter->getBBInfo($bbID);
+                $oBrandboost = BrandboostModel::getBBInfo($bbID);
                 $ownerID = $oBrandboost->user_id;
                 $eventName = 'sys_offsite_review_add';
             }
@@ -170,7 +168,9 @@ class Feedback extends Controller {
 
 
             if (!empty($subscriberId)) {
-                $aSubscriberInfo = $mFeedback->getSubscriberInfo($subscriberId);
+                $aSubscriberInfo = SubscriberModel::getSubscriberInfo($subscriberId);
+                pre($aSubscriberInfo);
+                die();
                 $firstName = $aSubscriberInfo->firstname;
                 $lastName = $aSubscriberInfo->lastname;
                 $sName = $firstName . ' ' . $lastName;
