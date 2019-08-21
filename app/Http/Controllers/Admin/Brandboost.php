@@ -22,7 +22,7 @@ use App\Models\Admin\Crons\InviterModel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
-
+error_reporting(0);
 class Brandboost extends Controller {
 
     var $default_main_email_template_onsite;
