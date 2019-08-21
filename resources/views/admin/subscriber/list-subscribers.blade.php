@@ -37,9 +37,7 @@
 
     <div class="tab-content"> 
         <!--===========TAB 1===========-->
-        <?php //$this->load->view("admin/components/smart-popup/contacts");?>
-        <?php //$this->load->view('admin/workflow/workflow_subscribers', array('showArchived' => true)); ?>
-
+        
         @include('admin.workflow2.workflow_subscribers', array('showArchived' => true));
         
     </div>

@@ -784,9 +784,7 @@ class Tags extends Controller {
         );
 
         $bAdded = $mTag->addSubscriberTag($aInput);
-        pre($bAdded);
-        die();
-
+       
         //Get refreshed tag list
         $oTags = $mTag->getSubscriberTags($subscriberID);
 

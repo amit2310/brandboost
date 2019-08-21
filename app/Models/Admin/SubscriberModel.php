@@ -1684,18 +1684,13 @@ FROM
     }
 
     public function getBrandboostContactInfo($id = '') {
-        $response = array();
-        $this->db->select('tbl_brandboost_users.id AS subsID, tbl_brandboost_users.status AS subs_status,tbl_brandboost_users.created AS subs_created, tbl_subscribers.*');
-        $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id= tbl_subscribers.id", "LEFT");
-        $this->db->where('tbl_brandboost_users.id', $id);
-        $this->db->order_by('tbl_brandboost_users.id', 'DESC');
-        $this->db->from('tbl_brandboost_users');
-        $result = $this->db->get();
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+		$oData = DB::table('tbl_brandboost_users')
+			->select('tbl_brandboost_users.id AS subsID', 'tbl_brandboost_users.status AS subs_status', 'tbl_brandboost_users.created AS subs_created', 'tbl_subscribers.*')
+			->where('tbl_brandboost_users.id', $id)
+			->orderBy('tbl_brandboost_users.id', 'desc')
+			->join('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=', 'tbl_subscribers.id')
+			->get();
+        return $oData;
     }
 
     public function getReferralContactInfo($id = '') {
@@ -1735,34 +1730,32 @@ FROM
         if ($subscriberID > 0 && !empty($moduleName)) {
 
             if ($moduleName == 'automation' || $moduleName == 'broadcast' || $moduleName == 'list') {
-                $this->db->where("id", $subscriberID);
-                $bUpdated = $this->db->delete("tbl_automation_users");
+				DB::table('tbl_automation_users')
+				->where('id', '=', $subscriberID)
+				->delete();
             } else if ($moduleName == 'brandboost') {
-                $this->db->where("subscriber_id", $subscriberID);
-                $this->db->where("brandboost_id", $moduleUnitID);
-                $bUpdated = $this->db->delete("tbl_brandboost_users");
+				$bUpdated = DB::table('tbl_brandboost_users')
+				->where('subscriber_id', '=', $subscriberID)
+				->where('brandboost_id', '=', $moduleUnitID)
+				->delete();
                 if ($bUpdated) {
                     $this->deleteModuleCampaignSubscriber($subscriberID, $moduleName, $moduleUnitID);
                 }
             } else if ($moduleName == 'referral') {
-                //$this->db->where("account_id", $moduleUnitID);
-                $this->db->where("id", $subscriberID);
-                $bUpdated = $this->db->delete("tbl_referral_users");
+				DB::table('tbl_referral_users')
+				->where('id', '=', $subscriberID)
+				->delete();
             } else if ($moduleName == 'nps') {
-                //$this->db->where("account_id", $moduleUnitID);
-                $this->db->where("subscriber_id", $subscriberID);
-                $this->db->where("account_id", $moduleUnitID);
-                $bUpdated = $this->db->delete("tbl_nps_users");
+				$bUpdated = DB::table('tbl_nps_users')
+				->where('subscriber_id', '=', $subscriberID)
+				->where('account_id', '=', $moduleUnitID)
+				->delete();
                 if ($bUpdated) {
                     $this->deleteModuleCampaignSubscriber($subscriberID, $moduleName, $moduleUnitID);
                 }
             } else if ($moduleName == 'people') {
-
                 DB::table('tbl_subscribers')->where('id', '=', $subscriberID)->delete();
-            } else {
-                //Do nothing
             }
-            //echo $this->db->last_query(); exit;
         }
         
         return true;
@@ -1771,22 +1764,20 @@ FROM
     public function deleteModuleCampaignSubscriber($subscriberID, $moduleName, $moduleUnitID) {
 
         if ($subscriberID > 0 && !empty($moduleName)) {
-
-            $this->db->where("subscriber_id", $subscriberID);
             if ($moduleName == 'brandboost') {
-                $this->db->where("brandboost_id", $moduleUnitID);
-                $bUpdated = $this->db->delete("tbl_brandboost_campaign_users");
+				$bUpdated = DB::table('tbl_brandboost_campaign_users')
+				->where("subscriber_id", $subscriberID)
+				->where('brandboost_id', '=', $moduleUnitID)
+				->delete();
             } else if ($moduleName == 'referral') {
-                //$this->db->where("account_id", $moduleUnitID);
-                $bUpdated = $this->db->delete("tbl_referral_users");
+				$bUpdated = DB::table('tbl_referral_users')
+				->where("subscriber_id", $subscriberID)
+				->delete();
             } else if ($moduleName == 'nps') {
-                //$this->db->where("account_id", $moduleUnitID);
-                $this->db->where("nps_id", $moduleUnitID);
-                $bUpdated = $this->db->delete("tbl_nps_campaign_users");
-            } else {
-                //Do nothing
+				$bUpdated = DB::table('tbl_nps_campaign_users')
+				->where("nps_id", $moduleUnitID)
+				->delete();
             }
-            //echo $this->db->last_query(); exit;
         }
 
         if ($bUpdated) {
