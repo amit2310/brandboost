@@ -1,5 +1,4 @@
-
-<?php list($canRead, $canWrite) = fetchPermissions('Offsite Campaign'); ?>
+<?php error_reporting(0); list($canRead, $canWrite) = fetchPermissions('Offsite Campaign'); ?>
 
 <style type="text/css">
     .socialIcon {
