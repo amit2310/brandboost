@@ -203,7 +203,7 @@ class Subscribers extends Controller {
         $subscriberID = strip_tags($post['subscriberId']);
 
         $bDeleted = $mSubscriber->deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID);
-		exit;
+		
         if ($bDeleted == true) {
             $response = array('status' => 'success', 'msg' => "Contact deleted successfully!");
         }

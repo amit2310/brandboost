@@ -19,6 +19,7 @@ if (!empty($aBrandbosts)) {
         }
     }
 }
+error_reporting(0);
 ?>
 
 <!-- Content area -->
@@ -287,12 +288,12 @@ if (!empty($aBrandbosts)) {
                                             $revRA = getCampaignReviewRA($data->id);
                                             $allSubscribers = \App\Models\Admin\ListsModel::getAllSubscribersList($data->id);
 											
-											$allSubscribers = array();
 											$newContacts = 0;
+											$iActiveContactCount = 0;
+											$iArchiveCount = 0;
                                             $subs = '';
                                             if (!empty($allSubscribers)) {
                                                 $subs = $allSubscribers[0];
-                                                $newContacts = 0;
                                                 foreach ($allSubscribers as $oSubs) {
                                                     if(strtotime($oSubs->created)> $recent){
                                                         $newContacts++;

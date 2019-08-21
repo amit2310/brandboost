@@ -179,8 +179,9 @@ if(!empty($subscribersData)) { ?>
                                             <td class="text-center">
                                                 <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
                                                     <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
+														<?php if($showArchived == true){ ?>
                                                         <li><a class="moveToArchiveModuleContact" href="javascript:void(0);" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" csrf_token="<?php echo csrf_token(); ?>"><i class="icon-trash"></i> Move To Archive</a></li>
-
+														<?php } ?>
                                                         <?php
                                                         if ($oContact->status == 1 && $oContact->globalStatus == 1) {
                                                             ?><li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '0' csrf_token="<?php echo csrf_token(); ?>"><i class='icon-file-locked'></i> Inactive</a></li>
@@ -192,8 +193,9 @@ if(!empty($subscribersData)) { ?>
                                                         }
                                                         ?>
                                                         <li><a href="<?php echo base_url(); ?>admin/contacts/profile/<?php echo $oContact->subscriber_id; ?>"><i class="icon-eye"></i> View Details</a></li>   
+														<?php if($showArchived == true){ ?>
                                                         <li><a href="javascript:void(0);" class="editModuleSubscriber" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data-redirect="admin/lists/getListContacts?list_id=<?php echo (!empty($list_id)) ? $list_id : ''; ?>"><i class="icon-pencil"></i> Edit</a></li>
-
+														<?php } ?>
                                                         <li><a class="deleteModuleSubscriber" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" csrf_token="<?php echo csrf_token(); ?>" href="javascript:void(0);"><i class="icon-trash"></i> Delete</a></li>
                                                     </ul>
                                                 </div>
