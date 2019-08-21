@@ -385,8 +385,8 @@ class BrandboostInviter extends Command {
                     
                     $defaultFromEmail = (!empty($this->client_from_email)) ? $this->client_from_email : $this->from_email;
                     $defaultFromName = (!empty($this->client_from_name)) ? $this->client_from_name : $this->from_name;
-                    $fromEmail = empty($aCampaign->from_email) ? $defaultFromEmail : $fromEmail;
-                    $fromName = empty($aCampaign->from_name) ? $defaultFromName : $fromName;
+                    $fromEmail = empty($aCampaign->from_email) ? $defaultFromEmail : $aCampaign->from_email;
+                    $fromName = empty($aCampaign->from_name) ? $defaultFromName : $aCampaign->from_name;
                     $aEmailData = array(
                         'subject' => $subject,
                         'content' => $content,
