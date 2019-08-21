@@ -22,7 +22,7 @@ class Feedback extends Controller {
     * @return type
     */
 
-    public function index($page) {
+    public function index($page = '') {
         $get = array();
         $get = Input::get();
        
