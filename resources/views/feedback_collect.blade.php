@@ -203,7 +203,7 @@
                         data: formdata + "&happy=yes",
                         dataType: "text",
                         success: function () {
-                            window.location.href = '<?php echo base_url('/feedback/index/thankyou/?'.$getParam);?>';
+                            window.location.href = '<?php echo base_url('feedback/thankyou/?'.$getParam);?>';
                         }
                     });
                 });
