@@ -72,7 +72,6 @@ class Feedback extends Controller {
         );
 
       
-        pre($page);
         if ($page == 'resolution') {
           return view('feedback_collect_resolution', $aData);
         } else if ($page == 'sources' || $page == 'thankyou') {
