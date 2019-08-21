@@ -22,9 +22,10 @@ class Feedback extends Controller {
     * @return type
     */
 
-    public function index() {
+    public function index($page) {
         $get = array();
         $get = Input::get();
+       
         if (!empty($get)) {
             $subscriberID = $get['subid'];
             $clientID = $get['clid'];
@@ -70,6 +71,7 @@ class Feedback extends Controller {
             'getParam' => $qs
         );
 
+      
         if ($page == 'resolution') {
           return view('feedback_collect_resolution', $aData);
         } else if ($page == 'sources' || $page == 'thankyou') {
@@ -388,7 +390,7 @@ class Feedback extends Controller {
             $title = strip_tags($post['title']);
             $resolutionText = strip_tags($post['resolutionText']);
             $type = strip_tags($post['type']);
-            $mFeedback  = FeedbackModel();
+            $mFeedback  = new FeedbackModel();
             $mInviter = new BrandboostModel();
             $mReview  = new ReviewlistsModel();
             $mSubscriber  = new SubscriberModel();
@@ -425,7 +427,7 @@ class Feedback extends Controller {
                 'link' => base_url() . 'admin/feedback',
                 'created' => date("Y-m-d H:i:s")
             );
-            add_notifications($aNotification, $eventName, $ownerID);
+            //add_notifications($aNotification, $eventName, $ownerID);
 
             if ($bAllDone == true) {
                 if (!empty($subscriberId)) {

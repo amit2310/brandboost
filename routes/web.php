@@ -790,6 +790,8 @@ Route::post('reviews/deleteReviewMultipal', 'Reviews@deleteReviewMultipal');
 //offsite 
 Route::get('feedback', 'Feedback@index');
 Route::post('feedback/saveFeedback', 'Feedback@saveFeedback');
+Route::get('feedback/{page}', 'Feedback@index');
+Route::post('feedback/saveResolution', 'Feedback@saveResolution');
 
 
 
