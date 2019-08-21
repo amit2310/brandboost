@@ -10,6 +10,7 @@ use App\Models\Admin\Twillio_model;
 use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\ReviewlistsModel;
 use App\Models\Admin\BrandboostModel;
+use App\Models\Admin\UsersModel;
 error_reporting(0);
 
 class Feedback extends Controller {
@@ -158,6 +159,7 @@ class Feedback extends Controller {
             $mInviter = new BrandboostModel();
             $mReview  = new ReviewlistsModel();
             $mSubscriber  = new SubscriberModel();
+            $mUser = new UsersModel();
 
             if (!empty($bbID)) {
                 $oBrandboost = BrandboostModel::getBBInfo($bbID);
@@ -168,7 +170,7 @@ class Feedback extends Controller {
 
 
             if (!empty($subscriberId)) {
-                $aSubscriberInfo = SubscriberModel::getSubscriberInfo($subscriberId);
+                $aSubscriberInfo = $mUser->getSubscriberInfo($subscriberId);
                 pre($aSubscriberInfo);
                 die();
                 $firstName = $aSubscriberInfo->firstname;
