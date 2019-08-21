@@ -7,7 +7,8 @@
 @section('contents')
 <?php list($canRead, $canWrite) = fetchPermissions('Offsite Campaign'); ?>
 <?php
-error_reporting(0);
+pre($feedbackResponse);
+die;
 if($feedbackResponse->count() > 0){
 	$feedbackResponseData = $feedbackResponse[0];
 }else{
