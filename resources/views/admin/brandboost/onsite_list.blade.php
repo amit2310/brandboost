@@ -276,21 +276,20 @@ if (!empty($aBrandbosts)) {
 
                                     <tbody>
                                         <?php
-                                        //$inc = 1;
                                         $recent = strtotime('-24 hours');
                                         $aUser = getLoggedUser();
                                         $currentUserId = $aUser->id;
                                         foreach ($aBrandbosts as $data) {
-                                            //if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
+                                            if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
                                             $list_id = $data->id;
                                             $user_id = $data->user_id;
-                                            //$revCount = getCampaignReviewCount($data->id);
-                                            //$revRA = getCampaignReviewRA($data->id);
-                                            //$allSubscribers = \App\Models\Admin\ListsModel::getAllSubscribersList($data->id);
-											//pre($allSubscribers); die;
-                                           $allSubscribers = array();
-										   $newContacts = 0;
-                                            /*$subs = '';
+                                            $revCount = getCampaignReviewCount($data->id);
+                                            $revRA = getCampaignReviewRA($data->id);
+                                            $allSubscribers = \App\Models\Admin\ListsModel::getAllSubscribersList($data->id);
+											
+											$allSubscribers = array();
+											$newContacts = 0;
+                                            $subs = '';
                                             if (!empty($allSubscribers)) {
                                                 $subs = $allSubscribers[0];
                                                 $newContacts = 0;
@@ -304,7 +303,7 @@ if (!empty($aBrandbosts)) {
                                                         $iActiveContactCount++;
                                                     }
                                                 }
-                                            }*/
+                                            }
 
                                             if(!empty($subs->s_created)) {
                                                 $lastListTime = timeAgo($subs->s_created);
@@ -316,51 +315,43 @@ if (!empty($aBrandbosts)) {
                                                         </div>';
                                             }
 
-                                            //$siteRevCount = getCampaignSiteReviewCount($data->id);
+                                            $siteRevCount = getCampaignSiteReviewCount($data->id);
 											$siteRevCount = 1;
-                                            //$siteRevRA = getCampaignSiteReviewRA($data->id);
+                                            $siteRevRA = getCampaignSiteReviewRA($data->id);
 											$siteRevRA = 1;
-                                            
-											/*$brandImgArray = unserialize($data->brand_img);
-                                            $brand_img = $brandImgArray[0]['media_url'];
-
-                                            if (empty($brand_img)) {
-                                                $imgSrc = base_url('assets/images/default_table_img2.png');
-                                            } else {
-                                                $imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
-                                            }*/
+                                            /*if($data->brand_img == 'b:0;' || $data->brand_img == ''){
+												$imgSrc = base_url('assets/images/default_table_img2.png');
+											}else{
+												$brandImgArray = unserialize($data->brand_img);
+												$brand_img = $brandImgArray[0]['media_url'];
+												if (empty($brand_img)) {
+													$imgSrc = base_url('assets/images/default_table_img2.png');
+												} else {
+													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
+												}
+											}*/
 											$imgSrc = base_url('assets/images/default_table_img2.png');
-                                            ?>
-
-
-                                            <?php
+                                           
                                             $reviewRequests = \App\Models\Admin\BrandboostModel::getReviewRequest($data->id, '');
-                                            //$getSendRequest = count($reviewRequests);
-											$getSendRequest =1;
-                                            //$getSendRequestSms = getSendRequest($data->id, 'sms');
-											$getSendRequestSms = 1;
-                                            //$getSendRequestEmail = getSendRequest($data->id, 'email');
-											$getSendRequestEmail = 1;
+                                            $getSendRequest = count($reviewRequests);
+                                            $getSendRequestSms = getSendRequest($data->id, 'sms');
+                                            $getSendRequestEmail = getSendRequest($data->id, 'email');
                                             $getSendRequestEmailPersentage = $getSendRequestEmail * 100 / $getSendRequest;
                                             $getSendRequestSmsPersentage = $getSendRequestSms * 100 / $getSendRequest;
 
                                             $reviewResponse = \App\Models\Admin\BrandboostModel::getReviewRequestResponse($data->id);
-                                            //$getResCount = count($reviewResponse);
-                                            $getResCount = 1;
-                                            if($data->id == 190){
-                                               //pre($reviewResponse);
-                                               //die;
-                                               
-                                            }
-
+                                            $getResCount = count($reviewResponse);
+											
+											$getSendRequest = $getSendRequest > 0 ? $getSendRequest : 1;
+											$getResCount = $getResCount > 0 ? $getResCount : 1;
+                                            
                                             $positiveRating = 0;
                                             $neturalRating = 0;
                                             $negativeRating = 0;
                                             $positiveGraph = 0;
                                             $neturalGraph = 0;
                                             $negativeGraph = 0;
-                                            //pre($reviewResponse);
-                                            //echo 'ratings:- '.$reviewResponse->ratings;
+                                            
                                             $newPositive = $newNegative = $newNeutral = 0;
                                             foreach ($reviewResponse as $reviewData) {
                                                 
@@ -382,6 +373,7 @@ if (!empty($aBrandbosts)) {
                                                         $negativeRating++;
                                                     }
                                                 }
+												$reviewUserData = \App\Models\Admin\UsersModel::getUserInfo($reviewData->user_id);
                                             }
 
                                             $positiveGraph = $positiveRating * 100 / $getResCount;
@@ -390,7 +382,7 @@ if (!empty($aBrandbosts)) {
                                             $totalGraph = $getResCount * 100 / $getSendRequest;
                                             $totalGraph = $totalGraph > 100 ? 100 : $totalGraph;
 
-                                            $reviewUserData = \App\Models\Admin\UsersModel::getUserInfo(35); //$reviewResponse[0]->user_id
+                                            
                                             ?>
 
                                             <tr id="append-<?php echo $data->id; ?>" class="selectedClass">
@@ -413,7 +405,7 @@ if (!empty($aBrandbosts)) {
                                                 </td>
 
                                                 <td>
-                                                    <?php //echo ratingView($revRA); ?>
+                                                    <?php echo ratingView($revRA); ?>
                                                 </td>
                                                 <td>														
                                                     <div class="media-left">
@@ -601,7 +593,7 @@ if (!empty($aBrandbosts)) {
                                                                                 <li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="<?php echo $data->id; ?>" status="1"><i class="icon-file-stats"></i> Start</a></li>
                                                                             <?php } ?>
                                                                             <li><a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->id); ?>" brandID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
-                                                                            <!-- <li><a href="<?php echo base_url('admin/brandboost/brand_configuration/' . $data->id); ?>" class="text-default text-semibold"><i class="icon-pencil"></i> Brand Configuration</a></li> -->
+                                                                            
                                                                             <li><a href="javascript:void(0);" class="deleteCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
                                                                             <li><a href="javascript:void(0);" class="archiveCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-file-text2"></i> Move to Archive</a></li>
                                                                         <?php endif; ?>
@@ -619,20 +611,19 @@ if (!empty($aBrandbosts)) {
                                                                         <li><a href="javascript:void(0);" class="deleteCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
                                                                     </ul>
                                                                 </div>
-                    <?php
-                }
-            } else {
-                echo '-';
-            }
-        }
-        ?>														
+																<?php
+															}
+														} else {
+															echo '-';
+														}
+													}
+													?>														
                                                 </td>
                                             </tr>
-        <?php
-        //$inc++;
-        //}
-    }
-    ?>
+											<?php
+											}
+										}
+										?>
                                     </tbody>
                                 </table>
                             </div>

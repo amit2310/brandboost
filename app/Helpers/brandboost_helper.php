@@ -213,10 +213,7 @@ if (!function_exists('getCampaignSiteReviewCount')) {
 
     function getCampaignSiteReviewCount($campaignId) {
         $aUser = array();
-        $CI = & get_instance();
-        $CI->load->model("Sitereviews_model", "mSReviews");
-
-        $aUser = $CI->mSReviews->getCampSiteReviews($campaignId);
+        $aUser = \App\Models\SitereviewsModel::getCampSiteReviews($campaignId);
 
         if (!empty($aUser)) {
             return count($aUser);
@@ -230,12 +227,10 @@ if (!function_exists('getCampaignSiteReviewRA')) {
 
     function getCampaignSiteReviewRA($campaignId) {
         $reviewRA = array();
-        $CI = & get_instance();
-        $CI->load->model("Sitereviews_model", "mSReviews");
-
-        $reviewRA = $CI->mSReviews->getCampSiteReviewsRA($campaignId);
+        
+        $reviewRA = \App\Models\SitereviewsModel::getCampSiteReviewsRA($campaignId);
         $totalRA = 0;
-        if ($reviewRA > 0) {
+        if ($reviewRA->count() > 0) {
             foreach ($reviewRA as $data) {
                 $totalRA = $data->ratings + $totalRA;
             }
@@ -858,9 +853,7 @@ if (!function_exists('getSendRequest')) {
     function getSendRequest($brandboostId, $type) {
 
         $aData = array();
-        $CI = & get_instance();
-        $CI->load->model("admin/Brandboost_model", "rBrandboost");
-        $aData = $CI->rBrandboost->getSendRequest($brandboostId, $type);
+        $aData = \App\Models\Admin\BrandboostModel::getSendRequest($brandboostId, $type);
         return $aData;
     }
 
