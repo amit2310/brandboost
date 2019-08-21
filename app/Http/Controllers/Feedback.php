@@ -34,7 +34,10 @@ class Feedback extends Controller {
             $mReview  = new ReviewlistsModel();
 
             if (!empty($bbID)) {
-                $aFeedbackResponse = $mFeedback->getFeedbackResponse($bbID);
+                $aFeedbackResponse = FeedbackModel::getFeedbackResponse($bbID);
+
+                pre($aFeedbackResponse);
+                die();
 
                  $oBrandboost = $mInviter->getBBInfo($bbID);
 

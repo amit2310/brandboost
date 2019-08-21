@@ -18,7 +18,7 @@ class FeedbackModel extends Model
 		$oData = DB::table('tbl_feedback_response')
 			->where('brandboost_id', $campaignID)    
 			->orderBy('id', 'asc')
-			->get();
+			->first();
 		return $oData;
     }
 	
