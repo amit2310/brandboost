@@ -90,20 +90,20 @@ else {
 
 	<div class="tab-content"> 
 		<!--########################TAB 0 ##########################-->
-		<?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-review-sources", array('brandboostID' => $brandboostID, 'sources' => $sources, 'offsites_links' => $offsites_links, 'offSiteData' => $offSiteData, 'offsite_ids' => $offsite_ids)); ?>
+		
 		@include('admin.brandboost.campaign-tabs.offsite.offsite-review-sources', array('brandboostID' => $brandboostID, 'sources' => $sources, 'offsites_links' => $offsites_links, 'offSiteData' => $offSiteData, 'offsite_ids' => $offsite_ids))
 		<!--########################TAB 1 ##########################-->
-		<?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-preferences", array('brandboostID' => $brandboostID, 'camp' => $camp, 'offsites_links' => $offsites_links, 'feedbackResponseData' => $feedbackResponseData)); ?>
+		
 		@include('admin.brandboost.campaign-tabs.offsite.offsite-preferences', array('brandboostID' => $brandboostID, 'camp' => $camp, 'offsites_links' => $offsites_links, 'feedbackResponseData' => $feedbackResponseData))
 		<!--########################TAB 2 ##########################-->
-        <?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-workflow-campaign-beta", array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents)); ?>
+       
 		@include('admin.brandboost.campaign-tabs.offsite.offsite-workflow-campaign-beta', array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents))
 		<!--########################TAB 3 ##########################--> 
-		<?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-subscribers", array('brandboostID' => $brandboostID, 'campaign' => $campaign)); ?>
+		
 		@include('admin.brandboost.campaign-tabs.offsite.offsite-subscribers', array('brandboostID' => $brandboostID, 'campaign' => $campaign))
 		<!--########################TAB 4 ##########################--> 
-		<?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-feedback", array('brandboostID' => $brandboostID, 'clients' => $clients)); ?>
-		@include('admin.brandboost.campaign-tabs.offsite.offsite-feedback', array('brandboostID' => $brandboostID, 'clients' => $clients))
+		
+		@include('admin.brandboost.campaign-tabs.offsite.offsite-feedback', array('brandboostID' => $brandboostID, 'clients' => $clients)) 
 	</div>
 </div>
 
