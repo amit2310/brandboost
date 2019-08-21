@@ -36,10 +36,10 @@ class Feedback extends Controller {
             if (!empty($bbID)) {
                 $aFeedbackResponse = FeedbackModel::getFeedbackResponse($bbID);
 
-                pre($aFeedbackResponse);
-                die();
+                $oBrandboost = BrandboostModel::getBBInfo($bbID);
 
-                 $oBrandboost = $mInviter->getBBInfo($bbID);
+                pre($oBrandboost);
+                die();
 
                 $aSourceLinks = unserialize($oBrandboost->offsites_links);
 
