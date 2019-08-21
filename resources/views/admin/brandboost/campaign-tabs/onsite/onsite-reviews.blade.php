@@ -14,8 +14,6 @@ $bActiveSubsription="";
             <div style="margin: 0;" class="panel panel-flat">
                 <!-- ****** Load Smart Popup ***** -->
                 <?php if(!empty($aReviews)): ?>
-                <?php //$this->load->view("admin/components/smart-popup/smart-review-widget"); ?>
-				<?php //$this->load->view("admin/components/smart-popup/smart-contact-widget-review");?>
 				@include('admin.components.smart-popup.smart-review-widget')
 				@include('admin.components.smart-popup.smart-contact-widget-review')
                 <?php endif; ?>
@@ -60,8 +58,6 @@ $bActiveSubsription="";
                         </div>
                         <div class="table_action_tool">
                             <a href="javascript:void();"><i class="icon-calendar2"></i></a>
-                            <!-- <a href="javascript:void();"><i class="icon-download4"></i></a>
-                            <a href="javascript:void();"><i class="icon-upload4"></i></a> -->
                             <a href="javascript:void();" class="editDataReview"><i class="icon-pencil4"></i></a>
                             <a href="javascript:void();" style="display: none;" id="deleteButtonReviewList" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                         </div>
@@ -71,7 +67,7 @@ $bActiveSubsription="";
                 <div class="panel-body p0">
                 <?php 
                 if(!empty($aReviews)) {
-                    //$this->load->view("admin/brandboost/partial/review_table", array('access' => 'limited'));
+                    
 				?>
 					@include('admin.brandboost.partial.review_table', array('access' => 'limited'))
 				<?php 
@@ -133,11 +129,6 @@ $bActiveSubsription="";
 
                 </div>
             </div>
-        </div>
-        <div class="col-md-12 text-right">
-<?php //if ($canWrite == TRUE):  ?>
-                <!-- <button <?php if ($bActiveSubsription == false) { ?> class="btn dark_btn mt20 pDisplayNoActiveSubscription" title="No Active Subscription" type="button" <?php } else { ?> type="submit" class="btn dark_btn mt20" <?php } ?> id="continueReviewTab"> Continue <i class=" icon-arrow-right13 text-size-base position-right"></i></button> -->
-<?php //endif;  ?>	
         </div>
     </div>
 

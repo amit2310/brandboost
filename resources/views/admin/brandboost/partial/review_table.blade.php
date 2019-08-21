@@ -24,9 +24,9 @@
 				foreach ($aReviews as $oReview) {
 					
 					$getComm = getCampaignCommentCount($oReview->id);
-					//$reviewTags = getTagsByReviewID($oReview->id);
+					$reviewTags = getTagsByReviewID($oReview->id);
 					$reviewTags = array();
-					//$reviewLikeCount = \App\Models\ReviewsModel::countHelpful($oReview->id);
+					$reviewLikeCount = \App\Models\ReviewsModel::countHelpful($oReview->id);
 					$productData = \App\Models\Admin\BrandboostModel::getProductDataById($oReview->product_id);
 					if(empty($productData)){
 						$productData = new stdClass();
@@ -222,11 +222,10 @@
 											} else {
 											echo "<li><a review_id='" . $oReview->id . "' change_status = '1' class='chg_status green'><i class='icon-file-locked'></i> Active</a></li>";
 										}
-										//echo '<li><a href="javascript:void(0);" class="applyInsightTagsReviews" reviewid="'.base64_url_encode($oReview->id).'" action_name="review-tag"><i class="icon-file-locked"></i> Apply Tags</a></li>';
-										echo '<li><a href="javascript:void(0);" class="displayReview" action_name="review-tag" tab_type="note" reviewid="' . $oReview->id . '" review_time="' . date("M d, Y h:i A", strtotime($oReview->created)) . '(' . timeAgo($oReview->created) . ')" ><i class="icon-file-locked"></i> Add Notes</a></li>';
-										//}
-										// echo '<li><a href="javascript:void(0);" class="showReviewPopup" tab_type="info" reviewid="' . $oReview->id . '" ><i class="icon-file-locked"></i> View Review Popup</a></li>';
 										
+										//echo '<li><a href="javascript:void(0);" class="displayReview" action_name="review-tag" tab_type="note" reviewid="' . $oReview->id . '" review_time="' . date("M d, Y h:i A", strtotime($oReview->created)) . '(' . timeAgo($oReview->created) . ')" ><i class="icon-file-locked"></i> Add Notes</a></li>';
+										//}
+																				
 										echo '<li><a target="_blank" href="' . base_url('admin/brandboost/reviewdetails/' . $oReview->id) . '"><i class="icon-file-locked"></i> View Review</a></li>';
 										//if ($canWrite) {
 										if ($oReview->review_type == 'text') {
@@ -268,6 +267,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmReviewTagListModal" id="frmReviewTagListModal" action="javascript:void();">
+				{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Apply Tags</h5>
@@ -289,6 +289,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateReview" action="javascript:void();">
+				{{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Review</h5>
@@ -384,14 +385,6 @@
 						</div>
 					</div>
 					
-                    <!-- <div class="form-group">
-                        <label class="control-label col-lg-3">Video</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" type="file" name="video"  />
-						</div>
-					</div> -->
-					
-					
                     <div class="form-group">
                         <label class="control-label col-lg-3">Rating</label>
                         <div class="col-lg-9">
@@ -415,6 +408,27 @@
 		</div>
 	</div>
 </div> 
+
+<div id="reviewPopup" class="modal fade">
+    <div class="modal-dialog">
+        <div class="">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div style="border-top: none; border-bottom: 1px solid #eee!important;" class="panel-footer panel-footer-condensed">
+                        <div class="heading-elements not-collapsible">
+                            <span class="heading-text text-semibold">
+                                <i class="icon-history position-left"></i>
+                                <span class="reviewTime"></span>
+							</span>
+                            <button class="btn btn-link pull-right" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
+						</div>
+					</div>
+                    <div class="panel-body" id="reviewContent"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
     
@@ -452,7 +466,7 @@
         $.ajax({
             url: '<?php echo base_url('admin/reviews/getCommentsPopup'); ?>',
             type: "POST",
-            data: {review_id: reviewID},
+            data: {review_id: reviewID, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -470,7 +484,7 @@
         $.ajax({
             url: "<?php echo base_url('/admin/reviews/getReviewPopupData'); ?>",
             type: "POST",
-            data: {rid: reviewId},
+            data: {rid: reviewId, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (response) {
                 if (response.status == "success") {
@@ -495,7 +509,7 @@
         $.ajax({
             url: "<?php echo base_url('/admin/reviews/displayreview'); ?>",
             type: "POST",
-            data: {rid: reviewid},
+            data: {rid: reviewid, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (response) {
                 if (response.status == "success") {
@@ -574,7 +588,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/reviews/update_review_category'); ?>',
                 type: "POST",
-                data: {dataCategory: dataCategory, review_id: review_id},
+                data: {dataCategory: dataCategory, review_id: review_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 					
@@ -608,7 +622,7 @@
                     $.ajax({
                         url: '<?php echo base_url('admin/reviews/deleteMultipalReview'); ?>',
                         type: "POST",
-                        data: {multiReviewid: val},
+                        data: {multiReviewid: val, _token: '{{csrf_token()}}'},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {
@@ -731,7 +745,7 @@
                 $.ajax({
                     url: "<?php echo base_url('admin/reviews/deleteReview'); ?>",
                     type: "POST",
-                    data: {reviewid: reviewID},
+                    data: {reviewid: reviewID, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -883,7 +897,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/reviews/update_review_status'); ?>',
                 type: "POST",
-                data: {status: status, review_id: review_id},
+                data: {status: status, review_id: review_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 					
@@ -930,7 +944,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
                 type: "POST",
-                data: {review_id: review_id},
+                data: {review_id: review_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
