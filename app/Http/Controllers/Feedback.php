@@ -36,14 +36,11 @@ class Feedback extends Controller {
             if (!empty($bbID)) {
                 $aFeedbackResponse = FeedbackModel::getFeedbackResponse($bbID);
 
-                $oBrandboost = BrandboostModel::getBBInfo($bbID);
-
-                pre($oBrandboost);
-                die();
+                $oBrandboost = BrandboostModel::getBBInfo($bbID);;
 
                 $aSourceLinks = unserialize($oBrandboost->offsites_links);
 
-                if($aFeedbackResponse->count()>0){ $sRatingsType = $aFeedbackResponse->ratings_type; }
+                if(!empty($aFeedbackResponse->ratings_type)){ $sRatingsType = $aFeedbackResponse->ratings_type; }
 
                 if ($subscriberID > 0) {
                     $oSubscriber = $mReview->getSubscriber($subscriberID);
