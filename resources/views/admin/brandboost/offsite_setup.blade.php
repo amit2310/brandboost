@@ -795,12 +795,12 @@ else {
             });
         });*/
 
+
         /*$(document).on('click', '.linkurlC', function () {
 
             var getSocialId = $(this).attr('linkid');
-            var getUrl = $('#linkUrl' + getSocialId).val();
+            var getUrl = $('#linkUrl'+getSocialId).val();
             var bbID = $(this).attr('bbID');
-            //console.log(getUrl);
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/addOffsiteUrl'); ?>',
                 type: "POST",
@@ -814,7 +814,10 @@ else {
                     }
                 }
             });
+
+            return false;
         });*/
+
 
         $(document).on('click', '.offsiteUrlSave', function () {
 

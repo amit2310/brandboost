@@ -573,6 +573,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/subscriber/getSubscriberDetail', 'Admin\Subscribers@getSubscriberDetail');
     Route::post('admin/subscriber/updateSubscriberDetails', 'Admin\Subscribers@updateSubscriberDetails');
     Route::post('admin/subscriber/deleteModuleSubscriber', 'Admin\Subscribers@deleteModuleSubscriber');
+    Route::post('admin/subscriber/deleteBulkModuleContacts', 'Admin\Subscribers@deleteBulkModuleContacts');
+    Route::post('admin/subscriber/archiveBulkModuleContacts', 'Admin\Subscribers@archiveBulkModuleContacts');
 
 //Lists
     Route::get('admin/lists', 'Admin\Lists@index');
@@ -771,19 +773,23 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/workflow/getWorkflowTemplate', 'Admin\WorkFlow@getWorkflowTemplate');
     Route::get('admin/workflow/updateWorkflowTemplate', 'Admin\WorkFlow@updateWorkflowTemplate');
     Route::get('admin/subscriptions', 'Admin\Subscriptions@index');
-    
+
     Route::get('admin/settings/team_accounts/{id}', 'Admin\Settings@team_accounts');
     Route::get('admin/settings/list_details/{id}', 'Admin\Settings@list_details');
-    
+
     Route::get('admin/contacts', 'Contacts@index');
-    
+
     //Add admin routes here
-    
 });
 //Middleware Routes above
 
+
 Route::post('payment/changeSubscription', 'Payment@changeSubscription');
 Route::post('reviews/deleteReviewMultipal', 'Reviews@deleteReviewMultipal');
+
+//offsite 
+Route::get('feedback', 'Feedback@index');
+
 
 
 

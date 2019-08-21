@@ -73,19 +73,20 @@ class ReviewlistsModel extends Model {
         return $oData;
     }
 
+
+    /**
+    * This function will return the subscribers
+    * @param type $userID
+    * @return type
+    */
+
     public function getSubscribers($userID, $brandboostID) {
-        $response = array();
-        $this->db->select('tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone');
-        $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id= tbl_subscribers.id", "LEFT");
-        //$this->db->where('user_id', $userID);
-        $this->db->where('tbl_brandboost_users.brandboost_id', $brandboostID);
-        $this->db->order_by('tbl_brandboost_users.id', 'DESC');
-        $this->db->from('tbl_brandboost_users');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result_array();
-        }
-        return $response;
+        $aData =  DB::table('tbl_brandboost_users')
+        ->select('tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone')
+        ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id','=','tbl_subscribers.id')
+        ->where('tbl_brandboost_users.brandboost_id', $brandboostID)
+        ->orderBy('tbl_brandboost_users.id', 'DESC')->get();
+        return $aData;
     }
 
     public function addSubscriber($aData) {
@@ -123,22 +124,25 @@ class ReviewlistsModel extends Model {
         return false;
     }
 
+
+    /**
+    * This function will return the subscriber details
+    * @param type $userID
+    * @return type
+    */
+
+
     public function getSubscriber($id = '') {
 
-        $response = array();
-        $this->db->select('tbl_brandboost_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone');
-        $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id= tbl_subscribers.id", "LEFT");
-        if ($id > 0) {
-            $this->db->where('tbl_brandboost_users.id', $id);
-        } else {
-            $this->db->order_by('tbl_brandboost_users.id', 'DESC');
-        }
-        $this->db->from('tbl_brandboost_users');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+            $aData =  DB::table('tbl_brandboost_users')
+            ->select('tbl_brandboost_users.*', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname'
+                , 'tbl_subscribers.phone')
+            ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id','=','tbl_subscribers.id')
+            ->when($id > 0, function($query) use ($id){
+            return $query->where('tbl_brandboost_users.id', $id);
+            })->get();
+           
+        return $aData ;
     }
 
     
