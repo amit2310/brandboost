@@ -1726,9 +1726,7 @@ FROM
 
     
     public function deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID) {
-
         if ($subscriberID > 0 && !empty($moduleName)) {
-
             if ($moduleName == 'automation' || $moduleName == 'broadcast' || $moduleName == 'list') {
 				DB::table('tbl_automation_users')
 				->where('id', '=', $subscriberID)
@@ -1741,6 +1739,7 @@ FROM
                 if ($bUpdated) {
                     $this->deleteModuleCampaignSubscriber($subscriberID, $moduleName, $moduleUnitID);
                 }
+				
             } else if ($moduleName == 'referral') {
 				DB::table('tbl_referral_users')
 				->where('id', '=', $subscriberID)
