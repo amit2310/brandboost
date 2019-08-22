@@ -658,21 +658,20 @@
 
         $('#automationList thead tr:eq(1) th').each(function (i) {
 
-            //console.log(i);
-            if (i === 11) {
+            if (i === 12) {
                 var title = $(this).text();
-                $(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" /><input type="checkbox" class="" id="colStatus">');
+                $(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" />');
 
                 $('input', this).on('keyup change', function () {
+                   
                     if (tableBase.column(i).search() !== this.value) {
                         tableBase
                                 .column(i)
-                                .search(this.value, $('#colStatus').prop('checked', true))
+                                .search(this.value)
                                 .draw();
                     }
                 });
             }
-
 
 
         });
