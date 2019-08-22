@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\Admin\Crons\ManagerModel;
 use App\Models\Admin\Crons\BrandboostModel;
 use App\Models\Admin\UsersModel;
+use URL;
 
 class BrandboostInviter extends Command {
 
