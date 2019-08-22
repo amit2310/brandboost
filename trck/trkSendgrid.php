@@ -8,7 +8,7 @@ include 'functions.php';
 //$a = $_POST;
 $a = file_get_contents("php://input");
 $aData = array(
-            'content' => json_encode($a),
+            'content' =>  'check-1'. json_encode($a),
             'qs' => $a
         );
 saveTrackingData('test', $aData);
@@ -82,7 +82,7 @@ try {
     }
 } catch (Exception $ex) {
     $aData = array(
-        'content' => $ex->getMessage(),
+        'content' => 'Error : '.$ex->getMessage(),
         'qs' => $a
     );
     saveTrackingData('test', $aData);
