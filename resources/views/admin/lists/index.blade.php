@@ -981,8 +981,9 @@
         });
 
         $(document).on('click', '.viewContact', function () {
+
             var list_id = $(this).attr('list_id');
-            window.location.href = 'lists/<?php echo $scriptFile; ?>?list_id=' + list_id;
+            window.location.href = '<?php echo base_url("admin/lists/").$scriptFile; ?>?list_id=' + list_id;
         });
 
         $('#frmaddListModal').on('submit', function () {
