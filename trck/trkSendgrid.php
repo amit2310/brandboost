@@ -7,11 +7,11 @@ header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Dispo
 include 'functions.php';
 //$a = $_POST;
 $a = file_get_contents("php://input");
-$aData = array(
-    'content' => 'check-1' . json_encode($a),
-    'qs' => $a
-);
-saveTrackingData('test', $aData);
+//$aData = array(
+//    'content' => 'check-1' . json_encode($a),
+//    'qs' => $a
+//);
+//saveTrackingData('test', $aData);
 try {
     if (!empty($a)) {
         $aResponse = json_decode($a);
@@ -37,6 +37,7 @@ try {
                     $moduleName = isset($oResponseData->bb_module_name) ? $oResponseData->bb_module_name : '';
                     $sendingMethod = isset($oResponseData->bb_sending_method) ? $oResponseData->bb_sending_method : '';
                     $sendingMethod = ($sendingMethod) ? $sendingMethod : 'normal';
+                    $automationID = isset($oResponseData->bb_automation_id) ? $oResponseData->bb_automation_id : 0;
 
                     $created = date("Y-m-d H:i:s");
 
@@ -55,11 +56,11 @@ try {
                     if ($moduleName == 'email' || $moduleName == 'automation') {
                         $aData['automation_id'] = $automationID;
                         $query = saveTrackingData('tbl_automations_emails_tracking_sendgrid', $aData);
-                        $aData = array(
-                            'content' => 'Query: ' . $query,
-                            'qs' => $a
-                        );
-                        saveTrackingData('test', $aData);
+//                        $aData = array(
+//                            'content' => 'Query: ' . $query,
+//                            'qs' => $a
+//                        );
+//                        saveTrackingData('test', $aData);
                     } else if ($moduleName == 'email_broadcast' || $moduleName == 'sms_broadcast') {
                         $aData['broadcast_id'] = $broadcastID;
                         $aData['sending_method'] = $sendingMethod;
