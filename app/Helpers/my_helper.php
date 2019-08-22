@@ -164,7 +164,7 @@ if (!function_exists('base_url')) {
             }
         }
 
-        return URL::to('/') . '/' . $path;
+        return $siteURL . '/' . $path;
     }
 
 }
