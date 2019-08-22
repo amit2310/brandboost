@@ -10,6 +10,8 @@ return [
       | by the framework. 
       |
      */
+    'siteURL' => 'http://brandboostx.com/',
+    'siteURLDev'=> 'http://dev.brandboostx.com/',
     'website_name' => 'Brand Boost',
     'mailFrom' => 'sandgrid',
     'siteemail' => 'alen@brandboost.io',
