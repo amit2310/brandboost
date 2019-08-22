@@ -67,7 +67,8 @@ class BrandboostInviter extends Command {
      * Default function responsible to initiate the cron
      */
     public function startCampaign() {
-
+        echo URL::to('/');
+        die;
         //Instantiate cron manager model to access its properties and methods
         $mCron = new ManagerModel();
 

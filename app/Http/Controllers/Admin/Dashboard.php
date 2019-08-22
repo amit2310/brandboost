@@ -10,7 +10,6 @@ use App\Models\Admin\MembershipModel;
 use App\Models\ReviewsModel;
 use Cookie;
 use Session;
-use URL;
 
 class Dashboard extends Controller {
 
@@ -19,8 +18,6 @@ class Dashboard extends Controller {
      * Used to display client's dashboard data
      */
     public function index($userID = '') {
-        echo URL::to('/');
-        die;
         if (empty($userID)) {
             $oUser = getLoggedUser();
             $userID = $oUser->id;
