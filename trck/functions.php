@@ -208,7 +208,7 @@ function saveTrackingData($tableName, $aData) {
         $sql = trim($sql, ",");
         $result = $db->query($sql);
         $insertID = $db->insert_id;
-        return $sql;
+        //return $sql;
 
         if ($result)
             return ($insertID) ? $insertID : true;
