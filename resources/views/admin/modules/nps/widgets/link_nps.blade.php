@@ -1,6 +1,7 @@
 <html>
     <head>
-        <title>Survey: <?php echo $oNPS->title; ?></title>
+
+        <title>Survey: <?php if(!empty($oNPS->title)){ echo $oNPS->title; } else { echo ''; } ?></title>
 		<style>
 		body {background:#d5e0f2;font-size: 14px!important;	font-family: 'Inter UI';font-style: normal;	font-weight: 400;letter-spacing: 0;}
 		</style>

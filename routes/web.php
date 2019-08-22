@@ -797,6 +797,11 @@ Route::post('feedback/saveFeedback', 'Feedback@saveFeedback');
 Route::get('feedback/{page}', 'Feedback@index');
 Route::post('feedback/saveResolution', 'Feedback@saveResolution');
 
+//Servey
+Route::get('survey/{hashcode}', 'Survey@index');
+
+
+
 
 
 
