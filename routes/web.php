@@ -210,9 +210,12 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/delete_multipal_brandboost', 'Admin\Brandboost@deleteMultipalBrandboost');
     Route::post('admin/brandboost/publishOnsiteWidget', 'Admin\Brandboost@publishOnsiteWidget');
     Route::post('admin/brandboost/deleteReviewRequest', 'Admin\Brandboost@deleteReviewRequest');
+    Route::get('admin/brandboost/campaign_specific', 'Admin\Brandboost@campaign_specific');
+    
 
 
-
+	Route::get('admin/modules/nps/{id}', 'Admin\Modules\Nps@index');
+    Route::get('admin/modules/referral/{id}', 'Admin\Modules\Referral@index');
     Route::post('admin/modules/chat/addChat', 'Admin\Modules\Chat@addChat');
     Route::get('admin/modules/chat/setup/{id}', 'Admin\Modules\Chat@setup');
     Route::post('admin/modules/chat/updateChatPreferences', 'Admin\Modules\Chat@updateChatPreferences');
