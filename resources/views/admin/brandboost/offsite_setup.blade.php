@@ -7,8 +7,9 @@
 @section('contents')
 <?php list($canRead, $canWrite) = fetchPermissions('Offsite Campaign'); ?>
 <?php
+
 if(!empty($feedbackResponse)){
-	$feedbackResponseData = $feedbackResponse[0];
+	$feedbackResponseData = $feedbackResponse;
 }else{
 	$feedbackResponseData = array();
 }
