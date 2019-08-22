@@ -388,7 +388,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 data: {_token: '{{csrf_token()}}', 'npsId': '<?php echo $oNPS->id; ?>'},
                 dataType: "html",
                 success: function (data) {
-                    window.location.href = '<?php echo base_url("/admin/modules/nps/") ?>';
+                    window.location.href = '<?php echo base_url("admin/modules/nps/") ?>';
                 }, error: function () {
                     alertMessage('Error: Some thing wrong!');
                 }
