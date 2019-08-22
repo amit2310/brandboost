@@ -9,7 +9,7 @@
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/core/libraries/jquery.min.js"></script>
         <!-- Global stylesheets -->
         <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-        <link href="<?php echo base_url(); ?>profile_css/profile.css" rel="stylesheet" type="text/css">
+        <link href="<?php echo base_url(); ?>assets/css/profile.css" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
     </head>
     <body>
@@ -18,7 +18,7 @@
             <div class="profile_header_bkg"></div>
             <div class="page_header">
                 <div class="row">
-                    <div class="col-md-6"><a class="logo" href="<?php echo base_url(); ?>"><img src="<?php echo base_url('new_pages/profile_images/logo_icon.png'); ?>" alt="">BrandBoost</a> </div>
+                    <div class="col-md-6"><a class="logo" href="<?php echo base_url(); ?>"><img src="<?php echo base_url('profile_images/logo_icon.png'); ?>" alt="">BrandBoost</a> </div>
                 </div>
             </div>
             <!--======================profile_header=======================-->
