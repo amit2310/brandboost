@@ -957,7 +957,8 @@ class EmailInviter extends Command {
 
 
 
-        $emailContent = $sPreheaderText . $emailData . $footerCompiledCode;
+        //$emailContent = $sPreheaderText . $emailData . $footerCompiledCode;
+        $emailContent = $emailData;
 
         $fromName = $aData['from_name'];
         $replyEmail = !empty($aData['reply_email']) ? $aData['reply_email'] : $aData['from_entity'];
