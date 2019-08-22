@@ -2083,10 +2083,6 @@ class WorkFlow extends Controller {
         $mLists = new ListsModel();
         $oAutomationLists = '';
         if ($moduleName == 'automation') {
-            //get Lists
-            $oLists = $mLists->getLists($userID, '', 'active');
-            //get Automation Lists
-            $oAutomationLists = $mLists->getAutomationLists($moduleUnitID);
             $oEventsType = array('main', 'followup');
         } else if (in_array($moduleName, array('brandboost', 'onsite', 'offsite'))) {
             $oEventsType = array('send-invite', 'followup');
@@ -2101,7 +2097,6 @@ class WorkFlow extends Controller {
         $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
 
         $pageData = array(
-            'oAutomationLists' => $oAutomationLists,
             'oEvents' => $oEvents,
             'moduleName' => $moduleName,
             'moduleUnitID' => $moduleUnitID,
