@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url("/assets/js/plugins/pickers/color/spectrum.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("assets/js/plugins/pickers/color/spectrum.js"); ?>"></script>
 <link href="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
 <script src="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.js"></script>
 
@@ -289,7 +289,7 @@
             var myDropzoneLogoImg = new Dropzone(
             '#myDropzone_logo_img', //id of drop zone element 1
             {
-                url: '<?php echo base_url("/dropzone/upload_s3_attachment"); ?>/<?php echo $userID; ?>/nps',
+                url: '<?php echo base_url("dropzone/upload_s3_attachment"); ?>/<?php echo $userID; ?>/nps',
                 params: {
                     _token: '{{csrf_token()}}'
                 },
@@ -442,10 +442,10 @@
                     if (data.status == 'success') {
 
 <?php if ($oNPS->platform == 'web' || $oNPS->platform == 'link'): ?>
-                            window.location.href = '<?php echo base_url("/admin/modules/nps/setup/{$programID}?t=widgets") ?>';
+                            window.location.href = '<?php echo base_url("admin/modules/nps/setup/{$programID}?t=widgets") ?>';
 
 <?php else: ?>
-                            window.location.href = '<?php echo base_url("/admin/modules/nps/setup/{$programID}?t=workflow") ?>';
+                            window.location.href = '<?php echo base_url("admin/modules/nps/setup/{$programID}?t=workflow") ?>';
 <?php endif; ?>
                     } else {
                         alertMessage('Error: Some thing wrong!');
