@@ -98,7 +98,7 @@
 				  		</label>
 				  </div>
 				</div>
-				<div id="uploadedQuestionFiles"></div>
+				<!-- <div id="uploadedQuestionFiles"></div> -->
 				<input type="hidden" name="campaign_id" class="campaign_id" value="<?php echo $oCampaign->id != ''? $oCampaign->id : $aBrandboostList[0]->id; ?>" />
 				<input type="hidden" name="subID" value="" />
 				<input type="hidden" name="inviterID" value="<?php echo $aUser->id; ?>" />
