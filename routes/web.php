@@ -41,8 +41,7 @@ Route::post('reviews/submitOnsiteReview', 'Reviews@submitOnsiteReview');
 
 
 
-Route::post('dropzone/upload_image', 'Dropzone\@upload_image');
-
+Route::post('dropzone/upload_image', 'Dropzone@upload_image');
 
 Route::post('reviews/deleteReviewNote', 'Reviews@deleteReviewNote');
 

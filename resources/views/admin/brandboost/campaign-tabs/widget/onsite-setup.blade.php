@@ -4190,11 +4190,6 @@
             var logo_img = $('#logo_img').val();
             var edit_logo_img = $('#edit_logo_img').val();
 			
-            if (logo_img == '' && edit_logo_img == '') {
-                alertMessage("Please upload a product logo.");
-                return false;
-			}
-			
             $.ajax({
                 url: "<?php echo base_url(); ?>/admin/brandboost/addBrandBoostWidgetData",
                 method: "POST",

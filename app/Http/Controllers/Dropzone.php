@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
 
-class dropzone extends Controller 
+class Dropzone extends Controller 
 {
   
     /**
@@ -90,7 +90,8 @@ class dropzone extends Controller
                     $filekey = "campaigns/" . $videoReviewFile;
                     $filename = $videoReview['name'];
                     $input = file_get_contents($videoReview['tmp_name']);
-                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
                 }
                 //$aReviewData['comment_video'] = $videoReviewFile;
                 echo $videoReviewFile;
