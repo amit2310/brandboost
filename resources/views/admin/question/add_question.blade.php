@@ -419,7 +419,7 @@
 	var myDropzone_ = new Dropzone(	
 		"#myDropzone",
 		{
-			url: '<?php echo base_url("dropzone/upload_s3_attachment_question_review/".$aUser->id."/reviews/"); ?>',
+			url: '<?php echo base_url("dropzone/upload_s3_attachment_question_review/".$aUser->id."/reviews"); ?>',
 			uploadMultiple: false,
 			maxFiles: 10,
 			maxFilesize: 600,

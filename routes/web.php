@@ -93,6 +93,7 @@ Route::post('webchat/dropzone/upload_s3_attachment_product_review/{clientId}/{fo
 Route::post('webchat/dropzone/edit_review_image', 'Dropzone@edit_review_image');
 Route::post('webchat/dropzone/upload_s3_attachment_question_review/{clientId}/{folderName}', 'Dropzone@upload_s3_attachment_question_review');
 Route::post('webchat/dropzone/upload_s3_attachment_review/{clientId}/{folderName}', 'Dropzone@upload_s3_attachment_review');
+Route::post('dropzone/upload_s3_attachment_question_review/{clientId}/{folderName}', 'Dropzone@upload_s3_attachment_question_review');
 
 
 Route::get('for/{brand}/{id}', 'Company@index');
