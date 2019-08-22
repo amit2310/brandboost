@@ -7,6 +7,10 @@ header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Dispo
 include 'functions.php';
 //$a = $_POST;
 $a = file_get_contents("php://input");
+$aData = array(
+            'content' => json_encode($a),
+            'qs' => $a
+        );
 try {
     if (!empty($a)) {
         $aResponse = json_decode($a);
