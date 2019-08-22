@@ -242,7 +242,7 @@
                                             <th><i class="icon-calendar"></i>Last Incoming Lead</th>
                                             <th class="text-center"><i class="fa fa-dot-circle-o"></i>Status</th>
                                             <th class="text-right" ><i class="fa fa-dot-circle-o"></i>Action</th>
-                                            <th style="display:block;">status</th>
+                                            <th style="display:none;">status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -302,7 +302,6 @@
                                                 $totalUnsubGraph = ceil($totalUnsubGraph);
                                             }
 
-                                            pre($oList->status);
                                             //if ($oList->status != 'archive') {
                                             if (1) {
                                                 ?>
@@ -471,7 +470,7 @@
                                                         </div>
                                                     </td>
 
-                                                    <td style="display:block;">
+                                                    <td style="display:none;">
                                                         <?php
                                                         if ($oList->status == 'archive') {
                                                             echo 'archive';
