@@ -210,7 +210,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/delete_multipal_brandboost', 'Admin\Brandboost@deleteMultipalBrandboost');
     Route::post('admin/brandboost/publishOnsiteWidget', 'Admin\Brandboost@publishOnsiteWidget');
     Route::post('admin/brandboost/deleteReviewRequest', 'Admin\Brandboost@deleteReviewRequest');
-    Route::get('admin/brandboost/campaign_specific', 'Admin\Brandboost@campaign_specific');
+    Route::get('admin/brandboost/campaign_specific', 'Admin\Brandboost@campaignSpecific');
     
 
 
