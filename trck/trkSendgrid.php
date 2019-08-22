@@ -11,6 +11,7 @@ $aData = array(
             'content' => json_encode($a),
             'qs' => $a
         );
+saveTrackingData('test', $aData);
 try {
     if (!empty($a)) {
         $aResponse = json_decode($a);
