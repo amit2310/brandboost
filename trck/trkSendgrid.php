@@ -8,9 +8,9 @@ include 'functions.php';
 //$a = $_POST;
 $a = file_get_contents("php://input");
 $aData = array(
-            'content' =>  'check-1'. json_encode($a),
-            'qs' => $a
-        );
+    'content' => 'check-1' . json_encode($a),
+    'qs' => $a
+);
 saveTrackingData('test', $aData);
 try {
     if (!empty($a)) {
@@ -54,7 +54,12 @@ try {
                     );
                     if ($moduleName == 'email' || $moduleName == 'automation') {
                         $aData['automation_id'] = $automationID;
-                        saveTrackingData('tbl_automations_emails_tracking_sendgrid', $aData);
+                        $query = saveTrackingData('tbl_automations_emails_tracking_sendgrid', $aData);
+                        $aData = array(
+                            'content' => 'Query: ' . $query,
+                            'qs' => $a
+                        );
+                        saveTrackingData('test', $aData);
                     } else if ($moduleName == 'email_broadcast' || $moduleName == 'sms_broadcast') {
                         $aData['broadcast_id'] = $broadcastID;
                         $aData['sending_method'] = $sendingMethod;
@@ -82,7 +87,7 @@ try {
     }
 } catch (Exception $ex) {
     $aData = array(
-        'content' => 'Error : '.$ex->getMessage(),
+        'content' => 'Error : ' . $ex->getMessage(),
         'qs' => $a
     );
     saveTrackingData('test', $aData);
