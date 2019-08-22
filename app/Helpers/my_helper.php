@@ -158,7 +158,7 @@ if (!function_exists('base_url')) {
     function base_url($path = '') {
         $siteURL = config('bbconfig.siteURL');
 
-        if (isset($_SERVER)) {
+        if (isset($_SERVER["REMOTE_ADDR"])) {
             if ($_SERVER["REMOTE_ADDR"] == "103.254.97.14" || $_SERVER["REMOTE_ADDR"] == '36.255.132.146' || $_SERVER["REMOTE_ADDR"] == "127.0.0.1" || $_SERVER['HTTP_HOST'] == 'dev.brandboostx.com') {
                 $siteURL = config('bbconfig.siteURLDev');
             }
