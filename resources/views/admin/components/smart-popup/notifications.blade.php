@@ -95,7 +95,9 @@
 <!--===========LAST WEEK============-->
     <div class="col-md-12">
 
-    <?php if(!empty($notifications_data)) {?>
+    <?php 
+    $inc = 0;
+    if(!empty($notifications_data)) {?>
     <div style="border-top: none!important;" class="profile_headings">ALL <?php if($inc == 0) { ?><a class="pull-right txt_blue2 viewAllNotification" style="text-transform: none; cursor: pointer;"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_check_blue_double.png" width="16"></i>&nbsp;Mark all read</a><?php $inc++; } ?></div><?php } ?>
 
     <?php if(!empty($notifications_data)) { ?>
