@@ -323,8 +323,7 @@ if (!function_exists('getCampaignsByEventID')) {
 if (!function_exists('getOffsite')) {
 
     function getOffsite($offsiteId) {
-        $aOffsiteDetail = App\Models\Admin\OffsiteModel::getOffsite($offsiteId);
-
+        $aOffsiteDetail = App\Models\Admin\OffsiteModel::getOffsiteById($offsiteId);
         if (!empty($aOffsiteDetail[0])) {
             return $aOffsiteDetail[0];
         }
