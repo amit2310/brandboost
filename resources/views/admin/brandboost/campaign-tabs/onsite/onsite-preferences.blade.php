@@ -581,7 +581,7 @@
 							$.ajax({
 				                url: '<?php echo base_url('admin/brandboost/DeleteObjectFromS3'); ?>',
 				                type: "POST",
-				                data: {dropImage: dropImage},
+				                data: {dropImage: dropImage, _token: '{{csrf_token()}}'},
 				                dataType: "json",
 				                success: function (data) {
 				                  
@@ -653,7 +653,7 @@
 							$.ajax({
 				                url: '<?php echo base_url('admin/brandboost/DeleteObjectFromS3'); ?>',
 				                type: "POST",
-				                data: {dropImage: dropImage},
+				                data: {dropImage: dropImage, _token: '{{csrf_token()}}'},
 				                dataType: "json",
 				                success: function (data) {
 				                  
