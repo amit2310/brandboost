@@ -134,26 +134,32 @@ class Notification extends Controller {
         return $message;
     }
 
-    public function markRead() {
+
+    /**
+    * This function is use to mark read
+    * @param type 
+    * @return type
+    */
+    public function markRead(Request $request) {
         $response = array();
-        $post = $this->input->post();
+        $mNotification = new NotificationModel();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $userRole = $aUser->user_role;
-        if (empty($post)) {
+        if (empty($request->param)) {
             $response['status'] = 'error';
             echo json_encode($response);
             exit;
         }
 
-        $param = strip_tags($post['param']);
-        $notificationID = strip_tags($post['notificationid']);
+        $param = strip_tags($request->param);
+        $notificationID = strip_tags($request->notificationid);
 
         if ($param == 'readall') {
-            $this->Notifications->markReadNotification($userID, $notificationID);
-            $oNotifications = $this->Notifications->getNotifications($userID, 'unread');
+            $mNotification->markReadNotification($userID, $notificationID);
+            $oNotifications = NotificationModel::getNotifications($userID, 'unread');
             $response['status'] = 'success';
-            $response['unreadCount'] = count($oNotifications);
+            $response['unreadCount'] = $oNotifications->count();
         }
 
         echo json_encode($response);
