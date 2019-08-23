@@ -293,7 +293,7 @@
 				</div>
 				<div class="bb_comment_reply_sec bbpw_comment_box bb_bfw_section" style="display:none;">
 					<?php //echo $this->load->view('reviews/review_comments_popup', array('oCampaign' => $oCampaign, 'reviewData' => $reviewData, 'classPositon' => $count), true); ?>
-					view('reviews.center_review_widget', array('oCampaign' => $oCampaign, 'reviewData' => $reviewData, 'classPositon' => $count));
+					<?php echo view('reviews.review_comments_popup', array('oCampaign' => $oCampaign, 'reviewData' => $reviewData, 'classPositon' => $count))->render(); ?>
 				</div>
 			</div>
 			<?php $count++; } ?>
