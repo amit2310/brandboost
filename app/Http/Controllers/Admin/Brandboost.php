@@ -2207,12 +2207,8 @@ class Brandboost extends Controller {
 
             $eventName = 'sys_onsite_added';
             // admin, client, user
-            $notyType = 'admin';
+            $notyType = 'client';
             $gNoti = getNotificationTemplate($eventName, $notyType);
-
-            pre($gNoti);
-            die();
-          
 
 			//Notify about this to admin
 			$notificationData = array(
