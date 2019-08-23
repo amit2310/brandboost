@@ -41,6 +41,7 @@ class NotificationModel extends Model {
         return $aData;
     }
 
+
     /**
      * Used to add Notification
      * @param type $data
@@ -54,6 +55,7 @@ class NotificationModel extends Model {
             return false;
         }
     }
+
 
     /**
      * Used to add cleint email notification
@@ -227,6 +229,23 @@ class NotificationModel extends Model {
 
         return $oData;
     }
+
+
+    /**
+     * Used to get the notification template
+     * @param type $slug
+     * @return type object
+     */
+    public function getNotificationTemplate($slug) {
+
+        $oData = DB::table('tbl_notifications_manager')
+        ->where('notification_slug', $slug)
+        ->first();
+
+        return $oData;
+    }
+
+
 
     /**
      * Used to get the list of yesterday notifications 
