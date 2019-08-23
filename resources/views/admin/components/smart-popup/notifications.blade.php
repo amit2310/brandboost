@@ -2,7 +2,7 @@
     <div class="col-md-12">
     
     <?php 
-    $inc = 0;
+    /*$inc = 0;
     if(!empty($notifications_data_today)) { ?>
     <div style="border-top: none!important;" class="profile_headings">TODAY<a class="pull-right txt_blue2 viewAllNotification" style="text-transform: none; cursor: pointer;"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_check_blue_double.png" width="16"></i>&nbsp;Mark all read</a></div>
     <?php  $inc++; 
@@ -24,7 +24,7 @@
 		<?php
 		}
 		?></div><?php
-	}
+	}*/
 	?>
     
 	</div>
@@ -33,7 +33,7 @@
 <!--===========YESTERDAY============-->
 	<div class="col-md-12">
 
-    <?php if(!empty($notifications_data_yesterday)) {?>
+    <?php /*if(!empty($notifications_data_yesterday)) {?>
     <div style="border-top: none!important;" class="profile_headings">YESTERDAY <?php if($inc == 0) { ?><a class="pull-right txt_blue2 viewAllNotification" style="text-transform: none; cursor: pointer;"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_check_blue_double.png" width="16"></i>&nbsp;Mark all read</a><?php $inc++; } ?></div><?php } ?>
 
     <?php
@@ -56,7 +56,7 @@
 
 	<?php } ?>
         </div>
-    <?php } ?>
+    <?php }*/ ?>
 	</div>
 
 
@@ -65,7 +65,7 @@
 
 	<div class="col-md-12">
 
-    <?php if(!empty($notifications_data_lastweek)) {?>
+    <?php /*if(!empty($notifications_data_lastweek)) {?>
     <div style="border-top: none!important;" class="profile_headings">LAST WEEK <?php if($inc == 0) { ?><a class="pull-right txt_blue2 viewAllNotification" style="text-transform: none; cursor: pointer;"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_check_blue_double.png" width="16"></i>&nbsp;Mark all read</a><?php $inc++; } ?></div><?php } ?>
 
     <?php
@@ -88,7 +88,7 @@
 
 	<?php } ?>
         </div>
-    <?php } ?>
+    <?php }*/ ?>
 	</div>
 
 
