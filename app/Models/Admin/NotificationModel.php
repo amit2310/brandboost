@@ -240,13 +240,13 @@ class NotificationModel extends Model {
 
         $oData = DB::table('tbl_notifications_manager')
         ->when(($notyType == 'admin'), function ($query) use ($notyType) {
-            return $query->select('tbl_notifications_manager.admin_system_content');
+            return $query->select('tbl_notifications_manager.admin_system_content as sysMessage');
         })
         ->when(($notyType == 'client'), function ($query) use ($notyType) {
-            return $query->select('tbl_notifications_manager.client_system_content');
+            return $query->select('tbl_notifications_manager.client_system_content as sysMessage');
         })
         ->when(($notyType == 'user'), function ($query) use ($notyType) {
-            return $query->select('tbl_notifications_manager.user_system_content');
+            return $query->select('tbl_notifications_manager.user_system_content as sysMessage');
         })
         ->where('notification_slug', $slug)
         ->first();
