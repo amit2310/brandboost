@@ -17,7 +17,7 @@ class OffsiteModel extends Model {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id; 
-        $response = array();
+
 		$oData = DB::table('tbl_offsite_websites')
 			->when((!empty($id)), function ($query) use ($id) {
 				return $query->where('id', $id);
@@ -28,22 +28,15 @@ class OffsiteModel extends Model {
 			->orderBy('id', 'asc')
 			->get();
 		return $oData;
-		
-		
-		
-        if ($id > 0) {
-            $this->db->where('id', $id);
-        } else {
-            $where = '(user_id="1" or user_id = "'.$userID.'")';
-            $this->db->where($where);
-            $this->db->order_by('id', 'ASC');
-        }
-        $this->db->from('tbl_offsite_websites');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+    }
+	
+	public static function getOffsiteById($id) {
+
+		$oData = DB::table('tbl_offsite_websites')
+				->where('id', $id)
+				->orderBy('id', 'asc')
+				->get();
+		return $oData;
     }
 	
 	public function offsite_count_all_edit($search, $selected_list) {

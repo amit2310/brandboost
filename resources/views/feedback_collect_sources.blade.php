@@ -61,8 +61,6 @@
                 </div>
             </div>
 
-
-            <?php //if ($ratingsType = 'star') ; ?>
             <div class="container">
                 <div class="review_main_box_new">
                     <div class="review_top_icon"><img width="74" src="<?php echo base_url("assets/images/review/review_tick_icon.png"); ?>"/></div>
@@ -79,7 +77,9 @@
                                 foreach ($aSourceLinks as $id => $aLink):
                                     if($id > 0):
                                         $aSource = getOffsite($id);
+										
                                         $sourceName = strtolower($aSource->name);
+										
                                         if ($sourceName == 'yelp') {
                                             $sourceClass = 'txt_red';
                                             $thumbclass = 'bkg2';
@@ -96,7 +96,7 @@
                                             $sourceClass = 'txt_blue';
                                             $thumbclass = 'bkg1';
                                         }
-                                        //$sourceName = !empty($sourceName) ? $sourceName : 'NA';
+                                        
                                         if (!empty($sourceName)):
                                             ?>
                                             <li class="media panel-body stack-media-on-mobile" id="socialIcon<?php echo $value; ?>">
@@ -153,11 +153,7 @@
                             </ul>
                         </div>
 <?php endif; ?>
-
-
-
                     <div class="review_button mt30">
-                            <!--<button class="btn dark_btn bkg_blue_light h52 mr10 sh_no">Send feedback <i class="icon-paperplane"></i></button>-->
                         <a href="<?php echo (!empty($oBrandboost->store_url) ? $oBrandboost->store_url : base_url()); ?>" class="btn light_btn bkg_grey_light h52 ml10 txt_dark sh_no" style="padding-top:17px;">Back to the homepage <i class="icon-arrow-right13"></i></a>
                     </div>
 
@@ -165,8 +161,6 @@
             </div>
 
         </div>
-
-
 
     </body>
 </html>
