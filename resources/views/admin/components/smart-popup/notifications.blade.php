@@ -117,7 +117,7 @@
 				</div>
 			</div>
 		<?php 
-		if($inc == 2) {
+		if($inc == 6) {
 			break;
 		}
 		$inc++;
