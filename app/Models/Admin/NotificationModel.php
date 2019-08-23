@@ -238,18 +238,16 @@ class NotificationModel extends Model {
      */
     public function getNotificationTemplate($slug, $notyType) {
 
-        if($notyType == 'admin') {
-            $selectType = 'admin_system_content as sysMessage';
-        }
-        else if($notyType == 'client') {
-            $selectType = 'client_system_content as sysMessage';
-        }
-        else if ($notyType == 'user') {
-            $selectType = 'user_system_content as sysMessage';
-        }
-
         $oData = DB::table('tbl_notifications_manager')
-        ->select($selectType)
+        ->when(($notyType == 'admin'), function ($query) use ($notyType) {
+            return $query->select('admin_system_content as sysMessage');
+        })
+        ->when(($notyType == 'client'), function ($query) use ($notyType) {
+            return $query->select('client_system_content as sysMessage');
+        })
+        ->when(($notyType == 'user'), function ($query) use ($notyType) {
+            return $query->select('user_system_content as sysMessage');
+        })
         ->where('notification_slug', $slug)
         ->first();
 
