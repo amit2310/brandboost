@@ -2206,7 +2206,9 @@ class Brandboost extends Controller {
 			//logUserActivity($aActivityData);
 
             $eventName = 'sys_onsite_added';
-            $gNoti = getNotificationTemplate($eventName);
+            // admin, client, user
+            $notyType = 'admin';
+            $gNoti = getNotificationTemplate($eventName, $notyType);
           
 
 			//Notify about this to admin
@@ -2214,7 +2216,7 @@ class Brandboost extends Controller {
 				'event_type' => $eventName,
 				'event_id' => 0,
 				'link' => base_url() . 'admin/brandboost/onsite_setup/' . $brandboostID,
-				'message' => $gNoti->client_system_content,
+				'message' => $gNoti->sysMessage,
 				'user_id' => $userID,
 				'status' => 1,
 				'created' => date("Y-m-d H:i:s")

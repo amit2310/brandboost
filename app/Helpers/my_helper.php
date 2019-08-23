@@ -1451,9 +1451,9 @@ if (!function_exists('checkPermissionentry')) {
  */
 if (!function_exists('getNotificationTemplate')) {
 
-    function getNotificationTemplate($slug) {
+    function getNotificationTemplate($slug, $notyType) {
 
-        $gNoti = \App\Models\Admin\NotificationModel::getNotificationTemplate($slug);
+        $gNoti = \App\Models\Admin\NotificationModel::getNotificationTemplate($slug, $notyType);
         return $gNoti;
     }
 }
@@ -1471,7 +1471,7 @@ if (!function_exists('add_notifications')) {
         $bSaved = false;
         $isLoggedInTeam = '';
 
-        
+
 
         if (!empty($ownerID) && !empty($eventName)) {
 
