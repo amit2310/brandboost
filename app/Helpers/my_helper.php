@@ -1503,6 +1503,10 @@ if (!function_exists('add_notifications')) {
                 $bSaved = \App\Models\Admin\NotificationModel::addClientEmailNotification($aData, $aSysPermissionData->notify_email, $oUser, $eventName, $teamMemberName);
             } else {
                 if ($slugDetails->client == 1 && $slugDetails->system == 1 && $aSysPermissionData->system_notify == 1) {
+
+                    $gNoti = getNotificationTemplate($eventName, 'client');
+                    $aData['message'] = $gNoti->sysMessage;
+
                     $bSaved = \App\Models\Admin\NotificationModel::addNotification($aData);
                 }
 
@@ -1531,7 +1535,9 @@ if (!function_exists('add_notifications')) {
 //+++++++++++++ ADMIN AREA +++++++++++++++
 
             if ($slugDetails->admin == 1 && $slugDetails->system == 1) {
-//$bSaved = $CI->mNotifications->addNotification($aData);
+                $gNoti = getNotificationTemplate($eventName, 'admin');
+                $aData['message'] = $gNoti->sysMessage;
+                //$bSaved = $CI->mNotifications->addNotification($aData);
             }
 
             if ($slugDetails->admin == 1 && $slugDetails->email == 1) {
