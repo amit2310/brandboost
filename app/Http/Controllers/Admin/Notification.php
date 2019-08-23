@@ -166,19 +166,25 @@ class Notification extends Controller {
         exit;
     }
 
-    public function delete_multipal_notification() {
+
+    /**
+    * This function is use to delete multipal notification
+    * @param type 
+    * @return type
+    */
+    public function delete_multipal_notification(Request $request) {
 
         $response = array();
         $post = array();
+        $mNotification = new NotificationModel();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $multi_notification_id = $post['multi_notification_id'];
+        if ($request->multi_notification_id) {
+            $multi_notification_id = $request->multi_notification_id;
 
             foreach ($multi_notification_id as $notificationId) {
 
-                $result = $this->Notifications->deleteNotification($userID, $notificationId);
+                $result = $mNotification->deleteNotification($userID, $notificationId);
                 $response['status'] = 'success';
             }
         }
