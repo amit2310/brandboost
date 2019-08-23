@@ -411,6 +411,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/settings/updateNotificationSettings', 'Admin\Settings@updateNotificationSettings');
     Route::post('admin/settings/updateNotification', 'Admin\Settings@updateNotification');
     Route::post('admin/notifications/markRead', 'Admin\Notification@markRead');
+    Route::post('admin/notifications/delete_multipal_notification', 'Admin\Notification@delete_multipal_notification');
     
 
 

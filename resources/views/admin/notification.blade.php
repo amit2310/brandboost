@@ -357,7 +357,7 @@
 	                    $.ajax({
 	                        url: "<?php echo base_url('admin/notifications/delete_multipal_notification'); ?>",
 	                        type: "POST",
-	                        data: {multi_notification_id: val},
+	                        data: {multi_notification_id: val, '_token':'{{csrf_token()}}'},
 	                        dataType: "json",
 	                        success: function (data) {
 	                            if (data.status == 'success') {
