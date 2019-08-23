@@ -1446,6 +1446,17 @@ if (!function_exists('checkPermissionentry')) {
 }
 
 
+/**
+ * Used to get notification template
+ */
+if (!function_exists('getNotificationTemplate')) {
+
+    function getNotificationTemplate($slug) {
+
+        $gNoti = \App\Models\Admin\NotificationModel::getNotificationTemplate($slug);
+        return $gNoti;
+    }
+}
 
 
 /**

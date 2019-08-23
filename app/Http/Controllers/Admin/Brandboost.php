@@ -2191,7 +2191,7 @@ class Brandboost extends Controller {
 			$response['brandboostID'] = $brandboostID;
 
 			//Add userActivity
-			$aActivityData = array(
+			/*$aActivityData = array(
 				'user_id' => $userID,
 				'event_type' => 'brandboost_onsite',
 				'action_name' => 'added_brandboost',
@@ -2202,8 +2202,13 @@ class Brandboost extends Controller {
 				'feedback_id' => '',
 				'activity_message' => 'New On Site Brandboost added',
 				'activity_created' => date("Y-m-d H:i:s")
-			);
-			logUserActivity($aActivityData);
+			);*/
+			//logUserActivity($aActivityData);
+
+            $gNoti = getNotificationTemplate('sys_onsite_added');
+            pre($gNoti);
+            die();
+
 			//Notify about this to admin
 			$notificationData = array(
 				'event_type' => 'added_onsite_brandboost',
@@ -2215,7 +2220,7 @@ class Brandboost extends Controller {
 				'created' => date("Y-m-d H:i:s")
 			);
 			$eventName = 'sys_onsite_added';
-			//add_notifications($notificationData, $eventName, $userID);
+			add_notifications($notificationData, $eventName, $userID);
 		} else {
 			$response['status'] = "Error";
 		}
