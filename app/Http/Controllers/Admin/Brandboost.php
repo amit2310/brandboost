@@ -2205,21 +2205,21 @@ class Brandboost extends Controller {
 			);*/
 			//logUserActivity($aActivityData);
 
-            $gNoti = getNotificationTemplate('sys_onsite_added');
-            pre($gNoti);
-            die();
+            $eventName = 'sys_onsite_added';
+            $gNoti = getNotificationTemplate($eventName);
+          
 
 			//Notify about this to admin
 			$notificationData = array(
-				'event_type' => 'added_onsite_brandboost',
+				'event_type' => $eventName,
 				'event_id' => 0,
 				'link' => base_url() . 'admin/brandboost/onsite_setup/' . $brandboostID,
-				'message' => 'Created new onsite brandboost.',
+				'message' => $gNoti->client_system_content,
 				'user_id' => $userID,
 				'status' => 1,
 				'created' => date("Y-m-d H:i:s")
 			);
-			$eventName = 'sys_onsite_added';
+			
 			add_notifications($notificationData, $eventName, $userID);
 		} else {
 			$response['status'] = "Error";

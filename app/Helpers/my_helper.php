@@ -1471,6 +1471,8 @@ if (!function_exists('add_notifications')) {
         $bSaved = false;
         $isLoggedInTeam = '';
 
+        
+
         if (!empty($ownerID) && !empty($eventName)) {
 
 
