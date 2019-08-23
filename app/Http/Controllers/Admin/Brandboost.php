@@ -2209,6 +2209,9 @@ class Brandboost extends Controller {
             // admin, client, user
             $notyType = 'admin';
             $gNoti = getNotificationTemplate($eventName, $notyType);
+
+            pre($gNoti);
+            die();
           
 
 			//Notify about this to admin
