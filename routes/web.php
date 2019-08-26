@@ -277,6 +277,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/reviews/deleteReviewNote', 'Admin\Reviews@deleteReviewNote');
     Route::post('admin/comments/update_comment_status', 'Admin\Comments@update_comment_status');
     Route::post('admin/reviews/update_note', 'Admin\Reviews@update_note');
+    Route::post('admin/reviews/deleteMultipalReview', 'Admin\Reviews@deleteMultipalReview');
 
     Route::post('admin/comments/add_comment', 'Admin\Comments@addComment');
     Route::post('admin/comments/getCommentById', 'Admin\Comments@getCommentById');
