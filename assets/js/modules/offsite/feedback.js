@@ -62,9 +62,6 @@ $(document).ready(function () {
     // Basic datatable
     var tableIdF = 'offsiteFeedback';
     var tableBase = custom_data_table(tableIdF);
-
-
-
     $("#frmFeedbackTagListModal").submit(function () {
         var formdata = $("#frmFeedbackTagListModal").serialize();
         $.ajax({
@@ -346,7 +343,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#deleteButtonBrandboostFeedbacks', function () {
-
+		var tkn = $('meta[name="_token"]').attr('content');
         var val = [];
         $('.checkRows:checkbox:checked').each(function (i) {
             val[i] = $(this).val();
@@ -371,9 +368,9 @@ $(document).ready(function () {
 				if (isConfirm) {
 					$('.overlaynew').show();
 					$.ajax({
-						url: 'admin/feedback/deleteMultipalFeedbackData',
+						url: '/admin/feedback/deleteMultipalFeedbackData',
 						type: "POST",
-						data: {multi_feedback_id: val, _token: '{{csrf_token()}}'},
+						data: {multi_feedback_id: val,_token:tkn},
 						dataType: "json",
 						success: function (data) {
 							if (data.status == 'success') {
