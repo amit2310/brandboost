@@ -612,13 +612,13 @@ Most startups fail. But many of those failures are preventable. The Lean Startup
 									<li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="<?php echo $data->id; ?>" status="1"><i class="icon-file-stats"></i> Start</a></li>
 								<?php } ?>
 								<li><a href="<?php echo base_url('admin/brandboost/onsite_setup/'.$data->id);?>" brandID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
-								<li><a href="<?php echo base_url('admin/brandboost/brand_configuration/'.$data->id);?>" class="text-default text-semibold"><i class="icon-pencil"></i> Brand Configuration</a></li>
+								<!-- <li><a href="<?php echo base_url('admin/brandboost/brand_configuration/'.$data->id);?>" class="text-default text-semibold"><i class="icon-pencil"></i> Brand Configuration</a></li> -->
 								<li><a href="javascript:void(0);" class="deleteCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
 								<li><a href="javascript:void(0);" class="archiveCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-file-text2"></i> Move to Archive</a></li>
 
 								<li><a href="javascript:void(0);" class="viewECode" brandID="<?php echo $data->id; ?>"><i class="icon-file-locked"></i> Get Embedded Code</a></li>
 								<li><a href="<?php echo base_url('admin/brandboost/stats/onsite/' . $data->id . '?t=contact'); ?>" target="_blank"><i class="icon-gear"></i> Contacts</a></li>
-								<li><a href="http://pleasereviewmehere.com/campaign/<?php echo strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id; ?>" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li>  
+								<li><?php $companyName = strtolower(str_replace(' ', '-', $company_name)); ?><a href="<?php echo base_url('for/'.$companyName.'/'); ?><?php echo strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id; ?>" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li>   
 							</ul>
 						</div>
 						
