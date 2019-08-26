@@ -35,7 +35,10 @@ error_reporting(0);
                     ?>
                      <div class="col-md-3">
                         <h3><img src="<?php echo base_url() ?>assets/images/onsite_icons.png"> On Site Overview</h3>
-                       
+                        <ul class="nav nav-tabs nav-tabs-bottom">
+                            <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="1|0|2">Active Campaigns</a></li>
+                            <li><a style="javascript:void();" class="filterByColumn" fil="3">Archive</a></li>
+                        </ul>
                     </div>
                     <?php
                 }
@@ -281,7 +284,8 @@ error_reporting(0);
                                         $aUser = getLoggedUser();
                                         $currentUserId = $aUser->id;
                                         foreach ($aBrandbosts as $data) {
-                                            if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
+                                        
+                                            //if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
                                             $list_id = $data->id;
                                             $user_id = $data->user_id;
                                             $revCount = getCampaignReviewCount($data->id);
@@ -622,8 +626,8 @@ error_reporting(0);
                                                 </td>
                                             </tr>
 											<?php
-											}
-										}
+											//}
+										} 
 										?>
                                     </tbody>
                                 </table>
@@ -897,7 +901,7 @@ error_reporting(0);
 
         setTimeout(function () {
             $('#activeCampaign').trigger('click');
-        }, 3000);
+        }, 2000);
 
 
         $(document).on('click', '.filterByColumn', function () {
