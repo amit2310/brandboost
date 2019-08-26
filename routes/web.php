@@ -292,6 +292,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
     Route::post('admin/tags/listAllTags', 'Admin\Tags@listAllTags');
     Route::post('admin/tags/applyQuestionTag', 'Admin\Tags@applyQuestionTag');
+    Route::post('admin/tags/applyFeedbackTag', 'Admin\Tags@applyFeedbackTag');
 
 
     Route::get('admin/questions/view/{id}', 'Admin\Questions@questionView');
