@@ -953,7 +953,7 @@ if (!empty($tReview)) {
                                 $.ajax({
                                     url: '<?php echo base_url('admin/reviews/deleteMultipalReview'); ?>',
                                     type: "POST",
-                                    data: {multiReviewid: val},
+                                    data: {multiReviewid: val, _token: '{{csrf_token()}}'},
                                     dataType: "json",
                                     success: function (data) {
                                         if (data.status == 'success') {

@@ -954,9 +954,15 @@ class ReviewsModel extends Model
         return $aData;
     }
 
-    public function deleteReviewByID($reviewID) {
-        $this->db->where('id', $reviewID);
-        $result = $this->db->delete('tbl_reviews');
+
+    /**
+     * Used to delete review by reviewID
+     * @param type $reviewID
+     */
+    public static function deleteReviewByID($reviewID) {
+        $result = DB::table('tbl_reviews')
+           ->where('id', $reviewID)
+           ->delete();
         return true;
     }
 

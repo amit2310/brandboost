@@ -1553,12 +1553,14 @@ class Reviews extends Controller {
     }
 
     
-
-    public function deleteReview() {
+    /**
+     * Used to delete review by reviewID
+     * @param type $reviewID
+     */
+    public function deleteReview(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        $reviewid = strip_tags($post['reviewid']);
-        $result = $this->mReviews->deleteReviewByID($reviewid);
+        $reviewid = strip_tags($request->reviewid);
+        $result = ReviewsModel::deleteReviewByID($reviewid);
         if ($result) {
             $response['status'] = 'success';
         } else {

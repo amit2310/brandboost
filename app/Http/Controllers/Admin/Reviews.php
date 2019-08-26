@@ -209,13 +209,18 @@ class Reviews extends Controller {
         }
     }
 	
-    public function deleteMultipalReview() {
+
+    /**
+     * Used to delete multipal review
+     * @param type
+     */
+    public function deleteMultipalReview(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        $multiReviewid = $post['multiReviewid'];
+    
+        $multiReviewid = $request->multiReviewid;
         foreach ($multiReviewid as $reviewid) {
 
-            $result = $this->mReviews->deleteReviewByID($reviewid);
+            $result = ReviewsModel::deleteReviewByID($reviewid);
         }
         if ($result) {
 
