@@ -69,11 +69,7 @@
                                                 </span> <span class="date"><?php echo date('F d, Y h:i A', strtotime($data->created)); ?></span> </div>
                                         <p><?php echo strlen($data->feedback)>200 ? substr($data->feedback, 0, 200). '...' : $data->feedback;?></p>
                                         <a class="readmore displayFeedback" fb_tab_type="feedback" feedback_id="<?php echo $data->id; ?>" fb_time="<?php echo date("M d, Y h:i A", strtotime($data->created)); ?> (<?php echo timeAgo($data->created);?>)" href="javascript:void(0);">Read more</a>
-<!--                                        <ul class="list-inline list-inline-separate text-size-small">
-                                            <li>57 Likes </li>
-                                            <li>8 Comments</li>
-                                            <li>1574 Views</li>
-                                        </ul>-->
+
                                     </div>
                                 </li>
                                 <?php
@@ -88,7 +84,6 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-md-12 text-right"> <a href="#" class="btn bg-blue-600"> Continue <i class=" icon-arrow-right13 text-size-base position-right"></i> </a> </div>-->
     </div>
 
     
