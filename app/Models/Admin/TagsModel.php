@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use Cookie;
 use Session;
-
+error_reporting(0);
 class TagsModel extends Model {
 
     /**
