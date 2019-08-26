@@ -742,7 +742,7 @@
 		
         $('#onsitereviewQuestion thead tr:eq(1) th').each(function (i) {
 			
-            if (i === 10) {
+            if (i === 11) {
                 var title = $(this).text();
                 $(this).html('<input type="text" id="filterBy" placeholder="Search ' + title + '" />');
 				
