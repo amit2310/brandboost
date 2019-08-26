@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\Admin;
-
+error_reporting(0);
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\UsersModel;
@@ -253,12 +253,13 @@ class Feedback extends Controller {
 
     public function deleteMultipalFeedbackData() {
 
-        $post = $this->input->post();
+        $post = Input::post();
+        $mFeedback  = new FeedbackModel();
         if ($post) {
             $multiFeedbackId = $post['multi_feedback_id'];
             //$dataArray = array('status' => '2');
             foreach ($multiFeedbackId as $feedbackId) {
-                $this->mFeedback->deleteFeedbackRecord($feedbackId);
+                $mFeedback->deleteFeedbackRecord($feedbackId);
             }
         }
 
