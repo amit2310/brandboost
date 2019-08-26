@@ -274,11 +274,17 @@ class FeedbackModel extends Model
             return false;
     }
 
+
+    /**
+    * This function will delete the feedback data
+    * @param type $noteId
+    * @return type
+    */
+
     public function deleteFeedbackRecord($id) {
         if(!empty($id)) {
-            $this->db->where('id', $id);
-            $result = $this->db->delete('tbl_brandboost_feedback');
-            //echo $this->db->last_query();
+            $aData =  DB::table('tbl_brandboost_feedback')
+             ->where('id', $id)->delete();
             if ($result)
                 return true;
             else
