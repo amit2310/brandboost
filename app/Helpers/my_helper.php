@@ -156,7 +156,15 @@ if (!function_exists('admin_account')) {
 if (!function_exists('base_url')) {
 
     function base_url($path = '') {
-        return URL::to('/') . '/' . $path;
+        $siteURL = config('bbconfig.siteURL');
+
+        if (isset($_SERVER["HTTP_HOST"])) {
+            if ($_SERVER['HTTP_HOST'] == 'dev.brandboostx.com') {
+                $siteURL = config('bbconfig.siteURLDev');
+            }
+        }
+
+        return $siteURL . $path;
     }
 
 }
@@ -1438,6 +1446,17 @@ if (!function_exists('checkPermissionentry')) {
 }
 
 
+/**
+ * Used to get notification template
+ */
+if (!function_exists('getNotificationTemplate')) {
+
+    function getNotificationTemplate($slug, $notyType) {
+
+        $gNoti = \App\Models\Admin\NotificationModel::getNotificationTemplate($slug, $notyType);
+        return $gNoti;
+    }
+}
 
 
 /**
@@ -1451,6 +1470,8 @@ if (!function_exists('add_notifications')) {
         $bEmailPermission = true;
         $bSaved = false;
         $isLoggedInTeam = '';
+
+
 
         if (!empty($ownerID) && !empty($eventName)) {
 
@@ -1482,6 +1503,10 @@ if (!function_exists('add_notifications')) {
                 $bSaved = \App\Models\Admin\NotificationModel::addClientEmailNotification($aData, $aSysPermissionData->notify_email, $oUser, $eventName, $teamMemberName);
             } else {
                 if ($slugDetails->client == 1 && $slugDetails->system == 1 && $aSysPermissionData->system_notify == 1) {
+
+                    $gNoti = getNotificationTemplate($eventName, 'client');
+                    $aData['message'] = $gNoti->sysMessage;
+
                     $bSaved = \App\Models\Admin\NotificationModel::addNotification($aData);
                 }
 
@@ -1511,6 +1536,9 @@ if (!function_exists('add_notifications')) {
 
             if ($slugDetails->admin == 1 && $slugDetails->system == 1) {
                // $bSaved = \App\Models\Admin\NotificationModel::addAdminEmailNotification($aData);
+                 $gNoti = getNotificationTemplate($eventName, 'admin');
+                $aData['message'] = $gNoti->sysMessage;
+                //$bSaved = $CI->mNotifications->addNotification($aData);
             }
 
             if ($slugDetails->admin == 1 && $slugDetails->email == 1) {

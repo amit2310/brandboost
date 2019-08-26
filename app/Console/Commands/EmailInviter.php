@@ -958,6 +958,7 @@ class EmailInviter extends Command {
 
 
         $emailContent = $sPreheaderText . $emailData . $footerCompiledCode;
+        
 
         $fromName = $aData['from_name'];
         $replyEmail = !empty($aData['reply_email']) ? $aData['reply_email'] : $aData['from_entity'];
@@ -972,6 +973,7 @@ class EmailInviter extends Command {
                 'bb_module_name' => $aData['module_name']
             )
         );
+        
         $plainText = convertHtmlToPlain($emailContent);
         $params = array(
             'api_user' => $user,
@@ -991,6 +993,7 @@ class EmailInviter extends Command {
         if (!empty($replyEmail)) {
             $params['replyto'] = $replyEmail;
         }
+        
 
         //pre($params);
         $request = $url . 'api/mail.send.json';

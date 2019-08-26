@@ -15,7 +15,7 @@
         <link href="<?php echo base_url("assets/css/core.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/components.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/colors.css"); ?>" rel="stylesheet" type="text/css">
-        <link href="<?php echo base_url("new_pages/assets/css/theme1.css"); ?>" rel="stylesheet" type="text/css">
+        <link href="<?php echo base_url("assets/css/theme1.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/bootstrap.css"); ?>" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
 
@@ -77,7 +77,7 @@
                                 <input type="hidden" value="4" id="ratingValue" name="ratingValue">
                             <?php endif; ?>
                             <button type="submit" class="btn dark_btn bkg_blue_light h52 mr10 sh_no">Send feedback <i class="icon-paperplane"></i></button>
-                            <a href="<?php echo base_url('/feedback/index/thankyou/?'.$getParam);?>" class="btn light_btn bkg_grey_light h52 ml10 txt_dark sh_no pt20" data-dismiss="modal">Skip <i class="icon-arrow-right13"></i></a>
+                            <a href="<?php echo base_url('feedback/thankyou/?'.$getParam);?>" class="btn light_btn bkg_grey_light h52 ml10 txt_dark sh_no pt20" data-dismiss="modal">Skip <i class="icon-arrow-right13"></i></a>
                         </div>
                     </div>
 
@@ -110,13 +110,13 @@
 
                     <?php endif; ?>
                     $.ajax({
-                        url: "<?php echo base_url('/feedback/saveResolution'); ?>",
+                        url: "<?php echo base_url('feedback/saveResolution'); ?>",
                         type: "POST",
-                        data: formdata + "&category=" + cat,
+                        data: formdata + "&category=" + cat+"&_token={{csrf_token()}}",
                         dataType: "json",
                         success: function (response) {
                             if (response.status == "success") {
-                                window.location.href = '<?php echo base_url('/feedback/index/thankyou/?'.$getParam);?>';
+                                window.location.href = '<?php echo base_url('feedback/thankyou/?'.$getParam);?>';
                             }
                         },
                         error: function (response) {

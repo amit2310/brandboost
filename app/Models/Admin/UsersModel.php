@@ -167,6 +167,20 @@ class UsersModel extends Model {
 
         return $oData;
     }
+	
+	/**
+     * This function used to check email exist
+     * @param type $emailID
+     * @return type object
+     */
+    public static function checkEmailExistData($emailID) {
+
+        $oData = DB::table('tbl_users')
+                ->where('email', $emailID)
+                ->get();
+
+        return $oData;
+    }
 
     public function basicSignup($aData) {
         require_once $_SERVER['DOCUMENT_ROOT'] . '/chargebee-php/lib/ChargeBee.php';

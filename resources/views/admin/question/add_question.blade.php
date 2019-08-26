@@ -98,7 +98,7 @@
 				  		</label>
 				  </div>
 				</div>
-				<div id="uploadedQuestionFiles"></div>
+				<!-- <div id="uploadedQuestionFiles"></div> -->
 				<input type="hidden" name="campaign_id" class="campaign_id" value="<?php echo $oCampaign->id != ''? $oCampaign->id : $aBrandboostList[0]->id; ?>" />
 				<input type="hidden" name="subID" value="" />
 				<input type="hidden" name="inviterID" value="<?php echo $aUser->id; ?>" />
@@ -419,7 +419,7 @@
 	var myDropzone_ = new Dropzone(	
 		"#myDropzone",
 		{
-			url: '<?php echo base_url("dropzone/upload_s3_attachment_question_review/".$aUser->id."/reviews/"); ?>',
+			url: '<?php echo base_url("dropzone/upload_s3_attachment_question_review/".$aUser->id."/reviews"); ?>',
 			uploadMultiple: false,
 			maxFiles: 10,
 			maxFilesize: 600,

@@ -249,12 +249,12 @@
 
                                         <?php
                                         foreach ($newolists as $oList):
-                                            //pre($oList);
+                                            
                                             $totEmailCount = 0;
                                             $totSMSCount = 0;
                                             $totUnsubscribeCount = 0;
                                             $newEmails = $newSMS = $newUnsubs = 0;
-                                            //pre($oList);
+                                          
                                             $lastList = end($oList);
                                             //pre($lastList->l_created);
                                             if (!empty($lastList->l_created)) {
@@ -301,7 +301,6 @@
                                                 $totalUnsubGraph = $totUnsubscribeCount * 100 / $totalContacts;
                                                 $totalUnsubGraph = ceil($totalUnsubGraph);
                                             }
-
 
                                             //if ($oList->status != 'archive') {
                                             if (1) {
@@ -358,12 +357,6 @@
                                                         <td style="display: none;"></td>
                                                     <?php } ?>
 
-                                                                            <!-- <td>
-                                                                                <a class="text-default text-semibold pl20" href="<?php echo $editListPath . $oList->id ?>" target="_blank"> <?php echo $totAll; ?></a>                                                        
-                                                                            </td> -->
-
-
-
                                                     <td>
                                                         <?php
                                                         $addPC = '';
@@ -417,32 +410,7 @@
                                                         </div>
 
                                                     </td>
-                                                    <!-- <td>
-                                                    <?php
-                                                    $addPC = '';
-                                                    if ($totalUnsubGraph > 50) {
-                                                        $addPC = 'over50';
-                                                    }
-                                                    ?>
-                                                        <div class="media-left">
-                                                            <div class="progress-circle <?php echo $addPC; ?> red cp<?php echo $totalUnsubGraph; ?>">
-                                                                <div class="left-half-clipper">
-                                                                    <div class="first50-bar"></div>
-                                                                    <div class="value-bar"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="media-left">
-                                                            <div data-toggle="tooltip" title="<?php echo $totUnsubscribeCount; ?> have unsubscribed out of <?php echo $totalContacts; ?> contacts" data-placement="top">
-                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $totUnsubscribeCount; ?></a>
-                                                    <?php if ($newUnsubs > 0): ?>    
-                                                        <?php echo '<span style="color:#FF0000;"> (' . $newUnsubs . ' new)</span>'; ?>    
-                                                    <?php endif; ?>    
-
-                                                            </div>
-                                                        </div>
-
-                                                    </td> -->
+                                                   
                                                     <td>
                                                         <?php echo $lastListTime; ?>
                                                     </td>
@@ -473,28 +441,6 @@
 
                                                         </ul>
                                                     </td>
-
-                                                                            <!-- <td class="text-center">
-
-                                                                                <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
-                                                                                    <ul class="dropdown-menu dropdown-menu-right more_act">
-                                                                                        <li><a href="javascript:void(0);" list_id="<?php echo $oList->id; ?>" target="_blank" class="viewContact"><i class="icon-gear"></i> View Contacts</a></li>
-                                                                                        <li><a href="javascript:void(0);" list_id="<?php echo $oList->id; ?>" class="editlist"><i class="icon-file-stats"></i> Edit</a></li>
-                                                    <?php if ($oList->status == 'active'): ?>
-                                                                                                <li><a href="javascript:void(0);" status="inactive" list_id="<?php echo $oList->id; ?>" class="changeStatus"><i class="icon-file-stats"></i> Inactive</a></li>
-                                                    <?php endif; ?>
-                                                    <?php if ($oList->status == 'inactive' && $oList->status != 'archive'): ?>
-                                                                                                <li><a href="javascript:void(0);" status="active" list_id="<?php echo $oList->id; ?>" class="changeStatus"><i class="icon-file-stats"></i> Active</a></li>
-                                                    <?php endif; ?>
-                                                    <?php if ($oList->status != 'archive'): ?>
-                                                                                                <li><a href="javascript:void(0);" status="archive" list_id="<?php echo $oList->id; ?>" class="changeStatus"><i class="icon-file-stats"></i> Move to Archive</a></li>
-                                                    <?php endif; ?>
-                                                                                        <li><a href="javascript:void(0);" list_id="<?php echo $oList->id; ?>" class="deletelist"><i class="icon-file-text2"></i> Delete</a></li>
-                                                                                    </ul>
-                                                                                </div>
-
-                                                                            </td> -->
-
 
                                                     <td class="text-right">
                                                         <div class="media-left pull-right">
@@ -712,21 +658,20 @@
 
         $('#automationList thead tr:eq(1) th').each(function (i) {
 
-            //console.log(i);
-            if (i === 11) {
+            if (i === 12) {
                 var title = $(this).text();
-                $(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" /><input type="checkbox" class="" id="colStatus">');
+                $(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" />');
 
                 $('input', this).on('keyup change', function () {
+                   
                     if (tableBase.column(i).search() !== this.value) {
                         tableBase
                                 .column(i)
-                                .search(this.value, $('#colStatus').prop('checked', true))
+                                .search(this.value)
                                 .draw();
                     }
                 });
             }
-
 
 
         });
@@ -981,8 +926,9 @@
         });
 
         $(document).on('click', '.viewContact', function () {
+
             var list_id = $(this).attr('list_id');
-            window.location.href = '<?php echo $scriptFile; ?>?list_id=' + list_id;
+            window.location.href = '<?php echo base_url("admin/lists/").$scriptFile; ?>?list_id=' + list_id;
         });
 
         $('#frmaddListModal').on('submit', function () {

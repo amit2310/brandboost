@@ -22,7 +22,7 @@ use App\Models\Admin\Crons\InviterModel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
-
+error_reporting(0);
 class Brandboost extends Controller {
 
     var $default_main_email_template_onsite;
@@ -217,10 +217,9 @@ class Brandboost extends Controller {
         $bActiveSubsription = $mUsers->isActiveSubscription();
         $eventsdata = $mBrandboost->getBrandboostEvents($brandboostID);
         $aReviews = $mReviews->getCampaignAllReviews($brandboostID);
-        //$revCount = getCampaignReviewCount($brandboostID);
-        //$revRA = getCampaignReviewRA($brandboostID);
-		$revCount = 1;
-		$revRA = array();
+        $revCount = getCampaignReviewCount($brandboostID);
+        $revRA = getCampaignReviewRA($brandboostID);
+		
         $emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite');
         $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');
         
@@ -2157,13 +2156,6 @@ class Brandboost extends Controller {
         $userID = Session::get("current_user_id");
 		$campaignName = $request->campaignName;
 		$OnsitecampaignDescription = $request->OnsitecampaignDescription;
-
-		/*$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$hashcode = '';
-		for ($i = 0; $i < 20; $i++) {
-			$hashcode .= $characters[rand(0, strlen($characters))];
-		}
-		$hashcode = $hashcode . date('Ymdhis');*/
 		
 		$str=rand(); 
 		$hashcode = sha1($str); 
@@ -2199,7 +2191,7 @@ class Brandboost extends Controller {
 			$response['brandboostID'] = $brandboostID;
 
 			//Add userActivity
-			$aActivityData = array(
+			/*$aActivityData = array(
 				'user_id' => $userID,
 				'event_type' => 'brandboost_onsite',
 				'action_name' => 'added_brandboost',
@@ -2210,20 +2202,23 @@ class Brandboost extends Controller {
 				'feedback_id' => '',
 				'activity_message' => 'New On Site Brandboost added',
 				'activity_created' => date("Y-m-d H:i:s")
-			);
-			logUserActivity($aActivityData);
+			);*/
+			//logUserActivity($aActivityData);
+
+            $eventName = 'sys_onsite_added';
+            
 			//Notify about this to admin
 			$notificationData = array(
-				'event_type' => 'added_onsite_brandboost',
+				'event_type' => $eventName,
 				'event_id' => 0,
 				'link' => base_url() . 'admin/brandboost/onsite_setup/' . $brandboostID,
-				'message' => 'Created new onsite brandboost.',
+				'message' => '',
 				'user_id' => $userID,
 				'status' => 1,
 				'created' => date("Y-m-d H:i:s")
 			);
-			$eventName = 'sys_onsite_added';
-			//add_notifications($notificationData, $eventName, $userID);
+			
+			add_notifications($notificationData, $eventName, $userID);
 		} else {
 			$response['status'] = "Error";
 		}
@@ -2299,7 +2294,7 @@ class Brandboost extends Controller {
 				'created' => date("Y-m-d H:i:s")
 			);
 			$eventName = 'sys_offsite_added';
-			//add_notifications($notificationData, $eventName, $userID);
+			add_notifications($notificationData, $eventName, $userID);
 		} else {
 			$response['status'] = "Error";
 		}
@@ -2673,33 +2668,20 @@ class Brandboost extends Controller {
 
              return view ('admin.brandboost.brand_configuration',array('title' => 'Brand Configuration', 'pagename' => $breadcrumb, 'brandData' => $brandData[0], 'aBrandbosts' => $aBrandboostList, 'brandThemeData' => $brandThemeData, 'faQData' => $faQData, 'aReviews' => $aReviews, 'userData' => $oUser));
 
-
-        /* $brandData = $this->mBrand->getBrandConfigurationData($this->uri->segment(4));
-          $faQData = $this->mBrand->getFaqData();
-          $getBrandboost = $this->mBrandboost->getBrandboost($this->uri->segment(4));
-          $aReviews = $this->mReviews->getCampaignReviews($this->uri->segment(4));
-
-
-          $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-          <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-          <li><a class="sidebar-control hidden-xs slace">/</a></li>
-          <li><a class="sidebar-control hidden-xs">Brand Configuration</a></li>
-          <li><a data-toggle="tooltip" data-placement="bottom" title="Brand Configuration" class="sidebar-control active hidden-xs ">Brand Configuration</a></li>
-          </ul>';
-
-          $this->template->load('admin/admin_template_new', 'admin/brandboost/brand_configuration', array('title' => 'Brand Configuration', 'pagename' => $breadcrumb, 'brandData' => $brandData[0], 'brandboostData' => $getBrandboost[0], 'aReviews' => $aReviews, 'faQData' => $faQData, 'aBrandbosts' => $aBrandboostList)); */
     }
 
-    public function campaign_specific() {
-
+    public function campaignSpecific() {
+        $mBrandboostObj = new BrandboostModel();
+        $mUserObj = new UsersModel();
+		
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         $company_name = $aUser->company_name;
         if ($user_role == 1) {
-            $aBrandboostList = $this->mBrandboost->getBrandboost('', 'onsite');
+            $aBrandboostList = $mBrandboostObj->getBrandboost('', 'onsite');
         } else {
-            $aBrandboostList = $this->mBrandboost->getBrandboostByUserId($userID, 'onsite');
+            $aBrandboostList = $mBrandboostObj->getBrandboostByUserId($userID, 'onsite');
         }
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -2710,8 +2692,8 @@ class Brandboost extends Controller {
             <li><a data-toggle="tooltip" data-placement="bottom" title="Campaigns" class="sidebar-control active hidden-xs ">Campaigns</a></li>
             </ul>';
 
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
-        $this->session->set_userdata('setTab', '');
+        $bActiveSubsription = $mUserObj->isActiveSubscription();
+        Session::put('setTab', '');
 
         $aData = array(
             'title' => 'Onsite Brand Boost Campaigns',
@@ -2721,8 +2703,8 @@ class Brandboost extends Controller {
             'user_role' => $user_role,
             'company_name' => $company_name
         );
-
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/campaign_specific', $aData);
+		
+		return view ('admin.brandboost.campaign_specific', $aData);
     }
 
 

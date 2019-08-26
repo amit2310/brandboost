@@ -529,7 +529,7 @@ class Contacts extends Controller
         $source = strip_tags(Input::post("source")); 
         $type = strip_tags(Input::post("type")); 
         
-        if($type == 'smartpopup'){
+        if($type == 'smartpopup' || $type == ''){
             $subId = Input::post("subscriberid");
         }else{
             $subId = Input::post("NotesTo");

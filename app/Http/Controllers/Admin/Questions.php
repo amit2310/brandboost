@@ -240,6 +240,7 @@ class Questions extends Controller {
 	
 
     public function saveManualQuestion() {
+		
 		$mUser = new UsersModel();
 		$mSubscriber = new SubscriberModel();
 		$mQuestion  = new QuestionModel();
@@ -302,16 +303,16 @@ class Questions extends Controller {
                 $response = array('status' => 'error', 'msg' => 'form fields are not validated!');
                 return json_encode($response);
             }
-
+			
             if (empty($userID)) {
-
+				
                 $moduleName = 'brandboost';
                 $moduleAccountID = $campaignID;
                 $bAlreadyExists = 0;
                 $bUserAlreadyExists = 0;
 
-                $oUserAccount = $mUser->checkEmailExist($email);
-                
+                $oUserAccount = $mUser->checkEmailExistData($email);
+				
                 if (!empty($oUserAccount)) {
                     $emailUserId = $oUserAccount[0]->id;
                     $bUserAlreadyExists = 1;
@@ -325,20 +326,15 @@ class Questions extends Controller {
                     $bAlreadyExists = 1;
 
                     // check brandboost user
-                    $iUserID = $oGlobalUser->user_id;
+                    
                     $getBrandSubs = $mSubscriber->getSubsByBrandboostId($campaignID, $iSubscriberID);
-                   
+					
                     if(!empty($getBrandSubs) && $getBrandSubs > 0) {
                         $updateBrandSubs = $mSubscriber->updateSubsByBrandboostId($campaignID, $iSubscriberID, $iUserID);
-                        
                     }
                     else {
                         $insertBrandSubs = $mSubscriber->insertSubsByBrandboostId($campaignID, $iSubscriberID, $iUserID);
-                        
                     }
-
-
-
                 } else {
 
                     //Add global subscriber
@@ -356,10 +352,9 @@ class Questions extends Controller {
                         $aSubscriberData['user_id'] = $emailUserId;
                     }
                     $iSubscriberID = $mSubscriber->addGlobalSubscriber($aSubscriberData);
-                    
                 }
 
-               
+				
                 if ($bUserAlreadyExists == 0) { //This means no user_id attached to subscriber
                     //My Code
                     $aRegistrationData = array(
@@ -373,6 +368,7 @@ class Questions extends Controller {
                     );
                     //pre($aRegistrationData);
                     $emailUserId = $mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
+					
                     if ($emailUserId > 0) {
 
                         $bData = array(
@@ -405,7 +401,7 @@ class Questions extends Controller {
                     $bUpdated = $mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
                    
                 }
-
+				
                 if (empty($emailUserId)) {
                     $response = array('status' => 'error', 'msg' => 'User registration has failed');
                     return json_encode($response);
@@ -1361,7 +1357,7 @@ class Questions extends Controller {
                     'message' => 'Question has been added successfully',
                     'created' => date("Y-m-d H:i:s")
                 );
-                //add_notifications($aNotificationData); //called from helper function
+                add_notifications($aNotificationData); //called from helper function
 
                 $response = array('status' => 'ok', 'msg' => 'Thank you for posting your question. Your question was sent successfully and is now waiting to publish it.');
             } else {

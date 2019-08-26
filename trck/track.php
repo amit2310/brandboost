@@ -76,6 +76,7 @@ if ($bbType == 'offsite') {
 } else {
     $additionalParams = ($additionalParams) ? $additionalParams : '';
     $redirectURL = base64UrlDecode($_REQUEST['click_redirect']);
+    
     $aURLParams = parse_url($redirectURL);
     if(!empty($aURLParams['query'])){
         $initQS = '';

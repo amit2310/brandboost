@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\ReviewsModel;
 use DB;
 
-class BrandboostModel extends Model {
+class BrandboostModel extends Model { 
+    
 
     /**
      * Checks if a review submitted by a subscribers

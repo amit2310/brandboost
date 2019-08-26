@@ -10,6 +10,7 @@ use App\Models\Admin\Twillio_model;
 use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\ReviewlistsModel;
 use App\Models\Admin\BrandboostModel;
+use App\Models\Admin\UsersModel;
 error_reporting(0);
 
 class Feedback extends Controller {
@@ -21,9 +22,10 @@ class Feedback extends Controller {
     * @return type
     */
 
-    public function index() {
+    public function index($page = '') {
         $get = array();
         $get = Input::get();
+       
         if (!empty($get)) {
             $subscriberID = $get['subid'];
             $clientID = $get['clid'];
@@ -34,13 +36,13 @@ class Feedback extends Controller {
             $mReview  = new ReviewlistsModel();
 
             if (!empty($bbID)) {
-                $aFeedbackResponse = $mFeedback->getFeedbackResponse($bbID);
+                $aFeedbackResponse = FeedbackModel::getFeedbackResponse($bbID);
 
-                 $oBrandboost = $mInviter->getBBInfo($bbID);
+                $oBrandboost = BrandboostModel::getBBInfo($bbID);;
 
                 $aSourceLinks = unserialize($oBrandboost->offsites_links);
 
-                if($aFeedbackResponse->count()>0){ $sRatingsType = $aFeedbackResponse->ratings_type; }
+                if(!empty($aFeedbackResponse->ratings_type)){ $sRatingsType = $aFeedbackResponse->ratings_type; }
 
                 if ($subscriberID > 0) {
                     $oSubscriber = $mReview->getSubscriber($subscriberID);
@@ -69,8 +71,9 @@ class Feedback extends Controller {
             'getParam' => $qs
         );
 
+      
         if ($page == 'resolution') {
-          return view('feedback_collect_resolution', $aData);
+			return view('feedback_collect_resolution', $aData);
         } else if ($page == 'sources' || $page == 'thankyou') {
             return view('feedback_collect_sources', $aData);
         } else {
@@ -79,12 +82,11 @@ class Feedback extends Controller {
     }
 
 
-        /**
-        * function to get resolution values 
-        * @param type $page
-        * @return type
-        */
-
+    /**
+    * function to get resolution values 
+    * @param type $page
+    * @return type
+    */
     public function resolution() {
         $get = array();
         $get = Input::get();
@@ -140,7 +142,6 @@ class Feedback extends Controller {
     * @param type
     * @return type
     */
-
     public function saveFeedback() {
 
         $response = array();
@@ -156,13 +157,14 @@ class Feedback extends Controller {
             $bbID = strip_tags($post['bbID']);
             $happy = strip_tags($post['happy']);
             $bRequireGlobalSubs = false;
-            $mFeedback  = FeedbackModel();
+            $mFeedback  = new FeedbackModel();
             $mInviter = new BrandboostModel();
             $mReview  = new ReviewlistsModel();
             $mSubscriber  = new SubscriberModel();
+            $mUser = new UsersModel();
 
             if (!empty($bbID)) {
-                $oBrandboost = $mInviter->getBBInfo($bbID);
+                $oBrandboost = BrandboostModel::getBBInfo($bbID);
                 $ownerID = $oBrandboost->user_id;
                 $eventName = 'sys_offsite_review_add';
             }
@@ -170,7 +172,8 @@ class Feedback extends Controller {
 
 
             if (!empty($subscriberId)) {
-                $aSubscriberInfo = $mFeedback->getSubscriberInfo($subscriberId);
+                $aSubscriberInfo = $mUser->getSubscriberInfo($subscriberId);
+                $aSubscriberInfo = $aSubscriberInfo[0];
                 $firstName = $aSubscriberInfo->firstname;
                 $lastName = $aSubscriberInfo->lastname;
                 $sName = $firstName . ' ' . $lastName;
@@ -198,7 +201,7 @@ class Feedback extends Controller {
                     'created' => date("Y-m-d H:i:s")
                 );
 
-                $result = $this->mFeedback->add($aData);
+                $result = $mFeedback->add($aData);
 
                 $aFeedbackRes = array(
                     'feedback_type' => $category,
@@ -210,7 +213,7 @@ class Feedback extends Controller {
                     'subscriber_name' => $sName,
                     'email' => $email
                 );
-                $this->sendFeedbackThankyouEmail($aFeedbackRes);
+                //$this->sendFeedbackThankyouEmail($aFeedbackRes);
 
                 //Add System Notification
                 $aNotification = array(
@@ -387,7 +390,7 @@ class Feedback extends Controller {
             $title = strip_tags($post['title']);
             $resolutionText = strip_tags($post['resolutionText']);
             $type = strip_tags($post['type']);
-            $mFeedback  = FeedbackModel();
+            $mFeedback  = new FeedbackModel();
             $mInviter = new BrandboostModel();
             $mReview  = new ReviewlistsModel();
             $mSubscriber  = new SubscriberModel();

@@ -1383,6 +1383,8 @@ class WorkflowModel extends Model {
                 } else if ($moduleName == 'onsite' || $moduleName == 'offsite' || $moduleName == 'brandboost') {
                     $brandboostType = $oAccountData->review_type;
 
+                    //Get from Name and Email info
+
                     if ($brandboostType == 'onsite') {
                         if (strtolower($resultData->template_type) == 'email') {
                             $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.email.templates', array('template_slug' => $resultData->template_slug))->render();
@@ -1400,6 +1402,10 @@ class WorkflowModel extends Model {
                     }
                 }
             }
+            
+            //Get From Email, Name info
+            $oFrom = $this->getWorkflowFromNameEmailInfo($moduleName, $accountID);
+            
             $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $resultData->stripo_compiled_html;
             $aCampaignData = array(
                 'event_id' => $eventID,
@@ -1415,9 +1421,9 @@ class WorkflowModel extends Model {
                 'stripo_compiled_html' => $compiledContent,
                 'template_source' => $templateSourceID,
                 'status' => 1,
-                'from_email' => $aUser->email,
-                'from_name' => $aUser->firstname . ' ' . $aUser->lastname,
-                'reply_to' => $aUser->email,
+                'from_email' => (!empty($oFrom)) ? $oFrom->from_email : $aUser->email,
+                'from_name' => (!empty($oFrom)) ? $oFrom->from_name :  $aUser->firstname . ' ' . $aUser->lastname,
+                'reply_to' => (!empty($oFrom)) ? $oFrom->from_name : $aUser->email,
                 'created' => date("Y-m-d H:i:s")
             );
 
@@ -1450,6 +1456,45 @@ class WorkflowModel extends Model {
             return array('id' => $insert_id, 'subject' => $resultData->template_subject, 'content' => base64_decode($resultData->template_content));
         else
             return false;
+    }
+
+    /**
+     * Used to get Workflow campaign From and Email info
+     * @param type $moduleName
+     * @param type $moduleUnitID
+     */
+    public function getWorkflowFromNameEmailInfo($moduleName, $moduleUnitID) {
+        switch ($moduleName) {
+            case "brandboost":
+            case "onsite":
+            case "offsite":
+                $tableName = 'tbl_feedback_response';
+                $fieldName = 'brandboost_id';
+                break;
+            case "automation":
+                $tableName = '';
+                break;
+            case "broadcast":
+                $tableName = '';
+                break;
+            case "referral":
+                $tableName = '';
+                break;
+            case "nps":
+                $tableName = '';
+                break;
+            default :
+                $tableName = '';
+        }
+
+        if (empty($tableName) || empty($moduleUnitID)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+                ->where($fieldName, $moduleUnitID)
+                ->first();
+        return $oData;
     }
 
     public function addWorkflowCampaign($eventID, $templateID, $accountID, $moduleName, $isDraft = false) {
@@ -4402,12 +4447,12 @@ class WorkflowModel extends Model {
                 $tableEventTableID = '';
                 $tableCampaignTable = '';
         }
-        
-        if (empty($tableMainTable) || empty($tableEventTable) ||  empty($tableCampaignTable)){
+
+        if (empty($tableMainTable) || empty($tableEventTable) || empty($tableCampaignTable)) {
             return false;
         }
 
-        
+
         //Update Main Table
         $oData = DB::table($tableMainTable)
                 ->where('id', $moduleUnitID)
@@ -4419,9 +4464,9 @@ class WorkflowModel extends Model {
         $bExists = DB::table($tableEventTable)
                 ->where($tableEventTableID, $moduleUnitID)
                 ->exists();
-        
-                      
-        
+
+
+
         if ($bExists) {
             //Update Event Table
             DB::table($tableEventTable)

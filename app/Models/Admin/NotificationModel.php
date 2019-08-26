@@ -30,8 +30,8 @@ class NotificationModel extends Model {
                 ->leftJoin('tbl_users', 'tbl_notifications.user_id', '=', 'tbl_users.id')
                 ->select('tbl_notifications.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.avatar')
                 ->where('tbl_notifications.user_id', $userId)
-                ->where(DB::raw("DATE(tbl_notifications.created)"), '<', "$lastWeekDate")
-                ->where(DB::raw("DATE(tbl_notifications.created)"), '>=', "$dateStartFilter")
+                //->where(DB::raw("DATE(tbl_notifications.created)"), '<', "$lastWeekDate")
+                //->where(DB::raw("DATE(tbl_notifications.created)"), '>=', "$dateStartFilter")
                 ->when(!empty($type), function ($query) use ($status) {
                     return $query->where('tbl_notifications.status', $status);
                 })
@@ -40,6 +40,7 @@ class NotificationModel extends Model {
 
         return $aData;
     }
+
 
     /**
      * Used to add Notification
@@ -54,6 +55,7 @@ class NotificationModel extends Model {
             return false;
         }
     }
+
 
     /**
      * Used to add cleint email notification
@@ -227,6 +229,32 @@ class NotificationModel extends Model {
 
         return $oData;
     }
+
+
+    /**
+     * Used to get the notification template
+     * @param type $slug
+     * @return type object
+     */
+    public function getNotificationTemplate($slug, $notyType) {
+
+        $oData = DB::table('tbl_notifications_manager')
+        ->when(($notyType == 'admin'), function ($query) use ($notyType) {
+            return $query->select('tbl_notifications_manager.admin_system_content as sysMessage');
+        })
+        ->when(($notyType == 'client'), function ($query) use ($notyType) {
+            return $query->select('tbl_notifications_manager.client_system_content as sysMessage');
+        })
+        ->when(($notyType == 'user'), function ($query) use ($notyType) {
+            return $query->select('tbl_notifications_manager.user_system_content as sysMessage');
+        })
+        ->where('notification_slug', $slug)
+        ->first();
+
+        return $oData;
+    }
+
+
 
     /**
      * Used to get the list of yesterday notifications 

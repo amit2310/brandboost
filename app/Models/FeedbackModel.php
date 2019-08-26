@@ -18,7 +18,7 @@ class FeedbackModel extends Model
 		$oData = DB::table('tbl_feedback_response')
 			->where('brandboost_id', $campaignID)    
 			->orderBy('id', 'asc')
-			->get();
+			->first();
 		return $oData;
     }
 	
@@ -166,25 +166,16 @@ class FeedbackModel extends Model
     }
 
 
+    /**
+    * Used to add feedback
+    * @param type $feedbackID
+    * @return type
+    */
 
+    public function add($aData) {
 
-
-
-
-
-
-
-
-   public function add($aData) {
-        $result = $this->db->insert('tbl_brandboost_feedback', $aData);
-        $inset_id = $this->db->insert_id();
-        //$last_query = $this->db->last_query();
-        //pre($last_query);
-        if ($result) {
-            return $inset_id;
-        } else {
-            return false;
-        }
+        $insert_id = DB::table('tbl_brandboost_feedback')->insertGetId($aData);
+        return $insert_id;
     }
     
     

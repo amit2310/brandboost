@@ -698,9 +698,9 @@
                 var bUnreadAll = true;
             }
             $.ajax({
-                url: '/admin/notifications/markRead',
+                url: '<?php echo base_url("admin/notifications/markRead"); ?>',
                 type: "POST",
-                data: {param: 'readall', notificationid: notificationid},
+                data: {param: 'readall', notificationid: notificationid, '_token':'{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {

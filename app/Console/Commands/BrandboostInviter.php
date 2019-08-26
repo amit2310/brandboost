@@ -48,7 +48,9 @@ class BrandboostInviter extends Command {
 
         $this->use_default_accounts = false;
         $this->from_email = 'request@brandboost.io';
+        $this->from_name = 'Brandboost Team';
         $this->client_from_email = '';
+        $this->client_from_name = '';
         $this->testCampaignId = '';
     }
 
@@ -65,7 +67,6 @@ class BrandboostInviter extends Command {
      * Default function responsible to initiate the cron
      */
     public function startCampaign() {
-
         //Instantiate cron manager model to access its properties and methods
         $mCron = new ManagerModel();
 
@@ -339,10 +340,20 @@ class BrandboostInviter extends Command {
 
         //Get owner information
         $this->client_from_email = '';
+        $this->client_from_name = '';
         $clientEmail = $oEvent->client_email;
+        
+        $clientFirstName = $oEvent->client_first_name;
+        $clientLastName = $oEvent->client_last_name;
+        
+        $fullName = trim($clientFirstName . ' '. $clientLastName);
 
         if (!empty($clientEmail)) {
             $this->client_from_email = $clientEmail;
+        }
+        
+        if(!empty($fullName)){
+            $this->client_from_name = $fullName;
         }
 
         $aCampaigns = $mInviter->getAutomationCampaign($inviterID);
@@ -369,13 +380,17 @@ class BrandboostInviter extends Command {
                         echo "Campaign Type is " . $campaignType;
                     }
                     $subject = $aCampaign->subject;
-                    $fromEmail = $aCampaign->from_email;
+                    
+                    
                     $defaultFromEmail = (!empty($this->client_from_email)) ? $this->client_from_email : $this->from_email;
-                    $fromEmail = empty($fromEmail) ? $defaultFromEmail : $fromEmail;
+                    $defaultFromName = (!empty($this->client_from_name)) ? $this->client_from_name : $this->from_name;
+                    $fromEmail = empty($aCampaign->from_email) ? $defaultFromEmail : $aCampaign->from_email;
+                    $fromName = empty($aCampaign->from_name) ? $defaultFromName : $aCampaign->from_name;
                     $aEmailData = array(
                         'subject' => $subject,
                         'content' => $content,
-                        'from' => $this->from_email, //$fromEmail,
+                        'from' => $fromEmail,
+                        'name' => $fromName,
                         'campaign_id' => $aCampaign->id,
                         'brandboost_id' => $bbID,
                         'inviter_id' => $inviterID,
@@ -419,6 +434,7 @@ class BrandboostInviter extends Command {
 
         $content = $aData['content'];
         $fromEmail = $aData['from'];
+        $fromName = $aData['name'];
         $subject = $aData['subject'];
         $clientID = $aData['client_id'];
         if ($aData['brandboost_id'] == $this->testCampaignId) {
@@ -454,6 +470,7 @@ class BrandboostInviter extends Command {
                     'campaign_type' => 'email',
                     'to' => $to,
                     'from_entity' => $fromEmail,
+                    'from_name' => $fromName,
                     'subject' => $subject,
                     'content' => base64_encode($msg),
                     'brandboost_id' => $aData['brandboost_id'],
@@ -870,6 +887,7 @@ class BrandboostInviter extends Command {
             'html' => $emailContent,
             'text' => $plainText,
             'from' => $aData['from_entity'],
+            'fromname' => $aData['from_name'],
             'x-smtpapi' => json_encode($json_string)
         );
         $request = $url . 'api/mail.send.json';

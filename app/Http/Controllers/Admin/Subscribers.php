@@ -15,7 +15,305 @@ use Session;
 use App\Libraries\Custom\Csvimport;
 
 class Subscribers extends Controller {
+	/**
+     * Used to export subscribers through csv file
+     */
+    public function exportSubscriberCSV() {
 
+        // file name 
+        $mSubscriber = new SubscriberModel();
+        $mSettings = new SettingsModel();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $userRole = $oUser->user_role;
+        $filename = 'users_' . time() . '.csv';
+        header("Content-Description: File Transfer");
+        header("Content-Disposition: attachment; filename=$filename");
+        header("Content-Type: application/csv; ");
+
+        $post = Input::get();
+
+        $moduleName = strip_tags($post['module_name']);
+        $moduleAccountID = strip_tags($post['module_account_id']);
+
+
+        if ($userRole != '1') {
+            $oSubscribers = $mSubscriber->getModuleSubscribers($userID, $moduleName, $moduleAccountID);
+        } else {
+            //$userID = '';
+            $oSubscribers = $mSubscriber->getModuleSubscribers('', $moduleName, $moduleAccountID);
+        }
+
+        // file creation 
+        $file = fopen('php://output', 'w');
+
+        $header = array("EMAIL", "FIRST_NAME", "LAST_NAME", "PHONE", "GENDER", "COUNTRY", "CITY", "STATE", "ZIP", "TWITTER_PROFILE", "FACEBOOK_PROFILE", "INSTAGRAM_PROFILE", "OTHER_SOCIAL_PROFILE", "OTHER_SOCIAL_PROFILE");
+        fputcsv($file, $header);
+        foreach ($oSubscribers as $key => $line) {
+            fputcsv($file, array($line->email, $line->firstname, $line->lastname, $line->phone, $line->gender, $line->country_code, $line->cityName, $line->stateName, $line->zipCode, $line->twitter_profile, $line->facebook_profile, $line->linkedin_profile, $line->instagram_profile, $line->socialProfile));
+        }
+        fclose($file);
+
+        //Log Export History
+        if (!empty($oSubscribers)) {
+            $aHistoryData = array(
+                'user_id' => $userID,
+                'export_name' => 'Contacts',
+                'item_count' => count($oSubscribers),
+                'created' => date("Y-m-d H:i:s")
+            );
+            $mSettings->logExportHistory($aHistoryData);
+        }
+        //Add Useractivity log
+
+        $aActivityData = array(
+            'user_id' => $userID,
+            'module_name' => $moduleName,
+            'module_account_id' => $moduleAccountID,
+            'event_type' => 'export_subscribers',
+            'action_name' => 'exported_contact',
+            'brandboost_id' => '',
+            'campaign_id' => '',
+            'inviter_id' => '',
+            'subscriber_id' => '',
+            'feedback_id' => '',
+            'activity_message' => 'Exported Subscribers',
+            'activity_created' => date("Y-m-d H:i:s")
+        );
+        logUserActivity($aActivityData);
+        exit;
+    }
+
+    
+    /**
+     * Used to move module subscribers into archive list
+     */
+    public function moveToArchiveModuleContact() {
+
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
+
+        if (empty($post)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+
+        $moduleName = strip_tags($post['moduleName']);
+        $moduleUnitID = strip_tags($post['moduleUnitId']);
+        $subscriberID = strip_tags($post['subscriberId']);
+
+        $aData = array(
+            'status' => 2
+        );
+
+        $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
+
+        if ($bUpdated == true) {
+            $response = array('status' => 'success', 'msg' => "Contact archived successfully!");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    
+    /**
+     * Used to move module subscribers into the active list
+     */
+    public function moveToActiveModuleContact() {
+
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
+
+        if (empty($post)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+
+        $moduleName = strip_tags($post['moduleName']);
+        $moduleUnitID = strip_tags($post['moduleUnitId']);
+        $subscriberID = strip_tags($post['subscriberId']);
+
+        $aData = array(
+            'status' => 1
+        );
+
+        $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
+
+        if ($bUpdated == true) {
+            $response = array('status' => 'success', 'msg' => "Contact made active successfully!");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    
+    /**
+     * Used to update module subscribers status
+     */
+    public function changeModuleContactStatus() {
+
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
+
+        if (empty($post)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+
+        $moduleName = strip_tags($post['moduleName']);
+        $moduleUnitID = strip_tags($post['moduleUnitId']);
+        $subscriberID = strip_tags($post['subscriberId']);
+        $status = strip_tags($post['contactStatus']);
+
+        $aData = array(
+            'status' => $status
+        );
+
+        $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
+
+        if ($bUpdated == true) {
+            $response = array('status' => 'success', 'msg' => "Status updated successfully!");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    
+    /**
+     * Used to delete module subscirbers
+     */
+    public function deleteModuleSubscriber() {
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
+
+        if (empty($post)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+
+        $moduleName = strip_tags($post['moduleName']);
+        $moduleUnitID = strip_tags($post['moduleUnitId']);
+        $subscriberID = strip_tags($post['subscriberId']);
+
+        $bDeleted = $mSubscriber->deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID);
+		
+        if ($bDeleted == true) {
+            $response = array('status' => 'success', 'msg' => "Contact deleted successfully!");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    
+    /**
+     * Used to delete module subscribers in bulk
+     */
+    public function deleteBulkModuleContacts(Request $request) {
+		$mSubscriber = new SubscriberModel();
+
+        $multipalSubscriberId = $request->multipalSubscriberId;
+        $moduleName = $request->moduleName;
+        $moduleUnitID = $request->moduleUnitId;
+
+        foreach ($multipalSubscriberId as $subscriberID) {
+            $bDeleted = $mSubscriber->deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID);
+        }
+
+        if ($bDeleted == true) {
+            $response = array('status' => 'success', 'msg' => "Selected contacts deleted successfully!");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    
+    /**
+     * Used to archive module subscribers in bulk
+     */
+    public function archiveBulkModuleContacts() {
+
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
+
+        if (empty($post)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+
+        $multipalSubscriberId = $post['multipalSubscriberId'];
+        $moduleName = strip_tags($post['moduleName']);
+        $moduleUnitID = strip_tags($post['moduleUnitId']);
+
+        foreach ($multipalSubscriberId as $subscriberID) {
+            $aData = array(
+                'status' => 2
+            );
+
+            $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
+        }
+
+        if ($bUpdated == true) {
+            $response = array('status' => 'success', 'msg' => "Selected contacts archived successfully!");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    
+    /**
+     * used to make active module subscribers into the contacts
+     */
+    public function activeBulkModuleContacts() {
+
+        $post = Input::post();
+        $mSubscriber = new SubscriberModel();
+
+        if (empty($post)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+
+        $multipalSubscriberId = $post['multipalSubscriberId'];
+        $moduleName = strip_tags($post['moduleName']);
+        $moduleUnitID = strip_tags($post['moduleUnitId']);
+
+        foreach ($multipalSubscriberId as $subscriberID) {
+            $aData = array(
+                'status' => 1
+            );
+            $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
+        }
+
+        if ($bUpdated == true) {
+            $response = array('status' => 'success', 'msg' => "Selected contacts archived successfully!");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     
     /**
      * Default Controller
@@ -595,303 +893,6 @@ class Subscribers extends Controller {
         } else {
             $data['error'] = "Error occured";
         }
-        
-    }
-
-    
-    /**
-     * Used to export subscribers through csv file
-     */
-    public function exportSubscriberCSV() {
-
-        // file name 
-        $mSubscriber = new SubscriberModel();
-        $mSettings = new SettingsModel();
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
-        $userRole = $oUser->user_role;
-        $filename = 'users_' . time() . '.csv';
-        header("Content-Description: File Transfer");
-        header("Content-Disposition: attachment; filename=$filename");
-        header("Content-Type: application/csv; ");
-
-        $post = Input::get();
-
-        $moduleName = strip_tags($post['module_name']);
-        $moduleAccountID = strip_tags($post['module_account_id']);
-
-
-        if ($userRole != '1') {
-            $oSubscribers = $mSubscriber->getModuleSubscribers($userID, $moduleName, $moduleAccountID);
-        } else {
-            //$userID = '';
-            $oSubscribers = $mSubscriber->getModuleSubscribers('', $moduleName, $moduleAccountID);
-        }
-
-        // file creation 
-        $file = fopen('php://output', 'w');
-
-        $header = array("EMAIL", "FIRST_NAME", "LAST_NAME", "PHONE", "GENDER", "COUNTRY", "CITY", "STATE", "ZIP", "TWITTER_PROFILE", "FACEBOOK_PROFILE", "INSTAGRAM_PROFILE", "OTHER_SOCIAL_PROFILE", "OTHER_SOCIAL_PROFILE");
-        fputcsv($file, $header);
-        foreach ($oSubscribers as $key => $line) {
-            fputcsv($file, array($line->email, $line->firstname, $line->lastname, $line->phone, $line->gender, $line->country_code, $line->cityName, $line->stateName, $line->zipCode, $line->twitter_profile, $line->facebook_profile, $line->linkedin_profile, $line->instagram_profile, $line->socialProfile));
-        }
-        fclose($file);
-
-        //Log Export History
-        if (!empty($oSubscribers)) {
-            $aHistoryData = array(
-                'user_id' => $userID,
-                'export_name' => 'Contacts',
-                'item_count' => count($oSubscribers),
-                'created' => date("Y-m-d H:i:s")
-            );
-            $mSettings->logExportHistory($aHistoryData);
-        }
-        //Add Useractivity log
-
-        $aActivityData = array(
-            'user_id' => $userID,
-            'module_name' => $moduleName,
-            'module_account_id' => $moduleAccountID,
-            'event_type' => 'export_subscribers',
-            'action_name' => 'exported_contact',
-            'brandboost_id' => '',
-            'campaign_id' => '',
-            'inviter_id' => '',
-            'subscriber_id' => '',
-            'feedback_id' => '',
-            'activity_message' => 'Exported Subscribers',
-            'activity_created' => date("Y-m-d H:i:s")
-        );
-        logUserActivity($aActivityData);
-        exit;
-    }
-
-    
-    /**
-     * Used to move module subscribers into archive list
-     */
-    public function moveToArchiveModuleContact() {
-
-        $post = Input::post();
-        $mSubscriber = new SubscriberModel();
-
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
-        $subscriberID = strip_tags($post['subscriberId']);
-
-        $aData = array(
-            'status' => 2
-        );
-
-        $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
-
-        if ($bUpdated == true) {
-            $response = array('status' => 'success', 'msg' => "Contact archived successfully!");
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    
-    /**
-     * Used to move module subscribers into the active list
-     */
-    public function moveToActiveModuleContact() {
-
-        $post = Input::post();
-        $mSubscriber = new SubscriberModel();
-
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
-        $subscriberID = strip_tags($post['subscriberId']);
-
-        $aData = array(
-            'status' => 1
-        );
-
-        $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
-
-        if ($bUpdated == true) {
-            $response = array('status' => 'success', 'msg' => "Contact made active successfully!");
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    
-    /**
-     * Used to update module subscribers status
-     */
-    public function changeModuleContactStatus() {
-
-        $post = Input::post();
-        $mSubscriber = new SubscriberModel();
-
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
-        $subscriberID = strip_tags($post['subscriberId']);
-        $status = strip_tags($post['contactStatus']);
-
-        $aData = array(
-            'status' => $status
-        );
-
-        $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
-
-        if ($bUpdated == true) {
-            $response = array('status' => 'success', 'msg' => "Status updated successfully!");
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    
-    /**
-     * Used to delete module subscirbers
-     */
-    public function deleteModuleSubscriber() {
-        $post = Input::post();
-        $mSubscriber = new SubscriberModel();
-
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
-        $subscriberID = strip_tags($post['subscriberId']);
-
-        $bDeleted = $mSubscriber->deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID);
-
-        if ($bDeleted == true) {
-            $response = array('status' => 'success', 'msg' => "Contact deleted successfully!");
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    
-    /**
-     * Used to delete module subscribers in bulk
-     */
-    public function deleteBulkModuleContacts() {
-
-        $post = $this->input->post();
-
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-        $multipalSubscriberId = $post['multipalSubscriberId'];
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
-
-        foreach ($multipalSubscriberId as $subscriberID) {
-            $bDeleted = $this->mSubscriber->deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID);
-        }
-
-        if ($bDeleted == true) {
-            $response = array('status' => 'success', 'msg' => "Selected contacts deleted successfully!");
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    
-    /**
-     * Used to archive module subscribers in bulk
-     */
-    public function archiveBulkModuleContacts() {
-
-        $post = Input::post();
-        $mSubscriber = new SubscriberModel();
-
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-
-        $multipalSubscriberId = $post['multipalSubscriberId'];
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
-
-        foreach ($multipalSubscriberId as $subscriberID) {
-            $aData = array(
-                'status' => 2
-            );
-
-            $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
-        }
-
-        if ($bUpdated == true) {
-            $response = array('status' => 'success', 'msg' => "Selected contacts archived successfully!");
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    
-    /**
-     * used to make active module subscribers into the contacts
-     */
-    public function activeBulkModuleContacts() {
-
-        $post = Input::post();
-        $mSubscriber = new SubscriberModel();
-
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
-
-        $multipalSubscriberId = $post['multipalSubscriberId'];
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
-
-        foreach ($multipalSubscriberId as $subscriberID) {
-            $aData = array(
-                'status' => 1
-            );
-            $bUpdated = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberID);
-        }
-
-        if ($bUpdated == true) {
-            $response = array('status' => 'success', 'msg' => "Selected contacts archived successfully!");
-        }
-
-        echo json_encode($response);
-        exit;
     }
 
 }

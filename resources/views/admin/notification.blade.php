@@ -119,13 +119,13 @@
 		
 		<div class="row" id="filterNotificationData">
 
-				<!-- <?php if(!empty($notifications_data_today)) {?>
+			<?php /*if(!empty($notifications_data_today)) {?>
 				<div class="col-md-12">
 					<p class="txt_grey txt_upper mt-15 mb-15 fsize10">Today</p>
 				</div>
-				<?php } ?>
+				<?php }*/ ?>
 
-				<div class="col-md-12"><?php
+				<!-- <div class="col-md-12"><?php
 			 if(!empty($notifications_data_today)) {
 			foreach($notifications_data_today as $notification) {
 
@@ -156,18 +156,18 @@
 				<?php
 			}}
 			?>
-				</div>
+				</div> -->
 
 
 
 
-				<?php if(!empty($notifications_data_yesterday)) {?>
+				<?php /*if(!empty($notifications_data_yesterday)) {?>
 				<div class="col-md-12">
 					<p class="txt_grey txt_upper mt-15 mb-15 fsize10">Yesterday</p>
 				</div>
-				<?php } ?>
+				<?php }*/ ?>
 
-				<div class="col-md-12"><?php
+				<!-- <div class="col-md-12"><?php
 			 if(!empty($notifications_data_yesterday)) {
 			foreach($notifications_data_yesterday as $notification) {
 
@@ -198,17 +198,17 @@
 				<?php
 			}}
 			?>
-				</div>
+				</div> -->
 
 
 
-				<?php if(!empty($notifications_data_lastweek)) {?>
+				<?php /*if(!empty($notifications_data_lastweek)) {?>
 				<div class="col-md-12">
 					<p class="txt_grey txt_upper mt-15 mb-15 fsize10">Last week</p>
 				</div>
-				<?php } ?>
+				<?php }*/ ?>
 
-				<div class="col-md-12"><?php
+				<!-- <div class="col-md-12"><?php
 			 if(!empty($notifications_data_lastweek)) {
 			foreach($notifications_data_lastweek as $notification) {
 
@@ -239,7 +239,7 @@
 				<?php
 			}}
 			?>
-				</div>
+				</div> -->
 
 
 
@@ -279,7 +279,7 @@
 				<?php
 			}}
 			?>
-				</div> -->
+				</div>
 			</div>
 	
 	<!--&&&&&&&&&&&& CONTENT  END&&&&&&&&&&-->
@@ -357,7 +357,7 @@
 	                    $.ajax({
 	                        url: "<?php echo base_url('admin/notifications/delete_multipal_notification'); ?>",
 	                        type: "POST",
-	                        data: {multi_notification_id: val},
+	                        data: {multi_notification_id: val, '_token':'{{csrf_token()}}'},
 	                        dataType: "json",
 	                        success: function (data) {
 	                            if (data.status == 'success') {

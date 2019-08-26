@@ -5,7 +5,6 @@
 @endsection
 
 @section('contents')
-
 <?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign'); ?>
 <?php
 $iActiveCount = $iArchiveCount = 0;
@@ -19,9 +18,10 @@ if (!empty($aBrandbosts)) {
         }
     }
 }
-error_reporting(0);
 ?>
-
+<style type="text/css">
+    a.txt_dark.bbot:hover { color: #962e6c!important; }
+</style>
 <!-- Content area -->
 <div class="content">
 
@@ -30,28 +30,17 @@ error_reporting(0);
     <div class="page_header">
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
-            <?php 
-                if($viewstats == true){
-                    ?>
-                     <div class="col-md-3">
-                        <h3><img src="<?php echo base_url() ?>assets/images/onsite_icons.png"> On Site Overview</h3>
-                       
-                    </div>
-                    <?php
-                }
-                else {
-                    ?>
-                     <div class="col-md-3">
-                        <h3><img src="<?php echo base_url() ?>assets/images/onsite_icons.png"> On Site Review Campaigns</h3>
-                        <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="1|0|2">Active Campaigns</a></li>
-                            <li><a style="javascript:void();" class="filterByColumn" fil="3">Archive</a></li>
-                        </ul>
-                    </div>
-                    <?php
-                }
-            ?>
-           
+            <div class="col-md-3">
+                <h3><img src="<?php echo base_url() ?>assets/images/onsite_icons.png"> On Site Review Campaigns</h3>
+                <ul class="nav nav-tabs nav-tabs-bottom">
+                    <!-- <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Active Campaigns</a></li>
+                    <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li> -->
+
+                    <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="1|0|2">Active Campaigns</a></li>
+                    <li><a style="javascript:void();" class="filterByColumn" fil="3">Archive</a></li>
+
+                </ul>
+            </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-9 text-right btn_area">
                 <div class="btn-group">
@@ -122,6 +111,7 @@ error_reporting(0);
                                     </div>
                                     <div id="accordion-control-right-group83" class="panel-collapse collapse in">
                                         <div class="panel-body">
+
                                             <div class="row mb20">
                                                 <div class="col-xs-6">
                                                     <div class="checkbox">
@@ -178,6 +168,7 @@ error_reporting(0);
                                                 </div>
 
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -206,13 +197,6 @@ error_reporting(0);
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
-
-                <?php 
-                    if($viewstats == true){
-						@include('admin.brandboost.campaign-tabs.onsite.overview_stats');
-                    }
-                ?>
-
                 <div class="row">
                     <div class="col-lg-12">
                         <!-- Marketing campaigns -->
@@ -221,18 +205,9 @@ error_reporting(0);
                                 <span class="pull-left">
                                     <h6 class="panel-title"><?php echo $iActiveCount; ?> On Site Review Campaigns</h6>
                                 </span>
-                                <div class="heading_links pull-left">
-                                    <a class="top_links btn btn-xs btn_white_table ml20 top_links_all">All</a>
-                                    <a class="top_links top_links_Status" getValue="1" style="cursor: pointer;">Active</a>
-                                    <a class="top_links top_links_Status" getValue="0" style="cursor: pointer;">Inactive</a> 
-                                    <a class="top_links top_links_positive" getValue="positive" style="cursor: pointer;">Positive</a> 
-                                    <a class="top_links top_links_neutral" getValue="neutral" style="cursor: pointer;">Neutral</a> 
-                                    <a class="top_links top_links_negative" getValue="negative" style="cursor: pointer;">Negative</a> 
-                                    <a class="top_links top_links_added_today"  getValue="today" style="cursor: pointer;">Added Today</a>
-                                </div>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-                                        <input class="form-control input-sm cus_search" tableID="onsiteBrandboostCampaign" placeholder="Search by name" type="text">
+                                        <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
                                         <div class="form-control-feedback">
                                             <i class="icon-search4"></i>
                                         </div>
@@ -255,45 +230,41 @@ error_reporting(0);
                                             <th style="display: none;"></th>
                                             <th style="display: none;" class="nosort editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
                                             <th><i class=""><img src="<?php echo base_url(); ?>assets/images/star_name.png"/></i>Name</th>
-                                            <th><i class="icon-star-full2"></i>Rating</th>
-                                            <th><i class="icon-calendar"></i>Created</th>
-                                            <th><i class="icon-user"></i> Contacts</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile.png"/></i> Positive</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile2.png"/></i> Neutral</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile3.png"/></i> Negative</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/clock.png"/></i>Last review</th>
-                                            <th><i class="icon-diff-modified"></i>Status</th>
+                                            <th style="display: none;"><i class="icon-star-full2"></i>Rating</th>
+                                            <th style="display: none;"><i class="icon-calendar"></i>Created</th>
+                                            <th style="display: none;"><i class="icon-user"></i> Contacts</th>
+                                            <th style="display: none;"><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile.png"/></i> Positive</th>
+                                            <th style="display: none;"><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile2.png"/></i> Neutral</th>
+                                            <th style="display: none;"><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile3.png"/></i> Negative</th>
+                                            <th style="display: none;"><i class=""><img src="<?php echo base_url(); ?>assets/images/clock.png"/></i>Last review</th>
+                                            <th style="display: none;"><i class="icon-diff-modified"></i>Status</th>
                                             <th style="display: none;">status</th>
                                             <th style="display: none;">status</th>
                                             <th style="display: none;">Positive</th>
                                             <th style="display: none;">Neutral</th>
                                             <th style="display: none;">Negative</th>
                                             <th style="display: none;">Today</th>
-                                            <th><i class="icon-calendar"></i>Last Incoming Lead</th>
-                                            <th class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
+                                            <th style="display: none;" class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
+                                            <th><i class="icon-star-full2"></i>Url</th>
 
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         <?php
+                                        //$inc = 1;
                                         $recent = strtotime('-24 hours');
                                         $aUser = getLoggedUser();
                                         $currentUserId = $aUser->id;
                                         foreach ($aBrandbosts as $data) {
-                                            if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
+                                            //if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
                                             $list_id = $data->id;
                                             $user_id = $data->user_id;
                                             $revCount = getCampaignReviewCount($data->id);
                                             $revRA = getCampaignReviewRA($data->id);
                                             $allSubscribers = \App\Models\Admin\ListsModel::getAllSubscribersList($data->id);
-											
-											$newContacts = 0;
-											$iActiveContactCount = 0;
-											$iArchiveCount = 0;
-                                            $subs = '';
                                             if (!empty($allSubscribers)) {
-                                                $subs = $allSubscribers[0];
+                                                $newContacts = 0;
                                                 foreach ($allSubscribers as $oSubs) {
                                                     if(strtotime($oSubs->created)> $recent){
                                                         $newContacts++;
@@ -305,34 +276,20 @@ error_reporting(0);
                                                     }
                                                 }
                                             }
-
-                                            if(!empty($subs->s_created)) {
-                                                $lastListTime = timeAgo($subs->s_created);
-                                            }
-                                            else {
-                                                $lastListTime = '<div class="media-left">
-                                                          <div class="">
-                                                            <span class="text-muted text-size-small">[No Data]</span></div>
-                                                        </div>';
-                                            }
-
                                             $siteRevCount = getCampaignSiteReviewCount($data->id);
-											$siteRevCount = 1;
                                             $siteRevRA = getCampaignSiteReviewRA($data->id);
-											$siteRevRA = 1;
-                                            /*if($data->brand_img == 'b:0;' || $data->brand_img == ''){
-												$imgSrc = base_url('assets/images/default_table_img2.png');
-											}else{
-												$brandImgArray = unserialize($data->brand_img);
-												$brand_img = $brandImgArray[0]['media_url'];
-												if (empty($brand_img)) {
-													$imgSrc = base_url('assets/images/default_table_img2.png');
-												} else {
-													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
-												}
-											}*/
-											$imgSrc = base_url('assets/images/default_table_img2.png');
-                                           
+                                            $brandImgArray = unserialize($data->brand_img);
+                                            $brand_img = $brandImgArray[0]['media_url'];
+
+                                            if (empty($brand_img)) {
+                                                $imgSrc = base_url('assets/images/default_table_img2.png');
+                                            } else {
+                                                $imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
+                                            }
+                                            ?>
+
+
+                                            <?php
                                             $reviewRequests = \App\Models\Admin\BrandboostModel::getReviewRequest($data->id, '');
                                             $getSendRequest = count($reviewRequests);
                                             $getSendRequestSms = getSendRequest($data->id, 'sms');
@@ -342,17 +299,15 @@ error_reporting(0);
 
                                             $reviewResponse = \App\Models\Admin\BrandboostModel::getReviewRequestResponse($data->id);
                                             $getResCount = count($reviewResponse);
-											
-											$getSendRequest = $getSendRequest > 0 ? $getSendRequest : 1;
-											$getResCount = $getResCount > 0 ? $getResCount : 1;
-                                            
+
                                             $positiveRating = 0;
                                             $neturalRating = 0;
                                             $negativeRating = 0;
                                             $positiveGraph = 0;
                                             $neturalGraph = 0;
                                             $negativeGraph = 0;
-                                            
+                                            //pre($reviewResponse);
+                                            //echo 'ratings:- '.$reviewResponse->ratings;
                                             $newPositive = $newNegative = $newNeutral = 0;
                                             foreach ($reviewResponse as $reviewData) {
                                                 
@@ -374,7 +329,6 @@ error_reporting(0);
                                                         $negativeRating++;
                                                     }
                                                 }
-												$reviewUserData = \App\Models\Admin\UsersModel::getUserInfo($reviewData->user_id);
                                             }
 
                                             $positiveGraph = $positiveRating * 100 / $getResCount;
@@ -383,7 +337,7 @@ error_reporting(0);
                                             $totalGraph = $getResCount * 100 / $getSendRequest;
                                             $totalGraph = $totalGraph > 100 ? 100 : $totalGraph;
 
-                                            
+                                            $reviewUserData = \App\Models\Admin\UsersModel::getUserInfo($reviewResponse[0]->user_id);
                                             ?>
 
                                             <tr id="append-<?php echo $data->id; ?>" class="selectedClass">
@@ -405,22 +359,22 @@ error_reporting(0);
 
                                                 </td>
 
-                                                <td>
+                                                <td style="display: none;">
                                                     <?php echo ratingView($revRA); ?>
                                                 </td>
-                                                <td>														
+                                                <td style="display: none;">														
                                                     <div class="media-left">
                                                         <div class=""><span class="text-default text-semibold"><?php echo date('F dS Y', strtotime($data->created)); ?></span></div>
                                                         <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)); ?></div>
                                                     </div>
                                                 </td>
 
-                                                <td>
+                                                <td style="display: none;">
                                                     <div data-toggle="tooltip" title="Total contacts <?php echo sizeof($allSubscribers); ?>" data-placement="top">
                                                         <a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->id . '?t=Clients'); ?>"  class="text-default text-semibold"><?php echo sizeof($allSubscribers); ?><?php if($newContacts>0):?><?php echo '<span style="color:#FF0000;"> ('.$newContacts.' new)</span>';?><?php endif;?></a>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td style="display: none;">
                                                     <?php
                                                     $positiveGraph = ceil($positiveGraph);
                                                     $addPC = '';
@@ -429,7 +383,7 @@ error_reporting(0);
                                                     }
                                                     ?>
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addPC; ?> green cp<?php echo $positiveGraph; ?> <?php if ($positiveGraph > 0): ?>createSegment<?php endif; ?>" segment-type="total-positive" campaign-id="<?php echo $data->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle <?php echo $addPC; ?> green cp<?php echo $positiveGraph; ?>">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -456,7 +410,7 @@ error_reporting(0);
                                                     </div>
 
                                                 </td>
-                                                <td>
+                                                <td style="display: none;">
 
                                                     <?php
                                                     $neturalGraph = ceil($neturalGraph);
@@ -466,7 +420,7 @@ error_reporting(0);
                                                     }
                                                     ?>
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addNUC; ?> grey cp<?php echo $neturalGraph; ?> <?php if ($neturalGraph > 0): ?>createSegment<?php endif; ?>" segment-type="total-neutral" campaign-id="<?php echo $data->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle <?php echo $addNUC; ?> grey cp<?php echo $neturalGraph; ?>">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -488,7 +442,7 @@ error_reporting(0);
                                                     </div>
 
                                                 </td>
-                                                <td>
+                                                <td style="display: none;">
 
                                                     <?php
                                                     $negativeGraph = ceil($negativeGraph);
@@ -498,7 +452,7 @@ error_reporting(0);
                                                     }
                                                     ?>
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addNEC; ?> red cp<?php echo $negativeGraph; ?> <?php if ($negativeGraph > 0): ?>createSegment<?php endif; ?>" segment-type="total-negative" campaign-id="<?php echo $data->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle <?php echo $addNEC; ?> red cp<?php echo $negativeGraph; ?>">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -520,7 +474,7 @@ error_reporting(0);
                                                     </div> 
 
                                                 </td>
-                                                <td>
+                                                <td style="display: none;">
                                                     <?php if (sizeof($reviewResponse) < 1) { ?>
                                                         <?php echo displayNoData(true); ?>
                                                     <?php } else { ?>
@@ -532,7 +486,7 @@ error_reporting(0);
                                                     <?php } ?>
                                                 </td>
 
-                                                <td>
+                                                <td style="display: none;">
                                                     <div class="tdropdown">
                                                         <?php
                                                         if ($data->status == 0) {
@@ -574,8 +528,7 @@ error_reporting(0);
                                                 <td style="display: none;"><?php
                                                     echo date('d M y', strtotime($data->created)) === date('d M y') ? 'today' : '';
                                                             ?></td>
-                                                <td><?php echo $lastListTime; ?></td>
-                                                <td class="text-center">
+                                                <td class="text-center" style="display: none;">
 
                                                     <?php
                                                     if ($user_role != '2') {
@@ -594,7 +547,7 @@ error_reporting(0);
                                                                                 <li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="<?php echo $data->id; ?>" status="1"><i class="icon-file-stats"></i> Start</a></li>
                                                                             <?php } ?>
                                                                             <li><a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->id); ?>" brandID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
-                                                                            
+                                                                            <!-- <li><a href="<?php echo base_url('admin/brandboost/brand_configuration/' . $data->id); ?>" class="text-default text-semibold"><i class="icon-pencil"></i> Brand Configuration</a></li> -->
                                                                             <li><a href="javascript:void(0);" class="deleteCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
                                                                             <li><a href="javascript:void(0);" class="archiveCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-file-text2"></i> Move to Archive</a></li>
                                                                         <?php endif; ?>
@@ -612,19 +565,21 @@ error_reporting(0);
                                                                         <li><a href="javascript:void(0);" class="deleteCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
                                                                     </ul>
                                                                 </div>
-																<?php
-															}
-														} else {
-															echo '-';
-														}
-													}
-													?>														
+                    <?php
+                }
+            } else {
+                echo '-';
+            }
+        }
+        ?>														
                                                 </td>
+                                                <td><a class="txt_dark bbot" href="<?php echo base_url('for/'.$companyName.'/'); ?><?php echo strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id; ?>"><?php echo base_url('for/'.$companyName.'/'); ?><?php echo strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id; ?></a></td>
                                             </tr>
-											<?php
-											}
-										}
-										?>
+        <?php
+        //$inc++;
+        //}
+    }
+    ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -732,7 +687,7 @@ error_reporting(0);
                 </div>
             </div> 
     </div>
-    
+        
 <?php endif; ?>
     <!-- /dashboard content -->
 
@@ -760,43 +715,38 @@ error_reporting(0);
 
 <!-- addBrandboost -->
 <div id="addBrandboostModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-     <form method="post" name="frmAddOnsiteBrandboost" id="frmAddOnsiteBrandboost" action="javascript:void();">
-          <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h5 class="modal-title"><img src="/new_pages/assets/css/menu_icons/OffSiteBoost_Color.svg"/> Add On Site Review Campaign &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
-        </div>
-        <div class="modal-body">
-         <h6 class="text-semibold">Step 1: Where Would You Like To Boost Your Brand? </h6>
-          <div class="row">
-          <div class="col-md-12">
-          <div class="form-group">
-          <label>Please Enter Title below:</label>
-        <input class="form-control" id="campaignName" name="campaignName" placeholder="Enter Title" type="text" required>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" name="frmAddOnsiteBrandboost" id="frmAddOnsiteBrandboost" action="javascript:void();">
+				{{ csrf_field() }}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Add On Site Review Campaign</h5>
+                </div>
 
-          </div>
-          
-          <div class="form-group mb0">
-          <label>Please Enter Description:</label>
-          <input class="form-control h52" type="text" id="OnsitecampaignDescription" name="OnsitecampaignDescription" value="" placeholder="Enter list description"/>
-          </div>
-          </div>
-          </div>
+                <div class="modal-body">
+					
+                    <h6 class="text-semibold">Step 1: Where Would You Like To Boost Your Brand? </h6>
+					<div class="form-group">
+                    <p>Please Enter Title below:</p>
+                    <input class="form-control" id="campaignName" name="campaignName" placeholder="Enter Title" type="text" required>
+					</div>
+					<div class="form-group mb0">
+					  <label>Please Enter Description:</label>
+					  <input class="form-control h52" type="text" id="OnsitecampaignDescription" name="OnsitecampaignDescription" value="" placeholder="Enter list description">
+					</div>
+                </div>
+				
+				
+
+                <div class="modal-footer p40">
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn dark_btn">Continue</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-        <button data-toggle="modal" type="submit" class="btn dark_btn bkg_sblue fsize14 h52">Continue</button>
-          <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
-          
-        </div>
-      </form>
     </div>
-  </div>
 </div>
-
-@include('admin.modals.segments.segments-popup')
-<script src="<?php echo base_url(); ?>assets/js/modules/segments/segments.js" type="text/javascript"></script>
-                                                                            
 <!-- /addBrandboost -->
 
 <script type="text/javascript">
@@ -897,7 +847,7 @@ error_reporting(0);
 
         setTimeout(function () {
             $('#activeCampaign').trigger('click');
-        }, 3000);
+        }, 1000);
 
 
         $(document).on('click', '.filterByColumn', function () {
@@ -1052,8 +1002,122 @@ error_reporting(0);
         });
 
 
-        var tableId = 'onsiteBrandboostCampaign';
-        var tableBase = custom_data_table(tableId);
+
+        // Basic datatable
+        var tableBase = $('#onsiteBrandboostCampaign')
+                .on('order.dt', function () {
+                    eventFired();
+                })
+                .on('search.dt', function () {
+                    eventFired();
+                })
+                .on('page.dt', function () {
+                    eventFired();
+                })
+                .DataTable({
+                    'order': [1, "desc"],
+                    'aoColumnDefs': [
+                        {
+                            'bSortable': false,
+                            'aTargets': ['nosort']
+                        }
+
+                    ],
+                    "dom": '<"top"f>rt<"datatable-footer"pil><"clear">',
+                    "language": {
+                        "info": '<span><span class="text-muted ml10">Showing results</span><span class="txt_black ml10"> _START_ - _END_ of _TOTAL_</span></span>',
+                        "lengthMenu": 'View <a style="cursor: pointer;" id="_5" >5</a><a style="cursor: pointer;" id="_10" >10</a><a style="cursor: pointer;" id="_20" >20</a><a style="cursor: pointer;" id="_40" >40</a><a style="cursor: pointer;" id="all" >All</a>'
+                    },
+                    "orderCellsTop": true,
+                    "fixedHeader": true
+
+                });
+
+
+        /* Custom filtering function which will search data in column four between two values */
+        $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+
+                    //console.log($('.link').hasClass('btn'));
+                    if ($('.link').hasClass('btn')) {
+                        //console.log(data[8]);
+                        var comment = parseInt(data[8], 0);
+                        if (comment > 0) {
+                            return true;
+                        }
+                        return false;
+                    } else {
+                        return true;
+                    }
+
+                }
+        );
+
+        $('table thead tr:eq(1)').hide();
+
+
+        $('#_10').addClass('current');
+
+        $(document).on('click', '#all', function () {
+
+            $('#all').removeClass('current');
+            $('#_5').removeClass('current');
+            $('#_10').removeClass('current');
+            $('#_20').removeClass('current');
+            $('#_40').removeClass('current');
+
+            $(this).addClass('current');
+            tableBase.page.len(-1).draw();
+        });
+
+        $(document).on('click', '#_5', function () {
+
+            $('#all').removeClass('current');
+            $('#_5').removeClass('current');
+            $('#_10').removeClass('current');
+            $('#_20').removeClass('current');
+            $('#_40').removeClass('current');
+
+            $(this).addClass('current');
+            tableBase.page.len(5).draw();
+        });
+
+        $(document).on('click', '#_10', function () {
+
+            $('#all').removeClass('current');
+            $('#_5').removeClass('current');
+            $('#_10').removeClass('current');
+            $('#_20').removeClass('current');
+            $('#_40').removeClass('current');
+
+            $(this).addClass('current');
+            tableBase.page.len(10).draw();
+        });
+
+        $(document).on('click', '#_20', function () {
+
+            $('#all').removeClass('current');
+            $('#_5').removeClass('current');
+            $('#_10').removeClass('current');
+            $('#_20').removeClass('current');
+            $('#_40').removeClass('current');
+
+            $(this).addClass('current');
+            tableBase.page.len(20).draw();
+        });
+
+        $(document).on('click', '#_40', function () {
+
+            $('#all').removeClass('current');
+            $('#_5').removeClass('current');
+            $('#_10').removeClass('current');
+            $('#_20').removeClass('current');
+            $('#_40').removeClass('current');
+
+            $(this).addClass('current');
+            tableBase.page.len(40).draw();
+        });
+
 
     });
 
@@ -1209,7 +1273,7 @@ error_reporting(0);
                     $.ajax({
                         url: "<?php echo base_url('admin/brandboost/delete_multipal_brandboost'); ?>",
                         type: "POST",
-                        data: {multi_brandboost_id: val},
+                        data: {multi_brandboost_id: val, _token: '{{csrf_token()}}'},
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 'success') {
@@ -1309,11 +1373,10 @@ error_reporting(0);
             $('.overlaynew').show();
             var campaignName = $('#campaignName').val();
             var OnsitecampaignDescription = $('#OnsitecampaignDescription').val();
-                                                                            
             $.ajax({
                 url: '<?php echo base_url('admin/brandboost/addOnsite'); ?>',
                 type: "POST",
-                data: {'campaignName': campaignName,'OnsitecampaignDescription':OnsitecampaignDescription, _token: '{{csrf_token()}}'},
+                data: {'campaignName': campaignName,'OnsitecampaignDescription': OnsitecampaignDescription, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1407,4 +1470,3 @@ error_reporting(0);
     });
 </script>
 @endsection
-

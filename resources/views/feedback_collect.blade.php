@@ -15,7 +15,7 @@
         <link href="<?php echo base_url("assets/css/core.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/components.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/colors.css"); ?>" rel="stylesheet" type="text/css">
-        <link href="<?php echo base_url("new_pages/assets/css/theme1.css"); ?>" rel="stylesheet" type="text/css">
+        <link href="<?php echo base_url("assets/css/theme1.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url("assets/css/bootstrap.css"); ?>" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
 
@@ -155,7 +155,7 @@
                         if (selectedRatings <= 2) {
                             //display Resolution popup
                             $("#resolution").modal("show");
-                            window.location.href = '<?php echo base_url('/feedback/index/resolution/?'.$getParam);?>';
+                            window.location.href = '<?php echo base_url('feedback/index/resolution/?'.$getParam);?>';
                         } else {
                             //Proceed further and redirect to destination page
                             if (selectedRatings == 3) {
@@ -168,12 +168,12 @@
                             formdata = $("#addFeedbackFrm").serialize();
                             //alert(formdata);
                             $.ajax({
-                                url: "<?php echo base_url('/feedback/saveFeedback'); ?>",
+                                url: "<?php echo base_url('feedback/saveFeedback'); ?>",
                                 type: "POST",
-                                data: formdata + "&happy=yes",
+                                data: formdata + "&happy=yes&_token={{csrf_token()}}",
                                 dataType: "text",
                                 success: function () {
-                                    window.location.href = '<?php echo base_url('/feedback/index/thankyou/?'.$getParam);?>';                                    
+                                    window.location.href = '<?php echo base_url('feedback/thankyou/?'.$getParam);?>';                                    
                                 }
                             });
                         }
@@ -183,12 +183,12 @@
                 
                 
 				$("#yesfeed").click(function () {
-					window.location.href = '<?php echo base_url('/feedback/index/thankyou/?'.$getParam);?>';
+					window.location.href = '<?php echo base_url('/feedback/thankyou/?'.$getParam);?>';
                 });
 				
 
                 $("#nothappy").click(function () {
-                    window.location.href = '<?php echo base_url('/feedback/index/resolution/?'.$getParam);?>';  
+                    window.location.href = '<?php echo base_url('/feedback/resolution/?'.$getParam);?>';  
                 });
 				
                 
@@ -203,7 +203,7 @@
                         data: formdata + "&happy=yes",
                         dataType: "text",
                         success: function () {
-                            window.location.href = '<?php echo base_url('/feedback/index/thankyou/?'.$getParam);?>';
+                            window.location.href = '<?php echo base_url('feedback/thankyou/?'.$getParam);?>';
                         }
                     });
                 });
