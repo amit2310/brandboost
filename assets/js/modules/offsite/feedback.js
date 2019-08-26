@@ -84,10 +84,11 @@ $(document).ready(function () {
 
     $(document).on("click", ".editBrandboost", function () {
         var brandboostID = $(this).attr('brandID');
+		var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/brandboost/update_offsite_step1',
             type: "POST",
-            data: {'brandboostID': brandboostID, _token: '{{csrf_token()}}'},
+            data: {'brandboostID': brandboostID,_token:tkn},
             dataType: "json",
             success: function (data) {
 
@@ -111,10 +112,11 @@ $(document).ready(function () {
 
     function displayFeedbackPopup(feedbackid, tabtype, fbtime) {
         //$('.overlaynew').show();
+		var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: "/admin/feedback/displayfeedback",
             type: "POST",
-            data: {fid: feedbackid, _token: '{{csrf_token()}}'},
+            data: {fid: feedbackid,_token:tkn},
             dataType: "json",
             success: function (response) {
                 if (response.status == "success") {
