@@ -61,7 +61,7 @@ class Mediagallery extends Controller {
 			
 			$eventName = 'sys_gallery_status';
 			
-			//add_notifications($notificationData, $eventName, $userID);
+			add_notifications($notificationData, $eventName, $userID);
 		}
 
         if ($result == true) {
@@ -103,7 +103,7 @@ class Mediagallery extends Controller {
 			
 			$eventName = 'sys_gallery_update';
 			
-			//add_notifications($notificationData, $eventName, $userID);
+			add_notifications($notificationData, $eventName, $userID);
 		}
 
         if ($result == true) {
@@ -143,7 +143,7 @@ class Mediagallery extends Controller {
 			
 			$eventName = 'sys_gallery_delete';
 			
-			//add_notifications($notificationData, $eventName, $userID);
+			add_notifications($notificationData, $eventName, $userID);
 		}
 
         if ($result == true) {
@@ -219,7 +219,7 @@ class Mediagallery extends Controller {
 			
             $eventName = 'sys_gallery_added';
 			
-            //add_notifications($notificationData, $eventName, $userID);
+            add_notifications($notificationData, $eventName, $userID);
         }
 
         echo json_encode($response);
@@ -304,7 +304,7 @@ class Mediagallery extends Controller {
 			
 			$eventName = 'sys_gallery_update';
 			
-			//add_notifications($notificationData, $eventName, $userID);
+			add_notifications($notificationData, $eventName, $userID);
 		}
 		
 		//$sliderData = $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData), true);
@@ -355,7 +355,7 @@ class Mediagallery extends Controller {
 			
 			$eventName = 'sys_gallery_update';
 			
-			//add_notifications($notificationData, $eventName, $userID);
+			add_notifications($notificationData, $eventName, $userID);
 		}
 		
 		$sliderData = view('admin.media-gallery.preview', array('galleryData' => $galleryData))->render();
