@@ -358,6 +358,12 @@ class TagsModel extends Model {
         }
     }
 
+
+    /**
+    * This function is used to add the feedback data 
+    * @param type 
+    * @return type
+    */
     public function addFeedbackTag($aData) {
         $aTagIDs = $aData['aTagIDs'];
         if (!empty($aTagIDs)) {
@@ -370,7 +376,7 @@ class TagsModel extends Model {
 
                 $tagData = $this->getTagByFeedbackIDTagID($iTagID, $aData['feedback_id']);
                 if ($tagData->id == '') {
-                    $result = $this->db->insert('tbl_feedback_tags', $aInput);
+                    $aData =  DB::table('tbl_feedback_tags')->insert($aInput);
                 }
 
                 $feedbackTagsData = $this->getTagsDataByFeedbackID($aData['feedback_id']);
