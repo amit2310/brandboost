@@ -257,7 +257,7 @@ $(document).ready(function () {
 		var status = $(this).attr('change_status');
 		var feedbackid = $(this).attr('feedback_id');
 		$.ajax({
-			url: '/admin/feedback/updateFeedbackStatus',
+			url: '<?php echo base_url(); ?>/admin/feedback/updateFeedbackStatus',
 			type: "POST",
 			data: {status: status, fid: feedbackid, _token: '{{csrf_token()}}'},
 			dataType: "json",

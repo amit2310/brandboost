@@ -6,11 +6,12 @@ $(document).ready(function () {
 
 
     $(document).on('click', '.editSmartNote', function () {
+		var tkn = $('meta[name="_token"]').attr('content');
         var noteId = $(this).attr('noteid');
         $.ajax({
             url: '/admin/feedback/getFeedbackNotes',
             type: "POST",
-            data: {noteid: noteId},
+            data: {noteid: noteId,_token:tkn},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -27,6 +28,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.deleteSmartNote', function () {
         var feedbackID = $("#smartpopup_feedback_id").val();
+		var tkn = $('meta[name="_token"]').attr('content');
         var noteId = $(this).attr('noteid');
         swal({
             title: "Are you sure? You want to delete this note!",
@@ -45,7 +47,7 @@ $(document).ready(function () {
                         $.ajax({
                             url: '/admin/feedback/deleteFeedbackNote',
                             type: "POST",
-                            data: {noteid: noteId},
+                            data: {noteid: noteId,_token:tkn},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {
@@ -91,6 +93,7 @@ $(document).ready(function () {
     $(document).on('click', '.deleteSmartComment', function () {
         var feedbackID = $("#smartpopup_feedback_id").val();
         var commentId = $(this).attr('commentid');
+		var tkn = $('meta[name="_token"]').attr('content');
         swal({
             title: "Are you sure? You want to delete this comment!",
             text: "You will not be able to recover this record!",
@@ -108,7 +111,7 @@ $(document).ready(function () {
                         $.ajax({
                             url: '/admin/feedback/deleteFeedbackComment',
                             type: "POST",
-                            data: {commentId: commentId},
+                            data: {commentId: commentId,_token:tkn},
                             dataType: "json",
                             success: function (data) {
                                 if (data.status == 'success') {
@@ -130,12 +133,12 @@ $(document).ready(function () {
 
         var numOfComment = $('#numOfComment').val();
         var feedbackID = $("#smartpopup_feedback_id").val();
-
+		var tkn = $('meta[name="_token"]').attr('content');
         $('.loaderImage').removeClass('hidden');
         $.ajax({
             url: '/admin/feedback/loadFeedbackComment',
             type: "POST",
-            data: {'fid': feedbackID, 'offset': numOfComment, 'source': 'smartpopup'},
+            data: {'fid': feedbackID, 'offset': numOfComment, 'source': 'smartpopup',_token:tkn},
             dataType: "html",
             success: function (data) {
 
@@ -161,10 +164,11 @@ $(document).ready(function () {
         var review_id = $(this).attr("reviewid");
         var feedback_id = $(this).attr("feedback_id");
         var action_name = $(this).attr("action_name");
+		var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/tags/listAllTags',
             type: "POST",
-            data: {review_id: review_id},
+            data: {review_id: review_id,_token:tkn},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {

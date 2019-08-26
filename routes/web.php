@@ -288,6 +288,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/feedback/details/{id}', 'Admin\Feedback@feedbackDetails');
     Route::post('admin/feedback/updateFeedbackStatus', 'Admin\Feedback@updateFeedbackStatus');
     Route::post('admin/feedback/updateFeedbackRatings', 'Admin\Feedback@updateFeedbackRatings');
+    Route::post('admin/feedback/deleteMultipalFeedbackData', 'Admin\Feedback@deleteMultipalFeedbackData');
 
 
     Route::post('admin/tags/listAllTags', 'Admin\Tags@listAllTags');

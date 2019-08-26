@@ -451,7 +451,7 @@
         });
 
         $(document).on('click', '#deleteButtonBrandboostFeedbacks', function () {
-
+			
             var val = [];
             $('.checkRows:checkbox:checked').each(function (i) {
                 val[i] = $(this).val();
