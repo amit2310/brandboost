@@ -472,23 +472,23 @@
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                $('.overlaynew').show();
-                                $.ajax({
-                                    url: '<?php echo base_url('admin/feedback/deleteMultipalFeedbackData'); ?>',
-                                    type: "POST",
-                                    data: {multi_feedback_id: val},
-                                    dataType: "json",
-                                    success: function (data) {
-                                        if (data.status == 'success') {
-                                            $('.overlaynew').hide();
-                                            window.location.href = '';
-                                        }
-                                    }
-                                });
-                            }
-                        });
+				function (isConfirm) {
+					if (isConfirm) {
+						$('.overlaynew').show();
+						$.ajax({
+							url: '<?php echo base_url('admin/feedback/deleteMultipalFeedbackData'); ?>',
+							type: "POST",
+							data: {multi_feedback_id: val, _token: '{{csrf_token()}}'},
+							dataType: "json",
+							success: function (data) {
+								if (data.status == 'success') {
+									$('.overlaynew').hide();
+									window.location.href = '';
+								}
+							}
+						});
+					}
+				});
             }
         });
 

@@ -542,7 +542,7 @@ if (empty($feedbackTags)) {
             $.ajax({
                 url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
                 type: "POST",
-                data: {review_id: review_id, feedback_id: feedback_id},
+                data: {review_id: review_id, feedback_id: feedback_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
