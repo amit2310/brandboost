@@ -1357,7 +1357,7 @@ class Questions extends Controller {
                     'message' => 'Question has been added successfully',
                     'created' => date("Y-m-d H:i:s")
                 );
-                //add_notifications($aNotificationData); //called from helper function
+                add_notifications($aNotificationData); //called from helper function
 
                 $response = array('status' => 'ok', 'msg' => 'Thank you for posting your question. Your question was sent successfully and is now waiting to publish it.');
             } else {

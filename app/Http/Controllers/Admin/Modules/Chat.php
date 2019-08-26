@@ -87,7 +87,7 @@ class Chat extends Controller {
 			
             $eventName = 'sys_chat_configured';
 			
-            //add_notifications($notificationData, $eventName, $userID);
+            add_notifications($notificationData, $eventName, $userID);
         }
         echo json_encode($response);
         exit;

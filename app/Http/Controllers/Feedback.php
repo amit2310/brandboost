@@ -223,7 +223,7 @@ class Feedback extends Controller {
                     'link' => base_url() . 'admin/feedback',
                     'created' => date("Y-m-d H:i:s")
                 );
-                //add_notifications($aNotification, $eventName, $ownerID);
+                add_notifications($aNotification, $eventName, $ownerID);
 
                 if ($result) {
                     $allDone = true;
@@ -427,7 +427,7 @@ class Feedback extends Controller {
                 'link' => base_url() . 'admin/feedback',
                 'created' => date("Y-m-d H:i:s")
             );
-            //add_notifications($aNotification, $eventName, $ownerID);
+            add_notifications($aNotification, $eventName, $ownerID);
 
             if ($bAllDone == true) {
                 if (!empty($subscriberId)) {

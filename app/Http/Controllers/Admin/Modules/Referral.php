@@ -193,7 +193,7 @@ class Referral extends Controller {
                 'created' => date("Y-m-d H:i:s")
             );
             $eventName = 'sys_referral_added';
-            //add_notifications($notificationData, $eventName, $userID);
+            add_notifications($notificationData, $eventName, $userID);
         }
         echo json_encode($response);
         exit;

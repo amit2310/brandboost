@@ -2294,7 +2294,7 @@ class Brandboost extends Controller {
 				'created' => date("Y-m-d H:i:s")
 			);
 			$eventName = 'sys_offsite_added';
-			//add_notifications($notificationData, $eventName, $userID);
+			add_notifications($notificationData, $eventName, $userID);
 		} else {
 			$response['status'] = "Error";
 		}
