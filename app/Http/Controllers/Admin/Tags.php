@@ -610,12 +610,6 @@ class Tags extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mTag = new TagsModel();
-        
-        if (empty($post) || empty($userID)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
 
         $feedbackID = base64_url_decode(strip_tags($request->feedback_id));
         $aTagID = $request->applytag;
