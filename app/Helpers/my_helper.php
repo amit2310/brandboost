@@ -1492,7 +1492,7 @@ if (!function_exists('add_notifications')) {
 
 
             if ($slugDetails->client == 1 && $slugDetails->sms == 1 && $aSysPermissionData->sms_notify == 1 && !empty($checkEntry->id) && !empty($slugDetails->client_sms_content)) {
-                //sendClientSMS($Phone, $slugDetails->client_sms_content, $oUser);
+                sendClientSMS($Phone, $slugDetails->client_sms_content, $oUser);
                 $aUsage = array(
                     'client_id' => $ownerID,
                     'usage_type' => 'sms',
@@ -1510,7 +1510,7 @@ if (!function_exists('add_notifications')) {
 //+++++++++++++ ADMIN AREA +++++++++++++++
 
             if ($slugDetails->admin == 1 && $slugDetails->system == 1) {
-//$bSaved = $CI->mNotifications->addNotification($aData);
+               // $bSaved = \App\Models\Admin\NotificationModel::addAdminEmailNotification($aData);
             }
 
             if ($slugDetails->admin == 1 && $slugDetails->email == 1) {
