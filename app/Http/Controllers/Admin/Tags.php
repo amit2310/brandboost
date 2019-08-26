@@ -605,7 +605,7 @@ class Tags extends Controller {
         }
     }
 
-    public function applyFeedbackTag() {
+    public function applyFeedbackTag(Request $request) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -625,7 +625,7 @@ class Tags extends Controller {
             //Get refreshed tag list
             $oTags = $mTag->getTagsDataByFeedbackID($feedbackID);
 
-            $sTagDropdown = $this->load->view("admin/tags/tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'feedback_id', 'fieldValue' => base64_url_encode($feedbackID), 'actionName' => 'feedback-tag'), true);
+            $sTagDropdown = view("admin/tags/tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'feedback_id', 'fieldValue' => base64_url_encode($feedbackID), 'actionName' => 'feedback-tag'))->render();
 
             $response = array('status' => 'success', 'msg' => 'Tag added successfully!', 'refreshTags' => $sTagDropdown, 'id' => $feedbackID);
             echo json_encode($response);
