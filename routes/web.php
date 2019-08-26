@@ -638,7 +638,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/addBrandCampaign', 'Admin\Brandboost@addBrandCampaign');
     Route::post('admin/brandboost/getBrandThemeData', 'Admin\Brandboost@getBrandThemeData');
     Route::post('admin/brandboost/addFaqData', 'Admin\Brandboost@addFaqData');
-    Route::post('admin/brandboost/addFaqData', 'Admin\Brandboost@addFaqData');
+    Route::get('admin/brandboost/stats/{type}/{id}', 'Admin\Brandboost@stats');
 
 
 //Team Module

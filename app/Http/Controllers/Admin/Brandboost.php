@@ -17,6 +17,7 @@ use App\Models\Admin\WorkflowModel;
 use App\Models\Admin\TemplatesModel;
 use App\Models\Admin\OffsiteModel;
 use App\Models\Admin\ReviewlistsModel;
+use App\Models\Admin\ListsModel;
 use App\Models\Admin\LiveModel;
 use App\Models\Admin\Crons\InviterModel;
 use Illuminate\Support\Facades\Input;
@@ -5565,19 +5566,23 @@ class Brandboost extends Controller {
         exit;
     }
 
+
+    /**
+    * Used to get stats
+    * @param type $type, $id
+    * @return type
+    */
     public function stats($type, $id) {
         if (empty($id)) {
             //Handle empty id error
         }
-        $oBrandboost = $this->mBrandboost->getBrandboost($id);
-        $oAllSubscribers = $this->rLists->getAllSubscribersList($id);
-
+        $oBrandboost = BrandboostModel::getBrandboost($id);
+        $oAllSubscribers = ListsModel::getAllSubscribersList($id);
 
         if ($type == 'onsite') {
-            $selectedTab = $this->input->get('t');
-            $oRequests = $this->mBrandboost->getReviewRequest($id);
-            $oResponse = $this->mBrandboost->getReviewRequestResponse($id);
-
+            $selectedTab = Input::get('t');
+            $oRequests = BrandboostModel::getReviewRequest($id);
+            $oResponse = BrandboostModel::getReviewRequestResponse($id);
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
 				<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
@@ -5601,7 +5606,7 @@ class Brandboost extends Controller {
                 'selected_tab' => $selectedTab
             );
 
-            $this->template->load('admin/admin_template_new', 'admin/brandboost/stats/onsite', $aData);
+            return view('admin.brandboost.stats.onsite', $aData);
         } else if ($type == 'offsite') {
             
         }
