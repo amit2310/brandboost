@@ -593,7 +593,7 @@ if (empty($feedbackTags)) {
                     if (data.status == 'success') {
                         var noteData = data.result;
                         $('#edit_note_content').val(noteData.notes);
-                        $('#edit_noteid').val(noteData.id);
+                        $('#edit_noteid').val(noteId);
                         $("#editNoteSection").modal();
                         $('.overlaynew').hide();
                     } else {
