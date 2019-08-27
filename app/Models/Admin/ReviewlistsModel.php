@@ -26,36 +26,36 @@ class ReviewlistsModel extends Model {
     }
 
 
+    /**
+    * this function is Used to get all subscribers by the user id
+    * @param type $brandboostID
+    * @return type
+    */
+
     public function getAllSubscribers($userID, $brandboostID) {
-        $response = array();
-        $this->db->select('tbl_brandboost_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id');
-        $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id= tbl_subscribers.id", "LEFT");
-        $this->db->where('tbl_brandboost_users.user_id', $userID);
-        $this->db->where('tbl_brandboost_users.brandboost_id', $brandboostID);
-        $this->db->order_by('tbl_brandboost_users.id', 'DESC');
-        $this->db->from('tbl_brandboost_users');
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+            $aData =  DB::table('tbl_brandboost_users')
+           ->select('tbl_brandboost_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id')
+              ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id','=','tbl_subscribers.id')
+               ->where('tbl_brandboost_users.user_id', $userID)
+               ->where('tbl_brandboost_users.brandboost_id', $brandboostID)
+                ->orderBy('tbl_brandboost_users.id', 'DESC')->get();
+                    return $aData;
     }
+
+    /**
+    * this function is Used to get all subscriber list
+    * @param type $brandboostID
+    * @return type
+    */
 
     public function getAllSubscribersList($brandboostID) {
-        $response = array();
-        $this->db->select('tbl_brandboost_users.*, tbl_subscribers.email, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.phone, tbl_subscribers.created as s_created, tbl_subscribers.status AS globalStatus, tbl_subscribers.facebook_profile, tbl_subscribers.twitter_profile, tbl_subscribers.linkedin_profile,tbl_subscribers.instagram_profile, tbl_subscribers.socialProfile, tbl_subscribers.id AS global_user_id');
-        $this->db->join("tbl_subscribers", "tbl_brandboost_users.subscriber_id= tbl_subscribers.id", "LEFT");
-        $this->db->where('tbl_brandboost_users.brandboost_id', $brandboostID);
-        $this->db->order_by('tbl_brandboost_users.id', 'DESC');
-        $this->db->from('tbl_brandboost_users');
-        //echo $this->db->last_query();exit;
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+       $aData =  DB::table('tbl_brandboost_users')
+        ->select('tbl_brandboost_users.*','tbl_subscribers.email','tbl_subscribers.firstname','tbl_subscribers.lastname','tbl_subscribers.phone','tbl_subscribers.created as s_created','tbl_subscribers.status AS globalStatus','tbl_subscribers.facebook_profile','tbl_subscribers.twitter_profile','tbl_subscribers.linkedin_profile','tbl_subscribers.instagram_profile','tbl_subscribers.socialProfile','tbl_subscribers.id AS global_user_id')
+            ->leftJoin('tbl_subscribers','tbl_brandboost_users.subscriber_id','=','tbl_subscribers.id')
+             ->where('tbl_brandboost_users.brandboost_id', $brandboostID)
+              ->orderBy('tbl_brandboost_users.id', 'DESC')->get();
+             return $aData ;
     }
-
 
      /**
     * This function will return the subscriber list by user id
