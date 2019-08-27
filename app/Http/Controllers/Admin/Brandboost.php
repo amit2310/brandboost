@@ -4844,15 +4844,15 @@ class Brandboost extends Controller {
     public function subscribers($listId) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        //$userID = $this->session->userdata("current_user_id");
-        $allSubscribers = $this->rLists->getAllSubscribersList($listId);
-        $getBrandboost = $this->mBrandboost->getBrandboost($listId);
+        $rLists  = new ReviewlistsModel();
+        $mBrandboost   = new BrandboostModel();
+        $allSubscribers = $rLists->getAllSubscribersList($listId);
+        $getBrandboost = $mBrandboost->getBrandboost($listId);
 
-        $breadcrumb = '<ul class="breadcrumb">
-			<li><a href="' . base_url('admin/') . '"><i class="icon-home2 position-left"></i> Home</a></li>
-			<li><a href="' . base_url('admin/brandboost/onsite') . '">' . $getBrandboost[0]->brand_title . '</a></li>
-			<li class="active">Subscribers</li>
-			</ul>';
+             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+            <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+            <li><a href="' . base_url('admin/brandboost/onsite') . '">' . $getBrandboost[0]->brand_title . '</a></li>
+            </ul>';
 
         $aData = array(
             'title' => 'Brand Boost Subscribers',
@@ -4861,7 +4861,7 @@ class Brandboost extends Controller {
             'list_id' => $listId
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/list_subscribers_page', $aData);
+        return view('admin.brandboost.list_subscribers_page', $aData);
     }
 
     public function add_subscriber() {

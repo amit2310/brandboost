@@ -179,6 +179,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/deleteObjectFromS3', 'Admin\Brandboost@deleteObjectFromS3');
     Route::get('admin/brandboost/widget_overview', 'Admin\Brandboost@widgetOverview');
     Route::get('admin/brandboost/widgets', 'Admin\Brandboost@widgets');
+    Route::get('admin/brandboost/subscribers/{id}', 'Admin\Brandboost@subscribers');
 
     Route::post('admin/brandboost/switchTemplate', 'Admin\Brandboost@switchTemplate');
     Route::post('admin/brandboost/campaignPreferences', 'Admin\Brandboost@campaignPreferences');
