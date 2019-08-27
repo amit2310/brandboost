@@ -28,7 +28,7 @@
 							<h6 class="panel-title"><?php echo count($oLiveData); ?> Live Visitors</h6>
 							<div class="heading-elements">
 								<div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-									<input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
+									<input class="form-control input-sm cus_search"  tableID="visitorDetails" placeholder="Search by name" type="text">
 									<div class="form-control-feedback">
 										<i class=""><img src="<?php echo base_url(); ?>assets/images/icon_search.png" width="14"></i>
 									</div>
@@ -40,7 +40,7 @@
 							</div>
 						</div>
 						<div class="panel-body p0">
-							<table class="table datatable-basic">
+							<table class="table" id="visitorDetails">
 								<thead>
 									<tr>
 										<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i>Name</th>
@@ -104,5 +104,10 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	var tableId = 'visitorDetails';
+    var tableBase = custom_data_table(tableId);
+</script>
 
 @endsection
