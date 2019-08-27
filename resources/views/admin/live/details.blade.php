@@ -36,9 +36,6 @@
 								<div class="table_action_tool">
 									<a href="#" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="<?php echo base_url(); ?>assets/images/icon_refresh.png"/></i></a>
 									<a href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_calender.png"/></i></a>
-									<a href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_download.png"/></i></a>
-									<a href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_upload.png"/></i></a>
-									<a href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_edit.png"/></i></a>
 								</div>
 							</div>
 						</div>
@@ -54,7 +51,6 @@
 										<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Source</th>
 										<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Action Parform</th>
 										<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Country</th>
-										<!-- <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Created By</th> -->
 									</tr>
 								</thead>
 								<tbody>
@@ -92,13 +88,7 @@
 										<td><div class="text-muted"><?php echo $data->source_page; ?></div></td>
 										<td><div class="text-muted"><?php echo $data->source_type; ?></div></td>
 										<td><div class="text-muted"><?php echo $data->city; ?> (<?php echo $data->countryCode; ?>)</div></td>
-										<!-- <td>
-											<div class="media-left">
-												<div class="pt-5"><a class="text-default text-semibold">
-												<?php echo dataFormat($data->created); ?></a></div>
-												<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)); ?></div>
-											</div>
-										</td> -->
+										
 									</tr>
 									<?php endforeach; ?>
 								</tbody>

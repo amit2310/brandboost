@@ -60,11 +60,11 @@
 			</div>
 			
 			<!--=============Button Area Right Side==============-->
-                                <div class="col-md-7 text-right btn_area">
-                                    <button type="button" class="btn light_btn ml20"><i class="icon-download4"></i><span> &nbsp;  Import Contacts</span> </button>
-                                    <button type="button" class="btn dark_btn ml10" ><i class="icon-plus3"></i> <span>Add Contacts</span> </button>
-                                    <button type="button" class="btn dark_btn ml10" ><i class="icon-plus3"></i></button>
-                                </div>
+			<div class="col-md-7 text-right btn_area">
+				<!-- <button type="button" class="btn light_btn ml20"><i class="icon-download4"></i><span> &nbsp;  Import Contacts</span> </button>
+				<button type="button" class="btn dark_btn ml10" ><i class="icon-plus3"></i> <span>Add Contacts</span> </button>
+				<button type="button" class="btn dark_btn ml10" ><i class="icon-plus3"></i></button> -->
+			</div>
 			
 		</div>
 	</div>
@@ -74,146 +74,146 @@
 		<!--===========TAB 1===========-->
 		<div class="tab-pane active" id="Overview">
 			 <div class="row">
-							  <div class="col-md-8 ">
-								<div class="panel panel-flat">
-								  <div class="panel-heading">
-									<h6 class="panel-title">Live</h6>
-								  </div>
-								  <div class="panel-body p0 bkg_white min_h310">
-									<div class="p20 bbot">
-									  <p class="txt_grey fw300 m0"><i class="fa fa-square txt_red"></i> &nbsp; Live users &nbsp; &nbsp; <strong class="txt_dark">160</strong></p>
-									</div>
-									<div class="p20" style="background: #fcfdfe!important; border-radius: 0 0 6px 6px">
-									  <div id="myfirstchart" style="height: 200px;"></div>
-									</div>
-								  </div>
-								</div>
-							  </div>
-							  <div class="col-md-4">
-								<div class="panel panel-flat">
-								  <div class="panel-heading">
-									<h6 class="panel-title">Today</h6>
-								  </div>
-								  <div class="panel-body p20 pt50 pb40 bkg_white text-center min_h310">
-									<div class="outer_circle">
-									  <div id="bluecircle" class="c100 p23 medium"> <span><strong>1415</strong> <br>
-										ACTION <br>
-										TODAY</span>
-										<div class="slice">
-										  <div class="bar"></div>
-										  <div class="fill"></div>
-										</div>
-									  </div>
-									</div>
-								  </div>
-								</div>
-							  </div>
-							</div>
+			  <div class="col-md-8 ">
+				<div class="panel panel-flat">
+				  <div class="panel-heading">
+					<h6 class="panel-title">Live</h6>
+				  </div>
+				  <div class="panel-body p0 bkg_white min_h310">
+					<div class="p20 bbot">
+					  <p class="txt_grey fw300 m0"><i class="fa fa-square txt_red"></i> &nbsp; Live users &nbsp; &nbsp; <strong class="txt_dark">160</strong></p>
+					</div>
+					<div class="p20" style="background: #fcfdfe!important; border-radius: 0 0 6px 6px">
+					  <div id="myfirstchart" style="height: 200px;"></div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			  <div class="col-md-4">
+				<div class="panel panel-flat">
+				  <div class="panel-heading">
+					<h6 class="panel-title">Today</h6>
+				  </div>
+				  <div class="panel-body p20 pt50 pb40 bkg_white text-center min_h310">
+					<div class="outer_circle">
+					  <div id="bluecircle" class="c100 p23 medium"> <span><strong>1415</strong> <br>
+						ACTION <br>
+						TODAY</span>
+						<div class="slice">
+						  <div class="bar"></div>
+						  <div class="fill"></div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+<div class="row">
+				<div class="col-md-6">
+				
+				<div class="panel panel-flat">
+			  <div class="panel-heading">
+				<h6 class="panel-title">Sources</h6>
+			  </div>
+			  <div class="panel-body bkg_white">
+			  <div class="row">
+				<div class="col-md-5 pr40 pl20 brig">
+					 <ul class="onsite_list">
+						<li class="bnone"><span class="txt_dark"><img width="12" src="<?php echo base_url(); ?>assets/images/all_icon.png"> All</span><strong>162</strong></li>
+						<li><span><img width="12" src="<?php echo base_url(); ?>assets/images/google_12.png"> Google</span><strong>139</strong></li>
+						<li><span><img width="12" src="<?php echo base_url(); ?>assets/images/facebook_12.png"> Facebook</span><strong>23</strong></li>
+					  </ul>
+				</div>
+				<div class="col-md-7 pl30"><div id="linechart_a" style="min-width: 300px; height: 170px;"></div></div>
+			  </div>
+			   
+			  </div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-md-6">
+			<div class="panel panel-flat">
+			  <div class="panel-heading">
+				<h6 class="panel-title">Average time<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+				<div class="heading-elements"><i class="icon-arrow-down12 txt_grey"></i></div>
+			  </div>
+			  <div class="panel-body p20 db_stats bkg_white">
 				<div class="row">
-								<div class="col-md-6">
-								
-								<div class="panel panel-flat">
-							  <div class="panel-heading">
-								<h6 class="panel-title">Sources</h6>
-							  </div>
-							  <div class="panel-body bkg_white">
-							  <div class="row">
-							  	<div class="col-md-5 pr40 pl20 brig">
-							  		 <ul class="onsite_list">
-										<li class="bnone"><span class="txt_dark"><img width="12" src="<?php echo base_url(); ?>assets/images/all_icon.png"> All</span><strong>162</strong></li>
-										<li><span><img width="12" src="<?php echo base_url(); ?>assets/images/google_12.png"> Google</span><strong>139</strong></li>
-										<li><span><img width="12" src="<?php echo base_url(); ?>assets/images/facebook_12.png"> Facebook</span><strong>23</strong></li>
-									  </ul>
-							  	</div>
-							  	<div class="col-md-7 pl30"><div id="linechart_a" style="min-width: 300px; height: 170px;"></div></div>
-							  </div>
-							   
-							  </div>
-							</div>
-							
-							
-							<div class="row">
-								<div class="col-md-6">
-					  		<div class="panel panel-flat">
-							  <div class="panel-heading">
-								<h6 class="panel-title">Average time<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-								<div class="heading-elements"><i class="icon-arrow-down12 txt_grey"></i></div>
-							  </div>
-							  <div class="panel-body p20 db_stats bkg_white">
-								<div class="row">
-									<div class="col-xs-12">
-									<div class="media-left pr-15">
-									<img class="pull-left" src="<?php echo base_url(); ?>assets/images/clock_44_red.png">
-									</div>
-									<div class="media-left">
-									<h1>1h 4m</h1><p><strong class="txt_green"><i class=""><img src="<?php echo base_url(); ?>assets/images/green_arrow.png"/></i>&nbsp; 33,87%</strong> &nbsp; <span class="txt_dgrey">last week</span></p>
-									</div>
-									</div>
-								</div>
-								
-								
-								
-								
-								<div class="row">
-									<div class="col-xs-12"><img style="width: 100%; height: 68px;" class="img-responsive mt30" src="<?php echo base_url(); ?>assets/images/graph_live1.png"></div>
-								</div>
-							  </div>
-							</div>
-					  	</div>
-					  	<div class="col-md-6">
-					  		<div class="panel panel-flat">
-							  <div class="panel-heading">
-								<h6 class="panel-title">Modules<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-								<div class="heading-elements"><i class="icon-arrow-down12 txt_grey"></i></div>
-							  </div>
-							  <div class="panel-body p20 db_stats bkg_white">
-								<div class="row">
-									<div class="col-xs-12">
-									<div class="media-left pr-15">
-									<img class="pull-left" src="<?php echo base_url(); ?>assets/images/message_red_44.png">
-									</div>
-									<div class="media-left">
-									<h1>23m</h1><p><strong class="txt_orange"><i class=""><img src="<?php echo base_url(); ?>assets/images/red_down_arrow.png"></i>&nbsp; 33,87%</strong> &nbsp; <span class="txt_dgrey">last week</span></p>
-									</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-xs-12"><img style="width: 100%; height: 66px;" class="img-responsive mt30" src="<?php echo base_url(); ?>assets/images/graph_live2.png"></div>
-								</div>
-							  </div>
-							</div>
-					  	</div>
-							</div>
-							  </div>
-							  <div class="col-md-6 ">
-								<div class="panel panel-flat">
-								  <div class="panel-heading">
-									<h6 class="panel-title">Live Activity</h6>
-								  </div>
-								  <div class="panel-body p20 bkg_white min_h310" style="padding-bottom: 5px!important; min-height: 470px;">
-								  <div class="p20 text-center"><!--<img style="height: 250px; margin: 0 auto;" class="img-responsive" src="<?php echo base_url(); ?>assets/images/map.png"/>-->
-								  
-								  <div style="height: 235px;" class="mapcontainer">
-									<div class="map">
-										<span>Alternative content for the map</span>
-									</div>
-									<div class="plotLegend">
-										<span>Alternative content for the legend</span>
-									</div>
-								</div>
-								  
-								  </div> 
-								  <div class="pl10 pr20">
-									 <ul class="onsite_list">
-										<li><span><img src="<?php echo base_url(); ?>assets/images/flags/us.png" width="16"> United States</span><strong class="txt_dark">117</strong></li>
-										<li><span><img src="<?php echo base_url(); ?>assets/images/flags/ca.png" width="16"> Canada</span><strong class="txt_dark">32</strong></li>
-										<li><span><img src="<?php echo base_url(); ?>assets/images/flags/gb.png" width="16"> Great Britain</span><strong class="txt_dark">19</strong></li>
-									  </ul>
-									  </div>
-								  </div>
-								</div>
-							  </div>
-							</div>	
+					<div class="col-xs-12">
+					<div class="media-left pr-15">
+					<img class="pull-left" src="<?php echo base_url(); ?>assets/images/clock_44_red.png">
+					</div>
+					<div class="media-left">
+					<h1>1h 4m</h1><p><strong class="txt_green"><i class=""><img src="<?php echo base_url(); ?>assets/images/green_arrow.png"/></i>&nbsp; 33,87%</strong> &nbsp; <span class="txt_dgrey">last week</span></p>
+					</div>
+					</div>
+				</div>
+				
+				
+				
+				
+				<div class="row">
+					<div class="col-xs-12"><img style="width: 100%; height: 68px;" class="img-responsive mt30" src="<?php echo base_url(); ?>assets/images/graph_live1.png"></div>
+				</div>
+			  </div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-flat">
+			  <div class="panel-heading">
+				<h6 class="panel-title">Modules<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+				<div class="heading-elements"><i class="icon-arrow-down12 txt_grey"></i></div>
+			  </div>
+			  <div class="panel-body p20 db_stats bkg_white">
+				<div class="row">
+					<div class="col-xs-12">
+					<div class="media-left pr-15">
+					<img class="pull-left" src="<?php echo base_url(); ?>assets/images/message_red_44.png">
+					</div>
+					<div class="media-left">
+					<h1>23m</h1><p><strong class="txt_orange"><i class=""><img src="<?php echo base_url(); ?>assets/images/red_down_arrow.png"></i>&nbsp; 33,87%</strong> &nbsp; <span class="txt_dgrey">last week</span></p>
+					</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12"><img style="width: 100%; height: 66px;" class="img-responsive mt30" src="<?php echo base_url(); ?>assets/images/graph_live2.png"></div>
+				</div>
+			  </div>
+			</div>
+		</div>
+			</div>
+			  </div>
+			  <div class="col-md-6 ">
+				<div class="panel panel-flat">
+				  <div class="panel-heading">
+					<h6 class="panel-title">Live Activity</h6>
+				  </div>
+				  <div class="panel-body p20 bkg_white min_h310" style="padding-bottom: 5px!important; min-height: 470px;">
+				  <div class="p20 text-center"><!--<img style="height: 250px; margin: 0 auto;" class="img-responsive" src="<?php echo base_url(); ?>assets/images/map.png"/>-->
+				  
+				  <div style="height: 235px;" class="mapcontainer">
+					<div class="map">
+						<span>Alternative content for the map</span>
+					</div>
+					<div class="plotLegend">
+						<span>Alternative content for the legend</span>
+					</div>
+				</div>
+				  
+				  </div> 
+				  <div class="pl10 pr20">
+					 <ul class="onsite_list">
+						<li><span><img src="<?php echo base_url(); ?>assets/images/flags/us.png" width="16"> United States</span><strong class="txt_dark">117</strong></li>
+						<li><span><img src="<?php echo base_url(); ?>assets/images/flags/ca.png" width="16"> Canada</span><strong class="txt_dark">32</strong></li>
+						<li><span><img src="<?php echo base_url(); ?>assets/images/flags/gb.png" width="16"> Great Britain</span><strong class="txt_dark">19</strong></li>
+					  </ul>
+					  </div>
+				  </div>
+				</div>
+			  </div>
+			</div>	
 		</div>
 		<!--===========TAB 2===========-->
 		<div class="tab-pane" id="Statistic">
@@ -233,9 +233,6 @@
 								<div class="table_action_tool">
 									<a href="#" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="<?php echo base_url(); ?>assets/images/icon_refresh.png"/></i></a>
 									<a href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_calender.png"/></i></a>
-									<a href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_download.png"/></i></a>
-									<a href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_upload.png"/></i></a>
-									<a href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_edit.png"/></i></a>
 								</div>
 								
 							</div>
