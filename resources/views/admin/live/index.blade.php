@@ -250,7 +250,7 @@
 										<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Browser</th>
 										<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Online</th>
 										<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Source</th>
-										<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Action Parform</th>
+										<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Action Perform</th>
 										<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Country</th>
 										<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_action.png"></i> Action</th>
 									</tr>
@@ -263,11 +263,6 @@
 											if(!empty($data->source_client_id)) {
 												$userData = getUserDetail($data->source_client_id);
 											}
-										
-
-										
-										
-
 									?>
 									<tr>
 										<td style="display: none;"></td>
