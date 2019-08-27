@@ -276,9 +276,11 @@ $(document).ready(function () {
                 if (data.status == 'success') {
                     
                     $("#subscriberTagListsModal").modal("hide");
-                    $("#tag_container_" + subscriberID).html(data.refreshTags);
+                    //$("#tag_container_" + subscriberID).html(data.refreshTags);
                     syncContactSelectionSources();
-                    //window.location.href = window.location.href;
+					setTimeout(function(){
+						window.location.href = window.location.href;
+					}, 1000);
                 }
             }
         });
