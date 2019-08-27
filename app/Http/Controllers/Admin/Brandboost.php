@@ -6005,15 +6005,13 @@ class Brandboost extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
-
-
-        $bActiveSubsription = $this->mUser->isActiveSubscription();
+        $bActiveSubsription = UsersModel::isActiveSubscription();
         //get Automation Info
-        $oBrandData = $this->mBrandboost->getBrandboost($brandboostID);
+        $oBrandData = BrandboostModel::getBrandboost($brandboostID);
         $oBrandboost = $oBrandData[0];
         //pre($oBrandboost);
         //get Brandboost Events
-        $oEvents = $this->mBrandboost->getBrandboostEvents($brandboostID);
+        $oEvents = BrandboostModel::getBrandboostEvents($brandboostID);
 
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">';
@@ -6040,7 +6038,7 @@ class Brandboost extends Controller {
             'oUser' => $oUser
         );
 
-        $this->template->load('admin/admin_template_new', 'admin/brandboost/brandboost-stats', $aData);
+        return view('admin.brandboost.brandboost-stats', $aData);
     }
 
     public function exportReviews() {

@@ -211,6 +211,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/publishOnsiteWidget', 'Admin\Brandboost@publishOnsiteWidget');
     Route::post('admin/brandboost/deleteReviewRequest', 'Admin\Brandboost@deleteReviewRequest');
     Route::get('admin/brandboost/campaign_specific', 'Admin\Brandboost@campaignSpecific');
+    Route::get('admin/brandboost/statistics/{bbid}', 'Admin\Brandboost@statistics');
     
 
 
