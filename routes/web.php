@@ -141,6 +141,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     //Dashborad 
 
     Route::post('admin/dashboard/getReviewData', 'Admin\Dashboard@getReviewData');
+    Route::post('admin/utility/addContactToList', 'Admin\Utility@addContactToList');
 
 //Email Modules
     Route::get('admin/modules/emails/overview', 'Admin\Modules\Emails@overview');

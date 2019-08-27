@@ -1787,9 +1787,11 @@ FROM
     }
 
     public function removeContactFromList($subscriberID, $listID) {
-        $this->db->where("subscriber_id", $subscriberID);
-        $this->db->where("list_id", $listID);
-        $bUpdated = $this->db->delete("tbl_automation_users");
+		$bUpdated = DB::table('tbl_automation_users')
+			->where("subscriber_id", $subscriberID)
+			->where("list_id", $listID)
+			->delete();
+				
         if ($bUpdated) {
             return true;
         } else {

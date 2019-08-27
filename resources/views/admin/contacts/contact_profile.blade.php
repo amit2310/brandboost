@@ -1413,15 +1413,6 @@
 
         $(function () {
 
-
-
-
-
-
-
-
-
-
             // Checkboxes/radios (Uniform)
             // ------------------------------
 
@@ -1498,6 +1489,7 @@
         <div style="max-width: 440px;ss" class="modal-dialog">
             <div class="modal-content">
                 <form method="post" class="form-horizontal">
+					{{ csrf_field() }}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h5 class="modal-title">Create new campaign</h5>
@@ -1520,9 +1512,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
                     </div>
                     <div class="modal-footer p40">
@@ -1543,6 +1532,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form method="post" class="form-horizontal" id="updateReview" action="javascript:void();">
+					{{ csrf_field() }}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Review</h5>
@@ -1643,15 +1633,6 @@
                                 <input class="form-control" type="text" name="edit_review_title" id="edit_video_review_title" placeholder="Title" required>
                             </div>
                         </div>
-
-                        <!-- <div class="form-group">
-                            <label class="control-label col-lg-3">Video</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="file" name="video"  />
-                            </div>
-                        </div> -->
-
-
                         <div class="form-group">
                             <label class="control-label col-lg-3">Rating</label>
                             <div class="col-lg-9">
@@ -1749,6 +1730,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form method="post" class="form-horizontal" id="addCentralSubscriberData">
+					{{ csrf_field() }}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">×</button>
                         <h5 class="modal-title">Notes</h5>
@@ -1771,6 +1753,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form method="post" name="frmSubscriberApplyTag" id="frmSubscriberApplyTag" action="javascript:void();">
+					{{ csrf_field() }}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h5 class="modal-title">Apply Tags</h5>
@@ -1789,6 +1772,7 @@
     <div id="addReviewRequest" class="modal fade">
         <div class="modal-dialog modal-lg">
             <form method="post" name="frmReviewRequest" id="frmReviewRequest" action="javascript:void();">
+			{{ csrf_field() }}
             <!------------module_sec_list------------->
             <div class="modal-content module_sec_list" style="width:25% !important;">
                 <div class="modal-header small_header">
@@ -1971,6 +1955,7 @@
                     <h5 class="modal-title">Choose Lists</h5>
                 </div>
                 <form method="post" name="frmAddCotactToLists" id="frmAddCotactToLists" action="javascript:void();">
+					{{ csrf_field() }}
                     <div class="modal-body p0" style="height:500px;overflow:auto;padding-bottom:17px !important; ">
                         <ul class="contactaddlist contact">
                             <?php
@@ -2078,10 +2063,6 @@
                             //alertMessage("Contact added to selected lists");
                             $("#chooselistModal").modal('hide');
                             window.location.href = '';
-
-
-
-
                         }
                     }
                 });
@@ -2127,7 +2108,7 @@
                 $.ajax({
                     url: '<?php echo base_url('admin/utility/loadModuleCampaigns'); ?>',
                     type: "POST",
-                    data: {module_name: moduleName},
+                    data: {module_name: moduleName, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -2179,7 +2160,7 @@
             $.ajax({
                 url: '<?php echo base_url('admin/reviews/getCommentsPopup'); ?>',
                 type: "POST",
-                data: {review_id: reviewID},
+                data: {review_id: reviewID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -2265,25 +2246,25 @@
                         closeOnConfirm: true,
                         closeOnCancel: true
                     },
-                            function (isConfirm) {
-                                if (isConfirm) {
-                                    $('.overlaynew').show();
-                                    $.ajax({
-                                        url: '<?php echo base_url('admin/reviews/deleteMultipalReview'); ?>',
-                                        type: "POST",
-                                        data: {multiReviewid: val},
-                                        dataType: "json",
-                                        success: function (data) {
-                                            if (data.status == 'success') {
-                                                window.location.href = '';
-                                            } else {
-                                                alertMessage('Error: Some thing wrong!');
-                                                $('.overlaynew').hide();
-                                            }
-                                        }
-                                    });
-                                }
-                            });
+					function (isConfirm) {
+						if (isConfirm) {
+							$('.overlaynew').show();
+							$.ajax({
+								url: '<?php echo base_url('admin/reviews/deleteMultipalReview'); ?>',
+								type: "POST",
+								data: {multiReviewid: val, _token: '{{csrf_token()}}'},
+								dataType: "json",
+								success: function (data) {
+									if (data.status == 'success') {
+										window.location.href = '';
+									} else {
+										alertMessage('Error: Some thing wrong!');
+										$('.overlaynew').hide();
+									}
+								}
+							});
+						}
+					});
                 }
 
             });
@@ -2325,7 +2306,7 @@
                 $.ajax({
                     url: "<?php echo base_url('/admin/reviews/getReviewPopupData'); ?>",
                     type: "POST",
-                    data: {rid: reviewId},
+                    data: {rid: reviewId, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (response) {
                         if (response.status == "success") {
@@ -2350,7 +2331,7 @@
                 $.ajax({
                     url: "<?php echo base_url('/admin/reviews/displayreview'); ?>",
                     type: "POST",
-                    data: {rid: reviewid},
+                    data: {rid: reviewid, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (response) {
                         if (response.status == "success") {
@@ -2447,7 +2428,7 @@
                                 $.ajax({
                                     url: '<?php echo base_url('admin/reviews/deleteReview'); ?>',
                                     type: "POST",
-                                    data: {reviewid: reviewID},
+                                    data: {reviewid: reviewID, _token: '{{csrf_token()}}'},
                                     dataType: "json",
                                     success: function (data) {
 
@@ -2599,7 +2580,7 @@
                 $.ajax({
                     url: '<?php echo base_url('admin/reviews/update_review_status'); ?>',
                     type: "POST",
-                    data: {status: status, review_id: review_id},
+                    data: {status: status, review_id: review_id, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
 
@@ -2639,36 +2620,6 @@
 
             });
 
-//            $(document).on("click", ".applyInsightTags", function () {
-//                var review_id = $(this).attr("reviewid");
-//                var feedback_id = $(this).attr("feedback_id");
-//                var action_name = $(this).attr("action_name");
-//                $.ajax({
-//                    url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
-//                    type: "POST",
-//                    data: {review_id: review_id},
-//                    dataType: "json",
-//                    success: function (data) {
-//                        if (data.status == 'success') {
-//                            $('.overlaynew').hide();
-//                            var dataString = data.list_tags;
-//                            if (dataString.search('have any tags yet :-') > 0) {
-//                                $('.modalFooterBtn').hide();
-//                            } else {
-//                                $('.modalFooterBtn').show();
-//                            }
-//                            $("#tagEntireList").html(dataString);
-//                            $("#tag_review_id").val(review_id);
-//                            $("#tag_feedback_id").val(feedback_id);
-//                            if (action_name == 'review-tag') {
-//                                $("#ReviewTagListModal").modal("show");
-//                            } else if (action_name == 'feedback-tag') {
-//                                $("#FeedbackTagListModal").modal("show");
-//                            }
-//                        }
-//                    }
-//                });
-//            });
 
             $(document).on('click', '.editDataReview', function () {
                 $('.editAction').toggle();
