@@ -249,23 +249,14 @@
                                     <div class="profile_headings">Segments: (Not completed) <a class="pull-right plus_icon" style="cursor: text;"><i class="icon-plus3"></i></a></div>
 
                                     <div class="p25">
-                                        <!-- <button class="btn btn-xs btn_white_table">Added Review</button>
-                                        <button class="btn btn-xs btn_white_table">Male 25+</button>
-                                        <button class="btn btn-xs btn_white_table">USA, Canada, Australia</button>
-                                        <button class="btn btn-xs btn_white_table">Positive</button>
-                                        <button class="btn btn-xs btn_white_table">Referral</button>
-                                        <button class="btn btn-xs btn_white_table">Added media</button>
-                                        <button class="btn btn-xs btn_white_table">SF</button>
-                                        <button class="btn btn-xs btn_white_table">SMS</button>
-                                        <button class="btn btn-xs btn_white_table">Emails</button> -->
+                                        
                                         <?php echo displayNoData(); ?>
                                     </div>
 
                                     <div class="profile_headings">Tags <a class="pull-right plus_icon" href="<?php echo base_url('admin/tags'); ?>"><i class="icon-plus3"></i></a></div>
 
-                                    <div class="p25">
+                                    <div class="p25" id="tag_container_<?php echo $contactId; ?>">
                                         <?php
-//pre($oTags);
                                         if (!empty($oTags)) {
                                             foreach ($oTags as $value) {
 
@@ -2119,10 +2110,6 @@
                 });
 
             });
-
-
-
-
         });
 
 
