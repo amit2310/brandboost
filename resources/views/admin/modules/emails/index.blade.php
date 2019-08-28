@@ -30,8 +30,6 @@ if (!empty($oAutomations)) {
             <div class="col-md-3">
                 <h3><img src="/assets/images/email_icon_active.png"> <?php echo $title; ?></h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
-<!--                    <li class="active"><a href="#right-icon-tab0" data-toggle="tab"><?php echo $title; ?></a></li>
-                    <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li>-->
                     <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="active"><?php echo $title; ?></a></li>
                     <li><a style="javascript:void();" class="filterByColumn" fil="archive">Archive</a></li>
                 </ul>
@@ -381,94 +379,6 @@ if (!empty($oAutomations)) {
 </div>
 <!-- /Automation -->
 
-<div id="addSubscriber" class="modal fade">
-    <div class="modal-dialog">
-
-        <div class="modal-content">
-            <form method="post" class="form-horizontal" id="addSubscriberData" action="javascript:void();">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Add Subscriber</h5>
-                </div>
-                <div class="modal-body">
-
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?>
-                        <?php //echo validation_errors(); ?></div>
-
-                    <div class="col-md-12">
-
-                        <div class="form-group">
-                            <label class="control-label">First Name</label>
-                            <div class="">
-                                <input name="firstname" id="firstname" class="form-control" type="text" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label">Last Name</label>
-                            <div class="">
-                                <input name="lastname" id="lastname" class="form-control" value="" type="text" required>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="control-label">Email</label>
-                            <div class="">
-                                <input name="email" id="email" value="" class="form-control" type="text" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label">Phone</label>
-                            <div class="">
-                                <input name="phone" id="phone" value="" class="form-control" type="text" required>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" name="listId" id="list_id" value="">
-                    <button class="btn btn-link" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
-                    <button type="submit" id="updateButton" class="btn btn-primary"><i class="icon-check"></i> Add</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<div id="importCSV" class="modal modalpopup fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form method="post" class="form-horizontal" action="{{ base_url() }}admin/lists/importListCSV" enctype="multipart/form-data">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Import Contacts CSV</h5>
-                </div>
-                <div class="modal-body">
-
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?>
-                        <?php //echo validation_errors(); ?></div>
-
-                    <div class="form-group">
-                        <label class="control-label col-lg-3">Import CSV</label>
-                        <div class="col-lg-9">
-                            <input type="file" name="userfile" style="margin-top:3px;" accept=".csv, application/vnd.ms-excel" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" name="list_id" id="import_list_id" value="">
-                    <button class="btn btn-link" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
-                    <button type="submit" class="btn btn-primary"><i class="icon-check"></i> Import</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 @include('admin.modals.segments.segments-popup')
 <script src="<?php echo base_url(); ?>assets/js/modules/segments/segments.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -476,10 +386,7 @@ if (!empty($oAutomations)) {
     $(document).ready(function () {
 
         $('#emailsmsautomation thead tr').clone(true).appendTo('#emailsmsautomation thead');
-
         $('#emailsmsautomation thead tr:eq(1) th').each(function (i) {
-
-
             if (i === 11) {
                 var title = $(this).text();
                 $(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" /><input type="checkbox" class="" id="colStatus">');
@@ -487,13 +394,12 @@ if (!empty($oAutomations)) {
                 $('input', this).on('keyup change', function () {
                     if (tableBase.column(i).search() !== this.value) {
                         tableBase
-                                .column(i)
-                                .search(this.value, $('#colStatus').prop('checked', true))
-                                .draw();
+						.column(i)
+						.search(this.value, $('#colStatus').prop('checked', true))
+						.draw();
                     }
                 });
             }
-
         });
 
 
@@ -507,9 +413,7 @@ if (!empty($oAutomations)) {
             var fil = $(this).attr('fil');
             $('#filterByStatus').val(fil);
             $('#filterByStatus').keyup();
-
         });
-
 
         var tableId = 'emailsmsautomation';
         var tableBase = custom_data_table(tableId);
@@ -517,8 +421,6 @@ if (!empty($oAutomations)) {
         $('table thead tr:eq(1)').hide();
 
         $('#activeCampaign').trigger('click');
-
-
     });
 
     $(document).ready(function () {
@@ -559,7 +461,6 @@ if (!empty($oAutomations)) {
             if (totalCheckboxes > numberOfChecked) {
                 $('#checkAll').prop('checked', false);
             }
-
         });
 
         $(document).on('click', '#deleteButtonEmailAutomation', function () {
@@ -633,7 +534,6 @@ if (!empty($oAutomations)) {
             if (totalCheckboxes > numberOfChecked) {
                 $('#checkAllA').prop('checked', false);
             }
-
         });
 
         $(document).on('click', '#deleteButtonEmailAutomationA', function () {
@@ -657,23 +557,23 @@ if (!empty($oAutomations)) {
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                $('.overlaynew').show();
-                                $.ajax({
-                                    url: '<?php echo base_url('admin/modules/emails/multipalDeleteAutomation'); ?>',
-                                    type: "POST",
-                                    data: {"_token": "{{ csrf_token() }}",multipal_automation_id: val},
-                                    dataType: "json",
-                                    success: function (data) {
-                                        if (data.status == 'success') {
-                                            $('.overlaynew').hide();
-                                            window.location.href = window.location.href;
-                                        }
-                                    }
-                                });
-                            }
-                        });
+				function (isConfirm) {
+					if (isConfirm) {
+						$('.overlaynew').show();
+						$.ajax({
+							url: '<?php echo base_url('admin/modules/emails/multipalDeleteAutomation'); ?>',
+							type: "POST",
+							data: {"_token": "{{ csrf_token() }}",multipal_automation_id: val},
+							dataType: "json",
+							success: function (data) {
+								if (data.status == 'success') {
+									$('.overlaynew').hide();
+									window.location.href = window.location.href;
+								}
+							}
+						});
+					}
+				});
             }
         });
 
@@ -709,7 +609,6 @@ if (!empty($oAutomations)) {
                         }
                     });
                 });
-
             }
         });
 
@@ -783,7 +682,6 @@ if (!empty($oAutomations)) {
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        //alertMessageAndRedirect("Automation created successfully!", '<?php echo base_url('admin/modules/emails/setupAutiomation/'); ?>'+data.id);
                         window.location.href = '<?php echo base_url('admin/modules/emails/setupAutomation/'); ?>' + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
@@ -873,24 +771,23 @@ if (!empty($oAutomations)) {
             var elem = $(this);
 
             deleteConfirmationPopup(
-                    "This record will deleted immediately.<br>You can't undo this action.",
-                    function () {
-                        $('.overlaynew').show();
-                        var automationID = $(elem).attr('automation_id');
-                        $.ajax({
-                            url: '<?php echo base_url('admin/modules/emails/deleteAutomation'); ?>',
-                            type: "POST",
-                            data: {"_token": "{{ csrf_token() }}", automation_id: automationID},
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    $('.overlaynew').hide();
-                                    window.location.href = window.location.href;
-                                }
-                            }
-                        });
-                    });
-
+			"This record will deleted immediately.<br>You can't undo this action.",
+			function () {
+				$('.overlaynew').show();
+				var automationID = $(elem).attr('automation_id');
+				$.ajax({
+					url: '<?php echo base_url('admin/modules/emails/deleteAutomation'); ?>',
+					type: "POST",
+					data: {"_token": "{{ csrf_token() }}", automation_id: automationID},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							$('.overlaynew').hide();
+							window.location.href = window.location.href;
+						}
+					}
+				});
+			});
         });
 
         $(document).on('click', '.viewECode', function () {
@@ -928,8 +825,6 @@ if (!empty($oAutomations)) {
                         this.checked = false;
                     });
                 }
-
-
             }
         });
 
@@ -947,7 +842,6 @@ if (!empty($oAutomations)) {
                         });
                     }
                 });
-
             }
         });
 
@@ -959,12 +853,7 @@ if (!empty($oAutomations)) {
             $('.editArchiveAction').toggle();
         });
 
-
     });
-
-
-
-
 </script>
 
 
