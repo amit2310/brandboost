@@ -274,9 +274,27 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
-                    
                     $("#subscriberTagListsModal").modal("hide");
-                    //$("#tag_container_" + subscriberID).html(data.refreshTags);
+                    $(".tag_container_" + subscriberID).html(data.refreshTags);
+                    syncContactSelectionSources();
+                }
+            }
+        });
+        return false;
+    });
+	
+	$("#frmSubscriberApplyTagList").submit(function () {
+        var formdata = $("#frmSubscriberApplyTagList").serialize();
+        var subscriberID = $("#tag_subscriber_id").val();
+        var tkn = $('meta[name="_token"]').attr('content');
+        $.ajax({
+            url: '/admin/tags/applySubscriberTag',
+            type: "POST",
+            data: formdata + '&_token=' + tkn,
+            dataType: "json",
+            success: function (data) {
+                if (data.status == 'success') {
+                    $("#subscriberTagListsModal").modal("hide");
                     syncContactSelectionSources();
 					setTimeout(function(){
 						window.location.href = window.location.href;

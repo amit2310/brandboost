@@ -86,9 +86,9 @@ if ($recordSource == 'contact-selection') {
                             <a class="icons social" href="mailto:<?php echo $oContact->email; ?>"><img src="<?php echo base_url(); ?>assets/images/icons/mail.svg"/></a>
 
                         </td>
-                        <td id="tag_container_<?php echo $oContact->subscriber_id; ?>">
+                        <td>
                             <div class="media-left pr30 brig">
-                                <div class="tdropdown">
+                                <div class="tdropdown tag_container_<?php echo $oContact->subscriber_id; ?>">
                                     <button type="button" class="btn btn-xs btn_white_table bluee dropdown-toggle" data-toggle="dropdown"> <?php echo count($oTags); ?> Tags <span class="caret"></span> </button>
                                     <ul class="dropdown-menu dropdown-menu-right tagss">
                                         <?php
