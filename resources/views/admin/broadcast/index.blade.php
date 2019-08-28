@@ -40,9 +40,9 @@ $newOpen = $newClick = 0;
                     <!--                    <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Brand Boost Broadcast</a></li>
                                         <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li>-->
                     <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="">All</a></li>
-                    <li class="active all"><a style="javascript:void();" class="filterByColumn" fil="active">Active</a></li>
-                    <li class="active all"><a style="javascript:void();" class="filterByColumn" fil="expired">Expired</a></li>
-                    <li class="active all"><a style="javascript:void();" class="filterByColumn" fil="draft">Draft</a></li>
+                    <li class=""><a style="javascript:void();" class="filterByColumn" fil="active">Active</a></li>
+                    <li class=""><a style="javascript:void();" class="filterByColumn" fil="expired">Expired</a></li>
+                    <li class=""><a style="javascript:void();" class="filterByColumn" fil="draft">Draft</a></li>
                     <li><a style="javascript:void();" class="filterByColumn" fil="archive">Archive</a></li>
                 </ul>
             </div>
@@ -240,8 +240,6 @@ $newOpen = $newClick = 0;
                                             <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_click_10.png"></i><?php echo (strtolower($campaignType) == 'email') ? 'Clicked' : 'Queued'; ?></th>
                                             <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_click_10.png"></i>Sending Method</th>
                                             <th class="text-right"><i><img src="<?php echo base_url(); ?>assets/images/icon_date.png"></i>Created</th>
-                                            <!-- <th><i class="icon-envelop"></i>Sending Status</th> -->
-
                                             <th class=""><i class="fa fa-dot-circle-o"></i>Status</th>
                                             <th class="text-center" ><i class="fa fa-dot-circle-o"></i>Action</th>
                                             <th style="display:none;">status</th>
@@ -262,10 +260,6 @@ $newOpen = $newClick = 0;
                                             $bExpired = false;
                                             if ($timeNow > $deliverAt) {
                                                 $bExpired = true;
-
-                                                //$moduleType = strtolower($campaignType)=='email' ? 'email' : 'sms';
-                                                //redirect("admin/broadcast/{$moduleType}");
-                                                //exit;
                                             }
 
                                             //if ($broadCastData->bc_status != 'archive') {
@@ -323,8 +317,6 @@ $newOpen = $newClick = 0;
                                                         $totalQueuedGraph = ceil($totalQueuedGraph);
                                                     }
                                                 }
-
-
 
                                                 if ($broadCastData->sending_method == 'split') {
                                                     $totalVariations = 0;
@@ -895,22 +887,19 @@ $newOpen = $newClick = 0;
         $('#emailsmsbroadcast thead tr:eq(1) th').each(function (i) {
 
             //console.log(i);
-            if (i === 11) {
+            if (i === 12) {
                 var title = $(this).text();
                 $(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" /><input type="checkbox" class="" id="colStatus">');
 
                 $('input', this).on('keyup change', function () {
                     if (tableBase.column(i).search() !== this.value) {
                         tableBase
-                                .column(i)
-                                .search(this.value, $('#colStatus').prop('checked', true))
-                                .draw();
+						.column(i)
+						.search(this.value, $('#colStatus').prop('checked', true))
+						.draw();
                     }
                 });
             }
-
-
-
         });
 
 
