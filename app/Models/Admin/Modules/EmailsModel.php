@@ -15,23 +15,23 @@ class EmailsModel extends Model {
      * @param type $id
      * @param type $automationType
      * @return type
-     */
+    */
     public function getEmailAutomations($userID = '', $id = '', $automationType = '') {
         $oData = DB::table('tbl_automations_emails')
-                ->join('tbl_users', 'tbl_automations_emails.user_id', '=', 'tbl_users.id')
-                ->select('tbl_automations_emails.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
-                ->where('tbl_automations_emails.email_type', 'automation')
-                ->where('tbl_automations_emails.deleted', 0)
-                ->when(($id > 0), function ($query) use ($id) {
-                    return $query->where('tbl_automations_emails.id', $id);
-                })
-                ->when(($userID > 0), function ($query) use ($userID) {
-                    return $query->where('tbl_automations_emails.user_id', $userID);
-                })
-                ->when(!empty($automationType), function ($query) use ($automationType) {
-                    return $query->where('tbl_automations_emails.automation_type', $automationType);
-                })
-                ->get();
+			->join('tbl_users', 'tbl_automations_emails.user_id', '=', 'tbl_users.id')
+			->select('tbl_automations_emails.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
+			->where('tbl_automations_emails.email_type', 'automation')
+			->where('tbl_automations_emails.deleted', 0)
+			->when(($id > 0), function ($query) use ($id) {
+				return $query->where('tbl_automations_emails.id', $id);
+			})
+			->when(($userID > 0), function ($query) use ($userID) {
+				return $query->where('tbl_automations_emails.user_id', $userID);
+			})
+			->when(!empty($automationType), function ($query) use ($automationType) {
+				return $query->where('tbl_automations_emails.automation_type', $automationType);
+			})
+			->get();
 
         return $oData;
     }
@@ -39,7 +39,7 @@ class EmailsModel extends Model {
     /**
      * Return all email events associated with the workflow tree
      * @return type
-     */
+    */
     public function getAllAutomationEvents($userID = '', $automationID = '') {
         $oData = DB::table('tbl_automations_emails_events')
                 ->leftJoin('tbl_automations_emails', 'tbl_automations_emails.id', '=', 'tbl_automations_emails_events.automation_id')
@@ -63,7 +63,7 @@ class EmailsModel extends Model {
      * @param type $id
      * @param type $eventType
      * @return type
-     */
+    */
     public static function getEmailSendgridStats($param, $id, $eventType = '') {
         $sql = "SELECT tbl_automations_emails_tracking_sendgrid.* FROM tbl_automations_emails_tracking_sendgrid "
                 . "LEFT JOIN tbl_automations_emails ON tbl_automations_emails_tracking_sendgrid.automation_id = tbl_automations_emails.id "

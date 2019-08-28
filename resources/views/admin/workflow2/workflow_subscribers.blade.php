@@ -1,5 +1,4 @@
 <?php
-$showArchived = false;
 $iActiveCount = $iArchiveCount = 0;
 if (!empty($subscribersData)) {
     foreach ($subscribersData as $oCount) {
@@ -178,7 +177,7 @@ if(!empty($subscribersData)) { ?>
                                             </td>
                                             <td class="text-center">
                                                 <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
-                                                    <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
+                                                    <ul style="right: 0; width:150px;" class="dropdown-menu dropdown-menu-right status">
 														<?php if($showArchived == true){ ?>
                                                         <li><a class="moveToArchiveModuleContact" href="javascript:void(0);" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" csrf_token="<?php echo csrf_token(); ?>"><i class="icon-trash"></i> Move To Archive</a></li>
 														<?php } ?>
@@ -367,7 +366,7 @@ else {
                                 if (count($subscribersData) > 0) {
                                     foreach ($subscribersData as $oContact) {
                                         $subscriberID = $oContact->subscriber_id;
-                                        $oTags = \App\Models\Admin\TagModel::getSubscriberTags($subscriberID);
+                                        $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($subscriberID);
                                         $iTagCount = count($oTags);
 
                                         if ($oContact->status == '2') {
