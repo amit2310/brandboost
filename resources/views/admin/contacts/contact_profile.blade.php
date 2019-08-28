@@ -381,10 +381,6 @@
 
                                     <div class="tab-pane active" id="ActivityLog">
                                         <div class="panel panel-flat mb0">
-                                            <!--                                    <div class="panel-heading">
-                                                                                    <h6 class="panel-title">Activity</h6>
-                                                                                    <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
-                                                                                </div>-->
                                             <div class="panel-body min_h270 p0">
                                                 <table class="table">
                                                     <tbody>
@@ -1743,7 +1739,7 @@
     <div id="subscriberTagListsModal" class="modal fade">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form method="post" name="frmSubscriberApplyTag" id="frmSubscriberApplyTag" action="javascript:void();">
+                <form method="post" name="frmSubscriberApplyTagList" id="frmSubscriberApplyTagList" action="javascript:void();">
 					@csrf
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
