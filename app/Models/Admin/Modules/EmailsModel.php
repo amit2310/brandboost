@@ -384,10 +384,11 @@ class EmailsModel extends Model {
      * @param type $userID
      * @return boolean
      */
-    public function checkIfEmailAutomationExists($automationName, $userID) {
+    public function checkIfEmailAutomationExists($automationName, $userID, $automationID='') {
         $oData = DB::table('tbl_automations_emails')
                 ->where('user_id', $userID)
                 ->where('title', $automationName)
+                ->where('id', '!=', $automationID)
                 ->where('deleted', 0)
                 ->exists();
         return $oData;

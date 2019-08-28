@@ -475,7 +475,7 @@ class Emails extends Controller {
             'description' => $description
         );
 
-        $bAlreadyExists = $mEmails->checkIfEmailAutomationExists($title, $userID);
+        $bAlreadyExists = $mEmails->checkIfEmailAutomationExists($title, $userID, $automationID);
         if ($bAlreadyExists == true) {
             $response = array('status' => 'error', 'type' => 'duplicate', 'msg' => 'Automation title already exists');
             echo json_encode($response);
