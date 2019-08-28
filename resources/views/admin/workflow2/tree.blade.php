@@ -537,7 +537,7 @@ $aSelectedContacts = array();
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="updateDraftTemplateName" id="updateDraftTemplateName" action="javascript:void();">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> &nbsp;Name your template <i class="icon-info22 fsize12 txt_grey"></i></h5>

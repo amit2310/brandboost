@@ -262,7 +262,7 @@ else {
   <div class="modal-dialog">
     <div class="modal-content">
       <form method="post" class="form-horizontal" id="frmShortListModalN">
-        {{ csrf_field() }}
+        @csrf
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">×</button>
           <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/images/menu_icons/Chat_Color.svg"> Add new shortcut &nbsp; <!--<i class="icon-info22 fsize12 txt_grey"></i>--></h5>
@@ -305,7 +305,7 @@ else {
   <div class="modal-dialog">
     <div class="modal-content">
       <form method="post" class="form-horizontal" id="frmUpdateShortListModal">
-        {{ csrf_field() }}
+        @csrf
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">×</button>
           <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/images/menu_icons/Chat_Color.svg"> Update shortcut &nbsp; <!--<i class="icon-info22 fsize12 txt_grey"></i>--></h5>

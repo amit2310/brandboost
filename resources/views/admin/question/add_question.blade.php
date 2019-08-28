@@ -65,7 +65,7 @@
 			<div class="col-md-6">
 
 				<form method="post" name="frmQuestionSubmit" id="frmQuestionSubmit" container_name="sitereview" action="#"  enctype="multipart/form-data">
-				{{ csrf_field() }}
+				@csrf
 				<div class="panel panel-flat">
 				  <div class="panel-heading">
 					<h6 class="panel-title">Add Question</h6>

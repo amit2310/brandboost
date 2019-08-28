@@ -42,7 +42,7 @@ if ($selected_tab == 'contact') {
             <!--=============Button Area Right Side==============-->
             <div class="col-md-6 text-right btn_area">
                 <button type="button" class="btn light_btn importModuleContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID ?>" data-redirect="<?php echo base_url(); ?>admin/brandboost/stats/onsite/<?php echo $moduleUnitID; ?>?t=contact"><i class="icon-arrow-up16"></i><span> &nbsp;  Import Contact</span> </button>
-                <a class="btn light_btn ml10" href="<?php echo base_url() ?>admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName; ?>&module_account_id=<?php echo $moduleUnitID; ?>"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contact</span> </a>
+                <a class="btn light_btn ml10" href="{{ base_url() }}admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName; ?>&module_account_id=<?php echo $moduleUnitID; ?>"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contact</span> </a>
                 <button type="button" class="btn dark_btn dropdown-toggle ml10 addModuleContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID ?>"><i class="icon-plus3"></i><span> &nbsp;  Add Contact</span> </button>  
             </div>
         </div>

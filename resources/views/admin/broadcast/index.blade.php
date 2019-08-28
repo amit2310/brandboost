@@ -648,7 +648,7 @@ $newOpen = $newClick = 0;
                                                     <td class="text-center">
                                                         <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
                                                             <ul class="dropdown-menu dropdown-menu-right more_act">
-                                                                <li><a href="<?php echo base_url() ?>admin/broadcast/edit/<?php echo $broadCastData->broadcast_id; ?>"><i class="icon-pencil"></i> Edit</a></li>
+                                                                <li><a href="{{ base_url() }}admin/broadcast/edit/<?php echo $broadCastData->broadcast_id; ?>"><i class="icon-pencil"></i> Edit</a></li>
                                                                 <li><a href="javascript:void(0);" class="clonBroadcastCampaign" broadcast_id="<?php echo $broadCastData->broadcast_id; ?>"><i class="icon-file-stats"></i> Duplicate</a></li>
                                                                 <?php if ($broadCastData->bc_status != 'archive'): ?>
                                                                     <li><a href="javascript:void(0);" class="moveArchive" broadcast_id="<?php echo $broadCastData->broadcast_id; ?>"><i class="icon-file-stats"></i> Move To Archive</a></li>
@@ -1275,7 +1275,7 @@ $newOpen = $newClick = 0;
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url() ?>admin/broadcast/edit/' + data.broadcastId;
+                        window.location.href = '{{ base_url() }}admin/broadcast/edit/' + data.broadcastId;
                     } else {
                         $('.overlaynew').hide();
                         alertMessage('Error: Some thing wrong!');

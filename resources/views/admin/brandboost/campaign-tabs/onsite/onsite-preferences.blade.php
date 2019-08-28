@@ -16,7 +16,7 @@
 <div class="tab-pane <?php echo $camp; ?>" id="right-icon-tab11">
     <form method="post" id="addOnsiteStepList" action="#" >
         <input name="brandboostId" id="brandboostId" value="<?php echo $brandboostData->id; ?>" type="hidden">
-		{{ csrf_field() }}
+		@csrf
         <div class="row">
             <div class="col-md-3">
                 <div style="margin: 0;" class="panel panel-flat">

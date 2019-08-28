@@ -286,7 +286,7 @@ if (!empty($oPrograms)) {
                                                 <td>
                                                     <div class="media-left media-middle"> <a class="icons square" href="javascript:void(0);"><i class="icon-checkmark3 txt_blue"></i></a> </div>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><a class="text-default text-semibold" href="<?php echo base_url() ?>admin/modules/nps/setup/<?php echo $oProgram->id; ?>"><?php echo $oProgram->title; ?></a></div>
+                                                        <div class="pt-5"><a class="text-default text-semibold" href="{{ base_url() }}admin/modules/nps/setup/<?php echo $oProgram->id; ?>"><?php echo $oProgram->title; ?></a></div>
                                                         <div class="text-muted text-size-small"><?php echo @(ucfirst($oProgram->platform)) ? ucfirst($oProgram->platform) : 'NA'; ?></div>
                                                     </div>
 
@@ -750,7 +750,7 @@ if (!empty($oPrograms)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmeditSurveyModel" name="frmeditSurveyModel">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Edit Survey</h5>
@@ -780,7 +780,7 @@ if (!empty($oPrograms)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmaddNPSModal" id="frmaddNPSModal" action="javascript:void();">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><img src="/new_pages/assets/css/menu_icons/OffSiteBoost_Color.svg"> Add New Survey &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>

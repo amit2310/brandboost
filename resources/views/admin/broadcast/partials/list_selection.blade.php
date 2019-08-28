@@ -231,7 +231,7 @@ foreach ($oLists as $key => $value) {
                             <li><a href="javascript:void(0);" list_id="<?php echo $oList->id; ?>" class="importModuleContact" data-modulename="list" data-moduleaccountid="<?php echo $oList->id; ?>" data-redirect="<?php echo base_url(); ?>admin/broadcast/edit/<?php echo $oList->id; ?>"><i class="icon-gear"></i> Import Contacts</a></li>
 
                             <li>
-                                <a href="<?php echo base_url() ?>admin/subscriber/exportSubscriberCSV?module_name=list&module_account_id=<?php echo $oList->id; ?>" list_id="<?php echo $oList->id; ?>" class="exportContact" data-modulename="list" data-moduleaccountid="<?php echo $oList->id; ?>"><i class="icon-gear"></i> Export Contacts</a>
+                                <a href="{{ base_url() }}admin/subscriber/exportSubscriberCSV?module_name=list&module_account_id=<?php echo $oList->id; ?>" list_id="<?php echo $oList->id; ?>" class="exportContact" data-modulename="list" data-moduleaccountid="<?php echo $oList->id; ?>"><i class="icon-gear"></i> Export Contacts</a>
                             </li>
                             <li><a target="_blank" href="<?php echo base_url(); ?>admin/lists/getListContacts?list_id=<?php echo $oList->id; ?>"><i class="icon-gear"></i> View Contacts</a></li>
                             <li><a href="javascript:void(0);" list_id="<?php echo $oList->id; ?>" class="editlist"><i class="icon-pencil"></i> Edit</a></li>

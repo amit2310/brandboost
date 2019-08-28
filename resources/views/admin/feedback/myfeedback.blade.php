@@ -380,7 +380,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmFeedbackTagListModal" id="frmFeedbackTagListModal" action="javascript:void();">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Apply Tags</h5>

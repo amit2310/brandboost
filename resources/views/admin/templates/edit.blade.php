@@ -39,7 +39,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3 mt20">
-                <h3><img src="<?php echo base_url() ?>assets/images/people_sec_icon.png"> <?php echo $title; ?></h3>
+                <h3><img src="{{ base_url() }}assets/images/people_sec_icon.png"> <?php echo $title; ?></h3>
 
             </div>
             <!--=============Button Area Right Side==============-->
@@ -83,7 +83,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmAddUserTemplateModal" id="frmAddUserTemplateModal" action="javascript:void();">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Add <?php echo $title; ?> &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>

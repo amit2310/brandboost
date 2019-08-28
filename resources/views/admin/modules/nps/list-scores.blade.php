@@ -336,7 +336,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmeditSurveyModel" name="frmeditSurveyModel">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Edit Survey</h5>
@@ -366,7 +366,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmaddNPSModal" id="frmaddNPSModal" action="#">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add New Survey</h5>
@@ -394,7 +394,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmNPSTagListModal" id="frmNPSTagListModal" action="#">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Apply Tags</h5>
@@ -416,7 +416,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header purple_preview_2 purple_preview_2">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/images/customer_profile_icon.png"> NPS Score Feedback</h5>

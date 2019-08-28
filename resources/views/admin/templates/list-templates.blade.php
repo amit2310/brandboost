@@ -1,12 +1,12 @@
-<?php
-$moduleName = !(empty($moduleName)) ?  $moduleName : '';
-$moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
+@php
+$moduleName = !(empty($moduleName)) ? $moduleName : 'Raj';
+$moduleUnitID = !(empty($moduleUnitID)) ? $moduleUnitID : '';
+@endphp
 
-?>
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -39,12 +39,12 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3 mt20">
-                <h3><img src="<?php echo base_url() ?>assets/images/people_sec_icon.png"> <?php echo $title; ?></h3>
+                <h3><img src="{{ base_url() }}assets/images/people_sec_icon.png"> {{ $title }}</h3>
 
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-9 text-right btn_area">
-                <button type="button" class="btn dark_btn dropdown-toggle ml10 addUserTemplate" template-type="<?php echo $templateType; ?>"><i class="icon-plus3"></i><span> &nbsp;  Add Template</span> </button>  
+                <button type="button" class="btn dark_btn dropdown-toggle ml10 addUserTemplate" template-type="{{ $templateType }}"><i class="icon-plus3"></i><span> &nbsp;  Add Template</span> </button>  
 
             </div>
         </div>
@@ -53,13 +53,13 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
 
     <div class="tab-content"> 
         <!--===========TAB 1===========-->
-        <?php if ($templateType == 'email'): ?>
+        @if ($templateType == 'email')
             @include('admin.templates.emails.email-template-index')
-        <?php endif; ?>
+        @endif
 
-        <?php if ($templateType == 'sms'): ?>
+        @if ($templateType == 'sms')
             @include('admin.templates.sms.sms-template-index')
-        <?php endif; ?>
+        @endif
 
     </div>
 </div>
@@ -70,10 +70,10 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmAddUserTemplateModal" id="frmAddUserTemplateModal" action="javascript:void();">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Add <?php echo $title; ?> &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> Add {{ $title }} &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
                 </div>
                 <div class="modal-body">
 
@@ -89,15 +89,15 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
                                 <label>Choose Template Category:</label>
                                 <select class="form-control h52" name="templateCategory" required="">
                                     <option>--Select--</option>
-                                    <?php
-                                    if (!empty($oCategories)) {
-                                        foreach ($oCategories as $oCategory) {
-                                            ?>
-                                            <option value="<?php echo $oCategory->id; ?>"><?php echo $oCategory->category_name; ?></option>                 
-                                            <?php
-                                        }
-                                    }
-                                    ?>
+
+                                    @if (!empty($oCategories)) 
+                                    @foreach ($oCategories as $oCategory)
+
+                                    <option value="{{ $oCategory->id }}"> {{ $oCategory->category_name }}</option>                 
+
+                                    @endforeach
+                                    @endif
+
                                 </select>
 
                             </div>
@@ -105,7 +105,7 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="templateType" value="<?php echo $templateType; ?>" />
+                    <input type="hidden" name="templateType" value="{{ $templateType }}" />
                     <button data-toggle="modal" type="submit" class="btn dark_btn bkg_sblue fsize14 h52">Continue</button>
                     <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
 
@@ -126,7 +126,7 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
                 if (templateId != '') {
                     $('.overlaynew').show();
                     $.ajax({
-                        url: '<?php echo base_url('admin/templates/cloneTemplate'); ?>',
+                        url: "{{ base_url('admin/templates/cloneTemplate') }}",
                         type: "POST",
                         data: {_token: '{{csrf_token()}}', templateId: templateId, templateType: templateType},
                         dataType: "json",
@@ -164,7 +164,7 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
                         $('.overlaynew').show();
                         var templateId = $(elem).attr('template_id');
                         $.ajax({
-                            url: '<?php echo base_url('admin/templates/deleteTemplate'); ?>',
+                            url: "{{ base_url('admin/templates/deleteTemplate') }}",
                             type: "POST",
                             data: {_token: '{{csrf_token()}}', templateId: templateId},
                             dataType: "json",
@@ -189,7 +189,7 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
             $('.overlaynew').show();
             var formdata = $("#frmAddUserTemplateModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/templates/addUserTemplate'); ?>',
+                url: "{{ base_url('admin/templates/addUserTemplate') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -197,7 +197,7 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
                         displayMessagePopup("success", "Success", "Template created successfully!");
-                        window.location.href = '<?php echo base_url('admin/templates/edit/'); ?>' + data.id;
+                        window.location.href = "{{ base_url('admin/templates/edit/') }}" + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         displayMessagePopup("error", "Duplicate Template", data.msg);
@@ -216,8 +216,8 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
             $("#editNameTxt_" + templateID).show();
             $("#editNameTxt_" + templateID).focus();
         });
-        
-        $(document).on("blur", ".editNameTxt", function(){
+
+        $(document).on("blur", ".editNameTxt", function () {
             $(".editName").show();
             $(".editNameTxt").hide();
         });
@@ -227,9 +227,9 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
             var elem = $(this);
             var templateName = $(this).val();
             $.ajax({
-                url: '<?php echo base_url('admin/templates/updateUserTemplateName'); ?>',
+                url: "{{ base_url('admin/templates/updateUserTemplateName') }}",
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', templateId:templateId, templateName:templateName},
+                data: {_token: '{{csrf_token()}}', templateId: templateId, templateName: templateName},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -237,7 +237,7 @@ $moduleUnitID = !(empty($moduleUnitID)) ?  $moduleUnitID : '';
                         displayMessagePopup("success", "Success", "Name updated successfully!");
                         $(elem).hide();
                         $("#editName_" + templateId).show();
-                        $("#editName_"+ templateId).html(templateName);
+                        $("#editName_" + templateId).html(templateName);
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         displayMessagePopup("error", "Duplicate Template", data.msg);

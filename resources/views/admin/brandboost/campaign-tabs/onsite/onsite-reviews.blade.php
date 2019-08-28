@@ -105,7 +105,7 @@ $bActiveSubsription="";
                                                 Lets Configure Your Campaign.
                                             </h5>
 
-                                            <a class="btn bl_cust_btn btn-default dark_btn ml20 mb40" href="<?php echo base_url() ?>admin/brandboost/addreview/<?php echo $brandboostID; ?>">Add On Site Manual Review</a>
+                                            <a class="btn bl_cust_btn btn-default dark_btn ml20 mb40" href="{{ base_url() }}admin/brandboost/addreview/<?php echo $brandboostID; ?>">Add On Site Manual Review</a>
 
                                         </div>
                                     </div>

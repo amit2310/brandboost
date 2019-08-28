@@ -330,7 +330,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmUpdateGallery" name="frmUpdateGallery">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="/assets/images/menu_icons/List_Color.svg"/> Edit Contact List &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
@@ -354,7 +354,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmAddGallery" id="frmAddGallery" action="javascript:void();">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Create Gallery &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
@@ -384,7 +384,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmSelectReviews" id="frmSelectReviews" action="javascript:void();">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Select Media &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>

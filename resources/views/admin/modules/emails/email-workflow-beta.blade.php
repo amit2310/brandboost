@@ -13,7 +13,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
-                <h3 class="mt20"><img src="<?php echo base_url() ?>assets/images/menu_icons/Email_Light.svg"> <?php echo $oAutomations[0]->title; ?></h3>
+                <h3 class="mt20"><img src="{{ base_url() }}assets/images/menu_icons/Email_Light.svg"> <?php echo $oAutomations[0]->title; ?></h3>
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">

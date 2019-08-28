@@ -1,5 +1,5 @@
 <form method="post" name="frmSubmit" id="frmSubmitPreferences" action="javascript:void(0);"  enctype="multipart/form-data">
-	{{ csrf_field() }}
+	@csrf
 	<input type="hidden" name="chat_id" value="<?php echo $oChat->id; ?>" />
 	<div class="row">
 		<div class="col-md-3">

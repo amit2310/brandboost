@@ -916,7 +916,7 @@
                                                     <td>
                                                         <div class="media-left media-middle"> <a class="icons br5" href="#"><i class="icon-tree5 txt_sblue"></i></a> </div>
                                                         <div class="media-left">
-                                                            <div class="pt-5"><a href="<?php echo base_url() ?>admin/modules/referral/setup/<?php echo $oProgram->id; ?>" class="text-default text-semibold"><?php echo $oProgram->title; ?></a>
+                                                            <div class="pt-5"><a href="{{ base_url() }}admin/modules/referral/setup/<?php echo $oProgram->id; ?>" class="text-default text-semibold"><?php echo $oProgram->title; ?></a>
                                                             </div>
                                                         </div></td>
                                                     <td><a href="#" target="_blank" class="text-default text-semibold"><img class="progress_icon" src="/assets/images/progress_blue.png"/> &nbsp; 98</a></td>
@@ -1083,7 +1083,7 @@
                                                     <td>
                                                         <div class="media-left media-middle"> <a class="icons square" href="javascript:void(0);"><i class="icon-checkmark3 txt_blue"></i></a> </div>
                                                         <div class="media-left">
-                                                            <div class="pt-5"><a class="text-default text-semibold" href="<?php echo base_url() ?>admin/modules/nps/setup/<?php echo $oProgram->id; ?>"><?php echo $oProgram->title; ?></a></div>
+                                                            <div class="pt-5"><a class="text-default text-semibold" href="{{ base_url() }}admin/modules/nps/setup/<?php echo $oProgram->id; ?>"><?php echo $oProgram->title; ?></a></div>
                                                             <div class="text-muted text-size-small"><?php echo (ucfirst($oProgram->platform)) ? ucfirst($oProgram->platform) : 'NA'; ?></div>
                                                         </div>
 
@@ -1480,7 +1480,7 @@
         <div style="max-width: 440px;ss" class="modal-dialog">
             <div class="modal-content">
                 <form method="post" class="form-horizontal">
-					{{ csrf_field() }}
+					@csrf
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h5 class="modal-title">Create new campaign</h5>
@@ -1523,7 +1523,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form method="post" class="form-horizontal" id="updateReview" action="javascript:void();">
-					{{ csrf_field() }}
+					@csrf
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Review</h5>
@@ -1610,7 +1610,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form method="post" class="form-horizontal" id="updateVideoReview" action="javascript:void();">
-                    {{ csrf_field() }}
+                    @csrf
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Review</h5>
@@ -1721,7 +1721,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form method="post" class="form-horizontal" id="addCentralSubscriberData">
-					{{ csrf_field() }}
+					@csrf
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">×</button>
                         <h5 class="modal-title">Notes</h5>
@@ -1744,7 +1744,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form method="post" name="frmSubscriberApplyTag" id="frmSubscriberApplyTag" action="javascript:void();">
-					{{ csrf_field() }}
+					@csrf
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h5 class="modal-title">Apply Tags</h5>
@@ -1763,7 +1763,7 @@
     <div id="addReviewRequest" class="modal fade">
         <div class="modal-dialog modal-lg">
             <form method="post" name="frmReviewRequest" id="frmReviewRequest" action="javascript:void();">
-			{{ csrf_field() }}
+			@csrf
             <!------------module_sec_list------------->
             <div class="modal-content module_sec_list" style="width:25% !important;">
                 <div class="modal-header small_header">
@@ -1946,7 +1946,7 @@
                     <h5 class="modal-title">Choose Lists</h5>
                 </div>
                 <form method="post" name="frmAddCotactToLists" id="frmAddCotactToLists" action="javascript:void();">
-					{{ csrf_field() }}
+					@csrf
                     <div class="modal-body p0" style="height:500px;overflow:auto;padding-bottom:17px !important; ">
                         <ul class="contactaddlist contact">
                             <?php

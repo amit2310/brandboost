@@ -137,7 +137,7 @@
     <div style="max-width: 760px;" class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmCreditProperty" id="frmCreditProperty" action="javascript:void();">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><i class="fa fa-tags"></i>&nbsp; Edit Credit Property</h5>

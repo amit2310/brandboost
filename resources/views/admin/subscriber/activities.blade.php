@@ -281,7 +281,7 @@ if (!empty($oNPSs)) {
                                                         <td>
 
                                                             <div class="media-left">
-                                                                <div class=""><a href="<?php echo base_url() ?>admin/modules/emails/setupAutiomation/<?php echo $oAutomation->id; ?>" target="_blank"><?php echo $oAutomation->title; ?></a></div>
+                                                                <div class=""><a href="{{ base_url() }}admin/modules/emails/setupAutiomation/<?php echo $oAutomation->id; ?>" target="_blank"><?php echo $oAutomation->title; ?></a></div>
                                                             </div>
                                                         </td>
                                                         <td><div class="text-semibold"><?php echo date('F d, Y', strtotime($oAutomation->created)); ?></div><div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oAutomation->created)) . ' (' . timeAgo($oAutomation->created) . ')'; ?></div></td>
@@ -328,7 +328,7 @@ foreach ($oAutomations as $oAutomation):
                                                         <td>
 
                                                             <div class="media-left">
-                                                                <div class=""><a href="<?php echo base_url() ?>admin/modules/emails/setupAutiomation/<?php echo $oAutomation->id; ?>" target="_blank"><?php echo $oAutomation->title; ?></a></div>
+                                                                <div class=""><a href="{{ base_url() }}admin/modules/emails/setupAutiomation/<?php echo $oAutomation->id; ?>" target="_blank"><?php echo $oAutomation->title; ?></a></div>
                                                             </div>
                                                         </td>
                                                         <td><div class="text-semibold"><?php echo date('F d, Y', strtotime($oAutomation->created)); ?></div><div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oAutomation->created)) . ' (' . timeAgo($oAutomation->created) . ')'; ?></div></td>
@@ -373,7 +373,7 @@ foreach ($oReferrals as $oReferral):
                                                     <td>
 
                                                         <div class="media-left">
-                                                            <div class=""><a href="<?php echo base_url() ?>admin/modules/referral/setup/<?php echo $oReferral->id; ?>" target="_blank"><?php echo $oReferral->title; ?></a></div>
+                                                            <div class=""><a href="{{ base_url() }}admin/modules/referral/setup/<?php echo $oReferral->id; ?>" target="_blank"><?php echo $oReferral->title; ?></a></div>
                                                         </div>
                                                     </td>
                                                     <td><div class="text-semibold"><?php echo date('F d, Y', strtotime($oReferral->created)); ?></div><div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oReferral->created)) . ' (' . timeAgo($oReferral->created) . ')'; ?></div></td>
@@ -419,7 +419,7 @@ foreach ($oNPSs as $oNPS):
                                                     <td>
 
                                                         <div class="media-left">
-                                                            <div class=""><a href="<?php echo base_url() ?>admin/modules/nps/setup/<?php echo $oNPS->id; ?>" target="_blank"><?php echo $oNPS->title; ?></a></div>
+                                                            <div class=""><a href="{{ base_url() }}admin/modules/nps/setup/<?php echo $oNPS->id; ?>" target="_blank"><?php echo $oNPS->title; ?></a></div>
                                                         </div>
                                                     </td>
                                                     <td><?php echo $oNPS->platform; ?></td>

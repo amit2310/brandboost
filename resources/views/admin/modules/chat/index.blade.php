@@ -215,7 +215,7 @@
 											<td>
 												<div class="media-left media-middle"> <a class="icons square" href="javascript:void(0);"><i class="icon-checkmark3 txt_blue"></i></a> </div>
 												<div class="media-left">
-                                                    <div class="pt-5"><a class="text-default text-semibold" href="<?php echo base_url() ?>admin/modules/chat/setup/<?php echo $oProgram->id; ?>"><?php echo $oProgram->title; ?></a></div>
+                                                    <div class="pt-5"><a class="text-default text-semibold" href="{{ base_url() }}admin/modules/chat/setup/<?php echo $oProgram->id; ?>"><?php echo $oProgram->title; ?></a></div>
                                                     <div class="text-muted text-size-small"><?php //echo (ucfirst($oProgram->platform)) ? ucfirst($oProgram->platform) : 'NA'; ?></div>
 												</div>
 												
@@ -365,7 +365,7 @@
 											<td>
 												<div class="media-left media-middle"> <a class="icons square" href="javascript:void(0);"><i class="icon-checkmark3 txt_blue"></i></a> </div>
 												<div class="media-left">
-                                                    <div class="pt-5"><a class="text-default text-semibold" href="<?php echo base_url() ?>admin/modules/chat/setup/<?php echo $oProgram->id; ?>"><?php echo $oProgram->title; ?></a></div>
+                                                    <div class="pt-5"><a class="text-default text-semibold" href="{{ base_url() }}admin/modules/chat/setup/<?php echo $oProgram->id; ?>"><?php echo $oProgram->title; ?></a></div>
                                                     <div class="text-muted text-size-small"><?php //echo (ucfirst($oProgram->platform)) ? ucfirst($oProgram->platform) : 'NA'; ?></div>
 												</div>
 												
@@ -444,7 +444,7 @@
 					
 					<div class="modal-footer">
 						<input type="hidden" name="chat_id" id="hidchatid" value="" />
-						{{ csrf_field() }}
+						@csrf
 						<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary">Continue</button>
 					</div>
@@ -473,7 +473,7 @@
 					</div>
 					
 					<div class="modal-footer">
-						{{ csrf_field() }}
+						@csrf
 						<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary">Create</button>
 					</div>

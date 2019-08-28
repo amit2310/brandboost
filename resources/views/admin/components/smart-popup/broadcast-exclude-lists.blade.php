@@ -89,7 +89,7 @@ foreach ($oLists as $key => $value) {
                                             <a href="#" class="dropdown_close">X</a>
 
                                             <li><a href="javascript:void(0);" list_id="<?php echo $oList->id; ?>" class="importModuleContact" data-modulename="list" data-moduleaccountid="<?php echo $oList->id; ?>" data-redirect="<?php echo base_url(); ?>admin/broadcast/edit/<?php echo $oList->id; ?>"><i class="icon-arrow-down16"></i> Import contacts</a> </li>
-                                            <li><a href="<?php echo base_url() ?>admin/subscriber/exportSubscriberCSV?module_name=list&module_account_id=<?php echo $oList->id; ?>" list_id="<?php echo $oList->id; ?>" class="exportContact" data-modulename="list" data-moduleaccountid="<?php echo $oList->id; ?>"><i class="icon-arrow-up16"></i> Export data</a> </li>
+                                            <li><a href="{{ base_url() }}admin/subscriber/exportSubscriberCSV?module_name=list&module_account_id=<?php echo $oList->id; ?>" list_id="<?php echo $oList->id; ?>" class="exportContact" data-modulename="list" data-moduleaccountid="<?php echo $oList->id; ?>"><i class="icon-arrow-up16"></i> Export data</a> </li>
                                             <li><a href="javascript:void(0);"><i class="icon-stats-growth2"></i> Create report</a> </li>
                                             <li><a href="javascript:void(0);" list_id="<?php echo $oList->id; ?>" class="deletelist"><i class="icon-bin"></i> Delete</a> </li>
                                         </ul>

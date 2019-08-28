@@ -134,7 +134,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
             <button data-toggle="modal" data-target="#importCSV" type="button" class="btn bl_cust_btn btn-default" style="margin-left:12px;"><i class="icon-make-group position-left"></i> IMPORT PEOPLE </button> 
 
-            <form method="post" action="<?php echo base_url() ?>admin/modules/nps/exportCSV" enctype="multipart/form-data" style="float:right; margin-left:15px;">
+            <form method="post" action="{{ base_url() }}admin/modules/nps/exportCSV" enctype="multipart/form-data" style="float:right; margin-left:15px;">
                 <input type="hidden" name="nps_hash_id" id="nps_hash_id" value="<?php echo $oNPS->hashcode; ?>">
                 <button type="submit" title="Export" class="btn bl_cust_btn btn-default" id="exportButton"><i class="icon-make-group position-left"></i> EXPORT PEOPLE </button>
             </form>

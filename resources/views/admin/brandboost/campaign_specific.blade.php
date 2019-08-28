@@ -31,7 +31,7 @@ if (!empty($aBrandbosts)) {
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3">
-                <h3><img src="<?php echo base_url() ?>assets/images/onsite_icons.png"> On Site Review Campaigns</h3>
+                <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Review Campaigns</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <!-- <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Active Campaigns</a></li>
                     <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li> -->
@@ -718,7 +718,7 @@ if (!empty($aBrandbosts)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmAddOnsiteBrandboost" id="frmAddOnsiteBrandboost" action="javascript:void();">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add On Site Review Campaign</h5>

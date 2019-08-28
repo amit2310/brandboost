@@ -70,7 +70,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 	  <div class="row">
 	  <!--=============Headings & Tabs menu==============-->
 		<div class="col-md-7">
-		  <h3><img src="<?php echo base_url() ?>assets/images/onsite_icons.png"> On Site Campaign: <?php echo ucfirst($brandboostData->brand_title); ?></h3>
+		  <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Campaign: <?php echo ucfirst($brandboostData->brand_title); ?></h3>
 		  <ul class="nav nav-tabs nav-tabs-bottom">
             <li class="<?php echo $camp; ?>"><a href="#right-icon-tab11" class="tabChange" tabName="Campaign Preferences" data-toggle="tab">Preferences</a></li>
             <li class="<?php echo $emailWorkflow; ?>"><a href="#right-icon-tab3" class="tabChange" tabName="Email Workflow" data-toggle="tab">Email Workflow</a></li>
@@ -100,13 +100,13 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
         <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn onSiteCampaignStatus" status="1"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
 
-        <a class="btn light_btn ml10 reviewShow <?php echo $reviewClass; ?>" href="<?php echo base_url() ?>admin/brandboost/addreview/<?php echo $brandboostID; ?>"><i class="icon-plus3"></i><span> &nbsp;  Add Manual Review</span> </a>
+        <a class="btn light_btn ml10 reviewShow <?php echo $reviewClass; ?>" href="{{ base_url() }}admin/brandboost/addreview/<?php echo $brandboostID; ?>"><i class="icon-plus3"></i><span> &nbsp;  Add Manual Review</span> </a>
 
 
 
     
 	<!--	<button type="button" class="btn light_btn importModuleContact contactShow <?php echo $clientClass; ?>" data-modulename="<?php echo $moduleName;?>" data-moduleaccountid="<?php echo $moduleUnitID ?>" data-redirect="<?php echo base_url();?>admin/brandboost/onsite_setup/<?php echo $moduleUnitID; ?>"><i class="icon-arrow-up16"></i><span> &nbsp;  Import Contacts</span> </button>
-		<a class="btn light_btn ml10 contactShow <?php echo $clientClass; ?>" href="<?php echo base_url() ?>admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName;?>&module_account_id=<?php echo $moduleUnitID; ?>"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contacts</span> </a>
+		<a class="btn light_btn ml10 contactShow <?php echo $clientClass; ?>" href="{{ base_url() }}admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName;?>&module_account_id=<?php echo $moduleUnitID; ?>"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contacts</span> </a>
         <button type="button" class="btn dark_btn dropdown-toggle ml10 addModuleContact" data-modulename="<?php echo $moduleName;?>" data-moduleaccountid="<?php echo $moduleUnitID ?>"><i class="icon-plus3"></i><span> &nbsp;  Add Contact</span> </button>  
 	-->	  
 		</div>

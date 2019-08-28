@@ -163,7 +163,7 @@
                         </div>
                     </div>
                 </div>
-                <a  class="btn dark_btn dropdown-toggle ml20" href="<?php echo base_url() ?>admin/questions/add"><i class="icon-plus3"></i><span> &nbsp;  New question</span> </a>
+                <a  class="btn dark_btn dropdown-toggle ml20" href="{{ base_url() }}admin/questions/add"><i class="icon-plus3"></i><span> &nbsp;  New question</span> </a>
 
 
             </div>
@@ -433,7 +433,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmQuestionTagListModal" id="frmQuestionTagListModal" action="javascript:void();">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Apply Tags</h5>

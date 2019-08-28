@@ -302,7 +302,7 @@ if (!empty($oAutomationLists)) {
                 <div class="row">
                     <div class="col-md-12 txt_inp_grp">
                         <form method="post" name="wf_eventTimeUpdate" class="wf_eventTimeUpdate" action="javascript:void(0);">
-                            {{ csrf_field() }}
+                            @csrf
                             <div class="actionpanel mt20" style="float:left; width: 100%;">
                                 <div class="panel-body">
                                     <h6 style="margin:8px 0px 20px 0!important; font-size: 13px; float: left; text-align: right;"> Trigger workflow when the following conditions are met:  </h6>

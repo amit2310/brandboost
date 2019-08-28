@@ -341,7 +341,7 @@ list($canRead, $canWrite) = fetchPermissions('Onsite Campaign');
   <div id="importCSV" class="modal modalpopup fade" role="dialog">
   <div class="modal-dialog">
   <div class="modal-content">
-  <form method="post" class="form-horizontal" action="<?php echo base_url() ?>admin/brandboost/importcsv" enctype="multipart/form-data">
+  <form method="post" class="form-horizontal" action="{{ base_url() }}admin/brandboost/importcsv" enctype="multipart/form-data">
   <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal">&times;</button>
   <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Import Subscriber CSV</h5>

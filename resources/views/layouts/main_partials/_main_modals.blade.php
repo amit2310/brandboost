@@ -1148,7 +1148,7 @@ foreach ($countriesList as $countryName) {
 <div id="importCentralCSV" class="modal modalpopup fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" class="form-horizontal" action="<?php echo base_url() ?>admin/subscriber/importSubscriberCSV" enctype="multipart/form-data">
+            <form method="post" class="form-horizontal" action="{{ base_url() }}admin/subscriber/importSubscriberCSV" enctype="multipart/form-data">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Import Contacts CSV</h5>
@@ -1329,7 +1329,7 @@ foreach ($countriesList as $countryName) {
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="frmShortListModal">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close BoxClose" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="{{ URL::asset('assets/images/menu_icons/Chat_Color.svg') }}"> Add new shortcut &nbsp; <!--<i class="icon-info22 fsize12 txt_grey"></i>--></h5>

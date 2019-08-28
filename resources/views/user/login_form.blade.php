@@ -45,7 +45,7 @@
 				<div class="p50 pl50 pr50">
 
 					<form action="{{ url('user/login') }}" method="post">
-						{{ csrf_field() }}
+						@csrf
 							
 						<div class="form_box">
 							<div class="inner bbot">

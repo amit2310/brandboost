@@ -41,7 +41,7 @@ $aHelpful2 = array();
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3">
-                <h3><img src="<?php echo base_url() ?>assets/images/onsite_icons.png"> Onsite Widgets</h3>
+                <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> Onsite Widgets</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Active Widgets</a></li>
                     <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li>

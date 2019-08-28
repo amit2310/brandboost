@@ -154,7 +154,7 @@
 
                 <button data-toggle="modal" data-target="#importCSV" type="button" class="btn dark_btn ml20"><i class="icon-make-group position-left"></i> Import Contact</button>
 
-                <form method="post" action="<?php echo base_url() ?>admin/contacts/exportCSV" enctype="multipart/form-data" style="float:right;">
+                <form method="post" action="{{ base_url() }}admin/contacts/exportCSV" enctype="multipart/form-data" style="float:right;">
                     <input type="hidden" name="list_id" id="list_id" value="<?php echo $list_id; ?>">
                     <button type="submit" title="Export" class="btn dark_btn ml20" id="exportButton"><i class="icon-make-group position-left"></i> Export Contact</button>
                 </form>
@@ -832,7 +832,7 @@
 <div id="importCSV" class="modal modalpopup fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" class="form-horizontal" action="<?php echo base_url() ?>admin/contacts/importcsv" enctype="multipart/form-data">
+            <form method="post" class="form-horizontal" action="{{ base_url() }}admin/contacts/importcsv" enctype="multipart/form-data">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Import Subscriber CSV</h5>

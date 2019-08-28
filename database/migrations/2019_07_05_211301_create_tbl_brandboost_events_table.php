@@ -15,7 +15,7 @@ class CreateTblBrandboostEventsTable extends Migration {
 		Schema::create('tbl_brandboost_events', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('brandboost_id')->index('automation_id');
+			$table->integer('brandboost_id')->index('brandboost_id');
 			$table->string('event_type');
 			$table->text('data', 65535);
 			$table->integer('previous_event_id')->nullable();

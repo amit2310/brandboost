@@ -155,7 +155,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
           <!-- <button type="button" class="btn light_btn bl_cust_btn btn-default importModuleContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $oNPS->hashcode; ?>" data-redirect="<?php echo base_url(); ?>admin/modules/nps/setup/<?php echo $oNPS->id; ?>"><i class="icon-arrow-up16"></i><span> &nbsp;  Import Contact</span> </button> 
 
-          <a  href="<?php echo base_url() ?>admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName; ?>&module_account_id=<?php echo $oNPS->hashcode; ?>" title="Export" class="btn light_btn ml10 bl_cust_btn btn-default"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contact</span> </a>
+          <a  href="{{ base_url() }}admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName; ?>&module_account_id=<?php echo $oNPS->hashcode; ?>" title="Export" class="btn light_btn ml10 bl_cust_btn btn-default"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contact</span> </a>
 
           <button type="button" class="btn dark_btn dropdown-toggle ml10 bl_cust_btn btn-default addModuleContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $oNPS->hashcode; ?>"><i class="icon-plus3 txt_green"></i><span> &nbsp;  Invite Contact</span> </button> -->
 
@@ -206,7 +206,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 <div class="panel-body">
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
-                        {{ csrf_field() }}
+                        @csrf
                         <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
                         <input type="hidden" name="bbaid" value="<?php echo $oNPS->hashcode; ?>" />
                         <div class="col-md-12">
@@ -265,7 +265,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             <div class="modal-body">
                 <div class="panel-body">
                     <form name="frmInviteBulkCustomer" id="frmInviteBulkCustomer"  method="post" action="" enctype="multipart/form-data" >
-                        {{ csrf_field() }}
+                        @csrf
                         <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
                         <input type="hidden" name="bbaid" value="<?php echo $oNPS->hashcode; ?>" />
 

@@ -418,7 +418,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmAddReferralWidget" id="frmAddReferralWidget" action="javascript:void();">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add Referral Widget</h5>

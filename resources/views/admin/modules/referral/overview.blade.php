@@ -249,7 +249,7 @@
 
 										<td><div class="media-left media-middle"> <img width="24" src="<?php echo base_url(); ?>assets/images/referal_ov_icon.png"/> </div>
 											<div class="media-left">
-												<div class=""><a href="<?php echo base_url() ?>admin/modules/referral/setup/<?php echo $oProgram->id; ?>" class="text-default text-semibold bbot"><?php echo $oProgram->title; ?></a></div>
+												<div class=""><a href="{{ base_url() }}admin/modules/referral/setup/<?php echo $oProgram->id; ?>" class="text-default text-semibold bbot"><?php echo $oProgram->title; ?></a></div>
 											</div></td>
 
 

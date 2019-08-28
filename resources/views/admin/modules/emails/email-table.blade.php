@@ -98,7 +98,7 @@
                                                     <td>
                                                         <div class="media-left media-middle"> <a class="icons br5" href="#"><i class="icon-envelop txt_sblue"></i></a> </div>
                                                         <div class="media-left">
-                                                            <div class=""><a href="<?php echo base_url() ?>admin/modules/emails/setupAutomation/<?php echo $oAutomation->id; ?>" class="text-default text-semibold"><?php echo setStringLimit($oAutomation->title, 20); ?></a></div>
+                                                            <div class=""><a href="{{ base_url() }}admin/modules/emails/setupAutomation/<?php echo $oAutomation->id; ?>" class="text-default text-semibold"><?php echo setStringLimit($oAutomation->title, 20); ?></a></div>
                                                             <div class="text-muted text-size-small">
                                                                 <?php echo setStringLimit($oAutomation->description, 25); ?>
                                                             </div>
