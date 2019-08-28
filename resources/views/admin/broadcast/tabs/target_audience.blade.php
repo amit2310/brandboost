@@ -60,12 +60,7 @@ if (!empty($oAutomationLists)) {
                     </div>
                 </label>
             </div>
-
-
         </div>
-
-
-
     </div>
     @include('admin.components.smart-popup.smart-broadcast-audience-widget')
     
@@ -139,8 +134,7 @@ if (!empty($oAutomationLists)) {
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?>
-                        <?php //echo validation_errors(); ?></div>
+                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?></div>
 
                     <div class="col-md-12">
 
@@ -196,8 +190,7 @@ if (!empty($oAutomationLists)) {
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?>
-                        <?php //echo validation_errors(); ?></div>
+                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?></div>
 
                     <div class="form-group">
                         <label class="control-label col-lg-3">Import CSV</label>
@@ -217,13 +210,11 @@ if (!empty($oAutomationLists)) {
 </div>
 
 <script type="text/javascript">
-
     $(document).ready(function () {
-
-
         $(".selectAudience").click(function () {
             resetAudienceContainers();
         });
+		
 
         function resetAudienceContainers() {
             $("#audienceSelectionContainer").show();
@@ -232,6 +223,7 @@ if (!empty($oAutomationLists)) {
             $("#contactSection").hide();
             $(".contactSection").hide();
         }
+		
 
         $(".choose_audience").change(function () {
             var audience_type = $(this).val();
@@ -247,24 +239,13 @@ if (!empty($oAutomationLists)) {
                         resetAudienceContainers();
                         $("#audienceSelectionContainer").hide();
                         $(".contactSection").show();
-                        /*if (audience_type == 'lists') {
-                            $("#listSection").show();
-                        } else if (audience_type == 'tags') {
-                            $("#tagSection").show();
-                        } else if (audience_type == 'contacts') {
-                            $("#contactSection").show();
-                        } else {
-
-                        }*/
-
                     } else if (data.status == 'error') {
                         $('.overlaynew').hide();
-
                     }
-
                 }
             });
         });
+		
 
         $(".importContact").click(function () {
             var listID = $(this).attr("list_id");
@@ -303,12 +284,12 @@ if (!empty($oAutomationLists)) {
                             $('.overlaynew').hide();
 
                         }
-
                     }
                 });
             }
             return false;
         });
+		
 
         $('#frmaddListModal').on('submit', function () {
             $('.overlaynew').show();
@@ -361,35 +342,31 @@ if (!empty($oAutomationLists)) {
                 }
             });
         });
+		
 
         $(document).on('click', '.deleteSegment', function () {
             var elem = $(this);
 
             deleteConfirmationPopup(
-                    "This record will deleted immediately.<br>You can't undo this action.",
-                    function () {
-                        $('.overlaynew').show();
-                        var segmentID = $(elem).attr('segment_id');
-                        $.ajax({
-                            url: '<?php echo base_url('admin/broadcast/deleteSegment'); ?>',
-                            type: "POST",
-                            data: {_token: '{{csrf_token()}}', segmentID: segmentID},
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    $('.overlaynew').hide();
-                                    window.location.href = window.location.href;
-                                }
-                            }
-                        });
-                    });
-
+				"This record will deleted immediately.<br>You can't undo this action.",
+				function () {
+					$('.overlaynew').show();
+					var segmentID = $(elem).attr('segment_id');
+					$.ajax({
+						url: '<?php echo base_url('admin/broadcast/deleteSegment'); ?>',
+						type: "POST",
+						data: {_token: '{{csrf_token()}}', segmentID: segmentID},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = window.location.href;
+							}
+						}
+					});
+				});
         });
 
-
-        
-        
-        
 
         $(document).on("click", ".editlist", function () {
             var listID = $(this).attr('list_id');
@@ -410,6 +387,7 @@ if (!empty($oAutomationLists)) {
                 }
             });
         });
+		
 
         $('#frmeditlistModel').on('submit', function () {
             $('.overlaynew').show();
@@ -459,6 +437,7 @@ if (!empty($oAutomationLists)) {
                 }
             });
         });
+		
 
         $(document).on('click', '.deletelist', function () {
             var elem = $(this);
@@ -473,27 +452,25 @@ if (!empty($oAutomationLists)) {
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            var listID = $(elem).attr('list_id');
-                            $.ajax({
-                                url: '<?php echo base_url('admin/lists/deleteLists'); ?>',
-                                type: "POST",
-                                data: {_token: '{{csrf_token()}}', list_id: listID},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = window.location.href;
-                                    }
-                                }
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					var listID = $(elem).attr('list_id');
+					$.ajax({
+						url: '<?php echo base_url('admin/lists/deleteLists'); ?>',
+						type: "POST",
+						data: {_token: '{{csrf_token()}}', list_id: listID},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = window.location.href;
+							}
+						}
+					});
+				}
+			});
         });
-
-
     });
 
 </script>

@@ -5,8 +5,7 @@ if (!empty($oCampaignContacts)) {
         $aSelectedContacts[] = $oRec->subscriber_id;
     }
 }
-?>
-<?php
+
 $iActiveCount = $iArchiveCount = 0;
 if (!empty($oBroadcastSubscriber)) {
     foreach ($oBroadcastSubscriber as $oCount) {
@@ -36,7 +35,6 @@ if (!empty($oBroadcastSubscriber)) {
                         </div></div>
                     <div class="col-md-6"><div class="p20 pl10 taggroup" id="excludePropertyButtons">
                             <?php echo $sExcludButtons; ?>
-
                         </div></div>
                 </div>
             </div>
@@ -49,15 +47,9 @@ if (!empty($oBroadcastSubscriber)) {
             <div class="panel-heading">
                 <span class="pull-left">
                     <h6 class="panel-title"><span id="totalBroadcastAudience"><?php echo $iActiveCount; ?></span> Contacts</h6>
-
                 </span>
-                <!--                <div class="heading_links pull-left">
-                                    <button type="button" class="btn btn-xs btn_white_table bkg_blue ml20" style="background:#4285f4!important;background-color:#4285f4!important;color:#ffffff!important;"><span id="totalContactCount"><?php echo count($aSelectedContacts); ?></span> contact added</button>
-                
-                                </div>-->
 
                 <div class="heading-elements">
-
                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                         <input class="form-control input-sm cus_search" tableID="broadcastAudience"  placeholder="Search by name" type="text">
                         <div class="form-control-feedback">
@@ -73,16 +65,13 @@ if (!empty($oBroadcastSubscriber)) {
                         <a href="javascript:void(0);" class="editDataListContact"><i class="icon-pencil"></i></a>
                         <a href="javascript:void(0);" style="display: none;" class="custom_action_box_con deleteBulkBoradcastAudience" broadcast_id="<?php echo $oBroadcast->broadcast_id;?>"><i class="icon-trash position-left"></i></a> 
                     </div>
-                    <!--                    <a href="javascript:void(0);" class="btn dark_btn bkg_blue selectAudience" style="margin-top:-8px;">Change Selection</a>-->
-
                 </div>
             </div>
 
             <div class="panel-body p0 bkg_white">
                 <div id="liveBroadcastAudience">
                 @include('admin.broadcast.partials.broadcast_audience', ['recordSource' => 'contact-selection'])
-                </div>    
-
+                </div>
             </div>
         </div>
     </div>
