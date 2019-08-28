@@ -273,7 +273,7 @@ if ($uriSegment == 'offsite') {
                     @endphp
                     
                         @if ($web_chat == 1 || $sms_chat == 1)
-                           @include('admin.chat_app', [getAllGlobalSubscribers' => $getAllGlobalSubscribers, 'isLoggedInTeam' => $loginMember]) 
+                           @include('admin.chat_app', ['getAllGlobalSubscribers' => $getAllGlobalSubscribers, 'isLoggedInTeam' => $loginMember]) 
                         @endif
                         
                         @include('admin.sidebar.team_sidebar')
