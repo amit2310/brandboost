@@ -157,6 +157,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/modules/emails/changeAutomationStatus', 'Admin\Modules\Emails@changeAutomationStatus');
     Route::post('admin/modules/emails/deleteAutomation', 'Admin\Modules\Emails@deleteAutomation');
     Route::post('admin/modules/emails/multipalDeleteAutomation', 'Admin\Modules\Emails@multipalDeleteAutomation');
+    Route::post('admin/modules/emails/multipalArchiveAutomation', 'Admin\Modules\Emails@multipalArchiveAutomation');
 
 
 //Onsite and Offsite Modules
