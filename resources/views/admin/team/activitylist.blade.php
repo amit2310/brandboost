@@ -240,7 +240,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmEditTeamMember" name="frmEditTeamMember">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Edit Team Member</h5>
@@ -312,7 +312,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmaddTeamMemberModal" id="frmaddTeamMemberModal" action="javascript:void();">
-                {{ csrf_field() }}
+                @csrf
                     <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add Team Member</h5>

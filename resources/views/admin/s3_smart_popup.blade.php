@@ -23,7 +23,7 @@
                     <h5 style="padding-left: 75px;" class="panel-title">Configure Storage</h5>
 
                     <form method="post" id="frmEditSystemTemplate" action="javascript:void();">
-                        {{ csrf_field() }}
+                        @csrf
                 <div class="col-md-12 pr0 brig" style="height: calc(100% - 56px);">
                     <div class="p20">
                      <div class="">

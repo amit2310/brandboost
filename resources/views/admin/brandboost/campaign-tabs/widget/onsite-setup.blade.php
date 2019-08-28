@@ -919,7 +919,7 @@
 						<div class="tab-pane" id="Design">
                             <div class="profile_headings fsize12 fw500">Widget appearance <a class="pull-right plus_icon" href="javascript:void(0);"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
                             <form method="post" name="frmSubmitWidgetDesign" id="frmSubmitWidgetDesign" action="javascript:void(0);"  enctype="multipart/form-data">
-								{{ csrf_field() }}
+								@csrf
                                 <input type="hidden" name="edit_widgetId" id="edit_widgetId" value=<?php echo $widgetID; ?> />
 								
                                 <div class="p20">							
@@ -1231,7 +1231,7 @@
 						<div class="tab-pane" id="Campaign">
 							<div class="profile_headings txt_upper p20 fsize11 fw600">Select Campaign <a class="pull-right plus_icon" href="javascript:void(0);"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
 							<form method="post" name="frmSubmitCampaign" id="frmSubmitCampaign" action="javascript:void(0);">
-								{{ csrf_field() }}
+								@csrf
 								<div class="p20">
 									<div class="row">
 										<div class="col-md-12">

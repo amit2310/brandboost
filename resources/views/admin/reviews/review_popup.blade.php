@@ -166,7 +166,7 @@ if (!empty($media_url)) {
                 </div>
                
                 <form name="frmSaveNote" id="frmSaveNote" method="post">
-                    {{ csrf_field() }}
+                    @csrf
                     <input type="hidden" name="reviewtime" value="<?php echo date("M d, Y h:i A", strtotime($oReview->created)); ?> (<?php echo timeAgo($oReview->created); ?>)" />
                     <input type="hidden" name="reviewid" value="<?php echo $oReview->id; ?>" />
                     <input type="hidden" name="bid" value="<?php echo $oReview->campaign_id; ?>" />

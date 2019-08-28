@@ -45,7 +45,7 @@
     </div>
     <div class="select_section" style="max-width: 100%;">
         <form name="frmSettings" method="post" id="frmSettings">
-			{{ csrf_field() }}
+			@csrf
             <div class="row">
                 <div class="col-md-3">
                     <div class="panel panel-flat">
@@ -225,7 +225,7 @@
                 <div class="panel-body">
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
-						{{ csrf_field() }}
+						@csrf
                         <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
                         <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
                         <div class="col-md-12">

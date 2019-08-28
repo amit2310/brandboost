@@ -282,7 +282,7 @@ if (!empty($oPrograms)) {
 
                                                 <td><div class="media-left media-middle"> <img width="24" src="<?php echo base_url(); ?>assets/images/referal_ov_icon.png"/> </div>
                                                     <div class="media-left">
-                                                        <div class=""><a href="<?php echo base_url() ?>admin/modules/referral/setup/<?php echo $oProgram->id; ?>" class="text-default text-semibold bbot"><?php echo $oProgram->title; ?></a></div>
+                                                        <div class=""><a href="{{ base_url() }}admin/modules/referral/setup/<?php echo $oProgram->id; ?>" class="text-default text-semibold bbot"><?php echo $oProgram->title; ?></a></div>
                                                     </div></td>
 
 
@@ -582,7 +582,7 @@ if (!empty($oPrograms)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmeditReferralModel" name="frmeditReferralModel">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i>&nbsp;&nbsp;Edit Referral Program</h5>
@@ -612,7 +612,7 @@ if (!empty($oPrograms)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="frmaddReferralModal" id="frmaddReferralModal" action="javascript:void();">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i>&nbsp;&nbsp;Add New Referral Program</h5>

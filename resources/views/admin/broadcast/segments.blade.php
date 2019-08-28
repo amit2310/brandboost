@@ -542,7 +542,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" name="addBroadcastSegment" id="addBroadcastSegment" action="javascript:void();">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Add Segment &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
@@ -659,7 +659,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmeditSegmentModel" name="frmeditSegmentModel">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="/assets/images/menu_icons/List_Color.svg"/> Edit Segment &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
@@ -1140,7 +1140,7 @@
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url() ?>admin/broadcast/edit/' + data.broadcastId;
+                        window.location.href = '{{ base_url() }}admin/broadcast/edit/' + data.broadcastId;
                     } else {
                         $('.overlaynew').hide();
                         alertMessage('Error: Some thing wrong!');

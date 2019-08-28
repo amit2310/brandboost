@@ -166,7 +166,7 @@ if (!empty($oSubscriber)) {
 
                 <button data-toggle="modal" data-target="#importCSV" type="button" class="btn dark_btn ml20 importModuleContact" data-modulename="list" data-moduleaccountid="<?php echo $list_id; ?>" data-redirect="admin/lists/getListContacts?list_id=<?php echo $list_id; ?>"><i class="icon-make-group position-left"></i> Import Contact</button>
 
-                <form method="get" action="<?php echo base_url() ?>admin/subscriber/exportSubscriberCSV" enctype="multipart/form-data" style="float:right;">
+                <form method="get" action="{{ base_url() }}admin/subscriber/exportSubscriberCSV" enctype="multipart/form-data" style="float:right;">
                     <input type="hidden" name="module_name" id="module_name" value="list">
                     <input type="hidden" name="module_account_id" value="<?php echo $list_id; ?>">
                     <button type="submit" title="Export" class="btn dark_btn ml20" id="exportButton"><i class="icon-make-group position-left"></i> Export Contact</button>

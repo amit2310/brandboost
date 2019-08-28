@@ -53,7 +53,7 @@ if ($activeTab == 'Design Template Edit') {
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-5">
-                <h3 class="mt30"><img src="<?php echo base_url() ?>assets/images/menu_icons/<?php echo (strtolower($oBroadcast->campaign_type) == 'sms') ? 'Sms_Light.svg' : 'Email_Light.svg'; ?>"><?php echo $oBroadcast->title; ?></h3>
+                <h3 class="mt30"><img src="{{ base_url() }}assets/images/menu_icons/<?php echo (strtolower($oBroadcast->campaign_type) == 'sms') ? 'Sms_Light.svg' : 'Email_Light.svg'; ?>"><?php echo $oBroadcast->title; ?></h3>
 
             </div>
             <!--=============Button Area Right Side==============-->

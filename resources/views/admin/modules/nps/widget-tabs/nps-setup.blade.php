@@ -9,7 +9,7 @@
             <div class="tab-pane">
                 <div class="profile_headings txt_upper p20 fsize11 fw600">Select NPS Survey <a class="pull-right plus_icon" href="javascript:void(0);"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
                 <form method="post" name="frmSubmitNPSWidget" id="frmSubmitNPSWidget" action="javascript:void(0);">
-                    {{ csrf_field() }}
+                    @csrf
                     <div class="p20">
                         <div class="row">
                             <div class="col-md-12">

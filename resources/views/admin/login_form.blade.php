@@ -59,7 +59,7 @@
                             <div class="panel login-form2">
                                 <div class="form_center"> 
                                     <form action="{{ url('/admin/login') }}" method="post">
-                                        {{ csrf_field() }}
+                                        @csrf
                                         <div class="pt30 pb20 bbot">
                                             <div class="text-center">
                                                 <img width="72" src="{{ URL::asset('assets/images/bb_icon.png') }}" class="br100 br_s mb-5">

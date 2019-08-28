@@ -387,7 +387,7 @@
     <div style="max-width: 440px;ss" class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal">
-			{{ csrf_field() }}
+			@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Create new campaign</h5>
@@ -428,7 +428,7 @@
     <div style="max-width: 440px;ss" class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Create new campaign</h5>
@@ -474,7 +474,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateReview" action="javascript:void();">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Review</h5>
@@ -559,7 +559,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateVideoReview" action="javascript:void();">
-            	{{ csrf_field() }}
+            	@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Review</h5>
@@ -668,7 +668,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmReviewTagListModal" id="frmReviewTagListModal" action="javascript:void();">
-				{{ csrf_field() }}
+				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Apply Tags</h5>

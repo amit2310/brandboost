@@ -34,7 +34,7 @@ error_reporting(0);
                 if($viewstats == true){
                     ?>
                      <div class="col-md-3">
-                        <h3><img src="<?php echo base_url() ?>assets/images/onsite_icons.png"> On Site Overview</h3>
+                        <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Overview</h3>
                         <ul class="nav nav-tabs nav-tabs-bottom">
                             <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="1|0|2">Active Campaigns</a></li>
                             <li><a style="javascript:void();" class="filterByColumn" fil="3">Archive</a></li>
@@ -45,7 +45,7 @@ error_reporting(0);
                 else {
                     ?>
                      <div class="col-md-3">
-                        <h3><img src="<?php echo base_url() ?>assets/images/onsite_icons.png"> On Site Review Campaigns</h3>
+                        <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Review Campaigns</h3>
                         <ul class="nav nav-tabs nav-tabs-bottom">
                             <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="1|0|2">Active Campaigns</a></li>
                             <li><a style="javascript:void();" class="filterByColumn" fil="3">Archive</a></li>

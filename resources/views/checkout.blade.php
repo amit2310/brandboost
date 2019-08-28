@@ -56,7 +56,7 @@
                                 <div id="newCreditCardForm">
                                     <div class="alert-danger" style="margin-bottom:10px;"></div>
                                     <form action="<?php echo base_url('/payment/charging'); ?>"  method="post" id="frmSubmit">
-                                        {{ csrf_field() }}
+                                        @csrf
                                         <input type="hidden" name="plan_id" class="plan_id" value="<?php echo $plan_id; ?>" />
                                         <input type="hidden" name="isUniqueAccount" id="isUniqueAccount" value="false" />
 <!--                                        <input type="hidden" name="contact_id" value="<?php echo Session::get('user_user_id'); ?>" />-->

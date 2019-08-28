@@ -30,7 +30,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
-                <h3><img src="<?php echo base_url() ?>assets/images/onsite_icons.png"> On Site Widget Setup</h3>
+                <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Widget Setup</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <li class="<?php echo $rs; ?>"><a href="#right-icon-tab1" data-toggle="tab">Review Widgets</a></li>
                     <li class="<?php echo $setupClass; ?>"><a href="#right-icon-tab2" data-toggle="tab">Configuration</a></li>

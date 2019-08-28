@@ -460,7 +460,7 @@ $brandboostID = '';
 <script type="text/javascript">
     function calltoReviewPage(brandboostID)
     {
-         window.location.href='<?php echo base_url() ?>admin/brandboost/addreview/'+brandboostID;
+         window.location.href='{{ base_url() }}admin/brandboost/addreview/'+brandboostID;
     }
 	
 	$(document).ready(function () {

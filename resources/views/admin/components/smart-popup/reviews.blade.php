@@ -334,7 +334,7 @@ $mediaArray = unserialize($reviewData->media_url);
         </div>
 
         <form method="post" class="form-horizontal" id="addSmartComment" action="javascript:void();">
-            {{ csrf_field() }}
+            @csrf
             <div class="smartStickyFooter">
                 <div class="box_heading bbot ">
                     <p class="fsize14 fw500 m0">Add Comment</p>
@@ -384,7 +384,7 @@ $mediaArray = unserialize($reviewData->media_url);
 
 
         <form method="post" class="form-horizontal" id="frmSmartSaveNote">
-            {{ csrf_field() }}
+            @csrf
             <div class="smartStickyFooter">
                 <div class="box_heading bbot ">
                     <p class="fsize14 fw500 m0">Add Notes</p>

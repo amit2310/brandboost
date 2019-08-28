@@ -174,7 +174,7 @@ a.filterByColumn.active{
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form method="post" id="frmeditSurveyModel" name="frmeditSurveyModel">
-                                    {{ csrf_field() }}
+                                    @csrf
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">×</button>
 						<h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Edit Survey</h5>
@@ -204,7 +204,7 @@ a.filterByColumn.active{
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form method="post" name="frmaddNPSModal" id="frmaddNPSModal" action="javascript:void();">
-				{{ csrf_field() }}	
+				@csrf	
                                     <div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h5 class="modal-title">Add New Survey</h5>
@@ -232,7 +232,7 @@ a.filterByColumn.active{
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
                             <form method="post" name="frmNPSTagListModal" id="frmNPSTagListModal" action="javascript:void();">
-				{{ csrf_field() }}	
+				@csrf	
                                     <div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h5 class="modal-title">Apply Tags</h5>

@@ -1,5 +1,7 @@
-@php
-
+<?php
+//defined('BASEPATH')OR exit('No direct script access allowed');
+//$CI = & get_instance();
+//$CI->load->model("admin/Team_model", "mmT");
 $aUInfo = getLoggedUser();
 userRoleAdmin($aUInfo->user_role);
 $additionalPriceToPay="";
@@ -97,7 +99,7 @@ if ($uriSegment == 'offsite') {
     
 }
 
-@endphp
+?>
 <!DOCTYPE html>
 <html>
 
@@ -115,7 +117,7 @@ if ($uriSegment == 'offsite') {
 
     </head>
     
-    @php
+    <?php
     $automation_type  = isset($automation_type) ? $automation_type : '';
 
     if (\Request::segment(2) == 'modules' && \Request::segment(3) == 'nps') {
@@ -231,10 +233,10 @@ if ($uriSegment == 'offsite') {
     } else {
         $pageColor = '';
     }
-    @endphp
+    ?>
 
     
-    <body class="{{ $pageColor }}_body">
+    <body class="<?php echo $pageColor; ?>_body">
         <span class="userStillLogged">
             <div class="overlaynew" style="position: fixed;width: 100%;height: 100%;background-color: rgba(0, 0, 0, 0.4); z-index: 99999;text-align: center; display:none;">
                 <div style="top: 47%;position:relative;">
@@ -259,9 +261,9 @@ if ($uriSegment == 'offsite') {
                 <div class="page-content">
                     <!-- Main content -->
 
-                    @if ($isLoggedInTeam) 
+                    <?php
                     
-                    @php
+                    if ($isLoggedInTeam) {
                         $hasweb_access = getMemberchatpermission($loginMember);
                         $web_chat="";
                         $sms_chat="";
@@ -270,29 +272,33 @@ if ($uriSegment == 'offsite') {
                         $web_chat = $hasweb_access->web_chat;
                         $sms_chat = $hasweb_access->sms_chat;
                         }
-                    @endphp
-                    
-                        @if ($web_chat == 1 || $sms_chat == 1)
-                           @include('admin.chat_app', [getAllGlobalSubscribers' => $getAllGlobalSubscribers, 'isLoggedInTeam' => $loginMember]) 
-                        @endif
-                        
-                        @include('admin.sidebar.team_sidebar')
-                         
-                    @elseif ($userRole == '1') 
-                        
-                        {{-- @include('admin.chat_app', ['getAllGlobalSubscribers' => $getAllGlobalSubscribers]) --}}
+                        if ($web_chat == 1 || $sms_chat == 1) {
+                            ?>
+                           @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers, 'isLoggedInTeam' => $loginMember)) 
+                            <?php
+                        }
+                        ?>
+                         @include('admin.sidebar.team_sidebar')
+                         <?php
+                    } else if ($userRole == '1') {
+                        ?>
+                        {{-- @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers)) --}}
                         @include('admin.sidebar.admin_sidebar')
-                        
-                    @elseif ($userRole == '2') 
-                        {{-- @include('admin.chat_app', ['getAllGlobalSubscribers' => $getAllGlobalSubscribers]) --}}
+                        <?php
+                    } else if ($userRole == '2') {
+                        ?>
+                        {{-- @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers)) --}}
                         @include('admin.sidebar.user_sidebar')
-                        
-                    @elseif ($userRole == '3')
-                        @include('admin.chat_app', ['getAllGlobalSubscribers' => $getAllGlobalSubscribers])
+                        <?php 
+                    } else if ($userRole == '3') {
+                        ?>
+                        @include('admin.chat_app', array('getAllGlobalSubscribers' => $getAllGlobalSubscribers))
                         @include('admin.sidebar.client_sidebar')
-                    @endif
+                       <?php 
+                    } 
+                    ?>
 
-                    <div class="content-wrapper {{ $pageColor }}">
+                    <div class="content-wrapper <?php echo $pageColor; ?>">
                         @yield('contents')
                     </div>
                     <!-- /main content -->

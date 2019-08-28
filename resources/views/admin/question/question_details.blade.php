@@ -580,7 +580,7 @@ $questionDescription = $oQuestion->question;
 </div>
 
 <div id="editNoteSection" class="modal fade" style="z-index:99999;">
-    {{ csrf_field() }}
+    @csrf
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateNote" action="javascript:void();">
@@ -635,7 +635,7 @@ $questionDescription = $oQuestion->question;
 </div>
 
 <div id="editNoteSection" class="modal fade" style="z-index:99999;">
-    {{ csrf_field() }}
+    @csrf
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateNote" action="javascript:void();">

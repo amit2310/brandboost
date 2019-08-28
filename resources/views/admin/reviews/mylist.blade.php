@@ -389,7 +389,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div id="editVideoReview" class="modal modalpopup fade" role="dialog">
     <div class="modal-dialog">
         <form method="post" id="updateVideoReview" action="javascript:void();">
-            {{ csrf_field() }}
+            @csrf
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>

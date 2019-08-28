@@ -318,7 +318,7 @@ $oCountries = getAllCountries();
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="frmSaveCCDetails" method="post" class="form-horizontal">
-                {{ csrf_field() }}	
+                @csrf	
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/images/edit_email_icon.png"> Add/Change Credit Card Details <span>Store your card card details on file directly at merchant site, highly secure and reliable</span></h5>

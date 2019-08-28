@@ -73,7 +73,7 @@
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
                         <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
                         <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
-						{{ csrf_field() }}
+						@csrf
                         <div class="col-md-12">
 							
                             <div class="form-group">

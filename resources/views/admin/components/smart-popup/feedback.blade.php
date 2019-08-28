@@ -309,7 +309,7 @@ $feedbackDescription = $result->feedback;
 
 
             <form method="post" class="form-horizontal" id="frmSmartSaveNote">
-                {{ csrf_field() }}
+                @csrf
                 <div class="smartStickyFooter">
                     <div class="box_heading bbot ">
                         <p class="fsize14 fw500 m0">Add Notes</p>

@@ -1032,7 +1032,7 @@
 												<div class="comment_form">
 													
 													<form method="POST" class="cmtformsubmit" action="javascript:void(0)" revId="<?php echo $aReview['id']; ?>" style="position:relative;">
-														{{ csrf_field() }}
+														@csrf
 														<div class="form-group">
 															<div class="">
 																<input name="cmtname" placeholder="Your Name" class="form-control cmtname" required="" type="text">

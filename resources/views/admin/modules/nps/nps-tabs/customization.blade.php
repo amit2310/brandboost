@@ -23,7 +23,7 @@
                         <div class="profile_headings">Components <a class="pull-right plus_icon txt_green" href="#"><i class="icon-arrow-down12 txt_green"></i></a></div>
 
                         <form method="post" name="frmSubmit" id="frmSubmit" action="javascript:void(0);"  enctype="multipart/form-data">
-                            {{ csrf_field() }}
+                            @csrf
                             <div class="interactions configurations p25">
                                 <ul class="chatwidgetsettings">
                                     <?php if ($oNPS->platform != 'sms'): ?>
@@ -116,7 +116,7 @@
                                         <label class="control-label">Upload Brand/Product Logo:</label>
                                         <label class="display-block">
                                             <input type="hidden" name="brand_logo" id="logo_img" value="<?php echo (!empty($oNPS->brand_logo)) ? $oNPS->brand_logo : ''; ?>">
-                                            {{ csrf_field() }}
+                                            @csrf
                                             <div class="img_vid_upload_small">
                                                 <div class="dropzone" id="myDropzone_logo_img"></div>
                                             </div>

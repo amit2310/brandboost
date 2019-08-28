@@ -520,7 +520,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateComment" action="javascript:void();">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Comment</h5>
@@ -548,7 +548,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateNote" action="javascript:void();">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Comment</h5>
@@ -584,7 +584,7 @@
                 <div class="row">
                     
                     <form method="post" class="form-horizontal" id="frmSaveNote" action="javascript:void();">
-                        {{ csrf_field() }}
+                        @csrf
                         <div class="col-md-12 mb-15">
                             <textarea class="form-control" name="notes" style="padding: 20px; height: 75px;" placeholder="Add Note"></textarea>
                         </div>
@@ -605,7 +605,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmReviewTagListModal" id="frmReviewTagListModal" action="javascript:void();">
-                {{ csrf_field() }}
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Apply Tags</h5>

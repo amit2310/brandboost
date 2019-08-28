@@ -126,7 +126,7 @@
 
                                 <button type="button" class="btn light_btn bl_cust_btn btn-default importModuleContact" data-modulename="<?php echo $moduleName;?>" data-moduleaccountid="<?php echo $oReferral->hashcode; ?>" data-redirect="<?php echo base_url();?>admin/modules/referral/setup/<?php echo $oReferral->id; ?>"><i class="icon-arrow-up16"></i><span> &nbsp;  Import Advocates</span> </button> 
 
-                                <a  href="<?php echo base_url() ?>admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName;?>&module_account_id=<?php echo $oReferral->hashcode; ?>" title="Export" class="btn light_btn ml10 bl_cust_btn btn-default"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Advocates</span> </a>
+                                <a  href="{{ base_url() }}admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName;?>&module_account_id=<?php echo $oReferral->hashcode; ?>" title="Export" class="btn light_btn ml10 bl_cust_btn btn-default"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Advocates</span> </a>
 
                                  <button class="btn dark_btn dropdown-toggle ml10 addModuleContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $oReferral->hashcode; ?>" ><i class="icon-plus3 txt_green"></i><span> &nbsp; Invite Advocates </button>
 
@@ -534,7 +534,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
             <button type="button" class="btn bl_cust_btn btn-default importModuleContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $oReferral->hashcode; ?>" data-redirect="<?php echo base_url(); ?>admin/modules/referral/setup/<?php echo $oReferral->id; ?>" style="margin-left:12px;"><i class="icon-make-group position-left"></i> ADVOCATES IMPORT</button> 
 
-            <a title="Export" class="btn bl_cust_btn btn-default" id="exportButton" href="<?php echo base_url() ?>admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName; ?>&module_account_id=<?php echo $oReferral->hashcode; ?>"><i class="icon-make-group position-left"></i> ADVOCATE EXPORT</a>
+            <a title="Export" class="btn bl_cust_btn btn-default" id="exportButton" href="{{ base_url() }}admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName; ?>&module_account_id=<?php echo $oReferral->hashcode; ?>"><i class="icon-make-group position-left"></i> ADVOCATE EXPORT</a>
 
 
 

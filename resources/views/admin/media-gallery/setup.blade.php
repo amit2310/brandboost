@@ -305,7 +305,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 				  <div class="tab-content"> 
 				  <div class="tab-pane active" id="Configurations">
 					<form method="post" name="frmWidgetConfSubmit" id="frmWidgetConfSubmit" action="javascript:void(0);"  enctype="multipart/form-data">
-					{{ csrf_field() }}
+					@csrf
 					<div class="profile_headings">DESIGN <a class="pull-right plus_icon" href="#"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
 					<div class="configurations p20">
 						<div class="form-group">
@@ -518,7 +518,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 					</div>
 				  </div>
 				  <div class="p20 btop">
-					{{ csrf_field() }}
+					@csrf
 					<input name="editGalleryId" type="hidden" value="<?php echo $galleryData->id; ?>">
 					<button type="submit" class="btn dark_btn bkg_dred w100 h52 saveWidgetDesign" >Save</button>
 				  </div>
@@ -529,7 +529,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 				  <div class="tab-pane" id="Reviews">
 					  <div class="profile_headings txt_upper p20 fsize11 fw600">Select Reviews <a class="pull-right plus_icon" href="javascript:void(0);"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
 					  <form method="post" name="frmWidgetReviewsSelect" id="frmWidgetReviewsSelect" action="javascript:void(0);">
-						{{ csrf_field() }}
+						@csrf
 						<div class="p20" style="height:790px; overflow-x:hidden;">
 							<div class="row">
 								<div class="col-md-12">

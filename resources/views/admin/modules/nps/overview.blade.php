@@ -411,7 +411,7 @@
 
                                             <td><div class="media-left media-middle"> <img width="24" src="<?php echo base_url(); ?>assets/images/sms_icon_24.png"/> </div>
                                                 <div class="media-left">
-                                                    <div class=""><a href="<?php echo base_url() ?>admin/modules/nps/setup/<?php echo $oProgram->id; ?>" class="text-default text-semibold bbot"><?php echo $oProgram->title; ?></a></div>
+                                                    <div class=""><a href="{{ base_url() }}admin/modules/nps/setup/<?php echo $oProgram->id; ?>" class="text-default text-semibold bbot"><?php echo $oProgram->title; ?></a></div>
                                                 </div>
                                             </td>
                                             <td><div style="width: 117px;" class="media-left text-right pr40 brig"><a href="#" class="text-default text-semibold">1293</a></div></td>
