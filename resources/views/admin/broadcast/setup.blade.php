@@ -89,11 +89,6 @@ if ($activeTab == 'Design Template Edit') {
     @include('admin.broadcast.tabs.campaign_summary', ['activeSummary' => $activeSummary, 'broadcast_id' => $broadcast_id])
     @include('admin.broadcast.tabs.report', ['activeReport' => $activeReport, 'broadcast_id' => $broadcast_id])
 
-
-
-
-
-
     <div class="row">
         <div class="col-md-6">
 
@@ -113,19 +108,8 @@ if ($activeTab == 'Design Template Edit') {
                 <button class="btn btn_white bkg_white h52 txt_dark minw_160 shadow br5 mr10 launchCampaign" id="saveDraftBroadcast" broadcastId = "<?php echo $broadcast_id; ?>" status="draft" current_state="<?php echo $activeTab; ?>" <?php if ($activeTab != 'Campaign Summary'): ?>style="display:none;"<?php endif; ?>>Save as Draft</button> 
                 <button class="btn dark_btn <?php echo (strtolower($oBroadcast->campaign_type) == 'email') ? 'bkg_sblue2' : 'bkg_green'; ?> h52 minw_160 launchCampaign" id="runBroadcast" broadcastId = "<?php echo $broadcast_id; ?>" status="active" <?php if ($activeTab != 'Campaign Summary'): ?>style="display:none;"<?php endif; ?>>Run Broadcast <i class="icon-arrow-right13 ml10"></i></button>
             <?php endif; ?>
-
-            <!--<?php if ($bExpired == false): ?>
-                        <button  class="btn dark_btn <?php echo (strtolower($oBroadcast->campaign_type) == 'email') ? 'bkg_sblue2' : 'bkg_green'; ?> h52 minw_160 continueButton" id="continueButton" tab="<?php echo $nextButtonTab; ?>">Next step <i class="icon-arrow-right13 ml20"></i></button>
-            <?php endif; ?>-->
-
-
         </div>
     </div>
-
-
-
-
-
 </div>
 
 <div id="AddNewListToBroadcast" class="modal fade">
@@ -342,6 +326,7 @@ if ($activeTab == 'Design Template Edit') {
                 }
             });
         });
+		
 
         $(document).on("click", "#wfBtnPopupSendTestSMS", function () {
             var number = $("#wfTextPopupSendTestSMS").val();
@@ -362,6 +347,7 @@ if ($activeTab == 'Design Template Edit') {
                 }
             });
         });
+		
 
         $(document).on("click", ".previewDefaultTemplate", function (e) {
             var templateID = $(this).attr('template_id');
@@ -381,12 +367,9 @@ if ($activeTab == 'Design Template Edit') {
                             $("#workflow_template_stripo_modal").modal();
                         } else if (data.status == 'error') {
                             $('.overlaynew').hide();
-
                         }
-
                     }
                 });
-
             }
         });
 
@@ -409,12 +392,12 @@ if ($activeTab == 'Design Template Edit') {
                             $('.overlaynew').hide();
 
                         }
-
                     }
                 });
-
             }
         });
+		
+		
         $('#frmaddNewListModal').on('submit', function () {
             $('.overlaynew').show();
             var formdata = $("#frmaddNewListModal").serialize();
@@ -427,7 +410,6 @@ if ($activeTab == 'Design Template Edit') {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
                         $('#Createnewlist').modal('hide');
-                        //alertMessageAndRedirect(data.msg, window.location.href);
                         window.location.href = '<?php echo base_url(); ?>admin/lists/getListContacts?list_id=' + data.list_id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
@@ -458,15 +440,13 @@ if ($activeTab == 'Design Template Edit') {
             var elem = (this);
             var tab = $(this).attr('tab');
             if (tab == 'Settings') {
-<?php if (strtolower($oBroadcast->campaign_type) == 'email'): ?>
-                    //                $('#loadstripotemplate').contents().find('#saveStripoChanges').trigger("click");
-                    $('#loadstripotemplate').contents().find('#saveStripoChangesSilent').trigger("click");
-<?php endif; ?>
+				<?php if (strtolower($oBroadcast->campaign_type) == 'email'): ?>
+					$('#loadstripotemplate').contents().find('#saveStripoChangesSilent').trigger("click");
+				<?php endif; ?>
 
-<?php if (strtolower($oBroadcast->campaign_type) == 'sms'): ?>
-                    $("#saveStripoChanges").trigger("click");
-<?php endif; ?>
-
+				<?php if (strtolower($oBroadcast->campaign_type) == 'sms'): ?>
+					$("#saveStripoChanges").trigger("click");
+				<?php endif; ?>
             }
             //$('.overlaynew').show();
             $.ajax({
@@ -485,22 +465,13 @@ if ($activeTab == 'Design Template Edit') {
                             showNextTab(elem, tab);
 
                             if (tab == 'Settings') {
-                                /*setTimeout(function () {
-                                 window.location.href = '';
-                                 
-                                 }, 2000);*/
+                               
                             } else {
-                                //window.location.href = '';
+								
                             }
-
                         }
-
-
                     } else if (data.status == 'error') {
-                        //$('.overlaynew').hide();
-
                     }
-
                 }
             });
             return false;
@@ -547,7 +518,6 @@ if ($activeTab == 'Design Template Edit') {
             $("#" + selector).show();
             if (currentTab == 'Select List') {
                 $("#backButton").hide();
-
             }
             $("#continueButton").attr('tab', nextTab);
             $("#backButton").attr('tab', backTab);
@@ -557,8 +527,6 @@ if ($activeTab == 'Design Template Edit') {
                 $("#showBroadcastPreview").show();
                 $("#continueButton").hide();
             }
-
-
         }
 
         $(document).on("click", "#backButton, #continueButton", function () {
@@ -576,7 +544,6 @@ if ($activeTab == 'Design Template Edit') {
                     displayMessagePopup('error', 'Template required', 'Please choose any template!'); //javascript notification msg (edited) 
                     return false;
                 }
-
                 $("a.continueButton:contains('Email Editor')").trigger("click");
                 $("a.continueButton:contains('SMS Editor')").trigger("click");
             } else if (tab == 'Settings') {
@@ -584,7 +551,6 @@ if ($activeTab == 'Design Template Edit') {
             } else if (tab == 'Campaign Summary') {
                 $("a.continueButton:contains('Summary')").trigger("click");
             }
-
         });
 
         $(document).on('click', '.broadcastBackButton', function () {
@@ -599,12 +565,9 @@ if ($activeTab == 'Design Template Edit') {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
                         window.location.href = '';
-
                     } else if (data.status == 'error') {
                         $('.overlaynew').hide();
-
                     }
-
                 }
             });
             return false;
@@ -682,18 +645,13 @@ if ($activeTab == 'Design Template Edit') {
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        //$('.overlaynew').hide();
-                        //window.location.href = '';
-
                     } else if (data.status == 'error') {
-                        //$('.overlaynew').hide();
-
                     }
-
                 }
             });
             return false;
         });
+		
 
         function loadImportedProperties(broadcastId) {
             $('.overlaynew').show();
@@ -710,6 +668,7 @@ if ($activeTab == 'Design Template Edit') {
                 }
             });
         }
+		
 
         function loadExcludedProperties(broadcastId) {
             $('.overlaynew').show();
@@ -726,6 +685,7 @@ if ($activeTab == 'Design Template Edit') {
                 }
             });
         }
+		
 
         $(document).on("click", ".deleteAudience", function () {
             var subscriber_id = $(this).attr('subscriber_id');
@@ -741,26 +701,26 @@ if ($activeTab == 'Design Template Edit') {
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: '<?php echo base_url('admin/broadcast/deleteBroadcastAudience'); ?>',
-                                type: "POST",
-                                data: {_token: '{{csrf_token()}}', subscriber_id: subscriber_id, broadcast_id: broadcast_id},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        displayMessagePopup('success', '', 'Selected contact deleted from this campaign');
-                                        //window.location.href = '';
-                                        loadImportedProperties('<?php echo $oBroadcast->broadcast_id; ?>');
-                                        loadBroadcastAudience('<?php echo $oBroadcast->broadcast_id; ?>', 'broadcastAudience2');
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					$.ajax({
+						url: '<?php echo base_url('admin/broadcast/deleteBroadcastAudience'); ?>',
+						type: "POST",
+						data: {_token: '{{csrf_token()}}', subscriber_id: subscriber_id, broadcast_id: broadcast_id},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								displayMessagePopup('success', '', 'Selected contact deleted from this campaign');
+								//window.location.href = '';
+								loadImportedProperties('<?php echo $oBroadcast->broadcast_id; ?>');
+								loadBroadcastAudience('<?php echo $oBroadcast->broadcast_id; ?>', 'broadcastAudience2');
 
-                                    }
-                                }
-                            });
-                        }
-                    });
+							}
+						}
+					});
+				}
+			});
         });
 
 
@@ -784,27 +744,27 @@ if ($activeTab == 'Design Template Edit') {
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                $('.overlaynew').show();
-                                console.log(val);
-                                $.ajax({
-                                    url: '<?php echo base_url('admin/broadcast/deleteBroadcastBulkAudience'); ?>',
-                                    type: "POST",
-                                    data: {_token: '{{csrf_token()}}', audience_array: val, broadcast_id: broadcast_id},
-                                    dataType: "json",
-                                    success: function (data) {
-                                        if (data.status == 'success') {
-                                            $('.overlaynew').hide();
-                                            displayMessagePopup('success', '', 'Selected contact deleted from this campaign');
-                                            //window.location.href = window.location.href;
-                                            loadImportedProperties('<?php echo $oBroadcast->broadcast_id; ?>');
-                                            loadBroadcastAudience('<?php echo $oBroadcast->broadcast_id; ?>', 'broadcastAudience2');
-                                        }
-                                    }
-                                });
-                            }
-                        });
+				function (isConfirm) {
+					if (isConfirm) {
+						$('.overlaynew').show();
+						console.log(val);
+						$.ajax({
+							url: '<?php echo base_url('admin/broadcast/deleteBroadcastBulkAudience'); ?>',
+							type: "POST",
+							data: {_token: '{{csrf_token()}}', audience_array: val, broadcast_id: broadcast_id},
+							dataType: "json",
+							success: function (data) {
+								if (data.status == 'success') {
+									$('.overlaynew').hide();
+									displayMessagePopup('success', '', 'Selected contact deleted from this campaign');
+									//window.location.href = window.location.href;
+									loadImportedProperties('<?php echo $oBroadcast->broadcast_id; ?>');
+									loadBroadcastAudience('<?php echo $oBroadcast->broadcast_id; ?>', 'broadcastAudience2');
+								}
+							}
+						});
+					}
+				});
             }
         });
 
@@ -834,12 +794,11 @@ if ($activeTab == 'Design Template Edit') {
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                     }
-
                 }
             });
             return false;
-
         });
+		
 
         $(document).on('change', '.updateList', function () {
             $('.overlaynew').show();
@@ -871,6 +830,7 @@ if ($activeTab == 'Design Template Edit') {
             });
             return false;
         });
+		
 
         $(document).on('change', ".addSegmentToCampaign", function () {
             $('.overlaynew').show();
@@ -895,12 +855,11 @@ if ($activeTab == 'Design Template Edit') {
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                     }
-
                 }
             });
             return false;
-
         });
+		
 
         $(document).on('change', ".addTagToCampaign", function () {
             $('.overlaynew').show();
@@ -925,11 +884,9 @@ if ($activeTab == 'Design Template Edit') {
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                     }
-
                 }
             });
             return false;
-
         });
 
         $(document).on('change', ".addToExcludeCampaign", function () {
@@ -956,11 +913,9 @@ if ($activeTab == 'Design Template Edit') {
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                     }
-
                 }
             });
             return false;
-
         });
 
 
@@ -989,11 +944,11 @@ if ($activeTab == 'Design Template Edit') {
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                     }
-
                 }
             });
             return false;
         });
+		
 
         $(document).on('change', ".addExcludeSegmentToCampaign", function () {
             $('.overlaynew').show();
@@ -1018,11 +973,9 @@ if ($activeTab == 'Design Template Edit') {
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                     }
-
                 }
             });
             return false;
-
         });
 
 
@@ -1049,13 +1002,10 @@ if ($activeTab == 'Design Template Edit') {
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                     }
-
                 }
             });
             return false;
-
         });
-
 
 
         function loadBroadcastAudience(broadcastId, tblid) {
@@ -1083,8 +1033,6 @@ if ($activeTab == 'Design Template Edit') {
                 }
             });
         }
-
-
     });
 
 </script>

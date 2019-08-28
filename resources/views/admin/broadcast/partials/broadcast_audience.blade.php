@@ -18,19 +18,20 @@ if ($recordSource == 'contact-selection') {
 <?php if (count($oBroadcastSubscriber) > 0) { ?>
     <table class="table" id="<?php echo $tableID; ?>">
         <thead>
-
             <tr>
                 <th style="display: none;"></th>
                 <th style="display: none;"></th>
                 <th class="nosort"><div class="brig pr10 editActionContact" style="display:none;">
-                        <label class="custmo_checkbox pull-left" ><input type="checkbox" name="checkAll[]" broadcast_id="<?php echo !empty($oBroadcast) ? $oBroadcast->broadcast_id : ''; ?>" class="control-primary" id="checkAllContact" ><span class="custmo_checkmark"></span></label>
+                    <label class="custmo_checkbox pull-left" >
+						<input type="checkbox" name="checkAll[]" broadcast_id="<?php echo !empty($oBroadcast) ? $oBroadcast->broadcast_id : ''; ?>" class="control-primary" id="checkAllContact" >
+						<span class="custmo_checkmark"></span>
+					</label>
                     </div> &nbsp;&nbsp;<i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i>Name</th>
                 <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_email_small.png"></i>Email</th>
                 <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Phone</th>
                 <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_social.png"></i>Social</th>
                 <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_id.png"></i>Tags</th>
                 <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Created</th>
-
             </tr>
         </thead>
         <tbody>
@@ -120,7 +121,6 @@ if ($recordSource == 'contact-selection') {
                                 <div class=""><a href="#" class="text-default text-semibold"><?php echo date('d M', strtotime($oContact->created)); ?></a> </div>
                             </div>
                         </td>
-
                     </tr>
                     <?php
                 }
@@ -134,9 +134,13 @@ if ($recordSource == 'contact-selection') {
     <table class="table datatable-basic">
         <thead>
             <tr>
-                <th class="nosort"><div class="brig pr10 editActionContact" style="display:none;">
-                        <label class="custmo_checkbox pull-left" ><input type="checkbox" name="checkAll[]" broadcast_id="<?php echo $oBroadcast->broadcast_id; ?>" class="control-primary" id="checkAllContact" ><span class="custmo_checkmark"></span></label>
-                    </div> &nbsp;&nbsp;<i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i>Name</th>
+                <th class="nosort">
+					<div class="brig pr10 editActionContact" style="display:none;">
+						<label class="custmo_checkbox pull-left" >
+							<input type="checkbox" name="checkAll[]" broadcast_id="<?php echo $oBroadcast->broadcast_id; ?>" class="control-primary" id="checkAllContact" >
+							<span class="custmo_checkmark"></span>
+						</label>
+					</div> &nbsp;&nbsp;<i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i>Name</th>
                 <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_email_small.png"></i>Email</th>
                 <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Phone</th>
                 <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_social.png"></i>Social</th>
@@ -165,12 +169,10 @@ if ($recordSource == 'contact-selection') {
         <td style="display: none"></td>
     </tbody>
     </table>
-    <?php }
-?>
+    <?php 
+	}
 
-
-<?php
-if ($recordSource == 'contact-selection') {
+	if ($recordSource == 'contact-selection') {
     ?>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -185,15 +187,6 @@ if ($recordSource == 'contact-selection') {
         $(document).ready(function () {
             var tableId = 'editBroadcastAudience';
             var tableBase = custom_data_table(tableId);
-        });
-    </script>
-    <?php
-} else {
-    ?>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            /*var tableId = 'broadcastAudience2';
-             var tableBase = custom_data_table(tableId);*/
         });
     </script>
     <?php

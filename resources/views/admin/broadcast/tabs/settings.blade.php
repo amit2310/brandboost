@@ -7,8 +7,7 @@ if(empty($broadcastSettings)){
     $broadcastSettings->link_tracking = 0;
     $broadcastSettings->reply_tracking = 0;
     $broadcastSettings->google_analytics= 0;
-    $broadcastSettings->campaign_archives= 0;
-    
+    $broadcastSettings->campaign_archives= 0; 
 }
 ?>
 <style>
@@ -29,7 +28,7 @@ if(empty($broadcastSettings)){
     .picker__month, .picker__year{font-size: 14px!important; color: #425784!important; font-weight: 400!important;}
     .picker__holder{border-radius: 4px!important;  box-shadow: 0 3px 5px 0 rgba(1, 21, 64, 0.04), 0 10px 20px 0 rgba(1, 21, 64, 0.02)!important;  border: solid 1px #ebeff6!important; padding-top: 0px;}
     .picker__box{padding: 5px 10px!important;}
-    /*    .picker__header {	text-align: center;	position: relative;	font-size: 15px;line-height: 1;	padding-top: 15px;	padding-bottom: 15px; border-bottom: 1px solid #eee; border-top: 1px solid #eee;  margin: 110px -10px 0; }*/
+   
     .picker__header {	text-align: center;	position: relative;	font-size: 15px;line-height: 1;	padding-top: 15px;	padding-bottom: 15px; border-bottom: 1px solid #eee; border-top: 1px solid #eee;  margin: 10px -10px 0; }
     .picker__footer{border-top: 1px solid #eee; padding-top: 10px; padding-bottom: 5px; margin: 0 -10px; display: none;}
     .picker__table{margin: 10px 0!important;}
@@ -45,9 +44,6 @@ if(empty($broadcastSettings)){
     .selecttime.bkg_white {
         background: url(http://dev.brandboost.io/assets/images/icon_calender3_blue.png) 95% 16px no-repeat #fff!important;
     }
-
-
-
 </style>
 <?php
 $colorClass = (strtolower($oBroadcast->campaign_type) == 'email') ? 'sblue' : 'green';
@@ -60,11 +56,7 @@ $deliveryTime = $aDeliveryParam->delivery_time;
 ?>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/pickers/pickadate/picker.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/pickers/pickadate/picker.date.js"></script>
-
 <script src="<?php echo base_url(); ?>assets/js/plugins/pickers/anytime.min.js"></script>
-<!--<script src="<?php echo base_url(); ?>assets/js/hr.timePicker.min.js"></script>
-<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/hr-timePicker.min.css">-->
 <style>
     ul{list-style-type:none;margin:0;padding:0}.main-wrapper{max-width:768px;margin:150px auto}
 </style>
@@ -128,14 +120,8 @@ $deliveryTime = $aDeliveryParam->delivery_time;
                                     </div>
                                 </div>
                             <?php endif; ?>
-
-
                         </div>
-
-
                     </div>
-
-
                 </div>
             </div>
 
@@ -169,29 +155,14 @@ $deliveryTime = $aDeliveryParam->delivery_time;
                     </div>
 
                     <div class="bbot p30" id="spt_container" <?php if ($oBroadcast->sending_method == 'normal'): ?> style="display:none;"<?php endif; ?>>
-
                         <div class="row">
-
-
                             <div class="form-group">
                                 <label>Test Name</label>
                                 <input class="form-control h52 updateSplitTest" st_id="<?php echo $oVariations[0]->splitID; ?>" type="text" value="<?php echo $oVariations[0]->test_name; ?>" name="test_name" placeholder="Split test demo">
                             </div>
-
-
                         </div>
-
-
-
-
                         @include('admin.broadcast.partials.add_split_form')
-
-
-
-
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -257,8 +228,6 @@ $deliveryTime = $aDeliveryParam->delivery_time;
                             </ul>
                         </div>
                     </div>
-
-
                 </div>
             </div>
             <div class="panel panel-flat">
@@ -273,7 +242,6 @@ $deliveryTime = $aDeliveryParam->delivery_time;
 
                         </div>
                     </div>
-
                 </div>
                 <div class="panel-body p0 bkg_white">
                     <div class="bbot p20 pl30 pr30">
@@ -294,34 +262,12 @@ $deliveryTime = $aDeliveryParam->delivery_time;
                         </div>    
                         <div class="position-relative displayanytimePicker">
                             <input type="text" id="anytime-time" name="delivery_time" value="<?php echo (!empty($deliveryTime)) ? $deliveryTime : '9 PM'; ?>" class="form-control h52 bkg_white selecttime updateSchedule" placeholder="9 PM">
-
                         </div>
-                        <!--                        <div>
-                                                    <div class="hr-time-picker">
-                                                        <div class="picked-time-wrapper">
-                                                            <input type="text" name="delivery_time" class="form-control h52 updateSchedule picked-time" value="<?php echo (!empty($deliveryTime)) ? $deliveryTime : '9 PM'; ?>" placeholder="9 PM">
-                                                        </div>
-                                                        <div class="pick-time-now">
-                                                            <div class="hours hr-timer">
-                                                                <div class="movable-area">
-                                                                    <ul></ul>
-                                                                </div>
-                                                            </div>
-                                                            <div class="minutes hr-timer">
-                                                                <ul></ul>
-                                                            </div>
-                                                            
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>-->
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 
 <div id="subscriberTagListsModal" class="modal fade">
@@ -365,16 +311,6 @@ $deliveryTime = $aDeliveryParam->delivery_time;
         minutes = date.getMinutes();
         $(".picked-time").val(hours + ":" + minutes);
     });
-
-    /*var tableId = 'broadcastAudience';
-    var tableBase = custom_data_table(tableId);
-
-    var tableId2 = 'editBroadcastAudience';
-    var tableBase2 = custom_data_table(tableId2);*/
-
-    /*var tableId3 = 'editBroadcastAudience';
-     var tableBase3 = custom_data_table(tableId3);*/
-    //$('table thead tr:eq(1)').hide();
 
     $(document).on("change", ".updatesettings", function () {
         var fieldName = $(this).attr('name');
@@ -426,8 +362,6 @@ $deliveryTime = $aDeliveryParam->delivery_time;
                 }
             });
         });
-
-
     });
 
     $(document).on("change", ".updateSplitTest", function () {
@@ -467,9 +401,7 @@ $deliveryTime = $aDeliveryParam->delivery_time;
             if (total > 100) {
                 $(elem).val(threshold);
                 fieldVal = threshold;
-
             }
-
         }
 
         $.ajax({
@@ -522,7 +454,6 @@ $deliveryTime = $aDeliveryParam->delivery_time;
             }
         });
         return bValidated;
-
     }
 
     $(document).on("click", "#btnAddMoreVariations", function () {
@@ -551,9 +482,6 @@ $deliveryTime = $aDeliveryParam->delivery_time;
                 }
             });
         }
-
-
-
     });
 
     $(document).on("change", ".updateSchedule", function () {
@@ -690,13 +618,6 @@ $deliveryTime = $aDeliveryParam->delivery_time;
 
     $(document).ready(function () {
         $('.pickadate').pickadate({format: 'm/d/yyyy', formatSubmit: 'm/d/yyyy'});
-
-
-        //        $(".picker__box").append('<div class="select_day"><a class="active" href="">Now</a><a class="" href="">Tomorrow</a><a class="" href="">Next week</a></div>');
-        //
-        //
-        //        $(".picker__box").append('<div class="picktime"><a class="" href="">Add time</a></div>');
-
     });
     /* ------------------------------------------------------------------------------
      *
