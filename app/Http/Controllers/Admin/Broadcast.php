@@ -748,13 +748,10 @@ class Broadcast extends Controller {
 
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-
-
         $response = array();
 
-
-        $subscriberID = strip_tags($request->subscriber_id);
-        $broadcastId = strip_tags($request->broadcast_id);
+        $subscriberID = $request->subscriber_id;
+        $broadcastId = $request->broadcast_id;
 
         $bDeleted = $mBroadcast->deleteAudienceToBraodcast($broadcastId, $subscriberID);
 

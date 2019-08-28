@@ -193,7 +193,7 @@ if (!empty($oAutomations)) {
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
                     <div class="col-lg-12">
-                        @include('admin.modules.emails.email-table')
+                        @include('admin.modules.emails.email-table', array('pageType' => 'main'))
                     </div>
                 </div>
             </div>

@@ -215,24 +215,18 @@ if (!empty($oAutomations)) {
 
             <div class="row">
                 <div class="col-md-12">
-                    @include('admin.modules.emails.email-table')
+                    @include('admin.modules.emails.email-table', array('pageType' => 'overview'))
                 </div>
             </div>
         </div>
     </div>
-
-
 
     <!-- /dashboard content -->
 
 </div>
 <!-- /content area -->
 
-
-
 <script>
-
-
     $(document).ready(function () {
 
         $('#emailsmsautomation thead tr').clone(true).appendTo('#emailsmsautomation thead');
@@ -247,9 +241,9 @@ if (!empty($oAutomations)) {
                 $('input', this).on('keyup change', function () {
                     if (tableBase.column(i).search() !== this.value) {
                         tableBase
-                                .column(i)
-                                .search(this.value, $('#colStatus').prop('checked', true))
-                                .draw();
+						.column(i)
+						.search(this.value, $('#colStatus').prop('checked', true))
+						.draw();
                     }
                 });
             }
@@ -383,19 +377,8 @@ if (!empty($oAutomations)) {
                 json2.plotOptions = plotOptions;
                 $('#semi_circle_chart2').highcharts(json2);
 
-
-
-
-
             });
-        </script>
-
-
-        <script>
-
-
-
-
+        
 
             Highcharts.chart('linechart_a', {
                 chart: {
@@ -495,13 +478,6 @@ if (!empty($oAutomations)) {
                     }
                 }
             };
-
-
-
-
-
-
-
 
             window.onload = function () {
                 var ctx = document.getElementById('canvas').getContext('2d');
