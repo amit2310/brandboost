@@ -12,7 +12,9 @@
 
 			<div class="table_action_tool">
 				<a href="javascript:void(0);"><i class="icon-calendar52"></i></a>
+				<?php if($pageType != 'overview'){ ?>
 				<a href="javascript:void(0);" class="editDataList"><i class="icon-pencil"></i></a>
+				<?php } ?>
 				<a href="javascript:void(0);" style="display: none;" id="deleteButtonEmailAutomation" class="custom_action_box"><i class="icon-trash position-left"></i></a>
 				<a href="javascript:void(0);" style="display: none;" id="archiveButtonEmailAutomation" class="custom_action_box"><i class="icon-gear position-left"></i></a>
 			</div>

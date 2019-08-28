@@ -1367,15 +1367,10 @@ class Emails extends Controller {
         exit;
     }
 
-    public function multipalArchiveAutomation() {
-
+    public function multipalArchiveAutomation(Regular $request) {
+		$mEmails = new EmailsModel();
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
-            $response = array('status' => 'error', 'msg' => 'Request header is empty');
-            echo json_encode($response);
-            exit;
-        }
+       
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
@@ -1387,7 +1382,7 @@ class Emails extends Controller {
             'status' => 'archive'
         );
 
-        $multiAutomationID = $post['multipal_automation_id'];
+        $multiAutomationID = $request->multipal_automation_id;
         foreach ($multiAutomationID as $automationID) {
             $bArchive = $mEmails->updateEmailAutomation($aData, $automationID, $userID);
             if ($bArchive == true) {
