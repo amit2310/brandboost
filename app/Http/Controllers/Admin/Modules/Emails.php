@@ -1367,7 +1367,7 @@ class Emails extends Controller {
         exit;
     }
 
-    public function multipalArchiveAutomation(Regular $request) {
+    public function multipalArchiveAutomation(Request $request) {
 		$mEmails = new EmailsModel();
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
        
@@ -1389,9 +1389,9 @@ class Emails extends Controller {
                 //Add Useractivity log
                 $aActivityData = array(
                     'user_id' => $aUser->id,
-                    'event_type' => 'manage_automation_lists',
-                    'action_name' => 'archive_automation_list',
-                    'list_id' => $listID,
+                    'event_type' => 'multiple_archive_automation_list',
+                    'action_name' => 'multiple_archive_automation_list',
+                    'list_id' => $automationID,
                     'brandboost_id' => '',
                     'campaign_id' => '',
                     'inviter_id' => '',
@@ -1401,7 +1401,7 @@ class Emails extends Controller {
                     'activity_created' => date("Y-m-d H:i:s")
                 );
                 logUserActivity($aActivityData);
-                $response = array('status' => 'success', 'msg' => "List deleted successfully!");
+                $response = array('status' => 'success', 'msg' => "List archive successfully!");
             }
         }
         echo json_encode($response);
