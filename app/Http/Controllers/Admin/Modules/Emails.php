@@ -103,7 +103,8 @@ class Emails extends Controller {
         $bActiveSubsription = UsersModel::isActiveSubscription();
         //get Automation Info
         $oAutomations = $mEmails->getEmailAutomations($userID, $id);
-        if (empty($oAutomations)) {
+		
+        if(empty($oAutomations)) {
             redirect("/admin/modules/emails");
             exit;
         }
@@ -111,7 +112,7 @@ class Emails extends Controller {
         $automationType = $oAutomations[0]->automation_type;
         //get Lists
         $oLists = $mLists->getLists($userID, '', 'active');
-
+		
         //get Automation Events
         $oEvents = $mEmails->getAutomationEvents($id);
 
@@ -130,13 +131,15 @@ class Emails extends Controller {
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>';
-        if ($automationType == 'email') {
+        
+		if ($automationType == 'email') {
             $breadcrumb .= '<li><a href="' . base_url('admin/modules/emails/') . '" class="sidebar-control hidden-xs">Email Automations </a></li><li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>';
         }
 
         if ($automationType == 'sms') {
             $breadcrumb .= '<li><a href="' . base_url('admin/modules/emails/sms') . '" class="sidebar-control hidden-xs">Sms Automations </a></li><li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>';
         }
+		
         $breadcrumb .= '<li><a data-toggle="tooltip" data-placement="bottom" title="Setup Automation" class="sidebar-control active hidden-xs ">Setup Automation</a></li>
                     </ul>';
 

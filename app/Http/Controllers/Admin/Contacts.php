@@ -382,9 +382,6 @@ class Contacts extends Controller
         } else {
             return view('admin.contacts.contact_profile', $aData);
         }
-
-
-        
     }
 
     public function mycontacts() {
@@ -419,7 +416,6 @@ class Contacts extends Controller
         );
 
         return view('admin.subscriber.list-subscribers', $aData);
-
     }
 
     public function mycontacts_old() {
