@@ -506,74 +506,72 @@ class Broadcast extends Controller {
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
-
         $userID = $aUser->id;
 
-        if (!empty($request)) {
-            $fieldName = strip_tags($request->fieldName);
-            $fieldValue = strip_tags($request->fieldVal);
-            $eventId = strip_tags($request->event_id);
-            $campaignId = strip_tags($request->campaign_id);
-            $broadcastID = strip_tags($request->broadcast_id);
-            $aBroadcastData = array();
-            $aBroadcastCampaignData = array();
-            $aBroadcastSettingsData = array();
+		$fieldName = $request->fieldName;
+		$fieldValue = $request->fieldVal;
+		$eventId = $request->event_id;
+		$campaignId = $request->campaign_id;
+		$broadcastID = $request->broadcast_id;
+		$aBroadcastData = array();
+		$aBroadcastCampaignData = array();
+		$aBroadcastSettingsData = array();
 
-            if ($broadcastID > 0) {
-                if (in_array($fieldName, array('title', 'sending_method'))) {
-                    $aBroadcastData[$fieldName] = $fieldValue;
-                }
+		if ($broadcastID > 0) {
+			if (in_array($fieldName, array('title', 'sending_method'))) {
+				$aBroadcastData[$fieldName] = $fieldValue;
+			}
 
-                if (!empty($aBroadcastData)) {
-                    $bUpdated = $mBroadcast->updateBroadcast($aBroadcastData, $broadcastID);
-                }
-            }
+			if (!empty($aBroadcastData)) {
+				$bUpdated = $mBroadcast->updateBroadcast($aBroadcastData, $broadcastID);
+			}
+		}
 
-            if ($eventId > 0) {
-                if (in_array($fieldName, array('subject', 'from_name', 'from_email', 'reply_to', 'from_number'))) {
-                    $aBroadcastCampaignData[$fieldName] = $fieldValue;
-                }
+		if ($eventId > 0) {
+			if (in_array($fieldName, array('subject', 'from_name', 'from_email', 'reply_to', 'from_number'))) {
+				$aBroadcastCampaignData[$fieldName] = $fieldValue;
+			}
 
-                if (!empty($aBroadcastCampaignData)) {
-                    $bUpdated = $mBroadcast->updateBroadcastCampaign($aBroadcastCampaignData, $eventId);
-                    $moduleName = 'broadcast';
-                    if ($fieldName == 'subject') {
+			if (!empty($aBroadcastCampaignData)) {
+				$bUpdated = $mBroadcast->updateBroadcastCampaign($aBroadcastCampaignData, $eventId);
+				$moduleName = 'broadcast';
+				if ($fieldName == 'subject') {
 
 
-                        $oVariations = $mWorkflow->getWorkflowSplitVariations($moduleName, $broadcastID);
-                        if (!empty($oVariations)) {
-                            $campaignID = $oVariations[0]->id;
-                        }
-                        $aData = array(
-                            'subject' => $fieldValue
-                        );
-                        $mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
-                    } else {
-                        $aData = array(
-                            $fieldName => $fieldValue
-                        );
-                        $mWorkflow->updateWorkflowSplitCampaign($aData, '', $moduleName, $broadcastID);
-                    }
-                }
-            }
+					$oVariations = $mWorkflow->getWorkflowSplitVariations($moduleName, $broadcastID);
+					if (!empty($oVariations)) {
+						$campaignID = $oVariations[0]->id;
+					}
+					$aData = array(
+						'subject' => $fieldValue
+					);
+					$mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
+				} else {
+					$aData = array(
+						$fieldName => $fieldValue
+					);
+					$mWorkflow->updateWorkflowSplitCampaign($aData, '', $moduleName, $broadcastID);
+				}
+			}
+		}
 
-            if ($campaignId > 0) {
+		if ($campaignId > 0) {
 
-                if (in_array($fieldName, array('text_version_email', 'enable_mobile_responsiveness', 'read_tracking', 'link_tracking', 'reply_tracking', 'google_analytics', 'campaign_archives'))) {
-                    $aBroadcastSettingsData[$fieldName] = $fieldValue;
-                }
+			if (in_array($fieldName, array('text_version_email', 'enable_mobile_responsiveness', 'read_tracking', 'link_tracking', 'reply_tracking', 'google_analytics', 'campaign_archives'))) {
+				$aBroadcastSettingsData[$fieldName] = $fieldValue;
+			}
 
-                if (!empty($aBroadcastSettingsData)) {
-                    $broadcastSettings = $mBroadcast->getBroadcastSettings($campaignId);
-                    if ($broadcastSettings->isNotEmpty()) {
-                        $bUpdated = $mBroadcast->updateBroadcastSettings($aBroadcastSettingsData, $campaignId);
-                    } else {
-                        $aBroadcastSettingsData['campaign_id'] = $campaignId;
-                        $bUpdated = $mBroadcast->addBroadcastSettings($aBroadcastSettingsData);
-                    }
-                }
-            }
-        }
+			if (!empty($aBroadcastSettingsData)) {
+				$broadcastSettings = $mBroadcast->getBroadcastSettings($campaignId);
+				if ($broadcastSettings->isNotEmpty()) {
+					$bUpdated = $mBroadcast->updateBroadcastSettings($aBroadcastSettingsData, $campaignId);
+				} else {
+					$aBroadcastSettingsData['campaign_id'] = $campaignId;
+					$bUpdated = $mBroadcast->addBroadcastSettings($aBroadcastSettingsData);
+				}
+			}
+		}
+		
         if (!empty($bUpdated)) {
             $response = array('status' => 'success');
         } else {
