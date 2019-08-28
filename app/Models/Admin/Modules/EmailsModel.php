@@ -358,18 +358,18 @@ class EmailsModel extends Model {
      * @return boolean
      */
     public function publishAutomationEvent($aData, $automationID, $userID) {
+		$oResponse2 = '';
         if ($automationID > 0) {
-
             $oResponse = DB::table('tbl_automations_emails_events')
                     ->where('automation_id', $automationID)
                     ->update($aData);
 
-            if ($oResponse) {
+            if ($oResponse > -1) {
                 $oResponse2 = DB::table('tbl_automations_emails')
                         ->where('id', $automationID)
                         ->update($aData);
             }
-            if ($oResponse || $oResponse2) {
+            if (($oResponse > -1) || ($oResponse2 > -1)) {
                 return true;
             } else {
                 return false;

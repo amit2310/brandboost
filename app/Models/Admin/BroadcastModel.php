@@ -383,7 +383,7 @@ class BroadcastModel extends Model {
      * @return typeUsed to get logged user's broadcast campaign
      */
     public function getMyBroadcasts($userID, $id = 0) {
-
+	
         $oData = DB::table('tbl_automations_emails')
                 ->leftJoin('tbl_automations_emails_events', 'tbl_automations_emails_events.automation_id', '=', 'tbl_automations_emails.id')
                 ->leftJoin('tbl_automations_emails_campaigns', 'tbl_automations_emails_campaigns.event_id', '=', 'tbl_automations_emails_events.id')
@@ -573,7 +573,6 @@ class BroadcastModel extends Model {
             $oData = DB::table('tbl_broadcast_split_campaigns')
                     ->where('id', $id)
                     ->delete();
-            
             return $oData;
         }
         return false;
@@ -603,10 +602,10 @@ class BroadcastModel extends Model {
      */
     public function updateSplitTest($aData, $id) {
         if ($id > 0) {
-            $oData = DB::table('tbl_broadcast_split_testing')
+            $result = DB::table('tbl_broadcast_split_testing')
                     ->where('id', $id)
                     ->update($aData);
-            return $oData;
+            return ($result > -1) ? true : false;
         }
         return false;
     }
@@ -936,7 +935,7 @@ class BroadcastModel extends Model {
         $result = DB::table('tbl_segments')
                 ->where('id', $segmentId)
                 ->update($aData);
-        return $result;
+        return ($result > -1) ? true : false;
     }
 
     /**
@@ -992,7 +991,7 @@ class BroadcastModel extends Model {
         $result = DB::table('tbl_automations_emails_events')
                 ->where('automation_id', $broadcastId)
                 ->update($aData);
-        return $result;
+        return ($result > -1) ? true : false;
     }
 
     /**
@@ -1005,7 +1004,7 @@ class BroadcastModel extends Model {
         $result = DB::table('tbl_automations_emails_campaigns')
                 ->where('id', $campaignId)
                 ->update($aData);
-        return $result;
+        return ($result > -1) ? true : false;
     }
 
     /**
@@ -1015,7 +1014,7 @@ class BroadcastModel extends Model {
         $result = DB::table('tbl_automations_emails_campaigns')
                 ->where('event_id', $eventId)
                 ->update($aData);
-        return $result;
+        return ($result > -1) ? true : false;
     }
 
     /**
@@ -1028,7 +1027,11 @@ class BroadcastModel extends Model {
         $result = DB::table('tbl_automations_emails_campaigns_settings')
                 ->where('campaign_id', $campaignId)
                 ->update($aData);
-        return $result;
+        if($result > -1){
+			return true;
+		}else{
+			return false;
+		}
     }
 
     /**
