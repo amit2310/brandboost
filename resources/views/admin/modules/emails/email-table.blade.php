@@ -47,7 +47,7 @@
 					$clickValue = 0;
 					$bounceValue = 0;
 					$newOpen = $newClick = $newBounce ='';
-					if ($oAutomation->status != 'archive') {
+					if ($oAutomation->status != '') {
 						$oEvents = \App\Models\Admin\Modules\EmailsModel::getAutomationEvents($oAutomation->id);
 						foreach ($oEvents as $oEventsValue) {
 							//pre($oEventsValue->id);
@@ -231,16 +231,7 @@
 									echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
 								}
 								?>
-								<a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-									<?php
-									if ($oAutomation->status == 'active') {
-										echo 'Active';
-									} else {
-										echo 'Draft';
-									}
-									?>
-
-								</a>
+								<a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown"><?php echo ucfirst($oAutomation->status); ?></a>
 								<ul class="dropdown-menu dropdown-menu-right status">
 
 								</ul>
@@ -252,7 +243,7 @@
 									<ul class="dropdown-menu dropdown-menu-right more_act">
 										<li><a href="javascript:void(0);" automation_id="<?php echo $oAutomation->id; ?>" class="editAutomation"><i class="icon-pencil"></i> Edit</a></li>
 										<?php if ($oAutomation->status == 'active'): ?>
-											<li><a href="javascript:void(0);" automation_id="<?php echo $oAutomation->id; ?>" status="inactive" class="change_staus"><i class='icon-file-locked'></i> Draft</a></li>
+											<li><a href="javascript:void(0);" automation_id="<?php echo $oAutomation->id; ?>" status="inactive" class="change_staus"><i class='icon-file-locked'></i> Inactive</a></li>
 										<?php endif; ?>
 										<?php if ($oAutomation->status == 'inactive' || $oAutomation->status == 'draft'): ?>
 											<li><a href="javascript:void(0);" automation_id="<?php echo $oAutomation->id; ?>" status="active" class="change_staus"><i class='icon-file-locked'></i> Active</a></li>
