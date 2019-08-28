@@ -207,20 +207,20 @@ $deliveryTime = $aDeliveryParam->delivery_time;
                                 <?php if (strtolower($oBroadcast->campaign_type) == 'email'): ?>
                                     <li><small class="wauto">Reply Tracking</small> 
                                         <label class="custom-form-switch pull-right">
-                                            <input class="field checkedBoxValue updatesettings" value="<?php echo $broadcastSettings->reply_tracking != '0' ? '1' : '0'; ?>" <?php //echo $broadcastSettings->reply_tracking != '0' ? 'checked' : ''; ?> name="reply_tracking" id="replyTracking" type="checkbox" disabled="disabled">
+                                            <input class="field checkedBoxValue updatesettings" value="<?php echo $broadcastSettings->reply_tracking != '0' ? '1' : '0'; ?>" <?php echo $broadcastSettings->reply_tracking != '0' ? 'checked' : ''; ?> name="reply_tracking" id="replyTracking" type="checkbox" disabled="disabled">
                                             <span class="toggle <?php echo $colorClass; ?>"></span>
                                         </label>
                                     </li>
                                 <?php endif; ?>
                                 <li><small class="wauto">Google Analytics</small> 
                                     <label class="custom-form-switch pull-right">
-                                        <input class="field checkedBoxValue updatesettings" value="<?php echo $broadcastSettings->google_analytics != '0' ? '1' : '0'; ?>" <?php //echo $broadcastSettings->google_analytics != '0' ? 'checked' : ''; ?> name="google_analytics" id="googleAnalytics" type="checkbox" disabled="disabled">
+                                        <input class="field checkedBoxValue updatesettings" value="<?php echo $broadcastSettings->google_analytics != '0' ? '1' : '0'; ?>" <?php echo $broadcastSettings->google_analytics != '0' ? 'checked' : ''; ?> name="google_analytics" id="googleAnalytics" type="checkbox" disabled="disabled">
                                         <span class="toggle <?php echo $colorClass; ?>"></span>
                                     </label>
                                 </li>
                                 <li><small class="wauto">Campaign Archives</small> 
                                     <label class="custom-form-switch pull-right">
-                                        <input class="field checkedBoxValue updatesettings" value="<?php echo $broadcastSettings->campaign_archives != '0' ? '1' : '0'; ?>" <?php //echo $broadcastSettings->campaign_archives != '0' ? 'checked' : ''; ?> id="campaignArchives" name="campaign_archives" type="checkbox" disabled="disabled">
+                                        <input class="field checkedBoxValue updatesettings" value="<?php echo $broadcastSettings->campaign_archives != '0' ? '1' : '0'; ?>" <?php echo $broadcastSettings->campaign_archives != '0' ? 'checked' : ''; ?> id="campaignArchives" name="campaign_archives" type="checkbox" disabled="disabled">
                                         <span class="toggle <?php echo $colorClass; ?>"></span>
                                     </label>
                                 </li>
@@ -571,19 +571,19 @@ $deliveryTime = $aDeliveryParam->delivery_time;
 
         }
 
-<?php if (strtolower($oBroadcast->campaign_type) == 'email') { ?>
-            if (emailSubject == '') {
-                $('#email_subject').focus();
-                $("#email_subject").next(".validation").remove();
-                $("#email_subject").after("<div class='validation' style='color:red;margin-bottom: 20px;'>Mandatory Field</div>");
-                //alertMessage('Please enter email subject.');
-                setTimeout(function () {
-                    $("#email_subject").next(".validation").remove();
-                }, 5000);
+	<?php if (strtolower($oBroadcast->campaign_type) == 'email') { ?>
+		if (emailSubject == '') {
+			$('#email_subject').focus();
+			$("#email_subject").next(".validation").remove();
+			$("#email_subject").after("<div class='validation' style='color:red;margin-bottom: 20px;'>Mandatory Field</div>");
+			//alertMessage('Please enter email subject.');
+			setTimeout(function () {
+				$("#email_subject").next(".validation").remove();
+			}, 5000);
 
-                return false;
-            }
-<?php } ?>
+			return false;
+		}
+	<?php } ?>
 
         $('.overlaynew').show();
 
