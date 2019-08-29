@@ -139,10 +139,10 @@
             url: "{{ URL::asset('admin/subscriber/getSubscriberDetail') }}",
             type: "POST",
             data: {
-                    module_name: module_name, 
-                    module_subscriber_id: module_subscriber_id,
-                    _token: "<?php echo csrf_token(); ?>"
-                },
+                module_name: module_name,
+                module_subscriber_id: module_subscriber_id,
+                _token: '{{csrf_token()}}',
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -177,7 +177,7 @@
         $.ajax({
             url: "{{ URL::asset('admin/subscriber/getSubscriberDetail') }}",
             type: "POST",
-            data: {module_name: module_name, module_subscriber_id: module_subscriber_id, _token: "<?php echo csrf_token(); ?>"},
+            data: {module_name: module_name, module_subscriber_id: module_subscriber_id, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -213,7 +213,7 @@
         $.ajax({
             url: "{{ URL::asset('admin/subscriber/getSubscriberDetail') }}",
             type: "POST",
-            data: {module_name: module_name, module_subscriber_id: module_subscriber_id, _token: "<?php echo csrf_token(); ?>"},
+            data: {module_name: module_name, module_subscriber_id: module_subscriber_id, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -249,7 +249,7 @@
         e.preventDefault();
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
-        formData.append('_token', '<?php echo csrf_token(); ?>');
+        formData.append('_token', '{{csrf_token()}}');
         $.ajax({
             url: "{{ URL::asset('admin/subscriber/updateSubscriberDetails') }}",
             type: "POST",
@@ -368,71 +368,71 @@
     });
 
 
-<?php if ($aUInfo->login_counter_lu >= 5) { ?>
-        setTimeout(function () {
-            $.ajax({
-                url: "<?php echo base_url('admin/users/updateUserData'); ?>",
-                type: "POST",
-                data: {userId: '<?php echo $aUInfo->id; ?>', fieldName: 'login_counter_lu', _token: '{{csrf_token()}}'},
-                dataType: "json",
-                success: function (data) {
-                    if (data.status == 'success') {
-                        $('#upgrade_popup1').modal();
-                    } else {
-                        alertMessage('Error: Some thing wrong!');
-                        $('.overlaynew').hide();
-                    }
-                },
-                error() {
-                    $('.overlaynew').hide();
-                }
-            });
-        }, 5000);
-<?php } ?>
-
-<?php if ($aUInfo->login_counter_au >= 12) { ?>
-        setTimeout(function () {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo base_url('admin/users/updateUserData'); ?>",
-                data: {userId: '<?php echo $aUInfo->id; ?>', fieldName: 'login_counter_au', _token: '<?php echo csrf_token() ?>'},
-                dataType: "json",
-                success: function (data) {
-
-                    if (data.status == 'success') {
-                        //console.log('success');
-                    } else {
-                        alertMessage('Error: Some thing wrong!');
-                        $('.overlaynew').hide();
-                    }
-                },
-                error() {
-                    $('.overlaynew').hide();
-                }
-            });
-        }, 5000);
-<?php } ?>
-
-    function createTwilioAccount(userId) {
+    @if ($aUInfo -> login_counter_lu >= 5)
+    setTimeout(function () {
         $.ajax({
-            url: "{{ URL::asset('/admin/users/createTwilioAccount') }}",
+            url: "{{ base_url('admin/users/updateUserData') }}",
             type: "POST",
-            data: {
-                'user_id': userId
-            },
+            data: {userId: '{{ $aUInfo->id }}', fieldName: 'login_counter_lu', _token: '{{csrf_token()}}'},
             dataType: "json",
-            success: function (response) {
-                if (response.status == 'success') {
-                    window.location.href = window.location.href;
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#upgrade_popup1').modal();
                 } else {
-                    alert("Something went wrong");
+                    alertMessage('Error: Some thing wrong!');
+                    $('.overlaynew').hide();
                 }
             },
-            error: function (response) {
-                alert("Something went wrong");
+            error() {
+                $('.overlaynew').hide();
             }
         });
-    }
+    }, 5000);
+    @endif
+
+            @if ($aUInfo -> login_counter_au >= 12)
+    setTimeout(function () {
+        $.ajax({
+            type: "POST",
+            url: "{{ base_url('admin/users/updateUserData') }}",
+            data: {userId: '{{ $aUInfo->id }}', fieldName: 'login_counter_au', _token: '{{csrf_token()}}'},
+            dataType: "json",
+            success: function (data) {
+
+                if (data.status == 'success') {
+                    //console.log('success');
+                } else {
+                    alertMessage('Error: Some thing wrong!');
+                    $('.overlaynew').hide();
+                }
+            },
+            error() {
+                $('.overlaynew').hide();
+            }
+        });
+    }, 5000);
+    @endif
+
+            function createTwilioAccount(userId) {
+            $.ajax({
+            url: "{{ URL::asset('/admin/users/createTwilioAccount') }}",
+                    type: "POST",
+                    data: {
+                    'user_id': userId
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                    if (response.status == 'success') {
+                    window.location.href = window.location.href;
+                    } else {
+                    alert("Something went wrong");
+                    }
+                    },
+                    error: function (response) {
+                    alert("Something went wrong");
+                    }
+            });
+            }
 
     function createSandgridAccount(userId) {
         $.ajax({
@@ -523,11 +523,11 @@
             var hidPlanID = $("#hidLevelPlanId").val();
             if ($('#lvltermsCondition').is(":checked") == true) {
                 $.ajax({
-                    url: "<?php echo base_url('payment/upgradeMembership'); ?>",
+                    url: "{{ base_url('payment/upgradeMembership') }}",
                     type: "POST",
                     data: {
                         plan_id: hidPlanID,
-                        _token: '<?php echo csrf_token(); ?>'
+                        _token: '{{csrf_token()}}'
                     },
                     dataType: "json",
                     success: function (data) {
@@ -698,9 +698,9 @@
                 var bUnreadAll = true;
             }
             $.ajax({
-                url: '<?php echo base_url("admin/notifications/markRead"); ?>',
+                url: '{{ base_url("admin/notifications/markRead") }}',
                 type: "POST",
-                data: {param: 'readall', notificationid: notificationid, '_token':'{{csrf_token()}}'},
+                data: {param: 'readall', notificationid: notificationid, '_token': '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -768,7 +768,7 @@
             clearInterval(timeOverStart);
             clearInterval(timeOutReminder);
             clearInterval(stillLoggedIn);
-            timeOverStart = timeOver(0, 0, '<?php echo $inactivity_length; ?>', '');
+            timeOverStart = timeOver(0, 0, '{{ $inactivity_length }}', '');
         });
 
     });
@@ -798,7 +798,7 @@
                     clearInterval(timeOverStart);
                     clearInterval(timeOutReminder);
                     clearInterval(stillLoggedIn);
-                    timeOverStart = timeOver(0, 0, '<?php echo $inactivity_length; ?>', '');
+                    timeOverStart = timeOver(0, 0, '{{ $inactivity_length }}', '');
                 }
 
             }
@@ -868,7 +868,7 @@
                     clearInterval(timeOverStart);
                     clearInterval(timeOutReminder);
                     clearInterval(stillLoggedIn);
-                    
+
                 }
 
             }
@@ -880,12 +880,12 @@
     }
 
 
-    timeOverStart = timeOver(0, 0, '<?php echo $inactivity_length; ?>', '');
+    timeOverStart = timeOver(0, 0, '{{ $inactivity_length }}', '');
 
     $(document).on('click', '.logoutYes', function () {
         clearInterval(stillLoggedIn);
         $('.close').trigger('click');
-        timeOverStart = timeOver(0, 0, '<?php echo $inactivity_length; ?>', '');
+        timeOverStart = timeOver(0, 0, '{{ $inactivity_length }}', '');
     });
 
     $(document).on('click', '.logoutNo', function () {
@@ -895,7 +895,7 @@
     $(document).on('click', '.remainLoggedIn', function () {
         clearInterval(timeOutReminder);
         $('.close').trigger('click');
-        timeOverStart = timeOver(0, 0, '<?php echo $inactivity_length; ?>', '');
+        timeOverStart = timeOver(0, 0, '{{ $inactivity_length }}', '');
     });
 
 
