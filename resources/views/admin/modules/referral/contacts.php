@@ -37,8 +37,7 @@
                             <?php
                             $inc = 1;
                             foreach ($oContacts as $data) {
-                                //pre($data);
-                                //$profileImg = $data->avatar == '' ? base_url('/profile_images/avatar_image.png') : base_url('profile_images/' . $data->avatar);
+                               
                                 ?>
                                 <tr>
                                     <td>			
