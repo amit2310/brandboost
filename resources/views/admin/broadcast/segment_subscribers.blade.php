@@ -384,11 +384,11 @@
                                                             </td> -->
                                                             
                                                         </tr>
-                                                        <?php
+                                                        @php
                                                     }
                                                 }
                                             }
-                                            ?>
+                                            @endphp
                                         </tbody>
                                     </table>
                             </div>
@@ -400,7 +400,7 @@
 
         </div>
 
-<?php else: ?>
+@php else: @endphp
 
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
@@ -410,7 +410,7 @@
                         <!-- Marketing campaigns -->
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $iActiveCount; ?> Segment Contacts</h6>
+                                <h6 class="panel-title">@php echo $iActiveCount; @endphp Segment Contacts</h6>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
