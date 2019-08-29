@@ -271,13 +271,9 @@ if (!empty($oPrograms)) {
 
                                             $totalFeedbackNum = $positive + $nutral + $negetive;
 
-
-
-                                            //$score = ($oProgram->NPS[0]->score) ? '<a target="_blank" href="'.base_url('admin/modules/nps/score/' . $oProgram->hashcode).'">'.$oProgram->NPS[0]->score * 10 .'</a>' : 'N/A';
                                             $aScoreSummery = $mNPS->getNPSScoreSummery($oProgram->hashcode);
                                             $score = number_format($aScoreSummery['NPSScore'], 1);
-                                            //pre($oProgram);
-                                            //if ($oProgram->status != 'archive') {
+                                           
                                             ?>
                                             <tr id="append-<?php echo $oProgram->id; ?>" class="selectedClass">
                                                 <td style="display: none;"><?php echo date('m/d/Y', strtotime($oProgram->created)); ?></td>
@@ -635,10 +631,8 @@ if (!empty($oPrograms)) {
 
 
                                             </tr>
-                                            <?php
-                                            //} 
-                                        endforeach;
-                                        ?>
+                                           
+                                        @endforeach;
                                     </tbody>
                                 </table>
                             </div>

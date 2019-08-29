@@ -1,14 +1,12 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php //echo $title;
- ?>
 @endsection
 
 @section('contents')
 
 <!-- Content area -->
-<?php
+@php
  if(!empty($campaignType))
  {
     $campaignType = $campaignType;
@@ -17,7 +15,8 @@
  {
     $campaignType="";
  }
-?>
+@endphp
+
 <div class="content">
 
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
