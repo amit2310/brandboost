@@ -481,7 +481,7 @@ else {
     </div>
 <?php endif; ?>
 
-<div id="subscriberTagListsModal" class="modal fade">
+<div id="subscriberTagListsModal" class="modal fade" style="z-index:9999999999;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" name="frmSubscriberApplyTag" id="frmSubscriberApplyTag" action="javascript:void();">
