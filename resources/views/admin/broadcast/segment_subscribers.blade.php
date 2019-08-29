@@ -233,8 +233,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-                                            
+                                            @php
                                             if (count($oSubscribers) > 0) {
                                                 foreach ($oSubscribers as $oContact) {
 
@@ -481,7 +480,9 @@
             </div>
         </div>
 
-<?php endif; ?> 
+<?php endif;
+
+ @endphp
 
 </div>
 
