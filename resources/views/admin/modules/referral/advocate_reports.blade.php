@@ -1,4 +1,4 @@
-<?php
+@php
 $totalEmailSent = $totalSmsSent = 0;
 if (!empty($oTotalReferralSent)) {
 
@@ -27,7 +27,7 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
 	}
 }
 }
-?>
+@endphp
 	<script type="text/javascript" src="http://www.chartjs.org/dist/2.7.2/Chart.bundle.js"></script>
 	
 	<style>
@@ -41,8 +41,7 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
 		  <div class="row">
 		  <!--=============Headings & Tabs menu==============-->
 			<div class="col-md-7">
-			  <h3 class="mt20"><img style="width: 18px;" src="<?php echo base_url(); ?>assets/images/refferal_icon.png"> <?php echo $oSettings->title; ?> Report</h3>
-			  
+			  <h3 class="mt20"><img style="width: 18px;" src="{{ base_url() }}assets/images/refferal_icon.png"> {{ $oSettings->title }} Report</h3>
 			</div>
 		  </div>
 		</div>
@@ -60,8 +59,8 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
 				<div class="panel panel-flat">
 				  <div class="panel-body p20 pb0 br5 bkg_white text-center ref_stats_sec">
 				  <div class="p20">
-				  	<img width="44" class="br100 mb10" src="<?php echo base_url(); ?>assets/images/ro_icon1.png"/>
-				  	<h1 class="txt_dark fsize28 fw700"><?php echo count($firstname); ?></h1>
+				  	<img width="44" class="br100 mb10" src="{{ base_url() }}assets/images/ro_icon1.png"/>
+				  	<h1 class="txt_dark fsize28 fw700">{{ count($firstname) }}</h1>
 				  	<p class="fsize14 txt_dgrey mb0">Visits</p>
 				  </div>
 				  <div class="btop p20">
@@ -74,8 +73,8 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
 				<div class="panel panel-flat">
 				  <div class="panel-body p20 pb0 br5 bkg_white text-center ref_stats_sec">
 				  <div class="p20">
-				  	<img width="44" class="br100 mb10" src="<?php echo base_url(); ?>assets/images/ro_icon1.png"/>
-				  	<h1 class="txt_dark fsize28 fw700"><?php echo count($referralSaleTrackData); ?></h1>
+				  	<img width="44" class="br100 mb10" src="{{ base_url() }}assets/images/ro_icon1.png"/>
+				  	<h1 class="txt_dark fsize28 fw700">{{ count($referralSaleTrackData) }}</h1>
 				  	<p class="fsize14 txt_dgrey mb0">Sales</p>
 				  </div>
 				  <div class="btop p20">
@@ -88,8 +87,8 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
 				<div class="panel panel-flat">
 				  <div class="panel-body p20 pb0 br5 bkg_white text-center ref_stats_sec">
 				  <div class="p20">
-				  	<img width="44" class="br100 mb10" src="<?php echo base_url(); ?>assets/images/ro_icon2.png"/>
-				  	<h1 class="txt_dark fsize28 fw700"><?php echo $totalOpened; ?></h1>
+				  	<img width="44" class="br100 mb10" src="{{ base_url() }}assets/images/ro_icon2.png"/>
+				  	<h1 class="txt_dark fsize28 fw700">{{ $totalOpened }}</h1>
 				  	<p class="fsize14 txt_dgrey mb0">Opens</p>
 				  </div>
 				  <div class="btop p20">
@@ -102,8 +101,8 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
 				<div class="panel panel-flat">
 				  <div class="panel-body p20 pb0 br5 bkg_white text-center ref_stats_sec">
 				  <div class="p20">
-				  	<img width="44" class="br100 mb10" src="<?php echo base_url(); ?>assets/images/ro_icon2.png"/>
-				  	<h1 class="txt_dark fsize28 fw700"><?php echo $totalClicked; ?></h1>
+				  	<img width="44" class="br100 mb10" src="{{ base_url() }}assets/images/ro_icon2.png"/>
+				  	<h1 class="txt_dark fsize28 fw700">{{ $totalClicked }}</h1>
 				  	<p class="fsize14 txt_dgrey mb0">Clicks</p>
 				  </div>
 				  <div class="btop p20">
@@ -131,9 +130,6 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
                                     </div>
                                     <div class="table_action_tool">
                                         <a href="#"><i class="icon-calendar52"></i></a>
-                                        <!-- <a href="#"><i class="icon-arrow-down16"></i></a>
-                                        <a href="#"><i class="icon-arrow-up16"></i></a>
-                                        <a style="cursor: pointer;" class="editDataList"><i class="icon-pencil"></i></a> -->
                                         <a style="cursor: pointer; display: none;" id="deleteBulkReferral" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                         <a style="cursor: pointer; display: none;" id="archiveBulkReferral" class="custom_action_box"><i class="icon-gear position-left"></i> </a>
                                     </div>
@@ -153,13 +149,12 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
+                            @php
                             $inc = 1;
                             foreach ($oRefPurchased as $data) {
                                 $oTags = $this->mReferral->getTagsBySaleID($data->id);
-                                //pre($data);
-                                //$profileImg = $data->avatar == '' ? base_url('/profile_images/avatar_image.png') : base_url('profile_images/' . $data->avatar);
-                                ?>
+                             
+                                @endphp
                                 <tr>
                                     <td>            
                                         <div style="vertical-align: top!important;" class="media-left media-middle">
@@ -168,9 +163,9 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
                                             </a>
                                         </div>
                                         <div class="media-left">
-                                            <a href="javascript:void()" class="text-default text-semibold"><?php echo $data->firstname; ?> <?php echo $data->lastname; ?></a>
-                                            <div class="text-muted text-size-small"><?php echo $data->email; ?></div>
-                                            <div class="text-muted text-size-small"><?php echo $data->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $data->phone; ?></div>
+                                            <a href="javascript:void()" class="text-default text-semibold">{{ $data->firstname }} {{ $data->lastname }}</a>
+                                            <div class="text-muted text-size-small">{{ $data->email }}</div>
+                                            <div class="text-muted text-size-small">{!! $data->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $data->phone !!}</div>
                                         </div>
                                     </td>
 
@@ -181,41 +176,39 @@ foreach ($oTotalReferralTwillio as $twilliRec) {
                                             </a>
                                         </div>
                                         <div class="media-left">
-                                            <a href="javascript:void()" class="text-default text-semibold"><?php echo $data->aff_firstname; ?> <?php echo $data->aff_lastname; ?></a>
-                                            <div class="text-muted text-size-small"><?php echo $data->aff_email; ?></div>
-                                            <div class="text-muted text-size-small"><?php echo $data->aff_mobile == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $data->aff_mobile; ?></div>
+                                            <a href="javascript:void()" class="text-default text-semibold">{{ $data->aff_firstname }} {{ $data->aff_lastname }}</a>
+                                            <div class="text-muted text-size-small">{{ $data->aff_email }}</div>
+                                            <div class="text-muted text-size-small">{!! $data->aff_mobile == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $data->aff_mobile !!}</div>
                                         </div>
                                     </td>
 
-                                    <td><?php echo $data->currency; ?><?php echo $data->amount; ?></td>
-                                    <td><h6 class="text-semibold"><?php echo date('M d, Y', strtotime($data->created)); ?><div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)) . ' (' . timeAgo($data->created) . ')'; ?></div></h6></td>
+                                    <td>{{ $data->currency}} {{ $data->amount }}</td>
+                                    <td><h6 class="text-semibold">{{ date('M d, Y', strtotime($data->created)) }}<div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) . ' (' . timeAgo($data->created) . ')' }}</div></h6></td>
                                     <td class="media_review text-center">
                                         <span class="label bg-success viewtags">View Tags
-                                            <?php if (count($oTags) > 0) { ?>
+                                            @if (count($oTags) > 0)
                                                 <div class="tagspop">
-                                                    <?php
-                                                    foreach ($oTags as $tagsData) {
-                                                        echo '<span class="label bg-success heading-text">' . $tagsData->tag_name . '</span>';
-                                                    }
-                                                    ?>
+                                                    @foreach ($oTags as $tagsData)
+                                                        <span class="label bg-success heading-text">{{ $tagsData->tag_name }}</span>
+                                                    @endforeach
                                                 </div>
-                                            <?php } ?>
+                                            @endif
                                         </span>
 
-                                        <a href="javascript:void(0);" class="applyInsightTags" action_name="referral-tag" saleid="<?php echo $data->id; ?>" ><span class="label bg-success addtag heading-text">+ Add Tag</span></a>
+                                        <a href="javascript:void(0);" class="applyInsightTags" action_name="referral-tag" saleid="{{ $data->id }}" ><span class="label bg-success addtag heading-text">+ Add Tag</span></a>
 
 
                                     </td>
                                     <td>
-                                        <a href="<?php echo base_url("admin/modules/referral/saledetails/".$data->id);?>" target="_blank">Details</a>
+                                        <a href="{{ base_url("admin/modules/referral/saledetails/".$data->id) }}" target="_blank">Details</a>
                                     </td>
 
 
                                 </tr>
-                                <?php
+                                @php
                                 $inc++;
                             }
-                            ?>
+                            @endphp
                         </tbody>
                     </table>
                             </div>
