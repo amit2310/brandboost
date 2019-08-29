@@ -322,7 +322,7 @@
                                                         </td> -->
 
                                                 <td class="text-right"><div class="media-left pull-right text-right pl20 pr20 brig blef">
-                                                        <div class=""><a href="javascript:void();" class="text-default text-semibold"><?php echo dataFormat($oSegment->created); ?> <span class="txt_grey"><?php echo date('h:i A', strtotime($oSegment->created)); ?></span></a> </div>
+                                                        <div class=""><a href="javascript:void();" class="text-default text-semibold">{{ dataFormat($oSegment->created) }} <span class="txt_grey">{{ date('h:i A', strtotime($oSegment->created)) }} </span></a> </div>
                                                     </div></td>
 
                                                 <td>
