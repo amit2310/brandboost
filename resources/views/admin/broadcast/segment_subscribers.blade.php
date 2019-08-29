@@ -249,12 +249,12 @@
                                                             $userData = $oTags = \App\Models\Admin\UsersModel::getUserInfo($subscriberUserID);
                                                         }
                                                        
-                                                        ?>
+                                                        @endphp
                                                         <tr id="append-<?php echo $oContact->id; ?>" class="selectedClass">
-                                                            <td style="display: none;"><?php echo date('m/d/Y', strtotime($oContact->created)); ?></td>
-                                                            <td style="display: none;"><?php echo $oContact->id; ?></td>
+                                                            <td style="display: none;">{{ date('m/d/Y', strtotime($oContact->created)) }}</td>
+                                                            <td style="display: none;">{{ $oContact->id }}</td>
 
-                                                            <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $oContact->id; ?>" value="<?php echo $oContact->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+                                                            <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $oContact->id }}" value="{{ $oContact->id }}" ><span class="custmo_checkmark"></span></label></td>
 
 
                                                             <!-- <td class="viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->globalSubscriberId; ?>" data-modulename="<?php echo $moduleName; ?>">	
@@ -267,7 +267,7 @@
 
                                                             <td>
                 
-       <div class="media-left media-middle"> <!-- <a class="icons fl_letters s32" href="#">ak</a> -->     <?php echo showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
+       <div class="media-left media-middle"> {!! showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname) !!} </div>
         <div class="media-left">
           <div class="pt-5"><a href="#" class="text-default text-semibold bbot"><span><?php if(empty($oContact->firstname) && empty($oContact->lastname)){ echo displayNoData();}else{ echo $oContact->firstname . ' '. $oContact->lastname; } ?></span>
           <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($oContact->country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></a></div>
@@ -480,9 +480,8 @@
             </div>
         </div>
 
-<?php endif;
+@endif
 
- @endphp
 
 </div>
 
