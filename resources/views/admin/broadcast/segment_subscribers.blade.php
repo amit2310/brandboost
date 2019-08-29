@@ -240,13 +240,13 @@
                                                     $subscriberID = $oContact->globalSubscriberId;
                                                     $subscriberUserID = $oContact->subUserId;
                                                     $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($subscriberID);
-                                                    //pre($oTags);
-                                                    $iTagCount = count($oTags);
+                                                    //pre($oTags->count());
+                                                    $iTagCount = $oTags->count();
                                                     $userData = '';
                                                     if ($oContact->status != '2') {
 
                                                         if ($oContact->user_id > 0) {
-                                                            $userData = $oTags = \App\Models\Admin\UsersModel::getUserInfo($subscriberUserID);
+                                                            $userData = \App\Models\Admin\UsersModel::getUserInfo($subscriberUserID);
                                                         }
                                                        
                                                         @endphp
@@ -328,21 +328,21 @@
 
                                                             <td id="tag_container_<?php echo $subscriberID; ?>">
                                                                 <div class="media-left pl30 blef">
-                                                                    <div class=""><a href="javascript:void(0);" class="text-default text-semibold bbot"><?php echo count($oTags); ?> Tags</a> </div>
+                                                                    <div class=""><a href="javascript:void(0);" class="text-default text-semibold bbot">{{ count($oTags) }} Tags</a> </div>
                                                                 </div>
                                                                 <div class="media-left pr30 brig">
                                                                     <div class="tdropdown">
                                                                         <button class="btn btn-xs plus_icon dropdown-toggle ml10" data-toggle="dropdown" aria-expanded="false"><i class="icon-plus3"></i></button>
                                                                         <ul style="right: 0px!important;" class="dropdown-menu dropdown-menu-right tagss">
-                                                                            <?php
+                                                                            @php
                                                                             if (count($oTags) > 0) {
                                                                                 foreach ($oTags as $oTag) {
-                                                                                    ?>
-                                                                                    <button class="btn btn-xs btn_white_table pr10"> <?php echo $oTag->tag_name; ?> </button>                                                            
-                                                                                    <?php
+                                                                                    @endphp
+                                                                                    <button class="btn btn-xs btn_white_table pr10">@php echo $oTag->tag_name; @endphp </button>                                                            
+                                                                                    @php
                                                                                 }
                                                                             }
-                                                                            ?>
+                                                                            @endphp
                                                                             <button class="btn btn-xs plus_icon ml10 applyInsightTags" data-subscriber-id="<?php echo $subscriberID; ?>"><i class="icon-plus3"></i></button>
                                                                         </ul>
                                                                     </div>
