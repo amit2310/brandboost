@@ -418,29 +418,6 @@ class Contacts extends Controller
         return view('admin.subscriber.list-subscribers', $aData);
     }
 
-    public function mycontacts_old() {
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-        if (!empty($userID)) {
-            $oContacts = $this->mSubscriber->getGlobalSubscribers($userID);
-            $archiveContacts = $this->mSubscriber->getArchiveGlobalSubscribers($userID);
-            $getClientTags = $this->mTags->getClientTags($userID);
-        }
-        $breadcrumb = '<ul class="breadcrumb">
-                    <li><a href="' . base_url('admin/') . '"><i class="icon-home2 position-left"></i> Home</a></li>
-                    <li class="active">Dashboard</li>
-                    <li class="active">Contacts</li>
-                </ul>';
-        $data = array(
-            'title' => 'Contacts',
-            'pagename' => $breadcrumb,
-            'archiveContacts' => $archiveContacts,
-            'oContacts' => $oContacts,
-            'getClientTags' => $getClientTags
-        );
-
-        $this->template->load('admin/admin_template_new', 'admin/users/my-contacts', $data);
-    }
 
     public function add_contact() {
         $response = array();
