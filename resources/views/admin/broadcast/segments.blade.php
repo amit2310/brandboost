@@ -304,7 +304,7 @@
 
                                                 <td><div class="media-left media-middle"> <a class="icons square" href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/filter_blue_10.png"/></a> </div>
                                                     <div class="media-left">
-                                                        <div class="pt-3"><a href="javascript:void(0);" segment_id="<?php echo $oSegment->id; ?>"  class="text-default text-semibold"><span><?php echo setStringLimit($oSegment->segment_name, 20); ?></span></a></div>
+                                                        <div class="pt-3"><a href="javascript:void(0);" segment_id="<?php echo $oSegment->id; ?>"  class="text-default text-semibold"><span>{{ setStringLimit($oSegment->segment_name, 20) }} </span></a></div>
                                                     </div></td>
 
 
