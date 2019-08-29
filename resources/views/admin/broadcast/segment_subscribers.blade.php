@@ -13,7 +13,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3 mt20">
-                <h3><img style="width: 18px;" src="{{ base_url() }} assets/images/menu_icons/Email_Light.svg">{{ $title }}</h3>
+                <h3><img style="width: 18px;" src="{{ base_url() }}assets/images/menu_icons/Email_Light.svg">{{ $title }}</h3>
 
             </div>
             <!--=============Button Area Right Side==============-->
