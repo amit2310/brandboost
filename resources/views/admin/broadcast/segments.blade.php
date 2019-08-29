@@ -327,13 +327,13 @@
 
                                                 <td>
                                                     <div class="media-left text-right">
-                                                        <div class=""><?php echo (!empty($campaignCollection)) ? implode(",", $campaignCollection) : $oSegment->campaign_title; ?></div>                                                            
+                                                        <div class="">@php echo (!empty($campaignCollection)) ? implode(",", $campaignCollection) : $oSegment->campaign_title;@endphp</div>                                                            
                                                     </div>
                                                 </td>
 
                                                 <td>
                                                     <div class="media-left text-right">
-                                                        <div class=""><?php echo ucfirst($modName); ?></div>                                                            
+                                                        <div class="">{{ ucfirst($modName) }}</div>                                                            
                                                     </div>
                                                 </td>
 
@@ -421,9 +421,9 @@
 
                                                                 <li><a href="javascript:void(0);" segment_id="<?php echo $oSegment->id; ?>" class="editSegment"><i class="icon-file-stats"></i> Edit</a></li>
 
-                                                                <?php if ($oSegment->status != 'archive'): ?>
+                                                                @if ($oSegment->status != 'archive')
                                                                     <li><a href="javascript:void(0);" class="moveArchive" segment_id="<?php echo $oSegment->id; ?>"><i class="icon-file-stats"></i> Move To Archive</a></li>
-                                                                <?php endif; ?>
+                                                                 @endif
 
                                                                 <li><a href="javascript:void(0);" class="deleteSegment" segment_id="<?php echo $oSegment->id; ?>"><i class="icon-bin"></i> Delete</a></li>
                                                             </ul>
