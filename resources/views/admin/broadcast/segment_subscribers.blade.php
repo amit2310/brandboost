@@ -351,7 +351,7 @@
 
                                                             <td>
         <div class="media-left pull-right">
-          <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+          <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="{{ base_url() }}assets/images/more.svg"></a>
             <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
               <li><a href="javascript:void();"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
               <li><a href="javascript:void();"><i class="icon-primitive-dot txt_grey"></i> Disable</a> </li>
@@ -360,7 +360,7 @@
           </div>
         </div>
         <div class="media-left pull-right">
-          <div class=""><?php echo ($oContact->status == 1) ? '<i class="icon-primitive-dot txt_green fsize16"></i>' : '<i class="icon-primitive-dot txt_red fsize16"></i>'; ?> <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown"><?php echo ($oContact->status == 1) ? ' Active' : ' Inactive'; ?></a> </div>
+          <div class="">@php echo ($oContact->status == 1) ? '<i class="icon-primitive-dot txt_green fsize16"></i>' : '<i class="icon-primitive-dot txt_red fsize16"></i>'; @endphp <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">@php echo ($oContact->status == 1) ? ' Active' : ' Inactive'; @endphp</a> </div>
         </div>
         </td>
 
