@@ -73,11 +73,7 @@
 
 <!-- Content area -->
 <div class="content">
-
-
     <!-- Dashboard content -->
-
-
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-flat">
@@ -131,7 +127,7 @@
     data-bb-currency="USD"
     data-bb-timestamp="<?php echo time();?>"
     ></div>
-<script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral-sale" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"></script>
+<script type="text/javascript" id="bbscriptloader" data-key="{{ $oSettings->hashcode }}" data-widgets="referral-sale" async="true" src="{{ base_url() }}assets/js/ref_widgets.js"></script>
                         </textarea>
                         </p>
                         <div class="clearfix"></div>
@@ -152,7 +148,7 @@
     data-bb-timestamp="<?php echo time();?>"
     data-bb-showwidget="true"
     ></div>
-<script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral-sale" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"></script></textarea>>
+<script type="text/javascript" id="bbscriptloader" data-key="{{ $oSettings->hashcode }}" data-widgets="referral-sale" async="true" src="{{ base_url() }}assets/js/ref_widgets.js"></script></textarea>>
 
 
 <textarea id="dummyPostSaleCodeWithoutPopup" style="display:none;"><div id="bb-invoice_details" 
@@ -164,7 +160,7 @@
     data-bb-currency="USD"
     data-bb-timestamp="<?php echo time();?>"
     ></div>
-<script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral-sale" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"></script></textarea>
+<script type="text/javascript" id="bbscriptloader" data-key="{{ $oSettings->hashcode }}" data-widgets="referral-sale" async="true" src="{{ base_url() }}assets/js/ref_widgets.js"></script></textarea>
 
     <!-- /dashboard content -->
 
@@ -172,9 +168,6 @@
 <!-- /content area -->
 <script>
     $(document).ready(function () {
-
-        
-
         $("#btnPostPurchase").click(function () {
             var copyText = $("#txtPostPurchase").val();
 
@@ -189,17 +182,12 @@
         $("#showPopupAfterSale").change(function () {
             if ($(this).is(":checked")) {
                 var codeContent = $("#dummyPostSaleCodeWithPopup").val();
-
             } else {
                 var codeContent = $("#dummyPostSaleCodeWithoutPopup").val();
-
             }
 
             $("#txtPostPurchase").val('');
             $("#txtPostPurchase").val(codeContent);
-
         });
-
-
     });
 </script>
