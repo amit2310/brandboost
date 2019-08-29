@@ -166,7 +166,7 @@
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
 
-    <?php
+    @php
     if ($listtype == 'email') {
         $scriptFile = 'getListContacts';
     } else {
@@ -192,7 +192,7 @@
                 $activeList++;
             }
         }
-        ?>
+        @endphp
 
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
         <div class="tab-content"> 
@@ -202,7 +202,7 @@
                     <div class="col-md-12">
                         <div style="margin: 0;" class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $activeList; ?> Lists</h6>
+                                <h6 class="panel-title">{{ $activeList }} Lists</h6>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" tableid="automationList" placeholder="Search by name" type="text">
@@ -229,12 +229,12 @@
                                             <th><i class="icon-user" ></i>Name</th>
                                             <th><i class="icon-user"></i>Contacts</th>
                                             <th><i class="icon-calendar"></i>Created</th>
-                                            <?php if ($uRole == 1) { ?>
+                                            @if ($uRole == 1)
                                                 <th> <i class="icon-user"></i>Created By</th>
-                                            <?php } else {
-                                                ?>
+                                            @else 
+                                            
                                                 <th style="display: none;"></th>
-                                            <?php } ?>
+                                            @endif
 
                                             <th><i class="icon-envelop"></i>Email</th>
                                             <th><i class="icon-iphone"></i>SMS</th>
@@ -247,7 +247,7 @@
                                     </thead>
                                     <tbody>
 
-                                        <?php
+                                        @php
                                         foreach ($newolists as $oList):
                                             
                                             $totEmailCount = 0;
@@ -304,19 +304,19 @@
 
                                             //if ($oList->status != 'archive') {
                                             if (1) {
-                                                ?>
+                                            @endphp
 
 
                                                 <!--================================================-->
                                                 <tr id="append-<?php echo $oList->id; ?>" class="selectedClass">
-                                                    <td style="display: none;"><?php echo date('m/d/Y', strtotime($oList->list_created)); ?></td>
-                                                    <td style="display: none;"><?php echo $oList->id; ?></td>
-                                                    <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="<?php echo $oList->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+                                                    <td style="display: none;">{{ date('m/d/Y', strtotime($oList->list_created)) }} </td>
+                                                    <td style="display: none;">{{ $oList->id }}</td>
+                                                    <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="{{ $oList->id }}" ><span class="custmo_checkmark"></span></label></td>
                                                     <td width="22%">
-                                                        <div class="media-left media-middle"> <a class="icons square" href="<?php echo $editListPath . $oList->id ?>"><i class="icon-indent-decrease2 txt_blue"></i></a> </div>
+                                                        <div class="media-left media-middle"> <a class="icons square" href="{{ $editListPath . $oList->id }} "><i class="icon-indent-decrease2 txt_blue"></i></a> </div>
                                                         <div class="media-left">
-                                                            <div><a href="<?php echo $editListPath . $oList->id ?>" list_id="<?php echo $oList->id; ?>" class="text-default text-semibold"><?php echo setStringLimit($oList->list_name, 20); ?></a></div>
-                                                            <div class="text-muted text-size-small"><?php echo setStringLimit($oList->description, 25); ?></div>
+                                                            <div><a href="{{ $editListPath . $oList->id }} " list_id="{{ $oList->id }}" class="text-default text-semibold">{{ setStringLimit($oList->list_name, 20)}} </a></div>
+                                                            <div class="text-muted text-size-small">{{ setStringLimit($oList->description, 25)}} </div>
                                                         </div>
                                                     </td>
 
@@ -324,13 +324,13 @@
 
                                                         <div class="media-left">
                                                             <div class="">
-                                                                <?php if ($totAll > 0) { ?>
-                                                                    <a href="<?php echo $editListPath . $oList->id ?>" class="text-default text-semibold"><span class="txt_grey"><?php echo $totAll; ?></span></a> 
-                                                                    <?php
+                                                                @php if ($totAll > 0) { @endphp
+                                                                    <a href="@php echo $editListPath . $oList->id @endphp" class="text-default text-semibold"><span class="txt_grey">@php echo $totAll; @endphp</span></a> 
+                                                                    @php
                                                                 } else {
-                                                                    ?><span class="text-muted text-size-small">[No Data]</span><?php
+                                                                    @endphp<span class="text-muted text-size-small">[No Data]</span>@php
                                                                     }
-                                                                    ?>
+                                                                    @endphp
                                                             </div>
                                                         </div>
                                                     </td>
