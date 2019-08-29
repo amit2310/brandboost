@@ -11,8 +11,12 @@
             <li><a class="sidebar-control sidebar-main-toggle left hidden-xs"><i class="icon-arrow-left22"></i></a> </li>
         </ul>
 
-
-        <?php if(isset($pagename)){ echo $pagename; } ?>
+         
+         @if(isset($pagename))
+         
+         {!! $pagename !!} 
+         
+         @endif        
 
 
         <ul class="nav navbar-nav navbar-right">
@@ -53,18 +57,18 @@
             
             <li class="dropdown hidden-xs"> 
                 <a class="dropdown-toggle pl20"> 
-                    <i class="icon-coins"></i> <?php echo (!empty($aUInfo->credits->total_credits)) ? number_format($aUInfo->credits->total_credits) . ' Credits' : 0 . ' Credits'; ?>  
+                    <i class="icon-coins"></i> {{ (!empty($aUInfo->credits->total_credits)) ? number_format($aUInfo->credits->total_credits) . ' Credits' : 0 . ' Credits' }}  
                 </a>
                 
             </li>
 
 
 
-            <?php if (!empty($oCurrentPlanData)): ?>
+            @if (!empty($oCurrentPlanData))
                 <li class="hbr">
                     <a id="showupgradePopup" class="btn bl_cust_btn btn-default upgrade_btn" data-toggle="modal" data-target="#upgrade_popup2"><img width="18" src="{{ URL::asset('assets/images/upgrade_account_icon.png') }}"/>&nbsp; Upgrade <span class="hidetab">Account</span></a> 
                 </li>
-            <?php endif; ?>
+            @endif
 
 
 
@@ -82,7 +86,7 @@
                 </ul>
             </li>
             <!--===========NOTIFICATIONS BELL============-->
-            <?php
+            @php
             $oSysNotifications = get_notifications();
             if (!empty($oSysNotifications)) {
                 $unreadNotificationCount = 0;
@@ -92,24 +96,24 @@
                     }
                 }
             }
-            ?>
+            @endphp
             <!--===========NOTIFICATIONS BELL============-->
-            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle top_notify_icon notification-smart-popup" data-toggle="dropdown"> <i class="icon-bell2"></i>  <span class="badge bg-warning-400 notify"><?php echo $unreadNotificationCount; ?></span> </a>
+            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle top_notify_icon notification-smart-popup" data-toggle="dropdown"> <i class="icon-bell2"></i>  <span class="badge bg-warning-400 notify">{{ $unreadNotificationCount }}</span> </a>
                 <div style="left: 50%; margin-left: -137px;" class="dropdown-menu dropdown-content width_275 p0 hidden">
-                    <div class="dropdown-content-heading"> Notifications <span class="badge bkg_purple ml10"><?php echo $unreadNotificationCount; ?></span>
+                    <div class="dropdown-content-heading"> Notifications <span class="badge bkg_purple ml10">{{ $unreadNotificationCount }}</span>
                         <ul class="icons-list">
                             <li><a href="javascript:void(0);" class="readAllNotification"><i class="icon-checkmark3"></i></a> </li>
-                            <li><a href="<?php echo base_url(); ?>admin/settings/?t=notify"><i class="icon-cog2"></i></a> </li>
+                            <li><a href="{{base_url() }}admin/settings/?t=notify"><i class="icon-cog2"></i></a> </li>
                         </ul>
                     </div>
                     <ul class="media-list dropdown-content-body">
 
-                        <?php if (empty($oSysNotifications)): ?>
+                        @if(empty($oSysNotifications))
                             <li class="media text-center">
                                 <i>No Notification(s) Found</i>
                             </li>
-                        <?php else: ?>
-                            <?php
+                        @else
+                            @php
                             $aSysNotifyTags = get_notification_tags();
                             if (!empty($oSysNotifications)) {
                                 $initFlag = 0;
@@ -122,7 +126,7 @@
                                             $oNotification = '';
                                         }
                                         
-                                        //pre($oNotification->template_tag);
+                                        
                                         if (!empty($oNotification)) {
                                             $messageTitle = $oNotification->title;
                                             $msgNotify = ($userRole == '1') ? $oNotification->tag_language_admin : $oNotification->tag_language;
@@ -139,7 +143,7 @@
                                                 $iconNotify = "icon-stack-text txt_purple";
                                             }
                                         } else {
-                                            //$messageTitle = 'Other';
+                                            
                                             $messageTitle = $oSysNotify->message;
                                             $msgNotify = $oSysNotify->message;
                                             $iconNotify = 'icon-stack-text txt_purple';
@@ -147,37 +151,37 @@
                                             $readStatus = $oSysNotify->status;
                                             $notifyDate = date('h:iA d M Y', strtotime($oSysNotify->created));
                                         }
-                                        ?>
+                                        @endphp
                                         <li class="media">
-                                            <div class="media-left pr15">  <a class="icons" href="javascript:void(0);"><i class="<?php echo $iconNotify; ?> "></i></a> </div>
+                                            <div class="media-left pr15">  <a class="icons" href="javascript:void(0);"><i class="{{ $iconNotify }} "></i></a> </div>
                                             <div class="media-body">
-                                                <a target="_blank" href="javascript:void(0);" data-redirect="<?php echo $oSysNotify->link; ?>" data-notifyid="<?php echo $oSysNotify->id; ?>" class="media-heading <?php if ($readStatus == '0'): ?>fw700<?php endif; ?> readNotification ">
-                                                    <p><?php echo $messageTitle; ?></p>
-                                                    <p class="fsize10 text-muted"><?php echo setStringLimit($msgNotify, 25); ?></p>
-                                                    <p class="fsize10 text-muted"><?php echo $notifyDate; ?></p>
+                                                <a target="_blank" href="javascript:void(0);" data-redirect="{{ $oSysNotify->link }}" data-notifyid="{{ $oSysNotify->id }}" class="media-heading {{ ($readStatus == '0') ? 'fw700' : '' }} readNotification ">
+                                                    <p>{{ $messageTitle }}</p>
+                                                    <p class="fsize10 text-muted">{{ setStringLimit($msgNotify, 25) }}</p>
+                                                    <p class="fsize10 text-muted"> {{ $notifyDate }}</p>
                                                 </a>
                                             </div>
                                         </li>
-                                        <?php
+                                        @php
                                     }
                                 }
                             }
-                            ?>
-                        <?php endif; ?>
+                            @endphp
+                        @endif
 
 
                     </ul>
-                    <?php if (!empty($oSysNotifications)): ?>
+                    @if (!empty($oSysNotifications))
                         <div class="dropdown-content-footer"> <a href="javascript:void(0);" class="viewAllNotification" data-popup="tooltip" title="All messages"><i class="icon-menu display-block"></i></a> </div>
-                    <?php endif; ?>
+                    @endif
                 </div>
             </li>
 
             <!--===========USER PROFILE============-->
             <li class="dropdown dropdown-user">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="<?php echo $srcUserImg; ?>" alt="">
-                    <span><?php echo $userFirstname != '' ? $userFirstname : ''; ?></span>
+                    <img src="{{ $srcUserImg }}" alt="">
+                    <span>{{ ($userFirstname != '') ? $userFirstname : '' }}</span>
                     <i class="caret"></i>
                 </a>
 
@@ -185,10 +189,10 @@
 
 
                 <ul class="dropdown-menu dropdown-menu-right width_170">
-                    <?php if (!empty($aTeamInfo)): ?>
-                        <li><a>(<strong>Logged In As : </strong> <?php echo $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname; ?>)</a>
+                    @if (!empty($aTeamInfo))
+                        <li><a>(<strong>Logged In As : </strong> {{ $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname }} )</a>
                         </li>
-                    <?php endif; ?>
+                    @endif
                     <li><a href="{{ url('/admin/profile/') }}"><i class="icon-user-plus"></i> My profile</a>
                     <li><a href="{{ url('/admin/settings/') }}"><i class="fa fa-cog"></i> Account Settings</a></li>
                     <li><a href="{{ url('/admin/accounts/usage') }}"><i class="fa fa-cog"></i> Account Usage</a></li>
@@ -197,16 +201,16 @@
                     <li><a href="{{ url('admin/settings/?t=subs') }}"><i class="icon-coins"></i> Subscription</a></li>
                     <li><a href="{{ url('admin/settings/?t=billing') }}"><i class="icon-coins"></i> Billing</a></li>
                     <li><a href="{{ url('admin/settings/?t=notify') }}"><i class="icon-bell3"></i> Notifications</a></li>
-                    <?php if ($userRole == 1) { ?>
+                    @if ($userRole == 1)
                         <li><a href="{{ url('/admin/autoresponder/') }}"><i class="icon-comment-discussion"></i> Auto Responder</a>
                         </li>
-                    <?php } ?>
-                    <?php if ($userRole == 1) { ?>
+                    @endif
+                    @if ($userRole == 1) 
                         <li><a href="{{ url('/admin/popupsettings/') }}"><i class="icon-cog5"></i> Popup settings</a>
                         </li>
                         <li><a href="{{ url('/admin/filesize/') }}"><i class="icon-cog5"></i> Filesize settings</a>
                         </li>
-                    <?php } ?>
+                    @endif
                         <li><a href="{{ url('/admin/login/logout/') }}" class="logoutUser"><i class="icon-switch2"></i> Logout</a>
                     </li>
                 </ul>

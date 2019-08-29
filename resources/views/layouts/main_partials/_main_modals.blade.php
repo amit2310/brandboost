@@ -1,4 +1,5 @@
-<?php $countriesList = getCountriesList(); ?>
+{{ $countriesList = getCountriesList() }}
+
 <div id="alertMessagePopup" style="z-index: 9999999999" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -40,9 +41,13 @@
         <div class="modal-content" style="border-top: 3px solid #0ea0dd">
             <div class="modal-header mb-20 text-center">
                 <button style="top: 20px;" type="button" class="close" data-dismiss="modal">&times;</button>
-                <h1 style="font-size: 35px;  font-style: italic; margin:30px 0 0;"><strong>Upgrade to <?php if (isset($oUpgradePlanData->level_name)) {
-    echo $oUpgradePlanData->level_name;
-} ?></strong></h1>
+                <h1 style="font-size: 35px;  font-style: italic; margin:30px 0 0;">
+                    <strong>Upgrade to 
+                        @if (isset($oUpgradePlanData->level_name))
+                            {{ $oUpgradePlanData->level_name }}
+                        @endif
+                    </strong>
+                </h1>
                 <h2 class="modal-title">Get these amazing features:</h2>
             </div>
 
@@ -60,9 +65,9 @@
                                 </dt>
 
                                 <dd>Total Email Invites :
-<?php if (isset($oUpgradePlanData->email_limit)) {
-    echo $oUpgradePlanData->email_limit;
-} ?>
+                                    @if (isset($oUpgradePlanData->email_limit))
+                                        {{ $oUpgradePlanData->email_limit }}
+                                    @endif
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -71,9 +76,9 @@
                                 </dt>
 
                                 <dd>Total Sms Invites :
-<?php if (isset($oUpgradePlanData->sms_limit)) {
-    echo $oUpgradePlanData->sms_limit;
-} ?>
+                                    @if (isset($oUpgradePlanData->sms_limit))
+                                        {{ $oUpgradePlanData->sms_limit }}
+                                    @endif
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -82,9 +87,9 @@
                                 </dt>
 
                                 <dd>Total Text Reviews :
-<?php if (isset($oUpgradePlanData->text_review_limit)) {
-    echo $oUpgradePlanData->text_review_limit;
-} ?>
+                                    @if (isset($oUpgradePlanData->text_review_limit))
+                                        {{ $oUpgradePlanData->text_review_limit }}
+                                    @endif
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -93,9 +98,9 @@
                                 </dt>
 
                                 <dd>Total Video Reviews :
-<?php if (isset($oUpgradePlanData->video_review_limit)) {
-    echo $oUpgradePlanData->video_review_limit;
-} ?>
+                                    @if (isset($oUpgradePlanData->video_review_limit))
+                                        {{ $oUpgradePlanData->video_review_limit }}
+                                    @endif
                                 </dd>
 
                                 <dt class="text-size-small text-bold text-uppercase">
@@ -105,9 +110,9 @@
 
                                 <dd>Get social invites on :
 
-<?php if (isset($oUpgradePlanData->social_invite_sources)) {
-    echo $oUpgradePlanData->social_invite_sources;
-} ?>
+                                    @if (isset($oUpgradePlanData->social_invite_sources))
+                                        {{ $oUpgradePlanData->social_invite_sources }}
+                                    @endif
 
                                 </dd>
                             </dl>
@@ -119,17 +124,24 @@
             <div class="modal-footer pt-20" style="background: #f9f9f9; border-top: 1px solid #eee;">
                 <div class="row">
                     <div class="col-md-9 text-left">
-                        <h1 style="margin: 0;">For an additional <strong>$<?php echo $additionalPriceToPay; ?></strong> every <?php echo $billedCycle; ?>,</h1>
+                        <h1 style="margin: 0;">For an additional <strong>${{ $additionalPriceToPay }}</strong> every {{ $billedCycle }},</h1>
                         <h4 style="margin: 0 0 10px;">You can get brandboost.io most popular plan</h4>
                         <p class="mb0">Want to get up to a 32% discount? <a data-toggle="modal" data-target="#upgrade_popup2" href="#">explore more plans</a>
                         </p>
                     </div>
                     <div class="col-md-3 pt-20 text-center">
-                        <button type="button" class="btn btn-primary mb-10" id="btnLevelUpgrade" plan_name="<?php if (isset($oUpgradePlanData->level_name)) {
-    echo $oUpgradePlanData->level_name;
-} ?>" plan_id="<?php if (isset($oUpgradePlanData->plan_id)) {
-    echo $oUpgradePlanData->plan_id;
-} ?>" data-toggle="modal" data-target="#confirm_level_upgrade"><i class="icon-cart"></i> &nbsp; Confirm Upgrade</button>
+                        <button type="button" class="btn btn-primary mb-10" id="btnLevelUpgrade" 
+                                plan_name="
+                                @if (isset($oUpgradePlanData->level_name))
+                                    {{ $oUpgradePlanData->level_name }}
+                                @endif
+                                " plan_id="
+                                    @if (isset($oUpgradePlanData->plan_id))
+                                        {{ $oUpgradePlanData->plan_id }}
+                                    @endif
+                                " data-toggle="modal" data-target="#confirm_level_upgrade">
+                            <i class="icon-cart"></i> &nbsp; Confirm Upgrade
+                        </button>
                         <p>Your Card will be automatically charged</p>
                     </div>
                 </div>
@@ -152,7 +164,7 @@
                 <div class="row">
                     <!-- Pricing -->
 
-                    <?php
+                    @php
                     $i = 0;
                     foreach ($aAnnualUpgradeData as $key => $data) {
                         $totalPrice = $data->price;
@@ -168,52 +180,36 @@
                                 $billedUnit = 'bi-annually';
                                 $perUnit = 'Bi-Year';
                             }
-                            ?>
-                            <div class="col-md-<?php echo (sizeof($aAnnualUpgradeData) == 2) ? '6' : '12'; ?>">
+                            @endphp
+                            <div class="col-md-{{ (sizeof($aAnnualUpgradeData) == 2) ? '6' : '12' }}">
 
                                 <div class="selectedradio radion_container">
-                                    <input type="radio" name="selectannualupgrade" plan_name="<?php echo $data->level_name; ?>" value="<?php echo $data->plan_id; ?>" id="box_annual_<?php echo $i; ?>"/>
-                                    <span class="checkmark <?php
-                                    if ($i == 1) {
-                                        echo " redc ";
-                                    } elseif ($i == 2) {
-                                        echo "yellowc ";
-                                    } elseif ($i == 3) {
-                                        echo "greenc ";
-                                    }
-                                    ?>"></span>
+                                    <input type="radio" name="selectannualupgrade" plan_name="{{ $data->level_name }}" value="{{ $data->plan_id }}" id="box_annual_{{ $i }}"/>
+                                    <span class="checkmark @if ($i == 1) redc  @elseif ($i == 2) yellowc @elseif ($i == 3) greenc @endif"></span>
                                 </div>
 
 
-                                <label for="box_annual_<?php echo $i; ?>">
-                                    <div class="pricing <?php
-                                    if ($i == 1) {
-                                        echo "red";
-                                    } elseif ($i == 2) {
-                                        echo "yellow";
-                                    } elseif ($i == 3) {
-                                        echo "green";
-                                    }
-                                    ?> hover-effect">
+                                <label for="box_annual_{{ $i }}">
+                                    <div class="pricing hover-effect @if ($i == 1) red @elseif ($i == 2) yellow @elseif ($i == 3) green @endif">
                                         <div class="pricing-head">
-                                            <h3><?php echo $data->level_name; ?> </h3>
-                                            <h4><i>USD</i>  $<?php echo $moPrice; ?> <i>/<?php echo $perUnit; ?></i> <span> Billed <?php echo $billedUnit; ?> <br>(Total $<?php echo $data->price; ?>)</span> </h4>
+                                            <h3>{{ $data->level_name }} </h3>
+                                            <h4><i>USD</i>  ${{ $moPrice }} <i>/{{ $perUnit }}</i> <span> Billed {{ $billedUnit }} <br>(Total ${{ $data->price }})</span> </h4>
                                         </div>
 
-                                        <p> <?php echo $data->description; ?></p>
+                                        <p> {{ $data->description }}</p>
                                         <ul class="pricing-content list-unstyled">
-                                            <li>Free Trials-<?php echo @($data->free_trial_days); ?> Days</li>
-                                            <li>Email Invites-<?php echo $data->email_limit; ?></li>
-                                            <li>Sms Invites-<?php echo $data->sms_limit; ?></li>
-                                            <li>Text Reviews-<?php echo $data->text_review_limit; ?></li>
-                                            <li>Video Reviews-<?php echo $data->video_review_limit; ?></li>
-                                            <li>Email Topup-<?php if (@($data->topup_email_limit)): ?> Yes <?php else: ?> No <?php endif; ?></li>
-                                            <li>Sms Topup-<?php if (@($data->topup_sms_limit)): ?> Yes <?php else: ?> No <?php endif; ?></li>
-                                            <li>Social Invites-<?php if ($data->social_invite_sources): ?> Yes <?php else: ?> No <?php endif; ?></li>
-                                            <li>Google Invites-<?php if (strpos($data->social_invite_sources, 'Google') !== false): ?> Yes <?php else: ?> No <?php endif; ?></li>
-                                            <li>Facebook Invites-<?php if (strpos($data->social_invite_sources, 'Facebook') !== false): ?> Yes <?php else: ?> No <?php endif; ?></li>
-                                            <li>Yelp Invites-<?php if (strpos($data->social_invite_sources, 'Yelp') !== false): ?> Yes <?php else: ?> No <?php endif; ?></li>
-                                            <li>Other Social Invites-<?php if (strpos($data->social_invite_sources, 'others') !== false): ?> Yes <?php else: ?> No <?php endif; ?></li>
+                                            <li>Free Trials-{{ @($data->free_trial_days) }} Days</li>
+                                            <li>Email Invites-{{ $data->email_limit }}</li>
+                                            <li>Sms Invites-{{ $data->sms_limit }}</li>
+                                            <li>Text Reviews-{{ $data->text_review_limit }}</li>
+                                            <li>Video Reviews-{{ $data->video_review_limit }}</li>
+                                            <li>Email Topup-@if (@($data->topup_email_limit)) Yes @else No @endif</li>
+                                            <li>Sms Topup-@if (@($data->topup_sms_limit)) Yes @else No @endif</li>
+                                            <li>Social Invites-@if ($data->social_invite_sources) Yes @else No @endif</li>
+                                            <li>Google Invites-@if (strpos($data->social_invite_sources, 'Google') !== false) Yes @else No @endif</li>
+                                            <li>Facebook Invites-@if (strpos($data->social_invite_sources, 'Facebook') !== false) Yes @else No @endif</li>
+                                            <li>Yelp Invites-@if (strpos($data->social_invite_sources, 'Yelp') !== false) Yes @else No @endif</li>
+                                            <li>Other Social Invites-@if (strpos($data->social_invite_sources, 'others') !== false) Yes @else No @endif></li>
                                         </ul>
                                         <div class="pricing-footer">
                                             <a href="javascript:;" class="btn yellow-crusta"> Sign Up </a> 
@@ -222,10 +218,10 @@
                                 </label>
 
                             </div>
-        <?php
+        @php
     }
 }
-?>
+@endphp
 
                     <!--//End Pricing -->
                 </div>
@@ -266,52 +262,42 @@
                             <tr>
                                 <td>Name :</td>
                                 <td>
-                                    <?php
-                                    if (isset($aUInfo->firstname) || isset($aUInfo->lastname)) {
-                                        echo $aUInfo->firstname . ' ' . $aUInfo->lastname;
-                                    }
-                                    ?>
+                                    @if (isset($aUInfo->firstname) || isset($aUInfo->lastname))
+                                       {{ $aUInfo->firstname . ' ' . $aUInfo->lastname }}
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td>Email :</td>
                                 <td>
-                                    <?php
-                                    if (isset($aUInfo->email)) {
-                                        echo $aUInfo->email;
-                                    }
-                                    ?>
+                                    @if (isset($aUInfo->email)) 
+                                       {{ $aUInfo->email }}
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td>Phone :</td>
                                 <td>
-                                    <?php
-                                    if (isset($aUInfo->mobile)) {
-                                        echo $aUInfo->mobile;
-                                    }
-                                    ?>
+                                    @if (isset($aUInfo->mobile))
+                                        {{ $aUInfo->mobile }}
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td>Current Plan :</td>
                                 <td>
-<?php
-if (isset($oCurrentPlanData->level_name)) {
-    echo $oCurrentPlanData->level_name;
-}
-?>
+                                    @if (isset($oCurrentPlanData->level_name)) 
+                                        {{ $oCurrentPlanData->level_name }}
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td>Upgrade to :</td>
                                 <td>
                                     <span id="upgradedPlanTitle">
-<?php
-if (isset($oUpgradePlanData->level_name)) {
-    echo $oUpgradePlanData->level_name;
-}
-?>
+                                        @if (isset($oUpgradePlanData->level_name)) 
+                                            {{ $oUpgradePlanData->level_name }}
+                                        @endif
                                     </span>
                                 </td>
                             </tr>
@@ -331,9 +317,7 @@ if (isset($oUpgradePlanData->level_name)) {
             </div>
 
             <div class="modal-footer">
-                <input type="hidden" name="hidLevelPlanId" id="hidLevelPlanId" value="<?php if (isset($oUpgradePlanData->plan_id)) {
-    echo $oUpgradePlanData->plan_id;
-} ?>"/>
+                <input type="hidden" name="hidLevelPlanId" id="hidLevelPlanId" value="@if (isset($oUpgradePlanData->plan_id)) {{ $oUpgradePlanData->plan_id }} @endif"/>
                 <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancel</button>
                 <button type="button" id="confirmLevelUpdate" class="btn btn-primary">Yes, Upgrade Now</button>
             </div>
@@ -353,8 +337,7 @@ if (isset($oUpgradePlanData->level_name)) {
                 <div class="modal-body">
 
                     <div class="alert-danger" style="margin-bottom:10px;">
-<?php echo Session::get('error_message'); ?>
-<?php //echo validation_errors();  ?>
+                        {{ Session::get('error_message') }}
                     </div>
 
                     <div class="col-md-12">
@@ -551,12 +534,9 @@ if (isset($oUpgradePlanData->level_name)) {
                                 <div class="">
                                     <select class="form-control h52" name="country_code" id="country_code">
                                         <option value="">Select Country</option>
-<?php
-
-foreach ($countriesList as $countryName) {
-    ?>
-                                            <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
-<?php } ?>
+                                            @foreach ($countriesList as $countryName)
+                                                <option value="{{ $countryName->country_code }}">{{ $countryName->name }}</option>
+                                            @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -713,12 +693,9 @@ foreach ($countriesList as $countryName) {
                                 <div class="">
                                     <select class="form-control h52" name="edit_countryCode" id="edit_countryCode_sms">
                                         <option value="">Select Country</option>
-<?php
-
-foreach ($countriesList as $countryName) {
-    ?>
-                                            <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
-<?php } ?>
+                                            @foreach ($countriesList as $countryName)
+                                                <option value="{{ $countryName->country_code }}"> {{ $countryName->name }}</option>
+                                            @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -880,12 +857,9 @@ foreach ($countriesList as $countryName) {
                                 <div class="">
                                     <select class="form-control h52" name="edit_countryCode" id="edit_countryCode_main_web">
                                         <option value="">Select Country</option>
-<?php
-
-foreach ($countriesList as $countryName) {
-    ?>
-                                            <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
-<?php } ?>
+                                            @foreach ($countriesList as $countryName)
+                                                <option value="{{ $countryName->country_code }}"> {{ $countryName->name }}</option>
+                                            @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -1046,12 +1020,9 @@ foreach ($countriesList as $countryName) {
                                 <div class="">
                                     <select class="form-control h52" name="edit_countryCode" id="edit_countryCode">
                                         <option value="">Select Country</option>
-<?php
-
-foreach ($countriesList as $countryName) {
-    ?>
-                                            <option value="<?php echo $countryName->country_code; ?>"><?php echo $countryName->name; ?></option>
-<?php } ?>
+                                            @foreach ($countriesList as $countryName)
+                                                <option value="{{ $countryName->country_code }}"> {{ $countryName->name }}</option>
+                                            @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -1155,8 +1126,7 @@ foreach ($countriesList as $countryName) {
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo Session::get('error_message'); ?>
-<?php //echo validation_errors();  ?></div>
+                    <div class="alert-danger" style="margin-bottom:10px;">{{ Session::get('error_message') }}</div>
 
                     <!-- <div class="form-group">
                        <label class="control-label col-lg-3">Import CSV</label>
@@ -1181,7 +1151,7 @@ foreach ($countriesList as $countryName) {
 
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                    @csrf
                     <input type="hidden" name="module_name" id="import_active_module_name" value="">
                     <input type="hidden" name="module_account_id" id="import_module_account_id" value="">
                     <input type="hidden" name="redirect_url" id="import_redirect_url" value="">
@@ -1294,7 +1264,7 @@ foreach ($countriesList as $countryName) {
                 <a style="cursor: pointer" class="close_no close" data-dismiss="modal"><img src="{{ URL::asset('assets/images/cross_icon_10.png') }}"/></a> 
                 <div class="media-left pr-15"><img src="{{ URL::asset('assets/images/logout_icon1.png') }}"/></div>
                 <div class="media-left pr0">
-                    <p class="txt_dark fw400">No Activity For <?php echo $inactivity_length; ?> Minutes</p>
+                    <p class="txt_dark fw400">No Activity For {{ $inactivity_length }} Minutes</p>
                     <p class="txt_grey fw300">Do you want to remain logged<br> in Brand Boost?</p>
                     <button class="gery_btn logoutYes">Yes</button>
                     <button class="gery_btn txt_grey logoutNo">No</button>
