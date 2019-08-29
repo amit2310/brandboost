@@ -165,7 +165,7 @@
         </div>
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
-    <?php if (!empty($oSubscribers)): ?>
+    @if (!empty($oSubscribers))
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
@@ -175,14 +175,14 @@
                         <div class="panel panel-flat">
                             <div class="panel-heading">
                                 <span class="pull-left">
-                                    <h6 class="panel-title">Open &nbsp; &nbsp; <img class="mt-5" src="<?php echo base_url(); ?>assets/images/user_icon_white.png"/> &nbsp;   <?php echo count($oSubscribers);?> Contacts </h6>
+                                    <h6 class="panel-title">Open &nbsp; &nbsp; <img class="mt-5" src="{{ base_url() }}assets/images/user_icon_white.png"/> &nbsp;   {{ count($oSubscribers) }} Contacts </h6>
                                 </span>
 
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
                                         <div class="form-control-feedback">
-                                            <i class=""><img src="<?php echo base_url(); ?>assets/images/icon_search.png" width="14"></i>
+                                            <i class=""><img src="{{ base_url() }} assets/images/icon_search.png" width="14"></i>
                                         </div>
                                     </div>
 
@@ -192,10 +192,10 @@
                                         <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_download.png"></i></a>
                                         <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_upload.png"></i></a> -->
 
-                                        <a href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_calender.png"></i></a>
-                                        <a href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_download.png"></i></a>
-                                        <a href="#"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_upload.png"></i></a>
-                                        <a href="javascript:void(0);"><i class="editDataListSeg"><img src="<?php echo base_url(); ?>assets/images/icon_edit.png"></i></a>
+                                        <a href="#"><i class=""><img src="{{ base_url() }}assets/images/icon_calender.png"></i></a>
+                                        <a href="#"><i class=""><img src="{{ base_url() }}assets/images/icon_download.png"></i></a>
+                                        <a href="#"><i class=""><img src="{{ base_url() }}assets/images/icon_upload.png"></i></a>
+                                        <a href="javascript:void(0);"><i class="editDataListSeg"><img src="{{ base_url() }} assets/images/icon_edit.png"></i></a>
 
                                         <a href="javascript:void(0);" style="display: none;" title="delete" id="deleteButtonSegment" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                         <!-- <a href="javascript:void(0);" style="display: none;" title="archive" id="archiveButtonSegment" class="custom_action_box"><i class="icon-gear position-left"></i></a> -->
@@ -222,13 +222,13 @@
                                                 <th style="display: none;"></th>
                                                 <th style="display: none;"></th>
                                                 <th class="nosort editAction" style="width:30px;display:none;"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="control-primary" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
-                                                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i>Name</th>
-                                                <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Phone</th>
-                                                <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Created</th>
-                                                <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Source</th>
-                                                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_social.png"></i>Social</th>
-                                                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_id.png"></i>Tags</th>
-                                                <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_status.png"></i>Status</th>
+                                                <th><i class=""><img src="{{ base_url() }}assets/images/icon_name.png"></i>Name</th>
+                                                <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_device.png"></i>Phone</th>
+                                                <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_clock.png"></i>Created</th>
+                                                <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_source.png"></i>Source</th>
+                                                <th><i class=""><img src="{{ base_url() }} assets/images/icon_social.png"></i>Social</th>
+                                                <th><i class=""><img src="{{ base_url() }} assets/images/icon_id.png"></i>Tags</th>
+                                                <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_status.png"></i>Status</th>
                                                 
                                             </tr>
                                         </thead>
