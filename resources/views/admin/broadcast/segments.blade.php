@@ -289,9 +289,9 @@
                                             }
                                             @endphp
                                             <tr id="append-<?php echo $oSegment->id; ?>" class="selectedClass">
-                                                <td style="display: none;"><?php echo date('m/d/Y', strtotime($oSegment->created)); ?></td>
-                                                <td style="display: none;"><?php echo $oSegment->id; ?></td>
-                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $oSegment->id; ?>" value="<?php echo $oSegment->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+                                                <td style="display: none;">{{ date('m/d/Y', strtotime($oSegment->created)) }} </td>
+                                                <td style="display: none;">{{ $oSegment->id }}</td>
+                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $oSegment->id}}" value="{{ $oSegment->id }}" ><span class="custmo_checkmark"></span></label></td>
                                                 <!-- <td>
                                                     <div class="media-left media-middle"> <a class="icons br5" href="#"><img src="<?php echo base_url(); ?>assets/images/filter_blue_10.png" class="img-circle img-xs br5" alt=""></a> </div>
                                                     <div class="media-left">
