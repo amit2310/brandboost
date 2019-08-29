@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -12,7 +12,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
-                <h3><img style="width: 16px;" src="<?php echo base_url(); ?>assets/images/refferal_icon.png">Advocates</h3>
+                <h3><img style="width: 16px;" src="{{ base_url() }}assets/images/refferal_icon.png">Advocates</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <li class="active all"><a style="javascript:void();" id="activeAdvocates" class="filterByColumn" fil="active">Active Campaigns</a></li>
                     <li><a style="javascript:void();" class="filterByColumn" fil="archive">Archive</a></li>
@@ -157,8 +157,6 @@
                         </div>
                     </div>
                 </div>
-
-<!-- <button type="button" class="btn dark_btn dropdown-toggle ml10"><i class="icon-plus3 txt_teal"></i><span> &nbsp;  New Program</span> </button> -->
             </div>
         </div>
     </div>
@@ -185,14 +183,14 @@
                                 <div class="table_action_tool">
                                     <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_calender.png"/></i></a>
                                     <a href="javascript:void(0);" class="editDataList"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_edit.png"/></i></a>
-                                    <a href="javascript:void(0);" id="deleteBulkModuleContacts" class="custom_action_box" style="display:none;" data-modulename="referral" data-moduleaccountid="<?php //echo $moduleUnitID; ?>"><i class="icon-trash position-left"></i></a>
-                                    <button id="archiveBulkModuleContacts" class="btn btn-xs custom_action_box" data-modulename="referral" data-moduleaccountid="<?php //echo $moduleUnitID; ?>"><i class="icon-gear position-left"></i> Archive</button>
+                                    <a href="javascript:void(0);" id="deleteBulkModuleContacts" class="custom_action_box" style="display:none;" data-modulename="referral" data-moduleaccountid="{{ $moduleUnitID }}"><i class="icon-trash position-left"></i></a>
+                                    <button id="archiveBulkModuleContacts" class="btn btn-xs custom_action_box" data-modulename="referral" data-moduleaccountid="{{ $moduleUnitID }}"><i class="icon-gear position-left"></i> Archive</button>
                                 </div>
 
                             </div>
                         </div>
                         <div class="panel-body p0">
-                            <?php if(!empty($oContacts)){?>
+                            @if(!empty($oContacts))
                             <table class="table" id="advocatesTable">
                                 <thead>
                                     <tr>
@@ -212,90 +210,75 @@
                                 </thead>
                                 <tbody>
 
-                                    <?php
-                                    //pre($oContacts);
+                                    @php
                                     foreach ($oContacts as $oContact) {
-                                        //pre($oContact);
                                         $moduleName = 'referral';
                                         $moduleUnitID = $oContact->account_id;
                                         $referralData = \App\Models\Admin\Modules\ReferralModel::getReferralByAccountId($moduleUnitID);
                                         $referralTrackData = \App\Models\Admin\Modules\ReferralModel::getReferralLinkVisitsByAdvocateId($oContact->subscriber_id, $referralData->id);
                                         $referralSaleTrackData = \App\Models\Admin\Modules\ReferralModel::referredSalesByAdvocateId($oContact->subscriber_id, $moduleUnitID);
-                                        
-                                        ?>
+                                        @endphp
                                         <tr>
-                                            <td style="display: none;"><?php echo date('m/d/Y', strtotime($oContact->created)); ?></td>
-                                            <td style="display: none;"><?php echo $oContact->id; ?></td>
-                                            <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="<?php echo $oContact->id; ?>" ><span class="custmo_checkmark"></span></label></td>
-                                            <td class="viewAdvocateSmartPopup" data-modulesubscriberid="<?php echo $oContact->subscriber_id; ?>" data-accountid="<?php echo $moduleUnitID; ?>">											
-                                                <div class="media-left media-middle"> <?php echo showUserAvtar($oContact->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
+                                            <td style="display: none;">{{ date('m/d/Y', strtotime($oContact->created)) }}</td>
+                                            <td style="display: none;">{{ $oContact->id }}</td>
+                                            <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="{{ $oContact->id }}" ><span class="custmo_checkmark"></span></label></td>
+                                            <td class="viewAdvocateSmartPopup" data-modulesubscriberid="{{ $oContact->subscriber_id }}" data-accountid="{{ $moduleUnitID }}">											
+                                                <div class="media-left media-middle"> {!! showUserAvtar($oContact->avatar, $oContact->firstname, $oContact->lastname) !!} </div>
                                                 <div class="media-left">
-                                                    <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold"><?php echo $oContact->firstname. ' '. $oContact->lastname; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($oContact->country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
-
+                                                    <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold">{{ $oContact->firstname. ' '. $oContact->lastname }}</a> <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($oContact->country_code) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png')}}'"/></div>
                                                 </div>
                                             </td>
                                             <td><div class="media-left media-middle"> <a class="icons br5" href="#"><i class="icon-tree5 txt_sblue"></i></a> </div>
                                                 <div class="media-left">
-                                                    <div class="pt-5"><a href="<?php echo base_url(); ?>admin/modules/referral/setup/<?php echo $referralData->id; ?>" class="text-default text-semibold"><?php echo $referralData->title; ?></a></div>
+                                                    <div class="pt-5"><a href="{{ base_url() }}admin/modules/referral/setup/{{ $referralData->id }}" class="text-default text-semibold">{{ $referralData->title }}</a></div>
                                                 </div></td>
                                             <td><div class="media-left">
-                                                    <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo $oContact->email; ?></a></div>
-                                                    <div class="text-muted text-size-small"><?php echo $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oContact->phone); ?></div>
+                                                    <div class="pt-5"><a href="#" class="text-default text-semibold">{{ $oContact->email }}</a></div>
+                                                    <div class="text-muted text-size-small">{!! $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oContact->phone) !!}</div>
                                                 </div></td>
                                             <td>
                                                 <div class="media-left">
-                                                    <div class="pt-5"><span class="text-default text-semibold dark"><?php echo date('F dS Y', strtotime($oContact->created)); ?></span></div>
-                                                    <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oContact->created)); ?></div>
+                                                    <div class="pt-5"><span class="text-default text-semibold dark">{{ date('F dS Y', strtotime($oContact->created)) }}</span></div>
+                                                    <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oContact->created)) }}</div>
                                                 </div>
                                             </td>
-                                            <td><a style="cursor: auto;" class="text-default text-semibold"><img class="progress_icon" src="<?php echo base_url(); ?>assets/images/progress_green.png"/> &nbsp; <?php echo count($referralTrackData); ?></a></td>
-                                            <td><a style="cursor: auto;" class="text-default text-semibold"><img class="progress_icon" src="<?php echo base_url(); ?>assets/images/progress_red.png"/> &nbsp; <?php echo count($referralSaleTrackData); ?></a></td>
+                                            <td><a style="cursor: auto;" class="text-default text-semibold"><img class="progress_icon" src="{{ base_url() }}assets/images/progress_green.png"/> &nbsp; {{ count($referralTrackData) }}</a></td>
+                                            <td><a style="cursor: auto;" class="text-default text-semibold"><img class="progress_icon" src="{{ base_url() }}assets/images/progress_red.png"/> &nbsp; {{ count($referralSaleTrackData) }}</a></td>
 
                                             <td><div class="tdropdown">
-                                                    <?php echo ($oContact->status == 1 && $oContact->globalStatus == 1) ? '<i class="icon-primitive-dot txt_green fsize16"></i>' : '<i class="icon-primitive-dot txt_red fsize16"></i>'; ?> <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown"><?php echo ($oContact->status == 1 && $oContact->globalStatus == 1) ? ' Active' : 'Archive'; ?></a>
+                                                    @php echo ($oContact->status == 1 && $oContact->globalStatus == 1) ? '<i class="icon-primitive-dot txt_green fsize16"></i>' : '<i class="icon-primitive-dot txt_red fsize16"></i>' @endphp <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">{{ ($oContact->status == 1 && $oContact->globalStatus == 1) ? ' Active' : 'Archive' }}</a>
                                                     <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
-                                                        <?php
-                                                        if ($oContact->status == 1 && $oContact->globalStatus == 1) {
-                                                            ?><li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '0'><i class="icon-primitive-dot txt_grey"></i> Inactive</a></li>
-                                                            <?php
-                                                        } else {
-                                                            ?>
-                                                            <li><a class='<?php if ($oContact->globalStatus == 1): ?>changeModuleContactStatus<?php else: ?>changeModuleContactStatusDisabled<?php endif; ?>'  data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '1'><i class="icon-primitive-dot txt_green"></i> Active</a></li>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                        <li><a class="moveToArchiveModuleContact" href="javascript:void(0);" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
+                                                        @if ($oContact->status == 1 && $oContact->globalStatus == 1)
+                                                            <li><a class='changeModuleContactStatus' data-modulesubscriberid="{{ $oContact->id }}" data-modulename="{{ $moduleName }}" data-moduleaccountid="{{ $moduleUnitID }}" data_status = '0'><i class="icon-primitive-dot txt_grey"></i> Inactive</a></li>
+                                                        @else
+                                                            <li><a class='@if ($oContact->globalStatus == 1) changeModuleContactStatus @else changeModuleContactStatusDisabled @endif'  data-modulesubscriberid="{{ $oContact->id }}" data-modulename="{{ $moduleName }}" data-moduleaccountid="{{ $moduleUnitID }}" data_status = '1'><i class="icon-primitive-dot txt_green"></i> Active</a></li>
+                                                        @endif
+                                                        <li><a class="moveToArchiveModuleContact" href="javascript:void(0);" data-modulesubscriberid="{{ $oContact->id }}" data-modulename="{{ $moduleName }}" data-moduleaccountid="{{ $moduleUnitID }}"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
                                                     </ul>
                                                 </div></td>
                                             <td class="text-center">
-                                                <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                                <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                                     <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
-                                                        <li><a class="moveToArchiveModuleContact" href="javascript:void(0);" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>"><i class="icon-trash"></i> Move To Archive</a></li>
+                                                        <li><a class="moveToArchiveModuleContact" href="javascript:void(0);" data-modulesubscriberid="{{ $oContact->id }}" data-modulename="{{ $moduleName }}" data-moduleaccountid="{{ $moduleUnitID }}"><i class="icon-trash"></i> Move To Archive</a></li>
 
-                                                        <?php
-                                                        if ($oContact->status == 1 && $oContact->globalStatus == 1) {
+                                                        @if ($oContact->status == 1 && $oContact->globalStatus == 1)
                                                             ?><li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '0'><i class='icon-file-locked'></i> Inactive</a></li>
-                                                            <?php
-                                                        } else {
-                                                            ?>
-                                                            <li><a class='<?php if ($oContact->globalStatus == 1): ?>changeModuleContactStatus<?php else: ?>changeModuleContactStatusDisabled<?php endif; ?>'  data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '1'><i class='icon-file-locked'></i> Active</a></li>
-                                                            <?php
-                                                        }
-                                                        ?>
+                                                        @else
+                                                            <li><a class='@if ($oContact->globalStatus == 1) changeModuleContactStatus @else changeModuleContactStatusDisabled @endif'  data-modulesubscriberid="{{ $oContact->id }}" data-modulename="{{ $moduleName }}" data-moduleaccountid="{{ $moduleUnitID }}" data_status = '1'><i class='icon-file-locked'></i> Active</a></li>
+                                                        @endif
 
-                                                        <li><a class="deleteModuleSubscriber" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" csrf_token="<?php echo csrf_token(); ?>" href="javascript:void(0);"><i class="icon-trash"></i> Delete</a></li>
+                                                        <li><a class="deleteModuleSubscriber" data-modulesubscriberid="{{ $oContact->id }}" data-modulename="{{ $moduleName }}" data-moduleaccountid="{{ $moduleUnitID }}" csrf_token="{{ csrf_token() }}" href="javascript:void(0);"><i class="icon-trash"></i> Delete</a></li>
                                                     </ul>
                                                 </div>
                                             </td>
 
-                                            <td style="display:none;"><?php echo $oContact->status == 1 ? 'active' : 'archive'; ?></td>
+                                            <td style="display:none;">{{ $oContact->status == 1 ? 'active' : 'archive' }}</td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
-                        <?php }
-                        else {
-                            ?><table class="table datatable-basic">
+                        @else
+							<table class="table datatable-basic">
                                     <thead>
                                         <tr>
                                             <th style="display: none"></th>
@@ -320,7 +303,7 @@
                                                 <div class="col-md-12">
                                                     <div style="margin: 20px 0px 0;" class="text-center">
                                                         <h5 class="mb-20 mt40">
-                                                            Looks Like You Don’t Have Any Advocate Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+                                                            Looks Like You Don’t Have Any Advocate Yet <img src="{{ base_url('assets/images/smiley.png') }}"> <br>
                                                             Lets Create Your First Advocate.
                                                         </h5>
 
@@ -337,24 +320,19 @@
                                         <td style="display: none"></td>
                                         <td style="display: none"></td>
                                     </tbody>
-                                </table><?php
-                        }?>
+                                </table>
+							@endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
     <!--&&&&&&&&&&&& TABBED CONTENT  END &&&&&&&&&&-->
-
-
-
 </div>
 
 
-<script src="<?php echo base_url(); ?>assets/js/modules/people/subscribers.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/js/modules/people/subscribers.js" type="text/javascript"></script>
 <script>
     // top navigation fixed on scroll and side bar collasped
 
