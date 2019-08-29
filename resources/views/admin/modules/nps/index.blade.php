@@ -1,12 +1,12 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
 
-<?php
+@php
 $iActiveCount = $iArchiveCount = 0;
 
 if (!empty($oPrograms)) {
@@ -18,7 +18,7 @@ if (!empty($oPrograms)) {
         }
     }
 }
-?>
+@endphp
 <!-- Content area -->
 
 <style type="text/css">
@@ -176,7 +176,7 @@ if (!empty($oPrograms)) {
                         </div>
                     </div>
                 </div>
-                <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription" <?php } else { ?> id="addNpsSurvery" <?php } ?> type="button" class="btn dark_btn ml20"><i class="icon-plus3"></i> Add New Survey</button>
+                <button @if ($bActiveSubsription == false) title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription" @else id="addNpsSurvery" @endif type="button" class="btn dark_btn ml20"><i class="icon-plus3"></i> Add New Survey</button>
             </div>
         </div>
     </div>
