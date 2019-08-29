@@ -293,21 +293,12 @@
                                                                 </div>
                                                             </td> -->
 
-                                                        <td class="text-right viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->globalSubscriberId; ?>" data-modulename="<?php echo $moduleName; ?>"><div class="media-left pull-right">
-          <div class="pt-5"><a href="javascript:void();" class="text-default text-semibold dark"><?php echo date('F dS Y', strtotime($oContact->created)); ?></a></div>
-          <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oContact->created)); ?></div>
+                                                        <td class="text-right viewContactSmartPopup" data-modulesubscriberid="{{  $oContact->globalSubscriberId }}" data-modulename="{{ $moduleName }}"><div class="media-left pull-right">
+          <div class="pt-5"><a href="javascript:void();" class="text-default text-semibold dark">{{ date('F dS Y', strtotime($oContact->created)) }}</a></div>
+          <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oContact->created)) }}</div>
         </div></td>
-
-                                                            <!-- <td class="viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->globalSubscriberId; ?>" data-modulename="<?php echo $moduleName; ?>">
-                                                                <div class="media-left text-right">
-                                                                    <div class="pt-5"><span class="text-default text-semibold dark">Email</span></div>
-                                                                    <div class="text-muted text-size-small">Form #183</div>
-                                                                </div>
-                                                                <div class="media-left media-middle brig pr10"> <span class="icons s28"><img src="<?php echo base_url(); ?>assets/images/icon_round_email.png" class="img-circle img-xs" alt=""></span> </div>
-                                                            </td> -->
-
-                                                            <td class="text-right viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->globalSubscriberId; ?>" data-modulename="<?php echo $moduleName; ?>">
-       <div class="media-left text-right pull-right mt10 pr10 brig"> <a class="icons s28" href="javascript:void();"><img src="<?php echo base_url(); ?>assets/images/icon_round_email.png" class="img-circle img-xs" alt=""></a> </div>
+         <td class="text-right viewContactSmartPopup" data-modulesubscriberid="{{ $oContact->globalSubscriberId }}" data-modulename="{{ $moduleName }}">
+       <div class="media-left text-right pull-right mt10 pr10 brig"> <a class="icons s28" href="javascript:void();"><img src="{{ base_url() }} assets/images/icon_round_email.png" class="img-circle img-xs" alt=""></a> </div>
         <div class="media-left text-right pull-right">
           <div class="pt-5"><a href="#" class="text-default text-semibold dark">Email</a></div>
           <div class="text-muted text-size-small">Form #183</div>
