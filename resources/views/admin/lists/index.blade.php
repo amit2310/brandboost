@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -160,7 +160,7 @@
                     </div>
                 </div>
 
-                <button type="button" <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription" <?php } else { ?> id="addList" <?php } ?> class="btn dark_btn ml20" data-toggle="modal" data-target="#addPeopleList"><i class="icon-plus3"></i><span> &nbsp;  New List</span> </button>
+                <button type="button" @php if ($bActiveSubsription == false) { @endphp title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription" @php } else { @endphp id="addList" @php } @endphp class="btn dark_btn ml20" data-toggle="modal" data-target="#addPeopleList"><i class="icon-plus3"></i><span> &nbsp;  New List</span> </button>
             </div>
         </div>
     </div>
