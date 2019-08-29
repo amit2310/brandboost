@@ -172,12 +172,12 @@
                     </div>
                 </div>
 
-                <?php if ($campaignType == 'Email'): ?>
+                @if ($campaignType == 'Email')
                     <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="Email"><i class="icon-plus3"></i> &nbsp; Email Broadcast</button> 
-                <?php endif; ?>
-                <?php if ($campaignType == 'SMS'): ?>
+                @endif
+                @if ($campaignType == 'SMS')
                     <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="SMS"><i class="icon-plus3"></i> &nbsp; SMS Broadcast</button>
-                <?php endif; ?>
+                @endif
             </div>
         </div>
     </div>
