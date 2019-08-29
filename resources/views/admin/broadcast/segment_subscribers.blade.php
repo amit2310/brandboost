@@ -13,7 +13,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3 mt20">
-                <h3><img style="width: 18px;" src="<?php echo base_url(); ?>assets/images/menu_icons/Email_Light.svg"><?php echo $title; ?></h3>
+                <h3><img style="width: 18px;" src="{{ base_url() }} assets/images/menu_icons/Email_Light.svg">{{ $title }}</h3>
 
             </div>
             <!--=============Button Area Right Side==============-->
@@ -155,12 +155,12 @@
                     </div>
                 </div>
 
-                <?php if (isset($campaignType) && $campaignType == 'Email'): ?>
+                @if (isset($campaignType) && $campaignType == 'Email')
                     <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="Email"><i class="icon-plus3"></i> &nbsp; Email Broadcast</button> 
-                <?php endif; ?>
-                <?php if (isset($campaignType) && $campaignType == 'SMS'): ?>
+                @endif
+                @if (isset($campaignType) && $campaignType == 'SMS')
                     <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="SMS"><i class="icon-plus3"></i> &nbsp; SMS Broadcast</button>
-                <?php endif; ?>
+                @endif
             </div>
         </div>
     </div>
