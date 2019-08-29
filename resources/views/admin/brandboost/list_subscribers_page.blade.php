@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -157,6 +157,6 @@
         </div>
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
- @include('admin.brandboost.list_subscribers', array('subscribersData'=>$subscribersData))
+    @include('admin.brandboost.list_subscribers', ['subscribersData'=>$subscribersData])
 </div>
 @endsection

@@ -332,7 +332,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmEditTeamMember" class="form-horizontal" name="frmEditTeamMember">
-                 <input type="hidden" name="_token" value="{{csrf_token()}}">
+                 @csrf
                 <div class="modal-header">
                 <input type="hidden" name="" id="oMember_bb_number" value="">
                     <button type="button" class="close" data-dismiss="modal">×</button>
@@ -578,7 +578,7 @@
         <div class="modal-content">
 
             <form method="post" name="frmaddTeamMemberModal" class="form-horizontal" id="frmaddTeamMemberModal" action="javascript:void();">
-                 <input type="hidden" name="_token" value="{{csrf_token()}}">
+                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add Team Member</h5>

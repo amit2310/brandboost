@@ -1,11 +1,11 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ echo $title }}
 @endsection
 
 @section('contents')
-<?php
+@php
 	$rs = '';
 	$setupClass = '';
 	$StatsClass = '';
@@ -22,20 +22,20 @@
 		} else {
 		$rs = 'active';
 	}
-?>
+@endphp
 <div class="content">
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
     <div class="page_header">
-		@include('admin.components.smart-popup.smart-widget-type');
+		@include('admin.components.smart-popup.smart-widget-type')
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
                 <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Widget Setup</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
-                    <li class="<?php echo $rs; ?>"><a href="#right-icon-tab1" data-toggle="tab">Review Widgets</a></li>
-                    <li class="<?php echo $setupClass; ?>"><a href="#right-icon-tab2" data-toggle="tab">Configuration</a></li>
-                    <li class="<?php echo $integrationClass; ?>"><a href="#right-icon-tab3" data-toggle="tab">Integration</a></li>
-                    <li class="<?php echo $StatsClass; ?>"><a href="#right-icon-tab4" data-toggle="tab">Statistics</a></li>
+                    <li class="{{ $rs }}"><a href="#right-icon-tab1" data-toggle="tab">Review Widgets</a></li>
+                    <li class="{{ $setupClass }}"><a href="#right-icon-tab2" data-toggle="tab">Configuration</a></li>
+                    <li class="{{ $integrationClass }}"><a href="#right-icon-tab3" data-toggle="tab">Integration</a></li>
+                    <li class="{{ $StatsClass }}"><a href="#right-icon-tab4" data-toggle="tab">Statistics</a></li>
 				</ul>
 			</div>
             <!--=============Button Area Right Side==============-->
@@ -85,7 +85,7 @@
 			
             var getActiveText = $(this).text();
             $.ajax({
-                url: "<?php echo base_url('/admin/brandboost/setTab'); ?>",
+                url: "{{ base_url('/admin/brandboost/setTab') }}",
                 type: "POST",
                 data: {getActiveText: getActiveText, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -111,7 +111,7 @@
 	
     function changeTab(getActiveText) {
         $.ajax({
-            url: "<?php echo base_url('/admin/brandboost/setTab'); ?>",
+            url: "{{ base_url('/admin/brandboost/setTab') }}",
             type: "POST",
             data: {getActiveText: getActiveText, _token: '{{csrf_token()}}'},
             dataType: "json",
@@ -127,13 +127,13 @@
     $(document).on("click", "#publishWidget", function () {
 		$('.overlaynew').show();
 		$.ajax({
-			url: '<?php echo base_url('admin/brandboost/publishOnsiteWidget'); ?>',
+			url: "{{ base_url('admin/brandboost/publishOnsiteWidget') }}",
 			type: "POST",
-			data: {'widgetID': '<?php echo $widgetData->id; ?>', _token: '{{csrf_token()}}'},
+			data: {'widgetID': '{{ $widgetData->id }}', _token: '{{csrf_token()}}'},
 			dataType: "json",
 			success: function (data) {
 				if (data.status == 'success') {
-					window.location.href = '<?php echo base_url('admin/brandboost/widgets'); ?>';
+					window.location.href = "{{ base_url('admin/brandboost/widgets') }}";
                 } else {
 					//alertMessage('Error: Some thing wrong!');
 					displayMessagePopup('error');
