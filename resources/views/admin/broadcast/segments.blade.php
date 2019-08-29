@@ -182,7 +182,7 @@
         </div>
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
-    <?php if (!empty($oSegments)): ?>
+    @if (!empty($oSegments))
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
@@ -245,7 +245,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
+                                        @php
                                         $aUser = getLoggedUser();
                                         $userID = $aUser->id;
                                         foreach ($oSegments as $oSegment) {
@@ -287,7 +287,7 @@
                                                     }
                                                 }
                                             }
-                                            ?>
+                                            @endphp
                                             <tr id="append-<?php echo $oSegment->id; ?>" class="selectedClass">
                                                 <td style="display: none;"><?php echo date('m/d/Y', strtotime($oSegment->created)); ?></td>
                                                 <td style="display: none;"><?php echo $oSegment->id; ?></td>
@@ -433,13 +433,13 @@
                                                         <div class=""> <a href="javascript:void(0);" class="syncContacts txt_blue" segment_id="<?php echo $oSegment->id; ?>"><span class="txt_blue_sky2">Sync</span></a> </div>
                                                     </div></td>
 
-                                                <td style="display: none;"><?php
+                                                <td style="display: none;">@php
                                                     if ($oSegment->status != 1) {
                                                         echo 'archive';
                                                     } else {
                                                         echo 'active';
                                                     }
-                                                    ?></td>
+                                                    @endphp</td>
 
 
 
@@ -458,7 +458,7 @@
 
         </div>
 
-    <?php else: ?>
+    @else
 
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
@@ -532,7 +532,7 @@
             </div>
         </div>
 
-    <?php endif; ?> 
+    @endif 
 
 </div>
 
