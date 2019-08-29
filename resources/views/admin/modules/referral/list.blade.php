@@ -373,7 +373,7 @@ if (!empty($oPrograms)) {
                                                     }
                                                     @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addPC; ?> green cp<?php echo $totPerClick; ?> <?php if ($totPerClick > 0): ?>createSegment<?php endif; ?>" segment-type="total-click" campaign-id="<?php echo $oProgram->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addPC }} green cp{{ $totPerClick }} @if ($totPerClick > 0) createSegment @endif" segment-type="total-click" campaign-id="{{$oProgram->id}}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -381,32 +381,27 @@ if (!empty($oPrograms)) {
                                                         </div>
                                                     </div>
                                                     <div class="media-left">
-                                                        <div data-toggle="tooltip" title="<?php echo $totalClicked; ?> email clicked" data-placement="top">
-                                                            <?php
-                                                            if ($totalClicked > 0) {
-                                                                ?>
-                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $totalClicked; ?></a>
-                                                                <?php
-                                                            } else {
-                                                                ?>
-                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $totalClicked; ?></a>
-                                                            <?php }
-                                                            ?>
+                                                        <div data-toggle="tooltip" title="{{ $totalClicked }} email clicked" data-placement="top">
+                                                            @if ($totalClicked > 0)
+                                                                <a href="javascript:void(0);" class="text-default text-semibold">{{ $totalClicked }}</a>
+                                                            @else
+                                                                <a href="javascript:void(0);" class="text-default text-semibold">{{ $totalClicked }}</a>
+                                                            @endif
                                                         </div>
                                                     </div>
 
                                                 </td>
-                                                <td><?php echo $lastListTime; ?> </td>
+                                                <td>{{ $lastListTime }} </td>
 												<td>														
                                                     <div class="media-left">
-                                                        <div class=""><span class="text-default text-semibold"><?php echo dataFormat($oProgram->created); ?></span></div>
-                                                        <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oProgram->created)); ?></div>
+                                                        <div class=""><span class="text-default text-semibold">{{ dataFormat($oProgram->created) }}</span></div>
+                                                        <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oProgram->created)) }}</div>
                                                     </div>
                                                 </td>
                                                 <td>
 
                                                     <div class="tdropdown">
-                                                        <?php
+                                                        @php
                                                         if ($oProgram->status == "draft") {
                                                             echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
                                                         } else if ($oProgram->status == 'archive') {
@@ -414,9 +409,9 @@ if (!empty($oPrograms)) {
                                                         } else {
                                                             echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
                                                         }
-                                                        ?>
+                                                        @endphp
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                                            <?php
+                                                            @php
                                                             if ($oProgram->status == "draft") {
                                                                 echo 'Inactive';
                                                             } else if ($oProgram->status == "archive") {
@@ -424,8 +419,7 @@ if (!empty($oPrograms)) {
                                                             } else {
                                                                 echo 'Active';
                                                             }
-                                                            ?>
-
+                                                            @endphp
                                                         </a>
                                                         <ul class="dropdown-menu dropdown-menu-right status">
 
@@ -434,37 +428,37 @@ if (!empty($oPrograms)) {
                                                 </td>
 
                                                 <td class="text-center">
+													<div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="{{ base_url() }}assets/images/more.svg"></a>
+														<ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
+															<li><a target="_blank" href="{{ base_url('admin/modules/referral/reports/' . $oProgram->id) }}"><i class="icon-file-stats"></i> Reports</a></li>
+															@if ($oProgram->status == 'active')
+																<li><a ref_id="{{ $oProgram->id }}" change_status = 'draft' class='chg_status'><i class='icon-gear'></i>Inactive</a></li>
+															@else
+																<li><a ref_id="{{ $oProgram->id }}" change_status = 'active' class='chg_status'><i class='icon-gear'></i>Active</a></li>
+															@endif
+															<li><a href="javascript:void(0);" ref_id="{{ $oProgram->id }}" class="editReferral"><i class="icon-pencil"></i> Edit</a></li>
+															@if ($oProgram->status != 'archive')
+																<li><a href="javascript:void(0);" ref_id="{{ $oProgram->id }}" class="moveToArchiveReferral"><i class="icon-file-stats"></i> Move To Archive</a></li>
+															@endif
 
-                                                    
-                                                        <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
-                                                            <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
-                                                                <li><a target="_blank" href="<?php echo base_url('admin/modules/referral/reports/' . $oProgram->id); ?>"><i class="icon-file-stats"></i> Reports</a></li>
-                                                                <?php if ($oProgram->status == 'active') { ?>
-                                                                    <li><a ref_id="<?php echo $oProgram->id; ?>" change_status = 'draft' class='chg_status'><i class='icon-gear'></i>Inactive</a></li>
-                                                                <?php } else { ?>
-                                                                    <li><a ref_id="<?php echo $oProgram->id; ?>" change_status = 'active' class='chg_status'><i class='icon-gear'></i>Active</a></li>
-                                                                <?php } ?>
-                                                                <li><a href="javascript:void(0);" ref_id="<?php echo $oProgram->id; ?>" class="editReferral"><i class="icon-pencil"></i> Edit</a></li>
-                                                                <?php if ($oProgram->status != 'archive') {
-                                                                    ?><li><a href="javascript:void(0);" ref_id="<?php echo $oProgram->id; ?>" class="moveToArchiveReferral"><i class="icon-file-stats"></i> Move To Archive</a></li><?php }
-                                                                ?>
-
-                                                                <li><a href="javascript:void(0);" ref_id="<?php echo $oProgram->id; ?>" class="deleteReferral"><i class="icon-trash"></i> Delete</a></li>
-                                                                <li><a target="_blank" href="<?php echo base_url('admin/modules/referral/stats/' . $oProgram->id); ?>"><i class="icon-file-stats"></i>Stats</a></li>
-                                                            </ul>
-                                                        </div>
+															<li><a href="javascript:void(0);" ref_id="{{ $oProgram->id }}" class="deleteReferral"><i class="icon-trash"></i> Delete</a></li>
+															<li><a target="_blank" href="{{ base_url('admin/modules/referral/stats/' . $oProgram->id) }}"><i class="icon-file-stats"></i>Stats</a></li>
+														</ul>
+													</div>
                                                 </td>
-                                                <td style="display: none;"><?php
+                                                <td style="display: none;">
+												@php
                                                     if ($oProgram->status == 'archive') {
                                                         echo 'archive';
                                                     } else {
                                                         echo 'active';
                                                     }
-                                                    ?></td>
+                                                @endphp
+													</td>
                                             </tr>
-                                            <?php
-                                        endforeach;
-                                        ?>
+                                        @php
+											endforeach;
+                                        @endphp
 
                                     </tbody>
                                 </table>
@@ -472,12 +466,9 @@ if (!empty($oPrograms)) {
                         </div>
                     </div>
                 </div>
-
             </div>
             <!--===========TAB 2===========-->
-           
-
-<?php else: ?>
+	@else
 
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
@@ -487,7 +478,7 @@ if (!empty($oPrograms)) {
                     <div class="col-md-12">
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $iActiveCount; ?> Referral Programs</h6>
+                                <h6 class="panel-title">{{ $iActiveCount }} Referral Programs</h6>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
@@ -531,11 +522,11 @@ if (!empty($oPrograms)) {
                                                     <div class="col-md-12">
                                                         <div style="margin: 20px 0px 0;" class="text-center">
                                                             <h5 class="mb-20 mt40">
-                                                                Looks Like You Don’t Have Created Any Referral Program Yet <img src="<?php echo base_url('assets/images/smiley.png'); ?>"> <br>
+                                                                Looks Like You Don’t Have Created Any Referral Program Yet <img src="{{ base_url('assets/images/smiley.png') }}"> <br>
                                                                 Lets Create a Referral Program.
                                                             </h5>
                                            
-                                                            <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addReferral" <?php } ?> type="button" class="btn dark_btn ml20 mb40"><i class="icon-plus3 txt_teal"></i> &nbsp; New Program</button>
+                                                            <button @if ($bActiveSubsription == false) title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription mb40" @else id="addReferral" @endif type="button" class="btn dark_btn ml20 mb40"><i class="icon-plus3 txt_teal"></i> &nbsp; New Program</button>
 
                                                         </div>
                                                     </div>
@@ -561,9 +552,7 @@ if (!empty($oPrograms)) {
                 </div>
             </div>
         </div>
-
-<?php endif; ?> 
-
+@endif 
 </div>
 
 
@@ -625,10 +614,8 @@ if (!empty($oPrograms)) {
 </div>
 
 @include('admin.modals.segments.segments-popup')
-<script src="<?php echo base_url(); ?>assets/js/modules/segments/segments.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/js/modules/segments/segments.js" type="text/javascript"></script>
 <script type="text/javascript">
-
-
     $(document).ready(function () {
 		var tableId = 'referralWidgetList';
 		var tableBase = custom_data_table(tableId); 
@@ -890,7 +877,7 @@ if (!empty($oPrograms)) {
 
 					$('.overlaynew').show();
 					$.ajax({
-						url: "<?php echo base_url('admin/modules/referral/bulkDeleteReferrals'); ?>",
+						url: "{{ base_url('admin/modules/referral/bulkDeleteReferrals') }}",
 						type: "POST",
 						data: {bulk_referral_id: val, _token: '{{csrf_token()}}'},
 						dataType: "json",
@@ -926,7 +913,7 @@ if (!empty($oPrograms)) {
 
 					$('.overlaynew').show();
 					$.ajax({
-						url: "<?php echo base_url('admin/modules/referral/bulkArchiveReferrals'); ?>",
+						url: "{{ base_url('admin/modules/referral/bulkArchiveReferrals') }}",
 						type: "POST",
 						data: {bulk_referral_id: val, _token: '{{csrf_token()}}'},
 						dataType: "json",
@@ -954,14 +941,14 @@ if (!empty($oPrograms)) {
             $('.overlaynew').show();
             var formdata = $("#frmaddReferralModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/addReferral'); ?>',
+                url: "{{ base_url('admin/modules/referral/addReferral') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url('admin/modules/referral/setup/'); ?>' + data.id;
+                        window.location.href = "{{ base_url('admin/modules/referral/setup/') }}" + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         $("#addReferralValidation").html(data.msg).show();
@@ -979,7 +966,7 @@ if (!empty($oPrograms)) {
             $('.overlaynew').show();
             var ref_id = $(this).attr('ref_id');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/getReferral'); ?>',
+                url: "{{ base_url('admin/modules/referral/getReferral') }}",
                 type: "POST",
                 data: {'ref_id': ref_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -1007,7 +994,7 @@ if (!empty($oPrograms)) {
 				$('.overlaynew').show();
 
 				$.ajax({
-					url: '<?php echo base_url('admin/modules/referral/moveToArchiveReferral'); ?>',
+					url: "{{ base_url('admin/modules/referral/moveToArchiveReferral') }}",
 					type: "POST",
 					data: {'ref_id': ref_id, _token: '{{csrf_token()}}'},
 					dataType: "json",
@@ -1027,14 +1014,14 @@ if (!empty($oPrograms)) {
             $('.overlaynew').show();
             var formdata = $("#frmeditReferralModel").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/updateReferral'); ?>',
+                url: "{{ base_url('admin/modules/referral/updateReferral') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url('admin/modules/referral/setup/'); ?>' + data.id;
+                        window.location.href = "{{ base_url('admin/modules/referral/setup/') }}" + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         $("#editReferralValidation").html(data.msg).show();
@@ -1056,7 +1043,7 @@ if (!empty($oPrograms)) {
 				$('.overlaynew').show();
 				var ref_id = $(elem).attr('ref_id');
 				$.ajax({
-					url: '<?php echo base_url('admin/modules/referral/deleteReferral'); ?>',
+					url: "{{ base_url('admin/modules/referral/deleteReferral') }}",
 					type: "POST",
 					data: {ref_id: ref_id, _token: '{{csrf_token()}}'},
 					dataType: "json",
@@ -1074,12 +1061,12 @@ if (!empty($oPrograms)) {
             var refID = $(this).attr('ref_id');
             var status = $(this).attr('change_status');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/changeStatus'); ?>',
+                url: "{{ base_url('admin/modules/referral/changeStatus') }}",
                 type: "POST",
                 data: {'refID': refID, 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "html",
                 success: function (data) {
-                    window.location.href = '<?php echo base_url("/admin/modules/referral/") ?>';
+                    window.location.href = "{{ base_url('/admin/modules/referral/') }}";
                 }, error: function () {
                     alertMessage('Error: Some thing wrong!');
                     $('.overlaynew').hide();
@@ -1091,12 +1078,11 @@ if (!empty($oPrograms)) {
             var refID = $(this).attr('ref_id');
             var status = $(this).attr('change_status');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/changeStatus'); ?>',
+                url: "{{ base_url('admin/modules/referral/changeStatus') }}",
                 type: "POST",
                 data: {'refID': refID, 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "html",
                 success: function (data) {
-                    //window.location.href = '<?php echo base_url("/admin/modules/referral/") ?>';
                 }, error: function () {
                     alertMessage('Error: Some thing wrong!');
                     $('.overlaynew').hide();
