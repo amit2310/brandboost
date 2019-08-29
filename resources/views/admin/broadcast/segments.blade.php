@@ -307,13 +307,8 @@
                                                         <div class="pt-3"><a href="javascript:void(0);" segment_id="<?php echo $oSegment->id; ?>"  class="text-default text-semibold"><span><?php echo setStringLimit($oSegment->segment_name, 20); ?></span></a></div>
                                                     </div></td>
 
-                                                        <!-- <td>
-                                                            <div class="media-left text-center">
-                                                                <div class="text-center"><a href="<?php echo base_url(); ?>admin/broadcast/segmentcontacts/<?php echo $oSegment->id; ?>" class="text-default text-semibold"><?php echo count($oSubscribers); ?> </a> </div>                                                            
-                                                            </div>
-                                                        </td> -->
 
-                                                <td class="text-right"><div class="media-left pull-right text-right"> <a href="<?php echo base_url(); ?>admin/broadcast/segmentcontacts/<?php echo $oSegment->id; ?>" class="text-default text-semibold"><?php echo count($oSubscribers); ?></a> </div></td>
+                                                <td class="text-right"><div class="media-left pull-right text-right"> <a href="<?php echo base_url(); ?>admin/broadcast/segmentcontacts/<?php echo $oSegment->id; ?>" class="text-default text-semibold">{{ count($oSubscribers) }} </a> </div></td>
 
                                                         <!-- <td>
                                                             <div class="media-left text-right">
