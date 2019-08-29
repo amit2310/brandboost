@@ -1,11 +1,11 @@
    @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php error_reporting(0); ?>	
+@php error_reporting(0); @endphp	
 <div class="content">
 
 	<!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -159,7 +159,7 @@
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
 
-    <?php 
+    @php 
 		$ratingOne = 0;
 		$ratingTwo = 0;
 		$ratingThree = 0;
@@ -185,55 +185,9 @@
 		$totalReviews = $ratingOne+$ratingTwo+$ratingThree+$ratingFour+$ratingFive;
 		$avgRating = ($ratingOne+($ratingTwo*2)+($ratingThree*3)+($ratingFour*4)+($ratingFive*5))/$totalReviews; 
 		
-	?>
+	@endphp
     <div class="tab-content"> 
         <div class="row">
-
-
-        	<!--
-			<div class="col-sm-6 col-md-4 result_box">
-					<div class="panel panel-body boxshadow bkg6">
-						<div class="media no-margin">
-							<div class="media-body text-left results">
-								
-								<h5 class="mb0"><i class="icon-star-full2"></i> &nbsp; <span><?php echo number_format($avgRating, 1); ?></span> &nbsp; <span><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></span></h5>
-								<h5>Average Review Rating</h5>
-								
-								<div class="rating_progress">
-									<p><span>5 Star</span><strong class="pull-right"><?php echo $ratingFive; ?></strong></p>
-									<div class="progress">
-										<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"></div>
-									</div>
-								</div>
-								<div class="rating_progress">
-									<p><span>4 Star</span><strong class="pull-right"><?php echo $ratingFour; ?></strong></p>
-									<div class="progress">
-										<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%"></div>
-									</div>
-								</div>
-								<div class="rating_progress">
-									<p><span>3 Star</span><strong class="pull-right"><?php echo $ratingThree; ?></strong></p>
-									<div class="progress">
-										<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%"></div>
-									</div>
-								</div>
-								<div class="rating_progress">
-									<p><span>2 Star</span><strong class="pull-right"><?php echo $ratingTwo; ?></strong></p>
-									<div class="progress">
-										<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%"></div>
-									</div>
-								</div>
-								<div class="rating_progress">
-									<p><span>1 Star</span><strong class="pull-right"><?php echo $ratingOne; ?></strong></p>
-									<div class="progress">
-										<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:20%"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-        	-->
 
         	<div class="col-sm-6 col-md-4 result_box">
         	<div class="panel panel-flat review_ratings">
@@ -319,7 +273,7 @@
 						<div class="panel panel-body boxshadow">
 							<div class="media no-margin">
 								<div class="media-body text-left results">
-									<h5 class="mb0"><i class="icon-bubbles6"></i> &nbsp;  <span><?php echo $totalReviews; ?></span></h5>
+									<h5 class="mb0"><i class="icon-bubbles6"></i> &nbsp;  <span>{{ $totalReviews }}</span></h5>
 									<h5 class="mb30">Product Feedback Received</h5>
 									<div class="svg-center" id="arc_multi"></div>
 								</div>
@@ -385,7 +339,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php 
+								@php 
 									foreach($aData['bbStatsData'] as $bbData){ 
 										$ratingOne = 0;
 										$ratingTwo = 0;
@@ -410,26 +364,26 @@
 												$ratingFive = $ratingFive + 1;
 											}
 										}
-									?>
+									@endphp
 									<tr>
-										<td style="display: none;"><?php echo date('m/d/Y', strtotime($data->created)); ?></td>
-										<!--td><h6 class="text-semibold"><?php echo date("M d, Y h:i A", strtotime($bbData->created)); ?> <div class="text-muted text-size-small"><?php echo date("h:i A", strtotime($bbData->created)); ?> (<?php echo timeAgo($bbData->created); ?>)</div></h6></td-->
+										<td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
+										
 										<td>
-                                            <div class="media-left">
-                                                <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($bbData->created)); ?></a></div>
-                                                <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($bbData->created)); ?></div>
-                                            </div>
-                                        </td>
-										<td class="text-center"><a href="#"><?php echo $bbData->totalNo; ?></a></td>
-										<td class="text-center"><a href="#"><?php echo $ratingFive; ?></a></td>
-										<td class="text-center"><a href="#"><?php echo $ratingFour; ?></a></td>
-										<td class="text-center"><a href="#"><?php echo $ratingThree; ?></a></td>
-										<td class="text-center"><a href="#"><?php echo $ratingTwo; ?></a></td>
-										<td style="display: none;"><?php echo date('m/d/Y', strtotime($bbData->created)); ?></td>
-										<td class="text-center"><a href="#"><?php echo $ratingOne; ?></a></td>
+                                                                                    <div class="media-left">
+                                                                                        <div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($bbData->created)) }}</a></div>
+                                                                                        <div class="text-muted text-size-small">{{ date('h:i A', strtotime($bbData->created)) }}</div>
+                                                                                    </div>
+                                                                                </td>
+										<td class="text-center"><a href="#">{{ $bbData->totalNo }}</a></td>
+										<td class="text-center"><a href="#">{{ $ratingFive }}</a></td>
+										<td class="text-center"><a href="#">{{ $ratingFour }}</a></td>
+										<td class="text-center"><a href="#">{{ $ratingThree }}</a></td>
+										<td class="text-center"><a href="#">{{ $ratingTwo }}</a></td>
+										<td style="display: none;">{{ date('m/d/Y', strtotime($bbData->created)) }}</td>
+										<td class="text-center"><a href="#">{{ $ratingOne }}</a></td>
 										
 									</tr>
-								<?php } ?>
+								@php } @endphp
 								
 							</tbody>
                        	</table>

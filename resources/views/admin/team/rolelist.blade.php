@@ -306,7 +306,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmeditRoleModel" class="form-horizontal" name="frmeditRoleModel">
-                 <input type="hidden" name="_token" value="{{csrf_token()}}">
+                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Edit Team Role</h5>
@@ -336,7 +336,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="frmeditRolePermissionModel" class="form-horizontal" name="frmeditRolePermissionModel">
-                 <input type="hidden" name="_token" value="{{csrf_token()}}">
+                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Manage Role Permission</h5>
@@ -361,7 +361,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" class="form-horizontal" name="frmaddTeamRoleModal" id="frmaddTeamRoleModal" action="javascript:void();">
-                 <input type="hidden" name="_token" value="{{csrf_token()}}">
+                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add Team Role</h5>

@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -36,8 +36,8 @@
 	}
 </style>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/forms/inputs/touchspin.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/dropzone-master/dist/dropzone.js"></script>
 
 	  <div class="content">
 	  
@@ -46,7 +46,7 @@
 		  <div class="row">
 		  <!--=============Headings & Tabs menu==============-->
 			<div class="col-md-5">
-			  <h3 class="mt30"><img width="18" src="<?php echo base_url(); ?>assets/images/plus_icon_purple.png"/> Add Review</h3>
+			  <h3 class="mt30"><img width="18" src="{{ base_url() }}assets/images/plus_icon_purple.png"/> Add Review</h3>
 			</div>
 			<!--=============Button Area Right Side==============-->
 			<div class="col-md-7 text-right btn_area">
@@ -67,7 +67,7 @@
 				<div class="panel panel-flat">
 				  <div class="panel-heading">
 					<h6 class="panel-title">Service Review</h6>
-					<div class="heading-elements"><a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a></div>
+					<div class="heading-elements"><a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a></div>
 				  </div>
 				  <div class="panel-body p25 bkg_white">
 				    
@@ -87,24 +87,19 @@
 			  		   <div class="col-md-7">
 			  		   <label class="fsize14 fw500">Rating</label>
 			  		   
-			  		   <?php $reviewRating = 3; ?>
+			  		   @php $reviewRating = 3; @endphp
 			  		   <div class="review_star_box starRate">
-							<?php 
-								for($inc = 1; $inc <= 5; $inc++) {
-								?>
-								<i data-value='<?php echo $inc; ?>' id="siteStarRating<?php echo $inc; ?>" containerclass="siteRatingValue" class="icon-star-full2  <?php echo $inc <= $reviewRating?'selected':''; ?>"></i>
-								<?php 
-								}
-							?>
-							<div class="rat_num hidden"><?php echo $reviewRating; ?>/5</div>
-						</div>
+                                                @for($inc = 1; $inc <= 5; $inc++)
+                                                    <i data-value='{{ $inc }}' id="siteStarRating{{ $inc }}" containerclass="siteRatingValue" class="icon-star-full2  {{ ($inc <= $reviewRating) ?'selected':'' }}"></i>
+                                                @endfor
+                                                <div class="rat_num hidden">{{ $reviewRating }}/5</div>
+                                            </div>
 			  		   
 
 			  		   </div>
 			  		   <div class="col-md-5">
 			  		   <label class="fsize14 fw500">&nbsp;</label>
-			  		   <!--<input type="text" class="h52 form-control" placeholder="4 / 5">-->
-					    <input type="text" value="" id="siteReviewRating" class="touchspin-vertical form-control h52" placeholder="4 / 5" readonly>
+			  		   <input type="text" value="" id="siteReviewRating" class="touchspin-vertical form-control h52" placeholder="4 / 5" readonly>
 			  		   </div>
 			  		   </div>
 			  		   </div>
@@ -115,31 +110,28 @@
 				<div class="panel panel-flat">
 				  <div class="panel-heading">
 					<h6 class="panel-title">Image &amp; Video</h6>
-					<div class="heading-elements"><a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a></div>
+					<div class="heading-elements"><a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a></div>
 				  </div>
 				  <div class="panel-body p25 bkg_white">
 				  
-				  		<label class="display-block" for="inputfile">
-				  		<div class="img_vid_upload dropzone"  id="myDropzone">
-				  		<!-- <input class="hidden" type="file" name="" value="" id="inputfile"> -->
-				  		</div>
-				  		</label>
+                                        <label class="display-block" for="inputfile">
+                                        <div class="img_vid_upload dropzone"  id="myDropzone">
+                                        </div>
+                                        </label>
 				  </div>
 				</div>
 				<div id="uploadedSiteFiles"></div>
-				<!-- <input style="display: none;"  name="display_name" value="1" type="checkbox"> -->
-				<?php //pre($oCampaign);
-				//pre($aBrandboostList[0]->id); ?>
-				<input type="hidden" name="campaign_id" class="campaign_id" value="<?php echo $oCampaign->id != ''? $oCampaign->id : $aBrandboostList[0]->id; ?>" />
+				
+				<input type="hidden" name="campaign_id" class="campaign_id" value="{{ ($oCampaign->id != '') ? $oCampaign->id : $aBrandboostList[0]->id }}" />
 				<input type="hidden" name="subID" value="" />
-				<input type="hidden" name="inviterID" value="<?php echo $aUser->id; ?>" />
-				<input type="hidden" name="user_id" value="<?php //echo $aUser->id; ?>" />
-				<input type="hidden" value="<?php echo $reviewRating; ?>" class="siteRatingValue" id="siteRatingValue" name="ratingValue">
+				<input type="hidden" name="inviterID" value="{{ $aUser->id }}" />
+				<input type="hidden" name="user_id" value="" />
+				<input type="hidden" value="{{ $reviewRating }}" class="siteRatingValue" id="siteRatingValue" name="ratingValue">
 				<input type="hidden" value="site" id="reviewType" name="reviewType">
 				<input type="hidden" name="reviewStatus" class="reviewStatus" value="2">
-				<input type="hidden" name="display_name" class="display_name" value="<?php echo $aUser->firstname.' '.$aUser->lastname; ?>">
-				<input type="hidden" name="display_email" class="display_email" value="<?php echo $aUser->email; ?>">
-				<input type="hidden" name="change_phone" class="change_phone" value="<?php echo $aUser->mobile; ?>">
+				<input type="hidden" name="display_name" class="display_name" value="{{ $aUser->firstname.' '.$aUser->lastname }}">
+				<input type="hidden" name="display_email" class="display_email" value="{{ $aUser->email }}">
+				<input type="hidden" name="change_phone" class="change_phone" value="{{ $aUser->mobile }}">
 				
 				
 				<input type="submit" style="display: none;" class="sav_con buttonSiteReview" id="buttonSiteReview"  value="Save & Continue">
@@ -184,16 +176,12 @@
 				  		   <div class="col-md-7">
 				  		   <label class="fsize14 fw500">Rating</label>
 
-				  		   <?php $reviewRating = 3; ?>
+				  		   @php $reviewRating = 3; @endphp
 				  		   <div class="review_star_box starRate">
-								<?php 
-									for($inc = 1; $inc <= 5; $inc++) {
-									?>
-									<i data-value='<?php echo $inc; ?>' id="productStarRating<?php echo $inc; ?>" containerclass="productRatingValue" class="icon-star-full2  <?php echo $inc <= $reviewRating?'selected':''; ?>"></i>
-									<?php 
-									}
-								?>
-								<div class="rat_num hidden"><?php echo $reviewRating; ?>/5</div>
+                                                        @for($inc = 1; $inc <= 5; $inc++) 
+                                                            <i data-value='{{ $inc }}' id="productStarRating{{ $inc }}" containerclass="productRatingValue" class="icon-star-full2  {{ ($inc <= $reviewRating) ? 'selected':'' }}"></i>
+                                                        @endfor
+                                                        <div class="rat_num hidden">{{ $reviewRating }}/5</div>
 							</div>
 
 				  		   </div>
@@ -238,17 +226,16 @@
 					</div>
 
 					<div id="uploadedProductFiles"></div>
-					<!-- <input style="display: none;"  name="display_name" value="1" type="checkbox"> -->
-					<input type="hidden" name="campaign_id" class="campaign_id" value="<?php echo $oCampaign->id != ''? $oCampaign->id : $aBrandboostList[0]->id; ?>" />
+					<input type="hidden" name="campaign_id" class="campaign_id" value="{{ ($oCampaign->id != '') ? $oCampaign->id : $aBrandboostList[0]->id }}" />
 					<input type="hidden" name="subID" value="" />
-					<input type="hidden" name="inviterID" value="<?php echo $aUser->id; ?>" />
-					<input type="hidden" name="user_id" value="<?php //echo $aUser->id; ?>" />
-					<input type="hidden" value="<?php echo $reviewRating; ?>" id="productRatingValue" name="ratingValue">
+					<input type="hidden" name="inviterID" value="{{ $aUser->id }}" />
+					<input type="hidden" name="user_id" value="" />
+					<input type="hidden" value="{{ $reviewRating }}" id="productRatingValue" name="ratingValue">
 					<input type="hidden" value="product" id="reviewType" name="reviewType">
 					<input type="hidden" name="reviewStatus" class="reviewStatus" value="2">
-					<input type="hidden" name="display_name" class="display_name" value="<?php echo $aUser->firstname.' '.$aUser->lastname; ?>">
-					<input type="hidden" name="display_email" class="display_email" value="<?php echo $aUser->email; ?>">
-					<input type="hidden" name="change_phone" class="change_phone" value="<?php echo $aUser->mobile; ?>">
+					<input type="hidden" name="display_name" class="display_name" value="{{ $aUser->firstname.' '.$aUser->lastname }}">
+					<input type="hidden" name="display_email" class="display_email" value="{{ $aUser->email }}">
+					<input type="hidden" name="change_phone" class="change_phone" value="{{ $aUser->mobile }}">
 
 					<input type="submit" style="display: none;" class="sav_con buttonProductReview" id="buttonProductReview"  value="Save & Continue">
 				</form>
@@ -269,37 +256,33 @@
 				<div class="panel panel-flat">
 				  <div class="panel-heading">
 					<h6 class="panel-title">Contact Info</h6>
-					<div class="heading-elements"><a href="javascript;void();"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a></div>
+					<div class="heading-elements"><a href="javascript;void();"><img src="{{ base_url() }}assets/images/more.svg"></a></div>
 				  </div>
 				  <div class="panel-body p25">
 				  <div class="form-group">
 				 	<label class="fsize14 fw500">Campaign</label>
-				 	<?php 
-				 	 //pre($oCampaign);
-				 	 if(!empty($aBrandboostList)) {
-				 	 ?><select class="h52 form-control changeCampaign" disabled=""><?php
-					 	foreach($aBrandboostList as $brandboostlist){
-					 		
-					 		?><option value="<?php echo $brandboostlist->id; ?>" <?php echo $oCampaign->id == $brandboostlist->id?'selected':'';?>><?php echo $brandboostlist->brand_title; ?></option><?php
-						 }
-						 ?></select><?php
-					 }
-				 	 ?>
+				 	@if(!empty($aBrandboostList))
+                                            <select class="h52 form-control changeCampaign" disabled="">
+					 	@foreach($aBrandboostList as $brandboostlist)
+                                                    <option value="{{ $brandboostlist->id }}" {{ ($oCampaign->id == $brandboostlist->id) ? 'selected':'' }}>{{ $brandboostlist->brand_title }}</option>
+                                                @endforeach
+                                            </select>
+                                         @endif
 			  		
 		  		   </div>
 			  		   
 			  		   <div class="form-group">
 			  		   <label class="fsize14 fw500">Fill name</label>
-			  		   <input type="text" value="<?php echo $aUser->firstname.' '.$aUser->lastname; ?>" class="h52 form-control changeName" placeholder="Enter contact full name">
+			  		   <input type="text" value="{{ $aUser->firstname.' '.$aUser->lastname }}" class="h52 form-control changeName" placeholder="Enter contact full name">
 			  		   </div>
 			  		   <div class="form-group">
 			  		   <label class="fsize14 fw500">Email</label>
-			  		   <input type="text" class="h52 form-control changeEmail" value="<?php echo $aUser->email; ?>" placeholder="Contact email">
+			  		   <input type="text" class="h52 form-control changeEmail" value="{{ $aUser->email }}" placeholder="Contact email">
 			  		   </div>
 
 			  		   <div class="form-group">
 			  		   <label class="fsize14 fw500">Pnone Number</label>
-			  		   <input type="text" class="h52 form-control changePhone" value="<?php echo $aUser->mobile; ?>" placeholder="Contact phone">
+			  		   <input type="text" class="h52 form-control changePhone" value="{{ $aUser->mobile }}" placeholder="Contact phone">
 			  		   </div>
 			  		   
 			  		    <label class="custmo_checkbox pull-left mb0 fsize14 fw500">
@@ -394,7 +377,7 @@
 			var containerName = $(this).attr("container_name");
 			$('.overlaynew').show();
 			$.ajax({
-				url: "<?php echo base_url('/reviews/saveManualReview'); ?>",
+				url: "{{ base_url('/reviews/saveManualReview') }}",
 				type: "POST",
 				data: formdata,
 				contentType: false,
@@ -405,7 +388,7 @@
 					if (response.status == 'success') {
 						$('.overlaynew').hide();
 						if(response.type === 'product') {
-							//window.location.href = "<?php echo base_url(); ?>admin/brandboost/onsite_setup/"+response.brandboostId;
+							//window.location.href = "{{ base_url() }}admin/brandboost/onsite_setup/"+response.brandboostId;
 
 							window.location.href = '';
 						}
@@ -589,7 +572,7 @@
     });
 
     Dropzone.options.myDropzone = {
-		url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment_review/".$aUser->id."/reviews"); ?>',
+		url: "{{ base_url('webchat/dropzone/upload_s3_attachment_review/".$aUser->id."/reviews') }}",
 		uploadMultiple: false,
 		maxFiles: 5,
 		maxFilesize: 250,
@@ -604,7 +587,7 @@
 	}
 
 	Dropzone.options.myDropzone2 = {
-		url: '<?php echo base_url("webchat/dropzone/upload_s3_attachment_product_review/".$aUser->id."/reviews"); ?>',
+		url: "{{ base_url('webchat/dropzone/upload_s3_attachment_product_review/".$aUser->id."/reviews') }}",
 		uploadMultiple: false,
 		maxFiles: 5,
 		maxFilesize: 250,

@@ -1,4 +1,4 @@
-{{ $countriesList = getCountriesList() }}
+@php $countriesList = getCountriesList(); @endphp
 
 <div id="alertMessagePopup" style="z-index: 9999999999" class="modal fade">
     <div class="modal-dialog">
