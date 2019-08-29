@@ -1,6 +1,10 @@
+@extends('layouts.main_template') 
 
+@section('title')
+@endsection
+
+@section('contents')
 <!-- Content area -->
-
 <div class="content">
 
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -151,10 +155,10 @@
                     </div>
                 </div>
 
-                <?php if ($campaignType == 'Email'): ?>
+                <?php if (isset($campaignType) && $campaignType == 'Email'): ?>
                     <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="Email"><i class="icon-plus3"></i> &nbsp; Email Broadcast</button> 
                 <?php endif; ?>
-                <?php if ($campaignType == 'SMS'): ?>
+                <?php if (isset($campaignType) && $campaignType == 'SMS'): ?>
                     <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="SMS"><i class="icon-plus3"></i> &nbsp; SMS Broadcast</button>
                 <?php endif; ?>
             </div>
@@ -230,8 +234,8 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $CI = & get_instance();
-                                            $CI->load->model("admin/Tags_model", "mmTag");
+                                            
+                                            //$CI->load->model("admin/Tags_model", "mmTag");
                                             //pre($subscribersData);
                                             //die;
                                             if (count($oSubscribers) > 0) {
@@ -239,14 +243,14 @@
 
                                                     $subscriberID = $oContact->globalSubscriberId;
                                                     $subscriberUserID = $oContact->subUserId;
-                                                    $oTags = $CI->mmTag->getSubscriberTags($subscriberID);
+                                                    $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($subscriberID);
                                                     //pre($oTags);
                                                     $iTagCount = count($oTags);
                                                     $userData = '';
                                                     if ($oContact->status != '2') {
 
                                                         if ($oContact->user_id > 0) {
-                                                            $userData = $this->mUser->getUserInfo($subscriberUserID);
+                                                            $userData = $oTags = \App\Models\Admin\UsersModel::getUserInfo($subscriberUserID);
                                                         }
                                                        
                                                         ?>
@@ -586,4 +590,4 @@
 
     });
 </script>	
-
+@endsection
