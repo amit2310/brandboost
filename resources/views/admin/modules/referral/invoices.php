@@ -1,6 +1,6 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/tables/datatables/datatables.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/datatables_sorting_date.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/jquery-ui.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/tables/datatables/datatables.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/pages/datatables_sorting_date.js"></script>
 <!-- Content area -->
 <div class="content">
 
@@ -12,7 +12,7 @@
                 <div class="panel-heading">
                     <h6 class="panel-title">Referral Invoice History</h6>
                     <div class="heading-elements">
-                        <span class="label bg-success lgraybtn heading-text"><?php echo count($oInvoices); ?> Records</span>
+                        <span class="label bg-success lgraybtn heading-text">{{ count($oInvoices) }} Records</span>
                         <button type="button" class="btn btn-link daterange-ranges heading-btn text-semibold">
                             <i class="icon-calendar3 position-left"></i> <span></span> <b class="caret"></b>
                         </button>
@@ -34,12 +34,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
+                            @php
                             $inc = 1;
                             foreach ($oInvoices as $oInvoice) {
-                                //pre($data);
-                                //$profileImg = $data->avatar == '' ? base_url('/profile_images/avatar_image.png') : base_url('profile_images/' . $data->avatar);
-                                ?>
+                                @endphp
                                 <tr>
                                     <td>			
                                         <div style="vertical-align: top!important;" class="media-left media-middle">
@@ -48,32 +46,25 @@
                                             </a>
                                         </div>
                                         <div class="media-left">
-                                            <a href="javascript:void()" class="text-default text-semibold"><?php echo $oInvoice->firstname; ?> <?php echo $oInvoice->lastname; ?></a>
-                                            <div class="text-muted text-size-small"><?php echo $oInvoice->email; ?></div>
-                                            <div class="text-muted text-size-small"><?php echo $oInvoice->mobile == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $oInvoice->mobile; ?></div>
+                                            <a href="javascript:void()" class="text-default text-semibold">{{ $oInvoice->firstname }} {{ $oInvoice->lastname }}</a>
+                                            <div class="text-muted text-size-small">{{ $oInvoice->email }}</div>
+                                            <div class="text-muted text-size-small">{!! $oInvoice->mobile == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $oInvoice->mobile !!}</div>
                                         </div>
                                     </td>
                                     
-                                    <td class=""><?php echo $oInvoice->sale_count; ?></td>
-                                    <td class=""><?php echo ($oInvoice->currency == 'USD')? '$':'';?><?php echo $oInvoice->total_sale; ?></td>
-                                    <td class=""><?php echo $oInvoice->currency; ?></td>
-                                    <td class=""><?php echo date('m/d/Y', strtotime($oInvoice->created)); ?></td>
+                                    <td class="">{{ $oInvoice->sale_count }}</td>
+                                    <td class="">{{ ($oInvoice->currency == 'USD') ? '$':'' }}{{ $oInvoice->total_sale }}</td>
+                                    <td class="">{{ $oInvoice->currency }}</td>
+                                    <td class="">{{ date('m/d/Y', strtotime($oInvoice->created)) }}</td>
 
                                 </tr>
-                                <?php $inc++;
-                            } ?>
+                                @php 
+									$inc++;
+								@endphp
                         </tbody>
                     </table>
                 </div>
-
-
             </div>
-            <!-- <div align="right" id="pagination_link"></div> -->
         </div>
     </div>
-
-
 </div>
-
-
-
