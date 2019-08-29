@@ -235,9 +235,6 @@
                                         <tbody>
                                             <?php
                                             
-                                            //$CI->load->model("admin/Tags_model", "mmTag");
-                                            //pre($subscribersData);
-                                            //die;
                                             if (count($oSubscribers) > 0) {
                                                 foreach ($oSubscribers as $oContact) {
 
