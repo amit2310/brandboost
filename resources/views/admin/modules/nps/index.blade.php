@@ -183,7 +183,7 @@ if (!empty($oPrograms)) {
 
     <!-- Dashboard content -->
 
-    <?php if ($oPrograms): ?>
+       @if ($oPrograms)
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
@@ -192,7 +192,7 @@ if (!empty($oPrograms)) {
                         <!-- Marketing campaigns -->
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $iActiveCount; ?> NPS Surveys</h6>
+                                <h6 class="panel-title">{{$iActiveCount}} NPS Surveys</h6>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
