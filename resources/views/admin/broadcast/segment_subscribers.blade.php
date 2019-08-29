@@ -222,13 +222,13 @@
                                                 <th style="display: none;"></th>
                                                 <th style="display: none;"></th>
                                                 <th class="nosort editAction" style="width:30px;display:none;"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="control-primary" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
-                                                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i>Name</th>
-                                                <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Phone</th>
-                                                <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Created</th>
-                                                <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Source</th>
-                                                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_social.png"></i>Social</th>
-                                                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_id.png"></i>Tags</th>
-                                                <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_status.png"></i>Status</th>
+                                                <th><i class=""><img src="{{ base_url() }}assets/images/icon_name.png"></i>Name</th>
+                                                <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_device.png"></i>Phone</th>
+                                                <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_clock.png"></i>Created</th>
+                                                <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_source.png"></i>Source</th>
+                                                <th><i class=""><img src="{{ base_url() }} assets/images/icon_social.png"></i>Social</th>
+                                                <th><i class=""><img src="{{ base_url() }} assets/images/icon_id.png"></i>Tags</th>
+                                                <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_status.png"></i>Status</th>
                                                 
                                             </tr>
                                         </thead>
