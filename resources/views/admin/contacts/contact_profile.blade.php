@@ -1990,7 +1990,7 @@
                     <div class="modal-footer botfooter">
                         <input type="hidden" name="subscriber_id" value="<?php echo $contactId; ?>" />
                         <button class="btn btn-link text-muted" data-dismiss="modal">Skip </button>
-                        <button type="submit" class="btn dark_btn bkg_blue">Send</button>
+                        <button type="submit" class="btn dark_btn bkg_blue">Sendff</button>
                     </div>
                 </form>
             </div>

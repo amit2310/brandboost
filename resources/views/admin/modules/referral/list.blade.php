@@ -1,11 +1,12 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php
+
+@php
 $iActiveCount = $iArchiveCount = 0;
 
 if (!empty($oPrograms)) {
@@ -17,7 +18,7 @@ if (!empty($oPrograms)) {
         }
     }
 }
-?>
+@endphp
 <div class="content">
 
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -170,9 +171,7 @@ if (!empty($oPrograms)) {
                         </div>
                     </div>
                 </div>
-                <?php //if (!empty($oPrograms) && $user_role != 1): ?>
-                <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription" <?php } else { ?> id="addReferral" <?php } ?> type="button" class="btn dark_btn ml20"><i class="icon-plus3 txt_teal"></i> &nbsp; New Program</button>
-                <?php //endif; ?>
+                <button @if ($bActiveSubsription == false) title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription" @else id="addReferral" @endif type="button" class="btn dark_btn ml20"><i class="icon-plus3 txt_teal"></i> &nbsp; New Program</button>
             </div>
         </div>
     </div>
@@ -180,7 +179,7 @@ if (!empty($oPrograms)) {
 
 
     <!--&&&&&&&&&&&& TABBED CONTENT START &&&&&&&&&&-->
-    <?php if (!empty($oPrograms)): ?>
+    @if (!empty($oPrograms))
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
@@ -189,7 +188,7 @@ if (!empty($oPrograms)) {
                     <div class="col-md-12">
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $iActiveCount; ?> Referral Programs</h6>
+                                <h6 class="panel-title">{{ $iActiveCount }} Referral Programs</h6>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" tableId="referralList" placeholder="Search by name" type="text">
@@ -213,13 +212,13 @@ if (!empty($oPrograms)) {
                                             <th style="display: none;"></th>
                                             <th style="display: none;"></th>
                                             <th style="display: none;" class="nosort editAction" style="width:30px;"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="control-primary" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_date.png"/></i> Programs</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_people.png"/></i> Advocated</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_click.png"/></i> </th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_display.png"/></i> </th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_refresh2.png"/></i> </th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_date.png"/></i> Programs</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_people.png"/></i> Advocated</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_click.png"/></i> </th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_display.png"/></i> </th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_refresh2.png"/></i> </th>
                                             <th><i class="icon-calendar"></i>Last Incoming Lead</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_date.png"/></i> Created</th>
+                                            <th><i class=""><img src=" {{ base_url() }}assets/images/icon_date.png"/></i> Created</th>
                                             <th><i class="icon-diff-modified"></i>Status</th>
                                             <th class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
                                             <th style="display: none;"></th>
@@ -228,7 +227,7 @@ if (!empty($oPrograms)) {
                                     <tbody>
 
                                         <!--================================================-->
-                                        <?php
+                                        @php
 										$newPositive = 0;
                                         foreach ($oPrograms as $oProgram):
                                             $oContacts = \App\Models\Admin\Modules\ReferralModel::getMyAdvocates($oProgram->hashcode);
@@ -274,21 +273,21 @@ if (!empty($oPrograms)) {
                                                     }
                                                 }
                                             }
-                                            ?>
-                                            <tr id="append-<?php echo $oProgram->id; ?>" class="selectedClass">
-                                                <td style="display: none;"><?php echo date('m/d/Y', strtotime($oProgram->created)); ?></td>
-                                                <td style="display: none;"><?php echo $oProgram->id; ?></td>
-                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]"  id="chk<?php echo $oProgram->id; ?>" class="checkRows" value="<?php echo $oProgram->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+                                            @endphp
+                                            <tr id="append-{{ $oProgram->id }}" class="selectedClass">
+                                                <td style="display: none;">{{ date('m/d/Y', strtotime($oProgram->created)) }}</td>
+                                                <td style="display: none;">{{ $oProgram->id }}</td>
+                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]"  id="chk{{ $oProgram->id }}" class="checkRows" value="{{ $oProgram->id }}" ><span class="custmo_checkmark"></span></label></td>
 
-                                                <td><div class="media-left media-middle"> <img width="24" src="<?php echo base_url(); ?>assets/images/referal_ov_icon.png"/> </div>
+                                                <td><div class="media-left media-middle"> <img width="24" src="{{ base_url() }}assets/images/referal_ov_icon.png"/> </div>
                                                     <div class="media-left">
-                                                        <div class=""><a href="{{ base_url() }}admin/modules/referral/setup/<?php echo $oProgram->id; ?>" class="text-default text-semibold bbot"><?php echo $oProgram->title; ?></a></div>
+                                                        <div class=""><a href="{{ base_url() }}admin/modules/referral/setup/{{ $oProgram->id }}" class="text-default text-semibold bbot">{{ $oProgram->title }}</a></div>
                                                     </div></td>
 
 
-                                                <td><div style="width: 117px;" class="media-left text-right pr40 brig"><a href="<?php echo base_url(); ?>admin/modules/referral/advocates/<?php echo $oProgram->id; ?>" class="text-default text-semibold"><?php echo count($oContacts) > 0 ? count($oContacts) : 0; ?></a></div></td>
+                                                <td><div style="width: 117px;" class="media-left text-right pr40 brig"><a href="{{base_url() }}admin/modules/referral/advocates/{{ $oProgram->id }}" class="text-default text-semibold">{{ count($oContacts) > 0 ? count($oContacts) : 0 }}</a></div></td>
                                                 <td>
-                                                    <?php
+                                                    @php
                                                     if ($totalEmailSent > 0) {
                                                         $positiveGraph = 100;
                                                         $positiveRating = $totalEmailSent;
@@ -301,9 +300,9 @@ if (!empty($oPrograms)) {
                                                     if ($positiveGraph > 50) {
                                                         $addPC = 'over50';
                                                     }
-                                                    ?>
+                                                    @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addPC; ?> teal cp<?php echo $positiveGraph; ?> <?php if ($positiveGraph > 0): ?>createSegment<?php endif; ?>" segment-type="total-sent" campaign-id="<?php echo $oProgram->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addPC }} teal cp{{ $positiveGraph }} @if ($positiveGraph > 0)createSegment @endif" segment-type="total-sent" campaign-id="{{ $oProgram->id }}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -311,27 +310,22 @@ if (!empty($oPrograms)) {
                                                         </div>
                                                     </div>
                                                     <div class="media-left">
-                                                        <div data-toggle="tooltip" title="<?php echo $positiveRating; ?> email send" data-placement="top">
-                                                            <?php
-                                                            if ($positiveRating > 0) {
-                                                                ?>
-                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $positiveRating; ?></a>
-                                                                <?php
-                                                            } else {
-                                                                ?>
-                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $positiveRating; ?></a>
-                                                            <?php }
-                                                            ?>
-                                                            <?php if ($newPositive > 0): ?>    
-                                                                <?php echo '<span style="color:#FF0000;"> (' . $newPositive . ' new)</span>'; ?>    
-                                                            <?php endif; ?>    
+                                                        <div data-toggle="tooltip" title="{{ $positiveRating }} email send" data-placement="top">
+                                                            @if ($positiveRating > 0)
+                                                                <a href="javascript:void(0);" class="text-default text-semibold">{{ $positiveRating }}</a>
+                                                            @else
+                                                                <a href="javascript:void(0);" class="text-default text-semibold">{{ $positiveRating }}</a>
+                                                            @endif
+                                                            @if($newPositive > 0)  
+                                                                <span style="color:#FF0000;"> ({{ $newPositive }} new)</span> 
+                                                            @endif    
 
                                                         </div>
                                                     </div>
 
                                                 </td>
                                                 <td>
-                                                    <?php
+                                                    @php
                                                     if ($totalOpened > 0) {
                                                         $positiveGraph = 100;
                                                         $positiveRating = $totalOpened;
@@ -344,9 +338,9 @@ if (!empty($oPrograms)) {
                                                     if ($positiveGraph > 50) {
                                                         $addPC = 'over50';
                                                     }
-                                                    ?>
+                                                    @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addPC; ?> dark_green cp<?php echo $positiveGraph; ?> <?php if ($positiveGraph > 0): ?>createSegment<?php endif; ?>" segment-type="total-open" campaign-id="<?php echo $oProgram->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addPC }} dark_green cp{{  $positiveGraph }} @if ($positiveGraph > 0)createSegment @endif" segment-type="total-open" campaign-id="{{ $oProgram->id }}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -354,20 +348,15 @@ if (!empty($oPrograms)) {
                                                         </div>
                                                     </div>
                                                     <div class="media-left">
-                                                        <div data-toggle="tooltip" title="<?php echo $positiveRating; ?> email open" data-placement="top">
-                                                            <?php
-                                                            if ($positiveRating > 0) {
-                                                                ?>
-                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $positiveRating; ?></a>
-                                                                <?php
-                                                            } else {
-                                                                ?>
-                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $positiveRating; ?></a>
-                                                            <?php }
-                                                            ?>
-                                                            <?php if ($newPositive > 0): ?>    
-                                                                <?php echo '<span style="color:#FF0000;"> (' . $newPositive . ' new)</span>'; ?>    
-                                                            <?php endif; ?>    
+                                                        <div data-toggle="tooltip" title="{{ $positiveRating }} email open" data-placement="top">
+                                                            @if($positiveRating > 0)
+                                                                <a href="javascript:void(0);" class="text-default text-semibold">{{ $positiveRating }}</a>
+                                                            @else
+                                                                <a href="javascript:void(0);" class="text-default text-semibold">{{ $positiveRating }}</a>
+                                                            @endif
+                                                            @if($newPositive > 0)    
+                                                                <span style="color:#FF0000;"> ({{ $newPositive }} new)</span>    
+                                                            @endif    
 
                                                         </div>
                                                     </div>
@@ -375,14 +364,14 @@ if (!empty($oPrograms)) {
 
                                                 </td>
                                                 <td>
-                                                    <?php
+                                                    @php
                                                     $totPerClick = ceil($totalClicked * 100 / $totalOpened);
 
                                                     $addPC = '';
                                                     if ($totPerClick > 50) {
                                                         $addPC = 'over50';
                                                     }
-                                                    ?>
+                                                    @endphp
                                                     <div class="media-left">
                                                         <div class="progress-circle <?php echo $addPC; ?> green cp<?php echo $totPerClick; ?> <?php if ($totPerClick > 0): ?>createSegment<?php endif; ?>" segment-type="total-click" campaign-id="<?php echo $oProgram->id; ?>" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
