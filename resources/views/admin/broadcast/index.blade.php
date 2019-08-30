@@ -461,14 +461,14 @@ $newOpen = $newClick = 0;
                                                         </td>
 
                                                         <td>
-                                                            <?php
+                                                            @php
                                                             $addPC = '';
                                                             if ($totalDeliveredGraph > 50) {
                                                                 $addPC = 'over50';
                                                             }
-                                                            ?>
+                                                            @endphp
                                                             <div class="media-left">
-                                                                <div class="progress-circle <?php echo $addPC; ?> blue1 cp<?php echo $totalDeliveredGraph; ?> <?php if ($delivered > 0): ?>createSegment<?php endif; ?>" segment-type="total-delivered" campaign-id="<?php echo $broadCastData->broadcast_id; ?>" campaign-type="sms" sending_method="<?php echo $broadCastData->sending_method; ?>" title="click to create segment">
+                                                                <div class="progress-circle @php echo $addPC; @endphp blue1 cp@php echo $totalDeliveredGraph; @endphp @php if ($delivered > 0): @endphpcreateSegment@php endif; @endphp" segment-type="total-delivered" campaign-id="@php echo $broadCastData->broadcast_id; @endphp" campaign-type="sms" sending_method="@php echo $broadCastData->sending_method; @endphp" title="click to create segment">
                                                                     <div class="left-half-clipper">
                                                                         <div class="first50-bar"></div>
                                                                         <div class="value-bar"></div>
@@ -476,37 +476,37 @@ $newOpen = $newClick = 0;
                                                                 </div>
                                                             </div>
                                                             <div class="media-left">
-                                                                <div data-toggle="tooltip" title="<?php echo $delivered; ?> delivered out of <?php echo $totalSent; ?> <?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; ?>" data-placement="top">
-                                                                    <?php
+                                                                <div data-toggle="tooltip" title="{{ $delivered }} delivered out of {{ $totalSent }} @php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; @endphp" data-placement="top">
+                                                                    @php
                                                                     if ($delivered > 0) {
-                                                                        ?>
-                                                                        <a href="<?php echo base_url(); ?>admin/broadcast/records/<?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; ?>/<?php echo $broadCastData->broadcast_id; ?>?type=delivered" class="text-default text-semibold"><?php echo $delivered; ?></a>
-                                                                        <?php
+                                                                        @endphp
+                                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; @endphp/@php echo $broadCastData->broadcast_id; @endphp?type=delivered" class="text-default text-semibold">{{ $delivered }}</a>
+                                                                        @php
                                                                     } else {
-                                                                        ?>
-                                                                        <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $delivered; ?></a>
-                                                                    <?php }
-                                                                    ?>
-                                                                    <?php if ($newDelivered > 0): ?>    
-                                                                        <?php echo '<span style="color:#FF0000;"> (' . $newDelivered . ' new)</span>'; ?>    
-                                                                    <?php endif; ?>    
+                                                                        @endphp
+                                                                        <a href="javascript:void(0);" class="text-default text-semibold">{{ $delivered }}</a>
+                                                                    @php }
+                                                                    @endphp
+                                                                    @php if ($newDelivered > 0): @endphp    
+                                                                        @php echo '<span style="color:#FF0000;"> (' . $newDelivered . ' new)</span>'; @endphp    
+                                                                    @php endif; @endphp    
 
                                                                 </div>
                                                             </div>
 
                                                         </td>
 
-                                                    <?php endif; ?>
-                                                    <?php if (strtolower($campaignType) == 'email'): ?>
+                                                    @php endif; @endphp
+                                                    @php if (strtolower($campaignType) == 'email'): @endphp
                                                         <td>
-                                                            <?php
+                                                            @php
                                                             $addPC = '';
                                                             if ($totalClickGraph > 50) {
                                                                 $addPC = 'over50';
                                                             }
-                                                            ?>
+                                                            @endphp
                                                             <div class="media-left">
-                                                                <div class="progress-circle <?php echo $addPC; ?> blue2 cp<?php echo $totalClickGraph; ?> <?php if ($click > 0): ?>createSegment<?php endif; ?>" segment-type="total-click" campaign-id="<?php echo $broadCastData->broadcast_id; ?>" campaign-type="email" sending_method="<?php echo $broadCastData->sending_method; ?>" title="click to create segment">
+                                                                <div class="progress-circle @php echo $addPC; @endphp blue2 cp@php echo $totalClickGraph; @endphp @php if ($click > 0): @endphpcreateSegment@php endif; @endphp" segment-type="total-click" campaign-id="@php echo $broadCastData->broadcast_id; @endphp" campaign-type="email" sending_method="@php echo $broadCastData->sending_method; @endphp" title="click to create segment">
                                                                     <div class="left-half-clipper">
                                                                         <div class="first50-bar"></div>
                                                                         <div class="value-bar"></div>
@@ -514,11 +514,11 @@ $newOpen = $newClick = 0;
                                                                 </div>
                                                             </div>
                                                             <div class="media-left">
-                                                                <div data-toggle="tooltip" title="<?php echo $click; ?> click out of <?php echo $totalSent; ?> <?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; ?>" data-placement="top">
-                                                                    <?php
+                                                                <div data-toggle="tooltip" title="{{ $click }} click out of @php echo $totalSent; @endphp @php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; @endphp" data-placement="top">
+                                                                    @php
                                                                     if ($click > 0) {
-                                                                        ?>
-                                                                        <a href="<?php echo base_url(); ?>admin/broadcast/records/<?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; ?>/<?php echo $broadCastData->broadcast_id; ?>?type=click" class="text-default text-semibold"><?php echo $click; ?></a>
+                                                                        @endphp
+                                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; @endphp/@php echo $broadCastData->broadcast_id; @endphp?type=click" class="text-default text-semibold">{{ $click }}</a>
                                                                         <?php
                                                                     } else {
                                                                         ?>
