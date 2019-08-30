@@ -185,12 +185,12 @@ $newOpen = $newClick = 0;
                     </div>
                 </div>
 
-                <?php if (strtolower($campaignType) == 'email'): ?>
+                @if (strtolower($campaignType) == 'email')
                     <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="Email"><i class="icon-plus3"></i> &nbsp; Email Broadcast</button> 
-                <?php endif; ?>
-                <?php if (strtolower($campaignType) == 'sms'): ?>
+                @endif
+                @if (strtolower($campaignType) == 'sms')
                     <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="SMS"><i class="icon-plus3"></i> &nbsp; SMS Broadcast</button>
-                <?php endif; ?>
+              @endif
             </div>
         </div>
     </div>
@@ -205,7 +205,7 @@ $newOpen = $newClick = 0;
                         <div class="panel panel-flat">
                             <div class="panel-heading">
                                 <span class="pull-left">
-                                    <h6 class="panel-title"><?php //echo $iActiveCount;          ?> Broadcast</h6>
+                                    <h6 class="panel-title">Broadcast</h6>
                                 </span>
 
                                 <div class="heading-elements">
@@ -682,7 +682,7 @@ $newOpen = $newClick = 0;
 
         </div>
 
-    <?php else: ?>
+    @php else: @endphp
 
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
@@ -756,7 +756,7 @@ $newOpen = $newClick = 0;
             </div>
         </div>
 
-    <?php endif; ?> 
+    @php endif @endphp 
 
 </div>
 
