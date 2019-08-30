@@ -5,8 +5,9 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="address=no" name="format-detection" />
-        <title><?php echo (!empty($oNPS->brand_name))? $oNPS->brand_name: '{{BRANDNAME}}';?></title>
-        <style type="text/css">* {
+        <title>{{ (!empty($oNPS->brand_name)) ? $oNPS->brand_name: '{{BRANDNAME}}' }}</title>
+        <style type="text/css">
+			* {
                 text-rendering: optimizelegibility;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale
@@ -206,47 +207,47 @@
         </style>
         <!--[if gte mso 9]>
         <style type='text/css'>table,
-  tbody,
-  tr,
-  td {
-          border-collapse: collapse !important;
-          mso-table-lspace: 0 !important;
-          mso-table-rspace: 0 !important
-  }
+		  tbody,
+		  tr,
+		  td {
+				  border-collapse: collapse !important;
+				  mso-table-lspace: 0 !important;
+				  mso-table-rspace: 0 !important
+		  }
 
-  .b2 {
-          width: 3px !important
-  }
+		  .b2 {
+				  width: 3px !important
+		  }
 
-  .b1-nps {
-          width: 43px !important
-  }
+		  .b1-nps {
+				  width: 43px !important
+		  }
 
-  .b2 {
-          width: 3px !important
-  }
+		  .b2 {
+				  width: 3px !important
+		  }
 
-  .b1-stars-five {
-          width: 43px !important
-  }
+		  .b1-stars-five {
+				  width: 43px !important
+		  }
 
-  .b2 {
-          width: 3px !important
-  }
+		  .b2 {
+				  width: 3px !important
+		  }
 
-  .b1-ces {
-          width: 43px !important
-  }
+		  .b1-ces {
+				  width: 43px !important
+		  }
 
-  .b2 {
-          width: 3px !important
-  }
+		  .b2 {
+				  width: 3px !important
+		  }
 
-  .b1-csat {
-          width: 43px !important
-  }
+		  .b1-csat {
+				  width: 43px !important
+		  }
 
-  </style>
+		</style>
         <![endif]-->
         <style>
             html, body {
@@ -267,7 +268,7 @@
                     <table border="0" cellpadding="0" cellspacing="0" class="i-nps" style="width:534px;min-width:534px;margin:0 23px" width="534">
                         <tr>
                             <td align="center" class="n11" dir="ltr" style="font-size:18px;line-height:26px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#777777;text-align:center">
-                                <?php echo (!empty($oNPS->description)) ? $oNPS->description : '{{INTRODUCTION}}'; ?>
+							{{ (!empty($oNPS->description)) ? $oNPS->description : '{{INTRODUCTION}}' }}
                             </td>
                         </tr>
                     </table>
@@ -281,7 +282,7 @@
                                 <table align="center" border="0" cellpadding="0" cellspacing="0" class="q1" style="width:374px" width="374">
                                     <tr>
                                         <td align="center" class="q11" dir="ltr" style="font-size:22px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;line-height:30px;color:#111111;text-align:center">
-                                            <?php echo (!empty($oNPS->question)) ? $oNPS->question : '{{QUESTIONLINE}}'; ?>
+										{{ (!empty($oNPS->question)) ? $oNPS->question : '{{QUESTIONLINE}}' }}
                                         </td>
                                     </tr>
                                 </table>
@@ -290,12 +291,12 @@
                         <tr>
                             <td align="center" class="b-nps">
 
-                                <?php for ($i = 10; $i >= 0; $i--): ?>
+                                @for ($i = 10; $i >= 0; $i--)
                                     <table align="right" border="0" cellpadding="0" cellspacing="0" class="b1-nps" style="width:44px;height:44px" width="44" height="44">
                                         <tr>
                                             <td align="center" class="b01" valign="middle" style="width:42px;background-color:#ffffff;height:40px;border-radius:6px;box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0;border-color:#cccccc #cccccc #cccccc;border-style:solid;border-width:1px 1px 3px" bgcolor="#ffffff" width="42" height="40">
-                                                <a href="<?php echo base_url("/nps/t/" . $oNPS->hashcode . "?s={$i}"); ?>" style="display:block;line-height:40px;text-decoration:none;font-size:18px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold">
-                                                    <span dir="ltr" style="color:#0F0F0D"><?php echo $i; ?>                                                  
+                                                <a href="@php echo base_url("/nps/t/" . $oNPS->hashcode . "?s={$i}"); @endphp" style="display:block;line-height:40px;text-decoration:none;font-size:18px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold">
+                                                    <span dir="ltr" style="color:#0F0F0D">{{ $i }}                                                  
                                                     </span>
 
                                                     </span>
@@ -304,18 +305,15 @@
                                         </tr>
                                     </table>
 
-                                <?php if($i>0):?>
+                                @if($i>0)
                                     <table align="right" border="0" cellpadding="0" cellspacing="0" class="b2" style="width:5px;height:44px" width="5" height="44">
                                         <tr>
                                             <td style="width:5px;height:44px;line-height:0;font-size:0" width="5" height="44">&nbsp;</td>
                                         </tr>
                                     </table>
-                                <?php endif;?>
+                                @endif
 
-                                <?php endfor; ?>
-
-
-
+                            @endfor
                             </td>
                         </tr>
                         <tr>
@@ -332,11 +330,8 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
                             </td>
                         </tr>
-
-
                     </table>
                 </td>
             </tr>
