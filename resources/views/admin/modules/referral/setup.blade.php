@@ -90,7 +90,7 @@
 
     .highlighted { color:#008000;font-size:15px !important;}
 </style>
-<?php
+@php
 $disableRemaining = false;
 $rewards = '';
 $emailWorkflow = '';
@@ -120,23 +120,19 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 } else {
     $rs = 'active';
 }
-?>
+@endphp
 <div class="content">
     <div class="row mb20">
-
         <div class="col-lg-12 text-right">
-
-
             <button data-toggle="modal" data-target="#addSubscriber" type="button" class="btn bl_cust_btn btn-default" style="margin-left:12px;"><i class="icon-make-group position-left"></i> INVITE ADVOCATES </button>
 
             <button data-toggle="modal" data-target="#importCSV" type="button" class="btn bl_cust_btn btn-default" style="margin-left:12px;"><i class="icon-make-group position-left"></i> ADVOCATES IMPORT</button> 
 
             <form method="post" action="{{ base_url() }}admin/modules/referral/exportCSV" enctype="multipart/form-data" style="float:right; margin-left:15px;">
-                <input type="hidden" name="account_id" id="account_id" value="<?php echo $accountID; ?>">
+                @csrf
+				<input type="hidden" name="account_id" id="account_id" value="{{ $accountID }}">
                 <button type="submit" title="Export" class="btn bl_cust_btn btn-default" id="exportButton"><i class="icon-make-group position-left"></i> ADVOCATE EXPORT</button>
             </form>
-
-
         </div>
     </div> 
     <div class="row">
@@ -148,90 +144,90 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 <div class="panel-body">
                     <div class="tabbable">
                         <ul class="nav nav-tabs nav-tabs-bottom" id="nav-tabs-bottom">
-                            <li class="<?php
+                            <li class="@php
                             if ($defalutTab == 'config') {
                                 echo 'active';
                             }
-                            ?>"><a href="#right-icon-tab1" data-toggle="tab"><i class="fa fa-cog position-left"></i> Configuration</a></li>
+                            @endphp"><a href="#right-icon-tab1" data-toggle="tab"><i class="fa fa-cog position-left"></i> Configuration</a></li>
 
-                            <li class="<?php
+                            <li class="@php
                             if ($defalutTab == 'reward') {
                                 echo 'active';
                                 $disableRemaining = true;
                             }
-                            ?>"><a href="<?php
+                            @endphp"><a href="@php
                                     if ($disableRemaining == false || $defalutTab == 'reward') {
                                         $bRewardTab = true;
-                                        ?>#right-icon-tab2<?php } else { ?>javascript:void(0);<?php } ?>" data-toggle="tab"><i class="icon-gift position-left"></i> Reward Management</a></li>
+                                        @endphp #right-icon-tab2 @php } else { @endphp javascript:void(0);@php } @endphp" data-toggle="tab"><i class="icon-gift position-left"></i> Reward Management</a></li>
 
-                            <li class="<?php
+                            <li class="@php
                             if ($defalutTab == 'widgets') {
                                 echo 'active';
                                 $disableRemaining = true;
                             }
-                            ?>"><a href="<?php
+                            @endphp"><a href="@php
                                 if ($disableRemaining == false || $defalutTab == 'widgets') {
                                     $bWidgetTab = true;
-                                    ?>#right-icon-tab3<?php } else { ?>javascript:void(0);<?php } ?>" data-toggle="tab"><i class="icon-pushpin position-left"></i> Widgets</a></li>
+                                    @endphp #right-icon-tab3 @php } else { @endphp javascript:void(0); @php } @endphp" data-toggle="tab"><i class="icon-pushpin position-left"></i> Widgets</a></li>
 
-                            <li class="<?php
+                            <li class="@php
                             if ($defalutTab == 'workflow') {
                                 echo 'active';
                                 $disableRemaining = true;
                             }
-                            ?>"><a href="<?php
+                            @endphp"><a href="@php
                                 if ($disableRemaining == false || $defalutTab == 'workflow') {
                                     $bWorkflowTab = true;
-                                ?>#right-icon-tab4<?php } else { ?>javascript:void(0);<?php } ?>" data-toggle="tab"><i class="icon-mention position-left"></i> Email Workflow</a></li>
+                                @endphp #right-icon-tab4 @php } else { @endphp javascript:void(0); @php } @endphp" data-toggle="tab"><i class="icon-mention position-left"></i> Email Workflow</a></li>
 
-                            <li class="<?php
+                            <li class="@php
                             if ($defalutTab == 'advocates') {
                                 echo 'active';
                                 $disableRemaining = true;
                             }
-                            ?>"><a href="<?php
+                            @endphp"><a href="@php
                             if ($disableRemaining == false || $defalutTab == 'advocates') {
                                 $bAdvocatesTab = true;
-                                ?>#right-icon-tab5<?php } else { ?>javascript:void(0);<?php } ?>" data-toggle="tab"><i class="icon-address-book position-left"></i> Advocates</a></li>
+                                @endphp #right-icon-tab5 @php } else { @endphp javascript:void(0); @php } @endphp" data-toggle="tab"><i class="icon-address-book position-left"></i> Advocates</a></li>
 
-                            <li class="<?php
+                            <li class="@php
                                 if ($defalutTab == 'integrations') {
                                     echo 'active';
                                     $disableRemaining = true;
                                 }
-                                ?>"><a href="<?php
+                                @endphp"><a href="@php
                                 if ($disableRemaining == false || $defalutTab == 'integrations') {
                                     $bIntegrationTab = true;
-                                    ?>#right-icon-tab6<?php } else { ?>javascript:void(0);<?php } ?>" data-toggle="tab"><i class="icon-puzzle4 position-left"></i> Integration</a></li>
-
-
-
+                                    @endphp #right-icon-tab6 @php } else { @endphp javascript:void(0); @php } @endphp" data-toggle="tab"><i class="icon-puzzle4 position-left"></i> Integration</a></li>
                         </ul>
                         <div class="tab-content">
                             <!--########################TAB 1 ##########################-->
-                            <?php $this->load->view("admin/modules/referral/referral-tabs/settings", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oAccountSettings' => $oAccountSettings)); ?>
-                            <!--########################TAB 2 ##########################-->
-                            <?php if ($bRewardTab == true): ?>
-                                <?php $this->load->view("admin/modules/referral/referral-tabs/reward-setup", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oSettings' => $oSettings, 'oAdvCouponCodes' => $oAdvCouponCodes, 'oRefCouponCodes' => $oRefCouponCodes)); ?>
-                            <?php endif; ?>
-                            <!--########################TAB 3 ##########################-->
-                            <?php if ($bWidgetTab == true): ?>
-                                <?php $this->load->view("admin/modules/referral/referral-tabs/widget_code", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oSettings' => $oSettings)); ?>
-                            <?php endif; ?>
-                            <!--########################TAB 4 ##########################-->
-                            <?php if ($bWorkflowTab == true): ?>
-                                <?php //$this->load->view("admin/modules/referral/referral-tabs/reward-email-settings", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oSettings' => $oSettings));  ?>
-                                <?php $this->load->view("admin/modules/referral/referral-tabs/reward-workflow", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oSettings' => $oSettings)); ?>
-                            <?php endif; ?>
-                            <!--########################TAB 5 ##########################--> 
-                            <?php if ($bAdvocatesTab == true): ?>
-                                <?php $this->load->view("admin/modules/referral/referral-tabs/contacts", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oSettings' => $oSettings, 'oContacts' => $oContacts)); ?>
-<?php endif; ?>
-                            <!--########################TAB 6 ##########################--> 
-<?php if ($bIntegrationTab == true): ?>
-    <?php $this->load->view("admin/modules/referral/referral-tabs/integration", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oSettings' => $oSettings)); ?>
-<?php endif; ?>
-
+                            @php $this->load->view("admin/modules/referral/referral-tabs/settings", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oAccountSettings' => $oAccountSettings)) @endphp
+                            
+							<!--########################TAB 2 ##########################-->
+                            @if ($bRewardTab == true)
+                                @php $this->load->view("admin/modules/referral/referral-tabs/reward-setup", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oSettings' => $oSettings, 'oAdvCouponCodes' => $oAdvCouponCodes, 'oRefCouponCodes' => $oRefCouponCodes)) @endphp
+                            @endif
+                            
+							<!--########################TAB 3 ##########################-->
+                            @if ($bWidgetTab == true)
+                                @php $this->load->view("admin/modules/referral/referral-tabs/widget_code", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oSettings' => $oSettings)) @endphp
+                            @endif
+                            
+							<!--########################TAB 4 ##########################-->
+                            @if ($bWorkflowTab == true)
+                                @php $this->load->view("admin/modules/referral/referral-tabs/reward-workflow", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oSettings' => $oSettings)) @endphp
+                            @endif
+                            
+							<!--########################TAB 5 ##########################--> 
+                            @if ($bAdvocatesTab == true)
+                                @php $this->load->view("admin/modules/referral/referral-tabs/contacts", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oSettings' => $oSettings, 'oContacts' => $oContacts)) @endphp
+							@endif
+							
+							<!--########################TAB 6 ##########################--> 
+							@if ($bIntegrationTab == true)
+								@php $this->load->view("admin/modules/referral/referral-tabs/integration", array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oSettings' => $oSettings)) @endphp
+							@endif
                         </div>
                     </div>
                 </div>
@@ -239,6 +235,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
         </div>
     </div>
 </div>
+
 <div id="addSubscriber" class="modal fade">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -248,18 +245,15 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             </div>
             <div class="modal-body">
                 <div class="panel-body">
-
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
-                        <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
-                        <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
+                        <input type="hidden" name="userid" value="{{ $userID }}" />
+                        <input type="hidden" name="bbaid" value="{{ $oSettings->hashcode }}" />
                         <div class="col-md-12">
-
                             <div class="form-group">
                                 <label class="control-label">First Name</label>
                                 <div class="">
                                     <input name="firstname" id="firstname" class="form-control" type="text" required="">
                                 </div>
-
                             </div>
 
                             <div class="form-group">
@@ -268,7 +262,6 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                                     <input name="lastname" id="lastname" class="form-control" value="" type="text" required="">
                                 </div>
                             </div>
-
 
                             <div class="form-group">
                                 <label class="control-label">Email</label>
@@ -287,10 +280,8 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                             <button class="btn btn-success pull-right" id="btnInvite" type="submit">
                                 Invite Advocates
                             </button>
-
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -308,33 +299,26 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             <div class="modal-body">
                 <div class="panel-body">
                     <form name="frmInviteBulkCustomer" id="frmInviteBulkCustomer"  method="post" action="" enctype="multipart/form-data" >
-                        <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
-                        <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
-
+                        <input type="hidden" name="userid" value="{{ $userID }}" />
+                        <input type="hidden" name="bbaid" value="{{ $oSettings->hashcode }}" />
                         <div class="col-md-8">
                             <strong> Upload a CSV file with customer contact details </strong> <br>
                             -Column 1 should be EMAIL<br>
                             -Column 2 should be FIRST_NAME<br>
                             Column 3 should be LAST_NAME<br>
-                            Column 4 should be PHONE<br>                            
-
+                            Column 4 should be PHONE<br>
                         </div>
 
                         <div class="col-md-4">
                             <div class="fileupload">
                                 <input type="file" name="userfile" id="ctrBrowse" accept=".csv, application/vnd.ms-excel" style="position:relative;top:50px;" />
                             </div>
-
                         </div>
 
                         <div class="clearfix"></div>
-
                         <button class="btn btn-success pull-right" id="btnBulkInvite" type="submit">
                             Import Advocates
                         </button>
-
-
-
                     </form>
                 </div>
             </div>
@@ -344,14 +328,12 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
 <script>
     $(document).ready(function () {
-
         $("#frmInviteCustomer").submit(function () {
-
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $('#btnInvite').prop("disabled", true);
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/registerInvite'); ?>',
+                url: "{{ base_url('admin/modules/referral/registerInvite') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -370,10 +352,11 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             });
             return false;
         });
+		
 
         $("#publishNPSCampaign").click(function () {
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/publishReferralCampaign'); ?>',
+                url: "{{ base_url('admin/modules/referral/publishReferralCampaign') }}",
                 type: "POST",
                 data: {'referralId': '<?php echo $programID; ?>'},
                 dataType: "html",
@@ -384,16 +367,13 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 }
             });
         });
+		
 
         $("#frmInviteBulkCustomer").submit(function () {
-
             $('.overlaynew').show();
-
             var formData = new FormData($(this)[0]);
-
-
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/importInviteCSV'); ?>',
+                url: "{{ base_url('admin/modules/referral/importInviteCSV') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -401,13 +381,9 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 processData: false,
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
-
                         alertMessageAndRedirect('Advocated has been invited successfully.', window.location.href);
-
                     } else {
-
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();
                     }
@@ -415,11 +391,5 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             });
             return false;
         });
-
-
     });
 </script>	
-
-
-
-
