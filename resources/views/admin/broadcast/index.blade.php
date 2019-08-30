@@ -519,10 +519,10 @@ $newOpen = $newClick = 0;
                                                                     if ($click > 0) {
                                                                         @endphp
                                                                         <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; @endphp/@php echo $broadCastData->broadcast_id; @endphp?type=click" class="text-default text-semibold">{{ $click }}</a>
-                                                                        <?php
+                                                                        @php
                                                                     } else {
-                                                                        ?>
-                                                                        <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $click; ?></a>
+                                                                        @endphp
+                                                                        <a href="javascript:void(0);" class="text-default text-semibold">{{ $click }}</a>
                                                                     <?php }
                                                                     ?>
                                                                     <?php if ($newClick > 0): ?>    
