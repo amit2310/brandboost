@@ -195,7 +195,7 @@ $newOpen = $newClick = 0;
         </div>
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
-    <?php if (!empty($oBroadcast)): ?>
+    @php if (!empty($oBroadcast)): @endphp
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
@@ -233,12 +233,12 @@ $newOpen = $newClick = 0;
                                             <th style="display: none;"></th>
                                             <th style="display: none;"></th>
                                             <th style="display: none;" class="nosort editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_star_10.png"/></i>Broadcast Name</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_click_10.png"/></i>Schedule Time</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_minus.png"></i>Sent</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_view.png"></i><?php echo (strtolower($campaignType) == 'email') ? 'Opens' : 'Delivered'; ?></th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_click_10.png"></i><?php echo (strtolower($campaignType) == 'email') ? 'Clicked' : 'Queued'; ?></th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_click_10.png"></i>Sending Method</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_star_10.png"/></i>Broadcast Name</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_click_10.png"/></i>Schedule Time</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_minus.png"></i>Sent</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_view.png"></i><?php echo (strtolower($campaignType) == 'email') ? 'Opens' : 'Delivered'; ?></th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_click_10.png"></i>@php echo (strtolower($campaignType) == 'email') ? 'Clicked' : 'Queued'; @endphp</th>
+                                            <th><i class=""><img src="{{ base_url() }} assets/images/icon_click_10.png"></i>Sending Method</th>
                                             <th class="text-right"><i><img src="<?php echo base_url(); ?>assets/images/icon_date.png"></i>Created</th>
                                             <th class=""><i class="fa fa-dot-circle-o"></i>Status</th>
                                             <th class="text-center" ><i class="fa fa-dot-circle-o"></i>Action</th>
