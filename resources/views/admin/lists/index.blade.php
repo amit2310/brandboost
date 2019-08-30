@@ -365,7 +365,7 @@
                                                         }
                                                         @endphp
                                                         <div class="media-left">
-                                                            <div class="progress-circle <?php echo $addPC; ?> green cp<?php echo $totalEmailGraph; ?>">
+                                                            <div class="progress-circle {{ $addPC }} green cp{{ $totalEmailGraph }} ">
                                                                 <div class="left-half-clipper">
                                                                     <div class="first50-bar"></div>
                                                                     <div class="value-bar"></div>
@@ -373,11 +373,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="media-left">
-                                                            <div data-toggle="tooltip" title="<?php echo $totEmailCount; ?> have email address out of <?php echo $totalContacts; ?> contacts" data-placement="top">
-                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $totEmailCount; ?></a>
-                                                                <?php if ($newEmails > 0): ?>    
-                                                                    <?php echo '<span style="color:#FF0000;"> (' . $newEmails . ' new)</span>'; ?>    
-                                                                <?php endif; ?>    
+                                                            <div data-toggle="tooltip" title="{{ $totEmailCount }} have email address out of {{ $totalContacts }} contacts" data-placement="top">
+                                                                <a href="javascript:void(0);" class="text-default text-semibold"><{{ $totEmailCount }}</a>
+                                                                @php if ($newEmails > 0):@endphp    
+                                                                    @php echo '<span style="color:#FF0000;"> (' . $newEmails . ' new)</span>'; @endphp    
+                                                                @php endif; @endphp    
 
                                                             </div>
                                                         </div>
@@ -385,12 +385,12 @@
                                                     </td>
                                                     <td>
 
-                                                        <?php
+                                                        @php
                                                         $addPC = '';
                                                         if ($totalSMSGraph > 50) {
                                                             $addPC = 'over50';
                                                         }
-                                                        ?>
+                                                        @endphp
                                                         <div class="media-left">
                                                             <div class="progress-circle <?php echo $addPC; ?> grey cp<?php echo $totalSMSGraph; ?>">
                                                                 <div class="left-half-clipper">
