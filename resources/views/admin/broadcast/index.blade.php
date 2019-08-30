@@ -692,7 +692,7 @@ $newOpen = $newClick = 0;
                         <!-- Marketing campaigns -->
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $iActiveCount; ?> Brand Boost Broadcast</h6>
+                                <h6 class="panel-title">{{ $iActiveCount }} Brand Boost Broadcast</h6>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
@@ -730,12 +730,12 @@ $newOpen = $newClick = 0;
                                                         <div style="margin: 20px 0px 0;" class="text-center">
 
                                                             <h5 class="mb-20 mt40">
-                                                                Looks Like You Don't Have Created Any <?php echo $campaignType; ?> Broadcast Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
-                                                                Lets Create <?php echo $campaignType; ?> Broadcast.
+                                                                Looks Like You Don't Have Created Any {{ $campaignType }} Broadcast Yet <img src="@php echo site_url('assets/images/smiley.png'); @endphp"> <br>
+                                                                Lets Create {{ $campaignType }} Broadcast.
                                                             </h5>
 
 
-                                                            <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20 mb40" broadcast_type="<?php echo $campaignType; ?>"><i class="icon-plus3"></i> &nbsp; <?php echo $campaignType; ?> Broadcast</button>
+                                                            <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20 mb40" broadcast_type="{{ $campaignType }}"><i class="icon-plus3"></i> &nbsp; {{ $campaignType }} Broadcast</button>
 
                                                         </div>
                                                     </div>
@@ -767,7 +767,7 @@ $newOpen = $newClick = 0;
             <form method="post" name="addBroadcastSegment" id="addBroadcastSegment" action="javascript:void();">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Add Segment &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> Add Segment &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
                 </div>
                 <div class="modal-body">
 
@@ -812,7 +812,7 @@ $newOpen = $newClick = 0;
             <form method="post" name="addBroadcastData" id="addBroadcastData" action="javascript:void();">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/<?php echo ($campaignType == 'Email') ? 'Email_Color.svg' : 'Sms_Color.svg'; ?>"/> Add Brand Boost Broadcast &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/@php echo ($campaignType == 'Email') ? 'Email_Color.svg' : 'Sms_Color.svg'; @endphp"/> Add Brand Boost Broadcast &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
                 </div>
                 <div class="modal-body">
 
@@ -834,8 +834,8 @@ $newOpen = $newClick = 0;
                 <div class="modal-footer">
                     <input type="hidden" value="" name="campaignTemplateID" id="campaignTemplateID">
                     <textarea id="campaignTemplateContant" style="display:none;"></textarea>
-                    <input type="hidden" value="<?php echo ($campaignType == 'Email') ? 'Email' : 'SMS'; ?>" name="broadCastType" id="broadCastType">
-                    <button data-toggle="modal" type="submit" class="btn dark_btn <?php echo ($campaignType == 'Email') ? 'bkg_sblue' : 'bkg_green' ?> fsize14 h52">Continue</button>
+                    <input type="hidden" value="@php echo ($campaignType == 'Email') ? 'Email' : 'SMS'; @endphp" name="broadCastType" id="broadCastType">
+                    <button data-toggle="modal" type="submit" class="btn dark_btn @php echo ($campaignType == 'Email') ? 'bkg_sblue' : 'bkg_green' @endphp fsize14 h52">Continue</button>
                     <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
 
                 </div>
