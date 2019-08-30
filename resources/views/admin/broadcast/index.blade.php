@@ -379,8 +379,8 @@ $newOpen = $newClick = 0;
                                                                     @php }
                                                                     @endphp
                                                                     @php if ($newOpen > 0): @endphp    
-                                                                        <?php echo '<span style="color:#FF0000;"> (' . $newOpen . ' new)</span>'; ?>    
-                                                                    <?php endif; ?>    
+                                                                        @php echo '<span style="color:#FF0000;"> (' . $newOpen . ' new)</span>'; @endphp    
+                                                                    @php endif; @endphp    
 
                                                                 </div>
                                                             </div>
@@ -388,14 +388,14 @@ $newOpen = $newClick = 0;
                                                         </td>
 
                                                         <td>
-                                                            <?php
+                                                            @php
                                                             $addPC = '';
                                                             if ($totalOpenGraph > 50) {
                                                                 $addPC = 'over50';
                                                             }
-                                                            ?>
+                                                            @endphp
                                                             <div class="media-left">
-                                                                <div class="progress-circle <?php echo $addPC; ?> blue1 cp<?php echo $totalOpenGraph; ?> <?php if ($open > 0): ?>createSegment<?php endif; ?>" segment-type="total-open" campaign-id="<?php echo $broadCastData->broadcast_id; ?>" campaign-type="email" sending_method="<?php echo $broadCastData->sending_method; ?>" title="click to create segment">
+                                                                <div class="progress-circle @php echo $addPC; @endphp blue1 cp@php echo $totalOpenGraph; @endphp @php if ($open > 0): @endphp createSegment@php endif; @endphp" segment-type="total-open" campaign-id="@php echo $broadCastData->broadcast_id; @endphp" campaign-type="email" sending_method="@php echo $broadCastData->sending_method; @endphp" title="click to create segment">
                                                                     <div class="left-half-clipper">
                                                                         <div class="first50-bar"></div>
                                                                         <div class="value-bar"></div>
