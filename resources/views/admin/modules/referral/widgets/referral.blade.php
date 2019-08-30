@@ -8,15 +8,15 @@
   <!---- start chat with user name section ---->
   <div id="bb_msg_wrap_new" >
     <div class="bb-form-group new">
-      <?php if(!empty($tagTitle)): ?>
-	<p><?php echo $tagTitle;?></p>
-	<?php endif; ?>
-      <img width="50" src="<?php echo base_url(); ?>/assets/images/gift-reward.png"/>
-      <?php if(!empty($tagLineDesc)): ?>
-		<p><?php echo $tagLineDesc;?></p>
-		<?php endif; ?>
+    @php if(!empty($tagTitle))
+		<p>{{ $tagTitle }}</p>
+	@endif
+      <img width="50" src="{{ base_url() }}/assets/images/gift-reward.png"/>
+    @php if(!empty($tagLineDesc))
+		<p>{{ $tagLineDesc }}</p>
+	@endif
       <div class="">
-		<input type="hidden" name="bb-account-id" id="bb-account-id" value="<?php echo $accountID; ?>" >
+		<input type="hidden" name="bb-account-id" id="bb-account-id" value="{{ $accountID }}" >
         <input name="bbrefname" id="bbrefname" class="form-control user" placeholder="Your Name" type="text" required="">
       </div>
       <div class="">
