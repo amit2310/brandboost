@@ -1,11 +1,11 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php
+@php
 $iActiveCount = $iArchiveCount = 0;
 
 if (!empty($oBroadcast)) {
@@ -19,7 +19,7 @@ if (!empty($oBroadcast)) {
 }
 
 $newOpen = $newClick = 0;
-?>
+@endphp
 <style>
     .createSegment{
         cursor:pointer!important;
@@ -35,7 +35,7 @@ $newOpen = $newClick = 0;
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3">
-                <h3><img src="/assets/images/email_icon_active.png"> <?php if ($campaignType == 'Email'): ?>Email Broadcasts<?php else: ?>SMS Broadcast<?php endif; ?></h3>
+                <h3><img src="/assets/images/email_icon_active.png"> @php if ($campaignType == 'Email'): @endphp Email Broadcasts@php else: @endphp SMS Broadcast@php endif; @endphp</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <!--                    <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Brand Boost Broadcast</a></li>
                                         <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li>-->
