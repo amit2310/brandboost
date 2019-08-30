@@ -400,11 +400,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="media-left">
-                                                            <div data-toggle="tooltip" title="<?php echo $totSMSCount; ?> have numbers out of <?php echo $totalContacts; ?> contacts" data-placement="top">
-                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $totSMSCount; ?></a>
-                                                                <?php if ($newSMS > 0): ?>    
-                                                                    <?php echo '<span style="color:#FF0000;"> (' . $newSMS . ' new)</span>'; ?>    
-                                                                <?php endif; ?>    
+                                                            <div data-toggle="tooltip" title="{{ $totSMSCount }} have numbers out of {{ $totalContacts }} contacts" data-placement="top">
+                                                                <a href="javascript:void(0);" class="text-default text-semibold">{{ $totSMSCount }}</a>
+                                                                @php if ($newSMS > 0): @endphp    
+                                                                    @php echo '<span style="color:#FF0000;"> (' . $newSMS . ' new)</span>'; @endphp    
+                                                                @php endif;@endphp    
 
                                                             </div>
                                                         </div>
@@ -416,7 +416,7 @@
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <?php
+                                                    @php
                                                         if ($oList->status == 'active') {
                                                             echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
                                                         } else if ($oList->status == 'archive') {
@@ -424,9 +424,9 @@
                                                         } else {
                                                             echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
                                                         }
-                                                        ?>
+                                                        @endphp
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                                            <?php
+                                                            @php
                                                             if ($oList->status == 'active') {
                                                                 echo 'Active';
                                                             } else if ($oList->status == 'archive') {
@@ -434,7 +434,7 @@
                                                             } else {
                                                                 echo 'Inactive';
                                                             }
-                                                            ?>
+                                                            @endphp
 
                                                         </a>
                                                         <ul class="dropdown-menu dropdown-menu-right status">
@@ -444,16 +444,17 @@
 
                                                     <td class="text-right">
                                                         <div class="media-left pull-right">
-                                                            <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                                            <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                                <img src="{{ base_url() }}assets/images/more.svg"></a>
 
                                                                 <ul class="dropdown-menu dropdown-menu-right more_act width-200">
                                                                     <a href="#" class="dropdown_close">X</a>
-                                                                    <li><a href="javascript:void(0);" list_id="<?php echo $oList->id; ?>" target="_blank" class="viewContact"><i class="icon-gear"></i> View Contacts</a></li>
-                                                                    <li><a href="javascript:void(0);" list_id="<?php echo $oList->id; ?>" class="editlist"><i class="icon-file-stats"></i> Edit</a></li>
-                                                                    <?php if ($oList->status == 'active'): ?>
-                                                                        <li><a href="javascript:void(0);" status="inactive" list_id="<?php echo $oList->id; ?>" class="changeStatus"><i class="icon-file-stats"></i> Inactive</a></li>
-                                                                    <?php endif; ?>
-                                                                    <?php if ($oList->status == 'inactive' && $oList->status != 'archive'): ?>
+                                                                    <li><a href="javascript:void(0);" list_id="{{ $oList->id }}" target="_blank" class="viewContact"><i class="icon-gear"></i> View Contacts</a></li>
+                                                                    <li><a href="javascript:void(0);" list_id="{{ $oList->id }}" class="editlist"><i class="icon-file-stats"></i> Edit</a></li>
+                                                                    @php if ($oList->status == 'active'): @endphp
+                                                                        <li><a href="javascript:void(0);" status="inactive" list_id="{{ $oList->id }} " class="changeStatus"><i class="icon-file-stats"></i> Inactive</a></li>
+                                                                    @php endif; @endphp
+                                                                    @php if ($oList->status == 'inactive' && $oList->status != 'archive'): @endphp
                                                                         <li><a href="javascript:void(0);" status="active" list_id="<?php echo $oList->id; ?>" class="changeStatus"><i class="icon-file-stats"></i> Active</a></li>
                                                                     <?php endif; ?>
                                                                     <?php if ($oList->status != 'archive'): ?>
