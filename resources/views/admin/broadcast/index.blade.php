@@ -404,35 +404,35 @@ $newOpen = $newClick = 0;
                                                             </div>
                                                             <div class="media-left">
                                                                 <div data-toggle="tooltip" title="<?php echo $open; ?> open out of <?php echo $totalSent; ?> <?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; ?>" data-placement="top">
-                                                                    <?php
+                                                                    @php
                                                                     if ($open > 0) {
-                                                                        ?>
-                                                                        <a href="<?php echo base_url(); ?>admin/broadcast/records/<?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; ?>/<?php echo $broadCastData->broadcast_id; ?>?type=open" class="text-default text-semibold"><?php echo $open; ?></a>
-                                                                        <?php
+                                                                        @endphp
+                                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; @endphp/@php echo $broadCastData->broadcast_id; @endphp?type=open" class="text-default text-semibold">{{ $open }}</a>
+                                                                        @php
                                                                     } else {
-                                                                        ?>
-                                                                        <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $open; ?></a>
-                                                                    <?php }
-                                                                    ?>
-                                                                    <?php if ($newOpen > 0): ?>    
-                                                                        <?php echo '<span style="color:#FF0000;"> (' . $newOpen . ' new)</span>'; ?>    
-                                                                    <?php endif; ?>    
+                                                                        @endphp
+                                                                        <a href="javascript:void(0);" class="text-default text-semibold">@php echo $open; @endphp</a>
+                                                                    @php }
+                                                                    @endphp
+                                                                    @php if ($newOpen > 0): @endphp    
+                                                                        @php echo '<span style="color:#FF0000;"> (' . $newOpen . ' new)</span>'; @endphp    
+                                                                    @php endif; @endphp    
 
                                                                 </div>
                                                             </div>
 
                                                         </td>
-                                                    <?php else: ?>
+                                                    @php else: @endphp
 
                                                         <td>
-                                                            <?php
+                                                            @php
                                                             $addPC = '';
                                                             if ($totalSentGraph > 50) {
                                                                 $addPC = 'over50';
                                                             }
-                                                            ?>
+                                                            @endphp
                                                             <div class="media-left">
-                                                                <div class="progress-circle <?php echo $addPC; ?> blue3 cp<?php echo $totalSentGraph; ?> <?php if ($totalSent > 0): ?>createSegment<?php endif; ?>"  segment-type="total-sent" campaign-id="<?php echo $broadCastData->broadcast_id; ?>" campaign-type="sms" sending_method="<?php echo $broadCastData->sending_method; ?>" title="click to create segment">
+                                                                <div class="progress-circle @php echo $addPC; @endphp blue3 cp@php echo $totalSentGraph; @endphp @php if ($totalSent > 0): @endphpcreateSegment@php endif; @endphp"  segment-type="total-sent" campaign-id="@php echo $broadCastData->broadcast_id; @endphp" campaign-type="sms" sending_method="@php echo $broadCastData->sending_method; @endphp" title="click to create segment">
                                                                     <div class="left-half-clipper">
                                                                         <div class="first50-bar"></div>
                                                                         <div class="value-bar"></div>
@@ -440,20 +440,20 @@ $newOpen = $newClick = 0;
                                                                 </div>
                                                             </div>
                                                             <div class="media-left">
-                                                                <div data-toggle="tooltip" title="<?php echo $totalSent; ?> sent out of <?php echo $totalSent; ?> <?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; ?>" data-placement="top">
-                                                                    <?php
+                                                                <div data-toggle="tooltip" title="@php echo $totalSent; @endphp sent out of @php echo $totalSent; @endphp @php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; @endphp" data-placement="top">
+                                                                    @php
                                                                     if ($totalSentGraph > 0) {
-                                                                        ?>
-                                                                        <a href="<?php echo base_url(); ?>admin/broadcast/records/<?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; ?>/<?php echo $broadCastData->broadcast_id; ?>?type=sent" class="text-default text-semibold"><?php echo $totalSent; ?></a>
-                                                                        <?php
+                                                                        @endphp
+                                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; @endphp/@php echo $broadCastData->broadcast_id; @endphp?type=sent" class="text-default text-semibold">@php echo $totalSent; @endphp</a>
+                                                                        @endphpphp
                                                                     } else {
-                                                                        ?>
-                                                                        <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $delivered; ?></a>
-                                                                    <?php }
-                                                                    ?>
-                                                                    <?php if ($newSent > 0): ?>    
-                                                                        <?php echo '<span style="color:#FF0000;"> (' . $newSent . ' new)</span>'; ?>    
-                                                                    <?php endif; ?>    
+                                                                        @endphp
+                                                                        <a href="javascript:void(0);" class="text-default text-semibold">{{ $delivered }}</a>
+                                                                    @php }
+                                                                    @endphp
+                                                                    @php if ($newSent > 0): @endphp    
+                                                                        @php echo '<span style="color:#FF0000;"> (' . $newSent . ' new)</span>'; @endphp    
+                                                                    @php endif; @endphp   
 
                                                                 </div>
                                                             </div>
