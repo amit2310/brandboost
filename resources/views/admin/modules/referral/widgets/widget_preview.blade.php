@@ -95,7 +95,6 @@
 	.bb-form-group input[type=button] {
 		height: 52px;
 		box-shadow: 0 1px 1px 0 rgba(27, 147, 255, 0.2), 0 2px 4px 0 rgba(27, 147, 255, 0.05), inset 0 -1px 0 0 rgba(0, 0, 0, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-		/*background-color: #1b93ff;*/
 		background-image: linear-gradient(259deg, #9b83ff, #6145d4) !important;
 		color: #fff!important;
 		padding: 0;
@@ -115,9 +114,9 @@
   <!---- start chat with user name section ---->
   <div id="bb_msg_wrap_new" >
     <div class="bb-form-group new">
-      <p><?php echo $oReferral['tagTitle']; ?></p>
+      <p>{{ $oReferral['tagTitle'] }}</p>
       <img width="50" src="http://brandboost.io/assets/images/gift-reward.png"/>
-      <p><?php echo $oReferral['tagLineDesc']; ?></p>
+      <p>{{ $oReferral['tagLineDesc'] }}</p>
       <div class="">
         <input name="bb_chat_username" id="" class="form-control user" value="" type="text" required placeholder="Enter your name">
       </div>
