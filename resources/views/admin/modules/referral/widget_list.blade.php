@@ -1,11 +1,12 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php
+
+@php
 	$iActiveCount = $iArchiveCount = 0;
 	
 	if (!empty($oWidgetsList)) {
@@ -17,12 +18,10 @@
 			}
 		}
 	}
-?>
+@endphp
+
 <!-- Content area -->
 <div class="content">
-	
-    <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
-	
     <div class="page_header">
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
@@ -207,7 +206,7 @@
 						</div>
 						
 						<div class="panel-body p0">
-							<?php if(!empty($oWidgetsList)) {?>
+							@if(!empty($oWidgetsList))
 							<table class="table" id="referralWidgetList">
 								<thead>
 									<tr>
@@ -224,64 +223,62 @@
 								</thead>
 								
 								<tbody>
-									<?php
+									@php
                                         $aUser = getLoggedUser();
                                         $currentUserId = $aUser->id;
 										
                                         foreach ($oWidgetsList as $data) {
                                             $referralData = \App\Models\Admin\Modules\ReferralModel::getReferral($currentUserId, $data->referral_id);
-											//pre($referralData); die;
 											
-										?>
+										@endphp
 										
-										<tr id="append-<?php echo $data->id; ?>" class="selectedClass">
-											<td style="display: none;"><?php echo date('m/d/Y', strtotime($data->created)); ?></td>
-											<td style="display: none;"><?php echo $data->id; ?></td>
-											<td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $data->id; ?>" value="<?php echo $data->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+										<tr id="append-{{ $data->id }}" class="selectedClass">
+											<td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
+											<td style="display: none;">{{ $data->id }}</td>
+											<td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $data->id }}" value="{{ $data->id }}" ><span class="custmo_checkmark"></span></label></td>
 											<td>
 												<div class="media-left media-middle">
-													<a href="<?php echo base_url('admin/modules/referral/referral_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->widget_title; ?>" class="text-default text-semibold">
-													<img src="<?php echo base_url('assets/images/default_table_img2.png'); ?>" class="img-circle img-xs br5" alt="Img"></a>
+													<a href="{{ base_url('admin/modules/referral/referral_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ $data->widget_title }}" class="text-default text-semibold">
+													<img src="{{ base_url('assets/images/default_table_img2.png') }}" class="img-circle img-xs br5" alt="Img"></a>
 												</div>
 												<div class="media-left">
-													<div class=""><a href="<?php echo base_url('admin/modules/referral/referral_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->widget_title; ?>" class="text-default text-semibold"><?php echo $data->widget_title; ?></a></div>
+													<div class=""><a href="{{ base_url('admin/modules/referral/referral_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ $data->widget_title }}" class="text-default text-semibold">{{ $data->widget_title }}</a></div>
 													<div class="text-muted text-size-small">
-														<?php echo setStringLimit($data->widget_desc); ?>
+													{{ setStringLimit($data->widget_desc) }}
 													</div>
 												</div>
 											</td>
 											
 											<td>
-												<?php if ($data->referral_id == '' || $data->referral_id == 0){ ?>
+												@if ($data->referral_id == '' || $data->referral_id == 0)
 												<div class="media-left media-middle">
 													<span class="icons fl_letters_gray s28">NA</span>
 												</div>
 												<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
-												<?php }else{ ?>
+												@else
 												<div class="media-left media-middle">
 													<a class="icons square">
 														<i class="icon-checkmark3 txt_blue"></i>
 													</a>
 												</div>
 												<div class="media-left">
-													<a href="<?php echo base_url("admin/modules/referral/setup/" . $data->referral_id); ?>" target="_blank">
-														<?php if(!empty($referralData)){ echo $referralData->title; } ?>
+													<a href="{{ base_url("admin/modules/referral/setup/" . $data->referral_id) }}" target="_blank">
+														@php if(!empty($referralData)){ echo $referralData->title; } @endphp
 													</a>
 												</div>
-												<?php } ?>
+												@endif
 											</td>
 											
 											<td>
 												<div class="media-left">
-													<div class="pt-5"><span class="text-default text-semibold"><?php echo dataFormat($data->created); ?></span></div>
-													<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)); ?></div>
+													<div class="pt-5"><span class="text-default text-semibold">{{ dataFormat($data->created) }}</span></div>
+													<div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) }}</div>
 												</div>
 											</td>
 											
 											<td>
 												<button class="btn btn-xs btn_white_table pr10">
-													
-													<?php
+													@php
 														if ($data->status == 1) {
 															echo '<i class="icon-primitive-dot txt_green"></i> Publish';
                                                             } else if ($data->status == 2) {
@@ -291,54 +288,50 @@
                                                             } else {
 															echo '<i class="icon-primitive-dot txt_red"></i> Draft';
 														}
-													?>
+													@endphp
 												</button>
 											</td>
 											
 											<td>
-												<?php
+												@php
 													if ($user_role != '2') {
 														if ($currentUserId == $data->user_id || $user_role == 1) {
-														?>
+														@endphp
 														
 														<div class="tdropdown">
 															<button type="button" class="btn btn-xs plus_icon ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
 															<ul class="dropdown-menu dropdown-menu-right width-200">
+																@if ($data->status == 1)
+																	<li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="{{ $data->id }}" status="2"><i class="icon-file-stats"></i> Pause</a></li>
+																@endif
+																@if ($data->status == 2)
+																	<li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="{{ $data->id }}" status="1"><i class="icon-file-stats"></i> Start</a></li>
+																@endif
+																<li><a href="{{ base_url('admin/modules/referral/referral_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ $data->widget_title }}" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
 																
-																<?php //if ($canWrite != FALSE): ?>
-																<?php if ($data->status == 1) { ?>
-																	<li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="2"><i class="icon-file-stats"></i> Pause</a></li>
-																<?php } ?>
-																<?php if ($data->status == 2) { ?>
-																	<li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="1"><i class="icon-file-stats"></i> Start</a></li>
-																<?php } ?>
-																<li><a href="<?php echo base_url('admin/modules/referral/referral_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->widget_title; ?>" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
+																<li><a href="javascript:void(0);" class="deleteCampaign" widgetID="{{$data->id }}"><i class="icon-trash"></i> Delete</a></li>
+																<li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="{{ $data->id }}" status="3"><i class="icon-file-text2"></i> Move to Archive</a></li>
 																
-																<li><a href="javascript:void(0);" class="deleteCampaign" widgetID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
-																<li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="3"><i class="icon-file-text2"></i> Move to Archive</a></li>
-																<?php //endif; ?>
-																<li><a href="javascript:void(0);" class="viewECode" widgetID="<?php echo $data->id; ?>"><i class="icon-file-locked"></i> Get Embedded Code</a></li>
+																<li><a href="javascript:void(0);" class="viewECode" widgetID="{{ $data->id }}"><i class="icon-file-locked"></i> Get Embedded Code</a></li>
 																
 															</ul>
 														</div>
-														<?php
+														@php
                                                             } else {
 															echo '-';
 														}
 													}
-												?>
+												@endphp
 											</td>
 											
-											<td style="display: none;"><?php echo $data->status == 3 ? 'Archive' : 'Publish'; ?></td>
+											<td style="display: none;">{{ $data->status == 3 ? 'Archive' : 'Publish' }}</td>
 										</tr>
-										<?php
+										@php
 										}
-									?>
+									@endphp
 								</tbody>
 							</table>
-							<?php }
-							else {
-								?>
+							@else
 								<table class="table datatable-basic">
                                     <thead>
                                         <tr>
@@ -361,12 +354,12 @@
                                                 <div class="col-md-12">
                                                     <div style="margin: 20px 0px 0;" class="text-center">
                                                         <h5 class="mb-20 mt40">
-                                                            Looks Like You Don’t Have Any Referral Widget Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+                                                            Looks Like You Don’t Have Any Referral Widget Yet <img src="{{ site_url('assets/images/smiley.png') }}"> <br>
                                                             Lets Create Your First Referral Widget.
                                                         </h5>
 
                                                         <?php //if ($canWrite): ?>
-                                                            <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addReferralWidgetShow" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add Referral Widget</button>
+                                                            <button @if ($bActiveSubsription == false) title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" @else id="addReferralWidgetShow" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" @endif type="button" ><i class="icon-plus3"></i> Add Referral Widget</button>
                                                         <?php //endif; ?>
 
                                                     </div>
@@ -379,8 +372,7 @@
                                         <td style="display: none"></td>
                                     </tbody>
                                 </table>
-								<?php
-							}?>
+							@endif
 						</div>
 					</div>
 				</div>
@@ -540,7 +532,7 @@
 				function() {
 					$('.overlaynew').show();
 					$.ajax({
-						url: '<?php echo base_url('admin/modules/referral/deleteBulkReferralWidgets'); ?>',
+						url: "{{ base_url('admin/modules/referral/deleteBulkReferralWidgets') }}",
 						type: "POST",
 						data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
 						dataType: "json",
@@ -570,7 +562,7 @@
 				function() {
 					$('.overlaynew').show();
 					$.ajax({
-						url: '<?php echo base_url('admin/modules/referral/archiveBulkReferralWidgets'); ?>',
+						url: "{{ base_url('admin/modules/referral/archiveBulkReferralWidgets') }}",
 						type: "POST",
 						data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
 						dataType: "json",
@@ -643,14 +635,14 @@
             $('.overlaynew').show();
             var referralTitle = $('#referralTitle').val();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/addReferralWidget'); ?>',
+                url: "{{ base_url('admin/modules/referral/addReferralWidget') }}",
                 type: "POST",
                 data: {'referralTitle': referralTitle, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url(); ?>admin/modules/referral/referral_widget_setup/' + data.widgetId;
+                        window.location.href = "{{ base_url() }}admin/modules/referral/referral_widget_setup/' + data.widgetId;
 						} else {
                         $('.overlaynew').hide();
                         alertMessage('Error: Some thing wrong!');
@@ -664,13 +656,13 @@
             var widgetID = $(this).attr('widgetID');
             var status = $(this).attr('status');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/updatReferralWidgetStatus'); ?>',
+                url: "{{ base_url('admin/modules/referral/updatReferralWidgetStatus') }}",
                 type: "POST",
                 data: {'widgetID': widgetID, 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/modules/referral/widgets'); ?>';
+                        window.location.href = "{{ base_url('admin/modules/referral/widgets') }}";
 						} else {
                         alertMessage('Error: Some thing wrong!');
 					}
@@ -686,7 +678,7 @@
 				$('.overlaynew').show();
 				var widgetID = $(elem).attr('widgetID');
 				$.ajax({
-					url: '<?php echo base_url('admin/modules/referral/delete_referral_widget'); ?>',
+					url: "{{ base_url('admin/modules/referral/delete_referral_widget') }}",
 					type: "POST",
 					data: {widget_id: widgetID, _token: '{{csrf_token()}}'},
 					dataType: "json",
@@ -703,7 +695,7 @@
         $(document).on('click', '.viewECode', function () {
             var widgetID = $(this).attr('widgetID');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/getReferralWidgetEmbedCode'); ?>',
+                url: "{{ base_url('admin/modules/referral/getReferralWidgetEmbedCode') }}",
                 type: "POST",
                 data: {widget_id: widgetID, _token: '{{csrf_token()}}'},
                 dataType: "json",
