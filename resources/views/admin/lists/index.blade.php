@@ -167,6 +167,7 @@
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
 
     @php
+    $activeList=0;
     if ($listtype == 'email') {
         $scriptFile = 'getListContacts';
     } else {
@@ -174,11 +175,10 @@
     }
 
     $editListPath = base_url() . "admin/lists/" . $scriptFile . "?list_id=";
-
-    if (!empty($oLists)):
+    if ($oLists->count()>0):
 
         $newolists = array();
-
+        
         $archiveList = $activeList = 0;
         foreach ($oLists as $key => $value) {
 
@@ -374,7 +374,7 @@
                                                         </div>
                                                         <div class="media-left">
                                                             <div data-toggle="tooltip" title="{{ $totEmailCount }} have email address out of {{ $totalContacts }} contacts" data-placement="top">
-                                                                <a href="javascript:void(0);" class="text-default text-semibold"><{{ $totEmailCount }}</a>
+                                                                <a href="javascript:void(0);" class="text-default text-semibold">{{ $totEmailCount }}</a>
                                                                 @php if ($newEmails > 0):@endphp    
                                                                     @php echo '<span style="color:#FF0000;"> (' . $newEmails . ' new)</span>'; @endphp    
                                                                 @php endif; @endphp    
@@ -455,34 +455,34 @@
                                                                         <li><a href="javascript:void(0);" status="inactive" list_id="{{ $oList->id }} " class="changeStatus"><i class="icon-file-stats"></i> Inactive</a></li>
                                                                     @php endif; @endphp
                                                                     @php if ($oList->status == 'inactive' && $oList->status != 'archive'): @endphp
-                                                                        <li><a href="javascript:void(0);" status="active" list_id="<?php echo $oList->id; ?>" class="changeStatus"><i class="icon-file-stats"></i> Active</a></li>
-                                                                    <?php endif; ?>
-                                                                    <?php if ($oList->status != 'archive'): ?>
-                                                                        <li><a href="javascript:void(0);" status="archive" list_id="<?php echo $oList->id; ?>" class="changeStatus"><i class="icon-file-stats"></i> Move to Archive</a></li>
-                                                                    <?php endif; ?>
-                                                                    <li><a href="javascript:void(0);" list_id="<?php echo $oList->id; ?>" class="deletelist"><i class="icon-file-text2"></i> Delete</a></li>
+                                                                        <li><a href="javascript:void(0);" status="active" list_id="{{  $oList->id }}" class="changeStatus"><i class="icon-file-stats"></i> Active</a></li>
+                                                                    @php endif; @endphp
+                                                                    @php if ($oList->status != 'archive'):@endphp
+                                                                        <li><a href="javascript:void(0);" status="archive" list_id="{{ $oList->id }}" class="changeStatus"><i class="icon-file-stats"></i> Move to Archive</a></li>
+                                                                    @php endif; @endphp
+                                                                    <li><a href="javascript:void(0);" list_id="{{ $oList->id }}" class="deletelist"><i class="icon-file-text2"></i> Delete</a></li>
                                                                 </ul>
 
                                                             </div>
                                                         </div>
                                                         <div class="media-left pull-right">
                                                             <div class="">
-                                                                <a href="javascript:void(0);" list_id="<?php echo $oList->id; ?>" class="addModuleContact text-default text-semibold bbotb" data-modulename="list" data-moduleaccountid="<?php echo $oList->id; ?>"><span class="txt_blue_sky2">Add Contacts</span></a> </div>
+                                                                <a href="javascript:void(0);" list_id="{{ $oList->id }}" class="addModuleContact text-default text-semibold bbotb" data-modulename="list" data-moduleaccountid="{{ $oList->id }}"><span class="txt_blue_sky2">Add Contacts</span></a> </div>
                                                         </div>
                                                     </td>
 
                                                     <td style="display:none;">
-                                                        <?php
+                                                        @php
                                                         if ($oList->status == 'archive') {
                                                             echo 'archive';
                                                         } else {
                                                             echo 'active';
                                                         }
-                                                        ?>
+                                                        @endphp
                                                     </td>
                                                 </tr>
 
-                                            <?php } endforeach; ?>
+                                            @php } endforeach; @endphp
                                         <!--================================================-->
 
                                     </tbody>
@@ -495,7 +495,7 @@
 
         </div>
         <!--&&&&&&&&&&&& TABBED CONTENT  END &&&&&&&&&&-->
-    <?php else: ?>
+    @php else: @endphp 
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
@@ -504,7 +504,7 @@
                     <div class="col-md-12">
                         <div style="margin: 0;" class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $activeList; ?> Lists</h6>
+                                <h6 class="panel-title">{{ $activeList }} Lists</h6>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
@@ -525,12 +525,11 @@
                                             <th style="display: none;"></th>
                                             <th><i class="icon-user" ></i>Name</th>
                                             <th><i class="icon-calendar"></i>Created</th>
-                                            <?php if ($uRole == 1) { ?>
+                                             @if ($uRole == 1) { ?
                                                 <th> <i class="icon-user"></i>Created By</th>
-                                            <?php } else {
-                                                ?>
+                                            @else 
                                                 <th style="display: none;"></th>
-                                            <?php } ?>
+                                            @endif
                                             <th><i class="icon-user"></i></th>
                                             <th><i class="icon-envelop"></i>Email</th>
                                             <th><i class="icon-iphone"></i>SMS</th>
@@ -545,11 +544,11 @@
                                                     <div class="col-md-12">
                                                         <div style="margin: 20px 0px 0;" class="text-center">
                                                             <h5 class="mb-20 mt40">
-                                                                Looks Like You Don’t Have Created Any Contact List Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+                                                                Looks Like You Don’t Have Created Any Contact List Yet <img src="{{ base_url('assets/images/smiley.png')}} "> <br>
                                                                 Lets Create Contact List.
                                                             </h5>
 
-                                                            <button type="button" <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addListN" <?php } ?> class="btn dark_btn ml20 mb40" data-toggle="modal" data-target="#addPeopleList"><i class="icon-plus3"></i><span> &nbsp;  New List</span> </button>
+                                                            <button type="button" @php if ($bActiveSubsription == false) { @endphp title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription mb40" @php } else { @endphp id="addListN" @php } @endphp class="btn dark_btn ml20 mb40" data-toggle="modal" data-target="#addPeopleList"><i class="icon-plus3"></i><span> &nbsp;  New List</span> </button>
 
                                                         </div>
                                                     </div>
