@@ -1,17 +1,16 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php list($canRead, $canWrite) = fetchPermissions('Offsite Campaign'); ?>
-<?php
-
-if(!empty($feedbackResponse)){
-	$feedbackResponseData = $feedbackResponse;
-}else{
-	$feedbackResponseData = array();
+@php list($canRead, $canWrite) = fetchPermissions('Offsite Campaign'); @endphp
+@php
+if (!empty($feedbackResponse)) {
+    $feedbackResponseData = $feedbackResponse;
+} else {
+    $feedbackResponseData = array();
 }
 
 $offsiteDetail = $getOffsite[0];
@@ -22,7 +21,7 @@ $offsites_links = $offsiteDetail->offsites_links;
 $offsite_ids = unserialize($offsite_ids);
 $offsites_links = unserialize($offsites_links);
 list($canReadCon, $canWriteCon) = fetchPermissions('Contacts');
- 
+
 $rewards = '';
 $emailWorkflow = '';
 $campaign = '';
@@ -32,9 +31,9 @@ $sources = '';
 $camp = '';
 
 
-if($selectedTab == 'contacts'){
+if ($selectedTab == 'contacts') {
     $campaign = 'active';
-}else if ($setTab == 'Campaign Preferences') {
+} else if ($setTab == 'Campaign Preferences') {
     $camp = 'active';
 } else if (trim($setTab) == 'Rewards & Gifts') {
     $rewards = 'active';
@@ -48,71 +47,65 @@ if($selectedTab == 'contacts'){
     $sources = 'active';
 } else if (trim($setTab) == 'Reviews') {
     $reviews = 'active';
-}
-else {
+} else {
     $sources = 'active';
 }
-
-?>
+@endphp
 
 <!-- /theme JS files -->
 <div class="content">
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
-	<div class="page_header">
-	  <div class="row">
-	  <!--=============Headings & Tabs menu==============-->
-		<div class="col-md-7" >
-		  <h3><img src="/assets/images/offsite_icon_19.png" style="width: 16px;"> &nbsp; Offsite Brandboost Campaign : <?php echo $getOffsite[0]->brand_title; ?></h3>
-		  <ul class="nav nav-tabs nav-tabs-bottom" >
-			<li class="<?php echo $sources; ?>"><a href="#right-icon-tab0" class="continueStepOffsite" targetName="Review Sources" data-brandid="<?php echo $brandboostID;?>" data-toggle="tab">Source</a></li>
+    <div class="page_header">
+        <div class="row">
+            <!--=============Headings & Tabs menu==============-->
+            <div class="col-md-7" >
+                <h3><img src="/assets/images/offsite_icon_19.png" style="width: 16px;"> &nbsp; Offsite Brandboost Campaign : {{ $getOffsite[0]->brand_title }}</h3>
+                <ul class="nav nav-tabs nav-tabs-bottom" >
+                    <li class="{{ $sources }}"><a href="#right-icon-tab0" class="continueStepOffsite" targetName="Review Sources" data-brandid="{{ $brandboostID }}" data-toggle="tab">Source</a></li>
 
-			<li class="<?php echo $camp; ?>"><a href="#right-icon-tab1" class="continueStepOffsite" targetName="Campaign Preferences" data-brandid="<?php echo $brandboostID;?>" data-toggle="tab">Preferences</a></li>
+                    <li class="{{ $camp }}"><a href="#right-icon-tab1" class="continueStepOffsite" targetName="Campaign Preferences" data-brandid="{{ $brandboostID }}" data-toggle="tab">Preferences</a></li>
 
-			<li class="<?php echo $emailWorkflow; ?>"><a href="#right-icon-tab3" class="continueStepOffsite" targetName="Email Workflow" data-brandid="<?php echo $brandboostID;?>" data-toggle="tab">Email Workflow</a></li>
+                    <li class="{{ $emailWorkflow }}"><a href="#right-icon-tab3" class="continueStepOffsite" targetName="Email Workflow" data-brandid="{{ $brandboostID }}" data-toggle="tab">Email Workflow</a></li>
 
-			<!-- <li class="<?php echo $reviews; ?>"><a href="#right-icon-tab6" data-toggle="tab">Reviews</a></li> -->
+                    <li class="{{ $clients }}"><a href="#right-icon-tab5" class="continueStepOffsite" targetName="Requires Attention" data-brandid="{{ $brandboostID }}" data-toggle="tab">Requires Attention</a></li>
 
-			<li class="<?php echo $clients; ?>"><a href="#right-icon-tab5" class="continueStepOffsite" targetName="Requires Attention" data-brandid="<?php echo $brandboostID;?>" data-toggle="tab">Requires Attention</a></li>
+                    <li class="{{ $campaign }}"><a href="#right-icon-tab4" class="continueStepOffsite" targetName="Campaign Clients" data-brandid="{{ $brandboostID }}" data-toggle="tab">Contacts</a></li>
 
-			<li class="<?php echo $campaign; ?>"><a href="#right-icon-tab4" class="continueStepOffsite" targetName="Campaign Clients" data-brandid="<?php echo $brandboostID;?>" data-toggle="tab">Contacts</a></li>
-			
-		  </ul>
-		</div>
-		<!--=============Button Area Right Side==============-->
-		<div class="col-md-5 text-right btn_area">
+                </ul>
+            </div>
+            <!--=============Button Area Right Side==============-->
+            <div class="col-md-5 text-right btn_area">
 
-            <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn onSiteCampaignStatus" status="2"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
+                <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn onSiteCampaignStatus" status="2"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
 
-            <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn onSiteCampaignStatus" status="1"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
-		</div>
-	  </div>
-	</div>
-  <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
+                <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn onSiteCampaignStatus" status="1"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
+            </div>
+        </div>
+    </div>
+    <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
-	<div class="tab-content"> 
-		<!--########################TAB 0 ##########################-->
-		
-		@include('admin.brandboost.campaign-tabs.offsite.offsite-review-sources', array('brandboostID' => $brandboostID, 'sources' => $sources, 'offsites_links' => $offsites_links, 'offSiteData' => $offSiteData, 'offsite_ids' => $offsite_ids))
-		<!--########################TAB 1 ##########################-->
-		
-		@include('admin.brandboost.campaign-tabs.offsite.offsite-preferences', array('brandboostID' => $brandboostID, 'camp' => $camp, 'offsites_links' => $offsites_links, 'feedbackResponseData' => $feedbackResponseData))
-		<!--########################TAB 2 ##########################-->
-       
-		@include('admin.brandboost.campaign-tabs.offsite.offsite-workflow-campaign-beta', array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents))
-		<!--########################TAB 3 ##########################--> 
-		
-		@include('admin.brandboost.campaign-tabs.offsite.offsite-subscribers', array('brandboostID' => $brandboostID, 'campaign' => $campaign))
-		<!--########################TAB 4 ##########################--> 
-		
-		@include('admin.brandboost.campaign-tabs.offsite.offsite-feedback', array('brandboostID' => $brandboostID, 'clients' => $clients)) 
-	</div>
+    <div class="tab-content"> 
+        <!--########################TAB 0 ##########################-->
+
+        @include('admin.brandboost.campaign-tabs.offsite.offsite-review-sources', array('brandboostID' => $brandboostID, 'sources' => $sources, 'offsites_links' => $offsites_links, 'offSiteData' => $offSiteData, 'offsite_ids' => $offsite_ids))
+        <!--########################TAB 1 ##########################-->
+
+        @include('admin.brandboost.campaign-tabs.offsite.offsite-preferences', array('brandboostID' => $brandboostID, 'camp' => $camp, 'offsites_links' => $offsites_links, 'feedbackResponseData' => $feedbackResponseData))
+        <!--########################TAB 2 ##########################-->
+
+        @include('admin.brandboost.campaign-tabs.offsite.offsite-workflow-campaign-beta', array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents))
+        <!--########################TAB 3 ##########################--> 
+
+        @include('admin.brandboost.campaign-tabs.offsite.offsite-subscribers', array('brandboostID' => $brandboostID, 'campaign' => $campaign))
+        <!--########################TAB 4 ##########################--> 
+
+        @include('admin.brandboost.campaign-tabs.offsite.offsite-feedback', array('brandboostID' => $brandboostID, 'clients' => $clients)) 
+    </div>
 </div>
 
 
-<?php //$this->load->view("admin/brandboost/campaign-tabs/offsite/offsite-popup"); ?>
-@include('admin.brandboost.campaign-tabs.offsite.offsite-popup')
 
-<?php //$this->load->view("admin/modals/workflow2/workflow-popup", array('oDefaultTemplates' => $oDefaultTemplates)); ?>
+@include('admin.brandboost.campaign-tabs.offsite.offsite-popup')
 
 @include('admin.modals.workflow2.workflow-popup')
 
@@ -121,7 +114,7 @@ else {
     function add_campaign(campaignType, eventID, eventype = 'main') {
         $('.overlaynew').show();
         $.ajax({
-            url: '<?php echo base_url('admin/brandboost/create_campaign'); ?>',
+            url: "{{ base_url('admin/brandboost/create_campaign') }}",
             type: "POST",
             data: {'campaign_type': campaignType, 'event_id': eventID, 'event_type': eventype, 'brandboost_type': 'offsite', _token: '{{csrf_token()}}'},
             dataType: "json",
@@ -155,37 +148,37 @@ else {
             closeOnConfirm: true,
             closeOnCancel: true
         },
-		function (isConfirm) {
+                function (isConfirm) {
 
-			if (isConfirm) {
-				$.ajax({
-					url: '<?php echo base_url('admin/brandboost/delete_campaign'); ?>',
-					type: "POST",
-					data: {'campaign_id': campaignID, _token: '{{csrf_token()}}'},
-					dataType: "json",
-					success: function (data) {
-						//console.log(data);
-						if (data.status == 'success') {
-							setTimeout(function () {
-								window.location.href = window.location.href;
-							}, 1000);
-						} else {
-							alert('Error: Some thing wrong!');
-							setTimeout(function () {
-								window.location.href = window.location.href;
-							}, 1000);
-						}
-					}
-				});
-			}
-		});
+                    if (isConfirm) {
+                        $.ajax({
+                            url: "{{ base_url('admin/brandboost/delete_campaign') }}",
+                            type: "POST",
+                            data: {'campaign_id': campaignID, _token: '{{csrf_token()}}'},
+                            dataType: "json",
+                            success: function (data) {
+                                //console.log(data);
+                                if (data.status == 'success') {
+                                    setTimeout(function () {
+                                        window.location.href = window.location.href;
+                                    }, 1000);
+                                } else {
+                                    alert('Error: Some thing wrong!');
+                                    setTimeout(function () {
+                                        window.location.href = window.location.href;
+                                    }, 1000);
+                                }
+                            }
+                        });
+                    }
+                });
     }
 
     function delete_event(eventID) {
         var conf = confirm("Are you sure? You want to delete this event!");
         if (conf == true) {
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/delete_event'); ?>',
+                url: "{{ base_url('admin/brandboost/delete_event') }}",
                 type: "POST",
                 data: {'event_id': eventID, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -213,13 +206,13 @@ else {
         $(document).on("click", "#publishCampaign", function () {
             var brandboostID = $(this).attr('data-brandid');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/publishOnsiteBB'); ?>',
+                url: "{{ base_url('admin/brandboost/publishOnsiteBB') }}",
                 type: "POST",
-                data: {action: 'publishCampaign', 'brandboostID' : brandboostID, _token: '{{csrf_token()}}'},
+                data: {action: 'publishCampaign', 'brandboostID': brandboostID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/brandboost/offsite'); ?>';
+                        window.location.href = "{{ base_url('admin/brandboost/offsite') }}";
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -258,7 +251,7 @@ else {
 
             $('.overlaynew').show();
             $.ajax({
-                url: '<?php echo base_url('admin/emailtemplate/send_email_template'); ?>',
+                url: "{{ base_url('admin/emailtemplate/send_email_template') }}",
                 type: "POST",
                 data: {email: email, emailtemplate: emailtemplate, bb_id: '', _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -280,7 +273,7 @@ else {
 
             $('.overlaynew').show();
             $.ajax({
-                url: '<?php echo base_url('admin/emailtemplate/send_sms_template'); ?>',
+                url: "{{ base_url('admin/emailtemplate/send_sms_template') }}",
                 type: "POST",
                 data: {phoneNo: phoneNo, smstemplate: smstemplate, bb_id: '', _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -304,14 +297,14 @@ else {
         $(document).on("click", "#publishFeedback", function () {
 
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/updateStatus'); ?>',
+                url: "{{ base_url('admin/brandboost/updateStatus') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     //console.log(data);
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/brandboost/offsite'); ?>';
+                        window.location.href = "{{ base_url('admin/brandboost/offsite') }}";
                     } else {
 
                     }
@@ -321,8 +314,8 @@ else {
         });
 
         /*$(document).on("click", "#campaignUserStep", function () {
-            $('.tabbable a[href="#right-icon-tab4"]').click();
-        });*/
+         $('.tabbable a[href="#right-icon-tab4"]').click();
+         });*/
 
         $(document).on("click", "#campaignUserStepBug", function () {
             alertMessage('There should be atleast one email or sms in each container');
@@ -342,59 +335,57 @@ else {
         });
 
 
-        $(document).on('click', '.onSiteCampaignStatus', function() {
+        $(document).on('click', '.onSiteCampaignStatus', function () {
 
             var status = $(this).attr('status');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/publishOnsiteStatusBB'); ?>',
+                url: "{{ base_url('admin/brandboost/publishOnsiteStatusBB') }}",
                 type: "POST",
-                data: {'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':status, _token: '{{csrf_token()}}'},
+                data: {'brandboostID': '{{ $brandboostData->id }}', 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        if(status == 1) {
-                            
+                        if (status == 1) {
+
+                            displayMessagePopup();
+                        } else {
                             displayMessagePopup();
                         }
-                        else {
-                             displayMessagePopup();
-                        }
-                        
+
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
                 }
             });
-            
+
         });
 
 
-        $(document).on('click', '#publishOnsiteCampaign', function() {
-            if($(this).prop("checked") == true) {
+        $(document).on('click', '#publishOnsiteCampaign', function () {
+            if ($(this).prop("checked") == true) {
                 $.ajax({
-                    url: '<?php echo base_url('admin/brandboost/publishOnsiteStatusBB'); ?>',
+                    url: "{{ base_url('admin/brandboost/publishOnsiteStatusBB') }}",
                     type: "POST",
-                    data: {'action': 'publishCampaign', 'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':'1', _token: '{{csrf_token()}}'},
+                    data: {'action': 'publishCampaign', 'brandboostID': '{{ $brandboostData->id }}', 'status': '1', _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
-                            //window.location.href = '<?php echo base_url('admin/brandboost/onsite'); ?>';
+                            //window.location.href = "{{ base_url('admin/brandboost/onsite') }}";
                         } else {
                             alertMessage('Error: Some thing wrong!');
                         }
                     }
                 });
-            }
-            else {
+            } else {
 
                 $.ajax({
-                    url: '<?php echo base_url('admin/brandboost/publishOnsiteStatusBB'); ?>',
+                    url: "{{ base_url('admin/brandboost/publishOnsiteStatusBB') }}",
                     type: "POST",
-                    data: {'action': 'publishCampaign', 'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':'0', _token: '{{csrf_token()}}'},
+                    data: {'action': 'publishCampaign', 'brandboostID': '{{ $brandboostData->id }}', 'status': '0', _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
-                            //window.location.href = '<?php echo base_url('admin/brandboost/onsite'); ?>';
+                            //window.location.href = "{{ base_url('admin/brandboost/onsite') }}";
                         } else {
                             alertMessage('Error: Some thing wrong!');
                         }
@@ -404,11 +395,11 @@ else {
             }
         });
 
-        $(document).on('change', '.autoSave', function() {
+        $(document).on('change', '.autoSave', function () {
             $('.saveOffsiteButton').trigger('click');
         });
-        
-       
+
+
         $("#addOffstepList").submit(function (e) {
 
             e.preventDefault();
@@ -457,9 +448,9 @@ else {
             var edit_campaignName = $('#edit_campaignName').val();
             formData.append('edit_campaignName', edit_campaignName);
             formData.append('_token', '{{csrf_token()}}');
-            
+
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/add_offsite_url'); ?>',
+                url: "{{ base_url('admin/brandboost/add_offsite_url') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -486,7 +477,7 @@ else {
             e.preventDefault();
 
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/update_event'); ?>',
+                url: "{{ base_url('admin/brandboost/update_event') }}",
                 type: "POST",
                 data: new FormData(this),
                 contentType: false,
@@ -507,7 +498,7 @@ else {
         $('#create_event').click(function () {
             $('.overlaynew').show();
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/addReminder'); ?>',
+                url: "{{ base_url('admin/brandboost/addReminder') }}",
                 type: "POST",
                 data: {action: 'createEvent', _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -572,13 +563,13 @@ else {
             var getActiveText = $(this).text();
 
             $.ajax({
-                url: "<?php echo base_url('/admin/brandboost/setTab'); ?>",
+                url: "{{ base_url('/admin/brandboost/setTab') }}",
                 type: "POST",
-                data: {getActiveText: getActiveText, brandboostID:'<?php echo $brandboostID;?>', _token: '{{csrf_token()}}'},
+                data: {getActiveText: getActiveText, brandboostID: '{{ $brandboostID }}', _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == 'error') {
-                        window.location.href = "/admin/brandboost/offsite_setup/<?php echo $brandboostID;?>";
+                        window.location.href = "/admin/brandboost/offsite_setup/{{ $brandboostID }}";
                     }
                 },
                 error: function (response) {
@@ -597,7 +588,7 @@ else {
             var camp_temp_src = $(this).attr('camp_temp_src');
             $('.overlaynew').show();
             $.ajax({
-                url: "<?php echo base_url('/admin/brandboost/email_template_popup'); ?>",
+                url: "{{ base_url('/admin/brandboost/email_template_popup') }}",
                 type: "POST",
                 data: {camp_id: camp_id, camp_temp_src: camp_temp_src, _token: '{{csrf_token()}}'},
                 dataType: "html",
@@ -620,7 +611,7 @@ else {
             var camp_id = $(this).attr('camp_id');
             var camp_temp_src = $(this).attr('camp_temp_src');
             $.ajax({
-                url: "<?php echo base_url('/admin/brandboost/sms_template_popup'); ?>",
+                url: "{{ base_url('/admin/brandboost/sms_template_popup') }}",
                 type: "POST",
                 data: {camp_id: camp_id, camp_temp_src: camp_temp_src, _token: '{{csrf_token()}}'},
                 dataType: "html",
@@ -650,7 +641,7 @@ else {
         var selected_list = $("#selected_list_n").val();
         var selected_list_new = $("#selected_list_new").val();
         $.ajax({
-            url: "<?php echo base_url(); ?>ajax_pagination/offsite_step_pagination_edit/" + page,
+            url: "{{ base_url() }}ajax_pagination/offsite_step_pagination_edit/" + page,
             data: {sortby: sortby, sort_type: sort_type, search_value: search_value, selected_list: selected_list, offsite_limit: offsite_limit, selected_list_new: selected_list_new, _token: '{{csrf_token()}}'},
             method: "GET",
             dataType: "json",
@@ -714,110 +705,68 @@ else {
             var offsiteSelected = $(this).attr('offsiteSelected');
 
             deleteConfirmationPopup(
-            "This Source will deleted immediately.<br>You can't undo this action.", 
-            function() {
-			   // $('ul.media-list #socialIcon'+offsiteId).hide();
-			 // $('.overlaynew').show();
-				if (offsiteSelected == 0) {
-					$(this).attr('offsiteSelected', '1');
-					$('#review_steps' + offsiteId).addClass('selected');
-					$(this).removeClass('bg-blue');
-					$(this).addClass('red_cust_btn');
-					$(this).html('<i class="icon-minus2 text-size-base"></i>');
+                    "This Source will deleted immediately.<br>You can't undo this action.",
+                    function () {
+                        // $('ul.media-list #socialIcon'+offsiteId).hide();
+                        // $('.overlaynew').show();
+                        if (offsiteSelected == 0) {
+                            $(this).attr('offsiteSelected', '1');
+                            $('#review_steps' + offsiteId).addClass('selected');
+                            $(this).removeClass('bg-blue');
+                            $(this).addClass('red_cust_btn');
+                            $(this).html('<i class="icon-minus2 text-size-base"></i>');
 
-					var selected_list = $('#selected_list_r').val();
-					$('#selected_list_r').val(selected_list + ',' + offsiteId);
-					$('#selected_list').val(selected_list + ',' + offsiteId);
-					$('#selected_list_n').val(selected_list + ',' + offsiteId);
+                            var selected_list = $('#selected_list_r').val();
+                            $('#selected_list_r').val(selected_list + ',' + offsiteId);
+                            $('#selected_list').val(selected_list + ',' + offsiteId);
+                            $('#selected_list_n').val(selected_list + ',' + offsiteId);
 
-				} else {
-					//$('#socialIcon' + offsiteId).hide();
-					//$('#linkUrl'+offsiteId).val('');
-					$('.totalIcon').attr("id", "socialIcon");
-					$(this).attr('offsiteSelected', '0');
-					$('#review_steps' + offsiteId).removeClass('selected');
-					$(this).removeClass('red_cust_btn');
-					$(this).addClass('bg-blue');
-					$(this).html('<i class="icon-plus2 text-size-base"></i>');
+                        } else {
+                            //$('#socialIcon' + offsiteId).hide();
+                            //$('#linkUrl'+offsiteId).val('');
+                            $('.totalIcon').attr("id", "socialIcon");
+                            $(this).attr('offsiteSelected', '0');
+                            $('#review_steps' + offsiteId).removeClass('selected');
+                            $(this).removeClass('red_cust_btn');
+                            $(this).addClass('bg-blue');
+                            $(this).html('<i class="icon-plus2 text-size-base"></i>');
 
-					var selected_list = $('#selected_list_r').val();
-					var offstepIds = selected_list.split(",");
-					offstepIds = $.grep(offstepIds, function (value) {
-						return value != offsiteId;
-					});
-					offstepIds = offstepIds.join();
-					$('#selected_list_r').val(offstepIds);
-					$('#selected_list').val(offstepIds);
-					$('#selected_list_n').val(offstepIds);
+                            var selected_list = $('#selected_list_r').val();
+                            var offstepIds = selected_list.split(",");
+                            offstepIds = $.grep(offstepIds, function (value) {
+                                return value != offsiteId;
+                            });
+                            offstepIds = offstepIds.join();
+                            $('#selected_list_r').val(offstepIds);
+                            $('#selected_list').val(offstepIds);
+                            $('#selected_list_n').val(offstepIds);
 
-				}
+                        }
 
-				var selected_list = $('#selected_list_r').val();
-				$.ajax({
-					url: '<?php echo base_url('admin/brandboost/add_offsite_resources'); ?>',
-					type: "POST",
-					data: {selected_list: selected_list, offsiteId:offsiteId, brandboostID: '<?php echo $brandboostID; ?>', _token: '{{csrf_token()}}'},
-					dataType: "json",
-					success: function (data) {
-						if (data.status == 'success') {
-							 window.location.href='';
-							//alert('del');
-							// $('.overlaynew').hide();
-							//alert(offsiteI d);
-							
-							//window.location.href='';
-							//$('.tabbable a[href="#right-icon-tab2"]').click();
-							//alert('done')
-						} else {
-							alertMessage('Error: Some thing wrong!');
-						}
-					}
-				});
-			});
+                        var selected_list = $('#selected_list_r').val();
+                        $.ajax({
+                            url: "{{ base_url('admin/brandboost/add_offsite_resources') }}",
+                            type: "POST",
+                            data: {selected_list: selected_list, offsiteId: offsiteId, brandboostID: '{{ $brandboostID }}', _token: '{{csrf_token()}}'},
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.status == 'success') {
+                                    window.location.href = '';
+                                    //alert('del');
+                                    // $('.overlaynew').hide();
+                                    //alert(offsiteI d);
+
+                                    //window.location.href='';
+                                    //$('.tabbable a[href="#right-icon-tab2"]').click();
+                                    //alert('done')
+                                } else {
+                                    alertMessage('Error: Some thing wrong!');
+                                }
+                            }
+                        });
+                    });
             return false;
         });
-		
-
-
-        /*$(document).on('click', '.getReview', function () {
-            var siteID = $(this).attr('site_id');
-            var bbID = $(this).attr('bbID');
-            var siteAPIId = $('.siteURLId_' + siteID).val();
-            $.ajax({
-                url: '<?php echo base_url('admin/brandboost/addOffsiteReviews'); ?>',
-                type: "POST",
-                data: {'site_id': siteID, 'site_api_id': siteAPIId},
-                dataType: "json",
-                success: function (data) {
-                    if (data.status == 'success') {
-
-                    }
-                }
-            });
-        });*/
-
-
-        /*$(document).on('click', '.linkurlC', function () {
-
-            var getSocialId = $(this).attr('linkid');
-            var getUrl = $('#linkUrl'+getSocialId).val();
-            var bbID = $(this).attr('bbID');
-            $.ajax({
-                url: '<?php echo base_url('admin/brandboost/addOffsiteUrl'); ?>',
-                type: "POST",
-                data: {'getSocialId': getSocialId, 'getUrl': getUrl, 'bbID': bbID},
-                dataType: "json",
-                success: function (data) {
-                    if (data.status == 'success') {
-
-                    } else {
-                        alertMessage('Error: Some thing wrong!');
-                    }
-                }
-            });
-
-            return false;
-        });*/
 
 
         $(document).on('click', '.offsiteUrlSave', function () {
@@ -834,7 +783,7 @@ else {
             //$(this).addClass('btn-ladda btn-ladda-progress');
 
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/addOffsiteUrl'); ?>',
+                url: "{{ base_url('admin/brandboost/addOffsiteUrl') }}",
                 type: "POST",
                 data: {'getSocialId': getSocialId, 'getUrl': getUrl, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -891,40 +840,39 @@ else {
 
             //$('.overlaynew').show();
 
-				$.ajax({
-                    url: "<?php echo base_url('admin/brandboost/campaignPreferences'); ?>",
-                    data: {brandboostID: '<?php echo $brandboostData->id; ?>', _token: '{{csrf_token()}}'},
-                    method: "POST",
-                    dataType: "json",
-                    success: function (data)
-                    {
-                        if(data.status == 'success') {
-                            $('.overlaynew').show();
-                            $('.media-list').html(data.socialList);
-                            $('.overlaynew').hide();
-                            $('#selected_list_r').val(data.selectedList);
-						}
-                        else {
-                            $('.overlaynew').hide();
-						}
-					}
-				});
-			
+            $.ajax({
+                url: "{{ base_url('admin/brandboost/campaignPreferences') }}",
+                data: {brandboostID: '{{ $brandboostData->id }}', _token: '{{csrf_token()}}'},
+                method: "POST",
+                dataType: "json",
+                success: function (data)
+                {
+                    if (data.status == 'success') {
+                        $('.overlaynew').show();
+                        $('.media-list').html(data.socialList);
+                        $('.overlaynew').hide();
+                        $('#selected_list_r').val(data.selectedList);
+                    } else {
+                        $('.overlaynew').hide();
+                    }
+                }
+            });
+
             var targetName = $(this).attr('targetName');
             var brandboostID = $(this).attr('data-brandid');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/continueStepOffsite'); ?>',
+                url: "{{ base_url('admin/brandboost/continueStepOffsite') }}",
                 type: "POST",
                 data: {'targetName': targetName, 'brandboostID': brandboostID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         //$('.overlaynew').hide();
-						if(data.public == 1){
-							window.location.href = '<?php echo base_url('admin/brandboost/offsite/');?>';
-						}else{
-                                //window.location.href = '<?php echo base_url('admin/brandboost/offsite_setup/');?>'+brandboostID;
-						}
+                        if (data.public == 1) {
+                            window.location.href = "{{ base_url('admin/brandboost/offsite/') }}";
+                        } else {
+                            //window.location.href = "{{ base_url('admin/brandboost/offsite_setup/') }}"+brandboostID;
+                        }
                     } else {
                         //$('.overlaynew').hide();
                         alertMessage('Error: Some thing wrong!');
@@ -940,27 +888,27 @@ else {
 
             var offstepIds = [];
             var selected_list = $('#selected_list').val();
-			 var offstepIds = selected_list.split(",");
+            var offstepIds = selected_list.split(",");
             var brandboostID = $(this).attr('data-brandid');
             //$('.overlaynew').show();
 
             if (offstepIds.length > 0) {
 
                 $.ajax({
-                    url: '<?php echo base_url('admin/brandboost/add_offsite_edit'); ?>',
+                    url: "{{ base_url('admin/brandboost/add_offsite_edit') }}",
                     type: "POST",
-                    data: {'offstepIds': offstepIds, brandboostID:brandboostID, _token: '{{csrf_token()}}'},
+                    data: {'offstepIds': offstepIds, brandboostID: brandboostID, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
                             //$('.overlaynew').hide();
-                            //window.location.href = '<?php echo base_url('admin/brandboost/offsite_setup/');?>'+brandboostID;
+                            //window.location.href = "{{ base_url('admin/brandboost/offsite_setup/') }}"+brandboostID;
                         } else {
                             //$('.overlaynew').hide();
                             alertMessage('Error: Some thing wrong!');
                             /*setTimeout(function () {
-                                window.location.href = window.location.href;
-                            }, 1000);*/
+                             window.location.href = window.location.href;
+                             }, 1000);*/
                         }
                     }
                 });
@@ -968,9 +916,9 @@ else {
                 alertMessage('Please select atleast one of them.')
             }
         });
-		
-	
-		
+
+
+
 
         $(document).on('click', '.previewButton', function () {
 
@@ -979,14 +927,14 @@ else {
             var texturl = $('#linkUrl' + textId).val();
             window.open(textname + texturl, '_blank');
         });
-		 $(document).on('click', '.previewButtonOthers', function () {
+        $(document).on('click', '.previewButtonOthers', function () {
 
             var textname = $(this).attr('siteUrl');
             var textId = $(this).attr('siteId');
             var texturl = $('#linkUrl' + textId).val();
             window.open(texturl, '_blank');
         });
-		
+
     });
 
 </script>
