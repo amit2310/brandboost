@@ -342,24 +342,24 @@ $newOpen = $newClick = 0;
                                                         <div class="media-left">
                                                             <div class=""><a href="@php echo base_url('admin/broadcast/edit/' . $broadCastData->broadcast_id); @endphp" broadcast_id="{{ $broadCastData->broadcast_id }}" broadcast_title="{{ $broadCastData->title }}" broadcast_des="{{ $broadCastData->description }}" class="text-default text-semibold">{{ setStringLimit($broadCastData->title, 20) }}</a></div>
                                                             <div class="text-muted text-size-small">
-                                                                <?php echo setStringLimit($broadCastData->description, 25); ?>
+                                                                {{ setStringLimit($broadCastData->description, 25) }}
                                                             </div>
 
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <?php echo dataFormat(date("Y-m-d H:i:s", $deliverAt)) . ' <span class="txt_grey">' . date("H:i A", $deliverAt) . '</span>'; ?>
+                                                        @php dataFormat(date("Y-m-d H:i:s", $deliverAt)) . ' <span class="txt_grey">' . date("H:i A", $deliverAt) . '</span>' @endphp
                                                     </td>
-                                                    <?php if (strtolower($broadCastData->campaign_type) == 'email'): ?>
+                                                    @php if (strtolower($broadCastData->campaign_type) == 'email'): @endphp
                                                         <td>
-                                                            <?php
+                                                            @php
                                                             $addPC = '';
                                                             if ($totalSentGraph > 50) {
                                                                 $addPC = 'over50';
                                                             }
-                                                            ?>
+                                                            @endphp
                                                             <div class="media-left">
-                                                                <div class="progress-circle <?php echo $addPC; ?> blue3 cp<?php echo $totalSentGraph; ?> <?php if ($delivered > 0): ?>createSegment<?php endif; ?>" segment-type="total-sent" campaign-id="<?php echo $broadCastData->broadcast_id; ?>" campaign-type="email" sending_method="<?php echo $broadCastData->sending_method; ?>" title="click to create segment">
+                                                                <div class="progress-circle {{ $addPC }} blue3 cp {{ $totalSentGraph }} @php if ($delivered > 0): @endphp createSegment @php endif;@endphp" segment-type="total-sent" campaign-id="{{ $broadCastData->broadcast_id }}" campaign-type="email" sending_method="{{ $broadCastData->sending_method }}" title="click to create segment">
                                                                     <div class="left-half-clipper">
                                                                         <div class="first50-bar"></div>
                                                                         <div class="value-bar"></div>
@@ -367,10 +367,10 @@ $newOpen = $newClick = 0;
                                                                 </div>
                                                             </div>
                                                             <div class="media-left">
-                                                                <div data-toggle="tooltip" title="<?php echo $delivered; ?> sent out of <?php echo $totalSent; ?> <?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; ?>" data-placement="top">
-                                                                    <?php
+                                                                <div data-toggle="tooltip" title="{{ $delivered }} sent out of {{ $totalSent @php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; @endphp" data-placement="top">
+                                                                    @php
                                                                     if ($totalSentGraph > 0) {
-                                                                        ?>
+                                                                        @endphp
                                                                         <a href="<?php echo base_url(); ?>admin/broadcast/records/<?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; ?>/<?php echo $broadCastData->broadcast_id; ?>?type=delivered" class="text-default text-semibold"><?php echo $delivered; ?></a>
                                                                         <?php
                                                                     } else {
