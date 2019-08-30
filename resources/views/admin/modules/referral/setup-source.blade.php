@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -12,7 +12,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
-                <h3 class="mt30"><img style="width: 16px;" src="<?php echo base_url(); ?>assets/images/refferal_icon.png"> New Referral Campaign</h3>
+                <h3 class="mt30"><img style="width: 16px;" src="{{ base_url() }}assets/images/refferal_icon.png"> New Referral Campaign</h3>
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">
@@ -30,11 +30,11 @@
         <div class="col-md-12">
             <div class="white_box broadcast_menu nps">
                 <ul>
-                    <li><a class="active" href="#"><img src="<?php echo base_url(); ?>assets/images/ref_br_icon0_act.png">Select Source</a></li>
-                    <li><a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/email_br_icon2.png">Rewards</a></li>
-                    <li><a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/email_br_icon3.png">Email Workflow</a></li>
-                    <li><a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/email_br_icon4.png">Configuration</a></li>
-                    <li><a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/email_br_icon5.png">Integration</a></li>
+                    <li><a class="active" href="#"><img src="{{ base_url() }}assets/images/ref_br_icon0_act.png">Select Source</a></li>
+                    <li><a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/email_br_icon2.png">Rewards</a></li>
+                    <li><a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/email_br_icon3.png">Email Workflow</a></li>
+                    <li><a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/email_br_icon4.png">Configuration</a></li>
+                    <li><a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/email_br_icon5.png">Integration</a></li>
                 </ul>
             </div>
         </div>
@@ -47,17 +47,17 @@
                 <label for="temp1" class="m0">
                     <div class="broadcast_select_contact">
                         <label class="custmo_checkbox">
-                            <input class="check" type="radio" name="source_type" value="email" id="temp1" <?php echo ($oReferral->source_type == 'email' || $oReferral->source_type == '') ? 'checked' : ''; ?>>
+                            <input class="check" type="radio" name="source_type" value="email" id="temp1" {!! ($oReferral->source_type == 'email' || $oReferral->source_type == '') ? 'checked' : '' !!}>
                             <span class="custmo_checkmark green_tr"></span>
                         </label>
 
 
-                        <div class="img_box img_inactive" style="<?php echo ($oReferral->source_type == 'email' || $oReferral->source_type == '') ? 'display: none;' : ''; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_email.png"/>
+                        <div class="img_box img_inactive" style="{{ ($oReferral->source_type == 'email' || $oReferral->source_type == '') ? 'display: none;' : '' }}">
+                            <img src="{{ base_url() }}assets/images/ref_email.png"/>
                         </div>
 
-                        <div class="img_box img_active " style="<?php echo ($oReferral->source_type == 'email' || $oReferral->source_type == '') ? '' : 'display: none;'; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_email_act.png"/>
+                        <div class="img_box img_active " style="{{ ($oReferral->source_type == 'email' || $oReferral->source_type == '') ? '' : 'display: none;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_email_act.png"/>
                         </div>
 
                         <p class="fsize14 txt_dark fw500">Emails</p>
@@ -69,15 +69,15 @@
                 <label for="temp2" class="m0">
                     <div class="broadcast_select_contact">
                         <label class="custmo_checkbox">
-                            <input class="check" type="radio" name="source_type" id="temp2" value="sms" <?php echo $oReferral->source_type == 'sms' ? 'checked' : ''; ?>>
+                            <input class="check" type="radio" name="source_type" id="temp2" value="sms" {!! $oReferral->source_type == 'sms' ? 'checked' : '' !!}>
                             <span class="custmo_checkmark green_tr"></span>
                         </label>
-                        <div class="img_box img_inactive" style="<?php echo $oReferral->source_type == 'sms' ? 'display: none;' : ''; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_social.png"/>
+                        <div class="img_box img_inactive" style="{{ $oReferral->source_type == 'sms' ? 'display: none;' : '' }}">
+                            <img src="{{ base_url() }}assets/images/ref_social.png"/>
                         </div>
 
-                        <div class="img_box img_active " style="<?php echo $oReferral->source_type == 'sms' ? '' : 'display: none;'; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_social_act.png"/>
+                        <div class="img_box img_active " style="{{ $oReferral->source_type == 'sms' ? '' : 'display: none;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_social_act.png"/>
                         </div>
 
                         <p class="fsize14 txt_dark fw500">SMS</p>
@@ -89,15 +89,15 @@
                 <label for="temp3" class="m0">
                     <div class="broadcast_select_contact">
                         <label class="custmo_checkbox">
-                            <input class="check" type="radio" name="source_type" value="widget" id="temp3" <?php echo $oReferral->source_type == 'widget' ? 'checked' : ''; ?>>
+                            <input class="check" type="radio" name="source_type" value="widget" id="temp3" {!! $oReferral->source_type == 'widget' ? 'checked' : '' !!}>
                             <span class="custmo_checkmark green_tr"></span>
                         </label>
-                        <div class="img_box img_inactive" style="<?php echo $oReferral->source_type == 'widget' ? 'display: none;' : ''; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_widget.png"/>
+                        <div class="img_box img_inactive" style="{{ $oReferral->source_type == 'widget' ? 'display: none;' : '' }}">
+                            <img src="{{ base_url() }}assets/images/ref_widget.png"/>
                         </div>
 
-                        <div class="img_box img_active " style="<?php echo $oReferral->source_type == 'widget' ? '' : 'display: none;'; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_widget_act.png"/>
+                        <div class="img_box img_active " style="{{ $oReferral->source_type == 'widget' ? '' : 'display: none;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_widget_act.png"/>
                         </div>
 
                         <p class="fsize14 txt_dark fw500">Widgets</p>
@@ -116,7 +116,7 @@
         </div>
         <div class="row">
                 <div class="col-md-6">&nbsp;</div>
-            <input type="hidden" name="refId" id="refId" value="<?php echo $moduleUnitID; ?>">
+            <input type="hidden" name="refId" id="refId" value="{{ $moduleUnitID }}">
             <div class="col-md-6 text-right"><button class="btn dark_btn bkg_dgreen2 h52 minw_160 updateSoucre">Next step <i class="icon-arrow-right13 ml20"></i></button></div>
         </div>
     </div>
@@ -134,8 +134,8 @@
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
 						@csrf
-                        <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
-                        <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
+                        <input type="hidden" name="userid" value="{{ $userID }}" />
+                        <input type="hidden" name="bbaid" value="{{ $oSettings->hashcode }}" />
                         <div class="col-md-12">
 
                             <div class="form-group">
@@ -186,13 +186,13 @@
             var sourceType = $("input[name='source_type']:checked").val();
             var refId = $("#refId").val();
             $.ajax({
-                url: "<?php echo base_url('/admin/modules/referral/updateSource'); ?>",
+                url: "{{ base_url('/admin/modules/referral/updateSource') }}",
                 type: "POST",
                 data: {source_type: sourceType, ref_id: refId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
-                        window.location.href = '<?php echo base_url('/admin/modules/referral/reward/'); ?>' + refId;
+                        window.location.href = "{{ base_url('/admin/modules/referral/reward/') }}" + refId;
                     }
                 },
                 error: function (response) {
@@ -206,9 +206,9 @@
 
             var status = $(this).attr('status');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/publishReferralStatus'); ?>',
+                url: "{{ base_url('admin/modules/referral/publishReferralStatus') }}",
                 type: "POST",
-                data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status': status, _token: '{{csrf_token()}}'},
+                data: {'ref_id': '{{ $moduleUnitID }}', 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -232,7 +232,7 @@
             var formData = new FormData($(this)[0]);
             $('#btnInvite').prop("disabled", true);
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/registerInvite'); ?>',
+                url: "{{ base_url('admin/modules/referral/registerInvite') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
