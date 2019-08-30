@@ -22,7 +22,6 @@
 				<p><span class="txt_dark">Euismod</span><br><small class="text-muted text-size-small">In the tumultuous business of cutting-in and attending to a whale, there.</small></p>
 				<p><span class="txt_dark">Descriptions List</span><br><small class="text-muted text-size-small">So strongly and metaphysically did I conceive of my situati.</small></p>
 				<p><span class="txt_dark">Euismod</span><br><small class="text-muted text-size-small">In the tumultuous business of cutting-in and attending to a whale, there.</small></p>
-				
 			</div>
 		</div>
 	</div>
@@ -38,13 +37,13 @@
 &lt;script 
 type="text/javascript" 
 id="bbscriptloader" 
-data-key="<?php echo $widgetData->hashcode; ?>" 
+data-key="{{ $widgetData->hashcode }}" 
 data-widgets="referral" 
 async="" 
-src="<?php echo base_url('assets/js/ref_widgets.js'); ?>"&gt;
+src="{{ base_url('assets/js/ref_widgets.js') }}"&gt;
 &lt;/script&gt;
 </pre>
-					<div style="display: none;" class="prettyprintDiv">&lt;script type="text/javascript" id="bbscriptloader" data-key="<?php echo $widgetData->hashcode; ?>" data-widgets="referral" async="" src="<?php echo base_url('assets/js/ref_widgets.js'); ?>"&gt; &lt;/script&gt;</div>
+					<div style="display: none;" class="prettyprintDiv">&lt;script type="text/javascript" id="bbscriptloader" data-key="{{ $widgetData->hashcode }}" data-widgets="referral" async="" src="{{ base_url('assets/js/ref_widgets.js') }}"&gt; &lt;/script&gt;</div>
 				</div>
 				<div class="p20 text-right">
 					<button class="btn btn-xs btn_white_table pl10 pr10" onclick="copyToClipboard('.prettyprintDiv')">Copy Code</button>
@@ -57,14 +56,14 @@ src="<?php echo base_url('assets/js/ref_widgets.js'); ?>"&gt;
 
 <div class="row pull-right">
 	<div class="col-md-12">
-		<a href="javascript:void(0);" class="btn dark_btn mt30" onclick="publishReferralWidget('<?php echo $widgetData->id; ?>');">Publish</a>
+		<a href="javascript:void(0);" class="btn dark_btn mt30" onclick="publishReferralWidget('{{ $widgetData->id }}');">Publish</a>
 	</div>
 </div>
 
 <script>
 function publishReferralWidget(widgetId){
 	$.ajax({
-		url: "<?php echo base_url(); ?>admin/modules/referral/publishReferralWidget",
+		url: "{{ base_url() }}admin/modules/referral/publishReferralWidget",
 		method: "POST",
 		data: {'widget_id' : widgetId, _token: '{{csrf_token()}}'},
 		dataType: "json",
@@ -72,7 +71,7 @@ function publishReferralWidget(widgetId){
 		{
 			if (data.status == "success")
 			{
-				window.location.href = '<?php echo base_url('admin/modules/referral/widgets'); ?>';
+				window.location.href = '{{ base_url('admin/modules/referral/widgets') }}';
 			} else {
 				displayMessagePopup('error');
 			}

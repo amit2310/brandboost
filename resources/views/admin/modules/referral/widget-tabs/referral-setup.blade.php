@@ -13,19 +13,19 @@
 					<div class="p20">
 						<div class="row">
 							<div class="col-md-12">
-								<?php foreach ($oReferralList as $data) { ?>
+								@foreach ($oReferralList as $data)
 									<div class="form-group mb10">
-										<p class="pull-left mb0"><a href="<?php echo base_url('admin/modules/referral/'.$data->id); ?>" target="_blank"><?php echo $data->title; ?></a></p>
+										<p class="pull-left mb0"><a href="{{ base_url('admin/modules/referral/'.$data->id) }}" target="_blank">{{ $data->title }}</a></p>
 										<label class="custom-form-switch pull-right">
-											<input class="field autoSaveReferralWidget" type="checkbox" data-hashcode="<?php echo $data->hashcode; ?>" id="referral_id_<?php echo $data->id; ?>" name="referral_id" value="<?php echo $data->id; ?>" 
-											<?php echo $data->id == $widgetData->referral_id ? 'checked' : ''; ?>>
+											<input class="field autoSaveReferralWidget" type="checkbox" data-hashcode="{{ $data->hashcode }}" id="referral_id_{{ $data->id }}" name="referral_id" value="{{ $data->id }}" 
+												{!! $data->id == $widgetData->referral_id ? 'checked' : '' !!}>
 											<span class="toggle dred"></span> 
 										</label>
 										<div class="clearfix"></div>
 									</div>
-								<?php } ?>
+								@endforeach
 							</div>
-							<input type="hidden" name="widget_id" id="widget_id" value="<?php echo $widgetData->id; ?>">
+							<input type="hidden" name="widget_id" id="widget_id" value="{{ $widgetData->id }}">
 							<button class="hidden saveReferralWidget btn dark_btn h52 w100 bkg_purple" type="submit"> Save Referral Widget </button>
 						</div>
 					</div>
@@ -42,9 +42,9 @@
 			<div class="panel-body p20">
 				<div class="widget_sec">
 					<div id="referralWidgetSection">
-						<?php echo ($widgetData->referral_id == '' || $widgetData->referral_id == 0) ? '' : $sEmailPreview; ?>
+					{{ ($widgetData->referral_id == '' || $widgetData->referral_id == 0) ? '' : $sEmailPreview }}
 					</div>
-					<img class="w100" src="<?php echo base_url(); ?>assets/images/config_bkg_bk2_overlay.png">
+					<img class="w100" src="{{ base_url() }}assets/images/config_bkg_bk2_overlay.png">
 				</div>
 			</div>
 		</div>
@@ -78,7 +78,7 @@
             e.preventDefault();
 			var widgetId = $('#widget_id').val();
             $.ajax({
-                url: "<?php echo base_url(); ?>admin/modules/referral/addReferralWidgetApp",
+                url: "{{ base_url() }}admin/modules/referral/addReferralWidgetApp",
                 method: "POST",
                 data: {'hashcode' : hashcodeVal, 'referral_id' : referralId, 'widget_id' : widgetId, _token: '{{csrf_token()}}'},
                 dataType: "json",
