@@ -371,16 +371,16 @@ $newOpen = $newClick = 0;
                                                                     @php
                                                                     if ($totalSentGraph > 0) {
                                                                         @endphp
-                                                                        <a href="<?php echo base_url(); ?>admin/broadcast/records/<?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; ?>/<?php echo $broadCastData->broadcast_id; ?>?type=delivered" class="text-default text-semibold"><?php echo $delivered; ?></a>
-                                                                        <?php
+                                                                        <a href="@php echo base_url(); ?>admin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; ?>/@php echo $broadCastData->broadcast_id; ?>?type=delivered" class="text-default text-semibold">@php echo $delivered; ?></a>
+                                                                        @php
                                                                     } else {
-                                                                        ?>
-                                                                        <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $delivered; ?></a>
-                                                                    <?php }
-                                                                    ?>
-                                                                    <?php if ($newOpen > 0): ?>    
-                                                                        <?php echo '<span style="color:#FF0000;"> (' . $newOpen . ' new)</span>'; ?>    
-                                                                    <?php endif; ?>    
+                                                                        @endphp
+                                                                        <a href="javascript:void(0);" class="text-default text-semibold">@php echo $delivered; @endphp</a>
+                                                                    @php }
+                                                                    @endphp
+                                                                    @php if ($newOpen > 0): @endphp    
+                                                                        @php echo '<span style="color:#FF0000;"> (' . $newOpen . ' new)</span>'; @endphp    
+                                                                    @php endif; @endphp    
 
                                                                 </div>
                                                             </div>
@@ -388,12 +388,12 @@ $newOpen = $newClick = 0;
                                                         </td>
 
                                                         <td>
-                                                            <?php
+                                                            @php
                                                             $addPC = '';
                                                             if ($totalOpenGraph > 50) {
                                                                 $addPC = 'over50';
                                                             }
-                                                            ?>
+                                                            @endphp
                                                             <div class="media-left">
                                                                 <div class="progress-circle <?php echo $addPC; ?> blue1 cp<?php echo $totalOpenGraph; ?> <?php if ($open > 0): ?>createSegment<?php endif; ?>" segment-type="total-open" campaign-id="<?php echo $broadCastData->broadcast_id; ?>" campaign-type="email" sending_method="<?php echo $broadCastData->sending_method; ?>" title="click to create segment">
                                                                     <div class="left-half-clipper">
