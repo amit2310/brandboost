@@ -33,10 +33,10 @@
 			<div class="col-md-12">
 				<div class="white_box broadcast_menu nps">
 					<ul>
-					<li><a href="{{ base_url() }}admin/modules/referral/setup/{{ $moduleUnitID }}"><img src="<?php echo base_url(); ?>assets/images/email_br_icon1_grey.png">Select Source</a></li>
-					<li><a href="{{ base_url() }}admin/modules/referral/reward/{{ $moduleUnitID }}"><img src="<?php echo base_url(); ?>assets/images/email_br_icon2.png">Rewards</a></li>
-					<li><a href="{{ base_url() }}admin/modules/referral/workflow/{{ $moduleUnitID }}"><img src="<?php echo base_url(); ?>assets/images/email_br_icon3.png">Email Workflow</a></li>
-					<li><a href="{{ base_url() }}admin/modules/referral/configurations/{{ $moduleUnitID }}"><img src="<?php echo base_url(); ?>assets/images/email_br_icon4.png">Configuration</a></li>
+					<li><a href="{{ base_url() }}admin/modules/referral/setup/{{ $moduleUnitID }}"><img src="{{ base_url() }}assets/images/email_br_icon1_grey.png">Select Source</a></li>
+					<li><a href="{{ base_url() }}admin/modules/referral/reward/{{ $moduleUnitID }}"><img src="{{ base_url() }}assets/images/email_br_icon2.png">Rewards</a></li>
+					<li><a href="{{ base_url() }}admin/modules/referral/workflow/{{ $moduleUnitID }}"><img src="{{ base_url() }}assets/images/email_br_icon3.png">Email Workflow</a></li>
+					<li><a href="{{ base_url() }}admin/modules/referral/configurations/{{ $moduleUnitID }}"><img src="{{ base_url() }}assets/images/email_br_icon4.png">Configuration</a></li>
 					<li><a class="active" href="javascript:void(0);"><img src="{{ base_url() }}assets/images/email_br_icon5_act.png">Integration</a></li>
 				</ul>
 				</div>
@@ -183,7 +183,7 @@
   </div>
   
 <div class="row">
-	<input type="hidden" name="refId" id="refId" value="<?php echo $moduleUnitID; ?>">
+	<input type="hidden" name="refId" id="refId" value="{{ $moduleUnitID }}">
 	<div class="col-md-6"><button class="btn btn_white bkg_white h52 txt_dark minw_140 shadow br5 backPage"><i class="icon-arrow-left12 mr20"></i> Back</button></div>
 	<div class="col-md-6 text-right"><button class="btn dark_btn bkg_dgreen2 h52 minw_160 publishReferral">Publish <i class="icon-arrow-right13 ml20"></i></button></div>
 </div>  

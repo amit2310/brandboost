@@ -1,12 +1,12 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
 
-<?php
+@php
 $oAdvMultipleCoupon = new stdClass();
 $oRefMultipleCoupon = new stdClass();
 $oAdvMultipleCoupon->expiry = 'never';
@@ -40,7 +40,8 @@ if (!empty($oRefCouponCodes)) {
         }
     }
 }
-?>
+@endphp
+
 <style type="text/css">
     .panel-referred-heading, .panel-advocate-heading { 
         border: 1px solid #ddd !important;
@@ -56,7 +57,7 @@ if (!empty($oRefCouponCodes)) {
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
-                <h3 class="mt30"><img style="width: 16px;" src="<?php echo base_url(); ?>assets/images/refferal_icon.png"> New Referral Campaign</h3>
+                <h3 class="mt30"><img style="width: 16px;" src="{{ base_url() }}assets/images/refferal_icon.png"> New Referral Campaign</h3>
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">
@@ -64,8 +65,6 @@ if (!empty($oRefCouponCodes)) {
                 <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishReferralStatus" status="draft"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
 
                 <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishReferralStatus" status="active"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
-
-                <!-- <button style="padding: 7px 15px!important;"  type="button" class="btn dark_btn" data-toggle="modal" data-target="#addPeopleList"><i class="icon-plus3 txt_green3"></i></button> -->
             </div>
         </div>
     </div>
@@ -79,11 +78,11 @@ if (!empty($oRefCouponCodes)) {
         <div class="col-md-12">
             <div class="white_box broadcast_menu nps">
                 <ul>
-                    <li><a href="<?php echo base_url(); ?>admin/modules/referral/setup/<?php echo $moduleUnitID; ?>"><img src="<?php echo base_url(); ?>assets/images/email_br_icon1_grey.png">Select Source</a></li>
-                    <li><a class="active" href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/sms_br_icon2_act.png">Rewards</a></li>
-                    <li><a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/email_br_icon3.png">Email Workflow</a></li>
-                    <li><a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/email_br_icon4.png">Configuration</a></li>
-                    <li><a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/email_br_icon5.png">Summary</a></li>
+                    <li><a href="{{ base_url() }}admin/modules/referral/setup/{{ $moduleUnitID }}"><img src="{{ base_url() }}assets/images/email_br_icon1_grey.png">Select Source</a></li>
+                    <li><a class="active" href="javascript:void(0);"><img src="{{ base_url() }}assets/images/sms_br_icon2_act.png">Rewards</a></li>
+                    <li><a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/email_br_icon3.png">Email Workflow</a></li>
+                    <li><a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/email_br_icon4.png">Configuration</a></li>
+                    <li><a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/email_br_icon5.png">Summary</a></li>
                 </ul>
             </div>
         </div>
@@ -110,16 +109,16 @@ if (!empty($oRefCouponCodes)) {
                 <label for="temp1" class="m0 advocateGift" option-type="#advocate-discount-new">
                     <div class="broadcast_select_contact ref">
                         <label class="custmo_checkbox">
-                            <input class="checkAdvocateGift" type="radio" name="advocateGiftType" value="coupon" id="temp1" <?php echo $oSettings->adv_coupon_id > 0 ? 'checked' : ''; ?>>
+                            <input class="checkAdvocateGift" type="radio" name="advocateGiftType" value="coupon" id="temp1" {!! $oSettings->adv_coupon_id > 0 ? 'checked' : '' !!}>
                             <span class="custmo_checkmark green_tr"></span>
                         </label>
 
-                        <div class="img_box img_inactive" style="<?php echo $oSettings->adv_coupon_id > 0 ? 'display: none;' : ''; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_1.png"/>
+                        <div class="img_box img_inactive" style="{{ $oSettings->adv_coupon_id > 0 ? 'display: none;' : '' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_1.png"/>
                         </div>
 
-                        <div class="img_box img_active" style="<?php echo $oSettings->adv_coupon_id > 0 ? '' : 'display: none;'; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_1_act.png"/>
+                        <div class="img_box img_active" style="{{ $oSettings->adv_coupon_id > 0 ? '' : 'display: none;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_1_act.png"/>
                         </div>
                         <p class="fsize14 txt_dark fw500">Coupon</p>
                         <p class="fsize12 txt_grey fw300">Coupon discount for advocate</p>
@@ -130,14 +129,14 @@ if (!empty($oRefCouponCodes)) {
                 <label for="temp2" class="m0 advocateGift" option-type="#advocate-cash-new">
                     <div class="broadcast_select_contact ref">
                         <label class="custmo_checkbox">
-                            <input class="checkAdvocateGift" type="radio" name="advocateGiftType" value="cash" id="temp2" <?php echo $oSettings->cash_id > 0 ? 'checked' : ''; ?>>
+                            <input class="checkAdvocateGift" type="radio" name="advocateGiftType" value="cash" id="temp2" {!! $oSettings->cash_id > 0 ? 'checked' : '' !!}>
                             <span class="custmo_checkmark green_tr"></span>
                         </label>
-                        <div class="img_box img_inactive" style="<?php echo $oSettings->cash_id > 0 ? 'display: none;' : ''; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_2.png"/>
+                        <div class="img_box img_inactive" style="{{ $oSettings->cash_id > 0 ? 'display: none;' : '' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_2.png"/>
                         </div>
-                        <div class="img_box img_active" style="<?php echo $oSettings->cash_id > 0 ? '' : 'display: none;'; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_2_act.png"/>
+                        <div class="img_box img_active" style="{{ $oSettings->cash_id > 0 ? '' : 'display: none;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_2_act.png"/>
                         </div>
                         <p class="fsize14 txt_dark fw500">Cash</p>
                         <p class="fsize12 txt_grey fw300">Cash discount for advocate</p>
@@ -148,14 +147,14 @@ if (!empty($oRefCouponCodes)) {
                 <label for="temp3" class="m0 advocateGift" option-type="#advocate-custom-new">
                     <div class="broadcast_select_contact ref">
                         <label class="custmo_checkbox">
-                            <input class="checkAdvocateGift" type="radio" name="advocateGiftType" value="custom" id="temp3" <?php echo $oSettings->custom_id > 0 ? 'checked' : ''; ?>>
+                            <input class="checkAdvocateGift" type="radio" name="advocateGiftType" value="custom" id="temp3" {!! $oSettings->custom_id > 0 ? 'checked' : '' !!}>
                             <span class="custmo_checkmark green_tr"></span>
                         </label>
-                        <div class="img_box img_inactive" style="<?php echo $oSettings->custom_id > 0 ? 'display: none;' : ''; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_3.png"/>
+                        <div class="img_box img_inactive" style="{{ $oSettings->custom_id > 0 ? 'display: none;' : '' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_3.png"/>
                         </div>
-                        <div class="img_box img_active" style="<?php echo $oSettings->custom_id > 0 ? '' : 'display: none;'; ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_3_act.png"/>
+                        <div class="img_box img_active" style="{{ $oSettings->custom_id > 0 ? '' : 'display: none;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_3_act.png"/>
                         </div>
                         <p class="fsize14 txt_dark fw500">Custom</p>
                         <p class="fsize12 txt_grey fw300">Custom discount for advocate</p>
@@ -164,7 +163,7 @@ if (!empty($oRefCouponCodes)) {
             </div>
         </div>
 
-        <?php
+        @php
         if ($oSettings->adv_coupon_id > 0) {
             $display = 'block';
         } else if ($oSettings->cash_id > 0) {
@@ -174,21 +173,21 @@ if (!empty($oRefCouponCodes)) {
         } else {
             $display = 'none';
         }
-        ?>
+        @endphp
 
         <div class="row mt20">
             <div class="col-md-12">
                 <div class="white_box p20 pl30 pr30">
-                    <div class="row advocateGiftHeading" style="display: <?php echo $display; ?>;">
+                    <div class="row advocateGiftHeading" style="display: {{ $display }};">
                         <div class="col-md-12 mb20">
                             <p class="fsize15 bbot pb-15">Gift Configuration</p>
                         </div>
                     </div>
 
-                    <div class="p20 advocateGiftD" style="display: <?php echo $display; ?>;">
+                    <div class="p20 advocateGiftD" style="display: {{ $display }};">
                         <div class="row">
 
-                            <div class="advocate_desc" id="advocate-discount-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->adv_coupon_id > 0) ? 'display:block;' : 'display:none;' ?>">
+                            <div class="advocate_desc" id="advocate-discount-new" style="margin-left:10px;margin-top:15px;{{ ($oSettings->adv_coupon_id > 0) ? 'display:block;' : 'display:none;' }}">
                                 <form name="frmAdvocateDiscount" id="frmAdvocateDiscount" method="post" data-container-id="advocate-free-gift" >
 									@csrf
                                     <div class="col-md-3">
@@ -196,7 +195,7 @@ if (!empty($oRefCouponCodes)) {
                                             <label class="control-label">Amount</label>
                                             <div class="">
                                                 <input type="hidden" name="rewardType" value="advocate_discount" />
-                                                <input name="advocate_discount_price" class="form-control" type="text" value="<?php echo (!empty($oSettings->advocate_discount)) ? $oSettings->advocate_discount : ''; ?>" required placeholder="10">
+                                                <input name="advocate_discount_price" class="form-control" type="text" value="{{ (!empty($oSettings->advocate_discount)) ? $oSettings->advocate_discount : '' }}" required placeholder="10">
                                             </div>
                                         </div>
                                     </div>
@@ -205,7 +204,7 @@ if (!empty($oRefCouponCodes)) {
                                             <label class="control-label">&nbsp;</label>
                                             <div class="">
                                                 <div class="input-group">
-													<?php
+													@php
 													if ($oSettings->advocate_discount_type == 'dollar') {
 														$dollarCoupon = 'table-cell';
 														$percentCoupon = 'none';
@@ -219,11 +218,11 @@ if (!empty($oRefCouponCodes)) {
 														$percentCoupon = 'table-cell';
 														$advDisValue = '%';
 													}
-													?>
-                                                    <input type="hidden" name="advocate_discount_type" class="form-control advocate_discount_type" value="<?php echo (!empty($oSettings->advocate_discount_type)) ? $oSettings->advocate_discount_type : 'percent'; ?>" placeholder="%">
-                                                    <input type="text" name="" value="<?php echo $advDisValue; ?>" id="adCouponVal" class="form-control" readonly />
-                                                    <span style="display: <?php echo $dollarCoupon; ?>;" class="input-group-addon bkg_dgreen bor_n adCouponType" amtSign="%" amtText="percent"><i class="icon-percent txt_white"></i></span>
-                                                    <span style="display: <?php echo $percentCoupon; ?>;" class="input-group-addon bkg_dgreen bor_n adCouponType" amtSign="$" amtText="dollar"><i class="icon-coin-dollar txt_white"></i></span>
+													@endphp
+                                                    <input type="hidden" name="advocate_discount_type" class="form-control advocate_discount_type" value="{{ (!empty($oSettings->advocate_discount_type)) ? $oSettings->advocate_discount_type : 'percent' }}" placeholder="%">
+                                                    <input type="text" name="" value="{{ $advDisValue }}" id="adCouponVal" class="form-control" readonly />
+                                                    <span style="display: {{ $dollarCoupon }};" class="input-group-addon bkg_dgreen bor_n adCouponType" amtSign="%" amtText="percent"><i class="icon-percent txt_white"></i></span>
+                                                    <span style="display: {{ $percentCoupon }};" class="input-group-addon bkg_dgreen bor_n adCouponType" amtSign="$" amtText="dollar"><i class="icon-coin-dollar txt_white"></i></span>
 
                                                 </div>
                                             </div>
@@ -234,7 +233,7 @@ if (!empty($oRefCouponCodes)) {
                                             <label class="control-label">Reward Message</label>
                                             <div class="">
 
-                                                <input type="text" name="advocate_discount" class="form-control" value="<?php echo (!empty($oSettings->advocate_display_msg)) ? $oSettings->advocate_display_msg : '20% off'; ?>" placeholder="e.g. 20% off" required="required" >
+                                                <input type="text" name="advocate_discount" class="form-control" value="{{ (!empty($oSettings->advocate_display_msg)) ? $oSettings->advocate_display_msg : '20% off' }}" placeholder="e.g. 20% off" required="required" >
                                             </div>
                                         </div>
                                     </div>
@@ -243,7 +242,7 @@ if (!empty($oRefCouponCodes)) {
                                             <label class="control-label">&nbsp;</label>
                                             <div>
 
-                                                <input type="hidden" name="rewardID" value="<?php echo $oSettings->rewardID; ?>" />
+                                                <input type="hidden" name="rewardID" value="{{ $oSettings->rewardID }}" />
                                                 <button type="button" class="btn white_btn"><span>Cancel</span> </button>
                                                 <button type="submit" class="btn dark_btn ml20 bkg_dgreen advDiscountSave"><span>Save Changes</span> </button>
 
@@ -261,25 +260,27 @@ if (!empty($oRefCouponCodes)) {
                                     <div class="radio">
                                         <label>
                                             <span>
-                                                <input type="radio" name="advCouponCode" option-type="adv_single_use_coupons" <?php if ($oSettings->advocate_coupon_type == 'single'): ?> checked="checked" <?php endif; ?> class="control-primary advocate_options">
+                                                <input type="radio" name="advCouponCode" option-type="adv_single_use_coupons" @if ($oSettings->advocate_coupon_type == 'single') checked="checked" @endif class="control-primary advocate_options">
                                             </span>
                                             <strong>Single Use Coupons</strong> Unique coupon codes for every advocate 
 
                                         </label>
 
                                     </div>
-                                    <div class="coupon_desc" id="advocate-single-use_code" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->advocate_coupon_type == 'single') ? 'display:block;' : 'display:none;' ?>">
+                                    <div class="coupon_desc" id="advocate-single-use_code" style="margin-left:10px;margin-top:15px;{{ ($oSettings->advocate_coupon_type == 'single') ? 'display:block;' : 'display:none;' }}">
                                         <form name="frmAdvSingleUseCodes" id="frmAdvSingleUseCodes" data-container-id="advocate-coupon-details" method="post" >
 											@csrf
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon codes here</label>
                                                     <div class="">
-                                                        <textarea name="singleCouponCodes"  class="form-control"  placeholder="list of coupon codes" required="required" ><?php
-                                                    if (!empty($aAdvCoupons)) {
-                                                        echo trim(implode(",", $aAdvCoupons));
-                                                    }
-?></textarea>
+                                                        <textarea name="singleCouponCodes"  class="form-control"  placeholder="list of coupon codes" required="required" >
+														@php
+															if (!empty($aAdvCoupons)) {
+																echo trim(implode(",", $aAdvCoupons));
+															}
+														@endphp
+														</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -288,9 +289,8 @@ if (!empty($oRefCouponCodes)) {
                                                     <label class="control-label">&nbsp;</label>
                                                     <div>
                                                         <input type="hidden" name="couponType" value="advocate_single_coupons" />
-                                                        <input type="hidden" name="rewardID" value="<?php echo $oSettings->rewardID; ?>" />
+                                                        <input type="hidden" name="rewardID" value="{{ $oSettings->rewardID }}" />
                                                         <button type="submit" class="btn dark_btn ml20 bkg_dgreen singleCouponCodesSubmit"><span>Save Changes</span> </button>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -301,21 +301,21 @@ if (!empty($oRefCouponCodes)) {
                                     <div class="radio">
                                         <label>
                                             <span>
-                                                <input type="radio" name="advCouponCode" option-type="adv_multiple_use_coupons" <?php if ($oSettings->advocate_coupon_type == 'multiple'): ?> checked="checked" <?php endif; ?> class="control-primary advocate_options">
+                                                <input type="radio" name="advCouponCode" option-type="adv_multiple_use_coupons" @if ($oSettings->advocate_coupon_type == 'multiple') checked="checked" @endif class="control-primary advocate_options">
                                             </span>
                                             <strong>Multiple Use Coupons</strong> Reusable coupon code for all advocates 
 
                                         </label>
 
                                     </div>
-                                    <div class="coupon_desc" id="advocate-multiple-use_code" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->advocate_coupon_type == 'multiple') ? 'display:block;' : 'display:none;' ?>">
+                                    <div class="coupon_desc" id="advocate-multiple-use_code" style="margin-left:10px;margin-top:15px;{{ ($oSettings->advocate_coupon_type == 'multiple') ? 'display:block;' : 'display:none;' }}">
                                         <form name="frmAdvMultipleUseCodes" id="frmAdvMultipleUseCodes" data-container-id="advocate-coupon-details" method="post" >
 											@csrf
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon code</label>
                                                     <div class="">
-                                                        <input type="text" class="form-control" name="multipleCouponCodes" value="<?php echo ($oAdvMultipleCoupon->coupon_code) ? $oAdvMultipleCoupon->coupon_code : ''; ?>" id="multipleCouponCodes" placeholder="e.g. REWARD10" />
+                                                        <input type="text" class="form-control" name="multipleCouponCodes" value="{{ ($oAdvMultipleCoupon->coupon_code) ? $oAdvMultipleCoupon->coupon_code : '' }}" id="multipleCouponCodes" placeholder="e.g. REWARD10" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -324,14 +324,14 @@ if (!empty($oRefCouponCodes)) {
                                                     <label class="control-label">Expiry</label>
                                                     <div class="">
                                                         <select class="form-control" id="adv_coupon_expiry" name="coupon_expiry">
-                                                            <option value="never" <?php echo ($oAdvMultipleCoupon->expiry == 'never') ? 'selected = "selected"' : ''; ?> >Never(Recommended)</option>
-                                                            <option value="6" <?php echo ($oAdvMultipleCoupon->expiry == '6') ? 'selected = "selected"' : ''; ?>>6 Months</option>
-                                                            <option value="5" <?php echo ($oAdvMultipleCoupon->expiry == '5') ? 'selected = "selected"' : ''; ?>>5 Months</option>
-                                                            <option value="4" <?php echo ($oAdvMultipleCoupon->expiry == '4') ? 'selected = "selected"' : ''; ?>>4 Months</option>
-                                                            <option value="3" <?php echo ($oAdvMultipleCoupon->expiry == '3') ? 'selected = "selected"' : ''; ?>>3 Months</option>
-                                                            <option value="2" <?php echo ($oAdvMultipleCoupon->expiry == '2') ? 'selected = "selected"' : ''; ?>>2 Months</option>
-                                                            <option value="1" <?php echo ($oAdvMultipleCoupon->expiry == '1') ? 'selected = "selected"' : ''; ?>>1 Months</option>
-                                                            <option value="specific-date" <?php echo ($oAdvMultipleCoupon->expiry == 'specific-date') ? 'selected = "selected"' : ''; ?>>Specific Date</option>
+                                                            <option value="never" {!! ($oAdvMultipleCoupon->expiry == 'never') ? 'selected = "selected"' : '' !!} >Never(Recommended)</option>
+                                                            <option value="6" {!! ($oAdvMultipleCoupon->expiry == '6') ? 'selected = "selected"' : '' !!}>6 Months</option>
+                                                            <option value="5" {!! ($oAdvMultipleCoupon->expiry == '5') ? 'selected = "selected"' : '' !!}>5 Months</option>
+                                                            <option value="4" {!! ($oAdvMultipleCoupon->expiry == '4') ? 'selected = "selected"' : '' !!}>4 Months</option>
+                                                            <option value="3" {!! ($oAdvMultipleCoupon->expiry == '3') ? 'selected = "selected"' : '' !!}>3 Months</option>
+                                                            <option value="2" {!! ($oAdvMultipleCoupon->expiry == '2') ? 'selected = "selected"' : '' !!}>2 Months</option>
+                                                            <option value="1" {!! ($oAdvMultipleCoupon->expiry == '1') ? 'selected = "selected"' : '' !!}>1 Months</option>
+                                                            <option value="specific-date" {!! ($oAdvMultipleCoupon->expiry == 'specific-date') ? 'selected = "selected"' : '' !!}>Specific Date</option>
 
                                                         </select>
 
@@ -342,7 +342,7 @@ if (!empty($oRefCouponCodes)) {
                                                 <div class="form-group">
                                                     <label class="control-label">&nbsp;</label>
                                                     <div class="">
-                                                        <input type="text" name="specific_expiry_picker" class="form-control daterange-single" id="adv_specific_expiry_picker" value="<?php echo ($oAdvMultipleCoupon->expiry_specific_date) ? $oAdvMultipleCoupon->expiry_specific_date : ''; ?>" style="<?php echo ($oAdvMultipleCoupon->expiry == 'specific-date') ? 'display:block;' : 'display:none;'; ?>"/>
+                                                        <input type="text" name="specific_expiry_picker" class="form-control daterange-single" id="adv_specific_expiry_picker" value="{{ ($oAdvMultipleCoupon->expiry_specific_date) ? $oAdvMultipleCoupon->expiry_specific_date : '' }}" style="{{ ($oAdvMultipleCoupon->expiry == 'specific-date') ? 'display:block;' : 'display:none;' }}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -351,7 +351,7 @@ if (!empty($oRefCouponCodes)) {
                                                     <label class="control-label">&nbsp;</label>
                                                     <div>
                                                         <input type="hidden" name="couponType" value="advocate_multiple_coupons" />
-                                                        <input type="hidden" name="rewardID" value="<?php echo $oSettings->rewardID; ?>" />
+                                                        <input type="hidden" name="rewardID" value="{{ $oSettings->rewardID }}" />
                                                         <button type="submit" class="btn dark_btn ml20 bkg_dgreen multipalCouponCodesSubmit"><span>Save Changes</span> </button>
                                                     </div>
                                                 </div>
@@ -368,14 +368,14 @@ if (!empty($oRefCouponCodes)) {
 
                             </div>
 
-                            <div class="advocate_desc" id="advocate-cash-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->cash_id > 0) ? 'display:block;' : 'display:none;' ?>">
+                            <div class="advocate_desc" id="advocate-cash-new" style="margin-left:10px;margin-top:15px;{{ ($oSettings->cash_id > 0) ? 'display:block;' : 'display:none;' }}">
                                 <form name="frmAdvocateCash" id="frmAdvocateCash" method="post" data-container-id="advocate-free-gift" >
 									@csrf
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label">Amount</label>
                                             <div class="">
-                                                <input name="advocate_discount_price" class="form-control" type="text" value="<?php echo (!empty($oSettings->amount)) ? $oSettings->amount : ''; ?>" required placeholder="10">
+                                                <input name="advocate_discount_price" class="form-control" type="text" value="{{ (!empty($oSettings->amount)) ? $oSettings->amount : '' }}" required placeholder="10">
                                             </div>
                                         </div>
                                     </div>
@@ -384,7 +384,7 @@ if (!empty($oRefCouponCodes)) {
                                             <label class="control-label">&nbsp;</label>
                                             <div class="">
                                                 <div class="input-group">
-													<?php
+													@php
 													if ($oSettings->amount_type == 'dollar') {
 														$dollarCash = 'table-cell';
 														$percentCash = 'none';
@@ -398,13 +398,13 @@ if (!empty($oRefCouponCodes)) {
 														$percentCash = 'table-cell';
 														$advCashDisValue = '%';
 													}
-													?>
-                                                    <input type="hidden" name="amount_type" class="form-control amount_type" value="<?php echo (!empty($oSettings->amount_type)) ? $oSettings->amount_type : 'percent'; ?>">
+													@endphp
+                                                    <input type="hidden" name="amount_type" class="form-control amount_type" value="{{ (!empty($oSettings->amount_type)) ? $oSettings->amount_type : 'percent' }}">
 
-                                                    <input type="text" name="" value="<?php echo $advCashDisValue; ?>" id="adCashVal" class="form-control" readonly />
+                                                    <input type="text" name="" value="{{ $advCashDisValue }}" id="adCashVal" class="form-control" readonly />
 
-                                                    <span style="display: <?php echo $dollarCash; ?>;" class="input-group-addon bkg_dgreen bor_n adCashType" amtSign="%" amtText="percent"><i class="icon-percent txt_white"></i></span>
-                                                    <span style="display: <?php echo $percentCash; ?>;" class="input-group-addon bkg_dgreen bor_n adCashType" amtSign="$" amtText="dollar"><i class="icon-coin-dollar txt_white"></i></span>
+                                                    <span style="display: {{ $dollarCash }};" class="input-group-addon bkg_dgreen bor_n adCashType" amtSign="%" amtText="percent"><i class="icon-percent txt_white"></i></span>
+                                                    <span style="display: {{ $percentCash }};" class="input-group-addon bkg_dgreen bor_n adCashType" amtSign="$" amtText="dollar"><i class="icon-coin-dollar txt_white"></i></span>
 
                                                 </div>
                                             </div>
@@ -415,7 +415,7 @@ if (!empty($oRefCouponCodes)) {
                                             <label class="control-label">Reward Message</label>
                                             <div class="">
 
-                                                <input type="text" name="advocate_cash" class="form-control" value="<?php echo (!empty($oSettings->display_msg)) ? $oSettings->display_msg : '$10 in cash'; ?>" placeholder="e.g. $10 in cash" required="required" >
+                                                <input type="text" name="advocate_cash" class="form-control" value="{{ (!empty($oSettings->display_msg)) ? $oSettings->display_msg : '$10 in cash' }}" placeholder="e.g. $10 in cash" required="required" >
                                             </div>
                                         </div>
                                     </div>
@@ -424,7 +424,7 @@ if (!empty($oRefCouponCodes)) {
                                             <label class="control-label">&nbsp;</label>
                                             <div>
                                                 <input type="hidden" name="rewardType" value="advocate_cash" />
-                                                <input type="hidden" name="rewardID" value="<?php echo $oSettings->rewardID; ?>" />
+                                                <input type="hidden" name="rewardID" value="{{ $oSettings->rewardID }}" />
                                                 <button type="button" class="btn white_btn"><span>Cancel</span> </button>
                                                 <button type="submit" class="btn dark_btn ml20 bkg_dgreen"><span>Save Changes</span> </button>
 
@@ -434,7 +434,7 @@ if (!empty($oRefCouponCodes)) {
                                 </form>
                             </div>
 
-                            <div class="advocate_desc " id="advocate-custom-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->custom_id > 0) ? 'display:block;' : 'display:none;' ?>">
+                            <div class="advocate_desc " id="advocate-custom-new" style="margin-left:10px;margin-top:15px;{{ ($oSettings->custom_id > 0) ? 'display:block;' : 'display:none;' }}">
                                 <form name="frmAdvocateCustom" id="frmAdvocateCustom" method="post" data-container-id="advocate-free-gift" >
 									@csrf
                                     <div class="col-md-3">
@@ -448,7 +448,7 @@ if (!empty($oRefCouponCodes)) {
                                             <label class="control-label">Reward Message</label>
                                             <div class="">
 
-                                                <input type="text" name="advocate_custom" class="form-control" value="<?php echo (!empty($oSettings->reward_title)) ? $oSettings->reward_title : 'a free gift'; ?>" placeholder="e.g. a free gift" required="required" >
+                                                <input type="text" name="advocate_custom" class="form-control" value="{{ (!empty($oSettings->reward_title)) ? $oSettings->reward_title : 'a free gift' }}" placeholder="e.g. a free gift" required="required" >
                                             </div>
                                         </div>
                                     </div>
@@ -457,7 +457,7 @@ if (!empty($oRefCouponCodes)) {
                                             <label class="control-label">&nbsp;</label>
                                             <div>
                                                 <input type="hidden" name="rewardType" value="advocate_custom" />
-                                                <input type="hidden" name="rewardID" value="<?php echo $oSettings->rewardID; ?>" />
+                                                <input type="hidden" name="rewardID" value="{{ $oSettings->rewardID }}" />
                                                 <button type="button" class="btn white_btn"><span>Cancel</span> </button>
                                                 <button type="submit" class="btn dark_btn ml20 bkg_dgreen"><span>Save Changes</span> </button>
 
@@ -498,15 +498,15 @@ if (!empty($oRefCouponCodes)) {
                 <label for="temp4" class="m0 friendGift" option-type="#referred-discount-new">
                     <div class="broadcast_select_contact ref">
                         <label class="custmo_checkbox">
-                            <input class="checkFriendGift" type="radio" name="friendsGiftType" value="coupon" id="temp4" <?php echo ($oSettings->ref_coupon_id > 0) ? 'checked' : ''; ?>>
+                            <input class="checkFriendGift" type="radio" name="friendsGiftType" value="coupon" id="temp4" {!! ($oSettings->ref_coupon_id > 0) ? 'checked' : '' !!}>
                             <span class="custmo_checkmark green_tr"></span>
                         </label>
-                        <div class="img_box img_inactive" style="<?php echo ($oSettings->ref_coupon_id > 0) ? 'display:none;' : 'display:block;' ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_1.png"/>
+                        <div class="img_box img_inactive" style="{{ ($oSettings->ref_coupon_id > 0) ? 'display:none;' : 'display:block;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_1.png"/>
                         </div>
 
-                        <div class="img_box img_active" style="<?php echo ($oSettings->ref_coupon_id > 0) ? 'display:block;' : 'display:none;' ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_1_act.png"/>
+                        <div class="img_box img_active" style="{{ ($oSettings->ref_coupon_id > 0) ? 'display:block;' : 'display:none;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_1_act.png"/>
                         </div>
 
 
@@ -519,15 +519,15 @@ if (!empty($oRefCouponCodes)) {
                 <label for="temp5" class="m0 friendGift" option-type="#referred-promo-new">
                     <div class="broadcast_select_contact ref">
                         <label class="custmo_checkbox">
-                            <input class="checkFriendGift" type="radio" name="friendsGiftType" value="cash" id="temp5" <?php echo ($oSettings->promo_id > 0) ? 'checked' : ''; ?>>
+                            <input class="checkFriendGift" type="radio" name="friendsGiftType" value="cash" id="temp5" {!! ($oSettings->promo_id > 0) ? 'checked' : '' !!}>
                             <span class="custmo_checkmark green_tr"></span>
                         </label>
-                        <div class="img_box img_inactive" style="<?php echo ($oSettings->promo_id > 0) ? 'display:none;' : 'display:block;' ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_2.png"/>
+                        <div class="img_box img_inactive" style="{{ ($oSettings->promo_id > 0) ? 'display:none;' : 'display:block;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_2.png"/>
                         </div>
 
-                        <div class="img_box img_active" style="<?php echo ($oSettings->promo_id > 0) ? 'display:block;' : 'display:none;' ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_2_act.png"/>
+                        <div class="img_box img_active" style="{{ ($oSettings->promo_id > 0) ? 'display:block;' : 'display:none;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_2_act.png"/>
                         </div>
 
                         <p class="fsize14 txt_dark fw500">Cash</p>
@@ -539,14 +539,14 @@ if (!empty($oRefCouponCodes)) {
                 <label for="temp6" class="m0 friendGift" option-type="#referred-no-discount-new">
                     <div class="broadcast_select_contact ref">
                         <label class="custmo_checkbox">
-                            <input class="checkFriendGift" type="radio" name="friendsGiftType" value="custom" id="temp6" <?php echo ($oSettings->no_discount > 0) ? 'checked' : ''; ?>>
+                            <input class="checkFriendGift" type="radio" name="friendsGiftType" value="custom" id="temp6" {!! ($oSettings->no_discount > 0) ? 'checked' : '' !!}>
                             <span class="custmo_checkmark green_tr"></span>
                         </label>
-                        <div class="img_box img_inactive" style="<?php echo ($oSettings->no_discount > 0) ? 'display:none;' : 'display:block;' ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_3.png"/>
+                        <div class="img_box img_inactive" style="{{ ($oSettings->no_discount > 0) ? 'display:none;' : 'display:block;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_3.png"/>
                         </div>
-                        <div class="img_box img_active" style="<?php echo ($oSettings->no_discount > 0) ? 'display:block;' : 'display:none;' ?>">
-                            <img src="<?php echo base_url(); ?>assets/images/ref_reward_3_act.png"/>
+                        <div class="img_box img_active" style="{{ ($oSettings->no_discount > 0) ? 'display:block;' : 'display:none;' }}">
+                            <img src="{{ base_url() }}assets/images/ref_reward_3_act.png"/>
                         </div>
                         <p class="fsize14 txt_dark fw500">Custom</p>
                         <p class="fsize12 txt_grey fw300">Custom discount for advocate</p>
@@ -555,21 +555,17 @@ if (!empty($oRefCouponCodes)) {
             </div>
         </div>
 
-<?php
-//pre($oSettings);
-if ($oSettings->ref_coupon_id > 0) {
-    $displayG = 'block';
-} else if ($oSettings->promo_id > 0) {
-    $displayG = 'block';
-} else if ($oSettings->no_discount == 'yes') {
-    $displayG = 'block';
-} else {
-    $displayG = 'none';
-}
-?>
-
-
-
+		@php
+		if ($oSettings->ref_coupon_id > 0) {
+			$displayG = 'block';
+		} else if ($oSettings->promo_id > 0) {
+			$displayG = 'block';
+		} else if ($oSettings->no_discount == 'yes') {
+			$displayG = 'block';
+		} else {
+			$displayG = 'none';
+		}
+		@endphp
         <div class="row mt20">
             <div class="col-md-12">
                 <div class="white_box p20 pl30 pr30">
@@ -579,10 +575,10 @@ if ($oSettings->ref_coupon_id > 0) {
                         </div>
                     </div>
 
-                    <div class="p20 friendGiftD" style="display: <?php echo $displayG; ?>;">
+                    <div class="p20 friendGiftD" style="display: {{ $displayG }};">
                         <div class="row">
 
-                            <div class="referred_desc" id="referred-discount-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->ref_coupon_id > 0) ? 'display:block;' : 'display:none;' ?>">
+                            <div class="referred_desc" id="referred-discount-new" style="margin-left:10px;margin-top:15px;{{ ($oSettings->ref_coupon_id > 0) ? 'display:block;' : 'display:none;' }}">
                                 <form name="frmReferredDiscount" id="frmReferredDiscount" method="post" data-container-id="referred-friend-gift" >
                                     <input type="hidden" name="rewardType" value="referred_discount" />
 									@csrf
@@ -591,7 +587,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                             <label class="control-label">Reward Message</label>
                                             <div class="">
 
-                                                <input type="text" name="referred_discount" class="form-control" value="<?php echo (!empty($oSettings->referred_display_msg)) ? $oSettings->referred_display_msg : '20% off'; ?>" placeholder="e.g. 20% off" required="required" >
+                                                <input type="text" name="referred_discount" class="form-control" value="{{ (!empty($oSettings->referred_display_msg)) ? $oSettings->referred_display_msg : '20% off' }}" placeholder="e.g. 20% off" required="required" >
                                             </div>
                                         </div>
                                     </div>
@@ -600,7 +596,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                             <label class="control-label">&nbsp;</label>
                                             <div>
 
-                                                <input type="hidden" name="rewardID" value="<?php echo $oSettings->rewardID; ?>" />
+                                                <input type="hidden" name="rewardID" value="{{ $oSettings->rewardID }}" />
                                                 <button type="button" style="display: none;" class="btn white_btn"><span>Cancel</span> </button>
                                                 <button type="submit" style="display: none;" class="btn dark_btn ml20 bkg_dgreen frdReferredDiscountSave"><span>Save Changes</span> </button>
 
@@ -619,25 +615,27 @@ if ($oSettings->ref_coupon_id > 0) {
                                     <div class="radio">
                                         <label>
                                             <span>
-                                                <input type="radio" name="refCouponCode" option-type="ref_single_use_coupons" <?php if ($oSettings->referred_coupon_type == 'single'): ?> checked="checked" <?php endif; ?> class="control-primary referred_options">
+                                                <input type="radio" name="refCouponCode" option-type="ref_single_use_coupons" @if ($oSettings->referred_coupon_type == 'single') checked="checked" @endif class="control-primary referred_options">
                                             </span>
                                             <strong>Single Use Coupons</strong> Unique coupon codes for every friend 
 
                                         </label>
 
                                     </div>
-                                    <div class="coupon_desc_ref" id="referred-single-use_code" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->referred_coupon_type == 'single') ? 'display:block;' : 'display:none;' ?>">
+                                    <div class="coupon_desc_ref" id="referred-single-use_code" style="margin-left:10px;margin-top:15px;{{ ($oSettings->referred_coupon_type == 'single') ? 'display:block;' : 'display:none;' }}">
                                         <form name="frmRefSingleUseCodes" id="frmRefSingleUseCodes" method="post" data-container-id="referred-friend-coupon" >
 											@csrf
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon codes here</label>
                                                     <div class="">
-                                                        <textarea name="singleCouponCodes"  class="form-control"  placeholder="list of coupon codes" required="required" ><?php
-        if (!empty($aRefCoupons)) {
-            echo trim(implode(",", $aRefCoupons));
-        }
-?></textarea>
+                                                        <textarea name="singleCouponCodes"  class="form-control"  placeholder="list of coupon codes" required="required" >
+														@php
+															if (!empty($aRefCoupons)) {
+																echo trim(implode(",", $aRefCoupons));
+															}
+														@endphp
+														</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -646,7 +644,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                                     <label class="control-label">&nbsp;</label>
                                                     <div>
                                                         <input type="hidden" name="couponType" value="referred_single_coupons" />
-                                                        <input type="hidden" name="rewardID" value="<?php echo $oSettings->rewardID; ?>" />
+                                                        <input type="hidden" name="rewardID" value="{{ $oSettings->rewardID }}" />
                                                         <button type="submit" style="display: none;" class="btn dark_btn ml20 bkg_dgreen singleReferredCodesSubmit"><span>Save Changes</span> </button>
 
                                                     </div>
@@ -662,7 +660,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                     <div class="radio">
                                         <label>
                                             <span>
-                                                <input type="radio" name="refCouponCode" option-type="ref_multiple_use_coupons" <?php if ($oSettings->referred_coupon_type == 'multiple'): ?> checked="checked" <?php endif; ?> class="control-primary referred_options">
+                                                <input type="radio" name="refCouponCode" option-type="ref_multiple_use_coupons" @if ($oSettings->referred_coupon_type == 'multiple') checked="checked" @endif class="control-primary referred_options">
                                             </span>
                                             <strong>Multiple Use Coupons</strong> Reusable coupon code for all friends 
 
@@ -671,14 +669,14 @@ if ($oSettings->ref_coupon_id > 0) {
                                     </div>
 
 
-                                    <div class="coupon_desc_ref" id="referred-multiple-use_code" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->referred_coupon_type == 'multiple') ? 'display:block;' : 'display:none;' ?>">
+                                    <div class="coupon_desc_ref" id="referred-multiple-use_code" style="margin-left:10px;margin-top:15px;{{ ($oSettings->referred_coupon_type == 'multiple') ? 'display:block;' : 'display:none;' }}">
                                         <form name="frmRefMultipleUseCodes" id="frmRefMultipleUseCodes" method="post" data-container-id="referred-friend-coupon">
 											@csrf
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon code</label>
                                                     <div class="">
-                                                        <input type="text" class="form-control" name="multipleCouponCodes" value="<?php echo ($oRefMultipleCoupon->coupon_code) ? $oRefMultipleCoupon->coupon_code : ''; ?>" id="multipleRefCouponCodes" placeholder="e.g. REWARD10" />
+                                                        <input type="text" class="form-control" name="multipleCouponCodes" value="{{ ($oRefMultipleCoupon->coupon_code) ? $oRefMultipleCoupon->coupon_code : '' }}" id="multipleRefCouponCodes" placeholder="e.g. REWARD10" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -687,14 +685,14 @@ if ($oSettings->ref_coupon_id > 0) {
                                                     <label class="control-label">Expiry</label>
                                                     <div class="">
                                                         <select class="form-control" id="ref_coupon_expiry" name="coupon_expiry">
-                                                            <option value="never" <?php echo ($oRefMultipleCoupon->expiry == 'never') ? 'selected = "selected"' : ''; ?> >Never(Recommended)</option>
-                                                            <option value="6" <?php echo ($oRefMultipleCoupon->expiry == '6') ? 'selected = "selected"' : ''; ?>>6 Months</option>
-                                                            <option value="5" <?php echo ($oRefMultipleCoupon->expiry == '5') ? 'selected = "selected"' : ''; ?>>5 Months</option>
-                                                            <option value="4" <?php echo ($oRefMultipleCoupon->expiry == '4') ? 'selected = "selected"' : ''; ?>>4 Months</option>
-                                                            <option value="3" <?php echo ($oRefMultipleCoupon->expiry == '3') ? 'selected = "selected"' : ''; ?>>3 Months</option>
-                                                            <option value="2" <?php echo ($oRefMultipleCoupon->expiry == '2') ? 'selected = "selected"' : ''; ?>>2 Months</option>
-                                                            <option value="1" <?php echo ($oRefMultipleCoupon->expiry == '1') ? 'selected = "selected"' : ''; ?>>1 Months</option>
-                                                            <option value="specific-date" <?php echo ($oRefMultipleCoupon->expiry == 'specific-date') ? 'selected = "selected"' : ''; ?>>Specific Date</option>
+                                                            <option value="never" {!! ($oRefMultipleCoupon->expiry == 'never') ? 'selected = "selected"' : '' !!} >Never(Recommended)</option>
+                                                            <option value="6" {!! ($oRefMultipleCoupon->expiry == '6') ? 'selected = "selected"' : '' !!}>6 Months</option>
+                                                            <option value="5" {!! ($oRefMultipleCoupon->expiry == '5') ? 'selected = "selected"' : '' !!}>5 Months</option>
+                                                            <option value="4" {!! ($oRefMultipleCoupon->expiry == '4') ? 'selected = "selected"' : '' !!}>4 Months</option>
+                                                            <option value="3" {!! ($oRefMultipleCoupon->expiry == '3') ? 'selected = "selected"' : '' !!}>3 Months</option>
+                                                            <option value="2" {!! ($oRefMultipleCoupon->expiry == '2') ? 'selected = "selected"' : '' !!}>2 Months</option>
+                                                            <option value="1" {!! ($oRefMultipleCoupon->expiry == '1') ? 'selected = "selected"' : '' !!}>1 Months</option>
+                                                            <option value="specific-date" {!! ($oRefMultipleCoupon->expiry == 'specific-date') ? 'selected = "selected"' : '' !!}>Specific Date</option>
 
                                                         </select>
 
@@ -705,7 +703,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                                 <div class="form-group">
                                                     <label class="control-label">&nbsp;</label>
                                                     <div class="">
-                                                        <input type="text" name="specific_expiry_picker" class="form-control daterange-single" id="ref_specific_expiry_picker" value="<?php echo ($oRefMultipleCoupon->expiry_specific_date) ? $oRefMultipleCoupon->expiry_specific_date : ''; ?>" style="<?php echo ($oRefMultipleCoupon->expiry == 'specific-date') ? 'display:block;' : 'display:none;'; ?>"/>
+                                                        <input type="text" name="specific_expiry_picker" class="form-control daterange-single" id="ref_specific_expiry_picker" value="{{ ($oRefMultipleCoupon->expiry_specific_date) ? $oRefMultipleCoupon->expiry_specific_date : '' }}" style="{{ ($oRefMultipleCoupon->expiry == 'specific-date') ? 'display:block;' : 'display:none;' }}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -714,7 +712,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                                     <label class="control-label">&nbsp;</label>
                                                     <div>
                                                         <input type="hidden" name="couponType" value="referred_multiple_coupons" />
-                                                        <input type="hidden" name="rewardID" value="<?php echo $oSettings->rewardID; ?>" />
+                                                        <input type="hidden" name="rewardID" value="{{ $oSettings->rewardID }}" />
                                                         <button type="submit" style="display: none;" class="btn dark_btn ml20 bkg_dgreen multipalReferredCodesSubmit"><span>Save Changes</span> </button>
 
                                                     </div>
@@ -737,7 +735,7 @@ if ($oSettings->ref_coupon_id > 0) {
                             </div>
 
 
-                            <div class="referred_desc" id="referred-promo-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->promo_id > 0) ? 'display:block;' : 'display:none;' ?>">
+                            <div class="referred_desc" id="referred-promo-new" style="margin-left:10px;margin-top:15px;{{ ($oSettings->promo_id > 0) ? 'display:block;' : 'display:none;' }}">
                                 <form name="frmReferredPromo" id="frmReferredPromo" method="post" data-container-id="referred-friend-gift" >
 									@csrf
                                     <div class="col-md-3">
@@ -745,7 +743,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                             <label class="control-label">Promo link</label>
                                             <div class="">
 
-                                                <input type="text" name="referred_promo_link" class="form-control" value="<?php echo (!empty($oSettings->link_url)) ? $oSettings->link_url : ''; ?>" placeholder="e.g. http://yourstore.com/discount/link" required="required" >
+                                                <input type="text" name="referred_promo_link" class="form-control" value="{{ (!empty($oSettings->link_url)) ? $oSettings->link_url : '' }}" placeholder="e.g. http://yourstore.com/discount/link" required="required" >
                                             </div>
                                         </div>
                                     </div>
@@ -754,7 +752,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                             <label class="control-label">Give friends</label>
                                             <div class="">
 
-                                                <input type="text" name="referred_promo_desc" class="form-control" value="<?php echo (!empty($oSettings->link_desc)) ? $oSettings->link_desc : ''; ?>" placeholder="e.g. 20% off" required="required" >
+                                                <input type="text" name="referred_promo_desc" class="form-control" value="{{ (!empty($oSettings->link_desc)) ? $oSettings->link_desc : '' }}" placeholder="e.g. 20% off" required="required" >
                                             </div>
                                         </div>
                                     </div>
@@ -763,14 +761,14 @@ if ($oSettings->ref_coupon_id > 0) {
                                             <label class="control-label">Link Expiry</label>
                                             <div class="">
                                                 <select class="form-control" id="promo_expiry" name="promo_expiry">
-                                                    <option value="never" <?php echo ($oSettings->expiry == 'never') ? 'selected = "selected"' : ''; ?> >Never(Recommended)</option>
-                                                    <option value="6" <?php echo ($oSettings->expiry == '6') ? 'selected = "selected"' : ''; ?>>6 Months</option>
-                                                    <option value="5" <?php echo ($oSettings->expiry == '5') ? 'selected = "selected"' : ''; ?>>5 Months</option>
-                                                    <option value="4" <?php echo ($oSettings->expiry == '4') ? 'selected = "selected"' : ''; ?>>4 Months</option>
-                                                    <option value="3" <?php echo ($oSettings->expiry == '3') ? 'selected = "selected"' : ''; ?>>3 Months</option>
-                                                    <option value="2" <?php echo ($oSettings->expiry == '2') ? 'selected = "selected"' : ''; ?>>2 Months</option>
-                                                    <option value="1" <?php echo ($oSettings->expiry == '1') ? 'selected = "selected"' : ''; ?>>1 Months</option>
-                                                    <option value="specific-date" <?php echo ($oSettings->expiry == 'specific-date') ? 'selected = "selected"' : ''; ?>>Specific Date</option>
+                                                    <option value="never" {!! ($oSettings->expiry == 'never') ? 'selected = "selected"' : '' !!} >Never(Recommended)</option>
+                                                    <option value="6" {!! ($oSettings->expiry == '6') ? 'selected = "selected"' : '' !!}>6 Months</option>
+                                                    <option value="5" {!! ($oSettings->expiry == '5') ? 'selected = "selected"' : '' !!}>5 Months</option>
+                                                    <option value="4" {!! ($oSettings->expiry == '4') ? 'selected = "selected"' : '' !!}>4 Months</option>
+                                                    <option value="3" {!! ($oSettings->expiry == '3') ? 'selected = "selected"' : '' !!}>3 Months</option>
+                                                    <option value="2" {!! ($oSettings->expiry == '2') ? 'selected = "selected"' : '' !!}>2 Months</option>
+                                                    <option value="1" {!! ($oSettings->expiry == '1') ? 'selected = "selected"' : '' !!}>1 Months</option>
+                                                    <option value="specific-date" {!! ($oSettings->expiry == 'specific-date') ? 'selected = "selected"' : '' !!}>Specific Date</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -780,7 +778,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                             <label class="control-label">&nbsp;</label>
                                             <div>
                                                 <input type="hidden" name="rewardType" value="referred_promo" />
-                                                <input type="hidden" name="rewardID" value="<?php echo $oSettings->rewardID; ?>" />
+                                                <input type="hidden" name="rewardID" value="{{ $oSettings->rewardID }}" />
                                                 <button type="button" class="btn white_btn"><span>Cancel</span> </button>
                                                 <button type="submit" class="btn dark_btn ml20 bkg_dgreen"><span>Save Changes</span> </button>
 
@@ -790,7 +788,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                 </form>
                             </div>
 
-                            <div class="referred_desc" id="referred-no-discount-new" style="margin-left:10px;margin-top:15px;<?php echo ($oSettings->no_discount == 'yes') ? 'display:block;' : 'display:none;' ?>">
+                            <div class="referred_desc" id="referred-no-discount-new" style="margin-left:10px;margin-top:15px;{{ ($oSettings->no_discount == 'yes') ? 'display:block;' : 'display:none;' }}">
                                 <form name="frmReferredNoDiscount" id="frmReferredNoDiscount" method="post" data-container-id="referred-friend-gift" >
 									@csrf
                                     <div class="col-md-3">
@@ -804,7 +802,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                             <label class="control-label">Reward Message</label>
                                             <div class="">
 
-                                                <input type="text" name="referred_no_discount" class="form-control" value="<?php echo (!empty($oSettings->reward_title)) ? $oSettings->reward_title : 'a free gift'; ?>" placeholder="e.g. a free gift" required="required" >
+                                                <input type="text" name="referred_no_discount" class="form-control" value="{{ (!empty($oSettings->reward_title)) ? $oSettings->reward_title : 'a free gift' }}" placeholder="e.g. a free gift" required="required" >
                                             </div>
                                         </div>
                                     </div>
@@ -813,7 +811,7 @@ if ($oSettings->ref_coupon_id > 0) {
                                             <label class="control-label">&nbsp;</label>
                                             <div>
                                                 <input type="hidden" name="rewardType" value="referred_no_discount" />
-                                                <input type="hidden" name="rewardID" value="<?php echo $oSettings->rewardID; ?>" />
+                                                <input type="hidden" name="rewardID" value="{{ $oSettings->rewardID }}" />
                                                 <button type="button" class="btn white_btn"><span>Cancel</span> </button>
                                                 <button type="submit" class="btn dark_btn ml20 bkg_dgreen"><span>Save Changes</span> </button>
 
@@ -843,7 +841,7 @@ if ($oSettings->ref_coupon_id > 0) {
             </div>
         </div>
         <div class="row">
-            <input type="hidden" name="refId" id="refId" value="<?php echo $moduleUnitID; ?>">
+            <input type="hidden" name="refId" id="refId" value="{{ $moduleUnitID }}">
             <div class="col-md-6"><button class="btn btn_white bkg_white h52 txt_dark minw_140 shadow br5 backPage"><i class="icon-arrow-left12 mr20"></i> Back</button></div>
             <div class="col-md-6 text-right"><button class="btn dark_btn bkg_dgreen2 h52 minw_160 continueWorkflow">Next step <i class="icon-arrow-right13 ml20"></i></button></div>
         </div>
@@ -865,8 +863,8 @@ if ($oSettings->ref_coupon_id > 0) {
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
 						@csrf
-                        <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
-                        <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
+                        <input type="hidden" name="userid" value="{{ $userID }}" />
+                        <input type="hidden" name="bbaid" value="{{ $oSettings->hashcode }}" />
                         <div class="col-md-12">
 
                             <div class="form-group">
@@ -917,13 +915,13 @@ $(document).ready(function(){
 	$(document).on("click", ".continueWorkflow", function () {
 		$('.overlaynew').show();
 		var refId = $("#refId").val();
-		window.location.href = '<?php echo base_url('/admin/modules/referral/workflow/'); ?>'+refId;
+		window.location.href = "{{ base_url('/admin/modules/referral/workflow/') }}"+refId;
 	});
 	
 	$(document).on("click", ".backPage", function () {
 		$('.overlaynew').show();
 		var refId = $("#refId").val();
-		window.location.href = '<?php echo base_url('/admin/modules/referral/setup/'); ?>'+refId;
+		window.location.href = "{{ base_url('/admin/modules/referral/setup/') }}"+refId;
 	});
 	
 	$(document).on('click', '.advocateGift', function() {
@@ -938,26 +936,23 @@ $(document).ready(function(){
 
         var status = $(this).attr('status');
         $.ajax({
-            url: '<?php echo base_url('admin/modules/referral/publishReferralStatus'); ?>',
+            url: "{{ base_url('admin/modules/referral/publishReferralStatus') }}",
             type: "POST",
-            data: {'ref_id': '<?php echo $moduleUnitID; ?>', 'status':status, _token: '{{csrf_token()}}'},
+            data: {'ref_id': '{{ $moduleUnitID }}', 'status':status, _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
                     if(status == 'active') {
-                        
                         displayMessagePopup('success', 'Campaign pushlished successfully');
                     }
                     else {
-                         displayMessagePopup('success', 'Campaign saved as draft successfully');
+                        displayMessagePopup('success', 'Campaign saved as draft successfully');
                     }
-                    
                 } else {
                     alertMessage('Error: Some thing wrong!');
                 }
             }
         });
-        
     });
 	
 	$(document).on('click', '.friendGift', function() {
@@ -1017,7 +1012,7 @@ $(document).ready(function(){
 	$(document).on("click", ".continueWorkflow", function () {
 		$('.overlaynew').show();
 		var refId = $("#refId").val();
-		window.location.href = '<?php echo base_url('/admin/modules/referral/workflow/'); ?>'+refId;
+		window.location.href = "{{ base_url('/admin/modules/referral/workflow/') }}"+refId;
 	});
 	
 	$("#frmInviteCustomer").submit(function () {
@@ -1025,7 +1020,7 @@ $(document).ready(function(){
 		var formData = new FormData($(this)[0]);
 		$('#btnInvite').prop("disabled", true);
 		$.ajax({
-			url: '<?php echo base_url('admin/modules/referral/registerInvite'); ?>',
+			url: "{{ base_url('admin/modules/referral/registerInvite') }}",
 			type: "POST",
 			data: formData,
 			contentType: false,
@@ -1131,7 +1126,7 @@ $(document).ready(function(){
 		var elem = $(this);
 		$('.overlaynew').show();
 		$.ajax({
-			url: '<?php echo base_url('admin/modules/referral/saveRewards'); ?>',
+			url: "{{ base_url('admin/modules/referral/saveRewards') }}",
 			type: "POST",
 			data: formdata,
 			dataType: "json",
@@ -1160,7 +1155,7 @@ $(document).ready(function(){
 		var formdata = $(this).serialize();
 		var elem = $(this);
 		$.ajax({
-			url: '<?php echo base_url('admin/modules/referral/saveCoupons'); ?>',
+			url: "{{ base_url('admin/modules/referral/saveCoupons') }}",
 			type: "POST",
 			data: formdata,
 			dataType: "json",
