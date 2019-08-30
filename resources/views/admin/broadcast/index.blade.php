@@ -239,14 +239,14 @@ $newOpen = $newClick = 0;
                                             <th><i class=""><img src="{{ base_url() }}assets/images/icon_view.png"></i><?php echo (strtolower($campaignType) == 'email') ? 'Opens' : 'Delivered'; ?></th>
                                             <th><i class=""><img src="{{ base_url() }}assets/images/icon_click_10.png"></i>@php echo (strtolower($campaignType) == 'email') ? 'Clicked' : 'Queued'; @endphp</th>
                                             <th><i class=""><img src="{{ base_url() }} assets/images/icon_click_10.png"></i>Sending Method</th>
-                                            <th class="text-right"><i><img src="<?php echo base_url(); ?>assets/images/icon_date.png"></i>Created</th>
+                                            <th class="text-right"><i><img src="{{ base_url() }}assets/images/icon_date.png"></i>Created</th>
                                             <th class=""><i class="fa fa-dot-circle-o"></i>Status</th>
                                             <th class="text-center" ><i class="fa fa-dot-circle-o"></i>Action</th>
                                             <th style="display:none;">status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
+                                        @php
                                         foreach ($oBroadcast as $broadCastData) {
                                             $aDeliveryParam = json_decode($broadCastData->data);
                                             $deliveryDate = $aDeliveryParam->delivery_date;
@@ -332,11 +332,11 @@ $newOpen = $newClick = 0;
                                                     $totalClickGraph = $click * 100 / $totalSent;
                                                     $totalClickGraph = ceil($totalClickGraph);
                                                 }
-                                                ?>
+                                                @endphp
                                                 <tr id="append-<?php echo $broadCastData->broadcast_id; ?>" class="selectedClass">
-                                                    <td style="display: none;"><?php echo date('m/d/Y', strtotime($broadCastData->created)); ?></td>
-                                                    <td style="display: none;"><?php echo $broadCastData->broadcast_id; ?></td>
-                                                    <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $broadCastData->broadcast_id; ?>" value="<?php echo $broadCastData->broadcast_id; ?>" ><span class="custmo_checkmark"></span></label></td>
+                                                    <td style="display: none;"><?php {{ date('m/d/Y', strtotime($broadCastData->created)) }}</td>
+                                                    <td style="display: none;">{{ $broadCastData->broadcast_id }}</td>
+                                                    <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php {{ $broadCastData->broadcast_id }} ?>" value="<?php {{ $broadCastData->broadcast_id }} " ><span class="custmo_checkmark"></span></label></td>
                                                     <td>
                                                         <div class="media-left media-middle pl-5"> <a class="icons br5" href="#"><img src="<?php echo base_url(); ?>assets/images/<?php echo (strtolower($broadCastData->campaign_type) == 'email') ? 'icon_massages.png' : 'icon_sms_24.png'; ?>" class="img-circle img-xs br5" alt=""></a> </div>
                                                         <div class="media-left">
