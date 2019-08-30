@@ -4,12 +4,12 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>BrandBoost::<?php echo (!empty($oNPS->brand_name)) ? $oNPS->brand_name : '{{BRANDNAME}}'; ?></title>
+        <title>BrandBoost::{{ (!empty($oNPS->brand_name)) ? $oNPS->brand_name : '{{BRANDNAME}}' }}</title>
         <link rel="icon" href="assets/images/icon.ico" sizes="16x16" type="image/ico">
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/core/libraries/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ base_url() }}assets/js/core/libraries/jquery.min.js"></script>
         <!-- Global stylesheets -->
-        <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-        <link href="<?php echo base_url(); ?>assets/css/profile.css" rel="stylesheet" type="text/css">
+        <link href="{{ base_url() }}assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="{{ base_url() }}assets/css/profile.css" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
     </head>
     <body>
@@ -18,7 +18,7 @@
             <div class="profile_header_bkg"></div>
             <div class="page_header">
                 <div class="row">
-                    <div class="col-md-6"><a class="logo" href="<?php echo base_url(); ?>"><img src="<?php echo base_url('profile_images/logo_icon.png'); ?>" alt="">BrandBoost</a> </div>
+                    <div class="col-md-6"><a class="logo" href="{{ base_url() }}"><img src="{{ base_url('profile_images/logo_icon.png') }}" alt="">BrandBoost</a> </div>
                 </div>
             </div>
             <!--======================profile_header=======================-->
@@ -30,21 +30,21 @@
 
                             <div class="p25 bbot">
                                 <div class="profile_avatar"> 
-                                    <?php if (!empty($oNPS->brand_logo)): ?>
-                                        <img src="https://s3-us-west-2.amazonaws.com/brandboost.io/<?php echo $oNPS->brand_logo; ?>"/> 
-                                    <?php else: ?>
-                                        <img src="<?php echo base_url(); ?>assets/images/face2.jpg"/>
-                                    <?php endif; ?>    
+                                    @if (!empty($oNPS->brand_logo))
+                                        <img src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $oNPS->brand_logo }}"/> 
+                                    @else
+                                        <img src="{{ base_url() }}assets/images/face2.jpg"/>
+                                    @endif   
 
 
                                 </div>
-                                <h3><?php echo (!empty($oNPS->brand_name)) ? $oNPS->brand_name : '{{BRANDNAME}}'; ?></h3>
-                                <p><?php echo (!empty($oNPS->description)) ? $oNPS->description : '{INTRODUCTION}'; ?></p>
+                                <h3>{{ (!empty($oNPS->brand_name)) ? $oNPS->brand_name : '{{BRANDNAME}}' }}</h3>
+                                <p>{{ (!empty($oNPS->description)) ? $oNPS->description : '{INTRODUCTION}' }}</p>
                             </div>
                             <div class="p15">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h3>Tell us why do you want to score <?php echo ($score) ? $score : 0; ?> </h3>
+                                        <h3>Tell us why do you want to score {{ ($score) ? $score : 0 }} </h3>
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
 
                                     <div class="form-group mb0">
                                         <div class=" text-right">
-                                            <input type="hidden" name="response_id" value="<?php echo $responseID; ?>" />
+                                            <input type="hidden" name="response_id" value="{{ $responseID }}" />
                                             <button type="submit" name="btnSubmit" class="btn bkg_blue txt_white">Submit</button>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-md-12 text-right"><p>Powered by <a href="<?php echo base_url(); ?>">Brandboost</a></p></div>
+                    <div class="col-md-12 text-right"><p>Powered by <a href="{{ base_url() }}">Brandboost</a></p></div>
                 </div>
             </div>
         </div>
@@ -85,9 +85,8 @@
         $(document).ready(function () {
             $("#frmSubmitFeedback").submit(function () {
                 var formData = new FormData($(this)[0]);
-                //$('.overlaynew').show();
                 $.ajax({
-                    url: '<?php echo base_url('nps/saveFeedback'); ?>',
+                    url: "{{ base_url('nps/saveFeedback') }}",
                     type: "POST",
                     data: formData,
                     contentType: false,
@@ -95,13 +94,11 @@
                     processData: false,
                     dataType: "json",
                     success: function (data) {
-                        //$('.overlaynew').hide();
                         if (data.status == 'success') {
                             $('#feedbackTitle').val('');
                             $('#feedbackDesc').val('');
                             $("#sucessMsg").html("Thank you for your feedback!!");
                         } else {
-                            //$('.overlaynew').hide();
                             alert("something went wrong");
                         }
                     }

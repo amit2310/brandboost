@@ -28,7 +28,7 @@
 	<!--&&&&&&&&&&&& TABBED CONTENT START &&&&&&&&&&-->
 	 <div class="tab-content"> 
 	  <!--===========TAB 1===========-->
-	  <div class="tab-pane active" id="right-icon-tab0">
+	  <div class="tab-pane active">
 	  
 		<!--====Top Section Graph====-->
 		<div class="row">
@@ -410,6 +410,7 @@
 						</tbody>
 					</table>
 				</div>
+			
 			</div>
 		  </div>
 		</div>

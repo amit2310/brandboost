@@ -391,7 +391,7 @@ if (!empty($oPrograms)) {
                                                     </div>
 
                                                 </td>
-                                                <td>{{ $lastListTime }} </td>
+                                                <td>{!! $lastListTime !!} </td>
 												<td>														
                                                     <div class="media-left">
                                                         <div class=""><span class="text-default text-semibold">{{ dataFormat($oProgram->created) }}</span></div>
