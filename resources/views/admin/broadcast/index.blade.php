@@ -555,28 +555,28 @@ $newOpen = $newClick = 0;
                                                                     if ($queued > 0) {
                                                                         @endphp
                                                                         <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; ?>/@php echo $broadCastData->broadcast_id; @endphp?type=queued" class="text-default text-semibold">{{ $queued }}</a>
-                                                                        <?php
+                                                                        @php
                                                                     } else {
-                                                                        ?>
-                                                                        <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $click; ?></a>
-                                                                    <?php }
-                                                                    ?>
-                                                                    <?php if ($newQueue > 0): ?>    
-                                                                        <?php echo '<span style="color:#FF0000;"> (' . $newQueue . ' new)</span>'; ?>    
-                                                                    <?php endif; ?>    
+                                                                        @endphp
+                                                                        <a href="javascript:void(0);" class="text-default text-semibold">{{ $click }}</a>
+                                                                    @php }
+                                                                    @endphp
+                                                                    @php if ($newQueue > 0): @endphp    
+                                                                        @php echo '<span style="color:#FF0000;"> (' . $newQueue . ' new)</span>'; @endphp    
+                                                                    @php endif; @endphp    
 
                                                                 </div>
                                                             </div>
 
                                                         </td>
-                                                    <?php endif; ?>
+                                                    @php endif; @endphp
                                                     <td class="text-center">
-                                                        <a href="<?php echo base_url(); ?>admin/broadcast/report/<?php echo $broadCastData->broadcast_id; ?>">
-                                                            <?php echo ($broadCastData->sending_method == 'split') ? 'Split(' . $totalVariations . ' Variations)' : 'Normal'; ?>
+                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/report/@php echo $broadCastData->broadcast_id; @endphp">
+                                                            @php echo ($broadCastData->sending_method == 'split') ? 'Split(' . $totalVariations . ' Variations)' : 'Normal'; @endphp
                                                         </a>    
                                                     </td>
                                                     <td class="text-right"><div class="media-left text-right pull-right">
-                                                            <div class=""><a href="#" class="text-default text-semibold"><?php echo dataFormat($broadCastData->created); ?> <span class="txt_grey"><?php echo dataFormatHours($broadCastData->created); ?></span></a> </div>
+                                                            <div class=""><a href="#" class="text-default text-semibold">@php echo dataFormat($broadCastData->created); @endphp <span class="txt_grey">{{ dataFormatHours($broadCastData->created) }}</span></a> </div>
                                                         </div></td>
                                                         <!-- <td>
                                                     <?php
@@ -602,7 +602,7 @@ $newOpen = $newClick = 0;
 
 
                                                     <td class="">
-                                                        <?php
+                                                        @php
                                                         if ($broadCastData->bc_status == 'active') {
                                                             if ($bExpired == true) {
                                                                 echo '<i class="icon-primitive-dot txt_grey3 fsize16"></i> ';
@@ -612,9 +612,9 @@ $newOpen = $newClick = 0;
                                                         } else {
                                                             echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
                                                         }
-                                                        ?>
+                                                        @endphp
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                                            <?php
+                                                            @php
                                                             if ($broadCastData->bc_status == 'active') {
                                                                 if ($bExpired == true) {
                                                                     echo 'Expired';
@@ -627,7 +627,7 @@ $newOpen = $newClick = 0;
                                                                 //echo 'Inactive';
                                                                 echo ucfirst($broadCastData->bc_status);
                                                             }
-                                                            ?>
+                                                            @endphp
 
                                                         </a>
                                                         <ul class="dropdown-menu dropdown-menu-right status">
@@ -651,7 +651,7 @@ $newOpen = $newClick = 0;
                                                     </td>
 
                                                     <td style="display:none;">
-                                                        <?php
+                                                        @php
                                                         if ($broadCastData->bc_status == 'archive') {
                                                             echo 'archive';
                                                         } else if ($broadCastData->bc_status == 'draft') {
@@ -663,14 +663,14 @@ $newOpen = $newClick = 0;
                                                                 echo 'active';
                                                             }
                                                         }
-                                                        ?>
+                                                        @endphp
                                                     </td>
 
                                                 </tr>
-                                                <?php
+                                                @php
                                             }
                                         }
-                                        ?>
+                                        @endphp
                                     </tbody>
                                 </table>
                             </div>
