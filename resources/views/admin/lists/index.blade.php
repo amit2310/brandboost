@@ -337,33 +337,33 @@
 
                                                     <td>
                                                         <div class="media-left">
-                                                            <div class="pt-5"><a href="#" class="text-default text-semibold"><?php //echo date('d M Y', strtotime($oList->list_created));      ?><?php echo dataFormat($oList->list_created); ?></a></div>
-                                                            <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oList->list_created)); ?></div>
+                                                            <div class="pt-5"><a href="#" class="text-default text-semibold"> {{ dataFormat($oList->list_created) }}</a></div>
+                                                            <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oList->list_created))}} </div>
                                                         </div>
 
                                                     </td>
 
 
-                                                    <?php if ($uRole == 1) { ?>
+                                                    @php if ($uRole == 1) { @endphp
                                                         <td>
-                                                            <div class="media-left media-middle"> <a class="icons" href="#"><img src="<?php echo base_url(); ?>images/cust1.png" class="img-circle img-xs" alt=""></a> </div>
+                                                            <div class="media-left media-middle"> <a class="icons" href="#"><img src="{{ base_url() }}images/cust1.png" class="img-circle img-xs" alt=""></a> </div>
                                                             <div class="media-left">
-                                                                <div class="pt-5"><a href="#" list_id="<?php echo $oList->id; ?>" class="text-default text-semibold editlist"><span><?php echo $oList->lCreateUsername; ?></span> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/ao.png"></a></div>
-                                                                <div class="text-muted text-size-small"><?php echo $oList->cEmail; ?></div>
-                                                                <div class="text-muted text-size-small"><?php echo $oList->cMobile; ?></div>
+                                                                <div class="pt-5"><a href="#" list_id="<?php echo $oList->id; ?>" class="text-default text-semibold editlist"><span>{{ $oList->lCreateUsername}}</span> <img class="flags" src="{{ base_url()}}assets/images/flags/ao.png"></a></div>
+                                                                <div class="text-muted text-size-small">{{ $oList->cEmai }}</div>
+                                                                <div class="text-muted text-size-small">{{ $oList->cMobile }}</div>
                                                             </div>
                                                         </td>
-                                                    <?php } else { ?>
+                                                    @php } else { @endphp
                                                         <td style="display: none;"></td>
-                                                    <?php } ?>
+                                                    @php } @endphp
 
                                                     <td>
-                                                        <?php
+                                                        @php
                                                         $addPC = '';
                                                         if ($totalEmailGraph > 50) {
                                                             $addPC = 'over50';
                                                         }
-                                                        ?>
+                                                        @endphp
                                                         <div class="media-left">
                                                             <div class="progress-circle <?php echo $addPC; ?> green cp<?php echo $totalEmailGraph; ?>">
                                                                 <div class="left-half-clipper">
