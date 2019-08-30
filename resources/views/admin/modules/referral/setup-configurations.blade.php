@@ -194,7 +194,7 @@
                                 <div class="form-group mb0">
                                     <label class="control-label pull-left">Active Campaign</label>
                                     <label class="custom-form-switch pull-right">
-                                        <input class="field autoSave" type="checkbox" name="referralStatus" value="1" {{ echo $oReferral->status == 'active' ? 'checked' : "" }}>
+                                        <input class="field autoSave" type="checkbox" name="referralStatus" value="1" {!! $oReferral->status == 'active' ? 'checked' : "" !!}>
                                         <span class="toggle teal"></span> 
                                     </label>
                                     <div class="clearfix"></div>
