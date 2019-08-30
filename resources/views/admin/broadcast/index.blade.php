@@ -334,13 +334,13 @@ $newOpen = $newClick = 0;
                                                 }
                                                 @endphp
                                                 <tr id="append-<?php echo $broadCastData->broadcast_id; ?>" class="selectedClass">
-                                                    <td style="display: none;"><?php {{ date('m/d/Y', strtotime($broadCastData->created)) }}</td>
+                                                    <td style="display: none;">{{ date('m/d/Y', strtotime($broadCastData->created)) }}</td>
                                                     <td style="display: none;">{{ $broadCastData->broadcast_id }}</td>
-                                                    <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php {{ $broadCastData->broadcast_id }} ?>" value="<?php {{ $broadCastData->broadcast_id }} " ><span class="custmo_checkmark"></span></label></td>
+                                                    <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk {{ $broadCastData->broadcast_id }} ?>" value="{{ $broadCastData->broadcast_id }} " ><span class="custmo_checkmark"></span></label></td>
                                                     <td>
-                                                        <div class="media-left media-middle pl-5"> <a class="icons br5" href="#"><img src="<?php echo base_url(); ?>assets/images/<?php echo (strtolower($broadCastData->campaign_type) == 'email') ? 'icon_massages.png' : 'icon_sms_24.png'; ?>" class="img-circle img-xs br5" alt=""></a> </div>
+                                                        <div class="media-left media-middle pl-5"> <a class="icons br5" href="#"><img src="{{ base_url() }}assets/images/@php echo (strtolower($broadCastData->campaign_type) == 'email') ? 'icon_massages.png' : 'icon_sms_24.png'; @endphp" class="img-circle img-xs br5" alt=""></a> </div>
                                                         <div class="media-left">
-                                                            <div class=""><a href="<?php echo base_url('admin/broadcast/edit/' . $broadCastData->broadcast_id); ?>" broadcast_id="<?php echo $broadCastData->broadcast_id; ?>" broadcast_title="<?php echo $broadCastData->title; ?>" broadcast_des="<?php echo $broadCastData->description; ?>" class="text-default text-semibold"><?php echo setStringLimit($broadCastData->title, 20); ?></a></div>
+                                                            <div class=""><a href="@php echo base_url('admin/broadcast/edit/' . $broadCastData->broadcast_id); @endphp" broadcast_id="{{ $broadCastData->broadcast_id }}" broadcast_title="{{ $broadCastData->title }}" broadcast_des="{{ $broadCastData->description }}" class="text-default text-semibold">{{ setStringLimit($broadCastData->title, 20) }}</a></div>
                                                             <div class="text-muted text-size-small">
                                                                 <?php echo setStringLimit($broadCastData->description, 25); ?>
                                                             </div>
