@@ -1,13 +1,13 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
 
-<?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign'); ?>
-<?php
+@php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign') @endphp
+@php
 $iActiveCount = $iArchiveCount = 0;
 
 if (!empty($aBrandbosts)) {
@@ -20,7 +20,7 @@ if (!empty($aBrandbosts)) {
     }
 }
 error_reporting(0);
-?>
+@endphp
 
 <!-- Content area -->
 <div class="content">
@@ -30,30 +30,24 @@ error_reporting(0);
     <div class="page_header">
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
-            <?php 
-                if($viewstats == true){
-                    ?>
-                     <div class="col-md-3">
-                        <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Overview</h3>
-                        <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="1|0|2">Active Campaigns</a></li>
-                            <li><a style="javascript:void();" class="filterByColumn" fil="3">Archive</a></li>
-                        </ul>
-                    </div>
-                    <?php
-                }
-                else {
-                    ?>
-                     <div class="col-md-3">
-                        <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Review Campaigns</h3>
-                        <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="1|0|2">Active Campaigns</a></li>
-                            <li><a style="javascript:void();" class="filterByColumn" fil="3">Archive</a></li>
-                        </ul>
-                    </div>
-                    <?php
-                }
-            ?>
+            @if($viewstats == true)
+                    
+                <div class="col-md-3">
+                   <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Overview</h3>
+                   <ul class="nav nav-tabs nav-tabs-bottom">
+                       <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="1|0|2">Active Campaigns</a></li>
+                       <li><a style="javascript:void();" class="filterByColumn" fil="3">Archive</a></li>
+                   </ul>
+               </div>
+               @else
+                <div class="col-md-3">
+                   <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Review Campaigns</h3>
+                   <ul class="nav nav-tabs nav-tabs-bottom">
+                       <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="1|0|2">Active Campaigns</a></li>
+                       <li><a style="javascript:void();" class="filterByColumn" fil="3">Archive</a></li>
+                   </ul>
+               </div>
+            @endif
            
             <!--=============Button Area Right Side==============-->
             <div class="col-md-9 text-right btn_area">
@@ -194,27 +188,25 @@ error_reporting(0);
                     </div>
                 </div>
 
-                <?php if ($user_role != 1): ?>
-                    <?php if ($canWrite): ?>
-                        <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription" <?php } else { ?> id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20" <?php } ?> type="button" ><i class="icon-plus3"></i> Add On Site Review Campaign</button>
-                    <?php endif; ?>
-                <?php endif; ?>
+                @if ($user_role != 1)
+                    @if ($canWrite)
+                        <button @if ($bActiveSubsription == false) title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription" @else id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20" @endif type="button" ><i class="icon-plus3"></i> Add On Site Review Campaign</button>
+                    @endif
+                @endif
 
             </div>
         </div>
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
    
-    <?php if (!empty($aBrandbosts)): ?>
+    @if (!empty($aBrandbosts))
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
 
-                <?php 
-                    if($viewstats == true){
-						@include('admin.brandboost.campaign-tabs.onsite.overview_stats');
-                    }
-                ?>
+                @if($viewstats == true)
+                    {{ --@include('admin.brandboost.campaign-tabs.onsite.overview_stats') --}}
+                @endif
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -222,7 +214,7 @@ error_reporting(0);
                         <div class="panel panel-flat">
                             <div class="panel-heading">
                                 <span class="pull-left">
-                                    <h6 class="panel-title"><?php echo $iActiveCount; ?> On Site Review Campaigns</h6>
+                                    <h6 class="panel-title">{{ $iActiveCount }} On Site Review Campaigns</h6>
                                 </span>
                                 <div class="heading_links pull-left">
                                     <a class="top_links btn btn-xs btn_white_table ml20 top_links_all">All</a>
@@ -257,14 +249,14 @@ error_reporting(0);
                                             <th style="display: none;"></th>
                                             <th style="display: none;"></th>
                                             <th style="display: none;" class="nosort editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/star_name.png"/></i>Name</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/star_name.png"/></i>Name</th>
                                             <th><i class="icon-star-full2"></i>Rating</th>
                                             <th><i class="icon-calendar"></i>Created</th>
                                             <th><i class="icon-user"></i> Contacts</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile.png"/></i> Positive</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile2.png"/></i> Neutral</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile3.png"/></i> Negative</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/clock.png"/></i>Last review</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/emoji_smile.png"/></i> Positive</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/emoji_smile2.png"/></i> Neutral</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/emoji_smile3.png"/></i> Negative</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/clock.png"/></i>Last review</th>
                                             <th><i class="icon-diff-modified"></i>Status</th>
                                             <th style="display: none;">status</th>
                                             <th style="display: none;">status</th>
@@ -279,7 +271,7 @@ error_reporting(0);
                                     </thead>
 
                                     <tbody>
-                                        <?php
+                                        @php
                                         $recent = strtotime('-24 hours');
                                         $aUser = getLoggedUser();
                                         $currentUserId = $aUser->id;
@@ -291,10 +283,10 @@ error_reporting(0);
                                             $revCount = getCampaignReviewCount($data->id);
                                             $revRA = getCampaignReviewRA($data->id);
                                             $allSubscribers = \App\Models\Admin\ListsModel::getAllSubscribersList($data->id);
-											
-											$newContacts = 0;
-											$iActiveContactCount = 0;
-											$iArchiveCount = 0;
+
+                                            $newContacts = 0;
+                                            $iActiveContactCount = 0;
+                                            $iArchiveCount = 0;
                                             $subs = '';
                                             if (!empty($allSubscribers)) {
                                                 $subs = $allSubscribers[0];
@@ -323,19 +315,10 @@ error_reporting(0);
                                             $siteRevCount = getCampaignSiteReviewCount($data->id);
 											$siteRevCount = 1;
                                             $siteRevRA = getCampaignSiteReviewRA($data->id);
-											$siteRevRA = 1;
-                                            /*if($data->brand_img == 'b:0;' || $data->brand_img == ''){
-												$imgSrc = base_url('assets/images/default_table_img2.png');
-											}else{
-												$brandImgArray = unserialize($data->brand_img);
-												$brand_img = $brandImgArray[0]['media_url'];
-												if (empty($brand_img)) {
-													$imgSrc = base_url('assets/images/default_table_img2.png');
-												} else {
-													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
-												}
-											}*/
-											$imgSrc = base_url('assets/images/default_table_img2.png');
+                                            
+                                            $siteRevRA = 1;
+
+                                            $imgSrc = base_url('assets/images/default_table_img2.png');
                                            
                                             $reviewRequests = \App\Models\Admin\BrandboostModel::getReviewRequest($data->id, '');
                                             $getSendRequest = count($reviewRequests);
@@ -347,8 +330,8 @@ error_reporting(0);
                                             $reviewResponse = \App\Models\Admin\BrandboostModel::getReviewRequestResponse($data->id);
                                             $getResCount = count($reviewResponse);
 											
-											$getSendRequest = $getSendRequest > 0 ? $getSendRequest : 1;
-											$getResCount = $getResCount > 0 ? $getResCount : 1;
+                                            $getSendRequest = $getSendRequest > 0 ? $getSendRequest : 1;
+                                            $getResCount = $getResCount > 0 ? $getResCount : 1;
                                             
                                             $positiveRating = 0;
                                             $neturalRating = 0;
@@ -378,7 +361,7 @@ error_reporting(0);
                                                         $negativeRating++;
                                                     }
                                                 }
-												$reviewUserData = \App\Models\Admin\UsersModel::getUserInfo($reviewData->user_id);
+                                                $reviewUserData = \App\Models\Admin\UsersModel::getUserInfo($reviewData->user_id);
                                             }
 
                                             $positiveGraph = $positiveRating * 100 / $getResCount;
@@ -388,52 +371,52 @@ error_reporting(0);
                                             $totalGraph = $totalGraph > 100 ? 100 : $totalGraph;
 
                                             
-                                            ?>
+                                            @endphp
 
-                                            <tr id="append-<?php echo $data->id; ?>" class="selectedClass">
-                                                <td style="display: none;"><?php echo date('m/d/Y', strtotime($data->created)); ?></td>
-                                                <td style="display: none;"><?php echo $data->id; ?></td>
-                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $data->id; ?>" value="<?php echo $data->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+                                            <tr id="append-{{ $data->id }}" class="selectedClass">
+                                                <td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
+                                                <td style="display: none;">{{ $data->id }}</td>
+                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $data->id }}" value="{{ $data->id }}" ><span class="custmo_checkmark"></span></label></td>
 
                                                 <td>
                                                     <div class="media-left media-middle">
-                                                        <a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->id); ?>" brandID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>">
-                                                            <img src="<?php echo $imgSrc; ?>" class="img-circle img-xs br5" alt="Img"></a>
+                                                        <a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id) }}" brandID="{{ $data->id }}" b_title="{{ $data->brand_title }}">
+                                                            <img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt="Img"></a>
                                                     </div>
                                                     <div class="media-left">
-                                                        <div class=""><a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->id); ?>" brandID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>" class="text-default text-semibold"><?php echo $data->brand_title; ?></a></div>
+                                                        <div class=""><a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id) }}" brandID="{{ $data->id }}" b_title="{{ $data->brand_title }}" class="text-default text-semibold">{{ $data->brand_title }}</a></div>
                                                         <div class="text-muted text-size-small">
-                                                            <?php echo setStringLimit($data->brand_desc, 28); ?>
+                                                            {!! setStringLimit($data->brand_desc, 28) !!}
                                                         </div>
                                                     </div>
 
                                                 </td>
 
                                                 <td>
-                                                    <?php echo ratingView($revRA); ?>
+                                                    {{ ratingView($revRA) }}
                                                 </td>
                                                 <td>														
                                                     <div class="media-left">
-                                                        <div class=""><span class="text-default text-semibold"><?php echo date('F dS Y', strtotime($data->created)); ?></span></div>
-                                                        <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)); ?></div>
+                                                        <div class=""><span class="text-default text-semibold">{{ date('F dS Y', strtotime($data->created)) }}</span></div>
+                                                        <div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) }}</div>
                                                     </div>
                                                 </td>
 
                                                 <td>
-                                                    <div data-toggle="tooltip" title="Total contacts <?php echo sizeof($allSubscribers); ?>" data-placement="top">
-                                                        <a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->id . '?t=Clients'); ?>"  class="text-default text-semibold"><?php echo sizeof($allSubscribers); ?><?php if($newContacts>0):?><?php echo '<span style="color:#FF0000;"> ('.$newContacts.' new)</span>';?><?php endif;?></a>
+                                                    <div data-toggle="tooltip" title="Total contacts {{ sizeof($allSubscribers) }}" data-placement="top">
+                                                        <a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?t=Clients') }}"  class="text-default text-semibold">{{ sizeof($allSubscribers) }} @if($newContacts>0) {{ '<span style="color:#FF0000;"> ('.$newContacts.' new)</span>' }} @endif </a>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <?php
+                                                    @php
                                                     $positiveGraph = ceil($positiveGraph);
                                                     $addPC = '';
                                                     if ($positiveGraph > 50) {
                                                         $addPC = 'over50';
                                                     }
-                                                    ?>
+                                                    @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addPC; ?> green cp<?php echo $positiveGraph; ?> <?php if ($positiveGraph > 0): ?>createSegment<?php endif; ?>" segment-type="total-positive" campaign-id="<?php echo $data->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addPC }} green cp{{ $positiveGraph }} @if ($positiveGraph > 0) createSegment @endif" segment-type="total-positive" campaign-id="{{ $data->id }}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -441,20 +424,15 @@ error_reporting(0);
                                                         </div>
                                                     </div>
                                                     <div class="media-left">
-                                                        <div data-toggle="tooltip" title="<?php echo $positiveRating; ?> out of <?php echo $getResCount; ?> Responses" data-placement="top">
-                                                            <?php
-                                                            if ($positiveRating > 0) {
-                                                                ?>
-                                                                <a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->id . '?cate=positive'); ?>" class="text-default text-semibold"><?php echo $positiveRating; ?></a>
-                                                                <?php
-                                                            } else {
-                                                                ?>
-                                                                <a href="javascript:void(0);" class="text-default text-semibold"><?php echo $positiveRating; ?></a>
-                                                                <?php }
-                                                            ?>
-                                                            <?php if($newPositive>0): ?>    
-                                                            <?php echo '<span style="color:#FF0000;"> ('.$newPositive.' new)</span>';?>    
-                                                            <?php endif; ?>    
+                                                        <div data-toggle="tooltip" title="{{ $positiveRating }} out of {{ $getResCount }} Responses" data-placement="top">
+                                                            @if ($positiveRating > 0) 
+                                                                <a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?cate=positive') }}" class="text-default text-semibold">{{ $positiveRating }}</a>
+                                                            @else
+                                                                <a href="javascript:void(0);" class="text-default text-semibold">{{ $positiveRating }}</a>
+                                                            @endif
+                                                            @if($newPositive>0)    
+                                                            {{ '<span style="color:#FF0000;"> ('.$newPositive.' new)</span>' }}   
+                                                            @endif    
 
                                                         </div>
                                                     </div>
@@ -462,15 +440,15 @@ error_reporting(0);
                                                 </td>
                                                 <td>
 
-                                                    <?php
+                                                    @php
                                                     $neturalGraph = ceil($neturalGraph);
                                                     $addNUC = '';
                                                     if ($neturalGraph > 50) {
                                                         $addNUC = 'over50';
                                                     }
-                                                    ?>
+                                                    @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addNUC; ?> grey cp<?php echo $neturalGraph; ?> <?php if ($neturalGraph > 0): ?>createSegment<?php endif; ?>" segment-type="total-neutral" campaign-id="<?php echo $data->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addNUC }} grey cp{{ $neturalGraph }} @if ($neturalGraph > 0) createSegment @endif" segment-type="total-neutral" campaign-id="{{ $data->id }}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -478,31 +456,32 @@ error_reporting(0);
                                                         </div>
                                                     </div>
                                                     <div class="media-left">
-                                                        <div data-toggle="tooltip" title="<?php echo $neturalRating; ?> out of <?php echo $getResCount; ?> Response" data-placement="top">
-                                                            <?php if ($neturalRating > 0) {
-                                                                ?><a  href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->id . '?cate=neutral'); ?>" class="text-default text-semibold">
-                                                                <?php echo $neturalRating; ?></a><?php
-                                                                } else {
-                                                                    ?><a href="javascript:void(0);" class="text-default text-semibold"><?php echo $neturalRating; ?></a><?php }
-                                                                ?>
-                                                                    <?php if($newNeutral>0): ?>   
-                                                                <?php echo '<span style="color:#FF0000;"> ('.$newNeutral.' new)</span>';?>    
-                                                                    <?php endif; ?>
+                                                        <div data-toggle="tooltip" title="{{ $neturalRating }} out of {{ $getResCount }} Response" data-placement="top">
+                                                            @if ($neturalRating > 0)
+                                                                <a  href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?cate=neutral') }}" class="text-default text-semibold">
+                                                                {{ $neturalRating }}
+                                                                </a>
+                                                            @else     
+                                                            <a href="javascript:void(0);" class="text-default text-semibold">{{ $neturalRating }}</a>
+                                                            @endif
+                                                            @if($newNeutral>0)
+                                                                {{ '<span style="color:#FF0000;"> ('.$newNeutral.' new)</span>' }}    
+                                                            @endif
                                                         </div>
                                                     </div>
 
                                                 </td>
                                                 <td>
 
-                                                    <?php
+                                                    @php
                                                     $negativeGraph = ceil($negativeGraph);
                                                     $addNEC = '';
                                                     if ($negativeGraph > 50) {
                                                         $addNEC = 'over50';
                                                     }
-                                                    ?>
+                                                    @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addNEC; ?> red cp<?php echo $negativeGraph; ?> <?php if ($negativeGraph > 0): ?>createSegment<?php endif; ?>" segment-type="total-negative" campaign-id="<?php echo $data->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addNEC }} red cp{{ $negativeGraph }} @if ($negativeGraph > 0) createSegment @endif" segment-type="total-negative" campaign-id="{{ $data->id }}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -510,35 +489,35 @@ error_reporting(0);
                                                         </div>
                                                     </div>
                                                     <div class="media-left">
-                                                        <div data-toggle="tooltip" title="<?php echo $negativeRating; ?> out of <?php echo $getResCount; ?> Response" data-placement="top">
-                                                            <?php if ($negativeRating > 0) {
-                                                                ?><a  href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->id . '?cate=negative'); ?>" class="text-default text-semibold">
-                                                                <?php echo $negativeRating; ?></a><?php
-                                                                } else {
-                                                                    ?><a href="javascript:void(0);" class="text-default text-semibold"><?php echo $negativeRating; ?></a><?php }
-                                                                ?>
-                                                                <?php if($newNegative>0): ?>  
-                                                                <?php echo '<span style="color:#FF0000;"> ('.$newNegative.' new)</span>';?>    
-                                                                <?php endif; ?>    
+                                                        <div data-toggle="tooltip" title="{{ $negativeRating }} out of {{ $getResCount }} Response" data-placement="top">
+                                                            @if ($negativeRating > 0) 
+                                                            <a  href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?cate=negative') }}" class="text-default text-semibold">
+                                                                {{ $negativeRating }}</a>
+                                                            @else
+                                                            <a href="javascript:void(0);" class="text-default text-semibold">{{ $negativeRating }}</a>
+                                                            @endif
+                                                            @if($newNegative>0)
+                                                            {{ '<span style="color:#FF0000;"> ('.$newNegative.' new)</span>' }}   
+                                                            @endif  
                                                         </div> 
                                                     </div> 
 
                                                 </td>
                                                 <td>
-                                                    <?php if (sizeof($reviewResponse) < 1) { ?>
-                                                        <?php echo displayNoData(true); ?>
-                                                    <?php } else { ?>
-                                                        <div class="media-left media-middle"> <img src="<?php echo smilyRating($reviewResponse[0]->ratings); ?>" class="img-circle" width="26" alt=""> </div>
+                                                    @if (sizeof($reviewResponse) < 1) 
+                                                        {{ displayNoData(true) }}
+                                                    @else
+                                                        <div class="media-left media-middle"> <img src="{{ smilyRating($reviewResponse[0]->ratings) }}" class="img-circle" width="26" alt=""> </div>
                                                         <div class="media-left">
-                                                            <div class=""><a href="#" class="text-default text-semibold"><?php echo number_format($reviewResponse[0]->ratings, 1); ?> </a> </div>
-                                                            <div class="text-muted text-size-small"><?php echo $reviewUserData->firstname; ?></div>
+                                                            <div class=""><a href="#" class="text-default text-semibold">{{ number_format($reviewResponse[0]->ratings, 1) }} </a> </div>
+                                                            <div class="text-muted text-size-small">{{ $reviewUserData->firstname }}</div>
                                                         </div>
-                                                    <?php } ?>
+                                                    @endif
                                                 </td>
 
                                                 <td>
                                                     <div class="tdropdown">
-                                                        <?php
+                                                        @php
                                                         if ($data->status == 0) {
                                                             echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
                                                         } else if ($data->status == 2) {
@@ -548,19 +527,19 @@ error_reporting(0);
                                                         } else {
                                                             echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
                                                         }
-                                                        ?>
+                                                        @endphp
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                                            <?php
-                                                            if ($data->status == 0) {
-                                                                echo 'Inactive';
-                                                            } else if ($data->status == 2) {
-                                                                echo 'Pending';
-                                                            } else if ($data->status == 3) {
-                                                                echo 'Archive';
-                                                            } else {
-                                                                echo 'Active';
-                                                            }
-                                                            ?>
+                                                        @php
+                                                        if ($data->status == 0) {
+                                                            echo 'Inactive';
+                                                        } else if ($data->status == 2) {
+                                                            echo 'Pending';
+                                                        } else if ($data->status == 3) {
+                                                            echo 'Archive';
+                                                        } else {
+                                                            echo 'Active';
+                                                        }
+                                                        @endphp
 
                                                         </a>
                                                         <ul class="dropdown-menu dropdown-menu-right status">
@@ -570,65 +549,65 @@ error_reporting(0);
                                                 </td>
 
 
-                                                <td style="display: none;"><?php echo $data->status; ?></td>
-                                                <td style="display: none;"><?php echo $data->status; ?></td>
-                                                <td style="display: none;"><?php echo $positiveRating > 0 ? 'positive' : ''; ?></td>
-                                                <td style="display: none;"><?php echo $neturalRating > 0 ? 'neutral' : ''; ?></td>
-                                                <td style="display: none;"><?php echo $negativeRating > 0 ? 'negative' : ''; ?></td>
-                                                <td style="display: none;"><?php
-                                                    echo date('d M y', strtotime($data->created)) === date('d M y') ? 'today' : '';
-                                                            ?></td>
-                                                <td><?php echo $lastListTime; ?></td>
+                                                <td style="display: none;">{{ $data->status }}</td>
+                                                <td style="display: none;">{{ $data->status }}</td>
+                                                <td style="display: none;">{{ $positiveRating > 0 ? 'positive' : '' }}</td>
+                                                <td style="display: none;">{{ $neturalRating > 0 ? 'neutral' : '' }}</td>
+                                                <td style="display: none;">{{ $negativeRating > 0 ? 'negative' : '' }}</td>
+                                                <td style="display: none;">
+                                                     {{ date('d M y', strtotime($data->created)) === date('d M y') ? 'today' : '' }}
+                                                </td>
+                                                <td>{{ $lastListTime }}</td>
                                                 <td class="text-center">
 
-                                                    <?php
+                                                    @php
                                                     if ($user_role != '2') {
                                                         if ($currentUserId == $user_id || $user_role == 1) {
 
                                                             if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
-                                                                ?>
-                                                                <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                                                @endphp
+                                                                <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                                                     <ul class="dropdown-menu dropdown-menu-right more_act">
 
-                                                                        <?php if ($canWrite != FALSE): ?>
-                                                                            <?php if ($data->status == 1) { ?>
-                                                                                <li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="<?php echo $data->id; ?>" status="2"><i class="icon-file-stats"></i> Pause</a></li>
-                                                                            <?php } ?>
-                                                                            <?php if ($data->status == 2) { ?>
-                                                                                <li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="<?php echo $data->id; ?>" status="1"><i class="icon-file-stats"></i> Start</a></li>
-                                                                            <?php } ?>
-                                                                            <li><a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->id); ?>" brandID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
+                                                                        @if ($canWrite != FALSE)
+                                                                            @if ($data->status == 1)
+                                                                                <li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="{{ $data->id }}" status="2"><i class="icon-file-stats"></i> Pause</a></li>
+                                                                            @endif
+                                                                            @if ($data->status == 2)
+                                                                                <li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="{{ $data->id }}" status="1"><i class="icon-file-stats"></i> Start</a></li>
+                                                                            @endif
+                                                                            <li><a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id) }}" brandID="{{ $data->id }}" b_title="{{ $data->brand_title }}" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
                                                                             
-                                                                            <li><a href="javascript:void(0);" class="deleteCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
-                                                                            <li><a href="javascript:void(0);" class="archiveCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-file-text2"></i> Move to Archive</a></li>
-                                                                        <?php endif; ?>
-                                                                        <li><a href="<?php echo base_url('admin/brandboost/stats/onsite/' . $data->id . '?t=contact'); ?>" target="_blank"><i class="icon-gear"></i> Contacts</a></li>
-                                                                        <li><?php $companyName = strtolower(str_replace(' ', '-', $company_name)); ?><a href="<?php echo base_url('for/'.$companyName.'/'); ?><?php echo strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id; ?>" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li> 
-                                                                        <li><a href="<?php echo base_url('admin/brandboost/reviews/' . $data->id); ?>" target="_blank"><i class="icon-menu"></i>Reviews</a></li> <li><a href="<?php echo base_url('admin/questions/view/' . $data->id); ?>" target="_blank"><i class="icon-menu"></i>Question</a></li>
+                                                                            <li><a href="javascript:void(0);" class="deleteCampaign" brandID="{{ $data->id }}"><i class="icon-trash"></i> Delete</a></li>
+                                                                            <li><a href="javascript:void(0);" class="archiveCampaign" brandID="{{ $data->id }}"><i class="icon-file-text2"></i> Move to Archive</a></li>
+                                                                        @endif
+                                                                        <li><a href="{{ base_url('admin/brandboost/stats/onsite/' . $data->id . '?t=contact') }}" target="_blank"><i class="icon-gear"></i> Contacts</a></li>
+                                                                        <li>@php $companyName = strtolower(str_replace(' ', '-', $company_name)) @endphp<a href="{{ base_url('for/'.$companyName.'/') }}{{ strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id }}" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li> 
+                                                                        <li><a href="{{ base_url('admin/brandboost/reviews/' . $data->id) }}" target="_blank"><i class="icon-menu"></i>Reviews</a></li> <li><a href="{{ base_url('admin/questions/view/' . $data->id) }}" target="_blank"><i class="icon-menu"></i>Question</a></li>
                                                                     </ul>
                                                                 </div>
-                                                                <?php
+                                                                @php
                                                             } else {
-                                                                ?>
-                                                                <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                                                @endphp
+                                                                <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                                                     <ul class="dropdown-menu dropdown-menu-right more_act">
-                                                                        <li><a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->id); ?>" brandID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
-                                                                        <li><a href="javascript:void(0);" class="deleteCampaign" brandID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
+                                                                        <li><a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id) }}" brandID="{{ $data->id }}" b_title="{{ $data->brand_title }}" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
+                                                                        <li><a href="javascript:void(0);" class="deleteCampaign" brandID="{{ $data->id }}"><i class="icon-trash"></i> Delete</a></li>
                                                                     </ul>
                                                                 </div>
-																<?php
-															}
-														} else {
-															echo '-';
-														}
-													}
-													?>														
+                                                                                @php
+                                                                        }
+                                                                } else {
+                                                                        echo '-';
+                                                                }
+                                                        }
+                                                        @endphp														
                                                 </td>
                                             </tr>
-											<?php
-											//}
-										} 
-										?>
+                                                @php
+                                                //}
+                                        } 
+                                        @endphp
                                     </tbody>
                                 </table>
                             </div>
@@ -641,103 +620,103 @@ error_reporting(0);
     
         </div>
 
-<?php else: ?>
-    <div class="tab-content">
-        <!--===========TAB 1===========-->
-            <div class="tab-pane active" id="right-icon-tab0">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <!-- Marketing campaigns -->
-                        <div class="panel panel-flat">
-                            <div class="panel-heading">
-                                <span class="pull-left">
-                                    <h6 class="panel-title"><?php echo $iActiveCount; ?> On Site Review Campaigns</h6>
-                                </span>
-                                <div class="heading_links pull-left">
-                                    <a class="top_links btn btn-xs btn_white_table ml20 top_links_all">All</a>
-                                    <a class="top_links top_links_Status" getValue="1" style="cursor: pointer;">Active</a>
-                                    <a class="top_links top_links_Status" getValue="0" style="cursor: pointer;">Inactive</a> 
-                                    <a class="top_links top_links_positive" getValue="positive" style="cursor: pointer;">Positive</a> 
-                                    <a class="top_links top_links_neutral" getValue="neutral" style="cursor: pointer;">Neutral</a> 
-                                    <a class="top_links top_links_negative" getValue="negative" style="cursor: pointer;">Negative</a> 
-                                    <a class="top_links top_links_added_today"  getValue="today" style="cursor: pointer;">Added Today</a>
-                                </div>
-                                <div class="heading-elements">
-                                    <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-                                        <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
-                                        <div class="form-control-feedback">
-                                            <i class="icon-search4"></i>
-                                        </div>
+    @else
+        <div class="tab-content">
+            <!--===========TAB 1===========-->
+                <div class="tab-pane active" id="right-icon-tab0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- Marketing campaigns -->
+                            <div class="panel panel-flat">
+                                <div class="panel-heading">
+                                    <span class="pull-left">
+                                        <h6 class="panel-title">{{ $iActiveCount }} On Site Review Campaigns</h6>
+                                    </span>
+                                    <div class="heading_links pull-left">
+                                        <a class="top_links btn btn-xs btn_white_table ml20 top_links_all">All</a>
+                                        <a class="top_links top_links_Status" getValue="1" style="cursor: pointer;">Active</a>
+                                        <a class="top_links top_links_Status" getValue="0" style="cursor: pointer;">Inactive</a> 
+                                        <a class="top_links top_links_positive" getValue="positive" style="cursor: pointer;">Positive</a> 
+                                        <a class="top_links top_links_neutral" getValue="neutral" style="cursor: pointer;">Neutral</a> 
+                                        <a class="top_links top_links_negative" getValue="negative" style="cursor: pointer;">Negative</a> 
+                                        <a class="top_links top_links_added_today"  getValue="today" style="cursor: pointer;">Added Today</a>
                                     </div>
-                                    <div class="table_action_tool">
-                                        <a href="javascript:void(0);"><i class="icon-calendar52"></i></a>
-                                        <a href="javascript:void(0);" class="editDataList"><i class="icon-pencil"></i></a>
-                                        <button id="deleteButtonBrandboostOnline" class="btn btn-xs custom_action_box"><i class="icon-trash position-left"></i> Delete</button>
-                                        <button id="archiveButtonBrandboostOnline" class="btn btn-xs custom_action_box"><i class="icon-gear position-left"></i> Archive</button>
-                                    </div>              
+                                    <div class="heading-elements">
+                                        <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
+                                            <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
+                                            <div class="form-control-feedback">
+                                                <i class="icon-search4"></i>
+                                            </div>
+                                        </div>
+                                        <div class="table_action_tool">
+                                            <a href="javascript:void(0);"><i class="icon-calendar52"></i></a>
+                                            <a href="javascript:void(0);" class="editDataList"><i class="icon-pencil"></i></a>
+                                            <button id="deleteButtonBrandboostOnline" class="btn btn-xs custom_action_box"><i class="icon-trash position-left"></i> Delete</button>
+                                            <button id="archiveButtonBrandboostOnline" class="btn btn-xs custom_action_box"><i class="icon-gear position-left"></i> Archive</button>
+                                        </div>              
+                                    </div>
+
                                 </div>
 
-                            </div>
+                                <div class="panel-body p0">
+                                    <table class="table datatable-basic">
+                                        <thead>
+                                            <tr>
+                                                <th style="display: none"></th>
+                                                <th style="display: none"></th>
+                                                <th><i class=""><img src="{{ base_url() }}assets/images/star_name.png"/></i>Name</th>
+                                                <th><i class="icon-star-full2"></i>Rating</th>
+                                                <th><i class="icon-calendar"></i>Created</th>
+                                                <th><i class="icon-user"></i> Contacts</th>
+                                                <th><i class=""><img src="{{ base_url() }}assets/images/emoji_smile.png"/></i> Positive</th>
+                                                <th><i class=""><img src="{{ base_url() }}assets/images/emoji_smile2.png"/></i> Neutral</th>
+                                                <th><i class=""><img src="{{ base_url() }}assets/images/emoji_smile3.png"/></i> Negative</th>
+                                                <th><i class=""><img src="{{ base_url() }}assets/images/clock.png"/></i>Last review</th>
+                                                <th><i class="icon-diff-modified"></i>Status</th>
+                                                <th class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
 
-                            <div class="panel-body p0">
-                                <table class="table datatable-basic">
-                                    <thead>
-                                        <tr>
-                                            <th style="display: none"></th>
-                                            <th style="display: none"></th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/star_name.png"/></i>Name</th>
-                                            <th><i class="icon-star-full2"></i>Rating</th>
-                                            <th><i class="icon-calendar"></i>Created</th>
-                                            <th><i class="icon-user"></i> Contacts</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile.png"/></i> Positive</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile2.png"/></i> Neutral</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/emoji_smile3.png"/></i> Negative</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/clock.png"/></i>Last review</th>
-                                            <th><i class="icon-diff-modified"></i>Status</th>
-                                            <th class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
+                                            </tr>
+                                        </thead>
 
-                                        </tr>
-                                    </thead>
+                                        <tbody>
+                                            <td style="display: none"></td>
+                                            <td style="display: none"></td>
+                                            <td colspan="10">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div style="margin: 20px 0px 0;" class="text-center">
+                                                            <h5 class="mb-20 mt40">
+                                                                Looks Like You Don’t Have Any On Site Review Campaign Yet <img src="{{ site_url('assets/images/smiley.png') }}"> <br>
+                                                                Lets Create Your First On Site Review Campaign.
+                                                            </h5>
 
-                                    <tbody>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td colspan="10">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div style="margin: 20px 0px 0;" class="text-center">
-                                                        <h5 class="mb-20 mt40">
-                                                            Looks Like You Don’t Have Any On Site Review Campaign Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
-                                                            Lets Create Your First On Site Review Campaign.
-                                                        </h5>
+                                                            @if ($canWrite)
+                                                                <button @if ($bActiveSubsription == false)  title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" @else id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" @endif type="button" ><i class="icon-plus3"></i> Add On Site Review Campaign</button>
+                                                            @endif
 
-                                                        <?php if ($canWrite): ?>
-                                                            <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add On Site Review Campaign</button>
-                                                        <?php endif; ?>
-
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                    </tbody>
-                                </table>
+                                            </td>
+                                            <td style="display: none"></td>
+                                            <td style="display: none"></td>
+                                            <td style="display: none"></td>
+                                            <td style="display: none"></td>
+                                            <td style="display: none"></td>
+                                            <td style="display: none"></td>
+                                            <td style="display: none"></td>
+                                            <td style="display: none"></td>
+                                            <td style="display: none"></td>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div> 
-    </div>
-    
-<?php endif; ?>
+                </div> 
+        </div>
+
+    @endif
     <!-- /dashboard content -->
 
 </div>
@@ -799,7 +778,7 @@ error_reporting(0);
 </div>
 
 @include('admin.modals.segments.segments-popup')
-<script src="<?php echo base_url(); ?>assets/js/modules/segments/segments.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/js/modules/segments/segments.js" type="text/javascript"></script>
                                                                             
 <!-- /addBrandboost -->
 
@@ -1128,7 +1107,7 @@ error_reporting(0);
 
                     $('.overlaynew').show();
                     $.ajax({
-                        url: "<?php echo base_url('admin/brandboost/delete_multipal_brandboost'); ?>",
+                        url: "{{ base_url('admin/brandboost/delete_multipal_brandboost') }}",
                         type: "POST",
                         data: {multi_brandboost_id: val, _token: '{{csrf_token()}}'},
                         dataType: "json",
@@ -1211,7 +1190,7 @@ error_reporting(0);
 
                     $('.overlaynew').show();
                     $.ajax({
-                        url: "<?php echo base_url('admin/brandboost/delete_multipal_brandboost'); ?>",
+                        url: "{{ base_url('admin/brandboost/delete_multipal_brandboost') }}",
                         type: "POST",
                         data: {multi_brandboost_id: val},
                         dataType: "json",
@@ -1249,7 +1228,7 @@ error_reporting(0);
 
                     $('.overlaynew').show();
                     $.ajax({
-                        url: "<?php echo base_url('admin/brandboost/archive_multipal_brandboost'); ?>",
+                        url: "{{ base_url('admin/brandboost/archive_multipal_brandboost') }}",
                         type: "POST",
                         data: {multi_brandboost_id: val, _token: '{{csrf_token()}}'},
                         dataType: "json",
@@ -1284,7 +1263,7 @@ error_reporting(0);
 
                     $('.overlaynew').show();
                     $.ajax({
-                        url: "<?php echo base_url('admin/brandboost/archive_multipal_brandboost'); ?>",
+                        url: "{{ base_url('admin/brandboost/archive_multipal_brandboost') }}",
                         type: "POST",
                         data: {multi_brandboost_id: val, _token: '{{csrf_token()}}'},
                         dataType: "json",
@@ -1315,14 +1294,14 @@ error_reporting(0);
             var OnsitecampaignDescription = $('#OnsitecampaignDescription').val();
                                                                             
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/addOnsite'); ?>',
+                url: "{{ base_url('admin/brandboost/addOnsite') }}",
                 type: "POST",
                 data: {'campaignName': campaignName,'OnsitecampaignDescription':OnsitecampaignDescription, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url(); ?>admin/brandboost/onsite_setup/' + data.brandboostID;
+                        window.location.href = '{{ base_url() }}admin/brandboost/onsite_setup/' + data.brandboostID;
                     } else {
                         $('.overlaynew').hide();
                         alertMessage('Error: Some thing wrong!');
@@ -1336,13 +1315,13 @@ error_reporting(0);
             var brandboostID = $(this).attr('brandID');
             var status = $(this).attr('status');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/updateOnsiteStatus'); ?>',
+                url: "{{ base_url('admin/brandboost/updateOnsiteStatus') }}",
                 type: "POST",
                 data: {'brandboostID': brandboostID, 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/brandboost/onsite'); ?>';
+                        window.location.href = "{{ base_url('admin/brandboost/onsite') }}";
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -1361,7 +1340,7 @@ error_reporting(0);
                 $('.overlaynew').show();
                 
                 $.ajax({
-                    url: "<?php echo base_url('admin/brandboost/delete_brandboost'); ?>",
+                    url: "{{ base_url('admin/brandboost/delete_brandboost') }}",
                     type: "POST",
                     data: {brandboost_id: brandID, _token: '{{csrf_token()}}'},
                     dataType: "json",
@@ -1383,7 +1362,7 @@ error_reporting(0);
         $(document).on('click', '.viewECode', function () {
             var brandID = $(this).attr('brandID');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/getBBECode'); ?>',
+                url: '{{ base_url('admin/brandboost/getBBECode') }}',
                 type: "POST",
                 data: {brandboost_id: brandID, _token: '{{csrf_token()}}'},
                 dataType: "json",
