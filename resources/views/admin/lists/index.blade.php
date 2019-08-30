@@ -573,7 +573,7 @@
             </div>
         </div>
 
-    <?php endif; ?>
+    @php endif; @endphp
 
 
 </div>
