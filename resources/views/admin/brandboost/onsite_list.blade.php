@@ -205,7 +205,7 @@ error_reporting(0);
             <div class="tab-pane active" id="right-icon-tab0">
 
                 @if($viewstats == true)
-                    {{ --@include('admin.brandboost.campaign-tabs.onsite.overview_stats') --}}
+                    {{--@include('admin.brandboost.campaign-tabs.onsite.overview_stats') --}}
                 @endif
 
                 <div class="row">
@@ -393,7 +393,7 @@ error_reporting(0);
                                                 </td>
 
                                                 <td>
-                                                    {{ ratingView($revRA) }}
+                                                    {!! ratingView($revRA) !!}
                                                 </td>
                                                 <td>														
                                                     <div class="media-left">
@@ -505,7 +505,7 @@ error_reporting(0);
                                                 </td>
                                                 <td>
                                                     @if (sizeof($reviewResponse) < 1) 
-                                                        {{ displayNoData(true) }}
+                                                        {!! displayNoData(true) !!}
                                                     @else
                                                         <div class="media-left media-middle"> <img src="{{ smilyRating($reviewResponse[0]->ratings) }}" class="img-circle" width="26" alt=""> </div>
                                                         <div class="media-left">
@@ -557,7 +557,7 @@ error_reporting(0);
                                                 <td style="display: none;">
                                                      {{ date('d M y', strtotime($data->created)) === date('d M y') ? 'today' : '' }}
                                                 </td>
-                                                <td>{{ $lastListTime }}</td>
+                                                <td>{!! $lastListTime !!}</td>
                                                 <td class="text-center">
 
                                                     @php
