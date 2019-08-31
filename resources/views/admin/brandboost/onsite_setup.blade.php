@@ -1,25 +1,27 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
 
-<?php
-error_reporting(0);
+@php
+
+$oDefaultTemplates = !(empty($oDefaultTemplates)) ? $oDefaultTemplates : array();
+
 $feedbackResponseData = new stdClass();
 
-if(count($feedbackResponse) > 0){
-	$feedbackResponseData = $feedbackResponse;
-}else{
-	$feedbackResponseData = array();
+if (count($feedbackResponse) > 0) {
+    $feedbackResponseData = $feedbackResponse;
+} else {
+    $feedbackResponseData = array();
 }
 
-if(count($bbProductsData) > 0){
-	$productsData = $bbProductsData;
-}else{
-	$productsData = new stdClass();
+if (count($bbProductsData) > 0) {
+    $productsData = $bbProductsData;
+} else {
+    $productsData = new stdClass();
 }
 
 list($canRead, $canWrite) = fetchPermissions('Onsite Campaign');
@@ -36,9 +38,9 @@ $setupClass = '';
 $imageClass = '';
 $videoClass = '';
 
-/*if($_GET['type'] == 'media') {
-    $setTab = 'Image';
-}*/
+/* if($_GET['type'] == 'media') {
+  $setTab = 'Image';
+  } */
 
 if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
     $rs = 'active';
@@ -63,78 +65,69 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 } else {
     $camp = 'active';
 }
-?>
+@endphp
 <div class="content">
-	<!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
-	<div class="page_header">
-	  <div class="row">
-	  <!--=============Headings & Tabs menu==============-->
-		<div class="col-md-7">
-		  <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Campaign: <?php echo ucfirst($brandboostData->brand_title); ?></h3>
-		  <ul class="nav nav-tabs nav-tabs-bottom">
-            <li class="<?php echo $camp; ?>"><a href="#right-icon-tab11" class="tabChange" tabName="Campaign Preferences" data-toggle="tab">Preferences</a></li>
-            <li class="<?php echo $emailWorkflow; ?>"><a href="#right-icon-tab3" class="tabChange" tabName="Email Workflow" data-toggle="tab">Email Workflow</a></li>
-            <li class="<?php echo $campaign; ?>"><a href="#right-icon-tab4" class="tabChange" tabName="Clients" data-toggle="tab">Contacts</a></li>
-            <li class="<?php echo $reviews; ?>"><a href="#right-icon-tab6" class="tabChange" tabName="Reviews" data-toggle="tab">Reviews</a></li>
-			<li class="<?php echo $imageClass; ?>"><a href="#right-icon-tab9" class="tabChange changeMedia" tabName="Image" data-toggle="tab">Media</a></li>
-		  </ul>
-		</div>
-		<!--=============Button Area Right Side==============-->
-		<div class="col-md-5 text-right btn_area">
+    <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
+    <div class="page_header">
+        <div class="row">
+            <!--=============Headings & Tabs menu==============-->
+            <div class="col-md-7">
+                <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Campaign: {{ ucfirst($brandboostData->brand_title) }}</h3>
+                <ul class="nav nav-tabs nav-tabs-bottom">
+                    <li class="{{ $camp }}"><a href="#right-icon-tab11" class="tabChange" tabName="Campaign Preferences" data-toggle="tab">Preferences</a></li>
+                    <li class="{{ $emailWorkflow }}"><a href="#right-icon-tab3" class="tabChange" tabName="Email Workflow" data-toggle="tab">Email Workflow</a></li>
+                    <li class="{{ $campaign }}"><a href="#right-icon-tab4" class="tabChange" tabName="Clients" data-toggle="tab">Contacts</a></li>
+                    <li class="{{ $reviews }}"><a href="#right-icon-tab6" class="tabChange" tabName="Reviews" data-toggle="tab">Reviews</a></li>
+                    <li class="{{ $imageClass }}"><a href="#right-icon-tab9" class="tabChange changeMedia" tabName="Image" data-toggle="tab">Media</a></li>
+                </ul>
+            </div>
+            <!--=============Button Area Right Side==============-->
+            <div class="col-md-5 text-right btn_area">
 
-        <?php 
-        if(!empty($reviews) && $reviews == 'active') {
-            $reviewClass = '';
-        } else {
-            $reviewClass = 'hidden';
-        }
+                @php
+                if (!empty($reviews) && $reviews == 'active') {
+                    $reviewClass = '';
+                } else {
+                    $reviewClass = 'hidden';
+                }
 
-        if( !empty($campaign) && $campaign == 'active') {
-            $clientClass = '';
-        } else {
-            $clientClass = 'hidden';
-        }
-        ?>
+                if (!empty($campaign) && $campaign == 'active') {
+                    $clientClass = '';
+                } else {
+                    $clientClass = 'hidden';
+                }
+                @endphp
 
-        <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn onSiteCampaignStatus" status="2"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
+                <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn onSiteCampaignStatus" status="2"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
 
-        <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn onSiteCampaignStatus" status="1"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
+                <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn onSiteCampaignStatus" status="1"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
 
-        <a class="btn light_btn ml10 reviewShow <?php echo $reviewClass; ?>" href="{{ base_url() }}admin/brandboost/addreview/<?php echo $brandboostID; ?>"><i class="icon-plus3"></i><span> &nbsp;  Add Manual Review</span> </a>
+                <a class="btn light_btn ml10 reviewShow {{ $reviewClass }}" href="{{ base_url() }}admin/brandboost/addreview/{{ $brandboostID }}"><i class="icon-plus3"></i><span> &nbsp;  Add Manual Review</span> </a>
 
+      
+            </div>
+        </div>
+    </div>
+    <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
-
-    
-	<!--	<button type="button" class="btn light_btn importModuleContact contactShow <?php echo $clientClass; ?>" data-modulename="<?php echo $moduleName;?>" data-moduleaccountid="<?php echo $moduleUnitID ?>" data-redirect="<?php echo base_url();?>admin/brandboost/onsite_setup/<?php echo $moduleUnitID; ?>"><i class="icon-arrow-up16"></i><span> &nbsp;  Import Contacts</span> </button>
-		<a class="btn light_btn ml10 contactShow <?php echo $clientClass; ?>" href="{{ base_url() }}admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName;?>&module_account_id=<?php echo $moduleUnitID; ?>"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contacts</span> </a>
-        <button type="button" class="btn dark_btn dropdown-toggle ml10 addModuleContact" data-modulename="<?php echo $moduleName;?>" data-moduleaccountid="<?php echo $moduleUnitID ?>"><i class="icon-plus3"></i><span> &nbsp;  Add Contact</span> </button>  
-	-->	  
-		</div>
-	  </div>
-	</div>
-  <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
-  
-	<div class="tab-content">
+    <div class="tab-content">
 
         <!--########################TAB 1 ##########################--> 
-		@include('admin.brandboost.campaign-tabs.onsite.onsite-reviews', array('reviews' => $reviews, 'aReviews' => $aReviews, 'brandboostData' => $brandboostData))
+        @include('admin.brandboost.campaign-tabs.onsite.onsite-reviews', array('reviews' => $reviews, 'aReviews' => $aReviews, 'brandboostData' => $brandboostData))
         <!--########################TAB 2 ##########################--> 
-		@include('admin.brandboost.campaign-tabs.onsite.onsite-subscribers', array('campaign' => $campaign))
+        @include('admin.brandboost.campaign-tabs.onsite.onsite-subscribers', array('campaign' => $campaign))
         <!--########################TAB 3 ##########################-->
-		@include('admin.brandboost.campaign-tabs.onsite.onsite-preferences', array('camp' => $camp, 'feedbackResponseData' => $feedbackResponseData, 'brandboostData' => $brandboostData, 'bbProductsData' => $productsData))
+        @include('admin.brandboost.campaign-tabs.onsite.onsite-preferences', array('camp' => $camp, 'feedbackResponseData' => $feedbackResponseData, 'brandboostData' => $brandboostData, 'bbProductsData' => $productsData))
         <!--########################TAB 4 ##########################-->
-		@include('admin.brandboost.campaign-tabs.onsite.onsite-workflow-campaign-beta', array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents))
+        @include('admin.brandboost.campaign-tabs.onsite.onsite-workflow-campaign-beta', array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents))
         <!--########################TAB 5 ##########################--> 
-		@include('admin.brandboost.campaign-tabs.onsite.onsite-image', array('aReviews' => $aReviews, 'imageClass' => $imageClass))
-	</div>
-    
+        @include('admin.brandboost.campaign-tabs.onsite.onsite-image', array('aReviews' => $aReviews, 'imageClass' => $imageClass))
+    </div>
+
 </div>	
 
 @include('admin.brandboost.campaign-tabs.onsite.onsite-popup')
-<?php //$this->load->view("admin/modals/workflow2/workflow-popup", array('oDefaultTemplates' => $oDefaultTemplates)); @include('admin.modals.workflow2.workflow-popup', array('oDefaultTemplates' => $oDefaultTemplates)) ?>
-<?php 
- $oDefaultTemplates = !(empty($oDefaultTemplates)) ? $oDefaultTemplates : array();
-?>
+
 @include('admin.modals.workflow2.workflow-popup', ['oDefaultTemplates' => $oDefaultTemplates])
 
 
@@ -142,7 +135,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
     $(document).ready(function () {
 
-        $(document).on('change', '.autoSave', function() {
+        $(document).on('change', '.autoSave', function () {
             $('.saveOnsiteButton').trigger('click');
         });
 
@@ -179,9 +172,9 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             var emailtemplate = $(".emailPreviewContent").html();
             $('.overlaynew').show();
             $.ajax({
-                url: '<?php echo base_url('admin/emailtemplate/send_email_template'); ?>',
+                url: "{{ base_url('admin/emailtemplate/send_email_template') }}",
                 type: "POST",
-                data: {email: email, emailtemplate: emailtemplate, bb_id: '<?php echo $brandboostData->id; ?>', _token: '{{csrf_token()}}'},
+                data: {email: email, emailtemplate: emailtemplate, bb_id: '{{ $brandboostData->id }}', _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     $('.overlaynew').hide();
@@ -200,9 +193,9 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             var smstemplate = $(".smsPreviewContent").html();
             $('.overlaynew').show();
             $.ajax({
-                url: '<?php echo base_url('admin/emailtemplate/send_sms_template'); ?>',
+                url: "{{ base_url('admin/emailtemplate/send_sms_template') }}",
                 type: "POST",
-                data: {phoneNo: phoneNo, smstemplate: smstemplate, bb_id: '<?php echo $brandboostData->id; ?>', _token: '{{csrf_token()}}'},
+                data: {phoneNo: phoneNo, smstemplate: smstemplate, bb_id: '{{ $brandboostData->id }}', _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     $('.overlaynew').hide();
@@ -220,59 +213,57 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             });
         });
 
-        $(document).on('click', '.onSiteCampaignStatus', function() {
+        $(document).on('click', '.onSiteCampaignStatus', function () {
 
             var status = $(this).attr('status');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/publishOnsiteStatusBB'); ?>',
+                url: "{{ base_url('admin/brandboost/publishOnsiteStatusBB') }}",
                 type: "POST",
-                data: {'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':status, _token: '{{csrf_token()}}'},
+                data: {'brandboostID': '{{ $brandboostData->id }}', 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        //window.location.href = '<?php echo base_url('admin/brandboost/onsite'); ?>';
-                        if(status == 1) {
-                            
+                        //window.location.href = '{{ base_url('admin/brandboost/onsite') }}';
+                        if (status == 1) {
+
+                            displayMessagePopup();
+                        } else {
                             displayMessagePopup();
                         }
-                        else {
-                             displayMessagePopup();
-                        }
-                        
+
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
                 }
             });
-            
+
         });
 
-        $(document).on('click', '#publishOnsiteCampaign', function() {
-            if($(this).prop("checked") == true) {
+        $(document).on('click', '#publishOnsiteCampaign', function () {
+            if ($(this).prop("checked") == true) {
                 $.ajax({
-                    url: '<?php echo base_url('admin/brandboost/publishOnsiteStatusBB'); ?>',
+                    url: "{{ base_url('admin/brandboost/publishOnsiteStatusBB') }}",
                     type: "POST",
-                    data: {'action': 'publishCampaign', 'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':'1', _token: '{{csrf_token()}}'},
+                    data: {'action': 'publishCampaign', 'brandboostID': '{{ $brandboostData->id }}', 'status': '1', _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
-                            //window.location.href = '<?php echo base_url('admin/brandboost/onsite'); ?>';
+                            //window.location.href = '{{ base_url('admin/brandboost/onsite') }}';
                         } else {
                             alertMessage('Error: Some thing wrong!');
                         }
                     }
                 });
-            }
-            else {
+            } else {
 
                 $.ajax({
-                    url: '<?php echo base_url('admin/brandboost/publishOnsiteStatusBB'); ?>',
+                    url: "{{ base_url('admin/brandboost/publishOnsiteStatusBB') }}",
                     type: "POST",
-                    data: {'action': 'publishCampaign', 'brandboostID': '<?php echo $brandboostData->id; ?>', 'status':'0', _token: '{{csrf_token()}}'},
+                    data: {'action': 'publishCampaign', 'brandboostID': '{{ $brandboostData->id }}', 'status': '0', _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
-                            //window.location.href = '<?php echo base_url('admin/brandboost/onsite'); ?>';
+                            //window.location.href = '{{ base_url('admin/brandboost/onsite') }}';
                         } else {
                             alertMessage('Error: Some thing wrong!');
                         }
@@ -284,13 +275,13 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
         $(document).on("click", "#publishCampaign", function () {
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/publishOnsiteBB'); ?>',
+                url: "{{ base_url('admin/brandboost/publishOnsiteBB') }}",
                 type: "POST",
-                data: {'action': 'publishCampaign', 'brandboostID': '<?php echo $brandboostData->id; ?>', _token: '{{csrf_token()}}'},
+                data: {'action': 'publishCampaign', 'brandboostID': '{{ $brandboostData->id }}', _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/brandboost/onsite'); ?>';
+                        window.location.href = "{{ base_url('admin/brandboost/onsite') }}";
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -298,18 +289,16 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             });
         });
 
-        $(document).on('click', '.tabChange', function() {
+        $(document).on('click', '.tabChange', function () {
             var tabName = $(this).attr('tabName');
             if (tabName == 'Reviews') {
                 $('.reviewShow').removeClass('hidden');
-            }
-            else {
+            } else {
                 $('.reviewShow').addClass('hidden');
             }
             if (tabName == 'Clients') {
                 $('.contactShow').removeClass('hidden');
-            }
-            else {
+            } else {
                 $('.contactShow').addClass('hidden');
             }
             changeTabWithoutReload(tabName);
@@ -349,7 +338,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/saveOnsitePreferences'); ?>',
+                url: "{{ base_url('admin/brandboost/saveOnsitePreferences') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -359,7 +348,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 success: function (data) {
                     if (data.status == 'success') {
                         displayMessagePopup();
-                        
+
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -371,7 +360,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
         $('.eventFrmUpdate').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/update_event'); ?>',
+                url: "{{ base_url('admin/brandboost/update_event') }}",
                 type: "POST",
                 data: new FormData(this),
                 contentType: false,
@@ -394,7 +383,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
         $("#frmFeedbackTagListModal").submit(function () {
             var formdata = $("#frmFeedbackTagListModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/tags/applyFeedbackTag'); ?>',
+                url: "{{ base_url('admin/tags/applyFeedbackTag') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -415,7 +404,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             var camp_id = $(this).attr('camp_id');
             var camp_temp_src = $(this).attr('camp_temp_src');
             $.ajax({
-                url: "<?php echo base_url('/admin/brandboost/sms_template_popup'); ?>",
+                url: "{{ base_url('/admin/brandboost/sms_template_popup') }}",
                 type: "POST",
                 data: {camp_id: camp_id, camp_temp_src: camp_temp_src, _token: '{{csrf_token()}}'},
                 dataType: "html",
@@ -435,7 +424,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
             var getActiveText = $(this).text();
             $.ajax({
-                url: "<?php echo base_url('/admin/brandboost/setTab'); ?>",
+                url: "{{ base_url('/admin/brandboost/setTab') }}",
                 type: "POST",
                 data: {getActiveText: getActiveText, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -466,7 +455,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $('.overlaynew').show();
             var templateContent = $("#template_content").val();
             $.ajax({
-                url: '<?php echo base_url('admin/emailtemplate/emailPreviewTemplate'); ?>',
+                url: "{{ base_url('admin/emailtemplate/emailPreviewTemplate') }}",
                 type: "POST",
                 data: {emailtemplate: templateContent, _token: '{{csrf_token()}}'},
                 dataType: "html",
@@ -503,7 +492,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $('.overlaynew').show();
             var templateContent = $("#template_content").val();
             $.ajax({
-                url: '<?php echo base_url('admin/emailtemplate/emailPreviewTemplate'); ?>',
+                url: "{{ base_url('admin/emailtemplate/emailPreviewTemplate') }}",
                 type: "POST",
                 data: {emailtemplate: templateContent, _token: '{{csrf_token()}}'},
                 dataType: "html",
@@ -533,14 +522,14 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             var templateId = $("#template_id").val();
             var campaignId = $("#campaign_id").val();
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/update_campaign'); ?>',
+                url: "{{ base_url('admin/brandboost/update_campaign') }}",
                 type: "POST",
                 data: {template_name: templateName, template_subject: templateSubject, from_name: fromName, from_email: fromEmail, reply_to: replyTo, template_content: templateContent, template_id: templateId, campaign_id: campaignId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         setTimeout(function () {
-                            window.location.href = '<?php echo base_url('admin/brandboost/offsite_step_2'); ?>';
+                            window.location.href = "{{ base_url('admin/brandboost/offsite_step_2') }}";
                         }, 1000);
                     } else {
                         alert('Error: Some thing wrong!');
@@ -557,7 +546,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             $('.overlaynew').show();
             var templateContent = $("#template_content").val();
             $.ajax({
-                url: '<?php echo base_url('admin/emailtemplate/emailPreviewTemplate'); ?>',
+                url: "{{ base_url('admin/emailtemplate/emailPreviewTemplate') }}",
                 type: "POST",
                 data: {emailtemplate: templateContent, _token: '{{csrf_token()}}'},
                 dataType: "html",
@@ -581,7 +570,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             move();
             var formdata = $("#updateCampaignData").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/update_campaign'); ?>',
+                url: "{{ base_url('admin/brandboost/update_campaign') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -589,7 +578,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                     if (data.status == 'success') {
                         setTimeout(function () {
                             $('.overlaynew').hide();
-                            window.location.href = '<?php echo base_url('admin/brandboost/offsite_step_2'); ?>';
+                            window.location.href = "{{ base_url('admin/brandboost/offsite_step_2') }}";
                         }, 1000);
                     } else {
                         alert('Error: Some thing wrong!');
@@ -603,7 +592,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             var campaignID = $(this).attr("campaign_id");
             $('.overlaynew').show();
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/getSendgridStats'); ?>',
+                url: "{{ base_url('admin/brandboost/getSendgridStats') }}",
                 type: "POST",
                 data: {'type': 'campaign', 'id': campaignID, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -620,12 +609,12 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             });
         });
 
-      
+
     });
 
     function changeTabWithoutReload(getActiveText) {
         $.ajax({
-            url: "<?php echo base_url('/admin/brandboost/setTab'); ?>",
+            url: "{{ base_url('/admin/brandboost/setTab') }}",
             type: "POST",
             data: {getActiveText: getActiveText, _token: '{{csrf_token()}}'},
             dataType: "json",
@@ -664,7 +653,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
     function add_campaign(campaignType, eventID, eventype = 'main') {
         $('.overlaynew').show();
         $.ajax({
-            url: '<?php echo base_url('admin/brandboost/create_campaign'); ?>',
+            url: "{{ base_url('admin/brandboost/create_campaign') }}",
             type: "POST",
             data: {'campaign_type': campaignType, 'event_id': eventID, 'event_type': eventype, 'brandboost_type': 'onsite', _token: '{{csrf_token()}}'},
             dataType: "json",
@@ -702,7 +691,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
                     if (isConfirm) {
                         $.ajax({
-                            url: '<?php echo base_url('admin/brandboost/delete_event'); ?>',
+                            url: "{{ base_url('admin/brandboost/delete_event') }}",
                             type: "POST",
                             data: {'event_id': eventID, _token: '{{csrf_token()}}'},
                             dataType: "json",
@@ -728,7 +717,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
         var conf = confirm("Are you sure? You want to delete this event!");
         if (conf == true) {
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/delete_event'); ?>',
+                url: "{{ base_url('admin/brandboost/delete_event') }}",
                 type: "POST",
                 data: {'event_id': eventID, _token: '{{csrf_token()}}'},
                 dataType: "json",
