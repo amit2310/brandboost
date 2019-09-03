@@ -31,11 +31,10 @@ if (!empty($oPrograms)) {
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3">
-                <h3><img style="width: 19px;" src="<?php echo base_url(); ?>assets/images/nps_icon.png"> &nbsp; NPS Surveys</h3>
+                <h3><img style="width: 19px;" src="{{ base_url() }}assets/images/nps_icon.png"> &nbsp; NPS Surveys</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="active">Active NPS Surveys</a></li>
                     <li><a style="javascript:void();" class="filterByColumn" fil="archive">Archive</a></li>
-
                 </ul>
             </div>
             <!--=============Button Area Right Side==============-->
@@ -120,7 +119,6 @@ if (!empty($oPrograms)) {
                                                 <div class="col-xs-6">
                                                     <input class="form-control input-sm" type="text" name="" value="20" /> <span class="dash">-</span> <input class="form-control input-sm" type="text" name="" value="100" />
                                                 </div>
-
                                             </div>
                                             <div class="row mb20">
                                                 <div class="col-xs-6">
@@ -134,7 +132,6 @@ if (!empty($oPrograms)) {
                                                 <div class="col-xs-6">
                                                     <input class="form-control input-sm" type="text" name="" value="20" /> <span class="dash">-</span> <input class="form-control input-sm" type="text" name="" value="100" />
                                                 </div>
-
                                             </div>
                                             <div class="row mb20">
                                                 <div class="col-xs-6">
@@ -148,7 +145,6 @@ if (!empty($oPrograms)) {
                                                 <div class="col-xs-6">
                                                     <input class="form-control input-sm" type="text" name="" value="20" disabled /> <span class="dash">-</span> <input class="form-control input-sm" type="text" name="" value="100" disabled />
                                                 </div>
-
                                             </div>
                                             <div class="row">
                                                 <div class="col-xs-6">
@@ -162,7 +158,6 @@ if (!empty($oPrograms)) {
                                                 <div class="col-xs-6">
                                                     <input class="form-control input-sm" type="text" name="" value="0" /> <span class="dash">-</span> <input class="form-control input-sm" type="text" name="" value="10" />
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -192,7 +187,7 @@ if (!empty($oPrograms)) {
                         <!-- Marketing campaigns -->
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title">{{$iActiveCount}} NPS Surveys</h6>
+                                <h6 class="panel-title">{{ $iActiveCount }} NPS Surveys</h6>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
@@ -207,10 +202,6 @@ if (!empty($oPrograms)) {
                                         <a href="javascript:void(0);" style="display: none;" id="deleteBulkNPS" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                         <a href="javascript:void(0);" style="display: none;" id="archiveBulkNPS" class="custom_action_box"><i class="icon-gear position-left"></i></a>
                                     </div>
-
-                                                                                <!-- <button type="button" class="btn btn-xs btn-default editDataList"><i class="icon-pencil position-left"></i> Edit</button>
-                                                                                <button id="deleteBulkNPS" class="btn btn-xs custom_action_box"><i class="icon-trash position-left"></i> Delete</button>
-                                                                                <button id="archiveBulkNPS" class="btn btn-xs custom_action_box"><i class="icon-gear position-left"></i> Archive</button> -->
                                 </div>
                             </div>
 
@@ -230,8 +221,6 @@ if (!empty($oPrograms)) {
                                             <th><i class="fa fa-smile-o fsize12"></i> Passive</th>
                                             <th><i class="fa fa-smile-o fsize12"></i> Detractors</th>
                                             <th><i class="icon-alarm-check"></i>Last Feedback</th>
-                                            <!-- <th class="nosort"><i class="icon-statistics"></i> Statistic</th>
-                                            <th><i class="icon-calendar"></i>Last Incoming Lead</th> -->
                                             <th class="text-center"><i class="fa fa-dot-circle-o fsize12"></i> Status</th>
                                             <th class="text-center nosort"><i class="fa fa-dot-circle-o"></i> Action</th>
                                             <th class="hidden" data-filter="status"></th>
@@ -239,7 +228,7 @@ if (!empty($oPrograms)) {
                                     </thead>
 
                                     <tbody>
-                                        <?php
+                                        @php
                                         foreach ($oPrograms as $oProgram):
 
                                             $positive = 0;
@@ -274,71 +263,68 @@ if (!empty($oPrograms)) {
                                             $aScoreSummery = $mNPS->getNPSScoreSummery($oProgram->hashcode);
                                             $score = number_format($aScoreSummery['NPSScore'], 1);
                                            
-                                            ?>
-                                            <tr id="append-<?php echo $oProgram->id; ?>" class="selectedClass">
-                                                <td style="display: none;"><?php echo date('m/d/Y', strtotime($oProgram->created)); ?></td>
-                                                <td style="display: none;"><?php echo $oProgram->id; ?></td>
-                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="<?php echo $oProgram->id; ?>" id="chk<?php echo $oProgram->id; ?>"><span class="custmo_checkmark"></span></label></td>
+                                            @endphp
+                                            <tr id="append-{{ $oProgram->id }}" class="selectedClass">
+                                                <td style="display: none;">{{ date('m/d/Y', strtotime($oProgram->created)) }}</td>
+                                                <td style="display: none;">{{ $oProgram->id }}</td>
+                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="{{ $oProgram->id }}" id="chk{{ $oProgram->id }}"><span class="custmo_checkmark"></span></label></td>
                                                 <td>
                                                     <div class="media-left media-middle"> <a class="icons square" href="javascript:void(0);"><i class="icon-checkmark3 txt_blue"></i></a> </div>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><a class="text-default text-semibold" href="{{ base_url() }}admin/modules/nps/setup/<?php echo $oProgram->id; ?>"><?php echo $oProgram->title; ?></a></div>
-                                                        <div class="text-muted text-size-small"><?php echo @(ucfirst($oProgram->platform)) ? ucfirst($oProgram->platform) : 'NA'; ?></div>
+                                                        <div class="pt-5"><a class="text-default text-semibold" href="{{ base_url() }}admin/modules/nps/setup/{{ $oProgram->id }}">{{ $oProgram->title }}</a></div>
+                                                        <div class="text-muted text-size-small">{{ @(ucfirst($oProgram->platform)) ? ucfirst($oProgram->platform) : 'NA' }}</div>
                                                     </div>
 
                                                 </td>
                                                 <td class="text-center">
 
-                                                    <?php
+                                                    @php
                                                     if ($score > 0) {
                                                         $scoreType = '';
-                                                        ?>
+                                                        @endphp
                                                         <div class="media-left media-middle">
-                                                            <a target="_blank" href="<?php echo base_url('admin/modules/nps/score/' . $oProgram->hashcode); ?>">
-                                                                <?php
+                                                            <a target="_blank" href="{{ base_url('admin/modules/nps/score/' . $oProgram->hashcode) }}">
+                                                                @php
                                                                 if ($score > 80) {
                                                                     echo '<img src="' . base_url() . 'assets/images/smiley_green.png" class="img-circle img-xs" alt="">';
                                                                     $scoreType = 'Positive';
                                                                 }
-                                                                ?>
-                                                                <?php
+                                                                
                                                                 if ($score > 60 && $score <= 80) {
                                                                     echo '<img src="' . base_url() . 'assets/images/smiley_grey2.png" class="img-circle img-xs" alt="">';
                                                                     $scoreType = 'Netural';
                                                                 }
-                                                                ?>
-                                                                <?php
+                                                               
                                                                 if ($score <= 60) {
                                                                     echo '<img src="' . base_url() . 'assets/images/smiley_red.png" class="img-circle img-xs" alt="">';
                                                                     $scoreType = 'Negtive';
                                                                 }
-                                                                ?>
+                                                                @endphp
                                                             </a>
                                                         </div>
                                                         <div class="media-left">
-                                                            <div class=""><a target="_blank" href="<?php echo base_url('admin/modules/nps/score/' . $oProgram->hashcode); ?>" class="text-default text-semibold"><?php echo $score; ?></a>
+                                                            <div class=""><a target="_blank" href="{{ base_url('admin/modules/nps/score/' . $oProgram->hashcode) }}" class="text-default text-semibold">{{ $score }}</a>
                                                             </div>
-                                                            <div class="text-muted text-size-small"><a href="<?php echo base_url('admin/modules/nps/score/' . $oProgram->hashcode); ?>" class="text-default text-semibold"><?php echo $scoreType; ?></a></div>
+                                                            <div class="text-muted text-size-small"><a href="{{ base_url('admin/modules/nps/score/' . $oProgram->hashcode) }}" class="text-default text-semibold">{{ $scoreType }}</a></div>
                                                         </div>
-                                                    <?php } else {
-                                                        ?>
+														@php 
+															} else {
+                                                        @endphp
                                                         <div class="media-left media-middle">
-                                                            <?php echo @showUserAvtar($totalFeedback[0]->avatar, $totalFeedback[0]->firstname, $totalFeedback[0]->lastname); ?>
+														{{ @showUserAvtar($totalFeedback[0]->avatar, $totalFeedback[0]->firstname, $totalFeedback[0]->lastname) }}
                                                         </div>
                                                         <div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
-                                                        <!-- <a target="_blank" href="<?php echo base_url('admin/modules/nps/score/' . $oProgram->hashcode); ?>" style="color: #333333;"><?php
-                                                        echo '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
-                                                        ?></a> --><?php }
-                                                    ?>
+                                                        @php }
+                                                    @endphp
 
 
                                                 </td>
                                                 <td> <div class="media-left">
-                                                        <div class="pt-5"><a class="text-default text-semibold"><?php echo dataFormat($oProgram->created); ?></a></div>
-                                                        <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oProgram->created)); ?></div>
+                                                        <div class="pt-5"><a class="text-default text-semibold">{{ dataFormat($oProgram->created) }}</a></div>
+                                                        <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oProgram->created)) }}</div>
                                                     </div></td>
                                                 <td>
-                                                    <?php
+                                                    @php
                                                     if (!empty($oContactsT)) {
                                                         $totPerson = count($oContactsT);
                                                         $totWidth = 100;
@@ -347,56 +333,41 @@ if (!empty($oPrograms)) {
                                                         $totWidth = 0;
                                                     }
                                                     echo $totPerson;
-                                                    ?>
-                                                        <!-- <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total People <?php echo $totPerson; ?>">
-                                                                <div class="progress-bar progress-bar-grey" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40" style="width:<?php echo $totWidth; ?>%"></div>
-                                                        </div> -->
-
-
-
+                                                    @endphp
+                                                        
                                                 </td>
                                                 <td>
-                                                    <?php
-                                                    if ($totalFeedbackNum > 0) {
-                                                        $totFeedCount = $totalFeedbackNum;
-                                                        $totWidth = 100;
-                                                    } else {
-                                                        $totFeedCount = 0;
-                                                        $totWidth = 0;
-                                                    }
-                                                    ?>
-                                                        <!-- <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Feedback <?php echo $totFeedCount; ?>">
-                                                                <div class="progress-bar progress-bar-violet" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40" style="width:<?php echo $totWidth; ?>%"></div>
-                                                        </div> -->
+                                                    @php
+														if ($totalFeedbackNum > 0) {
+															$totFeedCount = $totalFeedbackNum;
+															$totWidth = 100;
+														} else {
+															$totFeedCount = 0;
+															$totWidth = 0;
+														}
+														
+														$neturalRating = $totFeedCount;
+														if ($totFeedCount > 0) {
+															$neturalGraph = 100;
+														} else {
+															$neturalGraph = 0;
+														}
 
-                                                    <?php
-                                                    $neturalRating = $totFeedCount;
-                                                    if ($totFeedCount > 0) {
-                                                        $neturalGraph = 100;
-                                                    } else {
-                                                        $neturalGraph = 0;
-                                                    }
-
-                                                    $addNUC = '';
-                                                    if ($neturalGraph > 50) {
-                                                        $addNUC = 'over50';
-                                                    }
-                                                    ?>
-                                                                <a href="javascript:void(0);" title="total feedback"><?php echo $totFeedCount; ?></a>           
-
+														$addNUC = '';
+														if ($neturalGraph > 50) {
+															$addNUC = 'over50';
+														}
+                                                    @endphp
+                                                    <a href="javascript:void(0);" title="total feedback">{{ $totFeedCount }}</a>
                                                 </td>
                                                 <td>
-                                                    <?php
-                                                    //echo $positive; 
+                                                    @php 
                                                     if ($totFeedCount > 0) {
                                                         $divPosFeed = ($positive / $totFeedCount) * 100;
                                                     } else {
                                                         $divPosFeed = 0;
                                                     }
-                                                    ?>
-                                                       
-
-                                                    <?php
+                                                   
                                                     $neturalRating = $positive;
                                                     if ($positive > 0) {
                                                         $neturalGraph = ceil(($positive / $totFeedCount) * 100);
@@ -408,9 +379,9 @@ if (!empty($oPrograms)) {
                                                     if ($neturalGraph > 50) {
                                                         $addNUC = 'over50';
                                                     }
-                                                    ?>
+                                                    @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addNUC; ?> green cp<?php echo $neturalGraph; ?> <?php if ($neturalGraph > 0): ?>createSegment<?php endif; ?>" segment-type="total-promoters" campaign-id="<?php echo $oProgram->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addNUC }} green cp{{ $neturalGraph }} @if ($neturalGraph > 0) createSegment @endif" segment-type="total-promoters" campaign-id="{{ $oProgram->id }}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -418,44 +389,38 @@ if (!empty($oPrograms)) {
                                                         </div>
                                                     </div>
                                                     <div class="media-left">
-                                                        <div data-toggle="tooltip" title="Promoters Feedback <?php echo $neturalRating; ?>" data-placement="top">
-                                                            <?php if ($neturalRating > 0) {
-                                                                ?><a href="<?php echo base_url('admin/modules/nps/score/' . $oProgram->hashcode); ?>?tab=promoters" class="text-default text-semibold">
-                                                                    <?php echo $neturalRating; ?></a><?php
-                                                            } else {
-                                                                ?><a href="javascript:void(0);" class="text-default text-semibold"><?php echo $neturalRating; ?></a><?php }
-                                                            ?>
-
+                                                        <div data-toggle="tooltip" title="Promoters Feedback {{ $neturalRating }}" data-placement="top">
+                                                            @if ($neturalRating > 0)
+																<a href="{{ base_url('admin/modules/nps/score/' . $oProgram->hashcode) }}?tab=promoters" class="text-default text-semibold">{{ $neturalRating }}</a>
+															@else
+																<a href="javascript:void(0);" class="text-default text-semibold">{{ $neturalRating }}</a>
+															@endif
                                                         </div>
                                                     </div>
-
                                                 </td>
                                                 <td>
-                                                    <?php
-                                                    //echo $nutral; 
-                                                    if ($totFeedCount > 0) {
-                                                        $divNutFeed = ($nutral / $totFeedCount) * 100;
-                                                    } else {
-                                                        $divNutFeed = 0;
-                                                    }
-                                                    ?>
-                                                        
+                                                    @php
+														//echo $nutral; 
+														if ($totFeedCount > 0) {
+															$divNutFeed = ($nutral / $totFeedCount) * 100;
+														} else {
+															$divNutFeed = 0;
+														}
+														
+														$neturalRating = $nutral;
+														if ($nutral > 0) {
+															$neturalGraph = ceil(($nutral / $totFeedCount) * 100);
+														} else {
+															$neturalGraph = 0;
+														}
 
-                                                    <?php
-                                                    $neturalRating = $nutral;
-                                                    if ($nutral > 0) {
-                                                        $neturalGraph = ceil(($nutral / $totFeedCount) * 100);
-                                                    } else {
-                                                        $neturalGraph = 0;
-                                                    }
-
-                                                    $addNUC = '';
-                                                    if ($neturalGraph > 50) {
-                                                        $addNUC = 'over50';
-                                                    }
-                                                    ?>
+														$addNUC = '';
+														if ($neturalGraph > 50) {
+															$addNUC = 'over50';
+														}
+                                                    @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addNUC; ?> gray cp<?php echo $neturalGraph; ?> <?php if ($neturalGraph > 0): ?>createSegment<?php endif; ?>" segment-type="total-passive" campaign-id="<?php echo $oProgram->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addNUC }} gray cp{{ $neturalGraph }} @if ($neturalGraph > 0) createSegment @endif" segment-type="total-passive" campaign-id="{{ $oProgram->id }}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -463,29 +428,24 @@ if (!empty($oPrograms)) {
                                                         </div>
                                                     </div>
                                                     <div class="media-left">
-                                                        <div data-toggle="tooltip" title="Passive Feedback <?php echo $neturalRating; ?>" data-placement="top">
-                                                            <?php if ($neturalRating > 0) {
-                                                                ?><a href="<?php echo base_url('admin/modules/nps/score/' . $oProgram->hashcode); ?>?tab=passive" class="text-default text-semibold">
-                                                                    <?php echo $neturalRating; ?></a><?php
-                                                            } else {
-                                                                ?><a href="javascript:void(0);" class="text-default text-semibold"><?php echo $neturalRating; ?></a><?php }
-                                                            ?>
-
+                                                        <div data-toggle="tooltip" title="Passive Feedback {{ $neturalRating }}" data-placement="top">
+                                                            @if ($neturalRating > 0)
+																<a href="{{ base_url('admin/modules/nps/score/' . $oProgram->hashcode) }}?tab=passive" class="text-default text-semibold">{{ $neturalRating }}</a>
+															@else
+																<a href="javascript:void(0);" class="text-default text-semibold">{{ $neturalRating }}</a>
+															@endif
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <?php
+                                                    @php
                                                     //echo $negetive; 
                                                     if ($totFeedCount > 0) {
                                                         $divNegFeed = ($negetive / $totFeedCount) * 100;
                                                     } else {
                                                         $divNegFeed = 0;
                                                     }
-                                                    ?>
-                                                        
-
-                                                    <?php
+                                                    
                                                     $neturalRating = $negetive;
                                                     if ($negetive > 0) {
                                                         $neturalGraph = ceil(($negetive / $totFeedCount) * 100);
@@ -497,9 +457,9 @@ if (!empty($oPrograms)) {
                                                     if ($neturalGraph > 50) {
                                                         $addNUC = 'over50';
                                                     }
-                                                    ?>
+                                                    @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle <?php echo $addNUC; ?> red cp<?php echo $neturalGraph; ?> <?php if ($neturalGraph > 0): ?>createSegment<?php endif; ?>" segment-type="total-detractors" campaign-id="<?php echo $oProgram->id; ?>" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addNUC }} red cp{{ $neturalGraph }} @if ($neturalGraph > 0) createSegment @endif" segment-type="total-detractors" campaign-id="{{ $oProgram->id }}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -507,21 +467,19 @@ if (!empty($oPrograms)) {
                                                         </div>
                                                     </div>
                                                     <div class="media-left">
-                                                        <div data-toggle="tooltip" title="Detractors Feedback <?php echo $neturalRating; ?>" data-placement="top">
-                                                            <?php if ($neturalRating > 0) {
-                                                                ?><a href="<?php echo base_url('admin/modules/nps/score/' . $oProgram->hashcode); ?>?tab=detractors" class="text-default text-semibold">
-                                                                    <?php echo $neturalRating; ?></a><?php
-                                                            } else {
-                                                                ?><a href="javascript:void(0);" class="text-default text-semibold"><?php echo $neturalRating; ?></a><?php }
-                                                            ?>
-
+                                                        <div data-toggle="tooltip" title="Detractors Feedback {{ $neturalRating }}" data-placement="top">
+                                                            @if ($neturalRating > 0)
+																<a href="{{ base_url('admin/modules/nps/score/' . $oProgram->hashcode) }}?tab=detractors" class="text-default text-semibold">{{ $neturalRating }}</a>
+															@else
+																<a href="javascript:void(0);" class="text-default text-semibold">{{ $neturalRating }}</a>
+															@endif
                                                         </div>
                                                     </div>
 
                                                 </td>
 
                                                 <td>
-                                                    <?php
+                                                    @php
                                                     //pre($totalFeedback);
                                                     $totalFeedback = isset($totalFeedback[0]) ? $totalFeedback[0] : '';
                                                     if (!empty($totalFeedback->score)) {
@@ -543,25 +501,21 @@ if (!empty($oPrograms)) {
                                                         $icon = '';
                                                         $imageIcon = '';
                                                     }
-                                                    //pre($totalFeedback);
-                                                    ?>
-                                                    <div class="media-left media-middle"><?php echo @showUserAvtar($totalFeedback->avatar, $totalFeedback->firstname, $totalFeedback->lastname); ?><?php //echo $imageIcon;    ?></div>
+                                                    
+                                                    @endphp
+                                                    <div class="media-left media-middle">{!! @showUserAvtar($totalFeedback->avatar, $totalFeedback->firstname, $totalFeedback->lastname) !!}</div>
                                                     <div class="media-left">
                                                         <div class=""><a href="#" class="text-default text-semibold">
-                                                                <?php
-                                                                echo $ratingValue;
-                                                                //echo $icon;
-                                                                ?> 
+															{!! $ratingValue !!}
                                                         </div>
-                                                        <div class="text-muted text-size-small"><?php echo @($totalFeedback->firstname); ?> <?php echo @($totalFeedback->lastname); ?></div>
-                                                        <div class="text-muted text-size-small"><?php echo $lastListTime; ?></div>
+                                                        <div class="text-muted text-size-small">{{ @($totalFeedback->firstname) }} {{ @($totalFeedback->lastname) }}</div>
+                                                        <div class="text-muted text-size-small">{{ $lastListTime }}</div>
                                                     </div>
                                                 </td>
 
-                               
                                                 <td>
                                                     <div class="tdropdown">
-                                                        <?php
+                                                        @php
                                                         if ($oProgram->status == 'active') {
                                                             echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
                                                         } else if ($oProgram->status == 'draft') {
@@ -571,67 +525,53 @@ if (!empty($oPrograms)) {
                                                         } else {
                                                             echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
                                                         }
-                                                        ?>
+                                                        @endphp
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                                            <?php
-                                                            if ($oProgram->status == 'active') {
-                                                                echo 'Active';
-                                                            } else if ($oProgram->status == 'draft') {
-                                                                echo 'Pending';
-                                                            } else if ($oProgram->status == 'archive') {
-                                                                echo 'Archive';
-                                                            } else {
-                                                                echo 'Active';
-                                                            }
-                                                            ?>
-
+                                                            @php
+																if ($oProgram->status == 'active') {
+																	echo 'Active';
+																} else if ($oProgram->status == 'draft') {
+																	echo 'Pending';
+																} else if ($oProgram->status == 'archive') {
+																	echo 'Archive';
+																} else {
+																	echo 'Active';
+																}
+                                                            @endphp
                                                         </a>
-                                                        <ul class="dropdown-menu dropdown-menu-right status">
-
-                                                        </ul>
                                                     </div>
                                                 </td>
 
                                                 <td class="text-center">
 
-                                                    <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                                    <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
 
                                                         <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li><a target="_blank" href="<?php echo base_url('admin/modules/nps/stats/' . $oProgram->id); ?>"><i class='icon-gear'></i>Stats</a></li>
-                                                            <?php if ($oProgram->status == 'active') { ?>
-                                                                <li><a nps_id="<?php echo $oProgram->id; ?>" change_status = 'draft' class='chg_status'><i class='icon-gear'></i>Inactive</a></li>
-                                                            <?php } else { ?>
-                                                                <li><a nps_id="<?php echo $oProgram->id; ?>" change_status = 'active' class='chg_status'><i class='icon-gear'></i>Active</a></li>
-                                                            <?php } ?>
-                                                            <li><a href="javascript:void(0);" nps_id="<?php echo $oProgram->id; ?>" class="editSurvey"><i class="icon-file-stats"></i> Edit</a></li>
-                                                            <?php
-                                                            if ($oProgram->status != 'archive') {
-                                                                ?>
-                                                                <li><a href="javascript:void(0);" nps_id="<?php echo $oProgram->id; ?>" class="moveToArchiveNPS"><i class="icon-file-stats"></i> Move To Archive</a></li><?php
-                                                            }
-                                                            ?>
-
-                                                            <li><a href="javascript:void(0);" nps_id="<?php echo $oProgram->id; ?>" class="deleteNPS"><i class="icon-file-text2"></i> Delete</a></li>
-                                                            <?php //if($score > 0){ $scoreType = '';   ?>
-                                                            <li><a target="_blank" href="<?php echo base_url('admin/modules/nps/score/' . $oProgram->hashcode); ?>" class="text-default text-semibold"><i class='icon-gear'></i>View Score</a></li>
-                                                            <?php //} ?>
+                                                            <li><a target="_blank" href="{{ base_url('admin/modules/nps/stats/' . $oProgram->id) }}"><i class='icon-gear'></i>Stats</a></li>
+                                                            @if ($oProgram->status == 'active')
+                                                                <li><a nps_id="{{ $oProgram->id }}" change_status = 'draft' class='chg_status'><i class='icon-gear'></i>Inactive</a></li>
+                                                            @else
+                                                                <li><a nps_id="{{ $oProgram->id }}" change_status = 'active' class='chg_status'><i class='icon-gear'></i>Active</a></li>
+                                                            @endif
+                                                            <li><a href="javascript:void(0);" nps_id="{{ $oProgram->id }}" class="editSurvey"><i class="icon-file-stats"></i> Edit</a></li>
+                                                            @if ($oProgram->status != 'archive')
+                                                                <li><a href="javascript:void(0);" nps_id="{{ $oProgram->id }}" class="moveToArchiveNPS"><i class="icon-file-stats"></i> Move To Archive</a></li>
+															@endif
+                                                            <li><a href="javascript:void(0);" nps_id="{{ $oProgram->id }}" class="deleteNPS"><i class="icon-file-text2"></i> Delete</a></li>
+                                                            <li><a target="_blank" href="{{ base_url('admin/modules/nps/score/' . $oProgram->hashcode) }}" class="text-default text-semibold"><i class='icon-gear'></i>View Score</a></li>
                                                         </ul>
-
                                                     </div>
                                                 </td>
                                                 <td class="hidden">
-                                                    <?php
+                                                    @php
                                                     if ($oProgram->status == 'archive') {
                                                         echo 'archive';
                                                     } else {
                                                         echo 'active';
                                                     }
-                                                    ?>
+                                                    @endphp
                                                 </td>
-
-
                                             </tr>
-                                           
                                         @endforeach;
                                     </tbody>
                                 </table>
@@ -640,10 +580,9 @@ if (!empty($oPrograms)) {
                     </div>
                 </div>
             </div>
-
         </div>
 
-    <?php else: ?>
+    @else
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
@@ -652,7 +591,7 @@ if (!empty($oPrograms)) {
                         <!-- Marketing campaigns -->
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $iActiveCount; ?> NPS Surveys</h6>
+                                <h6 class="panel-title">{{ $iActiveCount }} NPS Surveys</h6>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
@@ -661,11 +600,6 @@ if (!empty($oPrograms)) {
                                         </div>
                                     </div>&nbsp; &nbsp;
 
-
-
-                <!-- <button type="button" class="btn btn-xs btn-default editDataList"><i class="icon-pencil position-left"></i> Edit</button>
-                <button id="deleteBulkNPS" class="btn btn-xs custom_action_box"><i class="icon-trash position-left"></i> Delete</button>
-                <button id="archiveBulkNPS" class="btn btn-xs custom_action_box"><i class="icon-gear position-left"></i> Archive</button> -->
                                 </div>
                             </div>
 
@@ -695,14 +629,13 @@ if (!empty($oPrograms)) {
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div style="margin: 20px 0px 0;" class="text-center">
-                                                            <!--<h5 class="mb-20" >Create Your First Offsite Brand Boost.</h5>-->
 
                                                             <h5 class="mb-20 mt40">
-                                                                Looks Like You Don’t Have Created Any NPS survey Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+                                                                Looks Like You Don’t Have Created Any NPS survey Yet <img src="{{ site_url('assets/images/smiley.png') }}"> <br>
                                                                 Lets Create a New Survey.
                                                             </h5>
 
-                                                            <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addNpsSurvery" <?php } ?> type="button" class="btn dark_btn ml20 mb40"><i class="icon-plus3"></i> Add New Survey</button>
+                                                            <button @if ($bActiveSubsription == false) title="No Active Subscription" class="btn dark_btn ml20 pDisplayNoActiveSubscription mb40" @else id="addNpsSurvery" @endif type="button" class="btn dark_btn ml20 mb40"><i class="icon-plus3"></i> Add New Survey</button>
 
                                                         </div>
                                                     </div>
@@ -729,9 +662,7 @@ if (!empty($oPrograms)) {
                 </div>
             </div>
         </div>
-
-
-    <?php endif; ?>
+	@endif
 </div>
 </div>
 
@@ -800,11 +731,9 @@ if (!empty($oPrograms)) {
 </div>
 
 @include('admin.modals.segments.segments-popup')
-<script src="<?php echo base_url(); ?>assets/js/modules/segments/segments.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/js/modules/segments/segments.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-
-
     $(document).ready(function () {
 
         // Setup - add a text input to each footer cell
@@ -819,9 +748,9 @@ if (!empty($oPrograms)) {
                 $('input', this).on('keyup change', function () {
                     if (tableBase.column(i).search() !== this.value) {
                         tableBase
-                                .column(i)
-                                .search(this.value, $('#colStatus').prop('checked', true))
-                                .draw();
+						.column(i)
+						.search(this.value, $('#colStatus').prop('checked', true))
+						.draw();
                     }
                 });
             }
@@ -844,9 +773,7 @@ if (!empty($oPrograms)) {
             var fil = $(this).attr('fil');
             $('#filterByStatus').val(fil);
             $('#filterByStatus').keyup();
-
         });
-
     });
 </script>
 
@@ -891,7 +818,6 @@ if (!empty($oPrograms)) {
             if (totalCheckboxes > numberOfChecked) {
                 $('#checkAll').prop('checked', false);
             }
-
         });
 
         $(document).on('click', '#deleteBulkNPS', function () {
@@ -904,28 +830,26 @@ if (!empty($oPrograms)) {
             } else {
 
                 deleteConfirmationPopup(
-                        "This NPS will deleted immediately.<br>You can't undo this action.",
-                        function () {
-
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: "<?php echo base_url('admin/modules/nps/bulkDeleteNPS'); ?>",
-                                type: "POST",
-                                data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        location.reload();
-                                    } else {
-                                        alert("Having some error.");
-                                    }
-                                },
-                                error: function (error) {
-                                    console.log(error);
-                                }
-                            });
-                        });
-
+				"This NPS will deleted immediately.<br>You can't undo this action.",
+				function () {
+					$('.overlaynew').show();
+					$.ajax({
+						url: "{{ base_url('admin/modules/nps/bulkDeleteNPS') }}",
+						type: "POST",
+						data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								location.reload();
+							} else {
+								alert("Having some error.");
+							}
+						},
+						error: function (error) {
+							console.log(error);
+						}
+					});
+				});
             }
         });
 
@@ -939,28 +863,27 @@ if (!empty($oPrograms)) {
             } else {
 
                 archiveConfirmationPopup(
-                        "This NPS will move to archive immediately.<br>You can't undo this action.",
-                        function () {
+				"This NPS will move to archive immediately.<br>You can't undo this action.",
+				function () {
 
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: "<?php echo base_url('admin/modules/nps/bulkArchiveNPS'); ?>",
-                                type: "POST",
-                                data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        location.reload();
-                                    } else {
-                                        alert("Having some error.");
-                                    }
-                                },
-                                error: function (error) {
-                                    console.log(error);
-                                }
-                            });
-                        });
-
+					$('.overlaynew').show();
+					$.ajax({
+						url: "{{ base_url('admin/modules/nps/bulkArchiveNPS') }}",
+						type: "POST",
+						data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								location.reload();
+							} else {
+								alert("Having some error.");
+							}
+						},
+						error: function (error) {
+							console.log(error);
+						}
+					});
+				});
             }
         });
 
@@ -973,14 +896,14 @@ if (!empty($oPrograms)) {
             $('.overlaynew').show();
             var formdata = $("#frmaddNPSModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/addNPS'); ?>',
+                url: "{{ base_url('admin/modules/nps/addNPS') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url('admin/modules/nps/setup/'); ?>' + data.id;
+                        window.location.href = "{{ base_url('admin/modules/nps/setup/') }}" + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         $("#addNPSValidation").html(data.msg).show();
@@ -988,17 +911,17 @@ if (!empty($oPrograms)) {
                             $("#addNPSValidation").html("").hide();
                         }, 5000);
                     }
-
                 }
             });
             return false;
         });
+		
 
         $(document).on("click", ".editSurvey", function () {
             $('.overlaynew').show();
             var nps_id = $(this).attr('nps_id');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/getNPS'); ?>',
+                url: "{{ base_url('admin/modules/nps/getNPS') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', 'nps_id': nps_id},
                 dataType: "json",
@@ -1014,44 +937,44 @@ if (!empty($oPrograms)) {
                 }
             });
         });
+		
 
         $(document).on("click", ".moveToArchiveNPS", function () {
-
             var nps_id = $(this).attr('nps_id');
             archiveConfirmationPopup(
-                    "This NPS will move to archive immediately.<br>You can't undo this action.",
-                    function () {
+			"This NPS will move to archive immediately.<br>You can't undo this action.",
+			function () {
 
-                        $('.overlaynew').show();
-                        $.ajax({
-                            url: '<?php echo base_url('admin/modules/nps/moveToArchiveNPS'); ?>',
-                            type: "POST",
-                            data: {_token: '{{csrf_token()}}', 'nps_id': nps_id},
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    location.reload();
-                                } else {
-                                    alertMessage('Error: Some thing wrong!');
-                                }
-                            }
-                        });
-                    });
-
+				$('.overlaynew').show();
+				$.ajax({
+					url: "{{ base_url('admin/modules/nps/moveToArchiveNPS') }}",
+					type: "POST",
+					data: {_token: '{{csrf_token()}}', 'nps_id': nps_id},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							location.reload();
+						} else {
+							alertMessage('Error: Some thing wrong!');
+						}
+					}
+				});
+			});
         });
+		
 
         $('#frmeditSurveyModel').on('submit', function () {
             $('.overlaynew').show();
             var formdata = $("#frmeditSurveyModel").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/updateNPS'); ?>',
+                url: "{{ base_url('admin/modules/nps/updateNPS') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url('admin/modules/nps/setup/'); ?>' + data.id;
+                        window.location.href = "{{ base_url('admin/modules/nps/setup/') }}" + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         $("#editSurveyValidation").html(data.msg).show();
@@ -1063,45 +986,46 @@ if (!empty($oPrograms)) {
             });
             return false;
         });
+		
 
         $(document).on('click', '.deleteNPS', function () {
-
             var nps_id = $(this).attr('nps_id');
             deleteConfirmationPopup(
-                    "This record will deleted immediately.<br>You can't undo this action.",
-                    function () {
-                        $('.overlaynew').show();
-                        $.ajax({
-                            url: '<?php echo base_url('admin/modules/nps/deleteNPS'); ?>',
-                            type: "POST",
-                            data: {_token: '{{csrf_token()}}', nps_id: nps_id},
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    $('.overlaynew').hide();
-                                    window.location.href = window.location.href;
-                                }
-                            }
-                        });
-                    });
-
+			"This record will deleted immediately.<br>You can't undo this action.",
+			function () {
+				$('.overlaynew').show();
+				$.ajax({
+					url: "{{ base_url('admin/modules/nps/deleteNPS') }}",
+					type: "POST",
+					data: {_token: '{{csrf_token()}}', nps_id: nps_id},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							$('.overlaynew').hide();
+							window.location.href = window.location.href;
+						}
+					}
+				});
+			});
         });
+		
 
         $(document).on('click', '.chg_status', function () {
             var npsID = $(this).attr('nps_id');
             var status = $(this).attr('change_status');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/changeStatus'); ?>',
+                url: "{{ base_url('admin/modules/nps/changeStatus') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', 'npsId': npsID, 'status': status},
                 dataType: "html",
                 success: function (data) {
-                    window.location.href = '<?php echo base_url("/admin/modules/nps/") ?>';
+                    window.location.href = "{{ base_url("/admin/modules/nps/") }}";
                 }, error: function () {
                     alertMessage('Error: Some thing wrong!');
                 }
             });
         });
+		
 
         $(document).on('click', '.editArchiveDataList', function () {
             $('.editArchiveAction').toggle();
@@ -1112,9 +1036,6 @@ if (!empty($oPrograms)) {
         });
 
     });
-
-
-
 
 </script>
 @endsection
