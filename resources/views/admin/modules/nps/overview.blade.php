@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -9,7 +9,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 <script src = "https://code.highcharts.com/highcharts.js"></script>
-
 <script type="text/javascript" src="http://www.chartjs.org/dist/2.7.2/Chart.bundle.js"></script>
 <script type="text/javascript" src="http://www.chartjs.org/samples/latest/utils.js"></script>
 
@@ -28,8 +27,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
-                <h3><img style="width: 19px;" src="<?php echo base_url(); ?>assets/images/nps_icon.png"> NPS Overview</h3>
-
+                <h3><img style="width: 19px;" src="{{ base_url() }}assets/images/nps_icon.png"> NPS Overview</h3>
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">
@@ -185,37 +183,37 @@
                         <div class="panel-heading">
                             <h6 class="panel-title">NPS</h6>
                         </div>
-                        <?php
-                        $npmArr = array();
-                        foreach ($oProgramsDate as $value) {
+                        @php
+							$npmArr = array();
+							foreach ($oProgramsDate as $value) {
 
-                            $created = $value->created;
-                            $createdTotal = $value->createdTotal;
-                            $npmMonth = (object) array('y' => date('d M', strtotime($created)), 'a' => $createdTotal);
-                            $npmArr[] = $npmMonth;
-                        }
-                        $npmJsonEncode = json_encode($npmArr);
-                        $pos = $neu = $neg = $totleScore = 0;
-                        foreach ($oPrograms as $value) {
-                            if (!empty($value->NPS)) {
-                                foreach ($value->NPS as $npsval) {
+								$created = $value->created;
+								$createdTotal = $value->createdTotal;
+								$npmMonth = (object) array('y' => date('d M', strtotime($created)), 'a' => $createdTotal);
+								$npmArr[] = $npmMonth;
+							}
+							$npmJsonEncode = json_encode($npmArr);
+							$pos = $neu = $neg = $totleScore = 0;
+							foreach ($oPrograms as $value) {
+								if (!empty($value->NPS)) {
+									foreach ($value->NPS as $npsval) {
 
-                                    if ($npsval->score >= 6) {
-                                        $pos++;
-                                    } else if ($npsval->score >= 4) {
-                                        $neu++;
-                                    } else {
-                                        $neg++;
-                                    }
-                                    $totleScore++;
-                                }
-                            }
-                        }
+										if ($npsval->score >= 6) {
+											$pos++;
+										} else if ($npsval->score >= 4) {
+											$neu++;
+										} else {
+											$neg++;
+										}
+										$totleScore++;
+									}
+								}
+							}
 
-                        $posPersent = number_format($pos / $totleScore * 100, '1');
-                        $neuPersent = number_format($neu / $totleScore * 100, '1');
-                        $negPersent = number_format($neg / $totleScore * 100, '1');
-                        ?>
+							$posPersent = number_format($pos / $totleScore * 100, '1');
+							$neuPersent = number_format($neu / $totleScore * 100, '1');
+							$negPersent = number_format($neg / $totleScore * 100, '1');
+                        @endphp
                         <div class="panel-body p0 bkg_white">
                             <div class="p20 bbot">
                                 <p class="txt_grey fw300 m0"><i class="fa fa-square txt_green3"></i>  &nbsp; NPS over time &nbsp; &nbsp; <strong class="txt_dark">51,913</strong></p>
@@ -226,8 +224,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="panel panel-flat">
@@ -236,9 +232,8 @@
                                 </div>
                                 <div class="panel-body bkg_white" style="min-height: 268px;">
                                     <div class="p30 text-center">
-                                        <img width="200" src="<?php echo base_url(); ?>assets/images/nps_graph.png"/>
+                                        <img width="200" src="{{ base_url() }}assets/images/nps_graph.png"/>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -255,7 +250,6 @@
                                     <div class="row">
                                         <div class="col-md-12"><div id="linechart_a" style="min-width: 300px; height: 205px;"></div></div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -273,9 +267,9 @@
                             </div>
                             <div class="clearfix"></div>
                             <ul class="onsite_list">
-                                <li><span class="txt_dark"><img width="12" src="<?php echo base_url(); ?>assets/images/smiley_icon_green.png"> Positive</span><strong><?php echo $posPersent; ?>%</strong></li>
-                                <li><span><img width="12" src="<?php echo base_url(); ?>assets/images/smiley_icon_yellow.png"> Neutral</span><strong><?php echo $neuPersent; ?>%</strong></li>
-                                <li><span><img width="12" src="<?php echo base_url(); ?>assets/images/smiley_icon_red.png"> Negative</span><strong><?php echo $negPersent; ?>%</strong></li>
+                                <li><span class="txt_dark"><img width="12" src="{{ base_url() }}assets/images/smiley_icon_green.png"> Positive</span><strong>{{ $posPersent }}%</strong></li>
+                                <li><span><img width="12" src="{{ base_url() }}assets/images/smiley_icon_yellow.png"> Neutral</span><strong>{{ $neuPersent }}%</strong></li>
+                                <li><span><img width="12" src="{{ base_url() }}assets/images/smiley_icon_red.png"> Negative</span><strong>{{ $negPersent }}%</strong></li>
                             </ul>
                         </div>
                     </div>
@@ -288,18 +282,14 @@
                         <div class="panel-body p30 db_stats bkg_white">
                             <div class="row">
                                 <div class="col-xs-8">
-
                                     <div class="media-left">
-                                        <h1>1,468</h1><p><strong class="txt_green"><i class=""><img src="<?php echo base_url(); ?>assets/images/green_arrow.png"/></i>&nbsp; 33,87%</strong> &nbsp; <span class="txt_dgrey">last week</span></p>
+                                        <h1>1,468</h1><p><strong class="txt_green"><i class=""><img src="{{ base_url() }}assets/images/green_arrow.png"/></i>&nbsp; 33,87%</strong> &nbsp; <span class="txt_dgrey">last week</span></p>
                                     </div>
                                 </div>
-                                <div class="col-xs-4 text-right"><img src="<?php echo base_url(); ?>assets/images/nps_graph_small.png"></div>
+                                <div class="col-xs-4 text-right"><img src="{{ base_url() }}assets/images/nps_graph_small.png"></div>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
 
@@ -323,15 +313,13 @@
                                 </div>&nbsp; &nbsp;
 
                                 <div class="table_action_tool">
-                                    <a href="javascript:void(0);" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="<?php echo base_url(); ?>assets/images/icon_refresh.png"></i></a>
-                                    <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_calender.png"></i></a>
-                                    <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_download.png"></i></a>
-                                    <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_upload.png"></i></a>
-                                    <a href="javascript:void(0);" class="editDataList"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_edit.png"></i></a>
+                                    <a href="javascript:void(0);" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="{{ base_url() }}assets/images/icon_refresh.png"></i></a>
+                                    <a href="javascript:void(0);"><i class=""><img src="{{ base_url() }}assets/images/icon_calender.png"></i></a>
+                                    <a href="javascript:void(0);"><i class=""><img src="{{ base_url() }}assets/images/icon_download.png"></i></a>
+                                    <a href="javascript:void(0);"><i class=""><img src="{{ base_url() }}assets/images/icon_upload.png"></i></a>
+                                    <a href="javascript:void(0);" class="editDataList"><i class=""><img src="{{ base_url() }}assets/images/icon_edit.png"></i></a>
                                     <a href="javascript:void(0);" style="display: none;" id="deleteBulkNPS" class="custom_action_box"><i class="icon-trash position-left"></i></a>
-
                                 </div>
-
                             </div>
                         </div>
                         <div class="panel-body p0">
@@ -341,33 +329,19 @@
                                         <th style="display: none;"></th>
                                         <th style="display: none;"></th>
                                         <th style="display: none;" class="nosort editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="control-primary" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
-                                        <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_date.png"/></i> Campaign Name</th>
-                                        <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_people.png"/></i> Email</th>
-                                        <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_click.png"/></i> </th>
-                                        <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_display.png"/></i> </th>
-                                        <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_refresh2.png"/></i> </th>
-                                        <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_date.png"/></i> Created</th>
-                                        <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_staats.png"/></i> Stats</th>
+                                        <th><i class=""><img src="{{ base_url() }}assets/images/icon_date.png"/></i> Campaign Name</th>
+                                        <th><i class=""><img src="{{ base_url() }}assets/images/icon_people.png"/></i> Email</th>
+                                        <th><i class=""><img src="{{ base_url() }}assets/images/icon_click.png"/></i> </th>
+                                        <th><i class=""><img src="{{ base_url() }}assets/images/icon_display.png"/></i> </th>
+                                        <th><i class=""><img src="{{ base_url() }}assets/images/icon_refresh2.png"/></i> </th>
+                                        <th><i class=""><img src="{{ base_url() }}assets/images/icon_date.png"/></i> Created</th>
+                                        <th><i class=""><img src="{{ base_url() }}assets/images/icon_staats.png"/></i> Stats</th>
                                         <th>&nbsp;</th>
-                                          <!-- <th><i class="icon-stack-star"></i> Name</th>
-                                          <th class="text-center"><i class="icon-star-full2"></i> NPS Score</th>
-                                          <th><i class="icon-calendar"></i> Created</th>
-                                          <th><i class="icon-user"></i></th>
-                                          <th><i class="icon-graph"></i> Total</th>
-                                          <th><i class="fa fa-smile-o fsize12"></i> Promoters</th>
-                                          <th><i class="fa fa-smile-o fsize12"></i> Passive</th>
-                                          <th><i class="fa fa-smile-o fsize12"></i> Detractors</th>
-                                          <th><i class="icon-alarm-check"></i>Last Feedback</th>
-                                          <th class="text-center"><i class="fa fa-dot-circle-o fsize12"></i> Status</th>
-                                          <th class="text-center nosort"><i class="fa fa-dot-circle-o"></i> Action</th>
-                                          <th class="hidden" data-filter="status"></th>  -->
-
-
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <?php
+                                    @php
                                     $totFeedCount = 0;
                                     foreach ($oPrograms as $oProgram):
 
@@ -403,42 +377,40 @@
 
                                         $aScoreSummery = $mNPS->getNPSScoreSummery($oProgram->hashcode);
                                         $score = number_format($aScoreSummery['NPSScore'], 1);
-                                        ?>
-                                        <tr id="append-<?php echo $oProgram->id; ?>" class="selectedClass">
-                                            <td style="display: none;"><?php echo date('m/d/Y', strtotime($oProgram->created)); ?></td>
-                                            <td style="display: none;"><?php echo $oProgram->id; ?></td>
-                                            <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="<?php echo $oProgram->id; ?>" id="chk<?php echo $oProgram->id; ?>"><span class="custmo_checkmark"></span></label></td>
+                                        @endphp
+                                        <tr id="append-{{ $oProgram->id }}" class="selectedClass">
+                                            <td style="display: none;">{{ date('m/d/Y', strtotime($oProgram->created)) }}</td>
+                                            <td style="display: none;">{{ $oProgram->id }}</td>
+                                            <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="{{ $oProgram->id }}" id="chk{{ $oProgram->id }}"><span class="custmo_checkmark"></span></label></td>
 
-                                            <td><div class="media-left media-middle"> <img width="24" src="<?php echo base_url(); ?>assets/images/sms_icon_24.png"/> </div>
+                                            <td><div class="media-left media-middle"> <img width="24" src="{{ base_url() }}assets/images/sms_icon_24.png"/> </div>
                                                 <div class="media-left">
-                                                    <div class=""><a href="{{ base_url() }}admin/modules/nps/setup/<?php echo $oProgram->id; ?>" class="text-default text-semibold bbot"><?php echo $oProgram->title; ?></a></div>
+                                                    <div class=""><a href="{{ base_url() }}admin/modules/nps/setup/{{ $oProgram->id }}" class="text-default text-semibold bbot">{{ $oProgram->title }}</a></div>
                                                 </div>
                                             </td>
                                             <td><div style="width: 117px;" class="media-left text-right pr40 brig"><a href="#" class="text-default text-semibold">1293</a></div></td>
-
-
                                             <td>
-                                                <?php
-                                                if ($totFeedCount > 0) {
-                                                    $divPosFeed = ($positive / $totFeedCount) * 100;
-                                                } else {
-                                                    $divPosFeed = 0;
-                                                }
+                                                @php
+													if ($totFeedCount > 0) {
+														$divPosFeed = ($positive / $totFeedCount) * 100;
+													} else {
+														$divPosFeed = 0;
+													}
 
-                                                $neturalRating = $positive;
-                                                if ($positive > 0 && $totFeedCount>0) {
-                                                    $neturalGraph = ceil(($positive / $totFeedCount) * 100);
-                                                } else {
-                                                    $neturalGraph = 0;
-                                                }
+													$neturalRating = $positive;
+													if ($positive > 0 && $totFeedCount>0) {
+														$neturalGraph = ceil(($positive / $totFeedCount) * 100);
+													} else {
+														$neturalGraph = 0;
+													}
 
-                                                $addNUC = '';
-                                                if ($neturalGraph > 50) {
-                                                    $addNUC = 'over50';
-                                                }
-                                                ?>
+													$addNUC = '';
+													if ($neturalGraph > 50) {
+														$addNUC = 'over50';
+													}
+                                                @endphp
                                                 <div class="media-left">
-                                                    <div class="progress-circle <?php echo $addNUC; ?> green cp<?php echo $neturalGraph; ?>">
+                                                    <div class="progress-circle {{ $addNUC }} green cp{{ $neturalGraph }}">
                                                         <div class="left-half-clipper">
                                                             <div class="first50-bar"></div>
                                                             <div class="value-bar"></div>
@@ -446,80 +418,39 @@
                                                     </div>
                                                 </div>
                                                 <div class="media-left">
-                                                    <div data-toggle="tooltip" title="Promoters Feedback <?php echo $neturalRating; ?>" data-placement="top">
-                                                        <?php if ($neturalRating > 0) {
-                                                            ?><a href="<?php echo base_url('admin/modules/nps/score/' . $oProgram->hashcode); ?>?tab=promoters" class="text-default text-semibold">
-                                                                <?php echo $neturalRating; ?></a><?php
-                                                        } else {
-                                                            ?><a href="javascript:void(0);" class="text-default text-semibold"><?php echo $neturalRating; ?></a><?php }
-                                                        ?>
-
-                                                    </div>
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <?php
-                                                if ($totFeedCount > 0) {
-                                                    $divNutFeed = ($nutral / $totFeedCount) * 100;
-                                                } else {
-                                                    $divNutFeed = 0;
-                                                }
-
-                                                $neturalRating = $nutral;
-                                                if ($nutral > 0 && $totFeedCount>0) {
-                                                    $neturalGraph = ceil(($nutral / $totFeedCount) * 100);
-                                                } else {
-                                                    $neturalGraph = 0;
-                                                }
-
-                                                $addNUC = '';
-                                                if ($neturalGraph > 50) {
-                                                    $addNUC = 'over50';
-                                                }
-                                                ?>
-                                                <div class="media-left">
-                                                    <div class="progress-circle <?php echo $addNUC; ?> gray cp<?php echo $neturalGraph; ?>">
-                                                        <div class="left-half-clipper">
-                                                            <div class="first50-bar"></div>
-                                                            <div class="value-bar"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="media-left">
-                                                    <div data-toggle="tooltip" title="Passive Feedback <?php echo $neturalRating; ?>" data-placement="top">
-                                                        <?php if ($neturalRating > 0) {
-                                                            ?><a href="<?php echo base_url('admin/modules/nps/score/' . $oProgram->hashcode); ?>?tab=passive" class="text-default text-semibold">
-                                                                <?php echo $neturalRating; ?></a><?php
-                                                        } else {
-                                                            ?><a href="javascript:void(0);" class="text-default text-semibold"><?php echo $neturalRating; ?></a><?php }
-                                                        ?>
-
+                                                    <div data-toggle="tooltip" title="Promoters Feedback {{ $neturalRating }}" data-placement="top">
+                                                        @if ($neturalRating > 0)
+															<a href="{{ base_url('admin/modules/nps/score/' . $oProgram->hashcode) }}?tab=promoters" class="text-default text-semibold">
+                                                                {{ $neturalRating }}
+															</a>
+														@else
+															<a href="javascript:void(0);" class="text-default text-semibold">{{ $neturalRating }}</a>
+														@endif
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <?php
-                                                if ($totFeedCount > 0) {
-                                                    $divNegFeed = ($negetive / $totFeedCount) * 100;
-                                                } else {
-                                                    $divNegFeed = 0;
-                                                }
+                                                @php
+													if ($totFeedCount > 0) {
+														$divNutFeed = ($nutral / $totFeedCount) * 100;
+													} else {
+														$divNutFeed = 0;
+													}
 
-                                                $neturalRating = $negetive;
-                                                if ($negetive > 0 && $totFeedCount>0) {
-                                                    $neturalGraph = ceil(($negetive / $totFeedCount) * 100);
-                                                } else {
-                                                    $neturalGraph = 0;
-                                                }
+													$neturalRating = $nutral;
+													if ($nutral > 0 && $totFeedCount>0) {
+														$neturalGraph = ceil(($nutral / $totFeedCount) * 100);
+													} else {
+														$neturalGraph = 0;
+													}
 
-                                                $addNUC = '';
-                                                if ($neturalGraph > 50) {
-                                                    $addNUC = 'over50';
-                                                }
-                                                ?>
+													$addNUC = '';
+													if ($neturalGraph > 50) {
+														$addNUC = 'over50';
+													}
+                                                @endphp
                                                 <div class="media-left">
-                                                    <div class="progress-circle <?php echo $addNUC; ?> red cp<?php echo $neturalGraph; ?>">
+                                                    <div class="progress-circle {{ $addNUC }} gray cp{{ $neturalGraph }}">
                                                         <div class="left-half-clipper">
                                                             <div class="first50-bar"></div>
                                                             <div class="value-bar"></div>
@@ -527,53 +458,89 @@
                                                     </div>
                                                 </div>
                                                 <div class="media-left">
-                                                    <div data-toggle="tooltip" title="Detractors Feedback <?php echo $neturalRating; ?>" data-placement="top">
-                                                        <?php if ($neturalRating > 0) {
-                                                            ?><a href="<?php echo base_url('admin/modules/nps/score/' . $oProgram->hashcode); ?>?tab=detractors" class="text-default text-semibold">
-                                                                <?php echo $neturalRating; ?></a><?php
-                                                        } else {
-                                                            ?><a href="javascript:void(0);" class="text-default text-semibold"><?php echo $neturalRating; ?></a><?php }
-                                                        ?>
-
+                                                    <div data-toggle="tooltip" title="Passive Feedback {{ $neturalRating }}" data-placement="top">
+                                                        @if ($neturalRating > 0)
+															<a href="{{ base_url('admin/modules/nps/score/' . $oProgram->hashcode) }}?tab=passive" class="text-default text-semibold">
+                                                                {{ $neturalRating }}
+															</a>
+														@else
+															<a href="javascript:void(0);" class="text-default text-semibold">{{ $neturalRating }}</a>
+														@endif
                                                     </div>
                                                 </div>
+                                            </td>
+                                            <td>
+                                                @php
+													if ($totFeedCount > 0) {
+														$divNegFeed = ($negetive / $totFeedCount) * 100;
+													} else {
+														$divNegFeed = 0;
+													}
 
+													$neturalRating = $negetive;
+													if ($negetive > 0 && $totFeedCount>0) {
+														$neturalGraph = ceil(($negetive / $totFeedCount) * 100);
+													} else {
+														$neturalGraph = 0;
+													}
+
+													$addNUC = '';
+													if ($neturalGraph > 50) {
+														$addNUC = 'over50';
+													}
+                                                @endphp
+                                                <div class="media-left">
+                                                    <div class="progress-circle {{ $addNUC }} red cp{{ $neturalGraph }}">
+                                                        <div class="left-half-clipper">
+                                                            <div class="first50-bar"></div>
+                                                            <div class="value-bar"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media-left">
+                                                    <div data-toggle="tooltip" title="Detractors Feedback {{ $neturalRating }}" data-placement="top">
+                                                        @if ($neturalRating > 0)
+															<a href="{{ base_url('admin/modules/nps/score/' . $oProgram->hashcode) }}?tab=detractors" class="text-default text-semibold">
+                                                                {{ $neturalRating }}
+															</a>
+														@else
+															<a href="javascript:void(0);" class="text-default text-semibold">{{ $neturalRating }}</a>
+														@endif
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td><div class="media-left">
-                                                    <div><a href="#" class="text-default text-semibold dark"><?php echo dataFormat($oProgram->created); ?></a></div>
+                                                    <div><a href="#" class="text-default text-semibold dark">{{ dataFormat($oProgram->created) }}</a></div>
                                                 </div>
                                                 <div class="media-left pr40 brig">
-                                                    <div class="text-muted"><?php echo date('h:i A', strtotime($oProgram->created)); ?></div>
+                                                    <div class="text-muted">{{ date('h:i A', strtotime($oProgram->created)) }}</div>
                                                 </div>
                                             </td>
-                                            <td><a target="_blank" href="<?php echo base_url('admin/modules/nps/stats/' . $oProgram->id); ?>"><img src="<?php echo base_url(); ?>assets/images/nps_graph_small2.png" class="" alt="Graph"></a>
+                                            <td><a target="_blank" href="{{ base_url('admin/modules/nps/stats/' . $oProgram->id) }}"><img src="{{ base_url() }}assets/images/nps_graph_small2.png" class="" alt="Graph"></a>
                                             </td>
                                             <td><label class="custom-form-switch">
 
-                                                    <input class="field" type="checkbox" <?php
+                                                    <input class="field" type="checkbox" @php
                                                     if ($oProgram->status == 'active') {
                                                         echo 'checked';
                                                     }
-                                                    ?>>
+                                                    @endphp >
                                                     <span class="toggle greenl"></span> </label>
                                                 <div class="media-left pull-right text-right">
-                                                    <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                                    <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="{{  base_url() }}assets/images/more.svg"></a>
 
                                                         <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
-                                                          <?php if ($oProgram->status == 'active') { ?>
-                                                                <li><a nps_id="<?php echo $oProgram->id; ?>" change_status = 'draft' class='chg_status'><i class="icon-primitive-dot txt_red"></i> Inactive</a></li>
-                                                            <?php } else { ?>
-                                                                <li><a nps_id="<?php echo $oProgram->id; ?>" change_status = 'active' class='chg_status'><i class="icon-primitive-dot txt_green"></i> Active</a></li>
-                                                            <?php } ?>
+															@if ($oProgram->status == 'active')
+                                                                <li><a nps_id="{{ $oProgram->id }}" change_status = 'draft' class='chg_status'><i class="icon-primitive-dot txt_red"></i> Inactive</a></li>
+                                                            @else
+                                                                <li><a nps_id="{{ $oProgram->id }}" change_status = 'active' class='chg_status'><i class="icon-primitive-dot txt_green"></i> Active</a></li>
+                                                            @endif
                                                         </ul>
-
                                                     </div>
                                                 </div>
                                             </td>                                           
-
-
                                         </tr>
-                                    <?php endforeach; ?>
+                                    @php endforeach @endphp
                                 </tbody>
                             </table>
                         </div>
@@ -670,28 +637,27 @@
             } else {
 
                 deleteConfirmationPopup(
-                        "This NPS will deleted immediately.<br>You can't undo this action.",
-                        function () {
+				"This NPS will deleted immediately.<br>You can't undo this action.",
+				function () {
 
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: "<?php echo base_url('admin/modules/nps/bulkDeleteNPS'); ?>",
-                                type: "POST",
-                                data: {bulk_nps_id: val},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        location.reload();
-                                    } else {
-                                        alert("Having some error.");
-                                    }
-                                },
-                                error: function (error) {
-                                    console.log(error);
-                                }
-                            });
-                        });
-
+					$('.overlaynew').show();
+					$.ajax({
+						url: "<?php echo base_url('admin/modules/nps/bulkDeleteNPS'); ?>",
+						type: "POST",
+						data: {bulk_nps_id: val},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								location.reload();
+							} else {
+								alert("Having some error.");
+							}
+						},
+						error: function (error) {
+							console.log(error);
+						}
+					});
+				});
             }
         });
 
@@ -705,28 +671,27 @@
             } else {
 
                 archiveConfirmationPopup(
-                        "This NPS will move to archive immediately.<br>You can't undo this action.",
-                        function () {
+				"This NPS will move to archive immediately.<br>You can't undo this action.",
+				function () {
 
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: "<?php echo base_url('admin/modules/nps/bulkArchiveNPS'); ?>",
-                                type: "POST",
-                                data: {bulk_nps_id: val},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        location.reload();
-                                    } else {
-                                        alert("Having some error.");
-                                    }
-                                },
-                                error: function (error) {
-                                    console.log(error);
-                                }
-                            });
-                        });
-
+					$('.overlaynew').show();
+					$.ajax({
+						url: "<?php echo base_url('admin/modules/nps/bulkArchiveNPS'); ?>",
+						type: "POST",
+						data: {bulk_nps_id: val},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								location.reload();
+							} else {
+								alert("Having some error.");
+							}
+						},
+						error: function (error) {
+							console.log(error);
+						}
+					});
+				});
             }
         });
 
@@ -785,24 +750,24 @@
 
             var nps_id = $(this).attr('nps_id');
             archiveConfirmationPopup(
-                    "This NPS will move to archive immediately.<br>You can't undo this action.",
-                    function () {
+			"This NPS will move to archive immediately.<br>You can't undo this action.",
+			function () {
 
-                        $('.overlaynew').show();
-                        $.ajax({
-                            url: '<?php echo base_url('admin/modules/nps/moveToArchiveNPS'); ?>',
-                            type: "POST",
-                            data: {'nps_id': nps_id},
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    location.reload();
-                                } else {
-                                    alertMessage('Error: Some thing wrong!');
-                                }
-                            }
-                        });
-                    });
+				$('.overlaynew').show();
+				$.ajax({
+					url: '<?php echo base_url('admin/modules/nps/moveToArchiveNPS'); ?>',
+					type: "POST",
+					data: {'nps_id': nps_id},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							location.reload();
+						} else {
+							alertMessage('Error: Some thing wrong!');
+						}
+					}
+				});
+			});
 
         });
 

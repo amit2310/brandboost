@@ -1,11 +1,12 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php
+
+@php
 $iActiveCount = $iArchiveCount = 0;
 
 if (!empty($oWidgetsList)) {
@@ -17,7 +18,7 @@ if (!empty($oWidgetsList)) {
         }
     }
 }
-?>
+@endphp
 <!-- Content area -->
 <div class="content">
 
@@ -29,12 +30,8 @@ if (!empty($oWidgetsList)) {
             <div class="col-md-3">
                 <h3><i class="icon-star-half"></i> NPS Widgets</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
-                    <!-- <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Active Widgets</a></li>
-                    <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li> -->
-
                     <li class="active"><a style="javascript:void();" id="activeWidget" class="filterByColumn" fil="publish">Active Widgets</a></li>
                     <li><a style="javascript:void();" class="filterByColumn" fil="archive">Archive</a></li>
-                    <!-- <li><a href="#right-icon-tab4" data-toggle="tab">Statistics</a></li> -->
                 </ul>
             </div>
             <!--=============Button Area Right Side==============-->
@@ -176,12 +173,7 @@ if (!empty($oWidgetsList)) {
                     </div>
                 </div>
 
-                <?php //if (!empty($oWidgetsList) && $user_role != 1): ?>
-                <?php //if ($canWrite): ?>
-                <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription" <?php } else { ?> id="addNPSWidget" class="btn bl_cust_btn btn-default dark_btn ml20" <?php } ?> type="button" ><i class="icon-plus3"></i> Add NPS Widget</button>
-                <?php //endif; ?>
-                <?php //endif; ?>
-
+                <button @if ($bActiveSubsription == false) title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription" @else id="addNPSWidget" class="btn bl_cust_btn btn-default dark_btn ml20" @endif type="button" ><i class="icon-plus3"></i> Add NPS Widget</button>
             </div>
         </div>
     </div>
@@ -196,7 +188,7 @@ if (!empty($oWidgetsList)) {
                     <!-- Marketing campaigns -->
                     <div class="panel panel-flat">
                         <div class="panel-heading">
-                            <h6 class="panel-title"><?php //echo $iActiveCount;  ?> NPS Widgets</h6>
+                            <h6 class="panel-title">{{ @$iActiveCount }} NPS Widgets</h6>
                             <div class="heading-elements">
 
                                 <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
@@ -216,7 +208,7 @@ if (!empty($oWidgetsList)) {
                         </div>
 
                         <div class="panel-body p0">
-                            <?php if (!empty($oWidgetsList)) { ?>
+                            @if (!empty($oWidgetsList))
                                 <table class="table datatable-sorting-new" id="npsWidgetList">
                                     <thead>
                                         <tr>
@@ -233,122 +225,112 @@ if (!empty($oWidgetsList)) {
                                     </thead>
 
                                     <tbody>
-                                        <?php
+                                        @php
                                         $aUser = getLoggedUser();
                                         $currentUserId = $aUser->id;
-                                        //pre($oWidgetsList);
                                         foreach ($oWidgetsList as $data) {
                                             $npsData = $mNPS->getNps($currentUserId, $data->nps_id);
-                                            //pre($npsData);
-                                            ?>
+                                            @endphp
 
-                                            <tr id="append-<?php echo $data->id; ?>" class="selectedClass">
-                                                <td style="display: none;"><?php echo date('m/d/Y', strtotime($data->created)); ?></td>
-                                                <td style="display: none;"><?php echo $data->id; ?></td>
-                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $data->id; ?>" value="<?php echo $data->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+                                            <tr id="append-{{ $data->id }}" class="selectedClass">
+                                                <td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
+                                                <td style="display: none;">{{ $data->id }}</td>
+                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $data->id }}" value="{{ $data->id }}" ><span class="custmo_checkmark"></span></label></td>
                                                 <td>
                                                     <div class="media-left media-middle">
-                                                        <a href="<?php echo base_url('admin/modules/nps/nps_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->widget_title; ?>" class="text-default text-semibold">
-                                                            <img src="<?php echo base_url('assets/images/default_table_img2.png'); ?>" class="img-circle img-xs br5" alt="Img"></a>
+                                                        <a href="{{ base_url('admin/modules/nps/nps_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ $data->widget_title }}" class="text-default text-semibold">
+                                                            <img src="{{ base_url('assets/images/default_table_img2.png') }}" class="img-circle img-xs br5" alt="Img"></a>
                                                     </div>
                                                     <div class="media-left">
-                                                        <div class=""><a href="<?php echo base_url('admin/modules/nps/nps_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo @($data->brand_title); ?>" class="text-default text-semibold"><?php echo $data->widget_title; ?></a></div>
+                                                        <div class=""><a href="{{ base_url('admin/modules/nps/nps_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ @($data->brand_title) }}" class="text-default text-semibold">{{  $data->widget_title }}</a></div>
                                                         <div class="text-muted text-size-small">
-                                                            <?php //echo setStringLimit($data->widget_desc); ?>
+														{{ //setStringLimit($data->widget_desc) }}
                                                         </div>
                                                     </div>
                                                 </td>
 
 
                                                 <td>
-                                                    <?php if ($data->nps_id == '' || $data->nps_id == 0) { ?>
+                                                    @if ($data->nps_id == '' || $data->nps_id == 0)
                                                         <div class="media-left media-middle">
                                                             <span class="icons fl_letters_gray s28">NA</span>
                                                         </div>
                                                         <div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
-                                                    <?php } else { ?>
+                                                    @else
                                                         <div class="media-left media-middle">
                                                             <a class="icons square">
                                                                 <i class="icon-checkmark3 txt_blue"></i>
                                                             </a>
                                                         </div>
                                                         <div class="media-left">
-                                                            <a href="<?php echo base_url("admin/modules/nps/setup/" . $data->nps_id); ?>" target="_blank">
-                                                                <?php echo $npsData->title; ?>
+                                                            <a href="{{ base_url('admin/modules/nps/setup/' . $data->nps_id) }}" target="_blank">
+                                                                {{ $npsData->title }}
                                                             </a>
                                                         </div>
-                                                    <?php } ?>
+                                                    @endif
                                                 </td>
 
                                                 <td>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><span class="text-default text-semibold"><?php echo dataFormat($data->created); ?></span></div>
-                                                        <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)); ?></div>
+                                                        <div class="pt-5"><span class="text-default text-semibold">{{ dataFormat($data->created) }}</span></div>
+                                                        <div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) }}</div>
                                                     </div>
                                                 </td>
 
-
                                                 <td>
                                                     <button class="btn btn-xs btn_white_table pr10">
-
-                                                        <?php
-                                                        if ($data->status == 1) {
-                                                            echo '<i class="icon-primitive-dot txt_green"></i> Publish';
-                                                        } else if ($data->status == 2) {
-                                                            echo '<i class="icon-primitive-dot txt_red"></i> Pause';
-                                                        } else if ($data->status == 3) {
-                                                            echo '<i class="icon-primitive-dot txt_red"></i> Archive';
-                                                        } else {
-                                                            echo '<i class="icon-primitive-dot txt_red"></i> Draft';
-                                                        }
-                                                        ?>
+                                                        @if ($data->status == 1)
+															<i class="icon-primitive-dot txt_green"></i> Publish
+                                                        @else if ($data->status == 2)
+															<i class="icon-primitive-dot txt_red"></i> Pause
+                                                        @else if ($data->status == 3)
+															<i class="icon-primitive-dot txt_red"></i> Archive
+                                                        @else
+															<i class="icon-primitive-dot txt_red"></i> Draft
+                                                        @endif
                                                     </button>
                                                 </td>
 
                                                 <td>
-                                                    <?php
+                                                    @php
                                                     if ($user_role != '2') {
                                                         if ($currentUserId == $data->user_id || $user_role == 1) {
-                                                            ?>
+                                                            @endphp
 
                                                             <div class="tdropdown">
                                                                 <button type="button" class="btn btn-xs plus_icon ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
                                                                 <ul class="dropdown-menu dropdown-menu-right width-200">
+                                                                    @if ($data->status == 1)
+                                                                        <li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="{{ $data->id }}" status="2"><i class="icon-file-stats"></i> Pause</a></li>
+                                                                    @endif
+                                                                    @if ($data->status == 2)
+                                                                        <li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="{{ $data->id }}" status="1"><i class="icon-file-stats"></i> Start</a></li>
+                                                                    @endif
+                                                                    <li><a href="{{ base_url('admin/modules/nps/nps_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ @($data->brand_title) }}" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
 
-                                                                    <?php //if ($canWrite != FALSE): ?>
-                                                                    <?php if ($data->status == 1) { ?>
-                                                                        <li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="2"><i class="icon-file-stats"></i> Pause</a></li>
-                                                                    <?php } ?>
-                                                                    <?php if ($data->status == 2) { ?>
-                                                                        <li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="1"><i class="icon-file-stats"></i> Start</a></li>
-                                                                    <?php } ?>
-                                                                    <li><a href="<?php echo base_url('admin/modules/nps/nps_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo @($data->brand_title); ?>" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
-
-                                                                    <li><a href="javascript:void(0);" class="deleteCampaign" widgetID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
-                                                                    <li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="3"><i class="icon-file-text2"></i> Move to Archive</a></li>
-                                                                    <?php //endif; ?>
-                                                                    <li><a href="javascript:void(0);" class="viewECode" widgetID="<?php echo $data->id; ?>"><i class="icon-file-locked"></i> Get Embedded Code</a></li>
-                                                                    <!-- <li><a href="<?php echo base_url('admin/modules/nps/nps_widget_setup/' . $data->id); ?>" target="_blank"><i class="icon-file-locked"></i> Statistics</a></li> -->
+                                                                    <li><a href="javascript:void(0);" class="deleteCampaign" widgetID="{{ $data->id }}"><i class="icon-trash"></i> Delete</a></li>
+                                                                    <li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="{{ $data->id }}" status="3"><i class="icon-file-text2"></i> Move to Archive</a></li>
+                                                                    
+                                                                    <li><a href="javascript:void(0);" class="viewECode" widgetID="{{ $data->id }}"><i class="icon-file-locked"></i> Get Embedded Code</a></li>
                                                                 </ul>
                                                             </div>
-                                                            <?php
+                                                            @php
                                                         } else {
                                                             echo '-';
                                                         }
                                                     }
-                                                    ?>
+                                                    @endphp
                                                 </td>
 
-                                                <td style="display: none;"><?php echo $data->status == 3 ? 'Archive' : 'Publish'; ?></td>
+                                                <td style="display: none;">{{ $data->status == 3 ? 'Archive' : 'Publish' }}</td>
                                             </tr>
-                                            <?php
+                                            @php
                                         }
-                                        ?>
+                                        @endphp
                                     </tbody>
                                 </table>
-                            <?php
-                            } else {
-                                ?><table class="table datatable-basic">
+                            @else
+								<table class="table datatable-basic">
                                     <thead>
                                         <tr>
                                             <th style="display: none"></th>
@@ -358,8 +340,6 @@ if (!empty($oWidgetsList)) {
                                             <th><i class="icon-calendar"></i>Created</th>
                                             <th><i class="fa fa-dot-circle-o"></i>Status</th>
                                             <th><i class="fa fa-dot-circle-o"></i>Action</th>
-
-
                                         </tr>
                                     </thead>
 
@@ -371,13 +351,11 @@ if (!empty($oWidgetsList)) {
                                             <div class="col-md-12">
                                                 <div style="margin: 20px 0px 0;" class="text-center">
                                                     <h5 class="mb-20 mt40">
-                                                        Looks Like You Don’t Have Any NPS Widget Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+                                                        Looks Like You Don’t Have Any NPS Widget Yet <img src="{{ site_url('assets/images/smiley.png') }}"> <br>
                                                         Lets Create Your First NPS Widget.
                                                     </h5>
 
-                                                    <?php //if ($canWrite): ?>
-                                                    <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addNPSWidgetShow" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add NPS Widget</button>
-                                                    <?php //endif; ?>
+                                                    <button @if ($bActiveSubsription == false) title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" @else id="addNPSWidgetShow" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" @endif type="button" ><i class="icon-plus3"></i> Add NPS Widget</button>
 
                                                 </div>
                                             </div>
@@ -388,9 +366,8 @@ if (!empty($oWidgetsList)) {
                                     <td style="display: none"></td>
                                     <td style="display: none"></td>
                                     </tbody>
-                                </table><?php
-                            }
-                            ?>
+                                </table>
+							@endif;
                         </div>
                     </div>
                 </div>
@@ -546,22 +523,22 @@ if (!empty($oWidgetsList)) {
             } else {
 
                 deleteConfirmationPopup(
-                        "Are you sure? You want to delete these records.<br>You can't undo this action.",
-                        function () {
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: '<?php echo base_url('admin/modules/nps/deleteBulkNPSWidgets'); ?>',
-                                type: "POST",
-                                data: {_token: '{{csrf_token()}}', multi_widget_id: val},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = '';
-                                    }
-                                }
-                            });
-                        });
+				"Are you sure? You want to delete these records.<br>You can't undo this action.",
+				function () {
+					$('.overlaynew').show();
+					$.ajax({
+						url: "{{ base_url('admin/modules/nps/deleteBulkNPSWidgets') }}",
+						type: "POST",
+						data: {_token: '{{csrf_token()}}', multi_widget_id: val},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = '';
+							}
+						}
+					});
+				});
             }
         });
 
@@ -576,22 +553,22 @@ if (!empty($oWidgetsList)) {
             } else {
 
                 archiveConfirmationPopup(
-                        "",
-                        function () {
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: '<?php echo base_url('admin/modules/nps/archiveBulkNPSWidgets'); ?>',
-                                type: "POST",
-                                data: {_token: '{{csrf_token()}}', multi_widget_id: val},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = '';
-                                    }
-                                }
-                            });
-                        });
+				"",
+				function () {
+					$('.overlaynew').show();
+					$.ajax({
+						url: "{{ base_url('admin/modules/nps/archiveBulkNPSWidgets') }}",
+						type: "POST",
+						data: {_token: '{{csrf_token()}}', multi_widget_id: val},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = '';
+							}
+						}
+					});
+				});
             }
         });
 
@@ -613,8 +590,6 @@ if (!empty($oWidgetsList)) {
 
         $(document).on('click', '.checkRowsA', function () {
             var inc = 0;
-
-
             var rowId = $(this).val();
 
             if (false == $(this).prop("checked")) {
@@ -638,8 +613,8 @@ if (!empty($oWidgetsList)) {
             if (totalCheckboxes > numberOfChecked) {
                 $('#checkAllA').prop('checked', false);
             }
-
         });
+		
 
         $(document).on('click', '#addNPSWidgetShow', function () {
             $('#addNPSWidget').trigger('click');
@@ -653,14 +628,14 @@ if (!empty($oWidgetsList)) {
             $('.overlaynew').show();
             var npsTitle = $('#npsTitle').val();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/addNPSWidget'); ?>',
+                url: "{{ base_url('admin/modules/nps/addNPSWidget') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', 'npsTitle': npsTitle},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url(); ?>admin/modules/nps/nps_widget_setup/' + data.widgetId;
+                        window.location.href = '{{ base_url() }}admin/modules/nps/nps_widget_setup/' + data.widgetId;
                     } else {
                         $('.overlaynew').hide();
                         alertMessage('Error: Some thing wrong!');
@@ -674,46 +649,48 @@ if (!empty($oWidgetsList)) {
             var widgetID = $(this).attr('widgetID');
             var status = $(this).attr('status');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/updatNPSWidgetStatus'); ?>',
+                url: "{{ base_url('admin/modules/nps/updatNPSWidgetStatus') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', 'widgetID': widgetID, 'status': status},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/modules/nps/widgets'); ?>';
+                        window.location.href = "{{ base_url('admin/modules/nps/widgets') }}";
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
                 }
             });
         });
+		
 
         $(document).on('click', '.deleteCampaign', function () {
             var elem = $(this);
             deleteConfirmationPopup(
-                    "This record will deleted immediately.<br>You can't undo this action.",
-                    function () {
-                        $('.overlaynew').show();
-                        var widgetID = $(elem).attr('widgetID');
-                        $.ajax({
-                            url: '<?php echo base_url('admin/modules/nps/delete_nps_widget'); ?>',
-                            type: "POST",
-                            data: {_token: '{{csrf_token()}}', widget_id: widgetID},
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    $('.overlaynew').hide();
-                                    window.location.href = '';
-                                }
-                            }
-                        });
-                    });
+			"This record will deleted immediately.<br>You can't undo this action.",
+			function () {
+				$('.overlaynew').show();
+				var widgetID = $(elem).attr('widgetID');
+				$.ajax({
+					url: "{{ base_url('admin/modules/nps/delete_nps_widget') }}",
+					type: "POST",
+					data: {_token: '{{csrf_token()}}', widget_id: widgetID},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							$('.overlaynew').hide();
+							window.location.href = '';
+						}
+					}
+				});
+			});
         });
+		
 
         $(document).on('click', '.viewECode', function () {
             var widgetID = $(this).attr('widgetID');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/getNPSWidgetEmbedCode'); ?>',
+                url: "{{ base_url('admin/modules/nps/getNPSWidgetEmbedCode') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', widget_id: widgetID},
                 dataType: "json",
@@ -728,6 +705,7 @@ if (!empty($oWidgetsList)) {
                 }
             });
         });
+		
 
         $(document).on('click', '.editDataList', function () {
             $('.editAction').toggle();
@@ -736,10 +714,5 @@ if (!empty($oWidgetsList)) {
         $('[data-toggle="tooltip"]').tooltip();
 
     });
-
-
-
-
 </script>
 @endsection
-

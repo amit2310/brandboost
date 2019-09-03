@@ -3,12 +3,12 @@
 
     .highlighted { color:#008000;font-size:15px !important;}
 </style>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/tables/datatables/datatables.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/datatables_sorting_date.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/jquery-ui.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/tables/datatables/datatables.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/pages/datatables_sorting_date.js"></script>
 <!-- Content area -->
 
-<?php
+@php
 $totalEmailSent = $totalSmsSent = 0;
 if (!empty($oTotalReferralSent)) {
 
@@ -37,9 +37,9 @@ if (!empty($oTotalReferralTwillio)) {
         }
     }
 }
-?>
-<div class="content">
+@endphp
 
+<div class="content">
     <!-- Dashboard content -->
     <div class="row">
         <div class="col-lg-12">
@@ -55,15 +55,14 @@ if (!empty($oTotalReferralTwillio)) {
                 </div>
 
                 <div class="panel-body">
-                    <p><strong>Referral email sent: </strong><?php echo $totalEmailSent; ?></p>
-                    <p><strong>Referral sms sent: </strong><?php echo $totalSmsSent; ?></p>
-                    <p><strong>Opens :</strong> <?php echo $totalOpened; ?></p>
-                    <p><strong>Clicks :</strong> <?php echo $totalClicked; ?></p>
-                    <p><strong>Referral Link(Landing Page) Visits: </strong><?php echo (count($oRefVisits)) ? count($oRefVisits) : 0; ?></p>
-                    <p><strong>Purchases by referred customer: </strong>$<?php echo ($referredAmount) ? $referredAmount : 0; ?></p>
-                    <p><strong>Total Untracked Sales: </strong><?php echo (count($oUntrackedPurchased)) ? count($oUntrackedPurchased) : 0; ?></p>
-                    <p><strong>Total Untracked Sales Amount: </strong>$<?php echo ($untrackedAmount) ? $untrackedAmount : 0; ?></p>
-
+                    <p><strong>Referral email sent: </strong>{{ $totalEmailSent }}</p>
+                    <p><strong>Referral sms sent: </strong>{{ $totalSmsSent }}</p>
+                    <p><strong>Opens :</strong> {{ $totalOpened }}</p>
+                    <p><strong>Clicks :</strong> {{ $totalClicked }}</p>
+                    <p><strong>Referral Link(Landing Page) Visits: </strong>{{ (count($oRefVisits)) ? count($oRefVisits) : 0 }}</p>
+                    <p><strong>Purchases by referred customer: </strong>${{ ($referredAmount) ? $referredAmount : 0 }}</p>
+                    <p><strong>Total Untracked Sales: </strong>{{ (count($oUntrackedPurchased)) ? count($oUntrackedPurchased) : 0 }}</p>
+                    <p><strong>Total Untracked Sales Amount: </strong>${{ ($untrackedAmount) ? $untrackedAmount : 0 }}</p>
                 </div>
 
                 <div class="table-responsive">
@@ -82,12 +81,10 @@ if (!empty($oTotalReferralTwillio)) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
+                            @php
                             $inc = 1;
                             foreach ($oRefPurchased as $data) {
-                                //pre($data);
-                                //$profileImg = $data->avatar == '' ? base_url('/profile_images/avatar_image.png') : base_url('profile_images/' . $data->avatar);
-                                ?>
+                                @endphp
                                 <tr>
                                     <td>			
                                         <div style="vertical-align: top!important;" class="media-left media-middle">
@@ -96,9 +93,9 @@ if (!empty($oTotalReferralTwillio)) {
                                             </a>
                                         </div>
                                         <div class="media-left">
-                                            <a href="javascript:void()" class="text-default text-semibold"><?php echo $data->firstname; ?> <?php echo $data->lastname; ?></a>
-                                            <div class="text-muted text-size-small"><?php echo $data->email; ?></div>
-                                            <div class="text-muted text-size-small"><?php echo $data->mobile == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $data->mobile; ?></div>
+                                            <a href="javascript:void()" class="text-default text-semibold">{{ $data->firstname }} {{ $data->lastname }}</a>
+                                            <div class="text-muted text-size-small">{{ $data->email }}</div>
+                                            <div class="text-muted text-size-small">{!! $data->mobile == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $data->mobile !!}</div>
                                         </div>
                                     </td>
 
@@ -109,45 +106,34 @@ if (!empty($oTotalReferralTwillio)) {
                                             </a>
                                         </div>
                                         <div class="media-left">
-                                            <a href="javascript:void()" class="text-default text-semibold"><?php echo $data->aff_firstname; ?> <?php echo $data->aff_lastname; ?></a>
-                                            <div class="text-muted text-size-small"><?php echo $data->aff_email; ?></div>
-                                            <div class="text-muted text-size-small"><?php echo $data->aff_mobile == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $data->aff_mobile; ?></div>
+                                            <a href="javascript:void()" class="text-default text-semibold">{{ $data->aff_firstname }} {{ $data->aff_lastname }}</a>
+                                            <div class="text-muted text-size-small">{{ $data->aff_email }}</div>
+                                            <div class="text-muted text-size-small">{!! $data->aff_mobile == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $data->aff_mobile !!}</div>
                                         </div>
                                     </td>
 
-                                    <td><?php echo $data->currency; ?><?php echo $data->amount; ?></td>
-                                    <td><?php echo $data->currency; ?></td>
-                                    <td><h6 class="text-semibold"><?php echo date('M d, Y', strtotime($data->created)); ?><div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)) . ' (' . timeAgo($data->created) . ')'; ?></div></h6></td>
-                                    <td class="text-center">
-
-                                    </td>
-
-
+                                    <td>{{ $data->currency}}{{ $data->amount }}</td>
+                                    <td>{{ $data->currency }}</td>
+                                    <td><h6 class="text-semibold">{{ date('M d, Y', strtotime($data->created)) }}<div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) . ' (' . timeAgo($data->created) . ')' }}</div></h6></td>
+                                    <td class="text-center"></td>
                                 </tr>
-                                <?php $inc++;
+                                @php 
+								$inc++;
                             }
-                            ?>
+                            @endphp
                         </tbody>
                     </table>
                 </div>
-
-
             </div>
-            <!-- <div align="right" id="pagination_link"></div> -->
         </div>
     </div>
-
-
 </div>
 <!-- /content area -->
-
-
 
 <!-- =======================add users popup========================= -->
 
 <div id="userLevelAdd" class="modal fade">
     <div class="modal-dialog">
-
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="addUsers" action="javascript:void();">
                 <div class="modal-header">
@@ -195,8 +181,6 @@ if (!empty($oTotalReferralTwillio)) {
                             <input name="zip" id="zip" class="form-control" value="" type="text" required>
                         </div>
                     </div>
-
-
                 </div>
 
                 <div class="modal-footer">
@@ -214,7 +198,6 @@ if (!empty($oTotalReferralTwillio)) {
 
 <div id="userLevelEdit" class="modal fade">
     <div class="modal-dialog">
-
         <div class="modal-content">
             <form method="post" class="form-horizontal" id="updateUsers" action="javascript:void();">
                 <div class="modal-header">
@@ -222,9 +205,6 @@ if (!empty($oTotalReferralTwillio)) {
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Edit Users</h5>
                 </div>
                 <div class="modal-body">
-
-                    <div class="alert-danger" style="margin-bottom:10px;"><?php echo $this->session->userdata('error_message'); ?>
-                        <?php echo validation_errors(); ?></div>
 
                     <div class="form-group">
                         <label class="control-label col-lg-3">First Name</label>
@@ -239,7 +219,6 @@ if (!empty($oTotalReferralTwillio)) {
                             <input name="lastname" id="e_lastname" class="form-control" value="" type="text" required>
                         </div>
                     </div>
-
 
                     <div class="form-group">
                         <label class="control-label col-lg-3">Phone</label>
@@ -266,8 +245,6 @@ if (!empty($oTotalReferralTwillio)) {
                             </select>
                         </div>
                     </div>
-
-
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="userID" id="e_userID" value="">
@@ -282,76 +259,22 @@ if (!empty($oTotalReferralTwillio)) {
 
 
 <script>
-    /*$(document).ready(function(){
-     
-     var sort_type_element = 'DESC';
-     var sort_by_element = 'id';
-     
-     $(document).on("click", ".sortingAction", function(event){
-     
-     $('.sortingAction').removeClass('sorting');
-     $('.sortingAction').removeClass('sorting_desc');
-     $('.sortingAction').removeClass('sorting_asc');
-     sort_by_element = $(this).attr('sort_by_element');
-     sort_type_element = $(this).attr('sort_type_element');
-     
-     load_user_data(1, sort_by_element, sort_type_element);
-     
-     var newClass = sort_type_element == 'ASC' ? 'sorting_desc' : 'sorting_asc';
-     var newSort = sort_type_element == 'ASC' ? 'DESC' : 'ASC';
-     $('.sortingAction').addClass('sorting');
-     $(this).removeClass('sorting');
-     $(this).addClass(newClass);
-     $(this).attr('sort_type_element', newSort);
-     
-     });
-     
-     function load_user_data(page, sortby, sort_type)
-     {
-     $.ajax({
-     url:"<?php echo base_url(); ?>ajax_pagination/user_pagination/"+page,
-     data: {sortby: sortby, sort_type: sort_type},
-     method:"GET",
-     dataType:"json",
-     success:function(data)
-     {
-     $('#user_table').html(data.user_table);
-     $('#pagination_link').html(data.pagination_link);
-     }
-     });
-     }
-     
-     load_user_data(1, 'id', 'DESC');
-     
-     $(document).on("click", ".pagination li a", function(event){
-     event.preventDefault();
-     var page = $(this).data("ci-pagination-page");
-     load_user_data(page, sort_by_element, sort_type_element);
-     });
-     
-     });*/
-
-
     $(document).ready(function () {
-
         $("#email").on("keyup", function () {
             var sEmail = $("#email").val();
             if (sEmail != '') {
                 $.ajax({
-                    url: "<?php echo base_url('admin/users/checkEmailExist'); ?>",
+                    url: "{{ base_url('admin/users/checkEmailExist') }}",
                     type: "POST",
-                    data: {emailID: sEmail},
+                    data: {_token: '{{csrf_token()}}', emailID: sEmail},
                     dataType: "json",
                     success: function (data) {
-
                         if (data.status == 'success') {
-
                             $('#emailDiv').addClass('has-error has-feedback');
                             $("#msgEmail").show();
                             $("#msgEmail").html('Email already exist.');
                             $('#addButton').prop("disabled", true);
                         } else {
-
                             $('#emailDiv').removeClass('has-error has-feedback');
                             $("#msgEmail").hide();
                             $("#msgEmail").html('');
@@ -361,9 +284,9 @@ if (!empty($oTotalReferralTwillio)) {
                 });
             }
         });
+		
 
         $(document).on('click', '.userDelete', function () {
-
             $('.overlaynew').show();
             var conf = confirm("Are you sure? You want to delete this user!");
             if (conf == true) {
@@ -371,18 +294,14 @@ if (!empty($oTotalReferralTwillio)) {
                 var userID = $(this).attr('userID');
                 var contactID = $(this).attr('contactID');
                 $.ajax({
-                    url: '<?php echo base_url('admin/users/user_delete'); ?>',
+                    url: "{{ base_url('admin/users/user_delete') }}",
                     type: "POST",
-                    data: {userID: userID, contactID: contactID},
+                    data: {_token: '{{csrf_token()}}', userID: userID, contactID: contactID},
                     dataType: "json",
                     success: function (data) {
-
                         if (data.status == 'success') {
-
                             alertMessageAndRedirect('User has been delete successfully.', window.location.href);
-
                         } else {
-
                             alertMessage('Error: Some thing wrong!');
                             $('.overlaynew').hide();
                         }
@@ -391,22 +310,19 @@ if (!empty($oTotalReferralTwillio)) {
             } else {
                 $('.overlaynew').hide();
             }
-
         });
+		
 
         $(document).on('click', '.userEdit', function () {
-
             var userID = $(this).attr('userID');
             $.ajax({
-                url: '<?php echo base_url('admin/users/getUserById'); ?>',
+                url: "{{ base_url('admin/users/getUserById') }}",
                 type: "POST",
-                data: {userID: userID},
+                data: {_token: '{{csrf_token()}}', userID: userID},
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
                         var mem = data.result[0];
-
                         $('#e_firstname').val(mem.firstname);
                         $('#e_lastname').val(mem.lastname);
                         $('#e_phone').val(mem.mobile);
@@ -414,18 +330,14 @@ if (!empty($oTotalReferralTwillio)) {
                         $('#e_userID').val(mem.id);
                         $('#e_twilio_status').val(mem.twilio_subaccount_status);
                         $('#e_infusion_user_id').val(mem.infusion_user_id);
-
                         $("#userLevelEdit").modal();
-
-                    } else {
-
                     }
                 }
             });
         });
+		
 
         $("#updateUsers").submit(function () {
-
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             var twilioStatus = $('#e_twilio_status').val();
@@ -436,7 +348,7 @@ if (!empty($oTotalReferralTwillio)) {
             }
             if (conf == true) {
                 $.ajax({
-                    url: '<?php echo base_url('admin/users/user_update'); ?>',
+                    url: "{{ base_url('admin/users/user_update') }}",
                     type: "POST",
                     data: formData,
                     contentType: false,
@@ -444,12 +356,9 @@ if (!empty($oTotalReferralTwillio)) {
                     processData: false,
                     dataType: "json",
                     success: function (data) {
-
                         if (data.status == 'success') {
-
                             alertMessageAndRedirect('User has been update successfully.', window.location.href);
                         } else {
-
                             alertMessage('Error: Some thing wrong!');
                             $('.overlaynew').hide();
                         }
@@ -462,12 +371,11 @@ if (!empty($oTotalReferralTwillio)) {
 
 
         $("#addUsers").submit(function () {
-
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $('#addButton').prop("disabled", true);
             $.ajax({
-                url: '<?php echo base_url('admin/users/user_add'); ?>',
+                url: "{{ base_url('admin/users/user_add') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -475,45 +383,36 @@ if (!empty($oTotalReferralTwillio)) {
                 processData: false,
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
-
                         alertMessageAndRedirect('User has been add successfully.', window.location.href);
-
                     } else {
-
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();
                     }
                 }
             });
         });
+		
 
         $(document).on('click', '.chg_status', function () {
-
             $('.overlaynew').show();
             var status = $(this).attr('change_status');
             var userId = $(this).attr('userId');
 
             $.ajax({
-                url: '<?php echo base_url('admin/users/update_status'); ?>',
+                url: "{{ base_url('admin/users/update_status') }}",
                 type: "POST",
-                data: {status: status, user_id: userId},
+                data: {_token: '{{csrf_token()}}', status: status, user_id: userId},
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
-
                         alertMessageAndRedirect('User has been update successfully.', window.location.href);
-
                     } else {
-
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();
                     }
                 }
             });
         });
-
     });
-</script>		
+</script>
