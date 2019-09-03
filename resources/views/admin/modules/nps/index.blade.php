@@ -7,17 +7,17 @@
 @section('contents')
 
 @php
-$iActiveCount = $iArchiveCount = 0;
+	$iActiveCount = $iArchiveCount = 0;
 
-if (!empty($oPrograms)) {
-    foreach ($oPrograms as $oCount) {
-        if ($oCount->status == 'archive') {
-            $iArchiveCount++;
-        } else {
-            $iActiveCount++;
-        }
-    }
-}
+	if (!empty($oPrograms)) {
+		foreach ($oPrograms as $oCount) {
+			if ($oCount->status == 'archive') {
+				$iArchiveCount++;
+			} else {
+				$iActiveCount++;
+			}
+		}
+	}
 @endphp
 <!-- Content area -->
 
@@ -246,7 +246,7 @@ if (!empty($oPrograms)) {
                                             }
 
                                             $totalFeedback = $oProgram->NPS;
-                                            //pre($totalFeedback);
+                                            
                                             foreach ($totalFeedback as $value) {
                                                 $scoreVal = $value->score;
                                                 if ($scoreVal > 8) {
@@ -274,10 +274,8 @@ if (!empty($oPrograms)) {
                                                         <div class="pt-5"><a class="text-default text-semibold" href="{{ base_url() }}admin/modules/nps/setup/{{ $oProgram->id }}">{{ $oProgram->title }}</a></div>
                                                         <div class="text-muted text-size-small">{{ @(ucfirst($oProgram->platform)) ? ucfirst($oProgram->platform) : 'NA' }}</div>
                                                     </div>
-
                                                 </td>
                                                 <td class="text-center">
-
                                                     @php
                                                     if ($score > 0) {
                                                         $scoreType = '';
@@ -311,13 +309,11 @@ if (!empty($oPrograms)) {
 															} else {
                                                         @endphp
                                                         <div class="media-left media-middle">
-														{{ @showUserAvtar($totalFeedback[0]->avatar, $totalFeedback[0]->firstname, $totalFeedback[0]->lastname) }}
+														{!! @showUserAvtar($totalFeedback[0]->avatar, $totalFeedback[0]->firstname, $totalFeedback[0]->lastname) !!}
                                                         </div>
                                                         <div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
                                                         @php }
                                                     @endphp
-
-
                                                 </td>
                                                 <td> <div class="media-left">
                                                         <div class="pt-5"><a class="text-default text-semibold">{{ dataFormat($oProgram->created) }}</a></div>
@@ -325,14 +321,14 @@ if (!empty($oPrograms)) {
                                                     </div></td>
                                                 <td>
                                                     @php
-                                                    if (!empty($oContactsT)) {
-                                                        $totPerson = count($oContactsT);
-                                                        $totWidth = 100;
-                                                    } else {
-                                                        $totPerson = '0';
-                                                        $totWidth = 0;
-                                                    }
-                                                    echo $totPerson;
+														if (!empty($oContactsT)) {
+															$totPerson = count($oContactsT);
+															$totWidth = 100;
+														} else {
+															$totPerson = '0';
+															$totWidth = 0;
+														}
+														echo $totPerson;
                                                     @endphp
                                                         
                                                 </td>
@@ -362,23 +358,23 @@ if (!empty($oPrograms)) {
                                                 </td>
                                                 <td>
                                                     @php 
-                                                    if ($totFeedCount > 0) {
-                                                        $divPosFeed = ($positive / $totFeedCount) * 100;
-                                                    } else {
-                                                        $divPosFeed = 0;
-                                                    }
-                                                   
-                                                    $neturalRating = $positive;
-                                                    if ($positive > 0) {
-                                                        $neturalGraph = ceil(($positive / $totFeedCount) * 100);
-                                                    } else {
-                                                        $neturalGraph = 0;
-                                                    }
+														if ($totFeedCount > 0) {
+															$divPosFeed = ($positive / $totFeedCount) * 100;
+														} else {
+															$divPosFeed = 0;
+														}
+													   
+														$neturalRating = $positive;
+														if ($positive > 0) {
+															$neturalGraph = ceil(($positive / $totFeedCount) * 100);
+														} else {
+															$neturalGraph = 0;
+														}
 
-                                                    $addNUC = '';
-                                                    if ($neturalGraph > 50) {
-                                                        $addNUC = 'over50';
-                                                    }
+														$addNUC = '';
+														if ($neturalGraph > 50) {
+															$addNUC = 'over50';
+														}
                                                     @endphp
                                                     <div class="media-left">
                                                         <div class="progress-circle {{ $addNUC }} green cp{{ $neturalGraph }} @if ($neturalGraph > 0) createSegment @endif" segment-type="total-promoters" campaign-id="{{ $oProgram->id }}" campaign-type="email" title="click to create segment">
@@ -439,24 +435,24 @@ if (!empty($oPrograms)) {
                                                 </td>
                                                 <td>
                                                     @php
-                                                    //echo $negetive; 
-                                                    if ($totFeedCount > 0) {
-                                                        $divNegFeed = ($negetive / $totFeedCount) * 100;
-                                                    } else {
-                                                        $divNegFeed = 0;
-                                                    }
-                                                    
-                                                    $neturalRating = $negetive;
-                                                    if ($negetive > 0) {
-                                                        $neturalGraph = ceil(($negetive / $totFeedCount) * 100);
-                                                    } else {
-                                                        $neturalGraph = 0;
-                                                    }
+														//echo $negetive; 
+														if ($totFeedCount > 0) {
+															$divNegFeed = ($negetive / $totFeedCount) * 100;
+														} else {
+															$divNegFeed = 0;
+														}
+														
+														$neturalRating = $negetive;
+														if ($negetive > 0) {
+															$neturalGraph = ceil(($negetive / $totFeedCount) * 100);
+														} else {
+															$neturalGraph = 0;
+														}
 
-                                                    $addNUC = '';
-                                                    if ($neturalGraph > 50) {
-                                                        $addNUC = 'over50';
-                                                    }
+														$addNUC = '';
+														if ($neturalGraph > 50) {
+															$addNUC = 'over50';
+														}
                                                     @endphp
                                                     <div class="media-left">
                                                         <div class="progress-circle {{ $addNUC }} red cp{{ $neturalGraph }} @if ($neturalGraph > 0) createSegment @endif" segment-type="total-detractors" campaign-id="{{ $oProgram->id }}" campaign-type="email" title="click to create segment">
@@ -480,28 +476,27 @@ if (!empty($oPrograms)) {
 
                                                 <td>
                                                     @php
-                                                    //pre($totalFeedback);
-                                                    $totalFeedback = isset($totalFeedback[0]) ? $totalFeedback[0] : '';
-                                                    if (!empty($totalFeedback->score)) {
-                                                        if ($totalFeedback->score >= 8) {
-                                                            $ratingValue = $totalFeedback->score . '/10';
-                                                            $icon = ' <i class="fa fa-smile-o"></i></a>';
-                                                            $imageIcon = '<a href="#"><img src="http://brandboost.io/assets/images/userp.png" class="img-circle img-xs" alt=""></a>';
-                                                        } else if ($totalFeedback->score > 4) {
-                                                            $ratingValue = $totalFeedback->score . '/10';
-                                                            $icon = ' <i class="fa fa-smile-o"></i></a>';
-                                                            $imageIcon = '<a href="#"><img src="http://brandboost.io/assets/images/userp.png" class="img-circle img-xs" alt=""></a>';
-                                                        } else {
-                                                            $ratingValue = $totalFeedback->score . '/10';
-                                                            $icon = ' <i class="fa fa-smile-o"></i></a>';
-                                                            $imageIcon = '<a href="#"><img src="http://brandboost.io/assets/images/userp.png" class="img-circle img-xs" alt=""></a>';
-                                                        }
-                                                    } else {
-                                                        $ratingValue = '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
-                                                        $icon = '';
-                                                        $imageIcon = '';
-                                                    }
-                                                    
+														
+														$totalFeedback = isset($totalFeedback[0]) ? $totalFeedback[0] : '';
+														if (!empty($totalFeedback->score)) {
+															if ($totalFeedback->score >= 8) {
+																$ratingValue = $totalFeedback->score . '/10';
+																$icon = ' <i class="fa fa-smile-o"></i></a>';
+																$imageIcon = '<a href="#"><img src="http://brandboost.io/assets/images/userp.png" class="img-circle img-xs" alt=""></a>';
+															} else if ($totalFeedback->score > 4) {
+																$ratingValue = $totalFeedback->score . '/10';
+																$icon = ' <i class="fa fa-smile-o"></i></a>';
+																$imageIcon = '<a href="#"><img src="http://brandboost.io/assets/images/userp.png" class="img-circle img-xs" alt=""></a>';
+															} else {
+																$ratingValue = $totalFeedback->score . '/10';
+																$icon = ' <i class="fa fa-smile-o"></i></a>';
+																$imageIcon = '<a href="#"><img src="http://brandboost.io/assets/images/userp.png" class="img-circle img-xs" alt=""></a>';
+															}
+														} else {
+															$ratingValue = '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
+															$icon = '';
+															$imageIcon = '';
+														}
                                                     @endphp
                                                     <div class="media-left media-middle">{!! @showUserAvtar($totalFeedback->avatar, $totalFeedback->firstname, $totalFeedback->lastname) !!}</div>
                                                     <div class="media-left">
@@ -516,15 +511,15 @@ if (!empty($oPrograms)) {
                                                 <td>
                                                     <div class="tdropdown">
                                                         @php
-                                                        if ($oProgram->status == 'active') {
-                                                            echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
-                                                        } else if ($oProgram->status == 'draft') {
-                                                            echo '<i class="icon-primitive-dot txt_grey fsize16"></i> ';
-                                                        } else if ($oProgram->status == 'archive') {
-                                                            echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
-                                                        } else {
-                                                            echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
-                                                        }
+															if ($oProgram->status == 'active') {
+																echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
+															} else if ($oProgram->status == 'draft') {
+																echo '<i class="icon-primitive-dot txt_grey fsize16"></i> ';
+															} else if ($oProgram->status == 'archive') {
+																echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
+															} else {
+																echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
+															}
                                                         @endphp
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
                                                             @php
@@ -564,11 +559,11 @@ if (!empty($oPrograms)) {
                                                 </td>
                                                 <td class="hidden">
                                                     @php
-                                                    if ($oProgram->status == 'archive') {
-                                                        echo 'archive';
-                                                    } else {
-                                                        echo 'active';
-                                                    }
+														if ($oProgram->status == 'archive') {
+															echo 'archive';
+														} else {
+															echo 'active';
+														}
                                                     @endphp
                                                 </td>
                                             </tr>
@@ -852,6 +847,7 @@ if (!empty($oPrograms)) {
 				});
             }
         });
+		
 
         $(document).on('click', '#archiveBulkNPS', function () {
             var val = [];
@@ -886,6 +882,7 @@ if (!empty($oPrograms)) {
 				});
             }
         });
+		
 
         $('#addNpsSurvery').click(function () {
             $('#addNPSModal').modal();

@@ -73,11 +73,7 @@
 
 <!-- Content area -->
 <div class="content">
-
-
     <!-- Dashboard content -->
-
-
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-flat">
@@ -85,7 +81,6 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h6 class="panel-title">Email/Sms Templates</h6>
-
                         </div>
                     </div>
                 </div>
@@ -101,144 +96,125 @@
                                 <div class="tab-content" style="min-height:500px;">
                                     <!--########################TAB 1 ##########################-->
                                     <div class="tab-pane active" id="Emailtab">
-                                        <?php
+                                        @php
                                         if (!empty($oCampaigns)) {
                                             foreach ($oCampaigns as $oCampaign) {
                                                 if ($oCampaign->campaign_type == 'Email') {
-                                                    ?>
-                                                    <div class="alert alert-info chooseTemplate" style="cursor:pointer" templateid="<?php echo $oCampaign->id; ?>">
-                                                        <?php echo $oCampaign->name; ?>
+                                                    @endphp
+                                                    <div class="alert alert-info chooseTemplate" style="cursor:pointer" templateid="{{ $oCampaign->id }}">
+                                                        {{ $oCampaign->name }}
                                                     </div>
-                                                    <?php
+                                                    @php
                                                 }
                                             }
                                         }
-                                        ?>
-
+                                        @endphp
                                     </div>
                                     <!--########################TAB 2 ##########################-->
                                     <div class="tab-pane" id="SMStab"> 
-                                        <?php
+                                        @php
                                         if (!empty($oCampaigns)) {
                                             foreach ($oCampaigns as $oCampaign) {
                                                 if ($oCampaign->campaign_type == 'Sms') {
-                                                    ?>
-                                                    <div class="alert alert-warning chooseTemplate" style="cursor:pointer" templateid="<?php echo $oCampaign->id; ?>">
-                                                        <?php echo $oCampaign->name; ?>
+                                                    @endphp
+                                                    <div class="alert alert-warning chooseTemplate" style="cursor:pointer" templateid="{{ $oCampaign->id }}">
+                                                        {{ $oCampaign->name }}
                                                     </div>
-                                                    <?php
+                                                    @php
                                                 }
                                             }
                                         }
-                                        ?>
+                                        @endphp
                                     </div>
                                     <!--########################TAB end ##########################-->
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="col-md-9">
                             <div class="tab-pane" id="post_purchase_tab">
-
-                                <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/editors/wysihtml5/wysihtml5.min.js"></script>
-                                <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/editors/wysihtml5/toolbar.js"></script>
-                                <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/editors/wysihtml5/parsers.js"></script>
-                                <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/editors/wysihtml5/locales/bootstrap-wysihtml5.ua-UA.js"></script>
-                                <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/editor_wysihtml5.js"></script>
-                                <?php $aTags = array('FIRST_NAME', 'LAST_NAME', 'EMAIL', 'ADVOCATE_REWARD', 'FRIEND_REWARD', 'REFERRAL_LINK', 'STORE_NAME', 'STORE_URL', 'STORE_EMAIL'); ?>
-
+                                <script type="text/javascript" src="{{ base_url() }}assets/js/plugins/editors/wysihtml5/wysihtml5.min.js"></script>
+                                <script type="text/javascript" src="{{ base_url() }}assets/js/plugins/editors/wysihtml5/toolbar.js"></script>
+                                <script type="text/javascript" src="{{ base_url() }}assets/js/plugins/editors/wysihtml5/parsers.js"></script>
+                                <script type="text/javascript" src="{{ base_url() }}assets/js/plugins/editors/wysihtml5/locales/bootstrap-wysihtml5.ua-UA.js"></script>
+                                <script type="text/javascript" src="{{ base_url() }}assets/js/pages/editor_wysihtml5.js"></script>
+                                @php $aTags = array('FIRST_NAME', 'LAST_NAME', 'EMAIL', 'ADVOCATE_REWARD', 'FRIEND_REWARD', 'REFERRAL_LINK', 'STORE_NAME', 'STORE_URL', 'STORE_EMAIL') @endphp
 
                                 <div style="width:100%;" id="template-info">
                                     <div style="position:relative; top:100px; left:150px;"><h3><strong>Edit and Design Email/Sms templates for your users</strong></h3></div>
 
                                 </div>
                                 <div class="clearfix"></div>
-
-
-                                <?php
+                                @php
                                 if (!empty($oCampaigns)) {
                                     foreach ($oCampaigns as $oCampaign) {
                                         if ($oCampaign->campaign_type == 'Email') {
-                                            ?>
+                                            @endphp
 
-                                            <div class="template-content" id="template_<?php echo $oCampaign->id; ?>" style="display:none;">
-                                                <h2 class="text text-center"><strong><?php echo $oCampaign->name; ?> Template</strong></h2>
+                                            <div class="template-content" id="template_{{ $oCampaign->id }}" style="display:none;">
+                                                <h2 class="text text-center"><strong>{{ $oCampaign->name }} Template</strong></h2>
                                                 <div class="clearfix"></div>
-                                                <form method="post" name="updateEmailTempaltes" id="updateTempaltes_<?php echo $oCampaign->id; ?>" action="javascript:void();">
-
+                                                <form method="post" name="updateEmailTempaltes" id="updateTempaltes_{{ $oCampaign->id }}" action="javascript:void();">
                                                     <div class="snoteeditoe">
-                                                        <textarea rows="15" name="emailtemplate" id="emailtemplate_<?php echo $oCampaign->id;?>" class="wysihtml5 wysihtml5-default form-control" style="height:600px;" required><?php echo base64_decode($oCampaign->html); ?></textarea>
+                                                        <textarea rows="15" name="emailtemplate" id="emailtemplate_{{ $oCampaign->id }}" class="wysihtml5 wysihtml5-default form-control" style="height:600px;" required>{!! base64_decode($oCampaign->html) !!}</textarea>
 
                                                         <div class="col-lg-12" style="margin-top:10px;">
-                                                            <?php
-                                                            foreach ($aTags as $value) {
-                                                                ?><button type="button" data-toggle="tooltip" title="Click to insert Tag" data-tag-name="<?php echo '{' . $value . '}'; ?>" class="btn btn-default add_btn draggable insert_tag_button" campaignid="<?php echo $oCampaign->id;?>"><?php echo '{' . $value . '}'; ?></button>&nbsp;&nbsp;<?php
-                                                            }
-                                                            ?>
+                                                            @foreach ($aTags as $value)
+																<button type="button" data-toggle="tooltip" title="Click to insert Tag" data-tag-name="{{ '{' . $value . '}' }}" class="btn btn-default add_btn draggable insert_tag_button" campaignid="{{ $oCampaign->id }}">{{ '{' . $value . '}' }}</button>&nbsp;&nbsp;
+															@endforeach
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 text-right" style="margin-top:30px;">
-                                                        <input name="campaignId" id="campaignId" value="<?php echo $oCampaign->id; ?>" type="hidden">
-                                                        <input name="campaignType" id="campaignType" value="<?php echo $oCampaign->campaign_type; ?>" type="hidden">
+                                                        <input name="campaignId" id="campaignId" value="{{ $oCampaign->id }}" type="hidden">
+                                                        <input name="campaignType" id="campaignType" value="{{ $oCampaign->campaign_type }}" type="hidden">
                                                         <button type="submit"  class="btn bl_cust_btn new btn-default">Save</button>
                                                     </div>
                                                 </form>
                                             </div>
 
-                                            <?php
+                                            @php
                                         }
                                     }
                                 }
-                                ?>
+                                @endphp
 
                                 <!-- SMS templates -->
-                                <?php
+                                @php
                                 if (!empty($oCampaigns)) {
                                     foreach ($oCampaigns as $oCampaign) {
                                         if ($oCampaign->campaign_type == 'Sms') {
-                                            ?>
-
-                                            <div class="template-content" id="template_<?php echo $oCampaign->id; ?>" style="display:none;">
-                                                <h2 class="text text-center"><strong><?php echo $oCampaign->name; ?> Template</strong></h2>
-                                                <form method="post" name="updateSmsTempaltes" id="updateTempaltes_<?php echo $oCampaign->id; ?>" action="javascript:void();">
-
+                                            @endphp
+                                            <div class="template-content" id="template_{{ $oCampaign->id }}" style="display:none;">
+                                                <h2 class="text text-center"><strong>{{ $oCampaign->name }} Template</strong></h2>
+                                                <form method="post" name="updateSmsTempaltes" id="updateTempaltes_{{ $oCampaign->id }}" action="javascript:void();">
                                                     <div class="snoteeditoe">
-                                                        <textarea rows="15" name="smstemplate" id="emailtemplate_<?php echo $oCampaign->id;?>" class="wysihtml5 wysihtml5-default form-control" style="height:600px;" required><?php echo base64_decode($oCampaign->html); ?></textarea>
+                                                        <textarea rows="15" name="smstemplate" id="emailtemplate_{{ $oCampaign->id }}" class="wysihtml5 wysihtml5-default form-control" style="height:600px;" required>{!! base64_decode($oCampaign->html) !!}</textarea>
 
                                                         <div class="col-lg-12" style="margin-top:10px;">
-                                                            <?php
-                                                            foreach ($aTags as $value) {
-                                                                ?><button type="button" data-toggle="tooltip" title="Click to insert Tag" data-tag-name="<?php echo '{' . $value . '}'; ?>" class="btn btn-default add_btn draggable insert_tag_button"><?php echo '{' . $value . '}'; ?></button>&nbsp;&nbsp;<?php
-                                                            }
-                                                            ?>
+                                                            @foreach ($aTags as $value)
+																<button type="button" data-toggle="tooltip" title="Click to insert Tag" data-tag-name="{{ '{' . $value . '}' }}" class="btn btn-default add_btn draggable insert_tag_button">{{ '{' . $value . '}' }}</button>&nbsp;&nbsp;
+															@endforeach
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 text-right" style="margin-top:30px;">
-                                                        <input name="campaignId" id="campaignId" value="<?php echo $oCampaign->id; ?>" type="hidden">
-                                                        <input name="campaignType" id="campaignType" value="<?php echo $oCampaign->campaign_type; ?>" type="hidden">
+                                                        <input name="campaignId" id="campaignId" value="{{ $oCampaign->id }}" type="hidden">
+                                                        <input name="campaignType" id="campaignType" value="{{ $oCampaign->campaign_type }}" type="hidden">
                                                         <button type="submit"  class="btn bl_cust_btn new btn-default">Save</button>
                                                     </div>
                                                 </form>
                                             </div>
-
-                                            <?php
+                                            @php
                                         }
                                     }
                                 }
-                                ?>
-
+                                @endphp
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </div>
-
-
 
     <!-- /dashboard content -->
 
@@ -248,22 +224,19 @@
     $(document).ready(function () {
 
         $(".chooseTemplate").click(function () {
-
             var campaignID = $(this).attr("templateid");
             $("#template-info").hide();
             $(".template-content").hide();
             $("#template_" + campaignID).show();
-
         });
 
 
         $("[id^=updateTempaltes_]").submit(function () {
-
             var formID = $(this).attr("id");
             $('.overlaynew').show();
             var formdata = $("#"+formID).serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/updateUserCampaign'); ?>',
+                url: "{{ base_url('admin/modules/referral/updateUserCampaign') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -280,8 +253,6 @@
                     alertMessage('Error: Some thing wrong!');
                 }
             });
-
-
         });
 
         $('.insert_tag_button').on('click', function () {

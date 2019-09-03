@@ -1,11 +1,12 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php
+
+@php
 $disableRemaining = false;
 $rewards = '';
 $emailWorkflow = '';
@@ -41,7 +42,8 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 } else {
     $rs = 'active';
 }
-?>
+@endphp
+
 <style>
     #uploadedbrandlogo .dropzone .dz-preview:hover .dz-image img { filter:none !important;-webkit-filter:!important;}
 </style>
@@ -52,144 +54,136 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
-                <h3><img style="width: 19px;" src="/assets/images/nps_icon.png"><?php echo $title; ?> <?php echo (!empty($oNPS)) ? ': ' . $oNPS->title : ''; ?></h3>
+                <h3><img style="width: 19px;" src="/assets/images/nps_icon.png">{{ $title }} {{ (!empty($oNPS)) ? ': ' . $oNPS->title : '' }}</h3>
 
                 <ul class="nav nav-tabs nav-tabs-bottom" id="nav-tabs-bottom">
-                    <?php if (empty($oNPS->platform)): ?>  
-                        <li class="<?php
+                    @if (empty($oNPS->platform)) 
+                        <li class="@php
                         if ($defalutTab == 'platform') {
                             echo 'active';
                             $disableRemaining = true;
                         }
-                        ?>"><a href="#right-icon-tab1" data-toggle="tab">Source</a></li>
-                        <?php endif; ?>
-                    <li class="<?php
+                        @endphp"><a href="#right-icon-tab1" data-toggle="tab">Source</a></li>
+                    @endif
+                    <li class="@php
                     if ($defalutTab == 'customize') {
                         echo 'active';
                         $disableRemaining = true;
                     }
-                    ?>"><a href="<?php
+                    @endphp"><a href="@php
                             if ($disableRemaining == false || $defalutTab == 'customize') {
                                 $bCustomizeTab = true;
-                                ?>#right-icon-tab2<?php } else { ?>javascript:void(0);<?php } ?>" data-toggle="tab">Configuration</a></li>
+                                @endphp#right-icon-tab2 @php } else { @endphp javascript:void(0); @php } @endphp" data-toggle="tab">Configuration</a></li>
 
 
-                    <?php if ($oNPS->platform != 'web' && $oNPS->platform != 'link'): ?>
-                        <li class="<?php
+                    @if ($oNPS->platform != 'web' && $oNPS->platform != 'link')
+                        <li class="@php
                         if ($defalutTab == 'workflow') {
                             echo 'active';
                             $disableRemaining = true;
                         }
-                        ?>"><a href="<?php
+                        @endphp"><a href="@php
                                 if ($disableRemaining == false || $defalutTab == 'workflow') {
                                     $bWorkflowTab = true;
-                                    ?>#right-icon-tab3<?php } else { ?>javascript:void(0);<?php } ?>" data-toggle="tab">Workflow</a>
+                                    @endphp #right-icon-tab3 @php } else { @endphp javascript:void(0); @php } @endphp " data-toggle="tab">Workflow</a>
                         </li>
 
 
-                        <li class="<?php
+                        <li class="@php
                         if ($defalutTab == 'people') {
                             echo 'active';
                             $disableRemaining = true;
                         }
-                        ?>"><a href="<?php
+                        @endphp"><a href="@php
                                 if ($disableRemaining == false || $defalutTab == 'people') {
                                     $bPeopleTab = true;
-                                    ?>#right-icon-tab4<?php } else { ?>javascript:void(0);<?php } ?>" data-toggle="tab">Contacts</a>
+                                    @endphp #right-icon-tab4 @php } else { @endphp javascript:void(0); @php } @endphp " data-toggle="tab">Contacts</a>
                         </li>
 
-                    <?php endif; ?>
+                    @endif
 
-                    <?php if ($oNPS->platform == 'link'): ?>
+                    @if ($oNPS->platform == 'link')
 
-                        <li class="<?php
+                        <li class="@php
                         if ($defalutTab == 'widgets') {
                             echo 'active';
                             $disableRemaining = true;
                         }
-                        ?>"><a href="<?php
+                        @endphp"><a href="@php
                                 if ($disableRemaining == false || $defalutTab == 'widgets') {
                                     $bWidgetTab = true;
-                                    ?>#right-icon-tab6<?php } else { ?>javascript:void(0);<?php } ?>" data-toggle="tab">Setup Link</a>
+                                    @endphp #right-icon-tab6 @php } else { @endphp javascript:void(0); @php } @endphp" data-toggle="tab">Setup Link</a>
                         </li>
-                    <?php endif; ?>    
+                    @endif    
 
-                    <?php if ($oNPS->platform == 'web'): ?>
-
-                        <li class="<?php
+                    @if ($oNPS->platform == 'web')
+                        <li class="@php
                         if ($defalutTab == 'widgets') {
                             echo 'active';
                             $disableRemaining = true;
                         }
-                        ?>"><a href="<?php
+                        @endphp"><a href="@php
                                 if ($disableRemaining == false || $defalutTab == 'widgets') {
                                     $bWidgetTab = true;
-                                    ?>#right-icon-tab6<?php } else { ?>javascript:void(0);<?php } ?>" data-toggle="tab">Widget</a>
+                                    @endphp #right-icon-tab6 @php } else { @endphp javascript:void(0) @php } @endphp" data-toggle="tab">Widget</a>
                         </li>
-                    <?php endif; ?>
+                    @endif
                         
-                    <li class="<?php
+                    <li class="@php
                     if ($defalutTab == 'score') {
                         echo 'active';
                         $disableRemaining = true;
                     }
-                    ?>"><a href="<?php
+                    @endphp"><a href="@php
                             if ($disableRemaining == false || $defalutTab == 'widgets') {
                                 $bScoreTab = true;
-                                ?>#right-icon-tab5<?php } else { ?>javascript:void(0);<?php } ?>" data-toggle="tab">Scores</a>
-                    </li>    
-
-
-
+                                @endphp #right-icon-tab5 @php } else { @endphp javascript:void(0) @php } @endphp" data-toggle="tab">Scores</a>
+                    </li> 
                 </ul>
 
 
             </div>
             <!--=============Button Area Right Side==============-->
-            <?php //if ($oNPS->platform != 'web'): ?>
-                <div class="col-md-5 text-right btn_area">
+            
+			<div class="col-md-5 text-right btn_area">
 
-                    <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishNPSCampaignStatus" status="draft"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
+				<button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishNPSCampaignStatus" status="draft"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
 
-                    <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishNPSCampaignStatus" status="active"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
+				<button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishNPSCampaignStatus" status="active"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
 
-          <!-- <button type="button" class="btn light_btn bl_cust_btn btn-default importModuleContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $oNPS->hashcode; ?>" data-redirect="<?php echo base_url(); ?>admin/modules/nps/setup/<?php echo $oNPS->id; ?>"><i class="icon-arrow-up16"></i><span> &nbsp;  Import Contact</span> </button> 
-
-          <a  href="{{ base_url() }}admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName; ?>&module_account_id=<?php echo $oNPS->hashcode; ?>" title="Export" class="btn light_btn ml10 bl_cust_btn btn-default"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contact</span> </a>
-
-          <button type="button" class="btn dark_btn dropdown-toggle ml10 bl_cust_btn btn-default addModuleContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $oNPS->hashcode; ?>"><i class="icon-plus3 txt_green"></i><span> &nbsp;  Invite Contact</span> </button> -->
-
-                </div>
-            <?php //endif; ?>
+			</div>
         </div>
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
     <div class="tab-content">
         <!--########################TAB 1 ##########################-->
-        <?php if (empty($oNPS->platform)): ?>  
+        @if (empty($oNPS->platform))  
             @include('admin.modules.nps.nps-tabs.choose-platform', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID))
-        <?php endif; ?>
-        <!--########################TAB 2 ##########################-->
-        <?php if ($bCustomizeTab == true): ?>
+        @endif
+        
+		<!--########################TAB 2 ##########################-->
+        @if ($bCustomizeTab == true)
             @include('admin.modules.nps.nps-tabs.customization', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS))
-        <?php endif; ?>
+        @endif
+		
         <!--########################TAB 3 ##########################-->
-        <?php if ($bWidgetTab == true): ?>
+        @if ($bWidgetTab == true)
             @include('admin.modules.nps.nps-tabs.widget_code', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS))
-        <?php endif; ?>
+        @endif
+		
         <!--########################TAB 4 ##########################-->
-        <?php if ($bWorkflowTab == true): ?>
+        @if ($bWorkflowTab == true)
             @include('admin.modules.nps.nps-tabs.reward-workflow-beta', array('emailWorkflow' => $emailWorkflow, 'oEvents' => $oEvents))
-        <?php endif; ?>
+        @endif
+		
         <!--########################TAB 5 ##########################--> 
-        <?php if ($bPeopleTab == true): ?>
+        @if ($bPeopleTab == true)
             @include('admin.modules.nps.nps-tabs.contacts', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS, 'oContacts' => $oContacts))
-        <?php endif; ?>
+        @endif
+		
         <!--########################TAB 6 ##########################--> 
-        <?php //if ($bScoreTab == true):  ?>
         @include('admin.modules.nps.nps-tabs.score', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS, 'oFeedbacks' => $oFeedbacks))
-        <?php //endif; ?>
     </div>
 </div>
 
@@ -207,8 +201,8 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
                         @csrf
-                        <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
-                        <input type="hidden" name="bbaid" value="<?php echo $oNPS->hashcode; ?>" />
+                        <input type="hidden" name="userid" value="{{ $userID }}" />
+                        <input type="hidden" name="bbaid" value="{{ $oNPS->hashcode }}" />
                         <div class="col-md-12">
 
                             <div class="form-group">
@@ -216,7 +210,6 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                                 <div class="">
                                     <input name="firstname" id="firstname" class="form-control" type="text" required="">
                                 </div>
-
                             </div>
 
                             <div class="form-group">
@@ -247,7 +240,6 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -266,8 +258,8 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 <div class="panel-body">
                     <form name="frmInviteBulkCustomer" id="frmInviteBulkCustomer"  method="post" action="" enctype="multipart/form-data" >
                         @csrf
-                        <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
-                        <input type="hidden" name="bbaid" value="<?php echo $oNPS->hashcode; ?>" />
+                        <input type="hidden" name="userid" value="{{ $userID }}" />
+                        <input type="hidden" name="bbaid" value="{{ $oNPS->hashcode }}" />
 
                         <div class="col-md-8">
                             <strong> Upload a CSV file with customer contact details </strong> <br>
@@ -275,14 +267,12 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                             -Column 2 should be FIRST_NAME<br>
                             Column 3 should be LAST_NAME<br>
                             Column 4 should be PHONE<br>                            
-
                         </div>
 
                         <div class="col-md-4">
                             <div class="fileupload">
                                 <input type="file" name="userfile" id="ctrBrowse" accept=".csv, application/vnd.ms-excel" style="position:relative;top:50px;" />
                             </div>
-
                         </div>
 
                         <div class="clearfix"></div>
@@ -290,9 +280,6 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                         <button class="btn btn-success pull-right" id="btnBulkInvite" type="submit">
                             Import People
                         </button>
-
-
-
                     </form>
                 </div>
             </div>
@@ -302,31 +289,26 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
 <script>
     $(document).ready(function () {
-
-
         $(document).on("click", ".logo_img", function () {
             $(".dz-remove").trigger("click");
             $("#myDropzone_logo_img").trigger("click");
             $("#uploadedbrandlogo").hide();
             $("#uploadbrandlogo").show();
-
         });
 
         $(document).on("click", ".dz-remove", function () {
             $("#uploadedbrandlogo").hide();
             $("#uploadbrandlogo").show();
             $('input[name="brand_logo"]').val('');
-
         });
 
 
         $("#frmInviteCustomer").submit(function () {
-
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $('#btnInvite').prop("disabled", true);
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/registerInvite'); ?>',
+                url: "{{ base_url('admin/modules/nps/registerInvite') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -336,11 +318,8 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 success: function (data) {
                     $('.overlaynew').hide();
                     if (data.status == 'success') {
-
-                        //alertMessageAndRedirect('User has been invited successfully.', window.location.href);
                         window.location.href = window.location.href;
                     } else {
-
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();
                     }
@@ -348,16 +327,13 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             });
             return false;
         });
+		
 
         $("#frmInviteBulkCustomer").submit(function () {
-
             $('.overlaynew').show();
-
             var formData = new FormData($(this)[0]);
-
-
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/importInviteCSV'); ?>',
+                url: "{{ base_url('admin/modules/nps/importInviteCSV') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -365,14 +341,9 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 processData: false,
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
-
-                        //alertMessageAndRedirect('Users has been invited successfully.', window.location.href);
                         window.location.href = window.location.href;
-
                     } else {
-
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();
                     }
@@ -380,50 +351,43 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             });
             return false;
         });
+		
 
         $("#publishNPSCampaign").click(function () {
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/publishNPSCampaign'); ?>',
+                url: "{{ base_url('admin/modules/nps/publishNPSCampaign') }}",
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', 'npsId': '<?php echo $oNPS->id; ?>'},
+                data: {_token: '{{csrf_token()}}', 'npsId': "{{ $oNPS->id }}"},
                 dataType: "html",
                 success: function (data) {
-                    window.location.href = '<?php echo base_url("admin/modules/nps/") ?>';
+                    window.location.href = "{{ base_url('admin/modules/nps/') }}";
                 }, error: function () {
                     alertMessage('Error: Some thing wrong!');
                 }
             });
         });
+		
 
         $(document).on('click', '.publishNPSCampaignStatus', function () {
-
             var status = $(this).attr('status');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/publishNPSCampaignStatus'); ?>',
+                url: "{{ base_url('admin/modules/nps/publishNPSCampaignStatus') }}",
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', 'npsId': '<?php echo $oNPS->id; ?>', 'status': status},
+                data: {_token: '{{csrf_token()}}', 'npsId': "{{ $oNPS->id }}", 'status': status},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        //window.location.href = '<?php echo base_url('admin/brandboost/onsite'); ?>';
                         if (status == 1) {
-
                             displayMessagePopup();
                         } else {
                             displayMessagePopup();
                         }
-
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
                 }
             });
-
         });
-
     });
 </script>	
 @endsection
-
-
-

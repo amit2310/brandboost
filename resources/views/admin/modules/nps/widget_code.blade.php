@@ -66,17 +66,13 @@
     }
 </style>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/tables/datatables/datatables.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/datatables_sorting_date.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/jquery-ui.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/tables/datatables/datatables.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/pages/datatables_sorting_date.js"></script>
 
 <!-- Content area -->
 <div class="content">
-
-
     <!-- Dashboard content -->
-
-
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-flat">
@@ -85,11 +81,9 @@
                         <div class="col-lg-12">
                             <h6 class="panel-title">Brandboost Widgets</h6>
                             <div class="heading-elements">
-
                                 <button type="button" class="btn btn-link daterange-ranges heading-btn text-semibold">
                                     <i class="icon-calendar3 position-left"></i> <span></span> <b class="caret"></b>
                                 </button>
-
                             </div>
                         </div>
                     </div>
@@ -108,16 +102,13 @@
                                 <p>A small widget that sits on your store page allowing customers to instantly sign-up as an advocate:</p>
 
                                 <textarea cols="100%" rows="4" name="txtReferral" id="txtReferral">
-<script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js">
+<script type="text/javascript" id="bbscriptloader" data-key="{{ $oSettings->hashcode }}" data-widgets="referral" async="true" src="{{ site_url() }}assets/js/ref_widgets.js">
 </script></textarea>
                                 <div class="clearfix"></div>
                                 <button type="button" id="btnReferral" class="btn bl_cust_btn pull-right">Copy <i class="icon-arrow-right14 position-right"></i></button>
-
-
                             </div>
                             <!--########################TAB 2 ##########################-->
                             <div class="tab-pane" id="post_purchase_tab">
-
                                 <p>Visit your store's dashboard and find your purchase completed page.Paste this code just before the closing body tag on your purchase completed page after replacing these dynamic variables:
                                     You must replace the following dummy fields in the code snippet with dynamic checkout data from your store platform:
                                 <p><strong>data-bb-firstname: Customer First Name</strong></p>
@@ -133,8 +124,6 @@
                                 <p><strong>data-bb-currency: Invoice Currency (3 letter code)</strong></p>
 
                                 <p><strong>data-bb-timestamp=: Purchase Timestamp (UNIX time)</strong></p>
-
-
                                 </p>
                                 <input type="checkbox" id="showPopupAfterSale"> Display Referral popup after successful purchase?
                                 <div class="clearfix"></div>
@@ -149,7 +138,7 @@
     data-bb-currency="USD"
     data-bb-timestamp="123456789"
     ></div>
-<script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral-sale" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"></script>
+<script type="text/javascript" id="bbscriptloader" data-key="{{ $oSettings->hashcode }}" data-widgets="referral-sale" async="true" src="{{ site_url() }}assets/js/ref_widgets.js"></script>
 </textarea>
                                 <div class="clearfix"></div>
                                 <button type="button" id="btnPostPurchase" class="btn bl_cust_btn pull-right">Copy <i class="icon-arrow-right14 position-right"></i></button>
@@ -160,7 +149,7 @@
                                 <p>Embed your sign-up page into your store, so your customers can sign up as they're browsing:</p>
 
                                 <textarea cols="100%" rows="4" name="txtEmbed" id="txtEmbed">
-<script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral-embed" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js">
+<script type="text/javascript" id="bbscriptloader" data-key="{{ $oSettings->hashcode }}" data-widgets="referral-embed" async="true" src="{{ site_url() }}assets/js/ref_widgets.js">
 </script></textarea>
                                 <div class="clearfix"></div>
                                 <button type="button" id="btnEmbed" class="btn bl_cust_btn pull-right">Copy <i class="icon-arrow-right14 position-right"></i></button>
@@ -185,7 +174,7 @@
     data-bb-timestamp="123456789"
     data-bb-showwidget="true"
     ></div>
-<script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral-sale" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"></script></textarea>>
+<script type="text/javascript" id="bbscriptloader" data-key="{{ $oSettings->hashcode }}" data-widgets="referral-sale" async="true" src="{{ site_url() }}assets/js/ref_widgets.js"></script></textarea>
 
 
 <textarea id="dummyPostSaleCodeWithoutPopup" style="display:none;"><div id="bb-invoice_details" 
@@ -197,7 +186,7 @@
     data-bb-currency="USD"
     data-bb-timestamp="123456789"
     ></div>
-<script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral-sale" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"></script></textarea>
+<script type="text/javascript" id="bbscriptloader" data-key="{{ $oSettings->hashcode }}" data-widgets="referral-sale" async="true" src="{{ site_url() }}assets/js/ref_widgets.js"></script></textarea>
 
     <!-- /dashboard content -->
 
@@ -251,7 +240,5 @@
             $("#txtPostPurchase").val(codeContent);
             
         });
-
-
     });
 </script>
