@@ -73,11 +73,7 @@
 
 <!-- Content area -->
 <div class="content">
-
-
     <!-- Dashboard content -->
-
-
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-flat">
@@ -85,32 +81,21 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h6 class="panel-title">Referral Module Integrations</h6>
-                            
                         </div>
                     </div>
                 </div>
 
                 <div class="panel-body">
                     <div class="tab-pane" id="post_purchase_tab">
-
                         <p>Visit your store's dashboard and find your purchase completed page.Paste this code just before the closing body tag on your purchase completed page after replacing these dynamic variables:
                             You must replace the following dummy fields in the code snippet with dynamic checkout data from your store platform:
-                            
                         <p class="highlighted"><strong>data-bb-firstname: Customer First Name</strong></p>
-
                         <p class="highlighted"><strong>data-bb-lastname: Customer Last Name</strong></p>
-
                         <p class="highlighted"><strong>data-bb-email: Customer Email Address</strong></p>
-
                         <p class="highlighted"><strong>data-bb-invoice-id: Invoice Number</strong></p>
-
                         <p class="highlighted"><strong>data-bb-amount: Invoice Amount</strong></p>
-
                         <p class="highlighted"><strong>data-bb-currency: Invoice Currency (3 letter code)</strong></p>
-
                         <p class="highlighted"><strong>data-bb-timestamp: Purchase Timestamp (UNIX time)</strong></p>
-
-                            
                         </p>
                         <p>
                             <br>
@@ -129,9 +114,9 @@
     data-bb-invoice-id="12345"
     data-bb-amount="10"
     data-bb-currency="USD"
-    data-bb-timestamp="<?php echo time();?>"
+    data-bb-timestamp="{{ time() }}"
     ></div>
-<script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral-sale" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"></script>
+<script type="text/javascript" id="bbscriptloader" data-key="{{ $oSettings->hashcode }}" data-widgets="referral-sale" async="true" src="{{ site_url() }}assets/js/ref_widgets.js"></script>
                         </textarea>
                         </p>
                         <div class="clearfix"></div>
@@ -149,10 +134,10 @@
     data-bb-invoice-id="12345"
     data-bb-amount="10"
     data-bb-currency="USD"
-    data-bb-timestamp="<?php echo time();?>"
+    data-bb-timestamp="{{ time() }}"
     data-bb-showwidget="true"
     ></div>
-<script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral-sale" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"></script></textarea>>
+<script type="text/javascript" id="bbscriptloader" data-key="{{ $oSettings->hashcode }}" data-widgets="referral-sale" async="true" src="{{ site_url() }}assets/js/ref_widgets.js"></script></textarea>>
 
 
 <textarea id="dummyPostSaleCodeWithoutPopup" style="display:none;"><div id="bb-invoice_details" 
@@ -162,9 +147,9 @@
     data-bb-invoice-id="12345"
     data-bb-amount="10"
     data-bb-currency="USD"
-    data-bb-timestamp="<?php echo time();?>"
+    data-bb-timestamp="{{ time() }}"
     ></div>
-<script type="text/javascript" id="bbscriptloader" data-key="<?php echo $oSettings->hashcode; ?>" data-widgets="referral-sale" async="true" src="<?php echo site_url(); ?>assets/js/ref_widgets.js"></script></textarea>
+<script type="text/javascript" id="bbscriptloader" data-key="{{ $oSettings->hashcode }}" data-widgets="referral-sale" async="true" src="{{ site_url() }}assets/js/ref_widgets.js"></script></textarea>
 
     <!-- /dashboard content -->
 
@@ -172,15 +157,12 @@
 <!-- /content area -->
 <script>
     $(document).ready(function () {
-
-        
-
         $("#btnPostPurchase").click(function () {
             var copyText = $("#txtPostPurchase").val();
 
             /* Select the text field */
             $("#txtPostPurchase").select();
-
+			
             /* Copy the text inside the text field */
             document.execCommand("copy");
         });
@@ -189,17 +171,11 @@
         $("#showPopupAfterSale").change(function () {
             if ($(this).is(":checked")) {
                 var codeContent = $("#dummyPostSaleCodeWithPopup").val();
-
             } else {
                 var codeContent = $("#dummyPostSaleCodeWithoutPopup").val();
-
             }
-
             $("#txtPostPurchase").val('');
             $("#txtPostPurchase").val(codeContent);
-
         });
-
-
     });
 </script>
