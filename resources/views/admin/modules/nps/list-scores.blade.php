@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -12,7 +12,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3">
-                <h3><img style="width: 19px;" src="<?php echo base_url(); ?>assets/images/nps_icon.png"> &nbsp; NPS Score</h3>
+                <h3><img style="width: 19px;" src="{{ base_url() }}assets/images/nps_icon.png"> &nbsp; NPS Score</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <li class="allS active"><a style="javascript:void();" class="filterByColumn" fil="">All</a></li>
                     <li class="proS"><a style="javascript:void();" class="filterByColumn" fil="1">Promoters</a></li>
@@ -162,14 +162,14 @@
         </div>
     </div>
     <!-- Dashboard content -->
-    <?php if (!empty($oFeedbacks)): ?>
+    @if (!empty($oFeedbacks))
         <div class="tab-content">
             <div class="tab-pane active" id="right-icon-tab1">
                 <div class="col-lg-12">
                     <!-- Marketing campaigns -->
                     <div class="panel panel-flat">
                         <div class="panel-heading">
-                            <h6 class="panel-title"><?php echo count($oFeedbacks); ?> NPS Score</h6>
+                            <h6 class="panel-title">{{ count($oFeedbacks) }} NPS Score</h6>
                             <div class="heading-elements">
                                 <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                     <input class="form-control input-sm cus_search" tableid="listScoresTable" placeholder="Search by name" type="text">
@@ -177,7 +177,6 @@
                                         <i class="icon-search4"></i>
                                     </div>
                                 </div>&nbsp; &nbsp;
-
                             </div>
                         </div>
 
@@ -195,13 +194,12 @@
                                         <th><i class="icon-hash"></i> Score</th>
                                         <th><i class="icon-atom"></i> Feedback</th>
                                         <th style="display: none;">Score</th>
-                                        <!-- <th class="text-center"><i class="icon-price-tag2"></i> Applied Tags</th> -->
                                     </tr>
                                 </thead>
 
                                 <tbody>
 
-                                    <?php
+                                    @php
                                     foreach ($oFeedbacks as $oFeedback) {
                                         $score = ($oFeedback->score) ? $oFeedback->score : 0;
                                         $feedback = ($oFeedback->feedback) ? $oFeedback->feedback : 'N/A';
@@ -212,69 +210,68 @@
                                         $lastName = isset($aName[1]) ? $aName[1] : '';
                                         
                                         $oFeedback->country_code = isset($oFeedback->country_code) ? $oFeedback->country_code : 'us';
-                                        ?>
+                                        @endphp
                                         <tr>
                                             <td style="display: none;"></td>
                                             <td style="display: none;"></td>
                                             <td>	
-                                                <?php if ($oFeedback->subscriber_id > 0) { ?>
-                                                    <div class="media-left media-middle"> <?php echo @showUserAvtar($oFeedback->avatar, $oFeedback->firstname, $oFeedback->lastname); ?> </div>
+                                                @if ($oFeedback->subscriber_id > 0)
+                                                    <div class="media-left media-middle"> {!! @showUserAvtar($oFeedback->avatar, $oFeedback->firstname, $oFeedback->lastname) !!} </div>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot"><?php echo $oFeedback->firstname; ?> <?php echo $oFeedback->lastname; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($oFeedback->country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
-                                                        <div class="text-muted text-size-small"><?php echo $oFeedback->email; ?></div>
+                                                        <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot">{{ $oFeedback->firstname }} {{ $oFeedback->lastname }}</a> <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($oFeedback->country_code) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
+                                                        <div class="text-muted text-size-small">{{ $oFeedback->email }}</div>
                                                     </div>
-                                                <?php } else { ?>
-                                                    <div class="media-left media-middle"> <?php echo $oFeedback->feedback_fullname == '' ? showUserAvtar('', '', '') : @showUserAvtar($oFeedback->avatar, $firstName, $lastName); ?> </div>
+                                                @else
+                                                    <div class="media-left media-middle"> {!! $oFeedback->feedback_fullname == '' ? showUserAvtar('', '', '') : @showUserAvtar($oFeedback->avatar, $firstName, $lastName) !!} </div>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot"><?php echo $oFeedback->feedback_fullname == '' ? 'User_' . $oFeedback->id : $firstName . ' ' . $lastName; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($oFeedback->country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
-                                                        <div class="text-muted text-size-small"><?php echo $oFeedback->feedback_email == '' ? $oFeedback->email : $oFeedback->feedback_email; ?></div>
+                                                        <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot">{{ $oFeedback->feedback_fullname == '' ? 'User_' . $oFeedback->id : $firstName . ' ' . $lastName }}</a> <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($oFeedback->country_code) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
+                                                        <div class="text-muted text-size-small">{{ $oFeedback->feedback_email == '' ? $oFeedback->email : $oFeedback->feedback_email }}</div>
                                                     </div>
-                                                <?php } ?>
+                                                @endif
                                             </td>
                                             <td>
                                                 <div class="media-left media-middle"> <a class="icons square" href="javascript:void(0);"><i class="icon-checkmark3 txt_blue"></i></a> </div>
                                                 <div class="media-left">
-                                                    <div class="pt-5"><a class="text-default text-semibold" href="<?php echo base_url(); ?>admin/modules/nps/setup/<?php echo $oFeedback->npsID; ?>"><?php echo $oFeedback->campaignTitle; ?></a></div>
-                                                    <div class="text-muted text-size-small"><?php echo ucfirst($oFeedback->platform); ?></div>
+                                                    <div class="pt-5"><a class="text-default text-semibold" href="{{ base_url() }}admin/modules/nps/setup/{{ $oFeedback->npsID }}"> {{ $oFeedback->campaignTitle }}</a></div>
+                                                    <div class="text-muted text-size-small">{{ ucfirst($oFeedback->platform) }}</div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="media-left">
-                                                    <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo $oFeedback->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oFeedback->phone); ?></a></div>
+                                                    <div class="pt-5"><a href="#" class="text-default text-semibold">{!! $oFeedback->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oFeedback->phone) !!}</a></div>
                                                     <div class="text-muted text-size-small">Chat</div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="media-left">
-                                                    <div class="pt-5"><a class="text-default text-semibold"><?php echo dataFormat($oFeedback->created_at); ?></a></div>
-                                                    <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oFeedback->created_at)); ?></div>
+                                                    <div class="pt-5"><a class="text-default text-semibold">{{ dataFormat($oFeedback->created_at) }}</a></div>
+                                                    <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oFeedback->created_at)) }}</div>
                                                 </div>
                                             </td>
-                                            <td><?php echo $score; ?></td>
+                                            <td>{{ $score }}</td>
                                             <td>
                                                 <div class="media-left">
-                                                    <a style="cursor: pointer;" class="showFeedbackData"><span class="text-default text-semibold"><?php echo setStringLimit($oFeedback->title); ?></span></a>
-                                                    <div style="display: none;"><?php echo $oFeedback->title; ?></div>
-                                                    <div style="display: none;"><?php echo $feedback; ?></div>
+                                                    <a style="cursor: pointer;" class="showFeedbackData"><span class="text-default text-semibold">{{ setStringLimit($oFeedback->title) }}</span></a>
+                                                    <div style="display: none;">{{ $oFeedback->title }}</div>
+                                                    <div style="display: none;">{{ $feedback }}</div>
                                                     <div class="text-muted text-size-small">
-                                                        <?php echo setStringLimit($feedback); ?>
+													{{ setStringLimit($feedback) }}
                                                     </div>
                                                 </div> 
                                             </td>
-                                            <td style="display: none;"><?php
-                                                if ($score > 8) {
-                                                    echo '1';
-                                                } else if ($score <= 8 && $score > 6) {
-                                                    echo '2';
-                                                } else {
-                                                    echo '3';
-                                                }
-                                                ?></td>
-
+                                            <td style="display: none;">
+												@if ($score > 8)
+													1
+                                                @else if ($score <= 8 && $score > 6)
+													2
+                                                @else 
+													3
+                                                
+											</td>
                                         </tr>
-                                        <?php
+                                        @php
                                     }
-                                    ?>
+                                    @endphp
                                 </tbody>
                             </table>
                         </div>
@@ -282,11 +279,9 @@
                 </div>
             </div>
 
-            <?php $tab = isset($_GET['tab']) ? $_GET['tab'] : '' ; ?>
+            @php $tab = isset($_GET['tab']) ? $_GET['tab'] : '' @endphp
 
-            <?php
-            if ($tab == 'promoters') {
-                ?>
+            @if ($tab == 'promoters')
                 <script>
                     $(document).ready(function () {
                         $(".allS").removeClass('active');
@@ -296,9 +291,7 @@
                         }, 50);
                     });
                 </script>
-                <?php
-            } else if ($tab == 'passive') {
-                ?>
+            @else if ($tab == 'passive')
                 <script>
                     $(document).ready(function () {
                         $(".allS").removeClass('active');
@@ -308,9 +301,7 @@
                         }, 50);
                     });
                 </script>
-                <?php
-            } else if ($tab == 'detractors') {
-                ?>
+            @else if ($tab == 'detractors')
                 <script>
                     $(document).ready(function () {
                         $(".allS").removeClass('active');
@@ -318,15 +309,11 @@
                         setTimeout(function () {
                             $(".detS").children().trigger('click');
                         }, 50);
-
-
-
                     });
                 </script>
-            <?php }   ?>
-                
+            @endif
         </div>
-    <?php endif; ?>
+    @endif
     <!-- /dashboard content -->
 
 </div>
@@ -419,7 +406,7 @@
                 @csrf
                 <div class="modal-header purple_preview_2 purple_preview_2">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/images/customer_profile_icon.png"> NPS Score Feedback</h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/images/customer_profile_icon.png"> NPS Score Feedback</h5>
                 </div>
                 <div class="modal-body p30 minh180">
                     <label class="fsize11 m0">Heading :</label>
@@ -428,25 +415,16 @@
                     <label class="fsize11 m0">Description :</label>
                     <p class="feedbackContent fsize13"></p>
                 </div>
-
             </form>
         </div>
     </div>
-
-
-
 </div>
 
 
 <script type="text/javascript">
 
-    //$('.datatable-sorting-my').DataTable();
-
     $(document).ready(function () {
-
-
         $('#listScoresTable thead tr').clone(true).appendTo('#listScoresTable thead');
-
         $('#listScoresTable thead tr:eq(1) th').each(function (i) {
 
             if (i === 8) {
@@ -456,21 +434,18 @@
                 $('input', this).on('keyup change', function () {
                     if (tableBase.column(i).search() !== this.value) {
                         tableBase
-                                .column(i)
-                                .search(this.value, $('#colStatus').prop('checked', true))
-                                .draw();
+						.column(i)
+						.search(this.value, $('#colStatus').prop('checked', true))
+						.draw();
                     }
                 });
             }
-
         });
 
         var tableId = 'listScoresTable';
         var tableBase = custom_data_table(tableId);
-
-
+		
         $(document).on('click', '.filterByColumn', function () {
-
             $('.nav-tabs').each(function (i) {
                 $(this).children().removeClass('active');
             });
@@ -478,16 +453,14 @@
             var fil = $(this).attr('fil');
             $('#filterByStatus').val(fil);
             $('#filterByStatus').keyup();
-
         });
 
-        $(document).on('click', '.showFeedbackData', function () {
 
+        $(document).on('click', '.showFeedbackData', function () {
             $('.feedbackHeading').html($(this).next().text());
             $('.feedbackContent').html($(this).next().next().text());
             $('#showFeedbackModal').modal();
         });
-
 
 
         $('#checkAll').change(function () {
@@ -526,8 +499,8 @@
             if (totalCheckboxes > numberOfChecked) {
                 $('#checkAll').prop('checked', false);
             }
-
         });
+		
 
         $(document).on('click', '#deleteBulkNPS', function () {
             var val = [];
@@ -550,25 +523,26 @@
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                $('.overlaynew').show();
-                                $.ajax({
-                                    url: '<?php echo base_url('admin/modules/nps/bulkDeleteNPS'); ?>',
-                                    type: "POST",
-                                    data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
-                                    dataType: "json",
-                                    success: function (data) {
-                                        if (data.status == 'success') {
-                                            $('.overlaynew').hide();
-                                            window.location.href = window.location.href;
-                                        }
-                                    }
-                                });
-                            }
-                        });
+				function (isConfirm) {
+					if (isConfirm) {
+						$('.overlaynew').show();
+						$.ajax({
+							url: "{{ base_url('admin/modules/nps/bulkDeleteNPS') }}",
+							type: "POST",
+							data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
+							dataType: "json",
+							success: function (data) {
+								if (data.status == 'success') {
+									$('.overlaynew').hide();
+									window.location.href = window.location.href;
+								}
+							}
+						});
+					}
+				});
             }
         });
+		
 
         $(document).on('click', '#archiveBulkNPS', function () {
             var val = [];
@@ -591,23 +565,23 @@
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                $('.overlaynew').show();
-                                $.ajax({
-                                    url: '<?php echo base_url('admin/modules/nps/bulkArchiveNPS'); ?>',
-                                    type: "POST",
-                                    data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
-                                    dataType: "json",
-                                    success: function (data) {
-                                        if (data.status == 'success') {
-                                            $('.overlaynew').hide();
-                                            window.location.href = window.location.href;
-                                        }
-                                    }
-                                });
-                            }
-                        });
+				function (isConfirm) {
+					if (isConfirm) {
+						$('.overlaynew').show();
+						$.ajax({
+							url: "{{ base_url('admin/modules/nps/bulkArchiveNPS') }}",
+							type: "POST",
+							data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
+							dataType: "json",
+							success: function (data) {
+								if (data.status == 'success') {
+									$('.overlaynew').hide();
+									window.location.href = window.location.href;
+								}
+							}
+						});
+					}
+				});
             }
         });
 
@@ -623,14 +597,14 @@
             $('.overlaynew').show();
             var formdata = $("#frmaddNPSModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/addNPS'); ?>',
+                url: "{{ base_url('admin/modules/nps/addNPS') }]",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url('admin/modules/nps/setup/'); ?>' + data.id;
+                        window.location.href = "{{ base_url('admin/modules/nps/setup/') }}" + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         $("#addNPSValidation").html(data.msg).show();
@@ -638,17 +612,17 @@
                             $("#addNPSValidation").html("").hide();
                         }, 5000);
                     }
-
                 }
             });
             return false;
         });
+		
 
         $(document).on("click", ".editSurvey", function () {
             $('.overlaynew').show();
             var nps_id = $(this).attr('nps_id');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/getNPS'); ?>',
+                url: "{{ base_url('admin/modules/nps/getNPS') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', 'nps_id': nps_id},
                 dataType: "json",
@@ -664,12 +638,13 @@
                 }
             });
         });
+		
 
         $(document).on("click", ".moveToArchiveNPS", function () {
             $('.overlaynew').show();
             var nps_id = $(this).attr('nps_id');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/moveToArchiveNPS'); ?>',
+                url: "{{ base_url('admin/modules/nps/moveToArchiveNPS') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', 'nps_id': nps_id},
                 dataType: "json",
@@ -682,20 +657,21 @@
                 }
             });
         });
+		
 
         $('#frmeditSurveyModel').on('submit', function (e) {
             e.preventDefault();
             $('.overlaynew').show();
             var formdata = $("#frmeditSurveyModel").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/updateNPS'); ?>',
+                url: "{{ base_url('admin/modules/nps/updateNPS') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url('admin/modules/nps/setup/'); ?>' + data.id;
+                        window.location.href = "{{ base_url('admin/modules/nps/setup/') }}" + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         $("#editSurveyValidation").html(data.msg).show();
@@ -707,6 +683,7 @@
             });
             return false;
         });
+		
 
         $(document).on('click', '.deleteNPS', function () {
             var elem = $(this);
@@ -721,24 +698,24 @@
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            var nps_id = $(elem).attr('nps_id');
-                            $.ajax({
-                                url: '<?php echo base_url('admin/modules/nps/deleteNPS'); ?>',
-                                type: "POST",
-                                data: {_token: '{{csrf_token()}}', nps_id: nps_id},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = window.location.href;
-                                    }
-                                }
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					var nps_id = $(elem).attr('nps_id');
+					$.ajax({
+						url: "{{ base_url('admin/modules/nps/deleteNPS') }}",
+						type: "POST",
+						data: {_token: '{{csrf_token()}}', nps_id: nps_id},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = window.location.href;
+							}
+						}
+					});
+				}
+			});
         });
 
 
@@ -746,7 +723,7 @@
             var score_id = $(this).attr("scoreid");
             var action_name = $(this).attr("action_name");
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/listAllTags'); ?>',
+                url: "{{ base_url('admin/modules/nps/listAllTags') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', score_id: score_id},
                 dataType: "json",
@@ -768,12 +745,13 @@
                 }
             });
         });
+		
 
         $("#frmNPSTagListModal").submit(function (e) {
             e.preventDefault();
             var formdata = $("#frmNPSTagListModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/applyNPSTag'); ?>',
+                url: "{{ base_url('admin/modules/nps/applyNPSTag') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -786,12 +764,6 @@
             });
             return false;
         });
-
-
     });
-
-
-
-
 </script>
 @endsection

@@ -1,6 +1,6 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/uploaders/dropzone.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/uploader_dropzone.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/jquery-ui.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/uploaders/dropzone.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/pages/uploader_dropzone.js"></script>
 <!-- Content area -->
 <div class="content">
 
@@ -21,8 +21,8 @@
                 <div class="panel-body">
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
-                        <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
-                        <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
+                        <input type="hidden" name="userid" value="{{ $userID }}" />
+                        <input type="hidden" name="bbaid" value="{{ $oSettings->hashcode }}" />
                         <div class="col-md-12">
 
                             <div class="form-group">
@@ -58,10 +58,8 @@
                             <button class="btn btn-success pull-right" id="btnInvite" type="submit">
                                 Invite Advocates
                             </button>
-
                         </div>
                     </form>
-
                 </div>
 
                 <div class="panel-heading">
@@ -69,14 +67,13 @@
                     <div class="heading-elements">
                         <ul class="icons-list">
                             <li><a data-action="collapse"></a></li>
-
                         </ul>
                     </div>
                 </div>
                 <div class="panel-body">
                     <form name="frmInviteBulkCustomer" id="frmInviteBulkCustomer"  method="post" action="" enctype="multipart/form-data" >
-                        <input type="hidden" name="userid" value="<?php echo $userID; ?>" />
-                        <input type="hidden" name="bbaid" value="<?php echo $oSettings->hashcode; ?>" />
+                        <input type="hidden" name="userid" value="{{ $userID }}" />
+                        <input type="hidden" name="bbaid" value="{{ $oSettings->hashcode }}" />
 
                         <div class="col-md-8">
                             <strong> Upload a CSV file with customer contact details </strong> <br>
@@ -84,14 +81,12 @@
                             -Column 2 should be FIRST_NAME<br>
                             Column 3 should be LAST_NAME<br>
                             Column 4 should be PHONE<br>                            
-
                         </div>
 
                         <div class="col-md-4">
                             <div class="fileupload">
                                 <input type="file" name="userfile" id="ctrBrowse" accept=".csv, application/vnd.ms-excel" style="position:relative;top:50px;" />
                             </div>
-
                         </div>
 
                         <div class="clearfix"></div>
@@ -99,28 +94,14 @@
                         <button class="btn btn-success pull-right" id="btnBulkInvite" type="submit">
                             Import Advocates
                         </button>
-
-
-
                     </form>
                 </div>
-
-
-
             </div>
             <!-- <div align="right" id="pagination_link"></div> -->
         </div>
     </div>
-
-
 </div>
 <!-- /content area -->
-
-
-
-
-
-
 
 <script>
     $(document).ready(function () {
@@ -131,7 +112,7 @@
             var formData = new FormData($(this)[0]);
             $('#btnInvite').prop("disabled", true);
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/registerInvite'); ?>',
+                url: "{{ base_url('admin/modules/referral/registerInvite') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -141,11 +122,8 @@
                 success: function (data) {
                     $('.overlaynew').hide();
                     if (data.status == 'success') {
-
                         alertMessageAndRedirect('Advocated has been invited successfully.', window.location.href);
-
                     } else {
-
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();
                     }
@@ -155,14 +133,11 @@
         });
 
         $("#frmInviteBulkCustomer").submit(function () {
-
             $('.overlaynew').show();
-
             var formData = new FormData($(this)[0]);
             
-            
             $.ajax({
-                url: '<?php echo base_url('admin/modules/referral/importInviteCSV'); ?>',
+                url: "{{ base_url('admin/modules/referral/importInviteCSV') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -170,13 +145,9 @@
                 processData: false,
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
-
                         alertMessageAndRedirect('Advocated has been invited successfully.', window.location.href);
-
                     } else {
-
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();
                     }
@@ -184,15 +155,5 @@
             });
             return false;
         });
-
-
-
-
-
-
-
-
-
-
     });
 </script>		
