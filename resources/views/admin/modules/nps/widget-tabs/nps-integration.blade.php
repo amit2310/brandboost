@@ -1,4 +1,4 @@
-<div class="tab-pane <?php echo isset($integrationClass)? $integrationClass : ''; ?>" id="right-icon-tab3">
+<div class="tab-pane {{ isset($integrationClass) ? $integrationClass : '' }}" id="right-icon-tab3">
     <div class="row">
         <div class="col-md-3">
             <div style="margin: 0;" class="panel panel-flat">
@@ -23,7 +23,6 @@
                     <p><span class="txt_dark">Euismod</span><br><small class="text-muted text-size-small">In the tumultuous business of cutting-in and attending to a whale, there.</small></p>
                     <p><span class="txt_dark">Descriptions List</span><br><small class="text-muted text-size-small">So strongly and metaphysically did I conceive of my situati.</small></p>
                     <p><span class="txt_dark">Euismod</span><br><small class="text-muted text-size-small">In the tumultuous business of cutting-in and attending to a whale, there.</small></p>
-					
 				</div>
 			</div>
 		</div>
@@ -39,18 +38,17 @@
 &lt;script 
 type="text/javascript" 
 id="bbscriptloader" 
-data-key="<?php echo $widgetData->hashcode; ?>" 
+data-key="{{ $widgetData->hashcode }}" 
 data-widgets="nps" 
 async="" 
-src="<?php echo base_url('assets/js/nps_widgets.js'); ?>"&gt;
+src="{{ base_url('assets/js/nps_widgets.js') }}"&gt;
 &lt;/script&gt;
 </pre>
-                        <div style="display: none;" class="prettyprintDiv">&lt;script type="text/javascript" id="bbscriptloader" data-key="<?php echo $widgetData->hashcode; ?>" data-widgets="nps" async="" src="<?php echo base_url('assets/js/nps_widgets.js'); ?>"&gt; &lt;/script&gt;</div>
+                        <div style="display: none;" class="prettyprintDiv">&lt;script type="text/javascript" id="bbscriptloader" data-key="{{ $widgetData->hashcode }}" data-widgets="nps" async="" src="{{ base_url('assets/js/nps_widgets.js') }}"&gt; &lt;/script&gt;</div>
 					</div>
                     <div class="p20 text-right">
                         <button class="btn btn-xs btn_white_table pl10 pr10" onclick="copyToClipboard('.prettyprintDiv')">Copy Code</button>
 					</div>
-					
 				</div>
 			</div>
 		</div>
@@ -58,27 +56,24 @@ src="<?php echo base_url('assets/js/nps_widgets.js'); ?>"&gt;
 	
 	<div class="row pull-right">
 		<div class="col-md-12">
-			<a href="javascript:void(0);" class="btn dark_btn mt30" onclick="saveNPSWidget('<?php echo $widgetData->id; ?>');">Publish</a>
+			<a href="javascript:void(0);" class="btn dark_btn mt30" onclick="saveNPSWidget('{{ $widgetData->id }}');">Publish</a>
 		</div>
 	</div>
 </div>
 
 <script>
-	
     function copyToClipboard(element) {
         var $temp = $("<input>");
         $("body").append($temp);
         var widgetScript = String($(element).text());
-        //alert(widgetScript);
         $temp.val(widgetScript).select();
         document.execCommand("copy");
         $temp.remove();
-        
 	}
 	
 	function saveNPSWidget(widgetId) {
 		$.ajax({
-			url: "<?php echo base_url(); ?>/admin/modules/nps/publishNPSWidgetSurvey",
+			url: "{{ base_url() }}/admin/modules/nps/publishNPSWidgetSurvey",
 			method: "POST",
 			data: {_token: '{{csrf_token()}}', 'widget_id' : widgetId},
 			dataType: "json",
@@ -87,9 +82,8 @@ src="<?php echo base_url('assets/js/nps_widgets.js'); ?>"&gt;
 				if (data.status == "success")
 				{
 					displayMessagePopup('', '', 'This widget has been published successfully.');
-					
 					setTimeout(function(){
-						window.location.href = '<?php echo base_url(); ?>admin/modules/nps/widgets';
+						window.location.href = "{{ base_url() }}admin/modules/nps/widgets";
 					}, 1000);
 				} else {
 					displayMessagePopup('error');

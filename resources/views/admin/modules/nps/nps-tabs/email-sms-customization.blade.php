@@ -1,9 +1,9 @@
-<?php
+@php
 $tab = $this->input->get()['tab'];
-?>
-<script type="text/javascript" src="<?php echo base_url("/assets/js/plugins/pickers/color/spectrum.js"); ?>"></script>
-<link href="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
-<script src="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.js"></script>
+@endphp
+<script type="text/javascript" src="{{ base_url('/assets/js/plugins/pickers/color/spectrum.js') }}"></script>
+<link href="{{ base_url() }}assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
+<script src="{{ base_url() }}assets/dropzone-master/dist/dropzone.js"></script>
 <style>
     .radion_container {
         display: inline-block;
@@ -96,12 +96,12 @@ $tab = $this->input->get()['tab'];
     .well-footer h3{margin: 0; font-size: 14px;}
     .well-footer h3 a{color: #bbb; text-decoration: underline;}
 
-    .phone_sms{background:url('<?php echo base_url(); ?>assets/images/iphone.png') center top no-repeat; margin: 40px auto 10px; width: 357px; height: 716px; padding: 80px 40px;}
+    .phone_sms{background:url('{{ base_url() }}assets/images/iphone.png') center top no-repeat; margin: 40px auto 10px; width: 357px; height: 716px; padding: 80px 40px;}
     .phone_sms .inner{ background: #ebece7; padding: 15px; font-size: 13px; border-radius:0 12px 12px; margin-bottom: 10px;}
     .phone_sms .inner p{margin: 0;}
 </style>
 
-<div class="tab-pane <?php echo ($defalutTab == 'customize') ? 'active' : ''; ?>" id="right-icon-tab2">
+<div class="tab-pane {{ ($defalutTab == 'customize') ? 'active' : '' }}" id="right-icon-tab2">
     <form method="post" name="frmSubmit" id="frmSubmit" action="javascript:void(0);"  enctype="multipart/form-data">
         <div class="panel-group panel-group-control content-group-lg"> 
             <div class="row">
@@ -112,19 +112,18 @@ $tab = $this->input->get()['tab'];
                         </div>
                         <div class="panel-body">
                             <div class="email_preview">
-
                                 <div style="display:none;"><textarea name="emailPreviewData" id="emailPreviewData"></textarea></div>
                                 <div class="emil_priview_sec">
                                     <table border="0" cellpadding="0" cellspacing="0" style="max-width:100%; width:616px; margin:0; padding:0" width="100%">
                                         <tr>
-                                            <td align="center" style="border-top:#F40460 5px solid; background-color:#ffffff; height:80px; padding:30px 0" bgcolor="#ffffff" height="80"><img style="width:120px; height:120px; border-radius:50%;" src="<?php echo (!empty($oNPS->brand_logo)) ? 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oNPS->brand_logo : base_url() . 'assets/images/face2.jpg'; ?>" width="120" class="logo_img" />
+                                            <td align="center" style="border-top:#F40460 5px solid; background-color:#ffffff; height:80px; padding:30px 0" bgcolor="#ffffff" height="80"><img style="width:120px; height:120px; border-radius:50%;" src="{{ (!empty($oNPS->brand_logo)) ? 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oNPS->brand_logo : base_url() . 'assets/images/face2.jpg' }}" width="120" class="logo_img" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td align="center" style="border-bottom:1px solid #e3e3e3; padding-bottom:29px">
                                                 <table border="0" cellpadding="0" cellspacing="0" style="width:100%; margin:0">
                                                     <tr>
-                                                        <td align="center" style="font-size:16px;line-height:26px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; color:#777777; text-align:center"class="introductionText"><?php echo (!empty($oNPS->description)) != '' ? $oNPS->description : '{INTRODUCTION}'; ?>
+                                                        <td align="center" style="font-size:16px;line-height:26px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; color:#777777; text-align:center"class="introductionText">{{ (!empty($oNPS->description)) != '' ? $oNPS->description : '{INTRODUCTION}' }}
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -137,7 +136,7 @@ $tab = $this->input->get()['tab'];
                                                         <td align="center" style="padding:18px 0">
                                                             <table align="center" border="0" cellpadding="0" cellspacing="0" style="width:100%">
                                                                 <tr>
-                                                                    <td align="center" style="font-size:19px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;line-height:30px;color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#111111'; ?>;text-align:center"class="questionText"><?php echo (!empty($oNPS->question)) != '' ? $oNPS->question : '{QUESTION}'; ?>
+                                                                    <td align="center" style="font-size:19px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;line-height:30px;color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#111111' }};text-align:center"class="questionText">{{ (!empty($oNPS->question)) != '' ? $oNPS->question : '{QUESTION}' }}
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -148,8 +147,8 @@ $tab = $this->input->get()['tab'];
                                                             <table align="right" border="0" cellpadding="0" cellspacing="0" style="width:44px; height:44px; margin-right:5px;" width="44" height="44">
                                                                 <tr>
                                                                     <td align="center" width="42" height="40">
-                                                                        <div style="width:42px; background:<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:<?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px'; ?>;" class="buttonStyle">
-                                                                            <a href="<?php echo base_url(); ?>nps/t/{ACCOUNTHASHCODE}?s=10" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>;">10</a>
+                                                                        <div style="width:42px; background:{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:{{ (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px' }};" class="buttonStyle">
+                                                                            <a href="{{ base_url() }}nps/t/{ACCOUNTHASHCODE}?s=10" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }};">10</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -158,8 +157,8 @@ $tab = $this->input->get()['tab'];
                                                             <table align="right" border="0" cellpadding="0" cellspacing="0" style="width:44px; height:44px; margin-right:5px;" width="44" height="44">
                                                                 <tr>
                                                                     <td align="center" width="42" height="40">
-                                                                        <div style="width:42px; background:<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:<?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px'; ?>;" class="buttonStyle">
-                                                                            <a href="<?php echo base_url(); ?>nps/t/{ACCOUNTHASHCODE}?s=9" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>;">9</a>
+                                                                        <div style="width:42px; background:{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:{{ (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px' }};" class="buttonStyle">
+                                                                            <a href="{{ base_url() }}nps/t/{ACCOUNTHASHCODE}?s=9" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }};">9</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -168,8 +167,8 @@ $tab = $this->input->get()['tab'];
                                                             <table align="right" border="0" cellpadding="0" cellspacing="0" style="width:44px; height:44px; margin-right:5px;" width="44" height="44">
                                                                 <tr>
                                                                     <td align="center" width="42" height="40">
-                                                                        <div style="width:42px; background:<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:<?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px'; ?>;" class="buttonStyle">
-                                                                            <a href="<?php echo base_url(); ?>nps/t/{ACCOUNTHASHCODE}?s=8" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>;">8</a>
+                                                                        <div style="width:42px; background:{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:{{ (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px' }};" class="buttonStyle">
+                                                                            <a href="{{ base_url() }}nps/t/{ACCOUNTHASHCODE}?s=8" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }};">8</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -178,8 +177,8 @@ $tab = $this->input->get()['tab'];
                                                             <table align="right" border="0" cellpadding="0" cellspacing="0" style="width:44px; height:44px; margin-right:5px;" width="44" height="44">
                                                                 <tr>
                                                                     <td align="center" width="42" height="40">
-                                                                        <div style="width:42px; background:<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:<?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px'; ?>;" class="buttonStyle">
-                                                                            <a href="<?php echo base_url(); ?>nps/t/{ACCOUNTHASHCODE}?s=7" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>;">7</a>
+                                                                        <div style="width:42px; background:{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:{{ (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px' }};" class="buttonStyle">
+                                                                            <a href="{{ base_url() }}nps/t/{ACCOUNTHASHCODE}?s=7" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }};">7</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -188,8 +187,8 @@ $tab = $this->input->get()['tab'];
                                                             <table align="right" border="0" cellpadding="0" cellspacing="0" style="width:44px; height:44px; margin-right:5px;" width="44" height="44">
                                                                 <tr>
                                                                     <td align="center" width="42" height="40">
-                                                                        <div style="width:42px; background:<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:<?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px'; ?>;" class="buttonStyle">
-                                                                            <a href="<?php echo base_url(); ?>nps/t/{ACCOUNTHASHCODE}?s=6" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>;">6</a>
+                                                                        <div style="width:42px; background:{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:{{ (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px' }};" class="buttonStyle">
+                                                                            <a href="{{ base_url() }}nps/t/{ACCOUNTHASHCODE}?s=6" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }};">6</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -198,8 +197,8 @@ $tab = $this->input->get()['tab'];
                                                             <table align="right" border="0" cellpadding="0" cellspacing="0" style="width:44px; height:44px; margin-right:5px;" width="44" height="44">
                                                                 <tr>
                                                                     <td align="center" width="42" height="40">
-                                                                        <div style="width:42px; background:<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:<?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px'; ?>;" class="buttonStyle">
-                                                                            <a href="<?php echo base_url(); ?>nps/t/{ACCOUNTHASHCODE}?s=5" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>;">5</a>
+                                                                        <div style="width:42px; background:{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:{{ (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px' }};" class="buttonStyle">
+                                                                            <a href="{{ base_url() }}nps/t/{ACCOUNTHASHCODE}?s=5" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }};">5</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -208,8 +207,8 @@ $tab = $this->input->get()['tab'];
                                                             <table align="right" border="0" cellpadding="0" cellspacing="0" style="width:44px; height:44px; margin-right:5px;" width="44" height="44">
                                                                 <tr>
                                                                     <td align="center" width="42" height="40">
-                                                                        <div style="width:42px; background:<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:<?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px'; ?>;" class="buttonStyle">
-                                                                            <a href="<?php echo base_url(); ?>nps/t/{ACCOUNTHASHCODE}?s=4" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>;">4</a>
+                                                                        <div style="width:42px; background:{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:{{ (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px' }};" class="buttonStyle">
+                                                                            <a href="{{ base_url() }}nps/t/{ACCOUNTHASHCODE}?s=4" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }};">4</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -218,8 +217,8 @@ $tab = $this->input->get()['tab'];
                                                             <table align="right" border="0" cellpadding="0" cellspacing="0" style="width:44px; height:44px; margin-right:5px;" width="44" height="44">
                                                                 <tr>
                                                                     <td align="center" width="42" height="40">
-                                                                        <div style="width:42px; background:<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:<?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px'; ?>;" class="buttonStyle">
-                                                                            <a href="<?php echo base_url(); ?>nps/t/{ACCOUNTHASHCODE}?s=3" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>;">3</a>
+                                                                        <div style="width:42px; background:{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:{{ (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px' }};" class="buttonStyle">
+                                                                            <a href="{{ base_url() }}nps/t/{ACCOUNTHASHCODE}?s=3" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }};">3</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -228,8 +227,8 @@ $tab = $this->input->get()['tab'];
                                                             <table align="right" border="0" cellpadding="0" cellspacing="0" style="width:44px; height:44px; margin-right:5px;" width="44" height="44">
                                                                 <tr>
                                                                     <td align="center" width="42" height="40">
-                                                                        <div style="width:42px; background:<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:<?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px'; ?>;" class="buttonStyle">
-                                                                            <a href="<?php echo base_url(); ?>nps/t/{ACCOUNTHASHCODE}?s=2" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>;">2</a>
+                                                                        <div style="width:42px; background:{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:{{ (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px' }};" class="buttonStyle">
+                                                                            <a href="{{ base_url() }}nps/t/{ACCOUNTHASHCODE}?s=2" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }};">2</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -238,8 +237,8 @@ $tab = $this->input->get()['tab'];
                                                             <table align="right" border="0" cellpadding="0" cellspacing="0" style="width:44px; height:44px; margin-right:5px;" width="44" height="44">
                                                                 <tr>
                                                                     <td align="center" width="42" height="40">
-                                                                        <div style="width:42px; background:<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:<?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px'; ?>;" class="buttonStyle">
-                                                                            <a href="<?php echo base_url(); ?>nps/t/{ACCOUNTHASHCODE}?s=1" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>;">1</a>
+                                                                        <div style="width:42px; background:{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:{{ (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px' }};" class="buttonStyle">
+                                                                            <a href="{{ base_url() }}nps/t/{ACCOUNTHASHCODE}?s=1" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }};">1</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -248,8 +247,8 @@ $tab = $this->input->get()['tab'];
                                                             <table align="right" border="0" cellpadding="0" cellspacing="0" style="width:44px; height:44px; margin-right:5px;" width="44" height="44">
                                                                 <tr>
                                                                     <td align="center" width="42" height="40">
-                                                                        <div style="width:42px; background:<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:<?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px'; ?>;" class="buttonStyle">
-                                                                            <a href="<?php echo base_url(); ?>nps/t/{ACCOUNTHASHCODE}?s=0" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>;">0</a>
+                                                                        <div style="width:42px; background:{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}; height:42px; box-shadow:rgba(0, 0, 0, 0.06) 0 2px 4px 0; border:2px solid #cccccc; padding:8px 0; border-radius:{{ (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'circle' ? '50%' : '0px' : '5px' }};" class="buttonStyle">
+                                                                            <a href="{{ base_url() }}nps/t/{ACCOUNTHASHCODE}?s=0" style="font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:bold; color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }};">0</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -281,7 +280,7 @@ $tab = $this->input->get()['tab'];
                                                 <table border="0" cellpadding="0" cellspacing="0" style="width:100%; margin:0;">
                                                     <tr>
                                                         <td align="left" valign="middle" style="height:48px;font-size:14px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#cccccc;width:40%;text-align:left" width="40%" height="48"><a href="#" style="color:#cccccc">Unsubscribe</a></td>
-                                                        <td align="right" valign="middle" style="height:48px;font-size:14px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#cccccc;width:60%;text-align:right" width="60%" height="48">Powered by&nbsp;<a href="<?php echo base_url(); ?>" style="color:#cccccc">Brandboost</a></td>
+                                                        <td align="right" valign="middle" style="height:48px;font-size:14px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#cccccc;width:60%;text-align:right" width="60%" height="48">Powered by&nbsp;<a href="{{ base_url() }}" style="color:#cccccc">Brandboost</a></td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -300,25 +299,23 @@ $tab = $this->input->get()['tab'];
                         <div class="panel-body">
                             <div class="sms_preview">
                                 <div class="input-group mb-15"> <span class="input-group-addon left">From &nbsp;&nbsp;</span>
-                                    <input class="form-control" value="<?php echo $userTwilioData->contact_no; ?>" type="text" name="fromNumber" readonly>
+                                    <input class="form-control" value="{{ $userTwilioData->contact_no }}" type="text" name="fromNumber" readonly>
                                 </div>
                                 <div class="phone_sms">
                                     <div class="inner">
-                                        <p><?php echo (!empty($oNPS->question)) != '' ? $oNPS->question : 'How likely are you to recommend My Store to a friend?'; ?></p>
+                                        <p>{{ (!empty($oNPS->question)) != '' ? $oNPS->question : 'How likely are you to recommend My Store to a friend?' }}</p>
                                         <p>Please Reply with a number from "0" (not likely) to "10" (very likely). </p>
                                     </div>
                                     <p><small>09:52, 14/08/2018</small></p>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 w50m0">
                     <div class="panel panel-flat min1566">
                         <div class="panel-heading">
-                            <h6 class="panel-title"><?php echo ucfirst($oNPS->platform); ?> Basic Setup</h6>
+                            <h6 class="panel-title">{{ ucfirst($oNPS->platform) }} Basic Setup</h6>
                         </div>
 
                         <div class="panel-body">
@@ -330,59 +327,56 @@ $tab = $this->input->get()['tab'];
                                         <div class="">
                                             <div class="form-group">
                                                 <label>Brand/Product Name:</label>
-                                                <input class="form-control" name="brand_name" id="brand_title" placeholder="Enter Brand/Product Name" type="text" value="<?php echo (!empty($oNPS->brand_name)) != '' ? $oNPS->brand_name : ''; ?>">
+                                                <input class="form-control" name="brand_name" id="brand_title" placeholder="Enter Brand/Product Name" type="text" value="{{ (!empty($oNPS->brand_name)) != '' ? $oNPS->brand_name : '' }}">
                                             </div>
 
                                             <div class="form-group">
                                                 <label>Introduction:</label>
-                                                <textarea rows="5" cols="5" name="description" class="form-control" id="description" placeholder="Placeholder Text"  required><?php echo (!empty($oNPS->description)) != '' ? $oNPS->description : ''; ?></textarea>
+                                                <textarea rows="5" cols="5" name="description" class="form-control" id="description" placeholder="Placeholder Text"  required>{{ (!empty($oNPS->description)) != '' ? $oNPS->description : '' }}</textarea>
                                             </div>
 
                                             <div class="form-group">
                                                 <label>Question:</label>
-                                                <textarea rows="5" cols="5" class="form-control" id="question" placeholder="How likely are you to recommend <?php echo (!empty($oNPS->brand_name)) != '' ? $oNPS->brand_name : 'My Store'; ?> to a friend?
-                                                          " name="question" required><?php echo (!empty($oNPS->question)) != '' ? $oNPS->question : ''; ?></textarea>
+                                                <textarea rows="5" cols="5" class="form-control" id="question" placeholder="How likely are you to recommend {{ (!empty($oNPS->brand_name)) != '' ? $oNPS->brand_name : 'My Store' }} to a friend?" name="question" required>{{ (!empty($oNPS->question)) != '' ? $oNPS->question : '' }}</textarea>
                                             </div>
 
 
                                         </div>
                                         <div class="form-group">
                                             <label>Upload Brand/Product Logo:</label>
-                                            <!-- <input type="file" class="file-input"> -->
                                             <div class="dropzone" id="myDropzone_logo_img"></div>
-                                            <input type="hidden" name="brand_logo" id="logo_img" value="<?php echo (!empty($oNPS->brand_logo)) ? $oNPS->brand_logo : ''; ?>" required>
+                                            <input type="hidden" name="brand_logo" id="logo_img" value="{{ (!empty($oNPS->brand_logo)) ? $oNPS->brand_logo : '' }}" required>
                                         </div>
 
                                     </div> 
 
                                     <div class="col-xs-12"><hr></div>
 
-                                    <input type="hidden" value="<?php echo!(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000'; ?>" name='web_text_color' id="text_color">
-                                    <input type="hidden" value="<?php echo (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF'; ?>" name='web_button_color' id="button_color">
-                                    <input type="hidden" name="nps_id" value="<?php echo $oNPS->id; ?>" />
+                                    <input type="hidden" value="{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000000' }}" name='web_text_color' id="text_color">
+                                    <input type="hidden" value="{{ (!empty($oNPS->web_button_color)) ? $oNPS->web_button_color : '#FFFFFF' }}" name='web_button_color' id="button_color">
+                                    <input type="hidden" name="nps_id" value="{{ $oNPS->id }}" />
 
-                                    <?php if ($oNPS->platform == 'email'): ?>
+                                    @if ($oNPS->platform == 'email')
                                         <div class="col-xs-12">
-
                                             <div class="">
                                                 <div class="form-group">
                                                     <label>From Name:</label>
-                                                    <input class="form-control" name="email_from" id="email_from" placeholder="Enter Brand/Product Name" type="text" value="<?php echo (!empty($oNPS->email_from)) != '' ? $oNPS->email_from : $oNPS->firstname; ?>">
+                                                    <input class="form-control" name="email_from" id="email_from" placeholder="Enter Brand/Product Name" type="text" value="{{ (!empty($oNPS->email_from)) != '' ? $oNPS->email_from : $oNPS->firstname }}">
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>Reply to email:</label>
-                                                    <input class="form-control" name="email_replyto" id="email_replyto" placeholder="Enter Reply to email" type="text" value="<?php echo (!empty($oNPS->email_replyto)) != '' ? $oNPS->email_replyto : $oNPS->email; ?>">
+                                                    <input class="form-control" name="email_replyto" id="email_replyto" placeholder="Enter Reply to email" type="text" value="{{ (!empty($oNPS->email_replyto)) != '' ? $oNPS->email_replyto : $oNPS->email }}">
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>Email Subject:</label>
-                                                    <textarea rows="5" cols="5" name="email_subject" class="form-control" id="brand_desc" placeholder="How likely are you to recommend <?php echo (!empty($oNPS->brand_name)) != '' ? $oNPS->brand_name : 'My Store'; ?> to a friend?" required><?php echo (!empty($oNPS->email_subject)) != '' ? $oNPS->email_subject : ''; ?></textarea>
+                                                    <textarea rows="5" cols="5" name="email_subject" class="form-control" id="brand_desc" placeholder="How likely are you to recommend {{ (!empty($oNPS->brand_name)) != '' ? $oNPS->brand_name : 'My Store' }} to a friend?" required>{{ (!empty($oNPS->email_subject)) != '' ? $oNPS->email_subject : '' }}</textarea>
                                                 </div>
                                             </div>
 
                                         </div> 
-                                    <?php endif; ?>
+                                    @endif
 
                                     <div class="col-xs-12">
                                         <div class="">
@@ -395,7 +389,7 @@ $tab = $this->input->get()['tab'];
                                                 <label>Button Color:</label>
                                                 <input class="form-control colorpickerbutton" name="web_button_color111">
                                             </div>
-                                            <?php if ($oNPS->platform == 'web'): ?>
+                                            @if ($oNPS->platform == 'web')
                                                 <div class="form-group">
                                                     <label>Button Style: &nbsp;</label>
                                                     <label class="radion_container">
@@ -405,22 +399,21 @@ $tab = $this->input->get()['tab'];
                                                         <input type="radio" value="withoutbg" name="web_button_style">
                                                         <span class="checkmark"></span>
                                                     </label>
-
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>Button Shape:</label>
                                                     <label class="radion_container">
-                                                        <input type="radio" value="square" <?php echo (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'square' ? 'checked' : '' : 'checked'; ?> name="web_button_shape">
+                                                        <input type="radio" value="square" {!! (!empty($oNPS->web_button_shape)) ? $oNPS->web_button_shape == 'square' ? 'checked' : '' : 'checked' !!} name="web_button_shape">
                                                         <span class="checkmark getShapeValue" shape_value="0px"></span> 
                                                     </label>
                                                     <label class="radion_container">
-                                                        <input type="radio" value="circle" <?php echo $oNPS->web_button_shape == 'circle' ? 'checked' : ''; ?> name="web_button_shape">
+                                                        <input type="radio" value="circle" {{ $oNPS->web_button_shape == 'circle' ? 'checked' : '' }} name="web_button_shape">
                                                         <span class="checkmark_round getShapeValue" shape_value="50%"></span>
                                                     </label>
 
                                                 </div>
-                                            <?php endif; ?>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -448,19 +441,19 @@ $tab = $this->input->get()['tab'];
         });
 
         var myDropzoneLogoImg = new Dropzone(
-                '#myDropzone_logo_img', //id of drop zone element 1
-                {
-                    url: '<?php echo site_url("/dropzone/upload_image"); ?>',
-                    uploadMultiple: false,
-                    maxFiles: 1,
-                    maxFilesize: 600,
-                    acceptedFiles: 'image/*',
-                    addRemoveLinks: true,
-                    success: function (response) {
-                        $('#logo_img').val(response.xhr.responseText);
-                        $('.logo_img').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' + response.xhr.responseText);
-                    }
-                });
+		'#myDropzone_logo_img', //id of drop zone element 1
+		{
+			url: "{{ site_url('/dropzone/upload_image') }}",
+			uploadMultiple: false,
+			maxFiles: 1,
+			maxFilesize: 600,
+			acceptedFiles: 'image/*',
+			addRemoveLinks: true,
+			success: function (response) {
+				$('#logo_img').val(response.xhr.responseText);
+				$('.logo_img').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' + response.xhr.responseText);
+			}
+		});
 
         Dropzone.autoDiscover = false;
 
@@ -496,7 +489,7 @@ $tab = $this->input->get()['tab'];
             var formData = new FormData($(this)[0]);
 
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/updateNPSCustomize'); ?>',
+                url: "{{ base_url('admin/modules/nps/updateNPSCustomize') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -506,7 +499,7 @@ $tab = $this->input->get()['tab'];
                 success: function (data) {
                     $('.overlaynew').hide();
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url("/admin/modules/nps/setup/{$programID}?t=workflow") ?>';
+                        window.location.href = "{{ base_url('/admin/modules/nps/setup/{$programID}?t=workflow') }}";
                     } else {
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();
@@ -515,14 +508,6 @@ $tab = $this->input->get()['tab'];
             });
             return false;
         });
-
     });
 </script>
-
-
-
-
-
-
-
 
