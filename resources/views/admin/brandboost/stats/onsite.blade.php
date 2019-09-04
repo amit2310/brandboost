@@ -1,12 +1,11 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php
-
+@php
 if ($selected_tab == 'contact') {
     $contactStatus = 'active';
     $aData['contactStatus'] = $contactStatus;
@@ -23,27 +22,26 @@ if ($selected_tab == 'contact') {
     $contactStatus = 'active';
     $aData['contactStatus'] = $contactStatus;
 }
-
-?>
+@endphp
 <div class="content">
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
     <div class="page_header">
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-6">
-                <h3><i class="icon-vcard"></i> &nbsp; Onsite Brand Boost Campaign : <?php echo ucfirst($aData['oBrandboost'][0]->brand_title); ?></h3>
+                <h3><i class="icon-vcard"></i> &nbsp; Onsite Brand Boost Campaign : {{ ucfirst($aData['oBrandboost'][0]->brand_title) }}</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
-                    <li class="<?php echo $contactStatus; ?>"><a href="#right-icon-tab1" data-toggle="tab"> Contacts</a></li>
-                    <li class="<?php echo $requestStatus; ?>"><a href="#right-icon-tab2" data-toggle="tab"> Review Requests</a></li>
-                    <li class="<?php echo $responseStatus; ?>"><a href="#right-icon-tab3" data-toggle="tab"> Responses</a></li>
-                    <li class="<?php echo $pendinngStatus; ?>"><a href="#right-icon-tab4" data-toggle="tab"> Pending</a></li>
+                    <li class="{{ $contactStatus }}"><a href="#right-icon-tab1" data-toggle="tab"> Contacts</a></li>
+                    <li class="{{ $requestStatus }}"><a href="#right-icon-tab2" data-toggle="tab"> Review Requests</a></li>
+                    <li class="{{ $responseStatus }}"><a href="#right-icon-tab3" data-toggle="tab"> Responses</a></li>
+                    <li class="{{ $pendinngStatus }}"><a href="#right-icon-tab4" data-toggle="tab"> Pending</a></li>
                 </ul>
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-6 text-right btn_area">
-                <button type="button" class="btn light_btn importModuleContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID ?>" data-redirect="<?php echo base_url(); ?>admin/brandboost/stats/onsite/<?php echo $moduleUnitID; ?>?t=contact"><i class="icon-arrow-up16"></i><span> &nbsp;  Import Contact</span> </button>
-                <a class="btn light_btn ml10" href="{{ base_url() }}admin/subscriber/exportSubscriberCSV?module_name=<?php echo $moduleName; ?>&module_account_id=<?php echo $moduleUnitID; ?>"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contact</span> </a>
-                <button type="button" class="btn dark_btn dropdown-toggle ml10 addModuleContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID ?>"><i class="icon-plus3"></i><span> &nbsp;  Add Contact</span> </button>  
+                <button type="button" class="btn light_btn importModuleContact" data-modulename="{{ $moduleName }}" data-moduleaccountid="{{ $moduleUnitID ?>" data-redirect="{{ base_url() }}admin/brandboost/stats/onsite/{{ $moduleUnitID }}?t=contact"><i class="icon-arrow-up16"></i><span> &nbsp;  Import Contact</span> </button>
+                <a class="btn light_btn ml10" href="{{ base_url() }}admin/subscriber/exportSubscriberCSV?module_name={{ $moduleName }}&module_account_id={{ $moduleUnitID }}"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contact</span> </a>
+                <button type="button" class="btn dark_btn dropdown-toggle ml10 addModuleContact" data-modulename="{{ $moduleName }}" data-moduleaccountid="{{ $moduleUnitID ?>"><i class="icon-plus3"></i><span> &nbsp;  Add Contact</span> </button>  
             </div>
         </div>
     </div>
@@ -131,7 +129,7 @@ if ($selected_tab == 'contact') {
                             if (isConfirm) {
                                 $('.overlaynew').show();
                                 $.ajax({
-                                    url: '<?php echo base_url('admin/brandboost/delete_multipal_subscriber'); ?>',
+                                    url: "{{ base_url('admin/brandboost/delete_multipal_subscriber') }}",
                                     type: "POST",
                                     data: {multiSubscriberId: val},
                                     dataType: "json",
@@ -214,7 +212,7 @@ if ($selected_tab == 'contact') {
                             if (isConfirm) {
                                 $('.overlaynew').show();
                                 $.ajax({
-                                    url: '<?php echo base_url('admin/brandboost/deleteReviewRequest'); ?>',
+                                    url: "{{ base_url('admin/brandboost/deleteReviewRequest') }}",
                                     type: "POST",
                                     data: {multipal_id: val},
                                     dataType: "json",
@@ -300,7 +298,7 @@ if ($selected_tab == 'contact') {
                             if (isConfirm) {
                                 $('.overlaynew').show();
                                 $.ajax({
-                                    url: '<?php echo base_url('admin/brandboost/deleteCampaignResponse'); ?>',
+                                    url: "{{ base_url('admin/brandboost/deleteCampaignResponse') }}",
                                     type: "POST",
                                     data: {multipal_id: val},
                                     dataType: "json",
@@ -384,7 +382,7 @@ if ($selected_tab == 'contact') {
                             if (isConfirm) {
                                 $('.overlaynew').show();
                                 $.ajax({
-                                    url: '<?php echo base_url('admin/brandboost/deleteCampaignResponse'); ?>',
+                                    url: "{{ base_url('admin/brandboost/deleteCampaignResponse') }}",
                                     type: "POST",
                                     data: {multipal_id: val},
                                     dataType: "json",
@@ -421,7 +419,7 @@ if ($selected_tab == 'contact') {
                         if (isConfirm) {
                             $('.overlaynew').show();
                             $.ajax({
-                                url: '<?php echo base_url('admin/brandboost/campaignResponseDel'); ?>',
+                                url: "{{ base_url('admin/brandboost/campaignResponseDel') }}",
                                 type: "POST",
                                 data: {campaign_response_id: campaignResponseDel},
                                 dataType: "json",
@@ -442,7 +440,7 @@ if ($selected_tab == 'contact') {
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/add_subscriber'); ?>',
+                url: "{{ base_url('admin/brandboost/add_subscriber') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -463,7 +461,7 @@ if ($selected_tab == 'contact') {
         $(document).on('click', '.editSubscriber', function () {
             var subscriberID = $(this).attr('subscriberid');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/getSubscriberById'); ?>',
+                url: "{{ base_url('admin/brandboost/getSubscriberById') }}",
                 type: "POST",
                 data: {subscriberID: subscriberID},
                 dataType: "json",
@@ -485,7 +483,7 @@ if ($selected_tab == 'contact') {
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/update_subscriber'); ?>',
+                url: "{{ base_url('admin/brandboost/update_subscriber') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -521,7 +519,7 @@ if ($selected_tab == 'contact') {
                             $('.overlaynew').show();
 
                             $.ajax({
-                                url: '<?php echo base_url('admin/brandboost/delete_subscriber'); ?>',
+                                url: "{{ base_url('admin/brandboost/delete_subscriber') }}",
                                 type: "POST",
                                 data: {subscriberId: subscriberID},
                                 dataType: "json",
@@ -548,7 +546,7 @@ if ($selected_tab == 'contact') {
             var subscriberid = $(this).attr('subscriberid');
 
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/unsubscriber_user'); ?>',
+                url: "{{ base_url('admin/brandboost/unsubscriber_user') }}",
                 type: "POST",
                 data: {subscriber_email: subscriberEmail, subscriberid: subscriberid},
                 dataType: "json",
@@ -569,7 +567,7 @@ if ($selected_tab == 'contact') {
             var subscriberId = $(this).attr('subscriberId');
 
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/update_subscriber_status'); ?>',
+                url: "{{ base_url('admin/brandboost/update_subscriber_status') }}",
                 type: "POST",
                 data: {status: status, subscriber_id: subscriberId},
                 dataType: "json",

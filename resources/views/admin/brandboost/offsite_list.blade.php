@@ -570,12 +570,12 @@ if (!empty($aBrandbosts)) {
                                                     }
                                                    @endphp
                                                     @if ($revCount < 1) 
-                                                        {{ displayNoData(true) }}
+                                                        {!! displayNoData(true) !!}
                                                     @else
                                                         <div class="media-left media-middle"> <img src="{{ smilyRating($ratingValue) }}" class="img-circle" width="26" alt=""> </div>
                                                         <div class="media-left">
                                                             <div class=""><a href="#" class="text-default text-semibold">{{ number_format($ratingValue, 1) }} </a> </div>
-                                                            <div class="text-muted text-size-small">{{ ($subscriberData->firstname) ? $subscriberData->firstname : displayNoData() }}</div>
+                                                            <div class="text-muted text-size-small">{!! ($subscriberData->firstname) ? $subscriberData->firstname : displayNoData() !!}</div>
                                                         </div>
                                                     @endif
                                                 </td>
@@ -621,7 +621,7 @@ if (!empty($aBrandbosts)) {
                                                 <td style="display: none;">{{ date('d M y', strtotime($data->created)) === date('d M y') ? 'today' : '' }}</td>
 
 
-                                                <td>{{ $lastListTime }}</td>
+                                                <td>{!! $lastListTime !!}</td>
                                                 <td class="text-center">
                                                     <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
 
@@ -631,7 +631,7 @@ if (!empty($aBrandbosts)) {
                                                                 @endphp
                                                                 <ul class="dropdown-menu dropdown-menu-right more_act">
 
-                                                                    @php if ($canWrite): 
+                                                                    @if ($canWrite): 
                                                                         @if ($data->status == 1) 
                                                                             <li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="{{ $data->id }}" status="2"><i class="icon-file-stats"></i> Pause</a></li>
                                                                         @endif
@@ -642,7 +642,7 @@ if (!empty($aBrandbosts)) {
                                                                         <li><a href="javascript:void(0);" class="deleteCampaign" brandID="{{ $data->id }}"><i class="icon-file-locked"></i> Delete</a></li>
                                                                         <li><a href="javascript:void(0);" class="archiveCampaign" brandID="{{ $data->id }}"><i class="icon-file-text2"></i> Move to Archive</a></li>
                                                                         <li><a href="{{ base_url() }}admin/brandboost/statistics/{{ $data->id }}" class="" brandID="{{ $data->id }}"><i class="icon-file-text2"></i> Statistics</a></li>
-                                                                    @endphp
+                                                                    @endif
                                                                     <li><a href="{{ base_url('admin/brandboost/subscribers/' . $list_id) }}"><i class="icon-gear"></i> Subscribers</a></li>
 
                                                                 </ul>

@@ -1,3 +1,3 @@
-<div class="tab-pane <?php echo $contactStatus; ?>" id="right-icon-tab1">
+<div class="tab-pane {{ $contactStatus }}" id="right-icon-tab1">
 	@include('admin.workflow2.workflow_subscribers')
 </div>

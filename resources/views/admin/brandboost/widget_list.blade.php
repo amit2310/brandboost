@@ -1,12 +1,15 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign'); ?>
-<?php
+
+@php
+
+list($canRead, $canWrite) = fetchPermissions('Onsite Campaign');
+        
 $iActiveCount = $iArchiveCount = 0;
 //$oWidgetsList =  array();
 
@@ -31,7 +34,7 @@ $aViews2 = array();
 $aClicks2 = array();
 $aComments2 = array();
 $aHelpful2 = array();
-?>
+@endphp
 <!-- Content area -->
 <div class="content">
 
@@ -187,11 +190,17 @@ $aHelpful2 = array();
                     </div>
                 </div>
 
-                <?php //if (!empty($oWidgetsList) && $user_role != 1): ?>
-                    <?php //if ($canWrite): ?>
-                    <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription" <?php } else { ?> id="addBrandboostWidget" class="btn bl_cust_btn btn-default dark_btn ml20" <?php } ?> type="button" ><i class="icon-plus3"></i> Add On Site Widget</button>
-                <?php //endif; ?>
-                <?php //endif; ?>
+                
+                <button 
+                    @if ($bActiveSubsription == false)  
+                        title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription" 
+                    @else
+                        id="addBrandboostWidget" class="btn bl_cust_btn btn-default dark_btn ml20" 
+                    @endif
+                        type="button" >
+                        <i class="icon-plus3"></i> Add On Site Widget
+                </button>
+                    
 
             </div>
         </div>
@@ -200,7 +209,7 @@ $aHelpful2 = array();
 
 
     <div class="tab-content">
-        <?php if (!empty($oWidgetsList)): ?>
+        @if (!empty($oWidgetsList))
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
@@ -208,21 +217,21 @@ $aHelpful2 = array();
                         <!-- Marketing campaigns -->
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $iActiveCount; ?> Onsite Widgets 1</h6>
+                                <h6 class="panel-title">{{ $iActiveCount }} Onsite Widgets 1</h6>
                                 <div class="heading-elements">
-                                    									
-									<div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-										<input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
-										<div class="form-control-feedback">
-											<i class="icon-search4"></i>
-										</div>
-									</div>
-									<div class="table_action_tool">
-										<a href="javascript:void(0)"><i class="icon-calendar52"></i></a>
-										<a href="javascript:void(0)" class="editDataList"><i class="icon-pencil"></i></a>
-										<button id="deleteButtonBrandboostOnlineWidget" class="btn btn-xs custom_action_box"><i class="icon-trash position-left"></i> Delete</button>
-										<button id="archiveButtonOnsiteWidget" class="btn btn-xs custom_action_box"><i class="icon-gear position-left"></i> Archive</button>
-									</div>
+
+                                    <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
+                                        <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-search4"></i>
+                                        </div>
+                                    </div>
+                                    <div class="table_action_tool">
+                                        <a href="javascript:void(0)"><i class="icon-calendar52"></i></a>
+                                        <a href="javascript:void(0)" class="editDataList"><i class="icon-pencil"></i></a>
+                                        <button id="deleteButtonBrandboostOnlineWidget" class="btn btn-xs custom_action_box"><i class="icon-trash position-left"></i> Delete</button>
+                                        <button id="archiveButtonOnsiteWidget" class="btn btn-xs custom_action_box"><i class="icon-gear position-left"></i> Archive</button>
+                                    </div>
 
                                 </div>
                             </div>
@@ -237,7 +246,7 @@ $aHelpful2 = array();
                                             <th><i class="icon-stack-star"></i>Name</th>
                                             <th><i class="icon-stack-star"></i>Widget Type</th>
                                             <th><i class="icon-stack-star"></i>Onsite Campaign</th>
-											<th><i class="icon-calendar"></i>Created</th>
+                                            <th><i class="icon-calendar"></i>Created</th>
                                             <th class="text-center"><i class="icon-stack-star"></i>Views</th>
                                             <th class="text-center"><i class="icon-stack-star"></i>Clicks</th>
                                             <th class="text-center"><i class="icon-stack-star"></i>Commented</th>
@@ -249,11 +258,11 @@ $aHelpful2 = array();
                                     </thead>
 
                                     <tbody>
-                                        <?php
+                                        @php
                                         $inc = 1;
                                         $aUser = getLoggedUser();
                                         $currentUserId = $aUser->id;
-										
+
                                         foreach ($oWidgetsList as $data) {
                                             $wid = $data->id;
                                             $oStats = \App\Models\Admin\BrandboostModel::getBBWidgetStats($wid);
@@ -277,163 +286,168 @@ $aHelpful2 = array();
                                                     $totalHelpful = count($aHelpful);
                                                 }
                                             }
-                                            
+
                                             if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
                                                 $list_id = $data->id;
                                                 $user_id = $data->user_id;
-                                                
+
                                                 //Attached camapaign brand Image
-												if(empty($data->campaignImg)){
-													$campaignImgArray = unserialize($data->campaignImg);
-													$campaign_img = $campaignImgArray[0]['media_url'];
+                                                if (empty($data->campaignImg)) {
+                                                    $campaignImgArray = unserialize($data->campaignImg);
+                                                    $campaign_img = $campaignImgArray[0]['media_url'];
 
-													if (empty($campaign_img)) {
-														$campaignImgSrc = base_url('assets/images/default_table_img2.png');
-														$imgSrc = base_url('assets/images/default_table_img2.png');
-													} else {
-														$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
-														$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
-													}
-												}else{
-													$campaignImgSrc = base_url('assets/images/default_table_img2.png');
-													$imgSrc = base_url('assets/images/default_table_img2.png');
-												}
-                                                ?>
+                                                    if (empty($campaign_img)) {
+                                                        $campaignImgSrc = base_url('assets/images/default_table_img2.png');
+                                                        $imgSrc = base_url('assets/images/default_table_img2.png');
+                                                    } else {
+                                                        $campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
+                                                        $imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
+                                                    }
+                                                } else {
+                                                    $campaignImgSrc = base_url('assets/images/default_table_img2.png');
+                                                    $imgSrc = base_url('assets/images/default_table_img2.png');
+                                                }
+                                                @endphp
 
-                                                <tr id="append-<?php echo $data->id; ?>" class="selectedClass">
-                                                    <td style="display: none;"><?php echo date('m/d/Y', strtotime($data->created)); ?></td>
-                                                    <td style="display: none;"><?php echo $data->id; ?></td>
-                                                    <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $data->id; ?>" value="<?php echo $data->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+                                                <tr id="append-{{ $data->id }}" class="selectedClass">
+                                                    <td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
+                                                    <td style="display: none;">{{ $data->id }}</td>
+                                                    <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $data->id }}" value="{{ $data->id }}" ><span class="custmo_checkmark"></span></label></td>
                                                     <td>
                                                         <div class="media-left media-middle">
-                                                            <a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->widget_title; ?>" class="text-default text-semibold">
-                                                                <img src="<?php echo $imgSrc; ?>" class="img-circle img-xs br5" alt="Img"></a>
+                                                            <a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ $data->widget_title }}" class="text-default text-semibold">
+                                                                <img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt="Img"></a>
                                                         </div>
                                                         <div class="media-left">
-                                                            <div class=""><a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>" class="text-default text-semibold"><?php echo $data->widget_title; ?></a></div>
+                                                            <div class=""><a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ $data->brand_title }}" class="text-default text-semibold">{{ $data->widget_title }}</a></div>
                                                             <div class="text-muted text-size-small">
-                                                                <?php echo setStringLimit($data->widget_desc); ?>
+                                                                {!! setStringLimit($data->widget_desc) !!}
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    
+
                                                     <td>
-                                                        <?php
-                                                        if ($data->widget_type == 'cpw') {
-                                                            echo 'Center Popup';
-                                                        } else if ($data->widget_type == 'vpw') {
-                                                            echo 'Vertical Popup';
-                                                        } else if ($data->widget_type == 'bww') {
-                                                            echo 'Button Widget Popup';
-                                                        } else if ($data->widget_type == 'bfw') {
-                                                            echo 'Bottom Fixed Popup';
-                                                        } else if ($data->widget_type == 'rfw') {
-                                                            echo 'Embeded Reviews';
-                                                        } else {
-                                                            echo '<span style="font-size:11px;">[No Data]</span>';
-                                                        };
-                                                        ?>
+                                                        @if ($data->widget_type == 'cpw')
+                                                             Center Popup
+                                                        @elseif ($data->widget_type == 'vpw') 
+                                                            Vertical Popup
+                                                        @elseif ($data->widget_type == 'bww') 
+                                                            Button Widget Popup
+                                                        @elseif ($data->widget_type == 'bfw') 
+                                                            Bottom Fixed Popup
+                                                        @elseif ($data->widget_type == 'rfw')
+                                                            Embeded Reviews
+                                                        @else
+                                                            <span style="font-size:11px;">[No Data]</span>
+                                                        @endif
                                                     </td>
                                                     <td>
-                                                        <?php if (!empty($data->brandboost_id)): ?>
+                                                        @if (!empty($data->brandboost_id))
                                                             <div class="media-left media-middle">
-                                                                <a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->brandboost_id); ?>" class="text-default text-semibold">
-                                                                    <img src="<?php echo $campaignImgSrc; ?>" class="img-circle img-xs br5" alt="Img">
+                                                                <a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->brandboost_id) }}>" class="text-default text-semibold">
+                                                                    <img src="{{ $campaignImgSrc }}" class="img-circle img-xs br5" alt="Img">
                                                                 </a>
                                                             </div>
                                                             <div class="media-left">
-                                                                <a href="<?php echo base_url("admin/brandboost/onsite_setup/" . $data->brandboost_id); ?>" target="_blank">
-                                                                <?php endif; ?>
-                                                                <?php echo ($data->bbBrandTitle) ? $data->bbBrandTitle : '<span style="font-size:11px;">[No Data]</span>'; ?>
-                                                                <?php if (!empty($data->brandboost_id)): ?>
+                                                                <a href="{{ base_url("admin/brandboost/onsite_setup/" . $data->brandboost_id) }}" target="_blank">
+                                                        @endif
+                                                                    {!! ($data->bbBrandTitle) ? $data->bbBrandTitle : '<span style="font-size:11px;">[No Data]</span>' !!}                                                            
+                                                        @if (!empty($data->brandboost_id))
                                                                 </a>
                                                                 <div class="text-muted text-size-small">
-                                                                    <?php echo setStringLimit($data->bbBrandDesc); ?>
+                                                                    {!! setStringLimit($data->bbBrandDesc) !!}
                                                                 </div>    
                                                             </div>
-                                                        <?php endif; ?>
+                                                        @endif
                                                     </td>
-                                                    
-													<td>
+
+                                                    <td>
                                                         <div class="media-left">
-                                                            <div class="pt-5"><span class="text-default text-semibold"><?php echo dataFormat($data->created); ?></span></div>
-                                                            <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)); ?></div>
+                                                            <div class="pt-5"><span class="text-default text-semibold">{{ dataFormat($data->created) }}</span></div>
+                                                            <div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) }}</div>
                                                         </div>
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <?php //echo ($totalViews) ? $totalViews : '0'; ?>0
+                                                        @php //echo ($totalViews) ? $totalViews : '0' @endphp0
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <?php //echo ($totalClicks) ? $totalClicks : '0'; ?>0
-                                                    </td>
-													
-													 <td class="text-center">
-                                                        <?php //echo ($totalComments) ? $totalComments : '0'; ?>0
+                                                        @php //echo ($totalClicks) ? $totalClicks : '0' @endphp0
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <?php //echo ($totalHelpful) ? $totalHelpful : '0'; ?>0
+                                                        @php //echo ($totalComments) ? $totalComments : '0' @endphp0
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        @php //echo ($totalHelpful) ? $totalHelpful : '0' @endphp0
                                                     </td>
 
                                                     <td>
                                                         <button class="btn btn-xs btn_white_table pr10">
 
-                                                            <?php
-                                                            if ($data->status == 1) {
-                                                                echo '<i class="icon-primitive-dot txt_green"></i> Publish';
-                                                            } else if ($data->status == 2) {
-                                                                echo '<i class="icon-primitive-dot txt_red"></i> Pause';
-                                                            } else if ($data->status == 3) {
-                                                                echo '<i class="icon-primitive-dot txt_red"></i> Archive';
-                                                            } else {
-                                                                echo '<i class="icon-primitive-dot txt_red"></i> Draft';
-                                                            }
-                                                            ?>
+                                                            @if ($data->status == 1)
+                                                                <i class="icon-primitive-dot txt_green"></i> Publish
+                                                            @elseif ($data->status == 2) 
+                                                                <i class="icon-primitive-dot txt_red"></i> Pause
+                                                            @elseif ($data->status == 3)
+                                                                <i class="icon-primitive-dot txt_red"></i> Archive
+                                                            @else
+                                                                <i class="icon-primitive-dot txt_red"></i> Draft
+                                                            @endif
                                                         </button>
                                                     </td>
 
                                                     <td>
-                                                        <?php
-                                                        if ($user_role != '2') {
-                                                            if ($currentUserId == $user_id || $user_role == 1) {
-                                                                ?>
-
+                                                        @if ($user_role != '2')
+                                                            @if ($currentUserId == $user_id || $user_role == 1)
                                                                 <div class="tdropdown">
                                                                     <button type="button" class="btn btn-xs plus_icon ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
-                                                                    <ul class="dropdown-menu dropdown-menu-right width-200">
+                                                                    <ul class="dropdown-menu dropdown-menu-right width-200">                                                                        
+                                                                        @if ($data->status == 1) 
+                                                                            <li>
+                                                                                <a href="javascript:void(0);" class="changeStatusCampaign" widgetID="{{ $data->id }}" status="2"><i class="icon-file-stats"></i> Pause</a>
+                                                                            </li>
+                                                                        @endif
+                                                                        @if ($data->status == 2) 
+                                                                            <li>
+                                                                                <a href="javascript:void(0);" class="changeStatusCampaign" widgetID="{{ $data->id }}" status="1"><i class="icon-file-stats"></i> Start</a>
+                                                                            </li>
+                                                                        @endif
+                                                                        <li>
+                                                                            <a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ $data->brand_title }}" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a>
+                                                                        </li>
 
-                                                                        <?php //if ($canWrite != FALSE): ?>
-                                                                        <?php if ($data->status == 1) { ?>
-                                                                            <li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="2"><i class="icon-file-stats"></i> Pause</a></li>
-                                                                        <?php } ?>
-                                                                        <?php if ($data->status == 2) { ?>
-                                                                            <li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="1"><i class="icon-file-stats"></i> Start</a></li>
-                                                                        <?php } ?>
-                                                                        <li><a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
-
-                                                                        <li><a href="javascript:void(0);" class="deleteCampaign" widgetID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
-                                                                        <li><a href="javascript:void(0);" class="archiveCampaign" widgetID="<?php echo $data->id; ?>"><i class="icon-file-text2"></i> Move to Archive</a></li>
-                                                                        <?php //endif; ?>
-                                                                        <li><a href="javascript:void(0);" class="viewECode" widgetID="<?php echo $data->id; ?>"><i class="icon-file-locked"></i> Get Embedded Code</a></li>
-                                                                        <li><a href="<?php echo base_url('admin/brandboost/onsite_widget_stats/' . $data->id); ?>" target="_blank"><i class="icon-file-locked"></i> Statistics</a></li>
+                                                                        <li>
+                                                                            <a href="javascript:void(0);" class="deleteCampaign" widgetID="{{ $data->id }}"><i class="icon-trash"></i> Delete</a>
+                                                                        </li>
+                                                                        
+                                                                        <li>
+                                                                            <a href="javascript:void(0);" class="archiveCampaign" widgetID="{{ $data->id }}"><i class="icon-file-text2"></i> Move to Archive</a>
+                                                                        </li>
+                                                                        
+                                                                        <li>
+                                                                            <a href="javascript:void(0);" class="viewECode" widgetID="{{ $data->id }}"><i class="icon-file-locked"></i> Get Embedded Code</a>
+                                                                        </li>
+                                                                        
+                                                                        <li>
+                                                                            <a href="{{ base_url('admin/brandboost/onsite_widget_stats/' . $data->id) }}" target="_blank"><i class="icon-file-locked"></i> Statistics</a>
+                                                                        </li>
                                                                     </ul>
                                                                 </div>
-                                                                <?php
-                                                            } else {
-                                                                echo '-';
-                                                            }
-                                                        }
-                                                        ?>
+                                                            @else
+                                                                {{ '-' }}
+                                                            @endif
+                                                        @endif
                                                     </td>
 
                                                 </tr>
-                                                <?php
+                                                @php
                                                 $inc++;
                                             }
                                         }
-                                        ?>
+                                        @endphp
                                     </tbody>
                                 </table>
                             </div>
@@ -449,19 +463,19 @@ $aHelpful2 = array();
                         <!-- Marketing campaigns -->
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $iArchiveCount; ?> Onsite Widgets 2</h6>
+                                <h6 class="panel-title">{{ $iArchiveCount }} Onsite Widgets 2</h6>
                                 <div class="heading-elements">
-                                   	<div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-										<input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
-										<div class="form-control-feedback">
-											<i class="icon-search4"></i>
-										</div>
-									</div>
-									<div class="table_action_tool">
-										<a href="javascript:void(0)"><i class="icon-calendar52"></i></a>
-										<a href="javascript:void(0)" class="editArchiveDataList"><i class="icon-pencil"></i></a>
-										<button id="deleteButtonBrandboostOnsiteWidgetA" style="display: none;" class="btn btn-xs custom_action_boxA"><i class="icon-trash position-left"></i> Delete</button>
-									</div>
+                                    <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
+                                        <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-search4"></i>
+                                        </div>
+                                    </div>
+                                    <div class="table_action_tool">
+                                        <a href="javascript:void(0)"><i class="icon-calendar52"></i></a>
+                                        <a href="javascript:void(0)" class="editArchiveDataList"><i class="icon-pencil"></i></a>
+                                        <button id="deleteButtonBrandboostOnsiteWidgetA" style="display: none;" class="btn btn-xs custom_action_boxA"><i class="icon-trash position-left"></i> Delete</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -487,7 +501,7 @@ $aHelpful2 = array();
                                     </thead>
 
                                     <tbody>
-                                        <?php
+                                        @php
                                         $inc = 1;
                                         $aUser = getLoggedUser();
                                         $currentUserId = $aUser->id;
@@ -499,169 +513,170 @@ $aHelpful2 = array();
                                                 foreach ($oStats as $oStat) {
                                                     if ($oStat->track_type == 'view') {
                                                         $aViews1[] = $oStat;
-                                                    } 
-													if ($oStat->track_type == 'click') {
+                                                    }
+                                                    if ($oStat->track_type == 'click') {
                                                         $aClicks1[] = $oStat;
-                                                    } 
-													if ($oStat->track_type == 'comment') {
+                                                    }
+                                                    if ($oStat->track_type == 'comment') {
                                                         $aComments1[] = $oStat;
-                                                    } 
-													if ($oStat->track_type == 'helpful') {
+                                                    }
+                                                    if ($oStat->track_type == 'helpful') {
                                                         $aHelpful1[] = $oStat;
                                                     }
                                                 }
                                             }
-											$totalRecords = count($oStats);
-											$totalViews = count($aViews1);
-											$totalClicks = count($aClicks1);
-											$totalComments = count($aComments1);
-											$totalHelpful = count($aHelpful1);
+                                            $totalRecords = count($oStats);
+                                            $totalViews = count($aViews1);
+                                            $totalClicks = count($aClicks1);
+                                            $totalComments = count($aComments1);
+                                            $totalHelpful = count($aHelpful1);
                                             //End of Widget Stats related Data
                                             if ($data->status == 3) {
                                                 $list_id = $data->id;
                                                 $user_id = $data->user_id;
-												$campaignImgArray = unserialize($data->campaignImg);
+                                                $campaignImgArray = unserialize($data->campaignImg);
                                                 $campaign_img = $campaignImgArray[0]['media_url'];
 
                                                 if (empty($campaign_img)) {
                                                     $campaignImgSrc = base_url('assets/images/default_table_img2.png');
-													$imgSrc = base_url('assets/images/default_table_img2.png');
+                                                    $imgSrc = base_url('assets/images/default_table_img2.png');
                                                 } else {
                                                     $campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
-													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
+                                                    $imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
                                                 }
-                                                ?>
+                                                @endphp
 
-                                                <tr id="append-<?php echo $data->id; ?>" class="selectedClassA">
-                                                    <td style="display: none;"><?php echo date('m/d/Y', strtotime($data->created)); ?></td>
-                                                    <td style="display: none;"><?php echo $data->id; ?></td>
-                                                    <td style="display: none;" class="editArchiveAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRowsA" id="chk<?php echo $data->id; ?>" value="<?php echo $data->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+                                                <tr id="append-{{ $data->id }}" class="selectedClassA">
+                                                    <td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
+                                                    <td style="display: none;">{{ $data->id }}</td>
+                                                    <td style="display: none;" class="editArchiveAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRowsA" id="chk{{ $data->id }}" value="{{ $data->id }}" ><span class="custmo_checkmark"></span></label></td>
                                                     <td>
                                                         <div class="media-left media-middle">
-                                                            <a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->widget_title; ?>" class="text-default text-semibold">
-                                                                <img src="<?php echo $imgSrc; ?>" class="img-circle img-xs br5" alt="Img"></a>
+                                                            <a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ $data->widget_title }}" class="text-default text-semibold">
+                                                                <img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt="Img"></a>
                                                         </div>
                                                         <div class="media-left">
-                                                            <div class=""><a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->widget_title; ?>" class="text-default text-semibold"><?php echo $data->widget_title; ?></a></div>
+                                                            <div class=""><a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ $data->widget_title }}" class="text-default text-semibold">{{ $data->widget_title }}</a></div>
                                                             <div class="text-muted text-size-small">
-                                                                <?php echo setStringLimit($data->widget_desc); ?>
+                                                                {!! setStringLimit($data->widget_desc) !!}
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    
+
                                                     <td>
-                                                        <?php
-                                                        if ($data->widget_type == 'cpw') {
-                                                            echo 'Center Popup';
-                                                        } else if ($data->widget_type == 'vpw') {
-                                                            echo 'Vertical Popup';
-                                                        } else if ($data->widget_type == 'bww') {
-                                                            echo 'Button Widget Popup';
-                                                        } else if ($data->widget_type == 'bfw') {
-                                                            echo 'Bottom Fixed Popup';
-                                                        } else {
-                                                            echo '<span style="font-size:11px;">[No Data]</span>';
-                                                        };
-                                                        ?>
+                                                        @if ($data->widget_type == 'cpw')
+                                                            {{ 'Center Popup' }}
+                                                        @elseif ($data->widget_type == 'vpw') 
+                                                            {{ 'Vertical Popup' }}
+                                                        @elseif ($data->widget_type == 'bww')
+                                                            {{ 'Button Widget Popup' }}
+                                                        @elseif ($data->widget_type == 'bfw')
+                                                            {{ 'Bottom Fixed Popup' }}
+                                                        @else
+                                                            <span style="font-size:11px;">[No Data]</span>
+                                                        @endif
                                                     </td>
-                                                    
+
                                                     <td>
-                                                        <?php if (!empty($data->brandboost_id)): ?>
+                                                        @if (!empty($data->brandboost_id))
                                                             <div class="media-left media-middle">
-                                                                <a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $data->brandboost_id); ?>" class="text-default text-semibold">
-                                                                    <img src="<?php echo $campaignImgSrc; ?>" class="img-circle img-xs br5" alt="Img">
+                                                                <a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->brandboost_id) }}" class="text-default text-semibold">
+                                                                    <img src="{{ $campaignImgSrc }}" class="img-circle img-xs br5" alt="Img">
                                                                 </a>
                                                             </div>
                                                             <div class="media-left">
-                                                                <a href="<?php echo base_url("admin/brandboost/onsite_setup/" . $data->brandboost_id); ?>" target="_blank">
-                                                                <?php endif; ?>
-                                                                <?php echo ($data->bbBrandTitle) ? $data->bbBrandTitle : '<span style="font-size:11px;">[No Data]</span>'; ?>
-                                                                <?php if (!empty($data->brandboost_id)): ?>
+                                                                <a href="{{ base_url("admin/brandboost/onsite_setup/" . $data->brandboost_id) }}" target="_blank">
+                                                        @endif
+                                                                {!! ($data->bbBrandTitle) ? $data->bbBrandTitle : '<span style="font-size:11px;">[No Data]</span>' !!}
+                                                        @if (!empty($data->brandboost_id)): 
                                                                 </a>
                                                                 <div class="text-muted text-size-small">
-                                                                    <?php echo setStringLimit($data->bbBrandDesc); ?>
+                                                                    {!! setStringLimit($data->bbBrandDesc) !!}
                                                                 </div>    
                                                             </div>
-                                                        <?php endif; ?>
+                                                        @endif
                                                     </td>
-													
-													<td>
+
+                                                    <td>
                                                         <div class="media-left">
-                                                            <div class="pt-5"><span class="text-default text-semibold"><?php echo dataFormat($data->created); ?></span></div>
-                                                            <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)); ?></div>
+                                                            <div class="pt-5"><span class="text-default text-semibold">{{ dataFormat($data->created) }}</span></div>
+                                                            <div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) }}</div>
                                                         </div>
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <?php echo ($totalViews) ? $totalViews : '0'; ?>
+                                                        {{ ($totalViews) ? $totalViews : '0' }}
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <?php echo ($totalClicks) ? $totalClicks : '0'; ?>
-                                                    </td>
-													
-													<td class="text-center">
-                                                        <?php echo ($totalComments) ? $totalComments : '0'; ?>
+                                                        {{ ($totalClicks) ? $totalClicks : '0' }}
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <?php echo ($totalHelpful) ? $totalHelpful : '0'; ?>
+                                                        {{ ($totalComments) ? $totalComments : '0' }}
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        {{ ($totalHelpful) ? $totalHelpful : '0' }}
                                                     </td>
 
                                                     <td>
                                                         <button class="btn btn-xs btn_white_table pr10">
 
-                                                            <?php
-                                                            if ($data->status == 1) {
-                                                                echo '<i class="icon-primitive-dot txt_green"></i> Publish';
-                                                            } else if ($data->status == 2) {
-                                                                echo '<i class="icon-primitive-dot txt_red"></i> Pause';
-                                                            } else if ($data->status == 3) {
-                                                                echo '<i class="icon-primitive-dot txt_red"></i> Archive';
-                                                            } else {
-                                                                echo '<i class="icon-primitive-dot txt_red"></i> Draft';
-                                                            }
-                                                            ?>
+                                                            @if ($data->status == 1) 
+                                                                <i class="icon-primitive-dot txt_green"></i> Publish
+                                                            @elseif ($data->status == 2) 
+                                                                <i class="icon-primitive-dot txt_red"></i> Pause
+                                                            @elseif ($data->status == 3)
+                                                                <i class="icon-primitive-dot txt_red"></i> Archive
+                                                            @else
+                                                                <i class="icon-primitive-dot txt_red"></i> Draft
+                                                            @endif
                                                         </button>
                                                     </td>
 
                                                     <td>
-                                                        <?php
-                                                        if ($user_role != '2') {
-                                                            if ($currentUserId == $user_id || $user_role == 1) {
-                                                                ?>
-
+                                                        @if ($user_role != '2') {
+                                                            @if ($currentUserId == $user_id || $user_role == 1)
                                                                 <div class="tdropdown">
                                                                     <button type="button" class="btn btn-xs btn_white_table ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
                                                                     <ul class="dropdown-menu dropdown-menu-right width-200">
 
-                                                                        <?php if ($canWrite != FALSE): ?>
-                                                                            <?php if ($data->status == 1) { ?>
-                                                                                <li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="2"><i class="icon-file-stats"></i> Pause</a></li>
-                                                                            <?php } ?>
-                                                                            <?php if ($data->status == 2) { ?>
-                                                                                <li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="<?php echo $data->id; ?>" status="1"><i class="icon-file-stats"></i> Start</a></li>
-                                                                            <?php } ?>
-                                                                            <li><a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $data->id); ?>" widgetID="<?php echo $data->id; ?>" b_title="<?php echo $data->brand_title; ?>" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
-                                                                            <li><a href="javascript:void(0);" class="deleteCampaign" widgetID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
-                                                                            <li><a href="<?php echo base_url('admin/brandboost/onsite_widget_stats/' . $data->id); ?>" target="_blank"><i class="icon-file-locked"></i> Statistics</a></li>
-                                                                        <?php endif; ?>
+                                                                        @if ($canWrite != FALSE)
+                                                                            @if ($data->status == 1) 
+                                                                                <li>
+                                                                                    <a href="javascript:void(0);" class="changeStatusCampaign" widgetID="{{ $data->id }}" status="2"><i class="icon-file-stats"></i> Pause</a>
+                                                                                </li>
+                                                                            @endif
+                                                                            @if ($data->status == 2)
+                                                                                <li>
+                                                                                    <a href="javascript:void(0);" class="changeStatusCampaign" widgetID="{{ $data->id }}" status="1"><i class="icon-file-stats"></i> Start</a>
+                                                                                </li>
+                                                                            @endif
+                                                                            <li>
+                                                                                <a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $data->id) }}" widgetID="{{ $data->id }}" b_title="{{ $data->brand_title }}" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="javascript:void(0);" class="deleteCampaign" widgetID="{{ $data->id }}"><i class="icon-trash"></i> Delete</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="{{ base_url('admin/brandboost/onsite_widget_stats/' . $data->id) }}" target="_blank"><i class="icon-file-locked"></i> Statistics</a>
+                                                                            </li>
+                                                                        @endif
                                                                     </ul>
-                                                                </div>
-                                                                <?php
-                                                            } else {
-                                                                echo '-';
-                                                            }
-                                                        }
-                                                        ?>
+                                                                </div>                                                                
+                                                            @else
+                                                                {{ '-' }}
+                                                            @endif
+                                                        @endif
                                                     </td>
 
                                                 </tr>
-                                                <?php
+                                                @php
                                                 $inc++;
                                             }
                                         }
-                                        ?>
+                                        @endphp
                                     </tbody>
                                 </table>
                             </div>
@@ -669,19 +684,18 @@ $aHelpful2 = array();
                     </div>
                 </div>
             </div>
-            
-			<?php //$this->load->view("admin/brandboost/campaign-tabs/widget/onsite-widget-stats", array('statsType' => 'aggregate')); 
-			//@include('admin.brandboost.campaign-tabs.widget.onsite-widget-stats', array('statsType' => '')) ?>
-			<?php else: ?>
+
+            {-- @include('admin.brandboost.campaign-tabs.widget.onsite-widget-stats', array('statsType' => '')) --} 
+        @else
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
                     <div class="col-lg-12">
                         <!-- Marketing campaigns -->
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $iActiveCount; ?> Onsite Widgets 3</h6>
+                                <h6 class="panel-title">{{ $iActiveCount }} Onsite Widgets 3</h6>
                                 <div class="heading-elements">
-                                                                        
+
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
                                         <div class="form-control-feedback">
@@ -725,17 +739,25 @@ $aHelpful2 = array();
                                                     <div class="col-md-12">
                                                         <div style="margin: 20px 0px 0;" class="text-center">
                                                             <h5 class="mb-20 mt40">
-                                                                Looks Like You Don't Have Any Brand Boosts Widget Yet <img src="<?php echo base_url('assets/images/smiley.png'); ?>"> <br>
+                                                                Looks Like You Don't Have Any Brand Boosts Widget Yet <img src="{{ base_url('assets/images/smiley.png') }}"> <br>
                                                                 Lets Create Your First Onsite Brand Boost Widget.
                                                             </h5>
 
-                                                            <?php if ($canWrite): ?>
-                                                                <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addBrandboostWidgetShow" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add On Site Widget</button>
-                                                            <?php endif; ?>
+                                                            @if ($canWrite)
+                                                                <button 
+                                                                    @if ($bActiveSubsription == false)
+                                                                        title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" 
+                                                                    @else
+                                                                        id="addBrandboostWidgetShow" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" 
+                                                                    @endif 
+                                                                    type="button" >
+                                                                    <i class="icon-plus3"></i> Add On Site Widget
+                                                                </button>
+                                                            @endif
 
                                                         </div>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </td>
                                             <td style="display: none;"></td>
@@ -758,8 +780,8 @@ $aHelpful2 = array();
                     </div>
                 </div>
             </div>
-                
-        <?php endif; ?>
+
+        @endif
 
     </div>            
 
@@ -876,23 +898,23 @@ $aHelpful2 = array();
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-				function (isConfirm) {
-					if (isConfirm) {
-						$('.overlaynew').show();
-						$.ajax({
-							url: '<?php echo base_url('admin/brandboost/delete_multipal_brandboost_widget'); ?>',
-							type: "POST",
-							data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
-							dataType: "json",
-							success: function (data) {
-								if (data.status == 'success') {
-									$('.overlaynew').hide();
-									window.location.href = '';
-								}
-							}
-						});
-					}
-				});
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $('.overlaynew').show();
+                                $.ajax({
+                                    url: "{{ base_url('admin/brandboost/delete_multipal_brandboost_widget') }}",
+                                    type: "POST",
+                                    data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data.status == 'success') {
+                                            $('.overlaynew').hide();
+                                            window.location.href = '';
+                                        }
+                                    }
+                                });
+                            }
+                        });
             }
         });
 
@@ -964,23 +986,23 @@ $aHelpful2 = array();
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-				function (isConfirm) {
-					if (isConfirm) {
-						$('.overlaynew').show();
-						$.ajax({
-							url: '<?php echo base_url('admin/brandboost/delete_multipal_brandboost_widget'); ?>',
-							type: "POST",
-							data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
-							dataType: "json",
-							success: function (data) {
-								if (data.status == 'success') {
-									$('.overlaynew').hide();
-									window.location.href = '';
-								}
-							}
-						});
-					}
-				});
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $('.overlaynew').show();
+                                $.ajax({
+                                    url: "{{ base_url('admin/brandboost/delete_multipal_brandboost_widget') }}",
+                                    type: "POST",
+                                    data: {multi_widget_id: val, _token: '{{csrf_token()}}'},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data.status == 'success') {
+                                            $('.overlaynew').hide();
+                                            window.location.href = '';
+                                        }
+                                    }
+                                });
+                            }
+                        });
             }
         });
 
@@ -1007,23 +1029,23 @@ $aHelpful2 = array();
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-				function (isConfirm) {
-					if (isConfirm) {
-						$('.overlaynew').show();
-						$.ajax({
-							url: '<?php echo base_url('admin/brandboost/archive_multipal_brandboost_widget'); ?>',
-							type: "POST",
-							data: {multi_brandboost_widget_id: val, _token: '{{csrf_token()}}'},
-							dataType: "json",
-							success: function (data) {
-								if (data.status == 'success') {
-									$('.overlaynew').hide();
-									window.location.href = '';
-								}
-							}
-						});
-					}
-				});
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $('.overlaynew').show();
+                                $.ajax({
+                                    url: "{{ base_url('admin/brandboost/archive_multipal_brandboost_widget') }}",
+                                    type: "POST",
+                                    data: {multi_brandboost_widget_id: val, _token: '{{csrf_token()}}'},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data.status == 'success') {
+                                            $('.overlaynew').hide();
+                                            window.location.href = '';
+                                        }
+                                    }
+                                });
+                            }
+                        });
             }
         });
 
@@ -1047,23 +1069,23 @@ $aHelpful2 = array();
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-				function (isConfirm) {
-					if (isConfirm) {
-						$('.overlaynew').show();
-						$.ajax({
-							url: '<?php echo base_url('admin/brandboost/archive_multipal_brandboost_widget'); ?>',
-							type: "POST",
-							data: {multi_brandboost_widget_id: val, _token: '{{csrf_token()}}'},
-							dataType: "json",
-							success: function (data) {
-								if (data.status == 'success') {
-									$('.overlaynew').hide();
-									window.location.href = '';
-								}
-							}
-						});
-					}
-				});
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $('.overlaynew').show();
+                                $.ajax({
+                                    url: "{{ base_url('admin/brandboost/archive_multipal_brandboost_widget') }}",
+                                    type: "POST",
+                                    data: {multi_brandboost_widget_id: val, _token: '{{csrf_token()}}'},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data.status == 'success') {
+                                            $('.overlaynew').hide();
+                                            window.location.href = '';
+                                        }
+                                    }
+                                });
+                            }
+                        });
             }
         });
 
@@ -1071,7 +1093,7 @@ $aHelpful2 = array();
             $('#addBrandboostWidgetModal').modal();
         });
 
-        $(document).on('click', '#addBrandboostWidgetShow', function(){
+        $(document).on('click', '#addBrandboostWidgetShow', function () {
             $("#addBrandboostWidget").trigger('click');
         });
 
@@ -1079,14 +1101,14 @@ $aHelpful2 = array();
             $('.overlaynew').show();
             var campaignName = $('#campaignName').val();
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/addOnsiteWidget'); ?>',
+                url: "{{ base_url('admin/brandboost/addOnsiteWidget') }}",
                 type: "POST",
                 data: {'campaignName': campaignName, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url(); ?>admin/brandboost/onsite_widget_setup/' + data.widgetID;
+                        window.location.href = '{{ base_url() }}admin/brandboost/onsite_widget_setup/' + data.widgetID;
                     } else {
                         $('.overlaynew').hide();
                         alertMessage('Error: Some thing wrong!');
@@ -1100,13 +1122,13 @@ $aHelpful2 = array();
             var widgetID = $(this).attr('widgetID');
             var status = $(this).attr('status');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/updateOnsiteWidgetStatus'); ?>',
+                url: "{{ base_url('admin/brandboost/updateOnsiteWidgetStatus') }}",
                 type: "POST",
                 data: {'widgetID': widgetID, 'status': status, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/brandboost/widgets'); ?>';
+                        window.location.href = "{{ base_url('admin/brandboost/widgets') }}";
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -1114,33 +1136,33 @@ $aHelpful2 = array();
             });
         });
 
-       $(document).on('click', '.deleteCampaign', function () {
-			var elem = $(this);
+        $(document).on('click', '.deleteCampaign', function () {
+            var elem = $(this);
 
             deleteConfirmationPopup(
-            "This record will deleted immediately.<br>You can't undo this action.", 
-            function() {
-				$('.overlaynew').show();
-				var widgetID = $(elem).attr('widgetID');
-				$.ajax({
-					url: '<?php echo base_url('admin/brandboost/delete_brandboost_widget'); ?>',
-					type: "POST",
-					data: {widget_id: widgetID, _token: '{{csrf_token()}}'},
-					dataType: "json",
-					success: function (data) {
-						if (data.status == 'success') {
-							$('.overlaynew').hide();
-							window.location.href = '';
-						}
-					}
-				});
-            });
+                    "This record will deleted immediately.<br>You can't undo this action.",
+                    function () {
+                        $('.overlaynew').show();
+                        var widgetID = $(elem).attr('widgetID');
+                        $.ajax({
+                            url: "{{ base_url('admin/brandboost/delete_brandboost_widget') }}",
+                            type: "POST",
+                            data: {widget_id: widgetID, _token: '{{csrf_token()}}'},
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.status == 'success') {
+                                    $('.overlaynew').hide();
+                                    window.location.href = '';
+                                }
+                            }
+                        });
+                    });
         });
 
         $(document).on('click', '.viewECode', function () {
             var widgetID = $(this).attr('widgetID');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/getOnsiteWidgetEmbedCode'); ?>',
+                url: "{{ base_url('admin/brandboost/getOnsiteWidgetEmbedCode') }}",
                 type: "POST",
                 data: {widget_id: widgetID, _token: '{{csrf_token()}}'},
                 dataType: "json",

@@ -1,20 +1,19 @@
-<div class="tab-pane <?php echo $clients; ?>" id="right-icon-tab5">
+<div class="tab-pane {{ $clients }}" id="right-icon-tab5">
     <div class="row">
         <div class="col-lg-12">
             <!-- Marketing campaigns -->
             <div class="panel panel-flat">
                 <!-- ****** Load Smart Popup ***** -->
-                <?php if (!empty($result)): ?>
-                    <?php //$this->load->view("admin/components/smart-popup/smart-feedback-widget", array('bgClass' => 'bkg_purple')); ?>
-					@include('admin.components.smart-popup.smart-feedback-widget', array('bgClass' => 'bkg_purple'))
-                <?php endif; ?>
+                @if (!empty($result))
+                    @include('admin.components.smart-popup.smart-feedback-widget', ['bgClass' => 'bkg_purple'])
+                @endif
 
 
                 <!-- ****** end ********-->
 
                 <div class="panel-heading">
                     <span class="pull-left">
-                    <h6 class="panel-title">Requires Attention</h6>
+                        <h6 class="panel-title">Requires Attention</h6>
                     </span>
                     <div class="heading_links pull-left">
                         <button type="button" class="btn btn-xs btn_white_table ml20 filterByColumn">All</button>
@@ -42,13 +41,12 @@
                 </div>
 
                 <div class="table-responsive">
-                    <?php //$this->load->view("admin/feedback/partial/feedback-list-table"); ?>
-					@include('admin.feedback.partial.feedback-list-table')
+                    @include('admin.feedback.partial.feedback-list-table')
                 </div>
             </div>
         </div>
     </div>
 </div>
-<?php //$this->load->view("admin/modals/modules/offsite/feedback_modal"); ?>
+
 @include('admin.modals.modules.offsite.feedback_modal')
-<script src="<?php echo base_url(); ?>assets/js/modules/offsite/feedback.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/js/modules/offsite/feedback.js" type="text/javascript"></script>
