@@ -49,7 +49,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <img style="margin: 0; padding: 0; width:100%;" alt="" title="" src="<?php echo base_url(); ?>assets/images/emailer/emailer-3-header.png"/>
+                                            <img style="margin: 0; padding: 0; width:100%;" alt="" title="" src="{{ base_url() }}assets/images/emailer/emailer-3-header.png"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -78,14 +78,14 @@
                                     </p>  
                                     <center>
 
-                                        <a href="{ONSITE_REVIEW_URL}?r=1"><img style="margin:0 20px 0 0;" src="<?php echo base_url(); ?>assets/images/emailer/star.png" title="" alt=""></a>
-                                        <a href="{ONSITE_REVIEW_URL}?r=2"><img style="margin:0 20px 0 0;" src="<?php echo base_url(); ?>assets/images/emailer/star.png" title="" alt=""></a>
-                                        <a href="{ONSITE_REVIEW_URL}?r=3"><img style="margin:0 20px 0 0;" src="<?php echo base_url(); ?>assets/images/emailer/star.png" title="" alt=""></a>
-                                        <a href="{ONSITE_REVIEW_URL}?r=4"><img style="margin:0 20px 0 0;" src="<?php echo base_url(); ?>assets/images/emailer/star.png" title="" alt=""></a> 
-                                        <a href="{ONSITE_REVIEW_URL}?r=5"><img style="margin:0 0 0 0;" src="<?php echo base_url(); ?>assets/images/emailer/star.png" title="" alt=""></a>
+                                        <a href="{ONSITE_REVIEW_URL}?r=1"><img style="margin:0 20px 0 0;" src="{{ base_url() }}assets/images/emailer/star.png" title="" alt=""></a>
+                                        <a href="{ONSITE_REVIEW_URL}?r=2"><img style="margin:0 20px 0 0;" src="{{ base_url() }}assets/images/emailer/star.png" title="" alt=""></a>
+                                        <a href="{ONSITE_REVIEW_URL}?r=3"><img style="margin:0 20px 0 0;" src="{{ base_url() }}assets/images/emailer/star.png" title="" alt=""></a>
+                                        <a href="{ONSITE_REVIEW_URL}?r=4"><img style="margin:0 20px 0 0;" src="{{ base_url() }}assets/images/emailer/star.png" title="" alt=""></a> 
+                                        <a href="{ONSITE_REVIEW_URL}?r=5"><img style="margin:0 0 0 0;" src="{{ base_url() }}assets/images/emailer/star.png" title="" alt=""></a>
                                     </center> 
                                     <center>
-                                        <a href="{ONSITE_REVIEW_URL}" title="Leave your feedback" style="margin:35px 0 0; text-decoration: none; font-family: 'Open Sans', sans-serif; background-color: #6d41f2; display: inline-block; padding:16px 20px; border-radius: 4px; font-size: 14px; color: #FFFFFF; text-align: center;"><img src="<?php echo base_url(); ?>assets/images/emailer/feedback-icon.png" style="margin-right: 8px; float: left;margin-top: 2px;">
+                                        <a href="{ONSITE_REVIEW_URL}" title="Leave your feedback" style="margin:35px 0 0; text-decoration: none; font-family: 'Open Sans', sans-serif; background-color: #6d41f2; display: inline-block; padding:16px 20px; border-radius: 4px; font-size: 14px; color: #FFFFFF; text-align: center;"><img src="{{ base_url() }}assets/images/emailer/feedback-icon.png" style="margin-right: 8px; float: left;margin-top: 2px;">
                                             Leave your feedback
                                         </a>
                                     </center>
@@ -133,7 +133,7 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td> 
-                                                                    <p style="font-family: 'Open Sans', sans-serif; text-align: left; margin:0px 0 10px; font-size: 12px; color:#494968; font-weight: normal; padding: 0 10px;"><img style="margin: 5px 15px 0px 0; float: left" src="<?php echo base_url(); ?>assets/images/emailer/emailer-1-signature.jpg" title="" alt="">Many thanks,<br><span style="font-family: 'Open Sans', sans-serif; text-align: left; margin:30px 0 0px; font-size: 12px; color:#494968; font-weight: 600; padding:0px;">{BRAND_NAME}</span></p>
+                                                                    <p style="font-family: 'Open Sans', sans-serif; text-align: left; margin:0px 0 10px; font-size: 12px; color:#494968; font-weight: normal; padding: 0 10px;"><img style="margin: 5px 15px 0px 0; float: left" src="{{ base_url() }}assets/images/emailer/emailer-1-signature.jpg" title="" alt="">Many thanks,<br><span style="font-family: 'Open Sans', sans-serif; text-align: left; margin:30px 0 0px; font-size: 12px; color:#494968; font-weight: 600; padding:0px;">{BRAND_NAME}</span></p>
 
                                                                 </td>
                                                             </tr>
@@ -165,7 +165,7 @@
                             <tbody>
                                 <tr>
                                     <td> 
-                                        <img src="<?php echo base_url(); ?>assets/images/emailer/border-btm.jpg">    
+                                        <img src="{{ base_url() }}assets/images/emailer/border-btm.jpg">    
                                     </td>
                                 </tr>
                             </tbody>

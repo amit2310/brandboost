@@ -20,23 +20,23 @@
                     </div>
 
                 </div>
-				<hr>
+                <hr>
                 <div class="modal-footer">
-					<div class="col-lg-8 showEmailBox" style="display:none;">
-					<div class="row">
-					<div class="col-lg-9"><input name="email" id="email" class="form-control" value="" placeholder="Email Address For Preview" type="text" required></div>
-					<div class="col-lg-3"><button type="submit" class="btn btn-primary" id="sendPreviewEmail"><i class="icon-check"></i> Send</button></div>
-					</div>
-					</div>
-					<button type="button" class="btn btn-primary" id="sendPreviewEmailBox" style="width:92px;"><i class="icon-check"></i> Send Me</button>
-					<button type="button" class="btn bg-danger" id="cancelPreviewEmailBox" style="display:none; width:92px;"><i class="icon-cross"></i> Cancel</button>
+                    <div class="col-lg-8 showEmailBox" style="display:none;">
+                        <div class="row">
+                            <div class="col-lg-9"><input name="email" id="email" class="form-control" value="" placeholder="Email Address For Preview" type="text" required></div>
+                            <div class="col-lg-3"><button type="submit" class="btn btn-primary" id="sendPreviewEmail"><i class="icon-check"></i> Send</button></div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="sendPreviewEmailBox" style="width:92px;"><i class="icon-check"></i> Send Me</button>
+                    <button type="button" class="btn bg-danger" id="cancelPreviewEmailBox" style="display:none; width:92px;"><i class="icon-cross"></i> Cancel</button>
                     <button class="btn btn-link canclepreviewpopup" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-  <!-- Other Source category modal -->
+<!-- Other Source category modal -->
 
 <div id="OtherSourcesId" class="modal fade">
     <div class="modal-dialog">
@@ -44,37 +44,37 @@
         <div class="modal-content">
             <form method="post" id="OtherSourcesPopupFrm" class="form-horizontal"  action="javascript:void();">
                 <input name="siteCategories[]" type="hidden" value="OtherSources">
-                <input type="hidden" name="brandboostID" value="<?php echo $brandboostID; ?>">
+                <input type="hidden" name="brandboostID" value="{{ $brandboostID }}">
                 <div class="modal-header">
                     <button type="button" class="canclepreviewpopup close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add Other Source</h5>
                 </div>
                 <div class="modal-body">
-                   <div class="form-group">
-                            <label class="control-label">Name</label>
-                            <div class="">
-                                <input name="offsitename" id="offsitename" class="form-control" type="text" required="">
-							</div>
-						</div>
-                  
                     <div class="form-group">
-                            <label class="control-label">Website URL</label>
-                            <div class="">
-                                <input name="txtURL" id="txtURL" class="form-control" type="text" required="">
-							</div>
-						</div>
-                   
+                        <label class="control-label">Name</label>
+                        <div class="">
+                            <input name="offsitename" id="offsitename" class="form-control" type="text" required="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Website URL</label>
+                        <div class="">
+                            <input name="txtURL" id="txtURL" class="form-control" type="text" required="">
+                        </div>
+                    </div>
+
 
                 </div>
-                 <div class="modal-footer noBorder"> 
+                <div class="modal-footer noBorder"> 
                     <button class="btn btn-link" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
                     <button type="submit" class="btn btn-primary"><i class="icon-check"></i> Add</button>
-				</div>
+                </div>
             </form>
         </div>
     </div>
 </div>
- <!-- Other Source category modal -->
+<!-- Other Source category modal -->
 
 
 
@@ -128,7 +128,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group" style="margin:0px;">
-                        <?php
+                        @php
                         $offsite_ids = $brandboostData->offsite_ids;
                         $offsite_ids = unserialize($offsite_ids);
                         if (!empty($offsite_ids)) {
@@ -136,7 +136,7 @@
                         } else {
                             $selected_list = 0;
                         }
-                        ?>
+                        @endphp
 
                         <div class="row">
                             <div class="col-md-4">
@@ -169,8 +169,8 @@
                             </div>
                         </div>
 
-                        <input type="hidden" name="selected_list" id='selected_list' value="<?php echo $selected_list; ?>">
-                        <input type="hidden" name="selected_list_n" id='selected_list_n' value="<?php echo $selected_list; ?>">
+                        <input type="hidden" name="selected_list" id='selected_list' value="{{ $selected_list }}">
+                        <input type="hidden" name="selected_list_n" id='selected_list_n' value="{{ $selected_list }}">
                         <input type="hidden" name="selected_list_new" id='selected_list_new' value="0">
                         <hr style="margin: 0 -20px!important;">
                         <ul style="margin: 0 -20px;" class="media-list" id="offsite_list_detail">

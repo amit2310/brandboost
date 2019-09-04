@@ -1,9 +1,4 @@
 <div class="content offsite_feed">
-<?php //pre($aData);
-//pre($aData['open']);
-
-
-?>
     <!-- Dashboard content -->
     <div class="row">
         <div class="col-lg-12">
@@ -21,60 +16,56 @@
                                 <th class="col-md-2">Dropped</th>
                                 <th class="col-md-2">Unsubscribe</th>
                                 <th class="col-md-2">Spam Report</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody id="listsubscribers_table">
 
-                            <?php
-                            if (!empty($aData)) {
-                                    ?>
-                                    <tr>
-                                        <td class="">
-                                            <?php echo $aData['processed']['TotalCount'];?>
-                                        </td>
-                                        
-                                        <td class="">
-                                            <?php echo $aData['delivered']['TotalCount'];?>
-                                        </td>
-                                        
-                                        <td class="">
-                                            Total: <?php echo $aData['open']['TotalCount'];?><br>
-                                            Unique: <?php echo $aData['open']['UniqueCount'];?><br>
-                                            Duplicate: <?php echo $aData['open']['DuplicateCount'];?>
-                                        </td>
-                                        
-                                        <td class="">
-                                            Total: <?php echo $aData['click']['TotalCount'];?><br>
-                                            Unique: <?php echo $aData['click']['UniqueCount'];?><br>
-                                            Duplicate: <?php echo $aData['click']['DuplicateCount'];?>
-                                        </td>
-                                        
-                                        <td class="">
-                                            Total: <?php echo $aData['bounce']['TotalCount'];?><br>
-                                            
-                                        </td>
-                                        
-                                        <td class="">
-                                            Total: <?php echo $aData['dropped']['TotalCount'];?><br>
-                                            
-                                        </td>
-                                        
-                                        <td class="">
-                                            Total: <?php echo $aData['unsubscribe']['TotalCount'];?><br>
-                                            
-                                        </td>
-                                        
-                                        <td class="">
-                                            Total: <?php echo $aData['spam_report']['TotalCount'];?><br>
-                                            
-                                        </td>
-                                        
-                                    </tr>
-                                    <?php
-                            }
-                                    ?>
-                                   
+                            @if (!empty($aData))
+                                <tr>
+                                    <td class="">
+                                        {{ $aData['processed']['TotalCount'] }}
+                                    </td>
+
+                                    <td class="">
+                                        {{ $aData['delivered']['TotalCount'] }}
+                                    </td>
+
+                                    <td class="">
+                                        Total: {{ $aData['open']['TotalCount'] }}<br>
+                                        Unique: {{ $aData['open']['UniqueCount'] }}<br>
+                                        Duplicate: {{ $aData['open']['DuplicateCount'] }}
+                                    </td>
+
+                                    <td class="">
+                                        Total: {{ $aData['click']['TotalCount'] }}<br>
+                                        Unique: {{ $aData['click']['UniqueCount'] }}<br>
+                                        Duplicate: {{ $aData['click']['DuplicateCount'] }}
+                                    </td>
+
+                                    <td class="">
+                                        Total: {{ $aData['bounce']['TotalCount'] }}<br>
+
+                                    </td>
+
+                                    <td class="">
+                                        Total: {{ $aData['dropped']['TotalCount'] }}<br>
+
+                                    </td>
+
+                                    <td class="">
+                                        Total: {{ $aData['unsubscribe']['TotalCount'] }}<br>
+
+                                    </td>
+
+                                    <td class="">
+                                        Total: {{ $aData['spam_report']['TotalCount'] }}<br>
+
+                                    </td>
+
+                                </tr>
+                            @endif
+
 
                         </tbody>
                     </table>
