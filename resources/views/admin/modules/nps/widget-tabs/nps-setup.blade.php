@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-md-3">
         <div style="margin: 0;" class="panel panel-flat">
@@ -13,19 +12,22 @@
                     <div class="p20">
                         <div class="row">
                             <div class="col-md-12">
-                                <?php foreach ($oNPSList as $data) { ?>
+                                @foreach ($oNPSList as $data)
                                     <div class="form-group mb10">
-                                        <p class="pull-left mb0"><a href="<?php echo base_url('admin/modules/nps/' . $data->id); ?>" target="_blank"><?php echo $data->title; ?></a></p>
+                                        <p class="pull-left mb0">
+											<a href="{{ base_url('admin/modules/nps/' . $data->id) }}" target="_blank">
+												{{ $data->title }}
+											</a>
+										</p>
                                         <label class="custom-form-switch pull-right">
-                                            <input class="field autoSaveNPSWidget" type="checkbox" data-hashcode="<?php echo $data->hashcode; ?>" id="nps_id_<?php echo $data->id; ?>" name="nps_id" value="<?php echo $data->id; ?>" 
-                                                   <?php echo $data->id == $widgetData->nps_id ? 'checked' : ''; ?>>
+                                            <input class="field autoSaveNPSWidget" type="checkbox" data-hashcode="{{ $data->hashcode }}" id="nps_id_{{ $data->id }}" name="nps_id" value="{{ $data->id }}" {!! $data->id == $widgetData->nps_id ? 'checked' : '' !!} >
                                             <span class="toggle dred"></span> 
                                         </label>
                                         <div class="clearfix"></div>
                                     </div>
-                                <?php } ?>
+                                @endforeach
                             </div>
-                            <input type="hidden" name="widget_id" id="widget_id" value="<?php echo $widgetData->id; ?>">
+                            <input type="hidden" name="widget_id" id="widget_id" value="{{ $widgetData->id }}">
                             <button class="hidden saveNPSWidget btn dark_btn h52 w100 bkg_purple" type="submit"> Save NPS Widget </button>
                         </div>
                     </div>
@@ -33,7 +35,7 @@
             </div>
         </div>
     </div>
-    <?php //echo $sEmailPreview; ?>
+	
     <div class="col-md-9">
         <div style="margin: 0;" class="panel panel-flat">
             <div class="panel-heading">
@@ -69,12 +71,13 @@
                 $('#npsWidgetSection').html('');
             }
         });
+		
 
         $('#frmSubmitNPSWidget').on('submit', function (e) {
             e.preventDefault();
             var widgetId = $('#widget_id').val();
             $.ajax({
-                url: "<?php echo base_url(); ?>/admin/modules/nps/addNPSWidgetSurvey",
+                url: "{{ base_url() }}/admin/modules/nps/addNPSWidgetSurvey",
                 method: "POST",
                 data: {_token: '{{csrf_token()}}', 'hashcode': hashcodeVal, 'nps_id': npsId, 'widget_id': widgetId},
                 dataType: "json",

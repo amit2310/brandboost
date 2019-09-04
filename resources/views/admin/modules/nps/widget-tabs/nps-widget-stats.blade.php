@@ -1,8 +1,8 @@
-<?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign'); ?>
+@php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign') @endphp
 <script src="https://code.highcharts.com/highcharts.js"></script>
-<?php
+
+@php
 	if (!empty($oStats)) {
-		
 		$timeNow = date("Y-m-d");
 		$yesterdayDate = date('Y-m-d', strtotime("-1 day"));
 		$weekDate = date('Y-m-d', strtotime("-7 week"));
@@ -155,8 +155,9 @@
 		$totalMonth = count($aViewsMonth) + count($aClicksMonth) + count($aCommentsMonth) + count($aHelpfulMonth);
 		$total3Month = count($aViews3Months) + count($aClicks3Months) + count($aComments3Months) + count($aHelpful3Months);
 	}
-?>
-<div class="tab-pane <?php echo $StatsClass; ?>" id="right-icon-tab4">
+@endphp
+
+<div class="tab-pane {{ $StatsClass }}" id="right-icon-tab4">
 	<!--===========TAB 1===========-->
 	<div class="tab-content">
 		<div class="row">
@@ -164,143 +165,128 @@
 				<div class="panel panel-flat">
 					<div class="panel-heading"> 
 						<span class="pull-left">
-							<h6 class="panel-title" id="totalStatCount"><?php echo ($totalRecords) ? $totalRecords : '0';?> Records</h6>
+							<h6 class="panel-title" id="totalStatCount">{{ ($totalRecords) ? $totalRecords : '0' }} Records</h6>
 						</span>
 						<div class="heading_links pull-left">
-							<a class="top_links btn btn-xs btn_white_table ml20 mvtabs" href="#right-icon-tab15" data-toggle="tab" total-record="<?php echo $totalRecords; ?>">All Time</a>
-							<a class="top_links mvtabs" href="#right-icon-tab10" data-toggle="tab" total-record="<?php echo $totalToday; ?>">Today</a> 
-							<a class="top_links mvtabs" href="#right-icon-tab11" data-toggle="tab" total-record="<?php echo $totalYesterday; ?>">Yesterday</a> 
-							<a class="top_links mvtabs" href="#right-icon-tab12" data-toggle="tab" total-record="<?php echo $totalWeek; ?>">Week</a> 
-							<a class="top_links mvtabs" href="#right-icon-tab13" data-toggle="tab" total-record="<?php echo $totalMonth; ?>">Month</a>
-							<a class="top_links mvtabs" href="#right-icon-tab14" data-toggle="tab" total-record="<?php echo $total3Month; ?>">3 Month</a>
-							<!-- <button type="button" class="btn btn-xs plus_icon ml20"><i class="icon-plus3"></i></button> -->
+							<a class="top_links btn btn-xs btn_white_table ml20 mvtabs" href="#right-icon-tab15" data-toggle="tab" total-record="{{ $totalRecords }}">All Time</a>
+							<a class="top_links mvtabs" href="#right-icon-tab10" data-toggle="tab" total-record="{{ $totalToday }}">Today</a> 
+							<a class="top_links mvtabs" href="#right-icon-tab11" data-toggle="tab" total-record="{{ $totalYesterday }}">Yesterday</a> 
+							<a class="top_links mvtabs" href="#right-icon-tab12" data-toggle="tab" total-record="{{ $totalWeek }}">Week</a> 
+							<a class="top_links mvtabs" href="#right-icon-tab13" data-toggle="tab" total-record="{{ $totalMonth }}">Month</a>
+							<a class="top_links mvtabs" href="#right-icon-tab14" data-toggle="tab" total-record="{{ $total3Month }}">3 Month</a>
 						</div>
-						
-					</div>
-					<div class="panel-body p0">
-						
 					</div>
 				</div>
 			</div>
 		</div>
 		
-		<?php if($statsType == 'aggregate'): ?>
-		<div class="row"> 
-			<!--------------LEFT----------->
-			<div class="col-md-3">
-				<div class="panel panel-flat review_ratings">
-					<div class="panel-heading">
-						<h6 class="panel-title">Total Widgets</h6>
-						<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
-					</div>
-					<div class="panel-body p0 bkg_white">
-						<div class="p20 topchart_value">
-							<div class="row">
-								<div class="col-xs-12">
-									<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_red.png"); ?>"/>
-									<h1 class="m0"><?php echo number_format(count($aWidgets['widget_id'])); ?></h1>                                        
+		@if($statsType == 'aggregate')
+			<div class="row"> 
+				<!--------------LEFT----------->
+				<div class="col-md-3">
+					<div class="panel panel-flat review_ratings">
+						<div class="panel-heading">
+							<h6 class="panel-title">Total Widgets</h6>
+							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
+						</div>
+						<div class="panel-body p0 bkg_white">
+							<div class="p20 topchart_value">
+								<div class="row">
+									<div class="col-xs-12">
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_red.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aWidgets['widget_id'])) }}</h1>                                        
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<!------------CENTER------------->
-			<div class="col-md-3">
-				<div class="panel panel-flat">
-					<div class="panel-heading">
-						<h6 class="panel-title">Total Campaigns</h6>
-						<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
-					</div>
-					<div class="panel-body p0 bkg_white"> 
-						<div class="p20 topchart_value">
-							<div class="row">
-								<div class="col-xs-12">
-									<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-									<h1 class="m0"><?php echo number_format(count($aWidgets['campaign'])); ?></h1>
+				<!------------CENTER------------->
+				<div class="col-md-3">
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h6 class="panel-title">Total Campaigns</h6>
+							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
+						</div>
+						<div class="panel-body p0 bkg_white"> 
+							<div class="p20 topchart_value">
+								<div class="row">
+									<div class="col-xs-12">
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aWidgets['campaign'])) }}</h1>
+									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+				<!------------RIGHT------------->
+				<div class="col-md-3">
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h6 class="panel-title">Widget Type</h6>
+							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
+						</div>
+						<div class="panel-body p0 bkg_white"> 
+							<div class="p20 topchart_value">
+								<div class="row">
+									<div class="col-xs-12">
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										@if(!empty($aWidgets['widget_type']))
+											@foreach($aWidgets['widget_type'] as $key => $aWT)
+												<h6 class="m0">
+													@if ($key == 'cpw')
+														{{ 'Center Popup' }}
+													@else if ($key == 'vpw')
+														{{ 'Vertical Popup' }}
+													@else if ($key == 'bww')
+														{{ 'Button Widget Popup' }}
+													@else if ($key == 'bfw')
+														{{ 'Bottom Fixed Popup' }}
+													@else
+														{{ ucfirst($key) }}
+													: {{ number_format(count($aWT)) }}
+												</h6>
+											@endforeach
+										@else
+											<h1 class="m0">0</h1>
+										@endif
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!------------RIGHT------------->
+				<div class="col-md-3">
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h6 class="panel-title">Sources</h6>
+							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
 						
-					</div>
-				</div>
-			</div>
-			<!------------RIGHT------------->
-			<div class="col-md-3">
-				<div class="panel panel-flat">
-					<div class="panel-heading">
-						<h6 class="panel-title">Widget Type</h6>
-						<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
-					</div>
-					<div class="panel-body p0 bkg_white"> 
-						<div class="p20 topchart_value">
-							<div class="row">
-								<div class="col-xs-12">
-									<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-									<?php if(!empty($aWidgets['widget_type'])){
-										foreach($aWidgets['widget_type'] as $key => $aWT){
-										?>
-										<h6 class="m0"><?php
-											if ($key == 'cpw') {
-												echo 'Center Popup';
-												} else if ($key == 'vpw') {
-												echo 'Vertical Popup';
-												} else if ($key == 'bww') {
-												echo 'Button Widget Popup';
-												} else if ($key == 'bfw') {
-												echo 'Bottom Fixed Popup';
-												} else {
-												echo ucfirst($key);
-											}
-										?>: <?php echo number_format(count($aWT)); ?></h6>
-										<?php
-										}
-										}else{
-										echo '<h1 class="m0">0</h1>';
-									}
-									?>
-									
-								</div>
-							</div>
-						</div>
-						
-					</div>
-				</div>
-			</div>
-			<!------------RIGHT------------->
-			<div class="col-md-3">
-				<div class="panel panel-flat">
-					<div class="panel-heading">
-						<h6 class="panel-title">Sources</h6>
-						<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
-					</div>
-					
-					<div class="panel-body p0 bkg_white"> 
-						<div class="p20 topchart_value">
-							<div class="row">
-								<div class="col-xs-3">
-									<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_green.png"); ?>"/>
-								</div>
-								<div class="col-xs-9">
-									<?php if(!empty($aWidgets['track_type'])){
-										foreach($aWidgets['track_type'] as $key => $aWT){
-										?>
-										<h6 class="m0"><?php echo ucfirst($key);?>: <?php echo number_format(count($aWT)); ?></h6>
-										<?php
-										}
-										}else{
-										echo '<h1 class="m0">0</h1>';
-									}
-									?>
-									
+						<div class="panel-body p0 bkg_white"> 
+							<div class="p20 topchart_value">
+								<div class="row">
+									<div class="col-xs-3">
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_green.png') }}"/>
+									</div>
+									<div class="col-xs-9">
+										@if(!empty($aWidgets['track_type']))
+											@foreach($aWidgets['track_type'] as $key => $aWT)
+												<h6 class="m0">{{ ucfirst($key) }}: {{ number_format(count($aWT)) }}</h6>
+											@endforeach
+										@else
+											<h1 class="m0">0</h1>
+										@endif
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<?php endif; ?>
+		@endif
 		
 		<div class="tab-pane active" id="right-icon-tab15">
 			
@@ -316,14 +302,12 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_red.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aViews)); ?></h1>
-										<p class="txt_red"><?php echo number_format(((count($aViews) / count($oStats)) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_red.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aViews)) }}</h1>
+										<p class="txt_red">{{ number_format(((count($aViews) / count($oStats)) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
-							
-							
 							<div id="linechart_a_all" style="min-width: 300px; height: 250px;"></div>
 						</div>
 					</div>
@@ -339,9 +323,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aClicks)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aClicks) / count($oStats)) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aClicks)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aClicks) / count($oStats)) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -360,9 +344,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aComments)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aComments) / count($oStats)) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aComments)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aComments) / count($oStats)) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -382,18 +366,14 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_green.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aHelpful)); ?></h1>
-										<p class="txt_green"><?php echo number_format(((count($aHelpful) / count($oStats)) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_green.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aHelpful)) }}</h1>
+										<p class="txt_green">{{ number_format(((count($aHelpful) / count($oStats)) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
 							<div id="linechart_d_all" style="min-width: 300px; height: 250px;"></div>
-						</div>
-						
-						
-						
-						
+						</div>						
 					</div>
 				</div>
 			</div>
@@ -431,15 +411,13 @@
 										<th>Source</th>
 										<th>IP</th>
 										<th>Platform</th>
-										<!-- <th>Device</th> -->
 										<th>Browser</th>
-										<!-- <th>Region</th> -->
 										<th>City</th>
 										<th>Country</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php
+									@php
 										if (!empty($oStats)) {
 											foreach ($oStats as $oData) {
 												$brandImgArray = unserialize($oData->brand_img);
@@ -462,88 +440,78 @@
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
 												
-												
-											?>
+											@endphp
 											
 											<!--================================================-->
 											<tr>
 												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id); ?>" widgetID="<?php echo $oData->widget_id; ?>" b_title="<?php echo $oData->bbCTitle; ?>" class="text-default text-semibold">
-														<img src="<?php echo $imgSrc; ?>" class="img-circle img-xs br5" alt="Img"></a>
+														<a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id) }}" widgetID="{{ $oData->widget_id }}" b_title="{{ $oData->bbCTitle }}" class="text-default text-semibold">
+														<img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt="Img"></a>
 													</div>
 													<div class="media-left">
-														<div class=""><a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->id); ?>" widgetID="<?php echo $oData->id; ?>" b_title="<?php echo $oData->widget_title; ?>" class="text-default text-semibold"><?php echo $oData->widget_title; ?></a></div>
+														<div class=""><a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->id) }}" widgetID="{{ $oData->id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">{{ echo $oData->widget_title }}</a></div>
 														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->widget_desc); ?>
+															{{ setStringLimit($oData->widget_desc) }}
 														</div>
 													</div>
 												</td>
 												
-												<td><?php
-													if ($oData->widget_type == 'cpw') {
-														echo 'Center Popup';
-														} else if ($oData->widget_type == 'vpw') {
-														echo 'Vertical Popup';
-														} else if ($oData->widget_type == 'bww') {
-														echo 'Button Widget Popup';
-														} else if ($oData->widget_type == 'bfw') {
-														echo 'Bottom Fixed Popup';
-														} else {
-														echo 'No Data';
-													};
-												?></td>
 												<td>
-													<?php if (!empty($oData->brandboost_id)): ?>
+													@if ($oData->widget_type == 'cpw')
+														{{ 'Center Popup' }}
+													@else if ($oData->widget_type == 'vpw')
+														{{ 'Vertical Popup' }}
+													@else if ($oData->widget_type == 'bww')
+														{{ 'Button Widget Popup' }}
+													@else if ($oData->widget_type == 'bfw')
+														{{ 'Bottom Fixed Popup' }}
+													@else {
+														{{ 'No Data' }}
+													@endif
+												</td>
+												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id); ?>" class="text-default text-semibold">
-															<img src="<?php echo $campaignImgSrc; ?>" class="img-circle img-xs br5" alt="Img">
+														<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" class="text-default text-semibold">
+															<img src="{{ $campaignImgSrc }}" class="img-circle img-xs br5" alt="Img">
 														</a>
 													</div>
 													<div class="media-left">
-														<a href="<?php echo base_url("admin/brandboost/onsite_setup/" . $oData->brandboost_id); ?>" target="_blank">
-															<?php endif; ?>
-															<?php echo ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A'; ?>
-															<?php if (!empty($oData->brandboost_id)): ?>
+														<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" target="_blank">
+															{{ ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A' }}
 														</a>
 														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->bbBrandDesc); ?>
+															{{ setStringLimit($oData->bbBrandDesc) }}
 														</div>    
 													</div>
-													<?php endif; ?>
 												</td>
 												<td>
 													<div class="media-left">
-														<div class="pt-5"><span class="text-default text-semibold"><?php echo dataFormat($oData->created_at); ?></span></div>
-														<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oData->created_at)); ?></div>
+														<div class="pt-5"><span class="text-default text-semibold">{{ dataFormat($oData->created_at) }}</span></div>
+														<div class="text-muted text-size-small">{{ date('h:i A', strtotime($oData->created_at)) }}</div>
 													</div>
 												</td>
-												<td><?php echo ($oData->track_type) ? $oData->track_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->section_type) ? $oData->section_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->ip_address) ? $oData->ip_address : 'No Data'; ?></td>
-												<td><?php echo ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->platform_device) ? $oData->platform_device : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->region) ? $oData->region : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->city) ? $oData->city : 'No Data'; ?></td>
-												<td><?php echo ($oData->country) ? $oData->country : 'No Data'; ?></td>
+												<td>{{ ($oData->track_type) ? $oData->track_type : 'No Data' }}</td>
+												<td>{{ ($oData->section_type) ? $oData->section_type : 'No Data' }}</td>
+												<td>{{ ($oData->ip_address) ? $oData->ip_address : 'No Data' }}</td>
+												<td>{{ ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data' }}</td>
+												<td>{{ ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data' }}</td>
+												<td>{{ ($oData->city) ? $oData->city : 'No Data' }}</td>
+												<td>{{ ($oData->country) ? $oData->country : 'No Data' }}</td>
 											</tr>
-											<?php
+											@php
 											}
 										}
-									?>
-									
+									@endphp
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
 			</div>
-			
 		</div>
 		
 		<div class="tab-pane" id="right-icon-tab10">
-			
 			<div class="row"> 
 				<!--------------LEFT----------->
 				<div class="col-md-3">
@@ -556,14 +524,12 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_red.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aViewsToday)); ?></h1>
-										<p class="txt_red"><?php echo number_format(((count($aViewsToday) / $totalToday) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_red.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aViewsToday)) }}</h1>
+										<p class="txt_red">{{ number_format(((count($aViewsToday) / $totalToday) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
-							
-							
 							<div id="linechart_a_today" style="min-width: 300px; height: 250px;"></div>
 						</div>
 					</div>
@@ -579,9 +545,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aClicksToday)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aClicksToday) / $totalToday) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aClicksToday)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aClicksToday) / $totalToday) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -600,9 +566,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aCommentsToday)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aCommentsToday) / $totalToday) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aCommentsToday)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aCommentsToday) / $totalToday) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -622,18 +588,14 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_green.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aHelpfulToday)); ?></h1>
-										<p class="txt_green"><?php echo number_format(((count($aHelpfulToday) / $totalToday) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_green.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aHelpfulToday)) }}</h1>
+										<p class="txt_green">{{ number_format(((count($aHelpfulToday) / $totalToday) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
 							<div id="linechart_d_today" style="min-width: 300px; height: 250px;"></div>
 						</div>
-						
-						
-						
-						
 					</div>
 				</div>
 			</div>
@@ -656,7 +618,6 @@
 									<a href="#"><i class="icon-arrow-up16"></i></a>
 									<a href="#"><i class="icon-pencil"></i></a>
 								</div>
-								
 							</div>
 						</div>
 						<div class="panel-body p0">
@@ -671,19 +632,16 @@
 										<th>Source</th>
 										<th>IP</th>
 										<th>Platform</th>
-										<!-- <th>Device</th> -->
 										<th>Browser</th>
-										<!-- <th>Region</th> -->
 										<th>City</th>
 										<th>Country</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php
+									@php
 										if (!empty($oStatsToday)) {
 											foreach ($oStatsToday as $oData) {
 												$brandImgArray = unserialize($oData->brand_img);
-												//pre($brandImgArray);
 												$brand_img = $brandImgArray[0]['media_url'];
 												
 												if (empty($brand_img)) {
@@ -701,84 +659,77 @@
 													} else {
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
-											?>
+											@endphp
 											
 											<!--================================================-->
 											<tr>
 												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id); ?>" widgetID="<?php echo $oData->widget_id; ?>" b_title="<?php echo $oData->bbCTitle; ?>" class="text-default text-semibold">
-														<img src="<?php echo $imgSrc; ?>" class="img-circle img-xs br5" alt="Img"></a>
+														<a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id) }}" widgetID="{{ $oData->widget_id }}" b_title="{{ $oData->bbCTitle }}" class="text-default text-semibold">
+														<img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt="Img"></a>
 													</div>
 													<div class="media-left">
-														<div class=""><a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->id); ?>" widgetID="<?php echo $oData->id; ?>" b_title="<?php echo $oData->widget_title; ?>" class="text-default text-semibold"><?php echo $oData->widget_title; ?></a></div>
+														<div class=""><a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->id) }}" widgetID="{{ $oData->id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">{{ $oData->widget_title }}</a></div>
 														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->widget_desc); ?>
+															{{ setStringLimit($oData->widget_desc) }}
 														</div>
 													</div>
 												</td>
 												
-												<td><?php
-													if ($oData->widget_type == 'cpw') {
-														echo 'Center Popup';
-														} else if ($oData->widget_type == 'vpw') {
-														echo 'Vertical Popup';
-														} else if ($oData->widget_type == 'bww') {
-														echo 'Button Widget Popup';
-														} else if ($oData->widget_type == 'bfw') {
-														echo 'Bottom Fixed Popup';
-														} else {
-														echo 'No Data';
-													};
-												?></td>
 												<td>
-													<?php if (!empty($oData->brandboost_id)): ?>
-													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id); ?>" class="text-default text-semibold">
-															<img src="<?php echo $campaignImgSrc; ?>" class="img-circle img-xs br5" alt="Img">
-														</a>
-													</div>
-													<div class="media-left">
-														<a href="<?php echo base_url("admin/brandboost/onsite_setup/" . $oData->brandboost_id); ?>" target="_blank">
-															<?php endif; ?>
-															<?php echo ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A'; ?>
-															<?php if (!empty($oData->brandboost_id)): ?>
-														</a>
-														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->bbBrandDesc); ?>
-														</div>    
-													</div>
-													<?php endif; ?>
+													@if ($oData->widget_type == 'cpw') {
+														{{ 'Center Popup' }}
+													@else if ($oData->widget_type == 'vpw')
+														{{ 'Vertical Popup' }}
+													@else if ($oData->widget_type == 'bww')
+														{{ 'Button Widget Popup' }}
+													@else if ($oData->widget_type == 'bfw')
+														{{ 'Bottom Fixed Popup' }}
+													@else
+														{{ 'No Data' }}
+													@endif
+												</td>
+												<td>
+													@if (!empty($oData->brandboost_id))
+														<div class="media-left media-middle">
+															<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" class="text-default text-semibold">
+																<img src="{{ $campaignImgSrc }}" class="img-circle img-xs br5" alt="Img">
+															</a>
+														</div>
+														<div class="media-left">
+															<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" target="_blank">
+																{{ ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A' }}
+															</a>
+															<div class="text-muted text-size-small">
+																{{ setStringLimit($oData->bbBrandDesc) }}
+															</div>    
+														</div>
+													@endif
 												</td>
 												<td>
 													<div class="media-left">
-														<div class="pt-5"><span class="text-default text-semibold"><?php echo dataFormat($oData->created_at); ?></span></div>
-														<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oData->created_at)); ?></div>
+														<div class="pt-5"><span class="text-default text-semibold">{{ dataFormat($oData->created_at) }}</span></div>
+														<div class="text-muted text-size-small">{{ date('h:i A', strtotime($oData->created_at)) }}</div>
 													</div>
 												</td>
-												<td><?php echo ($oData->track_type) ? $oData->track_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->section_type) ? $oData->section_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->ip_address) ? $oData->ip_address : 'No Data'; ?></td>
-												<td><?php echo ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->platform_device) ? $oData->platform_device : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->region) ? $oData->region : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->city) ? $oData->city : 'No Data'; ?></td>
-												<td><?php echo ($oData->country) ? $oData->country : 'No Data'; ?></td>
-												
+												<td>{{ ($oData->track_type) ? $oData->track_type : 'No Data' }}</td>
+												<td>{{ ($oData->section_type) ? $oData->section_type : 'No Data' }}</td>
+												<td>{{ ($oData->ip_address) ? $oData->ip_address : 'No Data' }}</td>
+												<td>{{ ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data' }}</td>
+												<td>{{ ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data' }}</td>
+												<td>{{ ($oData->city) ? $oData->city : 'No Data' }}</td>
+												<td>{{ ($oData->country) ? $oData->country : 'No Data' }}</td>
 											</tr>
-											<?php
+											@php
 											}
 										}
-									?>
-									
+									@endphp
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
 			</div>
-			
 		</div>
 		<!--===========TAB 2===========-->
 		<div class="tab-pane" id="right-icon-tab11">
@@ -794,14 +745,12 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_red.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aViewsYesterday)); ?></h1>
-										<p class="txt_red"><?php echo number_format(((count($aViewsYesterday) / $totalYesterday) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_red.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aViewsYesterday)) }}</h1>
+										<p class="txt_red">{{ number_format(((count($aViewsYesterday) / $totalYesterday) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
-							
-							
 							<div id="linechart_a_yesterday" style="min-width: 300px; height: 250px;"></div>
 						</div>
 					</div>
@@ -817,9 +766,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aClicksYesterday)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aClicksYesterday) / $totalYesterday) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aClicksYesterday)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aClicksYesterday) / $totalYesterday) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -838,9 +787,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aCommentsYesterday)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aCommentsYesterday) / $totalYesterday) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aCommentsYesterday)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aCommentsYesterday) / $totalYesterday) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -860,18 +809,14 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_green.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aHelpfulYesterday)); ?></h1>
-										<p class="txt_green"><?php echo number_format(((count($aHelpfulYesterday) / $totalYesterday) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_green.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aHelpfulYesterday)) }}</h1>
+										<p class="txt_green">{{ number_format(((count($aHelpfulYesterday) / $totalYesterday) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
 							<div id="linechart_d_yesterday" style="min-width: 300px; height: 250px;"></div>
 						</div>
-						
-						
-						
-						
 					</div>
 				</div>
 			</div>
@@ -909,15 +854,13 @@
 										<th>Source</th>
 										<th>IP</th>
 										<th>Platform</th>
-										<!-- <th>Device</th> -->
 										<th>Browser</th>
-										<!-- <th>Region</th> -->
 										<th>City</th>
 										<th>Country</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php
+									@php
 										if (!empty($oStatsYesterday)) {
 											foreach ($oStatsYesterday as $oData) {
 												$brandImgArray = unserialize($oData->brand_img);
@@ -938,77 +881,69 @@
 													} else {
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
-											?>
+											@endphp
 											
 											<!--================================================-->
 											<tr>
 												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id); ?>" widgetID="<?php echo $oData->widget_id; ?>" b_title="<?php echo $oData->widget_title; ?>" class="text-default text-semibold">
-														<img src="<?php echo $imgSrc; ?>" class="img-circle img-xs br5" alt="Img"></a>
+														<a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id) }}" widgetID="{{ $oData->widget_id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">
+														<img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt="Img"></a>
 													</div>
 													<div class="media-left">
-														<div class=""><a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->id); ?>" widgetID="<?php echo $oData->id; ?>" b_title="<?php echo $oData->widget_title; ?>" class="text-default text-semibold"><?php echo $oData->widget_title; ?></a></div>
+														<div class=""><a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->id) }}" widgetID="{{ $oData->id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">{{ $oData->widget_title }}</a></div>
 														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->widget_desc); ?>
+															{{ setStringLimit($oData->widget_desc) }}
 														</div>
 													</div>
 												</td>
 												
-												<td><?php
-													if ($oData->widget_type == 'cpw') {
-														echo 'Center Popup';
-														} else if ($oData->widget_type == 'vpw') {
-														echo 'Vertical Popup';
-														} else if ($oData->widget_type == 'bww') {
-														echo 'Button Widget Popup';
-														} else if ($oData->widget_type == 'bfw') {
-														echo 'Bottom Fixed Popup';
-														} else {
-														echo 'No Data';
-													};
-												?></td>
 												<td>
-													<?php if (!empty($oData->brandboost_id)): ?>
+													@if ($oData->widget_type == 'cpw') {
+														{{ 'Center Popup' }}
+													@else if ($oData->widget_type == 'vpw') {
+														{{ 'Vertical Popup' }}
+													@else if ($oData->widget_type == 'bww') {
+														{{ 'Button Widget Popup' }}
+													@else if ($oData->widget_type == 'bfw') {
+														{{ 'Bottom Fixed Popup' }}
+													@else {
+														{{ 'No Data' }}
+													@endif
+												</td>
+												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id); ?>" class="text-default text-semibold">
-															<img src="<?php echo $campaignImgSrc; ?>" class="img-circle img-xs br5" alt="Img">
+														<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" class="text-default text-semibold">
+															<img src="{{ $campaignImgSrc }}" class="img-circle img-xs br5" alt="Img">
 														</a>
 													</div>
 													<div class="media-left">
-														<a href="<?php echo base_url("admin/brandboost/onsite_setup/" . $oData->brandboost_id); ?>" target="_blank">
-															<?php endif; ?>
-															<?php echo ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A'; ?>
-															<?php if (!empty($oData->brandboost_id)): ?>
+														<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" target="_blank">
+															{{ ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A' }}
 														</a>
 														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->bbBrandDesc); ?>
+															{{ setStringLimit($oData->bbBrandDesc) }}
 														</div>    
 													</div>
-													<?php endif; ?>
 												</td>
 												<td>
 													<div class="media-left">
-														<div class="pt-5"><span class="text-default text-semibold"><?php echo dataFormat($oData->created_at); ?></span></div>
-														<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oData->created_at)); ?></div>
+														<div class="pt-5"><span class="text-default text-semibold">{{ dataFormat($oData->created_at) }}</span></div>
+														<div class="text-muted text-size-small">{{ date('h:i A', strtotime($oData->created_at)) }}</div>
 													</div>
 												</td>
-												<td><?php echo ($oData->track_type) ? $oData->track_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->section_type) ? $oData->section_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->ip_address) ? $oData->ip_address : 'No Data'; ?></td>
-												<td><?php echo ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->platform_device) ? $oData->platform_device : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->region) ? $oData->region : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->city) ? $oData->city : 'No Data'; ?></td>
-												<td><?php echo ($oData->country) ? $oData->country : 'No Data'; ?></td>
-												
+												<td>{{ ($oData->track_type) ? $oData->track_type : 'No Data' }}</td>
+												<td>{{ ($oData->section_type) ? $oData->section_type : 'No Data' }}</td>
+												<td>{{ ($oData->ip_address) ? $oData->ip_address : 'No Data' }}</td>
+												<td>{{ ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data' }}</td>
+												<td>{{ ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data' }}</td>
+												<td>{{ ($oData->city) ? $oData->city : 'No Data' }}</td>
+												<td>{{ ($oData->country) ? $oData->country : 'No Data' }}</td>
 											</tr>
-											<?php
+											@php
 											}
 										}
-									?>
-									
+									@endphp
 								</tbody>
 							</table>
 						</div>
@@ -1018,8 +953,7 @@
 			
 		</div>
 		<!--===========TAB 3====Preferences=======-->
-		<div class="tab-pane" id="right-icon-tab12"> 
-			
+		<div class="tab-pane" id="right-icon-tab12">
 			<div class="row"> 
 				<!--------------LEFT----------->
 				<div class="col-md-3">
@@ -1032,14 +966,12 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_red.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aViewsWeek)); ?></h1>
-										<p class="txt_red"><?php echo number_format(((count($aViewsWeek) / $totalWeek) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_red.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aViewsWeek)) }}</h1>
+										<p class="txt_red">{{ number_format(((count($aViewsWeek) / $totalWeek) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
-							
-							
 							<div id="linechart_a_week" style="min-width: 300px; height: 250px;"></div>
 						</div>
 					</div>
@@ -1055,9 +987,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aClicksWeek)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aClicksWeek) / $totalWeek) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aClicksWeek)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aClicksWeek) / $totalWeek) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -1076,9 +1008,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aCommentsWeek)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aCommentsWeek) / $totalWeek) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aCommentsWeek)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aCommentsWeek) / $totalWeek) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -1098,18 +1030,14 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_green.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aHelpfulWeek)); ?></h1>
-										<p class="txt_green"><?php echo number_format(((count($aHelpfulWeek) / $totalWeek) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_green.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aHelpfulWeek)) }}</h1>
+										<p class="txt_green">{{ number_format(((count($aHelpfulWeek) / $totalWeek) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
 							<div id="linechart_d_week" style="min-width: 300px; height: 250px;"></div>
 						</div>
-						
-						
-						
-						
 					</div>
 				</div>
 			</div>
@@ -1132,7 +1060,6 @@
 									<a href="#"><i class="icon-arrow-up16"></i></a>
 									<a href="#"><i class="icon-pencil"></i></a>
 								</div>
-								
 							</div>
 						</div>
 						<div class="panel-body p0">
@@ -1147,15 +1074,13 @@
 										<th>Source</th>
 										<th>IP</th>
 										<th>Platform</th>
-										<!-- <th>Device</th> -->
 										<th>Browser</th>
-										<!-- <th>Region</th> -->
 										<th>City</th>
 										<th>Country</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php
+									@php
 										if (!empty($oStatsWeek)) {
 											foreach ($oStatsWeek as $oData) {
 												$brandImgArray = unserialize($oData->brand_img);
@@ -1176,77 +1101,73 @@
 													} else {
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
-											?>
+											@endphp
 											
 											<!--================================================-->
 											<tr>
 												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id); ?>" widgetID="<?php echo $oData->widget_id; ?>" b_title="<?php echo $oData->widget_title; ?>" class="text-default text-semibold">
-														<img src="<?php echo $imgSrc; ?>" class="img-circle img-xs br5" alt="Img"></a>
+														<a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id) }}" widgetID="{{ $oData->widget_id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">
+														<img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt="Img"></a>
 													</div>
 													<div class="media-left">
-														<div class=""><a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->id); ?>" widgetID="<?php echo $oData->id; ?>" b_title="<?php echo $oData->widget_title; ?>" class="text-default text-semibold"><?php echo $oData->widget_title; ?></a></div>
+														<div class="">
+															<a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->id) }}" widgetID="{{ $oData->id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">
+																{{ $oData->widget_title }}
+															</a>
+														</div>
 														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->widget_desc); ?>
+															{{ setStringLimit($oData->widget_desc) }}
 														</div>
 													</div>
 												</td>
 												
-												<td><?php
-													if ($oData->widget_type == 'cpw') {
-														echo 'Center Popup';
-														} else if ($oData->widget_type == 'vpw') {
-														echo 'Vertical Popup';
-														} else if ($oData->widget_type == 'bww') {
-														echo 'Button Widget Popup';
-														} else if ($oData->widget_type == 'bfw') {
-														echo 'Bottom Fixed Popup';
-														} else {
-														echo 'No Data';
-													};
-												?></td>
 												<td>
-													<?php if (!empty($oData->brandboost_id)): ?>
+													@if ($oData->widget_type == 'cpw') {
+														{{ 'Center Popup' }}
+													@else if ($oData->widget_type == 'vpw') {
+														{{ 'Vertical Popup' }}
+													@else if ($oData->widget_type == 'bww') {
+														{{ 'Button Widget Popup' }}
+													@else if ($oData->widget_type == 'bfw') {
+														{{ 'Bottom Fixed Popup' }}
+													@else {
+														{{ 'No Data' }}
+													@endphp
+												</td>
+												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id); ?>" class="text-default text-semibold">
-															<img src="<?php echo $campaignImgSrc; ?>" class="img-circle img-xs br5" alt="Img">
+														<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" class="text-default text-semibold">
+															<img src="{{ $campaignImgSrc }}" class="img-circle img-xs br5" alt="Img">
 														</a>
 													</div>
 													<div class="media-left">
-														<a href="<?php echo base_url("admin/brandboost/onsite_setup/" . $oData->brandboost_id); ?>" target="_blank">
-															<?php endif; ?>
-															<?php echo ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A'; ?>
-															<?php if (!empty($oData->brandboost_id)): ?>
+														<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" target="_blank">
+															{{ ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A' }}
 														</a>
 														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->bbBrandDesc); ?>
+															{{ setStringLimit($oData->bbBrandDesc) }}
 														</div>    
 													</div>
-													<?php endif; ?>
 												</td>
 												<td>
 													<div class="media-left">
-														<div class="pt-5"><span class="text-default text-semibold"><?php echo dataFormat($oData->created_at); ?></span></div>
-														<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oData->created_at)); ?></div>
+														<div class="pt-5"><span class="text-default text-semibold">{{ dataFormat($oData->created_at) }}</span></div>
+														<div class="text-muted text-size-small">{{ date('h:i A', strtotime($oData->created_at)) }}</div>
 													</div>
 												</td>
-												<td><?php echo ($oData->track_type) ? $oData->track_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->section_type) ? $oData->section_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->ip_address) ? $oData->ip_address : 'No Data'; ?></td>
-												<td><?php echo ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->platform_device) ? $oData->platform_device : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->region) ? $oData->region : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->city) ? $oData->city : 'No Data'; ?></td>
-												<td><?php echo ($oData->country) ? $oData->country : 'No Data'; ?></td>
-												
+												<td>{{ ($oData->track_type) ? $oData->track_type : 'No Data' }}</td>
+												<td>{{ ($oData->section_type) ? $oData->section_type : 'No Data' }}</td>
+												<td>{{ ($oData->ip_address) ? $oData->ip_address : 'No Data' }}</td>
+												<td>{{ ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data' }}</td>
+												<td>{{ ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data' }}</td>
+												<td>{{ ($oData->city) ? $oData->city : 'No Data' }}</td>
+												<td>{{ ($oData->country) ? $oData->country : 'No Data' }}</td>
 											</tr>
-											<?php
+											@php
 											}
 										}
-									?>
-									
+									@endphp
 								</tbody>
 							</table>
 						</div>
@@ -1269,14 +1190,12 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_red.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aViewsMonth)); ?></h1>
-										<p class="txt_red"><?php echo number_format(((count($aViewsMonth) / $totalMonth) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_red.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aViewsMonth)) }}</h1>
+										<p class="txt_red">{{ number_format(((count($aViewsMonth) / $totalMonth) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
-							
-							
 							<div id="linechart_a_month" style="min-width: 300px; height: 250px;"></div>
 						</div>
 					</div>
@@ -1292,9 +1211,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aClicksMonth)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aClicksMonth) / $totalMonth) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aClicksMonth)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aClicksMonth) / $totalMonth) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -1313,9 +1232,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aCommentsMonth)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aCommentsMonth) / $totalMonth) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aCommentsMonth)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aCommentsMonth) / $totalMonth) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -1335,18 +1254,14 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_green.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aHelpfulMonth)); ?></h1>
-										<p class="txt_green"><?php echo number_format(((count($aHelpfulMonth) / $totalMonth) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_green.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aHelpfulMonth)) }}</h1>
+										<p class="txt_green">{{ number_format(((count($aHelpfulMonth) / $totalMonth) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
 							<div id="linechart_d_month" style="min-width: 300px; height: 250px;"></div>
 						</div>
-						
-						
-						
-						
 					</div>
 				</div>
 			</div>
@@ -1369,7 +1284,6 @@
 									<a href="#"><i class="icon-arrow-up16"></i></a>
 									<a href="#"><i class="icon-pencil"></i></a>
 								</div>
-								
 							</div>
 						</div>
 						<div class="panel-body p0">
@@ -1384,15 +1298,13 @@
 										<th>Source</th>
 										<th>IP</th>
 										<th>Platform</th>
-										<!-- <th>Device</th> -->
 										<th>Browser</th>
-										<!-- <th>Region</th> -->
 										<th>City</th>
 										<th>Country</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php
+									@php
 										if (!empty($oStatsMonth)) {
 											foreach ($oStatsMonth as $oData) {
 												$brandImgArray = unserialize($oData->brand_img);
@@ -1413,76 +1325,74 @@
 													} else {
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
-											?>
+											@endphp
 											
 											<!--================================================-->
 											<tr>
 												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id); ?>" widgetID="<?php echo $oData->widget_id; ?>" b_title="<?php echo $oData->widget_title; ?>" class="text-default text-semibold">
-														<img src="<?php echo $imgSrc; ?>" class="img-circle img-xs br5" alt="Img"></a>
+														<a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id) }}" widgetID="{{ $oData->widget_id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">
+														<img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt="Img"></a>
 													</div>
 													<div class="media-left">
-														<div class=""><a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->id); ?>" widgetID="<?php echo $oData->id; ?>" b_title="<?php echo $oData->widget_title; ?>" class="text-default text-semibold"><?php echo $oData->widget_title; ?></a></div>
+														<div class=""><a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->id) }}" widgetID="{{ $oData->id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">{{ $oData->widget_title }}</a></div>
 														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->widget_desc); ?>
+															{{ setStringLimit($oData->widget_desc) }}
 														</div>
 													</div>
 												</td>
 												
-												<td><?php
-													if ($oData->widget_type == 'cpw') {
-														echo 'Center Popup';
-														} else if ($oData->widget_type == 'vpw') {
-														echo 'Vertical Popup';
-														} else if ($oData->widget_type == 'bww') {
-														echo 'Button Widget Popup';
-														} else if ($oData->widget_type == 'bfw') {
-														echo 'Bottom Fixed Popup';
-														} else {
-														echo 'No Data';
-													};
-												?></td>
 												<td>
-													<?php if (!empty($oData->brandboost_id)): ?>
+													@if ($oData->widget_type == 'cpw') {
+														{{ 'Center Popup' }}
+													@else if ($oData->widget_type == 'vpw') {
+														{{ 'Vertical Popup' }}
+													@else if ($oData->widget_type == 'bww') {
+														{{ 'Button Widget Popup' }}
+													@else if ($oData->widget_type == 'bfw') {
+														{{ 'Bottom Fixed Popup' }}
+													@else {
+														{{ 'No Data' }}
+													@endif
+												</td>
+												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id); ?>" class="text-default text-semibold">
-															<img src="<?php echo $campaignImgSrc; ?>" class="img-circle img-xs br5" alt="Img">
+														<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" class="text-default text-semibold">
+															<img src="{{ $campaignImgSrc }}" class="img-circle img-xs br5" alt="Img">
 														</a>
 													</div>
 													<div class="media-left">
-														<a href="<?php echo base_url("admin/brandboost/onsite_setup/" . $oData->brandboost_id); ?>" target="_blank">
-															<?php endif; ?>
-															<?php echo ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A'; ?>
-															<?php if (!empty($oData->brandboost_id)): ?>
+														<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" target="_blank">
+															{{ ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A' }}
 														</a>
 														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->bbBrandDesc); ?>
+															{{ setStringLimit($oData->bbBrandDesc) }}
 														</div>    
 													</div>
-													<?php endif; ?>
 												</td>
 												<td>
 													<div class="media-left">
-														<div class="pt-5"><span class="text-default text-semibold"><?php echo dataFormat($oData->created_at); ?></span></div>
-														<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oData->created_at)); ?></div>
+														<div class="pt-5">
+															<span class="text-default text-semibold">
+																{{dataFormat($oData->created_at) }}
+															</span>
+														</div>
+														<div class="text-muted text-size-small">{{ date('h:i A', strtotime($oData->created_at)) }}</div>
 													</div>
 												</td>
-												<td><?php echo ($oData->track_type) ? $oData->track_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->section_type) ? $oData->section_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->ip_address) ? $oData->ip_address : 'No Data'; ?></td>
-												<td><?php echo ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->platform_device) ? $oData->platform_device : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->region) ? $oData->region : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->city) ? $oData->city : 'No Data'; ?></td>
-												<td><?php echo ($oData->country) ? $oData->country : 'No Data'; ?></td>
+												<td>{{ ($oData->track_type) ? $oData->track_type : 'No Data' }}</td>
+												<td>{{ ($oData->section_type) ? $oData->section_type : 'No Data' }}</td>
+												<td>{{ ($oData->ip_address) ? $oData->ip_address : 'No Data' }}</td>
+												<td>{{ ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data' }}</td>
+												<td>{{ ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data' }}</td>
+												<td>{{ ($oData->city) ? $oData->city : 'No Data' }}</td>
+												<td>{{ ($oData->country) ? $oData->country : 'No Data' }}</td>
 												
 											</tr>
-											<?php
+											@php
 											}
 										}
-									?>
+									@endphp
 									
 								</tbody>
 							</table>
@@ -1506,13 +1416,12 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_red.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aViews3Months)); ?></h1>
-										<p class="txt_red"><?php echo number_format(((count($aViews3Months) / $total3Month) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_red.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aViews3Months)) }}</h1>
+										<p class="txt_red">{{ number_format(((count($aViews3Months) / $total3Month) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
-							
 							
 							<div id="linechart_a_3month" style="min-width: 300px; height: 250px;"></div>
 						</div>
@@ -1529,9 +1438,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aClicks3Months)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aClicks3Months) / $total3Month) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aClicks3Months)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aClicks3Months) / $total3Month) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -1550,9 +1459,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/timer_icon.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aComments3Months)); ?></h1>
-										<p class="txt_teal"><?php echo number_format(((count($aComments3Months) / $total3Month) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/timer_icon.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aComments3Months)) }}</h1>
+										<p class="txt_teal">{{ number_format(((count($aComments3Months) / $total3Month) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -1572,9 +1481,9 @@
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
-										<img class="pull-left mr20" src="<?php echo base_url("assets/images/smiley_green.png"); ?>"/>
-										<h1 class="m0"><?php echo number_format(count($aHelpful3Months)); ?></h1>
-										<p class="txt_green"><?php echo number_format(((count($aHelpful3Months) / $total3Month) * 100), 1) ?>%</p>
+										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_green.png') }}"/>
+										<h1 class="m0">{{ number_format(count($aHelpful3Months)) }}</h1>
+										<p class="txt_green">{{ number_format(((count($aHelpful3Months) / $total3Month) * 100), 1) }}%</p>
 									</div>
 								</div>
 							</div>
@@ -1602,7 +1511,6 @@
 									<a href="#"><i class="icon-arrow-up16"></i></a>
 									<a href="#"><i class="icon-pencil"></i></a>
 								</div>
-								
 							</div>
 						</div>
 						<div class="panel-body p0">
@@ -1617,15 +1525,13 @@
 										<th>Source</th>
 										<th>IP</th>
 										<th>Platform</th>
-										<!-- <th>Device</th> -->
 										<th>Browser</th>
-										<!-- <th>Region</th> -->
 										<th>City</th>
 										<th>Country</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php
+									@php
 										if (!empty($oStats3Month)) {
 											foreach ($oStats3Month as $oData) {
 												$brandImgArray = unserialize($oData->brand_img);
@@ -1646,76 +1552,73 @@
 													} else {
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
-											?>
+											@endphp
 											
 											<!--================================================-->
 											<tr>
 												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id); ?>" widgetID="<?php echo $oData->widget_id; ?>" b_title="<?php echo $oData->widget_title; ?>" class="text-default text-semibold">
-														<img src="<?php echo $imgSrc; ?>" class="img-circle img-xs br5" alt="Img"></a>
+														<a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id) }}" widgetID="{{ $oData->widget_id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">
+														<img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt="Img"></a>
 													</div>
 													<div class="media-left">
-														<div class=""><a href="<?php echo base_url('admin/brandboost/onsite_widget_setup/' . $oData->id); ?>" widgetID="<?php echo $oData->id; ?>" b_title="<?php echo $oData->widget_title; ?>" class="text-default text-semibold"><?php echo $oData->widget_title; ?></a></div>
+														<div class="">
+															<a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->id) }}" widgetID="{{ $oData->id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">
+																{{ $oData->widget_title }}
+															</a>
+														</div>
 														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->widget_desc); ?>
+															{{ setStringLimit($oData->widget_desc) }}
 														</div>
 													</div>
 												</td>
 												
-												<td><?php
-													if ($oData->widget_type == 'cpw') {
-														echo 'Center Popup';
-														} else if ($oData->widget_type == 'vpw') {
-														echo 'Vertical Popup';
-														} else if ($oData->widget_type == 'bww') {
-														echo 'Button Widget Popup';
-														} else if ($oData->widget_type == 'bfw') {
-														echo 'Bottom Fixed Popup';
-														} else {
-														echo 'No Data';
-													};
-												?></td>
 												<td>
-													<?php if (!empty($oData->brandboost_id)): ?>
+													@if ($oData->widget_type == 'cpw')
+														{{ 'Center Popup' }}
+													@else if ($oData->widget_type == 'vpw')
+														{{ 'Vertical Popup' }}
+													@else if ($oData->widget_type == 'bww')
+														{{ 'Button Widget Popup' }}
+													@else if ($oData->widget_type == 'bfw')
+														{{ 'Bottom Fixed Popup' }}
+													@else {
+														{{ 'No Data' }}
+													@endif
+												</td>
+												<td>
 													<div class="media-left media-middle">
-														<a href="<?php echo base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id); ?>" class="text-default text-semibold">
-															<img src="<?php echo $campaignImgSrc; ?>" class="img-circle img-xs br5" alt="Img">
+														<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" class="text-default text-semibold">
+															<img src="{{ $campaignImgSrc }}" class="img-circle img-xs br5" alt="Img">
 														</a>
 													</div>
 													<div class="media-left">
-														<a href="<?php echo base_url("admin/brandboost/onsite_setup/" . $oData->brandboost_id); ?>" target="_blank">
-															<?php endif; ?>
-															<?php echo ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A'; ?>
-															<?php if (!empty($oData->brandboost_id)): ?>
+														<a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" target="_blank">
+															{{ ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A' }}
 														</a>
 														<div class="text-muted text-size-small">
-															<?php echo setStringLimit($oData->bbBrandDesc); ?>
+															{{ setStringLimit($oData->bbBrandDesc) }}
 														</div>    
 													</div>
-													<?php endif; ?>
 												</td>
 												<td>
 													<div class="media-left">
-														<div class="pt-5"><span class="text-default text-semibold"><?php echo dataFormat($oData->created_at); ?></span></div>
-														<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oData->created_at)); ?></div>
+														<div class="pt-5"><span class="text-default text-semibold">{{ dataFormat($oData->created_at) }}</span></div>
+														<div class="text-muted text-size-small">{{ date('h:i A', strtotime($oData->created_at)) }}</div>
 													</div>
 												</td>
-												<td><?php echo ($oData->track_type) ? $oData->track_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->section_type) ? $oData->section_type : 'No Data'; ?></td>
-												<td><?php echo ($oData->ip_address) ? $oData->ip_address : 'No Data'; ?></td>
-												<td><?php echo ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->platform_device) ? $oData->platform_device : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data'; ?></td>
-												<!-- <td><?php echo ($oData->region) ? $oData->region : 'No Data'; ?></td> -->
-												<td><?php echo ($oData->city) ? $oData->city : 'No Data'; ?></td>
-												<td><?php echo ($oData->country) ? $oData->country : 'No Data'; ?></td>
-												
+												<td>{{ ($oData->track_type) ? $oData->track_type : 'No Data' }}</td>
+												<td>{{ ($oData->section_type) ? $oData->section_type : 'No Data' }}</td>
+												<td>{{ ($oData->ip_address) ? $oData->ip_address : 'No Data' }}</td>
+												<td>{{ ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data' }}</td>
+												<td>{{ ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data' }}</td>
+												<td>{{ ($oData->city) ? $oData->city : 'No Data' }}</td>
+												<td>{{ ($oData->country) ? $oData->country : 'No Data' }}</td>
 											</tr>
-											<?php
+											@php
 											}
 										}
-									?>
+									@endphp
 									
 								</tbody>
 							</table>
@@ -1726,27 +1629,27 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12 text-right">
-				<?php //if ($canWrite == TRUE): ?>
-					<button <?php if ($bActiveSubsription == false) { ?> class="btn dark_btn mt20 pDisplayNoActiveSubscription" title="No Active Subscription" type="button" <?php } else { ?> type="submit" class="btn dark_btn mt20" <?php } ?> id="publishWidget"> Publish <i class=" icon-arrow-right13 text-size-base position-right"></i></button>
-					<?php //endif; ?>	
+				<button 
+					@if ($bActiveSubsription == false) 
+						class="btn dark_btn mt20 pDisplayNoActiveSubscription" title="No Active Subscription" type="button" 
+					@else
+						type="submit" class="btn dark_btn mt20"
+					@endif 
+						id="publishWidget"> Publish <i class=" icon-arrow-right13 text-size-base position-right"></i>
+				</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-
-
 <script>
-	
     function copyToClipboard(element) {
         var $temp = $("<input>");
         $("body").append($temp);
         var widgetScript = String($(element).text());
-        //alert(widgetScript);
         $temp.val(widgetScript).select();
         document.execCommand("copy");
         $temp.remove();
-        
 	}
 </script>
 
@@ -2016,8 +1919,6 @@
 			
 		}]
 	});
-    
-    
     
     
     Highcharts.chart('linechart_a_yesterday', {
@@ -3018,7 +2919,6 @@
 	});
     
     
-    
 	Highcharts.chart('linechart_a_all', {
         chart: {
             type: 'column'
@@ -3266,11 +3166,6 @@
 			
 		}]
 	});
-    
-</script>
-
-
-<script>
 	
     Highcharts.chart('linechart_bot', {
         title: {
@@ -3334,7 +3229,4 @@
 		}
 		
 	});
-	
-    
-	
 </script>  

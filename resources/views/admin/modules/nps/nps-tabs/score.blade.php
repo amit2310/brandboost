@@ -14,13 +14,11 @@ a.filterByColumn.active{
 }
 </style>
 
-
-
-<div class="tab-pane <?php echo $defalutTab == 'score' ? 'active' : ''; ?>" id="right-icon-tab5">
+<div class="tab-pane {{ $defalutTab == 'score' ? 'active' : '' }}" id="right-icon-tab5">
     <!-- Dashboard content -->
 	<div class="panel panel-flat">
 		<div class="panel-heading">
-			<h6 class="panel-title" style="width: 150px;float: left;"><?php echo count($oFeedbacks); ?> NPS Score</h6>
+			<h6 class="panel-title" style="width: 150px;float: left;">{{ count($oFeedbacks) }} NPS Score</h6>
 			
 			<div class="heading_links pull-left">				
 				<a class="top_links active filterByColumn">All</a>
@@ -36,13 +34,11 @@ a.filterByColumn.active{
 						<i class="icon-search4"></i>
 					</div>
 				</div>&nbsp; &nbsp;
-				
 			</div>
 		</div>
 		
-		
 		<div class="panel-body p0">
-			<?php if(!empty($oFeedbacks)) {?>
+			@if(!empty($oFeedbacks))
 			<table class="table" id="scorePage">
 				<thead>
 					<tr>
@@ -59,122 +55,120 @@ a.filterByColumn.active{
 				
 				<tbody>
 					
-					<?php
+					@php
 						foreach ($oFeedbacks as $oFeedback) {
 							$score = ($oFeedback->score) ? $oFeedback->score : 0;
 							$feedback = ($oFeedback->feedback) ? $oFeedback->feedback : 'N/A';
 							$oTags = $mNPS->getTagsByScoreID($oFeedback->id);
-							
-							//$profileImg = $oFeedback->avatar == '' ? base_url('assets/images/userp.png') : base_url('profile_images/' . $oFeedback->avatar);
-							
-						?>
+						@endphp
 						<tr>
-							<td style="display: none;"><?php echo $oFeedback->id; ?></td>
-							<td style="display: none;"><?php echo $oFeedback->id; ?></td>
+							<td style="display: none;">{{ $oFeedback->id }}</td>
+							<td style="display: none;">{{ $oFeedback->id }}</td>
 							<td>
-								<div class="media-left media-middle"> <a href="#"><img src="<?php echo base_url(); ?>assets/images/userp.png" class="img-circle img-xs" alt=""></a> </div>
-								
-								
+								<div class="media-left media-middle"> <a href="#"><img src="{{ base_url() }}assets/images/userp.png" class="img-circle img-xs" alt=""></a> </div>
 								<div class="media-left">
-									<div class="pt-5"><a href="<?php echo base_url(); ?>admin/subscriber/activities/<?php echo $oFeedback->id; ?>" target="_blank" class="text-default text-semibold"><span><?php echo $oFeedback->firstname; ?> <?php echo $oFeedback->lastname; ?></span> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/us.png"/></a></div>
-									<div class="text-muted text-size-small"><?php echo $oFeedback->email; ?></div>
+									<div class="pt-5"><a href="{{ base_url() }}admin/subscriber/activities/{{ $oFeedback->id }}" target="_blank" class="text-default text-semibold"><span>{{ $oFeedback->firstname }} {{ $oFeedback->lastname }}</span> <img class="flags" src="{{ base_url() }}assets/images/flags/us.png"/></a></div>
+									<div class="text-muted text-size-small">{{ $oFeedback->email }}</div>
 								</div>
 							</td>
 							<td>
 								<div class="media-left">
-									<div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo $oFeedback->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $oFeedback->phone; ?></a></div>
+									<div class="pt-5"><a href="#" class="text-default text-semibold">{!! $oFeedback->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $oFeedback->phone !!}</a></div>
 									<div class="text-muted text-size-small">Chat</div>
 								</div>
 							</td>
 							<td>
 								<div class="media-left">
-									<div class="pt-5"><a class="text-default text-semibold"><?php echo dataFormat($oFeedback->created_at); ?></a></div>
-									<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oFeedback->created_at)); ?></div>
+									<div class="pt-5"><a class="text-default text-semibold">{{ dataFormat($oFeedback->created_at) }}</a></div>
+									<div class="text-muted text-size-small">{{ date('h:i A', strtotime($oFeedback->created_at)) }}</div>
 								</div>
 							</td>
-							<td><?php echo $score; ?></td>
+							<td>{{ $score }}</td>
 							<td>
 								<div class="media-left">
-									<a target="_blank" href="<?php echo base_url("/admin/modules/nps/feedbackdetails/" . $oFeedback->id); ?>"><span class="text-default text-semibold"><?php echo setStringLimit($oFeedback->title); ?></span></a>
+									<a target="_blank" href="{{ base_url('/admin/modules/nps/feedbackdetails/' . $oFeedback->id) }}"><span class="text-default text-semibold">{{ setStringLimit($oFeedback->title) }}</span></a>
 									<div class="text-muted text-size-small">
-										<?php echo setStringLimit($feedback); ?>
+										{{ setStringLimit($feedback) }}
 									</div>
 								</div> 
 							</td>
-							<td style="display:none;"><?php if($score > 8){ echo 'Promoters'; } ?><?php if($score > 6 && $score < 9){ echo 'Passive'; } ?><?php if($score < 7){ echo 'Detractors'; } ?></td>
+							<td style="display:none;">
+								@if($score > 8)
+									{{ 'Promoters' }}
+								@endif
+								
+								@if($score > 6 && $score < 9)
+									{{ 'Passive' }}
+								@endif
+								
+								@if($score < 7)
+									{{'Detractors' }}
+								@endif
+							</td>
 						</tr>
-						<?php
+						@php
 						}
-					?>
+					@endphp
 				</tbody>
 			</table>
-			<?php }
-			else {
-				?>
-				<table class="table datatable-basic">
-                    <thead>
-                        <tr>
-                            <th style="display: none"></th>
-                            <th style="display: none"></th>
-                            <th><i class="icon-user"></i> Name</th>
-							<th><i class="icon-display"></i> Phone</th>
-							<th><i class="icon-calendar"></i> Created</th>
-							<th><i class="icon-hash"></i> Score</th>
-							<th><i class="icon-atom"></i> Feedback</th>
-                        </tr>
-                    </thead>
+		@else
+			<table class="table datatable-basic">
+				<thead>
+					<tr>
+						<th style="display: none"></th>
+						<th style="display: none"></th>
+						<th><i class="icon-user"></i> Name</th>
+						<th><i class="icon-display"></i> Phone</th>
+						<th><i class="icon-calendar"></i> Created</th>
+						<th><i class="icon-hash"></i> Score</th>
+						<th><i class="icon-atom"></i> Feedback</th>
+					</tr>
+				</thead>
 
-                    <tbody>
-                        <td style="display: none"></td>
-                        <td style="display: none"></td>
-                        <td colspan="10">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div style="margin: 20px 0px 0;" class="text-center">
-                                        <h5 class="mb-20 mt40">
-                                            Looks Like You Don’t Have Any Feedback Score Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <!-- <br>
-                                            Lets Create Your First On Site Review Campaign. -->
-                                        </h5>
-
-                                       <!--  <?php if ($canWrite): ?>
-                                            <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add On Site Review Campaign</button>
-                                        <?php endif; ?> -->
-
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td style="display: none"></td>
-                        <td style="display: none"></td>
-                        <td style="display: none"></td>
-                        <td style="display: none"></td>
-                    </tbody>
-                </table><?php
-			} ?>
+				<tbody>
+					<td style="display: none"></td>
+					<td style="display: none"></td>
+					<td colspan="10">
+						<div class="row">
+							<div class="col-md-12">
+								<div style="margin: 20px 0px 0;" class="text-center">
+									<h5 class="mb-20 mt40">
+										Looks Like You Don’t Have Any Feedback Score Yet <img src="{{ site_url('assets/images/smiley.png') }}">
+									</h5>
+								</div>
+							</div>
+						</div>
+					</td>
+					<td style="display: none"></td>
+					<td style="display: none"></td>
+					<td style="display: none"></td>
+					<td style="display: none"></td>
+				</tbody>
+			</table>
+		@endif
 		</div>
 	</div>
 	
 	<!-- /dashboard content -->
-	<?php if($oNPS->platform == 'web' || $oNPS->platform == 'link'){ ?>
-	<div class="row pull-right">
-		<div class="col-md-12">
-			<a href="<?php echo base_url("/admin/modules/nps/setup/{$programID}?t=widgets") ?>" class="btn dark_btn mt30">Continue</a>
+	@if($oNPS->platform == 'web' || $oNPS->platform == 'link')
+		<div class="row pull-right">
+			<div class="col-md-12">
+				<a href="{{ base_url('/admin/modules/nps/setup/{$programID}?t=widgets') }}" class="btn dark_btn mt30">Continue</a>
+			</div>
 		</div>
-	</div>
-	<?php }else{ ?>
-	<div class="row pull-right">
-		<div class="col-md-12">
-			<a href="javascript:void(0);" id="publishNPSCampaign" class="btn dark_btn mt30">Publish</a>
+	@else
+		<div class="row pull-right">
+			<div class="col-md-12">
+				<a href="javascript:void(0);" id="publishNPSCampaign" class="btn dark_btn mt30">Publish</a>
+			</div>
 		</div>
-	</div>
-	<?php } ?>
-	
+	@endif
 	
 	<div id="editSurveyModel" class="modal fade in">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form method="post" id="frmeditSurveyModel" name="frmeditSurveyModel">
-                                    @csrf
+                    @csrf
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">×</button>
 						<h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Edit Survey</h5>
@@ -204,8 +198,8 @@ a.filterByColumn.active{
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form method="post" name="frmaddNPSModal" id="frmaddNPSModal" action="javascript:void();">
-				@csrf	
-                                    <div class="modal-header">
+					@csrf	
+                    <div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h5 class="modal-title">Add New Survey</h5>
 					</div>
@@ -231,9 +225,9 @@ a.filterByColumn.active{
 	<div id="NPSTagListModal" class="modal fade">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-                            <form method="post" name="frmNPSTagListModal" id="frmNPSTagListModal" action="javascript:void();">
-				@csrf	
-                                    <div class="modal-header">
+                <form method="post" name="frmNPSTagListModal" id="frmNPSTagListModal" action="javascript:void();">
+					@csrf	
+                    <div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h5 class="modal-title">Apply Tags</h5>
 					</div>
@@ -247,8 +241,6 @@ a.filterByColumn.active{
 			</div>
 		</div>
 	</div>
-	
-	
 </div>
 <!-- /content area -->
 <script type="text/javascript">
@@ -329,7 +321,6 @@ a.filterByColumn.active{
 			if (totalCheckboxes > numberOfChecked) {
 				$('#checkAll').prop('checked', false);
 			}
-			
 		});
 		
 		$(document).on('click', '#deleteBulkNPS', function () {
@@ -357,7 +348,7 @@ a.filterByColumn.active{
 					if (isConfirm) {
 						$('.overlaynew').show();
 						$.ajax({
-							url: '<?php echo base_url('admin/modules/nps/bulkDeleteNPS'); ?>',
+							url: "{{ base_url('admin/modules/nps/bulkDeleteNPS') }}",
 							type: "POST",
 							data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
 							dataType: "json",
@@ -398,7 +389,7 @@ a.filterByColumn.active{
 					if (isConfirm) {
 						$('.overlaynew').show();
 						$.ajax({
-							url: '<?php echo base_url('admin/modules/nps/bulkArchiveNPS'); ?>',
+							url: "{{ base_url('admin/modules/nps/bulkArchiveNPS') }}',
 							type: "POST",
 							data: {_token: '{{csrf_token()}}', bulk_nps_id: val},
 							dataType: "json",
@@ -423,14 +414,14 @@ a.filterByColumn.active{
 			$('.overlaynew').show();
 			var formdata = $("#frmaddNPSModal").serialize();
 			$.ajax({
-				url: '<?php echo base_url('admin/modules/nps/addNPS'); ?>',
+				url: "{{ base_url('admin/modules/nps/addNPS') }}",
 				type: "POST",
 				data: formdata,
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'success') {
 						$('.overlaynew').hide();
-						window.location.href = '<?php echo base_url('admin/modules/nps/setup/'); ?>' + data.id;
+						window.location.href = "{{ base_url('admin/modules/nps/setup/') }}" + data.id;
 						} else if (data.status == 'error' && data.type == 'duplicate') {
 						$('.overlaynew').hide();
 						$("#addNPSValidation").html(data.msg).show();
@@ -438,7 +429,6 @@ a.filterByColumn.active{
 							$("#addNPSValidation").html("").hide();
 						}, 5000);
 					}
-					
 				}
 			});
 			return false;
@@ -448,7 +438,7 @@ a.filterByColumn.active{
 			$('.overlaynew').show();
 			var nps_id = $(this).attr('nps_id');
 			$.ajax({
-				url: '<?php echo base_url('admin/modules/nps/getNPS'); ?>',
+				url: "{{ base_url('admin/modules/nps/getNPS') }}",
 				type: "POST",
 				data: {_token: '{{csrf_token()}}', 'nps_id': nps_id},
 				dataType: "json",
@@ -469,7 +459,7 @@ a.filterByColumn.active{
 			$('.overlaynew').show();
 			var nps_id = $(this).attr('nps_id');
 			$.ajax({
-				url: '<?php echo base_url('admin/modules/nps/moveToArchiveNPS'); ?>',
+				url: "{{ base_url('admin/modules/nps/moveToArchiveNPS') }}",
 				type: "POST",
 				data: {_token: '{{csrf_token()}}', 'nps_id': nps_id},
 				dataType: "json",
@@ -487,14 +477,14 @@ a.filterByColumn.active{
 			$('.overlaynew').show();
 			var formdata = $("#frmeditSurveyModel").serialize();
 			$.ajax({
-				url: '<?php echo base_url('admin/modules/nps/updateNPS'); ?>',
+				url: "{{ base_url('admin/modules/nps/updateNPS') }}",
 				type: "POST",
 				data: formdata,
 				dataType: "json",
 				success: function (data) {
 					if (data.status == 'success') {
 						$('.overlaynew').hide();
-						window.location.href = '<?php echo base_url('admin/modules/nps/setup/'); ?>' + data.id;
+						window.location.href = "{{ base_url('admin/modules/nps/setup/') }}" + data.id;
 						} else if (data.status == 'error' && data.type == 'duplicate') {
 						$('.overlaynew').hide();
 						$("#editSurveyValidation").html(data.msg).show();
@@ -525,7 +515,7 @@ a.filterByColumn.active{
 					$('.overlaynew').show();
 					var nps_id = $(elem).attr('nps_id');
 					$.ajax({
-						url: '<?php echo base_url('admin/modules/nps/deleteNPS'); ?>',
+						url: "{{ base_url('admin/modules/nps/deleteNPS') }}",
 						type: "POST",
 						data: {_token: '{{csrf_token()}}', nps_id: nps_id},
 						dataType: "json",
@@ -545,7 +535,7 @@ a.filterByColumn.active{
 			var score_id = $(this).attr("scoreid");
 			var action_name = $(this).attr("action_name");
 			$.ajax({
-				url: '<?php echo base_url('admin/modules/nps/listAllTags'); ?>',
+				url: "{{ base_url('admin/modules/nps/listAllTags') }}",
 				type: "POST",
 				data: {_token: '{{csrf_token()}}', score_id: score_id},
 				dataType: "json",
@@ -571,7 +561,7 @@ a.filterByColumn.active{
 		$("#frmNPSTagListModal").submit(function () {
 			var formdata = $("#frmNPSTagListModal").serialize();
 			$.ajax({
-				url: '<?php echo base_url('admin/modules/nps/applyNPSTag'); ?>',
+				url: "{{ base_url('admin/modules/nps/applyNPSTag') }}",
 				type: "POST",
 				data: formdata,
 				dataType: "json",

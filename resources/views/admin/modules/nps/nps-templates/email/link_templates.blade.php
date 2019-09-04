@@ -32,20 +32,21 @@
 			
 			@media screen and (min-device-width:481px) and (max-device-width:767px){.col_t_2{padding-left:20px !important;}
 			}
-			@media only screen and (max-width:480px){.col_t_1 img{width:auto!important;margin:0 auto}
-			.col_t_1{direction:ltr !important;display:block !important;margin-bottom:10px;padding:0 !important;text-align:center !important;width:100% !important;}
-			.col_t_2{direction:ltr !important;display:block !important;margin-bottom:10px;padding:0 !important;text-align:center !important;width:100% !important;}
-			.heading { text-align:center!important;}
-			.col_t_2 p { text-align:center!important;}
-			.main_img{width: 60px;}
-			.table_mr{margin-top: -40px !important;}
-			.table_main_mr{margin: 100px auto 0 !important;}
-			.btn_pd{padding: 10px 15px !important;font-size: 12px !important;}
-			.main_txt{font-size: 12px !important; line-height: normal !important;}
-			.col_t_3 {font-size: 16px !important;margin: 10px 0 10px !important;}
-			.col_t_4 {font-size: 16px !important;margin: 10px 0 10px !important;}
-			.p15{padding:0 15px !important;}
-			.pb{padding-bottom:20px !important}
+			@media only screen and (max-width:480px){
+				.col_t_1 img{width:auto!important;margin:0 auto}
+				.col_t_1{direction:ltr !important;display:block !important;margin-bottom:10px;padding:0 !important;text-align:center !important;width:100% !important;}
+				.col_t_2{direction:ltr !important;display:block !important;margin-bottom:10px;padding:0 !important;text-align:center !important;width:100% !important;}
+				.heading { text-align:center!important;}
+				.col_t_2 p { text-align:center!important;}
+				.main_img{width: 60px;}
+				.table_mr{margin-top: -40px !important;}
+				.table_main_mr{margin: 100px auto 0 !important;}
+				.btn_pd{padding: 10px 15px !important;font-size: 12px !important;}
+				.main_txt{font-size: 12px !important; line-height: normal !important;}
+				.col_t_3 {font-size: 16px !important;margin: 10px 0 10px !important;}
+				.col_t_4 {font-size: 16px !important;margin: 10px 0 10px !important;}
+				.p15{padding:0 15px !important;}
+				.pb{padding-bottom:20px !important}
 			}
 		</style>
 	</head>

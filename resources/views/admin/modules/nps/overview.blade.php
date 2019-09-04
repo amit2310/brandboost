@@ -572,12 +572,12 @@
             var npsID = $(this).attr('nps_id');
             var status = $(this).attr('change_status');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/changeStatus'); ?>',
+                url: "{{ base_url('admin/modules/nps/changeStatus') }}",
                 type: "POST",
                 data: {'npsId': npsID, 'status': status},
                 dataType: "html",
                 success: function (data) {
-                    window.location.href = '<?php echo base_url("/admin/modules/nps/overview") ?>';
+                    window.location.href = "{{ base_url('/admin/modules/nps/overview') }}";
                 }, error: function () {
                     alertMessage('Error: Some thing wrong!');
                 }
@@ -624,7 +624,6 @@
             if (totalCheckboxes > numberOfChecked) {
                 $('#checkAll').prop('checked', false);
             }
-
         });
 
         $(document).on('click', '#deleteBulkNPS', function () {
@@ -642,7 +641,7 @@
 
 					$('.overlaynew').show();
 					$.ajax({
-						url: "<?php echo base_url('admin/modules/nps/bulkDeleteNPS'); ?>",
+						url: "{{ base_url('admin/modules/nps/bulkDeleteNPS') }}",
 						type: "POST",
 						data: {bulk_nps_id: val},
 						dataType: "json",
@@ -660,6 +659,7 @@
 				});
             }
         });
+		
 
         $(document).on('click', '#archiveBulkNPS', function () {
             var val = [];
@@ -676,7 +676,7 @@
 
 					$('.overlaynew').show();
 					$.ajax({
-						url: "<?php echo base_url('admin/modules/nps/bulkArchiveNPS'); ?>",
+						url: "{{ base_url('admin/modules/nps/bulkArchiveNPS') }}",
 						type: "POST",
 						data: {bulk_nps_id: val},
 						dataType: "json",
@@ -694,6 +694,7 @@
 				});
             }
         });
+		
 
         $('#addNpsSurvery').click(function () {
             $('#addNPSModal').modal();
@@ -704,14 +705,14 @@
             $('.overlaynew').show();
             var formdata = $("#frmaddNPSModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/addNPS'); ?>',
+                url: "{{ base_url('admin/modules/nps/addNPS') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url('admin/modules/nps/setup/'); ?>' + data.id;
+                        window.location.href = "{{ base_url('admin/modules/nps/setup/') }}" + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         $("#addNPSValidation").html(data.msg).show();
@@ -729,7 +730,7 @@
             $('.overlaynew').show();
             var nps_id = $(this).attr('nps_id');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/getNPS'); ?>',
+                url: "{{ base_url('admin/modules/nps/getNPS') }}",
                 type: "POST",
                 data: {'nps_id': nps_id},
                 dataType: "json",
@@ -752,10 +753,9 @@
             archiveConfirmationPopup(
 			"This NPS will move to archive immediately.<br>You can't undo this action.",
 			function () {
-
 				$('.overlaynew').show();
 				$.ajax({
-					url: '<?php echo base_url('admin/modules/nps/moveToArchiveNPS'); ?>',
+					url: "{{ base_url('admin/modules/nps/moveToArchiveNPS') }}",
 					type: "POST",
 					data: {'nps_id': nps_id},
 					dataType: "json",
@@ -768,21 +768,20 @@
 					}
 				});
 			});
-
         });
 
         $('#frmeditSurveyModel').on('submit', function () {
             $('.overlaynew').show();
             var formdata = $("#frmeditSurveyModel").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/updateNPS'); ?>',
+                url: "{{ base_url('admin/modules/nps/updateNPS') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url('admin/modules/nps/setup/'); ?>' + data.id;
+                        window.location.href = "{{ base_url('admin/modules/nps/setup/') }}" + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         $("#editSurveyValidation").html(data.msg).show();
@@ -799,35 +798,34 @@
 
             var nps_id = $(this).attr('nps_id');
             deleteConfirmationPopup(
-                    "This record will deleted immediately.<br>You can't undo this action.",
-                    function () {
-                        $('.overlaynew').show();
-                        $.ajax({
-                            url: '<?php echo base_url('admin/modules/nps/deleteNPS'); ?>',
-                            type: "POST",
-                            data: {nps_id: nps_id},
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    $('.overlaynew').hide();
-                                    window.location.href = window.location.href;
-                                }
-                            }
-                        });
-                    });
-
+			"This record will deleted immediately.<br>You can't undo this action.",
+			function () {
+				$('.overlaynew').show();
+				$.ajax({
+					url: "{{ base_url('admin/modules/nps/deleteNPS') }}",
+					type: "POST",
+					data: {nps_id: nps_id},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							$('.overlaynew').hide();
+							window.location.href = window.location.href;
+						}
+					}
+				});
+			});
         });
 
         $(document).on('click', '.chg_status', function () {
             var npsID = $(this).attr('nps_id');
             var status = $(this).attr('change_status');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/nps/changeStatus'); ?>',
+                url: "{{ base_url('admin/modules/nps/changeStatus') }}",
                 type: "POST",
                 data: {'npsId': npsID, 'status': status},
                 dataType: "html",
                 success: function (data) {
-                    window.location.href = '<?php echo base_url("/admin/modules/nps/") ?>';
+                    window.location.href = "{{ base_url('/admin/modules/nps/') }}";
                 }, error: function () {
                     alertMessage('Error: Some thing wrong!');
                 }
