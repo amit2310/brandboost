@@ -1,5 +1,5 @@
-<?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign'); ?>
-<div class="tab-pane <?php echo $integrationClass; ?>" id="right-icon-tab3">
+@php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign') @endphp
+<div class="tab-pane {{ $integrationClass }}" id="right-icon-tab3">
     <div class="row">
         <div class="col-md-3">
             <div style="margin: 0;" class="panel panel-flat">
@@ -40,14 +40,14 @@
 &lt;script 
 	type="text/javascript" 
 	id="bbscriptloader" 
-	data-key="<?php echo $campaign_key; ?>" 
-	data-widgets="<?php echo $sWidget ?>" 
+	data-key="{{ $campaign_key }}" 
+	data-widgets="{{ $sWidget ?>" 
 	async="" 
-	src="<?php echo base_url('assets/js/widgets.js'); ?>"&gt;
+	src="{{ base_url('assets/js/widgets.js') }}"&gt;
 &lt;/script&gt;
-                            <?php //echo htmlentities('<script type="text/javascript" id="bbscriptloader" data-key="'.$campaign_key.'" data-widgets="'.$sWidget.'" async="" src="'.base_url('assets/js/widgets.js').'"></script>'); ?>
+                            
                         </pre>
-                        <div style="display: none;" class="prettyprintDiv">&lt;script type="text/javascript" id="bbscriptloader" data-key="<?php echo $campaign_key; ?>" data-widgets="<?php echo $sWidget ?>" async="" src="<?php echo base_url('assets/js/widgets.js'); ?>"&gt; &lt;/script&gt;</div>
+                        <div style="display: none;" class="prettyprintDiv">&lt;script type="text/javascript" id="bbscriptloader" data-key="{{ $campaign_key }}" data-widgets="{{ $sWidget ?>" async="" src="{{ base_url('assets/js/widgets.js') }}"&gt; &lt;/script&gt;</div>
                     </div>
                     <div class="p20 text-right">
                         <button class="btn btn-xs btn_white_table pl10 pr10" onclick="copyToClipboard('.prettyprintDiv')">Copy Code</button>
@@ -69,6 +69,6 @@
         $temp.val(widgetScript).select();
         document.execCommand("copy");
         $temp.remove();
-        
+
     }
 </script>

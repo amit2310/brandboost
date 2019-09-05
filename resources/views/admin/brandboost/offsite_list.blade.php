@@ -459,9 +459,14 @@ if (!empty($aBrandbosts)) {
                                                     if ($positiveGraph > 50) {
                                                         $addPC = 'over50';
                                                     }
+                                                    
+                                                    $extClass = '';
+                                                    if($positiveGraph > 0){
+                                                    $extClass = 'createSegment';                                                    
+                                                    }
                                                     @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle {{ $addPC }} green cp{{ $positiveGraph }} @if ($positiveGraph > 0) createSegment @endif" segment-type="total-positive" campaign-id="{{ $data->id }}" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addPC }} green cp{{ $positiveGraph }} {{$extClass}}" segment-type="total-positive" campaign-id="{{ $data->id }}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -491,9 +496,14 @@ if (!empty($aBrandbosts)) {
                                                     if ($neturalGraph > 50) {
                                                         $addNUC = 'over50';
                                                     }
+                                                    
+                                                    $extClass2 = '';
+                                                    if(($neturalGraph > 0){
+                                                        $extClass2 = 'createSegment';
+                                                    }
                                                     @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle {{ $addNUC }} grey cp{{ $neturalGraph }} @if ($neturalGraph > 0) createSegment @endif" segment-type="total-neutral" campaign-id="{{ $data->id }}" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addNUC }} grey cp{{ $neturalGraph }} {{ $extClass2 }}" segment-type="total-neutral" campaign-id="{{ $data->id }}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>
@@ -524,9 +534,14 @@ if (!empty($aBrandbosts)) {
                                                     if ($negativeGraph > 50) {
                                                         $addNEC = 'over50';
                                                     }
+                                                    
+                                                    $extClass3 = '';
+                                                    if($negativeGraph > 0){
+                                                        $extClass3 = 'createSegment';
+                                                    }
                                                     @endphp
                                                     <div class="media-left">
-                                                        <div class="progress-circle {{ $addNEC }} red cp{{ $negativeGraph }} @if ($negativeGraph > 0) createSegment @endif" segment-type="total-negative" campaign-id="{{ $data->id }}" campaign-type="email" title="click to create segment">
+                                                        <div class="progress-circle {{ $addNEC }} red cp{{ $negativeGraph }} {{ $extClass3 }}" segment-type="total-negative" campaign-id="{{ $data->id }}" campaign-type="email" title="click to create segment">
                                                             <div class="left-half-clipper">
                                                                 <div class="first50-bar"></div>
                                                                 <div class="value-bar"></div>

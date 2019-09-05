@@ -1,5 +1,12 @@
-<?php list($canRead, $canWrite) = fetchPermissions('Offsite Campaign'); ?>
-<div class="tab-pane <?php echo $sources; ?>" id="right-icon-tab0">
+@php 
+list($canRead, $canWrite) = fetchPermissions('Offsite Campaign'); 
+
+$searchfalg = 0;
+$showextra = 0;
+$showcount = 0;
+
+@endphp
+<div class="tab-pane {{ $sources }}" id="right-icon-tab0">
     <div class="row">
 
         <div class="col-md-12">
@@ -81,17 +88,15 @@
             <div class="filter_campaign_new">
 
                 <div class="panel-group panel-group-control panel-group-control-right content-group-lg filter_campaign" id="accordion-control-right">
-                    <?php
-                    if (!empty($offsite_ids)) {
+                    @if (!empty($offsite_ids)) 
                         $selected_list = implode(",", $offsite_ids);
-                    } else {
+                    @else
                         $selected_list = 0;
-                    }
-                    ?>
+                    @endif
 
-                    <input type="hidden" name="selected_list" id='selected_list' value="<?php echo $selected_list; ?>">
+                    <input type="hidden" name="selected_list" id='selected_list' value="{{ $selected_list }}">
 
-                    <?php
+                    @php
                     $siteDatarray = array();
                     $cateList = array(
                         'accordion-control-group1' => array(
@@ -182,42 +187,37 @@
                     );
                     $cinc = 0;
                     echo '<div  id="myTable">';
-                    ?>
+                    @endphp
 
-                    <?php
-                    $searchfalg = 0;
-                    $showextra = 0;
-                    $showcount = 0;
-                    foreach ($cateList as $key => $cate) {
-                        ?>
-                        <div class="panel panel-white" id="SPanel<?php echo $key; ?>">
+                    @foreach ($cateList as $key => $cate)
+                    <div class="panel panel-white" id="SPanel{{ $key }}">
                             <div class="panel-heading sidebarheadings active">
-                                <h6 class="panel-title"> <a class="<?php echo $cinc > 0 ? 'collapsed' : ''; ?>" data-toggle="collapse" data-parent="#accordion-control-right" href="#accordion-control-right-group<?php echo $key; ?>">
+                                <h6 class="panel-title"> 
+                                    <a class="{{ $cinc > 0 ? 'collapsed' : '' }}" data-toggle="collapse" data-parent="#accordion-control-right" href="#accordion-control-right-group{{ $key }}">
 
-                                        <?php if (!empty($cate['cat_img'])) { ?>
-                                            <i class="">
-                                                <img src="/assets/images/<?php echo $cate['cat_img']; ?>"></i>
-                                        <?php } else if (!empty($cate['icon_class'])) { ?>
-                                            <i class="<?php echo $cate['icon_class']; ?>"></i> 
-                                        <?php } else { ?>
+                                        @if (!empty($cate['cat_img']))
+                                            <i class=""><img src="/assets/images/{{ $cate['cat_img'] }}"></i>
+                                        @elseif (!empty($cate['icon_class']))
+                                            <i class="{{ $cate['icon_class'] }}"></i> 
+                                        @elseif
                                             <i class="icon-power2"></i> 
-                                        <?php } ?>
-
-                                        &nbsp;<?php
-                                        if ($cate['title'] == 'OtherSources') {
-                                            echo 'Other Sources';
-                                        } else {
-                                            echo $cate['title'];
-                                        }
-                                        ?></a> </h6>
+                                        @endif
+                                        &nbsp;
+                                        @if ($cate['title'] == 'OtherSources') 
+                                            {{ 'Other Sources' }}
+                                        @else
+                                            {{ $cate['title'] }}
+                                        @endif
+                                    </a> 
+                                </h6>
                             </div>
-                            <div id="accordion-control-right-group<?php echo $key; ?>" class="panel-collapse collapse <?php echo $cinc == '0' ? 'in firstRow' : ''; ?>">
+                            <div id="accordion-control-right-group{{ $key }}" class="panel-collapse collapse {{ $cinc == '0' ? 'in firstRow' : '' }}">
                                 <div class="panel-body">
                                     <div class="row">
 
-                                        <?php
+                                        @php
                                         $thumbColor = array('bkg1', 'bkg2', 'bkg3', 'bkg4', 'bkg5', 'bkg6');
-										
+
                                         foreach ($offSiteData as $siteData) {
 
                                             $categoryunserilize = unserialize($siteData->site_categories);
@@ -254,9 +254,10 @@
                                                 }
 
                                                 $sourceName = !empty($sourceName) ? $sourceName : 'NA';
-                                                ?>
+                                                
+                                                @endphp
 
-                                                <?php if (in_array('OtherSources', unserialize($siteData->site_categories)) && $showcount < 1) { ?>
+                                                @if (in_array('OtherSources', unserialize($siteData->site_categories)) && $showcount < 1)
                                                     <div data-toggle="modal" id="rowDefault" data-target="#OtherSourcesId" class="col-xs-12 col-md-2 col-sm-2 rev_col">
                                                         <div class="thumbnail">
                                                             <div class="thumb bkg1">
@@ -272,44 +273,46 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <?php
+                                                    @php
                                                     $showcount++;
-                                                }
-                                                ?>
+                                                    @endphp
+                                                @endif
 
 
-												<?php //echo sizeof($offsite_ids); print_r($offsite_ids); die; ?>
-                                                <div onmouseover="ShowImg('<?php echo $siteData->id; ?>')" onmouseleave="HideImg('<?php echo $siteData->id; ?>')" class="<?php if (in_array('OtherSources', unserialize($siteData->site_categories))) { ?>OtMouseover_<?php
-                                                         echo $siteData->id;
-                                                     }
-                                                     ?> col-xs-12 col-md-2 col-sm-2 rev_col <?php
-													 if(!empty($offsite_ids)){
-														 if (in_array($siteData->id, $offsite_ids)) {
-															 echo 'selected';
-														 }
-													 }
-                                                     ?>" offsetId="<?php echo $siteData->id; ?>" id="review_steps<?php echo $siteData->id; ?>">
-                                                    <?php if (in_array('OtherSources', unserialize($siteData->site_categories))) { ?>
-                                                        <a id="tickImg_<?php echo $siteData->id; ?>" style="display:none" CsourceId="<?php echo $siteData->id; ?>" href="javascript:void(0);" class="deleteCustomSource"><i class="icon-cross2"></i></a>
-												<?php } ?>
+                                                
+                                                <div onmouseover="ShowImg('{{ $siteData->id }}')" onmouseleave="HideImg('{{ $siteData->id }}')" class="
+                                                    @if (in_array('OtherSources', unserialize($siteData->site_categories))) 
+                                                        OtMouseover_{{ $siteData->id }}
+                                                    @endif 
+                                                    col-xs-12 col-md-2 col-sm-2 rev_col 
+                                                    @if (!empty($offsite_ids))
+                                                        @if (in_array($siteData->id, $offsite_ids)) 
+                                                            {{ 'selected' }}
+                                                        @endif
+                                                    @endif
+                                                     " offsetId="{{ $siteData->id }}" id="review_steps{{ $siteData->id }}">
+                                                    @if (in_array('OtherSources', unserialize($siteData->site_categories)))
+                                                        <a id="tickImg_{{ $siteData->id }}" style="display:none" CsourceId="{{ $siteData->id }}" href="javascript:void(0);" class="deleteCustomSource"><i class="icon-cross2"></i></a>
+                                                    @endif
                                                     <div class="thumbnail">
 
-                                                        <div class="thumb <?php echo $thumbclass; ?>">
-                                                            <a href="javascript:void(0);"> <?php if (in_array('OtherSources', unserialize($siteData->site_categories))) { ?><i class="icon-<?php echo $sourceName . ' ' . $sourceClass; ?>" style="font-style:inherit">M</i> <?php } else { ?>
-
-                                                <!-- <img src="/new_pages/assets/images/<?php echo $sourceImg; ?>"> -->
-                                                                    <img src="<?php echo '/uploads/' . $siteData->image; ?>">
-
-
-            <?php } ?></a>
+                                                        <div class="thumb {{ $thumbclass }}">
+                                                            <a href="javascript:void(0);"> 
+                                                                @if (in_array('OtherSources', unserialize($siteData->site_categories)))
+                                                                    <i class="icon-{{ $sourceName . ' ' . $sourceClass }}" style="font-style:inherit">M</i> 
+                                                                @else
+                                                                    <img src="{{ '/uploads/' . $siteData->image }}">
+                                                                @endif
+                                                            </a>
                                                         </div>
 
 
 
                                                         <div class="caption text-center">
                                                             <div class="pull-left">
-                                                                <h5 class="no-margin sea"><?php echo ucfirst($siteData->name); ?></h5>
-                                                                <h6 class="text-muted"><?php
+                                                                <h5 class="no-margin sea">{{ ucfirst($siteData->name) }}</h5>
+                                                                <h6 class="text-muted">
+                                                                    @php
                                                                     if (in_array('OtherSources', unserialize($siteData->site_categories))) {
                                                                         $getLinksSocial = $getLinksSocial != '' ? $getLinksSocial : $siteData->website_url;
                                                                         $str = str_replace("www.", "", preg_replace('#^https?://#', '', $getLinksSocial));
@@ -319,89 +322,89 @@
                                                                         $str = preg_replace('#^https?://#', '', $siteData->website_url);
                                                                         echo $str;
                                                                     }
-                                                                    ?></h6>
+                                                                    @endphp
+                                                                </h6>
                                                             </div>
-                                                                <?php if ($canWrite): ?>
+                                                            @if ($canWrite)
                                                                 <label class="custom-form-switch pull-right mt10">
-                                                                    <input class="field offsite_selected" type="checkbox" <?php
-																	if(!empty($offsite_ids)){
-																		if (in_array($siteData->id, $offsite_ids)) {
-																			echo 'checked';
-																		} else {
-																			echo '';
-																		}
-																	}
-                                                                    ?> offsiteSelected="<?php
-																		if(!empty($offsite_ids)){
-                                                                           if (in_array($siteData->id, $offsite_ids)) {
-                                                                               echo '1';
-                                                                           } else {
-                                                                               echo '0';
-                                                                           }
-																		}
-                                                                           ?>" offsiteId="<?php echo $siteData->id; ?>">
+                                                                    <input class="field offsite_selected" type="checkbox" 
+                                                                        @if (!empty($offsite_ids)) 
+                                                                            @if (in_array($siteData->id, $offsite_ids))
+                                                                                {{ 'checked' }}
+                                                                            @else
+                                                                                {{ '' }}
+                                                                            @endif
+                                                                        @endif 
+                                                                        offsiteSelected="
+                                                                            @if (!empty($offsite_ids)) 
+                                                                               @if (in_array($siteData->id, $offsite_ids))
+                                                                                   {{ '1' }}
+                                                                               @else
+                                                                                   {{ '0' }}
+                                                                               @endif
+                                                                           @endif
+                                                                        " offsiteId="{{ $siteData->id }}">
                                                                     <span class="toggle green"></span>
                                                                 </label>
-            <?php endif; ?>
+                                                            @endif
                                                             <div class="clearfix"></div>
 
                                                         </div>
                                                     </div>
                                                 </div>
-                                            <?php } ?>
-    <?php }
-    ?>
+                                            @php 
+                                                }
+                                            }
+                                            @endphp
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <?php
-                        $cinc++;
-                    }
-                    if ($showextra == 0) {
-                        ?> 
+                        @php
+                            $cinc++;
+                        @endphp
+                    @endforeach
+                    @if ($showextra == 0)
+                    <script>
 
-                        <script>
+                        if (document.getElementById("SPanelaccordion-control-group15") !== null) {
+                            document.getElementById("SPanelaccordion-control-group15").style.display = 'none';
+                        }
+                        if (document.getElementById('rowDefault') !== null) {
+                            document.getElementById('rowDefault').style.display = 'none';
+                        }
+                    </script>
+                    <!-- Other Source category -->
+                    <div class="notFoundRow othersources" style="display: block;" id="defaultothersources">
+                        <div class="panel-heading sidebarheadings active">
+                            <h6 class="panel-title"> <a class="" data-toggle="collapse" data-parent="#accordion-control-right" href="#accordion-control-right-groupaccordion-control-group15" aria-expanded="true"><i class="icon-power2"></i>&nbsp;Other Sources</a> </h6>
+                        </div>
+                        <div id="" data-toggle="modal" data-target="#OtherSourcesId" aria-expanded="true" style="display:block">
+                            <div class="panel-body">
+                                <div class="row filter_campaign">
 
-                            if (document.getElementById("SPanelaccordion-control-group15") !== null) {
-                                document.getElementById("SPanelaccordion-control-group15").style.display = 'none';
-                            }
-                            if (document.getElementById('rowDefault') !== null) {
-                                document.getElementById('rowDefault').style.display = 'none';
-                            }
-                        </script>
-                        <!-- Other Source category -->
-                        <div class="notFoundRow othersources" style="display: block;" id="defaultothersources">
-                            <div class="panel-heading sidebarheadings active">
-                                <h6 class="panel-title"> <a class="" data-toggle="collapse" data-parent="#accordion-control-right" href="#accordion-control-right-groupaccordion-control-group15" aria-expanded="true"><i class="icon-power2"></i>&nbsp;Other Sources</a> </h6>
-                            </div>
-                            <div id="" data-toggle="modal" data-target="#OtherSourcesId" aria-expanded="true" style="display:block">
-                                <div class="panel-body">
-                                    <div class="row filter_campaign">
-
-                                        <div class="col-xs-12 col-md-2 col-sm-2 rev_col">
-                                            <div class="thumbnail">
-                                                <div class="thumb bkg1">
-                                                    <a href="javascript:void(0);"><i class="txt_blue" style="font-style:inherit">M</i></a>
+                                    <div class="col-xs-12 col-md-2 col-sm-2 rev_col">
+                                        <div class="thumbnail">
+                                            <div class="thumb bkg1">
+                                                <a href="javascript:void(0);"><i class="txt_blue" style="font-style:inherit">M</i></a>
+                                            </div>
+                                            <div class="caption text-center">
+                                                <div class="pull-left">
+                                                    <h5 class="no-margin sea">Custom Source</h5>
+                                                    <h6 class="text-muted">Use Custom Domain</h6> 
                                                 </div>
-                                                <div class="caption text-center">
-                                                    <div class="pull-left">
-                                                        <h5 class="no-margin sea">Custom Source</h5>
-                                                        <h6 class="text-muted">Use Custom Domain</h6> 
-                                                    </div>
-                                                    <div class="clearfix"></div>
+                                                <div class="clearfix"></div>
 
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Other Source category --> 
-                        <?php
-                    }
-                    ?>
+                    </div>
+                    <!-- Other Source category --> 
+                    @endif
 
 
                 </div>
@@ -413,12 +416,12 @@
 </div>
 <div class="row">
     <div class="col-md-12 text-right">
-<?php if ($canWrite): ?>
-            <a href="javascript:void(0);" class="btn dark_btn mt10 saveReviewSource hidden" data-brandid="<?php echo $brandboostID; ?>">
+        @if ($canWrite)
+            <a href="javascript:void(0);" class="btn dark_btn mt10 saveReviewSource hidden" data-brandid="{{ $brandboostID }}">
                 Continue
                 <i class=" icon-arrow-right13 text-size-base position-right"></i>
             </a>
-<?php endif; ?>
+        @endif
     </div>
 </div>
 </div>
@@ -498,7 +501,7 @@
             //$('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: '<?php echo base_url('admin/offsite/add_website'); ?>',
+                url: "{{ base_url('admin/offsite/add_website') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -518,8 +521,8 @@
 
                         (function () {
                             $.ajax({
-                                url: "<?php echo base_url('admin/brandboost/campaignPreferences'); ?>",
-                                data: {brandboostID: '<?php echo $brandboostData->id; ?>'},
+                                url: "{{ base_url('admin/brandboost/campaignPreferences') }}",
+                                data: {brandboostID: '{{ $brandboostData->id }}'},
                                 method: "POST",
                                 dataType: "json",
                                 success: function (data)
@@ -557,7 +560,7 @@
 
                         $('.overlaynew').show();
                         $.ajax({
-                            url: '<?php echo base_url('admin/offsite/delete_customsource'); ?>',
+                            url: "{{ base_url('admin/offsite/delete_customsource') }}",
                             type: "POST",
                             data: {'CustomSourceID': CsourceId, _token: '{{csrf_token()}}'},
                             dataType: "json",
@@ -578,8 +581,8 @@
                                     $('.saveReviewSource').trigger('click');
                                     (function () {
                                         $.ajax({
-                                            url: "<?php echo base_url('admin/brandboost/campaignPreferences'); ?>",
-                                            data: {brandboostID: '<?php echo $brandboostData->id; ?>'},
+                                            url: "{{ base_url('admin/brandboost/campaignPreferences') }}",
+                                            data: {brandboostID: '{{ $brandboostData->id }}'},
                                             method: "POST",
                                             dataType: "json",
                                             success: function (data)
@@ -599,7 +602,7 @@
                                     $('.overlaynew').hide();
                                     //displayMessagePopup('success', 'Success!', 'Your data has been deleted successfully.');
                                     // location.reload();
-                                    window.location.href = "<?php echo base_url('admin/brandboost/offsite_setup/'); ?><?php echo $brandboostData->id; ?>?type=del";
+                                    window.location.href = "{{ base_url('admin/brandboost/offsite_setup/') }}{{ $brandboostData->id }}?type=del";
                                 } else {
                                     alertMessage('Error: Some thing wrong!');
                                     $('.overlaynew').hide();
@@ -639,8 +642,8 @@
 
             (function () {
                 $.ajax({
-                    url: "<?php echo base_url('admin/brandboost/campaignPreferences'); ?>",
-                    data: {brandboostID: '<?php echo $brandboostData->id; ?>', _token: '{{csrf_token()}}'},
+                    url: "{{ base_url('admin/brandboost/campaignPreferences') }}",
+                    data: {brandboostID: '{{ $brandboostData->id }}', _token: '{{csrf_token()}}'},
                     method: "POST",
                     dataType: "json",
                     success: function (data)
@@ -661,13 +664,13 @@
     function CustomAddSource(offstepIds, brandboostID) {
         if (offstepIds.length > 0) {
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/add_offsite_edit'); ?>',
+                url: "{{ base_url('admin/brandboost/add_offsite_edit') }}",
                 type: "POST",
                 data: {'offstepIds': offstepIds, brandboostID: brandboostID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = "<?php echo base_url('admin/brandboost/offsite_setup/'); ?>" + brandboostID + "?type=add";
+                        window.location.href = "{{ base_url('admin/brandboost/offsite_setup/') }}" + brandboostID + "?type=add";
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -677,26 +680,5 @@
             alertMessage('Please select atleast one of them.')
         }
     }
-    ;
-
-    /*function DelSourcefrmPrefrence(offstepIds) {           
-     if (offstepIds.length > 0) {
-     $.ajax({
-     url: '<?php echo base_url('admin/brandboost/add_offsite_edit'); ?>',
-     type: "POST",
-     data: {'offstepIds': offstepIds, brandboostID:'<?php echo $brandboostData->id; ?>'},
-     dataType: "json",
-     success: function (data) {
-     if (data.status == 'success') {
-     window.location.href = "<?php echo base_url('admin/brandboost/offsite_setup/'); ?><?php echo $brandboostData->id; ?>?type=CmPre";
-     } else {
-     alertMessage('Error: Some thing wrong!');
-     }
-     }
-     });
-     } else {
-     alertMessage('Please select atleast one of them.')
-     }
-     };*/
-
+    
 </script>		
