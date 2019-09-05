@@ -1,11 +1,11 @@
  @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php error_reporting(0); list($canRead, $canWrite) = fetchPermissions('Tags'); ?>
+@php error_reporting(0); list($canRead, $canWrite) = fetchPermissions('Tags') @endphp
 <div class="content">
 	<!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
 
@@ -165,7 +165,7 @@
             <div class="panel panel-flat">
                 <div class="panel-heading" style="box-shadow:none;">
                     <span class="pull-left">
-                        <h6 class="panel-title"><?php echo count($tagData); ?> Tag Feedbacks</h6>
+                        <h6 class="panel-title">{{ count($tagData) }} Tag Feedbacks</h6>
                     </span>
                     <div class="heading-elements">
                         <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
@@ -181,16 +181,16 @@
 
                 <div class="table-responsive">
 
-                            <?php
-                            if (count($tagData) > 0) {
-                                foreach ($tagData as $data) {
-                                    $tagData = \App\Models\Admin\TagsModel::getFeedbackByTagID($data->id);
-                                    if (count($tagData) > 0) {
-                                        $feedbackCount = '<a href="' . base_url('admin/tags/feedback/' . $data->id) . '" target="_blank"><span class="text-muted reviewnum">(' . count($tagData) . ' Feedback)</span></a>';
-                                    } else {
-                                        $feedbackCount = '<span class="text-muted reviewnum">(0 Feedback)</span>';
-                                    }
-                                    ?>
+				@php
+				if (count($tagData) > 0) {
+					foreach ($tagData as $data) {
+						$tagData = \App\Models\Admin\TagsModel::getFeedbackByTagID($data->id);
+						if (count($tagData) > 0) {
+							$feedbackCount = '<a href="' . base_url('admin/tags/feedback/' . $data->id) . '" target="_blank"><span class="text-muted reviewnum">(' . count($tagData) . ' Feedback)</span></a>';
+						} else {
+							$feedbackCount = '<span class="text-muted reviewnum">(0 Feedback)</span>';
+						}
+						@endphp
                     <table class="table datatable-basic datatable-sorting">
                         <thead>
                             <tr>
@@ -206,51 +206,51 @@
                         </thead>
                         <tbody>
 
-                                    <tr id="append-<?php echo $data->id; ?>" class="selectedClass">
-                                        <td style="display: none;"><?php echo date('m/d/Y', strtotime($data->tag_created)); ?></td>
-                                        <td style="display: none;"><?php echo $data->id; ?></td>
-                                        <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $data->id; ?>" value="<?php echo $data->id; ?>" ><span class="custmo_checkmark"></span></label></td>
-                                        <td>
-											<div class="media-left media-middle"> 
-												<a class="icons square" href="#"><i class="icon-indent-decrease2 txt_blue"></i></a> 
-											</div>
-											<div class="media-left">
-											  <div><a href="#" class="text-default text-semibold"><?php echo $data->group_name; ?></a></div>
-											</div>
-										</td>
-                                        <td>
-											<button class="btn btn-xs btn_white_table pr10"><i class="icon-primitive-dot txt_green"></i> <?php echo $data->tag_name; ?></button>
-                                        </td>
-                                        
-                                         <td>
-											<div class="media-left">
-												<div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($data->tag_created)); ?></a></div>
-												<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->tag_created)); ?></div>
-											</div>
-										</td>
-											
-                                        <td>
-											<a href="<?php echo base_url('admin/tags/feedback/' . $data->id);?>" target="_blank" class="text-default text-semibold"><?php echo count($tagData); ?></a>
-											<div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo count($tagData); ?> Feedbacks">
-												<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?php echo count($tagData); ?>" aria-valuemin="0" aria-valuemax="<?php echo count($tagData); ?>" style="width:100%"></div>
-											</div>
-                                        </td>
-                                        
-                                        
-                                        <td class="text-center">
-                                            <ul class="icons-list">  
-                                                <li class="dropdown"> <button type="button" class="btn btn-xs btn_white_table ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <?php if($canWrite): ?>
-                                                        <li><a href="javascript:void(0);" class="deleteTagGroupEntity" tagid="<?php echo $data->id; ?>" groupid="<?php echo $data->group_id; ?>"><i class="icon-file-text2"></i> Delete</a></li>
-                                                        <?php endif; ?>
+							<tr id="append-<?php echo $data->id; ?>" class="selectedClass">
+								<td style="display: none;"><?php echo date('m/d/Y', strtotime($data->tag_created)); ?></td>
+								<td style="display: none;"><?php echo $data->id; ?></td>
+								<td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $data->id; ?>" value="<?php echo $data->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+								<td>
+									<div class="media-left media-middle"> 
+										<a class="icons square" href="#"><i class="icon-indent-decrease2 txt_blue"></i></a> 
+									</div>
+									<div class="media-left">
+									  <div><a href="#" class="text-default text-semibold"><?php echo $data->group_name; ?></a></div>
+									</div>
+								</td>
+								<td>
+									<button class="btn btn-xs btn_white_table pr10"><i class="icon-primitive-dot txt_green"></i> <?php echo $data->tag_name; ?></button>
+								</td>
+								
+								 <td>
+									<div class="media-left">
+										<div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($data->tag_created)); ?></a></div>
+										<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->tag_created)); ?></div>
+									</div>
+								</td>
+									
+								<td>
+									<a href="<?php echo base_url('admin/tags/feedback/' . $data->id);?>" target="_blank" class="text-default text-semibold"><?php echo count($tagData); ?></a>
+									<div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo count($tagData); ?> Feedbacks">
+										<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?php echo count($tagData); ?>" aria-valuemin="0" aria-valuemax="<?php echo count($tagData); ?>" style="width:100%"></div>
+									</div>
+								</td>
+								
+								
+								<td class="text-center">
+									<ul class="icons-list">  
+										<li class="dropdown"> <button type="button" class="btn btn-xs btn_white_table ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
+											<ul class="dropdown-menu dropdown-menu-right">
+												<?php if($canWrite): ?>
+												<li><a href="javascript:void(0);" class="deleteTagGroupEntity" tagid="<?php echo $data->id; ?>" groupid="<?php echo $data->group_id; ?>"><i class="icon-file-text2"></i> Delete</a></li>
+												<?php endif; ?>
 
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                        
-                                    </tr>
+											</ul>
+										</li>
+									</ul>
+								</td>
+								
+							</tr>
                                     
 
                         </tbody>

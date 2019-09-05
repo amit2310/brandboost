@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -80,7 +80,7 @@
   <div class="row">
   <!--=============Headings & Tabs menu==============-->
 	<div class="col-md-7">
-	  <h3><img src="<?php echo base_url(); ?>assets/images/gallery_icon.png"/ style="width: 16px;"> Gallery</h3>
+	  <h3><img src="{{ base_url() }}assets/images/gallery_icon.png" style="width: 16px;"> Gallery</h3>
 	  <ul class="nav nav-tabs nav-tabs-bottom">
 		<li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="Publish">All</a></li>
 		<li><a style="javascript:void();" class="filterByColumn" fil="Archive">Archive</a></li>
@@ -94,8 +94,6 @@
 </div>
 <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
-					
-
 <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
 <div class="tab-content"> 
   <!--===========TAB 1=====Configuration======-->
@@ -108,17 +106,17 @@
 				<div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
 					<input class="form-control input-sm cus_search" tableid="mediaGalleryDataList" placeholder="Search by name" type="text">
 					<div class="form-control-feedback">
-						<i class=""><img src="<?php echo base_url(); ?>assets/images/icon_search.png" width="14"></i>
+						<i class=""><img src="{{ base_url() }}assets/images/icon_search.png" width="14"></i>
 					</div>
 				</div>
 				<div class="table_action_tool">
-					<a href="#" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="<?php echo base_url(); ?>assets/images/icon_refresh.png"/></i></a>
-					<a href="javascript:void(0)"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_calender.png"/></i></a>
-					
-					<a href="javascript:void(0)" id="deleteMediaWidget" class="custom_action_box" style="display:none;"><i class="icon-trash position-left"></i></a>
+					<a href="#" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="{{ base_url() }}assets/images/icon_refresh.png"/></i></a>
+					<a href="javascript:void(0)"><i class=""><img src="{{ base_url() }}assets/images/icon_calender.png"/></i></a>
+					<a href="javascript:void(0)" id="deleteMediaWidget" class="custom_action_box" style="display:none;">
+						<i class="icon-trash position-left"></i>
+					</a>
 					<a href="javascript:void(0)" id="archiveButtonMediaWidget" class="custom_action_box" style="display:none;"><i class="icon-gear position-left"></i></a>
-					
-					<a href="javascript:void(0)" class="editDataList"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_edit.png"/></i></a>
+					<a href="javascript:void(0)" class="editDataList"><i class=""><img src="{{ base_url() }}assets/images/icon_edit.png"/></i></a>
 				</div>			
 			</div>
 		  </div>
@@ -129,18 +127,18 @@
 							<th style="display: none;"></th>
 							<th style="display: none;"></th>
 							<th style="display: none;" class="nosort editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
-							<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i>Name</th>
-							<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Media</th>
-							<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Type</th>
-							<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_id.png"></i>Created</th>
-							<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_id.png"></i>Created By</th>
-							<th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_action.png"></i>Action</th>
+							<th><i class=""><img src="{{ base_url() }}assets/images/icon_name.png"></i>Name</th>
+							<th><i class=""><img src="{{ base_url() }}assets/images/icon_device.png"></i>Media</th>
+							<th><i class=""><img src="{{ base_url() }}assets/images/icon_clock.png"></i>Type</th>
+							<th><i class=""><img src="{{ base_url() }}assets/images/icon_id.png"></i>Created</th>
+							<th><i class=""><img src="{{ base_url() }}assets/images/icon_id.png"></i>Created By</th>
+							<th><i class=""><img src="{{ base_url() }}assets/images/icon_action.png"></i>Action</th>
 							<th>&nbsp;</th>
 							<th style="display: none;"></th>
 						</tr>
 					</thead>
 					<tbody>
-						<?php 
+						@php 
 						foreach ($allGallery as $galleryData){
 							$galleryData = \App\Models\Admin\MediaModel::getGalleryData($galleryData->id);			
 							$reviewsIdArray = unserialize($galleryData->reviews_id);
@@ -186,117 +184,100 @@
 							$reviewCount = '';
 							
 							if($galleryData->team_id != ''){
-								//echo '1';
 								$createdByData = getTeamMemberById($galleryData->team_id);
 							}else{
-								//echo '2';
 								$createdByData = getUserDetailsByUserID($galleryData->user_id);
 							}
-						?>
-						<tr id="append-<?php echo $galleryData->id; ?>" class="selectedClass">
-							<td style="display: none;"><?php echo date('m/d/Y', strtotime($galleryData->created)); ?></td>
-							<td style="display: none;"><?php echo $galleryData->id; ?></td>
-							<td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $galleryData->id; ?>" value="<?php echo $galleryData->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+						@endphp
+						<tr id="append-{{ $galleryData->id }}" class="selectedClass">
+							<td style="display: none;">{{ date('m/d/Y', strtotime($galleryData->created)) }}</td>
+							<td style="display: none;">{{ $galleryData->id }}</td>
+							<td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $galleryData->id }}" value="{{ $galleryData->id }}" ><span class="custmo_checkmark"></span></label></td>
 							<td>
-								<div class="media-left media-middle"> <a class="icons" href="<?php echo base_url(); ?>admin/mediagallery/setup/<?php echo $galleryData->id; ?>"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $galleryData->gallery_logo; ?>" onerror="this.src='<?php echo base_url('assets/images/wakerslogo.png'); ?>'" class="img-circle br5 img-xs" alt=""></a> </div>
+								<div class="media-left media-middle"> <a class="icons" href="{{ base_url() }}admin/mediagallery/setup/{{ $galleryData->id }}"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $galleryData->gallery_logo }}" onerror="this.src='{{ base_url('assets/images/wakerslogo.png') }}'" class="img-circle br5 img-xs" alt=""></a> </div>
 								<div class="media-left">
-									<div class=""><a href="<?php echo base_url(); ?>admin/mediagallery/setup/<?php echo $galleryData->id; ?>" class="text-default text-semibold"><?php echo $galleryData->name; ?></a> </div>
+									<div class=""><a href="{{ base_url() }}admin/mediagallery/setup/{{ $galleryData->id }}" class="text-default text-semibold">{{ $galleryData->name }}</a> </div>
 								</div>
 							</td>
-							<td id="reviewsListCount_<?php echo $galleryData->id; ?>">
-								<?php echo $reviewCount; ?>
+							<td id="reviewsListCount_{{ $galleryData->id }}">
+								{{ $reviewCount }}
 							</td>
-							<td><a href="javascript:void(0);" class="getGalleryImage text-muted" gallery-type="<?php echo $galleryData->gallery_type; ?>" gallery-id="<?php echo $galleryData->id; ?>"><?php echo $galleryData->gallery_type < 3 ? 'Grid' : $galleryData->gallery_type. ' Images'; ?></a></td>
+							<td><a href="javascript:void(0);" class="getGalleryImage text-muted" gallery-type="{{ $galleryData->gallery_type }}" gallery-id="{{ $galleryData->id }}">{{ $galleryData->gallery_type < 3 ? 'Grid' : $galleryData->gallery_type. ' Images' }}</a></td>
 							<td>
 								<div class="media-left">
-									<div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold"><?php echo dataFormat($galleryData->created); ?></a></div>
-									<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($galleryData->created)); ?></div>
+									<div class="pt-5">
+										<a href="javascript:void(0);" class="text-default text-semibold">
+											{{ dataFormat($galleryData->created) }}
+										</a>
+									</div>
+									<div class="text-muted text-size-small">{{ date('h:i A', strtotime($galleryData->created)) }}</div>
 								</div>
 							</td>
 							<td>
-								<div class="media-left media-middle"> <?php echo showUserAvtar($createdByData->avatar, $createdByData->firstname, $createdByData->lastname); ?></div>
+								<div class="media-left media-middle"> {!! showUserAvtar($createdByData->avatar, $createdByData->firstname, $createdByData->lastname) !!}</div>
 								<div class="media-left">
-									<div class="pt-5"><a href="javascript:void();" class="text-default text-semibold bbot"><?php //echo $createdByData->firstname . ' ' . $createdByData->lastname; ?></a><img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php //echo strtolower($createdByData->userCountry); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/> </div>
-									<div class="text-muted text-size-small"><?php echo $createdByData->email; ?></div>
+									<div class="pt-5"><a href="javascript:void();" class="text-default text-semibold bbot">{{ $createdByData->firstname . ' ' . $createdByData->lastname }}</a><img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($createdByData->userCountry) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/> </div>
+									<div class="text-muted text-size-small">{{ $createdByData->email }}</div>
 								</div>
 							</td>
 							<td>
 								<div class="tdropdown open">
-									<?php
-									if ($galleryData->status == '1') {
-										echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
-									}else if ($galleryData->status == '2') {
-										echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
-									} else {
-										echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
-									}
-									?>
+									@if ($galleryData->status == '1')
+										<i class="icon-primitive-dot txt_green fsize16"></i> 
+									@else if ($galleryData->status == '2')
+										<i class="icon-primitive-dot txt_red fsize16"></i> 
+									@else
+										<i class="icon-primitive-dot txt_red fsize16"></i> 
+									@endif
+
 									<a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<?php
-										if ($galleryData->status == '1') {
-											echo 'Active';
-										}else if ($galleryData->status == '2') {
-											echo 'Archive';
-										} else {
-											echo 'Inactive';
-										}
-										?>
+										@if ($galleryData->status == '1')
+											{{ 'Active' }}
+										@else if ($galleryData->status == '2')
+											{{ 'Archive' }}
+										@else
+											{{ 'Inactive' }}
+										@endif
 									</a>
 									<ul class="dropdown-menu dropdown-menu-right status" style="right: 0;">
-										<?php
-										if ($galleryData->status == '1') {
-										?>
-											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="0"><i class="icon-primitive-dot txt_red"></i> Inactive</a> </li>
-											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="2"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
-										<?php
-										}else if ($galleryData->status == '2') {
-										?>
-											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="1"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
-											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="0"><i class="icon-primitive-dot txt_red"></i> Inactive</a> </li>
-										<?php
-										} else {
-										?>
-											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="1"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
-											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="2"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
-										<?php
-										}
-										?>
+										@if ($galleryData->status == '1')
+											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="0"><i class="icon-primitive-dot txt_red"></i> Inactive</a> </li>
+											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="2"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
+										@else if ($galleryData->status == '2')
+											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="1"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
+											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="0"><i class="icon-primitive-dot txt_red"></i> Inactive</a> </li>
+										@else
+											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="1"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
+											<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="2"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
+										@endif
 									</ul>
 								</div>
 							</td>
 							<td>
 								<div class="media-left pull-right text-right">
 									<div class="tdropdown ml10"> 
-										<a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+										<a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="{{ base_url() }}assets/images/more.svg"></a>
 										<ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
-											<?php
-											if ($galleryData->status == '1') {
-											?>
-												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="0"><i class="icon-primitive-dot txt_red"></i> Inactive</a> </li>
-												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="2"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
-											<?php
-											}else if ($galleryData->status == '2') {
-											?>
-												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="1"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
-												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="0"><i class="icon-primitive-dot txt_red"></i> Inactive</a> </li>
-											<?php
-											} else {
-											?>
-												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="1"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
-												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="<?php echo $galleryData->id; ?>" data-status="2"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
-											<?php
-											}
-											?>
+											@if ($galleryData->status == '1')
+												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="0"><i class="icon-primitive-dot txt_red"></i> Inactive</a> </li>
+												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="2"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
+											@else if ($galleryData->status == '2')
+												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="1"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
+												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="0"><i class="icon-primitive-dot txt_red"></i> Inactive</a> </li>
+											@else
+												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="1"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
+												<li><a href="javascript:void(0);" class="updateStatus" gallery-id="{{ $galleryData->id }}" data-status="2"><i class="icon-primitive-dot txt_red"></i> Archive</a> </li>
+											@endif
 											
-											<li><a href="javascript:void(0);" class="editGallery" gallery-id="<?php echo $galleryData->id; ?>" gallery-name="<?php echo $galleryData->name; ?>"><i class="icon-pencil"></i> Edit</a> </li>
-											<li><a class="deleteGallery" gallery-id="<?php echo $galleryData->id; ?>" href="javascript:void(0);"><i class="icon-trash"></i> Delete</a></li>
+											<li><a href="javascript:void(0);" class="editGallery" gallery-id="{{ $galleryData->id }}" gallery-name="{{ $galleryData->name }}"><i class="icon-pencil"></i> Edit</a> </li>
+											<li><a class="deleteGallery" gallery-id="{{ $galleryData->id }}" href="javascript:void(0);"><i class="icon-trash"></i> Delete</a></li>
 										</ul>
 									</div>
 								</div>
 							</td>
-							<td style="display: none;"><?php echo $galleryData->status == 2 ? 'archive' : 'publish'; ?></td>
+							<td style="display: none;">{{ $galleryData->status == 2 ? 'archive' : 'publish' }}</td>
 						</tr>
-						<?php } ?>
+						@endforeach
 					</tbody>
 				</table>
 			</div>
@@ -357,7 +338,7 @@
 				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Create Gallery &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> Create Gallery &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -387,7 +368,7 @@
 				@csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Select Media &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> Select Media &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -406,299 +387,297 @@
 <!-- /add New List -->
 
 <script>
-
-var sliderBoxCount = 6;
-var slideIndex = 0;
-function showSlides(n=1) {
-	var i;
-	var slides = document.getElementsByClassName("sliderImage");
-	if(n > 0){
-		if(slides.length > sliderBoxCount + slideIndex){
-			slides[slideIndex].style.display = "none";
-			slides[sliderBoxCount + slideIndex].style.display = "block";
-			slideIndex++;
-			document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#fff';
-			document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#fff';
-			if(slides.length == sliderBoxCount + slideIndex){
+	var sliderBoxCount = 6;
+	var slideIndex = 0;
+	function showSlides(n=1) {
+		var i;
+		var slides = document.getElementsByClassName("sliderImage");
+		if(n > 0){
+			if(slides.length > sliderBoxCount + slideIndex){
+				slides[slideIndex].style.display = "none";
+				slides[sliderBoxCount + slideIndex].style.display = "block";
+				slideIndex++;
+				document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#fff';
+				document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#fff';
+				if(slides.length == sliderBoxCount + slideIndex){
+					document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#eee';
+				}
+			}else{
 				document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#eee';
 			}
 		}else{
-			document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#eee';
-		}
-	}else{
-		if((slides.length >= sliderBoxCount + slideIndex) && (slideIndex > 0)){
-			--slideIndex;
-			slides[slideIndex].style.display = "block";
-			slides[sliderBoxCount + slideIndex].style.display = "none";
-			document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#fff';
-			document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#fff';
-			
-			if(sliderBoxCount == sliderBoxCount + slideIndex){
+			if((slides.length >= sliderBoxCount + slideIndex) && (slideIndex > 0)){
+				--slideIndex;
+				slides[slideIndex].style.display = "block";
+				slides[sliderBoxCount + slideIndex].style.display = "none";
+				document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#fff';
+				document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#fff';
+				
+				if(sliderBoxCount == sliderBoxCount + slideIndex){
+					document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#eee';
+				}
+			}else{
 				document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#eee';
 			}
-		}else{
-			document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#eee';
 		}
 	}
-}
 
-$(document).ready(function () { 
-	
-	// Setup - add a text input to each footer cell
-
-   $('#mediaGalleryDataList thead tr').clone(true).appendTo('#mediaGalleryDataList thead');        
-   $('#mediaGalleryDataList thead tr:eq(1) th').each(function (i) {            
-		if (i === 10) {
-			var title = $(this).text();
-			$(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" />');                
-			$('input', this).on('keyup change', function () {
-			if (tableBase.column(i).search() !== this.value) {
-					tableBase
-					.column(i)
-					.search(this.value, $('#colStatus').prop('checked', true))
-					.draw();
-				}
+	$(document).ready(function () { 
+		
+		// Setup - add a text input to each footer cell
+	   $('#mediaGalleryDataList thead tr').clone(true).appendTo('#mediaGalleryDataList thead');        
+	   $('#mediaGalleryDataList thead tr:eq(1) th').each(function (i) {            
+			if (i === 10) {
+				var title = $(this).text();
+				$(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" />');                
+				$('input', this).on('keyup change', function () {
+				if (tableBase.column(i).search() !== this.value) {
+						tableBase
+						.column(i)
+						.search(this.value, $('#colStatus').prop('checked', true))
+						.draw();
+					}
+				});
+			}
+	   });
+		
+		var tableId = 'mediaGalleryDataList';
+		var tableBase = custom_data_table(tableId);
+		
+		$(document).on('click', '.filterByColumn', function () {            
+			$('.nav-tabs').each(function (i) {
+			   $(this).children().removeClass('active');
 			});
-		}
-   });
-	
-	var tableId = 'mediaGalleryDataList';
-	var tableBase = custom_data_table(tableId);
-	
-	$(document).on('click', '.filterByColumn', function () {            
-		$('.nav-tabs').each(function (i) {
-		   $(this).children().removeClass('active');
-        });
 
-		$(this).parent().addClass('active');
-		var fil = $(this).attr('fil');
-		$('#filterByStatus').val(fil);
-		$('#filterByStatus').keyup();        
-	});
-	
-	setTimeout(function () {
-        $('#activeCampaign').trigger('click');
-    }, 100);
-	
-	$(document).on('click', '.editDataList', function () {
-		$('.editAction').toggle();
-	});
-	
-	$(document).on('click', '.getGalleryImage', function (e) {
-		$('.overlaynew').show();
-		var galleryId = $(this).attr('gallery-id');
-		sliderBoxCount = $(this).attr('gallery-type');
-		e.preventDefault();		
-		$.ajax({
-			url: "<?php echo base_url(); ?>/admin/mediagallery/getGalleryImages",
-			method: "POST",
-			data: {'gallery_id': galleryId, _token: '{{csrf_token()}}'},
-			dataType: "json",
-			success: function (data)
-			{
-				$('.overlaynew').hide();
-				if (data.status == "success")
-				{
-					$('#mediaGalleryPreview .gallery_slider_widget').html('<div class="slides'+sliderBoxCount+'">'+ data.sliderView +'</div>');
-					slideIndex = 0;
-					$('#showGalleryImages').modal();
-				} else {
-					displayMessagePopup('error');
-				}
-			}
-		});
-	});
-	
-	$(document).on('click', '.reviewArrowBH a', function(e){
-		var bd = $(this).attr("bb_direction");
-		if (bd == 'right') {
-			showSlides(1)
-		} else if (bd == 'left') {
-			showSlides(-1)
-		}
-	});
-    
-	$('.addMedia').click(function(){
-		var galleryId = $(this).attr('data-id');
-		$('#galleryIdValue').val(galleryId);
-		$(".overlaynew").show();
-		$.ajax({
-			url: "<?php echo base_url('admin/mediagallery/getReviewsList'); ?>",
-			type: "POST",
-			data: {'gallery_id': galleryId, _token: '{{csrf_token()}}'},
-			dataType: "json",
-			success: function (data) {
-				if (data.status == 'success') {
-					$(".overlaynew").hide();
-					$('#selectReviews').modal();
-					$('#reviewsDataList').html(data.content);
-				} else {
-					alertMessage('Error: Some thing wrong!');
-				}
-			}
-		});
-	});
-		
-	$(document).on('change', '#checkAll', function () {
-		if (false == $(this).prop("checked")) {
-			$(".checkRows").prop('checked', false);
-			$(".selectedClass").removeClass('success');
-			$('.custom_action_box').hide();
-		} else {
-			$(".checkRows").prop('checked', true);
-			$(".selectedClass").addClass('success');
-			$('.custom_action_box').show();
-		}
-	});
-	
-	$(document).on('click', '.checkRows', function () {
-		var inc = 0;
-		var rowId = $(this).val();
-		
-		if (false == $(this).prop("checked")) {
-			$('#append-' + rowId).removeClass('success');
-		} else {
-			$('#append-' + rowId).addClass('success');
-		}
-
-		$('.checkRows:checkbox:checked').each(function (i) {
-			inc++;
+			$(this).parent().addClass('active');
+			var fil = $(this).attr('fil');
+			$('#filterByStatus').val(fil);
+			$('#filterByStatus').keyup();        
 		});
 		
-		if (inc == 0) {
-			$('.custom_action_box').hide();
-		} else {
-			$('.custom_action_box').show();
-		}
-
-		var numberOfChecked = $('.checkRows:checkbox:checked').length;
-		var totalCheckboxes = $('.checkRows:checkbox').length;
-		if (totalCheckboxes > numberOfChecked) {
-			$('#checkAll').prop('checked', false);
-		}
-
-		if (totalCheckboxes == numberOfChecked) {
-			$('#checkAll').prop('checked', true);
-		}
-	});
-			
-	$('#frmAddGallery').on('submit', function () {
-		$('.overlaynew').show();
-		var formdata = $("#frmAddGallery").serialize();
-		$.ajax({
-			url: "<?php echo base_url('admin/mediagallery/addList'); ?>",
-			type: "POST",
-			data: formdata,
-			dataType: "json",
-			success: function (data) {
-				if (data.status == 'success') {
-					$('.overlaynew').hide();
-					$('#addGallery').modal('hide');
-					window.location.href = '<?php echo base_url(); ?>admin/mediagallery/setup/'+data.gallery_id;
-				} else {
-					
-				}
-			}
+		setTimeout(function () {
+			$('#activeCampaign').trigger('click');
+		}, 100);
+		
+		$(document).on('click', '.editDataList', function () {
+			$('.editAction').toggle();
 		});
-		return false;
-	});
-
-	$('#frmSelectReviews').on('submit', function () {
-		$('.overlaynew').show();
-		var formdata = $("#frmSelectReviews").serialize();
-		var galleryId = $('#galleryIdValue').val();
-		$.ajax({
-			url: "<?php echo base_url('admin/mediagallery/saveReviewsList'); ?>",
-			type: "POST",
-			data: formdata,
-			dataType: "json",
-			success: function (data) {
-				if (data.status == 'success') {
-					$('.overlaynew').hide();
-					$('#selectReviews').modal('hide');
-					$('#reviewsListCount_'+galleryId).html(data.reviewCount);
-				} else {
-					$('.overlaynew').hide();
-					alertMessage('Error: Some thing wrong!');
-				}
-			}
-		});
-		return false;
-	});
-
-	$(document).on('click', '.editGallery', function(){
-		var galleryId = $(this).attr('gallery-id');
-		var galleryName = $(this).attr('gallery-name');
-		$('#editGalleryName').val(galleryName);
-		$('#editGalleryId').val(galleryId);
-		$('#editGalleryModel').modal();		
-	});	
-
-	$(document).on("click", ".updateStatus", function () {
-		var galleryId = $(this).attr('gallery-id');
-		var status = $(this).attr('data-status');
-		$(".overlaynew").show();
-		$.ajax({
-			url: "<?php echo base_url('admin/mediagallery/updateStatus'); ?>",
-			type: "POST",
-			data: {'gallery_id': galleryId, status: status, _token: '{{csrf_token()}}'},
-			dataType: "json",
-			success: function (data) {
-				if (data.status == 'success') {
-					$(".overlaynew").hide();
-					displayMessagePopup('success', '', data.msg); 
-					window.location.href = window.location.href;
-				} else {
-					alertMessage('Error: Some thing wrong!');
-				}
-			}
-		});
-	});
-
-	$('#frmUpdateGallery').on('submit', function () {
-		$('.overlaynew').show();
-		var formdata = $("#frmUpdateGallery").serialize();
-		var editGalleryId = $('#editGalleryId').val();
-		$.ajax({
-			url: "<?php echo base_url('admin/mediagallery/updateGallery'); ?>",
-			type: "POST",
-			data: formdata,
-			dataType: "json",
-			success: function (data) {
-				if (data.status == 'success') {
-					$('.overlaynew').hide();
-					$("#editGalleryModel").modal('hide');
-					window.location.href = '<?php echo base_url(); ?>admin/mediagallery/setup/'+editGalleryId;
-				}else{
-					$('.overlaynew').hide();
-					alertMessage('Error: Some thing wrong!');
-				}
-			}
-		});
-		return false;
-	});
-	
-	$(document).on('click', '.deleteGallery', function () {
-		var elem = $(this);
-		deleteConfirmationPopup(
-		"This record will deleted immediately.<br>You can't undo this action.",
-		function () {
+		
+		$(document).on('click', '.getGalleryImage', function (e) {
 			$('.overlaynew').show();
-			var galleryId = $(elem).attr('gallery-id');
+			var galleryId = $(this).attr('gallery-id');
+			sliderBoxCount = $(this).attr('gallery-type');
+			e.preventDefault();		
 			$.ajax({
-				url: '<?php echo base_url('admin/mediagallery/deleteGallery'); ?>',
-				type: "POST",
-				data: {gallery_id: galleryId, _token: '{{csrf_token()}}'},
+				url: "{{ base_url() }}/admin/mediagallery/getGalleryImages",
+				method: "POST",
+				data: {'gallery_id': galleryId, _token: '{{csrf_token()}}'},
 				dataType: "json",
-				success: function (data) {
-					if (data.status == 'success') {
-						$('.overlaynew').hide();
-						window.location.href = window.location.href;
+				success: function (data)
+				{
+					$('.overlaynew').hide();
+					if (data.status == "success")
+					{
+						$('#mediaGalleryPreview .gallery_slider_widget').html('<div class="slides'+sliderBoxCount+'">'+ data.sliderView +'</div>');
+						slideIndex = 0;
+						$('#showGalleryImages').modal();
+					} else {
+						displayMessagePopup('error');
 					}
 				}
 			});
 		});
+		
+		$(document).on('click', '.reviewArrowBH a', function(e){
+			var bd = $(this).attr("bb_direction");
+			if (bd == 'right') {
+				showSlides(1)
+			} else if (bd == 'left') {
+				showSlides(-1)
+			}
+		});
+		
+		$('.addMedia').click(function(){
+			var galleryId = $(this).attr('data-id');
+			$('#galleryIdValue').val(galleryId);
+			$(".overlaynew").show();
+			$.ajax({
+				url: "{{ base_url('admin/mediagallery/getReviewsList') }}",
+				type: "POST",
+				data: {'gallery_id': galleryId, _token: '{{csrf_token()}}'},
+				dataType: "json",
+				success: function (data) {
+					if (data.status == 'success') {
+						$(".overlaynew").hide();
+						$('#selectReviews').modal();
+						$('#reviewsDataList').html(data.content);
+					} else {
+						alertMessage('Error: Some thing wrong!');
+					}
+				}
+			});
+		});
+			
+		$(document).on('change', '#checkAll', function () {
+			if (false == $(this).prop("checked")) {
+				$(".checkRows").prop('checked', false);
+				$(".selectedClass").removeClass('success');
+				$('.custom_action_box').hide();
+			} else {
+				$(".checkRows").prop('checked', true);
+				$(".selectedClass").addClass('success');
+				$('.custom_action_box').show();
+			}
+		});
+		
+		$(document).on('click', '.checkRows', function () {
+			var inc = 0;
+			var rowId = $(this).val();
+			
+			if (false == $(this).prop("checked")) {
+				$('#append-' + rowId).removeClass('success');
+			} else {
+				$('#append-' + rowId).addClass('success');
+			}
+
+			$('.checkRows:checkbox:checked').each(function (i) {
+				inc++;
+			});
+			
+			if (inc == 0) {
+				$('.custom_action_box').hide();
+			} else {
+				$('.custom_action_box').show();
+			}
+
+			var numberOfChecked = $('.checkRows:checkbox:checked').length;
+			var totalCheckboxes = $('.checkRows:checkbox').length;
+			if (totalCheckboxes > numberOfChecked) {
+				$('#checkAll').prop('checked', false);
+			}
+
+			if (totalCheckboxes == numberOfChecked) {
+				$('#checkAll').prop('checked', true);
+			}
+		});
+				
+		$('#frmAddGallery').on('submit', function () {
+			$('.overlaynew').show();
+			var formdata = $("#frmAddGallery").serialize();
+			$.ajax({
+				url: "{{ base_url('admin/mediagallery/addList') }}",
+				type: "POST",
+				data: formdata,
+				dataType: "json",
+				success: function (data) {
+					if (data.status == 'success') {
+						$('.overlaynew').hide();
+						$('#addGallery').modal('hide');
+						window.location.href = '{{ base_url() }}admin/mediagallery/setup/'+data.gallery_id;
+					} else {
+						
+					}
+				}
+			});
+			return false;
+		});
+
+		$('#frmSelectReviews').on('submit', function () {
+			$('.overlaynew').show();
+			var formdata = $("#frmSelectReviews").serialize();
+			var galleryId = $('#galleryIdValue').val();
+			$.ajax({
+				url: "{{ base_url('admin/mediagallery/saveReviewsList') }}",
+				type: "POST",
+				data: formdata,
+				dataType: "json",
+				success: function (data) {
+					if (data.status == 'success') {
+						$('.overlaynew').hide();
+						$('#selectReviews').modal('hide');
+						$('#reviewsListCount_'+galleryId).html(data.reviewCount);
+					} else {
+						$('.overlaynew').hide();
+						alertMessage('Error: Some thing wrong!');
+					}
+				}
+			});
+			return false;
+		});
+
+		$(document).on('click', '.editGallery', function(){
+			var galleryId = $(this).attr('gallery-id');
+			var galleryName = $(this).attr('gallery-name');
+			$('#editGalleryName').val(galleryName);
+			$('#editGalleryId').val(galleryId);
+			$('#editGalleryModel').modal();		
+		});	
+
+		$(document).on("click", ".updateStatus", function () {
+			var galleryId = $(this).attr('gallery-id');
+			var status = $(this).attr('data-status');
+			$(".overlaynew").show();
+			$.ajax({
+				url: "{{ base_url('admin/mediagallery/updateStatus') }}",
+				type: "POST",
+				data: {'gallery_id': galleryId, status: status, _token: '{{csrf_token()}}'},
+				dataType: "json",
+				success: function (data) {
+					if (data.status == 'success') {
+						$(".overlaynew").hide();
+						displayMessagePopup('success', '', data.msg); 
+						window.location.href = window.location.href;
+					} else {
+						alertMessage('Error: Some thing wrong!');
+					}
+				}
+			});
+		});
+
+		$('#frmUpdateGallery').on('submit', function () {
+			$('.overlaynew').show();
+			var formdata = $("#frmUpdateGallery").serialize();
+			var editGalleryId = $('#editGalleryId').val();
+			$.ajax({
+				url: "{{ base_url('admin/mediagallery/updateGallery') }}",
+				type: "POST",
+				data: formdata,
+				dataType: "json",
+				success: function (data) {
+					if (data.status == 'success') {
+						$('.overlaynew').hide();
+						$("#editGalleryModel").modal('hide');
+						window.location.href = "{{ base_url() }}admin/mediagallery/setup/"+editGalleryId;
+					}else{
+						$('.overlaynew').hide();
+						alertMessage('Error: Some thing wrong!');
+					}
+				}
+			});
+			return false;
+		});
+		
+		$(document).on('click', '.deleteGallery', function () {
+			var elem = $(this);
+			deleteConfirmationPopup(
+			"This record will deleted immediately.<br>You can't undo this action.",
+			function () {
+				$('.overlaynew').show();
+				var galleryId = $(elem).attr('gallery-id');
+				$.ajax({
+					url: "{{ base_url('admin/mediagallery/deleteGallery') }}",
+					type: "POST",
+					data: {gallery_id: galleryId, _token: '{{csrf_token()}}'},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							$('.overlaynew').hide();
+							window.location.href = window.location.href;
+						}
+					}
+				});
+			});
+		});
 	});
-});
 </script>
 @endsection
