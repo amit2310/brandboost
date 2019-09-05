@@ -1,16 +1,16 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<link href="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
-<script src="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/pickers/color/spectrum.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/picker_color.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/forms/inputs/touchspin.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>admin_new/assets/js/plugins/media/cropper.min.js"></script>
+<link href="{{ base_url() }}assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
+<script src="{{ base_url() }}assets/dropzone-master/dist/dropzone.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/pickers/color/spectrum.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/pages/picker_color.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}admin_new/assets/js/plugins/media/cropper.min.js"></script>
 
 
 <style>
@@ -104,30 +104,29 @@
 	
 </style>
 
-<?php
-$allowTitle = $galleryData->allow_title;
-$allowArrows = $galleryData->allow_arrow;
-$allowRating = $galleryData->allow_ratings;
-$name = $galleryData->name;
-$description = $galleryData->description;
-$galleryType = $galleryData->gallery_type;
-$imageSize = $galleryData->image_size;
-$gradientColor = $galleryData->gradient_color;
-$borderThickness = $galleryData->border_thickness;
-$galleryDesign = $galleryData->gallery_design_type;
-$galleryId = $galleryData->id;
-$colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : $galleryData->gradient_orientation;
-
-?>
+@php
+	$allowTitle = $galleryData->allow_title;
+	$allowArrows = $galleryData->allow_arrow;
+	$allowRating = $galleryData->allow_ratings;
+	$name = $galleryData->name;
+	$description = $galleryData->description;
+	$galleryType = $galleryData->gallery_type;
+	$imageSize = $galleryData->image_size;
+	$gradientColor = $galleryData->gradient_color;
+	$borderThickness = $galleryData->border_thickness;
+	$galleryDesign = $galleryData->gallery_design_type;
+	$galleryId = $galleryData->id;
+	$colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : $galleryData->gradient_orientation;
+@endphp
 
 <style type="text/css">
-	/*.previewWidgetBox .bbw_white_color{background-image: linear-gradient(<?php echo $colorOrientation; ?>, #ffffff, #ffffff 98%)!important;}
-    .previewWidgetBox .bbw_red_color{background-image: linear-gradient(<?php echo $colorOrientation; ?>, #e93474, #541069 98%)!important;}
-    .previewWidgetBox .bbw_yellow_color{background-image: linear-gradient(<?php echo $colorOrientation; ?>, #f9d84a, #f9814a)!important;}
-    .previewWidgetBox .bbw_orange_color{background-image: linear-gradient(<?php echo $colorOrientation; ?>, #ef9d39, #d92a3f)!important;}
-    .previewWidgetBox .bbw_green_color{background-image: linear-gradient(<?php echo $colorOrientation; ?>, #93cf48, #076768)!important;}
-    .previewWidgetBox .bbw_blue_color{background-image: linear-gradient(<?php echo $colorOrientation; ?>, #4194f7 3%, #1b1f97 99%)!important;}
-    .previewWidgetBox .bbw_purple_color{background-image: linear-gradient(<?php echo $colorOrientation; ?>, #4d4d7c 1%, #1e1e40)!important;}*/
+	/*.previewWidgetBox .bbw_white_color{background-image: linear-gradient({{ $colorOrientation }}, #ffffff, #ffffff 98%)!important;}
+    .previewWidgetBox .bbw_red_color{background-image: linear-gradient({{ $colorOrientation }}, #e93474, #541069 98%)!important;}
+    .previewWidgetBox .bbw_yellow_color{background-image: linear-gradient({{ $colorOrientation }}, #f9d84a, #f9814a)!important;}
+    .previewWidgetBox .bbw_orange_color{background-image: linear-gradient({{ $colorOrientation }}, #ef9d39, #d92a3f)!important;}
+    .previewWidgetBox .bbw_green_color{background-image: linear-gradient({{ $colorOrientation }}, #93cf48, #076768)!important;}
+    .previewWidgetBox .bbw_blue_color{background-image: linear-gradient({{ $colorOrientation }}, #4194f7 3%, #1b1f97 99%)!important;}
+    .previewWidgetBox .bbw_purple_color{background-image: linear-gradient({{ $colorOrientation }}, #4d4d7c 1%, #1e1e40)!important;}*/
 	
 	.toRightTop .previewWidgetBox .bbw_white_color{background-image: linear-gradient(to right top, #ffffff, #ffffff 98%)!important;}
     .toRightTop .previewWidgetBox .bbw_red_color{background-image: linear-gradient(to right top, #e93474, #541069 98%)!important;}
@@ -271,7 +270,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 	  <div class="row">
 	  <!--=============Headings & Tabs menu==============-->
 		<div class="col-md-7">
-		  <h3><img src="<?php echo base_url(); ?>assets/images/gallery_icon.png" style="width: 16px;"> Gallery</h3>
+		  <h3><img src="{{ base_url() }}assets/images/gallery_icon.png" style="width: 16px;"> Gallery</h3>
 		  <ul class="nav nav-tabs nav-tabs-bottom">
 			<li class="active"><a href="#right-icon-tab0" data-toggle="tab">Configuration</a></li>
 			<li><a href="#right-icon-tab1" data-toggle="tab">Integration</a></li>
@@ -311,27 +310,27 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 						<div class="form-group">
 							<div class="">
 								<label class="control-label">Template</label>
-								<button id="galleryDesignType" type="button" class="btn h52 form-control w100" style="text-align: left; padding: 7px 23px!important;"><span>Galley Type</span> <i class="pull-right txt_grey"><img src="<?php echo base_url(); ?>assets/images/icon_grid.png"></i></button>
+								<button id="galleryDesignType" type="button" class="btn h52 form-control w100" style="text-align: left; padding: 7px 23px!important;"><span>Galley Type</span> <i class="pull-right txt_grey"><img src="{{ base_url() }}assets/images/icon_grid.png"></i></button>
 							</div>
 						</div>
 					</div>
 					<div class="p20">
 						<p>Widget type</p>
 						<select class="form-control h52 autoSaveConfig" name="galleryType" id="galleryType">
-							<option value="3" <?php echo $galleryType == 3 ? 'selected' : ''; ?>>3 Images</option>
-							<option value="4" <?php echo $galleryType == 4 ? 'selected' : ''; ?>>4 Images</option>
-							<option value="5" <?php echo $galleryType == 5 ? 'selected' : ''; ?>>5 Images</option>
-							<option value="6" <?php echo $galleryType == 6 ? 'selected' : ''; ?>>6 Images</option>
-							<option value="7" <?php echo $galleryType == 7 ? 'selected' : ''; ?>>7 Images</option>
+							<option value="3" {!! $galleryType == 3 ? 'selected' : '' !!}>3 Images</option>
+							<option value="4" {!! $galleryType == 4 ? 'selected' : '' !!}>4 Images</option>
+							<option value="5" {!! $galleryType == 5 ? 'selected' : '' !!}>5 Images</option>
+							<option value="6" {!! $galleryType == 6 ? 'selected' : '' !!}>6 Images</option>
+							<option value="7" {!! $galleryType == 7 ? 'selected' : '' !!}>7 Images</option>
 						</select>
 					</div>
 					
 					<div class="p20">
 						<p>Image Size</p>
 						<select class="form-control h52 autoSaveConfig" name="imageSize" id="imageSize">
-							<option value="small" <?php echo $imageSize == 'small' ? 'selected' : ''; ?>>Small</option>
-							<option value="medium" <?php echo $imageSize == 'medium' ? 'selected' : ''; ?>>Medium</option>
-							<option value="large" <?php echo $imageSize == 'large' ? 'selected' : ''; ?>>Large</option>
+							<option value="small" {!! $imageSize == 'small' ? 'selected' : '' !!}>Small</option>
+							<option value="medium" {!! $imageSize == 'medium' ? 'selected' : '' !!}>Medium</option>
+							<option value="large" {!! $imageSize == 'large' ? 'selected' : '' !!}>Large</option>
 						</select>
 					</div>
 				  
@@ -343,7 +342,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 
 						  <p class="pull-left mb0">Title</p>
 						  <label class="custom-form-switch pull-right">
-							<input class="field checkedBoxValue autoSaveConfig" type="checkbox" value="<?php echo $allowTitle != '0' ? $allowTitle : '0'; ?>" <?php echo $allowTitle != '0' ? 'checked' : ''; ?> name="allowTitle" id="allowTitle">
+							<input class="field checkedBoxValue autoSaveConfig" type="checkbox" value="{{ $allowTitle != '0' ? $allowTitle : '0' }}" {!! $allowTitle != '0' ? 'checked' : '' !!} name="allowTitle" id="allowTitle">
 							<span class="toggle dred"></span> </label>
 							<div class="clearfix"></div>
 						</div>
@@ -351,7 +350,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 						<div class="form-group mb10">
 						  <p class="pull-left mb0">Arrows</p>
 						  <label class="custom-form-switch pull-right">
-							<input class="field checkedBoxValue autoSaveConfig" type="checkbox" value="<?php echo $allowArrows != '0' ? $allowArrows : '0'; ?>" <?php echo $allowArrows != '0' ? 'checked' : ''; ?> name="allowArrows" id="allowArrows">
+							<input class="field checkedBoxValue autoSaveConfig" type="checkbox" value="{{ $allowArrows != '0' ? $allowArrows : '0' }}" {!! $allowArrows != '0' ? 'checked' : '' !!} name="allowArrows" id="allowArrows">
 							<span class="toggle dred"></span> </label>
 							<div class="clearfix"></div>
 						</div>
@@ -359,7 +358,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 						 <div class="form-group mb10">
 						  <p class="pull-left mb0">Rating &amp; reviews</p>
 						  <label class="custom-form-switch pull-right">
-							<input class="field checkedBoxValue autoSaveConfig" type="checkbox" value="<?php echo $allowRating != '0' ? $allowRating : '0'; ?>" <?php echo $allowRating != '0' ? 'checked' : ''; ?> name="allowRating" id="allowRating">
+							<input class="field checkedBoxValue autoSaveConfig" type="checkbox" value="{{ $allowRating != '0' ? $allowRating : '0' }}" {!! $allowRating != '0' ? 'checked' : '' !!} name="allowRating" id="allowRating">
 							<span class="toggle dred"></span> </label>
 							<div class="clearfix"></div>
 						</div>
@@ -372,17 +371,17 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 					<div class="p20">
 					<div class="form-group">
 					<p>Gallery Name</p>
-					<input class="form-control h52 autoSaveConfig" type="text" value="<?php echo $name; ?>" name="galleryName" id="galleryName" placeholder="Gallery Name" required />
+					<input class="form-control h52 autoSaveConfig" type="text" value="{{ $name }}" name="galleryName" id="galleryName" placeholder="Gallery Name" required />
 					</div>
 					<div class="form-group">
 					<p>Gallery Description</p>
-					<textarea class="form-control" style="height:150px;" name="galleryDescription" id="galleryDescription" placeholder="Gallery Description"><?php echo $description; ?></textarea>
+					<textarea class="form-control" style="height:150px;" name="galleryDescription" id="galleryDescription" placeholder="Gallery Description">{{ $description }}</textarea>
 					</div>
 				  </div>
 				  
 				  
 				   <div class="p20 btop">
-				   <input type="hidden" value="<?php echo $galleryId; ?>" name="editGalleryId" id="editGalleryId" />
+				   <input type="hidden" value="{{ $galleryId }}" name="editGalleryId" id="editGalleryId" />
 					<button type="submit" class="btn dark_btn bkg_dred w100 h52 saveWidgetConfig" >Save</button>
 				  </div>
 				  </form>
@@ -393,7 +392,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 				  <form method="post" name="frmWidgetDesignSubmit" id="frmWidgetDesignSubmit" action="javascript:void(0);"  enctype="multipart/form-data">
 				  <div class="p20" style="display:none;">
 					<div class="barand_avatar mb20">
-						<img width="64" class="rounded galleryImage" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $galleryData->gallery_logo; ?>" onerror="this.src='<?php echo base_url('assets/images/wakerslogo.png'); ?>'" />
+						<img width="64" class="rounded galleryImage" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $galleryData->gallery_logo }}" onerror="this.src='{{ base_url('assets/images/wakerslogo.png') }}'" />
 					</div>
 					
 					<div class="form-group">
@@ -413,7 +412,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 							<label class="control-label txt_upper fsize11 fw500 text-muted">Border Drop-shadow</label>
 							<div class="form-group pull-right mb0">
 								<label class="custom-form-switch pull-right">
-									<input class="field autoSaveDesign" type="checkbox" <?php echo $galleryData->allow_border_shadow == '1' ? 'checked' : ''; ?> name="allow_border_shadow" id="allow_border_shadow">
+									<input class="field autoSaveDesign" type="checkbox" {!! $galleryData->allow_border_shadow == '1' ? 'checked' : '' !!} name="allow_border_shadow" id="allow_border_shadow">
 								<span class="toggle dred"></span> </label>
 								<div class="clearfix"></div>
 							</div>
@@ -422,24 +421,24 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 							<label class="control-label txt_upper fsize11 fw500 text-muted">Border Color</label>
 							<div class="form-group pull-right mb0">
 								<label class="custom-form-switch pull-right">
-									<input class="field" type="checkbox" <?php echo $galleryData->allow_widget_bgcolor == '1' ? 'checked' : ''; ?> name="widget_color_allow" id="widget_color_allow">
+									<input class="field" type="checkbox" {!! $galleryData->allow_widget_bgcolor == '1' ? 'checked' : '' !!} name="widget_color_allow" id="widget_color_allow">
 								<span class="toggle dred"></span> </label>
 								<div class="clearfix"></div>
 							</div>
 						</div>
 					</div>
 										
-					<div class="p20 allowWidgetBackground" <?php echo $galleryData->allow_widget_bgcolor == '1' ? '' : 'style="display:none;"'; ?>>
+					<div class="p20 allowWidgetBackground" {!! $galleryData->allow_widget_bgcolor == '1' ? '' : 'style="display:none;"' !!}>
 										
 					<div class="form-group" style="margin:-15px 0 30px;">
 						<p>Border Thickness</p>
 						<select class="form-control h52 autoSaveDesign" name="borderThickness" id="borderThickness">
-							<option value="1" <?php echo $borderThickness == 1 ? 'selected' : ''; ?>>1px</option>
-							<option value="2" <?php echo $borderThickness == 2 ? 'selected' : ''; ?>>2px</option>
-							<option value="3" <?php echo $borderThickness == 3 ? 'selected' : ''; ?>>3px</option>
-							<option value="4" <?php echo $borderThickness == 4 ? 'selected' : ''; ?>>4px</option>
-							<option value="5" <?php echo $borderThickness == 5 ? 'selected' : ''; ?>>5px</option>
-							<option value="6" <?php echo $borderThickness == 6 ? 'selected' : ''; ?>>6px</option>
+							<option value="1" {!! $borderThickness == 1 ? 'selected' : '' !!}>1px</option>
+							<option value="2" {!! $borderThickness == 2 ? 'selected' : '' !!}>2px</option>
+							<option value="3" {!! $borderThickness == 3 ? 'selected' : '' !!}>3px</option>
+							<option value="4" {!! $borderThickness == 4 ? 'selected' : '' !!}>4px</option>
+							<option value="5" {!! $borderThickness == 5 ? 'selected' : '' !!}>5px</option>
+							<option value="6" {!! $borderThickness == 6 ? 'selected' : '' !!}>6px</option>
 						</select>
 					</div>
 					
@@ -448,57 +447,43 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 						<div class="form-group pull-right mb0">
 							<p class="pull-left mb0 fsize11 fw500 text-muted mr-5">Gradient</p>
 							<label class="custom-form-switch pull-right">
-								<input class="field autoSaveDesign" type="checkbox" <?php echo $galleryData->bg_color_type == 'on' ? 'checked' : ''; ?> name="main_color_switch" id="main_color_switch">
+								<input class="field autoSaveDesign" type="checkbox" {!! $galleryData->bg_color_type == 'on' ? 'checked' : '' !!} name="main_color_switch" id="main_color_switch">
 							<span class="toggle dred"></span> </label>
 							<div class="clearfix"></div>
 						</div>
 					</div>
 					
-					<div class="widgetMultiColorBox" <?php echo $galleryData->bg_color_type == 'on' ? '' : 'style="display:none;"'; ?>>
+					<div class="widgetMultiColorBox" {!! $galleryData->bg_color_type == 'on' ? '' : 'style="display:none;"' !!}>
 						<div class="form-group">
 							<div class="color_box">
-								<input type="hidden" name="main_colors" id="main_colors" value="<?php echo $galleryData->gradient_color == '' ? 'white' : $galleryData->gradient_color; ?>">
-								<div class="color_cube white selectMainColor <?php echo $galleryData->gradient_color == 'white' ? 'active' : ''; ?>" color-data='white' color-class="bbw_white_color"></div>
-								<div class="color_cube dred selectMainColor <?php echo $galleryData->gradient_color == 'red' ? 'active' : ''; ?>" color-data='red' color-class="bbw_red_color"></div>
-								<div class="color_cube yellow selectMainColor <?php echo $galleryData->gradient_color == 'yellow' ? 'active' : ''; ?>" color-data='yellow' color-class="bbw_yellow_color"></div>
-								<div class="color_cube red selectMainColor <?php echo $galleryData->gradient_color == 'orange' ? 'active' : ''; ?>" color-data='orange' color-class="bbw_orange_color"></div>
-								<div class="color_cube green selectMainColor <?php echo ($galleryData->gradient_color == '' || $galleryData->gradient_color == 'green') ? 'active' : ''; ?>" color-data='green' color-class="bbw_green_color"></div>
-								<div class="color_cube blue selectMainColor <?php echo $galleryData->gradient_color == 'blue' ? 'active' : ''; ?>" color-data='blue' color-class="bbw_blue_color"></div>
-								<div class="color_cube black selectMainColor <?php echo $galleryData->gradient_color == 'purple' ? 'active' : ''; ?>" color-data='purple' color-class="bbw_purple_color"></div>
+								<input type="hidden" name="main_colors" id="main_colors" value="{{ $galleryData->gradient_color == '' ? 'white' : $galleryData->gradient_color }}">
+								<div class="color_cube white selectMainColor {{ $galleryData->gradient_color == 'white' ? 'active' : '' }}" color-data='white' color-class="bbw_white_color"></div>
+								<div class="color_cube dred selectMainColor {{ $galleryData->gradient_color == 'red' ? 'active' : '' }}" color-data='red' color-class="bbw_red_color"></div>
+								<div class="color_cube yellow selectMainColor {{ $galleryData->gradient_color == 'yellow' ? 'active' : '' }}" color-data='yellow' color-class="bbw_yellow_color"></div>
+								<div class="color_cube red selectMainColor {{ $galleryData->gradient_color == 'orange' ? 'active' : '' }}" color-data='orange' color-class="bbw_orange_color"></div>
+								<div class="color_cube green selectMainColor {{ ($galleryData->gradient_color == '' || $galleryData->gradient_color == 'green') ? 'active' : '' }}" color-data='green' color-class="bbw_green_color"></div>
+								<div class="color_cube blue selectMainColor {{ $galleryData->gradient_color == 'blue' ? 'active' : '' }}" color-data='blue' color-class="bbw_blue_color"></div>
+								<div class="color_cube black selectMainColor {{ $galleryData->gradient_color == 'purple' ? 'active' : '' }}" color-data='purple' color-class="bbw_purple_color"></div>
 								<div class="clearfix"></div>
 							</div>
 						</div>
-						
-						<!-- <div class="form-group">
-							<div class="row">
-								<div class="position-relative mt-5 col-md-6">
-									<input name="custom_colors1" class="form-control h52 autoSaveDesign" id="custom_colors1" placeholder="#000000" type="text" value="<?php //echo $galleryData->gradient_start_color == '' ? '#000000' : $galleryData->gradient_start_color; ?>" <?php //echo $galleryData->color_custom < 1 ? 'readonly' : ''; ?>>
-									<a style="position: absolute; top: 17px; right: 25px;" class="colorpicker1 colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php //echo $galleryData->gradient_start_color == '' ? 'style="color:#000000"' : 'style="color:' . $galleryData->gradient_start_color . '"'; ?>></i></a>
-								</div>
-								
-								<div class="position-relative mt-5 col-md-6">
-									<input name="custom_colors2" class="form-control h52 autoSaveDesign" id="custom_colors2" placeholder="#FF0000" type="text" value="<?php //echo $galleryData->gradient_end_color == '' ? '#FF0000' : $galleryData->gradient_end_color; ?>" <?php //echo $galleryData->color_custom < 1 ? 'readonly' : ''; ?>>
-									<a style="position: absolute; top: 17px; right: 25px;" class="colorpicker2 colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php //echo $galleryData->gradient_end_color == '' ? 'style="color:#FF0000"' : 'style="color:' . $galleryData->gradient_end_color . '"'; ?>></i></a>
-								</div>
-							</div>
-						</div> -->
 						
 						<div class="row orientation_top" style="display:block">
 							<div class="col-md-12">
 								<div style="margin: 25px 0 15px!important;" class="profile_headings txt_upper fsize11 fw600">Choose orientation</div>
 							</div>
 							<div class="col-md-12">
-								<input type="hidden" value="<?php echo $colorOrientation; ?>" id="color_orientation" name="color_orientation">
+								<input type="hidden" value="{{ $colorOrientation }}" id="color_orientation" name="color_orientation">
 								<ul class="choose_orientation">
-									<li><a class="gradientOrientation <?php echo $colorOrientation == 'to right top' ? 'active' : ''; ?>" color-orientation="to right top" main-orientation-class="toRightTop" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
-									<li><a class="gradientOrientation <?php echo $colorOrientation == 'to right' ? 'active' : ''; ?>" color-orientation="to right" main-orientation-class="toRight" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
-									<li><a class="gradientOrientation <?php echo $colorOrientation == 'to right bottom' ? 'active' : ''; ?>" color-orientation="to right bottom" main-orientation-class="toRightBottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
-									<li><a class="gradientOrientation <?php echo $colorOrientation == 'to bottom' ? 'active' : ''; ?>" color-orientation="to bottom" main-orientation-class="toBottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
-									<li><a class="gradientOrientation <?php echo $colorOrientation == 'to left bottom' ? 'active' : ''; ?>" color-orientation="to left bottom" main-orientation-class="toLeftBottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
-									<li><a class="gradientOrientation <?php echo $colorOrientation == 'to left' ? 'active' : ''; ?>" color-orientation="to left" main-orientation-class="toLeft" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
-									<li><a class="gradientOrientation <?php echo $colorOrientation == 'to left top' ? 'active' : ''; ?>" color-orientation="to left top" main-orientation-class="toLeftTop" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
-									<li><a class="gradientOrientation <?php echo $colorOrientation == 'to top' ? 'active' : ''; ?>" color-orientation="to top" main-orientation-class="toTop" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
-									<li><a class="gradientOrientation <?php echo $colorOrientation == 'circle' ? 'active' : ''; ?>" color-orientation="circle" main-orientation-class="orientationCircle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
+									<li><a class="gradientOrientation {{ $colorOrientation == 'to right top' ? 'active' : '' }}" color-orientation="to right top" main-orientation-class="toRightTop" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
+									<li><a class="gradientOrientation {{ $colorOrientation == 'to right' ? 'active' : '' }}" color-orientation="to right" main-orientation-class="toRight" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+									<li><a class="gradientOrientation {{ $colorOrientation == 'to right bottom' ? 'active' : '' }}" color-orientation="to right bottom" main-orientation-class="toRightBottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
+									<li><a class="gradientOrientation {{ $colorOrientation == 'to bottom' ? 'active' : '' }}" color-orientation="to bottom" main-orientation-class="toBottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+									<li><a class="gradientOrientation {{ $colorOrientation == 'to left bottom' ? 'active' : '' }}" color-orientation="to left bottom" main-orientation-class="toLeftBottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
+									<li><a class="gradientOrientation {{ $colorOrientation == 'to left' ? 'active' : '' }}" color-orientation="to left" main-orientation-class="toLeft" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+									<li><a class="gradientOrientation {{ $colorOrientation == 'to left top' ? 'active' : '' }}" color-orientation="to left top" main-orientation-class="toLeftTop" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
+									<li><a class="gradientOrientation {{ $colorOrientation == 'to top' ? 'active' : '' }}" color-orientation="to top" main-orientation-class="toTop" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+									<li><a class="gradientOrientation {{ $colorOrientation == 'circle' ? 'active' : '' }}" color-orientation="circle" main-orientation-class="orientationCircle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
 								</ul>
 							</div>
 						</div>
@@ -506,12 +491,12 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 					</div>
 					
 					
-					<div class="mb20 widgetSingleColorBox" <?php echo $galleryData->bg_color_type == 'on' ? 'style="display:none;"' : ''; ?>>
+					<div class="mb20 widgetSingleColorBox" {!! $galleryData->bg_color_type == 'on' ? 'style="display:none;"' : '' !!}>
 						
 						<div class="row">
 							<div class="position-relative mt-5 col-md-12">
-								<input name="solid_color" class="form-control h52 autoSaveDesign" id="solid_color" placeholder="#FF0000" type="text" value="<?php echo $galleryData->solid_color == '' ? '#FF0000' : $galleryData->solid_color; ?>" <?php echo $galleryData->bg_color_type != 'on' ? 'readonly' : ''; ?>>
-								<a style="position: absolute; top: 17px; right: 25px;" class="solidcolorpicker colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" <?php echo $galleryData->solid_color == '' ? 'style="color:#FF0000"' : 'style="color:' . $galleryData->solid_color . '"'; ?>></i></a>
+								<input name="solid_color" class="form-control h52 autoSaveDesign" id="solid_color" placeholder="#FF0000" type="text" value="{{ $galleryData->solid_color == '' ? '#FF0000' : $galleryData->solid_color }}" {!! $galleryData->bg_color_type != 'on' ? 'readonly' : '' !!}>
+								<a style="position: absolute; top: 17px; right: 25px;" class="solidcolorpicker colorpicker-show-input" href="javascript:void(0);"><i class="fa fa-square fsize18" {!! $galleryData->solid_color == '' ? 'style="color:#FF0000"' : 'style="color:' . $galleryData->solid_color . '"' !!}></i></a>
 							</div>
 							
 						</div>
@@ -519,7 +504,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 				  </div>
 				  <div class="p20 btop">
 					@csrf
-					<input name="editGalleryId" type="hidden" value="<?php echo $galleryData->id; ?>">
+					<input name="editGalleryId" type="hidden" value="{{ $galleryData->id }}">
 					<button type="submit" class="btn dark_btn bkg_dred w100 h52 saveWidgetDesign" >Save</button>
 				  </div>
 				  </form>
@@ -533,11 +518,9 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 						<div class="p20" style="height:790px; overflow-x:hidden;">
 							<div class="row">
 								<div class="col-md-12">
-									<?php
-									//pre($reviewsData);
+									@php
 									if(!empty($reviewsData)) {
 										foreach ($reviewsData as $review) {
-											//pre($review);
 											$mediaUrl = unserialize($review->media_url);
 											$mediaImageUrl = '';
 											if(!empty($mediaUrl)) {
@@ -573,17 +556,17 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 												$reviewRatings = $reviewData[0]->ratings + $reviewRatings;
 												$imageUrl = $reviewImageArray[0]['media_url'];*/
 												$imageUrl = '';
-												?>
+												@endphp
 										<div class="form-group mb10" style="padding-bottom:8px; margin-bottom:8px; border-bottom:1px solid #f4f6fa;">
-											<div class="pull-left mb0 showReviewPopup" review-id="<?php echo $review->id; ?>">
+											<div class="pull-left mb0 showReviewPopup" review-id="{{ $review->id }}">
 												
 												<div>
 													<div class="media-left pr-15">
-														<img class="review_productimg" src="https://s3-us-west-2.amazonaws.com/brandboost.io/<?php echo $mediaImageUrl; ?>" >
+														<img class="review_productimg" src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $mediaImageUrl }}" >
 													</div>
 												    <div class="media-left pr0">
-													<div><?php echo setStringLimit($review->brand_title); ?></div>
-													<div class="text-size-small text-muted" style="font-size:11px;"><?php echo setStringLimit($review->review_title, 30). ' ('.number_format($review->ratings, 1).')'; ?></div>
+													<div>{{ setStringLimit($review->brand_title) }}</div>
+													<div class="text-size-small text-muted" style="font-size:11px;">{{ setStringLimit($review->review_title, 30). ' ('.number_format($review->ratings, 1).')' }}</div>
 													</div>
 													
 													
@@ -595,7 +578,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 														<div class="right">
 															<div class="client_n"><p><?php //echo $reviewData[0]->firstname . ' ' . $reviewData[0]->lastname; ?></p></div>
 															<div class="client_review">
-															<?php echo $ratingsVal; ?>
+															{{ $ratingsVal }}
 															<span><?php //echo dataFormat($reviewData[0]->created); ?></span></div>
 														</div>
 													</div>
@@ -606,15 +589,15 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 												</div>
 											</div>
 											<label class="custom-form-switch pull-right">
-												<input class="field autoSaveReview" type="checkbox" id="widget_review_<?php echo $review->id; ?>" name="reviewsId[]" value="<?php echo $review->id; ?>" 
-												<?php echo $checked == true ? 'checked' : ''; ?>>
+												<input class="field autoSaveReview" type="checkbox" id="widget_review_{{ $review->id }}" name="reviewsId[]" value="{{ $review->id }}" 
+													{!! $checked == true ? 'checked' : '' !!}>
 												<span class="toggle dred"></span> 
 											</label>
 											<div class="clearfix"></div>
 										</div>
-									<?php } } } ?>
+									@php } } } @endphp
 								</div>
-								<input type="hidden" name="galleryId" id="review_widget_id" value="<?php echo $galleryData->id; ?>">
+								<input type="hidden" name="galleryId" id="review_widget_id" value="{{ $galleryData->id }}">
 								<button class="hidden saveReviews btn dark_btn h52 w100 bkg_purple" type="submit"> Save Campaign </button>
 							</div>
 						</div>
@@ -635,7 +618,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 				</ul>
 			  </div>				
 			  <div class="panel-body p20">
-					<img class="img-responsive w100" src="<?php echo base_url(); ?>assets/images/config_bkg_bk2.png"/>
+					<img class="img-responsive w100" src="{{ base_url() }}assets/images/config_bkg_bk2.png"/>
 					<div id="mediaGalleryPreview">
 						@include('admin.media-gallery.preview', array('galleryData' => $galleryData))
 					</div>
@@ -688,12 +671,12 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 &lt;script 
 	type="text/javascript" 
 	id="bbscriptgalleryloader" 
-	data-key="<?php echo $galleryData->hashcode; ?>"
+	data-key="{{ $galleryData->hashcode }}"
 	data-widgets="mediagallery"
-	src="<?php echo base_url('assets/js/media_gallery_widget.js'); ?>"&gt;
+	src="{{ base_url('assets/js/media_gallery_widget.js') }}"&gt;
 &lt;/script&gt;
 </pre>
-							<div style="display: none;" class="prettyprintDiv">&lt;script type="text/javascript" id="bbscriptgalleryloader" data-key="<?php echo $galleryData->hashcode; ?>" data-widgets="mediagallery" src="<?php echo base_url('assets/js/media_gallery_widget.js'); ?>"&gt; &lt;/script&gt;</div>
+							<div style="display: none;" class="prettyprintDiv">&lt;script type="text/javascript" id="bbscriptgalleryloader" data-key="{{ $galleryData->hashcode }}" data-widgets="mediagallery" src="{{ base_url('assets/js/media_gallery_widget.js') }}"&gt; &lt;/script&gt;</div>
 						</div>
 						<div class="p20 text-right">
 							<button class="btn btn-xs btn_white_table pl10 pr10" onclick="copyToClipboard('.prettyprintDiv')">Copy Code</button>
@@ -736,7 +719,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 					<div class="row">
 						<div class="col-md-12">
 							<div class="image-cropper-container content-group" style="height: 400px; width:100%;">
-								<img src="<?php echo base_url(); ?>assets/images/placeholder.jpg" alt="" class="cropper" id="demo-cropper-image">
+								<img src="{{ base_url() }}assets/images/placeholder.jpg" alt="" class="cropper" id="demo-cropper-image">
 							</div>
 
 							<div class="row">
@@ -816,7 +799,6 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
         var $temp = $("<input>");
         $("body").append($temp);
         var widgetScript = String($(element).text());
-        //alert(widgetScript);
         $temp.val(widgetScript).select();
         document.execCommand("copy");
         $temp.remove();
@@ -824,7 +806,7 @@ $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : 
 </script>
 
 <script>
-var sliderBoxCount = <?php echo $galleryType == '' ? 6 : $galleryType; ?>;
+var sliderBoxCount = {{ $galleryType == '' ? 6 : $galleryType }};
 var slideIndex = 0;
 function showSlides(n=1) {
 	var i;
@@ -924,17 +906,10 @@ $(document).ready(function(){
 
                         // Init modal
 						console.log(result);
-                        //$('#getCroppedCanvasModal').modal().find('.modal-body').html(result);
-
-                        // Download image
-                        //$download.attr('href', result.toDataURL('image/jpeg'));
-						//console.log(result.toDataURL('image/jpeg'));
-						
-						//$('.overlaynew').hide();
 						
 						var ImageURL = result.toDataURL('image/jpeg');
                         $.ajax({
-                            url: '<?php echo base_url(); ?>/admin/mediagallery/updateMediaImage',
+                            url: '{{ base_url() }}/admin/mediagallery/updateMediaImage',
                             type: "POST",
                             data: {imageName : ImageURL, mainImageName : mainImageName, reviewId : reviewId, _token: '{{csrf_token()}}'},
                             dataType: "json",
@@ -953,10 +928,6 @@ $(document).ready(function(){
         }
     });
 
-
-    //
-    // Aspect ratio
-    //
 
     $('.demo-cropper-ratio').on('change', 'input[type=radio]', function () {
 		$('.overlaynew').show();
@@ -984,9 +955,9 @@ $(document).ready(function(){
 		$('.'+currentClass+'CWBox .inner').addClass('active');
 		
 		$.ajax({
-			url: "<?php echo base_url(); ?>/admin/mediagallery/updateWidgetType",
+			url: "{{ base_url() }}/admin/mediagallery/updateWidgetType",
 			method: "POST",
-			data: {'gallery_id': <?php echo $galleryData->id; ?>, 'gallery_type': currentClass, _token: '{{csrf_token()}}'},
+			data: {'gallery_id': {{ $galleryData->id }}, 'gallery_type': currentClass, _token: '{{csrf_token()}}'},
 			dataType: "json",
 			success: function (data)
 			{
@@ -994,7 +965,6 @@ $(document).ready(function(){
 				{
 					$('#mediaGalleryPreview').html(data.sliderView);
 					slideIndex = 0;
-					//displayMessagePopup();
 				} else {
 					displayMessagePopup('error');
 				}
@@ -1010,10 +980,8 @@ $(document).ready(function(){
 	
 	$('#frmWidgetReviewsSelect').on('submit', function (e) {
 		e.preventDefault();
-		
-		//$('.overlaynew').show();
 		$.ajax({
-			url: "<?php echo base_url(); ?>/admin/mediagallery/saveReviewsList",
+			url: "{{ base_url() }}/admin/mediagallery/saveReviewsList",
 			method: "POST",
 			data: new FormData(this),
 			contentType: false,
@@ -1046,7 +1014,7 @@ $(document).ready(function(){
 	var myDropzoneLogoImg = new Dropzone(
 		'#myDropzone_logo_img', //id of drop zone element 1
 		{
-			url: '<?php echo base_url("/dropzone/upload_image"); ?>',
+			url: '{{ base_url("/dropzone/upload_image") }}',
 			uploadMultiple: false,
 			maxFiles: 1,
 			maxFilesize: 600,
@@ -1066,7 +1034,7 @@ $(document).ready(function(){
 		$('.overlaynew').show();
 		e.preventDefault();		
 		$.ajax({
-			url: "<?php echo base_url(); ?>/admin/mediagallery/updateMediaData",
+			url: "{{ base_url() }}/admin/mediagallery/updateMediaData",
 			method: "POST",
 			data: new FormData(this),
 			contentType: false,
@@ -1102,7 +1070,7 @@ $(document).ready(function(){
 		$('.overlaynew').show();
 		var reviewId = $(this).attr('review-id');
 		$.ajax({
-			url: "<?php echo base_url(); ?>/admin/mediagallery/getReviewData",
+			url: "{{ base_url() }}/admin/mediagallery/getReviewData",
 			method: "POST",
 			data: {'review_id' : reviewId, _token: '{{csrf_token()}}'},
 			dataType: "json",
@@ -1144,27 +1112,11 @@ $(document).ready(function(){
 		$('.reviewTitle').html($(this).val());
 	});
 	
-	/*$('#allowArrows').change(function () {
-		if ($(this).prop("checked") == false) {
-			$('.reviewArrowBH').addClass('hidden');
-		} else {
-			$('.reviewArrowBH').removeClass('hidden');
-		}
-	});
-	
-	$('#allowRating').change(function () {
-		if ($(this).prop("checked") == false) {
-			$('.reviewRatingsBH').addClass('hidden');
-		} else {
-			$('.reviewRatingsBH').removeClass('hidden');
-		}
-	});*/
-	
 	$('#frmWidgetDesignSubmit').on('submit', function (e) {
 		e.preventDefault();		
 		$('.overlaynew').show();
 		$.ajax({
-			url: "<?php echo base_url(); ?>/admin/mediagallery/updateMediaDesignData",
+			url: "{{ base_url() }}/admin/mediagallery/updateMediaDesignData",
 			method: "POST",
 			data: new FormData(this),
 			contentType: false,
