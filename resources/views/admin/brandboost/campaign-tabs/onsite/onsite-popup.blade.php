@@ -1,4 +1,7 @@
-<?php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign'); $list_id=''; ?>
+@php
+list($canRead, $canWrite) = fetchPermissions('Onsite Campaign');
+$list_id = '';
+@endphp
 <div id="modal_large" class="modal fade">
 
 </div>
@@ -124,7 +127,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group" style="margin:0px;">
-                        <?php
+                        @php
                         $offsite_ids = $brandboostData->offsite_ids;
                         $offsite_ids = unserialize($offsite_ids);
                         if (!empty($offsite_ids)) {
@@ -132,7 +135,7 @@
                         } else {
                             $selected_list = 0;
                         }
-                        ?>
+                        @endphp
 
                         <div class="row">
                             <div class="col-md-4">
@@ -165,8 +168,8 @@
                             </div>
                         </div>
 
-                        <input type="hidden" name="selected_list" id='selected_list' value="<?php echo $selected_list; ?>">
-                        <input type="hidden" name="selected_list_n" id='selected_list_n' value="<?php echo $selected_list; ?>">
+                        <input type="hidden" name="selected_list" id='selected_list' value="{{ $selected_list }}">
+                        <input type="hidden" name="selected_list_n" id='selected_list_n' value="{{ $selected_list }}">
                         <input type="hidden" name="selected_list_new" id='selected_list_new' value="0">
                         <hr style="margin: 0 -20px!important;">
                         <ul style="margin: 0 -20px;" class="media-list" id="offsite_list_detail">
@@ -238,7 +241,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="listId" id="listId" value="<?php echo $list_id; ?>">
+                    <input type="hidden" name="listId" id="listId" value="{{ $list_id }}">
                     <button class="btn btn-link" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
                     <button type="submit" id="addButton" class="btn btn-primary"><i class="icon-check"></i> Add</button>
                 </div>
