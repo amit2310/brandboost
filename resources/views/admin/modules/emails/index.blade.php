@@ -1,12 +1,12 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
 
-<?php
+@php
 $iActiveCount = $iArchiveCount = 0;
 
 if (!empty($oAutomations)) {
@@ -18,7 +18,7 @@ if (!empty($oAutomations)) {
         }
     }
 }
-?>
+@endphp
 <!-- Content area -->
 <div class="content">
 
@@ -28,9 +28,9 @@ if (!empty($oAutomations)) {
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3">
-                <h3><img src="/assets/images/email_icon_active.png"> <?php echo $title; ?></h3>
+                <h3><img src="/assets/images/email_icon_active.png"> {{ $title }}</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
-                    <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="active"><?php echo $title; ?></a></li>
+                    <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="active">{{ $title }}</a></li>
                     <li><a style="javascript:void();" class="filterByColumn" fil="archive">Archive</a></li>
                 </ul>
             </div>
@@ -173,9 +173,15 @@ if (!empty($oAutomations)) {
                     </div>
                 </div>
 
-                <?php if (!empty($oAutomations) && $user_role != 1): ?>
-                    <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default pDisplayNoActiveSubscription dark_btn ml20" <?php } else { ?> id="addEmailAutiomation" class="btn bl_cust_btn btn-default dark_btn ml20" <?php } ?> type="button" ><i class="icon-plus3"></i><span> &nbsp; <?php echo $title;?> </span></button>
-                <?php endif; ?>
+                @if (!empty($oAutomations) && $user_role != 1)
+                    <button 
+                        @if ($bActiveSubsription == false)
+                            title="No Active Subscription" class="btn bl_cust_btn btn-default pDisplayNoActiveSubscription dark_btn ml20" 
+                        @else 
+                            id="addEmailAutiomation" class="btn bl_cust_btn btn-default dark_btn ml20" 
+                        @endif
+                            type="button" ><i class="icon-plus3"></i><span> &nbsp; {{ $title }} </span></button>
+                @endif
             </div>
         </div>
     </div>
@@ -184,7 +190,7 @@ if (!empty($oAutomations)) {
 
 
     <!-- Dashboard content -->
-    <?php if (!empty($oAutomations)): ?>
+    @if (!empty($oAutomations))
 
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
@@ -198,7 +204,7 @@ if (!empty($oAutomations)) {
 
         </div>
 
-    <?php else: ?>
+    @else
         <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
@@ -207,7 +213,7 @@ if (!empty($oAutomations)) {
                         <!-- Marketing campaigns -->
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $iActiveCount; ?> <?php echo $title; ?></h6>
+                                <h6 class="panel-title">{{ $iActiveCount }} {{ $title }}</h6>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
@@ -228,7 +234,7 @@ if (!empty($oAutomations)) {
                             <div class="panel-body p0">
                                 <table class="table datatable-basic">
                                     <thead>
-                                   
+
                                     <th ><i class="icon-stack-star"></i>Automation Name</th>
                                     <th ><i class="icon-calendar"></i>Created</th>
                                     <th><i class="icon-envelop2"></i>Email</th>
@@ -237,7 +243,7 @@ if (!empty($oAutomations)) {
                                     <th><i class="icon-envelop2"></i>Bounce</th>
                                     <th class="text-center"><i class="fa fa-dot-circle-o"></i>Status</th>
                                     <th class="col-md-1 text-center"><i class="fa fa-dot-circle-o"></i>Action</th>
-                                  
+
                                     </thead>
 
                                     <tbody>
@@ -248,10 +254,15 @@ if (!empty($oAutomations)) {
                                             <div class="col-md-12">
                                                 <div style="margin: 20px 0px 0;" class="text-center">
                                                     <h5 class="mb-20 mt40">
-                                                        Looks Like You Don’t Have Created Any <?php echo ucfirst($automation_type);?> Automation Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
-                                                        Lets Create <?php echo ucfirst($automation_type);?> Automation.
+                                                        Looks Like You Don’t Have Created Any {{ ucfirst($automation_type) }} Automation Yet <img src="{{ site_url('assets/images/smiley.png') }}"> <br>
+                                                        Lets Create {{ ucfirst($automation_type) }} Automation.
                                                     </h5>
-                                                    <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default pDisplayNoActiveSubscription dark_btn ml20 mb40" <?php } else { ?> id="addEmailAutiomation" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i><span> &nbsp; <?php echo $title; ?> </span></button>
+                                                    <button @if ($bActiveSubsription == false) 
+                                                             title="No Active Subscription" class="btn bl_cust_btn btn-default pDisplayNoActiveSubscription dark_btn ml20 mb40" 
+                                                            @else
+                                                                id="addEmailAutiomation" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" 
+                                                            @endif
+                                                                 type="button" ><i class="icon-plus3"></i><span> &nbsp; {{ $title }} </span></button>
 
                                                 </div>
                                             </div>
@@ -272,7 +283,7 @@ if (!empty($oAutomations)) {
             </div> 
         </div>
 
-    <?php endif; ?>
+    @endif
 
     <!-- /dashboard content -->
 
@@ -348,7 +359,7 @@ if (!empty($oAutomations)) {
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Add <?php echo $title; ?> &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> Add {{ $title }} &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
                 </div>
                 <div class="modal-body">
 
@@ -368,7 +379,7 @@ if (!empty($oAutomations)) {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="automation_type" value="<?php echo $automation_type;?>" />
+                    <input type="hidden" name="automation_type" value="{{ $automation_type }}" />
                     <button data-toggle="modal" type="submit" class="btn dark_btn bkg_sblue fsize14 h52">Continue</button>
                     <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
 
@@ -380,7 +391,7 @@ if (!empty($oAutomations)) {
 <!-- /Automation -->
 
 @include('admin.modals.segments.segments-popup')
-<script src="<?php echo base_url(); ?>assets/js/modules/segments/segments.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/js/modules/segments/segments.js" type="text/javascript"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -394,9 +405,9 @@ if (!empty($oAutomations)) {
                 $('input', this).on('keyup change', function () {
                     if (tableBase.column(i).search() !== this.value) {
                         tableBase
-						.column(i)
-						.search(this.value, $('#colStatus').prop('checked', true))
-						.draw();
+                                .column(i)
+                                .search(this.value, $('#colStatus').prop('checked', true))
+                                .draw();
                     }
                 });
             }
@@ -472,28 +483,28 @@ if (!empty($oAutomations)) {
                 alert('Please select a row.')
             } else {
 
-                 deleteConfirmationPopup(
-                "This record will deleted immediately.<br>You can't undo this action.", 
-                function() {
+                deleteConfirmationPopup(
+                        "This record will deleted immediately.<br>You can't undo this action.",
+                        function () {
 
-                    $('.overlaynew').show();
-                    $.ajax({
-                        url: "<?php echo base_url('admin/modules/emails/multipalDeleteAutomation'); ?>",
-                        type: "POST",
-                        data: {"_token": "{{ csrf_token() }}", multipal_automation_id: val},
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.status == 'success') {
-                                location.reload();
-                            } else {
-                                alert("Having some error.");
-                            }
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                });
+                            $('.overlaynew').show();
+                            $.ajax({
+                                url: "{{ base_url('admin/modules/emails/multipalDeleteAutomation') }}",
+                                type: "POST",
+                                data: {"_token": "{{ csrf_token() }}", multipal_automation_id: val},
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data.status == 'success') {
+                                        location.reload();
+                                    } else {
+                                        alert("Having some error.");
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        });
             }
         });
 
@@ -557,23 +568,23 @@ if (!empty($oAutomations)) {
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-				function (isConfirm) {
-					if (isConfirm) {
-						$('.overlaynew').show();
-						$.ajax({
-							url: '<?php echo base_url('admin/modules/emails/multipalDeleteAutomation'); ?>',
-							type: "POST",
-							data: {"_token": "{{ csrf_token() }}",multipal_automation_id: val},
-							dataType: "json",
-							success: function (data) {
-								if (data.status == 'success') {
-									$('.overlaynew').hide();
-									window.location.href = window.location.href;
-								}
-							}
-						});
-					}
-				});
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $('.overlaynew').show();
+                                $.ajax({
+                                    url: "{{ base_url('admin/modules/emails/multipalDeleteAutomation') }}",
+                                    type: "POST",
+                                    data: {"_token": "{{ csrf_token() }}", multipal_automation_id: val},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data.status == 'success') {
+                                            $('.overlaynew').hide();
+                                            window.location.href = window.location.href;
+                                        }
+                                    }
+                                });
+                            }
+                        });
             }
         });
 
@@ -588,27 +599,27 @@ if (!empty($oAutomations)) {
             } else {
 
                 archiveConfirmationPopup(
-                "This record will move to archive immediately.<br>You can't undo this action.", 
-                function() {
+                        "This record will move to archive immediately.<br>You can't undo this action.",
+                        function () {
 
-                    $('.overlaynew').show();
-                    $.ajax({
-                        url: "<?php echo base_url('admin/modules/emails/multipalArchiveAutomation'); ?>",
-                        type: "POST",
-                        data: {"_token": "{{ csrf_token() }}", multipal_automation_id: val},
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.status == 'success') {
-                                location.reload();
-                            } else {
-                                alert("Having some error.");
-                            }
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                });
+                            $('.overlaynew').show();
+                            $.ajax({
+                                url: "{{ base_url('admin/modules/emails/multipalArchiveAutomation') }}",
+                                type: "POST",
+                                data: {"_token": "{{ csrf_token() }}", multipal_automation_id: val},
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data.status == 'success') {
+                                        location.reload();
+                                    } else {
+                                        alert("Having some error.");
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        });
             }
         });
 
@@ -675,14 +686,14 @@ if (!empty($oAutomations)) {
             $('.overlaynew').show();
             var formdata = $("#frmaddEmailAutiomationModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/emails/addAutiomation'); ?>',
+                url: "{{ base_url('admin/modules/emails/addAutiomation') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url('admin/modules/emails/setupAutomation/'); ?>' + data.id;
+                        window.location.href = "{{ base_url('admin/modules/emails/setupAutomation/') }}" + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         displayMessagePopup('error', '', data.msg);
@@ -697,9 +708,9 @@ if (!empty($oAutomations)) {
             $('.overlaynew').show();
             var automationID = $(this).attr('automation_id');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/emails/getAutomation'); ?>',
+                url: "{{ base_url('admin/modules/emails/getAutomation') }}",
                 type: "POST",
-                data: {"_token": "{{ csrf_token() }}",'automation_id': automationID},
+                data: {"_token": "{{ csrf_token() }}", 'automation_id': automationID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -720,9 +731,9 @@ if (!empty($oAutomations)) {
             var automationID = $(this).attr('automation_id');
             var status = $(this).attr('status');
             $.ajax({
-                url: '<?php echo base_url('admin/modules/emails/changeAutomationStatus'); ?>',
+                url: "{{ base_url('admin/modules/emails/changeAutomationStatus') }}",
                 type: "POST",
-                data: {"_token": "{{ csrf_token() }}",'automation_id': automationID, status:status},
+                data: {"_token": "{{ csrf_token() }}", 'automation_id': automationID, status: status},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -747,14 +758,14 @@ if (!empty($oAutomations)) {
             $('.overlaynew').show();
             var formdata = $("#frmeditAutomationModel").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/modules/emails/updateAutomation'); ?>',
+                url: "{{ base_url('admin/modules/emails/updateAutomation') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        window.location.href = '<?php echo base_url('admin/modules/emails/setupAutomation/'); ?>' + data.id;
+                        window.location.href = '{{ base_url('admin/modules/emails/setupAutomation/') }}' + data.id;
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
                         $("#editAutomationValidation").html(data.msg).show();
@@ -771,29 +782,29 @@ if (!empty($oAutomations)) {
             var elem = $(this);
 
             deleteConfirmationPopup(
-			"This record will deleted immediately.<br>You can't undo this action.",
-			function () {
-				$('.overlaynew').show();
-				var automationID = $(elem).attr('automation_id');
-				$.ajax({
-					url: '<?php echo base_url('admin/modules/emails/deleteAutomation'); ?>',
-					type: "POST",
-					data: {"_token": "{{ csrf_token() }}", automation_id: automationID},
-					dataType: "json",
-					success: function (data) {
-						if (data.status == 'success') {
-							$('.overlaynew').hide();
-							window.location.href = window.location.href;
-						}
-					}
-				});
-			});
+                    "This record will deleted immediately.<br>You can't undo this action.",
+                    function () {
+                        $('.overlaynew').show();
+                        var automationID = $(elem).attr('automation_id');
+                        $.ajax({
+                            url: "{{ base_url('admin/modules/emails/deleteAutomation') }}",
+                            type: "POST",
+                            data: {"_token": "{{ csrf_token() }}", automation_id: automationID},
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.status == 'success') {
+                                    $('.overlaynew').hide();
+                                    window.location.href = window.location.href;
+                                }
+                            }
+                        });
+                    });
         });
 
         $(document).on('click', '.viewECode', function () {
             var brandID = $(this).attr('brandID');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/getBBECode'); ?>',
+                url: "{{ base_url('admin/brandboost/getBBECode') }}",
                 type: "POST",
                 data: {"_token": "{{ csrf_token() }}", brandboost_id: brandID},
                 dataType: "json",
