@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -15,7 +15,7 @@
     .highcharts-container, .highcharts-container svg {width: 100% !important;}
     #canvas, #canvas2{height: 203px!important;}
 </style>
-<?php
+@php
 $iActiveCount = $iArchiveCount = 0;
 
 if (!empty($oAutomations)) {
@@ -27,7 +27,7 @@ if (!empty($oAutomations)) {
         }
     }
 }
-?>
+@endphp
 <!-- Content area -->
 <div class="content">
 
@@ -37,7 +37,7 @@ if (!empty($oAutomations)) {
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-5">
-                <h3><img src="<?php echo base_url(); ?>assets/images/email_icon_active.png"> Email Overview</h3>
+                <h3><img src="{{ base_url() }}assets/images/email_icon_active.png"> Email Overview</h3>
 
             </div>
             <!--=============Button Area Right Side==============-->
@@ -55,86 +55,80 @@ if (!empty($oAutomations)) {
 
     <!-- Dashboard content -->
 
-    <?php 
-        $deleverArr = array();
-        $bounceArr = array();
-        foreach ($oEvents as $oEvent) {
-            $isSMSAdded = $isEmailAdded = false;
-            if (!empty($oEvent->campaign_type) && $oEvent->campaign_type == 'Email') {
-                $aStats = \App\Models\Admin\Modules\EmailsModel::getEmailSendgridStats('campaign', $oEvent->id);
-                if(!empty($aStats)) {
-                    foreach ($aStats as $key => $value) {
-                        //pre($value);
-                        $value->created = date('M Y', strtotime($value->created));
-                        if($value->event_name == "delivered") {
-                            $deleverArr[] = $value->created;
-                        }
-                        else if($value->event_name == "bounce") {
-                            $bounceArr[] = $value->created;
-                        }
+    @php
+    $deleverArr = array();
+    $bounceArr = array();
+    foreach ($oEvents as $oEvent) {
+        $isSMSAdded = $isEmailAdded = false;
+        if (!empty($oEvent->campaign_type) && $oEvent->campaign_type == 'Email') {
+            $aStats = \App\Models\Admin\Modules\EmailsModel::getEmailSendgridStats('campaign', $oEvent->id);
+            if (!empty($aStats)) {
+                foreach ($aStats as $key => $value) {
+                    //pre($value);
+                    $value->created = date('M Y', strtotime($value->created));
+                    if ($value->event_name == "delivered") {
+                        $deleverArr[] = $value->created;
+                    } else if ($value->event_name == "bounce") {
+                        $bounceArr[] = $value->created;
                     }
                 }
             }
         }
-        //pre($deleverArr); 
-        //pre($bounceArr);
-        $deliverCountArr = array();
-        foreach ($deleverArr as $value) {
-           
-            $value = strtotime($value);
-            if(array_key_exists($value, $deliverCountArr)) {
-                $devInc = $deliverCountArr[$value] + 1;
-            }
-            else {
-                $devInc = 1;
-            }
-            $deliverCountArr[$value] = $devInc;
-        }
-        
-        ksort($deliverCountArr);
-        $deliverMainArr = array();
-        $totalValue = 0;
-        foreach ($deliverCountArr as $key => $value) {
-            $deliverMainArr[] = array(date('M Y', $key), $value);
-            $totalValue = $totalValue + $value;
-        }
+    }
+    //pre($deleverArr); 
+    //pre($bounceArr);
+    $deliverCountArr = array();
+    foreach ($deleverArr as $value) {
 
-        $deliverMainArrEn = json_encode($deliverMainArr);
-
-        $bounceCountArr = array();
-        foreach ($bounceArr as $value) {
-            $value = strtotime($value);
-            if(array_key_exists($value, $bounceCountArr)) {
-                $devInc = $bounceCountArr[$value] + 1;
-            }
-            else {
-                $devInc = 1;
-            }
-            $bounceCountArr[$value] = $devInc;
+        $value = strtotime($value);
+        if (array_key_exists($value, $deliverCountArr)) {
+            $devInc = $deliverCountArr[$value] + 1;
+        } else {
+            $devInc = 1;
         }
+        $deliverCountArr[$value] = $devInc;
+    }
 
-        ksort($bounceCountArr);
-        $bounceMainArr = array();
-        $totalbounceValue = 0;
-        $bounceDArrEn = $bounceDVArrEn = '';
-        foreach ($bounceCountArr as $key => $value) {
-            $bounceDArr[] = date('M Y', $key);
-            $bounceDVArr[] = $value;
-            //$bounceMainArr[] = array(date('M Y', $key), $value);
-            $totalbounceValue = $totalbounceValue + $value;
-        }
+    ksort($deliverCountArr);
+    $deliverMainArr = array();
+    $totalValue = 0;
+    foreach ($deliverCountArr as $key => $value) {
+        $deliverMainArr[] = array(date('M Y', $key), $value);
+        $totalValue = $totalValue + $value;
+    }
 
-        if(!empty($bounceDArr)){
-            $bounceDArrEn = json_encode($bounceDArr);
-        }
-        
-        if(!empty($bounceDVArr)){
-            $bounceDVArrEn = json_encode($bounceDVArr);
-        }
-        
-        
+    $deliverMainArrEn = json_encode($deliverMainArr);
 
-    ?>
+    $bounceCountArr = array();
+    foreach ($bounceArr as $value) {
+        $value = strtotime($value);
+        if (array_key_exists($value, $bounceCountArr)) {
+            $devInc = $bounceCountArr[$value] + 1;
+        } else {
+            $devInc = 1;
+        }
+        $bounceCountArr[$value] = $devInc;
+    }
+
+    ksort($bounceCountArr);
+    $bounceMainArr = array();
+    $totalbounceValue = 0;
+    $bounceDArrEn = $bounceDVArrEn = '';
+    foreach ($bounceCountArr as $key => $value) {
+        $bounceDArr[] = date('M Y', $key);
+        $bounceDVArr[] = $value;
+        //$bounceMainArr[] = array(date('M Y', $key), $value);
+        $totalbounceValue = $totalbounceValue + $value;
+    }
+
+    if (!empty($bounceDArr)) {
+        $bounceDArrEn = json_encode($bounceDArr);
+    }
+
+    if (!empty($bounceDVArr)) {
+        $bounceDVArrEn = json_encode($bounceDVArr);
+    }
+    @endphp
     <div class="tab-content"> 
         <div class="tab-pane active" id="right-icon-tab0">
             <div class="row">
@@ -150,8 +144,8 @@ if (!empty($oAutomations)) {
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <img class="pull-left mr20" src="<?php echo base_url(); ?>assets/images/icon_envalope.png"/>
-                                        <h1 class="m0"><?php echo $totalValue; ?></h1>
+                                        <img class="pull-left mr20" src="{{ base_url() }}assets/images/icon_envalope.png"/>
+                                        <h1 class="m0">{{ $totalValue }}</h1>
                                         <p class="txt_red"><span style="border: none;" class="label ml0">15.9%</span></p>
                                     </div>
                                 </div>
@@ -178,10 +172,10 @@ if (!empty($oAutomations)) {
                             <div class="p20 pb0 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-2">
-                                        <img class="" width="43" src="<?php echo base_url(); ?>assets/images/power_green.png"/>
+                                        <img class="" width="43" src="{{ base_url() }}assets/images/power_green.png"/>
                                     </div>
                                     <div class="col-xs-4">
-                                        <h1 class="m0 lh25"><?php echo $totalbounceValue; ?></h1>
+                                        <h1 class="m0 lh25">{{ $totalbounceValue }}</h1>
                                         <p><span style="border: none;" class="label bkg_dblue ml0 ">5.9%</span></p>
                                     </div>
                                 </div>
@@ -205,7 +199,7 @@ if (!empty($oAutomations)) {
                         </div>
 
                         <div class="panel-body p0 pb10 min_h290" >
-                            <div class="semi_circle_smiley"><img src="<?php echo base_url(); ?>assets/images/service_icon.png"/></div>
+                            <div class="semi_circle_smiley"><img src="{{ base_url() }}assets/images/service_icon.png"/></div>
                             <div id = "semi_circle_chart2" class="br5 bkg_gradient" style = "width: 100%; height: 280px;"></div>
                         </div>
                     </div>
@@ -241,9 +235,9 @@ if (!empty($oAutomations)) {
                 $('input', this).on('keyup change', function () {
                     if (tableBase.column(i).search() !== this.value) {
                         tableBase
-						.column(i)
-						.search(this.value, $('#colStatus').prop('checked', true))
-						.draw();
+                                .column(i)
+                                .search(this.value, $('#colStatus').prop('checked', true))
+                                .draw();
                     }
                 });
             }
@@ -274,218 +268,218 @@ if (!empty($oAutomations)) {
 
 
     });
-    
-            //Semi Circle chart js -- Highcharts js plugins
+
+    //Semi Circle chart js -- Highcharts js plugins
 
 
-            $(document).ready(function () {
-                var chart = {
-                    plotBackgroundColor: false,
-                    plotBorderWidth: 0,
-                    plotShadow: false
-                };
-                var title = {
-                    text: '83 <br> <span style="border: none;" class="label bkg_green ml0 ">15.9%</span>',
-                    align: 'center',
-                    verticalAlign: 'middle',
-                    y: 50
-                };
+    $(document).ready(function () {
+        var chart = {
+            plotBackgroundColor: false,
+            plotBorderWidth: 0,
+            plotShadow: false
+        };
+        var title = {
+            text: '83 <br> <span style="border: none;" class="label bkg_green ml0 ">15.9%</span>',
+            align: 'center',
+            verticalAlign: 'middle',
+            y: 50
+        };
 
-                var title2 = {
-                    text: '213 <br> <span style="border: none;" class="label bkg_green ml0 ">Email Credits</span>',
-                    align: 'center',
-                    verticalAlign: 'middle',
-                    y: 50
-                };
+        var title2 = {
+            text: '213 <br> <span style="border: none;" class="label bkg_green ml0 ">Email Credits</span>',
+            align: 'center',
+            verticalAlign: 'middle',
+            y: 50
+        };
 
 
-                var tooltip = {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                };
-                var plotOptions = {
-                    pie: {
-                        dataLabels: {
-                            enabled: false,
-                            distance: -5550,
+        var tooltip = {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        };
+        var plotOptions = {
+            pie: {
+                dataLabels: {
+                    enabled: false,
+                    distance: -5550,
 
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'white',
-                                textShadow: '0px 1px 2px black'
-                            }
-                        },
-                        startAngle: -90,
-                        endAngle: 90,
-                        center: ['50%', '75%']
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white',
+                        textShadow: '0px 1px 2px black'
                     }
-                };
-                var series = [{
-                        type: 'pie',
-                        name: 'NPS',
-                        colors: ['#fd6c81', '#facfd7', '#8bbc21', '#910000'],
-                        innerSize: '85%',
-                        data: [
-                            ['A', 83],
-                            ['B', 17],
-
-                            {
-                                name: 'Others',
-                                y: 0,
-                                dataLabels: {
-                                    enabled: false
-                                }
-                            }
-                        ]
-                    }];
-
-
-                var series2 = [{
-                        type: 'pie',
-                        name: 'NPS',
-                        colors: ['#2eb4dd', '#9de6fc', '#8bbc21', '#910000'],
-                        innerSize: '85%',
-                        data: [
-                            ['A', 52],
-                            ['B', 48],
-
-                            {
-                                name: 'Others',
-                                y: 0,
-                                dataLabels: {
-                                    enabled: false
-                                }
-                            }
-                        ]
-                    }];
-
-
-
-                var json = {};
-                json.chart = chart;
-                json.title = title;
-                json.tooltip = tooltip;
-                json.series = series;
-                json.plotOptions = plotOptions;
-                $('#semi_circle_chart').highcharts(json);
-
-
-                var json2 = {};
-                json2.chart = chart;
-                json2.title = title2;
-                json2.tooltip = tooltip;
-                json2.series = series2;
-                json2.plotOptions = plotOptions;
-                $('#semi_circle_chart2').highcharts(json2);
-
-            });
-        
-
-            Highcharts.chart('linechart_a', {
-                chart: {
-                    type: 'column',
-                    backgroundColor: 'rgba(0, 0, 0, 0)',
                 },
-                title: {
-                    text: null
-                },
-                subtitle: {
-                    text: null
-                },
-                xAxis: {
-                    type: 'category',
-                    labels: {
+                startAngle: -90,
+                endAngle: 90,
+                center: ['50%', '75%']
+            }
+        };
+        var series = [{
+                type: 'pie',
+                name: 'NPS',
+                colors: ['#fd6c81', '#facfd7', '#8bbc21', '#910000'],
+                innerSize: '85%',
+                data: [
+                    ['A', 83],
+                    ['B', 17],
 
-                        style: {
-                            fontSize: '11px',
-                            fontFamily: 'Verdana, sans-serif'
+                    {
+                        name: 'Others',
+                        y: 0,
+                        dataLabels: {
+                            enabled: false
                         }
                     }
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: null
+                ]
+            }];
+
+
+        var series2 = [{
+                type: 'pie',
+                name: 'NPS',
+                colors: ['#2eb4dd', '#9de6fc', '#8bbc21', '#910000'],
+                innerSize: '85%',
+                data: [
+                    ['A', 52],
+                    ['B', 48],
+
+                    {
+                        name: 'Others',
+                        y: 0,
+                        dataLabels: {
+                            enabled: false
+                        }
                     }
-                },
-                legend: {
-                    enabled: false
-                },
-
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.30,
-                        borderWidth: 0,
-                        borderRadius: 3
-                    }
-                },
-
-                colors: ['#2eb4dd', '#000000'],
-                tooltip: {
-                    pointFormat: '<b>{point.y:.1f}</b>'
-                },
-                series: [{
-                        name: 'Time',
-                        data: <?php echo $deliverMainArrEn; ?>,
-
-                    }]
-            });
+                ]
+            }];
 
 
 
+        var json = {};
+        json.chart = chart;
+        json.title = title;
+        json.tooltip = tooltip;
+        json.series = series;
+        json.plotOptions = plotOptions;
+        $('#semi_circle_chart').highcharts(json);
 
 
-            var config = {
-                type: 'line',
-                data: {
-                    labels: <?php echo $bounceDArrEn; ?>,
-                    datasets: [{
-                            label: false,
-                            backgroundColor: window.chartColors.blue,
-                            borderColor: window.chartColors.blue,
-                            data: <?php echo $bounceDVArrEn; ?>,
-                            fill: false,
-                        }]
-                },
-                options: {
-                    responsive: true,
-                    title: {
-                        display: false,
-                        //stext: 'Chart.js Line Chart'
-                    },
-                    tooltips: {
-                        mode: 'index',
-                        intersect: false,
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: false
-                    },
-                    scales: {
-                        xAxes: [{
-                                display: true,
-                                scaleLabel: {
-                                    display: false,
-                                    labelString: 'Month'
-                                }
-                            }],
-                        yAxes: [{
-                                display: false,
-                                scaleLabel: {
-                                    display: false,
-                                    labelString: 'Value'
-                                }
-                            }]
-                    }
+        var json2 = {};
+        json2.chart = chart;
+        json2.title = title2;
+        json2.tooltip = tooltip;
+        json2.series = series2;
+        json2.plotOptions = plotOptions;
+        $('#semi_circle_chart2').highcharts(json2);
+
+    });
+
+
+    Highcharts.chart('linechart_a', {
+        chart: {
+            type: 'column',
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+        },
+        title: {
+            text: null
+        },
+        subtitle: {
+            text: null
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+
+                style: {
+                    fontSize: '11px',
+                    fontFamily: 'Verdana, sans-serif'
                 }
-            };
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: null
+            }
+        },
+        legend: {
+            enabled: false
+        },
 
-            window.onload = function () {
-                var ctx = document.getElementById('canvas').getContext('2d');
-                window.myLine = new Chart(ctx, config);
+        plotOptions: {
+            column: {
+                pointPadding: 0.30,
+                borderWidth: 0,
+                borderRadius: 3
+            }
+        },
+
+        colors: ['#2eb4dd', '#000000'],
+        tooltip: {
+            pointFormat: '<b>{point.y:.1f}</b>'
+        },
+        series: [{
+                name: 'Time',
+                data: {{ $deliverMainArrEn }},
+
+            }]
+    });
 
 
 
-            };
-        </script>
+
+
+    var config = {
+        type: 'line',
+        data: {
+            labels: {{ $bounceDArrEn }},
+            datasets: [{
+                    label: false,
+                    backgroundColor: window.chartColors.blue,
+                    borderColor: window.chartColors.blue,
+                    data: {{ $bounceDVArrEn }},
+                    fill: false,
+                }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: false,
+                //stext: 'Chart.js Line Chart'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: false
+            },
+            scales: {
+                xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Month'
+                        }
+                    }],
+                yAxes: [{
+                        display: false,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Value'
+                        }
+                    }]
+            }
+        }
+    };
+
+    window.onload = function () {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+
+
+
+    };
+</script>
 
 @endsection
