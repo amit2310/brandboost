@@ -35,7 +35,7 @@ $newOpen = $newClick = 0;
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3">
-                <h3><img src="/assets/images/email_icon_active.png"> @php if ($campaignType == 'Email'): @endphp Email Broadcasts@php else: @endphp SMS Broadcast@php endif; @endphp</h3>
+                <h3><img src="/assets/images/email_icon_active.png"> @if ($campaignType == 'Email') {{ 'Email Broadcasts' }} @else {{ 'SMS Broadcast'}} @endif</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <!--                    <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Brand Boost Broadcast</a></li>
                                         <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li>-->
@@ -195,7 +195,7 @@ $newOpen = $newClick = 0;
         </div>
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
-    @php if (!empty($oBroadcast)): @endphp
+    @if (!empty($oBroadcast))
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
@@ -212,15 +212,15 @@ $newOpen = $newClick = 0;
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" tableid="emailsmsbroadcast" placeholder="Search by name" type="text">
                                         <div class="form-control-feedback">
-                                            <i class=""><img src="<?php echo base_url(); ?>assets/images/icon_search.png" width="14"></i>
+                                            <i class=""><img src="{{ base_url() }}assets/images/icon_search.png" width="14"></i>
                                         </div>
                                     </div>
                                     <div class="table_action_tool">
-                                        <a href="javascript:void(0);" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="<?php echo base_url(); ?>assets/images/icon_refresh.png"></i></a>
-                                        <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_calender.png"></i></a>
-                                        <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_download.png"></i></a>
-                                        <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_upload.png"></i></a>
-                                        <a href="javascript:void(0);"><i class="editDataList"><img src="<?php echo base_url(); ?>assets/images/icon_edit.png"></i></a>
+                                        <a href="javascript:void(0);" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="{{ base_url() }}assets/images/icon_refresh.png"></i></a>
+                                        <a href="javascript:void(0);"><i class=""><img src="{{ base_url() }}assets/images/icon_calender.png"></i></a>
+                                        <a href="javascript:void(0);"><i class=""><img src="{{ base_url() }}assets/images/icon_download.png"></i></a>
+                                        <a href="javascript:void(0);"><i class=""><img src="{{ base_url() }}assets/images/icon_upload.png"></i></a>
+                                        <a href="javascript:void(0);"><i class="editDataList"><img src="{{ base_url() }}assets/images/icon_edit.png"></i></a>
                                         <a href="javascript:void(0);" style="display: none;" title="delete" id="deleteButtonBroadcast" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                         <a href="javascript:void(0);" style="display: none;" title="archive" id="archiveButtonBroadcast" class="custom_action_box"><i class="icon-gear position-left"></i></a>
                                     </div>
@@ -236,8 +236,8 @@ $newOpen = $newClick = 0;
                                             <th><i class=""><img src="{{ base_url() }}assets/images/icon_star_10.png"/></i>Broadcast Name</th>
                                             <th><i class=""><img src="{{ base_url() }}assets/images/icon_click_10.png"/></i>Schedule Time</th>
                                             <th><i class=""><img src="{{ base_url() }}assets/images/icon_minus.png"></i>Sent</th>
-                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_view.png"></i><?php echo (strtolower($campaignType) == 'email') ? 'Opens' : 'Delivered'; ?></th>
-                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_click_10.png"></i>@php echo (strtolower($campaignType) == 'email') ? 'Clicked' : 'Queued'; @endphp</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_view.png"></i>{{ (strtolower($campaignType) == 'email') ? 'Opens' : 'Delivered' }}</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_click_10.png"></i>{{ (strtolower($campaignType) == 'email') ? 'Clicked' : 'Queued' }}</th>
                                             <th><i class=""><img src="{{ base_url() }} assets/images/icon_click_10.png"></i>Sending Method</th>
                                             <th class="text-right"><i><img src="{{ base_url() }}assets/images/icon_date.png"></i>Created</th>
                                             <th class=""><i class="fa fa-dot-circle-o"></i>Status</th>
@@ -333,14 +333,14 @@ $newOpen = $newClick = 0;
                                                     $totalClickGraph = ceil($totalClickGraph);
                                                 }
                                                 @endphp
-                                                <tr id="append-<?php echo $broadCastData->broadcast_id; ?>" class="selectedClass">
+                                                <tr id="append-{{ $broadCastData->broadcast_id }}" class="selectedClass">
                                                     <td style="display: none;">{{ date('m/d/Y', strtotime($broadCastData->created)) }}</td>
                                                     <td style="display: none;">{{ $broadCastData->broadcast_id }}</td>
-                                                    <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk {{ $broadCastData->broadcast_id }} ?>" value="{{ $broadCastData->broadcast_id }} " ><span class="custmo_checkmark"></span></label></td>
+                                                    <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk {{ $broadCastData->broadcast_id }}" value="{{ $broadCastData->broadcast_id }} " ><span class="custmo_checkmark"></span></label></td>
                                                     <td>
-                                                        <div class="media-left media-middle pl-5"> <a class="icons br5" href="#"><img src="{{ base_url() }}assets/images/@php echo (strtolower($broadCastData->campaign_type) == 'email') ? 'icon_massages.png' : 'icon_sms_24.png'; @endphp" class="img-circle img-xs br5" alt=""></a> </div>
+                                                        <div class="media-left media-middle pl-5"> <a class="icons br5" href="#"><img src="{{ base_url() }}assets/images/{{ (strtolower($broadCastData->campaign_type) == 'email') ? 'icon_massages.png' : 'icon_sms_24.png' }}" class="img-circle img-xs br5" alt=""></a> </div>
                                                         <div class="media-left">
-                                                            <div class=""><a href="@php echo base_url('admin/broadcast/edit/' . $broadCastData->broadcast_id); @endphp" broadcast_id="{{ $broadCastData->broadcast_id }}" broadcast_title="{{ $broadCastData->title }}" broadcast_des="{{ $broadCastData->description }}" class="text-default text-semibold">{{ setStringLimit($broadCastData->title, 20) }}</a></div>
+                                                            <div class=""><a href="{{ base_url('admin/broadcast/edit/' . $broadCastData->broadcast_id) }}" broadcast_id="{{ $broadCastData->broadcast_id }}" broadcast_title="{{ $broadCastData->title }}" broadcast_des="{{ $broadCastData->description }}" class="text-default text-semibold">{{ setStringLimit($broadCastData->title, 20) }}</a></div>
                                                             <div class="text-muted text-size-small">
                                                                 {{ setStringLimit($broadCastData->description, 25) }}
                                                             </div>
@@ -348,9 +348,9 @@ $newOpen = $newClick = 0;
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        @php dataFormat(date("Y-m-d H:i:s", $deliverAt)) . ' <span class="txt_grey">' . date("H:i A", $deliverAt) . '</span>' @endphp
+                                                        {!! dataFormat(date("Y-m-d H:i:s", $deliverAt)) . ' <span class="txt_grey">' . date("H:i A", $deliverAt) . '</span>'  !!}
                                                     </td>
-                                                    @php if (strtolower($broadCastData->campaign_type) == 'email'): @endphp
+                                                    @if (strtolower($broadCastData->campaign_type) == 'email')
                                                         <td>
                                                             @php
                                                             $addPC = '';
@@ -359,7 +359,7 @@ $newOpen = $newClick = 0;
                                                             }
                                                             @endphp
                                                             <div class="media-left">
-                                                                <div class="progress-circle {{ $addPC }} blue3 cp {{ $totalSentGraph }} @php if ($delivered > 0): @endphp createSegment @php endif;@endphp" segment-type="total-sent" campaign-id="{{ $broadCastData->broadcast_id }}" campaign-type="email" sending_method="{{ $broadCastData->sending_method }}" title="click to create segment">
+                                                                <div class="progress-circle {{ $addPC }} blue3 cp {{ $totalSentGraph }} @if ($delivered > 0){{ 'createSegment' }} @endif" segment-type="total-sent" campaign-id="{{ $broadCastData->broadcast_id }}" campaign-type="email" sending_method="{{ $broadCastData->sending_method }}" title="click to create segment">
                                                                     <div class="left-half-clipper">
                                                                         <div class="first50-bar"></div>
                                                                         <div class="value-bar"></div>
@@ -367,20 +367,15 @@ $newOpen = $newClick = 0;
                                                                 </div>
                                                             </div>
                                                             <div class="media-left">
-                                                                <div data-toggle="tooltip" title="{{ $delivered }} sent out of {{ $totalSent @php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; @endphp" data-placement="top">
-                                                                    @php
-                                                                    if ($totalSentGraph > 0) {
-                                                                       @endphp
-                                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; @endphp/@php echo $broadCastData->broadcast_id; @endphp?type=delivered" class="text-default text-semibold">@php echo $delivered; @endphp</a>
-                                                                        @php
-                                                                    } else {
-                                                                        @endphp
-                                                                        <a href="javascript:void(0);" class="text-default text-semibold">@php echo $delivered; @endphp</a>
-                                                                    @php }
-                                                                    @endphp
-                                                                    @php if ($newOpen > 0): @endphp    
-                                                                        @php echo '<span style="color:#FF0000;"> (' . $newOpen . ' new)</span>'; @endphp    
-                                                                    @php endif; @endphp    
+                                                                <div data-toggle="tooltip" title="{{ $delivered }} sent out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
+                                                                    @if ($totalSentGraph > 0)                                                                       
+                                                                        <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms' }}/{{ $broadCastData->broadcast_id }}?type=delivered" class="text-default text-semibold">{{ $delivered }}</a>
+                                                                    @else
+                                                                        <a href="javascript:void(0);" class="text-default text-semibold">{{ $delivered }}</a>
+                                                                    @endif
+                                                                    @if ($newOpen > 0)  
+                                                                        <span style="color:#FF0000;"> ({{ $newOpen }} new)</span>
+                                                                    @endif  
 
                                                                 </div>
                                                             </div>
@@ -395,7 +390,7 @@ $newOpen = $newClick = 0;
                                                             }
                                                             @endphp
                                                             <div class="media-left">
-                                                                <div class="progress-circle @php echo $addPC; @endphp blue1 cp@php echo $totalOpenGraph; @endphp @php if ($open > 0): @endphp createSegment@php endif; @endphp" segment-type="total-open" campaign-id="@php echo $broadCastData->broadcast_id; @endphp" campaign-type="email" sending_method="@php echo $broadCastData->sending_method; @endphp" title="click to create segment">
+                                                                <div class="progress-circle {{ $addPC }} blue1 cp{{ $totalOpenGraph }} @if ($open > 0) {{ 'createSegment' }} @endif" segment-type="total-open" campaign-id="{{ $broadCastData->broadcast_id }}" campaign-type="email" sending_method="{{ $broadCastData->sending_method }}" title="click to create segment">
                                                                     <div class="left-half-clipper">
                                                                         <div class="first50-bar"></div>
                                                                         <div class="value-bar"></div>
@@ -403,26 +398,22 @@ $newOpen = $newClick = 0;
                                                                 </div>
                                                             </div>
                                                             <div class="media-left">
-                                                                <div data-toggle="tooltip" title="<?php echo $open; ?> open out of <?php echo $totalSent; ?> <?php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; ?>" data-placement="top">
-                                                                    @php
-                                                                    if ($open > 0) {
+                                                                <div data-toggle="tooltip" title="{{ $open }} open out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
+                                                                    @if ($open > 0)
                                                                         @endphp
-                                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; @endphp/@php echo $broadCastData->broadcast_id; @endphp?type=open" class="text-default text-semibold">{{ $open }}</a>
-                                                                        @php
-                                                                    } else {
-                                                                        @endphp
-                                                                        <a href="javascript:void(0);" class="text-default text-semibold">@php echo $open; @endphp</a>
-                                                                    @php }
-                                                                    @endphp
-                                                                    @php if ($newOpen > 0): @endphp    
-                                                                        @php echo '<span style="color:#FF0000;"> (' . $newOpen . ' new)</span>'; @endphp    
-                                                                    @php endif; @endphp    
+                                                                        <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms' }}/{{ $broadCastData->broadcast_id }}?type=open" class="text-default text-semibold">{{ $open }}</a>
+                                                                    @else
+                                                                        <a href="javascript:void(0);" class="text-default text-semibold">{{ $open }}</a>
+                                                                    @endif
+                                                                    @if ($newOpen > 0)
+                                                                        <span style="color:#FF0000;"> ({{ $newOpen }} new)</span>
+                                                                    @endif    
 
                                                                 </div>
                                                             </div>
 
                                                         </td>
-                                                    @php else: @endphp
+                                                    @else
 
                                                         <td>
                                                             @php
@@ -432,7 +423,7 @@ $newOpen = $newClick = 0;
                                                             }
                                                             @endphp
                                                             <div class="media-left">
-                                                                <div class="progress-circle @php echo $addPC; @endphp blue3 cp@php echo $totalSentGraph; @endphp @php if ($totalSent > 0): @endphpcreateSegment@php endif; @endphp"  segment-type="total-sent" campaign-id="@php echo $broadCastData->broadcast_id; @endphp" campaign-type="sms" sending_method="@php echo $broadCastData->sending_method; @endphp" title="click to create segment">
+                                                                <div class="progress-circle {{ $addPC }} blue3 cp{{ $totalSentGraph }} @if ($totalSent > 0) {{ 'createSegment' }} @endif"  segment-type="total-sent" campaign-id="{{ $broadCastData->broadcast_id }}" campaign-type="sms" sending_method="{{ $broadCastData->sending_method }}" title="click to create segment">
                                                                     <div class="left-half-clipper">
                                                                         <div class="first50-bar"></div>
                                                                         <div class="value-bar"></div>
@@ -440,20 +431,15 @@ $newOpen = $newClick = 0;
                                                                 </div>
                                                             </div>
                                                             <div class="media-left">
-                                                                <div data-toggle="tooltip" title="@php echo $totalSent; @endphp sent out of @php echo $totalSent; @endphp @php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; @endphp" data-placement="top">
-                                                                    @php
-                                                                    if ($totalSentGraph > 0) {
-                                                                        @endphp
-                                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; @endphp/@php echo $broadCastData->broadcast_id; @endphp?type=sent" class="text-default text-semibold">@php echo $totalSent; @endphp</a>
-                                                                        @endphpphp
-                                                                    } else {
-                                                                        @endphp
+                                                                <div data-toggle="tooltip" title="{{ $totalSent }} sent out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
+                                                                    @f ($totalSentGraph > 0)                                                                        
+                                                                        <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms' }}/{{ $broadCastData->broadcast_id }}?type=sent" class="text-default text-semibold">{{ $totalSent }}</a>
+                                                                    @else
                                                                         <a href="javascript:void(0);" class="text-default text-semibold">{{ $delivered }}</a>
-                                                                    @php }
-                                                                    @endphp
-                                                                    @php if ($newSent > 0): @endphp    
-                                                                        @php echo '<span style="color:#FF0000;"> (' . $newSent . ' new)</span>'; @endphp    
-                                                                    @php endif; @endphp   
+                                                                    @endif
+                                                                    @if ($newSent > 0)  
+                                                                        <span style="color:#FF0000;"> ({{ $newSent }} new)</span>
+                                                                    @endif   
 
                                                                 </div>
                                                             </div>
@@ -468,7 +454,7 @@ $newOpen = $newClick = 0;
                                                             }
                                                             @endphp
                                                             <div class="media-left">
-                                                                <div class="progress-circle @php echo $addPC; @endphp blue1 cp@php echo $totalDeliveredGraph; @endphp @php if ($delivered > 0): @endphpcreateSegment@php endif; @endphp" segment-type="total-delivered" campaign-id="@php echo $broadCastData->broadcast_id; @endphp" campaign-type="sms" sending_method="@php echo $broadCastData->sending_method; @endphp" title="click to create segment">
+                                                                <div class="progress-circle {{ $addPC }} blue1 cp{{ $totalDeliveredGraph }} @if ($delivered > 0) {{ 'createSegment' }} @endif" segment-type="total-delivered" campaign-id="{{ $broadCastData->broadcast_id }}" campaign-type="sms" sending_method="{{ $broadCastData->sending_method }}" title="click to create segment">
                                                                     <div class="left-half-clipper">
                                                                         <div class="first50-bar"></div>
                                                                         <div class="value-bar"></div>
@@ -476,28 +462,23 @@ $newOpen = $newClick = 0;
                                                                 </div>
                                                             </div>
                                                             <div class="media-left">
-                                                                <div data-toggle="tooltip" title="{{ $delivered }} delivered out of {{ $totalSent }} @php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; @endphp" data-placement="top">
-                                                                    @php
-                                                                    if ($delivered > 0) {
-                                                                        @endphp
-                                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; @endphp/@php echo $broadCastData->broadcast_id; @endphp?type=delivered" class="text-default text-semibold">{{ $delivered }}</a>
-                                                                        @php
-                                                                    } else {
-                                                                        @endphp
+                                                                <div data-toggle="tooltip" title="{{ $delivered }} delivered out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
+                                                                    @if ($delivered > 0) 
+                                                                        <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms' }}/{{ $broadCastData->broadcast_id }}?type=delivered" class="text-default text-semibold">{{ $delivered }}</a>
+                                                                    @else
                                                                         <a href="javascript:void(0);" class="text-default text-semibold">{{ $delivered }}</a>
-                                                                    @php }
-                                                                    @endphp
-                                                                    @php if ($newDelivered > 0): @endphp    
-                                                                        @php echo '<span style="color:#FF0000;"> (' . $newDelivered . ' new)</span>'; @endphp    
-                                                                    @php endif; @endphp    
+                                                                    @endif
+                                                                    @if ($newDelivered > 0)   
+                                                                        <span style="color:#FF0000;"> ({{ $newDelivered }} new)</span>
+                                                                    @endif   
 
                                                                 </div>
                                                             </div>
 
                                                         </td>
 
-                                                    @php endif; @endphp
-                                                    @php if (strtolower($campaignType) == 'email'): @endphp
+                                                    @endif
+                                                    @if (strtolower($campaignType) == 'email')
                                                         <td>
                                                             @php
                                                             $addPC = '';
@@ -506,7 +487,7 @@ $newOpen = $newClick = 0;
                                                             }
                                                             @endphp
                                                             <div class="media-left">
-                                                                <div class="progress-circle @php echo $addPC; @endphp blue2 cp@php echo $totalClickGraph; @endphp @php if ($click > 0): @endphpcreateSegment@php endif; @endphp" segment-type="total-click" campaign-id="@php echo $broadCastData->broadcast_id; @endphp" campaign-type="email" sending_method="@php echo $broadCastData->sending_method; @endphp" title="click to create segment">
+                                                                <div class="progress-circle {{ $addPC }} blue2 cp{{ $totalClickGraph }} @if ($click > 0) {{ 'createSegment' }} @endif" segment-type="total-click" campaign-id="{{ $broadCastData->broadcast_id }}" campaign-type="email" sending_method="{{ $broadCastData->sending_method }}" title="click to create segment">
                                                                     <div class="left-half-clipper">
                                                                         <div class="first50-bar"></div>
                                                                         <div class="value-bar"></div>
@@ -514,26 +495,21 @@ $newOpen = $newClick = 0;
                                                                 </div>
                                                             </div>
                                                             <div class="media-left">
-                                                                <div data-toggle="tooltip" title="{{ $click }} click out of @php echo $totalSent; @endphp @php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; @endphp" data-placement="top">
-                                                                    @php
-                                                                    if ($click > 0) {
-                                                                        @endphp
-                                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; @endphp/@php echo $broadCastData->broadcast_id; @endphp?type=click" class="text-default text-semibold">{{ $click }}</a>
-                                                                        @php
-                                                                    } else {
-                                                                        @endphp
+                                                                <div data-toggle="tooltip" title="{{ $click }} click out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
+                                                                    @if ($click > 0)                                                                        
+                                                                        <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'}}/{{ $broadCastData->broadcast_id }}?type=click" class="text-default text-semibold">{{ $click }}</a>
+                                                                    @else
                                                                         <a href="javascript:void(0);" class="text-default text-semibold">{{ $click }}</a>
-                                                                    @php }
-                                                                    @endphp
-                                                                    @php if ($newClick > 0): @endphp    
-                                                                        <?php echo '<span style="color:#FF0000;"> (' . $newClick . ' new)</span>'; ?>    
-                                                                    @php endif; @endphp    
+                                                                    @endif
+                                                                    @if ($newClick > 0)    
+                                                                        <span style="color:#FF0000;"> ({{ $newClick }} new)</span>
+                                                                    @endif   
 
                                                                 </div>
                                                             </div>
 
                                                         </td>
-                                                    @php else: @endphp
+                                                    @else
                                                         <td>
                                                             @php
                                                             $addPC = '';
@@ -542,7 +518,7 @@ $newOpen = $newClick = 0;
                                                             }
                                                             @endphp
                                                             <div class="media-left">
-                                                                <div class="progress-circle @php echo $addPC; @endphp blue2 cp@php echo $totalQueuedGraph; @endphp @php if ($click > 0): @endphpcreateSegment@php endif; @endphp" segment-type="total-queued" campaign-id="@php echo $broadCastData->broadcast_id; @endphp" campaign-type="sms" sending_method="@php echo $broadCastData->sending_method; @endphp" title="click to create segment">
+                                                                <div class="progress-circle {{ $addPC }} blue2 cp{{ $totalQueuedGraph }} @if ($click > 0) {{ 'createSegment' }} @endif" segment-type="total-queued" campaign-id="{{ $broadCastData->broadcast_id }}" campaign-type="sms" sending_method="{{ $broadCastData->sending_method }}" title="click to create segment">
                                                                     <div class="left-half-clipper">
                                                                         <div class="first50-bar"></div>
                                                                         <div class="value-bar"></div>
@@ -550,84 +526,56 @@ $newOpen = $newClick = 0;
                                                                 </div>
                                                             </div>
                                                             <div class="media-left">
-                                                                <div data-toggle="tooltip" title="{{ $queued }} click out of @php echo $totalSent; @endphp @php echo strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms'; @endphp" data-placement="top">
-                                                                    @php
-                                                                    if ($queued > 0) {
-                                                                        @endphp
-                                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/records/@php echo strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'; ?>/@php echo $broadCastData->broadcast_id; @endphp?type=queued" class="text-default text-semibold">{{ $queued }}</a>
-                                                                        @php
-                                                                    } else {
-                                                                        @endphp
+                                                                <div data-toggle="tooltip" title="{{ $queued }} click out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
+                                                                    @if ($queued > 0) 
+                                                                        <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms' }}/{{ $broadCastData->broadcast_id }}?type=queued" class="text-default text-semibold">{{ $queued }}</a>
+                                                                    @else
                                                                         <a href="javascript:void(0);" class="text-default text-semibold">{{ $click }}</a>
-                                                                    @php }
-                                                                    @endphp
-                                                                    @php if ($newQueue > 0): @endphp    
-                                                                        @php echo '<span style="color:#FF0000;"> (' . $newQueue . ' new)</span>'; @endphp    
-                                                                    @php endif; @endphp    
+                                                                    @endif
+                                                                    @if ($newQueue > 0)  
+                                                                        <span style="color:#FF0000;"> ({{ $newQueue }} new)</span>
+                                                                    @endif  
 
                                                                 </div>
                                                             </div>
 
                                                         </td>
-                                                    @php endif; @endphp
+                                                    @endif
                                                     <td class="text-center">
-                                                        <a href="@php echo base_url(); @endphpadmin/broadcast/report/@php echo $broadCastData->broadcast_id; @endphp">
-                                                            @php echo ($broadCastData->sending_method == 'split') ? 'Split(' . $totalVariations . ' Variations)' : 'Normal'; @endphp
+                                                        <a href="{{ base_url() }}admin/broadcast/report/{{ $broadCastData->broadcast_id }}">
+                                                            {{ ($broadCastData->sending_method == 'split') ? 'Split(' . $totalVariations . ' Variations)' : 'Normal' }}
                                                         </a>    
                                                     </td>
                                                     <td class="text-right"><div class="media-left text-right pull-right">
-                                                            <div class=""><a href="#" class="text-default text-semibold">@php echo dataFormat($broadCastData->created); @endphp <span class="txt_grey">{{ dataFormatHours($broadCastData->created) }}</span></a> </div>
-                                                        </div></td>
-                                                        <!-- <td>
-                                                    <?php
-                                                    $oParams = json_decode($broadCastData->data);
-
-                                                    $deliveryDate = $oParams->delivery_date;
-                                                    $deliveryTime = $oParams->delivery_time;
-                                                    $timeString = $deliveryDate . ' ' . $deliveryTime;  //08/31/2017 1:05 AM
-                                                    $deliverAt = strtotime($timeString);
-
-                                                    $timeNow = strtotime(date("h:i A"));
-                                                    if ($deliverAt > $timeNow && $broadCastData->bc_status == 'active') {
-                                                        echo '<span class="label bkg_blue" title="To be sent on ' . dataFormat(date("Y-m-d H:i:s", $deliverAt)) . ' ' . dataFormatHours("Y-m-d H:i:s", $deliverAt) . '">Schedule</span>';
-                                                    } else if ($deliverAt < $timeNow && $broadCastData->bc_status == 'active') {
-                                                        echo '<span class="label bkg_green" title="Sent on ' . dataFormat(date("Y-m-d H:i:s", $deliverAt)) . ' ' . dataFormatHours("Y-m-d H:i:s", $deliverAt) . '">Sent</span>';
-                                                    } else {
-                                                        echo '<span class="label bkg_red">Disabled</span>';
-                                                    }
-                                                    ?>
-
-                                                        </td> -->
+                                                            <div class=""><a href="#" class="text-default text-semibold">{{ dataFormat($broadCastData->created) }} <span class="txt_grey">{{ dataFormatHours($broadCastData->created) }}</span></a> </div>
+                                                        </div>
+                                                    </td>
+                                                        
 
 
 
                                                     <td class="">
-                                                        @php
-                                                        if ($broadCastData->bc_status == 'active') {
-                                                            if ($bExpired == true) {
-                                                                echo '<i class="icon-primitive-dot txt_grey3 fsize16"></i> ';
-                                                            } else {
-                                                                echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
-                                                            }
-                                                        } else {
-                                                            echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
-                                                        }
-                                                        @endphp
+                                                        @if ($broadCastData->bc_status == 'active')
+                                                            @if ($bExpired == true)
+                                                                <i class="icon-primitive-dot txt_grey3 fsize16"></i> 
+                                                            @else
+                                                                <i class="icon-primitive-dot txt_green fsize16"></i> 
+                                                            @endif
+                                                        @else
+                                                            <i class="icon-primitive-dot txt_red fsize16"></i>
+                                                        @endif
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                                            @php
-                                                            if ($broadCastData->bc_status == 'active') {
-                                                                if ($bExpired == true) {
-                                                                    echo 'Expired';
-                                                                } else {
-                                                                    echo 'Active';
-                                                                }
-                                                            } else if ($broadCastData->bc_status == 'draft') {
-                                                                echo 'Draft';
-                                                            } else {
-                                                                //echo 'Inactive';
-                                                                echo ucfirst($broadCastData->bc_status);
-                                                            }
-                                                            @endphp
+                                                            @if ($broadCastData->bc_status == 'active') 
+                                                                @if($bExpired == true)
+                                                                    {{ 'Expired' }}
+                                                                @else
+                                                                    {{ 'Active' }}
+                                                                @endif
+                                                            @elseif ($broadCastData->bc_status == 'draft')
+                                                                {{ 'Draft' }}
+                                                            @else
+                                                                {{ ucfirst($broadCastData->bc_status) }}
+                                                            @endif
 
                                                         </a>
                                                         <ul class="dropdown-menu dropdown-menu-right status">
@@ -638,32 +586,30 @@ $newOpen = $newClick = 0;
 
 
                                                     <td class="text-center">
-                                                        <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                                        <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                                             <ul class="dropdown-menu dropdown-menu-right more_act">
-                                                                <li><a href="{{ base_url() }}admin/broadcast/edit/<?php echo $broadCastData->broadcast_id; ?>"><i class="icon-pencil"></i> Edit</a></li>
-                                                                <li><a href="javascript:void(0);" class="clonBroadcastCampaign" broadcast_id="<?php echo $broadCastData->broadcast_id; ?>"><i class="icon-file-stats"></i> Duplicate</a></li>
-                                                                <?php if ($broadCastData->bc_status != 'archive'): ?>
-                                                                    <li><a href="javascript:void(0);" class="moveArchive" broadcast_id="<?php echo $broadCastData->broadcast_id; ?>"><i class="icon-file-stats"></i> Move To Archive</a></li>
-                                                                <?php endif; ?>
-                                                                <li><a href="javascript:void(0);" class="deleteBroadcastCampaign" broadcast_id="<?php echo $broadCastData->broadcast_id; ?>"><i class="icon-trash"></i> Delete</a></li>
+                                                                <li><a href="{{ base_url() }}admin/broadcast/edit/{{ $broadCastData->broadcast_id }}"><i class="icon-pencil"></i> Edit</a></li>
+                                                                <li><a href="javascript:void(0);" class="clonBroadcastCampaign" broadcast_id="{{ $broadCastData->broadcast_id }}"><i class="icon-file-stats"></i> Duplicate</a></li>
+                                                                @if ($broadCastData->bc_status != 'archive')
+                                                                    <li><a href="javascript:void(0);" class="moveArchive" broadcast_id="{{ $broadCastData->broadcast_id }}"><i class="icon-file-stats"></i> Move To Archive</a></li>
+                                                                @endif
+                                                                <li><a href="javascript:void(0);" class="deleteBroadcastCampaign" broadcast_id="{{ $broadCastData->broadcast_id }}"><i class="icon-trash"></i> Delete</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
 
                                                     <td style="display:none;">
-                                                        @php
-                                                        if ($broadCastData->bc_status == 'archive') {
-                                                            echo 'archive';
-                                                        } else if ($broadCastData->bc_status == 'draft') {
-                                                            echo 'draft';
-                                                        } else {
-                                                            if ($bExpired == true) {
-                                                                echo 'expired';
-                                                            } else {
-                                                                echo 'active';
-                                                            }
-                                                        }
-                                                        @endphp
+                                                        @if ($broadCastData->bc_status == 'archive') 
+                                                            {{ 'archive' }}
+                                                        @elseif ($broadCastData->bc_status == 'draft') 
+                                                            {{ 'draft' }}
+                                                        @else
+                                                            @if ($bExpired == true)
+                                                                {{ 'expired' }}
+                                                            @else
+                                                                {{ 'active' }}
+                                                            @endif
+                                                        @endif
                                                     </td>
 
                                                 </tr>
@@ -682,7 +628,7 @@ $newOpen = $newClick = 0;
 
         </div>
 
-    @php else: @endphp
+    @else
 
         <div class="tab-content"> 
             <!--===========TAB 1===========-->
@@ -730,7 +676,7 @@ $newOpen = $newClick = 0;
                                                         <div style="margin: 20px 0px 0;" class="text-center">
 
                                                             <h5 class="mb-20 mt40">
-                                                                Looks Like You Don't Have Created Any {{ $campaignType }} Broadcast Yet <img src="@php echo site_url('assets/images/smiley.png'); @endphp"> <br>
+                                                                Looks Like You Don't Have Created Any {{ $campaignType }} Broadcast Yet <img src="{{ site_url('assets/images/smiley.png') }}"> <br>
                                                                 Lets Create {{ $campaignType }} Broadcast.
                                                             </h5>
 
@@ -756,7 +702,7 @@ $newOpen = $newClick = 0;
             </div>
         </div>
 
-    @php endif @endphp 
+    @endif 
 
 </div>
 
@@ -793,7 +739,7 @@ $newOpen = $newClick = 0;
                     <input type="hidden" value="Email" name="campaignType" id="hidCampaignType">
                     <input type="hidden" value="Email" name="sendingMethod" id="hidSendingMethod">
 
-                    <input type="hidden" value="<?php echo $moduleName; ?>" name="moduleName" />
+                    <input type="hidden" value="{{ $moduleName }}" name="moduleName" />
 
                     <button data-toggle="modal" type="submit" class="btn dark_btn bkg_sblue fsize14 h52">Continue</button>
                     <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
@@ -812,7 +758,7 @@ $newOpen = $newClick = 0;
             <form method="post" name="addBroadcastData" id="addBroadcastData" action="javascript:void();">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/@php echo ($campaignType == 'Email') ? 'Email_Color.svg' : 'Sms_Color.svg'; @endphp"/> Add Brand Boost Broadcast &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/{{ ($campaignType == 'Email') ? 'Email_Color.svg' : 'Sms_Color.svg' }}"/> Add Brand Boost Broadcast &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
                 </div>
                 <div class="modal-body">
 
@@ -834,8 +780,8 @@ $newOpen = $newClick = 0;
                 <div class="modal-footer">
                     <input type="hidden" value="" name="campaignTemplateID" id="campaignTemplateID">
                     <textarea id="campaignTemplateContant" style="display:none;"></textarea>
-                    <input type="hidden" value="@php echo ($campaignType == 'Email') ? 'Email' : 'SMS'; @endphp" name="broadCastType" id="broadCastType">
-                    <button data-toggle="modal" type="submit" class="btn dark_btn @php echo ($campaignType == 'Email') ? 'bkg_sblue' : 'bkg_green' @endphp fsize14 h52">Continue</button>
+                    <input type="hidden" value="{{ ($campaignType == 'Email') ? 'Email' : 'SMS' }}" name="broadCastType" id="broadCastType">
+                    <button data-toggle="modal" type="submit" class="btn dark_btn {{ ($campaignType == 'Email') ? 'bkg_sblue' : 'bkg_green' }} fsize14 h52">Continue</button>
                     <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
 
                 </div>
@@ -987,7 +933,7 @@ $newOpen = $newClick = 0;
                             if (isConfirm) {
                                 $('.overlaynew').show();
                                 $.ajax({
-                                    url: '<?php echo base_url('admin/modules/emails/multipalDeleteAutomation'); ?>',
+                                    url: "{{ base_url('admin/modules/emails/multipalDeleteAutomation') }}",
                                     type: "POST",
                                     data: {_token: '{{csrf_token()}}', multipal_automation_id: val},
                                     dataType: "json",
@@ -1065,7 +1011,7 @@ $newOpen = $newClick = 0;
                             if (isConfirm) {
                                 $('.overlaynew').show();
                                 $.ajax({
-                                    url: '<?php echo base_url('admin/modules/emails/multipalDeleteAutomation'); ?>',
+                                    url: "{{ base_url('admin/modules/emails/multipalDeleteAutomation') }}",
                                     type: "POST",
                                     data: {_token: '{{csrf_token()}}', multipal_automation_id: val},
                                     dataType: "json",
@@ -1105,7 +1051,7 @@ $newOpen = $newClick = 0;
                             if (isConfirm) {
                                 $('.overlaynew').show();
                                 $.ajax({
-                                    url: '<?php echo base_url('admin/broadcast/multipalArchiveAutomation'); ?>',
+                                    url: "{{ base_url('admin/broadcast/multipalArchiveAutomation') }}",
                                     type: "POST",
                                     data: {_token: '{{csrf_token()}}', multipal_automation_id: val},
                                     dataType: "json",
@@ -1162,7 +1108,7 @@ $newOpen = $newClick = 0;
         $(document).on('click', '.clonBroadcastCampaign', function () {
             var automationID = $(this).attr('broadcast_id');
             $.ajax({
-                url: '<?php echo base_url('admin/broadcast/clonBroadcastCampaign'); ?>',
+                url: "{{ base_url('admin/broadcast/clonBroadcastCampaign') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', automation_id: automationID},
                 dataType: "json",
@@ -1181,7 +1127,7 @@ $newOpen = $newClick = 0;
         $(document).on('click', '.moveArchive', function () {
             var automationID = $(this).attr('broadcast_id');
             $.ajax({
-                url: '<?php echo base_url('admin/broadcast/moveArchive'); ?>',
+                url: "{{ base_url('admin/broadcast/moveArchive') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', automation_id: automationID},
                 dataType: "json",
@@ -1202,7 +1148,7 @@ $newOpen = $newClick = 0;
                         $('.overlaynew').show();
                         var automationID = $(elem).attr('broadcast_id');
                         $.ajax({
-                            url: '<?php echo base_url('admin/modules/emails/deleteAutomation'); ?>',
+                            url: "{{ base_url('admin/modules/emails/deleteAutomation') }}",
                             type: "POST",
                             data: {_token: '{{csrf_token()}}', automation_id: automationID},
                             dataType: "json",
@@ -1226,14 +1172,14 @@ $newOpen = $newClick = 0;
             } else {
                 $('.overlaynew').show();
                 $.ajax({
-                    url: '<?php echo base_url('admin/broadcast/updateBroadcastClone'); ?>',
+                    url: "{{ base_url('admin/broadcast/updateBroadcastClone') }}",
                     type: "POST",
                     data: {_token: '{{csrf_token()}}', edit_broadcastId: broadcastId, campaign_name: campaignName, description: description},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
                             $('.overlaynew').hide();
-                            window.location.href = '<?php echo base_url('admin/broadcast/edit/'); ?>' + broadcastId;
+                            window.location.href = "{{ base_url('admin/broadcast/edit/') }}' + broadcastId;
                         } else {
                             $('.overlaynew').hide();
                             alertMessage('Error: Some thing wrong!');
@@ -1257,7 +1203,7 @@ $newOpen = $newClick = 0;
             var campaignTemplateContant = $('#campaignTemplateContant').val();
             $('.overlaynew').show();
             $.ajax({
-                url: '<?php echo base_url('admin/broadcast/createBroadcast'); ?>',
+                url: "{{ base_url('admin/broadcast/createBroadcast') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', 'campaign_name': campaignName, 'template_name': campaignTemplateID, 'description': description, 'template_content': campaignTemplateContant, 'broadcast_type': broadCastType},
                 dataType: "json",
@@ -1294,7 +1240,7 @@ $newOpen = $newClick = 0;
             var formData = new FormData($(this)[0]);
             var tkn = $('meta[name="_token"]').attr('content');
             $.ajax({
-                url: '<?php echo base_url('admin/broadcast/createSegment'); ?>',
+                url: "{{ base_url('admin/broadcast/createSegment') }}",
                 type: "POST",
                 data: formData + '&_token=' + tkn,
                 contentType: false,

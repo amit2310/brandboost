@@ -1,11 +1,11 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php
+@php
 $allStatus = '';
 $openStatus = '';
 $clickStatus = '';
@@ -15,10 +15,10 @@ if ($selected_tab == 'delivered') {
     $openStatus = 'active';
 } else if ($selected_tab == 'click') {
     $clickStatus = 'active';
-}else {
+} else {
     $allStatus = 'active';
 }
-?>
+@endphp
 
 <div class="content">
 
@@ -27,12 +27,12 @@ if ($selected_tab == 'delivered') {
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-5">
-                <h3><i class="icon-vcard"></i> &nbsp; Broadcast Report:<?php echo $oBroadcast->title;?></h3>
+                <h3><i class="icon-vcard"></i> &nbsp; Broadcast Report:{{ $oBroadcast->title }}</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
 
-                    <li class="<?php echo $allStatus; ?>"><a href="#right-icon-tab1" data-toggle="tab"> Sent </a></li>
-                    <li class="<?php echo $openStatus; ?>"><a href="#right-icon-tab2" data-toggle="tab"> Open </a></li>
-                    <li class="<?php echo $clickStatus; ?>"><a href="#right-icon-tab3" data-toggle="tab"> Click </a></li>
+                    <li class="{{ $allStatus }}"><a href="#right-icon-tab1" data-toggle="tab"> Sent </a></li>
+                    <li class="{{ $openStatus }}"><a href="#right-icon-tab2" data-toggle="tab"> Open </a></li>
+                    <li class="{{ $clickStatus }}"><a href="#right-icon-tab3" data-toggle="tab"> Click </a></li>
 
                 </ul>
             </div>
@@ -60,8 +60,8 @@ if ($selected_tab == 'delivered') {
 
 <script type="text/javascript">
 
-    $(document).ready(function() {
-        
+    $(document).ready(function () {
+
 
         $(document).on('click', '.editDataList', function () {
             $('.editAction').toggle();
@@ -117,29 +117,29 @@ if ($selected_tab == 'delivered') {
             } else {
 
                 deleteConfirmationPopup(
-                "This record will deleted immediately.<br>You can't undo this action.", 
-                function() {
+                        "This record will deleted immediately.<br>You can't undo this action.",
+                        function () {
 
-                    
-                    $('.overlaynew').show();
-                    $.ajax({
-                        url: "<?php echo base_url('admin/broadcast/multipalDeleteRecord'); ?>",
-                        type: "POST",
-                        data: {_token: '{{csrf_token()}}', multi_record_id: nRecord},
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.status == 'success') {
-                                location.reload();
-                            } else {
-                                alert("Having some error.");
-                            }
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
 
-                });
+                            $('.overlaynew').show();
+                            $.ajax({
+                                url: "{{ base_url('admin/broadcast/multipalDeleteRecord') }}",
+                                type: "POST",
+                                data: {_token: '{{csrf_token()}}', multi_record_id: nRecord},
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data.status == 'success') {
+                                        location.reload();
+                                    } else {
+                                        alert("Having some error.");
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+
+                        });
             }
         });
 
