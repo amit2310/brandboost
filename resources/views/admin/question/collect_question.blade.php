@@ -10,16 +10,16 @@
         <!-- Global stylesheets -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		
-        <link href="<?php echo base_url(); ?>assets/css/theme1.css" rel="stylesheet" type="text/css">
-        <link href="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
+        <link href="{{ base_url() }}assets/css/theme1.css" rel="stylesheet" type="text/css">
+        <link href="{{ base_url() }}assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
 		
         <!-- Core JS files -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/loaders/pace.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/core/libraries/jquery.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/core/libraries/bootstrap.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/loaders/blockui.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/dropzone-master/dist/dropzone.js"></script>
+        <script type="text/javascript" src="{{ base_url() }}assets/js/plugins/loaders/pace.min.js"></script>
+        <script type="text/javascript" src="{{ base_url() }}assets/js/core/libraries/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ base_url() }}assets/js/core/libraries/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{{ base_url() }}assets/js/plugins/loaders/blockui.min.js"></script>
+        <script src="{{ base_url() }}assets/dropzone-master/dist/dropzone.js"></script>
         <!-- /core JS files -->
         <style>
             body {background:#d5e0f2;font-size: 13px!important;	font-family: 'Inter UI';font-style: normal;	font-weight: 400;letter-spacing: 0;}
@@ -113,9 +113,6 @@
             .share_icon .fa.fa-share{color: #c4c7e4; font-size: 12px; margin-top: 15px;}
             .review_chat40 .middle .footer_div .comment_div p span em {margin-right: 10px;position: relative;top: -3px; color: #dfdfef;}
 			
-			
-			
-			
             .review_chat41{max-width: 520px; width: 100%;font-family: 'Inter UI';font-style: normal; position: relative;}
             .review_chat41 .head {box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.13);background-image: linear-gradient(95deg, #5c37f2, #aa7bff);border-radius: 5px 5px 0px 0px;width: 100%;float: left;}
             .review_chat41 .box_right {float: left;width: 100%;}
@@ -188,11 +185,6 @@
             .review_chat41 .middle .right_chck_box .checkmark:after {content: "";position: absolute;display: none;}
             .review_chat41 .middle .right_chck_box .container input:checked ~ .checkmark:after {display: block;}
             .review_chat41 .middle .right_chck_box .container .checkmark:after {left: 6px;top: 3px;width: 3px;height: 7px;border: solid white;border-width: 0 2px 2px 0;-webkit-transform: rotate(45deg);-ms-transform: rotate(45deg);transform: rotate(45deg);}
-			
-			
-			
-			
-			
 			
             .review_chat42{max-width: 520px; width: 100%;font-family: 'Inter UI';font-style: normal; position: relative;}
             .review_chat42 .head {box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.13);background-image: linear-gradient(95deg, #5c37f2, #aa7bff);border-radius: 5px 5px 0px 0px;width: 100%;float: left;}
@@ -271,27 +263,21 @@
 			
 			
             @media only screen and (max-width:480px){
-			.review_chat42 .middle .much_bx .review_headline{width: 100%;}
-			.review_chat42 .middle .much_bx .very_much{width: 100%;}
-			.review_chat42 .middle .much_bx .very_much input{padding-left: 25px;}
-			.review_chat42 .middle .much_bx .very_much{padding-right: 0;}
-			.review_chat42 .middle .term_condition{padding-right: 25px;}
-			.review_chat42 .middle h2{width: 100%;}
-			.review_chat42 .middle .right_max{float: left}
-			.review_chat42 .middle .much_bx .tell_you{padding: 0;}
-			.review_chat42 .middle .much_bx .tell_you textarea{padding: 10px 25px;}
-			
+				.review_chat42 .middle .much_bx .review_headline{width: 100%;}
+				.review_chat42 .middle .much_bx .very_much{width: 100%;}
+				.review_chat42 .middle .much_bx .very_much input{padding-left: 25px;}
+				.review_chat42 .middle .much_bx .very_much{padding-right: 0;}
+				.review_chat42 .middle .term_condition{padding-right: 25px;}
+				.review_chat42 .middle h2{width: 100%;}
+				.review_chat42 .middle .right_max{float: left}
+				.review_chat42 .middle .much_bx .tell_you{padding: 0;}
+				.review_chat42 .middle .much_bx .tell_you textarea{padding: 10px 25px;}
             }
-			
-			
 		</style>
-		
-		
         <!-- /theme JS files -->
 	</head>
 	
     <body>
-		
         <form method="post" name="frmSiteReviewSubmit" id="frmQuestionSubmit" container_name="sitereview" action="#"  enctype="multipart/form-data">
             <div class="review_sec">
                 <div class="review_chat42" style="margin:0 auto;">
@@ -331,8 +317,6 @@
 							</div>
                             <div id="uploadedQuestionFiles"></div>
 							
-							
-							
                             <h2>Contact Info</h2>
                             <div class="clearfix"></div>
                             <div class="much_bx name_bx">
@@ -341,11 +325,11 @@
                                 <div class="divider"></div>
                                 <div class="clearfix"></div>
                                 <div class="review_headline full_n_bx">Phone</div>
-                                <div class="very_much"><input name="phone" class="form-control" value="<?php echo $uSubscribers->phone; ?>" type="text"></div>
+                                <div class="very_much"><input name="phone" class="form-control" value="{{ $uSubscribers->phone }}" type="text"></div>
                                 <div class="divider"></div>
                                 <div class="clearfix"></div>
                                 <div class="review_headline full_n_bx">Email</div>
-                                <div class="very_much"><input name="emailid" class="form-control" value="<?php echo $uSubscribers->email; ?>" type="text" required="required" placeholder="admin@brandboost.io"></div>
+                                <div class="very_much"><input name="emailid" class="form-control" value="{{ $uSubscribers->email }}" type="text" required="required" placeholder="admin@brandboost.io"></div>
 							</div>
                             <div class="clearfix"></div>
 							
@@ -368,7 +352,7 @@
 							
                             <div class="ful_divider"></div>
                             <div class="bottom_btn_sec">
-                                <input type="hidden" name="campaign_id" value="<?php echo $brandboostID; ?>" />
+                                <input type="hidden" name="campaign_id" value="{{ $brandboostID }}" />
                                 <input type="submit" class="sav_con" value="Ask question" id="saveQuestionNow">
 								
                                 <div class="right_chck_box">
@@ -378,24 +362,13 @@
 									</label>
 								</div>
 							</div>
-							
 						</div>
-						
-						
-						
-						
                         <div class="clearfix"></div>
-
                         <!--<div class="bottom_sec"><span>Add your own review</span> <img src="assets/images/widget/arrow.png">		</div>-->
                     </div>
-
-
-
                 </div>
             </div>
-        </form>    
-
-
+        </form> 
 
         <script type="text/javascript">
 
@@ -407,11 +380,10 @@
                     } else {
                         $("#term_condition").hide();
                     }
-
                 });
 
                 Dropzone.options.myDropzone = {
-                    url: '<?php echo site_url("/dropzone/uploadQuestionFiles"); ?>',
+                    url: "{{ site_url('/dropzone/uploadQuestionFiles') }}",
                     uploadMultiple: false,
                     maxFiles: 10,
                     maxFilesize: 600,
@@ -420,7 +392,6 @@
                     success: function (response) {
                         $('#uploadedQuestionFiles').append(response.xhr.responseText);
                     }
-
                 }
 
                 setTimeout(function () {
@@ -432,7 +403,7 @@
                     $("#saveQuestionNow").attr("disabled", "disabled");
                     var formdata = new FormData(this);
                     $.ajax({
-                        url: "<?php echo base_url('/admin/questions/saveNewQuestion'); ?>",
+                        url: "{{ base_url('/admin/questions/saveNewQuestion') }}",
                         type: "POST",
                         data: formdata,
                         contentType: false,
@@ -441,7 +412,6 @@
                         dataType: "json",
                         success: function (response) {
                             if (response.status == 'success') {
-
                                 alert(response.msg);
                             } else {
                                 $("#saveQuestionNow").removeAttr("disabled");
@@ -459,14 +429,7 @@
                 $('.drop_rate').click(function() {
                     $('#myDropzone').trigger('click');
                 });
-
             });
-
-
-
         </script>
-
-
-
     </body>
 </html>

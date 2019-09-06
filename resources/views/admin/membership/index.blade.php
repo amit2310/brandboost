@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -9,11 +9,9 @@
 <div class="content">
     <div class="row mb20">
         <div class="col-lg-12 text-right">
-
             <a style="margin-left: 20px;" data-toggle="modal" data-target="#membershipLevel" class="btn bl_cust_btn btn-default" href="#"><i class="icon-make-group position-left"></i> ADD MEMBERSHIP LEVEL</a>
         </div>
     </div>
-
 
     <div class="row mb20">
         <div class="col-lg-12">
@@ -46,17 +44,16 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <h6 class="panel-title">Membership Levels</h6>
-                                                        <?php
+                                                        @php
                                                         $membershipLevel = 0;
                                                         foreach ($membership_data as $data) {
-
                                                             if ($data->type == 'membership') {
                                                                 $membershipLevel++;
                                                             }
                                                         }
-                                                        ?>
+                                                        @endphp
                                                         <div class="heading-elements">
-                                                            <span class="label bg-success heading-text"><?php echo $membershipLevel; ?> Membership Level</span>
+                                                            <span class="label bg-success heading-text">{{ $membershipLevel }} Membership Level</span>
                                                             <ul class="icons-list">
                                                                 <li class="dropdown">
                                                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> <span class="caret"></span></a>
@@ -90,10 +87,6 @@
                                                             <th>Price </th>
                                                             <th>Credits </th>
                                                             <th>Contacts Limit </th>
-                                                            <!--<th>Email Limit</th>
-                                                            <th>SMS Limit</th>
-                                                            <th>Text Review Limit </th>
-                                                            <th>Video Review Limit </th>-->
                                                             <th class="col-md-2">Date Created</th>
                                                             <th class="text-center">Status </th>
                                                             <th class="text-center">Action</th>
@@ -101,80 +94,75 @@
                                                     </thead>
 
                                                     <tbody>
-                                                        <?php
-                                                        foreach ($membership_data as $data) {
-                                                            if ($data->type == 'membership') {
-                                                                ?>
-                                                                <tr id="append-<?php echo $data->id; ?>" class="selectedClass">
-                                                                    <td style="display: none;"><?php echo date('m/d/Y', strtotime($data->created)); ?></td>
-                                                                    <td style="display: none;"><?php echo $data->id; ?></td>
-                                                                    <td style="width: 40px!important;"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $data->id; ?>" value="<?php echo $data->id; ?>" ></td>
-                                                                    <td><?php echo $data->level_name; ?></td>
+                                                        @foreach ($membership_data as $data)
+                                                            @if ($data->type == 'membership')
+                                                                <tr id="append-{{ $data->id }}" class="selectedClass">
+                                                                    <td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
+                                                                    <td style="display: none;">{{ $data->id }}</td>
+                                                                    <td style="width: 40px!important;"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $data->id }}" value="{{ $data->id }}" ></td>
+                                                                    <td>{{ $data->level_name }}</td>
                                                                     <td>
-                                                                        $<?php echo number_format($data->price, 2); ?>/<?php
-                                                                        if ($data->subs_cycle == 'monthly' || $data->subs_cycle == 'month') {
-                                                                            echo 'Month';
-                                                                        } else if ($data->subs_cycle == 'yearly' || $data->subs_cycle == 'year') {
-                                                                            echo 'Year';
-                                                                        } else if ($data->subs_cycle == 'weekly' || $data->subs_cycle == 'week') {
-                                                                            echo 'Week';
-                                                                        } else if ($data->subs_cycle == 'bi-yearly') {
-                                                                            echo '2 Year';
-                                                                        }
-                                                                        ?>
+                                                                        ${{ number_format($data->price, 2) }}/@if ($data->subs_cycle == 'monthly' || $data->subs_cycle == 'month')
+                                                                            {{ 'Month' }}
+                                                                        @else if ($data->subs_cycle == 'yearly' || $data->subs_cycle == 'year')
+                                                                            {{ 'Year' }}
+                                                                        @else if ($data->subs_cycle == 'weekly' || $data->subs_cycle == 'week')
+                                                                            {{ 'Week' }}
+                                                                        @else if ($data->subs_cycle == 'bi-yearly')
+                                                                            {{ '2 Year' }}
+                                                                        @endif
                                                                     </td>
-                                                                    <td><?php echo number_format($data->credits); ?></td>
-                                                                    <td><?php echo number_format($data->contact_limit); ?></td>
-                                                                    <!--<td><?php echo number_format($data->email_limit, 0); ?></td>
-                                                                    <td><?php echo number_format($data->sms_limit, 0); ?></td>
-                                                                    <td><?php echo number_format($data->text_review_limit, 0); ?></td>
-                                                                    <td><?php echo number_format($data->video_review_limit, 0); ?></td>-->
-                                                                    <td><h6 class="text-semibold"><?php echo date('M d, Y', strtotime($data->created)); ?><div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)) . ' (' . timeAgo($data->created) . ')'; ?></div></h6></td>
+                                                                    <td>{{ number_format($data->credits) }}</td>
+                                                                    <td>{{ number_format($data->contact_limit) }}</td>
+                                                                    <td>
+																		<h6 class="text-semibold">
+																			{{ date('M d, Y', strtotime($data->created)) }}
+																			<div class="text-muted text-size-small">
+																				{{ date('h:i A', strtotime($data->created)) }} ({{timeAgo($data->created)}})
+																			</div>
+																		</h6>
+																	</td>
                                                                     <td class="text-center">
-                                                                        <?php
-                                                                        if ($data->status == 1) {
-                                                                            ?><span class="label bg-success">Active</span><?php
-                                                                        } else {
-                                                                            ?><span class="label bg-danger">Inactive</span><?php
-                                                                        }
-                                                                        ?></td>
+                                                                        @if ($data->status == 1)
+                                                                            <span class="label bg-success">Active</span>
+																		@else
+																			<span class="label bg-danger">Inactive</span>
+																		@endif
+																	</td>
                                                                     <td class="text-center">
                                                                         <ul class="icons-list">
                                                                             <li class="dropdown">
                                                                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                                                 <ul class="dropdown-menu dropdown-menu-right">
                                                                                     <li>
-                                                                                        <?php
-                                                                                        if ($data->status == 1) {
-
-                                                                                            echo "<a membershipId='" . $data->id . "' change_status = '0' class='chg_status' data_type='Membership'><i class='icon-gear'></i> Inactive</a>";
-                                                                                        } else {
-                                                                                            echo "<a membershipId='" . $data->id . "' change_status = '1' class='chg_status' data_type='Membership'><i class='icon-gear'></i> Active</a>";
-                                                                                        }
-                                                                                        ?> </li>
+                                                                                        @if ($data->status == 1)
+                                                                                            <a membershipId='{{ $data->id }}' change_status = '0' class='chg_status' data_type='Membership'>
+																								<i class='icon-gear'></i> Inactive
+																							</a>
+                                                                                        @else
+																							<a membershipId='{{ $data->id }}' change_status = '1' class='chg_status' data_type='Membership'>
+																								<i class='icon-gear'></i> Active
+																							</a>
+                                                                                        @endif 
+																					</li>
                                                                                     <li>
-                                                                                        <a class="membershipEdit" memID="<?php echo $data->id; ?>"><i class="icon-gear"></i> Edit</a>
+                                                                                        <a class="membershipEdit" memID="{{ $data->id }}"><i class="icon-gear"></i> Edit</a>
                                                                                     </li>
                                                                                     <li> 
-                                                                                        <a style="cursor: pointer;" class="membershipDelete" memID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a>
+                                                                                        <a style="cursor: pointer;" class="membershipDelete" memID="{{ $data->id }}"><i class="icon-trash"></i> Delete</a>
                                                                                     </li>
                                                                                 </ul>
                                                                             </li>
                                                                         </ul>
                                                                     </td>
                                                                 </tr>
-                                                                <?php
-                                                            }
-                                                        }
-                                                        ?>
-
+															@endif
+                                                        @endforeach
                                                     </tbody>
-
                                                 </table>
                                             </div>
                                         </div>
                                         <!-- /marketing campaigns -->
-
                                     </div>
                                 </div>
                             </div>
@@ -502,30 +490,6 @@
                         
                     </div>
                     
-                    <!--<<div class="form-group">
-                        <label class="control-label col-lg-3">Contact Limit</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" name="contact_limit" placeholder="Enter contact limit" type="number" required>
-                        </div>
-                        
-                    </div>
-
-
-                    div class="form-group">
-                        <label class="control-label col-lg-3">Email Inivte Limit</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" name="topup_email_limit" value="" id="topup_email_limit" placeholder="500" type="text" required>
-
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-lg-3">SMS Inivte Limit</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" name="topup_sms_limit" id="topup_sms_limit" value="" placeholder="500" type="text">
-
-                        </div>
-                    </div>-->
 
                 </div>
 
