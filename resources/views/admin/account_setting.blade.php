@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -71,14 +71,14 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                         <div class="bbot p30 profile_photo_settings">
                             <div class="row">
                                 <div class="col-md-3"><p class="text-muted">Avatar</p></div>
-                                <div class="col-md-2 brig"><img class="avatar userAvatar" src="<?php echo $srcUserImg; ?>"/></div>
+                                <div class="col-md-2 brig"><img class="avatar userAvatar" src="{{ $srcUserImg }}"/></div>
                                 <div class="col-md-6 col-md-offset-1">
                                     <div class="form-group mb0">
                                         <label class="control-label">Photo</label>
                                         <div class="input-group dropzone" id="myDropzone_avatar">
                                             <span class="input-group-addon"><i class="icon-upload7"></i></span>
                                             <div class=""></div>
-                                            <input style="display: none;" type="text" name="avatar" id="avatar" value="<?php echo (!empty($aUInfo->avatar)) ? $aUInfo->avatar : ''; ?>" >
+                                            <input style="display: none;" type="text" name="avatar" id="avatar" value="{{ (!empty($aUInfo->avatar)) ? $aUInfo->avatar : '' }}" >
                                         </div>
 
 
@@ -95,7 +95,7 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                                     <div class="form-group">
                                         <label class="control-label">Firstname</label>
                                         <div class="">
-                                            <input name="firstname" id="firstname" class="form-control" required="" type="text" placeholder="maxive" value="<?php echo (!empty($aUInfo->firstname)) ? $aUInfo->firstname : ''; ?>">
+                                            <input name="firstname" id="firstname" class="form-control" required="" type="text" placeholder="maxive" value="{{ (!empty($aUInfo->firstname)) ? $aUInfo->firstname : '' }}">
                                         </div>
 
 
@@ -104,7 +104,7 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                                     <div class="form-group">
                                         <label class="control-label">Lastname</label>
                                         <div class="">
-                                            <input name="lastname" id="lastname" class="form-control" required="" type="text" placeholder="maxive" value="<?php echo (!empty($aUInfo->lastname)) ? $aUInfo->lastname : ''; ?>">
+                                            <input name="lastname" id="lastname" class="form-control" required="" type="text" placeholder="maxive" value="{{ (!empty($aUInfo->lastname)) ? $aUInfo->lastname : '' }}">
                                         </div>
                                     </div>
 
@@ -113,11 +113,13 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                                         <label class="control-label">Country</label>
                                         <div class="">
                                             <select class="form-control"  name="country">
-                                                <?php if (!empty($countries)) foreach ($countries as $country): ?>
-                                                        <option value="<?php echo $country->country_code; ?>" <?php echo ($country->country_code == $aUInfo->country) ? 'selected' : '' ?>>
-                                                            <?php echo $country->name; ?>
+                                                @if (!empty($countries)) 
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country->country_code }}" {{ ($country->country_code == $aUInfo->country) ? 'selected' : '' }}>
+                                                            {{ $country->name }}
                                                         </option>
-                                                    <?php endforeach; ?>
+                                                    @endforeach
+                                                @endif    
                                             </select>
                                         </div>
                                     </div>
@@ -125,13 +127,13 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                                     <div class="form-group">
                                         <label class="control-label w100">Phone number <span class="pull-right fsize11 text-muted">Display on public profile &nbsp; &nbsp;
                                                 <label class="custom-form-switch pull-right">
-                                                    <input class="field chk_change" name="phone_display" chkName="phone_display" value="<?php echo $phone_display; ?>" type="checkbox" <?php echo $phone_display == 1 ? 'checked' : ''; ?>>
+                                                    <input class="field chk_change" name="phone_display" chkName="phone_display" value="{{ $phone_display }}" type="checkbox" {{ ($phone_display == 1) ? 'checked' : '' }}>
                                                     <span class="toggle"></span>
                                                 </label>
                                             </span>
                                         </label>
                                         <div class="">
-                                            <input name="mobile" id="mobile" class="form-control" required="" type="text" placeholder="+3 8063 612 53 69" value="<?php echo (!empty($aUInfo->mobile)) ? $aUInfo->mobile : ''; ?>">
+                                            <input name="mobile" id="mobile" class="form-control" required="" type="text" placeholder="+3 8063 612 53 69" value="{{ (!empty($aUInfo->mobile)) ? $aUInfo->mobile : '' }}">
                                         </div>
                                     </div>
 
@@ -140,18 +142,18 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                                     <div class="form-group">
                                         <label class="control-label w100">Website <span class="pull-right fsize11 text-muted">Display on public profile &nbsp; &nbsp;
                                                 <label class="custom-form-switch pull-right">
-                                                    <input class="field chk_change" name="website_display" chkName="website_display" value="<?php echo $website_display; ?>" type="checkbox" <?php echo $website_display == 1 ? 'checked' : ''; ?>>
+                                                    <input class="field chk_change" name="website_display" chkName="website_display" value="{{ $website_display }}" type="checkbox" {{ ($website_display == 1) ? 'checked' : '' }}>
                                                     <span class="toggle"></span>
                                                 </label>
                                             </span>
                                         </label>
 
                                         <div class="">
-                                            <input name="website" id="website" class="form-control"  type="text" placeholder="www.wakers.co" value="<?php echo (!empty($aUInfo->website)) ? $aUInfo->website : ''; ?>">
+                                            <input name="website" id="website" class="form-control"  type="text" placeholder="www.wakers.co" value="{{ (!empty($aUInfo->website)) ? $aUInfo->website : '' }}">
                                         </div>
                                     </div>
 
-                                    <input type="hidden" name="userId" id="userId" value="<?php echo $userId; ?>">
+                                    <input type="hidden" name="userId" id="userId" value="{{ $userId }}">
 
                                     <!--====SAVE====-->
 
@@ -254,7 +256,7 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                                     <p class="pull-left mb0">Email notification<br>
                                         <span class="text-muted fsize11">Receive an email every time you get new event</span></p>
                                     <label class="custom-form-switch pull-right">
-                                        <input class="field chk_change" name="email_noti" chkName="email_noti" value="<?php echo $email_noti; ?>" type="checkbox" <?php echo $email_noti == 1 ? 'checked' : ''; ?>>
+                                        <input class="field chk_change" name="email_noti" chkName="email_noti" value="{{ $email_noti }}" type="checkbox" {{ ($email_noti == 1) ? 'checked' : '' }}>
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
@@ -262,7 +264,7 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                                 <div class="form-group">
                                     <label class="control-label">Email</label>
                                     <div class="">
-                                        <input name="user_email" class="form-control" value="<?php echo $aUInfo->email; ?>" type="text" placeholder="max@wakers.co" readonly>
+                                        <input name="user_email" class="form-control" value="{{ $aUInfo->email }}" type="text" placeholder="max@wakers.co" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -277,7 +279,7 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                                 <div class="form-group mb10">
                                     <p class="pull-left mb0">Password expiaration notification</p>
                                     <label class="custom-form-switch pull-right">
-                                        <input class="field chk_change" name="pass_ex_noti" chkName="pass_ex_noti" value="<?php echo $pass_ex_noti; ?>" type="checkbox" <?php echo $pass_ex_noti == 1 ? 'checked' : ''; ?>>
+                                        <input class="field chk_change" name="pass_ex_noti" chkName="pass_ex_noti" value="{{ $pass_ex_noti }}" type="checkbox" {{ ($pass_ex_noti == 1) ? 'checked' : '' }}>
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
@@ -285,7 +287,7 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                                 <div class="form-group mb10">
                                     <p class="pull-left mb0">New message notification</p>
                                     <label class="custom-form-switch pull-right">
-                                        <input class="field chk_change" name="new_msg_noti" chkName="new_msg_noti" value="<?php echo $new_msg_noti; ?>" type="checkbox" <?php echo $new_msg_noti == 1 ? 'checked' : ''; ?>>
+                                        <input class="field chk_change" name="new_msg_noti" chkName="new_msg_noti" value="{{ $new_msg_noti }}" type="checkbox" {{ ($new_msg_noti == 1) ? 'checked' : '' }}>
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
@@ -293,7 +295,7 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                                 <div class="form-group mb10">
                                     <p class="pull-left mb0">New task notifitcation</p>
                                     <label class="custom-form-switch pull-right">
-                                        <input class="field chk_change" name="new_task_noti" chkName="new_task_noti" value="<?php echo $new_task_noti; ?>" type="checkbox" <?php echo $new_task_noti == 1 ? 'checked' : ''; ?>>
+                                        <input class="field chk_change" name="new_task_noti" chkName="new_task_noti" value="{{ $new_task_noti }}" type="checkbox" {{ ($new_task_noti == 1) ? 'checked' : '' }}>
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
@@ -301,7 +303,7 @@ $new_contact_req_noti = $aUInfo->new_contact_req_noti;
                                 <div class="form-group mb0">
                                     <p class="pull-left mb0">New contact request notification</p>
                                     <label class="custom-form-switch pull-right">
-                                        <input class="field chk_change" name="new_contact_req_noti" chkName="new_contact_req_noti" value="<?php echo $new_contact_req_noti; ?>" type="checkbox" <?php echo $new_contact_req_noti == 1 ? 'checked' : ''; ?>>
+                                        <input class="field chk_change" name="new_contact_req_noti" chkName="new_contact_req_noti" value="{{ $new_contact_req_noti }}" type="checkbox" {{ ($new_contact_req_noti == 1) ? 'checked' : '' }}>
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
@@ -359,7 +361,7 @@ $(document).ready(function () {
 var myDropzoneLogoImg = new Dropzone(
         '#myDropzone_avatar', //id of drop zone element 1 
         {
-            url: '<?php echo base_url("webchat/dropzone/upload_profile_image"); ?>',
+            url: '{{ base_url("webchat/dropzone/upload_profile_image") }}',
             uploadMultiple: false,
             maxFiles: 1,
             maxFilesize: 600,
@@ -493,7 +495,7 @@ $(document).ready(function () {
             getCheckVal = 0;
         }
         $.ajax({
-            url: '<?php echo base_url('admin/account_setting/account_detail_check'); ?>',
+            url: "{{ base_url('admin/account_setting/account_detail_check') }}",
             type: "POST",
             data: {getCheckVal: getCheckVal, chkName: chkName},
             dataType: "json",

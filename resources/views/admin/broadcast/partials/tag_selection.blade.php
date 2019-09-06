@@ -1,11 +1,11 @@
-<?php
-if (!empty($oCampaignTags)) {
-    foreach ($oCampaignTags as $oRec) {
+@if (!empty($oCampaignTags))
+    @foreach ($oCampaignTags as $oRec)
         $aSelectedTags[] = $oRec->tag_id;
-    }
-}
-?>
-<div class="row" id="tagSection" <?php if ($oBroadcast->audience_type != 'tags'): ?>style="display:none;"<?php endif; ?>>
+    @endforeach
+@endif
+<div class="row" id="tagSection" 
+     @if ($oBroadcast->audience_type != 'tags') 
+      {!! 'style="display:none;"' !!}>
     <div class="col-md-12">
         <div class="panel panel-flat">
             <div class="panel-heading">
@@ -17,7 +17,7 @@ if (!empty($oCampaignTags)) {
                     <button type="button" class="btn btn-xs btn_white_table bkg_blue ml20" style="background:#4285f4!important;background-color:#4285f4!important;color:#ffffff!important;"><span id="totalTagCount"><?php echo count($aSelectedTags); ?></span> tags added</button>
 
                 </div>
-                
+
 
                 <div class="heading-elements">
                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
