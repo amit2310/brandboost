@@ -180,17 +180,7 @@
                 </div>
 
                 <div class="table-responsive">
-
-				@php
-				if (count($tagData) > 0) {
-					foreach ($tagData as $data) {
-						$tagData = \App\Models\Admin\TagsModel::getFeedbackByTagID($data->id);
-						if (count($tagData) > 0) {
-							$feedbackCount = '<a href="' . base_url('admin/tags/feedback/' . $data->id) . '" target="_blank"><span class="text-muted reviewnum">(' . count($tagData) . ' Feedback)</span></a>';
-						} else {
-							$feedbackCount = '<span class="text-muted reviewnum">(0 Feedback)</span>';
-						}
-						@endphp
+				@if (count($tagData) > 0)
                     <table class="table datatable-basic datatable-sorting">
                         <thead>
                             <tr>
@@ -205,145 +195,126 @@
                             </tr>
                         </thead>
                         <tbody>
-
-							<tr id="append-<?php echo $data->id; ?>" class="selectedClass">
-								<td style="display: none;"><?php echo date('m/d/Y', strtotime($data->tag_created)); ?></td>
-								<td style="display: none;"><?php echo $data->id; ?></td>
-								<td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $data->id; ?>" value="<?php echo $data->id; ?>" ><span class="custmo_checkmark"></span></label></td>
-								<td>
-									<div class="media-left media-middle"> 
-										<a class="icons square" href="#"><i class="icon-indent-decrease2 txt_blue"></i></a> 
-									</div>
-									<div class="media-left">
-									  <div><a href="#" class="text-default text-semibold"><?php echo $data->group_name; ?></a></div>
-									</div>
-								</td>
-								<td>
-									<button class="btn btn-xs btn_white_table pr10"><i class="icon-primitive-dot txt_green"></i> <?php echo $data->tag_name; ?></button>
-								</td>
-								
-								 <td>
-									<div class="media-left">
-										<div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($data->tag_created)); ?></a></div>
-										<div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->tag_created)); ?></div>
-									</div>
-								</td>
+							@endphp
+							foreach ($tagData as $data) {
+								$tagData = \App\Models\Admin\TagsModel::getFeedbackByTagID($data->id);
+								if (count($tagData) > 0) {
+									$feedbackCount = '<a href="' . base_url('admin/tags/feedback/' . $data->id) . '" target="_blank"><span class="text-muted reviewnum">(' . count($tagData) . ' Feedback)</span></a>';
+								} else {
+									$feedbackCount = '<span class="text-muted reviewnum">(0 Feedback)</span>';
+								}
+								@endphp
+								<tr id="append-{{ $data->id }}" class="selectedClass">
+									<td style="display: none;">{{ date('m/d/Y', strtotime($data->tag_created)) }}</td>
+									<td style="display: none;">{{ $data->id }}</td>
+									<td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $data->id }}" value="{{ $data->id }}" ><span class="custmo_checkmark"></span></label></td>
+									<td>
+										<div class="media-left media-middle"> 
+											<a class="icons square" href="#"><i class="icon-indent-decrease2 txt_blue"></i></a> 
+										</div>
+										<div class="media-left">
+										  <div><a href="#" class="text-default text-semibold">{{ $data->group_name }}</a></div>
+										</div>
+									</td>
+									<td>
+										<button class="btn btn-xs btn_white_table pr10"><i class="icon-primitive-dot txt_green"></i> {{ $data->tag_name }}</button>
+									</td>
 									
-								<td>
-									<a href="<?php echo base_url('admin/tags/feedback/' . $data->id);?>" target="_blank" class="text-default text-semibold"><?php echo count($tagData); ?></a>
-									<div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo count($tagData); ?> Feedbacks">
-										<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?php echo count($tagData); ?>" aria-valuemin="0" aria-valuemax="<?php echo count($tagData); ?>" style="width:100%"></div>
-									</div>
-								</td>
-								
-								
-								<td class="text-center">
-									<ul class="icons-list">  
-										<li class="dropdown"> <button type="button" class="btn btn-xs btn_white_table ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
-											<ul class="dropdown-menu dropdown-menu-right">
-												<?php if($canWrite): ?>
-												<li><a href="javascript:void(0);" class="deleteTagGroupEntity" tagid="<?php echo $data->id; ?>" groupid="<?php echo $data->group_id; ?>"><i class="icon-file-text2"></i> Delete</a></li>
-												<?php endif; ?>
-
-											</ul>
-										</li>
-									</ul>
-								</td>
-								
-							</tr>
-                                    
-
+									 <td>
+										<div class="media-left">
+											<div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($data->tag_created)) }}</a></div>
+											<div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->tag_created)) }}</div>
+										</div>
+									</td>
+										
+									<td>
+										<a href="{{ base_url('admin/tags/feedback/' . $data->id) }}" target="_blank" class="text-default text-semibold">{{ count($tagData) }}</a>
+										<div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ count($tagData) }} Feedbacks">
+											<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ count($tagData) }}" aria-valuemin="0" aria-valuemax="{{ count($tagData) }}" style="width:100%"></div>
+										</div>
+									</td>
+									
+									
+									<td class="text-center">
+										<ul class="icons-list">  
+											<li class="dropdown"> <button type="button" class="btn btn-xs btn_white_table ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
+												<ul class="dropdown-menu dropdown-menu-right">
+													@if($canWrite)
+														<li><a href="javascript:void(0);" class="deleteTagGroupEntity" tagid="{{ $data->id }}" groupid="{{ $data->group_id }}"><i class="icon-file-text2"></i> Delete</a></li>
+													@endif
+												</ul>
+											</li>
+										</ul>
+									</td>
+									
+								</tr>
+                            @php
+							}
+							@endphp
                         </tbody>
                     </table>
-
-                              <?php
-                                }
-                            }
-                            else
-                            { 
-                            ?>
-
-                              <table class="table datatable-basic datatable-sorting">
-                                    <thead>
-                                        <tr>
-                                        <th style="display: none;"></th>
-                                        <th style="display: none;"></th>
-                                        <th><i class="icon-price-tag2"></i>Tag Group</th>
-                                        <th><i class="icon-price-tag2"></i>Tag</th>
-                                        <th><i class="icon-calendar"></i>Created</th>
-                                        <th><i class="icon-atom"></i>Feedbacks</th>
-                                        <th class="text-center nosort"><i class="fa fa-dot-circle-o"></i>Action</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="12">
-                                                <div class="row">
-
-                                                    <div class="col-md-12">
-                                                        <div style="margin: 20px 0px 0;" class="text-center">
-                                                            <h5 class="mb-20">
-                        Looks Like You Don’t Have Any Tag Feedbacks <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
-                    </h5>
-                    </div>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </td>
-
-                                             <td style="display: none;"></td>
-                                            <td style="display: none;"></td>
-                                            <td style="display: none;"></td>
-                                            <td style="display: none;"></td>
-                                            <td style="display: none;"></td>
-                                            <td style="display: none;"></td>
-                                           
-                                           
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                            <?php
-                            }
-                            ?>  
-
-
+                @else
+					<table class="table datatable-basic datatable-sorting">
+						<thead>
+							<tr>
+							<th style="display: none;"></th>
+							<th style="display: none;"></th>
+							<th><i class="icon-price-tag2"></i>Tag Group</th>
+							<th><i class="icon-price-tag2"></i>Tag</th>
+							<th><i class="icon-calendar"></i>Created</th>
+							<th><i class="icon-atom"></i>Feedbacks</th>
+							<th class="text-center nosort"><i class="fa fa-dot-circle-o"></i>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan="12">
+									<div class="row">
+										<div class="col-md-12">
+											<div style="margin: 20px 0px 0;" class="text-center">
+												<h5 class="mb-20">
+													Looks Like You Don’t Have Any Tag Feedbacks <img src="{{ base_url('assets/images/smiley.png') }}"> <br>
+												</h5>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td style="display: none;"></td>
+								<td style="display: none;"></td>
+								<td style="display: none;"></td>
+								<td style="display: none;"></td>
+								<td style="display: none;"></td>
+								<td style="display: none;"></td>
+							</tr>
+						</tbody>
+					</table>
+				@endif
                 </div>
             </div>
             <!-- /marketing campaigns -->
         </div>
     </div>
     <!-- /dashboard content -->
-
 </div>
 <!-- /content area -->
 
 <script>
-
     $(document).ready(function() {
         $('#checkAll').change(function () {
-
             if (false == $(this).prop("checked")) {
-
                 $(".checkRows").prop('checked', false);
                 $(".selectedClass").removeClass('success');
                 $('.custom_action_box').hide();
             } else {
-
                 $(".checkRows").prop('checked', true);
                 $(".selectedClass").addClass('success');
                 $('.custom_action_box').show();
             }
-
         });
 
         $(document).on('click', '.checkRows', function () {
             var inc = 0;
-
-
             var rowId = $(this).val();
-
             if (false == $(this).prop("checked")) {
                 $('#append-' + rowId).removeClass('success');
             } else {
@@ -353,8 +324,8 @@
             $('.checkRows:checkbox:checked').each(function (i) {
                 inc++;
             });
+			
             if (inc == 0) {
-               
                 $('.custom_action_box').hide();
             } else {
                 $('.custom_action_box').show();
@@ -365,11 +336,9 @@
             if (totalCheckboxes > numberOfChecked) {
                 $('#checkAll').prop('checked', false);
             }
-
         });
 
         $(document).on('click', '#deleteButtonTagFeedback', function () {
-
             var val = [];
             $('.checkRows:checkbox:checked').each(function (i) {
                 val[i] = $(this).val();
@@ -377,7 +346,6 @@
             if (val.length === 0) {
                 alert('Please select a row.')
             } else {
-
                 var elem = $(this);
                 swal({
                     title: "Are you sure? You want to delete this record!",
@@ -394,7 +362,7 @@
                     if (isConfirm) {
                         $('.overlaynew').show();
                         $.ajax({
-                            url: '<?php echo base_url('admin/tags/deleteMultipalTagGroupEntity'); ?>',
+                            url: "{{ base_url('admin/tags/deleteMultipalTagGroupEntity') }}",
                             type: "POST",
                             data: {multiTagId: val},
                             dataType: "json",
@@ -408,39 +376,35 @@
                     }
                 });
             }
-
         });
 
 
-      $(document).on('click', '.deleteTagGroupEntity', function () {
-var elem = $(this);
-
+		$(document).on('click', '.deleteTagGroupEntity', function () {
+			var elem = $(this);
             deleteConfirmationPopup(
             "This record will deleted immediately.<br>You can't undo this action.", 
             function() {
-                      $('.overlaynew').show();
-                    var tagID = $(elem).attr('tagid');
-                    var groupID = $(elem).attr('groupid');
-                    $.ajax({
-                        url: '<?php echo base_url('admin/tags/deleteTagGroupEntity'); ?>',
-                        type: "POST",
-                        data: {id: tagID,_token: '{{csrf_token()}}'},
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = '';
-                                    }
-                        }
-                    });
+				$('.overlaynew').show();
+				var tagID = $(elem).attr('tagid');
+				var groupID = $(elem).attr('groupid');
+				$.ajax({
+					url: "{{ base_url('admin/tags/deleteTagGroupEntity') }}",
+					type: "POST",
+					data: {id: tagID,_token: '{{csrf_token()}}'},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							$('.overlaynew').hide();
+							window.location.href = '';
+						}
+					}
+				});
             });
-
         });
 		
 		$(document).on('click', '.editDataList', function () {
             $('.editAction').toggle();
         });
-
     });
     
 </script>

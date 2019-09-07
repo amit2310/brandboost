@@ -1,15 +1,16 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php
-$questionTitle = $oQuestion->question_title;
-$questionDescription = $oQuestion->question;
-?>
-<script type="text/javascript" src="<?php echo base_url('assets/js/viewbox.min.js'); ?>"></script>
+
+@php
+	$questionTitle = $oQuestion->question_title;
+	$questionDescription = $oQuestion->question;
+@endphp
+<script type="text/javascript" src="{{ base_url('assets/js/viewbox.min.js') }}"></script>
 <style>
     .viewbox-container{
         position: fixed;
@@ -154,7 +155,7 @@ $questionDescription = $oQuestion->question;
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
-                <h3 class="mt30"><img style="width: 18px;" src="<?php echo base_url(); ?>assets/images/review_icon.png"/> Question Details</h3>
+                <h3 class="mt30"><img style="width: 18px;" src="{{ base_url() }}assets/images/review_icon.png"/> Question Details</h3>
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">
@@ -174,13 +175,13 @@ $questionDescription = $oQuestion->question;
                     <h6 class="panel-title">Image & Video</h6>
                     <div class="heading-elements">
                         <div class="table_action_tool">
-                            <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                            <a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body p0" >
                     <div class="image_video">
-                        <?php
+                        @php
                         $mediaArray = unserialize($oQuestion->media_url);
                         if(!empty($mediaArray)) {
                         foreach ($mediaArray as $media) {
@@ -197,79 +198,74 @@ $questionDescription = $oQuestion->question;
                                 curl_close($ch);
                                 //$getFileSize = FileSizeConvert($fileSize);
 								$getFileSize = '';
-                                ?>
+                                @endphp
 
                                 <div class="p25 bbot">
                                     <div class="media-left media-middle pr40"> 
-                                        <a class="thumbnail2" href="<?php echo $videoImage; ?>"><img src="<?php echo $videoImage; ?>" class="br5" height="45px" width="60px"/></a>
+                                        <a class="thumbnail2" href="{{ $videoImage }}"><img src="{{ $videoImage }}" class="br5" height="45px" width="60px"/></a>
                                     </div>
                                     <div class="media-left media-middle pr10"> 
                                         <a class="icons" href="javascript:void(0)">
-                                            <?php
-                                            if ($ext == 'png') {
-                                                ?>
-                                                <img src="<?php echo base_url(); ?>assets/images/png.png" class="img-xs file" alt="">
-                                                <?php
-                                            } else {
-                                                ?>
-                                                <img src="<?php echo base_url(); ?>assets/images/jpg.png" class="img-xs file" alt="">
-                                            <?php }
-                                            ?>
-
+                                            @if ($ext == 'png')
+                                                <img src="{{ base_url() }}assets/images/png.png" class="img-xs file" alt="">
+                                            @else
+                                                <img src="{{ base_url() }}assets/images/jpg.png" class="img-xs file" alt="">
+                                            @endif
                                         </a> 
                                     </div>
                                     <div class="media-left">
                                         <div class="pt-5">
-                                            <a href="javascript:void(0)" class="text-default text-semibold"><?php echo $getFileSize; ?></a>
+                                            <a href="javascript:void(0)" class="text-default text-semibold">{{ $getFileSize }}</a>
                                         </div>
-                                        <div class="text-muted text-size-small"><?php echo '.' . strtoupper($ext); ?></div>
+                                        <div class="text-muted text-size-small">{{ '.' . strtoupper($ext) }}</div>
                                     </div>
                                 </div>
 
-                                <?php
-                            } else {
-                                $media_url = $media['media_url'];
-                                $videoImage = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $media_url;
-                                $ext = pathinfo($videoImage, PATHINFO_EXTENSION);
-                                $ch = curl_init($videoImage);
-                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-                                curl_setopt($ch, CURLOPT_HEADER, TRUE);
-                                curl_setopt($ch, CURLOPT_NOBODY, TRUE);
-                                $data = curl_exec($ch);
-                                $fileSize = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
-                                curl_close($ch);
-                                //$getFileSize = FileSizeConvert($fileSize);
-								$getFileSize = '';
-                                ?>
+                                @php
+								} else {
+									$media_url = $media['media_url'];
+									$videoImage = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" . $media_url;
+									$ext = pathinfo($videoImage, PATHINFO_EXTENSION);
+									$ch = curl_init($videoImage);
+									curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+									curl_setopt($ch, CURLOPT_HEADER, TRUE);
+									curl_setopt($ch, CURLOPT_NOBODY, TRUE);
+									$data = curl_exec($ch);
+									$fileSize = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+									curl_close($ch);
+									//$getFileSize = FileSizeConvert($fileSize);
+									$getFileSize = '';
+									@endphp
 
 
                                 <div class="p25 bbot">
                                     <div class="media-left media-middle pr40"> 
-                                        <a class="videoQuestion" style="cursor: pointer;" filepath="<?php echo $videoImage; ?>" fileext="<?php echo $ext; ?>">
-                                            <img src="<?php echo base_url(); ?>assets/images/media2.jpg"/></a>
+                                        <a class="videoQuestion" style="cursor: pointer;" filepath="{{ $videoImage }}" fileext="{{ $ext }}">
+                                            <img src="{{ base_url() }}assets/images/media2.jpg"/></a>
                                     </div>
                                     <div class="media-left media-middle pr10"> 
                                         <a class="icons" href="javascript:void(0)">
-                                            <img src="<?php echo base_url(); ?>assets/images/mp4.png" class="img-xs file" alt="">
+                                            <img src="{{ base_url() }}assets/images/mp4.png" class="img-xs file" alt="">
                                         </a> 
                                     </div>
                                     <div class="media-left">
                                         <div class="pt-5">
-                                            <a href="javascript:void(0)" class="text-default text-semibold"><?php echo $getFileSize; ?></a> 
+                                            <a href="javascript:void(0)" class="text-default text-semibold">{{ $getFileSize }}</a> 
                                         </div>
-                                        <div class="text-muted text-size-small"><?php echo '.' . strtoupper($ext); ?></div>
+                                        <div class="text-muted text-size-small">{{ '.' . strtoupper($ext) }}</div>
                                     </div>
                                 </div> 
-                                <?php
+                                @php
                             }
                         }
                     }
                     else 
                     {
-                        ?><div class="p25 bbot"><span><i>No Image found</i></span></div><?php
+                @endphp<div class="p25 bbot"><span><i>No Image found</i></span></div>
+				@php
                     }
 
-                        ?>
+                        @endphp
                     </div>
                 </div>
             </div>
@@ -279,7 +275,7 @@ $questionDescription = $oQuestion->question;
                     <h6 class="panel-title">Tags</h6>
                     <div class="heading-elements">
                         <div class="table_action_tool">
-                            <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                            <a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a>
                         </div>
                     </div>
                 </div>
@@ -287,22 +283,21 @@ $questionDescription = $oQuestion->question;
                     <div class="profile_sec">
 
                         <div class="p25">
-                            <?php
-                            if (!empty($oTags)) {
-                                foreach ($oTags as $oTag) {
-                                    ?>
-                                    <button class="btn btn-xs btn_white_table"><?php echo $oTag->tag_name; ?></button>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            <?php if (empty($oTags)): ?><span><i>No Tags found</i></span>&nbsp;<?php endif; ?> <button type="button" class="btn btn-xs plus_icon applyInsightTags" question_id="<?php echo base64_url_encode($oQuestion->id); ?>" action_name="question-tag"><i class="icon-plus3"></i></button>
-
+                            @if (!empty($oTags))
+                                @foreach ($oTags as $oTag)
+                                    <button class="btn btn-xs btn_white_table">{{ $oTag->tag_name }}</button>
+                                @endforeach
+                            @endif
+							
+                            @if (empty($oTags))
+								<span><i>No Tags found</i></span>&nbsp;
+							@endif
+							
+							<button type="button" class="btn btn-xs plus_icon applyInsightTags" question_id="{{ base64_url_encode($oQuestion->id) }}" action_name="question-tag"><i class="icon-plus3"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <!------------CENTER------------->
@@ -313,102 +308,88 @@ $questionDescription = $oQuestion->question;
                     <h6 class="panel-title">Question</h6>
                     <div class="heading-elements">
                         <div class="table_action_tool">
-                            <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                            <a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body p30 br0">
-                    <strong><?php echo $questionTitle; ?></strong>
-                    <p class="fsize13 mb20 lh25 txt_grey2"><?php echo $questionDescription; ?></p>
+                    <strong>{{ $questionTitle }}</strong>
+                    <p class="fsize13 mb20 lh25 txt_grey2">{{ $questionDescription }}</p>
 
-                    <?php
+                    @php
                     $defaultAvatar = base_url() . "assets/images/userp.png";
                     if ($oQuestion->avatar) {
                         $avatarImage = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/profile_image_9672_e3abdb9b595bb7fd46f89f7716447f38266ef481.jpg";
                     } else {
                         $avatarImage = $defaultAvatar;
                     }
-                    ?> 
-                    <div class="media-left media-middle pr10"> <a class="icons" href="#"><img onerror="this.src='<?php echo $defaultAvatar; ?>';" style="width: 18px;" src="<?php echo $avatarImage; ?>" class="img-circle" alt=""></a> </div>
+                    @endphp 
+					
+                    <div class="media-left media-middle pr10"> <a class="icons" href="#"><img onerror="this.src='{{ $defaultAvatar }}';" style="width: 18px;" src="{{ $avatarImage }}" class="img-circle" alt=""></a> </div>
                     <div class="media-left">
-                        <div class="text-muted">by <?php echo $oQuestion->firstname . " " . $oQuestion->lastname; ?>   <span class="ml20"><i class="icon-checkmark3 fsize12 txt_green"></i>&nbsp; Verified Purchase</span></div>
+                        <div class="text-muted">by {{ $oQuestion->firstname . " " . $oQuestion->lastname }}   <span class="ml20"><i class="icon-checkmark3 fsize12 txt_green"></i>&nbsp; Verified Purchase</span></div>
                     </div>
-
-
-
                 </div>
                 <div class="panel-footer p20 pl30 pr30 ">
                     <p class="mb0 fsize13">
-                        <span class="ml20"><i class="icon-comment fsize11 txt_purple"></i> &nbsp; <?php echo (count($oAnswers)) > 0 ? count($oAnswers) . ' Answers' : '0 Answers'; ?></span>
+                        <span class="ml20"><i class="icon-comment fsize11 txt_purple"></i> &nbsp; {{ (count($oAnswers)) > 0 ? count($oAnswers) . ' Answers' : '0 Answers' }}</span>
                     </p>
                 </div>
             </div>
             <!--=========Latest Comments===========-->
-            <?php if (!empty($oAnswers)) { ?>
+            @if (!empty($oAnswers))
                 <div class="panel panel-flat">
                     <div class="panel-heading">
-                        <h6 class="panel-title">Latest Answers <?php echo count($oAnswers) > 0 ? '(' . count($oAnswers) . ')' : 0; ?></h6>
+                        <h6 class="panel-title">Latest Answers {{ count($oAnswers) > 0 ? '(' . count($oAnswers) . ')' : 0 }}</h6>
                         <div class="heading-elements">
                             <div class="table_action_tool">
-                                <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                <a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a>
                             </div>
                         </div>
                     </div>
                     <div class="panel-body p0">
                         <div class="comment_sec">
                             <ul class="addMoreComment">
-                                <?php
-                                //pre($oAnswers);
+                                @php
                                 if (!empty($oAnswers)) {
 
                                     foreach ($oAnswers as $oAnswer) {
                                         $defaultAvatar = base_url() . "assets/images/userp.png";
                                         $avtarImage = $oAnswer->avatar == 'avatar_image.png' ? $defaultAvatar : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oAnswer->avatar;
 										$aHelpful = \App\Models\Admin\QuestionModel::countAnsHelpful($oAnswer->id);
-                                        ?>
+                                        @endphp
                                         <li class="bbot">
-
-                                            <div class="media-left"><img onerror="this.src='<?php echo $defaultAvatar; ?>'" width="36" src="<?php echo $avtarImage; ?>"/></div>
-
+                                            <div class="media-left"><img onerror="this.src='{{ $defaultAvatar }}'" width="36" src="{{ $avtarImage }}"/></div>
                                             <div class="media-left pr0 w100">
+                                                <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ $oAnswer->firstname . ' ' . $oAnswer->lastname }} <span class="dot">.</span> {{ timeAgo($oAnswer->created) }} <span class="dot">.</span> 
 
-                                                <p class="fsize14 txt_grey2 lh14 mb-15 "><?php echo $oAnswer->firstname . ' ' . $oAnswer->lastname; ?> <span class="dot">.</span> <?php echo timeAgo($oAnswer->created); ?> <span class="dot">.</span> 
-
-                                                    <?php if ($oAnswer->status == '1') { ?>
-                                                        <span class="txt_green"><i class="icon-checkmark3 fsize12 txt_green" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>"></i> Approve</span>
-                                                    <?php } ?>
-                                                    <?php if ($oAnswer->status == 0) { ?>
-
-                                                        <span class="txt_red"><i class="icon-checkmark3 fsize12 txt_red" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>"></i> Disapproved</span>
-
-                                                    <?php } ?>
-                                                    <?php if ($oAnswer->status == '2') { ?>
-                                                        <span class="media-annotation"> <span class="label bkg_grey txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="1" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>"> Approve</span> </span>
-                                                        <span class="media-annotation dotted"> <span class="label bkg_red txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="0" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>"> Disapprove</span> </span>
-                                                    <?php } ?>
+                                                    @if ($oAnswer->status == '1')
+                                                        <span class="txt_green"><i class="icon-checkmark3 fsize12 txt_green" answer_id="{{ base64_url_encode($oAnswer->id) }}"></i> Approve</span>
+                                                    @endif
+													
+                                                    @if ($oAnswer->status == 0)
+                                                        <span class="txt_red"><i class="icon-checkmark3 fsize12 txt_red" answer_id="{{ base64_url_encode($oAnswer->id) }}"></i> Disapproved</span>
+                                                    @endif
+													
+                                                    @if ($oAnswer->status == '2')
+                                                        <span class="media-annotation"> <span class="label bkg_grey txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="1" answer_id="{{ base64_url_encode($oAnswer->id) }}"> Approve</span> </span>
+                                                        <span class="media-annotation dotted"> <span class="label bkg_red txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="0" answer_id="{{ base64_url_encode($oAnswer->id) }}"> Disapprove</span> </span>
+                                                    @endif
                                                 </p>
 
                                                 <p class="fsize13 mb10 lh23 txt_grey2">
-                                                    <?php echo ($oAnswer->answer) ? nl2br(base64_decode($oAnswer->answer)) : 'N/A'; ?></p>
-
+													{{ ($oAnswer->answer) ? nl2br(base64_decode($oAnswer->answer)) : 'N/A' }}</p>
                                                 <div class="button_sec">
-                                                    <!-- <a class="btn comment_btn p7" href="javascript:void(0);"><i class="icon-thumbs-up2 txt_green"></i></a>
-                                                    <a class="btn comment_btn p7" href="javascript:void(0);"><i class="icon-thumbs-down2 txt_red"></i></a> -->
-													<div style="margin-bottom:10px; color:#888;"><?php echo $aHelpful['yes']; ?> Found this helpful</div>
-                                                    <a  href="javascript:void(0);" class="btn comment_btn txt_purple editAnswer" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>">Edit</a>
-                                                    <a  href="javascript:void(0);" class="btn comment_btn txt_purple deleteAnswer" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>">Delete</a>
+													<div style="margin-bottom:10px; color:#888;">{{ $aHelpful['yes'] }} Found this helpful</div>
+                                                    <a  href="javascript:void(0);" class="btn comment_btn txt_purple editAnswer" answer_id="{{ base64_url_encode($oAnswer->id) }}">Edit</a>
+                                                    <a  href="javascript:void(0);" class="btn comment_btn txt_purple deleteAnswer" answer_id="{{ base64_url_encode($oAnswer->id) }}">Delete</a>
                                                 </div>
-
-
-
                                             </div>
                                         </li>
-
-                                        <?php
+                                        @php
                                     }
                                 }
-                                ?>
-
+                                @endphp
                             </ul>
 
                             <?php /* if ($totalComment > 5) {
@@ -421,7 +402,7 @@ $questionDescription = $oQuestion->question;
                     </div>
 
                 </div>
-            <?php } ?>
+            @endif
             <!--=========Add Comment===========-->
             <form method="post" class="form-horizontal" id="addAnswer" action="javascript:void();">
                 <div class="panel panel-flat">
@@ -429,17 +410,16 @@ $questionDescription = $oQuestion->question;
                         <h6 class="panel-title">Add Answer</h6>
                         <div class="heading-elements">
                             <div class="table_action_tool">
-                                <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                <a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a>
                             </div>
                         </div>
                     </div>
                     <div class="panel-body br0">
-
                         <textarea name="txtAnswer" id="txtAnswer" required class="form-control addnote" placeholder="Start typing to leave your answer..."></textarea>
                     </div>
                     <div class="panel-footer p20 text-right">
                         <a style="cursor: pointer;"><i class="icon-hash text-muted"></i></a> &nbsp; &nbsp; <a style="cursor: pointer;"><i class="icon-reset text-muted"></i></a>
-                        <input type="hidden" id="question_id" name="question_id" value="<?php echo base64_url_encode($oQuestion->id); ?>">
+                        <input type="hidden" id="question_id" name="question_id" value="{{ base64_url_encode($oQuestion->id) }}">
                         <button type="submit" class="btn dark_btn btn-xs ml20">Add Answer</button>
                     </div>
                 </div>
@@ -453,7 +433,7 @@ $questionDescription = $oQuestion->question;
                     <h6 class="panel-title">Info</h6>
                     <div class="heading-elements">
                         <div class="table_action_tool">
-                            <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                            <a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a>
                         </div>
                     </div>
                 </div>
@@ -461,35 +441,30 @@ $questionDescription = $oQuestion->question;
                     <div class="interactions p25">
                         <ul>
                             <li><small>Ref</small> <strong>N/A</strong></li>
-                            <li><small>Name</small> <strong><?php echo $oQuestion->firstname . ' ' . $oQuestion->lastname; ?>  </strong></li>
-                            <li><small>Email</small> <strong><?php echo $oQuestion->email; ?></strong></li>
-                            <li><small>Phone</small> <strong><?php echo ($oQuestion->mobile) ? $oQuestion->mobile : 'N/A'; ?></strong></li>
-                            <li><small>Notification</small> <strong><?php echo ($oQuestion->system_notify) ? 'On' : 'Off'; ?></strong></li>
-                            <li><small>Id</small> <strong><?php echo $oQuestion->user_id; ?></strong></li>
-                            <li><small>Emails</small> <strong><?php echo ($oQuestion->email_notify) ? 'On' : 'Off'; ?></strong></li>
-                            <li><small>SMS</small> <strong><?php echo ($oQuestion->email_notify) ? 'On' : 'Off'; ?></strong></li>
+                            <li><small>Name</small> <strong>{{ $oQuestion->firstname . ' ' . $oQuestion->lastname }}  </strong></li>
+                            <li><small>Email</small> <strong>{{ $oQuestion->email }}</strong></li>
+                            <li><small>Phone</small> <strong>{{ ($oQuestion->mobile) ? $oQuestion->mobile : 'N/A' }}</strong></li>
+                            <li><small>Notification</small> <strong>{{ ($oQuestion->system_notify) ? 'On' : 'Off' }}</strong></li>
+                            <li><small>Id</small> <strong>{{ $oQuestion->user_id }}</strong></li>
+                            <li><small>Emails</small> <strong>{{ ($oQuestion->email_notify) ? 'On' : 'Off' }}</strong></li>
+                            <li><small>SMS</small> <strong>{{ ($oQuestion->email_notify) ? 'On' : 'Off' }}</strong></li>
                         </ul>
                     </div>
                     <div class="profile_headings">Question Notes <a class="pull-right plus_icon" href="#"><i class="icon-plus3"></i></a></div>
-                    <?php
-                    if (!empty($oNotes)) {
-                        foreach ($oNotes as $oNote) {
-                            ?>
+                    @if (!empty($oNotes))
+                        @foreach ($oNotes as $oNote)
                             <div class="p25 bbot">
-                                <p class="fsize12"><?php echo $oNote->notes; ?></p>
-                                <p><small class="text-muted">On <?php echo date('F d, Y h:i A', strtotime($oNote->created)); ?> <br>by <?php echo $oNote->firstname . ' ' . $oNote->lastname; ?></small></p>
+                                <p class="fsize12">{{ $oNote->notes }}</p>
+                                <p><small class="text-muted">On {{ date('F d, Y h:i A', strtotime($oNote->created)) }} <br>by {{ $oNote->firstname . ' ' . $oNote->lastname }}</small></p>
                                 <div class="text-right">
-                                    <a href="javascript:void(0)" class="editNote" noteid="<?php echo $oNote->id; ?>"> <span class="label addtag bkg_grey txt_white br5"> Modify</span></a>
-                                    <a href="javascript:void(0)" class="deleteNote" noteid="<?php echo $oNote->id; ?>"> <span class="label addtag bkg_red txt_white br5"> Delete</span></a>
+                                    <a href="javascript:void(0)" class="editNote" noteid="{{ $oNote->id }}"> <span class="label addtag bkg_grey txt_white br5"> Modify</span></a>
+                                    <a href="javascript:void(0)" class="deleteNote" noteid="{{ $oNote->id }}"> <span class="label addtag bkg_red txt_white br5"> Delete</span></a>
                                 </div>
                             </div>
-                            <?php
-                        }
-                    }else{
-                        echo '<div class="p25 bbot"><i>No Notes Available</i></div>';
-                    }
-                    ?>
-
+                        @endforeach
+                    @else
+                        <div class="p25 bbot"><i>No Notes Available</i></div>
+                    @endif
 
                     <div class="p25 btop">
                         <button class="btn dark_btn btn-xs mr20" data-toggle="modal" data-target="#addnotes">Add Note</button>	 
@@ -515,9 +490,6 @@ $questionDescription = $oQuestion->question;
                     <source src="" type="">
                 </video>
             </div>
-            <!-- <div class="modal-footer modalFooterBtn">
-                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-            </div> -->
         </div>
     </div>
 </div>
@@ -532,9 +504,8 @@ $questionDescription = $oQuestion->question;
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <strong>Question: <?php echo $questionTitle; ?></strong>
-                        <p class="fsize13 mb20 lh25 txt_grey2"><?php echo $questionDescription; ?>
-                        </p>
+                        <strong>Question: {{ $questionTitle }}</strong>
+                        <p class="fsize13 mb20 lh25 txt_grey2">{{ $questionDescription }}</p>
                         <label class="control-label col-lg-3">Answer</label>
                         <div class="col-lg-9">
                             <textarea class="form-control" rows="6"  placeholder="Leave Answer" name="txtAnswer" required ></textarea>
@@ -543,7 +514,7 @@ $questionDescription = $oQuestion->question;
 
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="question_id" name="question_id" value="<?php echo base64_url_encode($oQuestion->id); ?>">
+                    <input type="hidden" id="question_id" name="question_id" value="{{ base64_url_encode($oQuestion->id) }}">
                     <button class="btn btn-link" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
                     <button type="submit" class="btn dark_btn"><i class="icon-check"></i> Add Answer</button>
                 </div>
@@ -595,7 +566,6 @@ $questionDescription = $oQuestion->question;
                             <textarea class="form-control"  placeholder="Note" name="edit_note_content" id="edit_note_content" required ></textarea>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="edit_noteid" id="edit_noteid" value="">
@@ -622,9 +592,9 @@ $questionDescription = $oQuestion->question;
                             <textarea class="form-control" name="notes" style="padding: 20px; height: 75px;" placeholder="Add Note"></textarea>
                         </div>
                         <div class="col-md-12 text-right ">
-                            <input type="hidden" name="question_id" id="notes_question_id" value="<?php echo base64_url_encode($oQuestion->id); ?>">
-                            <input type="hidden" name="cid" id="cid" value="<?php echo $userID; ?>">
-                            <input type="hidden" name="bid" id="bid" value="<?php echo $brandboostID; ?>">
+                            <input type="hidden" name="question_id" id="notes_question_id" value="{{ base64_url_encode($oQuestion->id) }}">
+                            <input type="hidden" name="cid" id="cid" value="{{ $userID }}">
+                            <input type="hidden" name="bid" id="bid" value="{{ $brandboostID }}">
                             <button data-toggle="modal" data-target="#addnotes" type="button" id="saveQuestionNotes" class="btn dark_btn"> Add Notes &nbsp; <i class="fa fa-angle-double-right"></i> </button>
                         </div>
                     </form>
@@ -682,11 +652,9 @@ $questionDescription = $oQuestion->question;
 </div>
 
 
-
 <script>
 
     $(document).ready(function () {
-
         $(function () {
             $('.thumbnail2').viewbox();
         });
@@ -710,7 +678,7 @@ $questionDescription = $oQuestion->question;
             var formData = new FormData($(this)[0]);
             formData.append('_token', '{{csrf_token()}}');
             $.ajax({
-                url: '<?php echo base_url('admin/questions/add_answer'); ?>',
+                url: "{{ base_url('admin/questions/add_answer') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -731,7 +699,7 @@ $questionDescription = $oQuestion->question;
         $(document).on('click', '.editAnswer', function () {
             var answerID = $(this).attr('answer_id');
             $.ajax({
-                url: '<?php echo base_url('admin/questions/getAnswer'); ?>',
+                url: "{{ base_url('admin/questions/getAnswer') }}",
                 type: "POST",
                 data: {answerID: answerID, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -752,7 +720,7 @@ $questionDescription = $oQuestion->question;
             var formData = new FormData($(this)[0]);
             formData.append('_token', '{{csrf_token()}}');
             $.ajax({
-                url: '<?php echo base_url('admin/questions/updateAnswer'); ?>',
+                url: "{{ base_url('admin/questions/updateAnswer') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -788,7 +756,7 @@ $questionDescription = $oQuestion->question;
 				if (isConfirm) {
 					$('.overlaynew').show();
 					$.ajax({
-						url: '<?php echo base_url('admin/questions/delete_answer'); ?>',
+						url: "{{ base_url('admin/questions/delete_answer') }}",
 						type: "POST",
 						data: {answerId: answerId, _token: '{{csrf_token()}}'},
 						dataType: "json",
@@ -816,7 +784,7 @@ $questionDescription = $oQuestion->question;
             var answer_id = $(this).attr('answer_id');
 
             $.ajax({
-                url: '<?php echo base_url('admin/questions/update_answer_status'); ?>',
+                url: "{{ base_url('admin/questions/update_answer_status') }}",
                 type: "POST",
                 data: {status: status, answer_id: answer_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -836,7 +804,7 @@ $questionDescription = $oQuestion->question;
             var question_id = $(this).attr("question_id");
             var action_name = $(this).attr("action_name");
             $.ajax({
-                url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
+                url: "{{ base_url('admin/tags/listAllTags') }}",
                 type: "POST",
                 data: {question_id: question_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -862,13 +830,14 @@ $questionDescription = $oQuestion->question;
                 }
             });
         });
+		
 
         $("#frmQuestionTagListModal").submit(function () {
             var formdata = $("#frmQuestionTagListModal").serialize();
             formdata += '&_token={{csrf_token()}}';
             $('.overlaynew').show();
             $.ajax({
-                url: '<?php echo base_url('admin/tags/applyQuestionTag'); ?>',
+                url: "{{ base_url('admin/tags/applyQuestionTag') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -889,7 +858,7 @@ $questionDescription = $oQuestion->question;
             formdata += '&_token={{csrf_token()}}';
             $('.overlaynew').show();
             $.ajax({
-                url: "<?php echo base_url('admin/questions/saveQuestionNotes'); ?>",
+                url: "{{ base_url('admin/questions/saveQuestionNotes') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -909,7 +878,7 @@ $questionDescription = $oQuestion->question;
             $('.overlaynew').show();
             var noteId = $(this).attr('noteid');
             $.ajax({
-                url: '<?php echo base_url('admin/questions/getQuestionNotes'); ?>',
+                url: "{{ base_url('admin/questions/getQuestionNotes') }}",
                 type: "POST",
                 data: {noteid: noteId, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -933,7 +902,7 @@ $questionDescription = $oQuestion->question;
             var formData = new FormData($(this)[0]);
             formData.append('_token','{{csrf_token()}}');
             $.ajax({
-                url: '<?php echo base_url('admin/questions/updateQuestionNote'); ?>',
+                url: "{{ base_url('admin/questions/updateQuestionNote') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -970,7 +939,7 @@ $questionDescription = $oQuestion->question;
 				if (isConfirm) {
 					$('.overlaynew').show();
 					$.ajax({
-						url: '<?php echo base_url('admin/questions/deleteQuestionNote'); ?>',
+						url: "{{ base_url('admin/questions/deleteQuestionNote') }}",
 						type: "POST",
 						data: {noteid: noteId, _token: '{{csrf_token()}}'},
 						dataType: "json",
