@@ -212,7 +212,7 @@
                 <div class="panel panel-flat">
                     <!-- ****** Load Smart Popup ***** -->
                     @if (!empty($result))
-						{{ @include('admin.components.smart-popup.smart-feedback-widget') }}
+						@include('admin.components.smart-popup.smart-feedback-widget')
                     @endif
 
                     <!-- ****** end ********-->

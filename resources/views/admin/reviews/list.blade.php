@@ -1,4 +1,4 @@
-<?php
+@php
 defined('BASEPATH') OR exit('No direct script access allowed');
 if (!empty($oCampaign)) {
     //permissions
@@ -16,7 +16,6 @@ if (!empty($oCampaign)) {
     //Total Reviews
     $totalReviews = sizeof($aReviews);
     
-    //pre($aReviews);
     if(!empty($aReviews)){
         
         foreach($aReviews as $arr){
@@ -24,20 +23,19 @@ if (!empty($oCampaign)) {
             break;
         }
     }
-    
-    //pre($aLatestReview);
 }
-?>
+@endphp
+
 <style>
-    .grey{ color:#ccc!important;}
-    .externalpopup_vid{ position:absolute; margin:0;  /*top:30px;*/ bottom:30px;  left:30px; width:400px;}
+.grey{ color:#ccc!important;}
+.externalpopup_vid{ position:absolute; margin:0;  /*top:30px;*/ bottom:30px;  left:30px; width:400px;}
 .externalpopup_txt{ position:absolute; margin:0; top:30px; bottom:30px;   right:30px; width:400px;}
 
 .modal-body{ padding:0px;}
 .modal-content{box-shadow:none!important; border:none;}
 
 /*============video text review=========*/
-.video_review{ width: 100%; margin-bottom: 0px;  border-radius: 6px;  background-color: #ffffff;  /*box-shadow: 0 5px 30px 0 rgba(144, 144, 144, 0.25);*/ padding:10px 15px; min-height:auto; box-shadow:none!important; 	-webkit-box-shadow: 0 5px 40px rgba(0,0,0,.16) !important;
+.video_review{ width: 100%; margin-bottom: 0px;  border-radius: 6px;  background-color: #ffffff;  /*box-shadow: 0 5px 30px 0 rgba(144, 144, 144, 0.25);*/ padding:10px 15px; min-height:auto; box-shadow:none!important; -webkit-box-shadow: 0 5px 40px rgba(0,0,0,.16) !important;
 	box-shadow: 0 5px 40px rgba(0,0,0,.16) !important;
 	border-radius: 8px !important; border:none;}
 .video_review hr{ border-top: 1px solid #e3e3e3; margin:10px 0px;}
@@ -227,9 +225,6 @@ if (!empty($oCampaign)) {
                             <img src="<?php echo base_url(); ?>assets/images/small_logo.png"/>
                         </div>
                     </div>
-
-
-
                 </div>
                 <?php endforeach; ?>
                 <?php endif; ?>
@@ -238,8 +233,6 @@ if (!empty($oCampaign)) {
             <div class="clearfix"></div>
 
         </div>
-
-
     </div>
 </section>
 <?php endif; ?>
@@ -270,20 +263,20 @@ if (!empty($oCampaign)) {
 					<p><strong>Product: <?php echo $oCampaign->brand_title; ?></strong></p>
 					<hr>
 					<p>
-                                            <span>
-                                                
-                                    <?php for($i=0; $i< $aLatestReview['ratings']; $i++){ ?>
-                                    <i class="fa yellow fa-star"></i>
-                                    <?php } ?>
-                                    <?php if($i<5){
-                                        for($j=$i; $j<5; $j++){
-                                           ?>
-                                    <i class="fa fa-star"></i>
-                                    <?php
-                                        }
-                                    } ?>
-                                    
-                                            </span><br><?php echo $totalReviews; ?> Customer Reviews</p>
+					<span>
+
+					<?php for($i=0; $i< $aLatestReview['ratings']; $i++){ ?>
+					<i class="fa yellow fa-star"></i>
+					<?php } ?>
+					<?php if($i<5){
+					for($j=$i; $j<5; $j++){
+					?>
+					<i class="fa fa-star"></i>
+					<?php
+					}
+					} ?>
+
+					</span><br><?php echo $totalReviews; ?> Customer Reviews</p>
 				</div>
 				
 				
@@ -295,24 +288,23 @@ if (!empty($oCampaign)) {
 			
 			<div class="row">
 				<div class="col-md-12 <?php if($aLatestReview['review_type'] == 'video'):?>text-center<?php endif;?>">
-					<!--<iframe src="https://www.youtube-nocookie.com/embed/_BOdEeZmns0" allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0"></iframe>-->
-                                    <?php if($aLatestReview['review_type'] == 'text'){
-                                    echo $aLatestReview['comment_text'];
-                                }else if($aLatestReview['review_type'] == 'video'){
-                                    ?>
-                                    <video width="400" controls style="width:100%">
-                                    <source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $aLatestReview['comment_video'];?>" type="video/mp4">
-                                </video>
-                                    
-                                    <?php
-                                }
-                                ?>
+					<?php if($aLatestReview['review_type'] == 'text'){
+					echo $aLatestReview['comment_text'];
+					}else if($aLatestReview['review_type'] == 'video'){
+					?>
+					<video width="400" controls style="width:100%">
+					<source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $aLatestReview['comment_video'];?>" type="video/mp4">
+					</video>
+
+					<?php
+					}
+					?>
 				</div>
 			</div>
 			<?php if ($bAllowHelpful): ?>
 			<div class="row">
 				<div class="col-md-12 mtop10 text-center">
-                                    <h4 class="review"><span id="bbhelpfulcount"><?php echo ($aLatestReview['total_helpful'])? $aLatestReview['total_helpful']: 0 ;?></span> people found this helpful. Was this review helpful to you?</h4>
+                    <h4 class="review"><span id="bbhelpfulcount"><?php echo ($aLatestReview['total_helpful'])? $aLatestReview['total_helpful']: 0 ;?></span> people found this helpful. Was this review helpful to you?</h4>
 					<div><button class="btn grey_btn btn-sm bbhelpful">Yes</button> <button class="btn grey_btn btn-sm bbhelpful">No</button></div>
 					<a class="blue_link" href="#">See All <?php echo $totalReviews;?> Customer Reviews</a>
 				</div>
@@ -368,30 +360,18 @@ if (!empty($oCampaign)) {
                                 </p>
 				</div>
 				<div class="col-md-6 text-right">
-				<img src="http://www.brandboost.io/1/images/small_logo.png">
+				<img src="{{ base_url() }}1/images/small_logo.png">
 				</div>
 			</div>
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		</div>
       </div>
-     
     </div>
   </div>
 </div>
 <script>
     $(window).load(function(){        
-   $('#reviewvidPopup').modal('show');
-   //$('#reviewtxtPopup').modal('show');
+		$('#reviewvidPopup').modal('show');
     });
     
     
@@ -400,7 +380,7 @@ if (!empty($oCampaign)) {
             var bbhaction = $(this).text();
             var bbrid = $("#bbrid").val();
             $.ajax({
-                url: "http://brandboost.io/reviews/saveHelpful/",
+                url: "{{ base_url() }}reviews/saveHelpful/",
                 type: "POST",
                 data: {bbrid:bbrid, ha:bbhaction},
                 dataType: "json",
@@ -413,26 +393,18 @@ if (!empty($oCampaign)) {
                     alert(response.msg);
                 }
             });
-          
         });
             
               
         $("#bbcmt").blur(function(){
             $(".cmt-ctr").show();
-            
-           
         });
         
         $("#bbcmtsubmit").click(function(){
             $(this).attr("disabled", "disabled");
-        
-        var formdata = $("#frmbbcmt").serialize();
-            //e.preventDefault();
-            // var formdata = $('#logo_img').prop('files')[0];
-            //var formdata = new FormData();
-            //formdata.append('logo_img', formdata);
+			var formdata = $("#frmbbcmt").serialize();
             $.ajax({
-                url: "http://brandboost.io/reviews/addcomment/",
+                url: "{{ base_url() }}reviews/addcomment/",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -447,17 +419,12 @@ if (!empty($oCampaign)) {
                         $(".cmt-alert, .cmt-alert-error-msg").show();
                         $(".cmt-alert-success-msg").hide();
                     }
-
                 },
                 error: function (response) {
                     alert(response.msg);
                 }
             });
-          
         });
     });
-	
-
-    
 </script>
 
