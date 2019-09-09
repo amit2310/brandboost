@@ -1,4 +1,4 @@
-<div class="tab-pane <?php echo $clickStatus; ?>" id="right-icon-tab3">
+<div class="tab-pane {{ $clickStatus }}" id="right-icon-tab3">
     <div class="row">
         <div class="col-lg-12">
             <!-- Marketing campaigns -->
