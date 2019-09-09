@@ -1,5 +1,5 @@
 @if (!empty($oCampaignLists))
-    @foreach ($oCampaignLists as $oRec)        
+    @foreach ($oCampaignLists as $oRec)
         <button class="btn btn-xs btn_white_table remove"><img src="{{ base_url() }}assets/images/red_list.png"> {{ $oRec->list_name</button>
     @endforeach
 @endif
@@ -15,14 +15,14 @@ if (!empty($oCampaignTags)) {
     foreach ($aTags as $oTag) {
         if (in_array($oTag->tagid, $aSelectedTags)){
             @endphp
-            <button class="btn btn-xs btn_white_table remove"><img src="{{ base_url() }}assets/images/red_hash.png"> {{ $oTag->tag_name }} </button>
+            <button class="btn btn-xs btn_white_table remove"><img alt="" src="{{ base_url() }}assets/images/red_hash.png"> {{ $oTag->tag_name }} </button>
             @php
         }
     }
 }
 @endphp
 
-@if (!empty($oCampaignSegments)) 
+@if (!empty($oCampaignSegments))
     @foreach ($oCampaignSegments as $oRec)
         <button class="btn btn-xs btn_white_table remove"><img src="{{ base_url() }} assets/images/filter_red_10.png"> {{ $oRec->segment_name }}</button>
     @endforeach
@@ -33,8 +33,8 @@ if (!empty($oCampaignTags)) {
     <button class="btn btn-xs btn_white_table remove"><img src="{{ base_url() }}assets/images/user_red_10.png"> {{ count($oCampaignContacts) }} Contacts</button>
 @endif
 
-@if ($bSummaryExclude != true)        
-    <button class="btn btn-xs btn_white_table remove circle viewBroadcastExcludeOptionSmartPopup" broadcast-id="{{ $broadcastID }}"><img class="plusicon" src="{{ base_url() }}assets/images/red_plus.png"/></button>        
+@if ($bSummaryExclude != true)
+    <button class="btn btn-xs btn_white_table remove circle viewBroadcastExcludeOptionSmartPopup" broadcast-id="{{ $broadcastID }}"><img class="plusicon" src="{{ base_url() }}assets/images/red_plus.png"/></button>
 @endif
 
 

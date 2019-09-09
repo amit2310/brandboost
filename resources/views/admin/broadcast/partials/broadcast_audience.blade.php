@@ -1,41 +1,45 @@
-<?php
-$recordSource = !(empty($recordSource)) ? $recordSource : '';
-$moduleName = !(empty($moduleName)) ? $moduleName : 'broadcast';
-$aSelectedContacts = !(empty($aSelectedContacts)) ? $aSelectedContacts : array();
+@php
+    $recordSource = !(empty($recordSource)) ? $recordSource : '';
+    $moduleName = !(empty($moduleName)) ? $moduleName : 'broadcast';
+    $aSelectedContacts = !(empty($aSelectedContacts)) ? $aSelectedContacts : array();
 
-if ($recordSource == 'contact-selection') {
-    $tableID = 'broadcastAudience';
-    $prefix = 'cl';
-} else if ($recordSource == 'review-audience') {
-    $tableID = 'editBroadcastAudience';
-    $prefix = 'ml';
-} else {
-    $tableID = 'broadcastAudience2';
-    $prefix = '';
-}
-?>
-
-<?php if (count($oBroadcastSubscriber) > 0) { ?>
-    <table class="table" id="<?php echo $tableID; ?>">
+    if ($recordSource == 'contact-selection') {
+        $tableID = 'broadcastAudience';
+        $prefix = 'cl';
+    } else if ($recordSource == 'review-audience') {
+        $tableID = 'editBroadcastAudience';
+        $prefix = 'ml';
+    } else {
+        $tableID = 'broadcastAudience2';
+        $prefix = '';
+    }
+@endphp
+@if (count($oBroadcastSubscriber) > 0)
+    <table class="table" id="{{ $tableID }}">
         <thead>
-            <tr>
-                <th style="display: none;"></th>
-                <th style="display: none;"></th>
-                <th class="nosort"><div class="brig pr10 editActionContact" style="display:none;">
-                    <label class="custmo_checkbox pull-left" >
-						<input type="checkbox" name="checkAll[]" broadcast_id="<?php echo !empty($oBroadcast) ? $oBroadcast->broadcast_id : ''; ?>" class="control-primary" id="checkAllContact" >
-						<span class="custmo_checkmark"></span>
-					</label>
-                    </div> &nbsp;&nbsp;<i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i>Name</th>
-                <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_email_small.png"></i>Email</th>
-                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Phone</th>
-                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_social.png"></i>Social</th>
-                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_id.png"></i>Tags</th>
-                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Created</th>
-            </tr>
+        <tr>
+            <th style="display: none;"></th>
+            <th style="display: none;"></th>
+            <th class="nosort">
+                <div class="brig pr10 editActionContact" style="display:none;">
+                    <label class="custmo_checkbox pull-left">
+                        <input type="checkbox" name="checkAll[]"
+                               broadcast_id="{{ !empty($oBroadcast) ? $oBroadcast->broadcast_id : '' }}"
+                               class="control-primary" id="checkAllContact">
+                        <span class="custmo_checkmark"></span>
+                    </label>
+                </div> &nbsp;&nbsp;<i class=""><img src="{{ base_url() }}assets/images/icon_name.png"></i>Name
+            </th>
+            <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_email_small.png"></i>Email
+            </th>
+            <th><i class=""><img src="{{ base_url() }}assets/images/icon_device.png"></i>Phone</th>
+            <th><i class=""><img src="{{ base_url() }}assets/images/icon_social.png"></i>Social</th>
+            <th><i class=""><img src="{{ base_url() }}assets/images/icon_id.png"></i>Tags</th>
+            <th><i class=""><img src="{{ base_url() }}assets/images/icon_clock.png"></i>Created</th>
+        </tr>
         </thead>
         <tbody>
-            <?php
+        @php
             foreach ($oBroadcastSubscriber as $oContact) {
                 $subscriberID = $oContact->subscriber_id;
                 $oTags = $mTags->getSubscriberTags($subscriberID);
@@ -52,101 +56,141 @@ if ($recordSource == 'contact-selection') {
                     } else {
                         $profileImage = '<a class="icons s32" href="' . base_url() . 'admin/contacts/profile/' . $oContact->subscriber_id . '"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $userData->avatar . '" onerror="this.src=\'/assets/images/userp.png\'" class="img-circle img-xs" alt=""></a>';
                     }
-                    ?>
-                    <tr id="append-con-<?php echo $prefix; ?>-<?php echo $oContact->subscriber_id; ?>" class="selectedClass">
-                        <td style="display: none;"><?php echo date('m/d/Y', strtotime($oContact->created)); ?></td>
-                        <td style="display: none;"><?php echo $oContact->subscriber_id; ?></td>
-                        <td>											
-                            <div class="media-left brig pr10 editActionContact" style="display:none;">
-                                <label class="custmo_checkbox ">
-                                    <input type="checkbox" name="checkRows[]" class="addToBroadcast" value="<?php echo $oContact->subscriber_id; ?>" <?php if (in_array($oContact->subscriber_id, $aSelectedContacts)): ?>checked="checked"<?php endif; ?> tblid="<?php echo $tableID; ?>" >
-                                    <span class="custmo_checkmark sblue"></span>
-                                </label>
-                            </div>
-                            <div class="media-left media-middle" class="viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>"> <?php echo @showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
-                            <div class="media-left" class="viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>">
-                                <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot"><?php echo $oContact->firstname; ?> <?php echo $oContact->lastname; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($oContact->country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
-                            </div>
-                        </td>
+        @endphp
+        <tr id="append-con-{{ $prefix }}-{{ $oContact->subscriber_id }}" class="selectedClass">
+            <td style="display: none;">{{ date('m/d/Y', strtotime($oContact->created)) }}</td>
+            <td style="display: none;">{{ $oContact->subscriber_id }}</td>
+            <td>
+                <div class="media-left brig pr10 editActionContact" style="display:none;">
+                    <label class="custmo_checkbox ">
+                        <input type="checkbox" name="checkRows[]" class="addToBroadcast"
+                               value="{{ $oContact->subscriber_id }}"
+                               @if (in_array($oContact->subscriber_id, $aSelectedContacts))
+                               checked="checked"
+                               @endif
+                               tblid="{{ $tableID }}">
+                        <span class="custmo_checkmark sblue"></span>
+                    </label>
+                </div>
+                <div class="media-left media-middle" class="viewContactSmartPopup"
+                     data-modulesubscriberid="{{ $oContact->id }}"
+                     data-modulename="{{ $moduleName }}"> {{ @showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname) }} </div>
+                <div class="media-left" class="viewContactSmartPopup" data-modulesubscriberid="{{ $oContact->id }}"
+                     data-modulename="{{ $moduleName }}">
+                    <div class="pt-5"><a href="javascript:void(0);"
+                                         class="text-default text-semibold bbot">{{ $oContact->firstname }} {{ $oContact->lastname }}</a>
+                        <img class="flags"
+                             src="{{ base_url() }}assets/images/flags/{{ strtolower($oContact->country_code) }}.png"
+                             onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
+                </div>
+            </td>
 
-                        <td class="viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>">											
-                            <div class="media-left pull-right pr0"><a href="javascript:void(0);" class="text-default text-semibold"><?php echo $oContact->email; ?></a> </div>
+            <td class="viewContactSmartPopup" data-modulesubscriberid="{{ $oContact->id }}"
+                data-modulename="{{ $moduleName }}">
+                <div class="media-left pull-right pr0"><a href="javascript:void(0);"
+                                                          class="text-default text-semibold">{{ $oContact->email }}</a>
+                </div>
 
-                        </td>
+            </td>
 
-                        <td class="viewContactSmartPopup" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>">
-                            <div class="media-left">
-                                <div class="pt-5"><span class="text-default text-semibold dark"><?php echo $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oContact->phone); ?></span></div>
+            <td class="viewContactSmartPopup" data-modulesubscriberid="{{ $oContact->id }}"
+                data-modulename="{{ $moduleName }}">
+                <div class="media-left">
+                    <div class="pt-5"><span
+                            class="text-default text-semibold dark">{{ $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oContact->phone) }}</span>
+                    </div>
 
-                            </div>
-                        </td>
-                        <td>
-                            <a class="icons social" <?php if (!empty($oContact->twitter_profile)): ?>href="<?php echo $oContact->twitter_profile; ?>" target="_blank" title="View twitter profile" <?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><img src="<?php echo base_url(); ?>assets/images/icons/twitter.svg"/></a> 
-                            <a class="icons social"  <?php if (!empty($oContact->facebook_profile)): ?>href="<?php echo $oContact->facebook_profile; ?>" target="_blank" title="View facebook profile"<?php else: ?>href="javascript:void(0);" title="This profile not found"<?php endif; ?>><img src="<?php echo base_url(); ?>assets/images/icons/facebook.svg"/></a> 
-                            <a class="icons social" href="<?php echo $oContact->socialProfile; ?>"><img src="<?php echo base_url(); ?>assets/images/icons/google.svg"/></a> 
-                            <a class="icons social" href="mailto:<?php echo $oContact->email; ?>"><img src="<?php echo base_url(); ?>assets/images/icons/mail.svg"/></a>
+                </div>
+            </td>
+            <td>
+                <a class="icons social"
+                   @if (!empty($oContact->twitter_profile))
+                   href="{{ $oContact->twitter_profile }}" target="_blank" title="View twitter profile"
+                   @else
+                   href="javascript:void(0);" title="This profile not found"
+                    @endif
+                ><img src="{{ base_url() }}assets/images/icons/twitter.svg"/></a>
+                <a class="icons social"
+                   @if (!empty($oContact->facebook_profile))
+                   href="{{ $oContact->facebook_profile }}" target="_blank" title="View facebook profile"
+                   @else
+                   href="javascript:void(0);" title="This profile not found"
+                    @endif
+                ><img src="{{ base_url() }}assets/images/icons/facebook.svg"/></a>
+                <a class="icons social" href="{{ $oContact->socialProfile }}"><img
+                        src="{{ base_url() }}assets/images/icons/google.svg"/></a>
+                <a class="icons social" href="mailto:{{ $oContact->email }}"><img
+                        src="{{ base_url() }}assets/images/icons/mail.svg"/></a>
 
-                        </td>
-                        <td>
-                            <div class="media-left pr30 brig">
-                                <div class="tdropdown tag_container_<?php echo $oContact->subscriber_id; ?>">
-                                    <button type="button" class="btn btn-xs btn_white_table bluee dropdown-toggle" data-toggle="dropdown"> <?php echo count($oTags); ?> Tags <span class="caret"></span> </button>
-                                    <ul class="dropdown-menu dropdown-menu-right tagss">
-                                        <?php
-                                        if (count($oTags) > 0) {
-                                            foreach ($oTags as $oTag) {
-                                                ?>
-                                                <button class="btn btn-xs btn_white_table pr10"> <?php echo $oTag->tag_name; ?> </button>                                                            
-                                                <?php
-                                            }
-                                        }
-                                        ?>
-                                        <button class="btn btn-xs plus_icon ml10 applyInsightTags" data-subscriber-id="<?php echo $oContact->subscriber_id; ?>"><i class="icon-plus3"></i></button>
-                                    </ul>
-                                    <button class="btn btn-xs plus_icon ml10 applyInsightTags" data-subscriber-id="<?php echo $oContact->subscriber_id; ?>"><i class="icon-plus3"></i></button>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="media-left pull-right">
-                                <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
-                                    <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
+            </td>
+            <td>
+                <div class="media-left pr30 brig">
+                    <div class="tdropdown tag_container_{{ $oContact->subscriber_id }}">
+                        <button type="button" class="btn btn-xs btn_white_table bluee dropdown-toggle"
+                                data-toggle="dropdown"> {{ count($oTags) }} Tags <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right tagss">
+                            @if (count($oTags) > 0)
+                                @foreach ($oTags as $oTag)
+                                    <button class="btn btn-xs btn_white_table pr10"> {{ $oTag->tag_name }} </button>
+                                @endforeach
+                            @endif
+                            <button class="btn btn-xs plus_icon ml10 applyInsightTags"
+                                    data-subscriber-id="{{ $oContact->subscriber_id }}"><i class="icon-plus3"></i>
+                            </button>
+                        </ul>
+                        <button class="btn btn-xs plus_icon ml10 applyInsightTags"
+                                data-subscriber-id="{{ $oContact->subscriber_id }}"><i class="icon-plus3"></i></button>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="media-left pull-right">
+                    <div class="tdropdown ml10"><a class="table_more dropdown-toggle" data-toggle="dropdown"
+                                                   aria-expanded="false"><img
+                                src="{{ base_url() }}assets/images/more.svg"></a>
+                        <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
 
-                                        <li><a href="javascript:void(0);" class="deleteAudience" broadcast_id="<?php echo !empty($oBroadcast) ? $oBroadcast->broadcast_id : ''; ?>" subscriber_id="<?php echo $oContact->subscriber_id; ?>"><i class="icon-primitive-dot txt_red"></i> Delete</a> </li>
+                            <li><a href="javascript:void(0);" class="deleteAudience"
+                                   broadcast_id="{{ !empty($oBroadcast) ? $oBroadcast->broadcast_id : '' }}"
+                                   subscriber_id="{{ $oContact->subscriber_id }}"><i
+                                        class="icon-primitive-dot txt_red"></i> Delete</a></li>
 
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="media-left pull-right">
-                                <div class=""><a href="#" class="text-default text-semibold"><?php echo date('d M', strtotime($oContact->created)); ?></a> </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php
-                }
+                        </ul>
+                    </div>
+                </div>
+                <div class="media-left pull-right">
+                    <div class=""><a href="#"
+                                     class="text-default text-semibold">{{ date('d M', strtotime($oContact->created)) }}</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        @php
             }
-            ?>
+        }
+        @endphp
         </tbody>
     </table>
-<?php
-} else {
-    ?>
+@else
     <table class="table datatable-basic">
         <thead>
-            <tr>
-                <th class="nosort">
-					<div class="brig pr10 editActionContact" style="display:none;">
-						<label class="custmo_checkbox pull-left" >
-							<input type="checkbox" name="checkAll[]" broadcast_id="<?php echo $oBroadcast->broadcast_id; ?>" class="control-primary" id="checkAllContact" >
-							<span class="custmo_checkmark"></span>
-						</label>
-					</div> &nbsp;&nbsp;<i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i>Name</th>
-                <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_email_small.png"></i>Email</th>
-                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Phone</th>
-                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_social.png"></i>Social</th>
-                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_id.png"></i>Tags</th>
-                <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Created</th>
-            </tr>
+        <tr>
+            <th class="nosort">
+                <div class="brig pr10 editActionContact" style="display:none;">
+                    <label class="custmo_checkbox pull-left">
+                        <input type="checkbox" name="checkAll[]" broadcast_id="{{ $oBroadcast->broadcast_id }}"
+                               class="control-primary" id="checkAllContact">
+                        <span class="custmo_checkmark"></span>
+                    </label>
+                </div> &nbsp;&nbsp;<i class=""><img src="{{ base_url() }}assets/images/icon_name.png"></i>Name
+            </th>
+            <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_email_small.png"></i>Email
+            </th>
+            <th><i class=""><img src="{{ base_url() }}assets/images/icon_device.png"></i>Phone</th>
+            <th><i class=""><img src="{{ base_url() }}assets/images/icon_social.png"></i>Social</th>
+            <th><i class=""><img src="{{ base_url() }}assets/images/icon_id.png"></i>Tags</th>
+            <th><i class=""><img src="{{ base_url() }}assets/images/icon_clock.png"></i>Created</th>
+        </tr>
         </thead>
 
         <tbody>
@@ -157,7 +201,8 @@ if ($recordSource == 'contact-selection') {
                 <div class="col-md-12">
                     <div style="margin: 20px 0px 0;" class="text-center">
                         <h5 class="mb-20 mt40">
-                            Looks Like You Don’t Have Any Contact Yet <img src="<?php echo base_url('assets/images/smiley.png'); ?>"> <br>
+                            Looks Like You Don’t Have Any Contact Yet <img
+                                src="{{ base_url('assets/images/smiley.png') }}"> <br>
                             Lets Create Your First Contact.
                         </h5>
                     </div>
@@ -167,28 +212,22 @@ if ($recordSource == 'contact-selection') {
         <td style="display: none"></td>
         <td style="display: none"></td>
         <td style="display: none"></td>
-    </tbody>
+        </tbody>
     </table>
-    <?php 
-	}
+@endif
 
-	if ($recordSource == 'contact-selection') {
-    ?>
+@if ($recordSource == 'contact-selection')
     <script type="text/javascript">
         $(document).ready(function () {
             var tableId = 'broadcastAudience';
             var tableBase = custom_data_table(tableId);
         });
     </script>
-    <?php
-} else if ($recordSource == 'review-audience') {
-    ?>
+@elseif ($recordSource == 'review-audience')
     <script type="text/javascript">
         $(document).ready(function () {
             var tableId = 'editBroadcastAudience';
             var tableBase = custom_data_table(tableId);
         });
     </script>
-    <?php
-}
-?>
+@endif

@@ -14,3 +14,4 @@ yarn-error.log
 /infusionsoft-php-sdk/*
 vendor
 
+/nbproject/private/

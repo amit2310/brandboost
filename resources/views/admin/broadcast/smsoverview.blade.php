@@ -1,12 +1,12 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<link href="<?php echo base_url(); ?>assets/css/percircle.css" rel="stylesheet" type="text/css">
-<script src = "<?php echo base_url(); ?>assets/js/percircle.js"></script>
+<link href="{{ base_url() }}assets/css/percircle.css" rel="stylesheet" type="text/css">
+<script src = "{{ base_url() }}assets/js/percircle.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
@@ -26,7 +26,7 @@
     .outer_circle{padding: 14px; background: #fff; border: 1.5px solid #eee; margin: 0 auto!important; border-radius: 100%; width: 200px; height: 200px;}
     #bluecircle{margin: 0 auto!important; float: none!important; cursor: pointer; }
     path[stroke-width="0.5"]{   stroke: #eeeeee!important;  opacity: 0; }
-    #myfirstchart{background: url(<?php echo base_url('assets/'); ?>images/graphbkg.png) left top repeat!important;}
+    #myfirstchart{background: url({{ base_url('assets/') }}images/graphbkg.png) left top repeat!important;}
     .min_h310{min-height: 300px;}
 
 
@@ -41,7 +41,7 @@
     .loader2.red{border-top: 9px solid #127f84}
     @keyframes rotate {
         100% {transform: rotate(360deg);}
-    } 
+    }
 
     .highcharts-tick{stroke:none!important}
     .highcharts-credits{display: none!important;}
@@ -61,7 +61,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-5">
-                <h3><img style="width: 15px;" src="<?php echo base_url(); ?>assets/images/sms_icon.png"> SMS Overview</h3>
+                <h3><img style="width: 15px;" src="{{ base_url() }}assets/images/sms_icon.png"> SMS Overview</h3>
 
             </div>
             <!--=============Button Area Right Side==============-->
@@ -73,7 +73,7 @@
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
 
-    <?php
+    @php
     $currMonDate = array();
     $newSmsO = array();
 
@@ -141,9 +141,9 @@
         $mainarr[] = (object) $shArr;
     }
     $mainArrShow = json_encode($mainarr);
-    ?>
+    @endphp
 
-    <div class="tab-content"> 
+    <div class="tab-content">
         <!--===========TAB 1===========-->
         <div class="tab-pane active" id="right-icon-tab0">
 
@@ -205,9 +205,9 @@
                                 </div>
                                 <div class="col-md-7">
                                     <ul class="onsite_list mt30">
-                                        <li class="bor_n"><span><img src="<?php echo base_url(); ?>assets/images/green_circle1.png" width="10"> Delivered</span><strong class="txt_dark"><?php echo $delivered; ?></strong></li>
+                                        <li class="bor_n"><span><img src="{{ base_url() }}assets/images/green_circle1.png" width="10"> Delivered</span><strong class="txt_dark">{{ $delivered }}</strong></li>
                                         <!--<li><span><img src="assets/images/circle_blue2.png" width="10"> Open</span><strong class="txt_dark">58,6%</strong></li>-->
-                                        <li><span><img src="<?php echo base_url(); ?>assets/images/green_circle2.png" width="10"> Undelivered</span><strong class="txt_dark"><?php echo $undelivered; ?></strong></li>
+                                        <li><span><img src="{{ base_url() }}assets/images/green_circle2.png" width="10"> Undelivered</span><strong class="txt_dark">{{ $undelivered }}</strong></li>
                                     </ul>
                                 </div>
                             </div>
@@ -251,7 +251,7 @@
         parseTime: false,
 
         /*data: sendSms,*/
-        data: <?php echo $mainArrShow; ?>,
+        data: {{ $mainArrShow }},
 
         xkey: 'y',
         ykeys: ['a'],
