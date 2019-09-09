@@ -1,67 +1,68 @@
-<?php list($canRead, $canWrite) = fetchPermissions('Feedbacks'); ?>
-<?php
-$aData['allTab'] = '';
-$aData['postiveTab'] = '';
-$aData['neutralTab'] = '';
-$aData['negativeTag'] = '';
+@php 
+
+	list($canRead, $canWrite) = fetchPermissions('Feedbacks')
+
+	$aData['allTab'] = '';
+	$aData['postiveTab'] = '';
+	$aData['neutralTab'] = '';
+	$aData['negativeTag'] = '';
 
 
-if ($selected_tab == 'all') {
-    $allTab = 'active';
-    $aData['allTab'] = $allTab;
-} else if ($selected_tab == 'positive') {
-    $postiveTab = 'active';
-    $aData['postiveTab'] = $postiveTab;
-} else if ($selected_tab == 'neutral') {
-    $neutralTab = 'active';
-    $aData['neutralTab'] = $neutralTab;
-} else if ($selected_tab == 'negative') {
-    $negativeTag = 'active';
-    $aData['negativeTag'] = $negativeTag;
-} else {
-    $allTab = 'active';
-    $aData['allTab'] = $allTab;
-}
+	if ($selected_tab == 'all') {
+		$allTab = 'active';
+		$aData['allTab'] = $allTab;
+	} else if ($selected_tab == 'positive') {
+		$postiveTab = 'active';
+		$aData['postiveTab'] = $postiveTab;
+	} else if ($selected_tab == 'neutral') {
+		$neutralTab = 'active';
+		$aData['neutralTab'] = $neutralTab;
+	} else if ($selected_tab == 'negative') {
+		$negativeTag = 'active';
+		$aData['negativeTag'] = $negativeTag;
+	} else {
+		$allTab = 'active';
+		$aData['allTab'] = $allTab;
+	}
 
 
-if (!empty($result)) {
-    foreach ($result as $record) {
-        if ($record->category == 'Positive') {
-            $oPositive[] = $record;
-        } else if ($record->category == 'Neutral') {
-            $oNuetral[] = $record;
-        } else if ($record->category == 'Negative') {
-            $oNegative[] = $record;
-        }
-    }
-}
-?>
+	if (!empty($result)) {
+		foreach ($result as $record) {
+			if ($record->category == 'Positive') {
+				$oPositive[] = $record;
+			} else if ($record->category == 'Neutral') {
+				$oNuetral[] = $record;
+			} else if ($record->category == 'Negative') {
+				$oNegative[] = $record;
+			}
+		}
+	}
+@endphp
 
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-flat">
             <div class="panel-heading">
-
                 <h6 class="panel-title">Requires Attention</h6>
 
-                <?php
-                $titleName = '';
-                $revType = "Offsite";
-                if (!empty($brandboostDetail[0]->review_type)) {
-                    $revType = $brandboostDetail[0]->review_type;
-                }
-                if (!empty($brandboostDetail[0]->brand_title)) {
+                @php
+				$titleName = '';
+				$revType = "Offsite";
+				if (!empty($brandboostDetail[0]->review_type)) {
+					$revType = $brandboostDetail[0]->review_type;
+				}
+				if (!empty($brandboostDetail[0]->brand_title)) {
 
-                    $titleName = ': ' . ucfirst($brandboostDetail[0]->brand_title);
-                }
-                ?>
+					$titleName = ': ' . ucfirst($brandboostDetail[0]->brand_title);
+				}
+                @endphp
 
                 <!--<h6 class="panel-title">New Note</h6>-->
                 <ul class="nav nav-tabs nav-tabs-bottom" id="nav-tabs-bottom" style="position: absolute; top: 20px; left: 15%;">
-                    <li class="<?php echo $allTab; ?>"><a href="#right-icon-tab11" data-toggle="tab"> All (<?php echo count($result); ?>)</a></li>
-                    <li class="<?php echo $postiveTab; ?>"><a id="positive_tag" href="#right-icon-tab12" data-toggle="tab"> Positive (<?php echo count($oPositive); ?>)</a></li>
-                    <li class="<?php echo $neutralTab; ?>"><a href="#right-icon-tab13" data-toggle="tab"> Neutral (<?php echo count($oNuetral); ?>)</a></li>
-                    <li class="<?php echo $negativeTag; ?>"><a href="#right-icon-tab14" data-toggle="tab"> Negative (<?php echo count($oNegative); ?>)</a></li>
+                    <li class="{{ $allTab }}"><a href="#right-icon-tab11" data-toggle="tab"> All ({{ count($result) }})</a></li>
+                    <li class="{{ $postiveTab }}"><a id="positive_tag" href="#right-icon-tab12" data-toggle="tab"> Positive ({{ count($oPositive) }})</a></li>
+                    <li class="{{ $neutralTab }}"><a href="#right-icon-tab13" data-toggle="tab"> Neutral ({{ count($oNuetral) }})</a></li>
+                    <li class="{{ $negativeTag }}"><a href="#right-icon-tab14" data-toggle="tab"> Negative ({{ count($oNegative) }})</a></li>
                 </ul>
                 <div class="heading-elements">
                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
@@ -74,21 +75,17 @@ if (!empty($result)) {
                     <button type="button" class="btn btn-xs btn-default editDataList"><i class="icon-pencil position-left"></i> Edit</button>
                     <button id="deleteButtonBrandboostFeedbacks" class="btn btn-xs custom_action_box"><i class="icon-trash position-left"></i> Delete</button>
                 </div>
-
             </div>
 
-            <div class="tab-content">
-
+            <div class="tab-content">				
                 <!--########################TAB 1 ##########################-->
-                <?php $this->load->view("admin/feedback/feedback-tab/feeback-all", array('aData' => $result, 'allTab' => $allTab)) ?>
+				@include('admin.feedback.feedback-tab.feedback-all', array('aData' => $result, 'allTab' => $allTab))
                 <!--########################TAB 2 ##########################-->
-                <?php $this->load->view("admin/feedback/feedback-tab/feedback-positive", array('aData' => $oPositive, 'postiveTab' => $postiveTab)); ?>
+				@include('admin.feedback.feedback-tab.feedback-positive', array('aData' => $oPositive, 'postiveTab' => $postiveTab))
                 <!--########################TAB 3 ##########################-->
-                <?php $this->load->view("admin/feedback/feedback-tab/feedback-nuetral", array('aData' => $oNuetral, 'neutralTab' => $neutralTab)); ?>
+				@include('admin.feedback.feedback-tab.feedback-nuetral', array('aData' => $oNuetral, 'neutralTab' => $neutralTab))
                 <!--########################TAB 4 ##########################-->
-                <?php $this->load->view("admin/feedback/feedback-tab/feedback-negative", array('aData' => $oNegative, 'negativeTag' => $negativeTag)); ?>
-
-
+				@include('admin.feedback.feedback-tab.feedback-negative', array('aData' => $oNegative, 'negativeTag' => $negativeTag))
             </div>
         </div>
     </div>
@@ -112,14 +109,14 @@ if (!empty($result)) {
 
                             <ul class="icons-list" style="float:right;">  
                                 <li class="dropup"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                    <?php if ($canWrite): ?>
+                                    @if ($canWrite)
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <li class="text-semibold" style="border-bottom:1px solid #ddd; padding:5px 15px 10px;">Change Status</li>
                                             <li class="bg-danger updateFeedbackStatus" fb_status="Negative" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Negative</li>
                                             <li class="bg-blue updateFeedbackStatus" fb_status="Neutral" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Neutral</li>
                                             <li class="bg-success updateFeedbackStatus" fb_status="Positive" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Positive</li>
                                         </ul>
-                                    <?php endif; ?>
+                                    @endif
                                 </li>
                             </ul>
                         </div>
@@ -178,14 +175,13 @@ if (!empty($result)) {
         $("#frmFeedbackTagListModal").submit(function () {
             var formdata = $("#frmFeedbackTagListModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/tags/applyFeedbackTag'); ?>',
+                url: "{{ base_url('admin/tags/applyFeedbackTag') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $("#FeedbackTagListModal").modal("hide");
-                        //alertMessageAndRedirect('Tags applied successfully!', window.location.href);
                         window.location.href = window.location.href;
                     }
                 }
@@ -198,7 +194,7 @@ if (!empty($result)) {
             var feedback_id = $(this).attr("feedback_id");
             var action_name = $(this).attr("action_name");
             $.ajax({
-                url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
+                url: "{{ base_url('admin/tags/listAllTags') }}",
                 type: "POST",
                 data: {review_id: review_id, feedback_id: feedback_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -222,14 +218,13 @@ if (!empty($result)) {
 
             var brandboostID = $(this).attr('brandID');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/update_offsite_step1'); ?>',
+                url: "{{ base_url('admin/brandboost/update_offsite_step1') }}",
                 type: "POST",
                 data: {'brandboostID': brandboostID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/brandboost/offsite_step_2'); ?>';
+                        window.location.href = "{{ base_url('admin/brandboost/offsite_step_2') }}";
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -249,7 +244,7 @@ if (!empty($result)) {
         function displayFeedbackPopup(feedbackid, tabtype, fbtime) {
             //$('.overlaynew').show();
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/displayfeedback'); ?>",
+                url: "{{ base_url('/admin/feedback/displayfeedback') }}",
                 type: "POST",
                 data: {fid: feedbackid, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -292,59 +287,59 @@ if (!empty($result)) {
                 closeOnConfirm: false,
                 closeOnCancel: false
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            var formdata = $("#frmSendFeedbackReply").serialize();
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: "<?php echo base_url('/admin/feedback/replyFeedback'); ?>",
-                                type: "POST",
-                                data: formdata + "&career=" + career,
-                                dataType: "json",
-                                success: function (response) {
-                                    $('.overlaynew').hide();
-                                    if (response.status == "success") {
-                                        swal({
-                                            title: "Success!",
-                                            text: response.message,
-                                            confirmButtonColor: "#66BB6A",
-                                            type: "success"
-                                        });
-                                    } else {
-                                        swal({
-                                            title: "ERROR!",
-                                            text: response.message,
-                                            confirmButtonColor: "#2196F3",
-                                            type: "error"
-                                        });
-                                    }
-                                },
-                                error: function (response) {
-                                    $('.overlaynew').hide();
-                                    swal({
-                                        title: "ERROR!",
-                                        text: response.message,
-                                        confirmButtonColor: "#2196F3",
-                                        type: "error"
-                                    });
-                                }
-                            });
-                        } else {
-                            swal({
-                                title: "Cancelled",
-                                text: "",
-                                confirmButtonColor: "#2196F3",
-                                type: "error"
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					var formdata = $("#frmSendFeedbackReply").serialize();
+					$('.overlaynew').show();
+					$.ajax({
+						url: "{{ base_url('/admin/feedback/replyFeedback') }}",
+						type: "POST",
+						data: formdata + "&career=" + career,
+						dataType: "json",
+						success: function (response) {
+							$('.overlaynew').hide();
+							if (response.status == "success") {
+								swal({
+									title: "Success!",
+									text: response.message,
+									confirmButtonColor: "#66BB6A",
+									type: "success"
+								});
+							} else {
+								swal({
+									title: "ERROR!",
+									text: response.message,
+									confirmButtonColor: "#2196F3",
+									type: "error"
+								});
+							}
+						},
+						error: function (response) {
+							$('.overlaynew').hide();
+							swal({
+								title: "ERROR!",
+								text: response.message,
+								confirmButtonColor: "#2196F3",
+								type: "error"
+							});
+						}
+					});
+				} else {
+					swal({
+						title: "Cancelled",
+						text: "",
+						confirmButtonColor: "#2196F3",
+						type: "error"
+					});
+				}
+			});
         });
 
         $(document).on("click", "#saveFeedbackNote", function () {
             var formdata = $("#frmSaveNote").serialize();
             $('.overlaynew').show();
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/saveFeedbackNotes'); ?>",
+                url: "{{ base_url('/admin/feedback/saveFeedbackNotes') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -361,23 +356,20 @@ if (!empty($result)) {
                 }
             });
         });
-
-
-
+		
 
         $(document).on("click", ".updateFeedbackStatusNew", function () {
             $('.overlaynew').show();
             var feedbackid = $(this).attr('feedback_id');
             var statusVal = $(this).attr('fb_status');
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
+                url: "{{ base_url('/admin/feedback/updateFeedbackRatings') }}",
                 type: "POST",
                 data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
                         $('.overlaynew').hide();
-                        //alertMessageAndRedirect(response.message, window.location.href);
                         window.location.href = window.location.href;
                     }
                 },
@@ -393,7 +385,7 @@ if (!empty($result)) {
             var fbtime = $("input[name='fbtime']").val();
             var statusVal = $(this).attr('fb_status');
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
+                url: "{{ base_url('/admin/feedback/updateFeedbackRatings') }}",
                 type: "POST",
                 data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -435,14 +427,13 @@ if (!empty($result)) {
             var feedbackid = $(this).attr('feedback_id');
             var statusVal = $(this).attr('fb_status');
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
+                url: "{{ base_url('/admin/feedback/updateFeedbackRatings') }}",
                 type: "POST",
                 data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     $('.overlaynew').hide();
                     if (response.status == "success") {
-                        //alertMessageAndRedirect(response.message, window.location.href);
                         window.location.href = window.location.href;
                     }
                 },

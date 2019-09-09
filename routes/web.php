@@ -236,7 +236,6 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/modules/chat', 'Admin\Modules\Chat@index');
 
 
-
     Route::get('admin/modules/referral/overview', 'Admin\Modules\Referral@overview');
     Route::get('admin/modules/referral', 'Admin\Modules\Referral@index');
     Route::post('admin/modules/referral/changeStatus', 'Admin\Modules\Referral@changeStatus');
