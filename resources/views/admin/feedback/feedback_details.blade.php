@@ -1,22 +1,22 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php
-list($canRead, $canWrite) = fetchPermissions('Feedbacks');
-$feedbackBrand = $result->brand_title;
-$feedbackTitle = $result->title;
-$feedbackDescription = $result->feedback;
-if (empty($feedbackTags)) {
-    $feedbackTags = \App\Models\Admin\TagsModel::getTagsDataByFeedbackID($result->id);
-}
 
-//pre($result);
-?>
-<script type="text/javascript" src="<?php echo base_url('assets/js/viewbox.min.js'); ?>"></script>
+@php
+	list($canRead, $canWrite) = fetchPermissions('Feedbacks');
+	$feedbackBrand = $result->brand_title;
+	$feedbackTitle = $result->title;
+	$feedbackDescription = $result->feedback;
+	if (empty($feedbackTags)) {
+		$feedbackTags = \App\Models\Admin\TagsModel::getTagsDataByFeedbackID($result->id);
+	}
+@endphp
+
+<script type="text/javascript" src="{{ base_url('assets/js/viewbox.min.js') }}"></script>
 <style>
     .viewbox-container{
         position: fixed;
@@ -161,11 +161,10 @@ if (empty($feedbackTags)) {
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
-                <h3 class="mt30"><img style="width: 18px;" src="<?php echo base_url(); ?>assets/images/review_icon.png"/> Feedback Details</h3>
+                <h3 class="mt30"><img style="width: 18px;" src="{{ base_url() }}assets/images/review_icon.png"/> Feedback Details</h3>
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">
-                <!-- <button type="button" class="btn dark_btn dropdown-toggle ml10" id="addAnswerFromPopup"><i class="icon-plus3"></i><span> &nbsp;Add Answer</span> </button> -->
             </div>
         </div>
     </div>
@@ -181,31 +180,28 @@ if (empty($feedbackTags)) {
                     <h6 class="panel-title">Tags</h6>
                     <div class="heading-elements">
                         <div class="table_action_tool">
-                            <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                            <a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body p0" >
                     <div class="profile_sec">
                         <div class="p25">
-                            <?php
-                            if (!empty($feedbackTags)) {
-                                foreach ($feedbackTags as $oTag) {
-                                    ?>
-                                    <button class="btn btn-xs btn_white_table"><?php echo $oTag->tag_name; ?></button>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            <?php if (empty($feedbackTags)): ?><span><i>No Tags found</i></span>&nbsp;<?php endif; ?> 
+                            @if (!empty($feedbackTags))
+                                @foreach ($feedbackTags as $oTag)
+                                    <button class="btn btn-xs btn_white_table">{{ $oTag->tag_name }}</button>
+                                @endforeach
+                            @endif
+                            
+							@if (empty($feedbackTags))
+								<span><i>No Tags found</i></span>&nbsp;
+							@endif 
 
-                            <button class="btn btn-xs plus_icon applyInsightTags" feedback_id="<?php echo base64_url_encode($result->id); ?>" action_name="feedback-tag"><i class="icon-plus3"></i></button>
-
+                            <button class="btn btn-xs plus_icon applyInsightTags" feedback_id="{{ base64_url_encode($result->id) }}" action_name="feedback-tag"><i class="icon-plus3"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <!------------CENTER------------->
@@ -213,28 +209,25 @@ if (empty($feedbackTags)) {
             <!--=========Top Comments===========-->
             <div class="panel panel-flat">
                 <div class="panel-heading">
-                    <h6 class="panel-title">Feedback<?php echo $feedbackBrand != '' ? ' : ' . $feedbackBrand : ''; ?></h6>
+                    <h6 class="panel-title">Feedback{{ $feedbackBrand != '' ? ' : ' . $feedbackBrand : '' }}</h6>
                     <div class="heading-elements">
                         <div class="table_action_tool">
-                            <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                            <a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body p30 br0">
-                    <strong><?php echo $feedbackTitle; ?></strong>
-                    <p class="fsize13 mb20 lh25 txt_grey2"><?php echo $feedbackDescription; ?></p>
+                    <strong>{{ $feedbackTitle }}</strong>
+                    <p class="fsize13 mb20 lh25 txt_grey2">{{ $feedbackDescription }}</p>
 
-                    <?php
-                    $avatarImage = base_url() . "assets/images/userp.png";
-                    
-                    ?> 
-                    <div class="media-left media-middle pr10"> <a class="icons" href="javascript:void(0);"><img style="width: 18px;" src="<?php echo $avatarImage; ?>" class="img-circle" alt=""></a> </div>
+                    @php
+						$avatarImage = base_url() . "assets/images/userp.png";
+                    @endif 
+					
+                    <div class="media-left media-middle pr10"> <a class="icons" href="javascript:void(0);"><img style="width: 18px;" src="{{ $avatarImage }}" class="img-circle" alt=""></a> </div>
                     <div class="media-left">
-                        <div class="text-muted">by <?php echo $result->firstname . " " . $result->lastname; ?>   <span class="ml20"><i class="icon-checkmark3 fsize12 txt_green"></i>&nbsp; Verified Purchase</span></div>
+                        <div class="text-muted">by {{ $result->firstname . " " . $result->lastname }}   <span class="ml20"><i class="icon-checkmark3 fsize12 txt_green"></i>&nbsp; Verified Purchase</span></div>
                     </div>
-
-
-
                 </div>
                 <div class="panel-footer p20 pl30 pr30 ">
                     <p class="mb0 fsize13">
@@ -243,113 +236,98 @@ if (empty($feedbackTags)) {
                 </div>
             </div>
             <!--=========Latest Comments===========-->
-            <?php if (!empty($oAnswers)) { ?>
+            @if (!empty($oAnswers))
                 <div class="panel panel-flat">
                     <div class="panel-heading">
-                        <h6 class="panel-title">Latest Answers <?php echo count($oAnswers) > 0 ? '(' . count($oAnswers) . ')' : 0; ?></h6>
+                        <h6 class="panel-title">Latest Answers {{ count($oAnswers) > 0 ? '(' . count($oAnswers) . ')' : 0 }}</h6>
                         <div class="heading-elements">
                             <div class="table_action_tool">
-                                <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                <a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a>
                             </div>
                         </div>
                     </div>
                     <div class="panel-body p0">
                         <div class="comment_sec">
                             <ul class="addMoreComment">
-
-
-
-                                <?php
-                                //pre($reviewID);
+								@php
                                 if (!empty($oAnswers)) {
 
                                     foreach ($oAnswers as $oAnswer) {
                                         $defaultAvatar = base_url() . "assets/images/userp.png";
                                         $avtarImage = $oAnswer->avatar == 'avatar_image.png' ? $defaultAvatar : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oAnswer->avatar;
-                                        ?>
+                                        @endphp
                                         <li class="bbot">
-
-                                            <div class="media-left"><img onerror="this.src='<?php echo $defaultAvatar; ?>'" width="36" src="<?php echo $avtarImage; ?>"/></div>
-
+                                            <div class="media-left"><img onerror="this.src='{{ $defaultAvatar }}'" width="36" src="{{ $avtarImage }}"/></div>
                                             <div class="media-left pr0 w100">
+                                                <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ $oAnswer->firstname . ' ' . $oAnswer->lastname }} <span class="dot">.</span> {{ timeAgo($oAnswer->created) }} <span class="dot">.</span> 
 
-                                                <p class="fsize14 txt_grey2 lh14 mb-15 "><?php echo $oAnswer->firstname . ' ' . $oAnswer->lastname; ?> <span class="dot">.</span> <?php echo timeAgo($oAnswer->created); ?> <span class="dot">.</span> 
-
-                                                    <?php if ($oAnswer->status == '1') { ?>
-                                                        <span class="txt_green"><i class="icon-checkmark3 fsize12 txt_green" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>"></i> Approve</span>
-                                                    <?php } ?>
-                                                    <?php if ($oAnswer->status == 0) { ?>
-
-                                                        <span class="txt_red"><i class="icon-checkmark3 fsize12 txt_red" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>"></i> Disapproved</span>
-
-                                                    <?php } ?>
-                                                    <?php if ($oAnswer->status == '2') { ?>
-                                                        <span class="media-annotation"> <span class="label bkg_grey txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="1" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>"> Approve</span> </span>
-                                                        <span class="media-annotation dotted"> <span class="label bkg_red txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="0" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>"> Disapprove</span> </span>
-                                                    <?php } ?>
+                                                    @if ($oAnswer->status == '1')
+                                                        <span class="txt_green"><i class="icon-checkmark3 fsize12 txt_green" answer_id="{{ base64_url_encode($oAnswer->id) }}"></i> Approve</span>
+                                                    @endif
+													
+                                                    @if ($oAnswer->status == 0)
+                                                        <span class="txt_red"><i class="icon-checkmark3 fsize12 txt_red" answer_id="{{ base64_url_encode($oAnswer->id) }}"></i> Disapproved</span>
+                                                   @endif
+													
+                                                    @if ($oAnswer->status == '2')
+                                                        <span class="media-annotation"> <span class="label bkg_grey txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="1" answer_id="{{ base64_url_encode($oAnswer->id) }}"> Approve</span> </span>
+                                                        <span class="media-annotation dotted"> <span class="label bkg_red txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="0" answer_id="{{ base64_url_encode($oAnswer->id) }}"> Disapprove</span> </span>
+                                                    @endif
                                                 </p>
 
                                                 <p class="fsize13 mb10 lh23 txt_grey2">
-                                                    <?php echo ($oAnswer->answer) ? nl2br(base64_decode($oAnswer->answer)) : displayNoData(); ?></p>
+													{!! ($oAnswer->answer) ? nl2br(base64_decode($oAnswer->answer)) : displayNoData() !!}</p>
 
                                                 <div class="button_sec">
                                                     <a class="btn comment_btn p7" href="javascript:void(0);"><i class="icon-thumbs-up2 txt_green"></i></a>
                                                     <a class="btn comment_btn p7" href="javascript:void(0);"><i class="icon-thumbs-down2 txt_red"></i></a>
 
-                                                    <a  href="javascript:void(0);" class="btn comment_btn txt_purple editAnswer" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>">Edit</a>
-                                                    <a  href="javascript:void(0);" class="btn comment_btn txt_purple deleteAnswer" answer_id="<?php echo base64_url_encode($oAnswer->id); ?>">Delete</a>
+                                                    <a  href="javascript:void(0);" class="btn comment_btn txt_purple editAnswer" answer_id="{{ base64_url_encode($oAnswer->id) }}">Edit</a>
+                                                    <a  href="javascript:void(0);" class="btn comment_btn txt_purple deleteAnswer" answer_id="{{ base64_url_encode($oAnswer->id) }}">Delete</a>
                                                 </div>
-
-
-
                                             </div>
                                         </li>
-
-                                        <?php
+                                        @php
                                     }
                                 }
-                                ?>
-
+                                @endphp
                             </ul>
 
-                            <?php if ($totalComment > 5) {
-                                ?>
+                            @if ($totalComment > 5)
                                 <input type="hidden" id="numOfComment" value="5">
-                                <div class="loadMoreRecord"><a style="cursor: pointer;" id='loadMoreComment' revId="<?php echo $reviewData->id; ?>">Load more</a><img class="loaderImage hidden" height="20px" width="20px" src="<?php echo base_url(); ?>assets/images/widget_load.gif"></div><?php }
-                            ?>
-
+                                <div class="loadMoreRecord"><a style="cursor: pointer;" id='loadMoreComment' revId="{{ $reviewData->id }}">Load more</a><img class="loaderImage hidden" height="20px" width="20px" src="{{ base_url() }}assets/images/widget_load.gif"></div>
+							@endif
                         </div>
                     </div>
-
                 </div>
-            <?php } ?>
+            @endif
             <!--=========Add Comment===========-->
-            <?php
-            $oFeedback = \App\Models\FeedbackModel::getFeedbackInfo($result->id); 
-            ?>
+            @php
+				$oFeedback = \App\Models\FeedbackModel::getFeedbackInfo($result->id); 
+            @endphp
+			
             <form name="frmSendFeedbackReply" id="frmSendFeedbackReply" method="post" action="javascript:void();">
-                <input type="hidden" name="fbtime" value="<?php echo date("M d, Y h:i A", strtotime($oFeedback->created)); ?> (<?php echo timeAgo($oFeedback->created); ?>)" />
-                <input type="hidden" name="fid" value="<?php echo $oFeedback->id; ?>" />
-                <input type="hidden" name="bid" value="<?php echo $oFeedback->brandboost_id; ?>" />
-                <input type="hidden" name="cid" value="<?php echo $oFeedback->client_id; ?>" />
-                <input type="hidden" name="sid" value="<?php echo $oFeedback->subscriber_id; ?>" />
-                <input type="hidden" name="authorname" value="<?php echo $oFeedback->subscriber_id; ?>" />
+                <input type="hidden" name="fbtime" value="{{ date('M d, Y h:i A', strtotime($oFeedback->created)) }} ({{ timeAgo($oFeedback->created) }})" />
+                <input type="hidden" name="fid" value="{{ $oFeedback->id }}" />
+                <input type="hidden" name="bid" value="{{ $oFeedback->brandboost_id }}" />
+                <input type="hidden" name="cid" value="{{ $oFeedback->client_id }}" />
+                <input type="hidden" name="sid" value="{{ $oFeedback->subscriber_id }}" />
+                <input type="hidden" name="authorname" value="{{ $oFeedback->subscriber_id }}" />
                 <div class="panel panel-flat">
                     <div class="panel-heading">
                         <h6 class="panel-title">Reply Feedback</h6>
                         <div class="heading-elements">
                             <div class="table_action_tool">
-                                <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                <a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a>
                             </div>
                         </div>
                     </div>
                     <div class="panel-body br0">
-
                         <textarea name="feedbackReply" id="feedbackReply" required class="form-control addnote" placeholder="Start typing to leave your feedback reply..."></textarea>
                     </div>
                     <div class="panel-footer p20 text-right">
                         <a style="cursor: pointer;"><i class="icon-hash text-muted"></i></a> &nbsp; &nbsp; <a style="cursor: pointer;"><i class="icon-reset text-muted"></i></a>
-                        <input type="hidden" id="question_id" name="question_id" value="<?php echo base64_url_encode($result->id); ?>">
+                        <input type="hidden" id="question_id" name="question_id" value="{{ base64_url_encode($result->id) }}">
                         <button class="btn dark_btn btn-xs ml20" id="sendFeedbackEmail" title="Send SMS" career_medium="sms" type="button" > Send SMS </button>
                         <button class="btn dark_btn btn-xs ml20" id="sendFeedbackSMS" title="Send Email" career_medium="email"  type="button" > Send Email </button>
                     </div>
@@ -363,60 +341,46 @@ if (empty($feedbackTags)) {
                 <div class="panel-heading">
                     <h6 class="panel-title">Info</h6>
                     <div class="heading-elements">
-                        <script src="../../../../assets/js/modules/smart-popup/reviews.js" type="text/javascript"></script>
+                        <script src="{{ base_url() }}assets/js/modules/smart-popup/reviews.js" type="text/javascript"></script>
                         <div class="table_action_tool">
-                            <a href="#"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                            <a href="#"><img src="{{ base_url() }}assets/images/more.svg"></a>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body p0" >
                     <div class="interactions p25">
                         <ul>
-                            <li><small>Ref</small> <strong><?php echo displayNoData();?></strong></li>
-                            <li><small>Name</small> <strong><?php echo $result->firstname . ' ' . $result->lastname; ?>  </strong></li>
-                            <li><small>Email</small> <strong><?php echo $result->email; ?></strong></li>
-                            <li><small>Phone</small> <strong><?php echo ($result->phone) ? $result->phone : displayNoData(); ?></strong></li>
+                            <li><small>Ref</small> <strong>{{ displayNoData() }}</strong></li>
+                            <li><small>Name</small> <strong>{{ $result->firstname . ' ' . $result->lastname }}  </strong></li>
+                            <li><small>Email</small> <strong>{{ $result->email }}</strong></li>
+                            <li><small>Phone</small> <strong>{!! ($result->phone) ? $result->phone : displayNoData() !!}</strong></li>
                         </ul>
                     </div>
                     <div class="profile_headings">Feedback Notes <a class="pull-right plus_icon" href="#"><i class="icon-plus3"></i></a></div>
-                    <?php
-                    if (!empty($oNotes)) {
-                        foreach ($oNotes as $oNote) {
-                            ?>
+                    @if (!empty($oNotes))
+                        @foreach ($oNotes as $oNote)
                             <div class="p25 bbot">
-                                <p class="fsize12"><?php echo $oNote->notes; ?></p>
-                                <p><small class="text-muted">On <?php echo date('F d, Y h:i A', strtotime($oNote->created)); ?> <br>by <?php echo $oNote->firstname . ' ' . $oNote->lastname; ?></small></p>
+                                <p class="fsize12">{{ $oNote->notes }}</p>
+                                <p><small class="text-muted">On {{ date('F d, Y h:i A', strtotime($oNote->created)) }} <br>by {{ $oNote->firstname . ' ' . $oNote->lastname }}</small></p>
                                 <div class="text-right">
-                                    <a href="javascript:void(0)" class="editNote" noteid="<?php echo $oNote->id; ?>"> <span class="label addtag bkg_grey txt_white br5"> Modify</span></a>
-                                    <a href="javascript:void(0)" class="deleteNote" noteid="<?php echo $oNote->id; ?>"> <span class="label addtag bkg_red txt_white br5"> Delete</span></a>
+                                    <a href="javascript:void(0)" class="editNote" noteid="{{ $oNote->id }}"> <span class="label addtag bkg_grey txt_white br5"> Modify</span></a>
+                                    <a href="javascript:void(0)" class="deleteNote" noteid="{{ $oNote->id }}"> <span class="label addtag bkg_red txt_white br5"> Delete</span></a>
                                 </div>
                             </div>
-                            <?php
-                        }
-                    } else {
-                        echo '<div class="p25 bbot"><i>No Notes Available</i></div>';
-                    }
-                    ?>
-
-
+                        @endforeach
+                    @else
+						<div class="p25 bbot"><i>No Notes Available</i></div>
+                    @endif
                     <div class="p25 btop">
                         <button class="btn dark_btn btn-xs mr20" data-toggle="modal" data-target="#feedbackPopup">Add Note</button>	 
-                    </div> 
-
-                
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 
-
     <!--================================= CONTENT AFTER TAB===============================-->
-
-
-
 </div>
-
 
 
 <div id="editNoteSection" class="modal fade" style="z-index:99999;">
@@ -487,12 +451,12 @@ if (empty($feedbackTags)) {
                             <textarea class="form-control" id="add_feedback_popup" name="notes" style="padding: 20px; height: 75px;" placeholder="Add Note"></textarea>
                         </div>
                         <div class="col-md-12 text-right ">
-                            <input type="hidden" name="fbtime" value="<?php echo date("M d, Y h:i A", strtotime($result->created)); ?> (<?php echo timeAgo($oFeedback->created); ?>)" />
-                            <input type="hidden" name="fid" value="<?php echo $result->id; ?>" />
-                            <input type="hidden" name="bid" value="<?php echo $result->brandboost_id; ?>" />
-                            <input type="hidden" name="cid" value="<?php echo $result->client_id; ?>" />
-                            <input type="hidden" name="sid" value="<?php echo $result->subscriber_id; ?>" />
-                            <input type="hidden" name="authorname" value="<?php echo $result->subscriber_id; ?>" />
+                            <input type="hidden" name="fbtime" value="{{ date('M d, Y h:i A', strtotime($result->created)) }} ({{ timeAgo($oFeedback->created) }})" />
+                            <input type="hidden" name="fid" value="{{ $result->id }}" />
+                            <input type="hidden" name="bid" value="{{ $result->brandboost_id }}" />
+                            <input type="hidden" name="cid" value="{{ $result->client_id }}" />
+                            <input type="hidden" name="sid" value="{{ $result->subscriber_id }}" />
+                            <input type="hidden" name="authorname" value="{{ $result->subscriber_id }}" />
                             <button data-toggle="modal" data-target="#addnotes" type="button" id="saveFeedbackNote" class="btn dark_btn"> Add Notes &nbsp; <i class="fa fa-angle-double-right"></i> </button>
                         </div>
                     </form>
@@ -503,9 +467,7 @@ if (empty($feedbackTags)) {
 </div>
 
 
-
 <script>
-
     $(document).ready(function () {
 
         $(function () {
@@ -520,7 +482,7 @@ if (empty($feedbackTags)) {
             var formdata = $("#frmSaveNote").serialize();
             $('.overlaynew').show();
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/saveFeedbackNotes'); ?>",
+                url: "{{ base_url('/admin/feedback/saveFeedbackNotes') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -540,7 +502,7 @@ if (empty($feedbackTags)) {
             var feedback_id = $(this).attr("feedback_id");
             var action_name = $(this).attr("action_name");
             $.ajax({
-                url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
+                url: "{{ base_url('admin/tags/listAllTags') }}",
                 type: "POST",
                 data: {review_id: review_id, feedback_id: feedback_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -565,7 +527,7 @@ if (empty($feedbackTags)) {
             $('.overlaynew').show();
             var formdata = $("#frmFeedbackTagListModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/tags/applyFeedbackTag'); ?>',
+                url: "{{ base_url('admin/tags/applyFeedbackTag') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -585,7 +547,7 @@ if (empty($feedbackTags)) {
             $('.overlaynew').show();
             var noteId = $(this).attr('noteid');
             $.ajax({
-                url: '<?php echo base_url('admin/feedback/getFeedbackNotes'); ?>',
+                url: "{{ base_url('admin/feedback/getFeedbackNotes') }}",
                 type: "POST",
                 data: {noteid: noteId,_token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -596,8 +558,6 @@ if (empty($feedbackTags)) {
                         $('#edit_noteid').val(noteId);
                         $("#editNoteSection").modal();
                         $('.overlaynew').hide();
-                    } else {
-
                     }
                 }
             });
@@ -609,7 +569,7 @@ if (empty($feedbackTags)) {
             var formData = new FormData($(this)[0]);
             formData.append('_token','{{csrf_token()}}');
             $.ajax({
-                url: '<?php echo base_url('admin/feedback/updateFeedbackNote'); ?>',
+                url: "{{ base_url('admin/feedback/updateFeedbackNote') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -646,7 +606,7 @@ if (empty($feedbackTags)) {
 				if (isConfirm) {
 					$('.overlaynew').show();
 					$.ajax({
-						url: '<?php echo base_url('admin/feedback/deleteFeedbackNote'); ?>',
+						url: "{{ base_url('admin/feedback/deleteFeedbackNote') }}",
 						type: "POST",
 						data: {noteid: noteId,_token: '{{csrf_token()}}'},
 						dataType: "json",
@@ -666,7 +626,6 @@ if (empty($feedbackTags)) {
 					});
 				}
 			});
-
         });
 
 
@@ -695,7 +654,7 @@ if (empty($feedbackTags)) {
 					var formdata = $("#frmSendFeedbackReply").serialize();
 					$('.overlaynew').show();
 					$.ajax({
-						url: "<?php echo base_url('/admin/feedback/replyFeedback'); ?>",
+						url: "{{ base_url('/admin/feedback/replyFeedback') }}",
 						type: "POST",
 						data: formdata + "&career=" + career,
 						dataType: "json",
