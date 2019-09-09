@@ -1,49 +1,50 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
-<?php error_reporting(0);list($canRead, $canWrite) = fetchPermissions('Feedbacks'); ?>
-<?php
-$aData['allTab'] = '';
-$aData['postiveTab'] = '';
-$aData['neutralTab'] = '';
-$aData['negativeTag'] = '';
-$selected_tab="";
+@php error_reporting(0); list($canRead, $canWrite) = fetchPermissions('Feedbacks') @endphp
 
-if ($selected_tab == 'all') {
-    $allTab = 'active';
-    $aData['allTab'] = $allTab;
-} else if ($selected_tab == 'positive') {
-    $postiveTab = 'active';
-    $aData['postiveTab'] = $postiveTab;
-} else if ($selected_tab == 'neutral') {
-    $neutralTab = 'active';
-    $aData['neutralTab'] = $neutralTab;
-} else if ($selected_tab == 'negative') {
-    $negativeTag = 'active';
-    $aData['negativeTag'] = $negativeTag;
-} else {
-    $allTab = 'active';
-    $aData['allTab'] = $allTab;
-}
-?>
+@php
+	$aData['allTab'] = '';
+	$aData['postiveTab'] = '';
+	$aData['neutralTab'] = '';
+	$aData['negativeTag'] = '';
+	$selected_tab="";
 
-<?php
-if (!empty($result)) {
-    foreach ($result as $record) {
-        if ($record->category == 'Positive') {
-            $oPositive[] = $record;
-        } else if ($record->category == 'Neutral') {
-            $oNuetral[] = $record;
-        } else if ($record->category == 'Negative') {
-            $oNegative[] = $record;
-        }
-    }
-}
-?>
+	if ($selected_tab == 'all') {
+		$allTab = 'active';
+		$aData['allTab'] = $allTab;
+	} else if ($selected_tab == 'positive') {
+		$postiveTab = 'active';
+		$aData['postiveTab'] = $postiveTab;
+	} else if ($selected_tab == 'neutral') {
+		$neutralTab = 'active';
+		$aData['neutralTab'] = $neutralTab;
+	} else if ($selected_tab == 'negative') {
+		$negativeTag = 'active';
+		$aData['negativeTag'] = $negativeTag;
+	} else {
+		$allTab = 'active';
+		$aData['allTab'] = $allTab;
+	}
+@endphp
+
+@php
+	if (!empty($result)) {
+		foreach ($result as $record) {
+			if ($record->category == 'Positive') {
+				$oPositive[] = $record;
+			} else if ($record->category == 'Neutral') {
+				$oNuetral[] = $record;
+			} else if ($record->category == 'Negative') {
+				$oNegative[] = $record;
+			}
+		}
+	}
+@endphp
 
 <!-- Content area -->
 <div class="content">
@@ -203,41 +204,37 @@ if (!empty($result)) {
         </div>
     </div>
 
-
     <div class="tab-content">
-        <?php list($canRead, $canWrite) = fetchPermissions('Feedbacks'); ?>
         <!-- Dashboard content -->
         <div class="row">
             <div class="col-lg-12">
                 <!-- Marketing campaigns -->
                 <div class="panel panel-flat">
                     <!-- ****** Load Smart Popup ***** -->
-                    <?php if (!empty($result)): ?>
-                        <?php @include('admin.components.smart-popup.smart-feedback-widget'); //, array('bgClass' => 'bkg_red') ?>
-                    <?php endif; ?>
-
+                    @if (!empty($result))
+						{{ @include('admin.components.smart-popup.smart-feedback-widget') }}
+                    @endif
 
                     <!-- ****** end ********-->
-                    <?php //if ($this->uri->segment(2) != 'brandboost') { ?>
-                        <div class="panel-heading">
-                            <h6 class="panel-title"><?php echo count($result); ?> Off Site Brand Boost Feedback</h6>
-                            <div class="heading-elements">
-                                <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-                                    <input class="form-control input-sm cus_search" tableid="offsiteFeedback" placeholder="Search by name" type="text">
-                                    <div class="form-control-feedback">
-                                        <i class="icon-search4"></i>
-                                    </div>
-                                </div>
-                                <div class="table_action_tool">
-                                    <a href="javascript:void();"><i class="icon-calendar2"></i></a>
-                                    <a href="javascript:void();"><i class="icon-download4"></i></a>
-                                    <a href="javascript:void();"><i class="icon-upload4"></i></a>
-                                    <a href="javascript:void();" class="editDataList"><i class="icon-pencil4"></i></a>
-                                    <a href="javascript:void();" style="display: none;" id="deleteButtonBrandboostFeedbacks" class="custom_action_box"><i class="icon-trash position-left"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    <?php //} ?>
+					<div class="panel-heading">
+						<h6 class="panel-title">{{ count($result) }} Off Site Brand Boost Feedback</h6>
+						<div class="heading-elements">
+							<div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
+								<input class="form-control input-sm cus_search" tableid="offsiteFeedback" placeholder="Search by name" type="text">
+								<div class="form-control-feedback">
+									<i class="icon-search4"></i>
+								</div>
+							</div>
+							<div class="table_action_tool">
+								<a href="javascript:void();"><i class="icon-calendar2"></i></a>
+								<a href="javascript:void();"><i class="icon-download4"></i></a>
+								<a href="javascript:void();"><i class="icon-upload4"></i></a>
+								<a href="javascript:void();" class="editDataList"><i class="icon-pencil4"></i></a>
+								<a href="javascript:void();" style="display: none;" id="deleteButtonBrandboostFeedbacks" class="custom_action_box"><i class="icon-trash position-left"></i></a>
+							</div>
+						</div>
+					</div>
+					
                     <div class="table-responsive">
 						@include('admin.feedback.partial.feedback-list-table');
                     </div>
@@ -249,7 +246,7 @@ if (!empty($result)) {
 </div>
 
 @include('admin.modals.modules.offsite.feedback_modal');
-<script src="<?php echo base_url(); ?>assets/js/modules/offsite/feedback.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/js/modules/offsite/feedback.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 	$(document).on('click', '.chg_status', function () {
@@ -257,7 +254,7 @@ $(document).ready(function () {
 		var status = $(this).attr('change_status');
 		var feedbackid = $(this).attr('feedback_id');
 		$.ajax({
-			url: '<?php echo base_url(); ?>/admin/feedback/updateFeedbackStatus',
+			url: '{{ base_url() }}/admin/feedback/updateFeedbackStatus',
 			type: "POST",
 			data: {status: status, fid: feedbackid, _token: '{{csrf_token()}}'},
 			dataType: "json",
@@ -317,7 +314,6 @@ $(document).ready(function () {
             }
         });
     });
-	
 });
 </script>
 

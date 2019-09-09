@@ -178,7 +178,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <h6 class="panel-title">Topup Membership Levels</h6>
-                                                        <?php
+                                                        @php
                                                         $membershipLevel = 0;
                                                         foreach ($membership_data as $data) {
 
@@ -186,9 +186,9 @@
                                                                 $membershipLevel++;
                                                             }
                                                         }
-                                                        ?>
+                                                        @endphp
                                                         <div class="heading-elements">
-                                                            <span class="label bg-success heading-text"><?php echo $membershipLevel; ?> Membership Level</span>
+                                                            <span class="label bg-success heading-text">{{ $membershipLevel }} Membership Level</span>
                                                             <ul class="icons-list">
                                                                 <li class="dropdown">
                                                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> <span class="caret"></span></a>
@@ -222,10 +222,6 @@
                                                             <th>Price </th>
                                                             <th>Credits </th>
                                                             <th>Contacts Limit </th>
-                                                            <!--<th>Email Limit</th>
-                                                            <th>SMS Limit</th>
-                                                            <th>Text Review Limit </th>
-                                                            <th>Video Review Limit </th>-->
                                                             <th class="col-md-2">Date Created</th>
                                                             <th class="text-center">Status </th>
                                                             <th class="text-center">Action</th>
@@ -233,80 +229,64 @@
                                                     </thead>
 
                                                     <tbody>
-                                                        <?php
-                                                        foreach ($membership_data as $data) {
-                                                            if ($data->type == 'topup-membership') {
-                                                                ?>
-                                                                <tr id="append-<?php echo $data->id; ?>" class="selectedClass">
-                                                                    <td style="display: none;"><?php echo date('m/d/Y', strtotime($data->created)); ?></td>
-                                                                    <td style="display: none;"><?php echo $data->id; ?></td>
-                                                                    <td style="width: 40px!important;"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $data->id; ?>" value="<?php echo $data->id; ?>" ></td>
-                                                                    <td><?php echo $data->level_name; ?></td>
+                                                        @foreach ($membership_data as $data)
+                                                            @if ($data->type == 'topup-membership')
+                                                                <tr id="append-{{ $data->id }}" class="selectedClass">
+                                                                    <td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
+                                                                    <td style="display: none;">{{ $data->id }}</td>
+                                                                    <td style="width: 40px!important;"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $data->id }}" value="{{ $data->id }}" ></td>
+                                                                    <td>{{ $data->level_name }}</td>
                                                                     <td>
-                                                                        $<?php echo number_format($data->price, 2); ?>/<?php
-                                                                        if ($data->subs_cycle == 'monthly' || $data->subs_cycle == 'month') {
-                                                                            echo 'Month';
-                                                                        } else if ($data->subs_cycle == 'yearly' || $data->subs_cycle == 'year') {
-                                                                            echo 'Year';
-                                                                        } else if ($data->subs_cycle == 'weekly' || $data->subs_cycle == 'week') {
-                                                                            echo 'Week';
-                                                                        } else if ($data->subs_cycle == 'bi-yearly') {
-                                                                            echo '2 Year';
-                                                                        }
-                                                                        ?>
+                                                                        ${{ number_format($data->price, 2) }}/@if ($data->subs_cycle == 'monthly' || $data->subs_cycle == 'month')
+                                                                            {{ 'Month' }}
+                                                                        @else if ($data->subs_cycle == 'yearly' || $data->subs_cycle == 'year')
+                                                                            {{ 'Year' }}
+                                                                        @else if ($data->subs_cycle == 'weekly' || $data->subs_cycle == 'week')
+                                                                            {{ 'Week' }}
+                                                                        @else if ($data->subs_cycle == 'bi-yearly')
+                                                                            {{ '2 Year' }}
+                                                                        @endif
                                                                     </td>
-                                                                    <td><?php echo number_format($data->credits); ?></td>
-                                                                    <td><?php echo number_format($data->contact_limit); ?></td>
-                                                                    <!--<td><?php echo number_format($data->email_limit, 0); ?></td>
-                                                                    <td><?php echo number_format($data->sms_limit, 0); ?></td>
-                                                                    <td><?php echo number_format($data->text_review_limit, 0); ?></td>
-                                                                    <td><?php echo number_format($data->video_review_limit, 0); ?></td>-->
-                                                                    <td><h6 class="text-semibold"><?php echo date('M d, Y', strtotime($data->created)); ?><div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)) . ' (' . timeAgo($data->created) . ')'; ?></div></h6></td>
+                                                                    <td>{{ number_format($data->credits) }}</td>
+                                                                    <td>{{ number_format($data->contact_limit) }}</td>
+                                                                    <td><h6 class="text-semibold">{{ date('M d, Y', strtotime($data->created)) }}<div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) . ' (' . timeAgo($data->created) . ')' }}</div></h6></td>
                                                                     <td class="text-center">
-                                                                        <?php
-                                                                        if ($data->status == 1) {
-                                                                            ?><span class="label bg-success">Active</span><?php
-                                                                        } else {
-                                                                            ?><span class="label bg-danger">Inactive</span><?php
-                                                                        }
-                                                                        ?></td>
+                                                                        @if ($data->status == 1)
+                                                                            <span class="label bg-success">Active</span>
+																		@else
+                                                                            <span class="label bg-danger">Inactive</span>
+                                                                        @endif
+                                                                    </td>
                                                                     <td class="text-center">
                                                                         <ul class="icons-list">
                                                                             <li class="dropdown">
                                                                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                                                 <ul class="dropdown-menu dropdown-menu-right">
                                                                                     <li>
-                                                                                        <?php
-                                                                                        if ($data->status == 1) {
-
-                                                                                            echo "<a membershipId='" . $data->id . "' change_status = '0' class='chg_status' data_type='Membership'><i class='icon-gear'></i> Inactive</a>";
-                                                                                        } else {
-                                                                                            echo "<a membershipId='" . $data->id . "' change_status = '1' class='chg_status' data_type='Membership'><i class='icon-gear'></i> Active</a>";
-                                                                                        }
-                                                                                        ?> </li>
+                                                                                        @if ($data->status == 1)
+                                                                                            <a membershipId='{{ $data->id }}' change_status = '0' class='chg_status' data_type='Membership'><i class='icon-gear'></i> Inactive</a>
+                                                                                        @else
+																							<a membershipId='{{ $data->id }}' change_status = '1' class='chg_status' data_type='Membership'><i class='icon-gear'></i> Active</a>
+																						@endif
+																					</li>
                                                                                     <li>
-                                                                                        <a class="membershipEdit" memID="<?php echo $data->id; ?>"><i class="icon-gear"></i> Edit</a>
+                                                                                        <a class="membershipEdit" memID="{{ $data->id }}"><i class="icon-gear"></i> Edit</a>
                                                                                     </li>
                                                                                     <li> 
-                                                                                        <a style="cursor: pointer;" class="membershipDelete" memID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a>
+                                                                                        <a style="cursor: pointer;" class="membershipDelete" memID="{{ $data->id }}"><i class="icon-trash"></i> Delete</a>
                                                                                     </li>
                                                                                 </ul>
                                                                             </li>
                                                                         </ul>
                                                                     </td>
                                                                 </tr>
-                                                                <?php
-                                                            }
-                                                        }
-                                                        ?>
-
+                                                            @endif
+														@endforeach
                                                     </tbody>
-
                                                 </table>
                                             </div>
                                         </div>
                                         <!-- /marketing campaigns -->
-
                                     </div>
                                 </div>
                             </div>
@@ -322,7 +302,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <h6 class="panel-title">Topup Levels</h6>
-                                                        <?php
+                                                        @php
                                                         $membershipLevel = 0;
                                                         foreach ($membership_data as $data) {
 
@@ -330,9 +310,9 @@
                                                                 $membershipLevel++;
                                                             }
                                                         }
-                                                        ?>
+                                                        @endphp
                                                         <div class="heading-elements">
-                                                            <span class="label bg-success heading-text"><?php echo $membershipLevel; ?> Topup Level</span>
+                                                            <span class="label bg-success heading-text">{{ $membershipLevel }} Topup Level</span>
                                                             <ul class="icons-list">
                                                                 <li class="dropdown">
                                                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> <span class="caret"></span></a>
@@ -365,8 +345,6 @@
                                                             <th>Topup Price</th>
                                                             <th>Credits </th>
                                                             <th>Contacts Limit </th>
-                                                            <!--<th>Email Limit</th>
-                                                            <th>SMS Limit</th>-->
                                                             <th class="col-md-2">Date Created</th>
                                                             <th class="text-center">Status </th>
                                                             <th class="text-center">Action</th>
@@ -374,62 +352,51 @@
                                                     </thead>
 
                                                     <tbody>
-                                                        <?php
-                                                        foreach ($membership_data as $data) {
-                                                            if ($data->type == 'topup') {
-                                                                ?>
+                                                        @foreach ($membership_data as $data)
+                                                            @if ($data->type == 'topup')
                                                                 <tr>
-                                                                <tr id="append-topup-<?php echo $data->id; ?>" class="selectedClass">
-                                                                    <td style="display: none;"><?php echo date('m/d/Y', strtotime($data->created)); ?></td>
-                                                                    <td style="display: none;"><?php echo $data->id; ?></td>
-                                                                    <td style="width: 40px!important;"><input type="checkbox" name="checkRows[]" class="checkRows-topup" id="chk<?php echo $data->id; ?>" value="<?php echo $data->id; ?>" ></td>
-                                                                    <td><?php echo $data->level_name; ?></td>
-                                                                    <td>$<?php echo number_format($data->price, 2); ?></td>
-                                                                    <td><?php echo number_format($data->credits); ?></td>
-                                                                    <td><?php echo number_format($data->contact_limit); ?></td>
-                                                                  
-                                                                    <td><h6 class="text-semibold"><?php echo date('M d, Y', strtotime($data->created)); ?><div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)) . ' (' . timeAgo($data->created) . ')'; ?></div></h6></td>
+                                                                <tr id="append-topup-{{ $data->id }}" class="selectedClass">
+                                                                    <td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
+                                                                    <td style="display: none;">{{ $data->id }}</td>
+                                                                    <td style="width: 40px!important;"><input type="checkbox" name="checkRows[]" class="checkRows-topup" id="chk{{ $data->id }}" value="{{ $data->id }}" ></td>
+                                                                    <td>{{ $data->level_name }}</td>
+                                                                    <td>${{ number_format($data->price, 2) }}</td>
+                                                                    <td>{{ number_format($data->credits) }}</td>
+                                                                    <td>{{ number_format($data->contact_limit) }}</td>
+                                                                    <td><h6 class="text-semibold">{{ date('M d, Y', strtotime($data->created)) }}<div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) . ' (' . timeAgo($data->created) . ')' }}</div></h6></td>
                                                                     <td class="text-center">
-                                                                        <?php
-                                                                        if ($data->status == 1) {
-                                                                            ?><span class="label bg-success">Active</span><?php
-                                                                        } else {
-                                                                            ?><span class="label bg-danger">Inactive</span><?php
-                                                                        }
-                                                                        ?></td>
+                                                                        @if ($data->status == 1)
+																			<span class="label bg-success">Active</span>
+                                                                        @else
+																			<span class="label bg-danger">Inactive</span>
+                                                                        @endif
+																	</td>
                                                                     <td class="text-center">
                                                                         <ul class="icons-list">
                                                                             <li class="dropdown">
                                                                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                                                 <ul class="dropdown-menu dropdown-menu-right">
                                                                                     <li>
-                                                                                        <?php
-                                                                                        if ($data->status == 1) {
-
-                                                                                            echo "<a membershipId='" . $data->id . "' change_status = '0' class='chg_status' data_type='Topup'><i class='icon-gear'></i> Inactive</a>";
-                                                                                        } else {
-                                                                                            echo "<a membershipId='" . $data->id . "' change_status = '1' class='chg_status' data_type='Topup'><i class='icon-gear'></i> Active</a>";
-                                                                                        }
-                                                                                        ?> </li>
+                                                                                        @if ($data->status == 1)
+																							<a membershipId='{{ $data->id }}' change_status = '0' class='chg_status' data_type='Topup'><i class='icon-gear'></i> Inactive</a>
+																						@else
+																							<a membershipId='{{ $data->id }}' change_status = '1' class='chg_status' data_type='Topup'><i class='icon-gear'></i> Active</a>
+																						@endif
+																						</li>
                                                                                     <li>
-                                                                                        <a class="topUpEdit" memID="<?php echo $data->id; ?>"><i class="icon-gear"></i> Edit</a>
+                                                                                        <a class="topUpEdit" memID="{{ $data->id }}"><i class="icon-gear"></i> Edit</a>
                                                                                     </li>
                                                                                     <li> 
-                                                                                        <a style="cursor: pointer;" class="membershipDelete" memID="<?php echo $data->id; ?>"><i class="icon-trash"></i> Delete</a>
+                                                                                        <a style="cursor: pointer;" class="membershipDelete" memID="{{ $data->id }}"><i class="icon-trash"></i> Delete</a>
                                                                                     </li>
                                                                                 </ul>
                                                                             </li>
                                                                         </ul>
                                                                     </td>
-                                                                    
                                                                 </tr>
-                                                                <?php
-                                                            }
-                                                        }
-                                                        ?>
-
+                                                            @endif
+                                                        @endforeach
                                                     </tbody>
-
                                                 </table>
                                             </div>
                                         </div>
@@ -437,13 +404,10 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!--########################TAB end ##########################--> 
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -577,15 +541,9 @@
                         </div>
                         
                     </div>
-
-
-
-                   
-
                 </div>
 
                 <div class="modal-footer">
-
                     <button class="btn btn-link" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
                     <button type="submit" id="addButtonMem" class="btn btn-primary"><i class="icon-check"></i> Save</button>
                 </div>
@@ -648,12 +606,7 @@
                         <div class="col-lg-9">
                             <input class="form-control" name="contact_limit" value="" id="mem_contact_limit" placeholder="Enter contact limit" type="number" required>
                         </div>
-                        
                     </div>
-
-
-                   
-
                 </div>
 
                 <div class="modal-footer">
@@ -706,8 +659,6 @@
                         </div>
                         
                     </div>
-
-
                 </div>
 
                 <div class="modal-footer">
@@ -802,30 +753,30 @@
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                $('.overlaynew').show();
-                                $.ajax({
-                                    url: '<?php echo base_url('admin/membership/deleteMemberships'); ?>',
-                                    type: "POST",
-                                    data: {multipal_record_id: val},
-                                    dataType: "json",
-                                    success: function (data) {
-                                        if (data.status == 'success') {
-                                            $('.overlaynew').hide();
-                                            window.location.href = window.location.href;
-                                        } else {
-                                            $('.overlaynew').hide();
-                                            alertMessage('Error: Some thing wrong!');
-                                        }
-                                    },
-                                    error: function () {
-                                        $('.overlaynew').hide();
-                                        alertMessage('Error: Some thing wrong!');
-                                    }
-                                });
-                            }
-                        });
+				function (isConfirm) {
+					if (isConfirm) {
+						$('.overlaynew').show();
+						$.ajax({
+							url: "{{ base_url('admin/membership/deleteMemberships') }}",
+							type: "POST",
+							data: {multipal_record_id: val, _token: '{{csrf_token()}}'},
+							dataType: "json",
+							success: function (data) {
+								if (data.status == 'success') {
+									$('.overlaynew').hide();
+									window.location.href = window.location.href;
+								} else {
+									$('.overlaynew').hide();
+									alertMessage('Error: Some thing wrong!');
+								}
+							},
+							error: function () {
+								$('.overlaynew').hide();
+								alertMessage('Error: Some thing wrong!');
+							}
+						});
+					}
+				});
             }
         });
 
@@ -887,30 +838,30 @@
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                $('.overlaynew').show();
-                                $.ajax({
-                                    url: '<?php echo base_url('admin/membership/deleteMemberships'); ?>',
-                                    type: "POST",
-                                    data: {multipal_record_id: val},
-                                    dataType: "json",
-                                    success: function (data) {
-                                        if (data.status == 'success') {
-                                            $('.overlaynew').hide();
-                                            window.location.href = window.location.href;
-                                        } else {
-                                            $('.overlaynew').hide();
-                                            alertMessage('Error: Some thing wrong!');
-                                        }
-                                    },
-                                    error: function () {
-                                        $('.overlaynew').hide();
-                                        alertMessage('Error: Some thing wrong!');
-                                    }
-                                });
-                            }
-                        });
+				function (isConfirm) {
+					if (isConfirm) {
+						$('.overlaynew').show();
+						$.ajax({
+							url: "{{ base_url('admin/membership/deleteMemberships') }}",
+							type: "POST",
+							data: {multipal_record_id: val, _token: '{{csrf_token()}}'},
+							dataType: "json",
+							success: function (data) {
+								if (data.status == 'success') {
+									$('.overlaynew').hide();
+									window.location.href = window.location.href;
+								} else {
+									$('.overlaynew').hide();
+									alertMessage('Error: Some thing wrong!');
+								}
+							},
+							error: function () {
+								$('.overlaynew').hide();
+								alertMessage('Error: Some thing wrong!');
+							}
+						});
+					}
+				});
             }
         });
 
@@ -920,7 +871,7 @@
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: '<?php echo base_url('admin/membership/add'); ?>',
+                url: "{{ base_url('admin/membership/add') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -945,7 +896,7 @@
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: '<?php echo base_url('admin/membership/add'); ?>',
+                url: "{{ echo base_url('admin/membership/add') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -978,39 +929,39 @@
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: '<?php echo base_url('admin/membership/mem_delete'); ?>',
-                                type: "POST",
-                                data: {memID: memID},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = window.location.href;
-                                    } else {
-                                        $('.overlaynew').hide();
-                                        alertMessage('Error: Some thing wrong!');
-                                    }
-                                },
-                                error: function () {
-                                    $('.overlaynew').hide();
-                                    alertMessage('Error: Some thing wrong!');
-                                }
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					$.ajax({
+						url: "{{ base_url('admin/membership/mem_delete') }}",
+						type: "POST",
+						data: {memID: memID, _token: '{{csrf_token()}}'},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = window.location.href;
+							} else {
+								$('.overlaynew').hide();
+								alertMessage('Error: Some thing wrong!');
+							}
+						},
+						error: function () {
+							$('.overlaynew').hide();
+							alertMessage('Error: Some thing wrong!');
+						}
+					});
+				}
+			});
         });
 
 
         $(document).on('click', '.membershipEdit', function () {
             var memID = $(this).attr('memID');
             $.ajax({
-                url: '<?php echo base_url('admin/membership/getMemberById'); ?>',
+                url: "{{ base_url('admin/membership/getMemberById') }}",
                 type: "POST",
-                data: {memID: memID},
+                data: {memID: memID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
@@ -1032,9 +983,6 @@
                         $("#e_plan_id").val(mem.plan_id);
 
                         $("#membershipLevelEdit").modal()
-
-                    } else {
-
                     }
                 }
             });
@@ -1045,9 +993,9 @@
 
             var memID = $(this).attr('memID');
             $.ajax({
-                url: '<?php echo base_url('admin/membership/getMemberById'); ?>',
+                url: "{{ base_url('admin/membership/getMemberById') }}",
                 type: "POST",
-                data: {memID: memID},
+                data: {memID: memID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
@@ -1061,9 +1009,6 @@
                         $('#t_mem_ID').val(mem.id);
 
                         $("#edittopupLevel").modal()
-
-                    } else {
-
                     }
                 }
             });
@@ -1075,7 +1020,7 @@
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: '<?php echo base_url('admin/membership/mem_update'); ?>',
+                url: "{{ base_url('admin/membership/mem_update') }}"
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -1099,7 +1044,7 @@
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: '<?php echo base_url('admin/membership/topup_update'); ?>',
+                url: "{{ base_url('admin/membership/topup_update') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -1127,9 +1072,9 @@
             var dataTypeTxt = $(this).attr('data_type');
 
             $.ajax({
-                url: '<?php echo base_url('admin/membership/update_status'); ?>',
+                url: "{{ base_url('admin/membership/update_status') }}",
                 type: "POST",
-                data: {status: status, membership_id: membershipId},
+                data: {status: status, membership_id: membershipId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (dataTypeTxt == '') {
@@ -1149,14 +1094,10 @@
 
 
     $(function () {
-
-
         // Table setup
         // ------------------------------
-
         // Setting datatable defaults
-
-
+		
         $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
                     var min = $('#min').datepicker("getDate");
@@ -1223,49 +1164,46 @@
 
 
         $('.daterange-ranges').daterangepicker(
-                {
-                    startDate: moment().subtract(29, 'days'),
-                    endDate: moment(),
-                    minDate: '01/01/2012',
-                    maxDate: currentDate,
-                    dateLimit: {days: 60},
-                    ranges: {
-                        'All': [moment().add(1, 'days'), moment()],
-                        'Today': [moment(), moment()],
-                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                        'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                    },
-                    opens: 'left',
-                    applyClass: 'btn-small bg-slate-600 btn-block',
-                    cancelClass: 'btn-small btn-default btn-block',
-                    format: 'MM/DD/YYYY'
-                },
-                function (start, end) {
+			{
+				startDate: moment().subtract(29, 'days'),
+				endDate: moment(),
+				minDate: '01/01/2012',
+				maxDate: currentDate,
+				dateLimit: {days: 60},
+				ranges: {
+					'All': [moment().add(1, 'days'), moment()],
+					'Today': [moment(), moment()],
+					'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+					'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+					'This Month': [moment().startOf('month'), moment().endOf('month')],
+					'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+				},
+				opens: 'left',
+				applyClass: 'btn-small bg-slate-600 btn-block',
+				cancelClass: 'btn-small btn-default btn-block',
+				format: 'MM/DD/YYYY'
+			},
+			function (start, end) {
 
-                    if (start.format('MM/DD/YYYY') > end.format('MM/DD/YYYY')) {
+				if (start.format('MM/DD/YYYY') > end.format('MM/DD/YYYY')) {
 
-                        $('#min').val('');
-                        $('#max').val('');
-                        $('.daterange-ranges span').html('Sort by date.');
-                    } else {
+					$('#min').val('');
+					$('#max').val('');
+					$('.daterange-ranges span').html('Sort by date.');
+				} else {
 
-                        $('#min').val(start.format('MM/DD/YYYY'));
-                        $('#max').val(end.format('MM/DD/YYYY'));
-                        $('.daterange-ranges span').html(start.format('MMMM DD YYYY') + ' - ' + end.format('MMMM DD YYYY'));
-                    }
+					$('#min').val(start.format('MM/DD/YYYY'));
+					$('#max').val(end.format('MM/DD/YYYY'));
+					$('.daterange-ranges span').html(start.format('MMMM DD YYYY') + ' - ' + end.format('MMMM DD YYYY'));
+				}
 
-                    membershipLevelN.draw();
-                    membershipTopup.draw();
-                }
+				membershipLevelN.draw();
+				membershipTopup.draw();
+			}
         );
-
-        //$('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM DD YYYY') + ' - ' + moment().format('MMMM DD YYYY'));
-
+		
         $('.daterange-ranges span').html('Sort by date.');
-
     });
 </script>
 @endsection
