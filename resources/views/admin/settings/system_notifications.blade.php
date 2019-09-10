@@ -4,7 +4,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
-                <h3><i class="icon-star-half"></i> &nbsp;<?php echo $title; ?></h3>
+                <h3><i class="icon-star-half"></i> &nbsp;{{ $title }}</h3>
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">
@@ -22,7 +22,7 @@
             <div class="col-md-12">
                 <div style="margin: 0;" class="panel panel-flat">
                     <div class="panel-heading"> <span class="pull-left">
-                            <h6 class="panel-title"><?php echo count($oTemplates); ?> Templates</h6>
+                            <h6 class="panel-title">{{ count($oTemplates) }} Templates</h6>
                         </span>
                         <div class="heading-elements">
                             <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
@@ -49,43 +49,43 @@
                             <tbody>
 
                                 <!--=======================-->
-                                <?php foreach ($oTemplates as $oTemplate) { ?>
+                                @foreach ($oTemplates as $oTemplate)
                                     <tr>
                                         <td style="display:none;"></td>
                                         <td style="display:none;"></td>
                                         <td>
-                                            <?php echo $oTemplate->title; ?>
+                                            {{ $oTemplate->title }}
                                         </td>
                                         
                                         <td>
-                                            <?php echo $oTemplate->template_tag; ?>
+                                            {{ $oTemplate->template_tag }}
                                         </td>
 
                                         <td>
-                                            <?php echo $oTemplate->tag_language; ?>
+                                            {{ $oTemplate->tag_language }}
                                         </td>
 
                                         <td>
-                                            <?php echo $oTemplate->tag_language_admin; ?>
+                                            {{ $oTemplate->tag_language_admin }}
                                         </td>
 
                                         <td>
                                             <div class="media-left">
-                                                <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($oTemplate->created)); ?></a></div>
-                                                <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oTemplate->created)); ?></div>
+                                                <div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($oTemplate->created)) }}</a></div>
+                                                <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oTemplate->created)) }}</div>
                                             </div>
 
                                         </td>
                                         <td style="text-align: center;">
-                                            <a class="btn green_cust_btn editSystemNotificationTemplate"  template_id="<?php echo $oTemplate->id; ?>"><i class="fa fa-eye"></i></a>
-                                            <?php if($oTemplate->write_permission == true):?>
-                                            <a class="btn red deleteSystemNotificationTemplate" template_id="<?php echo $oTemplate->id; ?>"><i class="fa fa-trash"></i></a>
-                                            <?php else: ?>
-                                            <a href="javascript:void(0)" title="Deleting this template not allowed" class="btn red"><i class="fa fa-trash" style="color:#ccc;"></i></a>
-                                            <?php endif; ?>
+                                            <a class="btn green_cust_btn editSystemNotificationTemplate"  template_id="{{ $oTemplate->id }}"><i class="fa fa-eye"></i></a>
+                                            @if($oTemplate->write_permission == true)
+												<a class="btn red deleteSystemNotificationTemplate" template_id="{{ $oTemplate->id }}"><i class="fa fa-trash"></i></a>
+                                            @else
+												<a href="javascript:void(0)" title="Deleting this template not allowed" class="btn red"><i class="fa fa-trash" style="color:#ccc;"></i></a>
+                                           @endif
                                         </td>
                                     </tr>
-                                <?php } ?>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -174,11 +174,10 @@
 
 <script>
     $(document).ready(function () {
-
         $('#frmAddSysTemplate').on('submit', function (e) {
             var formdata = $("#frmAddSysTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/saveSystemNotificationTemplate'); ?>',
+                url: "{{ base_url('admin/settings/saveSystemNotificationTemplate') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -196,7 +195,7 @@
         $(document).on("click", ".editSystemNotificationTemplate", function (e) {
         var templateId = $(this).attr('template_id');
         $.ajax({
-            url: '<?php echo base_url("admin/settings/getSystemNotificationTemplate");?>',
+            url: '{{ base_url("admin/settings/getSystemNotificationTemplate") }}',
             type: "POST",
             data: {templateId: templateId},
             dataType: "json",
@@ -224,7 +223,7 @@
     $('#frmEditSysTemplate').on('submit', function (e) {
             var formdata = $("#frmEditSysTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateSystemNotificationTemplate'); ?>',
+                url: "{{ base_url('admin/settings/updateSystemNotificationTemplate') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -238,40 +237,37 @@
         });
         
         $(document).on('click', '.deleteSystemNotificationTemplate', function () {
-        var elem = $(this);
-        swal({
-            title: "Are you sure? You want to delete this template!",
-            text: "You will not be able to recover this record!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#EF5350",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel pls!",
-            closeOnConfirm: true,
-            closeOnCancel: true
-        },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $('.overlaynew').show();
-                        var templateID = $(elem).attr('template_id');
-                        $.ajax({
-                            url: '<?php echo base_url('admin/settings/deleteSystemNotificationTemplate'); ?>',
-                            type: "POST",
-                            data: {templateID: templateID},
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    $('.overlaynew').hide();
-                                    window.location.href = '';
-                                }
-                            }
-                        });
-                    }
-                });
-    });
-    
-    
-
-    });
+			var elem = $(this);
+			swal({
+				title: "Are you sure? You want to delete this template!",
+				text: "You will not be able to recover this record!",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#EF5350",
+				confirmButtonText: "Yes, delete it!",
+				cancelButtonText: "No, cancel pls!",
+				closeOnConfirm: true,
+				closeOnCancel: true
+			},
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					var templateID = $(elem).attr('template_id');
+					$.ajax({
+						url: "{{ base_url('admin/settings/deleteSystemNotificationTemplate') }}",
+						type: "POST",
+						data: {templateID: templateID},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = '';
+							}
+						}
+					});
+				}
+			});
+		});   
+	});
 </script>
 

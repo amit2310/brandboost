@@ -1,31 +1,28 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php //echo $title; ?>
+	{{ $title }}
 @endsection
 
 @section('contents')
 
 <div class="content">
-
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
     <div class="page_header">
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-12">
-                <h3><img style="width: 18px;" src="<?php echo base_url(); ?>assets/images/user_settings_icon.png"> Brand Settings</h3>
+                <h3><img style="width: 18px;" src="{{ base_url() }}assets/images/user_settings_icon.png"> Brand Settings</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
-                    <li class="<?php if(empty($seletedTab)):?>active<?php endif;?>"><a href="#right-icon-tab0" data-toggle="tab">General</a></li>
-                    <li class="<?php if($seletedTab=='prefer'):?>active<?php endif;?>"><a href="#right-icon-tab1" data-toggle="tab"> Preferences</a></li>
-                    <li class="<?php if($seletedTab=='subs'):?>active<?php endif;?>"><a href="#right-icon-tab2" data-toggle="tab">Subscription & Credits</a></li>
-                    <li class="<?php if($seletedTab=='billing'):?>active<?php endif;?>"><a href="#right-icon-tab3" data-toggle="tab">Billing</a></li>
-                    <li class="<?php if($seletedTab=='notify'):?>active<?php endif;?>"><a href="#right-icon-tab4" data-toggle="tab">Notifications</a></li>
-                    <li class="<?php if($seletedTab=='import'):?>active<?php endif;?>"><a href="#right-icon-tab5" data-toggle="tab">Import</a></li>
-                    <li class="<?php if($seletedTab=='export'):?>active<?php endif;?>"><a href="#right-icon-tab6" data-toggle="tab">Export</a></li>
+                    <li class="@if(empty($seletedTab)) active @endif"><a href="#right-icon-tab0" data-toggle="tab">General</a></li>
+                    <li class="@if($seletedTab=='prefer') active @endif"><a href="#right-icon-tab1" data-toggle="tab"> Preferences</a></li>
+                    <li class="@if($seletedTab=='subs') active @endif"><a href="#right-icon-tab2" data-toggle="tab">Subscription & Credits</a></li>
+                    <li class="@if($seletedTab=='billing') active @endif"><a href="#right-icon-tab3" data-toggle="tab">Billing</a></li>
+                    <li class="@if($seletedTab=='notify') active @endif"><a href="#right-icon-tab4" data-toggle="tab">Notifications</a></li>
+                    <li class="@if($seletedTab=='import') active @endif"><a href="#right-icon-tab5" data-toggle="tab">Import</a></li>
+                    <li class="@if($seletedTab=='export') active @endif"><a href="#right-icon-tab6" data-toggle="tab">Export</a></li>
                 </ul>
-
             </div>
-
         </div>
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
@@ -53,37 +50,25 @@
 
         <!--===========TAB 7===========-->
         @include('admin.settings.tabs.export')
-
-
     </div>
     <!--&&&&&&&&&&&& TABBED CONTENT  END &&&&&&&&&&-->
-
 </div>
-
 <script>
-
-
-
     $(document).ready(function () {
         $("#frmGeneralBusinessInfo, #frmGeneralBusinessInfo2, #frmGeneralBusinessInfo3, #frmGeneralBusinessInfo4").submit(function () {
             var formData = $(this).serialize();
-            //formData.append('_token', '<?php echo csrf_token(); ?>');
             $.ajax({
-                url: "<?php echo base_url('webchat/settings/updateCompanyFormData'); ?>",
+                url: "{{ base_url('webchat/settings/updateCompanyFormData') }}",
                 type: "POST",
                 data: formData,
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
                         alertMessage("Updated Successfully!");
-                    } else {
-                        //display error message if required
                     }
                 }
             });
             return false;
-
         });
     });
 
@@ -113,10 +98,6 @@
             smallMenu();
         };
     });
-
-
-
-
 
 </script>
 
