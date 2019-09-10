@@ -1,5 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+@php
 if (!empty($oCampaign)) {
     //permissions
     $bAllowComments = ($oCampaign->allow_comments == 1) ? true : false;
@@ -16,7 +15,6 @@ if (!empty($oCampaign)) {
     //Total Reviews
     $totalReviews = sizeof($aReviews);
 
-    //pre($aReviews);
     if (!empty($aReviews)) {
 
         foreach ($aReviews as $arr) {
@@ -24,10 +22,9 @@ if (!empty($oCampaign)) {
             break;
         }
     }
-
-    //pre($aLatestReview);
 }
-?>
+@endphp
+
 <style>
     .grey{ color:#ccc!important;}
     .externalpopup_vid{ position:absolute; margin:0;  /*top:30px;*/ bottom:30px;  left:30px; width:400px;}
@@ -108,144 +105,122 @@ if (!empty($oCampaign)) {
     }
 
 </style>  
-<?php if ($display == 'true'): ?>
+
+@if ($display == 'true')
     <section class="top_text price">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="alert-success" style="margin-bottom:10px;">
-                        <?php echo $this->session->flashdata('success_msg'); ?>
-                    </div>
-                    <div class="alert-danger" style="margin-bottom:10px;">
-                        <?php echo $this->session->flashdata('error_msg'); ?>
-                    </div>
-                    <?php if (!empty($aReviews)): ?>
-                        <?php foreach ($aReviews as $aReview): ?>
-                                    <div class="video_review" <!--style="background-color: <?php echo $bgColor; ?> !important; color: <?php echo $txtColor; ?> !important;" -->>
-                                 <div class="row">
+                    @if (!empty($aReviews))
+                        @foreach ($aReviews as $aReview)
+                            <div class="video_review">
+                                <div class="row">
                                     <div class="col-md-12 text-center">
-                                        <img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $oCampaign->logo_img; ?>" width="164"/>
+                                        <img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $oCampaign->logo_img }}" width="164"/>
                                         <hr>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-3 text-center">
-                                        <figure><img src="<?php echo base_url(); ?>assets/images/v_user.jpg"/></figure>	
+                                        <figure><img src="{{ base_url() }}assets/images/v_user.jpg"/></figure>	
                                     </div>
 
                                     <div class="col-md-7 user_details_box pl0">
                                         <h5><strong>Verified Buyer</strong></h5>
-                                        <h4><?php echo $oCampaign->firstname . ' ' . $oCampaign->lastname; ?></h4>
-                                        <?php if ($bAllowCreatedTime): ?>
-                                            <p class="date allow_timestamp"><?php echo date('F d, Y', strtotime($aReview['created'])); ?></p>
-                                        <?php endif; ?>
-                                        <p><strong>Product: <span class="brand_title"><?php echo $oCampaign->brand_title; ?></span></strong></p>
+                                        <h4>{{ $oCampaign->firstname . ' ' . $oCampaign->lastname }}</h4>
+                                        @if ($bAllowCreatedTime)
+                                            <p class="date allow_timestamp">{{ date('F d, Y', strtotime($aReview['created'])) }}</p>
+                                        @endif
+                                        <p><strong>Product: <span class="brand_title">{{ $oCampaign->brand_title }}</span></strong></p>
                                         <hr>
                                         <p>
                                             <span class="allow_ratings">
                                                 <ul id="stars">
-                                                    <?php for ($i = 0; $i < $aReview['ratings']; $i++) { ?>
+                                                    @for ($i = 0; $i < $aReview['ratings']; $i++)
                                                         <i class="fa fa-star"></i>
-                                                    <?php } ?>
-                                                    <?php
-                                                    if ($i < 5) {
-                                                        for ($j = $i; $j < 5; $j++) {
-                                                            ?>
+                                                    @endfor
+													
+													@if ($i < 5)
+                                                        @for ($j = $i; $j < 5; $j++)
                                                             <i class="fa fa-star grey"></i>
-                                                            <?php
-                                                        }
-                                                    }
-                                                    ?>
+                                                        @endfor
+                                                    @endif
                                                 </ul>
-                                            </span><?php echo $totalReviews; ?> Customer Reviews</p>
+                                            </span>{{ $totalReviews }} Customer Reviews
+										</p>
                                     </div>
 
 
                                     <div class="col-md-2 text-center">
-                                        <img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $oCampaign->brand_img; ?>" width="65" />
+                                        <img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $oCampaign->brand_img }}" width="65" />
                                     </div>
                                 </div>
-
 
                                 <div class="row">
                                     <div class="col-md-12 mtop30 text-center">
                                         <div class="text_box brand_desc">
-                                            <?php
-                                            if ($aReview['review_type'] == 'text') {
-                                                echo $aReview['comment_text'];
-                                            } else if ($aReview['review_type'] == 'video') {
-                                                ?>
+                                            @if ($aReview['review_type'] == 'text')
+												{{ $aReview['comment_text'] }}
+                                            @else if ($aReview['review_type'] == 'video')
                                                 <video width="400" controls>
-                                                    <source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $aReview['comment_video']; ?>" type="video/mp4">
+                                                    <source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $aReview['comment_video'] }}" type="video/mp4">
                                                 </video>
-
-                                                <?php
-                                            }
-                                            ?>
-
+											@endif
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row allow_helpful">
                                     <div class="col-md-12 mtop10 text-center">
-                                        <?php if ($bAllowHelpful): ?>
-                                            <h4 class="review"><?php echo $aReview['total_helpful']; ?> people found this helpful. Was this review helpful to you?</h4>
+                                        @if ($bAllowHelpful)
+                                            <h4 class="review">{{ $aReview['total_helpful'] }} people found this helpful. Was this review helpful to you?</h4>
                                             <div><button class="btn grey_btn btn-sm">Yes</button> <button class="btn grey_btn btn-sm">No</button></div>
-                                        <?php endif; ?>
-                                        <a class="blue_link" href="#">See All <?php echo $totalReviews; ?> Customer Reviews</a>
+                                        @endif
+                                        <a class="blue_link" href="#">See All {{ $totalReviews }} Customer Reviews</a>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <?php if (!empty($aReview['comment_block'])): ?>
-                                        <?php foreach ($aReview['comment_block'] as $aComment): ?>
+                                    @if (!empty($aReview['comment_block']))
+                                        @foreach ($aReview['comment_block'] as $aComment)
                                             <div class="col-md-12 mtop20">
                                                 <div class="cust_review">
                                                     <figure><img src="http://www.freeiconspng.com/uploads/male-icon-19.png" style="width:67px !important;"/></figure>
-                                                    <p><?php echo $aComment['firstname'] . ' ' . $aComment['lastname']; ?><br><strong><?php echo $aComment['content']; ?></strong></p>
+                                                    <p>{{ $aComment['firstname'] . ' ' . $aComment['lastname'] }}<br><strong>{{ $aComment['content'] }}</strong></p>
                                                 </div>
                                             </div>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
-
+                                        @endforeach
+                                    @endif
                                 </div>
 
-                                <?php if ($bAllowComments): ?>
+                                @if ($bAllowComments)
                                     <div class="row allow_comment">
                                         <div class="col-md-12 mbot40 mtop20">
                                             <input type="text" name="" placeholder="Write Your Comments Here…" />
                                         </div>
                                     </div>
-                                <?php endif; ?>
+                                @endif
 
                                 <div class="row">
-                                    <?php if ($bAllowLiveReading): ?>
+                                    @if ($bAllowLiveReading)
                                         <div class="col-md-6 allow_live_reading">
                                             <p>17 People Currently Watching This Review</p>
                                         </div>
-                                    <?php endif; ?>
+                                    @endif
                                     <div class="col-md-6 text-right">
-                                        <img src="<?php echo base_url(); ?>assets/images/small_logo.png"/>
+                                        <img src="{{ base_url() }}assets/images/small_logo.png"/>
                                     </div>
                                 </div>
-
-
-
                             </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-
+                        @endforeach
+                    @endif
                 </div>
                 <div class="clearfix"></div>
-
             </div>
-
-
         </div>
     </section>
-<?php endif; ?>
+@endif
 <!--================review video popup==============-->
 <div id="reviewvidPopup" class="modal fade" role="dialog">
     <div class="modal-dialog externalpopup_vid">
@@ -254,7 +229,7 @@ if (!empty($oCampaign)) {
                 <div class="video_review">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <img style="width:125px;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $oCampaign->logo_img; ?>">
+                            <img style="width:125px;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $oCampaign->logo_img }}">
                             <hr>
                         </div>
                     </div>
@@ -266,76 +241,66 @@ if (!empty($oCampaign)) {
 
                         <div class="col-md-6 user_details_box pl0 pr0">
                             <h5><strong>Verified Buyer</strong></h5>
-                            <h4><?php echo $oCampaign->firstname . ' ' . $oCampaign->lastname; ?></h4>
-                            <?php if ($bAllowCreatedTime): ?>
-                                <p class="date"><?php echo date('F d, Y', strtotime($aLatestReview['created'])); ?></p>
-                            <?php endif; ?>
-                            <p><strong>Product: <?php echo $oCampaign->brand_title; ?></strong></p>
+                            <h4>{{ $oCampaign->firstname . ' ' . $oCampaign->lastname }}</h4>
+                            @if ($bAllowCreatedTime)
+                                <p class="date">{{ date('F d, Y', strtotime($aLatestReview['created'])) }}</p>
+                            @endif
+                            <p><strong>Product: {{ $oCampaign->brand_title }}</strong></p>
                             <hr>
                             <p>
                                 <span>
-
-                                    <?php for ($i = 0; $i < $aLatestReview['ratings']; $i++) { ?>
+                                    @for ($i = 0; $i < $aLatestReview['ratings']; $i++)
                                         <i class="fa yellow fa-star"></i>
-                                    <?php } ?>
-                                    <?php
-                                    if ($i < 5) {
-                                        for ($j = $i; $j < 5; $j++) {
-                                            ?>
+                                    @endfor
+									
+                                    @if ($i < 5)
+                                        @for ($j = $i; $j < 5; $j++)
                                             <i class="fa fa-star"></i>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-
-                                </span><br><?php echo $totalReviews; ?> Customer Reviews</p>
+                                        @endfor
+                                    @endif
+                                </span><br>{{ $totalReviews }} Customer Reviews
+							</p>
                         </div>
 
-
                         <div class="col-md-3 text-center">
-                            <img style="height:85px;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $oCampaign->brand_img; ?>">
+                            <img style="height:85px;" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $oCampaign->brand_img }}">
                         </div>
                     </div>
 
 
                     <div class="row">
-                        <div class="col-md-12 <?php if ($aLatestReview['review_type'] == 'video'): ?>text-center<?php endif; ?>">
-                                <!--<iframe src="https://www.youtube-nocookie.com/embed/_BOdEeZmns0" allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0"></iframe>-->
-                            <?php
-                            if ($aLatestReview['review_type'] == 'text') {
-                                echo $aLatestReview['comment_text'];
-                            } else if ($aLatestReview['review_type'] == 'video') {
-                                ?>
+                        <div class="col-md-12 @if ($aLatestReview['review_type'] == 'video') text-center @endif">
+                            @if ($aLatestReview['review_type'] == 'text')
+								{{ $aLatestReview['comment_text'] }}
+                            @else if ($aLatestReview['review_type'] == 'video')
                                 <video width="400" controls style="width:100%">
-                                    <source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $aLatestReview['comment_video']; ?>" type="video/mp4">
+                                    <source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $aLatestReview['comment_video'] }}" type="video/mp4">
                                 </video>
-
-                                <?php
-                            }
-                            ?>
+							@endif
                         </div>
                     </div>
-                    <?php if ($bAllowHelpful): ?>
+					
+                    @if ($bAllowHelpful)
                         <div class="row">
                             <div class="col-md-12 mtop10 text-center">
-                                <h4 class="review"><span id="bbhelpfulcount"><?php echo ($aLatestReview['total_helpful']) ? $aLatestReview['total_helpful'] : 0; ?></span> people found this helpful. Was this review helpful to you?</h4>
+                                <h4 class="review"><span id="bbhelpfulcount">{{ ($aLatestReview['total_helpful']) ? $aLatestReview['total_helpful'] : 0 }}</span> people found this helpful. Was this review helpful to you?</h4>
                                 <div><button class="btn grey_btn btn-sm bbhelpful">Yes</button> <button class="btn grey_btn btn-sm bbhelpful">No</button></div>
-                                <a class="blue_link" href="#">See All <?php echo $totalReviews; ?> Customer Reviews</a>
+                                <a class="blue_link" href="#">See All {{ $totalReviews }} Customer Reviews</a>
                             </div>
                         </div>
-                    <?php endif; ?>
+                   @endif
 
 
                     <!--************ Ask question ************-->
 
                     <div class="col-md-12 mtop10 text-center">
                         <a class="blue_link ask_question" style="cursor: pointer;">Ask Question</a>
-
                         <div class="row" id="askQuesDet" style="display: none;">
                             <form method="post" name="frmques" id="frmques">
+								@csrf
                                 <div class="col-md-12 mbot20 mtop10">
-                                    <input type="hidden" name="campaignID" value="<?php echo $oCampaign->id; ?>" >
-                                    <input type="hidden" name="qqrid" id="qqrid" value="<?php echo $aLatestReview['id']; ?>" />
+                                    <input type="hidden" name="campaignID" value="{{ $oCampaign->id }}" >
+                                    <input type="hidden" name="qqrid" id="qqrid" value="{{ $aLatestReview['id'] }}" />
                                     <input type="text" name="campaignQues" placeholder="Write Your Question Here…" required="">
                                 </div>
                                 <div class="col-md-12 mbot20 mtop10">
@@ -349,35 +314,31 @@ if (!empty($oCampaign)) {
                                 </div> 
                             </form>    
                         </div>
-
                     </div>
 
-                    <?php
-                    $campId = $oCampaign->id;
-                    $revId = $aLatestReview['id'];
-                    ?>
+                    @php
+						$campId = $oCampaign->id;
+						$revId = $aLatestReview['id'];
+                    @endphp
 
                     <!--************** End question *************-->
-
-
                     <div class="row">
-                        <?php if (!empty($aLatestReview['comment_block'])): ?>
-                            <?php foreach ($aLatestReview['comment_block'] as $aComment): ?>
+                        @if (!empty($aLatestReview['comment_block']))
+							@foreach ($aLatestReview['comment_block'] as $aComment)
                                 <div class="col-md-12 mtop10">
                                     <div class="cust_review">
                                         <figure><img src="http://www.freeiconspng.com/uploads/male-icon-19.png"></figure> 
-                                        <p><?php echo $aComment['firstname'] . ' ' . $aComment['lastname']; ?> : <i><?php echo date('F d, Y', strtotime($aComment['created'])); ?></i> <br><strong><?php echo $aComment['content']; ?></strong></p>
+                                        <p>{{ $aComment['firstname'] . ' ' . $aComment['lastname'] }} : <i>{{ date('F d, Y', strtotime($aComment['created'])) }}</i> <br><strong>{{ $aComment['content'] }}</strong></p>
                                     </div>
                                 </div>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-
-
+                            @endforeach
+                        @endif
                     </div>
 
-                    <?php if ($bAllowComments): ?>
+                    @if ($bAllowComments)
                         <form method="post" name="frmbbcmt" id="frmbbcmt">
-                            <input type="hidden" name="bbrid" id="bbrid" value="<?php echo $aLatestReview['id']; ?>" />
+							@csrf
+                            <input type="hidden" name="bbrid" id="bbrid" value="{{ $aLatestReview['id'] }}" />
                             <div class="row">
                                 <div class="col-md-12 mbot20 mtop10">
                                     <input name="bbcmt" id="bbcmt" placeholder="Write Your Comments Here…" type="text">
@@ -397,41 +358,28 @@ if (!empty($oCampaign)) {
                                 </div>
                             </div>
                         </form>
-                    <?php endif; ?>
+                    @endif
 
                     <div class="row">
                         <div class="col-md-6">
-                            <p> <?php if ($bAllowLiveReading): ?>
-                                    17 People Currently Watching This Review
-                                <?php endif; ?>
+                            <p> 
+								@if ($bAllowLiveReading)
+									17 People Currently Watching This Review
+								@endif
                             </p>
                         </div>
                         <div class="col-md-6 text-right">
-                            <img src="http://www.brandboost.io/1/images/small_logo.png">
+                            <img src="{{ base_url() }}1/images/small_logo.png">
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 <script>
     $(window).load(function () {
-
         $('#reviewvidPopup').modal('show');
-        //$('#reviewtxtPopup').modal('show');
     });
 
     $(".ask_question").click(function () {
@@ -443,9 +391,9 @@ if (!empty($oCampaign)) {
             var bbhaction = $(this).text();
             var bbrid = $("#bbrid").val();
             $.ajax({
-                url: "http://brandboost.io/reviews/saveHelpful/",
+                url: "{{ base_url() }}reviews/saveHelpful/",
                 type: "POST",
-                data: {bbrid: bbrid, ha: bbhaction},
+                data: {bbrid: bbrid, ha: bbhaction, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == 'ok') {
@@ -456,26 +404,18 @@ if (!empty($oCampaign)) {
                     alert(response.msg);
                 }
             });
-
         });
 
 
         $("#bbcmt").blur(function () {
             $(".cmt-ctr").show();
-
-
         });
 
         $("#bbcmtsubmit").click(function () {
             $(this).attr("disabled", "disabled");
-
             var formdata = $("#frmbbcmt").serialize();
-            //e.preventDefault();
-            // var formdata = $('#logo_img').prop('files')[0];
-            //var formdata = new FormData();
-            //formdata.append('logo_img', formdata);
             $.ajax({
-                url: "<?php echo base_url('reviews/addcomment'); ?>",
+                url: "{{ base_url('reviews/addcomment') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -490,24 +430,19 @@ if (!empty($oCampaign)) {
                         $(".cmt-alert, .cmt-alert-error-msg").show();
                         $(".cmt-alert-success-msg").hide();
                     }
-
                 },
                 error: function (response) {
                     alert(response.msg);
                 }
             });
-
         });
 
 
         // -------submit question 
-
         $("#frmques").submit(function () {
-
             var formdata = $("#frmques").serialize();
-
             $.ajax({
-                url: "<?php echo base_url('admin/questions/addquestion'); ?>",
+                url: "{{ base_url('admin/questions/addquestion') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -522,19 +457,12 @@ if (!empty($oCampaign)) {
                         $(".cmt-alert, .cmt-alert-error-msg").show();
                         $(".cmt-alert-success-msg").hide();
                     }
-
-
                 },
                 error: function (response) {
                     alert(response.msg);
                 }
             });
             return false;
-
         });
     });
-
-
-
 </script>
-

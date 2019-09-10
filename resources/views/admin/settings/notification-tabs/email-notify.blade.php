@@ -1,4 +1,3 @@
-
 <div class="tab-pane <?php if ($seletedTab == 'email'): ?>active<?php endif; ?>" id="right-icon-tab1">
     <div class="row">
         <div class="col-md-12">

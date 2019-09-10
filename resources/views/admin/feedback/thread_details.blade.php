@@ -183,7 +183,6 @@
                                             </div>
                                             <!-- /mail container -->
 
-
                                             <!-- Reply -->
                                             <div class="mail-attachments-container" style="display:none;" id="thread-reply-{{ $i }}">
                                                 <h6 class="mail-attachments-heading">Reply to: {{ $oRow->fname . ' ' . $oRow->lname }} <a>&lt;{{ $oRow->semail }}&gt;</a> </h6>
