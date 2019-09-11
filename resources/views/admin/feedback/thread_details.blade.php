@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/editors/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/editors/summernote/summernote.min.js"></script>
 
 <div class="content">
     <div class="has-detached-left">
@@ -13,7 +13,7 @@
                                 <h6 class="panel-title">Feedback Thread</h6>
 
                                 <div class="heading-elements">
-                                    <span class="label bg-success heading-text"><?php echo count($result); ?> Messages</span>
+                                    <span class="label bg-success heading-text">{{ count($result) }} Messages</span>
                                     <ul class="icons-list">
                                         <li class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> <span class="caret"></span></a>
@@ -36,7 +36,6 @@
                         <div class="sidebar-detached">
                             <div class="sidebar sidebar-default">
                                 <div class="sidebar-content">
-
                                     <!-- Actions -->
                                     <div class="sidebar-category">
                                         <div class="category-title">
@@ -51,7 +50,6 @@
                                         </div>
                                     </div>
                                     <!-- /actions -->
-
 
                                     <!-- Sub navigation -->
                                     <div class="sidebar-category">
@@ -81,7 +79,6 @@
                                         </div>
                                     </div>
                                     <!-- /sub navigation -->
-
                                 </div>
                             </div>
                         </div>
@@ -89,15 +86,14 @@
                         <!-- Content Area -->
                         <div class="container-detached">
                             <div class="content-detached">
-                                <?php
+                                @php
                                 if (!empty($thread_details_data)) {
                                     $i = 0;
 
                                     foreach ($thread_details_data AS $oRow) {
                                         $i++;
-                                        ?>
+                                        @endphp
                                         <div class="panel panel-white">
-
                                             <!-- Mail toolbar -->
                                             <div class="panel-toolbar panel-toolbar-inbox">
                                                 <div class="navbar navbar-default">
@@ -111,7 +107,7 @@
 
                                                     <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-single">
                                                         <div class="btn-group navbar-btn">
-                                                            <a href="javascript:void(0);" class="btn btn-default threadreply" thread-id="<?php echo $i; ?>"><i class="icon-reply"></i> <span class="hidden-xs position-right">Reply</span></a>
+                                                            <a href="javascript:void(0);" class="btn btn-default threadreply" thread-id="{{ $i }}"><i class="icon-reply"></i> <span class="hidden-xs position-right">Reply</span></a>
                                                             <a href="#" class="btn btn-default"><i class="icon-bin"></i> <span class="hidden-xs position-right">Delete</span></a>
 
                                                             <div class="btn-group">
@@ -127,7 +123,7 @@
                                                         </div>
 
                                                         <div class="pull-right-lg">
-                                                            <p class="navbar-text"><?php echo date("H:i A- M d, Y", strtotime($oRow->created));?></p>
+                                                            <p class="navbar-text">{{ date("H:i A- M d, Y", strtotime($oRow->created)) }}</p>
                                                             <div class="btn-group navbar-btn">
                                                                 <a href="#" class="btn btn-default"><i class="icon-printer"></i> <span class="hidden-xs position-right">Print</span></a>
                                                                 <a href="#" class="btn btn-default"><i class="icon-new-tab2"></i> <span class="hidden-xs position-right">Share</span></a>
@@ -140,17 +136,21 @@
 
 
                                             <!-- Mail details -->
-                                            <div class="media stack-media-on-mobile mail-details-read thread" thread-id="<?php echo $i; ?>" style="cursor:pointer;">
+                                            <div class="media stack-media-on-mobile mail-details-read thread" thread-id="{{ $i }}" style="cursor:pointer;">
                                                 <a href="#" class="media-left">
                                                     <span class="btn bg-teal-400 btn-rounded btn-icon btn-xlg">
-                                                        <span class="letter-icon"><?php echo substr($oRow->fname, 0, 1); ?></span>
+                                                        <span class="letter-icon">{{ substr($oRow->fname, 0, 1) }}</span>
                                                     </span>
                                                 </a>
 
                                                 <div class="media-body">
-                                                    <h6 class="media-heading"><?php echo $oRow->fname . ' ' . $oRow->lname; ?> <a href="#">&lt;<?php echo $oRow->semail; ?>&gt;</a>
-                                                        </h6>
-                                                    <div class="letter-icon-title text-semibold"><?php echo substr(strip_tags($oRow->feedback), 0, 50); ?>...</div>
+                                                    <h6 class="media-heading">
+														{{ $oRow->fname . ' ' . $oRow->lname }} 
+														<a href="#">&lt;{{ $oRow->semail }}&gt;</a>
+                                                    </h6>
+                                                    <div class="letter-icon-title text-semibold">
+														{{ substr(strip_tags($oRow->feedback), 0, 50) }}...
+													</div>
                                                 </div>
 
                                                 <div class="media-right media-middle text-nowrap">
@@ -166,53 +166,43 @@
 
 
                                             <!-- Mail container -->
-                                            <div  <?php if ($i > 1) { ?> style="display:none;"<?php } ?> class="mail-container-read"  id="thread-body-<?php echo $i; ?>">
-
+                                            <div @if($i > 1) style="display:none;" @endif class="mail-container-read"  id="thread-body-{{ $i }}">
                                                 <!-- Email sample (demo) -->
                                                 <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                                    <tbody><tr>
+                                                    <tbody>
+														<tr>
                                                             <td>
-
                                                                 <!-- Hero -->
-                                                                <?php echo $oRow->feedback; ?>
+                                                                {{ $oRow->feedback }}
                                                                 <!-- /hero -->
-
-
-
                                                             </td>
                                                         </tr>
-                                                    </tbody></table>
+                                                    </tbody>
+												</table>
                                                 <!-- /email sample (demo) -->
-
                                             </div>
                                             <!-- /mail container -->
 
-
                                             <!-- Reply -->
-                                            <div class="mail-attachments-container" style="display:none;" id="thread-reply-<?php echo $i; ?>">
-                                                <h6 class="mail-attachments-heading">Reply to: <?php echo $oRow->fname . ' ' . $oRow->lname; ?> <a>&lt;<?php echo $oRow->semail; ?>&gt;</a> </h6>
-                                                <textarea rows="10" name="emailtemplate" id="reply-<?php echo $i; ?>" class="summernote" required><br><br><?php echo ($oRow->direction == 'client') ? $oRow->client_fname . ' ' . $oRow->client_lname :  $oRow->fname . ' ' . $oRow->lname ?> wrote on <?php echo date("M d, Y H:i A", strtotime($oRow->created)); ?>:<div style="display:block;border-left:1px solid #ccc;min-height:50px;padding:10px;"><?php echo $oRow->feedback; ?></div></textarea>
-                                                        <div class="clearfix"></div>                                                
-                                                        <button type="button" class="btn btn-lg btn-success pull-right threadreplynow" style="margin-left:10px;" thread-id="<?php echo $i; ?>" client_id="<?php echo $oRow->client_id;?>" subs_id="<?php echo $oRow->subscriber_id;?>" bb_id="<?php echo $oRow->brandboost_id;?>">
-                                                        <i class="icon-comment-discussion position-left"></i> Send
-                                                        </button>
-                                                        <button type="button" class="btn btn-lg btn-danger pull-right cancelthreadreply" thread-id="<?php echo $i; ?>" client_id="<?php echo $oRow->client_id;?>" subs_id="<?php echo $oRow->subscriber_id;?>" bb_id="<?php echo $oRow->brandboost_id;?>">
-                                                        <i class="icon-comment-discussion position-left"></i> Cancel
-                                                        </button>
-                                                        <div class="clearfix"></div>
-                                                            
+                                            <div class="mail-attachments-container" style="display:none;" id="thread-reply-{{ $i }}">
+                                                <h6 class="mail-attachments-heading">Reply to: {{ $oRow->fname . ' ' . $oRow->lname }} <a>&lt;{{ $oRow->semail }}&gt;</a> </h6>
+                                                <textarea rows="10" name="emailtemplate" id="reply-{{ $i }}" class="summernote" required><br><br>{{ ($oRow->direction == 'client') ? $oRow->client_fname . ' ' . $oRow->client_lname :  $oRow->fname . ' ' . $oRow->lname }} wrote on {{ date("M d, Y H:i A", strtotime($oRow->created)) }}:<div style="display:block;border-left:1px solid #ccc;min-height:50px;padding:10px;">{{ $oRow->feedback }}</div>
+												</textarea>
+												<div class="clearfix"></div>                                                
+												<button type="button" class="btn btn-lg btn-success pull-right threadreplynow" style="margin-left:10px;" thread-id="{{ $i }}" client_id="{{ $oRow->client_id }}" subs_id="{{ $oRow->subscriber_id }}" bb_id="{{ $oRow->brandboost_id }}">
+												<i class="icon-comment-discussion position-left"></i> Send
+												</button>
+												<button type="button" class="btn btn-lg btn-danger pull-right cancelthreadreply" thread-id="{{ $i }}" client_id="{{ $oRow->client_id }}" subs_id="{{ $oRow->subscriber_id }}" bb_id="{{ $oRow->brandboost_id }}">
+												<i class="icon-comment-discussion position-left"></i> Cancel
+												</button>
+												<div class="clearfix"></div>
                                             </div>
-                                                                                                    <!-- /attachments -->
-
-                                                </div>
-
-                                        <?php
+                                            <!-- /attachments -->
+                                        </div>
+                                        @php
                                     }
                                 }
-                                ?>
-
-
-
+                                @endphp
                             </div>
                         </div>
                     </div>
@@ -222,7 +212,6 @@
             </div>
         </div>
         <!-- /dashboard content -->
-
     </div>
 </div>
 <!-- /content area -->
@@ -259,9 +248,9 @@
             var emaildirectionFrom = 'client';
             var replycontent = $("#reply-"+threadid).val();
             $.ajax({
-                url: "<?php echo base_url('/feedback/threadreply'); ?>",
+                url: "{{ base_url('/feedback/threadreply') }}",
                 type: "POST",
-                data: {bbid:bbid,clid:clientid,subsid:subsid,data:replycontent,direction:emaildirectionFrom },
+                data: {bbid:bbid, clid:clientid, subsid:subsid, data:replycontent, direction:emaildirectionFrom, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (response) {
                     if (response.status == "success") {
@@ -277,5 +266,3 @@
         });
     });
 </script>
-
-

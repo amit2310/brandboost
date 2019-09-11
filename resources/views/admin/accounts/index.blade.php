@@ -1,13 +1,12 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php //echo $title;
- ?>
+
 @endsection
 
 @section('contents')
 
-<?php
+@php
 if (!empty($oTeam)) {
     foreach ($oTeam as $oTeamMember) {
         $aTeamMember[$oTeamMember->id] = $oTeamMember;
@@ -17,17 +16,15 @@ if (!empty($oTeam)) {
     }
 }
 
-if(!empty($oUser->subscriber_id)) {
+if (!empty($oUser->subscriber_id)) {
     $subscriber_id = $oUser->subscriber_id;
-}
-else {
+} else {
     $subscriber_id = '';
 }
 
-if(!empty($oUser->country_code)) {
+if (!empty($oUser->country_code)) {
     $country_code = $oUser->country_code;
-}
-else {
+} else {
     $country_code = '';
 }
 
@@ -36,9 +33,7 @@ if ($oUser->avatar == '') {
 } else {
     $profileImage = '<a class="icons s32" href="' . base_url() . 'admin/contacts/profile/' . $subscriber_id . '"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oUser->avatar . '" onerror="this.src=\'/assets/images/userp.png\'" class="img-circle img-xs" alt=""></a>';
 }
-
-
-?>
+@endphp
 <div class="content">
 
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -46,7 +41,7 @@ if ($oUser->avatar == '') {
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3">
-                <h3><i class="icon-vcard"></i> &nbsp; <?php echo $title; ?></h3>
+                <h3><i class="icon-vcard"></i> &nbsp; {{ $title }}</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <li class="all active"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="">All</a></li>
                     <li class=""><a style="javascript:void();" class="filterByColumn" fil="email">Email</a></li>
@@ -78,7 +73,7 @@ if ($oUser->avatar == '') {
                     <div class="panel panel-flat">
                         <div class="panel-heading">
 
-                            <h6 class="panel-title"><?php echo $title; ?></h6>
+                            <h6 class="panel-title">{{ $title }}</h6>
                             <div class="heading-elements">
                                 <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                     <input class="form-control input-sm cus_search" tableid="allusagecredits" placeholder="Search by name" type="text">
@@ -112,21 +107,21 @@ if ($oUser->avatar == '') {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
+                                    @php
                                     if (!empty($oUsages)) {
                                         foreach ($oUsages AS $oUsage) {
                                             $direction = ucfirst($oUsage->direction);
                                             $usageType = (strtolower($oUsage->usage_type) == 'sms' || strtolower($oUsage->usage_type) == 'mms') ? phoneNoFormat($oUsage->spend_to) : $oUsage->spend_to;
-                                            ?>
+                                            @endphp
                                             <tr role="row">
-                                                <td style="display: none;"><?php echo $oUsage->id ?></td>
-                                                <td style="display: none;"><?php echo date('m/d/Y', strtotime($oUsage->created)); ?></td>
-                                                <td><?php echo ucfirst($oUsage->usage_type); ?></td>
-                                                <td><?php echo ($direction) ? $direction: displayNoData(); ?></td>
-                                                <td><?php echo ($usageType) ? $usageType : displayNoData(); ?></td>
-                                                <td><?php echo (in_array(phone_display_custom_helper($oUsage->spend_to), $aTeamIDs) || in_array(phone_display_custom_helper($oUsage->spend_from), $aTeamIDs)) ? "Team Member" : "Client"; ?></td>
+                                                <td style="display: none;">{{ $oUsage->id }}</td>
+                                                <td style="display: none;">{{ date('m/d/Y', strtotime($oUsage->created)) }}</td>
+                                                <td>{{ ucfirst($oUsage->usage_type) }}</td>
+                                                <td>{!! ($direction) ? $direction : displayNoData() !!}</td>
+                                                <td>{!! ($usageType) ? $usageType : displayNoData() !!}</td>
+                                                <td>{!! (in_array(phone_display_custom_helper($oUsage->spend_to), $aTeamIDs) || in_array(phone_display_custom_helper($oUsage->spend_from), $aTeamIDs)) ? "Team Member" : "Client" !!}</td>
 
-                                                <?php
+                                                @php
                                                 if (in_array(phone_display_custom_helper($oUsage->spend_to), $aTeamIDs) || in_array(phone_display_custom_helper($oUsage->spend_from), $aTeamIDs)) {
                                                     if (in_array(phone_display_custom_helper($oUsage->spend_to), $aTeamIDs)) {
                                                         $teamID = array_search(phone_display_custom_helper($oUsage->spend_to), $aTeamIDs);
@@ -136,52 +131,50 @@ if ($oUser->avatar == '') {
 
                                                     $oTeamInfo = $aTeamMember[$teamID];
 
-                                                    if(!empty($oTeamInfo->subscriber_id)) {
+                                                    if (!empty($oTeamInfo->subscriber_id)) {
                                                         $subscriber_id = $oTeamInfo->subscriber_id;
-                                                    }
-                                                    else {
+                                                    } else {
                                                         $subscriber_id = '';
                                                     }
 
-                                                    if(!empty($oTeamInfo->country_code)) {
+                                                    if (!empty($oTeamInfo->country_code)) {
                                                         $country_code = $oTeamInfo->country_code;
-                                                    }
-                                                    else {
+                                                    } else {
                                                         $country_code = '';
                                                     }
-                                                  
+
                                                     if ($oTeamInfo->avatar == '') {
                                                         $profileImageTeam = '<a class="icons fl_letters s32" href="' . base_url() . 'admin/contacts/profile/' . $subscriber_id . '">' . ucfirst(substr($oTeamInfo->firstname, 0, 1)) . '' . ucfirst(substr($oTeamInfo->lastname, 0, 1)) . '</a>';
                                                     } else {
                                                         $profileImageTeam = '<a class="icons s32" href="' . base_url() . 'admin/contacts/profile/' . $subscriber_id . '"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oTeamInfo->avatar . '" onerror="this.src=\'/assets/images/userp.png\'" class="img-circle img-xs" alt=""></a>';
                                                     }
-                                                    ?>
+                                                    @endphp
                                                     <td>											
-                                                        <div class="media-left media-middle"> <?php echo $profileImageTeam; ?> </div>
+                                                        <div class="media-left media-middle"> {!! $profileImageTeam !!} </div>
                                                         <div class="media-left">
-                                                            <div class="pt-5"><a href="<?php echo base_url(); ?>admin/contacts/profile/<?php echo $subscriber_id; ?>" class="text-default text-semibold bbot"><?php echo $oTeamInfo->firstname; ?> <?php echo $oTeamInfo->lastname; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
-                                                            <div class="text-muted text-size-small"><?php echo $oTeamInfo->email; ?></div>
+                                                            <div class="pt-5"><a href="{{ base_url() }}admin/contacts/profile/{{ $subscriber_id }}" class="text-default text-semibold bbot">{{ $oTeamInfo->firstname }} {{ $oTeamInfo->lastname }}</a> <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($country_code) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
+                                                            <div class="text-muted text-size-small">{{ $oTeamInfo->email }}</div>
                                                         </div>
                                                     </td>
-                                                <?php } else { ?>
+                                                @php } else { @endphp
                                                     <td>											
-                                                        <div class="media-left media-middle"> <?php echo $profileImage; ?> </div>
+                                                        <div class="media-left media-middle"> {!! $profileImage !!} </div>
                                                         <div class="media-left">
-                                                            <div class="pt-5"><a href="<?php echo base_url(); ?>admin/contacts/profile/<?php echo $subscriber_id; ?>" class="text-default text-semibold bbot"><?php echo $oUser->firstname; ?> <?php echo $oUser->lastname; ?></a> <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($country_code); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"/></div>
-                                                            <div class="text-muted text-size-small"><?php echo $oUser->email; ?></div>
+                                                            <div class="pt-5"><a href="{{ base_url() }}admin/contacts/profile/{{ $subscriber_id }}" class="text-default text-semibold bbot">{{ $oUser->firstname }} {{ $oUser->lastname }}</a> <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($country_code) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
+                                                            <div class="text-muted text-size-small">{{ $oUser->email }}</div>
                                                         </div>
                                                     </td>
-                                                <?php } ?>
-                                                <td><?php echo ($oUsage->module_name) ? ucwords($oUsage->module_name) : displayNoData(); ?></td>    
-                                                <td><?php echo ($oUsage->balance_deducted) ? $oUsage->balance_deducted : 0; ?></td>
-                                                <td><?php echo ($oUsage->closing_balance) ? $oUsage->closing_balance : displayNoData(); ?></td>
-                                                <td><?php echo dataFormat($oUsage->created); ?></td>
-                                                <td><a href="javascript:void(0);" class="viewUsageDetails" usage_id="<?php echo $oUsage->id; ?>">View Details</a></td>
+                                                @php } @endphp
+                                                <td>{!! ($oUsage->module_name) ? ucwords($oUsage->module_name) : displayNoData() !!}</td>    
+                                                <td>{{ ($oUsage->balance_deducted) ? $oUsage->balance_deducted : 0 }}</td>
+                                                <td>{!! ($oUsage->closing_balance) ? $oUsage->closing_balance : displayNoData() !!}</td>
+                                                <td>{{ dataFormat($oUsage->created) }}</td>
+                                                <td><a href="javascript:void(0);" class="viewUsageDetails" usage_id="{{ $oUsage->id }}">View Details</a></td>
                                             </tr>
-                                            <?php
+                                            @php
                                         }
                                     }
-                                    ?>
+                                    @endphp
 
                                 </tbody>
                             </table>
@@ -277,42 +270,38 @@ if ($oUser->avatar == '') {
             $('.overlaynew').show();
             var id = $(this).attr('usage_id');
             $.ajax({
-                url: '<?php echo base_url('admin/accounts/usageInfo'); ?>',
+                url: "{{ base_url('admin/accounts/usageInfo') }}",
                 type: "POST",
                 data: {id: id, _token: "{{csrf_token()}}"},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
 
-                        if(data.mediaType == 'image')
+                        if (data.mediaType == 'image')
                         {
-                             
-                            $("#usage-container").html('<img src="'+data.content+'" alt="Image" height="auto" width="100%"> ');
-                        }
-                        else if(data.usagetype == "Mms") {
+
+                            $("#usage-container").html('<img src="' + data.content + '" alt="Image" height="auto" width="100%"> ');
+                        } else if (data.usagetype == "Mms") {
 
                             var newMessage = data.content;
                             var fileext = (/[.]/.exec(newMessage)) ? /[^.]+$/.exec(newMessage) : undefined;
-                            if(typeof fileext != 'undefined' && fileext !== null){
-                                if(fileext[0] == 'png' || fileext[0] == 'jpg' || fileext[0] == 'jpeg' || fileext[0] == 'gif') 
+                            if (typeof fileext != 'undefined' && fileext !== null) {
+                                if (fileext[0] == 'png' || fileext[0] == 'jpg' || fileext[0] == 'jpeg' || fileext[0] == 'gif')
                                 {
-                                newMessage = "<a href='"+newMessage+"' class='previewImage' target='_blank'><img src='"+newMessage+"' height='auto' width='100%' /></a>";
-                                }
-                                else if(fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf') {
-                                newMessage = "<a href='"+newMessage+"' target='_blank'>Download '"+fileext[0].toUpperCase()+"' File</a>";
-                                }
-                                else if(fileext[0] == 'mp4' || newMessage.indexOf('/Media/') != -1) {
-                                    newMessage = "<video width='100%' height='auto' controls><source src='"+newMessage+"' type='video/"+fileext[0]+"'></video>";
+                                    newMessage = "<a href='" + newMessage + "' class='previewImage' target='_blank'><img src='" + newMessage + "' height='auto' width='100%' /></a>";
+                                } else if (fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf') {
+                                    newMessage = "<a href='" + newMessage + "' target='_blank'>Download '" + fileext[0].toUpperCase() + "' File</a>";
+                                } else if (fileext[0] == 'mp4' || newMessage.indexOf('/Media/') != -1) {
+                                    newMessage = "<video width='100%' height='auto' controls><source src='" + newMessage + "' type='video/" + fileext[0] + "'></video>";
                                 }
 
                                 $("#usage-container").html(newMessage);
                             }
-                        }
-                        else {
+                        } else {
                             $("#usage-container").html(data.content);
                         }
 
-                        
+
                         $("#usagetype").html(data.usagetype);
                         $("#spentto").html(data.spentto);
                         $("#chargedcredits").html(data.chargedcredits);

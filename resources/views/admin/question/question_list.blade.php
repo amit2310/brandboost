@@ -1,12 +1,12 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
 
-<?php list($canRead, $canWrite) = fetchPermissions('Questions'); ?>
+@php list($canRead, $canWrite) = fetchPermissions('Questions') @endphp
 
 
 <div class="content">
@@ -178,15 +178,18 @@
                 <div class="col-md-12">
                     <div style="margin: 0;" class="panel panel-flat">
                         <!-- ****** Load Smart Popup ***** -->
-                        <?php if (!empty($oQuestions)): ?>
+                        @if (!empty($oQuestions))
 							@include('admin.components.smart-popup.smart-question-widget')
-                        <?php endif; ?>
-                        <div class = "panel-heading"> <span class = "pull-left">
-                                <h6 class = "panel-title"><?php
-                                    if (!empty($oQuestions)) {
-                                        echo count($oQuestions);
-                                    }
-                                    ?> Questions</h6>
+                        @endif
+						
+                        <div class = "panel-heading"> 
+							<span class = "pull-left">
+                                <h6 class = "panel-title">
+									@if (!empty($oQuestions))
+										{{ count($oQuestions) }}
+									@endif
+									Questions
+								</h6>
                             </span>
 
                             <div class="heading-elements">
@@ -207,7 +210,7 @@
                         <div class="panel-body p0">
 
                             <!-- Table data -->
-                            <?php if (!empty($oQuestions)) { ?>
+                            @if (!empty($oQuestions))
                             <table class="table datatable-basic-new" id="onsiteQuestion">
                                 <thead>
                                     <tr>
@@ -226,7 +229,7 @@
                                 <tbody>
 
                                     <!--================================================-->
-                                    <?php
+                                    @php
                                         $inc = 1;
                                         foreach ($oQuestions as $oQuestion) {
 
@@ -259,81 +262,71 @@
                                                     }
                                                 }
                                             }
-                                            //pre($oQuestion); die;
-                                            ?>
+                                            @endphp
                                             <tr>
-                                                <td style="display: none;"><?php echo date('m/d/Y', strtotime($oQuestion->created)); ?></td>
-                                                <td style="display: none;"><?php echo $oQuestion->id; ?></td>
-                                                <td style="width: 40px!important; display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk<?php echo $oQuestion->id; ?>" value="<?php echo $oQuestion->id; ?>" ><span class="custmo_checkmark"></span></label></td>
-                                                <td class="viewQuestionSmartPopup" questionid="<?php echo $oQuestion->id; ?>"><div class="media-left media-middle"> <?php echo showUserAvtar($oQuestion->avatar, $oQuestion->firstname, $oQuestion->lastname); ?> </div>
+                                                <td style="display: none;">{{ date('m/d/Y', strtotime($oQuestion->created)) }}</td>
+                                                <td style="display: none;">{{ $oQuestion->id }}</td>
+                                                <td style="width: 40px!important; display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $oQuestion->id }}" value="{{ $oQuestion->id }}" ><span class="custmo_checkmark"></span></label></td>
+                                                <td class="viewQuestionSmartPopup" questionid="{{ $oQuestion->id }}"><div class="media-left media-middle"> {!! showUserAvtar($oQuestion->avatar, $oQuestion->firstname, $oQuestion->lastname) !!} </div>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><a href="#" class="text-default text-semibold bbot"><span><?php echo (!empty($oQuestion->firstname)) ? $oQuestion->firstname . ' ' . $oQuestion->lastname : displayNoData(); ?></span></a><img class="flags" src="<?php echo (empty($oQuestion->country_code)) ? base_url('assets/images/flags/us.png') : base_url('assets/images/flags/' . strtolower($oQuestion->country_code) . '.png'); ?>" /></div>
-                                                        <div class="text-muted text-size-small"><?php echo (!empty($oQuestion->email)) ? $oQuestion->email : displayNoData(); ?></div>
+                                                        <div class="pt-5"><a href="#" class="text-default text-semibold bbot"><span>{{ (!empty($oQuestion->firstname)) ? $oQuestion->firstname . ' ' . $oQuestion->lastname : displayNoData() }}</span></a><img class="flags" src="{{ (empty($oQuestion->country_code)) ? base_url('assets/images/flags/us.png') : base_url('assets/images/flags/' . strtolower($oQuestion->country_code) . '.png') }}" /></div>
+                                                        <div class="text-muted text-size-small">{{ (!empty($oQuestion->email)) ? $oQuestion->email : displayNoData() }}</div>
                                                     </div>
                                                 </td>
-                                                <td class="viewQuestionSmartPopup text-left" questionid="<?php echo $oQuestion->id; ?>"><div class="media-left text-right" style="width:250px;">
-                                                        <div class="pt-5"><a href="javascript:void();<?php echo base_url('admin/questions/details/' . $oQuestion->id); ?>" class="text-default text-semibold bbot"><span><?php echo (!empty($oQuestion->question_title)) ? setStringLimit($oQuestion->question_title, '25') : displayNoData(); ?></span> </a></div>
-                                                        <div class="text-muted text-size-small"><?php echo (!empty($oQuestion->question)) ? setStringLimit($oQuestion->question, '40') : displayNoData(); ?></div>
+                                                <td class="viewQuestionSmartPopup text-left" questionid="{{ $oQuestion->id }}"><div class="media-left text-right" style="width:250px;">
+                                                        <div class="pt-5"><a href="{{ base_url('admin/questions/details/' . $oQuestion->id) }}" class="text-default text-semibold bbot"><span>{{ (!empty($oQuestion->question_title)) ? setStringLimit($oQuestion->question_title, '25') : displayNoData() }}</span> </a></div>
+                                                        <div class="text-muted text-size-small">{{ (!empty($oQuestion->question)) ? setStringLimit($oQuestion->question, '40') : displayNoData() }}</div>
                                                     </div>
                                                 </td>
                                                 <td  class="text-left"><div class="media-left text-right" style="width:200px;">
-                                                        <div class="pt-5"><a href="<?php echo ($oQuestion->review_type == 'offsite') ? base_url('admin/brandboost/offsite_setup/' . $oQuestion->campaign_id) : base_url('admin/brandboost/onsite_setup/' . $oQuestion->campaign_id); ?>" class="text-default text-semibold bbot"><span><?php echo (!empty($oQuestion->brand_title)) ? setStringLimit($oQuestion->brand_title, '20') : displayNoData(); ?></span> </a></div>
-                                                        <div class="text-muted text-size-small"><?php echo (!empty($oQuestion->brand_desc)) ? setStringLimit($oQuestion->brand_desc, '30') : displayNoData(); ?></div>
+                                                        <div class="pt-5"><a href="{{ ($oQuestion->review_type == 'offsite') ? base_url('admin/brandboost/offsite_setup/' . $oQuestion->campaign_id) : base_url('admin/brandboost/onsite_setup/' . $oQuestion->campaign_id) }}" class="text-default text-semibold bbot"><span>{{ (!empty($oQuestion->brand_title)) ? setStringLimit($oQuestion->brand_title, '20') : displayNoData() }}</span> </a></div>
+                                                        <div class="text-muted text-size-small">{{ (!empty($oQuestion->brand_desc)) ? setStringLimit($oQuestion->brand_desc, '30') : displayNoData() }}</div>
                                                     </div>
                                                 </td>
-                                                <td  class="text-left" class="viewQuestionSmartPopup" questionid="<?php echo $oQuestion->id; ?>"><div class="media-left text-right" style="width:180px;">
-                                                        <div class="pt-5"><a href="#" class="text-default text-semibold dark"><?php echo dataFormat($oQuestion->created); ?></a></div>
-                                                        <div class="text-muted text-size-small"><?php echo date('h:iA', strtotime($oQuestion->created)); ?></div>
+                                                <td  class="text-left" class="viewQuestionSmartPopup" questionid="{{ $oQuestion->id }}"><div class="media-left text-right" style="width:180px;">
+                                                        <div class="pt-5"><a href="#" class="text-default text-semibold dark">{{ dataFormat($oQuestion->created) }}</a></div>
+                                                        <div class="text-muted text-size-small">{{ date('h:iA', strtotime($oQuestion->created)) }}</div>
                                                     </div>
                                                 </td>
         
                                                 <td class="text-right">
 
                                                     <div class="tdropdown ml10">
-                                                        <?php
-                                                        if ($oQuestion->status == 0) {
-                                                            echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
-                                                        } else if ($oQuestion->status == 2) {
-                                                            echo '<i class="icon-primitive-dot txt_grey fsize16"></i> ';
-                                                        } else {
-                                                            echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
-                                                        }
-                                                        ?>
+                                                        @if ($oQuestion->status == 0)
+															<i class="icon-primitive-dot txt_red fsize16"></i> 
+                                                        @else if ($oQuestion->status == 2)
+                                                            <i class="icon-primitive-dot txt_grey fsize16"></i> 
+                                                        @else
+															<i class="icon-primitive-dot txt_green fsize16"></i> 
+                                                        @endif
+														
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                                            <?php
-                                                            if ($oQuestion->status == 0) {
-                                                                echo 'Inactive';
-                                                            } else if ($oQuestion->status == 2) {
-                                                                echo 'Pending';
-                                                            } else {
-                                                                echo 'Active';
-                                                            }
-                                                            ?>
-
+                                                            @if ($oQuestion->status == 0)
+																{{ 'Inactive' }}
+                                                            @else if ($oQuestion->status == 2)
+																{{ 'Pending' }}
+                                                            @else
+																{{ 'Active' }}
+                                                            @endif
                                                         </a>
                                                         <ul class="dropdown-menu dropdown-menu-right status">
-                                                            <?php
-                                                            if ($oQuestion->status == 1) {
-                                                                echo "<li><a question_id='" . $oQuestion->id . "' change_status = '0' class='chg_status red'><i class='icon-primitive-dot txt_red'></i> Inactive</a></li>";
-                                                            } else if ($oQuestion->status == 2) {
-                                                                echo "<li><a question_id='" . $oQuestion->id . "' change_status = '1' class='chg_status green'><i class='icon-primitive-dot txt_green'></i> Active</a></li>";
-                                                                echo "<li><a question_id='" . $oQuestion->id . "' change_status = '0' class='chg_status red'><i class='icon-primitive-dot txt_red'></i> Inactive</a></li>";
-                                                            } else {
-                                                                echo "<li><a question_id='" . $oQuestion->id . "' change_status = '1' class='chg_status green'><i class='icon-primitive-dot txt_green'></i> Active</a></li>";
-                                                            }
-                                                            ?>
+                                                            @if ($oQuestion->status == 1)
+                                                                <li><a question_id='{{ $oQuestion->id }}' change_status = '0' class='chg_status red'><i class='icon-primitive-dot txt_red'></i> Inactive</a></li>
+                                                            @else if ($oQuestion->status == 2)
+                                                                <li><a question_id='{{ $oQuestion->id }}' change_status = '1' class='chg_status green'><i class='icon-primitive-dot txt_green'></i> Active</a></li>
+                                                                <li><a question_id='{{ $oQuestion->id }}' change_status = '0' class='chg_status red'><i class='icon-primitive-dot txt_red'></i> Inactive</a></li>
+                                                            @else
+                                                                <li><a question_id='{{ $oQuestion->id }}' change_status = '1' class='chg_status green'><i class='icon-primitive-dot txt_green'></i> Active</a></li>
+                                                            @endif
                                                         </ul>
-
-
                                                     </div>
-
                                                 </td>
                                                 <td class="text-center"> 
                                                     <div class="tdropdown">
-                                                        <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                                        <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                                         <ul class="dropdown-menu dropdown-menu-right more_act">
                                                             <a href="javascript:void();" class="dropdown_close">X</a>
-                                                            <?php
+                                                            @php
                                                             if ($canWrite) {
 
                                                                 if ($oQuestion->status == 1) {
@@ -344,7 +337,6 @@
                                                                 } else {
                                                                     echo "<li><a question_id='" . $oQuestion->id . "' change_status = '1' class='chg_status green'><i class='icon-file-locked'></i> Active</a></li>";
                                                                 }
-                                                                //echo '<li><a href="javascript:void(0);" class="applyInsightTags" action_name="review-tag" reviewid="' . $oQuestion->id . '" ><i class="icon-file-locked"></i> Apply Tags</a></li>';
                                                                 echo '<li><a href="javascript:void(0);" class="displayReview" action_name="review-tag" tab_type="note" reviewid="' . $oQuestion->id . '" review_time="' . date("M d, Y h:i A", strtotime($oQuestion->created)) . '(' . timeAgo($oQuestion->created) . ')" ><i class="icon-file-locked"></i> Add Notes</a></li>';
                                                             }
                                                             echo '<li><a target="_blank" href="' . base_url('admin/questions/details/' . $oQuestion->id) . '"><i class="icon-file-locked"></i> View Answer</a></li>';
@@ -352,24 +344,20 @@
 
                                                                 echo '<li><a href="javascript:void(0);" class="deleteQuestion" queationid="' . $oQuestion->id . '" ><i class="icon-trash"></i> Delete</a></li>';
                                                             }
-                                                            ?>
+                                                            @endphp
                                                         </ul>
                                                     </div>
                                                 </td>
-                                                <td style="display: none;"><?php echo $oQuestion->status; ?></td>
+                                                <td style="display: none;">{{ $oQuestion->status }}</td>
                                             </tr>
-                                            <?php
+                                            @php
                                             $inc++;
                                         }
-                                   
-                                    ?>
-
+                                    @endphp
                                 </tbody>
                             </table>
-                            <?php  }
-                            else {
-
-                                ?><table class="table datatable-basic">
+                            @else
+								<table class="table datatable-basic">
                                     <thead>
                                         <tr>
                                             <th><i class=""><img src="assets/images/icon_name.png"></i>Contact</th>
@@ -390,14 +378,13 @@
                                                 <div class="col-md-12">
                                                     <div style="margin: 20px 0px 0;" class="text-center">
                                                         <h5 class="mb-20 mt40">
-                                                            Looks Like You Don’t Have Any Question Yet <img src="<?php echo base_url('assets/images/smiley.png'); ?>"> <br>
+                                                            Looks Like You Don’t Have Any Question Yet <img src="{{ base_url('assets/images/smiley.png') }}"> <br>
                                                             Lets Create Your First Question.
                                                         </h5>
 
-                                                        <?php if ($canWrite): ?>
-                                                            <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" <?php } else { ?> id="addQuestion" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } ?> type="button" ><i class="icon-plus3"></i> Add Question</button>
-                                                        <?php endif; ?>
-
+                                                        @if ($canWrite)
+                                                            <button @if ($bActiveSubsription == false) title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" @else id="addQuestion" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" @endif type="button" ><i class="icon-plus3"></i> Add Question</button>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -406,26 +393,16 @@
                                         <td style="display: none"></td>
                                         <td style="display: none"></td>
                                     </tbody>
-                                </table><?php 
-                            }?>
-
+                                </table>
+							@endif
                             <!-- End Table data -->
-
-
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
     </div>
     <!--================================= CONTENT AFTER TAB===============================-->
-
-
-
 </div>
 
 
@@ -449,33 +426,25 @@
     </div>
 </div>
 
-
-
 <script>
     $(document).ready(function () {
 
         $('#checkAll').change(function () {
-
             if (false == $(this).prop("checked")) {
-
                 $(".checkRows").prop('checked', false);
                 $(".selectedClass").removeClass('success');
                 $('.custom_action_box').hide();
             } else {
-
                 $(".checkRows").prop('checked', true);
                 $(".selectedClass").addClass('success');
                 $('.custom_action_box').show();
             }
-
         });
 
-        $(document).on('click', '.checkRows', function () {
+        
+		$(document).on('click', '.checkRows', function () {
             var inc = 0;
-
-
             var rowId = $(this).val();
-
             if (false == $(this).prop("checked")) {
                 $('#append-' + rowId).removeClass('success');
             } else {
@@ -497,11 +466,10 @@
             if (totalCheckboxes > numberOfChecked) {
                 $('#checkAll').prop('checked', false);
             }
-
         });
+		
 
         $(document).on('click', '#deleteButtonQuestionList', function () {
-
             var val = [];
             $('.checkRows:checkbox:checked').each(function (i) {
                 val[i] = $(this).val();
@@ -509,14 +477,12 @@
             if (val.length === 0) {
                 alert('Please select a row.')
             } else {
-
                 deleteConfirmationPopup(
                 "This question will deleted immediately.<br>You can't undo this action.", 
                 function() {
-
                     $('.overlaynew').show();
                     $.ajax({
-                        url: "<?php echo base_url('admin/questions/deleteMultipalQuestion'); ?>",
+                        url: "{{ base_url('admin/questions/deleteMultipalQuestion') }}",
                         type: "POST",
                         data: {multiQuestionid: val, _token: '{{csrf_token()}}'},
                         dataType: "json",
@@ -532,22 +498,18 @@
                         }
                     });
                 });
-
             }
-
         });
+		
 
         $(document).on('click', '.deleteQuestion', function () {
-
             var questionID = $(this).attr('queationid');
-
             deleteConfirmationPopup(
             "This question will deleted immediately.<br>You can't undo this action.", 
             function() {
-
                 $('.overlaynew').show();
                 $.ajax({
-                    url: "<?php echo base_url('admin/questions/deleteQuestion'); ?>",
+                    url: "{{ base_url('admin/questions/deleteQuestion') }}",
                     type: "POST",
                     data: {questionID: questionID, _token: '{{csrf_token()}}'},
                     dataType: "json",
@@ -563,7 +525,6 @@
                     }
                 });
             });
-
         });
 
 
@@ -571,9 +532,8 @@
             $('.overlaynew').show();
             var status = $(this).attr('change_status');
             var question_id = $(this).attr('question_id');
-
             $.ajax({
-                url: '<?php echo base_url('admin/questions/update_question_status'); ?>',
+                url: "{{ base_url('admin/questions/update_question_status') }}",
                 type: "POST",
                 data: {status: status, question_id: question_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -588,16 +548,13 @@
                 }
             });
         });
+		
 
         $('#onsiteQuestion thead tr').clone(true).appendTo('#onsiteQuestion thead');
-
-         var tableId = 'onsiteQuestion';
-         var tableBase = custom_data_table(tableId);
-
-        $('table thead tr:eq(1)').hide();
-
-        $('#onsiteQuestion thead tr:eq(1) th').each(function (i) {
-
+			var tableId = 'onsiteQuestion';
+			var tableBase = custom_data_table(tableId);
+			$('table thead tr:eq(1)').hide();
+			$('#onsiteQuestion thead tr:eq(1) th').each(function (i) {
             if (i === 9) {
                 var title = $(this).text();
                 $(this).html('<input type="text" id="filterBy" placeholder="Search ' + title + '" />');
@@ -611,11 +568,10 @@
                     }
                 });
             }
-
         });
+		
 
         $(document).on('click', '.filterByColumn', function () {
-
             $('.nav-tabs').each(function (i) {
                 $(this).children().removeClass('active');
             });
@@ -623,7 +579,6 @@
             var fil = $(this).attr('fil');
             $('#filterBy').val(fil);
             $('#filterBy').keyup();
-
             if (fil.length == 0) {
                 $('.heading_links').each(function (i) {
                     $(this).children('a').removeClass('btn btn-xs ml20 btn-default');
@@ -634,9 +589,9 @@
                 tableBase.draw();
             }
         });
+		
 
         $(document).on('click', '.top_links_clk', function () {
-
             $('.heading_links').each(function (i) {
                 $(this).children('a').removeClass('btn btn-xs ml20 btn-default');
             });
@@ -661,14 +616,14 @@
                 $('#startRate').keyup();
                 tableBase.draw();
             }
-
         });
+		
 
         $(document).on("click", ".applyInsightTags", function () {
             var question_id = $(this).attr("question_id");
             var action_name = $(this).attr("action_name");
             $.ajax({
-                url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
+                url: "{{ base_url('admin/tags/listAllTags') }}",
                 type: "POST",
                 data: {question_id: question_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -694,12 +649,13 @@
                 }
             });
         });
+		
 
         $("#frmQuestionTagListModal").submit(function () {
             var formdata = $("#frmQuestionTagListModal").serialize();
             formdata += '&_token={{csrf_token()}}';
             $.ajax({
-                url: '<?php echo base_url('admin/tags/applyQuestionTag'); ?>',
+                url: "{{ base_url('admin/tags/applyQuestionTag') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -707,23 +663,20 @@
                     if (data.status == 'success') {
                         $("#question_tag_" + data.id).html(data.refreshTags);
                         $("#QuestionTagListModal").modal("hide");
-                        //window.location.href = '';
                     }
                 }
             });
             return false;
         });
+		
 
         $(document).on('click', '.editDataQuestion', function () {
             $('.editAction').toggle();
         });
 
         $(document).on('click', '#addQuestion', function(){
-
-            window.location.href = "<?php echo base_url(); ?>admin/questions/add";
+            window.location.href = "{{ base_url() }}admin/questions/add";
         });
-
-
     });
 </script>
 @endsection

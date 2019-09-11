@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -11,7 +11,7 @@
 
 
     <!-- Dashboard content -->
-    <?php
+    @php
     $emailActive = '';
     $smsActive = '';
     if ($type == 'sms') {
@@ -19,7 +19,7 @@
     } else {
         $emailActive = 'active';
     }
-    ?>
+    @endphp
 
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
 
@@ -29,8 +29,8 @@
             <div class="col-md-3">
                 <h3><i class="icon-star-half"></i> &nbsp;Automation Stats</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
-                    <li class="<?php echo $emailActive; ?>" ><a href="#right-icon-tab0" data-toggle="tab">Email Stats</a></li>
-                    <li class="<?php echo $smsActive; ?>" ><a href="#right-icon-tab1" data-toggle="tab">SMS Stats</a></li>
+                    <li class="{{ $emailActive }}" ><a href="#right-icon-tab0" data-toggle="tab">Email Stats</a></li>
+                    <li class="{{ $smsActive }}" ><a href="#right-icon-tab1" data-toggle="tab">SMS Stats</a></li>
                 </ul>
             </div>
             <!--=============Button Area Right Side==============-->
@@ -182,7 +182,7 @@
 
     <div class="tab-content"> 
         <!--===========TAB 1===========-->
-        <div class="tab-pane <?php echo $emailActive; ?>" id="right-icon-tab0">
+        <div class="tab-pane {{ $emailActive }}" id="right-icon-tab0">
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Marketing campaigns -->
@@ -200,10 +200,6 @@
                             </div>
                         </div>
                         <div class="panel-body p0">
-                            <?php
-                            $isValidated = true;
-                            $eventNo = 0;
-                            ?>
                             <table class="table datatable-basic datatable-sorting">
                                 <thead>
                                     <tr>
@@ -225,7 +221,9 @@
 
                                 <tbody>
 
-                                    <?php
+                                    @php
+                                    $isValidated = true;
+                                    $eventNo = 0;
                                     foreach ($oEvents as $oEvent) {
                                         $isSMSAdded = $isEmailAdded = false;
                                         if (!empty($oEvent->campaign_type) && $oEvent->campaign_type == 'Email') {
@@ -260,79 +258,79 @@
                                                 $droppedGraph = $dropped * 100 / $processed;
                                                 $spamReportGraph = $spamReport * 100 / $processed;
                                             }
-                                            ?>
+                                            @endphp
                                             <tr>
-                                                <td style="display: none;"><?php echo date('m/d/Y', strtotime($oEvent->created)); ?></td>
-                                                <td style="display: none;"><?php echo $oEvent->id; ?></td>
+                                                <td style="display: none;">{{ date('m/d/Y', strtotime($oEvent->created)) }}</td>
+                                                <td style="display: none;">{{ $oEvent->id }}</td>
                                                 <td>
                                                     <div class="media-left media-middle"> 
                                                         <a class="icons square" href="#"><i class="icon-indent-decrease2 txt_blue"></i></a> 
                                                     </div>
                                                     <div class="media-left">
-                                                        <div><a href="#" class="text-default text-semibold"><?php echo $oEvent->subject == '' ? '<span style="color:#999999">No Data</span>' : setStringLimit($oEvent->subject); ?></a></div>
-                                                        <div class="text-muted text-size-small"><?php echo setStringLimit($oEvent->name); ?></div>
+                                                        <div><a href="#" class="text-default text-semibold">{!! $oEvent->subject == '' ? '<span style="color:#999999">No Data</span>' : setStringLimit($oEvent->subject) !!}</a></div>
+                                                        <div class="text-muted text-size-small">{{ setStringLimit($oEvent->name) }}</div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($oEvent->created)); ?></a></div>
-                                                        <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oEvent->created)); ?></div>
+                                                        <div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($oEvent->created)) }}</a></div>
+                                                        <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oEvent->created)) }}</div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $processed; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $processed; ?> Processed Email">
-                                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?php echo $processed; ?>" aria-valuemin="0" aria-valuemax="<?php echo $processed; ?>" style="width:<?php echo $processed > 0 ? '100' : 0; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $processed }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $processed }} Processed Email">
+                                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ $processed }}" aria-valuemin="0" aria-valuemax="{{ $processed }}" style="width:{{ $processed > 0 ? '100' : 0 }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $delivered; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $delivered; ?> Delivered Email">
-                                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?php echo $processed; ?>" aria-valuemin="0" aria-valuemax="<?php echo $delivered; ?>" style="width:<?php echo $deliveredGraph; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $delivered }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $delivered }} Delivered Email">
+                                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ $processed }}" aria-valuemin="0" aria-valuemax="{{ $delivered }}" style="width:{{ $deliveredGraph }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $open; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $open; ?> Open Email">
-                                                        <div class="progress-bar progress-bar-green2" role="progressbar" aria-valuenow="<?php echo $open; ?>" aria-valuemin="0" aria-valuemax="<?php echo $open; ?>" style="width:<?php echo $openGraph; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $open }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $open }} Open Email">
+                                                        <div class="progress-bar progress-bar-green2" role="progressbar" aria-valuenow="{{ $open }}" aria-valuemin="0" aria-valuemax="{{ $open }}" style="width:{{ $openGraph }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $click; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $click; ?> Click">
-                                                        <div class="progress-bar progress-bar-green2" role="progressbar" aria-valuenow="<?php echo $click; ?>" aria-valuemin="0" aria-valuemax="<?php echo $click; ?>" style="width:<?php echo $clickGraph; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $click }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $click }} Click">
+                                                        <div class="progress-bar progress-bar-green2" role="progressbar" aria-valuenow="{{ $click }}" aria-valuemin="0" aria-valuemax="{{ $click }}" style="width:{{ $clickGraph }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $unsubscribe; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $unsubscribe; ?> Unsubscribe">
-                                                        <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="<?php echo $unsubscribe; ?>" aria-valuemin="0" aria-valuemax="<?php echo $unsubscribe; ?>" style="width:<?php echo $unsubscribeGraph; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $unsubscribe }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $unsubscribe }} Unsubscribe">
+                                                        <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="{{ $unsubscribe }}" aria-valuemin="0" aria-valuemax="{{ $unsubscribe }}" style="width:{{ $unsubscribeGraph }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $bounce; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $bounce; ?> Bounce Email">
-                                                        <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="<?php echo $bounce; ?>" aria-valuemin="0" aria-valuemax="<?php echo $bounce; ?>" style="width:<?php echo $bounceGraph; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $bounce }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $bounce }} Bounce Email">
+                                                        <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="{{ $bounce }}" aria-valuemin="0" aria-valuemax="{{ $bounce }}" style="width:{{ $bounceGraph }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $dropped; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $dropped; ?> Dropped Email">
-                                                        <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="<?php echo $dropped; ?>" aria-valuemin="0" aria-valuemax="<?php echo $dropped; ?>" style="width:<?php echo $droppedGraph; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $dropped }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $dropped }} Dropped Email">
+                                                        <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="{{ $dropped }}" aria-valuemin="0" aria-valuemax="{{ $dropped }}" style="width:{{ $droppedGraph }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $spamReport; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $spamReport; ?> Spam Email">
-                                                        <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="<?php echo $spamReport; ?>" aria-valuemin="0" aria-valuemax="<?php echo $spamReport; ?>" style="width:<?php echo $spamReportGraph; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $spamReport }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $spamReport }} Spam Email">
+                                                        <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="{{ $spamReport }}" aria-valuemin="0" aria-valuemax="{{ $spamReport }}" style="width:{{ $spamReportGraph }}%"></div>
                                                     </div>
                                                 </td>                                           
 
 
-                                            </tr><?php
+                                            </tr>@php
                                         }
                                     }
-                                    ?>
+                                    @endphp
                                 </tbody>
                             </table>
                         </div>
@@ -342,7 +340,7 @@
         </div>
 
         <!--===========TAB 2===========-->
-        <div class="tab-pane <?php echo $smsActive; ?>" id="right-icon-tab1">
+        <div class="tab-pane {{ $smsActive }}" id="right-icon-tab1">
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Marketing campaigns -->
@@ -377,7 +375,7 @@
                                 </thead>
                                 <tbody>
 
-                                    <?php
+                                    @php
                                     foreach ($oEvents as $oEvent) {
                                         $isSMSAdded = $isEmailAdded = false;
                                         if (!empty($oEvent->campaign_type) && $oEvent->campaign_type == 'Sms') {
@@ -411,60 +409,60 @@
                                                 $failedSmsGraph = $failedSms * 100 / $sentSms;
                                                 $queuedSmsGraph = $queuedSms * 100 / $sentSms;
                                             }
-                                            ?>
+                                            @endphp
                                             <tr>
-                                                <td style="display: none;"><?php echo date('m/d/Y', strtotime($oEvent->created)); ?></td>
-                                                <td style="display: none;"><?php echo $oEvent->id; ?></td>
+                                                <td style="display: none;">{{ date('m/d/Y', strtotime($oEvent->created)) }}</td>
+                                                <td style="display: none;">{{ $oEvent->id }}</td>
                                                 <td>
                                                     <div class="media-left media-middle"> 
                                                         <a class="icons square" href="#"><i class="icon-indent-decrease2 txt_blue"></i></a> 
                                                     </div>
                                                     <div class="media-left">
-                                                        <div><a href="#" class="text-default text-semibold"><?php echo $oEvent->name == '' ? '<span style="color:#999999">No Data</span>' : setStringLimit($oEvent->name); ?></a></div>
-                                                        <div class="text-muted text-size-small"><?php echo setStringLimit($oEvent->subject); ?></div>
+                                                        <div><a href="#" class="text-default text-semibold">{!! $oEvent->name == '' ? '<span style="color:#999999">No Data</span>' : setStringLimit($oEvent->name) !!}</a></div>
+                                                        <div class="text-muted text-size-small">{{ setStringLimit($oEvent->subject) }}</div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($oEvent->created)); ?></a></div>
-                                                        <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oEvent->created)); ?></div>
+                                                        <div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($oEvent->created)) }}</a></div>
+                                                        <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oEvent->created)) }}</div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $sentSms; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $sentSms; ?> Sent SMS">
-                                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?php echo $sentSms; ?>" aria-valuemin="0" aria-valuemax="<?php echo $sentSms; ?>" style="width:<?php echo $sentSms > 0 ? '100' : 0; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $sentSms }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $sentSms }} Sent SMS">
+                                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ $sentSms }}" aria-valuemin="0" aria-valuemax="{{ $sentSms }}" style="width:{{ $sentSms > 0 ? '100' : 0 }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $deliveredSms; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $deliveredSms; ?> Delivered SMS">
-                                                        <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="<?php echo $deliveredSms; ?>" aria-valuemin="0" aria-valuemax="<?php echo $deliveredSms; ?>" style="width:<?php echo $deliveredSmsGraph; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $deliveredSms }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $deliveredSms }} Delivered SMS">
+                                                        <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="{{ $deliveredSms }}" aria-valuemin="0" aria-valuemax="{{ $deliveredSms }}" style="width:{{ $deliveredSmsGraph }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $acceptedSms; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $acceptedSms; ?> Accepted SMS">
-                                                        <div class="progress-bar progress-bar-green2" role="progressbar" aria-valuenow="<?php echo $acceptedSms; ?>" aria-valuemin="0" aria-valuemax="<?php echo $acceptedSms; ?>" style="width:<?php echo $acceptedSmsGraph; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $acceptedSms }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $acceptedSms }} Accepted SMS">
+                                                        <div class="progress-bar progress-bar-green2" role="progressbar" aria-valuenow="{{ $acceptedSms }}" aria-valuemin="0" aria-valuemax="{{ $acceptedSms }}" style="width:{{ $acceptedSmsGraph }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $failedSms; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $failedSms; ?> Failed SMS">
-                                                        <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="<?php echo $failedSms; ?>" aria-valuemin="0" aria-valuemax="<?php echo $failedSms; ?>" style="width:<?php echo $failedSmsGraph; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $failedSms }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $failedSms }} Failed SMS">
+                                                        <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="{{ $failedSms }}" aria-valuemin="0" aria-valuemax="{{ $failedSms }}" style="width:{{ $failedSmsGraph }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" target="_blank" class="text-default text-semibold"><?php echo $queuedSms; ?></a>
-                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total <?php echo $queuedSms; ?> Queued SMS">
-                                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?php echo $queuedSms; ?>" aria-valuemin="0" aria-valuemax="<?php echo $queuedSms; ?>" style="width:<?php echo $queuedSmsGraph; ?>%"></div>
+                                                    <a href="#" target="_blank" class="text-default text-semibold">{{ $queuedSms }}</a>
+                                                    <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total {{ $queuedSms }} Queued SMS">
+                                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ $queuedSms }}" aria-valuemin="0" aria-valuemax="{{ $queuedSms }}" style="width:{{ $queuedSmsGraph }}%"></div>
                                                     </div>
                                                 </td>
 
-                                            </tr><?php
-                                }
-                            }
-                                    ?>
+                                            </tr>@php
+                                        }
+                                    }
+                                    @endphp
                                 </tbody>
                             </table>
                         </div>

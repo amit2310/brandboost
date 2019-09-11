@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -13,21 +13,21 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-7">
-                <h3 class="mt20"><img src="{{ base_url() }}assets/images/menu_icons/Email_Light.svg"> <?php echo $oAutomations[0]->title; ?></h3>
+                <h3 class="mt20"><img src="{{ base_url() }}assets/images/menu_icons/Email_Light.svg"> {{ $oAutomations[0]->title }}</h3>
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">
 
-                <button type="button" class="btn dark_btn ml10 saveAsDraft" automation_id="<?php echo $oAutomations[0]->id; ?>">
+                <button type="button" class="btn dark_btn ml10 saveAsDraft" automation_id="{{ $oAutomations[0]->id }}">
                     <i class="icon-plus3"></i>
                     <span>&nbsp;Save as Draft</span>                   
-                    
+
                 </button>
 
-                <button type="button" class="btn dark_btn ml10 publishAutoEvent" automation_id="<?php echo $oAutomations[0]->id; ?>">
+                <button type="button" class="btn dark_btn ml10 publishAutoEvent" automation_id="{{ $oAutomations[0]->id }}">
                     <i class="icon-plus3"></i>
                     <span>&nbsp;Publish</span>                   
-                    
+
                 </button>
 
 
@@ -37,12 +37,12 @@
         </div>
     </div>
     @include('admin.workflow2.tree', ['oEvents' => $oEvents])
-    
+
 
 </div>
-<?php 
- $oDefaultTemplates = !(empty($oDefaultTemplates)) ? $oDefaultTemplates : array();
-?>
+@php
+$oDefaultTemplates = !(empty($oDefaultTemplates)) ? $oDefaultTemplates : array();
+@endphp
 @include('admin.modals.workflow2.workflow-popup', ['oDefaultTemplates' => $oDefaultTemplates])
 
 <script>
@@ -74,7 +74,7 @@
         $('.overlaynew').show();
         var automationID = $(this).attr('automation_id');
         $.ajax({
-            url: '<?php echo base_url('admin/modules/emails/publishAutomationEvent'); ?>',
+            url: "{{ base_url('admin/modules/emails/publishAutomationEvent') }}",
             type: "POST",
             data: {_token: '{{csrf_token()}}', 'automation_id': automationID},
             dataType: "json",
@@ -82,18 +82,18 @@
                 if (data.status == 'success') {
                     $('.overlaynew').hide();
                     displayMessagePopup('success', 'Success', 'Campaign published successfully!');
-                    //window.location.href = '<?php echo base_url('admin/modules/emails'); ?>';
+                    //window.location.href = "{{ base_url('admin/modules/emails') }}';
                 }
             }
         });
     });
-    
-    
+
+
     $('.saveAsDraft').click(function () {
         $('.overlaynew').show();
         var automationID = $(this).attr('automation_id');
         $.ajax({
-            url: '<?php echo base_url('admin/modules/emails/publishAsDraft'); ?>',
+            url: "{{ base_url('admin/modules/emails/publishAsDraft') }}",
             type: "POST",
             data: {_token: '{{csrf_token()}}', 'automation_id': automationID},
             dataType: "json",
@@ -101,7 +101,7 @@
                 if (data.status == 'success') {
                     $('.overlaynew').hide();
                     displayMessagePopup('success', 'Success', 'Campaign saved a draft!');
-                    //window.location.href = '<?php echo base_url('admin/modules/emails'); ?>';
+                    //window.location.href = "{{ base_url('admin/modules/emails') }}';
                 }
             }
         });

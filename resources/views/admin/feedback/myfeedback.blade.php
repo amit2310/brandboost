@@ -158,7 +158,7 @@
                     <!-- Marketing campaigns -->
                     <div class="panel panel-flat">
                         <div class="panel-heading">
-                            <h6 class="panel-title"><?php echo count($result); ?> Offsite Brand Boost Feedback</h6>
+                            <h6 class="panel-title">{{ count($result) }} Offsite Brand Boost Feedback</h6>
                             <div class="heading-elements">
                                 <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                     <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
@@ -189,8 +189,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    <?php
+                                    @php
                                     if (count($result) > 0) {
                                         foreach ($result as $data) {
                                             $brandImgArray = unserialize($data->brand_img);
@@ -208,87 +207,91 @@
                                             if (strlen($feedbackTitle) > 30) {
                                                 $feedbackTitle = substr($feedbackTitle, 0, 29) . '...';
                                             }
-                                            ?>
-                                            <tr id="append-feedback-<?php echo $data->id; ?>" class="selectedClass">
-                                                <td style="display: none;"><?php echo date('m/d/Y', strtotime($data->created)); ?></td>
-                                                <td style="display: none;"><?php echo $data->id; ?></td>
-                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows"  value="<?php echo $data->id; ?>" ><span class="custmo_checkmark"></span></label></td>
-
-
+                                            @endphp
+                                            <tr id="append-feedback-{{ $data->id }}" class="selectedClass">
+                                                <td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
+                                                <td style="display: none;">{{ $data->id }}</td>
+                                                <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows"  value="{{ $data->id }}" ><span class="custmo_checkmark"></span></label></td>
                                                 <td>
                                                     <div class="media-left media-middle"> 
-                                                        <a href="#"><img src="<?php echo base_url(); ?>assets/images/userp.png" class="img-circle img-xs" alt=""></a> 
+                                                        <a href="#"><img src="{{ base_url() }}assets/images/userp.png" class="img-circle img-xs" alt=""></a> 
                                                     </div>
                                                     <div class="media-left">
-                                                        <?php if ($data->firstname != '') { ?>
-                                                                                        <div class="pt-5"><a href="<?php echo base_url(); ?>admin/subscriber/activities/<?php echo $data->id; ?>" target="_blank" class="text-default text-semibold"><span><?php echo $data->firstname; ?> <?php echo $data->lastname; ?></span> <!-- <img class="flags" src="<?php echo base_url(); ?>assets/images/flags/us.png"/> --></a></div>
-                                                            <div class="text-muted text-size-small"><?php echo $data->email; ?></div>
-                                                            <?php
-                                                        } else {
-                                                            echo 'NA';
-                                                        }
-                                                        ?>
+                                                        @if ($data->firstname != '')
+                                                            <div class="pt-5">
+																<a href="{{ base_url() }}admin/subscriber/activities/{{ $data->id }}" target="_blank" class="text-default text-semibold">
+																	<span>{{ $data->firstname }} {{ $data->lastname }}</span>
+																</a>
+															</div>
+                                                            <div class="text-muted text-size-small">{{ $data->email }}</div>
+                                                        @else
+															NA
+                                                        @endif
                                                     </div>
                                                 </td>
 
                                                 <td>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $oContact->phone; ?></a></div>
-                                                        <div class="text-muted text-size-small"><?php echo $oContact->phone != '' ? 'Chat' : ''; ?></div>
+                                                        <div class="pt-5">
+															<a href="#" class="text-default text-semibold">
+																{!! $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : $oContact->phone !!}
+															</a>
+														</div>
+                                                        <div class="text-muted text-size-small">{{ $oContact->phone != '' ? 'Chat' : '' }}</div>
                                                     </div>
                                                 </td>
 
                                                 <td>
                                                     <div class="media-left media-middle"> 
-                                                        <a class="editBrandboost" brandid="<?php echo $data->brandboost_id; ?>" b_title="click to view campaign details" href="javascript:void(0);">
-                                                            <img src="<?php echo $imgSrc; ?>" class="img-circle img-xs" alt="">
+                                                        <a class="editBrandboost" brandid="{{ $data->brandboost_id }}" b_title="click to view campaign details" href="javascript:void(0);">
+                                                            <img src="{{ $imgSrc }}" class="img-circle img-xs" alt="">
                                                         </a> 
                                                     </div>
                                                     <div class="media-left">
                                                         <div class="pt-5">
-                                                            <a href="javascript:void(0);" class="text-default text-semibold" brandid="<?php echo $data->brandboost_id; ?>"><?php echo $data->brand_title; ?></a>
+                                                            <a href="javascript:void(0);" class="text-default text-semibold" brandid="{{ $data->brandboost_id }}">{{ $data->brand_title }}</a>
                                                         </div>
-                                                        <div class="text-muted text-size-small"><?php echo $data->review_type; ?></div>
-
+                                                        <div class="text-muted text-size-small">{{ $data->review_type }}</div>
                                                     </div>
                                                 </td>
 
                                                 <td>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($data->created)); ?></a></div>
-                                                        <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($data->created)); ?></div>
+                                                        <div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($data->created)) }}</a></div>
+                                                        <div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) }}</div>
                                                     </div>
                                                 </td>
 
                                                 <td>
-
                                                     <span style="display:none;">
-                                                        <!-- for datatable sorting only -->
-                                                        <?php if ($data->category == 'Positive'): $rc = 5; ?>
-                                                            5
-                                                        <?php elseif ($data->category == 'Neutral'): $rc = 3; ?>
-                                                            3
-                                                        <?php elseif ($data->category == 'Negative'): $rc = 1; ?>
-                                                            1
-                                                        <?php endif; ?>
-
+													@php
+														if ($data->category == 'Positive'): 
+															$rc = 5;
+															echo 5;
+														elseif ($data->category == 'Neutral'): 
+															$rc = 3;
+															echo 3;
+														elseif ($data->category == 'Negative'): 
+															$rc = 1;
+															echo 1;
+														endif
+													@endphp
                                                     </span>
-                                                    <span class="ratingBox" id="ratingBoxStatus<?php echo $data->id; ?>" style="display: block">
-                                                        <?php if ($data->category == 'Positive'): ?>
+                                                    <span class="ratingBox" id="ratingBoxStatus{{ $data->id }}" style="display: block">
+                                                        @if ($data->category == 'Positive')
                                                             <i class="icon-star-full2 fsize10 txt_green"></i><i class="icon-star-full2 fsize10 txt_green"></i><i class="icon-star-full2 fsize10 txt_green"></i><i class="icon-star-full2 fsize10 txt_green"></i><i class="icon-star-full2 fsize10 txt_green"></i>
-                                                        <?php elseif ($data->category == 'Neutral'): ?>
+                                                        @elseif ($data->category == 'Neutral')
                                                             <i class="icon-star-full2 fsize10 txt_green"></i><i class="icon-star-full2 fsize10 txt_green"></i><i class="icon-star-full2 fsize10 txt_green"></i><i class="icon-star-full2 fsize10"></i><i class="icon-star-full2 fsize10"></i>
-                                                        <?php elseif ($data->category == 'Negative'): ?>
+                                                        @elseif ($data->category == 'Negative')
                                                             <i class="icon-star-full2 fsize10 txt_green"></i><i class="icon-star-full2 fsize10"></i><i class="icon-star-full2 fsize10"></i><i class="icon-star-full2 fsize10"></i><i class="icon-star-full2 fsize10"></i>
-                                                        <?php endif; ?>
+                                                        @endif
                                                     </span>
-                                                    <a href="javascript:void(0);"><span class="text-muted reviewnum">(<?php echo $rc; ?> out of 5 Stars)</span></a>
+                                                    <a href="javascript:void(0);"><span class="text-muted reviewnum">({{ $rc }} out of 5 Stars)</span></a>
                                                 </td>
 
                                                 <td>
                                                     <div class="media-left">
-                                                        <a class="displayFeedback" fb_tab_type="feedback" feedback_id="<?php echo $data->id; ?>" fb_time="<?php echo date("M d, Y h:i A", strtotime($data->created)); ?> (<?php echo timeAgo($data->created); ?>)" href="javascript:void(0);"><span class="text-default text-semibold"><?php echo setStringLimit($data->feedback); ?></span></a>
-                                                        
+                                                        <a class="displayFeedback" fb_tab_type="feedback" feedback_id="{{ $data->id }}" fb_time="{{ date('M d, Y h:i A', strtotime($data->created)) }} ({{ timeAgo($data->created) }})" href="javascript:void(0);"><span class="text-default text-semibold">{{ setStringLimit($data->feedback) }}</span></a>
                                                     </div> 
                                                 </td>
 
@@ -298,29 +301,24 @@
                                                             <button type="button" class="btn btn-xs btn_white_table ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
                                                             <ul class="dropdown-menu dropdown-menu-right">
 
-                                                                <li><a class="displayFeedback" fb_tab_type="feedback" feedback_id="<?php echo $data->id; ?>" fb_time="<?php echo date("M d, Y h:i A", strtotime($data->created)); ?> (<?php echo timeAgo($data->created); ?>)" href="javascript:void(0);" ><i class="icon-file-stats "></i> View</a></li>
-
+                                                                <li><a class="displayFeedback" fb_tab_type="feedback" feedback_id="{{ $data->id }}" fb_time="{{ date('M d, Y h:i A', strtotime($data->created)) }} ({{ timeAgo($data->created) }})" href="javascript:void(0);" ><i class="icon-file-stats "></i> View</a></li>
                                                             </ul>
                                                         </li>
                                                     </ul>
                                                 </td>
                                             </tr>
-                                            <?php
+                                            @php
                                         }
                                     }
-                                    ?>	
+                                    @endphp
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>    
-
-
     </div>
-
 </div>
 
 <!-- /content area -->
@@ -341,14 +339,14 @@
 
                             <ul class="icons-list" style="float:right;">  
                                 <li class="dropup"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                    <?php if ($canWrite): ?>
+                                    @if ($canWrite)
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <li class="text-semibold" style="border-bottom:1px solid #ddd; padding:5px 15px 10px;">Change Status</li>
                                             <li class="bg-danger updateFeedbackStatus" fb_status="Negative" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Negative</li>
                                             <li class="bg-blue updateFeedbackStatus" fb_status="Neutral" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Neutral</li>
                                             <li class="bg-success updateFeedbackStatus" fb_status="Positive" style="color:#FFF; text-align:center; padding:10px; cursor: pointer;">Positive</li>
                                         </ul>
-                                    <?php endif; ?>
+                                    @endif
                                 </li>
                             </ul>
                         </div>
@@ -386,9 +384,7 @@
                     <h5 class="modal-title">Apply Tags</h5>
                 </div>
 
-                <div class="modal-body" id="tagEntireList">
-
-                </div>
+                <div class="modal-body" id="tagEntireList"></div>
 
                 <div class="modal-footer">
                     <input type="hidden" name="feedback_id" id="tag_feedback_id" />
@@ -402,7 +398,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
         $(document).on('change', '#checkAll', function () {
             if (false == $(this).prop("checked")) {
 
@@ -476,7 +471,7 @@
 					if (isConfirm) {
 						$('.overlaynew').show();
 						$.ajax({
-							url: '<?php echo base_url('admin/feedback/deleteMultipalFeedbackData'); ?>',
+							url: "{{ base_url('admin/feedback/deleteMultipalFeedbackData') }}",
 							type: "POST",
 							data: {multi_feedback_id: val, _token: '{{csrf_token()}}'},
 							dataType: "json",
@@ -503,7 +498,7 @@
         $("#frmFeedbackTagListModal").submit(function () {
             var formdata = $("#frmFeedbackTagListModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/tags/applyFeedbackTag'); ?>',
+                url: "{{ base_url('admin/tags/applyFeedbackTag') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -522,7 +517,7 @@
             var feedback_id = $(this).attr("feedback_id");
             var action_name = $(this).attr("action_name");
             $.ajax({
-                url: '<?php echo base_url('admin/tags/listAllTags'); ?>',
+                url: "{{ base_url('admin/tags/listAllTags') }}",
                 type: "POST",
                 data: {review_id: review_id, feedback_id: feedback_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -546,14 +541,14 @@
 
             var brandboostID = $(this).attr('brandID');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/update_offsite_step1'); ?>',
+                url: "{{ base_url('admin/brandboost/update_offsite_step1') }}",
                 type: "POST",
                 data: {'brandboostID': brandboostID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/brandboost/offsite_step_2'); ?>';
+                        window.location.href = "{{ base_url('admin/brandboost/offsite_step_2') }}";
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -573,7 +568,7 @@
         function displayFeedbackPopup(feedbackid, tabtype, fbtime) {
             //$('.overlaynew').show();
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/displayfeedback'); ?>",
+                url: "{{ base_url('/admin/feedback/displayfeedback') }}",
                 type: "POST",
                 data: {fid: feedbackid, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -621,7 +616,7 @@
 					var formdata = $("#frmSendFeedbackReply").serialize();
 					$('.overlaynew').show();
 					$.ajax({
-						url: "<?php echo base_url('/admin/feedback/replyFeedback'); ?>",
+						url: "{{ base_url('/admin/feedback/replyFeedback') }}",
 						type: "POST",
 						data: formdata + "&career=" + career,
 						dataType: "json",
@@ -668,7 +663,7 @@
             var formdata = $("#frmSaveNote").serialize();
             $('.overlaynew').show();
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/saveFeedbackNotes'); ?>",
+                url: "{{ base_url('/admin/feedback/saveFeedbackNotes') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -686,15 +681,12 @@
             });
         });
 
-
-
-
         $(document).on("click", ".updateFeedbackStatusNew", function () {
             $('.overlaynew').show();
             var feedbackid = $(this).attr('feedback_id');
             var statusVal = $(this).attr('fb_status');
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
+                url: "{{ base_url('/admin/feedback/updateFeedbackRatings') }}",
                 type: "POST",
                 data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -716,7 +708,7 @@
             var fbtime = $("input[name='fbtime']").val();
             var statusVal = $(this).attr('fb_status');
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
+                url: "{{ base_url('/admin/feedback/updateFeedbackRatings') }}",
                 type: "POST",
                 data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -758,7 +750,7 @@
             var feedbackid = $(this).attr('feedback_id');
             var statusVal = $(this).attr('fb_status');
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
+                url: "{{ base_url('/admin/feedback/updateFeedbackRatings') }}",
                 type: "POST",
                 data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",

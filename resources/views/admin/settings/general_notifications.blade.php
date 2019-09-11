@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php //echo $title; ?>
+	{{ $title }}
 @endsection
 
 @section('contents')
@@ -14,272 +14,219 @@
 
 @include('admin.notification_smart_popup')
 
+    <div class="content">          
+	<!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
+	<div class="page_header">
+	  <div class="row">
+	  <!--=============Headings & Tabs menu==============-->
+		<div class="col-md-5">
+		  <h3 class=""><img  width="20"  src="/assets/images/menu_icons/Website_Light.svg"/>Notification Management</h3>
+			<ul class="nav nav-tabs nav-tabs-bottom">
+				<li class="active"><a href="#right-icon-tab0" data-toggle="tab">Nps</a></li>
+				<li><a href="#right-icon-tab1" data-toggle="tab">Referral</a></li>
+				<li><a href="#right-icon-tab2" data-toggle="tab">Login</a></li>
+			</ul>
+		</div>
+		<!--=============Button Area Right Side==============-->
+		<div class="col-md-7 text-right btn_area">
+		  <button type="button" class="btn dark_btn ml10" style="min-width: 140px;"><span><i class="icon-plus3"></i> Add New Notification</span> </button>
+		  <button type="button" class="btn dark_btn ml10"><i class="icon-plus3"></i></button>
+		</div>
+	  </div>
+	</div>
+	<!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
-       <div class="content">
-                  
-                  <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
-                    <div class="page_header">
-                      <div class="row">
-                      <!--=============Headings & Tabs menu==============-->
-                        <div class="col-md-5">
-                          <h3 class=""><img  width="20"  src="/assets/images/menu_icons/Website_Light.svg"/>Notification Management</h3>
-                           <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Nps</a></li>
-                            <li><a href="#right-icon-tab1" data-toggle="tab">Referral</a></li>
-                            <li><a href="#right-icon-tab2" data-toggle="tab">Login</a></li>
+	<!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
+	<div class="tab-content"> 
+	  <!--===========TAB 1===========-->
+	  <div class="tab-pane active" id="right-icon-tab0">
+		<div class="row">
+		  <div class="col-md-12">
+			<div class="panel panel-flat">
+			  <div class="panel-heading"> 
+				  <span class="pull-left">
+					<h6 class="panel-title">Notification Management</h6>
+				  </span>
+				  
+				<div class="heading-elements">
+					<div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
+						<input class="form-control input-sm cus_search" tableid="generalNotification" placeholder="Search by name" type="text">
+						<div class="form-control-feedback">
+							<i class=""><img src="/assets/images/icon_search.png" width="14"></i>
+						</div>
+					</div>
+					<div class="table_action_tool">
+						<a href="#" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="/assets/images/icon_refresh.png"></i></a>
+						<a href="#"><i class=""><img src="/assets/images/icon_calender.png"></i></a>
+						<a href="#"><i class=""><img src="/assets/images/icon_download.png"></i></a>
+						<a href="#"><i class=""><img src="/assets/images/icon_upload.png"></i></a>
+						<a href="#"><i class=""><img src="/assets/images/icon_edit.png"></i></a>
+					</div>
+				</div>
+				</div>
+				<div class="panel-body p0 bkg_white">
+				<table class="table" id="generalNotification">
+				<thead>
+				<tr>
+				<th style="display:none;"></th>
+				<th style="display:none;"></th>
+				<th>Event Name</th>
+				<th>Category</th>
+				<th>Email</th>
+				<th>Sms</th>
+				<th>System</th>
+				<th>Permission Level</th>
+				</tr>
+				</thead>
+				<tbody>
+				<!--========== ROW START =============-->
+				@foreach ($notifications as $oTemplate)
+					<tr>
+						<td style="display:none;">{{ $oTemplate->id }}</td>
+						<td style="display:none;">{{ $oTemplate->id }}</td>
+						<td><div class="media-left media-middle"> <i class="fa fa-square mr10" style="color: #6190fa;"></i></div>
+						<div class="media-left">
+						<div class=""><a href="#" class="text-default text-semibold">{{ $oTemplate->notification_name }}</a> </div>
 
-                          </ul>
-                        </div>
-                        <!--=============Button Area Right Side==============-->
-                        <div class="col-md-7 text-right btn_area">
-                          <button type="button" class="btn dark_btn ml10" style="min-width: 140px;"><span><i class="icon-plus3"></i> Add New Notification</span> </button>
-                          <button type="button" class="btn dark_btn ml10"><i class="icon-plus3"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                    <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
-                    
-                    
-                    
-                    <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
-                    
-                        <div class="tab-content"> 
+						</div></td>
 
+						<td>{{ $oTemplate->category }}</td>
 
-                      <!--===========TAB 1===========-->
-                      <div class="tab-pane active" id="right-icon-tab0">
-                     <div class="row">
-                          <div class="col-md-12">
-                            <div class="panel panel-flat">
-                              <div class="panel-heading"> 
-                                  <span class="pull-left">
-                                  <h6 class="panel-title">Notification Management</h6>
-                                  </span>
-                                  
-                                  <div class="heading-elements">
-                                <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-                                    <input class="form-control input-sm cus_search" tableid="generalNotification" placeholder="Search by name" type="text">
-                                    <div class="form-control-feedback">
-                                        <i class=""><img src="/assets/images/icon_search.png" width="14"></i>
-                                    </div>
-                                </div>
-                                <div class="table_action_tool">
-                                    <a href="#" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="/assets/images/icon_refresh.png"></i></a>
-                                    <a href="#"><i class=""><img src="/assets/images/icon_calender.png"></i></a>
-                                    <a href="#"><i class=""><img src="/assets/images/icon_download.png"></i></a>
-                                    <a href="#"><i class=""><img src="/assets/images/icon_upload.png"></i></a>
-                                    <a href="#"><i class=""><img src="/assets/images/icon_edit.png"></i></a>
-                                </div>
-                                
-                                </div>
-                              
-                              
-                                  
-                                </div>
-                                <div class="panel-body p0 bkg_white">
-                                <table class="table" id="generalNotification">
-                                <thead>
-                                <tr>
-                                <th style="display:none;"></th>
-                                <th style="display:none;"></th>
-                                <th>Event Name</th>
-                                <th>Category</th>
-                                <th>Email</th>
-                                <th>Sms</th>
-                                <th>System</th>
-                                <th>Permission Level</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <!--========== ROW START =============-->
-                                <?php foreach ($notifications as $oTemplate) { ?>
-                                <tr>
-                                  <td style="display:none;"><?php echo $oTemplate->id; ?></td>
-                                  <td style="display:none;"><?php echo $oTemplate->id; ?></td>
-                                <td><div class="media-left media-middle"> <i class="fa fa-square mr10" style="color: #6190fa;"></i></div>
-                                <div class="media-left">
-                                <div class=""><a href="#" class="text-default text-semibold"><?php echo $oTemplate->notification_name; ?></a> </div>
-
-                                </div></td>
-
-                                <td><?php echo $oTemplate->category; ?></td>
-
-                                <td><label class="custom-form-switch">
-                                <input class="field UpDatepermission" permission="email" notificationId="<?php echo $oTemplate->id; ?>" type="checkbox" <?php if($oTemplate->email == 1) {?>checked="checked"<?php } ?> >
-                                <span class="toggle yellow"></span> </label>
-                                <div class="tdropdown"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="/assets/images/more.svg"></a>
-                                <ul class="dropdown-menu dropdown-menu-right more_act">
-                                <a href="#" class="dropdown_close">X</a>
-                                <li><a template_id="<?php echo $oTemplate->id; ?>" class="emailNotiSmartPopup"><i class="icon-arrow-down16"></i>Add Message</a> </li>
-                                <!-- <li><a href="#"><i class="icon-arrow-up16"></i> Preview</a> </li> -->
-                                </ul>
-                                </div>
-                                </td>
+						<td><label class="custom-form-switch">
+						<input class="field UpDatepermission" permission="email" notificationId="{{ $oTemplate->id }}" type="checkbox" 
+						@if($oTemplate->email == 1) checked="checked" @endif >
+						<span class="toggle yellow"></span> </label>
+						<div class="tdropdown"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="/assets/images/more.svg"></a>
+						<ul class="dropdown-menu dropdown-menu-right more_act">
+						<a href="#" class="dropdown_close">X</a>
+						<li><a template_id="{{ $oTemplate->id }}" class="emailNotiSmartPopup"><i class="icon-arrow-down16"></i>Add Message</a> </li>
+						</ul>
+						</div>
+						</td>
 
 
 
-                                <td><label class="custom-form-switch">
-                                <input class="field UpDatepermission" permission="sms" notificationId="<?php echo $oTemplate->id; ?>" type="checkbox" <?php if($oTemplate->sms == 1) {?>checked="checked"<?php } ?>>
-                                <span class="toggle yellow"></span> </label>
-                                <div class="tdropdown"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="/assets/images/more.svg"></a>
-                                <ul class="dropdown-menu dropdown-menu-right more_act">
-                                <a href="#" class="dropdown_close">X</a>
-                                <li><a template_id="<?php echo $oTemplate->id; ?>" class="smsNotiSmartPopup" ><i class="icon-arrow-down16"></i>Add Message</a> </li>
-                                <!-- <li><a href="#"><i class="icon-arrow-up16"></i> Preview</a> </li> -->
-                                </ul>
-                                </div></td>
+						<td><label class="custom-form-switch">
+						<input class="field UpDatepermission" permission="sms" notificationId="{{ $oTemplate->id }}" type="checkbox" @if($oTemplate->sms == 1) checked="checked" @endif >
+						<span class="toggle yellow"></span> </label>
+						<div class="tdropdown"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="/assets/images/more.svg"></a>
+						<ul class="dropdown-menu dropdown-menu-right more_act">
+						<a href="#" class="dropdown_close">X</a>
+						<li><a template_id="{{ $oTemplate->id }}" class="smsNotiSmartPopup" ><i class="icon-arrow-down16"></i>Add Message</a> </li>
+						</ul>
+						</div></td>
 
-                                <td><label class="custom-form-switch">
-                                <input class="field UpDatepermission" permission="system" notificationId="<?php echo $oTemplate->id; ?>" type="checkbox" <?php if($oTemplate->system == 1) {?>checked="checked"<?php } ?>>
-                                <span class="toggle yellow"></span> </label>
-                                <div class="tdropdown"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="/assets/images/more.svg"></a>
-                                <ul class="dropdown-menu dropdown-menu-right more_act">
-                                <a href="#" class="dropdown_close">X</a>
-                                <li><a template_id="<?php echo $oTemplate->id; ?>" class="systemNotiSmartPopup"><i class="icon-arrow-down16"></i>Add Message</a> </li>
-                                <!-- <li><a href="#"><i class="icon-arrow-up16"></i> Preview</a> </li> -->
-                                </ul>
-                                </div></td>
+						<td><label class="custom-form-switch">
+						<input class="field UpDatepermission" permission="system" notificationId="{{ $oTemplate->id }}" type="checkbox" @if($oTemplate->system == 1) checked="checked" @endif >
+						<span class="toggle yellow"></span> </label>
+						<div class="tdropdown"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="/assets/images/more.svg"></a>
+						<ul class="dropdown-menu dropdown-menu-right more_act">
+						<a href="#" class="dropdown_close">X</a>
+						<li><a template_id="{{ $oTemplate->id }}" class="systemNotiSmartPopup"><i class="icon-arrow-down16"></i>Add Message</a> </li>
+						</ul>
+						</div></td>
+						<td>
+						<div class="p0">
+						<label class="custmo_checkbox pull-left mr20">
+						<input class="UpDatepermission" permission="admin" notificationId="{{ $oTemplate->id }}" type="checkbox" @if($oTemplate->admin == 1) checked="checked" @endif >
+						<span class="custmo_checkmark"></span>
+						&nbsp; Admin
+						</label>
+						<label class="custmo_checkbox pull-left mr20">
+						<input class="UpDatepermission" permission="user" notificationId="{{ $oTemplate->id }}" type="checkbox" @if($oTemplate->user == 1) checked="checked" @endif >
+						<span class="custmo_checkmark"></span>
+						&nbsp; User
+						</label>
 
+						<label class="custmo_checkbox pull-left">
+						<input class="UpDatepermission" permission="client" notificationId="{{ $oTemplate->id }}" type="checkbox" @if($oTemplate->client == 1) checked="checked" @endif >
+						<span class="custmo_checkmark"></span>
+						&nbsp; Client
+						</label>
+						<div class="clearfix"></div>
+						</div>
+						</td>
+					</tr>
+				@endforeach
+				</tbody>
+				</table>
 
-                                <td>
-
-                                <div class="p0">
-                                <label class="custmo_checkbox pull-left mr20">
-                                <input class="UpDatepermission" permission="admin" notificationId="<?php echo $oTemplate->id; ?>" type="checkbox" <?php if($oTemplate->admin == 1) {?>checked="checked"<?php } ?>>
-                                <span class="custmo_checkmark"></span>
-                                &nbsp; Admin
-                                </label>
-
-
-
-                                <label class="custmo_checkbox pull-left mr20">
-                                <input class="UpDatepermission" permission="user" notificationId="<?php echo $oTemplate->id; ?>" type="checkbox" <?php if($oTemplate->user == 1) {?>checked="checked"<?php } ?> >
-                                <span class="custmo_checkmark"></span>
-                                &nbsp; User
-                                </label>
-
-                                <label class="custmo_checkbox pull-left">
-                                <input class="UpDatepermission" permission="client" notificationId="<?php echo $oTemplate->id; ?>" type="checkbox" <?php if($oTemplate->client == 1) {?>checked="checked"<?php } ?>>
-                                <span class="custmo_checkmark"></span>
-                                &nbsp; Client
-                                </label>
-                                <div class="clearfix"></div>
-                                </div>
-
-
-
-
-                                </td>
-
-
-
-                                </tr>
-                                <?php } ?>
-                                   <!--========== ROW END =============-->
-
-                          
-
-
-
-
-                                </tbody>
-                                </table>
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!--===========TAB 2===========-->
-                      <div class="tab-pane" id="right-icon-tab1">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="panel panel-flat">
-                              <div class="panel-heading"> 
-                                  <span class="pull-left">
-                                  <h6 class="panel-title">Tab 2 Content Goes here...</h6>
-                                  </span>
-                                  
-                                  <div class="heading-elements">
-                                <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-                                                        <input class="form-control input-sm" placeholder="Search by name" type="text">
-                                                        <div class="form-control-feedback">
-                                                            <i class=""><img src="/assets/images/icon_search.png" width="14"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="table_action_tool">
-                                                        <a href="#" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="/assets/images/icon_refresh.png"></i></a>
-                                                        <a href="#"><i class=""><img src="/assets/images/icon_calender.png"></i></a>
-                                                        <a href="#"><i class=""><img src="/assets/images/icon_download.png"></i></a>
-                                                        <a href="#"><i class=""><img src="/assets/images/icon_upload.png"></i></a>
-                                                        <a href="#"><i class=""><img src="/assets/images/icon_edit.png"></i></a>
-                                                    </div>
-                                                    
-                                </div>
-                              
-                              
-                                  
-                                </div>
-                              <div class="panel-body p20 bkg_white">
-                                Tab 2 Content Goes here...
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <!--===========TAB 2===========-->
+	  <div class="tab-pane" id="right-icon-tab1">
+		<div class="row">
+		  <div class="col-md-12">
+			<div class="panel panel-flat">
+				<div class="panel-heading"> 
+					<span class="pull-left">
+						<h6 class="panel-title">Tab 2 Content Goes here...</h6>
+					</span>
+				  
+					<div class="heading-elements">
+						<div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
+							<input class="form-control input-sm" placeholder="Search by name" type="text">
+							<div class="form-control-feedback">
+								<i class=""><img src="/assets/images/icon_search.png" width="14"></i>
+							</div>
+						</div>
+						<div class="table_action_tool">
+							<a href="#" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="/assets/images/icon_refresh.png"></i></a>
+							<a href="#"><i class=""><img src="/assets/images/icon_calender.png"></i></a>
+							<a href="#"><i class=""><img src="/assets/images/icon_download.png"></i></a>
+							<a href="#"><i class=""><img src="/assets/images/icon_upload.png"></i></a>
+							<a href="#"><i class=""><img src="/assets/images/icon_edit.png"></i></a>
+						</div>				
+					</div>
+				</div>
+			  <div class="panel-body p20 bkg_white">
+				Tab 2 Content Goes here...
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
 
 
-                        <!--===========TAB 3===========-->
-                      <div class="tab-pane" id="right-icon-tab2">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="panel panel-flat">
-                              <div class="panel-heading"> 
-                                  <span class="pull-left">
-                                  <h6 class="panel-title">Tab 3 Content Goes here...</h6>
-                                  </span>
-                                  
-                                  <div class="heading-elements">
-                                <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-                                                        <input class="form-control input-sm" placeholder="Search by name" type="text">
-                                                        <div class="form-control-feedback">
-                                                            <i class=""><img src="/assets/images/icon_search.png" width="14"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="table_action_tool">
-                                                        <a href="#" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="/assets/images/icon_refresh.png"></i></a>
-                                                        <a href="#"><i class=""><img src="/assets/images/icon_calender.png"></i></a>
-                                                        <a href="#"><i class=""><img src="/assets/images/icon_download.png"></i></a>
-                                                        <a href="#"><i class=""><img src="/assets/images/icon_upload.png"></i></a>
-                                                        <a href="#"><i class=""><img src="/assets/images/icon_edit.png"></i></a>
-                                                    </div>
-                                                    
-                                </div>
-                              
-                              
-                                  
-                                </div>
-                              <div class="panel-body p20 bkg_white">
-                                Tab 3 Content Goes here...
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                    </div>
-                          
-                                
-                    
-                    
-                        
-                    <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
-                    
-                    
-                    
-                    
-                    
-                  </div>
+		<!--===========TAB 3===========-->
+	  <div class="tab-pane" id="right-icon-tab2">
+		<div class="row">
+		  <div class="col-md-12">
+			<div class="panel panel-flat">
+			  <div class="panel-heading"> 
+				  <span class="pull-left">
+				  <h6 class="panel-title">Tab 3 Content Goes here...</h6>
+				  </span>
+				  
+				  <div class="heading-elements">
+					<div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
+						<input class="form-control input-sm" placeholder="Search by name" type="text">
+						<div class="form-control-feedback">
+							<i class=""><img src="/assets/images/icon_search.png" width="14"></i>
+						</div>
+					</div>
+					<div class="table_action_tool">
+						<a href="#" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="/assets/images/icon_refresh.png"></i></a>
+						<a href="#"><i class=""><img src="/assets/images/icon_calender.png"></i></a>
+						<a href="#"><i class=""><img src="/assets/images/icon_download.png"></i></a>
+						<a href="#"><i class=""><img src="/assets/images/icon_upload.png"></i></a>
+						<a href="#"><i class=""><img src="/assets/images/icon_edit.png"></i></a>
+					</div>			
+				</div>				  
+				</div>
+				<div class="panel-body p20 bkg_white">
+					Tab 3 Content Goes here...
+				</div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+<!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
+</div>
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -297,23 +244,20 @@
             }
 
             $.ajax({
-            url: '<?php echo base_url("admin/settings/updateNotification");?>',
-            type: "POST",
-            data: {id: notificationId,permission:permission,user_type:'admin',permission_value:flag, _token: '{{csrf_token()}}'},
-            dataType: "json",
-            success: function (data) {
-                if (data.status == 'success') {
-                   displayMessagePopup(); 
-                   //setTimeout(function(){ document.location=''; }, 1000);
-                   
-                } else {
-                    alertMessage('Error: Some thing wrong!');
-                }
-            }, error() {
-                alertMessage('Error: Some thing wrong!');
-            }
-        });
-
+				url: '{{ base_url("admin/settings/updateNotification") }}',
+				type: "POST",
+				data: {id: notificationId,permission:permission,user_type:'admin',permission_value:flag, _token: '{{csrf_token()}}'},
+				dataType: "json",
+				success: function (data) {
+					if (data.status == 'success') {
+					   displayMessagePopup(); 
+					} else {
+						alertMessage('Error: Some thing wrong!');
+					}
+				}, error() {
+					alertMessage('Error: Some thing wrong!');
+				}
+			});
         });
 
           
@@ -340,11 +284,8 @@
             $(".systemNotificationShow").animate({
                 width: "toggle"
             });
-        });
-        
+        }); 
     });
-
-
 </script>
 <!-- Email -->
 
@@ -409,19 +350,6 @@
                             <a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSub" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
                             <input type="hidden" name="emailTypeSub" class="emailTypeSub" id="emailTypeSub" value="admin">
                     </p>
-
-                    <!-- <p>Email Type
-                        <input type="radio" id="notify-plain-text" name="content_type" value="plain" style="margin-left:10px;" checked="checked" /> <label for="notify-plain-text">Plain</label>
-                        <input type="radio" id="notify-html-text" name="content_type" value="html" style="margin-left:10px;"  /> <label for="notify-html-text">Html</label>
-
-                    </p> 
-
-                    <p>Send SMS Too
-                        <label class="custom-form-switch">
-                            <input type="checkbox" name="send_sms" id="sys_send_sms" class="field checkedBoxValue">
-                            <span class="toggle"></span>
-                        </label>
-                    </p>  -->
 
                 </div>
 
@@ -498,20 +426,6 @@
                             <a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSub" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
                             <input type="hidden" name="emailTypeSub" class="emailTypeSub" id="emailTypeSub" value="admin">
                     </p>
-
-                    <!-- <p>Email Type
-                        <input type="radio" id="notify-plain-text" name="content_type" value="plain" style="margin-left:10px;" checked="checked" /> <label for="notify-plain-text">Plain</label>
-                        <input type="radio" id="notify-html-text" name="content_type" value="html" style="margin-left:10px;"  /> <label for="notify-html-text">Html</label>
-
-                    </p> 
-
-                    <p>Send SMS Too
-                        <label class="custom-form-switch">
-                            <input type="checkbox" name="send_sms" id="sys_send_sms" class="field checkedBoxValue">
-                            <span class="toggle"></span>
-                        </label>
-                    </p>  -->
-
                 </div>
 
                 <div class="modal-footer">
@@ -587,20 +501,6 @@
                             <a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSub" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
                             <input type="hidden" name="emailTypeSub" class="emailTypeSub" id="emailTypeSub" value="admin">
                     </p>
-
-                    <!-- <p>Email Type
-                        <input type="radio" id="notify-plain-text" name="content_type" value="plain" style="margin-left:10px;" checked="checked" /> <label for="notify-plain-text">Plain</label>
-                        <input type="radio" id="notify-html-text" name="content_type" value="html" style="margin-left:10px;"  /> <label for="notify-html-text">Html</label>
-
-                    </p> 
-
-                    <p>Send SMS Too
-                        <label class="custom-form-switch">
-                            <input type="checkbox" name="send_sms" id="sys_send_sms" class="field checkedBoxValue">
-                            <span class="toggle"></span>
-                        </label>
-                    </p>  -->
-
                 </div>
 
                 <div class="modal-footer">
@@ -673,20 +573,6 @@
                             <a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSubEdit" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
                             <input type="hidden" name="emailTypeSubEdit" class="emailTypeSubEdit" id="emailTypeSubEdit" value="admin">
                     </p>
-
-                    <!-- <p>Email Type
-                        <input type="radio" id="edit-notify-plain-text" name="edit_content_type" value="plain" style="margin-left:10px;" checked="checked" /> <label for="edit-notify-plain-text">Plain</label>
-                        <input type="radio" id="edit-notify-html-text" name="edit_content_type" value="html" style="margin-left:10px;"  /> <label for="edit-notify-html-text">Html</label>
-
-                    </p>
-
-                    <p>Send SMS Too
-                        <label class="custom-form-switch">
-                            <input type="checkbox" name="send_sms" id="edit_send_sms" class="field checkedBoxValue">
-                            <span class="toggle"></span>
-                        </label>
-                    </p> -->
-
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="template_id" id="sys_email_template_id" />
@@ -701,15 +587,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
        
-        /*$(document).on("click", ".reviewsNoti", function(){ 
-            $(".box").animate({
-                width: "toggle"
-            });
-          
-        });*/
-
         $(document).on('click', '.systemNotiSmartPopup', function() {
-            //$('.overlaynew').show();
             $(".systemNotificationShow").animate({
                 width: "toggle"
             });
@@ -717,7 +595,7 @@
             var templateId = $(this).attr('template_id');
 
             $.ajax({
-                url: '<?php echo base_url("admin/settings/getEmailNotificationContent"); ?>',
+                url: '{{ base_url("admin/settings/getEmailNotificationContent") }}',
                 type: "POST",
                 data: {templateId: templateId, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -730,12 +608,8 @@
                         $(".client_system_content").val(aData.client_system_content);
                         $(".user_system_content").val(aData.user_system_content);
                         
-                       
                         $(".template_id").val(templateId);
-                        $('.overlaynew').hide();
-
-
-                      
+                        $('.overlaynew').hide();                      
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -750,7 +624,6 @@
         
 
         $(document).on('click', '.smsNotiSmartPopup', function() {
-            //$('.overlaynew').show();
             $(".smsNotificationShow").animate({
                 width: "toggle"
             });
@@ -759,7 +632,7 @@
             var templateId = $(this).attr('template_id');
 
             $.ajax({
-                url: '<?php echo base_url("admin/settings/getEmailNotificationContent"); ?>',
+                url: '{{ base_url("admin/settings/getEmailNotificationContent") }}',
                 type: "POST",
                 data: {templateId: templateId, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -776,8 +649,6 @@
                         $(".template_id").val(templateId);
                         $('.overlaynew').hide();
 
-
-                      
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -792,9 +663,7 @@
 
         $(document).on('click', '.emailNotiSmartPopup', function() {
             $('.overlaynew').show();
-           /* $('.eSubject').hide();
-            $('.emailTextArea').next().hide();*/
-
+           
             $(".emailNotificationShow").animate({
                 width: "toggle"
             });
@@ -802,7 +671,7 @@
             var templateId = $(this).attr('template_id');
           
             $.ajax({
-                url: '<?php echo base_url("admin/settings/getEmailNotificationContent"); ?>',
+                url: '{{ base_url("admin/settings/getEmailNotificationContent") }}',
                 type: "POST",
                 data: {templateId: templateId, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -822,8 +691,6 @@
                         $(".template_id").val(templateId);
                         $('.overlaynew').hide();
 
-
-                      
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -853,14 +720,13 @@
             var formdata = $("#frmEditEmailTemplate").serialize();
             formdata += '&_token={{csrf_token()}}';
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateEmailNotificationContent'); ?>',
+                url: '{{ base_url('admin/settings/updateEmailNotificationContent') }}',
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                      displayMessagePopup(); 
-                     
+                      displayMessagePopup();
                     }
                 }
             });
@@ -872,7 +738,7 @@
             var formdata = $("#frmEditSMSTemplate").serialize();
             formdata += '&_token={{csrf_token()}}';
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateSMSNotificationContent'); ?>',
+                url: '{{ base_url('admin/settings/updateSMSNotificationContent') }}',
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -891,21 +757,18 @@
             var formdata = $("#frmEditSystemTemplate").serialize();
             formdata += '&_token={{csrf_token()}}';
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateSystemNotificationContent'); ?>',
+                url: "{{ base_url('admin/settings/updateSystemNotificationContent') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                       displayMessagePopup(); 
-                      
                     }
                 }
             });
             return false;
         });
-
-        
 
         $('.adminSubject').show();
         $('.emailTextAdmin').next().show();
@@ -948,7 +811,6 @@
             setTimeout(function() {
               $('.overlaynew').hide();
             }, 500);
-
         });
 
         $(document).on('change', '.eventSystemType', function() {
@@ -1032,7 +894,7 @@
 
             if(testEmailSys != '') {
                 $.ajax({
-                    url: '<?php echo base_url('admin/settings/sendTestEmailPreview'); ?>',
+                    url: "{{ base_url('admin/settings/sendTestEmailPreview') }}",
                     type: "POST",
                     data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser, _token: '{{csrf_token()}}'},
                     dataType: "json",
@@ -1053,10 +915,7 @@
             
             return false;            
         });
-
     });
-
-
 </script>
 
 @endsection

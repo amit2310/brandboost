@@ -15,7 +15,7 @@
     .media_review .media {	margin-top: 25px;	border-bottom: 1px solid #f5f4f5;	padding-bottom: 25px;}
     .media_review .media:first-child {	margin-top: 0!important;}
 </style>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/editors/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/editors/summernote/summernote.min.js"></script>
 <!-- Content area -->
 <div class="content">
     <div class="row">
@@ -23,7 +23,7 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <h6 class="panel-title">Feedback list<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                    <div class="heading-elements"> <span class="label bg-success heading-text"><?php echo sizeof($result);?> Feedback</span>
+                    <div class="heading-elements"> <span class="label bg-success heading-text">{{ sizeof($result) }} Feedback</span>
                         <ul class="icons-list">
                             <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> <span class="caret"></span></a>
                                 <ul class="dropdown-menu dropdown-menu-right">
@@ -41,43 +41,47 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="media-list media_review stack-media-on-mobile">
-                                <?php
-                            if (count($result) > 0) {
-                                foreach ($result as $data) {
-                                    
-                                    ?>
-                                <li class="media">
-                                    <div class="media-left"> <a href="#"><img src="<?php echo (!empty($data->avatar)) ? base_url().'/profile_images/'.$data->avatar : base_url().'/profile_images/avatar_image.png'; ?>" class="img-circle img-cust" alt=""></a> </div>
-                                    <div class="media-body">
-                                        <div class="media-heading"> <a href="#" class="text-semibold"><strong><?php echo $data->firstname; ?> <?php echo $data->lastname; ?></strong> rated <a href="javascript:void(0);" class="editBrandboost" brandid="<?php echo $data->brandboost_id;?>" b_title="click to view campaign details"><?php echo ($data->brand_title) ? $data->brand_title : 'it' ; ?></a> &nbsp; &nbsp; <span class="mediastar">
-                                                <?php if ($data->category == 'Positive'): ?>
-                                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                                <?php elseif ($data->category == 'Neutral'): ?>
-                                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                                                <?php elseif ($data->category == 'Negative'): ?>
-                                                    <i class="fa fa-star"></i><i class="fa fa-star fastar"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                                                <?php endif; ?></span> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span> <span><a class="displayFeedback" style="text-decoration: 'none;'" fb_tab_type="note" feedback_id="<?php echo $data->id; ?>" href="javascript:void(0);" fb_time="<?php echo date("M d, Y h:i A", strtotime($data->created)); ?> (<?php echo timeAgo($data->created);?>)"><span class="label bg-success heading-text">+ Add Notes</span></a> 
-                                                    <span class="label bg-success heading-text" ><ul class="icons-list">  
-                                                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a class="displayFeedback" fb_tab_type="feedback" feedback_id="<?php echo $data->id; ?>" fb_time="<?php echo date("M d, Y h:i A", strtotime($data->created)); ?> (<?php echo timeAgo($data->created);?>)" href="javascript:void(0);" ><i class="icon-file-stats "></i> View</a></li>
-                                                        <li><a class="displayFeedback" fb_tab_type="note" feedback_id="<?php echo $data->id; ?>" href="javascript:void(0);" fb_time="<?php echo date("M d, Y h:i A", strtotime($data->created)); ?> (<?php echo timeAgo($data->created);?>)"><i class="icon-pencil7"></i> Add Note</a></li>
-
-                                                    </ul>
-                                                </li>
-                                            </ul></span>
-                                                </span> <span class="date"><?php echo date('F d, Y h:i A', strtotime($data->created)); ?></span> </div>
-                                        <p><?php echo strlen($data->feedback)>200 ? substr($data->feedback, 0, 200). '...' : $data->feedback;?></p>
-                                        <a class="readmore displayFeedback" fb_tab_type="feedback" feedback_id="<?php echo $data->id; ?>" fb_time="<?php echo date("M d, Y h:i A", strtotime($data->created)); ?> (<?php echo timeAgo($data->created);?>)" href="javascript:void(0);">Read more</a>
-
-                                    </div>
-                                </li>
-                                <?php
-                                }
-                            }else {
-                                echo '<li class="text-center">No any feedback found.</li>';
-                            }
-                            ?>	
+							@if (count($result) > 0)
+								@foreach ($result as $data)
+									<li class="media">
+										<div class="media-left"> <a href="#"><img src="{{ (!empty($data->avatar)) ? base_url().'/profile_images/'.$data->avatar : base_url().'/profile_images/avatar_image.png' }}" class="img-circle img-cust" alt=""></a> </div>
+										<div class="media-body">
+											<div class="media-heading"> <a href="#" class="text-semibold"><strong>{{ $data->firstname }} {{ $data->lastname }}</strong> rated <a href="javascript:void(0);" class="editBrandboost" brandid="{{ $data->brandboost_id }}" b_title="click to view campaign details">{{ ($data->brand_title) ? $data->brand_title : 'it' }}</a> &nbsp; &nbsp; 
+												<span class="mediastar">
+													@if ($data->category == 'Positive')
+														<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+													@elseif ($data->category == 'Neutral')
+														<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+													@elseif ($data->category == 'Negative')
+														<i class="fa fa-star"></i><i class="fa fa-star fastar"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+													@endif
+												</span> 
+												<span>&nbsp; &nbsp; &nbsp; &nbsp;</span> 
+												<span>
+													<a class="displayFeedback" style="text-decoration: 'none;'" fb_tab_type="note" feedback_id="{{ $data->id }}" href="javascript:void(0);" fb_time="{{ date('M d, Y h:i A', strtotime($data->created)) }} ({{ timeAgo($data->created) }})">
+														<span class="label bg-success heading-text">+ Add Notes</span>
+													</a> 
+													<span class="label bg-success heading-text" >
+														<ul class="icons-list">  
+															<li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+																<ul class="dropdown-menu dropdown-menu-right">
+																	<li><a class="displayFeedback" fb_tab_type="feedback" feedback_id="{{ $data->id }}" fb_time="{{ date('M d, Y h:i A', strtotime($data->created)) }} ({{ timeAgo($data->created) }})" href="javascript:void(0);" ><i class="icon-file-stats "></i> View</a></li>
+																	<li><a class="displayFeedback" fb_tab_type="note" feedback_id="{{ $data->id }}" href="javascript:void(0);" fb_time="{{ date('M d, Y h:i A', strtotime($data->created)) }} ({{ timeAgo($data->created) }})"><i class="icon-pencil7"></i> Add Note</a></li>
+																</ul>
+															</li>
+														</ul>
+													</span>
+												</span> 
+												<span class="date">{{ date('F d, Y h:i A', strtotime($data->created)) }}</span> 
+											</div>
+											<p>{{ strlen($data->feedback) > 200 ? substr($data->feedback, 0, 200). '...' : $data->feedback }}</p>
+											<a class="readmore displayFeedback" fb_tab_type="feedback" feedback_id="{{ $data->id }}" fb_time="{{ date('M d, Y h:i A', strtotime($data->created)) }} ({{ timeAgo($data->created) }})" href="javascript:void(0);">Read more</a>
+										</div>
+									</li>
+                                @endforeach
+                            @else
+								<li class="text-center">No any feedback found.</li>
+                            @endif
                             </ul>
                         </div>
                     </div>
@@ -85,9 +89,6 @@
             </div>
         </div>
     </div>
-
-    
-
 </div>
 <!-- /content area -->
 <div id="feedbackPopup" class="modal fade">
@@ -141,8 +142,6 @@
 </div>
 
 
-
-
 <script>
     $(document).ready(function () {
 
@@ -150,14 +149,13 @@
 
             var brandboostID = $(this).attr('brandID');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/update_offsite_step1'); ?>',
+                url: "{{ base_url('admin/brandboost/update_offsite_step1') }}",
                 type: "POST",
                 data: {'brandboostID': brandboostID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url('admin/brandboost/offsite_step_2'); ?>';
+                        window.location.href = "{{ base_url('admin/brandboost/offsite_step_2') }}";
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -172,13 +170,12 @@
             var tabtype = $(this).attr('fb_tab_type');
             var fbtime = $(this).attr('fb_time');
             displayFeedbackPopup(fid, tabtype, fbtime);
-
         });
 
         function displayFeedbackPopup(feedbackid, tabtype, fbtime) {
             //$('.overlaynew').show();
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/displayfeedback'); ?>",
+                url: "{{ base_url('/admin/feedback/displayfeedback') }}",
                 type: "POST",
                 data: {fid: feedbackid, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -221,59 +218,60 @@
                 closeOnConfirm: false,
                 closeOnCancel: false
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            var formdata = $("#frmSendFeedbackReply").serialize();
-                            $('.overlaynew').show();
-                            $.ajax({
-                                url: "<?php echo base_url('/admin/feedback/replyFeedback'); ?>",
-                                type: "POST",
-                                data: formdata + "&career=" + career,
-                                dataType: "json",
-                                success: function (response) {
-                                    $('.overlaynew').hide();
-                                    if (response.status == "success") {
-                                        swal({
-                                            title: "Success!",
-                                            text: response.message,
-                                            confirmButtonColor: "#66BB6A",
-                                            type: "success"
-                                        });
-                                    } else {
-                                        swal({
-                                            title: "ERROR!",
-                                            text: response.message,
-                                            confirmButtonColor: "#2196F3",
-                                            type: "error"
-                                        });
-                                    }
-                                },
-                                error: function (response) {
-                                    $('.overlaynew').hide();
-                                    swal({
-                                        title: "ERROR!",
-                                        text: response.message,
-                                        confirmButtonColor: "#2196F3",
-                                        type: "error"
-                                    });
-                                }
-                            });
-                        } else {
-                            swal({
-                                title: "Cancelled",
-                                text: "",
-                                confirmButtonColor: "#2196F3",
-                                type: "error"
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					var formdata = $("#frmSendFeedbackReply").serialize();
+					$('.overlaynew').show();
+					$.ajax({
+						url: "{{ base_url('/admin/feedback/replyFeedback') }}",
+						type: "POST",
+						data: formdata + "&career=" + career,
+						dataType: "json",
+						success: function (response) {
+							$('.overlaynew').hide();
+							if (response.status == "success") {
+								swal({
+									title: "Success!",
+									text: response.message,
+									confirmButtonColor: "#66BB6A",
+									type: "success"
+								});
+							} else {
+								swal({
+									title: "ERROR!",
+									text: response.message,
+									confirmButtonColor: "#2196F3",
+									type: "error"
+								});
+							}
+						},
+						error: function (response) {
+							$('.overlaynew').hide();
+							swal({
+								title: "ERROR!",
+								text: response.message,
+								confirmButtonColor: "#2196F3",
+								type: "error"
+							});
+						}
+					});
+				} else {
+					swal({
+						title: "Cancelled",
+						text: "",
+						confirmButtonColor: "#2196F3",
+						type: "error"
+					});
+				}
+			});
         });
+		
 
         $(document).on("click", "#saveFeedbackNote", function () {
             var formdata = $("#frmSaveNote").serialize();
             $('.overlaynew').show();
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/saveFeedbackNotes'); ?>",
+                url: "{{ base_url('/admin/feedback/saveFeedbackNotes') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -290,6 +288,7 @@
                 }
             });
         });
+		
 
         $(document).on("click", ".updateFeedbackStatus", function () {
             $('.overlaynew').show();
@@ -297,7 +296,7 @@
             var fbtime = $("input[name='fbtime']").val();
             var statusVal = $(this).attr('fb_status');
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
+                url: "{{ base_url('/admin/feedback/updateFeedbackRatings') }}",
                 type: "POST",
                 data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -339,7 +338,7 @@
             var feedbackid = $(this).attr('feedback_id');
             var statusVal = $(this).attr('fb_status');
             $.ajax({
-                url: "<?php echo base_url('/admin/feedback/updateFeedbackRatings'); ?>",
+                url: "{{ base_url('/admin/feedback/updateFeedbackRatings') }}",
                 type: "POST",
                 data: {fid: feedbackid, status: statusVal, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -355,11 +354,5 @@
                 }
             });
         });
-
-
-
     });
-
 </script>
-
-

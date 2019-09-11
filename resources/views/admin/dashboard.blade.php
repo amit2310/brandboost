@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -1506,23 +1506,23 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        $('#reviewsTable').DataTable({
-            'processing': true,
-            'serverSide': true,
-            'serverMethod': 'post',
-            'ajax': {
-                'url': '<?php echo base_url(); ?>admin/dashboard/getReviewData', 'data' : {"_token": "{{ csrf_token() }}"},
-            },
-            'columns': [
-                {data: 'review_title'},
-                {data: 'ratings'},
-                {data: 'brand_title'},
-                {data: 'created'},
-                {data: 'action'},
-            ]
-        });
+$(document).ready(function () {
+    $('#reviewsTable').DataTable({
+        'processing': true,
+        'serverSide': true,
+        'serverMethod': 'post',
+        'ajax': {
+            'url': '{{ base_url() }}admin/dashboard/getReviewData', 'data': {"_token": "{{ csrf_token() }}"},
+        },
+        'columns': [
+            {data: 'review_title'},
+            {data: 'ratings'},
+            {data: 'brand_title'},
+            {data: 'created'},
+            {data: 'action'},
+        ]
     });
+});
 
 </script>
 

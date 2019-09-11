@@ -8,7 +8,7 @@
     .heading-elements .has-feedback-left .form-control-feedback {right: 30px;}
 
 </style>
-<?php
+@php
 $templateCount = 0;
 $tempName = (strtolower($oBroadcast->campaign_type) == 'email') ? 'email' : 'sms';
 if (!empty($oDefaultTemplates)) {
@@ -18,14 +18,18 @@ if (!empty($oDefaultTemplates)) {
         }
     }
 }
-?>
+@endphp
 
-<div id="broadcastSelectTemplate" class="broadcastTab" <?php if ($activeTab != 'Choose Template'): ?> style="display:none;"<?php endif; ?>>
-    <?php if (strtolower($oBroadcast->campaign_type) == 'email'): ?>
+<div id="broadcastSelectTemplate" class="broadcastTab"
+     @if ($activeTab != 'Choose Template')
+     style="display:none;"
+    @endif
+>
+    @if (strtolower($oBroadcast->campaign_type) == 'email')
         @include('admin.templates.emails.email-template-index', ["campaign_type" => 'email'])
-    <?php else: ?>
+    @else
         @include('admin.templates.sms.sms-template-index', ["campaign_type" => 'sms'])
-    <?php endif; ?>
+    @endif
 </div>
 
 
@@ -35,28 +39,28 @@ if (!empty($oDefaultTemplates)) {
     $(document).ready(function () {
 
         $(document).on('change', '.continueChooseTemplateButton, .continueChooseSMSTemplateButton', function () {
-            var broadcast_id = '<?php echo $broadcast_id; ?>';
+            var broadcast_id = '{{ $broadcast_id }}';
             var template_id = $(this).attr('template_id');
             var source = $(this).attr('source');
 
             $('.overlaynew').show();
             $.ajax({
-                url: '<?php echo base_url('admin/broadcast/addCampaignToBroadcast'); ?>',
+                url: "{{ base_url('admin/broadcast/addCampaignToBroadcast') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', broadcast_id: broadcast_id, template_id: template_id, source: source},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
-                        <?php if (strtolower($oBroadcast->campaign_type) == 'email'): ?>
-                            var editorURL = '<?php echo base_url("admin/workflow/loadStripoCampaign/$moduleName/{$oBroadcast->id}/{$oBroadcast->broadcast_id}"); ?>';
+                        @if (strtolower($oBroadcast->campaign_type) == 'email')
+                            var editorURL = '{{ base_url("admin/workflow/loadStripoCampaign/$moduleName/{$oBroadcast->id}/{$oBroadcast->broadcast_id}") }}';
                             $("#loadstripotemplate").attr("src", editorURL);
-                        <?php endif; ?>
-                        <?php if (strtolower($oBroadcast->campaign_type) == 'sms'): ?>
+                        @endif
+                        @if (strtolower($oBroadcast->campaign_type) == 'sms')
                             //$("a.continueButton:contains('SMS Editor')").trigger("click");
                             //window.location.href = '';
                             $("#broadcastDesignTemplate").html(data.editorData);
-                        <?php endif; ?>
+                        @endif
                         //window.location.href = '';
 
                     } else if (data.status == 'error') {
@@ -84,7 +88,7 @@ if (!empty($oDefaultTemplates)) {
                         $('.overlaynew').show();
 
                         $.ajax({
-                            url: "<?php echo base_url('admin/workflow/deleteWorkflowDraft'); ?>",
+                            url: "{{ base_url('admin/workflow/deleteWorkflowDraft') }}",
                             type: "POST",
                             data: {_token: '{{csrf_token()}}', moduleName: moduleName, template_id: templateID},
                             dataType: "json",

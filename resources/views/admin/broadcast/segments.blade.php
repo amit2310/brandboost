@@ -25,7 +25,7 @@
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3">
-                <h3><?php echo $title; ?></h3>
+                <h3>{{ $title }}</h3>
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <li class="active all"><a style="javascript:void();" id="activeCampaign" class="filterByColumn" fil="active">Active Segments</a></li>
                     <li><a style="javascript:void();" class="filterByColumn" fil="archive">Archive</a></li>
@@ -192,23 +192,23 @@
                         <div class="panel panel-flat">
                             <div class="panel-heading">
                                 <span class="pull-left">
-                                    <h6 class="panel-title"><?php echo count($oSegments); ?> Segments</h6>
+                                    <h6 class="panel-title">{{ count($oSegments) }} Segments</h6>
                                 </span>
 
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" tableid="emailsmsSegment" placeholder="Search by name" type="text">
                                         <div class="form-control-feedback">
-                                            <i class=""><img src="<?php echo base_url(); ?>assets/images/icon_search.png" width="14"></i>
+                                            <i class=""><img src="{{ base_url() }}assets/images/icon_search.png" width="14"></i>
                                         </div>
                                     </div>
                                     <div class="table_action_tool">
-                                        <a href="javascript:void(0);" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="<?php echo base_url(); ?>assets/images/icon_refresh.png"></i></a>
-                                        <!-- <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_calender.png"></i></a>
-                                        <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_download.png"></i></a>
-                                        <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_upload.png"></i></a> -->
-                                        <a href="javascript:void(0);" class="brig pr-15 custom_action_box" id="syncAllSegments" style="display: none;">Sync Contacts &nbsp; <i class=""><img src="<?php echo base_url(); ?>assets/images/icon_refresh.png"></i></a>
-                                        <a href="javascript:void(0);"><i class="editDataList"><img src="<?php echo base_url(); ?>assets/images/icon_edit.png"></i></a>
+                                        <a href="javascript:void(0);" class="brig pr-15">Updated just now &nbsp; <i class=""><img src="{{ base_url() }}assets/images/icon_refresh.png"></i></a>
+                                        <!-- <a href="javascript:void(0);"><i class=""><img src="{{ base_url() }}assets/images/icon_calender.png"></i></a>
+                                        <a href="javascript:void(0);"><i class=""><img src="{{ base_url() }}assets/images/icon_download.png"></i></a>
+                                        <a href="javascript:void(0);"><i class=""><img src="{{ base_url() }}assets/images/icon_upload.png"></i></a> -->
+                                        <a href="javascript:void(0);" class="brig pr-15 custom_action_box" id="syncAllSegments" style="display: none;">Sync Contacts &nbsp; <i class=""><img src="{{ base_url() }}assets/images/icon_refresh.png"></i></a>
+                                        <a href="javascript:void(0);"><i class="editDataList"><img src="{{ base_url() }}assets/images/icon_edit.png"></i></a>
                                         <a href="javascript:void(0);" style="display: none;" title="delete" id="deleteButtonBroadcast" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                         <a href="javascript:void(0);" style="display: none;" title="archive" id="archiveButtonSegment" class="custom_action_box"><i class="icon-gear position-left"></i></a>
                                     </div>
@@ -221,25 +221,25 @@
                                             <th style="display: none;"></th>
                                             <th style="display: none;"></th>
                                             <th class="nosort editAction" style="width:30px;display:none;"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="control-primary" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
-                                            <!-- <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i> Segment Name</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Total Contacts</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Created</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Campaign Name</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Module Name</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_social.png"></i>Campaign Type</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_social.png"></i>Source Type</th>
+                                            <!-- <th><i class=""><img src="{{ base_url() }}assets/images/icon_name.png"></i> Segment Name</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_device.png"></i>Total Contacts</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_clock.png"></i>Created</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_source.png"></i>Campaign Name</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_source.png"></i>Module Name</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_social.png"></i>Campaign Type</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_social.png"></i>Source Type</th>
                                             <th><i class="icon-diff-modified"></i>Status</th>
-                                            <th class="nosort sorting_disabled text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_action.png"></i>Action</th>
+                                            <th class="nosort sorting_disabled text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_action.png"></i>Action</th>
                                             <th style="display: none;"></th> -->
 
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/filter_black_10.png"/></i>Segment</th>
-                                            <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/chat_user_icon.png" width="9"/></i>Contacts</th>
-                                            <th class="text-right"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_created.png"/></i>Created</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/filter_black_10.png"/></i>Segment</th>
+                                            <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/chat_user_icon.png" width="9"/></i>Contacts</th>
+                                            <th class="text-right"><i class=""><img src="{{ base_url() }}assets/images/icon_created.png"/></i>Created</th>
 
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Campaign Name</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Module Name</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_source.png"></i>Campaign Name</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_source.png"></i>Module Name</th>
 
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_hash.png"/></i>Sources</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_hash.png"/></i>Sources</th>
                                             <th class="text-right">&nbsp;</th>
                                             <th style="display: none;"></th>
                                         </tr>
@@ -288,31 +288,31 @@
                                                 }
                                             }
                                             @endphp
-                                            <tr id="append-<?php echo $oSegment->id; ?>" class="selectedClass">
+                                            <tr id="append-{{ $oSegment->id }}" class="selectedClass">
                                                 <td style="display: none;">{{ date('m/d/Y', strtotime($oSegment->created)) }} </td>
                                                 <td style="display: none;">{{ $oSegment->id }}</td>
                                                 <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $oSegment->id}}" value="{{ $oSegment->id }}" ><span class="custmo_checkmark"></span></label></td>
                                                 <!-- <td>
-                                                    <div class="media-left media-middle"> <a class="icons br5" href="#"><img src="<?php echo base_url(); ?>assets/images/filter_blue_10.png" class="img-circle img-xs br5" alt=""></a> </div>
+                                                    <div class="media-left media-middle"> <a class="icons br5" href="#"><img src="{{ base_url() }}assets/images/filter_blue_10.png" class="img-circle img-xs br5" alt=""></a> </div>
                                                     <div class="media-left">
-                                                        <div class=""><a href="<?php echo base_url('admin/broadcast/edit/' . $oSegment->id); ?>" segment_id="<?php echo $oSegment->id; ?>" class="text-default text-semibold"><?php echo setStringLimit($oSegment->segment_name, 20); ?></a></div>
+                                                        <div class=""><a href="{{ base_url('admin/broadcast/edit/' . $oSegment->id) }}" segment_id="{{ $oSegment->id }}" class="text-default text-semibold">{{ setStringLimit($oSegment->segment_name, 20) }}</a></div>
                                                          <div class="text-muted text-size-small">
-                                                <?php echo setStringLimit($oSegment->segment_name, 25); ?>
+                                                {{ setStringLimit($oSegment->segment_name, 25) }}
                                                         </div>
                                                     </div>
                                                 </td> -->
 
-                                                <td><div class="media-left media-middle"> <a class="icons square" href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/filter_blue_10.png"/></a> </div>
+                                                <td><div class="media-left media-middle"> <a class="icons square" href="javascript:void(0);"><img src="{{ base_url() }}assets/images/filter_blue_10.png"/></a> </div>
                                                     <div class="media-left">
-                                                        <div class="pt-3"><a href="javascript:void(0);" segment_id="<?php echo $oSegment->id; ?>"  class="text-default text-semibold"><span>{{ setStringLimit($oSegment->segment_name, 20) }} </span></a></div>
+                                                        <div class="pt-3"><a href="javascript:void(0);" segment_id="{{ $oSegment->id }}"  class="text-default text-semibold"><span>{{ setStringLimit($oSegment->segment_name, 20) }} </span></a></div>
                                                     </div></td>
 
 
-                                                <td class="text-right"><div class="media-left pull-right text-right"> <a href="<?php echo base_url(); ?>admin/broadcast/segmentcontacts/<?php echo $oSegment->id; ?>" class="text-default text-semibold">{{ count($oSubscribers) }} </a> </div></td>
+                                                <td class="text-right"><div class="media-left pull-right text-right"> <a href="{{ base_url() }}admin/broadcast/segmentcontacts/{{ $oSegment->id }}" class="text-default text-semibold">{{ count($oSubscribers) }} </a> </div></td>
 
                                                         <!-- <td>
                                                             <div class="media-left text-right">
-                                                                <div class=""><a href="javascript:void(0);" class="text-default text-semibold"><?php echo dataFormat($oSegment->created); ?> <span class="txt_grey"><?php echo date('h:i A', strtotime($oSegment->created)); ?></span></a> </div>                                                            
+                                                                <div class=""><a href="javascript:void(0);" class="text-default text-semibold">{{ dataFormat($oSegment->created) }} <span class="txt_grey">{{ date('h:i A', strtotime($oSegment->created)) }}</span></a> </div>                                                            
                                                             </div>
                                                         </td> -->
 
@@ -322,7 +322,7 @@
 
                                                 <td>
                                                     <div class="media-left text-right">
-                                                        <div class="">@php echo (!empty($campaignCollection)) ? implode(",", $campaignCollection) : $oSegment->campaign_title;@endphp</div>                                                            
+                                                        <div class="">{{ (!empty($campaignCollection)) ? implode(",", $campaignCollection) : $oSegment->campaign_title }}</div>                                                            
                                                     </div>
                                                 </td>
 
@@ -334,79 +334,21 @@
 
                                                         <!-- <td>
                                                             <div class="media-left text-right">
-                                                                <div class=""><?php echo ucwords($oSegment->source_campaign_type); ?></div>                                                            
+                                                                <div class="">{{ ucwords($oSegment->source_campaign_type) }}</div>                                                            
                                                             </div>
                                                         </td> -->
 
                                                 <td>
                                                     <!-- <div class="media-left text-right">
-                                                        <div class=""><?php echo ucwords($oSegment->source_segment_type); ?></div>                                                            
+                                                        <div class="">{{ ucwords($oSegment->source_segment_type) }}</div>                                                            
                                                     </div> -->
 
-                                                    <button class="btn btn-xs btn_white_table pr10"> <?php echo ucwords($oSegment->source_segment_type); ?></button>
+                                                    <button class="btn btn-xs btn_white_table pr10"> {{ ucwords($oSegment->source_segment_type) }}</button>
                                                     <button class="btn btn-xs plus_icon"><i class="icon-plus3"></i></button>
                                                 </td>
 
-                                                        <!-- <td>
-                                                            <div class="tdropdown ml10">
-                                                <?php
-                                                if ($oSegment->status == 0) {
-                                                    echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
-                                                } else if ($oSegment->status == 2) {
-                                                    echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
-                                                } else if ($oSegment->status == 3) {
-                                                    echo '<i class="icon-primitive-dot txt_red fsize16"></i> ';
-                                                } else {
-                                                    echo '<i class="icon-primitive-dot txt_green fsize16"></i> ';
-                                                }
-                                                ?>
-                                                                <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                                <?php
-                                                if ($oSegment->status == 0) {
-                                                    echo 'Inactive';
-                                                } else if ($oSegment->status == 3) {
-                                                    echo 'Pending';
-                                                } else if ($oSegment->status == 2) {
-                                                    echo 'Archive';
-                                                } else {
-                                                    echo 'Active';
-                                                }
-                                                ?>
-
-                                                                </a>
-                                                                <ul class="dropdown-menu dropdown-menu-right status">
-
-                                                                </ul>
-                                                            </div>
-                                                        </td> -->
-
-                                                        <!-- <td class="text-right">
-                                                            <div class="media-left pull-right">
-                                                                <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
-                                                                    <ul class="dropdown-menu dropdown-menu-right more_act">
-
-                                                                        <li><a href="javascript:void(0);" segment_id="<?php echo $oSegment->id; ?>" class="editSegment"><i class="icon-file-stats"></i> Edit</a></li>
-
-                                                <?php if ($oSegment->status != 'archive'): ?>
-                                                                                <li><a href="javascript:void(0);" class="moveArchive" segment_id="<?php echo $oSegment->id; ?>"><i class="icon-file-stats"></i> Move To Archive</a></li>
-                                                <?php endif; ?>
-
-                                                                        <li><a href="javascript:void(0);" class="deleteSegment" segment_id="<?php echo $oSegment->id; ?>"><i class="icon-trash"></i> Delete</a></li>
-                                                                    </ul>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="media-left pull-right">
-                                                                <div class="">
-                                                                    <a href="javascript:void(0);" class="syncContacts text-default text-semibold bbotb" segment_id="<?php echo $oSegment->id; ?>"><span class="txt_blue_sky2">Sync</span></a> 
-                                                                </div>
-                                                            </div>
-
-                                                        </td> -->
-
-
                                                 <td class="text-right"><div class="media-left pull-right text-right">
-                                                        <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="<?php echo base_url(); ?>assets/images/more.svg"></a>
+                                                        <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                                             <ul class="dropdown-menu dropdown-menu-right more_act">
                                                                 <a href="#" class="dropdown_close">X</a>
                                                                 <!-- <li><a href="#"><i class="icon-arrow-down16"></i> Import contacts</a> </li>
@@ -414,34 +356,34 @@
                                                                 <li><a href="#"><i class="icon-stats-growth2"></i> Create report</a> </li>
                                                                 <li><a href="#"><i class="icon-bin"></i> Delete</a> </li> -->
 
-                                                                <li><a href="javascript:void(0);" segment_id="<?php echo $oSegment->id; ?>" class="editSegment"><i class="icon-file-stats"></i> Edit</a></li>
+                                                                <li><a href="javascript:void(0);" segment_id="{{ $oSegment->id }}" class="editSegment"><i class="icon-file-stats"></i> Edit</a></li>
 
                                                                 @if ($oSegment->status != 'archive')
-                                                                    <li><a href="javascript:void(0);" class="moveArchive" segment_id="<?php echo $oSegment->id; ?>"><i class="icon-file-stats"></i> Move To Archive</a></li>
+                                                                    <li><a href="javascript:void(0);" class="moveArchive" segment_id="{{ $oSegment->id }}"><i class="icon-file-stats"></i> Move To Archive</a></li>
                                                                  @endif
 
-                                                                <li><a href="javascript:void(0);" class="deleteSegment" segment_id="<?php echo $oSegment->id; ?>"><i class="icon-bin"></i> Delete</a></li>
+                                                                <li><a href="javascript:void(0);" class="deleteSegment" segment_id="{{ $oSegment->id }}"><i class="icon-bin"></i> Delete</a></li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                     <div class="media-left pull-right text-right pl20 blef">
-                                                        <div class=""> <a href="javascript:void(0);" class="syncContacts txt_blue" segment_id="<?php echo $oSegment->id; ?>"><span class="txt_blue_sky2">Sync</span></a> </div>
+                                                        <div class=""> <a href="javascript:void(0);" class="syncContacts txt_blue" segment_id="{{ $oSegment->id }}"><span class="txt_blue_sky2">Sync</span></a> </div>
                                                     </div></td>
 
-                                                <td style="display: none;">@php
-                                                    if ($oSegment->status != 1) {
-                                                        echo 'archive';
-                                                    } else {
-                                                        echo 'active';
-                                                    }
-                                                    @endphp</td>
+                                                <td style="display: none;">
+                                                    @if ($oSegment->status != 1) 
+                                                        {{ 'archive' }}
+                                                    @else
+                                                        {{ 'active' }}
+                                                    @endif
+                                                </td>
 
 
 
                                             </tr>
-                                            <?php
+                                            @php
                                         }
-                                        ?>
+                                        @endphp
                                     </tbody>
                                 </table>
                             </div>
@@ -463,7 +405,7 @@
                         <!-- Marketing campaigns -->
                         <div class="panel panel-flat">
                             <div class="panel-heading">
-                                <h6 class="panel-title"><?php echo $iActiveCount; ?> Brand Boost Broadcast</h6>
+                                <h6 class="panel-title">{{ $iActiveCount }} Brand Boost Broadcast</h6>
                                 <div class="heading-elements">
                                     <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
@@ -484,11 +426,11 @@
                                             <th style="display: none;"></th>
                                             <th style="display: none;"></th>
                                             <th class="nosort" style="width:30px;"><label class="custmo_checkbox pull-left" style="display:none;"><input type="checkbox" name="checkAll[]" class="control-primary" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_name.png"></i> Segment Name</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_device.png"></i>Total Contacts</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_clock.png"></i>Created</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_source.png"></i>Campaign Source</th>
-                                            <th><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_social.png"></i>Campaign Type</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_name.png"></i> Segment Name</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_device.png"></i>Total Contacts</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_clock.png"></i>Created</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_source.png"></i>Campaign Source</th>
+                                            <th><i class=""><img src="{{ base_url() }}assets/images/icon_social.png"></i>Campaign Type</th>
                                             <th class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
                                         </tr>
                                     </thead>
@@ -501,7 +443,7 @@
                                                     <div class="col-md-12">
                                                         <div style="margin: 20px 0px 0;" class="text-center">
                                                             <h5 class="mb-20 mt40">
-                                                                Looks Like You Don’t Have Any Segment Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
+                                                                Looks Like You Don’t Have Any Segment Yet <img src="{{ site_url('assets/images/smiley.png') }}"> <br>
                                                                
                                                             </h5>
 
@@ -539,7 +481,7 @@
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Add Segment &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> Add Segment &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
                 </div>
                 <div class="modal-body">
 
@@ -581,7 +523,7 @@
             <form method="post" name="addBroadcastData" id="addBroadcastData" action="javascript:void();">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> Add Brand Boost Broadcast &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> Add Brand Boost Broadcast &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
                 </div>
                 <div class="modal-body">
 
@@ -789,7 +731,7 @@
 
                             $('.overlaynew').show();
                             $.ajax({
-                                url: "<?php echo base_url('admin/broadcast/deleteMultipalSegment'); ?>",
+                                url: "{{ base_url('admin/broadcast/deleteMultipalSegment') }}",
                                 type: "POST",
                                 data: {multiSegmentid: val},
                                 dataType: "json",
@@ -851,7 +793,7 @@
         $(document).on("click", ".editSegment", function () {
             var segmentID = $(this).attr('segment_id');
             $.ajax({
-                url: '<?php echo base_url('admin/broadcast/getSegment'); ?>',
+                url: "{{ base_url('admin/broadcast/getSegment') }}",
                 type: "POST",
                 data: {'segment_id': segmentID,_token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -875,7 +817,7 @@
             var formdata = $("#frmeditSegmentModel").serialize();
             var listID = $("#hidsegmentid").val();
             $.ajax({
-                url: '<?php echo base_url('admin/broadcast/updateSegment'); ?>',
+                url: "{{ base_url('admin/broadcast/updateSegment') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -883,9 +825,6 @@
                     if (data.status == 'success') {
                         $('.overlaynew').hide();
                         $("#editSegmentModel").modal('hide');
-                        //alertMessageAndRedirect(data.msg, window.location.href);
-                        //displayMessagePopup('success', '', data.msg); 
-                        //window.location.href = '<?php echo base_url(); ?>admin/lists/getListContacts?list_id='+listID;
                         window.location.href = '';
                     } else if (data.status == 'error' && data.type == 'duplicate') {
                         $('.overlaynew').hide();
@@ -923,7 +862,7 @@
                             if (isConfirm) {
                                 $('.overlaynew').show();
                                 $.ajax({
-                                    url: '<?php echo base_url('admin/modules/emails/multipalDeleteAutomation'); ?>',
+                                    url: "{{ base_url('admin/modules/emails/multipalDeleteAutomation') }}",
                                     type: "POST",
                                     data: {multipal_automation_id: val},
                                     dataType: "json",
@@ -955,7 +894,7 @@
 
                             $('.overlaynew').show();
                             $.ajax({
-                                url: "<?php echo base_url('admin/broadcast/archive_multipal_segment'); ?>",
+                                url: "{{ base_url('admin/broadcast/archive_multipal_segment') }}",
                                 type: "POST",
                                 data: {multi_segment_id: val,_token: '{{csrf_token()}}'},
                                 dataType: "json",
@@ -1016,7 +955,7 @@
         $(document).on('click', '.clonBroadcastCampaign', function () {
             var automationID = $(this).attr('broadcast_id');
             $.ajax({
-                url: '<?php echo base_url('admin/broadcast/clonBroadcastCampaign'); ?>',
+                url: "{{ base_url('admin/broadcast/clonBroadcastCampaign') }}",
                 type: "POST",
                 data: {automation_id: automationID},
                 dataType: "json",
@@ -1042,7 +981,7 @@
 
                         $('.overlaynew').show();
                         $.ajax({
-                            url: "<?php echo base_url('admin/broadcast/archive_multipal_segment'); ?>",
+                            url: "{{ base_url('admin/broadcast/archive_multipal_segment') }}",
                             type: "POST",
                             data: {multi_segment_id: val,_token: '{{csrf_token()}}'},
                             dataType: "json",
@@ -1071,7 +1010,7 @@
                         $('.overlaynew').show();
                         var segmentID = $(elem).attr('segment_id');
                         $.ajax({
-                            url: '<?php echo base_url('admin/broadcast/deleteSegment'); ?>',
+                            url: "{{ base_url('admin/broadcast/deleteSegment') }}",
                             type: "POST",
                             data: {segmentID: segmentID,_token: '{{csrf_token()}}'},
                             dataType: "json",
@@ -1095,14 +1034,14 @@
             } else {
                 $('.overlaynew').show();
                 $.ajax({
-                    url: '<?php echo base_url('admin/broadcast/updateBroadcastClone'); ?>',
+                    url: "{{ base_url('admin/broadcast/updateBroadcastClone') }}",
                     type: "POST",
                     data: {edit_broadcastId: broadcastId, campaign_name: campaignName, description: description},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
                             $('.overlaynew').hide();
-                            window.location.href = '<?php echo base_url('admin/broadcast/edit/'); ?>' + broadcastId;
+                            window.location.href = '{{ base_url('admin/broadcast/edit/') }}' + broadcastId;
                         } else {
                             $('.overlaynew').hide();
                             alertMessage('Error: Some thing wrong!');
@@ -1127,7 +1066,7 @@
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: '<?php echo base_url('admin/broadcast/createBroadcast'); ?>',
+                url: "{{ base_url('admin/broadcast/createBroadcast') }}",
                 type: "POST",
                 data: {'campaign_name': campaignName, 'template_name': campaignTemplateID, 'description': description, 'template_content': campaignTemplateContant, 'broadcast_type': broadCastType},
                 dataType: "json",
@@ -1161,7 +1100,7 @@
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: '<?php echo base_url('admin/broadcast/createSegment'); ?>',
+                url: "{{ base_url('admin/broadcast/createSegment') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -1199,7 +1138,7 @@
             var segmentID = $(this).attr('segment_id');
             $('.overlaynew').show();
             $.ajax({
-                url: '<?php echo base_url('admin/segments/syncSegment'); ?>',
+                url: "{{ base_url('admin/segments/syncSegment') }}",
                 type: "POST",
                 data: {segmentID: segmentID,_token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -1234,7 +1173,7 @@
             } else {
                 $('.overlaynew').show();
                 $.ajax({
-                    url: '<?php echo base_url('admin/broadcast/syncSegmentMultiple'); ?>',
+                    url: "{{ base_url('admin/broadcast/syncSegmentMultiple') }}",
                     type: "POST",
                     data: {segmentCollection: val,_token: '{{csrf_token()}}'},
                     dataType: "json",

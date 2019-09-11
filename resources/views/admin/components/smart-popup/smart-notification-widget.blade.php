@@ -45,7 +45,7 @@
 
             <div class="row" style="height: 100%;">
                 <div class="col-md-12">
-                    <a style="left: 35px; top: 15px;" class="reviews notification-smart-popup slide-toggle bkg_grey_light" ><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_arrow_left.png"/></i></a> 
+                    <a style="left: 35px; top: 15px;" class="reviews notification-smart-popup slide-toggle bkg_grey_light" ><i class=""><img src="{{ base_url() }}assets/images/icon_arrow_left.png"/></i></a>
                     <h5 style="padding-left: 75px;" class="panel-title">Notifications</h5>
                 </div>
                 <div class="notificationSmartPopup"></div>
@@ -54,13 +54,13 @@
            				<a class="txt_blue2 fsize14 " href="{{ URL::asset('admin/notifications') }}">View all notifications <i class="icon-arrow-right13 txt_blue2"></i></a>
            			</div>
            		</div>
-                
-           
+
+
             </div>
 
-        </div>					
+        </div>
     </div>
-</div> 
+</div>
 
 <script>
     $(document).ready(function () {
@@ -80,14 +80,14 @@
             });
         });*/
 
-        
+
 
        /* $('[data-popup="lightbox"]').fancybox({
             padding: 3
         });*/
-        
-     
-        
+
+
+
         //$(".viewFaqSmartPopup").first().trigger('click');
         $(".notificationSmartPopup").hide();
 
@@ -97,7 +97,7 @@
          $(".notificationSmartPopup").empty();
            $(".notificationSmartPopup").html('<h1 class="text-center" style="margin-top:450px;">Loading....</h1>');
         $.ajax({
-            url: '<?php echo base_url("admin/notifications/getNotificationSmartPopup"); ?>',
+            url: '{{ base_url("admin/notifications/getNotificationSmartPopup") }}',
             type: "POST",
             data: {action: 'smart-popup', _token: '{{csrf_token()}}'},
             dataType: "json",

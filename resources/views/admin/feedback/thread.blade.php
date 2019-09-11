@@ -12,7 +12,7 @@
 								<h6 class="panel-title">Feedback Thread</h6>
 								
 								<div class="heading-elements">
-									<span class="label bg-success heading-text"><?php echo count($thread_data); ?> Messages</span>
+									<span class="label bg-success heading-text">{{ count($thread_data) }} Messages</span>
 									<ul class="icons-list">
 										<li class="dropdown">
 											<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> <span class="caret"></span></a>
@@ -80,7 +80,6 @@
 										</div>
 									</div>
 									<!-- /sub navigation -->
-									
 								</div>
 							</div>
 						</div>
@@ -88,12 +87,10 @@
 						<!-- Content Area -->
 						<div class="container-detached">
 							<div class="content-detached">
-								
 								<!-- Single line -->
 								<div class="panel panel-white">
 									<div class="panel-heading">
 										<h6 class="panel-title">Email Messages</h6>
-										
 										<div class="heading-elements not-collapsible">
 											<span class="label bg-blue heading-text">0 new today</span>
 										</div>
@@ -114,9 +111,6 @@
 													<input type="checkbox" class="styled selectCheck" name="checkAll[]" id="checkAll">
 												</div>
 												<div class="btn-group navbar-btn">
-													<!-- <button type="button" class="btn btn-default btn-icon btn-checkbox-all">
-														<input type="checkbox" class="styled selectCheck" name="checkAll[]" id="checkAll">
-													</button> -->
 													
 													<button type="button" class="btn btn-default btn-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="margin-left:24px;">
 														<span class="caret"></span>
@@ -138,7 +132,7 @@
 												</div>
 												
 												<div class="navbar-right">
-													<p class="navbar-text"><span class="text-semibold">1 - <?php echo count($thread_data); ?></span> of <span class="text-semibold"><?php echo count($thread_data); ?></span></p>
+													<p class="navbar-text"><span class="text-semibold">1 - {{ count($thread_data) }}</span> of <span class="text-semibold">{{ count($thread_data) }}</span></p>
 													
 													<div class="btn-group navbar-left navbar-btn">
 														<button type="button" class="btn btn-default btn-icon disabled"><i class="icon-arrow-left12"></i></button>
@@ -166,55 +160,45 @@
 									<div class="table-responsive">
 										<table class="table table-inbox">
 											<tbody data-link="row" class="rowlink">
-												
-												<?php if(!empty($thread_data)): ?>
-												<?php foreach($thread_data AS $oRow): ?>
-												
-												
-												<tr class="unread">
-													<td class="table-inbox-checkbox rowlink-skip">
-														<input type="checkbox" name="checkRows[]" value="<?php echo $oRow->id; ?>" class="styled checkRows">
-													</td>
-													<td class="table-inbox-star rowlink-skip">
-														<a href="mail_read.html">
-															<i class="icon-star-empty3 text-muted"></i>
-														</a>
-													</td>
-													<td class="table-inbox-image">
-														<span class="btn bg-warning-400 btn-rounded btn-icon btn-xs">
-															<span class="letter-icon"><?php echo substr($oRow->fname,0,1);?></span>
-														</span>
-														
-													</td>
-													<td class="table-inbox-name">
-														<a href="#">
-															<div class="letter-icon-title text-default"><a href="<?php echo base_url('/admin/feedback/view/'.$oRow->brandboost_id.'/'.$oRow->client_id.'/'.$oRow->subscriber_id); ?>" target="_blank"><?php echo $oRow->fname. ' '. $oRow->lname . ' ('. $oRow->total_messages.')';?></a></div>
-														</a>
-													</td>
-													<td class="table-inbox-message">
-														<span class="table-inbox-subject"><?php echo substr($oRow->feedback, 0, 50);?></span>
-														<span class="table-inbox-preview">To the London docks, you may have seen a crippled beggar (or KEDGER, as the sailors say) holding a painted board before him, representing the tragic scene in which he lost his leg</span>
-													</td>
-													<td class="table-inbox-attachment">
-														<i class="icon-attachment text-muted"></i>
-													</td>
-													<td class="table-inbox-time">
-														11:09 pm
-													</td>
-												</tr>
-												<?php endforeach; ?>
-												<?php endif; ?>
-												
-												
-												
+												@if(!empty($thread_data))
+													@foreach($thread_data AS $oRow)
+														<tr class="unread">
+															<td class="table-inbox-checkbox rowlink-skip">
+																<input type="checkbox" name="checkRows[]" value="{{ $oRow->id }}" class="styled checkRows">
+															</td>
+															<td class="table-inbox-star rowlink-skip">
+																<a href="mail_read.html">
+																	<i class="icon-star-empty3 text-muted"></i>
+																</a>
+															</td>
+															<td class="table-inbox-image">
+																<span class="btn bg-warning-400 btn-rounded btn-icon btn-xs">
+																	<span class="letter-icon">{{ substr($oRow->fname,0,1) }}</span>
+																</span>
+															</td>
+															<td class="table-inbox-name">
+																<a href="#">
+																	<div class="letter-icon-title text-default"><a href="{{ base_url('/admin/feedback/view/'.$oRow->brandboost_id.'/'.$oRow->client_id.'/'.$oRow->subscriber_id) }}" target="_blank">{{ $oRow->fname. ' '. $oRow->lname . ' ('. $oRow->total_messages.')' }}</a></div>
+																</a>
+															</td>
+															<td class="table-inbox-message">
+																<span class="table-inbox-subject">{{ substr($oRow->feedback, 0, 50) }}</span>
+																<span class="table-inbox-preview">To the London docks, you may have seen a crippled beggar (or KEDGER, as the sailors say) holding a painted board before him, representing the tragic scene in which he lost his leg</span>
+															</td>
+															<td class="table-inbox-attachment">
+																<i class="icon-attachment text-muted"></i>
+															</td>
+															<td class="table-inbox-time">
+																11:09 pm
+															</td>
+														</tr>
+													@endforeach
+												@endif
 											</tbody>
 										</table>
 									</div>
 								</div>
 								<!-- /single line -->
-								
-								
-								
 							</div>
 						</div>
 					</div>
@@ -224,7 +208,6 @@
 			</div>
 		</div>
 		<!-- /dashboard content -->
-		
 	</div>
 </div>
 <!-- /content area -->
@@ -322,6 +305,7 @@
             $('#feedbackPopup').modal();
 		});
 		
+		
 		$('.deleteEmailFeedback').click(function(){
 			var conf = confirm("Are you sure? You want to delete this feedback!");
 			if(conf == true){
@@ -331,9 +315,9 @@
 					jQuery(".checkRows:checked").each(function(){
 						selectedCountry.push($(this).val());
 						$.ajax({
-							url: '<?php echo base_url('admin/feedback/deleteFeedback'); ?>',
+							url: "{{ base_url('admin/feedback/deleteFeedback') }}",
 							type: "POST",
-							data: {'email_feedback_id':selectedCountry},
+							data: {'email_feedback_id':selectedCountry, _token: '{{csrf_token()}}'},
 							dataType: "json",
 							success: function (data) {
 								if(data.status == 'success'){
@@ -351,5 +335,3 @@
 		});
 	});
 </script>
-
-

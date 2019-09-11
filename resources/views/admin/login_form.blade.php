@@ -75,17 +75,18 @@
     <div class="line_or"><p>or</p></div> -->
 
                                             <div class="alert-success text-center" style="margin-bottom:10px;">
-                                                <?php echo session('success_message'); ?>
+                                                {{ session('success_message') }}
                                             </div>
                                             @if ($errors->any())        
-                                            <div class="alert-danger text-center" style="margin-bottom:10px;"><?php echo session('error_message'); ?>
-                                                
+                                            <div class="alert-danger text-center" style="margin-bottom:10px;">
+                                                {{ session('error_message') }}
+
                                                 <ul>
                                                     @foreach ($errors->all() as $error)
                                                     <li>{{ $error }}</li>
-                                                      @endforeach
+                                                    @endforeach
                                                 </ul>
-                                                <?php echo session('authenticate'); ?>
+                                                {{ session('authenticate') }}
                                             </div>
                                             @endif
 
@@ -194,75 +195,75 @@
                                                         <div class="col-xs-12">
                                                             <div class="box_main pt40">
                                                                 <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Create unique campaigns</p></div>
-                                                            <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Connect your favorite tools</p></div>
-                                                            <div class="box_1 b_r txt_grey pb20 pt20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Automate your busy work</p></div>
+                                                                <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Connect your favorite tools</p></div>
+                                                                <div class="box_1 b_r txt_grey pb20 pt20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Automate your busy work</p></div>
 
-                                                        </div> 
+                                                            </div> 
+                                                        </div>
+
                                                     </div>
+                                                </div>
+                                                <div class="item tutorials loginslide">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <img src="{{ URL::asset('assets/images/icon-125.png') }}" class="mt-10">
+                                                            <p><strong class="fsize22 fw500 mb30">Build  email marketing </strong></p>
+                                                            <p class="mt-5 fsize14">Create branded and personalized emails with pixel perfect accuracy. Start from a gorgeous template or design your own. Unleash your creativity. </p>
+                                                        </div>
 
+                                                        <div class="col-xs-12">
+                                                            <div class="box_main pt40">
+                                                                <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Create unique campaigns</p></div>
+                                                                <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Connect your favorite tools</p></div>
+                                                                <div class="box_1 b_r txt_grey pb20 pt20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Automate your busy work</p></div>
+
+                                                            </div> 
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="item tutorials loginslide">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <img src="{{ URL::asset('assets/images/icon-125.png') }}" class="mt-10">
+                                                            <p><strong class="fsize22 fw500 mb30">Build  email marketing </strong></p>
+                                                            <p class="mt-5 fsize14">Create branded and personalized emails with pixel perfect accuracy. Start from a gorgeous template or design your own. Unleash your creativity. </p>
+                                                        </div>
+
+                                                        <div class="col-xs-12">
+                                                            <div class="box_main pt40">
+                                                                <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Create unique campaigns</p></div>
+                                                                <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Connect your favorite tools</p></div>
+                                                                <div class="box_1 b_r txt_grey pb20 pt20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Automate your busy work</p></div>
+
+                                                            </div> 
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="item tutorials loginslide">
-                                                <div class="row">
-                                                    <div class="col-xs-12">
-                                                        <img src="{{ URL::asset('assets/images/icon-125.png') }}" class="mt-10">
-                                                        <p><strong class="fsize22 fw500 mb30">Build  email marketing </strong></p>
-                                                        <p class="mt-5 fsize14">Create branded and personalized emails with pixel perfect accuracy. Start from a gorgeous template or design your own. Unleash your creativity. </p>
-                                                    </div>
 
-                                                    <div class="col-xs-12">
-                                                        <div class="box_main pt40">
-                                                            <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Create unique campaigns</p></div>
-                                                            <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Connect your favorite tools</p></div>
-                                                            <div class="box_1 b_r txt_grey pb20 pt20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Automate your busy work</p></div>
-
-                                                        </div> 
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="item tutorials loginslide">
-                                                <div class="row">
-                                                    <div class="col-xs-12">
-                                                        <img src="{{ URL::asset('assets/images/icon-125.png') }}" class="mt-10">
-                                                        <p><strong class="fsize22 fw500 mb30">Build  email marketing </strong></p>
-                                                        <p class="mt-5 fsize14">Create branded and personalized emails with pixel perfect accuracy. Start from a gorgeous template or design your own. Unleash your creativity. </p>
-                                                    </div>
-
-                                                    <div class="col-xs-12">
-                                                        <div class="box_main pt40">
-                                                            <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Create unique campaigns</p></div>
-                                                            <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Connect your favorite tools</p></div>
-                                                            <div class="box_1 b_r txt_grey pb20 pt20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Automate your busy work</p></div>
-
-                                                        </div> 
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                            <!--<a class="btn dark_btn caro_next_btn" href="#DemoCarousel" data-slide="next">Next</a>-->
                                         </div>
-
-                                        <!--<a class="btn dark_btn caro_next_btn" href="#DemoCarousel" data-slide="next">Next</a>-->
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- /advanced login -->
                         </div>
 
-                        <!-- /advanced login -->
-                    </div>
 
+                    </div>
+                    <!-- /content area -->
 
                 </div>
-                <!-- /content area -->
+                <!-- /main content -->
 
             </div>
-            <!-- /main content -->
+            <!-- /page content -->
 
         </div>
-        <!-- /page content -->
+        <!-- /page container -->
 
-    </div>
-    <!-- /page container -->
-
-</body>
+    </body>
 </html>
