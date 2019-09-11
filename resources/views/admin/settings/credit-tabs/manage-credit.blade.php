@@ -1,10 +1,9 @@
-
-<div class="tab-pane <?php if (empty($seletedTab)): ?>active<?php endif; ?>" id="right-icon-tab0">
+<div class="tab-pane @if (empty($seletedTab)) active @endif" id="right-icon-tab0">
     <div class="row">
         <div class="col-md-12">
             <div style="margin: 0;" class="panel panel-flat">
                 <div class="panel-heading"> <span class="pull-left">
-                        <h6 class="panel-title"><?php echo count($oCrValues); ?> Credit Properties</h6>
+                        <h6 class="panel-title">{{ count($oCrValues) }} Credit Properties</h6>
                     </span>
                     <div class="heading-elements">
                         <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
@@ -32,51 +31,51 @@
                         <tbody>
 
                             <!--=======================-->
-                            <?php foreach ($oCrValues as $oCr) { ?>
+                            @foreach ($oCrValues as $oCr)
                                 <tr>
                                     <td style="display:none;"></td>
                                     <td style="display:none;"></td>
                                     <td>
-                                        <?php echo $oCr->feature_name; ?>
+                                        {{ $oCr->feature_name }}
                                     </td>
                                     
                                     <td>
-                                        <?php echo $oCr->feature_key; ?>
+                                        {{ $oCr->feature_key }}
                                     </td>
 
                                     <td class="text-center">
-                                        <?php echo $oCr->credit_value; ?>
+                                        {{ $oCr->credit_value }}
                                     </td>
 
                                     <td>
                                         <div class="media-left">
-                                            <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($oCr->updated)); ?></a></div>
-                                            <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oCr->updated)); ?></div>
+                                            <div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($oCr->updated)) }}</a></div>
+                                            <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oCr->updated)) }}</div>
                                         </div>
 
                                     </td>
                                     
                                     <td>
                                         <div class="media-left">
-                                            <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($oCr->created)); ?></a></div>
-                                            <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oCr->created)); ?></div>
+                                            <div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($oCr->created)) }}</a></div>
+                                            <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oCr->created)) }}</div>
                                         </div>
 
                                     </td>
                                     
                                     <td class="text-center">
-                                        <?php  if($oCr->status == true): ?>
-                                        <button class="btn btn-xs btn_white_table whitt dropdown-toggle" data-toggle="dropdown"><i class="icon-primitive-dot txt_green"></i> Active</button>
-                                        <?php else: ?>
-                                        <button class="btn btn-xs btn_white_table whitt dropdown-toggle" data-toggle="dropdown"><i class="icon-primitive-dot txt_grey"></i> Disabled</button>
-                                        <?php endif; ?>
+                                        @if($oCr->status == true)
+											<button class="btn btn-xs btn_white_table whitt dropdown-toggle" data-toggle="dropdown"><i class="icon-primitive-dot txt_green"></i> Active</button>
+                                        @else
+											<button class="btn btn-xs btn_white_table whitt dropdown-toggle" data-toggle="dropdown"><i class="icon-primitive-dot txt_grey"></i> Disabled</button>
+                                        @endif
                                     </td>
 
                                    <td style="text-align: center;">
-                                        <a class="btn green_cust_btn editCrditProperties"  credit_id="<?php echo base64_url_encode($oCr->id);?>"><i class="fa fa-eye"></i></a>
+                                        <a class="btn green_cust_btn editCrditProperties"  credit_id="{{ base64_url_encode($oCr->id) }}"><i class="fa fa-eye"></i></a>
                                    </td>
                                 </tr>
-                            <?php } ?>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -165,19 +164,17 @@
 
 <script>
     $(document).ready(function () {
-        
-
         $('#frmAddEmailTemplate').on('submit', function (e) {
             var formdata = $("#frmAddEmailTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/saveEmailNotificationTemplate'); ?>',
+                url: "{{ base_url('admin/settings/saveEmailNotificationTemplate') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         //Display tag list
-                        window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=email';
+                        window.location.href = '{{ base_url() }}admin/settings/setup_system_notifications?t=email';
                     }
                 }
             });
@@ -188,7 +185,7 @@
         $(document).on("click", ".editCrditProperties", function (e) {
             var creditID = $(this).attr('credit_id');
             $.ajax({
-                url: '<?php echo base_url("admin/settings/getCreditPropery"); ?>',
+                url: '{{ base_url("admin/settings/getCreditPropery") }}',
                 type: "POST",
                 data: {creditID: creditID,_token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -214,18 +211,19 @@
         $('#frmCreditProperty').on('submit', function (e) {
             var formdata = $("#frmCreditProperty").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateCreditPropery'); ?>',
+                url: "{{ base_url('admin/settings/updateCreditPropery') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url(); ?>admin/settings/creditValues';
+                        window.location.href = '{{ base_url() }}admin/settings/creditValues';
                     }
                 }
             });
             return false;
         });
+		
 
         $(document).on('click', '.deleteEmailNotificationTemplate', function () {
             var elem = $(this);
@@ -240,27 +238,24 @@
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            var templateID = $(elem).attr('template_id');
-                            $.ajax({
-                                url: '<?php echo base_url('admin/settings/deleteEmailNotificationTemplate'); ?>',
-                                type: "POST",
-                                data: {templateID: templateID},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=email';
-                                    }
-                                }
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					var templateID = $(elem).attr('template_id');
+					$.ajax({
+						url: "{{ base_url('admin/settings/deleteEmailNotificationTemplate') }}",
+						type: "POST",
+						data: {templateID: templateID, _token: '{{ csrf_token() }}'},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = '{{ base_url() }}admin/settings/setup_system_notifications?t=email';
+							}
+						}
+					});
+				}
+			});
         });
-
-
-
     });
 </script>

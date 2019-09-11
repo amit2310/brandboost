@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -12,11 +12,9 @@
     .toggle { cursor:pointer!important; }
 </style>
 
- @include('admin.s3_smart_popup')
-
+@include('admin.s3_smart_popup')
 
 <div class="content">
-  
   <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
 	<div class="page_header">
 	  <div class="row">
@@ -25,19 +23,16 @@
 		  <h3 class=""><img  width="20"  src="/assets/images/menu_icons/Website_Light.svg"/>S3 Storage Management</h3>
 		</div>
 		<!--=============Button Area Right Side==============-->
-	   
 	  </div>
 	</div>
 	<!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 	
 	<!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
 	
-		<div class="tab-content"> 
-
-
+	<div class="tab-content"> 
 	  <!--===========TAB 1===========-->
 	  <div class="tab-pane active" id="right-icon-tab0">
-	 <div class="row">
+		<div class="row">
 		  <div class="col-md-12">
 			<div class="panel panel-flat">
 			  <div class="panel-heading"> 
@@ -61,9 +56,6 @@
 				</div>
 				
 				</div>
-			  
-			  
-				  
 				</div>
 				<div class="panel-body p0 bkg_white">
 				<table class="table" id="generalNotification">
@@ -80,36 +72,39 @@
 				</thead>
 				<tbody>
 				<!--========== ROW START =============-->
-				<?php $notifications = getAllUser(); 
+				@php 
+				$notifications = getAllUser(); 
 				 foreach ($notifications as $oTemplate) {
 				  if($oTemplate->id!='1' && $oTemplate->firstname!='')
 				  {
-				  ?>
+				  @endphp
 				<tr>
-				  <td style="display:none;"><?php echo $oTemplate->id; ?></td>
-				  <td style="display:none;"><?php echo $oTemplate->id; ?></td>
+				  <td style="display:none;">{{ $oTemplate->id }}</td>
+				  <td style="display:none;">{{ $oTemplate->id }}</td>
 				<td><div class="media-left media-middle"> <i class="fa fa-square mr10" style="color: #6190fa;"></i></div>
 				<div class="media-left">
-				<div class=""><a href="#" class="text-default text-semibold"><?php echo $oTemplate->id; ?></a> </div>
+				<div class=""><a href="#" class="text-default text-semibold">{{ $oTemplate->id }}</a> </div>
 
 				</div></td>
 
-				<td><?php echo $oTemplate->firstname.' '.$oTemplate->lastname; ?></td>
+				<td>{{ $oTemplate->firstname.' '.$oTemplate->lastname }}</td>
 
-				<td><?php echo $oTemplate->s3_allow_size; ?></td>
-				 <td><?php echo ($oTemplate->s3_allow_size-$oTemplate->s3_used_size); ?></td>
+				<td>{{ $oTemplate->s3_allow_size }}</td>
+				 <td>{{ ($oTemplate->s3_allow_size-$oTemplate->s3_used_size) }}</td>
 
 				<td>
 				<div class="tdropdown"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="/assets/images/more.svg"></a>
 				<ul class="dropdown-menu dropdown-menu-right more_act">
 				<a href="#" class="dropdown_close">X</a>
-				<li><a user_id="<?php echo $oTemplate->id; ?>" class="systemNotiSmartPopup"><i class="icon-arrow-down16"></i>Edit</a> </li>
+				<li><a user_id="{{ $oTemplate->id }}" class="systemNotiSmartPopup"><i class="icon-arrow-down16"></i>Edit</a> </li>
 				</ul>
 				</div></td>
 
 				</tr>
-				<?php }
-				} ?>
+				@php 
+					}
+				} 
+				@endphp
 				   <!--========== ROW END =============-->
 
 				</tbody>
@@ -143,8 +138,7 @@
 						<a href="#"><i class=""><img src="/assets/images/icon_download.png"></i></a>
 						<a href="#"><i class=""><img src="/assets/images/icon_upload.png"></i></a>
 						<a href="#"><i class=""><img src="/assets/images/icon_edit.png"></i></a>
-					</div>
-									
+					</div>			
 				</div>
 				</div>
 			  <div class="panel-body p20 bkg_white">
@@ -154,8 +148,6 @@
 		  </div>
 		</div>
 	  </div>
-
-
 		<!--===========TAB 3===========-->
 	  <div class="tab-pane" id="right-icon-tab2">
 		<div class="row">
@@ -167,7 +159,7 @@
 				  </span>
 				  
 				  <div class="heading-elements">
-				<div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
+					<div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
 						<input class="form-control input-sm" placeholder="Search by name" type="text">
 						<div class="form-control-feedback">
 							<i class=""><img src="/assets/images/icon_search.png" width="14"></i>
@@ -184,22 +176,18 @@
 				</div>
 
 				</div>
-			  <div class="panel-body p20 bkg_white">
-				Tab 3 Content Goes here...
-			  </div>
+				<div class="panel-body p20 bkg_white">
+					Tab 3 Content Goes here...
+				</div>
 			</div>
 		  </div>
 		</div>
 	  </div>
-	 
 	</div>
-		
 	<!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
   </div>
 <script type="text/javascript">
     $(document).ready(function(){
-
-
          $('.UpDatepermission').change(function () {
             var flag=0;
             var permission;
@@ -212,31 +200,28 @@
             }
 
             $.ajax({
-            url: '<?php echo base_url("admin/settings/updateNotification");?>',
-            type: "POST",
-            data: {id: notificationId,permission:permission,user_type:'admin',permission_value:flag,_token: '{{csrf_token()}}'},
-            dataType: "json",
-            success: function (data) {
-                if (data.status == 'success') {
-                   displayMessagePopup(); 
-                   //setTimeout(function(){ document.location=''; }, 1000);
-                   
-                } else {
-                    alertMessage('Error: Some thing wrong!');
-                }
-            }, error() {
-                alertMessage('Error: Some thing wrong!');
-            }
-        });
-
+				url: '{{ base_url("admin/settings/updateNotification") }}',
+				type: "POST",
+				data: {id: notificationId,permission:permission,user_type:'admin',permission_value:flag,_token: '{{csrf_token()}}'},
+				dataType: "json",
+				success: function (data) {
+					if (data.status == 'success') {
+					   displayMessagePopup(); 					   
+					} else {
+						alertMessage('Error: Some thing wrong!');
+					}
+				}, error() {
+					alertMessage('Error: Some thing wrong!');
+				}
+			});
         });
 
           
-       var tableId = 'generalNotification';
-       var tableBase = custom_data_table(tableId, 0, 'asc');
-       tableBase.page.len(-1).draw();
-        $('#_10'+tableId).removeClass('current');
-       $('#all'+tableId).addClass('current');
+		var tableId = 'generalNotification';
+		var tableBase = custom_data_table(tableId, 0, 'asc');
+		tableBase.page.len(-1).draw();
+		$('#_10'+tableId).removeClass('current');
+		$('#all'+tableId).addClass('current');
 
        
         $(document).on("click", ".emailNotifictionBack", function(){ 
@@ -256,10 +241,7 @@
                 width: "toggle"
             });
         });
-        
     });
-
-
 </script>
 <!-- Email -->
 
@@ -311,8 +293,8 @@
                         <p>User Subject:
                             <input class="form-control" id="addSubEmailsubUser" name="user_subject" placeholder="Enter Subject" type="text" ></p>
                         <p>User Text:
-                            <textarea class="form-control summernote" id="addSubEmailUser" name="user_text"  rows="6" placeholder="Enter Plain Text" ></textarea></p>
-
+                            <textarea class="form-control summernote" id="addSubEmailUser" name="user_text"  rows="6" placeholder="Enter Plain Text" ></textarea>
+						</p>
                         <p>
                             <button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;
                         </p>
@@ -324,7 +306,6 @@
                             <a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSub" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
                             <input type="hidden" name="emailTypeSub" class="emailTypeSub" id="emailTypeSub" value="admin">
                     </p>
-
                 </div>
 
                 <div class="modal-footer">
@@ -365,8 +346,8 @@
                         <p>Admin Subject:
                             <input class="form-control" id="addSubEmailsubAdmin" name="admin_subject" placeholder="Enter Subject" type="text" ></p>
                         <p>Admin Text:
-                            <textarea class="form-control summernote" id="addSubEmailAdmin" name="admin_text" rows="6" placeholder="Enter Plain Text"></textarea></p>
-
+                            <textarea class="form-control summernote" id="addSubEmailAdmin" name="admin_text" rows="6" placeholder="Enter Plain Text"></textarea>
+						</p>
                         <p>
                             <button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;
                         </p>
@@ -377,7 +358,8 @@
                             <input class="form-control" id="addSubEmailsubClient" name="subject" placeholder="Enter Subject" type="text" ></p>
                         
                         <p> Client Text:
-                            <textarea class="form-control summernote" id="addSubEmailClient" name="plain_text" rows="6" placeholder="Enter Plain Text" ></textarea></p>
+                            <textarea class="form-control summernote" id="addSubEmailClient" name="plain_text" rows="6" placeholder="Enter Plain Text" ></textarea>
+						</p>
                         <p>
                             <button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;
                         </p>
@@ -387,8 +369,8 @@
                         <p>User Subject:
                             <input class="form-control" id="addSubEmailsubUser" name="user_subject" placeholder="Enter Subject" type="text" ></p>
                         <p>User Text:
-                            <textarea class="form-control summernote" id="addSubEmailUser" name="user_text"  rows="6" placeholder="Enter Plain Text" ></textarea></p>
-
+                            <textarea class="form-control summernote" id="addSubEmailUser" name="user_text"  rows="6" placeholder="Enter Plain Text" ></textarea>
+						</p>
                         <p>
                             <button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;
                         </p>
@@ -396,12 +378,11 @@
 
                     <div class="showEmailMsg" style="color: green;"></div>
                     <p>Notification Preview:        
-                            <input style="width: 88% !important;display: inline-block;margin-right: 15px;" class="form-control h40 input90" type="text" id="testEmailSub" name="testEmailSub" value="" placeholder="Enter test email">
-                            <a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSub" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
-                            <input type="hidden" name="emailTypeSub" class="emailTypeSub" id="emailTypeSub" value="admin">
+						<input style="width: 88% !important;display: inline-block;margin-right: 15px;" class="form-control h40 input90" type="text" id="testEmailSub" name="testEmailSub" value="" placeholder="Enter test email">
+						<a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSub" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
+						<input type="hidden" name="emailTypeSub" class="emailTypeSub" id="emailTypeSub" value="admin">
                     </p>
                 </div>
-
                 <div class="modal-footer">
                     <button type="submit" class="btn dark_btn">Create</button>
                     <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
@@ -440,8 +421,8 @@
                         <p>Admin Subject:
                             <input class="form-control" id="addSubEmailsubAdmin" name="admin_subject" placeholder="Enter Subject" type="text" ></p>
                         <p>Admin Text:
-                            <textarea class="form-control summernote" id="addSubEmailAdmin" name="admin_text" rows="6" placeholder="Enter Plain Text"></textarea></p>
-
+                            <textarea class="form-control summernote" id="addSubEmailAdmin" name="admin_text" rows="6" placeholder="Enter Plain Text"></textarea>
+						</p>
                         <p>
                             <button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;
                         </p>
@@ -452,7 +433,8 @@
                             <input class="form-control" id="addSubEmailsubClient" name="subject" placeholder="Enter Subject" type="text" ></p>
                         
                         <p> Client Text:
-                            <textarea class="form-control summernote" id="addSubEmailClient" name="plain_text" rows="6" placeholder="Enter Plain Text" ></textarea></p>
+                            <textarea class="form-control summernote" id="addSubEmailClient" name="plain_text" rows="6" placeholder="Enter Plain Text" ></textarea>
+						</p>
                         <p>
                             <button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;
                         </p>
@@ -462,8 +444,8 @@
                         <p>User Subject:
                             <input class="form-control" id="addSubEmailsubUser" name="user_subject" placeholder="Enter Subject" type="text" ></p>
                         <p>User Text:
-                            <textarea class="form-control summernote" id="addSubEmailUser" name="user_text"  rows="6" placeholder="Enter Plain Text" ></textarea></p>
-
+                            <textarea class="form-control summernote" id="addSubEmailUser" name="user_text"  rows="6" placeholder="Enter Plain Text" ></textarea>
+						</p>
                         <p>
                             <button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;
                         </p>
@@ -471,11 +453,10 @@
 
                     <div class="showEmailMsg" style="color: green;"></div>
                     <p>Notification Preview:        
-                            <input style="width: 88% !important;display: inline-block;margin-right: 15px;" class="form-control h40 input90" type="text" id="testEmailSub" name="testEmailSub" value="" placeholder="Enter test email">
-                            <a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSub" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
-                            <input type="hidden" name="emailTypeSub" class="emailTypeSub" id="emailTypeSub" value="admin">
+						<input style="width: 88% !important;display: inline-block;margin-right: 15px;" class="form-control h40 input90" type="text" id="testEmailSub" name="testEmailSub" value="" placeholder="Enter test email">
+						<a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSub" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
+						<input type="hidden" name="emailTypeSub" class="emailTypeSub" id="emailTypeSub" value="admin">
                     </p>
-
                 </div>
 
                 <div class="modal-footer">
@@ -487,8 +468,6 @@
     </div>
 </div>
 <!-- System -->
-
-
 
 <div id="editEmailNotificationTemplate" class="modal fade">
     <div style="max-width: 760px;" class="modal-dialog modal-lg">
@@ -507,19 +486,24 @@
                     </div>
 
                     <p>Title:
-                        <input class="form-control" name="title" id="sys_email_template_title" placeholder="Enter Title for the notification" type="text" required></p>
+                        <input class="form-control" name="title" id="sys_email_template_title" placeholder="Enter Title for the notification" type="text" required>
+					</p>
 
                     <p>Event Name:
-                        <input class="form-control" name="template_tag" id="sys_email_template_tag" placeholder="Enter Event Name" type="text" readonly="readonly" style="background:#ccc;"  required></p>
+                        <input class="form-control" name="template_tag" id="sys_email_template_tag" placeholder="Enter Event Name" type="text" readonly="readonly" style="background:#ccc;"  required>
+					</p>
                     
                     <span class="subAdmin subAdminForm">
                         <p>Admin Subject:
                             <input class="form-control" name="admin_subject" id="sys_email_subject_admin" placeholder="Enter Subject" type="text" ></p>
 
                         <p>Admin Text:
-                            <textarea class="form-control summernote" name="admin_text" rows="6" id="sys_email_admin_text" placeholder="Enter Plain Text"></textarea></p>
+                            <textarea class="form-control summernote" name="admin_text" rows="6" id="sys_email_admin_text" placeholder="Enter Plain Text"></textarea>
+						</p>
 
-                        <p><button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;</p>
+                        <p>
+							<button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;
+						</p>
                     </span>
 
                     <span class="subClient subClientForm" style="display: none;">
@@ -527,28 +511,34 @@
                             <input class="form-control" name="subject" id="sys_email_subject" placeholder="Enter Subject" type="text" ></p>
 
                         <p>Client Text:
-                            <textarea class="form-control summernote" name="plain_text" rows="6" id="sys_email_plain_text" placeholder="Enter Plain Text"></textarea></p>
+                            <textarea class="form-control summernote" name="plain_text" rows="6" id="sys_email_plain_text" placeholder="Enter Plain Text"></textarea>
+						</p>
 
-                        <p><button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;</p>
+                        <p>
+							<button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;
+						</p>
                     </span>
 
                     <span class="subUser subUserForm" style="display: none;">
                         <p>User Subject:
-                            <input class="form-control" name="user_subject" id="sys_email_subject_user" placeholder="Enter Subject" type="text"></p> 
+                            <input class="form-control" name="user_subject" id="sys_email_subject_user" placeholder="Enter Subject" type="text">
+						</p> 
 
                         <p>User Text:
-                            <textarea class="form-control summernote" name="user_text" rows="6" id="sys_email_user_text" placeholder="Enter Plain Text"></textarea></p>
+                            <textarea class="form-control summernote" name="user_text" rows="6" id="sys_email_user_text" placeholder="Enter Plain Text"></textarea>
+						</p>
 
-                        <p><button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;</p>
+                        <p>
+							<button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_edit_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;
+						</p>
                     </span>
 
                     <div class="showEmailMsg" style="color: green;"></div>
                     <p>Notification Preview:        
-                            <input style="width: 88% !important;display: inline-block;margin-right: 15px;" class="form-control h40 input90" type="text" id="testEmailSubEdit" name="testEmailSubEdit" value="" placeholder="Enter test email">
-                            <a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSubEdit" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
-                            <input type="hidden" name="emailTypeSubEdit" class="emailTypeSubEdit" id="emailTypeSubEdit" value="admin">
+						<input style="width: 88% !important;display: inline-block;margin-right: 15px;" class="form-control h40 input90" type="text" id="testEmailSubEdit" name="testEmailSubEdit" value="" placeholder="Enter test email">
+						<a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSubEdit" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
+						<input type="hidden" name="emailTypeSubEdit" class="emailTypeSubEdit" id="emailTypeSubEdit" value="admin">
                     </p>
-
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="template_id" id="sys_email_template_id" />
@@ -572,7 +562,7 @@
             var userid = $(this).attr('user_id');
 
             $.ajax({
-                url: '<?php echo base_url("admin/settings/getuserbyid"); ?>',
+                url: '{{ base_url("admin/settings/getuserbyid") }}',
                 type: "POST",
                 data: {userid: userid,_token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -586,9 +576,6 @@
                         $("#user_id_input").val(aData.id);
                        
                         $('.overlaynew').hide();
-
-
-                      
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -596,9 +583,7 @@
                     alertMessage('Error: Some thing wrong!');
                 }
             });
-
             return false;
-
         });
         
 
@@ -612,9 +597,9 @@
             var templateId = $(this).attr('template_id');
 
             $.ajax({
-                url: '<?php echo base_url("admin/settings/getEmailNotificationContent"); ?>',
+                url: '{{ base_url("admin/settings/getEmailNotificationContent") }}',
                 type: "POST",
-                data: {templateId: templateId,_token: '{{csrf_token()}}'},
+                data: {templateId: templateId, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -624,13 +609,9 @@
                         $(".admin_sms_content").val(aData.admin_sms_content);
                         $(".client_sms_content").val(aData.client_sms_content);
                         $(".user_sms_content").val(aData.user_sms_content);
-                        
                        
                         $(".template_id").val(templateId);
                         $('.overlaynew').hide();
-
-
-                      
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -638,16 +619,12 @@
                     alertMessage('Error: Some thing wrong!');
                 }
             });
-
             return false;
-
         });
 
         $(document).on('click', '.emailNotiSmartPopup', function() {
             $('.overlaynew').show();
-           /* $('.eSubject').hide();
-            $('.emailTextArea').next().hide();*/
-
+           
             $(".emailNotificationShow").animate({
                 width: "toggle"
             });
@@ -655,7 +632,7 @@
             var templateId = $(this).attr('template_id');
           
             $.ajax({
-                url: '<?php echo base_url("admin/settings/getEmailNotificationContent"); ?>',
+                url: '{{ base_url("admin/settings/getEmailNotificationContent") }}',
                 type: "POST",
                 data: {templateId: templateId,_token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -671,12 +648,9 @@
                         $(".emailTextClient").summernote('code', aData.email_content_client);
                         $(".emailTextUser").summernote('code', aData.email_content_user);
                         
-                       
                         $(".template_id").val(templateId);
                         $('.overlaynew').hide();
 
-
-                      
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -684,9 +658,7 @@
                     alertMessage('Error: Some thing wrong!');
                 }
             });
-
             return false;
-
         });
 
         $(document).on('click', '.oEditor', function() {
@@ -705,7 +677,7 @@
             
             var formdata = $("#frmEditEmailTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateEmailNotificationContent'); ?>',
+                url: '{{ base_url('admin/settings/updateEmailNotificationContent') }}',
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -722,7 +694,7 @@
             
             var formdata = $("#frmEditSMSTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateSMSNotificationContent'); ?>',
+                url: '{{ base_url('admin/settings/updateSMSNotificationContent') }}',
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -739,7 +711,7 @@
             
             var formdata = $("#frmEditSystemTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateS3setting'); ?>',
+                url: '{{ base_url('admin/settings/updateS3setting') }}',
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -752,8 +724,6 @@
             });
             return false;
         });
-
-        
 
         $('.adminSubject').show();
         $('.emailTextAdmin').next().show();
@@ -864,7 +834,6 @@
             setTimeout(function() {
               $('.overlaynew').hide();
             }, 500);
-            
         });
 
         $(document).on('click', '.sendNotiEmailPreview', function() {
@@ -880,9 +849,9 @@
 
             if(testEmailSys != '') {
                 $.ajax({
-                    url: '<?php echo base_url('admin/settings/sendTestEmailPreview'); ?>',
+                    url: "{{ base_url('admin/settings/sendTestEmailPreview') }}",
                     type: "POST",
-                    data: {'addSysEmailAdmin':addSysEmailAdmin,_token: '{{csrf_token()}}','addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser},
+                    data: {'addSysEmailAdmin':addSysEmailAdmin,_token: '{{csrf_token()}}','addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser, _token: '{{csrf_token()}}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -897,13 +866,9 @@
                 $('.showEmailErrMsg').html('Please enter a email');
                 $('.testEmailNotificationpre').focus();
                 setTimeout(function(){ $('.showEmailErrMsg').html(''); }, 3000);
-            }
-            
+            } 
             return false;            
         });
-
     });
-
-
 </script>
 @endsection 

@@ -1,7 +1,7 @@
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+	{{ $title }}
 @endsection
 
 @section('contents')
@@ -73,40 +73,35 @@
     }
 </style>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/tables/datatables/datatables.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/datatables_sorting_date.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/jquery-ui.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/tables/datatables/datatables.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/pages/datatables_sorting_date.js"></script>
 
 <!-- Content area -->
 <div class="content">
-    <?php if (!empty($oRoles)): ?>
+    @if (!empty($oRoles))
         <div class="row mb20">
             <div class="col-lg-12 text-right">
-
                 <button id="addTeamMember" type="button" class="btn bl_cust_btn btn-default addTeamMember"><i class="icon-make-group position-left"></i> Add Team Members</button>
-
             </div>
         </div>
-    <?php endif; ?>
+    @endif
 
     <!-- Dashboard content -->
-    <?php if (!empty($oData)): ?>
+    @if (!empty($oData))
         <div class="row">
             <div class="col-lg-12">
-
                 <!-- Marketing campaigns -->
                 <div class="panel panel-flat">
                     <div class="panel-heading">
                         <h6 class="panel-title">Team Members</h6>
                         <div class="heading-elements">
-                            <span class="label bg-success lgraybtn heading-text"><?php echo count($oData); ?> Total Activities</span>
+                            <span class="label bg-success lgraybtn heading-text">{{ count($oData) }} Total Activities</span>
                             <button type="button" class="btn btn-link daterange-ranges heading-btn text-semibold">
                                 <i class="icon-calendar3 position-left"></i> <span></span> <b class="caret"></b>
                             </button>
-
                         </div>
                     </div>
-
 
                     <div class="table-responsive">
                         <input name="min" id="min" type="hidden">
@@ -126,8 +121,8 @@
                             </thead>
 
                             <tbody>
-                                <?php foreach ($oData as $oRow){
-                                    
+                                @php 
+								foreach ($oData as $oRow){
                                     if($oRow->event_type == 'brandboost_offsite'){
                                         $eventType = 'Off Site Brandboost';
                                     }else if($oRow->event_type == 'brandboost_onsite'){
@@ -175,64 +170,59 @@
                                         $actionName = $oRow->action_name;
                                     }
                                     
-                                    ?>
+                                    @endphp
                                     <tr>
                                         <td>
                                             <div style="vertical-align: top!important;" class="media-left media-middle">
                                                 <a href="#">
-                                                    <img src="http://brandboost.io/admin_new/images/userp.png" class="img-circle img-xs" alt=""></a>
+                                                    <img src="{{ base_url() }}admin_new/images/userp.png" class="img-circle img-xs" alt=""></a>
                                             </div>
                                             <div class="media-left">
-                                                <?php echo $oRow->firstname . ' ' . $oRow->lastname; ?>
-                                                <div class="text-muted text-size-small"><?php echo $oRow->email; ?></div>
-                                                <div class="text-muted text-size-small"><?php echo $oRow->mobile; ?></div>
+                                                {{ $oRow->firstname . ' ' . $oRow->lastname }}
+                                                <div class="text-muted text-size-small">{{ $oRow->email }}</div>
+                                                <div class="text-muted text-size-small">{{ $oRow->mobile }}</div>
                                                 
                                             </div>
 
                                         </td>
-                                        <td><div class="text-semibold"><?php echo date('F d, Y', strtotime($oRow->activityTime)); ?></div><div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oRow->activityTime)) . ' (' . timeAgo($oRow->activityTime) . ')'; ?></div></td>
-                                        <td><?php echo $eventType ?></td>
-                                        <td><?php echo ucwords($actionName); ?></td>
+                                        <td><div class="text-semibold">{{ date('F d, Y', strtotime($oRow->activityTime)) }}</div><div class="text-muted text-size-small">{{ date('h:i A', strtotime($oRow->activityTime)) . ' (' . timeAgo($oRow->activityTime) . ')' }}</div></td>
+                                        <td>{{ $eventType }}</td>
+                                        <td>{{ ucwords($actionName) }}</td>
                                         <td><a href="javascript:void(0);">Details</a></td>
                                         <td class="text-center">
 
                                             <ul class="icons-list">
                                                 <li class="dropup"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="javascript:void(0);" member_id="<?php echo $oRow->activityID; ?>" class="deleteActivity" brandID="<?php echo $oRow->activityID; ?>"><i class="icon-file-text2"></i> Delete</a></li>
+                                                        <li><a href="javascript:void(0);" member_id="{{ $oRow->activityID }}" class="deleteActivity" brandID="{{ $oRow->activityID }}"><i class="icon-file-text2"></i> Delete</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
 
                                         </td>
                                         <td style="display: none;"></td>
-                                        <td style="display: none;"><?php echo date('m/d/Y', strtotime($oRow->activityTime)); ?></td>
+                                        <td style="display: none;">{{ date('m/d/Y', strtotime($oRow->activityTime)) }}</td>
 
                                     </tr>
-                                <?php } ?>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-    <?php else: ?>
+    @else
         <div class="row">
             <div class="col-md-12">
                 <div style="margin: 200px 0px 0;" class="text-center">
-                    <!--<h5 class="mb-20" >Create Your First Offsite Brand Boost.</h5>-->
-
                     <h5 class="mb-20">
                         No Activity Found.
                     </h5>
-                    
-
                 </div>
             </div>
         </div>
-    <?php endif; ?>
+    @endif
     <!-- /dashboard content -->
-
 </div>
 <!-- /content area -->
 
@@ -283,15 +273,11 @@
 						<div class="col-lg-9">
 							<select name="edit_memberRole" id="edit_memberRole" class="form-control">
 								<option>Select Role</option>
-								<?php
-								if (!empty($oRoles)) {
-									foreach ($oRoles as $oRole) {
-										?>
-										<option value="<?php echo $oRole->id; ?>"><?php echo $oRole->role_name; ?></option>
-										<?php
-									}
-								}
-								?>
+								@if (!empty($oRoles))
+									@foreach ($oRoles as $oRole)
+										<option value="{{ $oRole->id }}">{{ $oRole->role_name }}</option>
+									@endforeach
+								@endif
 							</select>
 						</div>
 					</div>
@@ -335,18 +321,12 @@
                     <p>Select Role:</p>
                     <select name="memberRole">
                         <option>Select Role</option>
-                        <?php
-                        if (!empty($oRoles)) {
-                            foreach ($oRoles as $oRole) {
-                                ?>
-                                <option value="<?php echo $oRole->id; ?>"><?php echo $oRole->role_name; ?></option>
-                                <?php
-                            }
-                        }
-                        ?>
+                        @if (!empty($oRoles))
+                            @foreach ($oRoles as $oRole)
+                                <option value="{{ $oRole->id }}">{{ $oRole->role_name }}</option>
+                            @endforeach
+                        @endif
                     </select>
-
-
                 </div>
 
                 <div class="modal-footer">
@@ -360,7 +340,6 @@
 <!-- /addBrandboost -->
 
 <script type="text/javascript">
-
     $(document).ready(function () {
         $('.addTeamMember').click(function () {
             $('#addTeamMemberModal').modal();
@@ -370,7 +349,7 @@
             $('.overlaynew').show();
             var formdata = $("#frmaddTeamMemberModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/team/addTeamMember'); ?>',
+                url: "{{ base_url('admin/team/addTeamMember') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -385,7 +364,6 @@
                             $("#addMemberValidation").html("").hide();
                         }, 5000);
                     }
-
                 }
             });
             return false;
@@ -395,9 +373,9 @@
             $('.overlaynew').show();
             var memberID = $(this).attr('member_id');
             $.ajax({
-                url: '<?php echo base_url('admin/team/getTeamMember'); ?>',
+                url: "{{ base_url('admin/team/getTeamMember') }}",
                 type: "POST",
-                data: {'member_id': memberID,_token: '{{csrf_token()}}'},
+                data: {'member_id': memberID, _token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
 					$('.overlaynew').hide();
@@ -418,14 +396,13 @@
 				}
             });
         });
-
-
+		
 
         $('#frmEditTeamMember').on('submit', function () {
             $('.overlaynew').show();
             var formdata = $("#frmEditTeamMember").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/team/updateTeamMember'); ?>',
+                url: "{{ base_url('admin/team/updateTeamMember') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -460,9 +437,9 @@
 					$('.overlaynew').show();
 					var memberID = $(elem).attr('member_id');
 					$.ajax({
-						url: '<?php echo base_url('admin/team/deleteTeamMember'); ?>',
+						url: "{{ base_url('admin/team/deleteTeamMember') }}",
 						type: "POST",
-						data: {member_id: memberID,_token: '{{csrf_token()}}'},
+						data: {member_id: memberID, _token: '{{csrf_token()}}'},
 						dataType: "json",
 						success: function (data) {
 							$('.overlaynew').hide();
@@ -476,8 +453,6 @@
 				}
 			});
         });
-
     });
-
 </script>
 @endsection  

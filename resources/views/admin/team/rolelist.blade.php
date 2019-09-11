@@ -1,8 +1,7 @@
-
 @extends('layouts.main_template') 
 
 @section('title')
-<?php echo $title; ?>
+	{{ $title }}
 @endsection
 
 @section('contents')
@@ -16,7 +15,6 @@
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3">
                 <h3>Team Roles</h3>
-               
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-9 text-right btn_area">
@@ -100,7 +98,6 @@
                                                 <div class="col-xs-6">
                                                     <input class="form-control input-sm" type="text" name="" value="20" /> <span class="dash">-</span> <input class="form-control input-sm" type="text" name="" value="100" />
                                                 </div>
-
                                             </div>
                                             <div class="row mb20">
                                                 <div class="col-xs-6">
@@ -157,11 +154,9 @@
                     </div>
                 </div>
 
-                <?php if (!empty($oRoles)): ?>
-				
-					<button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn dark_btn ml20 bl_cust_btn btn-default pDisplayNoActiveSubscription" <?php } else { ?> id="addTeamRole" <?php } ?> type="button" class="btn dark_btn ml20 bl_cust_btn btn-default"><i class="icon-plus3"></i> Add New Role</button>
-			    <?php endif; ?>
-
+                @if (!empty($oRoles))
+					<button @if ($bActiveSubsription == false)  title="No Active Subscription" class="btn dark_btn ml20 bl_cust_btn btn-default pDisplayNoActiveSubscription" @else id="addTeamRole" @endif type="button" class="btn dark_btn ml20 bl_cust_btn btn-default"><i class="icon-plus3"></i> Add New Role</button>
+			    @endif
             </div>
         </div>
     </div>
@@ -172,12 +167,11 @@
     
 	<div class="row">
 		<div class="col-lg-12">
-			
 			<!-- Marketing campaigns -->
 			<div class="panel panel-flat">
 
 				<div class="panel-heading">
-                    <h6 class="panel-title"><?php echo count($oRoles) > 0? count($oRoles):''; ?>&nbsp;Team Roles</h6>
+                    <h6 class="panel-title">{{ count($oRoles) > 0 ? count($oRoles) : '' }}&nbsp;Team Roles</h6>
                     <div class="heading-elements">
                         <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
                             <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
@@ -193,7 +187,7 @@
 				
 				
 				<div class="panel-body p0">
-                <?php if (!empty($oRoles)): ?>
+                @if (!empty($oRoles))
 					<table class="table datatable-basic datatable-sorting">
 						<thead>
 							<tr>
@@ -207,26 +201,25 @@
 						</thead>
 						
 						<tbody>
-							<?php foreach ($oRoles as $oRole): ?>
-							<tr id="append-<?php echo $oRole->id; ?>" class="selectedClass">
-								<td style="display: none;"><?php echo date('m/d/Y', strtotime($oRole->role_created)); ?></td>
-								<td style="display: none;"><?php echo $oRole->id; ?></td>
-								<td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="<?php echo $oRole->id; ?>" ><span class="custmo_checkmark"></span></label></td>
+							@foreach ($oRoles as $oRole)
+							<tr id="append-{{ $oRole->id }}" class="selectedClass">
+								<td style="display: none;">{{ date('m/d/Y', strtotime($oRole->role_created)) }}</td>
+								<td style="display: none;">{{ $oRole->id }}</td>
+								<td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="{{ $oRole->id }}" ><span class="custmo_checkmark"></span></label></td>
 								<td>
 									<div style="vertical-align: top!important;" class="media-left media-middle">
 										<a href="#">
-										<img src="<?php echo base_url(); ?>/admin_new/images/userp.png" class="img-circle img-xs" alt=""></a>
+										<img src="{{ base_url() }}/admin_new/images/userp.png" class="img-circle img-xs" alt=""></a>
 									</div>
 									<div class="media-left">
-										<?php echo setStringLimit($oRole->role_name); ?>
+										{{ setStringLimit($oRole->role_name) }}
 									</div>
-									
 								</td>
 
 								<td>
                                     <div class="media-left">
-                                        <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($oRole->role_created)); ?></a></div>
-                                        <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oRole->role_created)); ?></div>
+                                        <div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($oRole->role_created)) }}</a></div>
+                                        <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oRole->role_created)) }}</div>
                                     </div>
                                 </td>
 
@@ -234,69 +227,57 @@
                                     <div class="tdropdown">
                                         <button type="button" class="btn btn-xs btn_white_table ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
                                         <ul class="dropdown-menu dropdown-menu-right width-200">
-                                            <li><a href="javascript:void(0);" role_id="<?php echo $oRole->id; ?>" class="managerole"><i class="icon-gear"></i> Manage Permission</a></li>
-											<li><a href="javascript:void(0);" role_id="<?php echo $oRole->id; ?>" class="editrole"><i class="icon-pencil"></i> Edit</a></li>
-											<li><a href="javascript:void(0);" role_id="<?php echo $oRole->id; ?>" class="deleterole" brandID="<?php //echo $data->id; ?>"><i class="icon-trash"></i> Delete</a></li>
+                                            <li><a href="javascript:void(0);" role_id="{{ $oRole->id }}" class="managerole"><i class="icon-gear"></i> Manage Permission</a></li>
+											<li><a href="javascript:void(0);" role_id="{{ $oRole->id }}" class="editrole"><i class="icon-pencil"></i> Edit</a></li>
+											<li><a href="javascript:void(0);" role_id="{{ $oRole->id }}" class="deleterole"><i class="icon-trash"></i> Delete</a></li>
                                         </ul>
                                     </div>
-
-
                                 </td>
-
-								
 							</tr>
-							<?php endforeach; ?>
+							@endforeach
 						</tbody>
 					</table>
-                        <?php else: ?>
+                        @else
                              <table class="table datatable-basic datatable-sorting">
-                                    <thead>
-                                        <tr>
-                                        <th style="display: none;"></th>
-                                        <th style="display: none;"></th>
-                                        <th class="col-md-6"><i class="icon-atom"></i>Role Name</th>
-                                        <th class="col-md-5"><i class="icon-calendar"></i>Created</th>
-                                        <th class="col-md-1 text-center"><i class="fa fa-dot-circle-o"></i>Action</th>
+								<thead>
+									<tr>
+									<th style="display: none;"></th>
+									<th style="display: none;"></th>
+									<th class="col-md-6"><i class="icon-atom"></i>Role Name</th>
+									<th class="col-md-5"><i class="icon-calendar"></i>Created</th>
+									<th class="col-md-1 text-center"><i class="fa fa-dot-circle-o"></i>Action</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="12">
-                                                <div class="row">
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td colspan="12">
+											<div class="row">
+												<div class="col-md-12">
+													<div style="margin: 20px 0px 0;" class="text-center">
+													   <h5 class="mb-20">
+															Looks Like You Don’t Have Created Any Team Role Yet <img src="{{ site_url('assets/images/smiley.png') }}"> <br>
+															Lets Create Team Role.
+														</h5>
+														<button @if ($bActiveSubsription == false) title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" @else id="addTeamRole" @endif class="btn bl_cust_btn btn-default dark_btn ml20 mb40" type="button"><i class="icon-plus3"></i> Add Team Role</button>
+													</div>
+												</div>
+											</div>
+										</td>
 
-                                                    <div class="col-md-12">
-                                                        <div style="margin: 20px 0px 0;" class="text-center">
-                                                           <h5 class="mb-20">
-                    Looks Like You Don’t Have Created Any Team Role Yet <img src="<?php echo site_url('assets/images/smiley.png'); ?>"> <br>
-                    Lets Create Team Role.
-                </h5>
-                <button <?php if ($bActiveSubsription == false) { ?> title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" <?php } else { ?> id="addTeamRole" <?php } ?> class="btn bl_cust_btn btn-default dark_btn ml20 mb40" type="button"><i class="icon-plus3"></i> Add Team Role</button>
-
-                                                        </div>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </td>
-
-                                             <td style="display: none;"></td>
-                                            <td style="display: none;"></td>
-                                            <td style="display: none;"></td>
-                                            <td style="display: none;"></td>
-                                           
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                 <?php endif; ?>
-
+										<td style="display: none;"></td>
+										<td style="display: none;"></td>
+										<td style="display: none;"></td>
+										<td style="display: none;"></td>
+									</tr>
+								</tbody>
+							</table>
+						@endif
 				</div>
 			</div>
 		</div>
 	</div>
- 
-	
-   
+
     <!-- /dashboard content -->
 	
 </div>
@@ -462,7 +443,7 @@
 					if (isConfirm) {
 						$('.overlaynew').show();
 						$.ajax({
-							url: '<?php echo base_url('admin/team/deleteTeamRoles');?>',
+							url: "{{ base_url('admin/team/deleteTeamRoles') }}",
 							type: "POST",
 							data: {multipal_id:val},
 							dataType: "json",
@@ -484,7 +465,7 @@
             $('.overlaynew').show();
             var formdata = $("#frmaddTeamRoleModal").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/team/addRole'); ?>',
+                url: "{{ base_url('admin/team/addRole') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -499,7 +480,6 @@
                             $("#addRoleValidation").html("").hide();
 						}, 5000);
 					}
-					
 				}
 			});
             return false;
@@ -509,7 +489,7 @@
             //$('.overlaynew').show();
             var roleID = $(this).attr('role_id');
             $.ajax({
-                url: '<?php echo base_url('admin/team/getRole'); ?>',
+                url: "{{ base_url('admin/team/getRole') }}",
                 type: "POST",
                 data: {'role_id': roleID,_token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -527,12 +507,11 @@
 		});
 		
 		
-		
         $('#frmeditRoleModel').on('submit', function () {
             $('.overlaynew').show();
             var formdata = $("#frmeditRoleModel").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/team/updateRole'); ?>',
+                url: "{{ base_url('admin/team/updateRole') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -553,12 +532,11 @@
 		});
 		
 		
-		
         $(document).on("click", ".managerole", function () {
             $('.overlaynew').show();
             var roleID = $(this).attr('role_id');
             $.ajax({
-                url: '<?php echo base_url('admin/team/manageRolePermission'); ?>',
+                url: "{{ base_url('admin/team/manageRolePermission') }}",
                 type: "POST",
                 data: {'role_id': roleID,_token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -580,7 +558,7 @@
             $('.overlaynew').show();
             var formdata = $("#frmeditRolePermissionModel").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/team/updateRolePermission'); ?>',
+                url: "{{ base_url('admin/team/updateRolePermission') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -606,28 +584,27 @@
             deleteConfirmationPopup(
             "This record will deleted immediately.<br>You can't undo this action.", 
             function() {
-                    $('.overlaynew').show();
-					var roleID = $(elem).attr('role_id');
-					$.ajax({
-						url: '<?php echo base_url('admin/team/deleteRole'); ?>',
-						type: "POST",
-						data: {role_id: roleID,_token: '{{csrf_token()}}'},
-						dataType: "json",
-						success: function (data) {
-							if (data.status == 'success') {
-								$('.overlaynew').hide();
-								window.location.href = window.location.href;
-							}
+				$('.overlaynew').show();
+				var roleID = $(elem).attr('role_id');
+				$.ajax({
+					url: "{{ base_url('admin/team/deleteRole') }}",
+					type: "POST",
+					data: {role_id: roleID,_token: '{{csrf_token()}}'},
+					dataType: "json",
+					success: function (data) {
+						if (data.status == 'success') {
+							$('.overlaynew').hide();
+							window.location.href = window.location.href;
 						}
-					});
+					}
+				});
             });
-
         });
 		
         $(document).on('click', '.viewECode', function () {
             var brandID = $(this).attr('brandID');
             $.ajax({
-                url: '<?php echo base_url('admin/brandboost/getBBECode'); ?>',
+                url: "{{ base_url('admin/brandboost/getBBECode') }}",
                 type: "POST",
                 data: {brandboost_id: brandID},
                 dataType: "json",
@@ -659,8 +636,6 @@
                         this.checked = false;
 					});
 				}
-				
-				
 			}
 		});
 		
@@ -678,20 +653,13 @@
 						});
 					}
 				});
-				
 			}
 		});
 		
 		$(document).on('click', '.editRoleList', function () {
             $('.editAction').toggle();
         });
-		
-		
 	});
-	
-	
-	
-	
 </script>
 
 @endsection  

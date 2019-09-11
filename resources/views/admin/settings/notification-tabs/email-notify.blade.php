@@ -1,10 +1,10 @@
-<div class="tab-pane <?php if ($seletedTab == 'email'): ?>active<?php endif; ?>" id="right-icon-tab1">
+<div class="tab-pane @if ($seletedTab == 'email') @active @endif" id="right-icon-tab1">
     <div class="row">
         <div class="col-md-12">
             <div style="margin: 0;" class="panel panel-flat">
                 <div class="panel-heading"> 
                     <span class="pull-left">
-                        <h6 class="panel-title"><?php echo count($oTemplates); ?> Email Templates</h6>
+                        <h6 class="panel-title">{{ count($oTemplates) }} Email Templates</h6>
                     </span>
                     <div class="heading_links pull-left">
                         <a class="top_links email_notification btn btn-xs btn_white_table ml20" type="all">All</a>
@@ -31,9 +31,6 @@
                                 <th class="subAdmin"><i class="icon-iphone"></i>Admin Subject</th>
                                 <th class="subClient"><i class="icon-iphone"></i>Client Subject</th>
                                 <th class="subUser"><i class="icon-iphone"></i>User Subject</th>
-                                <!-- <th width="300"><i class="icon-iphone"></i> Plain Text</th> -->
-                                <!-- <th><i class="icon-iphone"></i> Html Text</th> -->
-                                <!-- <th><i class="icon-iphone"></i> Email Type</th> -->
                                 <th><i class="icon-calendar"></i> Created</th>
                                 <th class="text-center"><i class="fa fa-dot-circle-o"></i> Actions</th>
                             </tr>
@@ -41,80 +38,59 @@
                         <tbody>
 
                             <!--=======================-->
-                            <?php foreach ($oEmailTemplates as $oTemplate) { ?>
+                            @foreach ($oEmailTemplates as $oTemplate)
                                 <tr>
                                     <td style="display:none;"></td>
                                     <td style="display:none;"></td>
                                     <td>
-                                        <?php echo $oTemplate->title; ?>
+                                        {{ $oTemplate->title }}
                                     </td>
 
                                     <td>
-                                        <?php echo $oTemplate->template_tag; ?>
+                                        {{ $oTemplate->template_tag }}
                                     </td>
 
-                                     <td class="subAdmin emailNotiSmartPopup" type="admin" template_id="<?php echo $oTemplate->id; ?>" style="cursor: pointer;">
-                                        <?php 
-                                        if(!empty($oTemplate->subject_admin)) {
-                                            echo setStringLimit($oTemplate->subject_admin);
-                                        } 
-                                        else {
-                                            echo '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
-                                        }
-                                        ?>
+                                     <td class="subAdmin emailNotiSmartPopup" type="admin" template_id="{{ $oTemplate->id }}" style="cursor: pointer;">
+                                        @if(!empty($oTemplate->subject_admin))
+											{{ setStringLimit($oTemplate->subject_admin) }}
+                                        @else
+											<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
+                                        @endif
                                     </td>
 
-                                    <td class="subClient emailNotiSmartPopup" type="client" template_id="<?php echo $oTemplate->id; ?>" style="cursor: pointer;">
-                                        <?php 
-                                        if(!empty($oTemplate->subject)) {
-                                            echo setStringLimit($oTemplate->subject);
-                                        } 
-                                        else {
-                                            echo '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
-                                        }
-                                        ?>
+                                    <td class="subClient emailNotiSmartPopup" type="client" template_id="{{ $oTemplate->id }}" style="cursor: pointer;">
+                                        @if(!empty($oTemplate->subject))
+											{{ setStringLimit($oTemplate->subject) }}
+                                        @else
+											<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
+                                        @endif
                                     </td>
 
-                                    <td class="subUser emailNotiSmartPopup" type="user" template_id="<?php echo $oTemplate->id; ?>" style="cursor: pointer;">
-                                        <?php 
-                                        if(!empty($oTemplate->subject_user)) {
-                                            echo setStringLimit($oTemplate->subject_user);
-                                        } 
-                                        else {
-                                            echo '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
-                                        }
-                                        ?>
+                                    <td class="subUser emailNotiSmartPopup" type="user" template_id="{{ $oTemplate->id }}" style="cursor: pointer;">
+                                        @if(!empty($oTemplate->subject_user))
+											{{setStringLimit($oTemplate->subject_user) }}
+                                        @else
+											<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
+                                        @endif
                                     </td>
-
-                                   <!--  <td>
-                                        <?php //echo base64_decode($oTemplate->plain_text); ?>
-                                    </td> -->
-
-                                   <!--  <td>
-                                        <a class="editEmailNotificationTemplate" template_id="<?php echo $oTemplate->id; ?>">View</a>
-                                    </td> -->
-
-                                    <!-- <td>
-                                        <?php echo ucfirst($oTemplate->content_type); ?>
-                                    </td> -->
 
                                     <td>
                                         <div class="media-left">
-                                            <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($oTemplate->created)); ?></a></div>
-                                            <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oTemplate->created)); ?></div>
+                                            <div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($oTemplate->created)) }}</a></div>
+                                            <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oTemplate->created)) }}</div>
                                         </div>
 
                                     </td>
                                     <td style="text-align: center;">
-                                        <a class="btn green_cust_btn editEmailNotificationTemplate"  template_id="<?php echo $oTemplate->id; ?>"><i class="fa fa-eye"></i></a>
-                                        <?php if ($oTemplate->write_permission == true): ?>
-                                            <a class="btn red deleteEmailNotificationTemplate" template_id="<?php echo $oTemplate->id; ?>"><i class="fa fa-trash"></i></a>
-                                        <?php else: ?>
+                                        <a class="btn green_cust_btn editEmailNotificationTemplate"  template_id="{{ $oTemplate->id }}"><i class="fa fa-eye"></i></a>
+                                        @if ($oTemplate->write_permission == true)
+                                            <a class="btn red deleteEmailNotificationTemplate" template_id="{{ $oTemplate->id }}"><i class="fa fa-trash"></i></a>
+                                        @else
                                             <a href="javascript:void(0)" title="Deleting this template not allowed" class="btn red"><i class="fa fa-trash" style="color:#ccc;"></i></a>
-                                        <?php endif; ?>
+                                        @endif
                                     </td>
                                 </tr>
-                            <?php } ?>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -131,15 +107,12 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add Email Notification Template</h5>
                 </div>
-
                 <div class="modal-body">
-
                     <div class="">
                         <a class="top_links sub_notification_form btn btn-xs btn_white_table active" type="admin" href="javascript:void(0);">Admin</a>
                         <a class="top_links sub_notification_form btn btn-xs btn_white_table" type="client" href="javascript:void(0);">Client</a> 
                         <a class="top_links sub_notification_form btn btn-xs btn_white_table" type="user" href="javascript:void(0);">User</a> 
                     </div>
-
                     <p>Title:
                         <input class="form-control" name="title" placeholder="Enter Title for the notification" type="text" required></p>
                      <p>Event Name:
@@ -171,8 +144,8 @@
                         <p>User Subject:
                             <input class="form-control" id="addSubEmailsubUser" name="user_subject" placeholder="Enter Subject" type="text" ></p>
                         <p>User Text:
-                            <textarea class="form-control summernote" id="addSubEmailUser" name="user_text"  rows="6" placeholder="Enter Plain Text" ></textarea></p>
-
+                            <textarea class="form-control summernote" id="addSubEmailUser" name="user_text"  rows="6" placeholder="Enter Plain Text" ></textarea>
+						</p>
                         <p>
                             <button type="button" data-toggle="tooltip" title="" data-tag-name="{FIRST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{FIRST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{LAST_NAME}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{LAST_NAME}</button>&nbsp;&nbsp;<button type="button" data-toggle="tooltip" title="" data-tag-name="{EMAIL}" class="btn btn-default add_btn draggable insert_tag_button" data-original-title="Click to insert Tag">{EMAIL}</button>&nbsp;&nbsp;
                         </p>
@@ -184,19 +157,6 @@
                             <a class="btn dark_btn bkg_sblue2 h40 sendTestEmailPreviewSub" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
                             <input type="hidden" name="emailTypeSub" class="emailTypeSub" id="emailTypeSub" value="admin">
                     </p>
-
-                    <!-- <p>Email Type
-                        <input type="radio" id="notify-plain-text" name="content_type" value="plain" style="margin-left:10px;" checked="checked" /> <label for="notify-plain-text">Plain</label>
-                        <input type="radio" id="notify-html-text" name="content_type" value="html" style="margin-left:10px;"  /> <label for="notify-html-text">Html</label>
-
-                    </p> 
-
-                    <p>Send SMS Too
-                        <label class="custom-form-switch">
-                            <input type="checkbox" name="send_sms" id="sys_send_sms" class="field checkedBoxValue">
-                            <span class="toggle"></span>
-                        </label>
-                    </p>  -->
 
                 </div>
 
@@ -268,19 +228,6 @@
                             <input type="hidden" name="emailTypeSubEdit" class="emailTypeSubEdit" id="emailTypeSubEdit" value="admin">
                     </p>
 
-                    <!-- <p>Email Type
-                        <input type="radio" id="edit-notify-plain-text" name="edit_content_type" value="plain" style="margin-left:10px;" checked="checked" /> <label for="edit-notify-plain-text">Plain</label>
-                        <input type="radio" id="edit-notify-html-text" name="edit_content_type" value="html" style="margin-left:10px;"  /> <label for="edit-notify-html-text">Html</label>
-
-                    </p>
-
-                    <p>Send SMS Too
-                        <label class="custom-form-switch">
-                            <input type="checkbox" name="send_sms" id="edit_send_sms" class="field checkedBoxValue">
-                            <span class="toggle"></span>
-                        </label>
-                    </p> -->
-
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="template_id" id="sys_email_template_id" />
@@ -295,20 +242,6 @@
 
 <script>
     $(document).ready(function () {
-
-        //greetingMsg
-
-        /*$(document).on('keydown', '.greetingMsgType', function() {
-            var greetingMsgType = $(this).val();
-            $('.greetingMsg').html(greetingMsgType);
-        });*/
-        
-        /*$(document).on('keyup keydown', '.greetingTextType', function() {
-            var greetingTextType = $(this).val();
-            greetingTextType = greetingTextType.replace(/\n/g, "<br />");
-            $('.greetingText').html(greetingTextType);
-        });*/
-
         $(document).on('click', '.greetingMsgType', function() {
             $('.greetingMsg').focus();
         });
@@ -328,9 +261,9 @@
             $(this).hide();
             $(".oEditor").show();
         });
+		
 
         $(document).on('change', function() {
-
             var eventEmailType = $('.eventEmailType').val();
             if(eventEmailType == 'admin') {
                 $('.adminSubject').show();
@@ -362,6 +295,7 @@
                 $('.emailTextUser').next().hide();
             }
         });
+		
 
         $(document).on('click', '.emailNotiSmartPopup', function() {
             $('.overlaynew').show();
@@ -376,14 +310,12 @@
           
 
             $.ajax({
-                url: '<?php echo base_url("admin/settings/getEmailNotificationTemplate"); ?>',
+                url: '{{ base_url("admin/settings/getEmailNotificationTemplate") }}',
                 type: "POST",
-                data: {templateId: templateId},
+                data: {templateId: templateId, _token: '{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        //console.log(data.datarow);
-
 
                         $('select').find('option[value="'+data.datarow.template_tag+'"]').attr("selected",true);
                         $(".emailSubject").val(data.datarow.subject);
@@ -393,12 +325,7 @@
                            $(this).removeAttr('selected');
                         });
 
-                        /*$( ".eventEmailType option" ).each(function( index ) {
-                           $(this).removeAttr('selected');
-                        });*/
-
                         $("select.eventEmailTag").find('option[value="'+data.datarow.template_tag+'"]').attr("selected",true);
-                        //$("select.eventEmailType").find('option[value="'+type+'"]').attr("selected",true);
                         
                         $(".eventEmailType").val(type);
                         $(".emailSubjectAdmin").val(data.datarow.subject_admin);
@@ -420,33 +347,11 @@
                             $('.userSubject').show();
                             $('.emailTextUser').next().show();
                         }
-                        else {
-
-                        }
-
+						
                         $(".emailTitle").val(data.datarow.title);
                         $(".template_id").val(templateId);
                         $('.overlaynew').hide();
 
-
-                        /*$("#sys_email_template_title").val(data.datarow.title);
-                        $("#sys_email_subject").val(data.datarow.subject);
-                        $('#sys_email_template_tag').val(data.datarow.template_tag);
-                        $('#sys_email_plain_text').summernote('code', data.datarow.plain_text);
-                        $('#sys_email_subject_admin').val(data.datarow.subject_admin);
-                        $('#sys_email_admin_text').summernote('code', data.datarow.plain_text_admin);
-                        $('#sys_email_subject_user').val(data.datarow.subject_user);
-                        $('#sys_email_user_text').summernote('code', data.datarow.plain_text_user);
-                        $("input[name='edit_content_type'][value='" + data.datarow.content_type + "']").prop('checked', true);
-                        if (data.datarow.send_sms == 1) {
-                            $("#edit_send_sms").prop('checked', true);
-
-                        } else {
-                            $("#edit_send_sms").prop('checked', false);
-
-                        }
-                        $('#sys_email_template_id').val(templateId);
-                        $('#editEmailNotificationTemplate').modal();*/
                     } else {
                         alertMessage('Error: Some thing wrong!');
                     }
@@ -454,23 +359,19 @@
                     alertMessage('Error: Some thing wrong!');
                 }
             });
-
             return false;
-
         });
 
+
         $(document).on('submit', '#frmEditEmailTemplate', function (e) {
-            
             var formdata = $("#frmEditEmailTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateEmailNotificationTemplate'); ?>',
+                url: "{{ base_url('admin/settings/updateEmailNotificationTemplate') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        //window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=email';
-
                         $('.showEmailMsg').html(data.msg);
                         setTimeout(function(){ $('.showEmailMsg').html(''); }, 3000);
                     }
@@ -478,16 +379,16 @@
             });
             return false;
         });
+		
 
         $(document).on('click', '.insert_tag_button', function () {
-
             var dataTagName = $(this).attr('data-tag-name');
             var cursorPosition = $('#sys_plain_text').prop("selectionStart");
             var emailtemplate = $('#sys_plain_text').val();
             var newstr = emailtemplate.substring(0, cursorPosition) + dataTagName + emailtemplate.substring(cursorPosition, emailtemplate.length);
             $('#sys_plain_text').val(newstr);
-            
         });
+		
         
         $(document).on('click', '.insert_edit_tag_button', function () {
 
@@ -496,9 +397,8 @@
             var emailtemplate = $('#sys_email_plain_text').val();
             var newstr = emailtemplate.substring(0, cursorPosition) + dataTagName + emailtemplate.substring(cursorPosition, emailtemplate.length);
             $('#sys_email_plain_text').val(newstr);
-            
-
         });
+		
 
         $("#edit_send_sms, #sys_send_sms").change(function () {
             if ($(this).is(':checked')) {
@@ -507,18 +407,19 @@
                 $(this).val('0');
             }
         });
+		
 
         $('#frmAddEmailTemplate').on('submit', function (e) {
             var formdata = $("#frmAddEmailTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/saveEmailNotificationTemplate'); ?>',
+                url: "{{ base_url('admin/settings/saveEmailNotificationTemplate') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         //Display tag list
-                        window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=email';
+                        window.location.href = '{{ base_url() }}admin/settings/setup_system_notifications?t=email';
                     }
                 }
             });
@@ -529,9 +430,9 @@
         $(document).on("click", ".editEmailNotificationTemplate", function (e) {
             var templateId = $(this).attr('template_id');
             $.ajax({
-                url: '<?php echo base_url("admin/settings/getEmailNotificationTemplate"); ?>',
+                url: '{{ base_url("admin/settings/getEmailNotificationTemplate") }}',
                 type: "POST",
-                data: {templateId: templateId},
+                data: {templateId: templateId, _token: '{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -560,26 +461,26 @@
                     alertMessage('Error: Some thing wrong!');
                 }
             });
-
             return false;
-
         });
+		
 
         $('#frmEditSysEmailTemplate').on('submit', function (e) {
             var formdata = $("#frmEditSysEmailTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateEmailNotificationTemplate'); ?>',
+                url: "{{ base_url('admin/settings/updateEmailNotificationTemplate') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=email';
+                        window.location.href = '{{ base_url() }}admin/settings/setup_system_notifications?t=email';
                     }
                 }
             });
             return false;
         });
+		
 
         $(document).on('click', '.deleteEmailNotificationTemplate', function () {
             var elem = $(this);
@@ -594,24 +495,24 @@
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            var templateID = $(elem).attr('template_id');
-                            $.ajax({
-                                url: '<?php echo base_url('admin/settings/deleteEmailNotificationTemplate'); ?>',
-                                type: "POST",
-                                data: {templateID: templateID},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=email';
-                                    }
-                                }
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					var templateID = $(elem).attr('template_id');
+					$.ajax({
+						url: "{{ base_url('admin/settings/deleteEmailNotificationTemplate') }}",
+						type: "POST",
+						data: {templateID: templateID, _token: '{{ csrf_token() }}'},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = '{{ base_url() }}admin/settings/setup_system_notifications?t=email';
+							}
+						}
+					});
+				}
+			});
         });
 
 
@@ -675,6 +576,7 @@
                 $('.emailTypeSubEdit').val('admin');
             }   
         });
+		
 
         $(document).on('click', '.sendTestEmailPreviewSub', function() {
             var addSysEmailAdmin = $('#addSubEmailAdmin').summernote('code');
@@ -686,9 +588,9 @@
             var emailType = $('#emailTypeSub').val();
             var testEmailSys = $('#testEmailSub').val();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/sendTestEmailPreview'); ?>',
+                url: "{{ base_url('admin/settings/sendTestEmailPreview') }}",
                 type: "POST",
-                data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser},
+                data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser, _token: '{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -700,6 +602,7 @@
             });
             return false;
         });
+		
 
         $(document).on('click', '.sendTestEmailPreviewSub', function() {
             var addSysEmailAdmin = $('#addSubEmailAdmin').summernote('code');
@@ -711,9 +614,9 @@
             var emailType = $('#emailTypeSubEdit').val();
             var testEmailSys = $('#testEmailSub').val();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/sendTestEmailPreview'); ?>',
+                url: "{{ base_url('admin/settings/sendTestEmailPreview') }}",
                 type: "POST",
-                data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser},
+                data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser, _token: '{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -725,6 +628,7 @@
             });
             return false;
         });
+		
 
         $(document).on('click', '.sendTestEmailPreviewSubEdit', function() {
             var addSysEmailAdmin = $('#sys_email_admin_text').summernote('code');
@@ -736,9 +640,9 @@
             var emailType = $('#emailTypeSub').val();
             var testEmailSys = $('#testEmailSubEdit').val();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/sendTestEmailPreview'); ?>',
+                url: "{{ base_url('admin/settings/sendTestEmailPreview') }}",
                 type: "POST",
-                data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser},
+                data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser, _token: '{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -750,9 +654,9 @@
             });
             return false;
         });
+		
 
         $(document).on('click', '.sendNotiEmailPreview', function() {
-
             var addSysEmailAdmin = $('.emailTextAdmin').summernote('code');
             var addSysEmailClient = $('.emailTextClient').summernote('code');
             var addSysEmailUser = $('.emailTextUser').summernote('code');
@@ -764,9 +668,9 @@
 
             if(testEmailSys != '') {
                 $.ajax({
-                    url: '<?php echo base_url('admin/settings/sendTestEmailPreview'); ?>',
+                    url: "{{ base_url('admin/settings/sendTestEmailPreview') }}",
                     type: "POST",
-                    data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser},
+                    data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, 'addSubEmailsubAdmin':addSubEmailsubAdmin, 'addSubEmailsubClient':addSubEmailsubClient, 'addSubEmailsubUser':addSubEmailsubUser, _token: '{{ csrf_token() }}'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
@@ -782,9 +686,7 @@
                 $('.testEmailNotificationpre').focus();
                 setTimeout(function(){ $('.showEmailErrMsg').html(''); }, 3000);
             }
-            
             return false;            
         });
-
     });
 </script>

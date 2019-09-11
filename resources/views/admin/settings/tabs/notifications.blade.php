@@ -1,4 +1,4 @@
-<div class="tab-pane <?php if($seletedTab=='notify'):?>active<?php endif;?>" id="right-icon-tab4">
+<div class="tab-pane @if($seletedTab=='notify') active @endif " id="right-icon-tab4">
     <form id="notificationcenterform">
     <div class="row"> 
         <div class="col-md-6">
@@ -19,7 +19,7 @@
                                     <p class="pull-left mb0">System Notification<br>
                                         <span class="text-muted fsize11">Receive system notification every time you get new event</span></p>
                                     <label class="custom-form-switch pull-right">
-                                        <input name="system_notify" class="field updatenotification" type="checkbox" <?php if($notificationData->system_notify):?>checked<?php endif;?>>
+                                        <input name="system_notify" class="field updatenotification" type="checkbox" @if($notificationData->system_notify) checked @endif >
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
@@ -28,7 +28,7 @@
                                     <p class="pull-left mb0">Floating notification sound<br>
                                         <span class="text-muted fsize11">Play sound when a visitor sends a new message.</span></p>
                                     <label class="custom-form-switch pull-right">
-                                        <input name="notify_sound" class="field updatenotification" type="checkbox" <?php if($notificationData->notify_sound):?>checked<?php endif;?>>
+                                        <input name="notify_sound" class="field updatenotification" type="checkbox" @if($notificationData->notify_sound) @checked @endif >
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
@@ -37,12 +37,10 @@
                                     <p style="max-width: 285px;" class="pull-left mb0">New unread notifications icon in browser tab<br>
                                         <span class="text-muted fsize11">Show that you have new unread notifications in your notification center by displaying a red dot on the Brand Boost icon in your browser tab.</span></p>
                                     <label class="custom-form-switch pull-right">
-                                        <input name="browser_notify" class="field updatenotification" type="checkbox" <?php if($notificationData->browser_notify):?>checked<?php endif;?>>
+                                        <input name="browser_notify" class="field updatenotification" type="checkbox" @if($notificationData->browser_notify) checked @endif >
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -54,20 +52,19 @@
                             </div>
                             <div class="col-md-9"> 
                             <!-- notification loop start -->
-                            <?php foreach($notificationlisting as $key=>$value){ 
-                                 $checkflag = checkPermissionentry($value->notification_slug);
-
-                                ?>
+                            @php 
+							foreach($notificationlisting as $key=>$value){ 
+                                $checkflag = checkPermissionentry($value->notification_slug);
+                                @endphp
                                 <div class="form-group mb10">
-                                    <p class="pull-left mb0"><?php echo $value->notification_name; ?></p>
+                                    <p class="pull-left mb0">{{ $value->notification_name }}</p>
                                     <label class="custom-form-switch pull-right">
-                                        <input style="cursor: pointer!important;" notification_slug="<?php echo $value->notification_slug; ?>" name="sys_assign_chat" class="field updatePermissionDetails" type="checkbox" <?php if($checkflag):?>checked<?php endif;?>>
+                                        <input style="cursor: pointer!important;" notification_slug="{{ $value->notification_slug }}" name="sys_assign_chat" class="field updatePermissionDetails" type="checkbox" @if($checkflag) checked @endif>
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
                                 <!-- notification loop end  -->
-                                <?php } ?>
-
+                                @php } @endphp
                             </div>
                         </div>
                     </div>
@@ -79,14 +76,12 @@
                             </div>
                             <div class="col-md-2" style="margin-top:-10px;">
                                 <div class="form-group">
-                                    <input name="inactivity_length" class="form-control updatePermission" value="<?php echo $notificationData->inactivity_length == '' ? 10 : $notificationData->inactivity_length; ?>" type="number" placeholder="">
-									<?php //pre($oUser); ?>
+                                    <input name="inactivity_length" class="form-control updatePermission" value="{{ $notificationData->inactivity_length == '' ? 10 : $notificationData->inactivity_length }}" type="number" placeholder="">
                                 </div>
                             </div>
 							<div class="col-md-2">Minutes</div>
                         </div>
                     </div>
-					
                 </div>
             </div>
         </div>					
@@ -108,7 +103,7 @@
                                     <p class="pull-left mb0">Email notification<br>
                                         <span class="text-muted fsize11">Receive an email every time you get new event</span></p>
                                     <label class="custom-form-switch pull-right">
-                                        <input name="email_notify" class="field updatenotification" type="checkbox" <?php if($notificationData->email_notify):?>checked<?php endif;?>>
+                                        <input name="email_notify" class="field updatenotification" type="checkbox" @if($notificationData->email_notify) checked @endif>
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
@@ -116,13 +111,12 @@
                                 <div class="form-group">
                                     <label class="control-label">Email</label>
                                     <div class="">
-                                        <input name="notify_email" class="form-control updatenotification" value="<?php echo ($notificationData->notify_email) ? $notificationData->notify_email: $oUser->email;?>" type="text" placeholder="max@wakers.co">
+                                        <input name="notify_email" class="form-control updatenotification" value="{{ ($notificationData->notify_email) ? $notificationData->notify_email : $oUser->email }}" type="text" placeholder="max@wakers.co">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                 
                 </div>
             </div>
 
@@ -143,7 +137,7 @@
                                     <p class="pull-left mb0">Sms notification<br>
                                         <span class="text-muted fsize11">Receive an Sms every time you get new event</span></p>
                                     <label class="custom-form-switch pull-right">
-                                        <input name="sms_notify" class="field updatenotification" type="checkbox" <?php if($notificationData->sms_notify):?>checked<?php endif;?>>
+                                        <input name="sms_notify" class="field updatenotification" type="checkbox" @if($notificationData->sms_notify) checked @endif>
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
@@ -151,39 +145,33 @@
                                 <div class="form-group">
                                     <label class="control-label">Email</label>
                                     <div class="">
-                                        <input name="notify_phone" class="form-control updatenotification" value="<?php echo ($notificationData->notify_phone) ? $notificationData->notify_phone: $oUser->mobile;?>" type="text" placeholder="xx-xx-xx-xx">
+                                        <input name="notify_phone" class="form-control updatenotification" value="{{ ($notificationData->notify_phone) ? $notificationData->notify_phone : $oUser->mobile }}" type="text" placeholder="xx-xx-xx-xx">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                 
                 </div>
             </div>
-
         </div>
     </div>
     </form>
 </div> 
 <script>
-
     $(document).ready(function () {
-        
 		$(document).on("change blur",".updatenotification",function () {
             var fieldname = $(this).attr('name');
             var fieldval = $(this).val();
-            
             $.ajax({
-                url: "<?php echo base_url('admin/settings/updateNotificationSettings'); ?>",
+                url: "{{ base_url('admin/settings/updateNotificationSettings') }}",
                 type: "POST",
                 data: {
                     fieldname: fieldname,
                     fieldval: fieldval,
-                    _token: '<?php echo csrf_token(); ?>'
+                    _token: "{{ csrf_token() }}"
                 },
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
                         //display success message if required
                     } else {
@@ -196,15 +184,14 @@
 		$(".updatePermissionDetails").change(function () {
             var notification_slug = $(this).attr('notification_slug');
             $.ajax({
-				url: "<?php echo base_url('admin/settings/updateNotificationPermisson'); ?>",
+				url: "{{ base_url('admin/settings/updateNotificationPermisson') }}",
 				type: "POST",
 				data: {
 					notification_slug: notification_slug,
-                    _token: '<?php echo csrf_token(); ?>'
+                    _token: "{{ csrf_token() }}"
 				},
 				dataType: "json",
 				success: function (data) {
-
 					if (data.status == 'success') {
 						//display success message if required
 					} else {
@@ -214,7 +201,6 @@
 			});
         });
 		
-       
         $('input[type="checkbox"]').change(function(){
             if($(this).is(":checked") == true){
                 $(this).attr("value", 1);
@@ -223,6 +209,4 @@
             }
         })
     });
-
-
 </script>
