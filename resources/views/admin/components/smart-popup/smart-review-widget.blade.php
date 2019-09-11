@@ -1,8 +1,13 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/media/fancybox.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/gallery.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/media/fancybox.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/pages/gallery.js"></script>
 <style>
-.fancybox-opened{z-index: 2147483647!important;}
-.fancybox-overlay{z-index: 2147483646!important;}
+    .fancybox-opened {
+        z-index: 2147483647 !important;
+    }
+
+    .fancybox-overlay {
+        z-index: 2147483646 !important;
+    }
 </style>
 <div class="box smart-review-box" style="width: 680px;z-index:2147483646;">
     <div style="width: 680px;overflow: hidden; height: 100%;">
@@ -10,15 +15,17 @@
 
             <div class="row" style="height: 100%;">
                 <div class="col-md-12">
-                    <a style="left: 35px; top: 15px;" class="reviews smart-review slide-toggle bkg_grey_light" ><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_arrow_left.png"/></i></a> 
+                    <a style="left: 35px; top: 15px;" class="reviews smart-review slide-toggle bkg_grey_light"><i
+                            class=""><img src="{{ base_url() }}assets/images/icon_arrow_left.png"/></i></a>
                     <h5 style="padding-left: 75px;" class="panel-title">Review</h5>
                 </div>
                 <div id="reviewSmartPopup"></div>
             </div>
-        </div>					
+        </div>
     </div>
-</div>   
-<a style="position: fixed; top: 50%; right: 12px;display:none;" class="reviews smart-review slide-toggle visible bkg_purple" ><i class="icon-arrow-left5"></i></a>
+</div>
+<a style="position: fixed; top: 50%; right: 12px;display:none;"
+   class="reviews smart-review slide-toggle visible bkg_purple"><i class="icon-arrow-left5"></i></a>
 
 
 <div id="videoReviewModal" class="modal fade">
@@ -41,11 +48,10 @@
     </div>
 </div>
 
-<?php //$this->load->view("admin/modals/smartPopup/reviews"); ?>
-<script src="<?php echo base_url(); ?>assets/js/modules/smart-popup/reviews.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/js/modules/smart-popup/reviews.js" type="text/javascript"></script>
 <script>
     $(document).ready(function () {
-        
+
         $(".smart-review").click(function () {
             $(".smart-review-box").animate({
                 width: "toggle"
@@ -55,7 +61,7 @@
         $('[data-popup="lightbox"]').fancybox({
             padding: 3
         });
-        
+
         $(document).on('click', '.preview_video_src', function () {
             var filepath = $(this).attr('filepath');
             var fileext = $(this).attr('fileext');
@@ -66,10 +72,9 @@
 
         });
 
-               
-        
+
         $(document).on("click", ".viewSmartPopup", function () {
-	
+
             $("#reviewSmartPopup").html('<h1 class="text-center" style="margin-top:450px;">Loading....</h1>');
             var reviewID = $(this).attr('reviewid');
             loadSmartPopup(reviewID);
@@ -79,13 +84,13 @@
         $(".smart-review-box").hide();
         //$(".icon-arrow-left5").trigger('click'); //For auto close
     });
-	
+
     function loadSmartPopup(reviewID, selectedTab) {
         //$("#reviewSmartPopup").empty();
         $.ajax({
             url: '/admin/brandboost/reviewdetails/' + reviewID + '?t=' + selectedTab,
             type: "POST",
-            data: {reviewid: reviewID, action: 'smart-popup',_token: '{{csrf_token()}}'},
+            data: {reviewid: reviewID, action: 'smart-popup', _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
 
