@@ -1,23 +1,23 @@
-<?php
-if (!empty($oMemberships)) {
-    foreach ($oMemberships as $oMembership) {
-        if ($oMembership->plan_id == $oUser->plan_id) {
-            $oRegularMembership = $oMembership;
-        }
+@php
+	if (!empty($oMemberships)) {
+		foreach ($oMemberships as $oMembership) {
+			if ($oMembership->plan_id == $oUser->plan_id) {
+				$oRegularMembership = $oMembership;
+			}
 
-        if ($oMembership->plan_id == $oUser->topup_plan_id) {
-            $oTopupMembership = $oMembership;
-        }
-    }
-}
+			if ($oMembership->plan_id == $oUser->topup_plan_id) {
+				$oTopupMembership = $oMembership;
+			}
+		}
+	}
 
-$oCountries = getAllCountries();
-?>
+	$oCountries = getAllCountries();
+@endphp
 <style>
     .subscription_list tbody tr td{font-size:12px!important;}
 </style>
 
-<div class="tab-pane <?php if ($seletedTab == 'billing'): ?>active<?php endif; ?>" id="right-icon-tab3">
+<div class="tab-pane @if ($seletedTab == 'billing') active @endif" id="right-icon-tab3">
     <div class="row"> 
         <div class="col-md-6">
             <div class="panel panel-flat review_ratings">
@@ -26,32 +26,29 @@ $oCountries = getAllCountries();
                     <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                 </div>
                 <div class="panel-body p0">
-
-
                     <!--====GENERAL SETTINGS====-->
                     <div class="bbot p30">
                         <div class="row">
                             <div class="col-md-3"><p class="text-muted">Company Info</p></div>
                             <div class="col-md-9">
-
                                 <div class="form-group">
                                     <label class="control-label">Company</label>
                                     <div class="">
-                                        <input name="company_name" class="form-control updatecompanyprofileinfo" required="" value="<?php echo $oUser->company_name; ?>" placeholder="Wakers Inc." type="text">
+                                        <input name="company_name" class="form-control updatecompanyprofileinfo" required="" value="{{ $oUser->company_name }}" placeholder="Wakers Inc." type="text">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Company Profile</label>
                                     <div class="">
-                                        <textarea class="form-control updatecompanyprofileinfo" name="company_description"><?php echo $oUser->company_description; ?></textarea>
+                                        <textarea class="form-control updatecompanyprofileinfo" name="company_description">{{ $oUser->company_description }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <p class="pull-left mb0">Receiving newsletters:<br>
-                                        <span class="text-muted fsize11">We'll send newsletters emails to <?php echo $oUser->email; ?></span></p>
+                                        <span class="text-muted fsize11">We'll send newsletters emails to {{ $oUser->email }}</span></p>
                                     <label class="custom-form-switch pull-right">
-                                        <input class="field updatecompanyprofileinfo" name="receive_newsletter" type="checkbox" <?php if ($oUser->receive_newsletter): ?>checked<?php endif; ?>>
+                                        <input class="field updatecompanyprofileinfo" name="receive_newsletter" type="checkbox" @if ($oUser->receive_newsletter) checked @endif>
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
@@ -60,7 +57,7 @@ $oCountries = getAllCountries();
                                     <p class="pull-left mb0">Get a text when payments fail?<br>
                                         <span class="text-muted fsize11">We won’t text you about billing issues</span></p>
                                     <label class="custom-form-switch pull-right">
-                                        <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" <?php if ($oUser->receive_debug_notification): ?>checked<?php endif; ?> >
+                                        <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" @if ($oUser->receive_debug_notification) checked @endif >
                                         <span class="toggle"></span> </label>
                                     <div class="clearfix"></div>
                                 </div>
@@ -80,7 +77,7 @@ $oCountries = getAllCountries();
                                             <div class="form-group">
                                                 <label class="control-label">First Name</label>
                                                 <div class="">
-                                                    <input name="billing_firstname" id="billing_firstname" class="form-control" required="" placeholder="Alen" type="text" value="<?php echo $oUser->billing_firstname; ?>">
+                                                    <input name="billing_firstname" id="billing_firstname" class="form-control" required="" placeholder="Alen" type="text" value="{{ $oUser->billing_firstname }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -88,7 +85,7 @@ $oCountries = getAllCountries();
                                             <div class="form-group">
                                                 <label class="control-label">Last Name</label>
                                                 <div class="">
-                                                    <input name="billing_lastname" id="billing_lastname" class="form-control" required="" placeholder="Sultanic" type="text" value="<?php echo $oUser->billing_lastname; ?>">
+                                                    <input name="billing_lastname" id="billing_lastname" class="form-control" required="" placeholder="Sultanic" type="text" value="{{ $oUser->billing_lastname }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -97,14 +94,14 @@ $oCountries = getAllCountries();
                                     <div class="form-group">
                                         <label class="control-label">Address #1</label>
                                         <div class="">
-                                            <input name="billing_address1" id="billing_address1" class="form-control" required="" placeholder="Address Line 1" type="text" value="<?php echo $oUser->billing_address1; ?>">
+                                            <input name="billing_address1" id="billing_address1" class="form-control" required="" placeholder="Address Line 1" type="text" value="{{ $oUser->billing_address1 }}">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="control-label">Address #2</label>
                                         <div class="">
-                                            <input name="billing_address2" id="billing_address2" class="form-control" required="" placeholder="Address Line 2" type="text" value="<?php echo $oUser->billing_address2; ?>">
+                                            <input name="billing_address2" id="billing_address2" class="form-control" required="" placeholder="Address Line 2" type="text" value="{{ $oUser->billing_address2 }}">
                                         </div>
                                     </div>
 
@@ -112,7 +109,7 @@ $oCountries = getAllCountries();
                                     <div class="form-group">
                                         <label class="control-label">City</label>
                                         <div class="">
-                                            <input name="billing_city" id="billing_city" class="form-control" required="" placeholder="City" type="text" value="<?php echo $oUser->billing_city; ?>">
+                                            <input name="billing_city" id="billing_city" class="form-control" required="" placeholder="City" type="text" value="{{ $oUser->billing_city }}">
                                         </div>
                                     </div>
 
@@ -124,9 +121,13 @@ $oCountries = getAllCountries();
                                                 <div class="">
                                                     <select class="form-control" name="billing_country" id="billing_country">
                                                         <option value="">Select Country</option>
-                                                        <?php if (!empty($oCountries)) foreach ($oCountries as $oCountry): ?>
-                                                                <option value="<?php echo $oCountry->country_code; ?>" <?php echo ($oCountry->country_code == $oUser->billing_country) ? 'selected' : '' ?>><?php echo $oCountry->name; ?></option>
-                                                            <?php endforeach; ?>
+															@if (!empty($oCountries)) 
+																foreach ($oCountries as $oCountry)
+																	<option value="{{ $oCountry->country_code }}" {!! ($oCountry->country_code == $oUser->billing_country) ? 'selected' : '' !!}>
+																		{{ $oCountry->name }}
+																	</option>
+																@endforeach
+															@endif
                                                     </select>
                                                 </div>
                                             </div>
@@ -136,8 +137,8 @@ $oCountries = getAllCountries();
                                                 <label class="control-label">State</label>
                                                 <div class="">
                                                     <select class="form-control" name="billing_state" id="billing_state">
-                                                        <option <?php echo ($oUser->billing_state == 'Alabama') ? 'selected' : '' ?>>Alabama</option>
-                                                        <option <?php echo ($oUser->billing_state == 'Delhi') ? 'selected' : '' ?>>Delhi</option>
+                                                        <option {!! ($oUser->billing_state == 'Alabama') ? 'selected' : '' !!}>Alabama</option>
+                                                        <option {!! ($oUser->billing_state == 'Delhi') ? 'selected' : '' !!}>Delhi</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -146,7 +147,7 @@ $oCountries = getAllCountries();
                                             <div class="form-group">
                                                 <label class="control-label">Zip Code</label>
                                                 <div class="">
-                                                    <input  name="billing_zipcode" id="billing_zipcode" class="form-control" required="" placeholder="Zip Code" type="text" value="<?php echo $oUser->billing_zipcode; ?>">
+                                                    <input  name="billing_zipcode" id="billing_zipcode" class="form-control" required="" placeholder="Zip Code" type="text" value="{{ $oUser->billing_zipcode }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -155,7 +156,7 @@ $oCountries = getAllCountries();
                                     <div class="form-group">
                                         <label class="control-label">Phone</label>
                                         <div class="">
-                                            <input name="billing_phone" id="billing_phone" class="form-control" required="" placeholder="Phone" type="text" value="<?php echo $oUser->billing_phone; ?>">
+                                            <input name="billing_phone" id="billing_phone" class="form-control" required="" placeholder="Phone" type="text" value="{{ $oUser->billing_phone }}">
                                         </div>
                                     </div>
                                 </div>
@@ -176,33 +177,31 @@ $oCountries = getAllCountries();
                             <div class="col-md-9">
                                 <div class="card_sec p30">
                                     <div class="row mb20">
-                                        <div class="col-xs-6"><img width="135" src="<?php echo base_url(); ?>assets/images/credit-cards.png"/></div>
-                                        <div class="col-xs-6"><button class="btn btn-xs btn_white_table pull-right" data-toggle="modal" data-target="#cbChangeCC"><?php if (!empty($oUser->chargebee_cc_id)): ?>Edit<?php else: ?>Add<?php endif ?> Card</button></div>
+                                        <div class="col-xs-6"><img width="135" src="{{ base_url() }}assets/images/credit-cards.png"/></div>
+                                        <div class="col-xs-6"><button class="btn btn-xs btn_white_table pull-right" data-toggle="modal" data-target="#cbChangeCC">@if (!empty($oUser->chargebee_cc_id)) Edit @else Add @endif Card</button></div>
                                     </div>
 
-                                    <div class="row mb20 ccinfodetails" <?php if (empty($oUser->chargebee_cc_id)): ?> stye=display:none;<?php endif; ?>>
+                                    <div class="row mb20 ccinfodetails" @if (empty($oUser->chargebee_cc_id)) style="display:none;" @endif>
                                         <div class="col-xs-12">
-                                            <input type="text" id="savedccnum" class="form-control" disabled="disabled" value="XXXX-XXXX-XXXX <?php echo $oUser->cc_last_four; ?>" placeholder="XXXX-XXXX-XXXX 9613"/>
+                                            <input type="text" id="savedccnum" class="form-control" disabled="disabled" value="XXXX-XXXX-XXXX {{ $oUser->cc_last_four }}" placeholder="XXXX-XXXX-XXXX 9613"/>
                                         </div>
                                     </div>
-                                    <div class="row ccinfodetails" <?php if (empty($oUser->chargebee_cc_id)): ?> stye=display:none;<?php endif; ?>>
+                                    <div class="row ccinfodetails" @if (empty($oUser->chargebee_cc_id)) style="display:none;" @endif >
                                         <div class="col-xs-3">
-                                            <input type="text" id="savedExpiry" class="form-control" disabled="disabled" placeholder="e.g. 10 / 2021" value="<?php echo $oUser->cc_exp_month . ' / ' . $oUser->cc_exp_year; ?>"/>
+                                            <input type="text" id="savedExpiry" class="form-control" disabled="disabled" placeholder="e.g. 10 / 2021" value="{{ $oUser->cc_exp_month . ' / ' . $oUser->cc_exp_year }}"/>
                                         </div>
                                         <div class="col-xs-3">
                                             <p class="pull-left mb0"><span class="text-muted fsize11">EXP.<br>DATE</span></p>
                                         </div>
                                     </div>
 
-                                    <?php if (empty($oUser->chargebee_cc_id)): ?>
+                                    @f (empty($oUser->chargebee_cc_id))
                                         <div class="row ccinfoerror">
                                             <div class="col-xs-6 tex-center">
                                                 <p class="pull-left mb0">Currently you haven't stored any credit card details yet.</p>
                                             </div>
                                         </div>
-                                    <?php endif; ?>
-
-
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -213,36 +212,38 @@ $oCountries = getAllCountries();
                         <div class="row">
                             <div class="col-md-3"><p class="text-muted">Subscriptions</p></div>
                             <div class="col-md-9">
-                                <?php if (!empty($oUser->subscription_id)): ?>
+                                @if (!empty($oUser->subscription_id))
                                     <div class="card_sec p0">
                                         <ul class="subscription_list">
-                                            <li><span>Plan Name</span><strong class="pull-right"><?php echo $oRegularMembership->level_name ?> (<?php echo ucfirst($oRegularMembership->subs_cycle); ?>, USD)</strong></li>
-                                            <li><span>Price</span><strong class="pull-right">$<?php echo $oRegularMembership->price ?>/<?php echo ucfirst($oRegularMembership->subs_cycle); ?></strong></li>
-                                            <li><span>Subscription Status</span><strong class="pull-right"><?php echo ucfirst($oUser->regular_subscription_info->subscription_status); ?></strong></li>
-                                            <li><span>Start</span><strong class="pull-right"><?php echo date("F dS Y", $oUser->regular_subscription_info->started_at); ?></strong></li>
-                                            <li><span>Next Billing Date</span><strong class="pull-right"><?php echo date("F dS Y", $oUser->regular_subscription_info->next_billing_at); ?></strong></li>
+                                            <li><span>Plan Name</span><strong class="pull-right">{{ $oRegularMembership->level_name }} ({{ ucfirst($oRegularMembership->subs_cycle) }}, USD)</strong></li>
+                                            <li><span>Price</span><strong class="pull-right">${{ $oRegularMembership->price }}/{{ ucfirst($oRegularMembership->subs_cycle) }}</strong></li>
+                                            <li><span>Subscription Status</span><strong class="pull-right">{{ ucfirst($oUser->regular_subscription_info->subscription_status) }}</strong></li>
+                                            <li><span>Start</span><strong class="pull-right">{{ date("F dS Y", $oUser->regular_subscription_info->started_at) }}</strong></li>
+                                            <li><span>Next Billing Date</span><strong class="pull-right">{{ date("F dS Y", $oUser->regular_subscription_info->next_billing_at) }}</strong></li>
                                             <li><span>End</span><strong class="pull-right">Recurring</strong></li>
                                         </ul>
                                         <div class="clearfix"></div>
                                     </div>
-                                <?php endif; ?>
-                                <?php if (!empty($oUser->topup_subscription_id)): ?>
+                                @endif
+								
+                                @if (!empty($oUser->topup_subscription_id))
                                     <br>
                                     <div class="card_sec p0">
                                         <ul class="subscription_list">
-                                            <li><span>Plan Name</span><strong class="pull-right"><?php echo $oTopupMembership->level_name ?> (<?php echo ucfirst($oTopupMembership->subs_cycle); ?>, USD)</strong></li>
-                                            <li><span>Price</span><strong class="pull-right">$<?php echo $oTopupMembership->price ?>/<?php echo ucfirst($oTopupMembership->subs_cycle); ?></strong></li>
-                                            <li><span>Subscription Status</span><strong class="pull-right"><?php echo ucfirst($oUser->topup_subscription_info->subscription_status); ?></strong></li>
-                                            <li><span>Start</span><strong class="pull-right"><?php echo date("F dS Y", $oUser->topup_subscription_info->started_at); ?></strong></li>
-                                            <li><span>Next Billing Date</span><strong class="pull-right"><?php echo date("F dS Y", $oUser->topup_subscription_info->next_billing_at); ?></strong></li>
+                                            <li><span>Plan Name</span><strong class="pull-right">{{ $oTopupMembership->level_name }} ({{ ucfirst($oTopupMembership->subs_cycle) }}, USD)</strong></li>
+                                            <li><span>Price</span><strong class="pull-right">${{ $oTopupMembership->price }}/{{ ucfirst($oTopupMembership->subs_cycle) }}</strong></li>
+                                            <li><span>Subscription Status</span><strong class="pull-right">{{ ucfirst($oUser->topup_subscription_info->subscription_status) }}</strong></li>
+                                            <li><span>Start</span><strong class="pull-right">{{ date("F dS Y", $oUser->topup_subscription_info->started_at) }}</strong></li>
+                                            <li><span>Next Billing Date</span><strong class="pull-right">{{ date("F dS Y", $oUser->topup_subscription_info->next_billing_at) }}</strong></li>
                                             <li><span>End</span><strong class="pull-right">Recurring</strong></li>
                                         </ul>
                                         <div class="clearfix"></div>
                                     </div>
-                                <?php endif; ?>
-                                <?php if (empty($oUser->subscription_id) && empty($oUser->topup_subscription_id)): ?>
+                                @endif
+								
+                                @if (empty($oUser->subscription_id) && empty($oUser->topup_subscription_id))
                                     <i>No Subscription found</i>
-                                <?php endif; ?>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -262,25 +263,23 @@ $oCountries = getAllCountries();
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php if (!empty($oInvoices)): ?>
-                                                <?php
+                                            @php
+											if (!empty($oInvoices)):
                                                 foreach ($oInvoices as $oInvoice):
-                                                    //$invoiceData = App\Models\Admin\InvoicesModel::getInvoiceDetails($oInvoice->id);
-                                                    //pre($oInvoice);
-                                                    //pre($invoiceData);
-                                                    ?>
+                                                    $invoiceData = App\Models\Admin\InvoicesModel::getInvoiceDetails($oInvoice->id);
+                                                    @endphp
                                                     <tr>
-                                                        <td><span class="text-muted"><?php echo date("F dS Y", $oInvoice->paid_at); ?></span></td>
-                                                        <td><span class="pl0 txt_dark inv_details" invoice_id="<?php echo $oInvoice->id; ?>" style="cursor:pointer;"><strong class="text-left"><?php
-                                                                    if (!empty($invoiceData[0])) {
-                                                                        echo $invoiceData[0]->description;
-                                                                    }
-                                                                    ?></strong></span></td>
-                                                        <td><span class="txt_dark"><strong class="text-left">$<?php echo number_format($oInvoice->amount_paid, 2); ?></strong></span></td>
-                                                        <td><span class="text-right"><a href="<?php echo base_url(); ?>admin/invoices/download_invoice/<?php echo $oInvoice->id; ?>"><strong class="txt_purple">Download</strong></a></span></td>
+                                                        <td><span class="text-muted">{{ date("F dS Y", $oInvoice->paid_at) }}</span></td>
+                                                        <td><span class="pl0 txt_dark inv_details" invoice_id="{{ $oInvoice->id }}" style="cursor:pointer;"><strong class="text-left">
+															@if (!empty($invoiceData[0])) 
+																{{ $invoiceData[0]->description }}
+															@endif
+															</strong></span></td>
+                                                        <td><span class="txt_dark"><strong class="text-left">${{ number_format($oInvoice->amount_paid, 2) }}</strong></span></td>
+                                                        <td><span class="text-right"><a href="{{ base_url() }}admin/invoices/download_invoice/{{ $oInvoice->id }}"><strong class="txt_purple">Download</strong></a></span></td>
                                                     </tr>
-                                                <?php endforeach; ?>
-<?php endif; ?>
+                                                @endforeach
+											@endif
                                         </tbody>
                                     </table>
                                     <div class="clearfix"></div>
@@ -300,7 +299,7 @@ $oCountries = getAllCountries();
                     <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                 </div>
                 <div class="panel-body min_h405 p40 pt60 info_card text-center">
-                    <div class="img_icon mb20"><img src="<?php echo base_url(); ?>assets/images/icon_card.png" width="35"></div>
+                    <div class="img_icon mb20"><img src="{{ base_url() }}assets/images/icon_card.png" width="35"></div>
                     <p class="mb20"><strong>Manage your billing</strong></p>
                     <p class="mb20"><span>Being the savage's bowsman, that <br>is, the person who pulled.</span></p>
                     <a class="txt_purple" href="#">Learn More</a>
@@ -321,13 +320,9 @@ $oCountries = getAllCountries();
                 @csrf	
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/images/edit_email_icon.png"> Add/Change Credit Card Details <span>Store your card card details on file directly at merchant site, highly secure and reliable</span></h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/images/edit_email_icon.png"> Add/Change Credit Card Details <span>Store your card card details on file directly at merchant site, highly secure and reliable</span></h5>
                 </div>
-
-
-
                 <div class="modal-body">
-
                     <div class="">
                         <div class="card_sec p0">
                             <div class="row bbot form_box">
@@ -371,20 +366,15 @@ $oCountries = getAllCountries();
                                 <div class="col-xs-8">
                                     <select name="expYear" class="form-control">
                                         <option value="">YYYY</option>
-                                        <?php for ($i = date('Y'); $i <= date('Y', strtotime('+20 years')); $i++) { ?>  
-                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-<?php } ?>
+                                        @for ($i = date('Y'); $i <= date('Y', strtotime('+20 years')); $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+										@endif
                                     </select>
                                 </div>	
                             </div>
-
                             <div class="clearfix"></div>
                         </div>
                     </div>
-
-
-
-
                 </div>
                 <div class="modal-footer p40">
                     <button data-dismiss="modal" type="button" class="btn white_btn h52">Cancel</button>
@@ -397,10 +387,7 @@ $oCountries = getAllCountries();
 
 <div id="invoice_details" class="modal fade">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content invc">
-
-        </div>
-
+        <div class="modal-content invc"></div>
     </div>
 </div>
 
@@ -412,18 +399,15 @@ $oCountries = getAllCountries();
             $('.overlaynew').show();
             var invoiceid = $(this).attr('invoice_id');
             $.ajax({
-                url: '<?php echo base_url('admin/invoices/get'); ?>',
+                url: "{{ base_url('admin/invoices/get') }}",
                 type: "POST",
                 data: {_token: '{{csrf_token()}}', invoice_id: invoiceid},
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
-
                         $(".invc").html(data.content);
                         $("#invoice_details").modal("show");
                         $('.overlaynew').hide();
-
                     } else {
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();
@@ -445,12 +429,11 @@ $oCountries = getAllCountries();
             var formData = $(this).serialize();
             $('.overlaynew').show();
             $.ajax({
-                url: "<?php echo base_url('payment/storeCreditCard'); ?>",
+                url: "{{ base_url('payment/storeCreditCard') }}",
                 type: "POST",
                 data: formData,
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
                         $("#savedccnum").val('XXXX-XXXX-XXXX-' + data.info.cc_last_four);
                         $("#savedExpiry").val(data.info.cc_exp_month + '/' + data.info.cc_exp_year);
@@ -467,20 +450,21 @@ $oCountries = getAllCountries();
             });
             return false;
         });
+		
+		
         $(".updatecompanyprofileinfo").blur(function () {
             var fieldname = $(this).attr('name');
             var fieldval = $(this).val();
             $.ajax({
-                url: "<?php echo base_url('admin/settings/updateCompanyProfile'); ?>",
+                url: "{{ base_url('admin/settings/updateCompanyProfile') }}",
                 type: "POST",
                 data: {
                     fieldname: fieldname,
                     fieldval: fieldval,
-                    _token: '<?php echo csrf_token(); ?>'
+                    _token: '{{ csrf_token() }}'
                 },
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
                         //display success message if required
                     } else {
@@ -488,7 +472,6 @@ $oCountries = getAllCountries();
                     }
                 }
             });
-
         });
 
         $('input[name="receive_newsletter"], input[name="receive_debug_notification"]').change(function () {
@@ -503,7 +486,4 @@ $oCountries = getAllCountries();
             $('.subscription_list_head').hide();
         }, 1000);
     });
-
-
-
 </script>

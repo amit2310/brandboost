@@ -1,13 +1,13 @@
 <style type="text/css">
     .note-toolbar { height: 120px!important; }
 </style>
-<div class="tab-pane <?php if($seletedTab == 'system'):?>active<?php endif;?>" id="right-icon-tab0">
+<div class="tab-pane @if($seletedTab == 'system') active @endif" id="right-icon-tab0">
     <div class="row">
         <div class="col-md-12">
             <div style="margin: 0;" class="panel panel-flat">
                 <div class="panel-heading"> 
                     <span class="pull-left">
-                        <h6 class="panel-title"><?php echo count($oTemplates); ?> Templates</h6>
+                        <h6 class="panel-title">{{ count($oTemplates) }} Templates</h6>
                     </span>
                     <div class="heading_links pull-left">
                         <a class="top_links sys_notification btn btn-xs btn_white_table ml20" type="all">All</a>
@@ -41,68 +41,60 @@
                         <tbody>
 
                             <!--=======================-->
-                            <?php foreach ($oTemplates as $oTemplate) { ?>
+                            @foreach ($oTemplates as $oTemplate)
                                 <tr>
                                     <td style="display:none;"></td>
                                     <td style="display:none;"></td>
                                     <td>
-                                        <?php echo $oTemplate->title; ?>
+                                        {{ $oTemplate->title }}
                                     </td>
 
                                     <td>
-                                        <?php echo $oTemplate->template_tag; ?>
+                                        {{ $oTemplate->template_tag }}
                                     </td>
 
                                     <td class="sysAdmin">
-                                        <?php 
-                                        if(!empty($oTemplate->tag_language_admin)) {
-                                            echo setStringLimit(base64_decode($oTemplate->tag_language_admin));
-                                        } 
-                                        else {
-                                            echo '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
-                                        }
-                                        ?>
+                                        @if(!empty($oTemplate->tag_language_admin))
+											{{ setStringLimit(base64_decode($oTemplate->tag_language_admin)) }}
+                                        @else
+											<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
+                                        @endif
                                     </td>
 
                                     <td class="sysClient">
-                                        <?php 
-                                        if(!empty($oTemplate->tag_language)) {
-                                            echo setStringLimit(base64_decode($oTemplate->tag_language));
-                                        } 
-                                        else {
-                                            echo '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
-                                        }
-                                        ?>
+                                        @if(!empty($oTemplate->tag_language))
+											{{ setStringLimit(base64_decode($oTemplate->tag_language)) }}
+                                        @else
+											<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
+                                        @endif
                                     </td>
 
                                     <td class="sysUser">
-                                        <?php 
-                                        if(!empty($oTemplate->tag_language_user)) {
-                                            echo setStringLimit(base64_decode($oTemplate->tag_language_user));
-                                        } 
-                                        else {
-                                            echo '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
-                                        }
-                                        ?>
+                                        @if(!empty($oTemplate->tag_language_user))
+											{{ setStringLimit(base64_decode($oTemplate->tag_language_user)) }}
+                                        @else
+											<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
+                                        @endif
                                     </td>
 
                                     <td>
                                         <div class="media-left">
-                                            <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($oTemplate->created)); ?></a></div>
-                                            <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oTemplate->created)); ?></div>
+                                            <div class="pt-5">
+												<a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($oTemplate->created)) }}</a>
+											</div>
+                                            <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oTemplate->created)) }}</div>
                                         </div>
-
                                     </td>
                                     <td style="text-align: center;">
-                                        <a class="btn green_cust_btn editSystemNotificationTemplate"  template_id="<?php echo $oTemplate->id; ?>"><i class="fa fa-eye"></i></a>
-                                        <?php if ($oTemplate->write_permission == true): ?>
-                                            <a class="btn red deleteSystemNotificationTemplate" template_id="<?php echo $oTemplate->id; ?>"><i class="fa fa-trash"></i></a>
-                                        <?php else: ?>
+                                        <a class="btn green_cust_btn editSystemNotificationTemplate"  template_id="{{ $oTemplate->id }}"><i class="fa fa-eye"></i></a>
+                                        @if ($oTemplate->write_permission == true)
+                                            <a class="btn red deleteSystemNotificationTemplate" template_id="{{ $oTemplate->id }}"><i class="fa fa-trash"></i></a>
+                                        @else
                                             <a href="javascript:void(0)" title="Deleting this template not allowed" class="btn red"><i class="fa fa-trash" style="color:#ccc;"></i></a>
-                                        <?php endif; ?>
+                                        @endif
                                     </td>
                                 </tr>
-                            <?php } ?>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -121,7 +113,6 @@
                 </div>
 
                 <div class="modal-body">
-                    
                     <div class="">
                         <a class="top_links sys_notification_form btn btn-xs btn_white_table active" type="admin" href="javascript:void(0);">Admin</a>
                         <a class="top_links sys_notification_form btn btn-xs btn_white_table" type="client" href="javascript:void(0);">Client</a> 
@@ -148,18 +139,6 @@
                             <input type="hidden" name="emailType" class="emailType" id="emailType" value="admin">
                     </p>
                            
-                       
-
-                   <!--  <p>Icon
-                        <input type="radio" id="icon-envelop" name="icon" value="icon-envelop" style="margin-left:10px;" checked="checked" /> <label for="icon-envelop"><i class="icon-envelop fsize20"></i></label>
-                        <input type="radio" id="icon-stack-text" name="icon" value="icon-stack-text" style="margin-left:10px;"  /> <label for="icon-stack-text"><i class="icon-stack-text fsize20"></i></label>
-                        <input type="radio" id="icon-enter2" name="icon" value="icon-enter2" style="margin-left:10px;"  /> <label for="icon-enter2"><i class="icon-enter2 fsize20"></i> </label>
-                        <input type="radio" id="icon-loop3" name="icon" value="icon-loop3" style="margin-left:10px;"  /> <label for="icon-loop3"><i class="icon-loop3 fsize20"></i> </label>
-                        <input type="radio" id="icon-radio-checked2" name="icon" value="icon-radio-checked2" style="margin-left:10px;"  /> <label for="icon-radio-checked2 fsize20"><i class="icon-radio-checked2"></i></label>
-
-
-                    </p>     -->
-
                 </div>
 
                 <div class="modal-footer">
@@ -208,16 +187,6 @@
                         <input type="hidden" name="emailType" class="emailTypeEdit" id="emailTypeEdit" value="admin">
                     </p>
                     
-                    <!-- <p>Icon
-                        <input type="radio" id="icon-envelop" name="edit_icon" value="icon-envelop" checked="checked" style="margin-left:10px;" /> <label for="icon-envelop"><i class="icon-envelop fsize20"></i></label>
-                        <input type="radio" id="icon-stack-text" name="edit_icon" value="icon-stack-text" style="margin-left:10px;"  /> <label for="icon-stack-text"><i class="icon-stack-text fsize20"></i></label>
-                        <input type="radio" id="icon-enter2" name="edit_icon" value="icon-enter2" style="margin-left:10px;"  /> <label for="icon-enter2"><i class="icon-enter2 fsize20"></i> </label>
-                        <input type="radio" id="icon-loop3" name="edit_icon" value="icon-loop3" style="margin-left:10px;"  /> <label for="icon-loop3"><i class="icon-loop3 fsize20"></i> </label>
-                        <input type="radio" id="icon-radio-checked2" name="edit_icon" value="icon-radio-checked2" style="margin-left:10px;"  /> <label for="icon-radio-checked2 fsize20"><i class="icon-radio-checked2"></i></label>
-
-
-                    </p> -->
-
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="template_id" id="sys_template_id" />
@@ -301,14 +270,14 @@
             var formdata = $("#frmAddSysTemplate").serialize();
             var addsummernote = $('#addsummernote').summernote('code');
             $.ajax({
-                url: '<?php echo base_url('admin/settings/saveSystemNotificationTemplate'); ?>',
+                url: "{{ base_url('admin/settings/saveSystemNotificationTemplate') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         //Display tag list
-                        window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=system';
+                        window.location.href = '{{ base_url() }}admin/settings/setup_system_notifications?t=system';
                     }
                 }
             });
@@ -322,9 +291,9 @@
             var emailType = $('#emailType').val();
             var testEmailSys = $('#testEmailSys').val();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/sendTestEmailPreview'); ?>',
+                url: "{{ base_url('admin/settings/sendTestEmailPreview') }}",
                 type: "POST",
-                data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType},
+                data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, _token: '{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -344,9 +313,9 @@
             var emailType = $('#emailTypeEdit').val();
             var testEmailSys = $('#testEmailSysEdit').val();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/sendTestEmailPreview'); ?>',
+                url: "{{ base_url('admin/settings/sendTestEmailPreview') }}",
                 type: "POST",
-                data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType},
+                data: {'addSysEmailAdmin':addSysEmailAdmin, 'addSysEmailClient': addSysEmailClient, 'addSysEmailUser':addSysEmailUser, 'testEmailSys':testEmailSys, 'emailType':emailType, _token: '{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -363,9 +332,9 @@
         $(document).on("click", ".editSystemNotificationTemplate", function (e) {
             var templateId = $(this).attr('template_id');
             $.ajax({
-                url: '<?php echo base_url("admin/settings/getSystemNotificationTemplate"); ?>',
+                url: '{{ base_url("admin/settings/getSystemNotificationTemplate") }}',
                 type: "POST",
-                data: {templateId: templateId},
+                data: {templateId: templateId, _token: '{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -393,13 +362,13 @@
         $('#frmEditSysTemplate').on('submit', function (e) {
             var formdata = $("#frmEditSysTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateSystemNotificationTemplate'); ?>',
+                url: "{{ base_url('admin/settings/updateSystemNotificationTemplate') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=system';
+                        window.location.href = '{{ base_url() }}admin/settings/setup_system_notifications?t=system';
                     }
                 }
             });
@@ -419,27 +388,24 @@
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            var templateID = $(elem).attr('template_id');
-                            $.ajax({
-                                url: '<?php echo base_url('admin/settings/deleteSystemNotificationTemplate'); ?>',
-                                type: "POST",
-                                data: {templateID: templateID},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=system';
-                                    }
-                                }
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					var templateID = $(elem).attr('template_id');
+					$.ajax({
+						url: "{{ base_url('admin/settings/deleteSystemNotificationTemplate') }}",
+						type: "POST",
+						data: {templateID: templateID, _token: '{{ csrf_token() }}'},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = '{{ base_url() }}admin/settings/setup_system_notifications?t=system';
+							}
+						}
+					});
+				}
+			});
         });
-
-
-
     });
 </script>

@@ -1,10 +1,10 @@
-<div class="tab-pane <?php if ($seletedTab == 'sms'): ?>active<?php endif; ?>" id="right-icon-tab2">
+<div class="tab-pane @if ($seletedTab == 'sms') active @endif" id="right-icon-tab2">
     <div class="row">
         <div class="col-md-12">
             <div style="margin: 0;" class="panel panel-flat">
                 <div class="panel-heading"> 
                     <span class="pull-left">
-                        <h6 class="panel-title"><?php echo count($oTemplates); ?> Email Templates</h6>
+                        <h6 class="panel-title">{{ count($oTemplates) }} Email Templates</h6>
                     </span>
                     <div class="heading_links pull-left">
                         <a class="top_links sms_notification btn btn-xs btn_white_table ml20" type="all">All</a>
@@ -31,9 +31,6 @@
                                 <th class="smsAdmin"><i class="icon-iphone"></i>Admin Message</th>
                                 <th class="smsClient"><i class="icon-iphone"></i>Client Message</th>
                                 <th class="smsUser"><i class="icon-iphone"></i>User Message</th>
-                                <!-- <th width="300"><i class="icon-iphone"></i> Plain Text</th> -->
-                                <!-- <th><i class="icon-iphone"></i> Html Text</th> -->
-                                <!-- <th><i class="icon-iphone"></i> Email Type</th> -->
                                 <th><i class="icon-calendar"></i> Created</th>
                                 <th class="text-center"><i class="fa fa-dot-circle-o"></i> Actions</th>
                             </tr>
@@ -41,80 +38,59 @@
                         <tbody>
 
                             <!--=======================-->
-                            <?php foreach ($oEmailTemplates as $oTemplate) { ?>
+                            @foreach ($oEmailTemplates as $oTemplate)
                                 <tr>
                                     <td style="display:none;"></td>
                                     <td style="display:none;"></td>
                                     <td>
-                                        <?php echo $oTemplate->title; ?>
+                                        {{ $oTemplate->title }}
                                     </td>
 
                                     <td>
-                                        <?php echo $oTemplate->template_tag; ?>
+                                        {{ $oTemplate->template_tag }}
                                     </td>
 
                                      <td class="smsAdmin">
-                                        <?php 
-                                        if(!empty($oTemplate->sms_text_admin)) {
-                                            echo setStringLimit($oTemplate->sms_text_admin);
-                                        } 
-                                        else {
-                                            echo '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
-                                        }
-                                        ?>
+                                        @if(!empty($oTemplate->sms_text_admin))
+											{{ setStringLimit($oTemplate->sms_text_admin) }}
+                                        @else
+											<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
+                                        @endif
                                     </td>
 
                                     <td class="smsClient">
-                                        <?php 
-                                        if(!empty($oTemplate->sms_text_client)) {
-                                            echo setStringLimit($oTemplate->sms_text_client);
-                                        } 
-                                        else {
-                                            echo '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
-                                        }
-                                        ?>
+                                        @if(!empty($oTemplate->sms_text_client))
+											{{ setStringLimit($oTemplate->sms_text_client) }}
+                                        @else
+											<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
+                                        @endif
                                     </td>
 
                                     <td class="smsUser">
-                                        <?php 
-                                        if(!empty($oTemplate->sms_text_user)) {
-                                            echo setStringLimit($oTemplate->sms_text_user);
-                                        } 
-                                        else {
-                                            echo '<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
-                                        }
-                                        ?>
+                                        @if(!empty($oTemplate->sms_text_user))
+											{{ setStringLimit($oTemplate->sms_text_user) }}
+                                        @else
+											<div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
+                                        @endif
                                     </td>
-
-                                   <!--  <td>
-                                        <?php //echo base64_decode($oTemplate->plain_text); ?>
-                                    </td> -->
-
-                                    <!-- <td>
-                                        <a class="editSMSNotificationTemplate" template_id="<?php echo $oTemplate->id; ?>">View</a>
-                                    </td> -->
-
-                                    <!-- <td>
-                                        <?php echo ucfirst($oTemplate->content_type); ?>
-                                    </td> -->
 
                                     <td>
                                         <div class="media-left">
-                                            <div class="pt-5"><a href="#" class="text-default text-semibold"><?php echo date('d M Y', strtotime($oTemplate->created)); ?></a></div>
-                                            <div class="text-muted text-size-small"><?php echo date('h:i A', strtotime($oTemplate->created)); ?></div>
+                                            <div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($oTemplate->created)) }}</a></div>
+                                            <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oTemplate->created)) }}</div>
                                         </div>
 
                                     </td>
                                     <td style="text-align: center;">
-                                        <a class="btn green_cust_btn editSMSNotificationTemplate"  template_id="<?php echo $oTemplate->id; ?>"><i class="fa fa-eye"></i></a>
-                                        <?php if ($oTemplate->write_permission == true): ?>
-                                            <a class="btn red deleteEmailNotificationTemplate" template_id="<?php echo $oTemplate->id; ?>"><i class="fa fa-trash"></i></a>
-                                        <?php else: ?>
+                                        <a class="btn green_cust_btn editSMSNotificationTemplate"  template_id="{{ $oTemplate->id }}"><i class="fa fa-eye"></i></a>
+                                        @if ($oTemplate->write_permission == true)
+                                            <a class="btn red deleteEmailNotificationTemplate" template_id="{{ $oTemplate->id }}"><i class="fa fa-trash"></i></a>
+                                        @else
                                             <a href="javascript:void(0)" title="Deleting this template not allowed" class="btn red"><i class="fa fa-trash" style="color:#ccc;"></i></a>
-                                        <?php endif; ?>
+                                        @endif
                                     </td>
                                 </tr>
-                            <?php } ?>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -158,12 +134,12 @@
                     </span>
 
                     <div class="showEmailMsg" style="color: green;"></div>
-                    <p>Notification Preview:        
-                            <input style="width: 88% !important;display: inline-block;margin-right: 15px;" class="form-control h40 input90" type="text" id="testSMSSub" name="testSMSSub" value="" placeholder="Enter phone number">
-                            <a class="btn dark_btn bkg_sblue2 h40  sendTestSMSPreview" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
-                            <input type="hidden" name="smsType" class="smsType" id="smsType" value="admin">
+                    <p>
+						Notification Preview:        
+						<input style="width: 88% !important;display: inline-block;margin-right: 15px;" class="form-control h40 input90" type="text" id="testSMSSub" name="testSMSSub" value="" placeholder="Enter phone number">
+						<a class="btn dark_btn bkg_sblue2 h40  sendTestSMSPreview" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
+						<input type="hidden" name="smsType" class="smsType" id="smsType" value="admin">
                     </p>
-                   
                 </div>
 
                 <div class="modal-footer">
@@ -212,9 +188,9 @@
 
                     <div class="showEmailMsg" style="color: green;"></div>
                     <p>Notification Preview:        
-                            <input style="width: 88% !important;display: inline-block;margin-right: 15px;" class="form-control h40 input90" type="text" id="testSMSSubEdit" name="testSMSSubEdit" value="" placeholder="Enter phone number">
-                            <a class="btn dark_btn bkg_sblue2 h40 sendTestSMSPreviewEdit" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
-                            <input type="hidden" name="smsTypeEdit" class="smsTypeEdit" id="smsTypeEdit" value="admin">
+						<input style="width: 88% !important;display: inline-block;margin-right: 15px;" class="form-control h40 input90" type="text" id="testSMSSubEdit" name="testSMSSubEdit" value="" placeholder="Enter phone number">
+						<a class="btn dark_btn bkg_sblue2 h40 sendTestSMSPreviewEdit" style="padding: 7px 13px !important;min-width: 40px !important;display: inline-block;line-height: 26px;background: #6190fa!important;"><i style="font-size: 15px!important;" class="icon-paperplane fsize15"></i></a>
+						<input type="hidden" name="smsTypeEdit" class="smsTypeEdit" id="smsTypeEdit" value="admin">
                     </p>
 
                 </div>
@@ -233,26 +209,22 @@
 <script>
     $(document).ready(function () {
         $(document).on('click', '.insert_tag_button', function () {
-
             var dataTagName = $(this).attr('data-tag-name');
             var cursorPosition = $('#sys_plain_text').prop("selectionStart");
             var emailtemplate = $('#sys_plain_text').val();
             var newstr = emailtemplate.substring(0, cursorPosition) + dataTagName + emailtemplate.substring(cursorPosition, emailtemplate.length);
             $('#sys_plain_text').val(newstr);
-            
-
         });
         
+		
         $(document).on('click', '.insert_edit_tag_button', function () {
-
             var dataTagName = $(this).attr('data-tag-name');
             var cursorPosition = $('#sys_email_plain_text').prop("selectionStart");
             var emailtemplate = $('#sys_email_plain_text').val();
             var newstr = emailtemplate.substring(0, cursorPosition) + dataTagName + emailtemplate.substring(cursorPosition, emailtemplate.length);
             $('#sys_email_plain_text').val(newstr);
-            
-
         });
+		
 
         $("#edit_send_sms, #sys_send_sms").change(function () {
             if ($(this).is(':checked')) {
@@ -261,19 +233,20 @@
                 $(this).val('0');
             }
         });
+		
 
         $('#frmAddSMSTemplate').on('submit', function (e) {
             e.preventDefault();
             var formdata = $("#frmAddSMSTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/saveSMSNotificationTemplate'); ?>',
+                url: "{{ base_url('admin/settings/saveSMSNotificationTemplate') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
                         //Display tag list
-                        window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=sms';
+                        window.location.href = '{{ base_url() }}admin/settings/setup_system_notifications?t=sms';
                     }
                 }
             });
@@ -284,9 +257,9 @@
         $(document).on("click", ".editSMSNotificationTemplate", function (e) {
             var templateId = $(this).attr('template_id');
             $.ajax({
-                url: '<?php echo base_url("admin/settings/getSMSNotificationTemplate"); ?>',
+                url: '{{ base_url("admin/settings/getSMSNotificationTemplate") }}',
                 type: "POST",
-                data: {templateId: templateId},
+                data: {templateId: templateId, _token: '{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -304,27 +277,27 @@
                     alertMessage('Error: Some thing wrong!');
                 }
             });
-
             return false;
-
         });
+		
 
         $('#frmEditSysSMSTemplate').on('submit', function (e) {
             e.preventDefault();
             var formdata = $("#frmEditSysSMSTemplate").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/updateSMSNotificationTemplate'); ?>',
+                url: "{{ base_url('admin/settings/updateSMSNotificationTemplate') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
-                        window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=sms';
+                        window.location.href = '{{ base_url() }}admin/settings/setup_system_notifications?t=sms';
                     }
                 }
             });
             return false;
         });
+		
 
         $(document).on('click', '.deleteEmailNotificationTemplate', function () {
             var elem = $(this);
@@ -339,24 +312,24 @@
                 closeOnConfirm: true,
                 closeOnCancel: true
             },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('.overlaynew').show();
-                            var templateID = $(elem).attr('template_id');
-                            $.ajax({
-                                url: '<?php echo base_url('admin/settings/deleteEmailNotificationTemplate'); ?>',
-                                type: "POST",
-                                data: {templateID: templateID},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.status == 'success') {
-                                        $('.overlaynew').hide();
-                                        window.location.href = '<?php echo base_url(); ?>admin/settings/setup_system_notifications?t=sms';
-                                    }
-                                }
-                            });
-                        }
-                    });
+			function (isConfirm) {
+				if (isConfirm) {
+					$('.overlaynew').show();
+					var templateID = $(elem).attr('template_id');
+					$.ajax({
+						url: "{{ base_url('admin/settings/deleteEmailNotificationTemplate') }}",
+						type: "POST",
+						data: {templateID: templateID, _token: '{{ csrf_token() }}'},
+						dataType: "json",
+						success: function (data) {
+							if (data.status == 'success') {
+								$('.overlaynew').hide();
+								window.location.href = '{{ base_url() }}admin/settings/setup_system_notifications?t=sms';
+							}
+						}
+					});
+				}
+			});
         });
 
 
@@ -427,9 +400,9 @@
             var smsType = $('#smsType').val();
             var testSMSSub = $('#testSMSSub').val();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/sendTestSMSPreview'); ?>',
+                url: "{{ base_url('admin/settings/sendTestSMSPreview') }}",
                 type: "POST",
-                data: {'sms_text_admin':sms_text_admin, 'sms_text_client': sms_text_client, 'sms_text_user':sms_text_user, 'testSMSSub':testSMSSub, 'smsType':smsType},
+                data: {'sms_text_admin':sms_text_admin, 'sms_text_client': sms_text_client, 'sms_text_user':sms_text_user, 'testSMSSub':testSMSSub, 'smsType':smsType, _token: '{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -449,9 +422,9 @@
             var smsType = $('#smsTypeEdit').val();
             var testSMSSub = $('#testSMSSubEdit').val();
             $.ajax({
-                url: '<?php echo base_url('admin/settings/sendTestSMSPreview'); ?>',
+                url: "{{ base_url('admin/settings/sendTestSMSPreview') }}",
                 type: "POST",
-                data: {'sms_text_admin':sms_text_admin, 'sms_text_client': sms_text_client, 'sms_text_user':sms_text_user, 'testSMSSub':testSMSSub, 'smsType':smsType},
+                data: {'sms_text_admin':sms_text_admin, 'sms_text_client': sms_text_client, 'sms_text_user':sms_text_user, 'testSMSSub':testSMSSub, 'smsType':smsType, _token: '{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -463,7 +436,5 @@
             });
             return false;
         });
-
-
     });
 </script>
