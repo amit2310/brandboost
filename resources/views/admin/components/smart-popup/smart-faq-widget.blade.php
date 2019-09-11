@@ -1,5 +1,5 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/media/fancybox.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/gallery.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/media/fancybox.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/pages/gallery.js"></script>
 
 <div class="box smart-faq-box" style="width: 680px;z-index:9999999999;">
     <div style="width: 680px;overflow: hidden; height: 100%;">
@@ -7,14 +7,14 @@
 
             <div class="row" style="height: 100%;">
                 <div class="col-md-12">
-                    <a style="left: 35px; top: 15px;" class="reviews smart-faq slide-toggle bkg_grey_light" ><i class=""><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_arrow_left.png"/></i></i></a> 
+                    <a style="left: 35px; top: 15px;" class="reviews smart-faq slide-toggle bkg_grey_light" ><i class=""><i class=""><img src="{{ base_url() }}assets/images/icon_arrow_left.png"/></i></i></a>
                     <h5 style="padding-left: 75px;" class="panel-title">FAQs</h5>
                 </div>
                 <div id="faQSmartPopup"></div>
             </div>
-        </div>					
+        </div>
     </div>
-</div>   
+</div>
 <a style="position: fixed; top: 50%; right: 12px; display:none;" class="reviews smart-faq slide-toggle visible bkg_dred" ><i class="icon-arrow-left5"></i></a>
 
 
@@ -52,10 +52,10 @@
         $('[data-popup="lightbox"]').fancybox({
             padding: 3
         });
-        
-     
+
+
         $(document).on("click", ".viewFaqSmartPopup", function () {
-    
+
             $("#faQSmartPopup").html('<h1 class="text-center" style="margin-top:450px;">Loading....</h1>');
             var faQListid = $(this).attr('faQListid');
             loadFAQSmartPopup(faQListid);
