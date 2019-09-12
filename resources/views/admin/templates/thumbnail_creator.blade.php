@@ -1,10 +1,14 @@
-<div id="thumbtemplateContent" style="padding:10px;<?php if($templateType == 'sms'):?>width:276px;<?php endif; ?>">
-    <?php echo $content; ?>
+<div id="thumbtemplateContent" style="padding:10px;
+@if($templateType == 'sms')
+    width:276px;
+@endif
+    ">
+    {{ $content }}
 </div>
 
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/modules/html2canvas/html2canvas.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/modules/html2canvas/jquery.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/modules/html2canvas/html2canvas.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/modules/html2canvas/jquery.js"></script>
 <script type="text/javascript">
 
 
@@ -19,7 +23,7 @@
     });
 
     function createThumbnail(imagestring) {
-        var templateId = '<?php echo $templateID; ?>';
+        var templateId = '{{ $templateID }}';
         $.ajax({
             url: '/admin/templates/updateThumbnail',
             type: "POST",
@@ -33,4 +37,4 @@
             }
         });
     }
-</script>   
+</script>

@@ -1,94 +1,108 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/forms/inputs/touchspin.min.js"></script>
 <style>
-    .mb55{
+    .mb55 {
         margin-bottom: 55px;
     }
-    #chooseEmailTemplate{ display:none;}
-    #chooseSMSTemplate{display: none;}
-    #templateParentContainer{display:none;}
-    .workflow_main_box .input-group.bootstrap-touchspin {bottom: 20px;right: 30px; z-index:99;}
-</style>
-<?php
-list($canReadCon, $canWriteCon) = fetchPermissions('Contacts');
-list($canReadAna, $canWriteAna) = fetchPermissions('Analytics');
-$bAnyMainEventExist = false;
-$oFinal = array();
 
-//In order to maintain order of the events
-if ($oEvents->isNotEmpty()) {
-    $oFinal[] = $oEvents[0];
-    $eventID = $oEvents[0]->id;
-    foreach ($oEvents as $key => $value) {
-        foreach ($oEvents as $inner) {
-            if ($inner->previous_event_id == $eventID) {
-                $oFinal[] = $inner;
-                $eventID = $inner->id;
+    #chooseEmailTemplate {
+        display: none;
+    }
+
+    #chooseSMSTemplate {
+        display: none;
+    }
+
+    #templateParentContainer {
+        display: none;
+    }
+
+    .workflow_main_box .input-group.bootstrap-touchspin {
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+    }
+</style>
+@php
+    list($canReadCon, $canWriteCon) = fetchPermissions('Contacts');
+    list($canReadAna, $canWriteAna) = fetchPermissions('Analytics');
+    $bAnyMainEventExist = false;
+    $oFinal = array();
+
+    //In order to maintain order of the events
+    if ($oEvents->isNotEmpty()) {
+        $oFinal[] = $oEvents[0];
+        $eventID = $oEvents[0]->id;
+        foreach ($oEvents as $key => $value) {
+            foreach ($oEvents as $inner) {
+                if ($inner->previous_event_id == $eventID) {
+                    $oFinal[] = $inner;
+                    $eventID = $inner->id;
+                    break;
+                }
+            }
+        }
+    }
+
+    $oEvents = $oFinal;
+
+    if (!empty($oEvents)) {
+        foreach ($oEvents as $oEvent) {
+            if (empty($oEvent->previous_event_id)) {
+                $oMainEvent = $oEvent;
                 break;
             }
         }
     }
-}
 
-$oEvents = $oFinal;
+    if (empty($moduleName)) {
+        echo "Module is missing";
+        exit;
+    }
 
-if (!empty($oEvents)) {
-    foreach ($oEvents as $oEvent) {
-        if (empty($oEvent->previous_event_id)) {
-            $oMainEvent = $oEvent;
-            break;
+    //Get Overall Stats
+    $aEmailStats = App\Models\Admin\WorkflowModel::getModuleUnitSendgridStats($moduleUnitID, $moduleName);
+    if (!empty($aEmailStats)) {
+
+        $aCategorizedEmailStats = App\Models\Admin\WorkflowModel::getEventSendgridCategorizedStats($aEmailStats);
+
+        $aCategorizedEmailStats24Hours = App\Models\Admin\WorkflowModel::getEventSendgridCategorizedStats($aEmailStats, true);
+    }
+
+
+
+    $aCampaignStats = array(
+        'aEmailStats' => $aEmailStats,
+        'aEmailStatsCategorized' => $aCategorizedEmailStats,
+        'aCategorizedEmailStats24Hours' => $aCategorizedEmailStats24Hours
+    );
+
+    //get Twilio Account Details
+
+    $oUser = getLoggedUser();
+    $userID = $oUser->id;
+    if ($userID > 0) {
+        $oTwilioAc = getClientTwilioAccount($userID);
+    }
+
+    $aContactSelectionData = App\Models\Admin\WorkflowModel::getWorkflowContactSelectionInterfaceData($moduleName, $moduleUnitID);
+    $iActiveCount = $iArchiveCount = 0;
+    $aSelectedContacts = $aContactSelectionData['oCampaignSubscribers'];
+    $iActiveSelectedCount = 0;
+    if (!empty($aSelectedContacts)) {
+        foreach ($aSelectedContacts as $oCount) {
+            if ($oCount->status == 2) {
+                $iArchiveSelectedCount++;
+            } else {
+                $iActiveSelectedCount++;
+            }
         }
     }
-}
-
-if (empty($moduleName)) {
-    echo "Module is missing";
-    exit;
-}
-
-//Get Overall Stats
-$aEmailStats = App\Models\Admin\WorkflowModel::getModuleUnitSendgridStats($moduleUnitID, $moduleName);
-if (!empty($aEmailStats)) {
-
-    $aCategorizedEmailStats = App\Models\Admin\WorkflowModel::getEventSendgridCategorizedStats($aEmailStats);
-
-    $aCategorizedEmailStats24Hours = App\Models\Admin\WorkflowModel::getEventSendgridCategorizedStats($aEmailStats, true);
-}
-
-
-
-$aCampaignStats = array(
-    'aEmailStats' => $aEmailStats,
-    'aEmailStatsCategorized' => $aCategorizedEmailStats,
-    'aCategorizedEmailStats24Hours' => $aCategorizedEmailStats24Hours
-);
-
-//get Twilio Account Details
-
-$oUser = getLoggedUser();
-$userID = $oUser->id;
-if ($userID > 0) {
-    $oTwilioAc = getClientTwilioAccount($userID);
-}
-
-$aContactSelectionData = App\Models\Admin\WorkflowModel::getWorkflowContactSelectionInterfaceData($moduleName, $moduleUnitID);
-$iActiveCount = $iArchiveCount = 0;
-$aSelectedContacts = $aContactSelectionData['oCampaignSubscribers'];
-$iActiveSelectedCount = 0;
-if (!empty($aSelectedContacts)) {
-    foreach ($aSelectedContacts as $oCount) {
-        if ($oCount->status == 2) {
-            $iArchiveSelectedCount++;
-        } else {
-            $iActiveSelectedCount++;
-        }
-    }
-}
-$aSelectedContacts = array();
-?>
+    $aSelectedContacts = array();
+@endphp
 <div class="">
     <div class="row">
         <!-- Draw graph  -->
-        <?php //$this->load->view("admin/workflow/partials/workflow-graph.php", $aCampaignStats);    ?>
+        @php //$this->load->view("admin/workflow/partials/workflow-graph.php", $aCampaignStats);    @endphp
     </div>
 
     <div class="row" id="superContainer">
@@ -96,10 +110,9 @@ $aSelectedContacts = array();
             <div class="panel panel-flat workflow_main_box">
                 <div style="border-bottom: 1px solid #eee!important;" class="panel-heading bkg_grey_light">
                     <h6 class="panel-title">Workflow</h6>
-
                 </div>
-                <div class="panel-body p40 pb20 min_h290 email_workflow_sec new" style="height:1000px;overflow:auto;" >
-                    <a id="wf_fs" class="workflow_fs_icon"><img src="<?php echo base_url(); ?>assets/images/fs_icon.png"/></a>
+                <div class="panel-body p40 pb20 min_h290 email_workflow_sec new" style="height:1000px;overflow:auto;">
+                    <a id="wf_fs" class="workflow_fs_icon"><img src="{{ base_url() }}assets/images/fs_icon.png"/></a>
 
 
                     <!-- Timeline -->
@@ -111,249 +124,280 @@ $aSelectedContacts = array();
                                 <div class="timeline-row post-full">
 
 
-
-
                                     <div class="timeline-date button">
 
-                                        <button type="button" class="btn white_btn chooseContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>"><span class="txt_grey"></span> New Contact 
-
+                                        <button type="button" class="btn white_btn chooseContact"
+                                                data-modulename="{{ $moduleName }}"
+                                                data-moduleaccountid="{{ $moduleUnitID }}">
+                                            <span class="txt_grey"></span> New Contact
                                         </button>
-                                        <a class="icons iconsab blue br8 t30 chooseContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" href="javascript:void(0);" ><img src="<?php echo base_url(); ?>assets/images/menu_icons/People_Light.svg"></a>
+                                        <a class="icons iconsab blue br8 t30 chooseContact"
+                                           data-modulename="{{ $moduleName }}"
+                                           data-moduleaccountid="{{ $moduleUnitID }}" href="javascript:void(0);">
+                                            <img src="{{ base_url() }}assets/images/menu_icons/People_Light.svg">
+                                        </a>
                                     </div>
 
 
-                                    <?php
-                                    if (!empty($oMainEvent)):
-                                        $previousID = $oMainEvent->previous_event_id;
-                                        $currentID = $oMainEvent->id;
-                                        $bAnyMainEventExist = true;
-                                        ?>
+                                    @php
+                                        if (!empty($oMainEvent)){
+                                            $previousID = $oMainEvent->previous_event_id;
+                                            $currentID = $oMainEvent->id;
+                                            $bAnyMainEventExist = true;
+                                    @endphp
 
-                                        <div class="timeline-date button mt20 mb40">
-                                            <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle" data-toggle="dropdown"><i class="icon-plus3"></i></button>
-                                            @include('admin.workflow2.partials.action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'main', 'eventType' => $oEventsType[0]])
-                                        </div>
-                                    <?php endif; ?>
+                                    <div class="timeline-date button mt20 mb40">
+                                        <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle"
+                                                data-toggle="dropdown"><i class="icon-plus3"></i>
+                                        </button>
+                                        @include('admin.workflow2.partials.action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'main', 'eventType' => $oEventsType[0]])
+                                    </div>
 
-                                    <?php
-                                    $previousEventID = 0;
-                                    $eventNo = 1;
-                                    $subscribersData = App\Models\Admin\WorkflowModel::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
-                                    $bBranchDrawn = false;
-                                    if (!empty($oEvents)) {
-                                        foreach ($oEvents as $key => $oEvent) {
-                                            $bMulitpleBranches = false;
-                                            $finishBranch = false;
-                                            if ($bBranchDrawn == true) {
-                                                $finishBranch = true;
-                                            }
-
-                                            $aEventData = json_decode($oEvent->data);
-                                            if (isset($oEvents[$key + 1])) {
-                                                $oEventDataNext = json_decode($oEvents[$key + 1]->data);
-                                            }
-
-
-                                            if (!empty($oEventDataNext)) {
-                                                if ($oEventDataNext->delay_value == 0 && $oEventDataNext->delay_unit == 'minute') {
-                                                    $bMulitpleBranches = true;
+                                    @php
+                                        }
+                                        $previousEventID = 0;
+                                        $eventNo = 1;
+                                        $subscribersData = App\Models\Admin\WorkflowModel::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+                                        $bBranchDrawn = false;
+                                        if (!empty($oEvents)) {
+                                            foreach ($oEvents as $key => $oEvent) {
+                                                $bMulitpleBranches = false;
+                                                $finishBranch = false;
+                                                if ($bBranchDrawn == true) {
+                                                    $finishBranch = true;
                                                 }
-                                            }
 
-                                            $oCampaignData = App\Models\Admin\WorkflowModel::getEventCampaign($oEvent->id, $moduleName);
-
-                                            if ($oCampaignData->isNotEmpty()) {
-
-                                                $oCampaign = $oCampaignData[0];
-                                            }
+                                                $aEventData = json_decode($oEvent->data);
+                                                if (isset($oEvents[$key + 1])) {
+                                                    $oEventDataNext = json_decode($oEvents[$key + 1]->data);
+                                                }
 
 
-                                            $isSMSAdded = $isEmailAdded = false;
-                                            $previousID = $oEvent->previous_event_id;
-                                            $currentID = $oEvent->id;
-                                            $currentEventType = $oEvent->event_type;
-                                            $currentEventIndex = array_keys($oEventsType, $currentEventType);
+                                                if (!empty($oEventDataNext)) {
+                                                    if ($oEventDataNext->delay_value == 0 && $oEventDataNext->delay_unit == 'minute') {
+                                                        $bMulitpleBranches = true;
+                                                    }
+                                                }
 
-                                            if (!empty($currentEventIndex)) {
-                                                if (array_key_exists($currentEventIndex[0] + 1, $oEventsType)) {
-                                                    $nextEventType = $oEventsType[$currentEventIndex[0] + 1];
+                                                $oCampaignData = App\Models\Admin\WorkflowModel::getEventCampaign($oEvent->id, $moduleName);
+
+                                                if ($oCampaignData->isNotEmpty()) {
+
+                                                    $oCampaign = $oCampaignData[0];
+                                                }
+
+
+                                                $isSMSAdded = $isEmailAdded = false;
+                                                $previousID = $oEvent->previous_event_id;
+                                                $currentID = $oEvent->id;
+                                                $currentEventType = $oEvent->event_type;
+                                                $currentEventIndex = array_keys($oEventsType, $currentEventType);
+
+                                                if (!empty($currentEventIndex)) {
+                                                    if (array_key_exists($currentEventIndex[0] + 1, $oEventsType)) {
+                                                        $nextEventType = $oEventsType[$currentEventIndex[0] + 1];
+                                                    } else {
+                                                        $nextEventType = $currentEventType;
+                                                    }
                                                 } else {
                                                     $nextEventType = $currentEventType;
                                                 }
-                                            } else {
-                                                $nextEventType = $currentEventType;
-                                            }
 
-                                            if (!empty($oCampaign)) {
-                                                if ($oCampaign->id != '') {
+                                                if (!empty($oCampaign)) {
+                                                    if ($oCampaign->id != '') {
 
-                                                    $aStatsSms = App\Models\Admin\WorkflowModel::getEventTwilioStats($oCampaign->id, $moduleName);
-                                                    $aCategorizedStatsSms = App\Models\Admin\WorkflowModel::getEventTwilioCategorizedStats($aStatsSms);
+                                                        $aStatsSms = App\Models\Admin\WorkflowModel::getEventTwilioStats($oCampaign->id, $moduleName);
+                                                        $aCategorizedStatsSms = App\Models\Admin\WorkflowModel::getEventTwilioCategorizedStats($aStatsSms);
 
-                                                    $sentSmsCount = $aCategorizedStatsSms['sent']['UniqueCount'];
-                                                    $deliveredSmsCount = $aCategorizedStatsSms['delivered']['UniqueCount'];
-                                                    $acceptedSmsCount = $aCategorizedStatsSms['accepted']['UniqueCount'];
-                                                    $failedSmsCount = $aCategorizedStatsSms['failed']['UniqueCount'];
-                                                    $queuedSmsCount = $aCategorizedStatsSms['queued']['UniqueCount'];
+                                                        $sentSmsCount = $aCategorizedStatsSms['sent']['UniqueCount'];
+                                                        $deliveredSmsCount = $aCategorizedStatsSms['delivered']['UniqueCount'];
+                                                        $acceptedSmsCount = $aCategorizedStatsSms['accepted']['UniqueCount'];
+                                                        $failedSmsCount = $aCategorizedStatsSms['failed']['UniqueCount'];
+                                                        $queuedSmsCount = $aCategorizedStatsSms['queued']['UniqueCount'];
 
-                                                    $sentSms = $sentSmsCount == '' ? '0' : $sentSmsCount;
-                                                    $deliveredSms = $deliveredSmsCount == '' ? '0' : $deliveredSmsCount;
-                                                    $acceptedSms = $acceptedSmsCount == '' ? '0' : $acceptedSmsCount;
-                                                    $failedSms = $failedSmsCount == '' ? '0' : $failedSmsCount;
-                                                    $queuedSms = $queuedSmsCount == '' ? '0' : $queuedSmsCount;
+                                                        $sentSms = $sentSmsCount == '' ? '0' : $sentSmsCount;
+                                                        $deliveredSms = $deliveredSmsCount == '' ? '0' : $deliveredSmsCount;
+                                                        $acceptedSms = $acceptedSmsCount == '' ? '0' : $acceptedSmsCount;
+                                                        $failedSms = $failedSmsCount == '' ? '0' : $failedSmsCount;
+                                                        $queuedSms = $queuedSmsCount == '' ? '0' : $queuedSmsCount;
 
-                                                    if (strtolower($oCampaign->campaign_type) == 'email') {
-                                                        $sNodeType = 'email';
-                                                        $isSMSAdded = true;
-                                                        $aStats = App\Models\Admin\WorkflowModel::getEventSendgridStats($oCampaign->id, $moduleName);
-                                                        $aCategorizedStats = App\Models\Admin\WorkflowModel::getEventSendgridCategorizedStats($aStats);
+                                                        if (strtolower($oCampaign->campaign_type) == 'email') {
+                                                            $sNodeType = 'email';
+                                                            $isSMSAdded = true;
+                                                            $aStats = App\Models\Admin\WorkflowModel::getEventSendgridStats($oCampaign->id, $moduleName);
+                                                            $aCategorizedStats = App\Models\Admin\WorkflowModel::getEventSendgridCategorizedStats($aStats);
 
-                                                        $processedCount = $aCategorizedStats['processed']['UniqueCount'];
-                                                        $deliveredCount = $aCategorizedStats['delivered']['UniqueCount'];
-                                                        $openCount = $aCategorizedStats['open']['UniqueCount'];
-                                                        $clickCount = $aCategorizedStats['click']['UniqueCount'];
-                                                        $unsubscribeCount = $aCategorizedStats['unsubscribe']['UniqueCount'];
-                                                        $bounceCount = $aCategorizedStats['bounce']['UniqueCount'];
-                                                        $droppedCount = $aCategorizedStats['dropped']['UniqueCount'];
-                                                        $spamReportCount = $aCategorizedStats['spam_report']['UniqueCount'];
+                                                            $processedCount = $aCategorizedStats['processed']['UniqueCount'];
+                                                            $deliveredCount = $aCategorizedStats['delivered']['UniqueCount'];
+                                                            $openCount = $aCategorizedStats['open']['UniqueCount'];
+                                                            $clickCount = $aCategorizedStats['click']['UniqueCount'];
+                                                            $unsubscribeCount = $aCategorizedStats['unsubscribe']['UniqueCount'];
+                                                            $bounceCount = $aCategorizedStats['bounce']['UniqueCount'];
+                                                            $droppedCount = $aCategorizedStats['dropped']['UniqueCount'];
+                                                            $spamReportCount = $aCategorizedStats['spam_report']['UniqueCount'];
 
-                                                        $processed = $processedCount == '' ? '0' : $processedCount;
-                                                        $delivered = $deliveredCount == '' ? '0' : $deliveredCount;
-                                                        $open = $openCount == '' ? '0' : $openCount;
-                                                        $click = $clickCount == '' ? '0' : $clickCount;
-                                                        $unsubscribe = $unsubscribeCount == '' ? '0' : $unsubscribeCount;
-                                                        $bounce = $bounceCount == '' ? '0' : $bounceCount;
-                                                        $dropped = $droppedCount == '' ? '0' : $droppedCount;
-                                                        $spamReport = $spamReportCount == '' ? '0' : $spamReportCount;
+                                                            $processed = $processedCount == '' ? '0' : $processedCount;
+                                                            $delivered = $deliveredCount == '' ? '0' : $deliveredCount;
+                                                            $open = $openCount == '' ? '0' : $openCount;
+                                                            $click = $clickCount == '' ? '0' : $clickCount;
+                                                            $unsubscribe = $unsubscribeCount == '' ? '0' : $unsubscribeCount;
+                                                            $bounce = $bounceCount == '' ? '0' : $bounceCount;
+                                                            $dropped = $droppedCount == '' ? '0' : $droppedCount;
+                                                            $spamReport = $spamReportCount == '' ? '0' : $spamReportCount;
 
-                                                        $aNodeData = array(
-                                                            'oEvent' => $oEvent,
-                                                            'oCampaign' => $oCampaign,
-                                                            'moduleName' => $moduleName,
-                                                            'subscribersData' => $subscribersData,
-                                                            'eventNo' => $eventNo,
-                                                            'oTwilioAc' => $oTwilioAc,
-                                                            'processed' => $processed,
-                                                            'delivered' => $delivered,
-                                                            'bMulitpleBranches' => $bMulitpleBranches,
-                                                            'bBranchDrawn' => $bBranchDrawn,
-                                                            'open' => $open,
-                                                            'click' => $click,
-                                                            'bounce' => $bounce,
-                                                            'dropped' => $dropped,
-                                                            'unsubscribe' => $unsubscribe,
-                                                            'spamReport' => $spamReport,
-                                                            'iActiveSelectedCount' => $iActiveSelectedCount
-                                                        );
-                                                    } else if (strtolower($oCampaign->campaign_type) == 'sms') {
-                                                        $sNodeType = 'sms';
-                                                        $aNodeData = array(
-                                                            'oEvent' => $oEvent,
-                                                            'oCampaign' => $oCampaign,
-                                                            'moduleName' => $moduleName,
-                                                            'subscribersData' => $subscribersData,
-                                                            'bMulitpleBranches' => $bMulitpleBranches,
-                                                            'bBranchDrawn' => $bBranchDrawn,
-                                                            'eventNo' => $eventNo,
-                                                            'oTwilioAc' => $oTwilioAc,
-                                                            'sentSms' => $sentSms,
-                                                            'deliveredSms' => $deliveredSms,
-                                                            'failedSms' => $failedSms,
-                                                            'queuedSms' => $queuedSms,
-                                                            'acceptedSms' => $acceptedSms,
-                                                            'sentSms' => $sentSms,
-                                                            'iActiveSelectedCount' => $iActiveSelectedCount
-                                                        );
-                                                    }
-                                                    ?>
+                                                            $aNodeData = array(
+                                                                'oEvent' => $oEvent,
+                                                                'oCampaign' => $oCampaign,
+                                                                'moduleName' => $moduleName,
+                                                                'subscribersData' => $subscribersData,
+                                                                'eventNo' => $eventNo,
+                                                                'oTwilioAc' => $oTwilioAc,
+                                                                'processed' => $processed,
+                                                                'delivered' => $delivered,
+                                                                'bMulitpleBranches' => $bMulitpleBranches,
+                                                                'bBranchDrawn' => $bBranchDrawn,
+                                                                'open' => $open,
+                                                                'click' => $click,
+                                                                'bounce' => $bounce,
+                                                                'dropped' => $dropped,
+                                                                'unsubscribe' => $unsubscribe,
+                                                                'spamReport' => $spamReport,
+                                                                'iActiveSelectedCount' => $iActiveSelectedCount
+                                                            );
+                                                        } else if (strtolower($oCampaign->campaign_type) == 'sms') {
+                                                            $sNodeType = 'sms';
+                                                            $aNodeData = array(
+                                                                'oEvent' => $oEvent,
+                                                                'oCampaign' => $oCampaign,
+                                                                'moduleName' => $moduleName,
+                                                                'subscribersData' => $subscribersData,
+                                                                'bMulitpleBranches' => $bMulitpleBranches,
+                                                                'bBranchDrawn' => $bBranchDrawn,
+                                                                'eventNo' => $eventNo,
+                                                                'oTwilioAc' => $oTwilioAc,
+                                                                'sentSms' => $sentSms,
+                                                                'deliveredSms' => $deliveredSms,
+                                                                'failedSms' => $failedSms,
+                                                                'queuedSms' => $queuedSms,
+                                                                'acceptedSms' => $acceptedSms,
+                                                                'sentSms' => $sentSms,
+                                                                'iActiveSelectedCount' => $iActiveSelectedCount
+                                                            );
+                                                        }
+                                    @endphp
 
-                                                    <?php if ($bBranchDrawn == false) { ?>
-                                                        <div class="timeline-date button">
-                                                            <button type="button" class="btn white_btn wf_timer" id="wf_waitTime_<?php echo $oEvent->id; ?>" event_id="<?php echo $oEvent->id; ?>" delay_value="<?php echo @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value); ?>" delay_unit="<?php echo @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit); ?>" delay_time="<?php echo!empty($aEventData->delay_time) ? $aEventData->delay_time : '9 PM'; ?>"><span class="txt_grey">Wait for</span> <?php echo @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value); ?> <?php echo @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit); ?></button>
-                                                            <a class="icons iconsab br8 dark t30 wf_timer" id="wf_waitTime_<?php echo $oEvent->id; ?>" event_id="<?php echo $oEvent->id; ?>" delay_value="<?php echo @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value); ?>" delay_unit="<?php echo @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit); ?>" delay_time="<?php echo!empty($aEventData->delay_time) ? $aEventData->delay_time : '9 PM'; ?>"  href="javascript:void(0)"><img src="<?php echo base_url(); ?>assets/images/clock_white14.png"></a>
-                                                        </div>
+                                    @if ($bBranchDrawn == false)
+                                        <div class="timeline-date button">
+                                            <button type="button" class="btn white_btn wf_timer"
+                                                    id="wf_waitTime_{{ $oEvent->id }}" event_id="{{ $oEvent->id }}"
+                                                    delay_value="{{ @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value) }}"
+                                                    delay_unit="{{ @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit) }}"
+                                                    delay_time="{{!empty($aEventData->delay_time) ? $aEventData->delay_time : '9 PM' }}">
+                                                <span
+                                                    class="txt_grey">Wait for</span> {{ @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value) }} {{ @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit) }}
+                                            </button>
+                                            <a class="icons iconsab br8 dark t30 wf_timer"
+                                               id="wf_waitTime_{{ $oEvent->id }}" event_id="{{ $oEvent->id }}"
+                                               delay_value="{{ @($aEventData->delay_value == '' ? '10' : $aEventData->delay_value) }}"
+                                               delay_unit="{{ @($aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit) }}"
+                                               delay_time="{{!empty($aEventData->delay_time) ? $aEventData->delay_time : '9 PM' }}"
+                                               href="javascript:void(0)">
+                                                <img src="{{ base_url() }}assets/images/clock_white14.png">
+                                            </a>
+                                        </div>
 
-                                                        <?php if ($bMulitpleBranches == true): ?>
-                                                            <div class="timeline-date button mb0">
-                                                                <img src="<?php echo base_url(); ?>assets/images/timeline_top_border_grey.jpg"/>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    <?php } ?>
-
-
-                                                    <?php if ($bBranchDrawn == false): ?>
-                                                        <div class="timeline-content mb0">
-                                                            <div class="<?php if ($bMulitpleBranches == true): ?>bkg_image<?php endif; ?> pt0 pb0">
-                                                                <div class="row">
-                                                                <?php endif; ?>
-                                                                <?php if ($sNodeType == 'sms'): ?>
-                                                                    <!-- Draw Tree Node -->
-                                                                    @include('admin.workflow2.partials.sms_node', $aNodeData)
-
-                                                                <?php elseif ($sNodeType == 'email'): ?>
-                                                                    <!-- Draw Tree Node -->
-                                                                    @include('admin.workflow2.partials.email_node', $aNodeData)
-                                                                <?php endif; ?>
-                                                                <?php if ($bMulitpleBranches == false): ?>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    <?php endif; ?>
+                                        @if ($bMulitpleBranches == true)
+                                            <div class="timeline-date button mb0">
+                                                <img src="{{ base_url() }}assets/images/timeline_top_border_grey.jpg"/>
+                                            </div>
+                                        @endif
+                                    @endif
 
 
-                                                    <?php if ($finishBranch == true): ?>
-                                                        <div class="timeline-date button mb0">
-                                                            <img src="<?php echo base_url(); ?>assets/images/timeline_bot_border_grey.png"/>
-                                                        </div>
-                                                    <?php endif; ?>
+                                    @if ($bBranchDrawn == false)
+                                        <div class="timeline-content mb0">
+                                            <div class="
+@if ($bMulitpleBranches == true)
+                                                bkg_image
+@endif
+                                                pt0 pb0">
+                                                <div class="row">
+                                                @endif
+                                                @if ($sNodeType == 'sms')
+                                                    <!-- Draw Tree Node -->
+                                                    @include('admin.workflow2.partials.sms_node', $aNodeData)
 
-                                                    <?php if ($bMulitpleBranches == false): ?>
-                                                        <div class="timeline-date button mt20 mb40">
-                                                            <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle" data-toggle="dropdown" previous_event_id="<?php echo $previousID; ?>" current_event_id="<?php echo $currentID; ?>" event_type="<?php echo $nextEventType; ?>" data-node-type="followup"><i class="icon-plus3"></i></button>
-                                                            @include('admin.workflow2.partials.action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'followup', 'eventType' => $nextEventType])
-                                                        </div>
-                                                    <?php endif; ?>
-                                                    <?php
-                                                    $previousEventID = $oEvent->id;
-                                                    $eventNo++;
+                                                @elseif ($sNodeType == 'email')
+                                                    <!-- Draw Tree Node -->
+                                                        @include('admin.workflow2.partials.email_node', $aNodeData)
+                                                    @endif
+                                                    @if ($bMulitpleBranches == false)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
 
-                                                    if ($bMulitpleBranches == true) {
-                                                        $bBranchDrawn = true;
-                                                    } else {
-                                                        $bBranchDrawn = false;
-                                                    }
-                                                }
-                                            }
+
+                                    @if ($finishBranch == true)
+                                        <div class="timeline-date button mb0">
+                                            <img src="{{ base_url() }}assets/images/timeline_bot_border_grey.png"/>
+                                        </div>
+                                    @endif
+
+                                    @if ($bMulitpleBranches == false)
+                                        <div class="timeline-date button mt20 mb40">
+                                            <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle"
+                                                    data-toggle="dropdown" previous_event_id="{{ $previousID }}"
+                                                    current_event_id="{{ $currentID }}"
+                                                    event_type="{{ $nextEventType }}" data-node-type="followup"><i
+                                                    class="icon-plus3"></i>
+                                            </button>
+                                            @include('admin.workflow2.partials.action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'followup', 'eventType' => $nextEventType])
+                                        </div>
+                                    @endif
+                                    @php
+                                        $previousEventID = $oEvent->id;
+                                        $eventNo++;
+
+                                        if ($bMulitpleBranches == true) {
+                                            $bBranchDrawn = true;
+                                        } else {
+                                            $bBranchDrawn = false;
                                         }
                                     }
+                                }
+                            }
+                        }
 
-                                    $previousID = (!empty($previousID)) ? $previousID : '';
-                                    $currentID = (!empty($currentID)) ? $currentID : '';
-                                    $nextEventType = (!empty($nextEventType)) ? $nextEventType : '';
-                                    if (empty($oEvent)) {
-                                        $oEvent = new stdClass();
-                                        $oEvent->id = '';
-                                    }
-                                    if (empty($aEventData)) {
-                                        $aEventData = new stdClass();
-                                        $aEventData->delay_value = '';
-                                        $aEventData->delay_unit = '';
-                                        $aEventData->delay_unit = '';
-                                    }
-                                    ?>
+                        $previousID = (!empty($previousID)) ? $previousID : '';
+                        $currentID = (!empty($currentID)) ? $currentID : '';
+                        $nextEventType = (!empty($nextEventType)) ? $nextEventType : '';
+                        if (empty($oEvent)) {
+                            $oEvent = new stdClass();
+                            $oEvent->id = '';
+                        }
+                        if (empty($aEventData)) {
+                            $aEventData = new stdClass();
+                            $aEventData->delay_value = '';
+                            $aEventData->delay_unit = '';
+                            $aEventData->delay_unit = '';
+                        }
+                                    @endphp
 
-                                    <?php if ($bAnyMainEventExist == false): ?> 
+                                    @if ($bAnyMainEventExist == false)
                                         <div class="timeline-date button mt0 mb20">
-                                            <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle" data-toggle="dropdown"><i class="icon-plus3"></i></button>
+                                            <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle"
+                                                    data-toggle="dropdown"><i class="icon-plus3"></i></button>
                                             @include('admin.workflow2.partials.action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'main', 'eventType' => $oEventsType[0]])
                                         </div>
-                                    <?php endif; ?>
+                                    @endif
 
-                                    <div  class="timeline-date button mt30 mb0">
-                                        <button type="button" class="btn white_btn"><span class="txt_grey"></span>&nbsp;Success </button>
-                                        <a class="icons iconsab green2 br8 t30" href="#"><img src="<?php echo base_url(); ?>assets/images/green_check_round.png"></a>
+                                    <div class="timeline-date button mt30 mb0">
+                                        <button type="button" class="btn white_btn"><span class="txt_grey"></span>&nbsp;Success
+                                        </button>
+                                        <a class="icons iconsab green2 br8 t30" href="#"><img
+                                                src="{{ base_url() }}assets/images/green_check_round.png"></a>
                                     </div>
-
 
 
                                 </div>
@@ -365,22 +409,21 @@ $aSelectedContacts = array();
                         </div>
                         <div class="clearfix text-right">
 
-                            <!--------Back ------>        
-                            <!--                            <div class="workflow_back">
+                            <!--------Back ------>
+                        <!--                            <div class="workflow_back">
                                                             <div class="input-group">
-                                                                <span class="input-group-btn">	
-                                                                    <button class="btn btn-default btn-icon" type="button"><i class=""><img src="<?php echo base_url(); ?>assets/images/back_tek_icon_grey.png"/></i></button>
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-default btn-icon" type="button"><i class=""><img src="{{ base_url() }}assets/images/back_tek_icon_grey.png"/></i></button>
                                                                 </span>
                                                                 <span class="input-group-btn">
-                                                                    <button class="btn btn-default btn-icon" type="button"><i class=""><img src="<?php echo base_url(); ?>assets/images/back_icon_grey.png"/></i></button>
+                                                                    <button class="btn btn-default btn-icon" type="button"><i class=""><img src="{{ base_url() }}assets/images/back_icon_grey.png"/></i></button>
                                                                 </span>
                                                             </div>
                                                         </div>-->
                         </div>
 
 
-
-                        <!--------Back ------>  
+                        <!--------Back ------>
 
 
                     </div>
@@ -390,70 +433,132 @@ $aSelectedContacts = array();
                         @include('admin.templates.emails.email-template-index', ["campaign_type" => 'email'])
                         @include('admin.templates.sms.sms-template-index', ["campaign_type" => 'sms'])
                         <div class="text-right" style="margin:0 50px 50px 50px;padding-bottom:100px;">
-                            <input type="hidden" name="action_email_template_id" id="wf_act_email_template_id" />
-                            <input type="hidden" name="action_sms_template_id" id="wf_act_sms_template_id" />
-                            <input type="hidden" name="action_template_type" id="wf_act_template_type" />
-                            <input type="hidden" name="action_previous_id" id="wf_act_prev_id" />
-                            <input type="hidden" name="action_current_id" id="wf_act_curr_id" />
-                            <input type="hidden" name="action_event_type" id="wf_act_event_type" />
-                            <input type="hidden" name="action_node_type" id="wf_act_node_type" />
-                            <input type="hidden" name="moduleName" id="wf_act_moduleName" value="<?php echo $moduleName; ?>" />
-                            <input type="hidden" name="moduleUnitID" id="wf_act_module_unit_id" value="<?php echo $moduleUnitID; ?>" />
+                            <input type="hidden" name="action_email_template_id" id="wf_act_email_template_id"/>
+                            <input type="hidden" name="action_sms_template_id" id="wf_act_sms_template_id"/>
+                            <input type="hidden" name="action_template_type" id="wf_act_template_type"/>
+                            <input type="hidden" name="action_previous_id" id="wf_act_prev_id"/>
+                            <input type="hidden" name="action_current_id" id="wf_act_curr_id"/>
+                            <input type="hidden" name="action_event_type" id="wf_act_event_type"/>
+                            <input type="hidden" name="action_node_type" id="wf_act_node_type"/>
+                            <input type="hidden" name="moduleName" id="wf_act_moduleName" value="{{ $moduleName }}"/>
+                            <input type="hidden" name="moduleUnitID" id="wf_act_module_unit_id"
+                                   value="{{ $moduleUnitID }}"/>
                             <a href="javascript:void(0);" class="btn btn-info mt10" id="cancelAddNewEvent">
                                 Cancel
                                 <i class=" icon-arrow-right13 text-size-base position-right"></i>
                             </a>
 
-                            <a href="javascript:void(0);" class="btn dark_btn mt10 ml10" id="createNewWorkflowEventNode">
+                            <a href="javascript:void(0);" class="btn dark_btn mt10 ml10"
+                               id="createNewWorkflowEventNode">
                                 Save
                                 <i class=" icon-arrow-right13 text-size-base position-right"></i>
                             </a>
                         </div>
-                    </div>    
+                    </div>
                     <div class="workflow_option hide" id="wfMainRightMenuZoomContainer">
                         <ul>
-                            <li><a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/wf_opt_icon1.png"/></a>
+                            <li><a class="dropdown-toggle" data-toggle="dropdown"><img
+                                        src="{{ base_url() }}assets/images/wf_opt_icon1.png"/></a>
                                 <ul class="dropdown-menu dropdown-menu-right wf_dropdown action_box_new nodes">
-                                    <div class="profile_headings m0 mb10">TRIGGERS </div>
-                                    <li><a href="javascript:void(0);" class="chooseContact" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>"><span class="icons br8 grd_bkg_blue"><img src="<?php echo base_url(); ?>assets/images/menu_icons/People_Light.svg"></span>New Contacts </a></li>
-                                    <li><a href="#"><span class="icons br8 grd_bkg_green2"><img src="<?php echo base_url(); ?>assets/images/menu_icons/List_Light.svg"></span>Form Submitted </a></li>
-                                    <li><a href="javascript:void(0);" <?php if ($oEvent->id > 0): ?>class="wf_timer"<?php endif; ?> style="cursor:pointer;" event_id="<?php echo $oEvent->id; ?>" delay_value="<?php echo $aEventData->delay_value == '' ? '10' : $aEventData->delay_value; ?>" delay_unit="<?php echo $aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit; ?>" delay_time="<?php echo!empty($aEventData->delay_time) ? $aEventData->delay_time : '9 PM'; ?>"><span class="icons br8 grd_bkg_purple"><img src="<?php echo base_url(); ?>assets/images/clock_white14.png"></span>Time Trigger </a></li>
+                                    <div class="profile_headings m0 mb10">TRIGGERS</div>
+                                    <li><a href="javascript:void(0);" class="chooseContact"
+                                           data-modulename="{{ $moduleName }}"
+                                           data-moduleaccountid="{{ $moduleUnitID }}"><span
+                                                class="icons br8 grd_bkg_blue"><img
+                                                    src="{{ base_url() }}assets/images/menu_icons/People_Light.svg"></span>New
+                                            Contacts </a></li>
+                                    <li><a href="#"><span class="icons br8 grd_bkg_green2"><img
+                                                    src="{{ base_url() }}assets/images/menu_icons/List_Light.svg"></span>Form
+                                            Submitted </a></li>
+                                    <li><a href="javascript:void(0);"
+                                           @if ($oEvent->id > 0)
+                                           class="wf_timer"
+                                           @endif
+                                           style="cursor:pointer;" event_id="{{ $oEvent->id }}"
+                                           delay_value="{{ $aEventData->delay_value == '' ? '10' : $aEventData->delay_value }}"
+                                           delay_unit="{{ $aEventData->delay_unit == '' ? 'minute' : $aEventData->delay_unit }}"
+                                           delay_time="{{!empty($aEventData->delay_time) ? $aEventData->delay_time : '9 PM' }}"><span
+                                                class="icons br8 grd_bkg_purple"><img
+                                                    src="{{ base_url() }}assets/images/clock_white14.png"></span>Time
+                                            Trigger </a></li>
                                     <div class="clearfix"></div>
                                 </ul>
 
                             </li>
-                            <li><a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/wf_opt_icon2.png"/></a>
+                            <li><a class="dropdown-toggle" data-toggle="dropdown"><img
+                                        src="{{ base_url() }}assets/images/wf_opt_icon2.png"/></a>
                                 <ul class="dropdown-menu dropdown-menu-right wf_dropdown action_box_new nodes">
-                                    <div class="profile_headings m0 mb10">ACTIONS </div>
-                                    <li><a href="#"><span class="icons grd_bkg_blue"><img src="<?php echo base_url(); ?>assets/images/menu_icons/People_Light.svg"></span>Add to list </a></li>
-                                    <li><a href="#accordion-control-group2" data-toggle="collapse" data-parent="#accordion-control" data-tab-type="email" class="addWorkflowNewEvent" previous_event_id="<?php echo $previousID; ?>" current_event_id="<?php echo $currentID; ?>" event_type="<?php echo $nextEventType; ?>" <?php if ($oEvent->id > 0): ?>data-node-type="followup"<?php else: ?>data-node-type="main"<?php endif; ?>><span class="icons grd_bkg_green2"><img src="<?php echo base_url(); ?>assets/images/menu_icons/Email_Light.svg"></span>Send email </a></li>
-                                    <li><a href="#accordion-control-group3" data-toggle="collapse" data-parent="#accordion-control" data-tab-type="sms" class="addWorkflowNewEvent" previous_event_id="<?php echo $previousID; ?>" current_event_id="<?php echo $currentID; ?>" event_type="<?php echo $nextEventType; ?>" <?php if ($oEvent->id > 0): ?>data-node-type="followup"<?php else: ?>data-node-type="main"<?php endif; ?>><span class="icons grd_bkg_green"><img style="width: 12px;" src="<?php echo base_url(); ?>assets/images/menu_icons/BrandPage_Light.svg"></span>Send sms </a></li>
-                                    <li><a href="#"><span class="icons grd_bkg_green2"><i class="icon-bell2"></i></span>Send notification </a></li>
-                                    <li><a href="#"><span class="icons grd_bkg_red"><img src="<?php echo base_url(); ?>assets/images/menu_icons/Website_Light.svg"></span>Show site widget </a></li>
+                                    <div class="profile_headings m0 mb10">ACTIONS</div>
+                                    <li><a href="#"><span class="icons grd_bkg_blue"><img
+                                                    src="{{ base_url() }}assets/images/menu_icons/People_Light.svg"></span>Add
+                                            to list </a></li>
+                                    <li><a href="#accordion-control-group2" data-toggle="collapse"
+                                           data-parent="#accordion-control" data-tab-type="email"
+                                           class="addWorkflowNewEvent" previous_event_id="{{ $previousID }}"
+                                           current_event_id="{{ $currentID }}" event_type="{{ $nextEventType }}"
+                                           @if ($oEvent->id > 0)
+                                           data-node-type="followup"
+                                           @else
+                                           data-node-type="main"
+                                            @endif
+                                        ><span class="icons grd_bkg_green2"><img
+                                                    src="{{ base_url() }}assets/images/menu_icons/Email_Light.svg"></span>Send
+                                            email </a></li>
+                                    <li><a href="#accordion-control-group3" data-toggle="collapse"
+                                           data-parent="#accordion-control" data-tab-type="sms"
+                                           class="addWorkflowNewEvent" previous_event_id="{{ $previousID }}"
+                                           current_event_id="{{ $currentID }}" event_type="{{ $nextEventType }}"
+                                           @if ($oEvent->id > 0)
+                                           data-node-type="followup"
+                                           @else
+                                           data-node-type="main"
+                                            @endif><span class="icons grd_bkg_green"><img style="width: 12px;"
+                                                                                          src="{{ base_url() }}assets/images/menu_icons/BrandPage_Light.svg"></span>Send
+                                            sms </a></li>
+                                    <li><a href="#"><span class="icons grd_bkg_green2"><i class="icon-bell2"></i></span>Send
+                                            notification </a></li>
+                                    <li><a href="#"><span class="icons grd_bkg_red"><img
+                                                    src="{{ base_url() }}assets/images/menu_icons/Website_Light.svg"></span>Show
+                                            site widget </a></li>
                                     <div class="clearfix"></div>
                                 </ul>
                             </li>
-                            <li><a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/wf_opt_icon3.png"/></a>
+                            <li><a class="dropdown-toggle" data-toggle="dropdown"><img
+                                        src="{{ base_url() }}assets/images/wf_opt_icon3.png"/></a>
                                 <ul class="dropdown-menu dropdown-menu-right wf_dropdown action_box_new nodes">
-                                    <div class="profile_headings m0 mb10">RULES </div>
-                                    <li><a href="#"><span class="icons grd_bkg_blue"><img src="<?php echo base_url(); ?>assets/images/menu_icons/List_Light.svg"></span>Field </a></li>
-                                    <li><a href="#"><span class="icons grd_bkg_blue"><img src="<?php echo base_url(); ?>assets/images/menu_icons/Tags_Light.svg"></span>Tag </a></li>
+                                    <div class="profile_headings m0 mb10">RULES</div>
+                                    <li><a href="#"><span class="icons grd_bkg_blue"><img
+                                                    src="{{ base_url() }}assets/images/menu_icons/List_Light.svg"></span>Field
+                                        </a></li>
+                                    <li><a href="#"><span class="icons grd_bkg_blue"><img
+                                                    src="{{ base_url() }}assets/images/menu_icons/Tags_Light.svg"></span>Tag
+                                        </a></li>
                                     <div class="clearfix"></div>
                                 </ul>
                             </li>
-                            <li><a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/wf_opt_icon4.png"/></a>
+                            <li><a class="dropdown-toggle" data-toggle="dropdown"><img
+                                        src="{{ base_url() }}assets/images/wf_opt_icon4.png"/></a>
                                 <ul class="dropdown-menu dropdown-menu-right wf_dropdown action_box_new nodes">
-                                    <div class="profile_headings m0 mb10">FLOW </div>
-                                    <li><a href="#"><span class="icons grd_bkg_purple"><img src="<?php echo base_url(); ?>assets/images/split_icon.png"></span>Split </a></li>
+                                    <div class="profile_headings m0 mb10">FLOW</div>
+                                    <li><a href="#"><span class="icons grd_bkg_purple"><img
+                                                    src="{{ base_url() }}assets/images/split_icon.png"></span>Split </a>
+                                    </li>
                                     <div class="clearfix"></div>
                                 </ul>
                             </li>
-                            <li><a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url(); ?>assets/images/wf_opt_icon5.png"/></a>
+                            <li><a class="dropdown-toggle" data-toggle="dropdown"><img
+                                        src="{{ base_url() }}assets/images/wf_opt_icon5.png"/></a>
                                 <ul class="dropdown-menu dropdown-menu-right wf_dropdown action_box_new nodes">
-                                    <div class="profile_headings m0 mb10">FLOW </div>
-                                    <li><a href="#"><span class="icons br8 grd_bkg_blue"><img src="<?php echo base_url(); ?>assets/images/menu_icons/People_Light.svg"></span>Contacts 2 </a></li>
-                                    <li><a href="#"><span class="icons br8 grd_bkg_green2"><img src="<?php echo base_url(); ?>assets/images/menu_icons/List_Light.svg"></span>Form 2</a></li>
-                                    <li><a href="#"><span class="icons br8 grd_bkg_purple"><img src="<?php echo base_url(); ?>assets/images/clock_white14.png"></span>Time 2</a></li>
+                                    <div class="profile_headings m0 mb10">FLOW</div>
+                                    <li><a href="#"><span class="icons br8 grd_bkg_blue"><img
+                                                    src="{{ base_url() }}assets/images/menu_icons/People_Light.svg"></span>Contacts
+                                            2 </a></li>
+                                    <li><a href="#"><span class="icons br8 grd_bkg_green2"><img
+                                                    src="{{ base_url() }}assets/images/menu_icons/List_Light.svg"></span>Form
+                                            2</a></li>
+                                    <li><a href="#"><span class="icons br8 grd_bkg_purple"><img
+                                                    src="{{ base_url() }}assets/images/clock_white14.png"></span>Time 2</a>
+                                    </li>
                                     <div class="clearfix"></div>
                                 </ul>
                             </li>
@@ -464,8 +569,8 @@ $aSelectedContacts = array();
                 </div>
 
                 <!--------zoom ------>
-                <input type="text" value="100" readonly="readonly" class="touchspin-postfix" style="min-width:50px!important;"> 
-
+                <input type="text" value="100" readonly="readonly" class="touchspin-postfix"
+                       style="min-width:50px!important;">
 
 
             </div>
@@ -473,15 +578,15 @@ $aSelectedContacts = array();
         </div>
         <div class="col-md-3" id="sidebar_statc">
 
-            @include('admin.workflow2.partials.main-right-menu', ['aEventData' => $aEventData, 'previousID' => $previousID, 'currentID' => $currentID, 'nextEventType' => $nextEventType])
+        @include('admin.workflow2.partials.main-right-menu', ['aEventData' => $aEventData, 'previousID' => $previousID, 'currentID' => $currentID, 'nextEventType' => $nextEventType])
 
-            @include('admin.workflow2.partials.email-menu', ['aEventData' => $aEventData, 'previousID' => $previousID, 'currentID' => $currentID, 'nextEventType' => $nextEventType])
+        @include('admin.workflow2.partials.email-menu', ['aEventData' => $aEventData, 'previousID' => $previousID, 'currentID' => $currentID, 'nextEventType' => $nextEventType])
 
-            @include('admin.workflow2.partials.sms-menu', ['aEventData' => $aEventData, 'previousID' => $previousID, 'currentID' => $currentID, 'nextEventType' => $nextEventType])
+        @include('admin.workflow2.partials.sms-menu', ['aEventData' => $aEventData, 'previousID' => $previousID, 'currentID' => $currentID, 'nextEventType' => $nextEventType])
 
-            @include('admin.workflow2.partials.timer-menu', ['aEventData' => $aEventData, 'previousID' => $previousID, 'currentID' => $currentID, 'nextEventType' => $nextEventType])
+        @include('admin.workflow2.partials.timer-menu', ['aEventData' => $aEventData, 'previousID' => $previousID, 'currentID' => $currentID, 'nextEventType' => $nextEventType])
 
-            <!-- choose contact -->
+        <!-- choose contact -->
             @include('admin.workflow2.partials.choose-contacts', ['aContactSelectionData' => $aContactSelectionData])
 
             @include('admin.workflow2.partials.import-options', ['aContactSelectionData' => $aContactSelectionData])
@@ -509,12 +614,6 @@ $aSelectedContacts = array();
             @include('admin.workflow2.partials.exclude/ex-segments', ['aContactSelectionData' => $aContactSelectionData])
 
 
-
-
-
-
-
-
         </div>
 
     </div>
@@ -523,12 +622,12 @@ $aSelectedContacts = array();
     <div class="row" id="editTemplateContainer" style="display:none;">
         <div class="col-md-12">
             <div class="white_box mb20 p10">
-                <iframe src="" id="loadstripotemplateInline" width="100%" height="1800" scrolling="no" style="border:none !important;overflow:hidden;"></iframe>
+                <iframe src="" id="loadstripotemplateInline" width="100%" height="1800" scrolling="no"
+                        style="border:none !important;overflow:hidden;"></iframe>
             </div>
         </div>
 
     </div>
-
 
 
 </div>
@@ -540,7 +639,8 @@ $aSelectedContacts = array();
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> &nbsp;Name your template <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                    <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> &nbsp;Name
+                        your template <i class="icon-info22 fsize12 txt_grey"></i></h5>
                 </div>
                 <div class="modal-body">
 
@@ -548,8 +648,10 @@ $aSelectedContacts = array();
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Please Enter Title For the Template:</label>
-                                <input class="form-control" id="templateName" name="templateName" placeholder="Enter Title for the Template" type="text" required>
-                                <label style="color:#ff0000;font-size:12px;display:none;" id="templateNameErrorMsg">This template name already exists</label>
+                                <input class="form-control" id="templateName" name="templateName"
+                                       placeholder="Enter Title for the Template" type="text" required>
+                                <label style="color:#ff0000;font-size:12px;display:none;" id="templateNameErrorMsg">This
+                                    template name already exists</label>
 
                             </div>
                         </div>
@@ -557,7 +659,7 @@ $aSelectedContacts = array();
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" value="" name="template_draft_id" id="template_draft_id">
-                    <input type="hidden" value="<?php echo $moduleName; ?>" name="moduleName">
+                    <input type="hidden" value="{{ $moduleName }}" name="moduleName">
                     <button type="submit" class="btn dark_btn bkg_sblue fsize14">Save</button>
 
                 </div>
@@ -572,7 +674,8 @@ $aSelectedContacts = array();
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> &nbsp;Send Test Email <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> &nbsp;Send
+                    Test Email <i class="icon-info22 fsize12 txt_grey"></i></h5>
             </div>
             <div class="modal-body">
 
@@ -580,15 +683,17 @@ $aSelectedContacts = array();
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input class="form-control" id="wfTextPopupSendTestEmail" placeholder="Email" type="text" required>                          
+                            <input class="form-control" id="wfTextPopupSendTestEmail" placeholder="Email" type="text"
+                                   required>
 
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="hidden" id="wf_test_email_campaign_id" />
-                <button type="button" id="wfBtnPopupSendTestEmail" class="btn dark_btn bkg_sblue fsize14">Send Email</button>
+                <input type="hidden" id="wf_test_email_campaign_id"/>
+                <button type="button" id="wfBtnPopupSendTestEmail" class="btn dark_btn bkg_sblue fsize14">Send Email
+                </button>
             </div>
 
         </div>
@@ -602,7 +707,8 @@ $aSelectedContacts = array();
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Sms_Color.svg"/> &nbsp;Send Test SMS <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Sms_Color.svg"/> &nbsp;Send Test
+                    SMS <i class="icon-info22 fsize12 txt_grey"></i></h5>
             </div>
             <div class="modal-body">
 
@@ -610,14 +716,16 @@ $aSelectedContacts = array();
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <input class="form-control" id="wfTextPopupSendTestSMS" placeholder="Phone Number" type="text" value="<?php echo $oUser->mobile; ?>" required>                          
+                            <input class="form-control" id="wfTextPopupSendTestSMS" placeholder="Phone Number"
+                                   type="text" value="{{ $oUser->mobile }}" required>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="hidden" id="wf_test_sms_campaign_id" />
-                <button type="button" id="wfBtnPopupSendTestSMS" class="btn dark_btn bkg_sblue fsize14">Send SMS</button>
+                <input type="hidden" id="wf_test_sms_campaign_id"/>
+                <button type="button" id="wfBtnPopupSendTestSMS" class="btn dark_btn bkg_sblue fsize14">Send SMS
+                </button>
             </div>
 
         </div>
@@ -630,13 +738,15 @@ $aSelectedContacts = array();
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Email_Color.svg"/> &nbsp;How to use this editor <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> &nbsp;How to
+                    use this editor <i class="icon-info22 fsize12 txt_grey"></i></h5>
             </div>
             <div class="modal-body">
 
                 <div class="row">
                     <div class="col-md-12">
-                        <b>Brandboost Email Builder</b> We will revert back to you very soon with detailed document and help videos
+                        <b>Brandboost Email Builder</b> We will revert back to you very soon with detailed document and
+                        help videos
                     </div>
                 </div>
             </div>
@@ -654,13 +764,15 @@ $aSelectedContacts = array();
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h5 class="modal-title"><img src="<?php echo base_url(); ?>assets/css/menu_icons/Sms_Color.svg"/> &nbsp;How to use this sms editor <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Sms_Color.svg"/> &nbsp;How to
+                    use this sms editor <i class="icon-info22 fsize12 txt_grey"></i></h5>
             </div>
             <div class="modal-body">
 
                 <div class="row">
                     <div class="col-md-12">
-                        <b>Brandboost SMS Editor</b> We will revert back to you very soon with detailed document and help videos
+                        <b>Brandboost SMS Editor</b> We will revert back to you very soon with detailed document and
+                        help videos
                     </div>
                 </div>
             </div>
@@ -673,30 +785,28 @@ $aSelectedContacts = array();
 </div>
 
 
-
 @include('admin.modals.segments.segments-popup')
-<script src="<?php echo base_url(); ?>assets/js/modules/segments/segments.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/js/modules/segments/segments.js" type="text/javascript"></script>
 <script>
-var site_url = '<?php echo base_url(); ?>';
+    var site_url = '{{ base_url() }}';
 </script>
-<script src="<?php echo base_url(); ?>assets/js/modules/workflow2/workflow.js" type="text/javascript"></script>
-<script type="text/javascript" >
-history.pushState(null, null, location.href);
-window.onpopstate = function () {
-    history.go(1);
-};
+<script src="{{ base_url() }}assets/js/modules/workflow2/workflow.js" type="text/javascript"></script>
+<script type="text/javascript">
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
 </script>
 
 <script>
-
 
 
     function loadImportedProperties() {
         $('.overlaynew').show();
-        var moduleName = '<?php echo $moduleName; ?>';
-        var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+        var moduleName = '{{ $moduleName }}';
+        var moduleUnitID = '{{ $moduleUnitID }}';
         $.ajax({
-            url: '<?php echo base_url('admin/workflow/getWorkflowImportedProperties'); ?>',
+            url: "{{ base_url('admin/workflow/getWorkflowImportedProperties') }}",
             type: "POST",
             data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID},
             dataType: "json",
@@ -711,10 +821,10 @@ window.onpopstate = function () {
 
     function loadExcludedProperties() {
         $('.overlaynew').show();
-        var moduleName = '<?php echo $moduleName; ?>';
-        var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+        var moduleName = '{{ $moduleName }}';
+        var moduleUnitID = '{{ $moduleUnitID }}';
         $.ajax({
-            url: '<?php echo base_url('admin/workflow/getWorkflowExportedProperties'); ?>',
+            url: "{{ base_url('admin/workflow/getWorkflowExportedProperties') }}",
             type: "POST",
             data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID},
             dataType: "json",
@@ -728,10 +838,10 @@ window.onpopstate = function () {
     }
 
     function syncAudience() {
-        var moduleName = '<?php echo $moduleName; ?>';
-        var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+        var moduleName = '{{ $moduleName }}';
+        var moduleUnitID = '{{ $moduleUnitID }}';
         $.ajax({
-            url: '<?php echo base_url('admin/workflow/syncWorkflowAudience'); ?>',
+            url: "{{ base_url('admin/workflow/syncWorkflowAudience') }}",
             type: "POST",
             data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID},
             dataType: "json",
@@ -747,11 +857,12 @@ window.onpopstate = function () {
             }
         });
     }
+
     $(document).ready(function () {
         $(document).on('change', ".addToCampaign", function () {
             $('.overlaynew').show();
-            var moduleName = '<?php echo $moduleName; ?>';
-            var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+            var moduleName = '{{ $moduleName }}';
+            var moduleUnitID = '{{ $moduleUnitID }}';
             var contactId = $(this).val();
             var actionValue = ''
             if ($(this).is(":checked") === true) {
@@ -761,9 +872,15 @@ window.onpopstate = function () {
             }
 
             $.ajax({
-                url: '<?php echo base_url('admin/workflow/addContactToWorkflowCampaign'); ?>',
+                url: "{{ base_url('admin/workflow/addContactToWorkflowCampaign') }}",
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, contactId: contactId},
+                data: {
+                    _token: '{{csrf_token()}}',
+                    moduleName: moduleName,
+                    moduleUnitID: moduleUnitID,
+                    actionValue: actionValue,
+                    contactId: contactId
+                },
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -784,8 +901,8 @@ window.onpopstate = function () {
 
         $(document).on('change', '.addListToCampaign', function () {
             $('.overlaynew').show();
-            var moduleName = '<?php echo $moduleName; ?>';
-            var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+            var moduleName = '{{ $moduleName }}';
+            var moduleUnitID = '{{ $moduleUnitID }}';
             var actionValue = ''
             if ($(this).is(":checked") === true) {
                 actionValue = 'addRecord';
@@ -794,9 +911,15 @@ window.onpopstate = function () {
             }
             var listID = $(this).val();
             $.ajax({
-                url: '<?php echo base_url('admin/workflow/addListToWorkflowCampaign'); ?>',
+                url: "{{ base_url('admin/workflow/addListToWorkflowCampaign') }}",
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, selectedLists: listID},
+                data: {
+                    _token: '{{csrf_token()}}',
+                    moduleName: moduleName,
+                    moduleUnitID: moduleUnitID,
+                    actionValue: actionValue,
+                    selectedLists: listID
+                },
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -818,8 +941,8 @@ window.onpopstate = function () {
 
         $(document).on('change', ".addSegmentToCampaign", function () {
             $('.overlaynew').show();
-            var moduleName = '<?php echo $moduleName; ?>';
-            var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+            var moduleName = '{{ $moduleName }}';
+            var moduleUnitID = '{{ $moduleUnitID }}';
 
             var segmentId = $(this).val();
             var actionValue = ''
@@ -829,9 +952,15 @@ window.onpopstate = function () {
                 actionValue = 'deleteRecord';
             }
             $.ajax({
-                url: '<?php echo base_url('admin/workflow/addSegmentToWorkflowCampaign'); ?>',
+                url: "{{ base_url('admin/workflow/addSegmentToWorkflowCampaign') }}",
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, segmentId: segmentId},
+                data: {
+                    _token: '{{csrf_token()}}',
+                    moduleName: moduleName,
+                    moduleUnitID: moduleUnitID,
+                    actionValue: actionValue,
+                    segmentId: segmentId
+                },
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -852,8 +981,8 @@ window.onpopstate = function () {
 
         $(document).on('change', ".addTagToCampaign", function () {
             $('.overlaynew').show();
-            var moduleName = '<?php echo $moduleName; ?>';
-            var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+            var moduleName = '{{ $moduleName }}';
+            var moduleUnitID = '{{ $moduleUnitID }}';
             var tagId = $(this).val();
             var actionValue = ''
             if ($(this).is(":checked") === true) {
@@ -862,9 +991,15 @@ window.onpopstate = function () {
                 actionValue = 'deleteRecord';
             }
             $.ajax({
-                url: '<?php echo base_url('admin/workflow/addTagToWorkflowCampaign'); ?>',
+                url: "{{ base_url('admin/workflow/addTagToWorkflowCampaign') }}",
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, tagId: tagId},
+                data: {
+                    _token: '{{csrf_token()}}',
+                    moduleName: moduleName,
+                    moduleUnitID: moduleUnitID,
+                    actionValue: actionValue,
+                    tagId: tagId
+                },
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -884,8 +1019,8 @@ window.onpopstate = function () {
 
         $(document).on('change', ".addToExcludeCampaign", function () {
             $('.overlaynew').show();
-            var moduleName = '<?php echo $moduleName; ?>';
-            var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+            var moduleName = '{{ $moduleName }}';
+            var moduleUnitID = '{{ $moduleUnitID }}';
             var contactId = $(this).val();
             var actionValue = ''
             if ($(this).is(":checked") === true) {
@@ -895,9 +1030,15 @@ window.onpopstate = function () {
             }
             var listID = $(this).val();
             $.ajax({
-                url: '<?php echo base_url('admin/workflow/addContactToExcludeWorkflowCampaign'); ?>',
+                url: "{{ base_url('admin/workflow/addContactToExcludeWorkflowCampaign') }}",
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, contactId: contactId},
+                data: {
+                    _token: '{{csrf_token()}}',
+                    moduleName: moduleName,
+                    moduleUnitID: moduleUnitID,
+                    actionValue: actionValue,
+                    contactId: contactId
+                },
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -917,8 +1058,8 @@ window.onpopstate = function () {
 
         $(document).on('change', '.addListToExcludeCampaign', function () {
             $('.overlaynew').show();
-            var moduleName = '<?php echo $moduleName; ?>';
-            var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+            var moduleName = '{{ $moduleName }}';
+            var moduleUnitID = '{{ $moduleUnitID }}';
             var actionValue = ''
             if ($(this).is(":checked") === true) {
                 actionValue = 'addRecord';
@@ -927,9 +1068,15 @@ window.onpopstate = function () {
             }
             var listID = $(this).val();
             $.ajax({
-                url: '<?php echo base_url('admin/workflow/updateAutomationListsExcludedRecord'); ?>',
+                url: "{{ base_url('admin/workflow/updateAutomationListsExcludedRecord') }}",
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, selectedLists: listID},
+                data: {
+                    _token: '{{csrf_token()}}',
+                    moduleName: moduleName,
+                    moduleUnitID: moduleUnitID,
+                    actionValue: actionValue,
+                    selectedLists: listID
+                },
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -950,8 +1097,8 @@ window.onpopstate = function () {
 
         $(document).on('change', ".addExcludeSegmentToCampaign", function () {
             $('.overlaynew').show();
-            var moduleName = '<?php echo $moduleName; ?>';
-            var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+            var moduleName = '{{ $moduleName }}';
+            var moduleUnitID = '{{ $moduleUnitID }}';
             var segmentId = $(this).val();
             var actionValue = ''
             if ($(this).is(":checked") === true) {
@@ -960,9 +1107,15 @@ window.onpopstate = function () {
                 actionValue = 'deleteRecord';
             }
             $.ajax({
-                url: '<?php echo base_url('admin/workflow/addExcludeSegmentToWorkflowCampaign'); ?>',
+                url: "{{ base_url('admin/workflow/addExcludeSegmentToWorkflowCampaign') }}",
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, segmentId: segmentId},
+                data: {
+                    _token: '{{csrf_token()}}',
+                    moduleName: moduleName,
+                    moduleUnitID: moduleUnitID,
+                    actionValue: actionValue,
+                    segmentId: segmentId
+                },
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -982,8 +1135,8 @@ window.onpopstate = function () {
 
         $(document).on('change', ".addExcludedTagToCampaign", function () {
             $('.overlaynew').show();
-            var moduleName = '<?php echo $moduleName; ?>';
-            var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+            var moduleName = '{{ $moduleName }}';
+            var moduleUnitID = '{{ $moduleUnitID }}';
             var tagId = $(this).val();
             var actionValue = ''
             if ($(this).is(":checked") === true) {
@@ -992,9 +1145,15 @@ window.onpopstate = function () {
                 actionValue = 'deleteRecord';
             }
             $.ajax({
-                url: '<?php echo base_url('admin/workflow/addExcludedTagToWorkflowCampaign'); ?>',
+                url: "{{ base_url('admin/workflow/addExcludedTagToWorkflowCampaign') }}",
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, actionValue: actionValue, tagId: tagId},
+                data: {
+                    _token: '{{csrf_token()}}',
+                    moduleName: moduleName,
+                    moduleUnitID: moduleUnitID,
+                    actionValue: actionValue,
+                    tagId: tagId
+                },
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1021,7 +1180,7 @@ window.onpopstate = function () {
             var formData = new FormData($(this)[0]);
             window.parent.$('.overlaynew').show();
             $.ajax({
-                url: '<?php echo base_url('admin/workflow/updateWorkflowDraft'); ?>',
+                url: "{{ base_url('admin/workflow/updateWorkflowDraft') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -1050,12 +1209,7 @@ window.onpopstate = function () {
 <script>
 
 
-
-
-
-
-    function zoom_page(step)
-    {
+    function zoom_page(step) {
         var zoomscale = $(".touchspin-postfix").val();
 //        $(".email_workflow_sec").css('height', '1000px');
 //        $(".email_workflow_sec").css('overflow', 'auto');
@@ -1065,7 +1219,7 @@ window.onpopstate = function () {
 
     }
 
-// top navigation fixed on scroll and side bar collasped
+    // top navigation fixed on scroll and side bar collasped
     $(window).scroll(function () {
         var sc = $(window).scrollTop();
         if (sc > 100) {
@@ -1074,6 +1228,7 @@ window.onpopstate = function () {
             $("#header-sroll").removeClass("small-header");
         }
     });
+
     function smallMenu() {
         if ($(window).width() < 1600) {
             $('body').addClass('sidebar-xs');
@@ -1170,7 +1325,6 @@ window.onpopstate = function () {
     });
 
 
-
     $(".wfBacktoChooseMenu").click(function () {
         $(".wfSwitchMenu").hide();
         setTimeout(function () {
@@ -1191,7 +1345,6 @@ window.onpopstate = function () {
             $("#wfExcludeOptionMenu").show();
         }, 50);
     });
-
 
 
     $(document).on("click", ".loadAudience", function () {
@@ -1227,9 +1380,6 @@ window.onpopstate = function () {
     });
 
 
-
-
-
     $(document).on("click", ".wfLoadEmailNodeProperty", function () {
         if ($(".workflow_main_box").hasClass("workflow_fs")) {
             $("#wf_fs").trigger("click");
@@ -1246,7 +1396,13 @@ window.onpopstate = function () {
         $.ajax({
             url: '/admin/workflow/loadWorkflowEmailStats',
             type: "POST",
-            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitId: moduleUnitId, eventId: eventId, campaign_id: campaign_id},
+            data: {
+                _token: '{{csrf_token()}}',
+                moduleName: moduleName,
+                moduleUnitId: moduleUnitId,
+                eventId: eventId,
+                campaign_id: campaign_id
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1289,7 +1445,13 @@ window.onpopstate = function () {
         $.ajax({
             url: '/admin/workflow/loadWorkflowSMSStats',
             type: "POST",
-            data: {_token: '{{csrf_token()}}', moduleName: moduleName, campaign_id: campaign_id, moduleUnitId: moduleUnitId, eventId: eventId, },
+            data: {
+                _token: '{{csrf_token()}}',
+                moduleName: moduleName,
+                campaign_id: campaign_id,
+                moduleUnitId: moduleUnitId,
+                eventId: eventId,
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1327,7 +1489,12 @@ window.onpopstate = function () {
             $.ajax({
                 url: '/admin/workflow/previewWorkflowCampaign',
                 type: "POST",
-                data: {_token: '{{csrf_token()}}', moduleName: moduleName, campaignId: campaignId, moduleUnitId: moduleUnitId},
+                data: {
+                    _token: '{{csrf_token()}}',
+                    moduleName: moduleName,
+                    campaignId: campaignId,
+                    moduleUnitId: moduleUnitId
+                },
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -1371,7 +1538,15 @@ window.onpopstate = function () {
         $.ajax({
             url: '/admin/workflow/updateWorkflowCampaign',
             type: "POST",
-            data: {_token: '{{csrf_token()}}', moduleName: moduleName, subject: subject, greeting: greeting, introduction: introduction, template_source: template_source, campaignId: campaignId},
+            data: {
+                _token: '{{csrf_token()}}',
+                moduleName: moduleName,
+                subject: subject,
+                greeting: greeting,
+                introduction: introduction,
+                template_source: template_source,
+                campaignId: campaignId
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1398,7 +1573,14 @@ window.onpopstate = function () {
         $.ajax({
             url: '/admin/workflow/updateWorkflowCampaign',
             type: "POST",
-            data: {_token: '{{csrf_token()}}', moduleName: moduleName, greeting: greeting, introduction: introduction, template_source: template_source, campaignId: campaignId},
+            data: {
+                _token: '{{csrf_token()}}',
+                moduleName: moduleName,
+                greeting: greeting,
+                introduction: introduction,
+                template_source: template_source,
+                campaignId: campaignId
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1464,7 +1646,14 @@ window.onpopstate = function () {
         $.ajax({
             url: '/admin/workflow/updateEventTime',
             type: "POST",
-            data: {_token: '{{csrf_token()}}', event_id: eventID, delay_value: timerValue, delay_unit: timerUnit, event_type: 'sent', 'moduleName': moduleName},
+            data: {
+                _token: '{{csrf_token()}}',
+                event_id: eventID,
+                delay_value: timerValue,
+                delay_unit: timerUnit,
+                event_type: 'sent',
+                'moduleName': moduleName
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1484,7 +1673,14 @@ window.onpopstate = function () {
         $.ajax({
             url: '/admin/workflow/updateEventTime',
             type: "POST",
-            data: {_token: '{{csrf_token()}}', event_id: eventID, delay_value: timerValue, delay_unit: timerUnit, event_type: 'sent', 'moduleName': moduleName},
+            data: {
+                _token: '{{csrf_token()}}',
+                event_id: eventID,
+                delay_value: timerValue,
+                delay_unit: timerUnit,
+                event_type: 'sent',
+                'moduleName': moduleName
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1500,17 +1696,23 @@ window.onpopstate = function () {
         var email = $("#wf_preview_edit_template_text_email").val();
         var campaignId = $("#wf_preview_edit_template_campaign_id").val();
         //var moduleName = $("#wf_preview_edit_template_moduleName").val();
-        var moduleName = '<?php echo $moduleName; ?>';
-        var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+        var moduleName = '{{ $moduleName }}';
+        var moduleUnitID = '{{ $moduleUnitID }}';
         $('.overlaynew').show();
         $.ajax({
             url: '/admin/workflow/sendTestEmailworkflowCampaign',
             type: "POST",
-            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, campaignId: campaignId, email: email},
+            data: {
+                _token: '{{csrf_token()}}',
+                moduleName: moduleName,
+                moduleUnitID: moduleUnitID,
+                campaignId: campaignId,
+                email: email
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
-                    displayMessagePopup('success', 'Success', 'Test email sent successfully'); //javascript notification msg (edited) 
+                    displayMessagePopup('success', 'Success', 'Test email sent successfully'); //javascript notification msg (edited)
                     $('.overlaynew').hide();
                 }
             }
@@ -1526,17 +1728,23 @@ window.onpopstate = function () {
         var email = $("#wfPreviewTestCtr_text_email").val();
         var campaignId = $("#wf_email_preview").attr('campaign_id');
         //var moduleName = $("#wf_email_preview").attr('modulename');
-        var moduleName = '<?php echo $moduleName; ?>';
-        var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+        var moduleName = '{{ $moduleName }}';
+        var moduleUnitID = '{{ $moduleUnitID }}';
         $('.overlaynew').show();
         $.ajax({
             url: '/admin/workflow/sendTestEmailworkflowCampaign',
             type: "POST",
-            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, campaignId: campaignId, email: email},
+            data: {
+                _token: '{{csrf_token()}}',
+                moduleName: moduleName,
+                moduleUnitID: moduleUnitID,
+                campaignId: campaignId,
+                email: email
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
-                    displayMessagePopup('success', 'Success', 'Test email sent successfully'); //javascript notification msg (edited) 
+                    displayMessagePopup('success', 'Success', 'Test email sent successfully'); //javascript notification msg (edited)
                     $('.overlaynew').hide();
                 }
             }
@@ -1545,18 +1753,24 @@ window.onpopstate = function () {
     $(document).on("click", "#wfBtnPopupSendTestEmail", function () {
         var email = $("#wfTextPopupSendTestEmail").val();
         var campaignId = $("#wf_test_email_campaign_id").val();
-        //var moduleName = '<?php echo $moduleName; ?>';
-        var moduleName = '<?php echo $moduleName; ?>';
-        var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+        //var moduleName = '{{ $moduleName }}';
+        var moduleName = '{{ $moduleName }}';
+        var moduleUnitID = '{{ $moduleUnitID }}';
         $('.overlaynew').show();
         $.ajax({
             url: '/admin/workflow/sendTestEmailworkflowCampaign',
             type: "POST",
-            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, campaignId: campaignId, email: email},
+            data: {
+                _token: '{{csrf_token()}}',
+                moduleName: moduleName,
+                moduleUnitID: moduleUnitID,
+                campaignId: campaignId,
+                email: email
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
-                    displayMessagePopup('success', 'Success', 'Test email sent successfully'); //javascript notification msg (edited) 
+                    displayMessagePopup('success', 'Success', 'Test email sent successfully'); //javascript notification msg (edited)
                     $("#wfSendTestEmail").modal("hide");
                     $('.overlaynew').hide();
                 }
@@ -1575,7 +1789,7 @@ window.onpopstate = function () {
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
-                    displayMessagePopup('success', 'Success', 'Test SMS sent successfully'); //javascript notification msg (edited) 
+                    displayMessagePopup('success', 'Success', 'Test SMS sent successfully'); //javascript notification msg (edited)
                     $('.overlaynew').hide();
                 }
             }
@@ -1584,7 +1798,7 @@ window.onpopstate = function () {
     $(document).on("click", "#wfBtnPopupSendTestSMS", function () {
         var number = $("#wfTextPopupSendTestSMS").val();
         var campaignId = $("#wf_test_sms_campaign_id").val();
-        var moduleName = '<?php echo $moduleName; ?>';
+        var moduleName = '{{ $moduleName }}';
         $('.overlaynew').show();
         $.ajax({
             url: '/admin/workflow/sendTestSMSworkflowCampaign',
@@ -1602,21 +1816,26 @@ window.onpopstate = function () {
     });
 
 
-
     $(document).on("click", "#wfPreviewTestCtr_send_sms", function () {
         var number = $("#wfPreviewTestCtr_text_number").val();
         var campaignId = $("#wf_sms_preview").attr('campaign_id');
-        var moduleName = '<?php echo $moduleName; ?>';
-        var moduleUnitID = '<?php echo $moduleUnitID; ?>';
+        var moduleName = '{{ $moduleName }}';
+        var moduleUnitID = '{{ $moduleUnitID }}';
         $('.overlaynew').show();
         $.ajax({
             url: '/admin/workflow/sendTestSMSworkflowCampaign',
             type: "POST",
-            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitID: moduleUnitID, campaignId: campaignId, number: number},
+            data: {
+                _token: '{{csrf_token()}}',
+                moduleName: moduleName,
+                moduleUnitID: moduleUnitID,
+                campaignId: campaignId,
+                number: number
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
-                    displayMessagePopup('success', 'Success', 'Test SMS sent successfully'); //javascript notification msg (edited) 
+                    displayMessagePopup('success', 'Success', 'Test SMS sent successfully'); //javascript notification msg (edited)
                     $('.overlaynew').hide();
                 }
             }
@@ -1658,7 +1877,7 @@ window.onpopstate = function () {
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
-                    displayMessagePopup('success', 'Success', 'Test SMS sent successfully'); //javascript notification msg (edited) 
+                    displayMessagePopup('success', 'Success', 'Test SMS sent successfully'); //javascript notification msg (edited)
                     $('.overlaynew').hide();
                 }
             }
@@ -1701,6 +1920,7 @@ window.onpopstate = function () {
 
 
     });
+
     function initShowAddEventContainers() {
         $(".timeline").hide();
         $(".bootstrap-touchspin").hide();
@@ -1726,7 +1946,7 @@ window.onpopstate = function () {
     });
     $(document).on("click", "#createNewWorkflowEventNode", function (e) {
         e.preventDefault();
-        //check which email template selected   
+        //check which email template selected
 
         var emailTemplateId = $("#wf_act_email_template_id").val();
         var smsTemplateId = $("#wf_act_sms_template_id").val();
@@ -1748,7 +1968,20 @@ window.onpopstate = function () {
         $.ajax({
             url: '/admin/workflow/addWorkflowNode',
             type: "POST",
-            data: {_token: '{{csrf_token()}}', moduleName: moduleName, moduleUnitId: moduleUnitId, previous_event_id: previousID, emailTemplateId: emailTemplateId, smsTemplateId: smsTemplateId, source: source, delayVal: delayVal, delayUnit: delayUnit, 'current_event_id': currentID, 'event_type': event_type, node_type: node_type},
+            data: {
+                _token: '{{csrf_token()}}',
+                moduleName: moduleName,
+                moduleUnitId: moduleUnitId,
+                previous_event_id: previousID,
+                emailTemplateId: emailTemplateId,
+                smsTemplateId: smsTemplateId,
+                source: source,
+                delayVal: delayVal,
+                delayUnit: delayUnit,
+                'current_event_id': currentID,
+                'event_type': event_type,
+                node_type: node_type
+            },
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
@@ -1759,7 +1992,7 @@ window.onpopstate = function () {
                     //Open Editor
                     if (emailTemplateId > 0) {
                         if (data.categoryStatus != '2') {
-                            $("#loadstripotemplateInline").attr("src", '<?php echo base_url(); ?>admin/workflow/loadStripoCampaign/' + moduleName + '/' + data.campaign_id + '/' + '<?php echo $moduleUnitID; ?>');
+                            $("#loadstripotemplateInline").attr("src", '{{ base_url() }}admin/workflow/loadStripoCampaign/' + moduleName + '/' + data.campaign_id + '/' + '{{ $moduleUnitID }}');
                             //$("#workflow_template_stripo_modal").modal();
                             $("#superContainer").hide();
                             $("#editTemplateContainer").show();
@@ -1770,7 +2003,7 @@ window.onpopstate = function () {
 
                     if (smsTemplateId > 0) {
                         if (data.categoryStatus != '2') {
-                            $("#loadstripotemplateInline").attr("src", '<?php echo base_url(); ?>admin/workflow/loadStripoSMSCampaign/' + moduleName + '/' + data.campaign_id + '/' + '<?php echo $moduleUnitID; ?>');
+                            $("#loadstripotemplateInline").attr("src", '{{ base_url() }}admin/workflow/loadStripoSMSCampaign/' + moduleName + '/' + data.campaign_id + '/' + '{{ $moduleUnitID }}');
                             //$("#workflow_template_stripo_modal").modal();
                             $("#superContainer").hide();
                             $("#editTemplateContainer").show();
@@ -1789,6 +2022,7 @@ window.onpopstate = function () {
             }
         });
     });
+
     function loadAjaxTree(moduleName, moduleUnitId) {
         $('.overlaynew').show();
         $.ajax({
@@ -1821,14 +2055,13 @@ window.onpopstate = function () {
     }
 
 
-
-
     $(document).on("click", ".backtoMenu", function () {
         clearAllActive();
         clearAllMenu();
         $(".wfSwitchMenu").hide();
         $("#wfMainRightMenu").show();
     });
+
     function clearAllActive() {
         $(".wf_timer").removeClass('active_btn');
         $(".top_box").removeClass('active_sms');
@@ -1848,7 +2081,6 @@ window.onpopstate = function () {
         $("select[name='wfEmailMenuCampaign']").val('');
         $("select[name='wfSMSMenuCampaign']").val('');
     }
-
 
 
 </script>
