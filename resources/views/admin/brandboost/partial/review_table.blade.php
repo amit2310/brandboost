@@ -116,8 +116,8 @@
                             <ul class="dropdown-menu dropdown-menu-right tagss">
                                 @if (count($reviewTags) > 0)
                                     @foreach ($reviewTags as $oTag)
-                                       <button class="btn btn-xs btn_white_table pr10"> {{ $oTag->tag_name }} </button>                                                            
-                                    @endforeach    
+                                       <button class="btn btn-xs btn_white_table pr10"> {{ $oTag->tag_name }} </button>
+                                    @endforeach
                                 @endif
                                 <button class="btn btn-xs plus_icon ml10 applyInsightTagsReviews" reviewid="{{ base64_url_encode($oReview->id) }}" action_name="review-tag"><i class="icon-plus3"></i></button>
                             </ul>
@@ -127,9 +127,9 @@
 
                     <td>
                         <div class="tdropdown">
-                            @if ($oReview->ratings >= 4) 
+                            @if ($oReview->ratings >= 4)
                                 <i class="icon-primitive-dot txt_green fsize16"></i>
-                            @elseif ($oReview->ratings == 3) 
+                            @elseif ($oReview->ratings == 3)
                                 <i class="icon-primitive-dot txt_grey fsize16"></i>
                             @else
                                 <i class="icon-primitive-dot txt_red fsize16"></i>
@@ -148,24 +148,24 @@
                             <ul class="dropdown-menu dropdown-menu-right status">
                                 @if ($oReview->ratings >= 4)
                                     <li>
-                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '3' class="update_category"><i class="icon-primitive-dot txt_grey"></i> Neutral</a> 
+                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '3' class="update_category"><i class="icon-primitive-dot txt_grey"></i> Neutral</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '1' class="update_category"><i class="icon-primitive-dot txt_red"></i> Negative</a> 
+                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '1' class="update_category"><i class="icon-primitive-dot txt_red"></i> Negative</a>
                                     </li>
                                 @elseif($oReview->ratings == 3)
                                     <li>
-                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '5' class="update_category"><i class="icon-primitive-dot txt_green"></i> Positive</a> 
+                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '5' class="update_category"><i class="icon-primitive-dot txt_green"></i> Positive</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '1' class="update_category"><i class="icon-primitive-dot txt_red"></i> Negative</a> 
+                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '1' class="update_category"><i class="icon-primitive-dot txt_red"></i> Negative</a>
                                     </li>
                                 @else
                                     <li>
-                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '5' class="update_category"><i class="icon-primitive-dot txt_green"></i> Positive</a> 
+                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '5' class="update_category"><i class="icon-primitive-dot txt_green"></i> Positive</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '3' class="update_category"><i class="icon-primitive-dot txt_grey"></i> Neutral</a> 
+                                        <a href="javascript:void(0);" review_id='{{ $oReview->id }}' change_category = '3' class="update_category"><i class="icon-primitive-dot txt_grey"></i> Neutral</a>
                                     </li>
                                 @endif
                             </ul>
@@ -181,7 +181,7 @@
                                 <i class="icon-primitive-dot txt_green fsize16"></i>
                             @endif
                             <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                @if ($oReview->status == 0) 
+                                @if ($oReview->status == 0)
                                     {{ 'Inactive' }}
                                 @elseif ($oReview->status == 2)
                                     {{ 'Pending' }}
@@ -191,7 +191,7 @@
 
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right status">
-                                @if ($oReview->status == 1) 
+                                @if ($oReview->status == 1)
                                     <li>
                                         <a review_id="{{ $oReview->id }}" change_status = "0" class="chg_status"><i class='icon-primitive-dot txt_red'></i> Inactive</a>
                                     </li>
@@ -211,14 +211,14 @@
                         </div>
                     </td>
                     <td class="text-center">
-                        <div class="tdropdown ml10"> 
+                        <div class="tdropdown ml10">
                             <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
                             <ul class="dropdown-menu dropdown-menu-right more_act">
-                                @if ($oReview->status == 1) 
+                                @if ($oReview->status == 1)
                                     <li>
                                         <a review_id="{{ $oReview->id }}" change_status = "0" class="chg_status red"><i class='icon-file-locked'></i> Inactive</a>
                                     </li>
-                                @endif ($oReview->status == 2)
+                                @elseif ($oReview->status == 2)
                                     <li>
                                         <a review_id="{{ $oReview->id }}" change_status = "1" class="chg_status green"><i class='icon-file-locked'></i> Active</a>
                                     </li>
@@ -229,12 +229,12 @@
                                     <li>
                                         <a review_id="{{ $oReview->id }}" change_status = "1" class="chg_status green"><i class='icon-file-locked'></i> Active</a>
                                     </li>
-                                @endif                                
+                                @endif
 
                                 <li>
                                     <a target="_blank" href="{{ base_url('admin/brandboost/reviewdetails/' . $oReview->id) }}"><i class="icon-file-locked"></i> View Review</a>
                                 </li>
-                                
+
                                 @if ($oReview->review_type == 'text')
                                     <li>
                                         <a href="javascript:void(0);" class="editReview" reviewid="{{ $oReview->id }}"><i class="icon-gear"></i> Edit</a>
@@ -247,12 +247,12 @@
                                 <li>
                                     <a href="javascript:void(0);" class="deleteReview" reviewid="{{ $oReview->id }}" ><i class="icon-trash"></i> Delete</a>
                                 </li>
-                                
-                                
+
+
                             </ul>
                         </div></td>
                     <td style="display: none;">
-                        @if ($oReview->status == 0) 
+                        @if ($oReview->status == 0)
                             {{ 'Declined' }}
                         @elseif ($oReview->status == 2)
                             {{ 'Pending' }}
@@ -372,7 +372,7 @@
             </form>
         </div>
     </div>
-</div> 
+</div>
 
 <!-- =======================edit video popup========================= -->
 
@@ -416,7 +416,7 @@
             </form>
         </div>
     </div>
-</div> 
+</div>
 
 <div id="reviewPopup" class="modal fade">
     <div class="modal-dialog">
