@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -19,7 +19,7 @@ if (!empty($aBrandbosts)) {
         }
     }
 }
-error_reporting(0);
+
 @endphp
 
 <!-- Content area -->
@@ -31,7 +31,7 @@ error_reporting(0);
         <div class="row">
             <!--=============Headings & Tabs menu==============-->
             @if($viewstats == true)
-                    
+
                 <div class="col-md-3">
                    <h3><img src="{{ base_url() }}assets/images/onsite_icons.png"> On Site Overview</h3>
                    <ul class="nav nav-tabs nav-tabs-bottom">
@@ -48,7 +48,7 @@ error_reporting(0);
                    </ul>
                </div>
             @endif
-           
+
             <!--=============Button Area Right Side==============-->
             <div class="col-md-9 text-right btn_area">
                 <div class="btn-group">
@@ -70,7 +70,7 @@ error_reporting(0);
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -198,9 +198,9 @@ error_reporting(0);
         </div>
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
-   
+
     @if (!empty($aBrandbosts))
-        <div class="tab-content"> 
+        <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
 
@@ -219,10 +219,10 @@ error_reporting(0);
                                 <div class="heading_links pull-left">
                                     <a class="top_links btn btn-xs btn_white_table ml20 top_links_all">All</a>
                                     <a class="top_links top_links_Status" getValue="1" style="cursor: pointer;">Active</a>
-                                    <a class="top_links top_links_Status" getValue="0" style="cursor: pointer;">Inactive</a> 
-                                    <a class="top_links top_links_positive" getValue="positive" style="cursor: pointer;">Positive</a> 
-                                    <a class="top_links top_links_neutral" getValue="neutral" style="cursor: pointer;">Neutral</a> 
-                                    <a class="top_links top_links_negative" getValue="negative" style="cursor: pointer;">Negative</a> 
+                                    <a class="top_links top_links_Status" getValue="0" style="cursor: pointer;">Inactive</a>
+                                    <a class="top_links top_links_positive" getValue="positive" style="cursor: pointer;">Positive</a>
+                                    <a class="top_links top_links_neutral" getValue="neutral" style="cursor: pointer;">Neutral</a>
+                                    <a class="top_links top_links_negative" getValue="negative" style="cursor: pointer;">Negative</a>
                                     <a class="top_links top_links_added_today"  getValue="today" style="cursor: pointer;">Added Today</a>
                                 </div>
                                 <div class="heading-elements">
@@ -237,7 +237,7 @@ error_reporting(0);
                                         <a href="javascript:void(0);" class="editDataList"><i class="icon-pencil"></i></a>
                                         <a href="javascript:void(0);" style="display: none;" id="deleteButtonBrandboostOnline" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                         <a href="javascript:void(0);" style="display: none;" id="archiveButtonBrandboostOnline" class="custom_action_box"><i class="icon-gear position-left"></i></a>
-                                    </div>				
+                                    </div>
                                 </div>
 
                             </div>
@@ -276,7 +276,7 @@ error_reporting(0);
                                         $aUser = getLoggedUser();
                                         $currentUserId = $aUser->id;
                                         foreach ($aBrandbosts as $data) {
-                                        
+
                                             //if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
                                             $list_id = $data->id;
                                             $user_id = $data->user_id;
@@ -315,11 +315,11 @@ error_reporting(0);
                                             $siteRevCount = getCampaignSiteReviewCount($data->id);
 											$siteRevCount = 1;
                                             $siteRevRA = getCampaignSiteReviewRA($data->id);
-                                            
+
                                             $siteRevRA = 1;
 
                                             $imgSrc = base_url('assets/images/default_table_img2.png');
-                                           
+
                                             $reviewRequests = \App\Models\Admin\BrandboostModel::getReviewRequest($data->id, '');
                                             $getSendRequest = count($reviewRequests);
                                             $getSendRequestSms = getSendRequest($data->id, 'sms');
@@ -329,20 +329,20 @@ error_reporting(0);
 
                                             $reviewResponse = \App\Models\Admin\BrandboostModel::getReviewRequestResponse($data->id);
                                             $getResCount = count($reviewResponse);
-											
+
                                             $getSendRequest = $getSendRequest > 0 ? $getSendRequest : 1;
                                             $getResCount = $getResCount > 0 ? $getResCount : 1;
-                                            
+
                                             $positiveRating = 0;
                                             $neturalRating = 0;
                                             $negativeRating = 0;
                                             $positiveGraph = 0;
                                             $neturalGraph = 0;
                                             $negativeGraph = 0;
-                                            
+
                                             $newPositive = $newNegative = $newNeutral = 0;
                                             foreach ($reviewResponse as $reviewData) {
-                                                
+
                                                 if ($reviewData->ratings != '') {
                                                     if ($reviewData->ratings >= 4) {
                                                         if(strtotime($reviewData->reviewdate)>$recent){
@@ -370,7 +370,7 @@ error_reporting(0);
                                             $totalGraph = $getResCount * 100 / $getSendRequest;
                                             $totalGraph = $totalGraph > 100 ? 100 : $totalGraph;
 
-                                            
+
                                             @endphp
 
                                             <tr id="append-{{ $data->id }}" class="selectedClass">
@@ -395,7 +395,7 @@ error_reporting(0);
                                                 <td>
                                                     {!! ratingView($revRA) !!}
                                                 </td>
-                                                <td>														
+                                                <td>
                                                     <div class="media-left">
                                                         <div class=""><span class="text-default text-semibold">{{ date('F dS Y', strtotime($data->created)) }}</span></div>
                                                         <div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) }}</div>
@@ -425,14 +425,14 @@ error_reporting(0);
                                                     </div>
                                                     <div class="media-left">
                                                         <div data-toggle="tooltip" title="{{ $positiveRating }} out of {{ $getResCount }} Responses" data-placement="top">
-                                                            @if ($positiveRating > 0) 
+                                                            @if ($positiveRating > 0)
                                                                 <a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?cate=positive') }}" class="text-default text-semibold">{{ $positiveRating }}</a>
                                                             @else
                                                                 <a href="javascript:void(0);" class="text-default text-semibold">{{ $positiveRating }}</a>
                                                             @endif
-                                                            @if($newPositive>0)    
-                                                            {{ '<span style="color:#FF0000;"> ('.$newPositive.' new)</span>' }}   
-                                                            @endif    
+                                                            @if($newPositive>0)
+                                                            {{ '<span style="color:#FF0000;"> ('.$newPositive.' new)</span>' }}
+                                                            @endif
 
                                                         </div>
                                                     </div>
@@ -461,11 +461,11 @@ error_reporting(0);
                                                                 <a  href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?cate=neutral') }}" class="text-default text-semibold">
                                                                 {{ $neturalRating }}
                                                                 </a>
-                                                            @else     
+                                                            @else
                                                             <a href="javascript:void(0);" class="text-default text-semibold">{{ $neturalRating }}</a>
                                                             @endif
                                                             @if($newNeutral>0)
-                                                                {{ '<span style="color:#FF0000;"> ('.$newNeutral.' new)</span>' }}    
+                                                                {{ '<span style="color:#FF0000;"> ('.$newNeutral.' new)</span>' }}
                                                             @endif
                                                         </div>
                                                     </div>
@@ -490,21 +490,21 @@ error_reporting(0);
                                                     </div>
                                                     <div class="media-left">
                                                         <div data-toggle="tooltip" title="{{ $negativeRating }} out of {{ $getResCount }} Response" data-placement="top">
-                                                            @if ($negativeRating > 0) 
+                                                            @if ($negativeRating > 0)
                                                             <a  href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?cate=negative') }}" class="text-default text-semibold">
                                                                 {{ $negativeRating }}</a>
                                                             @else
                                                             <a href="javascript:void(0);" class="text-default text-semibold">{{ $negativeRating }}</a>
                                                             @endif
                                                             @if($newNegative>0)
-                                                            {{ '<span style="color:#FF0000;"> ('.$newNegative.' new)</span>' }}   
-                                                            @endif  
-                                                        </div> 
-                                                    </div> 
+                                                            {{ '<span style="color:#FF0000;"> ('.$newNegative.' new)</span>' }}
+                                                            @endif
+                                                        </div>
+                                                    </div>
 
                                                 </td>
                                                 <td>
-                                                    @if (sizeof($reviewResponse) < 1) 
+                                                    @if (sizeof($reviewResponse) < 1)
                                                         {!! displayNoData(true) !!}
                                                     @else
                                                         <div class="media-left media-middle"> <img src="{{ smilyRating($reviewResponse[0]->ratings) }}" class="img-circle" width="26" alt=""> </div>
@@ -577,12 +577,12 @@ error_reporting(0);
                                                                                 <li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="{{ $data->id }}" status="1"><i class="icon-file-stats"></i> Start</a></li>
                                                                             @endif
                                                                             <li><a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id) }}" brandID="{{ $data->id }}" b_title="{{ $data->brand_title }}" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
-                                                                            
+
                                                                             <li><a href="javascript:void(0);" class="deleteCampaign" brandID="{{ $data->id }}"><i class="icon-trash"></i> Delete</a></li>
                                                                             <li><a href="javascript:void(0);" class="archiveCampaign" brandID="{{ $data->id }}"><i class="icon-file-text2"></i> Move to Archive</a></li>
                                                                         @endif
                                                                         <li><a href="{{ base_url('admin/brandboost/stats/onsite/' . $data->id . '?t=contact') }}" target="_blank"><i class="icon-gear"></i> Contacts</a></li>
-                                                                        <li>@php $companyName = strtolower(str_replace(' ', '-', $company_name)) @endphp<a href="{{ base_url('for/'.$companyName.'/') }}{{ strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id }}" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li> 
+                                                                        <li>@php $companyName = strtolower(str_replace(' ', '-', $company_name)) @endphp<a href="{{ base_url('for/'.$companyName.'/') }}{{ strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id }}" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li>
                                                                         <li><a href="{{ base_url('admin/brandboost/reviews/' . $data->id) }}" target="_blank"><i class="icon-menu"></i>Reviews</a></li> <li><a href="{{ base_url('admin/questions/view/' . $data->id) }}" target="_blank"><i class="icon-menu"></i>Question</a></li>
                                                                     </ul>
                                                                 </div>
@@ -601,12 +601,12 @@ error_reporting(0);
                                                                         echo '-';
                                                                 }
                                                         }
-                                                        @endphp														
+                                                        @endphp
                                                 </td>
                                             </tr>
                                                 @php
                                                 //}
-                                        } 
+                                        }
                                         @endphp
                                     </tbody>
                                 </table>
@@ -617,7 +617,7 @@ error_reporting(0);
             </div>
 
             <!--===========TAB 2===========-->
-    
+
         </div>
 
     @else
@@ -635,10 +635,10 @@ error_reporting(0);
                                     <div class="heading_links pull-left">
                                         <a class="top_links btn btn-xs btn_white_table ml20 top_links_all">All</a>
                                         <a class="top_links top_links_Status" getValue="1" style="cursor: pointer;">Active</a>
-                                        <a class="top_links top_links_Status" getValue="0" style="cursor: pointer;">Inactive</a> 
-                                        <a class="top_links top_links_positive" getValue="positive" style="cursor: pointer;">Positive</a> 
-                                        <a class="top_links top_links_neutral" getValue="neutral" style="cursor: pointer;">Neutral</a> 
-                                        <a class="top_links top_links_negative" getValue="negative" style="cursor: pointer;">Negative</a> 
+                                        <a class="top_links top_links_Status" getValue="0" style="cursor: pointer;">Inactive</a>
+                                        <a class="top_links top_links_positive" getValue="positive" style="cursor: pointer;">Positive</a>
+                                        <a class="top_links top_links_neutral" getValue="neutral" style="cursor: pointer;">Neutral</a>
+                                        <a class="top_links top_links_negative" getValue="negative" style="cursor: pointer;">Negative</a>
                                         <a class="top_links top_links_added_today"  getValue="today" style="cursor: pointer;">Added Today</a>
                                     </div>
                                     <div class="heading-elements">
@@ -653,7 +653,7 @@ error_reporting(0);
                                             <a href="javascript:void(0);" class="editDataList"><i class="icon-pencil"></i></a>
                                             <button id="deleteButtonBrandboostOnline" class="btn btn-xs custom_action_box"><i class="icon-trash position-left"></i> Delete</button>
                                             <button id="archiveButtonBrandboostOnline" class="btn btn-xs custom_action_box"><i class="icon-gear position-left"></i> Archive</button>
-                                        </div>              
+                                        </div>
                                     </div>
 
                                 </div>
@@ -713,7 +713,7 @@ error_reporting(0);
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
         </div>
 
     @endif
@@ -759,7 +759,7 @@ error_reporting(0);
         <input class="form-control" id="campaignName" name="campaignName" placeholder="Enter Title" type="text" required>
 
           </div>
-          
+
           <div class="form-group mb0">
           <label>Please Enter Description:</label>
           <input class="form-control h52" type="text" id="OnsitecampaignDescription" name="OnsitecampaignDescription" value="" placeholder="Enter list description"/>
@@ -770,7 +770,7 @@ error_reporting(0);
         <div class="modal-footer">
         <button data-toggle="modal" type="submit" class="btn dark_btn bkg_sblue fsize14 h52">Continue</button>
           <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
-          
+
         </div>
       </form>
     </div>
@@ -779,7 +779,7 @@ error_reporting(0);
 
 @include('admin.modals.segments.segments-popup')
 <script src="{{ base_url() }}assets/js/modules/segments/segments.js" type="text/javascript"></script>
-                                                                            
+
 <!-- /addBrandboost -->
 
 <script type="text/javascript">
@@ -1102,7 +1102,7 @@ error_reporting(0);
             } else {
 
                 deleteConfirmationPopup(
-                "This campaign will deleted immediately.<br>You can't undo this action.", 
+                "This campaign will deleted immediately.<br>You can't undo this action.",
                 function() {
 
                     $('.overlaynew').show();
@@ -1123,7 +1123,7 @@ error_reporting(0);
                         }
                     });
                 });
-                
+
             }
 
         });
@@ -1185,7 +1185,7 @@ error_reporting(0);
             } else {
 
                 deleteConfirmationPopup(
-                "This campaign will deleted immediately.<br>You can't undo this action.", 
+                "This campaign will deleted immediately.<br>You can't undo this action.",
                 function() {
 
                     $('.overlaynew').show();
@@ -1206,7 +1206,7 @@ error_reporting(0);
                         }
                     });
                 });
-                
+
             }
 
         });
@@ -1223,7 +1223,7 @@ error_reporting(0);
             } else {
 
                 archiveConfirmationPopup(
-                "This campaign will move to archive immediately.<br>You can't undo this action.", 
+                "This campaign will move to archive immediately.<br>You can't undo this action.",
                 function() {
 
                     $('.overlaynew').show();
@@ -1258,7 +1258,7 @@ error_reporting(0);
             } else {
 
                 archiveConfirmationPopup(
-                "This campaign will move to archive immediately.<br>You can't undo this action.", 
+                "This campaign will move to archive immediately.<br>You can't undo this action.",
                 function() {
 
                     $('.overlaynew').show();
@@ -1280,7 +1280,7 @@ error_reporting(0);
                     });
                 });
 
-                
+
             }
         });
 
@@ -1292,7 +1292,7 @@ error_reporting(0);
             $('.overlaynew').show();
             var campaignName = $('#campaignName').val();
             var OnsitecampaignDescription = $('#OnsitecampaignDescription').val();
-                                                                            
+
             $.ajax({
                 url: "{{ base_url('admin/brandboost/addOnsite') }}",
                 type: "POST",
@@ -1334,11 +1334,11 @@ error_reporting(0);
             var brandID = $(this).attr('brandID');
 
             deleteConfirmationPopup(
-            "This campaign will deleted immediately.<br>You can't undo this action.", 
+            "This campaign will deleted immediately.<br>You can't undo this action.",
             function() {
 
                 $('.overlaynew').show();
-                
+
                 $.ajax({
                     url: "{{ base_url('admin/brandboost/delete_brandboost') }}",
                     type: "POST",
