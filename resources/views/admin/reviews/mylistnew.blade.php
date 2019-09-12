@@ -31,7 +31,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -190,7 +190,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php 
+                            @php
 							if (!empty($oMyReviews)):
                                 foreach ($oMyReviews as $oReview):
 
@@ -239,14 +239,14 @@
                                                 <div class="text-muted text-size-small">
 													{{ setStringLimit($oReview->comment_text) }}
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </td>
 
                                         <td style="text-align: center;">
                                             <button class="btn btn-xs btn_white_table pr10">
 												@if ($oReview->rstatus == 0)
 													<i class="icon-primitive-dot txt_red"></i> Disapproved
-												@else if ($oReview->rstatus == 2)
+												@elseif ($oReview->rstatus == 2)
 													<i class="icon-primitive-dot txt_blue"></i> Pending
 												@else
 													<i class="icon-primitive-dot txt_green"></i> Approved
@@ -261,7 +261,7 @@
                                                     @else
 														{{ '  <li class="dropdown">' }}
                                                     @endif
-													
+
 														<button type="button" class="btn btn-xs btn_white_table ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
 														<ul class="dropdown-menu dropdown-menu-right width-200">
 															@if ($oReview->review_type == 'text')
@@ -269,7 +269,7 @@
 															@else
 																<li><a href="javascript:void(0);" class="editVideoReview" reviewid="{{ $oReview->reviewid }}"><i class="icon-pencil"></i> Edit</a></li>
 															@endif
-															
+
 															<li><a href="javascript:void(0);" class="deleteReview" reviewid="{{ $oReview->reviewid }}" ><i class="icon-trash"></i> Delete</a></li>
 														</ul>
                                                     </li>
@@ -277,7 +277,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @php 
+                                @php
 								endforeach
 							endif
 						@endphp

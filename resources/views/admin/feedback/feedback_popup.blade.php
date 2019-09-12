@@ -1,13 +1,13 @@
-@php 
+@php
 	list($canRead, $canWrite) = fetchPermissions('Feedbacks') @endphp
-	$aTags = array('REVIEW_URL') 
+	$aTags = array('REVIEW_URL')
 @endphp
 <h5 class="text-semibold no-margin-top row">
     <div class="col-md-6"><a href="javascript:void(0);">{{ $oFeedback->brand_title }}</a></div>
-    <div class="col-md-6"><span class="heading-text pull-right label 
+    <div class="col-md-6"><span class="heading-text pull-right label
 		@if ($oFeedback->category == 'Positive')
             {{ 'bg-success' }}
-        @else if ($oFeedback->category == 'Neutral')
+        @elseif ($oFeedback->category == 'Neutral')
             {{ 'bg-blue' }}
         @else if ($oFeedback->category == 'Negative')
             {{ 'bg-danger' }}
@@ -36,7 +36,7 @@
             <li><a href="#note-tab" data-toggle="tab">Notes ({{ empty(sizeof($oNotes)) ? 0 : sizeof($oNotes) }})</a></li>
 
         </ul>
-        <div class="tab-content"> 
+        <div class="tab-content">
             <div class="tab-pane active" id="feedback-tab">
 				{{ $oFeedback->feedback }}
                 <br>
@@ -118,7 +118,7 @@
 	@foreach ($aTags as $value)
         customTag += '<button type="button" data-toggle="tooltip" title="Click to insert Tag" data-tag-name="{{ '{' . $value . '}' }}" class="btn btn-default add_btn draggable insert_tag_button">{{ '{' . $value . '}' }}</button>';
 	@endforeach
-	
+
     var fileGroup = '<div class="note-btn-group btn-group note-view">' + customTag + '</div>';
     $(fileGroup).appendTo($('.note-toolbar'));
 
@@ -131,12 +131,12 @@
         $(this).hide();
         $(".replysection").show();
     });
-    
+
     $(document).on("click", ".cancelFeedbackReply", function(){
         $(".replysection").hide();
         $(".displayreplysection").show();
     });
-    
+
     $(document).on("click", ".previewFeedback", function(){
         var bbid = $(this).attr("brandboost_id");
         var pcontent = $("#feedbackReply").val();

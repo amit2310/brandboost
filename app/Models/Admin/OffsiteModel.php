@@ -7,7 +7,7 @@ use Cookie;
 use Session;
 
 class OffsiteModel extends Model {
-	
+
 	/**
 	* Used to get offsite data
 	* @param type $campaignID
@@ -16,7 +16,7 @@ class OffsiteModel extends Model {
 	public static function getOffsite($id = '') {
 
         $aUser = getLoggedUser();
-        $userID = $aUser->id; 
+        $userID = $aUser->id;
 
 		$oData = DB::table('tbl_offsite_websites')
 			->when((!empty($id)), function ($query) use ($id) {
@@ -24,12 +24,12 @@ class OffsiteModel extends Model {
 			}, function ($query) use ($userID){
 				return $query->where('user_id', 1)
 				->orWhere('user_id', $userID);
-			}) 
+			})
 			->orderBy('id', 'asc')
 			->get();
 		return $oData;
     }
-	
+
 	public static function getOffsiteById($id) {
 
 		$oData = DB::table('tbl_offsite_websites')
@@ -38,7 +38,7 @@ class OffsiteModel extends Model {
 				->get();
 		return $oData;
     }
-	
+
 	public function offsite_count_all_edit($search, $selected_list) {
 
         $response = array();
@@ -53,7 +53,7 @@ class OffsiteModel extends Model {
         $result = $this->db->get();
         return $result->num_rows();
     }
-	
+
     public function getAllOffsite($id = '') {
 
         $response = array();
@@ -71,43 +71,54 @@ class OffsiteModel extends Model {
         return $response;
     }
 
+    /**
+     * Used to insert add offsite website data
+     * @param $aData
+     * @return mixed
+     */
     public function addOffsite($aData) {
-        $result = $this->db->insert('tbl_offsite_websites', $aData);
-        $inset_id = $this->db->insert_id();
-        //echo $this->db->last_query();exit;
-        if ($result)
-            return $inset_id;
-        else
-            return false;
+        $insert_id = DB::table('tbl_offsite_websites')->insertGetId($aData);
+        return $insert_id;
     }
-    
+
+    /**
+     * Used to delete custom source
+     * @param $aData
+     * @return bool
+     */
     public function DelCustomSource($aData) {
-        
-        $aUser = getLoggedUser();
-        $userID = $aUser->id; 
-        $where = '(id="'.$aData['CustomSourceID'].'" AND user_id = "'.$aData['user_id'].'")';
-        $this->db->where($where);
-        $result = $this->db->delete('tbl_offsite_websites');
-         //echo $this->db->last_query();exit;
+        $result = DB::table('tbl_offsite_websites')
+            ->where('id', $aData['CustomSourceID'])
+            ->where('user_id', $aData['user_id'])
+            ->delete();
         return true;
     }
-    
 
-    
-
+    /**
+     * Used to update offsite website list
+     * @param $aData
+     * @param $offsiteId
+     * @return bool
+     */
     public function updateOffsite($aData, $offsiteId) {
-
-        $this->db->where('id', $offsiteId);
-        $result = $this->db->update('tbl_offsite_websites', $aData);
-        if ($result)
+        $iAffectedRows = DB::table('tbl_offsite_websites')
+            ->where('id', $offsiteId)
+            ->update($aData);
+        if ($iAffectedRows>-1)
             return true;
         else
             return false;
     }
 
+    /**
+     * Used to delete custom offiste website
+     * @param $offsiteId
+     * @return bool
+     */
     public function deleteOffsite($offsiteId) {
-        $this->db->where('id', $offsiteId);
-        $result = $this->db->delete('tbl_offsite_websites');
+        $result = DB::table('tbl_offsite_websites')
+            ->where('id', $offsiteId)
+            ->delete();
         return true;
     }
 

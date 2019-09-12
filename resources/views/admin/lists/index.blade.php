@@ -494,7 +494,7 @@
                                         <td class="text-center">
                                             @if ($oList->status == 'active')
                                                 {!! '<i class="icon-primitive-dot txt_green fsize16"></i>' !!}
-                                            @else if ($oList->status == 'archive')
+                                            @elseif ($oList->status == 'archive')
                                             {!! '<i class="icon-primitive-dot txt_red fsize16"></i>' !!}
                                             @else
                                                 {!! '<i class="icon-primitive-dot txt_red fsize16"></i>' !!}
@@ -504,7 +504,7 @@
                                                data-toggle="dropdown">
                                                 @if ($oList->status == 'active')
                                                     {{ 'Active' }}
-                                                @else if ($oList->status == 'archive')
+                                                @elseif ($oList->status == 'archive')
                                                 {{ 'Archive' }}
                                                 @else
                                                     {{ 'Inactive' }}

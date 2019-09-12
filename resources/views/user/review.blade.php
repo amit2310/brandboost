@@ -289,7 +289,7 @@
                                                                             @if($commentData->status == '1')
                                                                                 <span class="txt_green"><i
                                                                                         class="icon-checkmark3 fsize12 txt_green"></i> Approve</span>
-                                                                            @else if($commentData->status == '2')
+                                                                            @elseif($commentData->status == '2')
                                                                             <span class="txt_yellow"><i
                                                                                     class="icon-checkmark3 fsize12 txt_yellow"></i> Pending</span>
                                                                             @endif

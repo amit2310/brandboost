@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -46,7 +46,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -171,7 +171,7 @@
     </div>
 
     <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
-    <div class="tab-content"> 
+    <div class="tab-content">
         <!--===========TAB 1===========-->
         <div class="tab-pane active" id="right-icon-tab0">
             <div class="row">
@@ -181,8 +181,8 @@
                         @if (!empty($oQuestions))
 							@include('admin.components.smart-popup.smart-question-widget')
                         @endif
-						
-                        <div class = "panel-heading"> 
+
+                        <div class = "panel-heading">
 							<span class = "pull-left">
                                 <h6 class = "panel-title">
 									@if (!empty($oQuestions))
@@ -216,7 +216,7 @@
                                     <tr>
                                         <th style="display: none;"></th>
                                         <th style="display: none;"></th>
-                                        <th style="display: none;" class="nosort editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="control-primary" id="checkAll" ><span class="custmo_checkmark"></span></label></th>  
+                                        <th style="display: none;" class="nosort editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="control-primary" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
                                         <th><i class=""><img src="assets/images/icon_name.png"></i>Contact</th>
                                         <th><i class=""><img src="assets/images/icon_source.png"></i>Question</th>
                                         <th><i class=""><img src="assets/images/icon_campaign.png"></i>Campaign</th>
@@ -235,7 +235,7 @@
 
                                             //$iAnswerCount = getAnswerCount($oQuestion->id);
                                             //$oTags = $this->mTags->getTagsDataByQuestionID($oQuestion->id);
-                                            
+
                                             $defaultAvatar = base_url('profile_images/avatar_image.png');
                                             if (!empty($oQuestion->avatar)) {
                                                 $avatarImage = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oQuestion->avatar;
@@ -288,22 +288,22 @@
                                                         <div class="text-muted text-size-small">{{ date('h:iA', strtotime($oQuestion->created)) }}</div>
                                                     </div>
                                                 </td>
-        
+
                                                 <td class="text-right">
 
                                                     <div class="tdropdown ml10">
                                                         @if ($oQuestion->status == 0)
-															<i class="icon-primitive-dot txt_red fsize16"></i> 
-                                                        @else if ($oQuestion->status == 2)
-                                                            <i class="icon-primitive-dot txt_grey fsize16"></i> 
+															<i class="icon-primitive-dot txt_red fsize16"></i>
+                                                        @elseif ($oQuestion->status == 2)
+                                                            <i class="icon-primitive-dot txt_grey fsize16"></i>
                                                         @else
-															<i class="icon-primitive-dot txt_green fsize16"></i> 
+															<i class="icon-primitive-dot txt_green fsize16"></i>
                                                         @endif
-														
+
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
                                                             @if ($oQuestion->status == 0)
 																{{ 'Inactive' }}
-                                                            @else if ($oQuestion->status == 2)
+                                                            @elseif ($oQuestion->status == 2)
 																{{ 'Pending' }}
                                                             @else
 																{{ 'Active' }}
@@ -312,7 +312,7 @@
                                                         <ul class="dropdown-menu dropdown-menu-right status">
                                                             @if ($oQuestion->status == 1)
                                                                 <li><a question_id='{{ $oQuestion->id }}' change_status = '0' class='chg_status red'><i class='icon-primitive-dot txt_red'></i> Inactive</a></li>
-                                                            @else if ($oQuestion->status == 2)
+                                                            @elseif ($oQuestion->status == 2)
                                                                 <li><a question_id='{{ $oQuestion->id }}' change_status = '1' class='chg_status green'><i class='icon-primitive-dot txt_green'></i> Active</a></li>
                                                                 <li><a question_id='{{ $oQuestion->id }}' change_status = '0' class='chg_status red'><i class='icon-primitive-dot txt_red'></i> Inactive</a></li>
                                                             @else
@@ -321,7 +321,7 @@
                                                         </ul>
                                                     </div>
                                                 </td>
-                                                <td class="text-center"> 
+                                                <td class="text-center">
                                                     <div class="tdropdown">
                                                         <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                                         <ul class="dropdown-menu dropdown-menu-right more_act">
@@ -441,7 +441,7 @@
             }
         });
 
-        
+
 		$(document).on('click', '.checkRows', function () {
             var inc = 0;
             var rowId = $(this).val();
@@ -467,7 +467,7 @@
                 $('#checkAll').prop('checked', false);
             }
         });
-		
+
 
         $(document).on('click', '#deleteButtonQuestionList', function () {
             var val = [];
@@ -478,7 +478,7 @@
                 alert('Please select a row.')
             } else {
                 deleteConfirmationPopup(
-                "This question will deleted immediately.<br>You can't undo this action.", 
+                "This question will deleted immediately.<br>You can't undo this action.",
                 function() {
                     $('.overlaynew').show();
                     $.ajax({
@@ -500,12 +500,12 @@
                 });
             }
         });
-		
+
 
         $(document).on('click', '.deleteQuestion', function () {
             var questionID = $(this).attr('queationid');
             deleteConfirmationPopup(
-            "This question will deleted immediately.<br>You can't undo this action.", 
+            "This question will deleted immediately.<br>You can't undo this action.",
             function() {
                 $('.overlaynew').show();
                 $.ajax({
@@ -548,7 +548,7 @@
                 }
             });
         });
-		
+
 
         $('#onsiteQuestion thead tr').clone(true).appendTo('#onsiteQuestion thead');
 			var tableId = 'onsiteQuestion';
@@ -569,7 +569,7 @@
                 });
             }
         });
-		
+
 
         $(document).on('click', '.filterByColumn', function () {
             $('.nav-tabs').each(function (i) {
@@ -589,7 +589,7 @@
                 tableBase.draw();
             }
         });
-		
+
 
         $(document).on('click', '.top_links_clk', function () {
             $('.heading_links').each(function (i) {
@@ -617,7 +617,7 @@
                 tableBase.draw();
             }
         });
-		
+
 
         $(document).on("click", ".applyInsightTags", function () {
             var question_id = $(this).attr("question_id");
@@ -649,7 +649,7 @@
                 }
             });
         });
-		
+
 
         $("#frmQuestionTagListModal").submit(function () {
             var formdata = $("#frmQuestionTagListModal").serialize();
@@ -668,7 +668,7 @@
             });
             return false;
         });
-		
+
 
         $(document).on('click', '.editDataQuestion', function () {
             $('.editAction').toggle();

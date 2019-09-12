@@ -1,4 +1,4 @@
-@php 
+@php
 	list($canRead, $canWrite) = fetchPermissions('Feedbacks')
 @endphp
 
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                 @endif
-				
+
                 <div class="table-responsive">
                     <table class="table datatable-basic datatable-sorting">
                         <thead>
@@ -81,16 +81,16 @@
                                         </td>
 
                                         <td>
-                                            @php 
+                                            @php
 												if ($data->category == 'Positive') {
 													$ratingValue = 5;
 												} else if ($data->category == 'Neutral') {
 													$ratingValue = 3;
 												} else {
 													$ratingValue = 1;
-												} 
+												}
 											@endphp
-											
+
 											{{ $smilyImage = ratingView($ratingValue) }}
                                         </td>
 
@@ -120,7 +120,7 @@
                                                             <button class="btn btn-xs btn_white_table pr10"> {{ $tagsData->tag_name }}</button>
 														@endforeach
 													@endif
-													
+
 													@if ($canWrite)
                                                         <button class="btn btn-xs plus_icon applyInsightTags" feedback_id="{{ base64_url_encode($data->id) }}" action_name="feedback-tag"><i class="icon-plus3"></i></button>
 													@endif
@@ -138,9 +138,9 @@
 													@elseif ($data->category == 'Negative')
                                                         <span class="label txt_red">Negative</span>
 													@endif
-													
+
                                                     &nbsp; <span class="caret"></span></button>
-													
+
 													@if (count($feedbackTags) > 0)
 														<ul class="dropdown-menu dropdown-menu-right width-100">
 															<li><a class="txt_blue updateFeedbackStatusNew" feedback_id="{{ $data->id }}" fb_status="Positive">Positive</a></li>
@@ -155,7 +155,7 @@
                                             <button class="btn btn-xs btn_white_table pr10">
                                                 @if ($data->status == 0)
                                                     <i class="icon-primitive-dot txt_red"></i> Disapproved
-                                                @else if ($data->status == 2)
+                                                @elseif ($data->status == 2)
                                                     <i class="icon-primitive-dot txt_blue"></i> Pending
                                                 @else
                                                     <i class="icon-primitive-dot txt_green"></i> Approved
@@ -164,18 +164,18 @@
                                         </td>
 
                                         <td>
-                                            <ul class="icons-list">  
+                                            <ul class="icons-list">
                                                 <li class="dropdown">
                                                     <button type="button" class="btn btn-xs btn_white_table ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-right">
                                                         <li><a href="{{ base_url() }}admin/feedback/details/{{ $data->id }}" target="_blank"><i class="icon-file-stats "></i> View Details</a></li>
 
-														@if ($canWrite)  
+														@if ($canWrite)
                                                             <li><a href="javascript:void(0);" class="applyInsightTags" action_name="feedback-tag" feedback_id="{{ $data->id }}"><i class="icon-file-stats"></i> Apply Tags</a></li>
 														@endif
-														
+
                                                         <li><a class="displayFeedback" fb_tab_type="feedback" feedback_id="{{ $data->id }}" fb_time="{{ date('M d, Y h:i A', strtotime($data->created)) }} ({{ timeAgo($data->created) }})" href="javascript:void(0);" ><i class="icon-file-stats "></i> View</a></li>
-														
+
 														@if ($canWrite)
                                                             <li><a class="displayFeedback" fb_tab_type="note" feedback_id="{{ $data->id }}" href="javascript:void(0);" fb_time="{{ date('M d, Y h:i A', strtotime($data->created)) }} ({{ timeAgo($data->created) }})"><i class="icon-pencil7"></i> Add Note</a></li>
 														@endif
@@ -188,7 +188,7 @@
 									@php
 								}
 							}
-							@endphp	
+							@endphp
                         </tbody>
                     </table>
                 </div>
@@ -228,7 +228,7 @@
             $('.checkRows:checkbox:checked').each(function (i) {
                 inc++;
             });
-			
+
             if (inc == 0) {
                 $('.custom_action_box').hide();
             } else {
@@ -292,4 +292,4 @@
             $('.editAction').show();
         });
     });
-</script>		
+</script>

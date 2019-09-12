@@ -27,7 +27,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -233,14 +233,14 @@
                                                 <div class="text-muted text-size-small">
 													{{ setStringLimit($oReview->comment_text) }}
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </td>
 
                                         <td style="text-align: center;">
                                             <button class="btn btn-xs btn_white_table pr10">
                                                 @if ($oReview->rstatus == 0)
 													<i class="icon-primitive-dot txt_red"></i> Disapproved
-                                                @else if ($oReview->rstatus == 2)
+                                                @elseif ($oReview->rstatus == 2)
 													<i class="icon-primitive-dot txt_blue"></i> Pending
                                                 @else
 													<i class="icon-primitive-dot txt_green"></i> Approved
@@ -366,7 +366,7 @@
                                 <input type="text" name="edit_review_title" id="edit_review_title" placeholder="Title" required>
                             </div>
                         </div>
-						
+
                         <div class="col-md-12">
                             <div class="input_box" style="height:80px;">
                                 <label>Rating</label>

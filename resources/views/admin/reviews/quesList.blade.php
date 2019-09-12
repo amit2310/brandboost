@@ -104,7 +104,7 @@ if (!empty($oCampaign)) {
         .video_review{ height:550px; overflow:auto;}
     }
 
-</style>  
+</style>
 
 @if ($display == 'true')
     <section class="top_text price">
@@ -123,7 +123,7 @@ if (!empty($oCampaign)) {
 
                                 <div class="row">
                                     <div class="col-md-3 text-center">
-                                        <figure><img src="{{ base_url() }}assets/images/v_user.jpg"/></figure>	
+                                        <figure><img src="{{ base_url() }}assets/images/v_user.jpg"/></figure>
                                     </div>
 
                                     <div class="col-md-7 user_details_box pl0">
@@ -140,7 +140,7 @@ if (!empty($oCampaign)) {
                                                     @for ($i = 0; $i < $aReview['ratings']; $i++)
                                                         <i class="fa fa-star"></i>
                                                     @endfor
-													
+
 													@if ($i < 5)
                                                         @for ($j = $i; $j < 5; $j++)
                                                             <i class="fa fa-star grey"></i>
@@ -162,7 +162,7 @@ if (!empty($oCampaign)) {
                                         <div class="text_box brand_desc">
                                             @if ($aReview['review_type'] == 'text')
 												{{ $aReview['comment_text'] }}
-                                            @else if ($aReview['review_type'] == 'video')
+                                            @elseif ($aReview['review_type'] == 'video')
                                                 <video width="400" controls>
                                                     <source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $aReview['comment_video'] }}" type="video/mp4">
                                                 </video>
@@ -236,7 +236,7 @@ if (!empty($oCampaign)) {
 
                     <div class="row">
                         <div class="col-md-3 text-center">
-                            <figure><img src="http://www.brandboost.io/1/images/v_user.jpg"></figure>	
+                            <figure><img src="http://www.brandboost.io/1/images/v_user.jpg"></figure>
                         </div>
 
                         <div class="col-md-6 user_details_box pl0 pr0">
@@ -252,7 +252,7 @@ if (!empty($oCampaign)) {
                                     @for ($i = 0; $i < $aLatestReview['ratings']; $i++)
                                         <i class="fa yellow fa-star"></i>
                                     @endfor
-									
+
                                     @if ($i < 5)
                                         @for ($j = $i; $j < 5; $j++)
                                             <i class="fa fa-star"></i>
@@ -272,14 +272,14 @@ if (!empty($oCampaign)) {
                         <div class="col-md-12 @if ($aLatestReview['review_type'] == 'video') text-center @endif">
                             @if ($aLatestReview['review_type'] == 'text')
 								{{ $aLatestReview['comment_text'] }}
-                            @else if ($aLatestReview['review_type'] == 'video')
+                            @elseif ($aLatestReview['review_type'] == 'video')
                                 <video width="400" controls style="width:100%">
                                     <source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $aLatestReview['comment_video'] }}" type="video/mp4">
                                 </video>
 							@endif
                         </div>
                     </div>
-					
+
                     @if ($bAllowHelpful)
                         <div class="row">
                             <div class="col-md-12 mtop10 text-center">
@@ -311,8 +311,8 @@ if (!empty($oCampaign)) {
                                 </div>
                                 <div class="col-md-12 mbot20 mtop10">
                                     <input type="submit" class="btn grey_btn btn-sm" name="subQues" value="Submit">
-                                </div> 
-                            </form>    
+                                </div>
+                            </form>
                         </div>
                     </div>
 
@@ -327,7 +327,7 @@ if (!empty($oCampaign)) {
 							@foreach ($aLatestReview['comment_block'] as $aComment)
                                 <div class="col-md-12 mtop10">
                                     <div class="cust_review">
-                                        <figure><img src="http://www.freeiconspng.com/uploads/male-icon-19.png"></figure> 
+                                        <figure><img src="http://www.freeiconspng.com/uploads/male-icon-19.png"></figure>
                                         <p>{{ $aComment['firstname'] . ' ' . $aComment['lastname'] }} : <i>{{ date('F d, Y', strtotime($aComment['created'])) }}</i> <br><strong>{{ $aComment['content'] }}</strong></p>
                                     </div>
                                 </div>
@@ -362,7 +362,7 @@ if (!empty($oCampaign)) {
 
                     <div class="row">
                         <div class="col-md-6">
-                            <p> 
+                            <p>
 								@if ($bAllowLiveReading)
 									17 People Currently Watching This Review
 								@endif
@@ -438,7 +438,7 @@ if (!empty($oCampaign)) {
         });
 
 
-        // -------submit question 
+        // -------submit question
         $("#frmques").submit(function () {
             var formdata = $("#frmques").serialize();
             $.ajax({
