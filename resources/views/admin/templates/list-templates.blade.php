@@ -3,9 +3,9 @@ $moduleName = !(empty($moduleName)) ? $moduleName : 'Raj';
 $moduleUnitID = !(empty($moduleUnitID)) ? $moduleUnitID : '';
 @endphp
 
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
-@section('title')
+@section('title')3
 {{ $title }}
 @endsection
 
@@ -44,14 +44,14 @@ $moduleUnitID = !(empty($moduleUnitID)) ? $moduleUnitID : '';
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-9 text-right btn_area">
-                <button type="button" class="btn dark_btn dropdown-toggle ml10 addUserTemplate" template-type="{{ $templateType }}"><i class="icon-plus3"></i><span> &nbsp;  Add Template</span> </button>  
+                <button type="button" class="btn dark_btn dropdown-toggle ml10 addUserTemplate" template-type="{{ $templateType }}"><i class="icon-plus3"></i><span> &nbsp;  Add Template</span> </button>
 
             </div>
         </div>
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
 
-    <div class="tab-content"> 
+    <div class="tab-content">
         <!--===========TAB 1===========-->
         @if ($templateType == 'email')
             @include('admin.templates.emails.email-template-index')
@@ -90,10 +90,10 @@ $moduleUnitID = !(empty($moduleUnitID)) ? $moduleUnitID : '';
                                 <select class="form-control h52" name="templateCategory" required="">
                                     <option>--Select--</option>
 
-                                    @if (!empty($oCategories)) 
+                                    @if (!empty($oCategories))
                                     @foreach ($oCategories as $oCategory)
 
-                                    <option value="{{ $oCategory->id }}"> {{ $oCategory->category_name }}</option>                 
+                                    <option value="{{ $oCategory->id }}"> {{ $oCategory->category_name }}</option>
 
                                     @endforeach
                                     @endif

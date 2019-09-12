@@ -1,18 +1,22 @@
 <div class="panel panel-flat wfSwitchMenu" id="wfTimerMenu" style="display:none;">
     <div class="panel-heading">
-        <h6 class="panel-title pull-left"><a style="color: #5e729d!important;" class="backtoMenu" href="javascript:void(0);"> <i class=""><img width="20" src="<?php echo base_url(); ?>assets/images/back_icon.png"/></i> &nbsp; Back</a></h6>
+        <h6 class="panel-title pull-left"><a style="color: #5e729d!important;" class="backtoMenu"
+                                             href="javascript:void(0);"> <i class=""><img width="20"
+                                                                                          src="{{ base_url() }}assets/images/back_icon.png"/></i>
+                &nbsp; Back</a></h6>
         <h6 class="panel-title pull-right">Time trigger</h6>
         <div class="clearfix"></div>
     </div>
     <div class="panel-body p20 pt0 bkg_white">
-        <div class="profile_headings m0 mb10">CONFIGURATION </div>
+        <div class="profile_headings m0 mb10">CONFIGURATION</div>
 
         <div class="row">
             <div class="col-md-4">
 
                 <div class="form-group bbot pb20">
                     <label class="control-label">Time</label>
-                    <input type="number" name="delay_value" value="10" id="wf_timer_event_value" class="form-control h52" />
+                    <input type="number" name="delay_value" value="10" id="wf_timer_event_value"
+                           class="form-control h52"/>
                 </div>
 
             </div>
@@ -29,11 +33,10 @@
                     </select>
                 </div>
             </div>
-            
-            <input type="hidden" id="wf_timer_event_id" value="" />
-            <input type="hidden" name="moduleName" value="<?php echo $moduleName;?>" id="wf_timer_moduleName" />
-        </div>
 
+            <input type="hidden" id="wf_timer_event_id" value=""/>
+            <input type="hidden" name="moduleName" value="{{ $moduleName }}" id="wf_timer_moduleName"/>
+        </div>
 
 
         <div class="">
@@ -47,4 +50,4 @@
         </div>
 
     </div>
-</div> 
+</div>
