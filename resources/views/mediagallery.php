@@ -1,5 +1,4 @@
 <?php
-error_reporting(0);
 $allowTitle = $galleryData->allow_title;
 $allowArrows = $galleryData->allow_arrow;
 $allowRating = $galleryData->allow_ratings;

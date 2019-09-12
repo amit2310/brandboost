@@ -1,6 +1,5 @@
-<?php error_reporting(0);//pre($oCurrentPlanData); die;   ?>
 
-<div class="row monthly_pricing_plan" <?php if (!empty($oCurrentPlanData) && !(($oCurrentPlanData->subs_cycle == 'month' || $oCurrentPlanData->subs_cycle == 'monthly') && ($oCurrentPlanData->level_name != 'Pro'))): ?> style="display:none;"<?php endif; ?>> 
+<div class="row monthly_pricing_plan" <?php if (!empty($oCurrentPlanData) && !(($oCurrentPlanData->subs_cycle == 'month' || $oCurrentPlanData->subs_cycle == 'monthly') && ($oCurrentPlanData->level_name != 'Pro'))): ?> style="display:none;"<?php endif; ?>>
     <?php if (!empty($oMemberships)): $isMembershipActive = false; ?>
         <?php foreach ($oMemberships as $oMembership): ?>
             <?php if (($oMembership->type == 'membership') && ($oMembership->subs_cycle == 'monthly' || $oMembership->subs_cycle == 'month')): ?>
@@ -20,7 +19,7 @@
                     <div class="price_plan">
                         <div class="imgicon"><img src="{{ URL::asset('assets/images/'.$planiconup) }}"/></div>
                         <div class="bbot p30 text-center">
-                            <p class="txt_purple fsize16 mt-5"><?php echo $oMembership->level_name; ?></p>	
+                            <p class="txt_purple fsize16 mt-5"><?php echo $oMembership->level_name; ?></p>
                             <h3 class="mt-5 mb0">$<?php echo $oMembership->price; ?><span>/mo</span></h3>
                             <p class="text-muted fsize13 m0">Billed Monthly</p>
                         </div>
@@ -49,7 +48,7 @@
                                 <button type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
                             <?php } else { ?>
                                 <button type="button" type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" plan_id="<?php echo $oMembership->plan_id; ?>" plan_name="<?php echo $oMembership->level_name; ?>"><span><?php if (empty($oCurrentPlanData)): ?>Buy<?php elseif ($isMembershipActive): ?>Upgrade<?php else: ?>Downgrade<?php endif; ?></span> </button>
-                            <?php } 
+                            <?php }
                             }
                         ?>
                         </div>
@@ -58,10 +57,10 @@
             <?php endif; ?>
         <?php endforeach; ?>
     <?php endif; ?>
-    <!--//End Pricing --> 
+    <!--//End Pricing -->
 </div>
 
-<div class="row yearly_pricing_plan" <?php if (!(($oCurrentPlanData->subs_cycle == 'yearly' || $oCurrentPlanData->subs_cycle == 'year') || ($oCurrentPlanData->level_name == 'Pro'))): ?> style="display:none;"<?php endif; ?>> 
+<div class="row yearly_pricing_plan" <?php if (!(($oCurrentPlanData->subs_cycle == 'yearly' || $oCurrentPlanData->subs_cycle == 'year') || ($oCurrentPlanData->level_name == 'Pro'))): ?> style="display:none;"<?php endif; ?>>
     <?php if (!empty($oMemberships)): $isMembershipActive = false; ?>
         <?php foreach ($oMemberships as $oMembership): ?>
             <?php if (($oMembership->type == 'membership') && ($oMembership->subs_cycle == 'yearly' || $oMembership->subs_cycle == 'year')): ?>
@@ -81,7 +80,7 @@
                     <div class="price_plan">
                         <div class="imgicon"><img src="{{ URL::asset('assets/images/'.$planiconup2) }}"/></div>
                         <div class="bbot p30 text-center">
-                            <p class="txt_purple fsize16 mt-5"><?php echo $oMembership->level_name; ?></p>	
+                            <p class="txt_purple fsize16 mt-5"><?php echo $oMembership->level_name; ?></p>
                             <h3 class="mt-5 mb0">$<?php echo $oMembership->price; ?><span>/yr</span></h3>
                             <p class="text-muted fsize13 m0">Billed Yearly</p>
                         </div>
@@ -120,7 +119,7 @@
             <?php endif; ?>
         <?php endforeach; ?>
     <?php endif; ?>
-    <!--//End Pricing --> 
+    <!--//End Pricing -->
 </div>
 <script>
     $(document).ready(function () {

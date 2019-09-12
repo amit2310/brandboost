@@ -1,11 +1,11 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
 @endsection
 
 @section('contents')
-@php error_reporting(0); list($canRead, $canWrite) = fetchPermissions('Feedbacks') @endphp
+@php list($canRead, $canWrite) = fetchPermissions('Feedbacks') @endphp
 
 @php
 	$aData['allTab'] = '';
@@ -53,7 +53,7 @@
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-9">
                 <h3><img src="/assets/images/offsite_icon_19.png" style="width: 16px;"> &nbsp; Offsite Brand Boost Feedback</h3>
-               
+
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <li class="active all"><a style="javascript:void();" class="filterByColumn" fil="">All</a></li>
                     <li><a style="javascript:void();" class="filterByColumn" fil="positive">Positive</a></li>
@@ -83,7 +83,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -234,7 +234,7 @@
 							</div>
 						</div>
 					</div>
-					
+
                     <div class="table-responsive">
 						@include('admin.feedback.partial.feedback-list-table');
                     </div>
@@ -268,7 +268,7 @@ $(document).ready(function () {
 			}
 		});
 	});
-	
+
 	$(document).on("click", ".updateFeedbackStatusNew", function () {
         $('.overlaynew').show();
         var feedbackid = $(this).attr('feedback_id');
@@ -289,7 +289,7 @@ $(document).ready(function () {
             }
         });
     });
-	
+
 	$(document).on("click", ".applyInsightTagsFeedback", function () {
         var review_id = $(this).attr("reviewid");
         var feedback_id = $(this).attr("feedback_id");

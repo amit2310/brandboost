@@ -1,11 +1,11 @@
-   @extends('layouts.main_template') 
+   @extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
 @endsection
 
 @section('contents')
-@php error_reporting(0); @endphp	
+
 <div class="content">
 
 	<!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
@@ -14,7 +14,7 @@
             <!--=============Headings & Tabs menu==============-->
             <div class="col-md-3">
                 <h3><img style="width: 16px;" src="/assets/images/analysis_icon.png"> Feedback Report</h3>
-               
+
             </div>
             <!--=============Button Area Right Side==============-->
               <div class="col-md-9 text-right btn_area">
@@ -37,7 +37,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -159,13 +159,13 @@
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
 
-    @php 
+    @php
 		$ratingOne = 0;
 		$ratingTwo = 0;
 		$ratingThree = 0;
 		$ratingFour = 0;
 		$ratingFive = 0;
-		foreach($aData['bbStatsData'] as $statsData){ 
+		foreach($aData['bbStatsData'] as $statsData){
 			if($statsData->ratings == 1){
 				$ratingOne = $ratingOne + 1;
 			}
@@ -183,10 +183,10 @@
 			}
 		}
 		$totalReviews = $ratingOne+$ratingTwo+$ratingThree+$ratingFour+$ratingFive;
-		$avgRating = ($ratingOne+($ratingTwo*2)+($ratingThree*3)+($ratingFour*4)+($ratingFive*5))/$totalReviews; 
-		
+		$avgRating = ($ratingOne+($ratingTwo*2)+($ratingThree*3)+($ratingFour*4)+($ratingFive*5))/$totalReviews;
+
 	@endphp
-    <div class="tab-content"> 
+    <div class="tab-content">
         <div class="row">
 
         	<div class="col-sm-6 col-md-4 result_box">
@@ -202,7 +202,7 @@
 			  <div class="p40 ratings">
 				<div class="row inner">
 					<div class="col-xs-6">
-						<i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+						<i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
 					</div>
 					<div class="col-xs-6 text-right"><p>24% <span>5</span></p></div>
 				<div class="col-xs-12">
@@ -213,7 +213,7 @@
 				</div>
 				<div class="row inner">
 					<div class="col-xs-6">
-						<i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+						<i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
 					</div>
 					<div class="col-xs-6 text-right"><p>61% <span>17</span></p></div>
 				<div class="col-xs-12">
@@ -224,7 +224,7 @@
 				</div>
 				<div class="row inner">
 					<div class="col-xs-6">
-						<i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+						<i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
 					</div>
 					<div class="col-xs-6 text-right"><p>3% <span>1</span></p></div>
 				<div class="col-xs-12">
@@ -235,7 +235,7 @@
 				</div>
 				<div class="row inner">
 					<div class="col-xs-6">
-						<i class="icon-star-full2"></i> <i class="icon-star-full2"></i>  
+						<i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
 					</div>
 					<div class="col-xs-6 text-right"><p>0% <span>0</span></p></div>
 				<div class="col-xs-12">
@@ -246,7 +246,7 @@
 				</div>
 				<div class="row inner mb0">
 					<div class="col-xs-6">
-						<i class="icon-star-full2"></i>   
+						<i class="icon-star-full2"></i>
 					</div>
 					<div class="col-xs-6 text-right"><p>0% <span>0</span></p></div>
 				<div class="col-xs-12">
@@ -255,8 +255,8 @@
 					</div>
 					</div>
 				</div>
-				
-				
+
+
 				</div>
 			  </div>
 			</div>
@@ -339,8 +339,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								@php 
-									foreach($aData['bbStatsData'] as $bbData){ 
+								@php
+									foreach($aData['bbStatsData'] as $bbData){
 										$ratingOne = 0;
 										$ratingTwo = 0;
 										$ratingThree = 0;
@@ -367,7 +367,7 @@
 									@endphp
 									<tr>
 										<td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
-										
+
 										<td>
                                                                                     <div class="media-left">
                                                                                         <div class="pt-5"><a href="#" class="text-default text-semibold">{{ date('d M Y', strtotime($bbData->created)) }}</a></div>
@@ -381,10 +381,10 @@
 										<td class="text-center"><a href="#">{{ $ratingTwo }}</a></td>
 										<td style="display: none;">{{ date('m/d/Y', strtotime($bbData->created)) }}</td>
 										<td class="text-center"><a href="#">{{ $ratingOne }}</a></td>
-										
+
 									</tr>
 								@php } @endphp
-								
+
 							</tbody>
                        	</table>
                     </div>
@@ -394,7 +394,7 @@
         </div>
     </div>
 
-<script>			
+<script>
 	// Daterange picker
 	// ------------------------------
 	$('.daterange-ranges').daterangepicker(
@@ -421,17 +421,17 @@
 		$('.daterange-ranges span').html(start.format('MMMM D') + ' - ' + end.format('MMMM D'));
 	}
 	);
-	
+
 	$('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));
-	
-	
+
+
 	// Initialize chart
 	progressArcMulti("#arc_multi", 78, 700);
 	progressArcMulti("#arc_multi2", 78, 700);
-	
+
 	// Chart setup
 	function progressArcMulti(element, size, goal) {
-		
+
 		// Main variables
 		var d3Container = d3.select(element),
 		radius = size,
@@ -439,46 +439,46 @@
 		startColor = '#66BB6A',
 		midColor = '#FFA726',
 		endColor = '#EF5350';
-		
+
 		// Colors
 		var color = d3.scale.linear()
 		.domain([0, 70, 100])
 		.range([startColor, midColor, endColor]);
-		
-		
+
+
 		// Create chart
 		// ------------------------------
-		
+
 		// Add svg element
 		var container = d3Container.append("svg");
-		
+
 		// Add SVG group
 		var svg = container
 		.attr('width', radius * 2)
 		.attr('height', radius + 20);
-		
-		
+
+
 		// Construct chart layout
 		// ------------------------------
-		
+
 		// Pie
 		var arc = d3.svg.arc()
 		.innerRadius(radius - thickness)
 		.outerRadius(radius)
 		.startAngle(-Math.PI / 2);
-		
-		
+
+
 		// Append chart elements
 		// ------------------------------
-		
+
 		//
 		// Group arc elements
 		//
-		
+
 		// Group
 		var chart = svg.append('g')
 		.attr('transform', 'translate(' + radius + ',' + radius + ')');
-		
+
 		// Background
 		var background = chart.append('path')
 		.datum({
@@ -488,7 +488,7 @@
 			'd': arc,
 			'fill': '#eee'
 		});
-		
+
 		// Foreground
 		var foreground = chart.append('path')
 		.datum({
@@ -496,7 +496,7 @@
 		})
 		.style('fill', startColor)
 		.attr('d', arc);
-		
+
 		// Counter value
 		var value = svg.append('g')
 		.attr('transform', 'translate(' + radius + ',' + (radius * 0.9) + ')')
@@ -510,12 +510,12 @@
 			'font-size': 19,
 			'font-weight': 400
 		});
-		
-		
+
+
 		//
 		// Min and max text
 		//
-		
+
 		// Group
 		var scale = svg.append('g')
 		.attr('transform', 'translate(' + radius + ',' + (radius + 15) + ')')
@@ -523,7 +523,7 @@
 			'font-size': 12,
 			'fill': '#999'
 		});
-		
+
 		// Max
 		scale.append('text')
 		.text(100)
@@ -531,7 +531,7 @@
 			'text-anchor': 'middle',
 			'x': (radius - thickness / 2)
 		});
-		
+
 		// Min
 		scale.append('text')
 		.text(0)
@@ -539,17 +539,17 @@
 			'text-anchor': 'middle',
 			'x': -(radius - thickness / 2)
 		});
-		
-		
+
+
 		//
 		// Animation
 		//
-		
+
 		// Interval
 		setInterval(function() {
 			update(Math.random() * 100);
 		}, 1500);
-		
+
 		// Update
 		function update(v) {
 			v = d3.format('.0f')(v);
@@ -559,12 +559,12 @@
 				return color(v);
 			})
 			.call(arcTween, v);
-			
+
 			value.transition()
 			.duration(750)
 			.call(textTween, v);
 		}
-		
+
 		// Arc
 		function arcTween(transition, v) {
 			var newAngle = v / 100 * Math.PI - Math.PI / 2;
@@ -576,7 +576,7 @@
 				};
 			});
 		}
-		
+
 		// Text
 		function textTween(transition, v) {
 			transition.tween('text', function() {
@@ -589,61 +589,61 @@
 			});
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	// Progress arc - single color
 	// ------------------------------
-	
+
 	// Initialize chart
 	progressArcSingle("#arc_single", 78);
 	progressArcSingle("#arc_single2", 78);
-	
+
 	// Chart setup
 	function progressArcSingle(element, size) {
-		
+
 		// Main variables
 		var d3Container = d3.select(element),
 		radius = size,
 		thickness = 20,
 		color = '#29B6F6';
-		
-		
+
+
 		// Create chart
 		// ------------------------------
-		
+
 		// Add svg element
 		var container = d3Container.append("svg");
-		
+
 		// Add SVG group
 		var svg = container
 		.attr('width', radius * 2)
 		.attr('height', radius + 20)
 		.attr('class', 'gauge');
-		
-		
+
+
 		// Construct chart layout
 		// ------------------------------
-		
+
 		// Pie
 		var arc = d3.svg.arc()
 		.innerRadius(radius - thickness)
 		.outerRadius(radius)
 		.startAngle(-Math.PI / 2);
-		
-		
+
+
 		// Append chart elements
 		// ------------------------------
-		
+
 		//
 		// Group arc elements
 		//
-		
+
 		// Group
 		var chart = svg.append('g')
 		.attr('transform', 'translate(' + radius + ',' + radius + ')');
-		
+
 		// Background
 		var background = chart.append('path')
 		.datum({
@@ -653,7 +653,7 @@
 			'd': arc,
 			'fill': '#eee'
 		});
-		
+
 		// Foreground
 		var foreground = chart.append('path')
 		.datum({
@@ -661,7 +661,7 @@
 		})
 		.style('fill', color)
 		.attr('d', arc);
-		
+
 		// Counter value
 		var value = svg.append('g')
 		.attr('transform', 'translate(' + radius + ',' + (radius * 0.9) + ')')
@@ -675,12 +675,12 @@
 			'font-size': 19,
 			'font-weight': 400
 		});
-		
-		
+
+
 		//
 		// Min and max text
 		//
-		
+
 		// Group
 		var scale = svg.append('g')
 		.attr('transform', 'translate(' + radius + ',' + (radius + 15) + ')')
@@ -688,7 +688,7 @@
 			'font-size': 12,
 			'fill': '#999'
 		});
-		
+
 		// Max
 		scale.append('text')
 		.text(100)
@@ -696,7 +696,7 @@
 			'text-anchor': 'middle',
 			'x': (radius - thickness / 2)
 		});
-		
+
 		// Min
 		scale.append('text')
 		.text(0)
@@ -704,29 +704,29 @@
 			'text-anchor': 'middle',
 			'x': -(radius - thickness / 2)
 		});
-		
-		
+
+
 		//
 		// Animation
 		//
-		
+
 		// Interval
 		setInterval(function() {
 			update(Math.random() * 100);
 		}, 1500);
-		
+
 		// Update
 		function update(v) {
 			v = d3.format('.0f')(v);
 			foreground.transition()
 			.duration(750)
 			.call(arcTween, v);
-			
+
 			value.transition()
 			.duration(750)
 			.call(textTween, v);
 		}
-		
+
 		// Arc
 		function arcTween(transition, v) {
 			var newAngle = v / 100 * Math.PI - Math.PI / 2;
@@ -738,7 +738,7 @@
 				};
 			});
 		}
-		
+
 		// Text
 		function textTween(transition, v) {
 			transition.tween('text', function() {
@@ -751,25 +751,25 @@
 			});
 		}
 	}
-	
-	
+
+
 	// Pie with progress bar
 	// ------------------------------
-	
+
 	// Initialize chart
 	pieWithProgress("#pie_progress_bar", 100);
 	pieWithProgress("#pie_progress_bar2", 100);
-	
+
 	// Chart setup
 	function pieWithProgress(element, size) {
-		
+
 		// Demo dataset
 		var dataset = [
 		{ name: 'New', count: 639 },
 		{ name: 'Pending', count: 255 },
 		{ name: 'Shipped', count: 215 }
 		];
-		
+
 		// Main variables
 		var d3Container = d3.select(element),
 		total = 0,
@@ -780,54 +780,54 @@
 		arcSize = 20,
 		outerRadius = (width / 2),
 		innerRadius = (outerRadius - arcSize);
-		
+
 		// Colors
 		var color = d3.scale.ordinal()
 		.range(['#EF5350', '#29b6f6', '#66BB6A']);
-		
-		
+
+
 		// Create chart
 		// ------------------------------
-		
+
 		// Add svg element
 		var container = d3Container.append("svg");
-		
+
 		// Add SVG group
 		var svg = container
 		.attr("width", width)
 		.attr("height", height)
 		.append("g")
 		.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-		
-		
+
+
 		// Construct chart layout
 		// ------------------------------
-		
+
 		// Add dataset
 		dataset.forEach(function(d){
 			total+= d.count;
 		});
-		
+
 		// Pie layout
 		var pie = d3.layout.pie()
 		.value(function(d){ return d.count; })
 		.sort(null);
-		
+
 		// Inner arc
 		var arc = d3.svg.arc()
 		.innerRadius(innerRadius)
 		.outerRadius(outerRadius);
-		
+
 		// Line arc
 		var arcLine = d3.svg.arc()
 		.innerRadius(innerRadius - progressSize)
 		.outerRadius(innerRadius - progressSpacing)
 		.startAngle(0);
-		
-		
+
+
 		// Append chart elements
 		// ------------------------------
-		
+
 		//
 		// Animations
 		//
@@ -842,12 +842,12 @@
 				};
 			});
 		};
-		
-		
+
+
 		//
 		// Donut paths
 		//
-		
+
 		// Donut
 		var path = svg.selectAll('path')
 		.data(pie(dataset))
@@ -862,7 +862,7 @@
 			'stroke-width': 2,
 			'cursor': 'pointer'
 		});
-		
+
 		// Animate donut
 		path
 		.transition()
@@ -872,15 +872,15 @@
 			var interpolate = d3.interpolate(d.startAngle, d.endAngle);
 			return function(t) {
 				d.endAngle = interpolate(t);
-				return arc(d);  
-			}; 
+				return arc(d);
+			};
 		});
-		
-		
+
+
 		//
-		// Line path 
+		// Line path
 		//
-		
+
 		// Line
 		var pathLine = svg.append('path')
 		.datum({endAngle: 0})
@@ -888,18 +888,18 @@
 		.style({
 			fill: color('New')
 		});
-		
+
 		// Line animation
 		pathLine.transition()
 		.duration(600)
 		.delay(300)
 		.call(arcTween, (2 * Math.PI) * (dataset[0].count / total));
-		
-		
+
+
 		//
 		// Add count text
 		//
-		
+
 		var middleCount = svg.append('text')
 		.datum(0)
 		.attr('dy', 6)
@@ -910,13 +910,13 @@
 		})
 		.text(function(d){
 			return d;
-		});            
-		
-		
+		});
+
+
 		//
 		// Add interactions
 		//
-		
+
 		// Mouse
 		path
 		.on('mouseover', function(d, i) {
@@ -929,12 +929,12 @@
 		.on('mouseout', function(d, i) {
 			$(element + ' [data-slice]').css('opacity', 1);
 		});
-		
-		
+
+
 		//
 		// Add legend
 		//
-		
+
 		// Append list
 		var legend = d3.select(element)
 		.append('ul')
@@ -952,13 +952,13 @@
 		.text(function(d, i) {
 			return d.data.name + ': ';
 		});
-		
+
 		// Append legend text
 		legend.append('span')
 		.text(function(d, i) {
 			return d.data.count;
 		});
 	}
-	
-</script>	
-@endsection 
+
+</script>
+@endsection
