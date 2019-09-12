@@ -16,12 +16,12 @@ $gradientClass = lcfirst($gradientClass);
 
 <?php if($galleryDesign == 'onerow'){ ?>
 <div class="arrow <?php echo $allowArrows != '0' ? '' : 'bb_hidden'; ?>">
-	<a href="javascript:void(0);" class="left_arrow bb_slide_btn" bb_direction="left"><img src="<?php echo base_url(); ?>assets/images/widget/arrow-left.png" /></a> 
+	<a href="javascript:void(0);" class="left_arrow bb_slide_btn" bb_direction="left"><img src="<?php echo base_url(); ?>assets/images/widget/arrow-left.png" /></a>
 	<a href="javascript:void(0);" class="right_arrow bb_slide_btn" bb_direction="right"><img src="<?php echo base_url(); ?>assets/images/widget/arrow-right.png" /></a>
 </div>
 <div style="overflow:hidden; float:left; width:100%;" class="<?php echo $gradientClass; ?> <?php if($galleryData->allow_border_shadow == 1){ echo 'bb_borderBoxShadow'; } ?>">
 	<div style="width:5000px; float:left;" class="bbw_middle">
-	<?php 
+	<?php
 	$reviewsIdArray = unserialize($galleryData->reviews_id);
 	$reviewRatings = 0;
 	$gradientColor = $galleryData->gradient_color;
@@ -31,10 +31,10 @@ $gradientClass = lcfirst($gradientClass);
 		$reviewRatings = $reviewData[0]->ratings + $reviewRatings;
 		//pre($reviewImageArray);
 		$imageUrl = $reviewImageArray[0]['media_url'];
-		
+
 		if($widgetBgcolor == 1){
 			if($galleryData->bg_color_type == ''){
-				$styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"'; 
+				$styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"';
 			}else{
 				$styleSetting = 'style="padding:'.$borderThickness.'px!important;"';
 			}
@@ -76,7 +76,7 @@ $gradientClass = lcfirst($gradientClass);
 
 <div style="overflow:hidden; float:left; width:100%;" class="<?php echo $gradientClass; ?> <?php if($galleryData->allow_border_shadow == 1){ echo 'bb_borderBoxShadow'; } ?>">
 	<div style="width:5000px; float:left;" class="bbw_middle">
-	<?php 
+	<?php
 	$reviewsIdArray = unserialize($galleryData->reviews_id);
 	$reviewRatings = 0;
 	$gradientColor = $galleryData->gradient_color;
@@ -89,7 +89,7 @@ $gradientClass = lcfirst($gradientClass);
 		if($key <= 3){
 		if($widgetBgcolor == 1){
 			if($galleryData->bg_color_type == ''){
-				$styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"'; 
+				$styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"';
 			}else{
 				$styleSetting = 'style="padding:'.$borderThickness.'px!important;"';
 			}
@@ -135,7 +135,7 @@ $gradientClass = lcfirst($gradientClass);
 
 <div style="overflow:hidden; float:left; width:100%;" class="<?php echo $gradientClass; ?> <?php if($galleryData->allow_border_shadow == 1){ echo 'bb_borderBoxShadow'; } ?>">
 	<div style="width:5000px; float:left;" class="bbw_middle">
-	<?php 
+	<?php
 	$reviewsIdArray = unserialize($galleryData->reviews_id);
 	$reviewRatings = 0;
 	$gradientColor = $galleryData->gradient_color;
@@ -148,7 +148,7 @@ $gradientClass = lcfirst($gradientClass);
 		if($key <= 5){
 		if($widgetBgcolor == 1){
 			if($galleryData->bg_color_type == ''){
-				$styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"'; 
+				$styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"';
 			}else{
 				$styleSetting = 'style="padding:'.$borderThickness.'px!important;"';
 			}
@@ -194,7 +194,7 @@ $gradientClass = lcfirst($gradientClass);
 
 <div style="overflow:hidden; float:left; width:100%;" class="<?php echo $gradientClass; ?> <?php if($galleryData->allow_border_shadow == 1){ echo 'bb_borderBoxShadow'; } ?>">
 	<div style="width:5000px; float:left;" class="bbw_middle">
-	<?php 
+	<?php
 	$reviewsIdArray = unserialize($galleryData->reviews_id);
 	$reviewRatings = 0;
 	$gradientColor = $galleryData->gradient_color;
@@ -207,7 +207,7 @@ $gradientClass = lcfirst($gradientClass);
 		if($key <= 5){
 		if($widgetBgcolor == 1){
 			if($galleryData->bg_color_type == ''){
-				$styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"'; 
+				$styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"';
 			}else{
 				$styleSetting = 'style="padding:'.$borderThickness.'px!important;"';
 			}
