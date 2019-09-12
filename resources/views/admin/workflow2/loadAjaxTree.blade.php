@@ -297,6 +297,7 @@
                         class="icon-plus3"></i></button>
                 @include('admin.workflow2.partials.action-dropdown', ['previousID' => $previousID, 'currentID' => $currentID, 'oEventsType' => $oEventsType, 'nodeType' => 'main', 'eventType' => $oEventsType[0]])
             </div>
+        @endif
             <div class="timeline-date button mt30 mb0">
                 <button type="button" class="btn white_btn"><span class="txt_grey"></span>&nbsp;Success</button>
                 <a class="icons iconsab green2 br8 t30" href="#"><img
