@@ -128,13 +128,13 @@
                                                                         ($data->subs_cycle == 'monthly' ||
                                                                         $data->subs_cycle == 'month')
                                                                         {{ 'Month' }}
-                                                                        @else if ($data->subs_cycle == 'yearly' ||
+                                                                        @elseif ($data->subs_cycle == 'yearly' ||
                                                                         $data->subs_cycle == 'year')
                                                                         {{ 'Year' }}
-                                                                        @else if ($data->subs_cycle == 'weekly' ||
+                                                                        @elseif ($data->subs_cycle == 'weekly' ||
                                                                         $data->subs_cycle == 'week')
                                                                         {{ 'Week' }}
-                                                                        @else if ($data->subs_cycle == 'bi-yearly')
+                                                                        @elseif ($data->subs_cycle == 'bi-yearly')
                                                                         {{ '2 Year' }}
                                                                         @endif
                                                                     </td>
@@ -303,13 +303,13 @@
                                                                         ($data->subs_cycle == 'monthly' ||
                                                                         $data->subs_cycle == 'month')
                                                                         {{ 'Month' }}
-                                                                        @else if ($data->subs_cycle == 'yearly' ||
+                                                                        @elseif ($data->subs_cycle == 'yearly' ||
                                                                         $data->subs_cycle == 'year')
                                                                         {{ 'Year' }}
-                                                                        @else if ($data->subs_cycle == 'weekly' ||
+                                                                        @elseif ($data->subs_cycle == 'weekly' ||
                                                                         $data->subs_cycle == 'week')
                                                                         {{ 'Week' }}
-                                                                        @else if ($data->subs_cycle == 'bi-yearly')
+                                                                        @elseif ($data->subs_cycle == 'bi-yearly')
                                                                         {{ '2 Year' }}
                                                                         @endif
                                                                     </td>

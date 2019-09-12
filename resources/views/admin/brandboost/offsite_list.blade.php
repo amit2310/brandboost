@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -65,7 +65,7 @@ if (!empty($aBrandbosts)) {
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -193,10 +193,10 @@ if (!empty($aBrandbosts)) {
     <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
     @if (!empty($aBrandbosts))
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
-        <div class="tab-content"> 
+        <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
-                @if ($viewstats == true) 
+                @if ($viewstats == true)
                     @include('admin.brandboost.campaign-tabs.offsite.overview_stats')
                 @endif
                 <div class="row">
@@ -209,10 +209,10 @@ if (!empty($aBrandbosts)) {
                                 <div class="heading_links pull-left">
                                     <a class="top_links btn btn-xs btn_white_table ml20 top_links_all">All</a>
                                     <a class="top_links top_links_Status" getValue="1" style="cursor: pointer;">Active</a>
-                                    <a class="top_links top_links_Status" getValue="0" style="cursor: pointer;">Inactive</a> 
-                                    <a class="top_links top_links_positive" getValue="positive" style="cursor: pointer;">Positive</a> 
-                                    <a class="top_links top_links_neutral" getValue="neutral" style="cursor: pointer;">Neutral</a> 
-                                    <a class="top_links top_links_negative" getValue="negative" style="cursor: pointer;">Negative</a> 
+                                    <a class="top_links top_links_Status" getValue="0" style="cursor: pointer;">Inactive</a>
+                                    <a class="top_links top_links_positive" getValue="positive" style="cursor: pointer;">Positive</a>
+                                    <a class="top_links top_links_neutral" getValue="neutral" style="cursor: pointer;">Neutral</a>
+                                    <a class="top_links top_links_negative" getValue="negative" style="cursor: pointer;">Negative</a>
                                     <a class="top_links top_links_added_today"  getValue="today" style="cursor: pointer;">Added Today</a>
                                 </div>
                                 <div class="heading-elements">
@@ -227,7 +227,7 @@ if (!empty($aBrandbosts)) {
                                         <a href="javascript:void(0);" class="editDataList"><i class="icon-pencil"></i></a>
                                         <a href="javascript:void(0);" style="display: none;" id="deleteMultipleOffsiteBB" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                         <a href="javascript:void(0);" style="display: none;" id="archiveMultipleOffsiteBB" class="custom_action_box"><i class="icon-gear position-left"></i></a>
-                                    </div>				
+                                    </div>
                                 </div>
 
                             </div>
@@ -459,10 +459,10 @@ if (!empty($aBrandbosts)) {
                                                     if ($positiveGraph > 50) {
                                                         $addPC = 'over50';
                                                     }
-                                                    
+
                                                     $extClass = '';
                                                     if($positiveGraph > 0){
-                                                    $extClass = 'createSegment';                                                    
+                                                    $extClass = 'createSegment';
                                                     }
                                                     @endphp
                                                     <div class="media-left">
@@ -480,9 +480,9 @@ if (!empty($aBrandbosts)) {
                                                             @else
                                                                 <a href="javascript:void(0);" class="text-default text-semibold">{{ $positiveRating }}</a>
                                                             @endif
-                                                            @if ($newPositive > 0)   
-                                                                {{ '<span style="color:#FF0000;"> (' . $newPositive . ' new)</span>' }}    
-                                                            @endif   
+                                                            @if ($newPositive > 0)
+                                                                {{ '<span style="color:#FF0000;"> (' . $newPositive . ' new)</span>' }}
+                                                            @endif
 
                                                         </div>
                                                     </div>
@@ -496,9 +496,9 @@ if (!empty($aBrandbosts)) {
                                                     if ($neturalGraph > 50) {
                                                         $addNUC = 'over50';
                                                     }
-                                                    
+
                                                     $extClass2 = '';
-                                                    if(($neturalGraph > 0){
+                                                    if($neturalGraph > 0){
                                                         $extClass2 = 'createSegment';
                                                     }
                                                     @endphp
@@ -512,15 +512,15 @@ if (!empty($aBrandbosts)) {
                                                     </div>
                                                     <div class="media-left">
                                                         <div data-toggle="tooltip" title="{{ $neturalRating }} out of {{ $revCount }} Response" data-placement="top">
-                                                            @if ($neturalRating > 0) 
+                                                            @if ($neturalRating > 0)
                                                                 <a  href="{{ base_url() }}admin/feedback/listall/{{ $list_id }}/?t=neutral" class="text-default text-semibold">
                                                                     {{ $neturalRating }}
                                                                 </a>
                                                             @else
                                                                 <a href="javascript:void(0);" class="text-default text-semibold">{{ $neturalRating }}</a>
                                                             @endif
-                                                            @if ($newNeutral > 0) 
-                                                                {{ '<span style="color:#FF0000;"> (' . $newNeutral . ' new)</span>' }}    
+                                                            @if ($newNeutral > 0)
+                                                                {{ '<span style="color:#FF0000;"> (' . $newNeutral . ' new)</span>' }}
                                                             @endif
                                                         </div>
                                                     </div>
@@ -534,7 +534,7 @@ if (!empty($aBrandbosts)) {
                                                     if ($negativeGraph > 50) {
                                                         $addNEC = 'over50';
                                                     }
-                                                    
+
                                                     $extClass3 = '';
                                                     if($negativeGraph > 0){
                                                         $extClass3 = 'createSegment';
@@ -557,11 +557,11 @@ if (!empty($aBrandbosts)) {
                                                             @else
                                                                 <a href="javascript:void(0);" class="text-default text-semibold">{{ $negativeRating }}</a>
                                                             @endif
-                                                            @if ($newNegative > 0) 
-                                                                {{ '<span style="color:#FF0000;"> (' . $newNegative . ' new)</span>' }}    
-                                                            @endif   
-                                                        </div> 
-                                                    </div> 
+                                                            @if ($newNegative > 0)
+                                                                {{ '<span style="color:#FF0000;"> (' . $newNegative . ' new)</span>' }}
+                                                            @endif
+                                                        </div>
+                                                    </div>
 
                                                 </td>
                                                 <td>
@@ -584,7 +584,7 @@ if (!empty($aBrandbosts)) {
                                                         $imageIcon = '';
                                                     }
                                                    @endphp
-                                                    @if ($revCount < 1) 
+                                                    @if ($revCount < 1)
                                                         {!! displayNoData(true) !!}
                                                     @else
                                                         <div class="media-left media-middle"> <img src="{{ smilyRating($ratingValue) }}" class="img-circle" width="26" alt=""> </div>
@@ -646,8 +646,8 @@ if (!empty($aBrandbosts)) {
                                                                 @endphp
                                                                 <ul class="dropdown-menu dropdown-menu-right more_act">
 
-                                                                    @if ($canWrite): 
-                                                                        @if ($data->status == 1) 
+                                                                    @if ($canWrite):
+                                                                        @if ($data->status == 1)
                                                                             <li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="{{ $data->id }}" status="2"><i class="icon-file-stats"></i> Pause</a></li>
                                                                         @endif
                                                                         @if ($data->status == 2)
@@ -670,11 +670,11 @@ if (!empty($aBrandbosts)) {
 
                                                 </td>
 
-                                            </tr>       
+                                            </tr>
                                             <!--=======================-->
                                             @php
                                         }
-                                        @endphp	
+                                        @endphp
                                     </tbody>
                                 </table>
                             </div>
@@ -690,7 +690,7 @@ if (!empty($aBrandbosts)) {
 
     @else
 
-        <div class="tab-content"> 
+        <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
 
@@ -771,7 +771,7 @@ if (!empty($aBrandbosts)) {
             </div>
         </div>
 
-    @endif   
+    @endif
 </div>
 <!--================================= CONTENT AFTER TAB===============================-->
 

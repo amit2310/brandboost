@@ -133,7 +133,7 @@
                 <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
                 <span> &nbsp; {{ count($reviewIDArray) }} Reviews</span></div>
         </div>
-    @else if($galleryDesign == 'square')
+    @elseif($galleryDesign == 'square')
     <div class="@if($galleryData->allow_border_shadow == 1) borderBoxShadow @endif">
         <div class="middle previewWidgetBox">
             @php
@@ -201,7 +201,7 @@
             <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
             <span> &nbsp; {{ count($reviewIDArray) }} Reviews</span></div>
     </div>
-    @else if($galleryDesign == 'horizontal')
+    @elseif($galleryDesign == 'horizontal')
     <div class="@if($galleryData->allow_border_shadow == 1) borderBoxShadow @endif">
         <div class="middle previewWidgetBox">
             @php
@@ -269,7 +269,7 @@
             <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
             <span> &nbsp; {{ count($reviewIDArray) }} Reviews</span></div>
     </div>
-    @else if($galleryDesign == 'vertical')
+    @elseif($galleryDesign == 'vertical')
     <div class="@if($galleryData->allow_border_shadow == 1) borderBoxShadow endif">
         <div class="middle previewWidgetBox">
             @php

@@ -43,6 +43,7 @@
 
         <div class="modal-content">
             <form method="post" id="OtherSourcesPopupFrm" class="form-horizontal"  action="javascript:void();">
+                @csrf
                 <input name="siteCategories[]" type="hidden" value="OtherSources">
                 <input type="hidden" name="brandboostID" value="{{ $brandboostID }}">
                 <div class="modal-header">
@@ -66,7 +67,7 @@
 
 
                 </div>
-                <div class="modal-footer noBorder"> 
+                <div class="modal-footer noBorder">
                     <button class="btn btn-link" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
                     <button type="submit" class="btn btn-primary"><i class="icon-check"></i> Add</button>
                 </div>
@@ -140,7 +141,7 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <input name="offsite_search" id="offsite_search" placeholder="Search..." class="search form-control" type="text"> 
+                                <input name="offsite_search" id="offsite_search" placeholder="Search..." class="search form-control" type="text">
                             </div>
                             <div class="col-md-2 pull-right">
                                 <select name="offsiteLimit" id="offsiteLimit" class="form-control">

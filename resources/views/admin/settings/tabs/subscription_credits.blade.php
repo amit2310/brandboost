@@ -1,5 +1,5 @@
 <div class="tab-pane @if ($seletedTab == 'subs') active @endif" id="right-icon-tab2">
-    <div class="row"> 
+    <div class="row">
         <div class="col-md-9">
             <div class="panel panel-flat review_ratings">
                 <div class="panel-heading">
@@ -75,23 +75,23 @@
                                             <div class="price_plan">
                                                 <div class="imgicon"><img src="{{ base_url() }}assets/images/icon_credit.png"/></div>
                                                 <div class="bbot p30 text-center">
-                                                    <p class="txt_purple fsize16">{{ number_format($oMembership->credits) }} credits</p>	
+                                                    <p class="txt_purple fsize16">{{ number_format($oMembership->credits) }} credits</p>
                                                     <h3>${{ $oMembership->price }}<span>/
 														@if ($oMembership->subs_cycle == 'week')
 															{{ 'week' }}
-														@else if ($oMembership->subs_cycle == 'month')
+														@elseif ($oMembership->subs_cycle == 'month')
 															{{ 'Mo' }}
-														@else if ($oMembership->subs_cycle == 'year')
+														@elseif ($oMembership->subs_cycle == 'year')
 															{{ 'Yr' }}
 														@endif
 														</span>
 													</h3>
-                                                    <p class="text-muted fsize13 m0">Billed 
+                                                    <p class="text-muted fsize13 m0">Billed
 														@if ($oMembership->subs_cycle == 'week')
 															{{ 'Weekly' }}
-                                                        @else if ($oMembership->subs_cycle == 'month')
+                                                        @elseif ($oMembership->subs_cycle == 'month')
                                                             {{ 'Monthly' }}
-                                                        @else if ($oMembership->subs_cycle == 'year')
+                                                        @elseif ($oMembership->subs_cycle == 'year')
                                                             {{ 'Yearly' }}
                                                         @endif
 													</p>
@@ -147,7 +147,7 @@
                                                 <div class="imgicon"><img src="{{ base_url() }}assets/images/icon_credit.png"/></div>
                                                 <div class="bbot p30 text-center">
                                                     <p><strong>{{ $oMembership->level_name }}</strong></p>
-                                                    <p class="txt_purple fsize16">{{ number_format($oMembership->credits) }} credits</p>	
+                                                    <p class="txt_purple fsize16">{{ number_format($oMembership->credits) }} credits</p>
                                                     <h3>${{ $oMembership->price }}<span></span></h3>
                                                     <p class="text-muted fsize13 m0">Flat Fee</p>
                                                 </div>
@@ -535,7 +535,7 @@
                     url: "{{ base_url('payment/buyCreditAddons') }}",
                     type: "POST",
                     data: {
-                        _token: '{{csrf_token()}}', 
+                        _token: '{{csrf_token()}}',
                         toup_plan_id: hidPlanID,
                         quantity: qty
                     },
