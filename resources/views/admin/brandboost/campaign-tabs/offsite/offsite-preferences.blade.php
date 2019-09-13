@@ -60,12 +60,12 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                             <div class="clearfix"></div>
                         </div>
 
-                        
+
                         <div class="p25 bbot">
                             <div class="form-group mb0">
                                 <label class="custmo_radiobox pull-left mb20">
-                                    <input name="feedback_type" class="autoSave" value="public" type="radio" 
-                                        @if(!empty($feedbackResponseData)) 
+                                    <input name="feedback_type" class="autoSave" value="public" type="radio"
+                                        @if(!empty($feedbackResponseData))
                                             {{ ($feedbackResponseData->feedback_type == '' || $feedbackResponseData->feedback_type == 'public') ? 'checked' : '' }}
                                         @endif
                                     >
@@ -73,7 +73,7 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                                     Public
                                 </label>
                                 <label class="custmo_radiobox pull-left mb20 ml10">
-                                    <input  name="feedback_type" class="autoSave" value="private" type="radio" 
+                                    <input  name="feedback_type" class="autoSave" value="private" type="radio"
                                         @if(!empty($feedbackResponseData))
                                             {{ ($feedbackResponseData->feedback_type == 'private') ? 'checked' : '' }}
                                         @endif
@@ -88,22 +88,14 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                             <div class="form-group">
                                 <label class="control-label">Home Page URL</label>
                                 <div class="">
-                                    <input value="
-                                        @if (!empty($feedbackResponseData))
-                                            {{ ($brandboostData->store_url) ? $brandboostData->store_url : '' }}
-                                        @endif
-                                    " name="store_url" id="store_url" class="form-control autoSave" type="text">
+                                    <input value="@if (!empty($feedbackResponseData)){{($brandboostData->store_url) ? $brandboostData->store_url : ''}}@endif" name="store_url" id="store_url" class="form-control autoSave" type="text">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">Review Request "Form" Name</label>
                                 <div class="">
-                                    <input value="
-                                        @if (!empty($feedbackResponseData))
-                                            {{ ($feedbackResponseData->from_name) ? $feedbackResponseData->from_name : $aUserInfo->firstname . ' ' . $aUserInfo->lastname }}
-                                        @endif
-                                    " name="from_name" id="from_name" class="form-control autoSave" type="text" onkeypress="return IsAlphabet(event);">
+                                    <input value="@if(!empty($feedbackResponseData)){{($feedbackResponseData->from_name) ? $feedbackResponseData->from_name : $aUserInfo->firstname . ' ' . $aUserInfo->lastname}}@endif" name="from_name" id="from_name" class="form-control autoSave" type="text" onkeypress="return IsAlphabet(event);">
                                     <div class="errorMsg"></div>
                                 </div>
                             </div>
@@ -111,22 +103,14 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                             <div class="form-group">
                                 <label class="control-label">Review Request "Form" Email</label>
                                 <div class="">
-                                    <input value="
-                                        @if (!empty($feedbackResponseData)) 
-                                            {{ ($feedbackResponseData->from_email) ? $feedbackResponseData->from_email : $aUserInfo->email }}
-                                        @endif
-                                    " name="from_email" id="from_email" class="form-control autoSave" type="text">
+                                    <input value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->from_email) ? $feedbackResponseData->from_email : $aUserInfo->email}}@endif" name="from_email" id="from_email" class="form-control autoSave" type="text">
                                     <div class="errorMsg"></div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">SMS Sender Name</label>
                                 <div class="">
-                                    <input value="
-                                        @if (!empty($feedbackResponseData)) 
-                                        {{ ($feedbackResponseData->sms_sender) ? $feedbackResponseData->sms_sender : $aUserInfo->firstname . ' ' . $aUserInfo->lastname }}
-                                        @endif
-                                    " name="sender_name" id="sender_name" class="form-control autoSave" type="text">
+                                    <input value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->sms_sender) ? $feedbackResponseData->sms_sender : $aUserInfo->firstname . ' ' . $aUserInfo->lastname}}@endif" name="sender_name" id="sender_name" class="form-control autoSave" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -142,7 +126,7 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                         <div class="p25 bbot">
                             <div class="form-group mb0">
                                 <label class="custmo_radiobox pull-left mb20">
-                                    <input name="ratings_type" class="autoSave" value="happy" 
+                                    <input name="ratings_type" class="autoSave" value="happy"
                                         @if (!empty($feedbackResponseData))
                                             {{ ($feedbackResponseData->ratings_type == '' || $feedbackResponseData->ratings_type == 'happy') ? 'checked' : '' }}
                                         @endif
@@ -151,7 +135,7 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                                     Happy Ratings
                                 </label>
                                 <label class="custmo_radiobox pull-left mb20 ml10">
-                                    <input name="ratings_type" class="autoSave" value="star" 
+                                    <input name="ratings_type" class="autoSave" value="star"
                                         @if (!empty($feedbackResponseData))
                                             {{ ($feedbackResponseData->ratings_type == 'star') ? 'checked' : '' }}
                                         @endif
@@ -193,12 +177,12 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
 
                         @if ($canWrite)
                             <div class="p25 text-center btop hidden">
-                                <button 
-                                    @if ($bActiveSubsription == false) 
-                                        class="btn dark_btn w100 bkg_purple pDisplayNoActiveSubscription" title="No Active Subscription" type="button" 
-                                    @else 
-                                        type="submit" class="btn dark_btn w100 bkg_purple saveOffsiteButton" 
-                                    @endif 
+                                <button
+                                    @if ($bActiveSubsription == false)
+                                        class="btn dark_btn w100 bkg_purple pDisplayNoActiveSubscription" title="No Active Subscription" type="button"
+                                    @else
+                                        type="submit" class="btn dark_btn w100 bkg_purple saveOffsiteButton"
+                                    @endif
                                     > Save <i class=" icon-arrow-right13 text-size-base position-right"></i>
                                 </button>
                             </div>
@@ -258,14 +242,14 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                                             @endphp
 
                                             <li class="media panel-body stack-media-on-mobile" id="socialIcon{{ $value }}">
-                                                <div class="media-left"> 
-                                                    <a class="{{ $thumbclass }}" href="javascript:void(0)"> 
+                                                <div class="media-left">
+                                                    <a class="{{ $thumbclass }}" href="javascript:void(0)">
                                                         @if (in_array('OtherSources', unserialize($getData->site_categories)))
-                                                            <i class="icon-{{ $sourceName . ' ' . $sourceClass }} socialIcon" style="font-style:inherit">M</i> 
+                                                            <i class="icon-{{ $sourceName . ' ' . $sourceClass }} socialIcon" style="font-style:inherit">M</i>
                                                         @else
                                                             <img src="/uploads/{{ $getData->image }}" height="45" width="45">
                                                         @endif
-                                                    </a> 
+                                                    </a>
                                                 </div>
                                                 <div class="media-body">
                                                     <div class="col-md-12 mb-10 pl0 pr0">
@@ -285,7 +269,7 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                                                         </h6>
                                                     </div>
                                                     <div class="col-md-12 pl0 pr0">
-                                                        <div class="input-group"> 
+                                                        <div class="input-group">
 
                                                             @if (in_array('OtherSources', unserialize($getData->site_categories)))
                                                                 <input style="text-align:left;" class="input-group-addon form-control autoSave siteURLId_{{ $getData->id }}" autocomplete="off" linkid="{{ $getData->id }}" id="linkUrl{{ $getData->id }}" name="offsite_url[]" value="{{ $getLinksSocial != '' ? $getLinksSocial : $getData->website_url }}" placeholder="Enter Web Address" type="text" required="required">
@@ -312,8 +296,8 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                                     }
                                 }
                             }
-                            @endphp					
-                        </ul>						
+                            @endphp
+                        </ul>
                     </div>
                 </div>
 
@@ -339,25 +323,14 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                             <div class="form-group">
                                 <label class="control-label">Positive Title</label>
                                 <div class="">
-                                    <input class="form-control thankMsgTitle autoSave" name="positive_title" id="positive_title" value="
-                                        @if (!empty($feedbackResponseData))
-                                            {{ ($feedbackResponseData->pos_title) ? $feedbackResponseData->pos_title : 'Thanks for leaving positive review' }}
-                                        @else
-                                            {{ 'Thanks for leaving positive review' }}
-                                        @endif
-                                    " required="" type="text">
+                                    <input class="form-control thankMsgTitle autoSave" name="positive_title" id="positive_title"
+                                           value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->pos_title) ? $feedbackResponseData->pos_title : 'Thanks for leaving positive review'}}@else{{'Thanks for leaving positive review'}}@endif" required="" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Positive Subtitle</label>
                                 <div class="">
-                                    <input  class="form-control thankMsgSubTitle autoSave" name="positive_subtitle" id="positive_subtitle" value="
-                                        @if (!empty($feedbackResponseData)) 
-                                            {{ ($feedbackResponseData->pos_sub_title) ? $feedbackResponseData->pos_sub_title : 'We will revert back to you soon' }}
-                                        @else
-                                            {{ 'We will revert back to you soon' }}
-                                        @endif
-                                    " required="" type="text">
+                                    <input  class="form-control thankMsgSubTitle autoSave" name="positive_subtitle" id="positive_subtitle" value="@if (!empty($feedbackResponseData)){{ ($feedbackResponseData->pos_sub_title) ? $feedbackResponseData->pos_sub_title : 'We will revert back to you soon'}}@else{{'We will revert back to you soon'}}@endif" required="" type="text">
                                 </div>
                             </div>
                             <div class="alert bkg_green txt_white mt30 mb0 preview">
@@ -374,7 +347,7 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                                     </div>
                                     <div>
                                         <small class="thanksSubTitlePreview">
-                                        @if (!empty($feedbackResponseData)) 
+                                        @if (!empty($feedbackResponseData))
                                                 {{ $feedbackResponseData->pos_sub_title == '' ? 'We will revert back to you soon' : $feedbackResponseData->pos_sub_title }}
                                         @else
                                                 {{ 'We will revert back to you soon' }}
@@ -391,25 +364,13 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                             <div class="form-group">
                                 <label class="control-label">Neutral Title</label>
                                 <div class="">
-                                    <input class="form-control thankMsgTitle autoSave" name="neutral_title" id="neutral_title" value="
-                                        @if (!empty($feedbackResponseData)) 
-                                            {{ ($feedbackResponseData->neu_title) ? $feedbackResponseData->neu_title : 'Thanks for leaving your review' }}
-                                        @else
-                                            {{ 'Thanks for leaving your review' }}
-                                        @endif
-                                    " required="" type="text">
+                                    <input class="form-control thankMsgTitle autoSave" name="neutral_title" id="neutral_title" value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->neu_title) ? $feedbackResponseData->neu_title : 'Thanks for leaving your review'}}@else{{'Thanks for leaving your review'}}@endif" required="" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Neutral Subtitle</label>
                                 <div class="">
-                                    <input class="form-control thankMsgSubTitle autoSave" name="neutral_subtitle"  id="neutral_subtitle" value="
-                                        @if (!empty($feedbackResponseData))
-                                            {{ ($feedbackResponseData->neu_sub_title) ? $feedbackResponseData->neu_sub_title : 'We will revert back to you soon' }}
-                                        @else
-                                            {{ 'We will revert back to you soon' }}
-                                        @endif
-                                    " required="" type="text">
+                                    <input class="form-control thankMsgSubTitle autoSave" name="neutral_subtitle"  id="neutral_subtitle" value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->neu_sub_title) ? $feedbackResponseData->neu_sub_title : 'We will revert back to you soon'}}@else{{'We will revert back to you soon'}}@endif" required="" type="text">
                                 </div>
                             </div>
                             <div class="alert bkg_grey txt_white mt30 mb0 preview">
@@ -426,7 +387,7 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                                     </div>
                                     <div>
                                         <small class="thanksSubTitlePreview">
-                                            @if (!empty($feedbackResponseData)) 
+                                            @if (!empty($feedbackResponseData))
                                                 {{ $feedbackResponseData->neu_sub_title == '' ? 'We will revert back to you soon' : $feedbackResponseData->neu_sub_title }}
                                             @else
                                                 {{ 'We will revert back to you soon' }}
@@ -442,27 +403,16 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                             <div class="form-group">
                                 <label class="control-label">Negative Title</label>
                                 <div class="">
-                                    <input class="form-control thankMsgTitle autoSave" name="negetive_title" id="negetive_title" value="
-                                        @if (!empty($feedbackResponseData))
-                                            {{ ($feedbackResponseData->neg_title) ? $feedbackResponseData->neg_title : 'Thanks for leaving your review' }}
-                                        @else
-                                            {{ 'Thanks for leaving your review' }}
-                                        @endif
-                                    " required="" type="text">
+                                    <input class="form-control thankMsgTitle autoSave" name="negetive_title" id="negetive_title"
+                                           value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->neg_title) ? $feedbackResponseData->neg_title:'Thanks for leaving your review'}}@else{{'Thanks for leaving your review'}}@endif" required="" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Negative Subtitle</label>
                                 <div class="">
-                                    <input class="form-control thankMsgSubTitle autoSave" name="negetive_subtitle"  id="negetive_subtitle" value="
-                                        @if (!empty($feedbackResponseData)) 
-                                            {{ ($feedbackResponseData->neg_sub_title) ? $feedbackResponseData->neg_sub_title : 'We will revert back to you soon' }}
-                                        @else
-                                            {{ 'We will revert back to you soon' }}
-                                        @endif
-                                    " required="" type="text">
+                                    <input class="form-control thankMsgSubTitle autoSave" name="negetive_subtitle"  id="negetive_subtitle" value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->neg_sub_title) ? $feedbackResponseData->neg_sub_title:'We will revert back to you soon' }}@else{{'We will revert back to you soon'}}@endif" required="" type="text">
                                 </div>
-                            </div>							
+                            </div>
 
                             <div class="alert bkg_red txt_white mt30 mb0 preview">
                                 <div class="media-left">
@@ -478,7 +428,7 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                                     </div>
                                     <div>
                                         <small class="thanksSubTitlePreview">
-                                            @if (!empty($feedbackResponseData)) 
+                                            @if (!empty($feedbackResponseData))
                                                 {{ $feedbackResponseData->neg_sub_title == '' ? 'We will revert back to you soon' : $feedbackResponseData->neg_sub_title }}
                                             @else
                                                 {{ 'We will revert back to you soon' }}
@@ -577,11 +527,11 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
         <div class="row">
             <div class="col-md-12 text-right">
                 @if ($canWrite)
-                    <button 
-                        @if($bActiveSubsription == false) 
-                            class="btn dark_btn mt10 pDisplayNoActiveSubscription hidden" title="No Active Subscription" type="button" 
-                        @else 
-                            type="submit" class="btn dark_btn mt10 hidden" 
+                    <button
+                        @if($bActiveSubsription == false)
+                            class="btn dark_btn mt10 pDisplayNoActiveSubscription hidden" title="No Active Subscription" type="button"
+                        @else
+                            type="submit" class="btn dark_btn mt10 hidden"
                         @endif
                         > Continue <i class=" icon-arrow-right13 text-size-base position-right"></i>
                     </button>
