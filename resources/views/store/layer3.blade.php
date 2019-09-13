@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 	
@@ -354,8 +353,6 @@
 			.review_chat42 .middle .right_max{float: left}
 			.review_chat42 .middle .much_bx .tell_you{padding: 0;}
 			.review_chat42 .middle .much_bx .tell_you textarea{padding: 10px 25px;}
-			
-			
 			
 			
             }
@@ -883,9 +880,6 @@
 									?>	
 									
 								</div>
-								<!-- <div class="panel-footer p20">
-									<a href="#" class="fsize14 fw500 txt_green">View All Review <i class="icon-arrow-right13 pull-right txt_green fsize16 mt-5"></i></a>
-								</div> -->
 							</div>
 							
 							
@@ -951,9 +945,6 @@
 										<input type="hidden" class="fullname<?php echo $aReview['id']?>" value="<?php echo $aReview['firstname'] . ' ' . $aReview['lastname']; ?>">
 										
 										<input type="hidden" class="review<?php echo $aReview['id']?>" value="<?php echo $aReview['comment_text'] != ''?$aReview['comment_text']: ''; ?>">
-										
-										
-										
 										
 										<div class="brand_review mb-20 br5">
 											<div class="p20 bbot pl30">
@@ -1104,8 +1095,6 @@
 											}
 											
 											
-											
-											
 											if (!empty($aReview['media_url'])) {
 												if (strpos($aReview['media_url'], '.mp4') !== false) {
 													$mediaType = 'video';
@@ -1115,16 +1104,10 @@
 												} else {
 												$mediaType = '';
 											}
-											//if($aReview['status'] == 1 || ($aReview['status'] == 2 && $aReview['user_id'] == $userID)){
-											
-											//pre($aReview);
 										?>
 										<input type="hidden" class="fullname<?php echo $aReview['id']?>" value="<?php echo $aReview['firstname'] . ' ' . $aReview['lastname']; ?>">
 										
 										<input type="hidden" class="review<?php echo $aReview['id']?>" value="<?php echo $aReview['comment_text'] != ''?$aReview['comment_text']: ''; ?>">
-										
-										
-										
 										
 										<div class="brand_review mb-20 br5">
 											<div class="p20 bbot pl30">
@@ -1146,7 +1129,6 @@
 														</p>
 														<span class="ml10"><?php echo timeAgo($aReview['created']); ?></span>
 													</div>
-													<!-- <p class="hidden revComment<?php echo $aReview['id']; ?>"><img src="<?php echo base_url(); ?>assets/images/widget/comment_icon.jpg"><?php echo count($aReview['comment_block']) > 0 ? count($aReview['comment_block']) : '0'; ?> Comments <span id="revRatingStars"><?php echo number_format($aReview['ratings'], 1); ?> Our of 5 Stars</span></p> -->
 													
 													<div class="text-muted  text-size-small"><span>
 														<?php for ($i = 1; $i <= 5; $i++): ?>
@@ -1312,7 +1294,6 @@
 														</p>
 														<span class="ml10"><?php echo timeAgo($aReview['created']); ?></span>
 													</div>
-													<!-- <p class="hidden revComment<?php echo $aReview['id']; ?>"><img src="<?php echo base_url(); ?>assets/images/widget/comment_icon.jpg"><?php echo count($aReview['comment_block']) > 0 ? count($aReview['comment_block']) : '0'; ?> Comments <span id="revRatingStars"><?php echo number_format($aReview['ratings'], 1); ?> Our of 5 Stars</span></p> -->
 													
 													<div class="text-muted  text-size-small"><span>
 														<?php for ($i = 1; $i <= 5; $i++): ?>
@@ -2096,57 +2077,6 @@
 				$(this).addClass('textSolidColor');
 			});
 			
-			/*$(window).scroll(function() {
-				
-				if($(window).scrollTop() == $(document).height() - $(window).height()) {
-				
-				console.log('testing');
-				var siteReviewOffset = $('#siteReviewOffset').val(); 
-				var campaignReviewOffset = $('#campaignReviewOffset').val();
-				$('.siteReviewLoader').removeClass('hidden');
-				$('.campaignReviewLoader').removeClass('hidden');
-				$.ajax({  
-				url:"<?php echo base_url(); ?>campaign/loadSiteReview",  
-				method:"POST",  
-				data:{offsite:siteReviewOffset, limit:5, campaignId: <?php echo $campaignId; ?>},  
-				dataType: "html", 
-				success:function(data)  
-				{  
-				$('.siteReviewLoader').addClass('hidden');
-				if(data != '') {
-				$('.appendSiteReview').append(data);
-				var newSiteReviewOffset = Number (siteReviewOffset) + 5;
-				$('#siteReviewOffset').val(newSiteReviewOffset);
-				}
-				else {
-				$('.siteReviewLoader').remove();
-				}
-				}  
-				});  
-				
-				$.ajax({  
-				url:"<?php echo base_url(); ?>campaign/loadCampaignReview",  
-				method:"POST",  
-				data:{offsite:campaignReviewOffset, limit:5, campaignId: <?php echo $campaignId; ?>},  
-				dataType: "html", 
-				success:function(data)  
-				{  
-				$('.campaignReviewLoader').addClass('hidden');
-				if(data != '') {
-				$('.appendCampaignReview').append(data);
-				var newCampaignReviewOffset = Number (campaignReviewOffset) + 5;
-				$('#campaignReviewOffset').val(newCampaignReviewOffset);
-				}
-				else {
-				$('.campaignReviewLoader').remove();
-				}
-				}  
-				});  
-				
-				return false;
-				}
-			});*/
-			
 		});
 	</script>
 	
@@ -2169,7 +2099,6 @@
 					} else {
 					$("#term_condition_review").hide();
 				}
-				
 			});
 			
 			
@@ -2301,14 +2230,6 @@
 				$('#' + valContainer).val(ratingValue);
 			});
 			
-			/*
-			$('.drop_rate').click(function() {
-				$('#myDropzone').trigger('click');
-			});
-			
-			$('.drop_rate2').click(function() {
-				$('#myDropzone2').trigger('click');
-			});*/
 		});
 	</script>
 </body>

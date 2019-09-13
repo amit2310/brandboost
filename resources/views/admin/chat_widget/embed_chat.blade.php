@@ -116,17 +116,7 @@
         <span id="greattingMsgTimeArray">{{ implode('||', $greatingMTArray) }}</span>
         <span
             id="bbClientAvtarImg">https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $userDataDetail->avatar }}</span>
-        <input type="hidden" value="
-@if($widgetSettings->header_color_fix == 1)
-        {{ $widgetSettings->header_color.'_bbcpw_header' }}
-        @endif
-        @if($widgetSettings->header_color_custom == 1)
-        {{ $bgClassName }}
-        @endif
-        @if($widgetSettings->header_color_solid == 1)
-        {{ $bgClassName }}
-        @endif
-            " id="bbcp_bg_color">
+        <input type="hidden" value="@if($widgetSettings->header_color_fix == 1){{$widgetSettings->header_color.'_bbcpw_header'}}@endif @if($widgetSettings->header_color_custom == 1){{$bgClassName }}@endif @if($widgetSettings->header_color_solid == 1){{ $bgClassName }}@endif" id="bbcp_bg_color">
     </div>
 
     <div id="bb_msg_wrap" class="bbcw_main_box" style="display: none;">
