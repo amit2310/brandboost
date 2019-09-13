@@ -68,7 +68,7 @@
                                     <td class="text-center">
                                         @if ($data->status == 1)
 											<span class="label bg-success">ACTIVE</span>
-										@else if ($data->status == 2)
+										@elseif ($data->status == 2)
 											<span class="label bg-blue">PENDING</span>
 										@else
 											<span class="label bg-danger">INACTIVE</span>
@@ -82,7 +82,7 @@
                                                 <ul class="dropdown-menu dropdown-menu-right">
 													@if ($data->status == 1)
 														<li><a style='cursor:pointer' answer_id='{{ $data->id }}' change_status = '0' title='Disapproved this answer.' class='chg_status'><i class='icon-gear'></i>Disapproved</a></li>
-													@else if ($data->status == 2)
+													@elseif ($data->status == 2)
 														<li><a style='cursor:pointer' answer_id='{{ $data->id }}' change_status = '1' title='Approved this answer.' class='chg_status'><i class='icon-gear'></i>Approved</a>&nbsp; / &nbsp;
 														<li><a style='cursor:pointer' answer_id='{{ $data->id }}' change_status = '0' title='Disapproved this answer.' class='chg_status'><i class='icon-gear'></i>Disapproved</a></li>
 													@else
@@ -101,7 +101,7 @@
     @php
     $inc++;
 }
-@endphp		
+@endphp
 
                         </tbody>
                     </table>

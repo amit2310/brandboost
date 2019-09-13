@@ -1,5 +1,5 @@
-@php error_reporting(0); @endphp
-   @extends('layouts.main_template') 
+
+   @extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -8,17 +8,17 @@
 @section('contents')
 
     <script src = "https://code.highcharts.com/highcharts.js"></script>
-    
+
     <!-- /theme JS files -->
 
-    @php 
-        
-        $getNegativeTime = getNegativeTime(); 
-        
+    @php
+
+        $getNegativeTime = getNegativeTime();
+
         if(!empty($getNegativeTime)){
             $negativeTime = $getNegativeTime[0];
             $positiveTime = end($getNegativeTime);
-            
+
 
             if($negativeTime->ratings == '1' || $negativeTime->ratings == '2') {
                 $negTime = date('h A',strtotime($negativeTime->created));
@@ -57,7 +57,7 @@
     </style>
 
   <div class="content">
-  
+
   <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
     <div class="page_header">
       <div class="row">
@@ -71,7 +71,7 @@
             <li><a href="#right-icon-tab3" data-toggle="tab">Month</a></li>
             <li><a href="#right-icon-tab4" data-toggle="tab">3 Month</a></li>
           </ul>
-          
+
         </div>
         <!--=============Button Area Right Side==============-->
         <div class="col-md-5 text-right btn_area">
@@ -94,7 +94,7 @@
                             <div id="accordion-control-right-group1" class="panel-collapse collapse">
                               <div class="panel-body">
                                 <div class="row">
-                                  <div class="col-md-12"> 
+                                  <div class="col-md-12">
                         Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                          </div>
                                 </div>
@@ -215,16 +215,16 @@
       </div>
     </div>
   <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
-  
-  
+
+
     <!--&&&&&&&&&&&& TABBED CONTENT START &&&&&&&&&&-->
-     <div class="tab-content"> 
+     <div class="tab-content">
       <!--===========TAB 1===========-->
       <div class="tab-pane active" id="right-icon-tab0">
-                      
-                      
-                      
-<div class="row"> 
+
+
+
+<div class="row">
   <!--------------LEFT----------->
   <div class="col-md-3">
     <div class="panel panel-flat review_ratings">
@@ -242,8 +242,8 @@
                 </div>
             </div>
           </div>
-                              
-                              
+
+
         <div id="linechart_a" style="min-width: 300px; height: 200px;"></div>
       </div>
     </div>
@@ -255,7 +255,7 @@
         <h6 class="panel-title">Quietest Time of the Day</h6>
         <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
       </div>
-      <div class="panel-body p0 bkg_white"> 
+      <div class="panel-body p0 bkg_white">
       <div class="p20 topchart_value">
             <div class="row">
                 <div class="col-xs-12">
@@ -276,7 +276,7 @@
         <h6 class="panel-title">Busiest Time of the Day</h6>
         <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
       </div>
-      <div class="panel-body p0 bkg_white"> 
+      <div class="panel-body p0 bkg_white">
       <div class="p20 topchart_value">
             <div class="row">
                 <div class="col-xs-12">
@@ -297,8 +297,8 @@
         <h6 class="panel-title">Most Negative Time of the Day</h6>
         <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
       </div>
-      
-      <div class="panel-body p0 bkg_white"> 
+
+      <div class="panel-body p0 bkg_white">
       <div class="p20 topchart_value">
             <div class="row">
                 <div class="col-xs-12">
@@ -310,23 +310,23 @@
           </div>
      <div id="linechart_d" style="min-width: 300px; height: 200px;"></div>
       </div>
-      
-      
+
+
     </div>
   </div>
 </div>
-          
-              
-                  
-<div class="row">                     
+
+
+
+<div class="row">
 <div class="col-md-12">
     <div class="panel panel-flat">
       <div class="panel-heading">
         <h6 class="panel-title">Bounce</h6>
         <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
       </div>
-      
-      <div class="panel-body p0 bkg_white"> 
+
+      <div class="panel-body p0 bkg_white">
       <div class="p20 topchart_value" style="max-width: 1400px;">
             <div class="row">
                 <div class="col-xs-2">
@@ -334,7 +334,7 @@
                 <h1 class="m0">136</h1>
                 <p class="txt_green">61.8%</p>
                 </div>
-                
+
                 <div class="col-xs-2">
                 <img class="pull-left mr20" src="{{ base_url() }}assets/images/smiley_green.png"/>
                 <h1 class="m0">121</h1>
@@ -358,21 +358,21 @@
             </div>
           </div>
      <!--<div id="linechart_d" style="min-width: 300px; height: 250px;"></div>-->
-     
+
      <div class="p20" id="linechart_bot"></div>
-     
-     
-     
+
+
+
       </div>
-      
-      
+
+
     </div>
-  </div>    
-              
-</div>            
-                     
-                        
-                        
+  </div>
+
+</div>
+
+
+
                       </div>
                       <!--===========TAB 2===========-->
                       <div class="tab-pane" id="right-icon-tab1"> </div>
@@ -384,13 +384,13 @@
                       <div class="tab-pane" id="right-icon-tab4"> </div>
                      </div>
                      <!--&&&&&&&&&&&& TABBED CONTENT  END &&&&&&&&&&-->
-                
-                
-                
-                    
-                
-                    
-                    
+
+
+
+
+
+
+
                   </div>
 
 
@@ -398,7 +398,7 @@
 <script>
 
     // top navigation fixed on scroll and side bar collasped
-    
+
         $( window ).scroll( function () {
             var sc = $( window ).scrollTop();
             if ( sc > 100 ) {
@@ -423,11 +423,11 @@
                 smallMenu();
             };
         } );
-    
 
-    
+
+
     </script>
-    
+
 
 
 
@@ -437,7 +437,7 @@
 
 <script>
 //Semi Circle chart js -- Highcharts js plugins
-    
+
 Highcharts.chart('linechart_a', {
     chart: {
         type: 'column'
@@ -451,7 +451,7 @@ Highcharts.chart('linechart_a', {
     xAxis: {
         type: 'category',
         labels: {
-           
+
             style: {
                 fontSize: '11px',
                 fontFamily: 'Verdana, sans-serif'
@@ -467,7 +467,7 @@ Highcharts.chart('linechart_a', {
     legend: {
         enabled: false
     },
-    
+
     plotOptions: {
         column: {
             pointPadding: 0.20,
@@ -475,7 +475,7 @@ Highcharts.chart('linechart_a', {
             borderRadius: 5
         }
     },
-    
+
     colors: ['#fd6c81', '#fbcfd7', '#8bbc21', '#910000'],
     tooltip: {
         pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -496,13 +496,13 @@ Highcharts.chart('linechart_a', {
             ['11', 4.5],
             ['12', 2.2]
         ],
-       
+
     }]
-}); 
-    
-    
-    
-    
+});
+
+
+
+
     Highcharts.chart('linechart_b', {
     chart: {
         type: 'column'
@@ -516,7 +516,7 @@ Highcharts.chart('linechart_a', {
     xAxis: {
         type: 'category',
         labels: {
-           
+
             style: {
                 fontSize: '11px',
                 fontFamily: 'Verdana, sans-serif'
@@ -532,7 +532,7 @@ Highcharts.chart('linechart_a', {
     legend: {
         enabled: false
     },
-    
+
     plotOptions: {
         column: {
             pointPadding: 0.20,
@@ -540,7 +540,7 @@ Highcharts.chart('linechart_a', {
             borderRadius: 5
         }
     },
-    
+
     colors: ['#2694b8', '#badbe7', '#8bbc21', '#910000'],
     tooltip: {
         pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -561,13 +561,13 @@ Highcharts.chart('linechart_a', {
             ['11', 4.5],
             ['12', 2.2]
         ],
-       
+
     }]
-}); 
-    
-    
-    
-    
+});
+
+
+
+
     Highcharts.chart('linechart_c', {
     chart: {
         type: 'column'
@@ -581,7 +581,7 @@ Highcharts.chart('linechart_a', {
     xAxis: {
         type: 'category',
         labels: {
-           
+
             style: {
                 fontSize: '11px',
                 fontFamily: 'Verdana, sans-serif'
@@ -597,7 +597,7 @@ Highcharts.chart('linechart_a', {
     legend: {
         enabled: false
     },
-    
+
     plotOptions: {
         column: {
             pointPadding: 0.20,
@@ -605,7 +605,7 @@ Highcharts.chart('linechart_a', {
             borderRadius: 5
         }
     },
-    
+
     colors: ['#066172', '#badbe7', '#8bbc21', '#910000'],
     tooltip: {
         pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -626,13 +626,13 @@ Highcharts.chart('linechart_a', {
             ['11', 4.5],
             ['12', 2.2]
         ],
-       
+
     }]
-}); 
-    
-    
-    
-    
+});
+
+
+
+
     Highcharts.chart('linechart_d', {
     chart: {
         type: 'column'
@@ -646,7 +646,7 @@ Highcharts.chart('linechart_a', {
     xAxis: {
         type: 'category',
         labels: {
-           
+
             style: {
                 fontSize: '11px',
                 fontFamily: 'Verdana, sans-serif'
@@ -662,7 +662,7 @@ Highcharts.chart('linechart_a', {
     legend: {
         enabled: false
     },
-    
+
     plotOptions: {
         column: {
             pointPadding: 0.20,
@@ -670,7 +670,7 @@ Highcharts.chart('linechart_a', {
             borderRadius: 5
         }
     },
-    
+
     colors: ['#5ad491', '#cbf0dd', '#8bbc21', '#910000'],
     tooltip: {
         pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -691,14 +691,14 @@ Highcharts.chart('linechart_a', {
             ['11', 4.5],
             ['12', 2.2]
         ],
-       
+
     }]
-}); 
+});
 </script>
-      
-      
+
+
    <script>
-    
+
     Highcharts.chart('linechart_bot', {
     title: {
         text: null
@@ -716,7 +716,7 @@ Highcharts.chart('linechart_a', {
     legend: {
         enabled: false
     },
-        
+
         colors: ['#acba14', '#fd6c81', '#9292b4', '#4ebc86', '#2694b8'],
 
     plotOptions: {
@@ -727,8 +727,8 @@ Highcharts.chart('linechart_a', {
             pointStart: 1
         }
     },
-        
-        
+
+
 
     series: [{
         name: 'Installation',
@@ -763,6 +763,6 @@ Highcharts.chart('linechart_a', {
     }
 
 });
-    
-    </script> 
+
+    </script>
 @endsection

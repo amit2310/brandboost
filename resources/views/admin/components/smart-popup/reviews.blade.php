@@ -1,4 +1,3 @@
-<?php error_reporting(0); ?>
 <style>
     .enlarge {
         cursor: pointer;
@@ -25,12 +24,12 @@
         border-top: 1px solid #eee;
         padding: 0px;
         left:10px;
-    } 
+    }
     .smartStickyFooter textarea {
         height: 50px!important;
     }
 
-    
+
     .thumbnail .thumb img {border-radius: 5px 5px 0 0; height: 220px;}
     .caption-overflow.smallovfl {
         color: #333;
@@ -87,7 +86,7 @@ $mediaArray = unserialize($reviewData->media_url);
 
                     <?php
                     $subscriberID = $mUser->checkIfSubscriber(array('email' => $reviewData->email));
-                   
+
                     if (!empty($subscriberID)) {
                         $oSubscriber = $mSubscriber->getGlobalSubscriberInfo($subscriberID->id);
 
@@ -129,8 +128,8 @@ $mediaArray = unserialize($reviewData->media_url);
                     }
                     ?>
                 </div>
-            </div>  
-    </div>    
+            </div>
+    </div>
 
 <ul class="nav nav-tabs nav-tabs-bottom">
     <li class="<?php if (empty($selectedTab) || $selectedTab == 'undefined' || $selectedTab == 'review'): ?>active<?php endif; ?>"><a href="#smartReviewTab" data-toggle="tab">Review</a></li>
@@ -172,8 +171,8 @@ $mediaArray = unserialize($reviewData->media_url);
 				<?php endif; ?>
 				<div class="clearfix"></div>
 				</div>
-				
-				
+
+
                 <p class="mb0 fsize13 mt20">
                     <?php
                     if ($reviewData->ratings >= 4) {
@@ -196,8 +195,8 @@ $mediaArray = unserialize($reviewData->media_url);
                         }
                         ?>
 
-                    </span>  
-                    <span class="ml20"><?php echo $reviewData->ratings > 0 ? number_format($reviewData->ratings, 1) : 'Unknown'; ?> Out of 5 Stars</span> 
+                    </span>
+                    <span class="ml20"><?php echo $reviewData->ratings > 0 ? number_format($reviewData->ratings, 1) : 'Unknown'; ?> Out of 5 Stars</span>
                 </p>
             </div>
 
@@ -234,7 +233,7 @@ $mediaArray = unserialize($reviewData->media_url);
 
                                             <div class="media-left pr0 w100">
 
-                                                <p class="fsize14 txt_grey2 lh14 mb-15 "><?php echo $commentData->firstname . ' ' . $commentData->lastname; ?> <span class="dot">.</span> <?php echo timeAgo($commentData->created); ?> <span class="dot">.</span> 
+                                                <p class="fsize14 txt_grey2 lh14 mb-15 "><?php echo $commentData->firstname . ' ' . $commentData->lastname; ?> <span class="dot">.</span> <?php echo timeAgo($commentData->created); ?> <span class="dot">.</span>
 
                                                     <?php if ($commentData->status == '1') { ?>
                                                         <span class="txt_green"><i class="icon-checkmark3 fsize12 txt_green"></i> Approve</span>
@@ -258,7 +257,7 @@ $mediaArray = unserialize($reviewData->media_url);
                                                     <a class="btn comment_btn p7" href="javascript:void(0);" onclick="saveSmartCommentLikeStatus('<?php echo $commentData->id; ?>', '1', '<?php echo $reviewData->id; ?>')"><i class="icon-thumbs-up2 txt_green"></i></a>
                                                     <button class="btn btn-link pl0 txt_red"><?php echo count($disLikeData); ?></button>
                                                     <a class="btn comment_btn p7" href="javascript:void(0);" onclick="saveSmartCommentLikeStatus('<?php echo $commentData->id; ?>', '0', '<?php echo $reviewData->id; ?>')"><i class="icon-thumbs-down2 txt_red"></i></a>
-                                                    <a style="cursor: pointer;" class="btn comment_btn txt_purple replySmartCommentAction">Reply</a> 
+                                                    <a style="cursor: pointer;" class="btn comment_btn txt_purple replySmartCommentAction">Reply</a>
                                                     <a  href="javascript:void(0);" class="btn comment_btn txt_purple editSmartComment" commentid="<?php echo $commentData->id; ?>">Edit</a>
                                                     <a  href="javascript:void(0);" class="btn comment_btn txt_purple deleteSmartComment" commentid="<?php echo $commentData->id; ?>">Delete</a>
                                                 </div>
@@ -371,7 +370,7 @@ $mediaArray = unserialize($reviewData->media_url);
                             </span>
                             <br>
                             <small class="text-muted">On <?php echo date('F d, Y h:i A', strtotime($noteData->created)); ?> by <?php echo $noteData->firstname . ' ' . $noteData->lastname; ?></small>
-                        </p>    
+                        </p>
 
                         <?php
                     }
@@ -459,20 +458,20 @@ $mediaArray = unserialize($reviewData->media_url);
                 }
             });
         });
-        
+
         $(".loadMainImageMedia").click(function(){
             var mediasource = $(this).attr('src');
             $('.big_img').empty();
             $('.big_img').html('<img class="bb_img_enlagre" src="'+mediasource+'"><div class="caption-overflow smallovfl"><a class="preview_img_src" href="'+mediasource+'" data-popup="lightbox"><i class="icon-eye"></i></a></div>');
-            
+
         });
-        
+
         $(".loadMainVideoMedia").click(function(){
             var mediasource = $(this).attr('data-src');
             var mediaExtension = $(this).attr('data-ext');
             $('.big_img').empty();
             $('.big_img').html('<video class="media br5 " height="100%" width="100%" controls><source id="bb_video_enlarge" src="'+ mediasource+'" type="video/mp4"></video><div class="caption-overflow smallovfl"><a class="preview_video_src" style="cursor: pointer;" filepath="'+mediasource+'" fileext="'+mediaExtension+'"><i class="icon-eye"></i></a></div>');
-            
+
         });
     });
 

@@ -8,69 +8,69 @@
 		$weekDate = date('Y-m-d', strtotime("-7 week"));
 		$monthDate = date('Y-m-d', strtotime("-1 month"));
 		$threeMonthDate = date('Y-m-d', strtotime("-1 month"));
-		
+
 		$yesterdayST = (int)strtotime($yesterdayDate);
 		$weekST = (int)strtotime($weekDate);
 		$monthST = (int)strtotime($monthDate);
 		$threeMonthST = (int)strtotime($threeMonthDate);
-		
+
 		foreach ($oStats as $oStat) {
 			if($statsType == 'aggregate'){
-				
+
 				if(!empty($oStat->widget_id)){
 					$aWidgets['widget_id'][$oStat->widget_id]=$oStat;
 				}
-				
+
 				if(!empty($oStat->brandboost_id)){
 					$aWidgets['campaign'][$oStat->brandboost_id]= $oStat;
 				}
-				
+
 				if(!empty($oStat->widget_type)){
 					$aWidgets['widget_type'][$oStat->widget_type][]= $oStat;
 				}
-				
+
 				if(!empty($oStat->track_type)){
 					$aWidgets['track_type'][$oStat->track_type][]= $oStat;
 				}
 			}
-			
+
 			$trackDate = date("Y-m-d", strtotime($oStat->created_at));
 			$trackST = (int)strtotime($trackDate);
-			
+
 			if ($timeNow == $trackDate) {
 				$oStatsToday[] = $oStat;
-			} 
+			}
 			if($yesterdayST <= $trackST) {
 				$oStatsYesterday[] = $oStat;
-			} 
+			}
 			if($weekST <= $trackST) {
 				$oStatsWeek[] = $oStat;
-			} 
+			}
 			if($monthST <= $trackST) {
 				$oStatsMonth[] = $oStat;
-			} 
+			}
 			if($threeMonthST <= $trackST) {
 				$oStats3Month[] = $oStat;
 			}
-			
+
 			if ($oStat->track_type == 'view') {
 				$aViews[] = $oStat;
 				if ($timeNow == $trackDate) {
 					//Today
 					$aViewsToday[] = $oStat;
-				} 
+				}
 				if($yesterdayST <= $trackST) {
 					//Yesterday
 					$aViewsYesterday[] = $oStat;
-				} 
+				}
 				if($weekST <= $trackST) {
 					//Week
 					$aViewsWeek[] = $oStat;
-				} 
+				}
 				if($monthST <= $trackST) {
 					//Month
 					$aViewsMonth[] = $oStat;
-				} 
+				}
 				if($threeMonthST <= $trackST) {
 					//3 Month
 					$aViews3Months[] = $oStat;
@@ -80,19 +80,19 @@
 				if ($timeNow == $trackDate) {
 					//Today
 					$aClicksToday[] = $oStat;
-				} 
+				}
 				if($yesterdayST <= $trackST) {
 					//Yesterday
 					$aClicksYesterday[] = $oStat;
-				} 
+				}
 				if($weekST <= $trackST) {
 					//Week
 					$aClicksWeek[] = $oStat;
-				} 
+				}
 				if($monthST <= $trackST) {
 					//Month
 					$aClicksMonth[] = $oStat;
-				} 
+				}
 				if($threeMonthST <= $trackST) {
 					//3 Month
 					$aClicks3Months[] = $oStat;
@@ -102,19 +102,19 @@
 				if ($timeNow == $trackDate) {
 					//Today
 					$aCommentsToday[] = $oStat;
-				} 
+				}
 				if($yesterdayST <= $trackST) {
 					//Yesterday
 					$aCommentsYesterday[] = $oStat;
-				} 
+				}
 				if($weekST <= $trackST) {
 					//Week
 					$aCommentsWeek[] = $oStat;
-				} 
+				}
 				if($monthST <= $trackST) {
 					//Month
 					$aCommentsMonth[] = $oStat;
-				} 
+				}
 				if($threeMonthST <= $trackST) {
 					//3 Month
 					$aComments3Months[] = $oStat;
@@ -124,26 +124,26 @@
 				if ($timeNow == $trackDate) {
 					//Today
 					$aHelpfulToday[] = $oStat;
-				} 
+				}
 				if($yesterdayST <= $trackST) {
 					//Yesterday
 					$aHelpfulYesterday[] = $oStat;
-				} 
+				}
 				if($weekST <= $trackST) {
 					//Week
 					$aHelpfulWeek[] = $oStat;
-				} 
+				}
 				if($monthST <= $trackST) {
 					//Month
 					$aHelpfulMonth[] = $oStat;
-				} 
+				}
 				if($threeMonthST <= $trackST) {
 					//3 Month
 					$aHelpful3Months[] = $oStat;
 				}
 			}
 		}
-		
+
 		$totalRecords = count($oStats);
 		$totalViews = count($aViews);
 		$totalClicks = count($aClicks);
@@ -163,15 +163,15 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-flat">
-					<div class="panel-heading"> 
+					<div class="panel-heading">
 						<span class="pull-left">
 							<h6 class="panel-title" id="totalStatCount">{{ ($totalRecords) ? $totalRecords : '0' }} Records</h6>
 						</span>
 						<div class="heading_links pull-left">
 							<a class="top_links btn btn-xs btn_white_table ml20 mvtabs" href="#right-icon-tab15" data-toggle="tab" total-record="{{ $totalRecords }}">All Time</a>
-							<a class="top_links mvtabs" href="#right-icon-tab10" data-toggle="tab" total-record="{{ $totalToday }}">Today</a> 
-							<a class="top_links mvtabs" href="#right-icon-tab11" data-toggle="tab" total-record="{{ $totalYesterday }}">Yesterday</a> 
-							<a class="top_links mvtabs" href="#right-icon-tab12" data-toggle="tab" total-record="{{ $totalWeek }}">Week</a> 
+							<a class="top_links mvtabs" href="#right-icon-tab10" data-toggle="tab" total-record="{{ $totalToday }}">Today</a>
+							<a class="top_links mvtabs" href="#right-icon-tab11" data-toggle="tab" total-record="{{ $totalYesterday }}">Yesterday</a>
+							<a class="top_links mvtabs" href="#right-icon-tab12" data-toggle="tab" total-record="{{ $totalWeek }}">Week</a>
 							<a class="top_links mvtabs" href="#right-icon-tab13" data-toggle="tab" total-record="{{ $totalMonth }}">Month</a>
 							<a class="top_links mvtabs" href="#right-icon-tab14" data-toggle="tab" total-record="{{ $total3Month }}">3 Month</a>
 						</div>
@@ -179,9 +179,9 @@
 				</div>
 			</div>
 		</div>
-		
+
 		@if($statsType == 'aggregate')
-			<div class="row"> 
+			<div class="row">
 				<!--------------LEFT----------->
 				<div class="col-md-3">
 					<div class="panel panel-flat review_ratings">
@@ -194,7 +194,7 @@
 								<div class="row">
 									<div class="col-xs-12">
 										<img class="pull-left mr20" src="{{ base_url('assets/images/smiley_red.png') }}"/>
-										<h1 class="m0">{{ number_format(count($aWidgets['widget_id'])) }}</h1>                                        
+										<h1 class="m0">{{ number_format(count($aWidgets['widget_id'])) }}</h1>
 									</div>
 								</div>
 							</div>
@@ -208,7 +208,7 @@
 							<h6 class="panel-title">Total Campaigns</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -227,7 +227,7 @@
 							<h6 class="panel-title">Widget Type</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -237,11 +237,11 @@
 												<h6 class="m0">
 													@if ($key == 'cpw')
 														{{ 'Center Popup' }}
-													@else if ($key == 'vpw')
+													@elseif ($key == 'vpw')
 														{{ 'Vertical Popup' }}
-													@else if ($key == 'bww')
+													@elseif ($key == 'bww')
 														{{ 'Button Widget Popup' }}
-													@else if ($key == 'bfw')
+													@elseif ($key == 'bfw')
 														{{ 'Bottom Fixed Popup' }}
 													@else
 														{{ ucfirst($key) }}
@@ -264,8 +264,8 @@
 							<h6 class="panel-title">Sources</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						
-						<div class="panel-body p0 bkg_white"> 
+
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-3">
@@ -287,10 +287,10 @@
 				</div>
 			</div>
 		@endif
-		
+
 		<div class="tab-pane active" id="right-icon-tab15">
-			
-			<div class="row"> 
+
+			<div class="row">
 				<!--------------LEFT----------->
 				<div class="col-md-3">
 					<div class="panel panel-flat review_ratings">
@@ -319,7 +319,7 @@
 							<h6 class="panel-title">Clicks</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -340,7 +340,7 @@
 							<h6 class="panel-title">Comments</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -361,8 +361,8 @@
 							<h6 class="panel-title">Helpful</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						
-						<div class="panel-body p0 bkg_white"> 
+
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -373,11 +373,11 @@
 								</div>
 							</div>
 							<div id="linechart_d_all" style="min-width: 300px; height: 250px;"></div>
-						</div>						
+						</div>
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-flat">
@@ -396,7 +396,7 @@
 									<a href="#"><i class="icon-arrow-up16"></i></a>
 									<a href="#"><i class="icon-pencil"></i></a>
 								</div>
-								
+
 							</div>
 						</div>
 						<div class="panel-body p0">
@@ -423,25 +423,25 @@
 												$brandImgArray = unserialize($oData->brand_img);
 												//pre($brandImgArray);
 												$brand_img = $brandImgArray[0]['media_url'];
-												
+
 												if (empty($brand_img)) {
 													$imgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
 												}
-												
+
 												//Attached camapaign brand Image
 												$campaignImgArray = unserialize($oData->campaignImg);
 												$campaign_img = $campaignImgArray[0]['media_url'];
-												
+
 												if (empty($campaign_img)) {
 													$campaignImgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
-												
+
 											@endphp
-											
+
 											<!--================================================-->
 											<tr>
 												<td>
@@ -456,15 +456,15 @@
 														</div>
 													</div>
 												</td>
-												
+
 												<td>
 													@if ($oData->widget_type == 'cpw')
 														{{ 'Center Popup' }}
-													@else if ($oData->widget_type == 'vpw')
+													@elseif ($oData->widget_type == 'vpw')
 														{{ 'Vertical Popup' }}
-													@else if ($oData->widget_type == 'bww')
+													@elseif ($oData->widget_type == 'bww')
 														{{ 'Button Widget Popup' }}
-													@else if ($oData->widget_type == 'bfw')
+													@elseif ($oData->widget_type == 'bfw')
 														{{ 'Bottom Fixed Popup' }}
 													@else {
 														{{ 'No Data' }}
@@ -482,7 +482,7 @@
 														</a>
 														<div class="text-muted text-size-small">
 															{{ setStringLimit($oData->bbBrandDesc) }}
-														</div>    
+														</div>
 													</div>
 												</td>
 												<td>
@@ -510,9 +510,9 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="tab-pane" id="right-icon-tab10">
-			<div class="row"> 
+			<div class="row">
 				<!--------------LEFT----------->
 				<div class="col-md-3">
 					<div class="panel panel-flat review_ratings">
@@ -541,7 +541,7 @@
 							<h6 class="panel-title">Clicks</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -562,7 +562,7 @@
 							<h6 class="panel-title">Comments</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -583,8 +583,8 @@
 							<h6 class="panel-title">Helpful</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						
-						<div class="panel-body p0 bkg_white"> 
+
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -599,7 +599,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-flat">
@@ -643,24 +643,24 @@
 											foreach ($oStatsToday as $oData) {
 												$brandImgArray = unserialize($oData->brand_img);
 												$brand_img = $brandImgArray[0]['media_url'];
-												
+
 												if (empty($brand_img)) {
 													$imgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
 												}
-												
+
 												//Attached camapaign brand Image
 												$campaignImgArray = unserialize($oData->campaignImg);
 												$campaign_img = $campaignImgArray[0]['media_url'];
-												
+
 												if (empty($campaign_img)) {
 													$campaignImgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
 											@endphp
-											
+
 											<!--================================================-->
 											<tr>
 												<td>
@@ -675,15 +675,15 @@
 														</div>
 													</div>
 												</td>
-												
+
 												<td>
 													@if ($oData->widget_type == 'cpw') {
 														{{ 'Center Popup' }}
-													@else if ($oData->widget_type == 'vpw')
+													@elseif ($oData->widget_type == 'vpw')
 														{{ 'Vertical Popup' }}
-													@else if ($oData->widget_type == 'bww')
+													@elseif ($oData->widget_type == 'bww')
 														{{ 'Button Widget Popup' }}
-													@else if ($oData->widget_type == 'bfw')
+													@elseif ($oData->widget_type == 'bfw')
 														{{ 'Bottom Fixed Popup' }}
 													@else
 														{{ 'No Data' }}
@@ -702,7 +702,7 @@
 															</a>
 															<div class="text-muted text-size-small">
 																{{ setStringLimit($oData->bbBrandDesc) }}
-															</div>    
+															</div>
 														</div>
 													@endif
 												</td>
@@ -733,7 +733,7 @@
 		</div>
 		<!--===========TAB 2===========-->
 		<div class="tab-pane" id="right-icon-tab11">
-			<div class="row"> 
+			<div class="row">
 				<!--------------LEFT----------->
 				<div class="col-md-3">
 					<div class="panel panel-flat review_ratings">
@@ -762,7 +762,7 @@
 							<h6 class="panel-title">Clicks</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -783,7 +783,7 @@
 							<h6 class="panel-title">Comments</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -804,8 +804,8 @@
 							<h6 class="panel-title">Helpful</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						
-						<div class="panel-body p0 bkg_white"> 
+
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -820,7 +820,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-flat">
@@ -839,7 +839,7 @@
 									<a href="#"><i class="icon-arrow-up16"></i></a>
 									<a href="#"><i class="icon-pencil"></i></a>
 								</div>
-								
+
 							</div>
 						</div>
 						<div class="panel-body p0">
@@ -865,24 +865,24 @@
 											foreach ($oStatsYesterday as $oData) {
 												$brandImgArray = unserialize($oData->brand_img);
 												$brand_img = $brandImgArray[0]['media_url'];
-												
+
 												if (empty($brand_img)) {
 													$imgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
 												}
-												
+
 												//Attached camapaign brand Image
 												$campaignImgArray = unserialize($oData->campaignImg);
 												$campaign_img = $campaignImgArray[0]['media_url'];
-												
+
 												if (empty($campaign_img)) {
 													$campaignImgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
 											@endphp
-											
+
 											<!--================================================-->
 											<tr>
 												<td>
@@ -897,15 +897,15 @@
 														</div>
 													</div>
 												</td>
-												
+
 												<td>
 													@if ($oData->widget_type == 'cpw') {
 														{{ 'Center Popup' }}
-													@else if ($oData->widget_type == 'vpw') {
+													@elseif ($oData->widget_type == 'vpw') {
 														{{ 'Vertical Popup' }}
-													@else if ($oData->widget_type == 'bww') {
+													@elseif ($oData->widget_type == 'bww') {
 														{{ 'Button Widget Popup' }}
-													@else if ($oData->widget_type == 'bfw') {
+													@elseif ($oData->widget_type == 'bfw') {
 														{{ 'Bottom Fixed Popup' }}
 													@else {
 														{{ 'No Data' }}
@@ -923,7 +923,7 @@
 														</a>
 														<div class="text-muted text-size-small">
 															{{ setStringLimit($oData->bbBrandDesc) }}
-														</div>    
+														</div>
 													</div>
 												</td>
 												<td>
@@ -950,11 +950,11 @@
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 		<!--===========TAB 3====Preferences=======-->
 		<div class="tab-pane" id="right-icon-tab12">
-			<div class="row"> 
+			<div class="row">
 				<!--------------LEFT----------->
 				<div class="col-md-3">
 					<div class="panel panel-flat review_ratings">
@@ -983,7 +983,7 @@
 							<h6 class="panel-title">Clicks</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -1004,7 +1004,7 @@
 							<h6 class="panel-title">Comments</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -1025,8 +1025,8 @@
 							<h6 class="panel-title">Helpful</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						
-						<div class="panel-body p0 bkg_white"> 
+
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -1041,7 +1041,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-flat">
@@ -1085,24 +1085,24 @@
 											foreach ($oStatsWeek as $oData) {
 												$brandImgArray = unserialize($oData->brand_img);
 												$brand_img = $brandImgArray[0]['media_url'];
-												
+
 												if (empty($brand_img)) {
 													$imgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
 												}
-												
+
 												//Attached camapaign brand Image
 												$campaignImgArray = unserialize($oData->campaignImg);
 												$campaign_img = $campaignImgArray[0]['media_url'];
-												
+
 												if (empty($campaign_img)) {
 													$campaignImgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
 											@endphp
-											
+
 											<!--================================================-->
 											<tr>
 												<td>
@@ -1121,15 +1121,15 @@
 														</div>
 													</div>
 												</td>
-												
+
 												<td>
 													@if ($oData->widget_type == 'cpw') {
 														{{ 'Center Popup' }}
-													@else if ($oData->widget_type == 'vpw') {
+													@elseif ($oData->widget_type == 'vpw') {
 														{{ 'Vertical Popup' }}
-													@else if ($oData->widget_type == 'bww') {
+													@elseif ($oData->widget_type == 'bww') {
 														{{ 'Button Widget Popup' }}
-													@else if ($oData->widget_type == 'bfw') {
+													@elseif ($oData->widget_type == 'bfw') {
 														{{ 'Bottom Fixed Popup' }}
 													@else {
 														{{ 'No Data' }}
@@ -1147,7 +1147,7 @@
 														</a>
 														<div class="text-muted text-size-small">
 															{{ setStringLimit($oData->bbBrandDesc) }}
-														</div>    
+														</div>
 													</div>
 												</td>
 												<td>
@@ -1174,11 +1174,11 @@
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 		<!--===========TAB 4====Chat Widget=======-->
 		<div class="tab-pane" id="right-icon-tab13">
-			<div class="row"> 
+			<div class="row">
 				<!--------------LEFT----------->
 				<div class="col-md-3">
 					<div class="panel panel-flat review_ratings">
@@ -1207,7 +1207,7 @@
 							<h6 class="panel-title">Clicks</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -1228,7 +1228,7 @@
 							<h6 class="panel-title">Comments</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -1249,8 +1249,8 @@
 							<h6 class="panel-title">Helpful</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						
-						<div class="panel-body p0 bkg_white"> 
+
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -1265,7 +1265,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-flat">
@@ -1309,24 +1309,24 @@
 											foreach ($oStatsMonth as $oData) {
 												$brandImgArray = unserialize($oData->brand_img);
 												$brand_img = $brandImgArray[0]['media_url'];
-												
+
 												if (empty($brand_img)) {
 													$imgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
 												}
-												
+
 												//Attached camapaign brand Image
 												$campaignImgArray = unserialize($oData->campaignImg);
 												$campaign_img = $campaignImgArray[0]['media_url'];
-												
+
 												if (empty($campaign_img)) {
 													$campaignImgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
 											@endphp
-											
+
 											<!--================================================-->
 											<tr>
 												<td>
@@ -1341,15 +1341,15 @@
 														</div>
 													</div>
 												</td>
-												
+
 												<td>
 													@if ($oData->widget_type == 'cpw') {
 														{{ 'Center Popup' }}
-													@else if ($oData->widget_type == 'vpw') {
+													@elseif ($oData->widget_type == 'vpw') {
 														{{ 'Vertical Popup' }}
-													@else if ($oData->widget_type == 'bww') {
+													@elseif ($oData->widget_type == 'bww') {
 														{{ 'Button Widget Popup' }}
-													@else if ($oData->widget_type == 'bfw') {
+													@elseif ($oData->widget_type == 'bfw') {
 														{{ 'Bottom Fixed Popup' }}
 													@else {
 														{{ 'No Data' }}
@@ -1367,7 +1367,7 @@
 														</a>
 														<div class="text-muted text-size-small">
 															{{ setStringLimit($oData->bbBrandDesc) }}
-														</div>    
+														</div>
 													</div>
 												</td>
 												<td>
@@ -1387,24 +1387,24 @@
 												<td>{{ ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data' }}</td>
 												<td>{{ ($oData->city) ? $oData->city : 'No Data' }}</td>
 												<td>{{ ($oData->country) ? $oData->country : 'No Data' }}</td>
-												
+
 											</tr>
 											@php
 											}
 										}
 									@endphp
-									
+
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 		<!--===========TAB 5===========-->
-		<div class="tab-pane" id="right-icon-tab14"> 
-			<div class="row"> 
+		<div class="tab-pane" id="right-icon-tab14">
+			<div class="row">
 				<!--------------LEFT----------->
 				<div class="col-md-3">
 					<div class="panel panel-flat review_ratings">
@@ -1422,7 +1422,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<div id="linechart_a_3month" style="min-width: 300px; height: 250px;"></div>
 						</div>
 					</div>
@@ -1434,7 +1434,7 @@
 							<h6 class="panel-title">Clicks</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -1455,7 +1455,7 @@
 							<h6 class="panel-title">Comments</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						<div class="panel-body p0 bkg_white"> 
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -1476,8 +1476,8 @@
 							<h6 class="panel-title">Helpful</h6>
 							<div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
 						</div>
-						
-						<div class="panel-body p0 bkg_white"> 
+
+						<div class="panel-body p0 bkg_white">
 							<div class="p20 topchart_value">
 								<div class="row">
 									<div class="col-xs-12">
@@ -1492,7 +1492,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-flat">
@@ -1536,24 +1536,24 @@
 											foreach ($oStats3Month as $oData) {
 												$brandImgArray = unserialize($oData->brand_img);
 												$brand_img = $brandImgArray[0]['media_url'];
-												
+
 												if (empty($brand_img)) {
 													$imgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
 												}
-												
+
 												//Attached camapaign brand Image
 												$campaignImgArray = unserialize($oData->campaignImg);
 												$campaign_img = $campaignImgArray[0]['media_url'];
-												
+
 												if (empty($campaign_img)) {
 													$campaignImgSrc = base_url('assets/images/default_table_img2.png');
 													} else {
 													$campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
 												}
 											@endphp
-											
+
 											<!--================================================-->
 											<tr>
 												<td>
@@ -1572,15 +1572,15 @@
 														</div>
 													</div>
 												</td>
-												
+
 												<td>
 													@if ($oData->widget_type == 'cpw')
 														{{ 'Center Popup' }}
-													@else if ($oData->widget_type == 'vpw')
+													@elseif ($oData->widget_type == 'vpw')
 														{{ 'Vertical Popup' }}
-													@else if ($oData->widget_type == 'bww')
+													@elseif ($oData->widget_type == 'bww')
 														{{ 'Button Widget Popup' }}
-													@else if ($oData->widget_type == 'bfw')
+													@elseif ($oData->widget_type == 'bfw')
 														{{ 'Bottom Fixed Popup' }}
 													@else {
 														{{ 'No Data' }}
@@ -1598,7 +1598,7 @@
 														</a>
 														<div class="text-muted text-size-small">
 															{{ setStringLimit($oData->bbBrandDesc) }}
-														</div>    
+														</div>
 													</div>
 												</td>
 												<td>
@@ -1619,7 +1619,7 @@
 											}
 										}
 									@endphp
-									
+
 								</tbody>
 							</table>
 						</div>
@@ -1629,12 +1629,12 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12 text-right">
-				<button 
-					@if ($bActiveSubsription == false) 
-						class="btn dark_btn mt20 pDisplayNoActiveSubscription" title="No Active Subscription" type="button" 
+				<button
+					@if ($bActiveSubsription == false)
+						class="btn dark_btn mt20 pDisplayNoActiveSubscription" title="No Active Subscription" type="button"
 					@else
 						type="submit" class="btn dark_btn mt20"
-					@endif 
+					@endif
 						id="publishWidget"> Publish <i class=" icon-arrow-right13 text-size-base position-right"></i>
 				</button>
 			</div>
@@ -1664,14 +1664,14 @@
             $(this).removeClass("btn");
             $(this).removeClass("btn-xs");
 		});
-		
+
         $(this).addClass("btn");
         $(this).addClass("btn-xs");
         $(this).addClass("btn_white_table");
         $("#totalStatCount").html(totalRecords + ' Records');
 		});
 	//Semi Circle chart js -- Highcharts js plugins
-	
+
     Highcharts.chart('linechart_a_today', {
         chart: {
             type: 'column'
@@ -1685,7 +1685,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -1701,7 +1701,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -1709,7 +1709,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#fd6c81', '#fbcfd7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -1730,10 +1730,10 @@
 			['11', 4.5],
 			['12', 3.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_b_today', {
         chart: {
             type: 'column'
@@ -1747,7 +1747,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -1763,7 +1763,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -1771,7 +1771,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#2694b8', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -1792,10 +1792,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_c_today', {
         chart: {
             type: 'column'
@@ -1809,7 +1809,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -1825,7 +1825,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -1833,7 +1833,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#066172', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -1854,10 +1854,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_d_today', {
         chart: {
             type: 'column'
@@ -1871,7 +1871,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -1887,7 +1887,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -1895,7 +1895,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#5ad491', '#cbf0dd', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -1916,11 +1916,11 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-    
-    
+
+
     Highcharts.chart('linechart_a_yesterday', {
         chart: {
             type: 'column'
@@ -1934,7 +1934,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -1950,7 +1950,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -1958,7 +1958,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#fd6c81', '#fbcfd7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -1979,10 +1979,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_b_yesterday', {
         chart: {
             type: 'column'
@@ -1996,7 +1996,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2012,7 +2012,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2020,7 +2020,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#2694b8', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2041,10 +2041,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_c_yesterday', {
         chart: {
             type: 'column'
@@ -2058,7 +2058,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2074,7 +2074,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2082,7 +2082,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#066172', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2103,10 +2103,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_d_yesterday', {
         chart: {
             type: 'column'
@@ -2120,7 +2120,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2136,7 +2136,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2144,7 +2144,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#5ad491', '#cbf0dd', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2165,12 +2165,12 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-    
-    
-    
+
+
+
     Highcharts.chart('linechart_a_week', {
         chart: {
             type: 'column'
@@ -2184,7 +2184,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2200,7 +2200,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2208,7 +2208,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#fd6c81', '#fbcfd7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2229,10 +2229,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_b_week', {
         chart: {
             type: 'column'
@@ -2246,7 +2246,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2262,7 +2262,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2270,7 +2270,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#2694b8', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2291,10 +2291,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_c_week', {
         chart: {
             type: 'column'
@@ -2308,7 +2308,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2324,7 +2324,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2332,7 +2332,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#066172', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2353,10 +2353,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_d_week', {
         chart: {
             type: 'column'
@@ -2370,7 +2370,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2386,7 +2386,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2394,7 +2394,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#5ad491', '#cbf0dd', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2415,12 +2415,12 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-    
-    
-    
+
+
+
     Highcharts.chart('linechart_a_month', {
         chart: {
             type: 'column'
@@ -2434,7 +2434,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2450,7 +2450,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2458,7 +2458,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#fd6c81', '#fbcfd7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2479,10 +2479,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_b_month', {
         chart: {
             type: 'column'
@@ -2496,7 +2496,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2512,7 +2512,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2520,7 +2520,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#2694b8', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2541,10 +2541,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_c_month', {
         chart: {
             type: 'column'
@@ -2558,7 +2558,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2574,7 +2574,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2582,7 +2582,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#066172', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2603,10 +2603,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_d_month', {
         chart: {
             type: 'column'
@@ -2620,7 +2620,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2636,7 +2636,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2644,7 +2644,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#5ad491', '#cbf0dd', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2665,11 +2665,11 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-    
-    
+
+
     Highcharts.chart('linechart_a_3month', {
         chart: {
             type: 'column'
@@ -2683,7 +2683,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2699,7 +2699,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2707,7 +2707,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#fd6c81', '#fbcfd7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2728,10 +2728,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_b_3month', {
         chart: {
             type: 'column'
@@ -2745,7 +2745,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2761,7 +2761,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2769,7 +2769,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#2694b8', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2790,10 +2790,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_c_3month', {
         chart: {
             type: 'column'
@@ -2807,7 +2807,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2823,7 +2823,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2831,7 +2831,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#066172', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2852,10 +2852,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_d_3month', {
         chart: {
             type: 'column'
@@ -2869,7 +2869,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2885,7 +2885,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2893,7 +2893,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#5ad491', '#cbf0dd', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2914,11 +2914,11 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-    
-    
+
+
 	Highcharts.chart('linechart_a_all', {
         chart: {
             type: 'column'
@@ -2932,7 +2932,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -2948,7 +2948,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -2956,7 +2956,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#fd6c81', '#fbcfd7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -2977,10 +2977,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_b_all', {
         chart: {
             type: 'column'
@@ -2994,7 +2994,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -3010,7 +3010,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -3018,7 +3018,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#2694b8', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -3039,10 +3039,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_c_all', {
         chart: {
             type: 'column'
@@ -3056,7 +3056,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -3072,7 +3072,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -3080,7 +3080,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#066172', '#badbe7', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -3101,10 +3101,10 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_d_all', {
         chart: {
             type: 'column'
@@ -3118,7 +3118,7 @@
         xAxis: {
             type: 'category',
             labels: {
-				
+
                 style: {
                     fontSize: '11px',
                     fontFamily: 'Verdana, sans-serif'
@@ -3134,7 +3134,7 @@
         legend: {
             enabled: false
 		},
-		
+
         plotOptions: {
             column: {
                 pointPadding: 0.20,
@@ -3142,7 +3142,7 @@
                 borderRadius: 5
 			}
 		},
-		
+
         colors: ['#5ad491', '#cbf0dd', '#8bbc21', '#910000'],
         tooltip: {
             pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
@@ -3163,19 +3163,19 @@
 			['11', 4.5],
 			['12', 2.2]
 			],
-			
+
 		}]
 	});
-	
+
     Highcharts.chart('linechart_bot', {
         title: {
             text: null
 		},
-		
+
         subtitle: {
             text: null
 		},
-		
+
         yAxis: {
             title: {
                 text: null
@@ -3184,9 +3184,9 @@
         legend: {
             enabled: false
 		},
-		
+
         colors: ['#acba14', '#fd6c81', '#9292b4', '#4ebc86', '#2694b8'],
-		
+
         plotOptions: {
             series: {
                 label: {
@@ -3195,7 +3195,7 @@
                 pointStart: 1
 			}
 		},
-		
+
         series: [{
 			name: 'Installation',
 			data: [100, 150, 200, 150, 300, 350, 200, 450]
@@ -3212,7 +3212,7 @@
 			name: 'Other',
 			data: [120, 350, 400, 350, 500, 550, 600, 650]
 		}],
-		
+
         responsive: {
             rules: [{
 				condition: {
@@ -3227,6 +3227,6 @@
 				}
 			}]
 		}
-		
+
 	});
-</script>  
+</script>

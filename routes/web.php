@@ -78,7 +78,7 @@ Route::post('webchat/settings/updateCompanyFormData', 'Admin\Settings@updateComp
 
 
 
-//Payment 
+//Payment
 Route::post('payment/upgradeMembership', 'Payment@upgradeMembership');
 
 
@@ -138,7 +138,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
     Route::get('admin/dashboard', 'Admin\Dashboard@index');
 
-    //Dashborad 
+    //Dashborad
 
     Route::post('admin/dashboard/getReviewData', 'Admin\Dashboard@getReviewData');
     Route::post('admin/utility/addContactToList', 'Admin\Utility@addContactToList');
@@ -214,7 +214,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/deleteReviewRequest', 'Admin\Brandboost@deleteReviewRequest');
     Route::get('admin/brandboost/campaign_specific', 'Admin\Brandboost@campaignSpecific');
     Route::get('admin/brandboost/statistics/{bbid}', 'Admin\Brandboost@statistics');
-    
+    Route::post('admin/offsite/add_website', 'Admin\Offsite@add_website');
 
 
 	Route::get('admin/modules/nps/{id}', 'Admin\Modules\Nps@index');
@@ -281,7 +281,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/comments/update_comment_status', 'Admin\Comments@update_comment_status');
     Route::post('admin/reviews/update_note', 'Admin\Reviews@update_note');
     Route::post('admin/reviews/deleteMultipalReview', 'Admin\Reviews@deleteMultipalReview');
-	
+
 
     Route::post('admin/comments/add_comment', 'Admin\Comments@addComment');
     Route::post('admin/comments/getCommentById', 'Admin\Comments@getCommentById');
@@ -352,7 +352,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/webchat/removeBoxStatus', 'Admin\WebChat@removeBoxStatus');
 
 
-//Setting 
+//Setting
     Route::get('admin/settings', 'Admin\Settings@index');
     Route::get('admin/settings/setup_system_notifications', 'Admin\Settings@setup_system_notifications');
     Route::post('admin/settings/getEmailNotificationContent', 'Admin\Settings@getEmailNotificationContent');
@@ -419,7 +419,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/settings/updateNotification', 'Admin\Settings@updateNotification');
     Route::post('admin/notifications/markRead', 'Admin\Notification@markRead');
     Route::post('admin/notifications/delete_multipal_notification', 'Admin\Notification@delete_multipal_notification');
-    
+
 
 
 // Membership
@@ -800,7 +800,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 Route::post('payment/changeSubscription', 'Payment@changeSubscription');
 Route::post('reviews/deleteReviewMultipal', 'Reviews@deleteReviewMultipal');
 
-//offsite 
+//offsite
 Route::get('feedback', 'Feedback@index');
 Route::post('feedback/saveFeedback', 'Feedback@saveFeedback');
 Route::get('feedback/{page}', 'Feedback@index');

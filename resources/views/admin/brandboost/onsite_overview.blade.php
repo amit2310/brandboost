@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -67,7 +67,7 @@ if (!empty($aBrandbosts)) {
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -193,8 +193,8 @@ if (!empty($aBrandbosts)) {
     <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
     <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
-    @if
-    <div class="tab-content"> 
+    @if (!empty($aBrandbosts))
+    <div class="tab-content">
         <!--===========TAB 1===========-->
         <div class="tab-pane active" id="right-icon-tab0">
             <div class="row">
@@ -211,7 +211,7 @@ if (!empty($aBrandbosts)) {
                             <div class="p40 ratings">
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>24% <span>5</span></p></div>
                                     <div class="col-xs-12">
@@ -222,7 +222,7 @@ if (!empty($aBrandbosts)) {
                                 </div>
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>61% <span>17</span></p></div>
                                     <div class="col-xs-12">
@@ -233,7 +233,7 @@ if (!empty($aBrandbosts)) {
                                 </div>
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>3% <span>1</span></p></div>
                                     <div class="col-xs-12">
@@ -244,7 +244,7 @@ if (!empty($aBrandbosts)) {
                                 </div>
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>  
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>0% <span>0</span></p></div>
                                     <div class="col-xs-12">
@@ -255,7 +255,7 @@ if (!empty($aBrandbosts)) {
                                 </div>
                                 <div class="row inner mb0">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i>   
+                                        <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>0% <span>0</span></p></div>
                                     <div class="col-xs-12">
@@ -430,7 +430,7 @@ if (!empty($aBrandbosts)) {
 
 
                                                 <td>
-                                                    <div class="media-left media-middle"> 
+                                                    <div class="media-left media-middle">
                                                         <a href="{{ base_url('admin/brandboost/onsite_setup/'.$data->id) }}" brandID="{{ $data->id }}" b_title="{{ $data->brand_title }}" class="text-default text-semibold"><img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt=""></a> </div>
                                                     <div class="media-left">
                                                         <div class=""><a href="{{ base_url('admin/brandboost/onsite_setup/'.$data->id) }}" brandID="{{ $data->id }}" b_title="{{ $data->brand_title }}" class="text-default text-semibold">{{ $data->brand_title }}</a>
@@ -465,13 +465,13 @@ if (!empty($aBrandbosts)) {
                                                 </td>
 
                                                 <td>
-                                                    @if (sizeof($allSubscribers) > 0) 
+                                                    @if (sizeof($allSubscribers) > 0)
                                                         <a href="{{ base_url('admin/brandboost/stats/onsite/' . $data->id . '?t=contact') }}" target="_blank" class="text-default text-semibold">{{ sizeof($allSubscribers) }}</a>
                                                         <div data-toggle="tooltip" title="Total contacts {{ sizeof($allSubscribers) }}" data-placement="top" class="progress">
                                                             <div class="progress-bar progress-bar-grey" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"></div>
                                                         </div>
 
-                                                    @else    
+                                                    @else
                                                         <a href="{{ base_url('admin/brandboost/stats/onsite/' . $data->id . '?t=contact') }}" target="_blank" class="text-default text-semibold">{{ $allSubscribers }}</a>
                                                         <div data-toggle="tooltip" title="Total contacts 0" data-placement="top" class="progress">
                                                             <div style="color:#999999!important;" class="progress-bar progress-bar-violet" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"></div>
@@ -520,7 +520,7 @@ if (!empty($aBrandbosts)) {
                                                 $negativeGraph = $negativeRating * 100 / $getResCount;
                                                 $totalGraph = $getResCount * 100 / $getSendRequest;
                                                 $totalGraph = $totalGraph > 100 ? 100 : $totalGraph;
-                                                
+
                                                 @endphp
                                                 <td>
                                                     <a style="cursor: pointer;" target="_blank" class="text-default text-semibold">{{ $getResCount }}</a>
@@ -571,7 +571,7 @@ if (!empty($aBrandbosts)) {
 
                                                 <td class="text-center">
                                                     <label class="custom-form-switch">
-                                                        @if ($data->status == 1) 
+                                                        @if ($data->status == 1)
                                                             <input class="field changeStatus"  brandID="{{ $data->id }}" status="2" type="checkbox" checked="checked" >
                                                         @else
                                                             <input class="field changeStatus"  brandID="{{ $data->id }}" status="1" type="checkbox" >
@@ -580,28 +580,28 @@ if (!empty($aBrandbosts)) {
                                                         <span class="toggle"></span>
                                                     </label>
 
-                                                    @if ($user_role != '2') 
-                                                        @if ($currentUserId == $user_id || $user_role == 1) 
-                                                            
+                                                    @if ($user_role != '2')
+                                                        @if ($currentUserId == $user_id || $user_role == 1)
+
                                                             <div class="tdropdown">
                                                                 <a class="ml30 dropdown-toggle" data-toggle="dropdown" style="cursor: pointer;"><img src="/assets/images/more.svg"/></a>
                                                                 <!-- <button type="button" class="btn btn-xs btn_white_table ml20 dropdown-toggle" data-toggle="dropdown"><i class="icon-more2 txt_blue"></i></button> -->
                                                                 <ul class="dropdown-menu dropdown-menu-right width-200">
 
-                                                                    @if ($data->status == 1) 
+                                                                    @if ($data->status == 1)
                                                                         <li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="{{ $data->id }}" status="2"><i class="icon-file-stats"></i> Pause</a></li>
                                                                     @endif
                                                                     @if ($data->status == 2)
                                                                         <li><a href="javascript:void(0);" class="changeStatusCampaign" brandID="{{ $data->id }}" status="1"><i class="icon-file-stats"></i> Start</a></li>
                                                                     @endif
                                                                     <li><a href="{{ base_url('admin/brandboost/onsite_setup/'.$data->id) }}" brandID="{{ $data->id }}" b_title="{{ $data->brand_title }}" class="text-default text-semibold"><i class="icon-pencil"></i>  Edit</a></li>
-                                                                    
+
                                                                     <li><a href="javascript:void(0);" class="deleteCampaign" brandID="{{ $data->id }}"><i class="icon-trash"></i> Delete</a></li>
                                                                     <li><a href="javascript:void(0);" class="archiveCampaign" brandID="{{ $data->id }}"><i class="icon-file-text2"></i> Move to Archive</a></li>
 
                                                                     <li><a href="javascript:void(0);" class="viewECode" brandID="{{ $data->id }}"><i class="icon-file-locked"></i> Get Embedded Code</a></li>
                                                                     <li><a href="{{ base_url('admin/brandboost/stats/onsite/' . $data->id . '?t=contact') }}" target="_blank"><i class="icon-gear"></i> Contacts</a></li>
-                                                                    <li>@php $companyName = strtolower(str_replace(' ', '-', $company_name)) @endphp<a href="{{ base_url('for/'.$companyName.'/') }}{{ strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id }}" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li>   
+                                                                    <li>@php $companyName = strtolower(str_replace(' ', '-', $company_name)) @endphp<a href="{{ base_url('for/'.$companyName.'/') }}{{ strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id }}" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li>
                                                                 </ul>
                                                             </div>
                                                         @else
@@ -708,7 +708,7 @@ if (!empty($aBrandbosts)) {
 </div>
 <!-- /addBrandboost -->
 
-<!--=====================================Create new campaign================================-->	
+<!--=====================================Create new campaign================================-->
 <div id="addPeopleList" class="modal fade">
     <div style="max-width: 440px;ss" class="modal-dialog">
         <div class="modal-content">

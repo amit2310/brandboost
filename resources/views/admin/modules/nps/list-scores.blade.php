@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -41,7 +41,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -208,13 +208,13 @@
                                         $aName = explode(' ', $oFeedback->feedback_fullname, 2);
                                         $firstName = isset($aName[0]) ? $aName[0] : '';
                                         $lastName = isset($aName[1]) ? $aName[1] : '';
-                                        
+
                                         $oFeedback->country_code = isset($oFeedback->country_code) ? $oFeedback->country_code : 'us';
                                         @endphp
                                         <tr>
                                             <td style="display: none;"></td>
                                             <td style="display: none;"></td>
-                                            <td>	
+                                            <td>
                                                 @if ($oFeedback->subscriber_id > 0)
                                                     <div class="media-left media-middle"> {!! @showUserAvtar($oFeedback->avatar, $oFeedback->firstname, $oFeedback->lastname) !!} </div>
                                                     <div class="media-left">
@@ -257,16 +257,16 @@
                                                     <div class="text-muted text-size-small">
 													{{ setStringLimit($feedback) }}
                                                     </div>
-                                                </div> 
+                                                </div>
                                             </td>
                                             <td style="display: none;">
 												@if ($score > 8)
 													1
-                                                @else if ($score <= 8 && $score > 6)
+                                                @elseif ($score <= 8 && $score > 6)
 													2
-                                                @else 
+                                                @else
 													3
-                                                
+
 											</td>
                                         </tr>
                                         @php
@@ -291,7 +291,7 @@
                         }, 50);
                     });
                 </script>
-            @else if ($tab == 'passive')
+            @elseif ($tab == 'passive')
                 <script>
                     $(document).ready(function () {
                         $(".allS").removeClass('active');
@@ -301,7 +301,7 @@
                         }, 50);
                     });
                 </script>
-            @else if ($tab == 'detractors')
+            @elseif ($tab == 'detractors')
                 <script>
                     $(document).ready(function () {
                         $(".allS").removeClass('active');
@@ -444,7 +444,7 @@
 
         var tableId = 'listScoresTable';
         var tableBase = custom_data_table(tableId);
-		
+
         $(document).on('click', '.filterByColumn', function () {
             $('.nav-tabs').each(function (i) {
                 $(this).children().removeClass('active');
@@ -500,7 +500,7 @@
                 $('#checkAll').prop('checked', false);
             }
         });
-		
+
 
         $(document).on('click', '#deleteBulkNPS', function () {
             var val = [];
@@ -542,7 +542,7 @@
 				});
             }
         });
-		
+
 
         $(document).on('click', '#archiveBulkNPS', function () {
             var val = [];
@@ -616,7 +616,7 @@
             });
             return false;
         });
-		
+
 
         $(document).on("click", ".editSurvey", function () {
             $('.overlaynew').show();
@@ -638,7 +638,7 @@
                 }
             });
         });
-		
+
 
         $(document).on("click", ".moveToArchiveNPS", function () {
             $('.overlaynew').show();
@@ -657,7 +657,7 @@
                 }
             });
         });
-		
+
 
         $('#frmeditSurveyModel').on('submit', function (e) {
             e.preventDefault();
@@ -683,7 +683,7 @@
             });
             return false;
         });
-		
+
 
         $(document).on('click', '.deleteNPS', function () {
             var elem = $(this);
@@ -745,7 +745,7 @@
                 }
             });
         });
-		
+
 
         $("#frmNPSTagListModal").submit(function (e) {
             e.preventDefault();

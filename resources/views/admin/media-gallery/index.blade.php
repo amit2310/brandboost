@@ -478,7 +478,7 @@
                                         <div class="tdropdown open">
                                             @if ($galleryData->status == '1')
                                                 <i class="icon-primitive-dot txt_green fsize16"></i>
-                                            @else if ($galleryData->status == '2')
+                                            @elseif ($galleryData->status == '2')
                                             <i class="icon-primitive-dot txt_red fsize16"></i>
                                             @else
                                                 <i class="icon-primitive-dot txt_red fsize16"></i>
@@ -488,7 +488,7 @@
                                                data-toggle="dropdown" aria-expanded="true">
                                                 @if ($galleryData->status == '1')
                                                     {{ 'Active' }}
-                                                @else if ($galleryData->status == '2')
+                                                @elseif ($galleryData->status == '2')
                                                 {{ 'Archive' }}
                                                 @else
                                                     {{ 'Inactive' }}
@@ -503,7 +503,7 @@
                                                     <li><a href="javascript:void(0);" class="updateStatus"
                                                            gallery-id="{{ $galleryData->id }}" data-status="2"><i
                                                                 class="icon-primitive-dot txt_red"></i> Archive</a></li>
-                                                @else if ($galleryData->status == '2')
+                                                @elseif ($galleryData->status == '2')
                                                 <li><a href="javascript:void(0);" class="updateStatus"
                                                        gallery-id="{{ $galleryData->id }}" data-status="1"><i
                                                             class="icon-primitive-dot txt_green"></i> Active</a></li>
@@ -537,7 +537,7 @@
                                                                gallery-id="{{ $galleryData->id }}" data-status="2"><i
                                                                     class="icon-primitive-dot txt_red"></i> Archive</a>
                                                         </li>
-                                                    @else if ($galleryData->status == '2')
+                                                    @elseif ($galleryData->status == '2')
                                                     <li><a href="javascript:void(0);" class="updateStatus"
                                                            gallery-id="{{ $galleryData->id }}" data-status="1"><i
                                                                 class="icon-primitive-dot txt_green"></i> Active</a>

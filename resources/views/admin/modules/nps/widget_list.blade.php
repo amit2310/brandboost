@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -55,7 +55,7 @@ if (!empty($oWidgetsList)) {
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -281,9 +281,9 @@ if (!empty($oWidgetsList)) {
                                                     <button class="btn btn-xs btn_white_table pr10">
                                                         @if ($data->status == 1)
 															<i class="icon-primitive-dot txt_green"></i> Publish
-                                                        @else if ($data->status == 2)
+                                                        @elseif ($data->status == 2)
 															<i class="icon-primitive-dot txt_red"></i> Pause
-                                                        @else if ($data->status == 3)
+                                                        @elseif ($data->status == 3)
 															<i class="icon-primitive-dot txt_red"></i> Archive
                                                         @else
 															<i class="icon-primitive-dot txt_red"></i> Draft
@@ -310,7 +310,7 @@ if (!empty($oWidgetsList)) {
 
                                                                     <li><a href="javascript:void(0);" class="deleteCampaign" widgetID="{{ $data->id }}"><i class="icon-trash"></i> Delete</a></li>
                                                                     <li><a href="javascript:void(0);" class="changeStatusCampaign" widgetID="{{ $data->id }}" status="3"><i class="icon-file-text2"></i> Move to Archive</a></li>
-                                                                    
+
                                                                     <li><a href="javascript:void(0);" class="viewECode" widgetID="{{ $data->id }}"><i class="icon-file-locked"></i> Get Embedded Code</a></li>
                                                                 </ul>
                                                             </div>
@@ -373,7 +373,7 @@ if (!empty($oWidgetsList)) {
                 </div>
             </div>
         </div>
-    </div>            
+    </div>
 
 
     <!-- /dashboard content -->
@@ -614,7 +614,7 @@ if (!empty($oWidgetsList)) {
                 $('#checkAllA').prop('checked', false);
             }
         });
-		
+
 
         $(document).on('click', '#addNPSWidgetShow', function () {
             $('#addNPSWidget').trigger('click');
@@ -662,7 +662,7 @@ if (!empty($oWidgetsList)) {
                 }
             });
         });
-		
+
 
         $(document).on('click', '.deleteCampaign', function () {
             var elem = $(this);
@@ -685,7 +685,7 @@ if (!empty($oWidgetsList)) {
 				});
 			});
         });
-		
+
 
         $(document).on('click', '.viewECode', function () {
             var widgetID = $(this).attr('widgetID');
@@ -705,7 +705,7 @@ if (!empty($oWidgetsList)) {
                 }
             });
         });
-		
+
 
         $(document).on('click', '.editDataList', function () {
             $('.editAction').toggle();

@@ -416,7 +416,7 @@
                                             <button class="btn btn-xs btn_white_table pr10">
                                                 @($oReview->status == 0)
                                                 <i class="icon-primitive-dot txt_red"></i> Disapproved
-                                                @else if ($oReview->status == 2)
+                                                @elseif ($oReview->status == 2)
                                                 <i class="icon-primitive-dot txt_blue"></i> Pending
                                                 @else
                                                     <i class="icon-primitive-dot txt_green"></i> Approved
@@ -446,7 +446,7 @@
                                                                                class='chg_status red'><i
                                                                                     class='icon-file-locked'></i>
                                                                                 Disapproved</a></li>
-                                                                    @else if ($oReview->status == 2)
+                                                                    @elseif ($oReview->status == 2)
                                                                     <li><a review_id='{{ $oReview->id }}'
                                                                            change_status='1'
                                                                            title='Approved this review.'

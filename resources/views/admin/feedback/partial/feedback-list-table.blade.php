@@ -30,7 +30,7 @@
 				} else {
 					$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
 				}*/
-				
+
 				$imgSrc = base_url('assets/images/default_table_img2.png');
 
 				if (!empty($data->avatar)) {
@@ -49,7 +49,7 @@
 							@if ($data->firstname != '')
 								<div class="pt-5">
 									<a href="javascript:void(0);" class="text-default text-semibold">
-										<span>{{ $data->firstname }} {{ $data->lastname }}</span> 
+										<span>{{ $data->firstname }} {{ $data->lastname }}</span>
 										<img class="flags" src="{{ base_url() }}assets/images/flags/us.png"/>
 									</a>
 								</div>
@@ -87,7 +87,7 @@
 								$ratingValue = 1;
 							}
 						@endphp
-						
+
 						{{ $smilyImage = ratingView($ratingValue) }}
 					</td>
 
@@ -120,7 +120,7 @@
 								<button class="btn btn-xs plus_icon dropdown-toggle ml10" data-toggle="dropdown" aria-expanded="false"><i class="icon-plus3"></i></button>
 								<ul style="right: 0px!important;" class="dropdown-menu dropdown-menu-right tagss">
 									@if (count($feedbackTags) > 0)
-										foreach ($feedbackTags as $oTag)
+										@foreach ($feedbackTags as $oTag)
 											<button class="btn btn-xs btn_white_table pr10"> {{ $oTag->tag_name }} </button>
 										@endforeach
 									@endif
@@ -134,7 +134,7 @@
 						<div class="tdropdown">
 							@if ($data->category == 'Positive')
 								<i class="icon-primitive-dot txt_green fsize16"></i>
-							@else if ($data->category == 'Neutral')
+							@elseif ($data->category == 'Neutral')
 								<i class="icon-primitive-dot txt_grey fsize16"></i>
 							@else
 								<i class="icon-primitive-dot txt_red fsize16"></i>
@@ -148,7 +148,7 @@
 								@if ($data->category == 'Positive')
 									<li><a href="javascript:void(0);" feedback_id="{{ $data->id }}" fb_status="Neutral" class="updateFeedbackStatusNew"><i class="icon-primitive-dot txt_grey"></i> Neutral</a> </li>
 									<li><a href="javascript:void(0);" feedback_id="{{ $data->id }}" fb_status="Negative" class="updateFeedbackStatusNew"><i class="icon-primitive-dot txt_red"></i> Negative</a> </li>
-								@else if ($data->category == 'Neutral')
+								@elseif ($data->category == 'Neutral')
 									<li><a href="javascript:void(0);" feedback_id="{{ $data->id }}" fb_status="Positive" class="updateFeedbackStatusNew"><i class="icon-primitive-dot txt_green"></i> Positive</a> </li>
 									<li><a href="javascript:void(0);" feedback_id="{{ $data->id }}" fb_status="Negative" class="updateFeedbackStatusNew"><i class="icon-primitive-dot txt_red"></i> Negative</a> </li>
 								@else
@@ -162,16 +162,16 @@
 					<td>
 						<div class="tdropdown">
 							@if ($data->status == 0)
-								<i class="icon-primitive-dot txt_red fsize16"></i> 
-							@else if ($data->status == 2)
-								<i class="icon-primitive-dot txt_grey fsize16"></i> 
+								<i class="icon-primitive-dot txt_red fsize16"></i>
+							@elseif ($data->status == 2)
+								<i class="icon-primitive-dot txt_grey fsize16"></i>
 							@else
-								<i class="icon-primitive-dot txt_green fsize16"></i> 
+								<i class="icon-primitive-dot txt_green fsize16"></i>
 							@endif
 							<a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
 								@if ($data->status == 0)
 									{{ 'Inactive' }}
-								@else if ($data->status == 2) {
+								@elseif ($data->status == 2) {
 									{{ 'Pending' }}
 								@else {
 									{{ 'Active' }}
@@ -181,7 +181,7 @@
 								@if ($canWrite)
 									@if ($data->status == 1)
 										<li><a feedback_id='{{ $data->id }}' change_status = '0'  class='chg_status'><i class='icon-primitive-dot txt_red'></i> Inactive</a></li>
-									@else if ($data->status == 2)
+									@elseif ($data->status == 2)
 										<li><a feedback_id='{{ $data->id }}' change_status = '1' class='chg_status'><i class='icon-primitive-dot txt_green'></i> Active</a></li>
 										<li><a feedback_id='{{ $data->id }}' change_status = '0'  class='chg_status'><i class='icon-primitive-dot txt_red'></i> Inactive</a></li>
 									@else
@@ -193,21 +193,21 @@
 					</td>
 
 					<td class="text-center">
-						<div class="tdropdown ml10"> 
+						<div class="tdropdown ml10">
 							<a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
 							<ul class="dropdown-menu dropdown-menu-right more_act">
 								<a href="javascript:void();" class="dropdown_close">X</a>
 								@if ($canWrite)
 									@if ($data->status == 1)
 										<li><a feedback_id='{{ $data->id }}' change_status = '0' class='chg_status red'><i class='icon-file-locked'></i> Inactive</a></li>
-									@else if ($data->status == 2) {
+									@elseif ($data->status == 2) {
 										<li><a feedback_id='{{ $data->id }}' change_status = '1' class='chg_status green'><i class='icon-file-locked'></i> Active</a></li>
 										<li><a feedback_id='{{ $data->id }}' change_status = '0' class='chg_status red'><i class='icon-file-locked'></i> Inactive</a></li>
 									@else {
 										<li><a feedback_id='{{ $data->id }}' change_status = '1' class='chg_status green'><i class='icon-file-locked'></i> Active</a></li>";
 									@endif
 								@endif
-								
+
 								<li><a target="_blank" href="{{ base_url('admin/feedback/details/' . $data->id) }}"><i class="icon-file-locked"></i> View Details</a></li>
 							</ul>
 						</div>
@@ -225,7 +225,7 @@
 				</tr>
 				@php
 				}
-			@endphp	
+			@endphp
 		</tbody>
 	</table>
 @else

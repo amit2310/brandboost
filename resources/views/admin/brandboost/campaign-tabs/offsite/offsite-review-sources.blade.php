@@ -1,5 +1,5 @@
-@php 
-list($canRead, $canWrite) = fetchPermissions('Offsite Campaign'); 
+@php
+list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
 
 $searchfalg = 0;
 $showextra = 0;
@@ -69,7 +69,7 @@ $showcount = 0;
                                 <div class="caption text-center">
                                     <div class="pull-left">
                                         <h5 class="no-margin sea">Custom Source</h5>
-                                        <h6 class="text-muted">Use Custom Domain</h6> 
+                                        <h6 class="text-muted">Use Custom Domain</h6>
                                     </div>
                                     <div class="clearfix"></div>
 
@@ -88,10 +88,10 @@ $showcount = 0;
             <div class="filter_campaign_new">
 
                 <div class="panel-group panel-group-control panel-group-control-right content-group-lg filter_campaign" id="accordion-control-right">
-                    @if (!empty($offsite_ids)) 
-                        $selected_list = implode(",", $offsite_ids);
+                    @if (!empty($offsite_ids))
+                       @php $selected_list = implode(",", $offsite_ids); @endphp
                     @else
-                        $selected_list = 0;
+                       @php $selected_list = 0; @endphp
                     @endif
 
                     <input type="hidden" name="selected_list" id='selected_list' value="{{ $selected_list }}">
@@ -192,23 +192,23 @@ $showcount = 0;
                     @foreach ($cateList as $key => $cate)
                     <div class="panel panel-white" id="SPanel{{ $key }}">
                             <div class="panel-heading sidebarheadings active">
-                                <h6 class="panel-title"> 
+                                <h6 class="panel-title">
                                     <a class="{{ $cinc > 0 ? 'collapsed' : '' }}" data-toggle="collapse" data-parent="#accordion-control-right" href="#accordion-control-right-group{{ $key }}">
 
                                         @if (!empty($cate['cat_img']))
                                             <i class=""><img src="/assets/images/{{ $cate['cat_img'] }}"></i>
                                         @elseif (!empty($cate['icon_class']))
-                                            <i class="{{ $cate['icon_class'] }}"></i> 
-                                        @elseif
-                                            <i class="icon-power2"></i> 
+                                            <i class="{{ $cate['icon_class'] }}"></i>
+                                        @else
+                                            <i class="icon-power2"></i>
                                         @endif
                                         &nbsp;
-                                        @if ($cate['title'] == 'OtherSources') 
+                                        @if ($cate['title'] == 'OtherSources')
                                             {{ 'Other Sources' }}
                                         @else
                                             {{ $cate['title'] }}
                                         @endif
-                                    </a> 
+                                    </a>
                                 </h6>
                             </div>
                             <div id="accordion-control-right-group{{ $key }}" class="panel-collapse collapse {{ $cinc == '0' ? 'in firstRow' : '' }}">
@@ -254,7 +254,7 @@ $showcount = 0;
                                                 }
 
                                                 $sourceName = !empty($sourceName) ? $sourceName : 'NA';
-                                                
+
                                                 @endphp
 
                                                 @if (in_array('OtherSources', unserialize($siteData->site_categories)) && $showcount < 1)
@@ -266,7 +266,7 @@ $showcount = 0;
                                                             <div class="caption text-center">
                                                                 <div class="pull-left">
                                                                     <h5 class="no-margin sea">Custom Source</h5>
-                                                                    <h6 class="text-muted">Use Custom Domain</h6> 
+                                                                    <h6 class="text-muted">Use Custom Domain</h6>
                                                                 </div>
                                                                 <div class="clearfix"></div>
 
@@ -279,14 +279,14 @@ $showcount = 0;
                                                 @endif
 
 
-                                                
+
                                                 <div onmouseover="ShowImg('{{ $siteData->id }}')" onmouseleave="HideImg('{{ $siteData->id }}')" class="
-                                                    @if (in_array('OtherSources', unserialize($siteData->site_categories))) 
+                                                    @if (in_array('OtherSources', unserialize($siteData->site_categories)))
                                                         OtMouseover_{{ $siteData->id }}
-                                                    @endif 
-                                                    col-xs-12 col-md-2 col-sm-2 rev_col 
+                                                    @endif
+                                                    col-xs-12 col-md-2 col-sm-2 rev_col
                                                     @if (!empty($offsite_ids))
-                                                        @if (in_array($siteData->id, $offsite_ids)) 
+                                                        @if (in_array($siteData->id, $offsite_ids))
                                                             {{ 'selected' }}
                                                         @endif
                                                     @endif
@@ -297,9 +297,9 @@ $showcount = 0;
                                                     <div class="thumbnail">
 
                                                         <div class="thumb {{ $thumbclass }}">
-                                                            <a href="javascript:void(0);"> 
+                                                            <a href="javascript:void(0);">
                                                                 @if (in_array('OtherSources', unserialize($siteData->site_categories)))
-                                                                    <i class="icon-{{ $sourceName . ' ' . $sourceClass }}" style="font-style:inherit">M</i> 
+                                                                    <i class="icon-{{ $sourceName . ' ' . $sourceClass }}" style="font-style:inherit">M</i>
                                                                 @else
                                                                     <img src="{{ '/uploads/' . $siteData->image }}">
                                                                 @endif
@@ -327,16 +327,16 @@ $showcount = 0;
                                                             </div>
                                                             @if ($canWrite)
                                                                 <label class="custom-form-switch pull-right mt10">
-                                                                    <input class="field offsite_selected" type="checkbox" 
-                                                                        @if (!empty($offsite_ids)) 
+                                                                    <input class="field offsite_selected" type="checkbox"
+                                                                        @if (!empty($offsite_ids))
                                                                             @if (in_array($siteData->id, $offsite_ids))
                                                                                 {{ 'checked' }}
                                                                             @else
                                                                                 {{ '' }}
                                                                             @endif
-                                                                        @endif 
+                                                                        @endif
                                                                         offsiteSelected="
-                                                                            @if (!empty($offsite_ids)) 
+                                                                            @if (!empty($offsite_ids))
                                                                                @if (in_array($siteData->id, $offsite_ids))
                                                                                    {{ '1' }}
                                                                                @else
@@ -352,11 +352,11 @@ $showcount = 0;
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @php 
+                                            @php
                                                 }
                                             }
                                             @endphp
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -392,7 +392,7 @@ $showcount = 0;
                                             <div class="caption text-center">
                                                 <div class="pull-left">
                                                     <h5 class="no-margin sea">Custom Source</h5>
-                                                    <h6 class="text-muted">Use Custom Domain</h6> 
+                                                    <h6 class="text-muted">Use Custom Domain</h6>
                                                 </div>
                                                 <div class="clearfix"></div>
 
@@ -403,7 +403,7 @@ $showcount = 0;
                             </div>
                         </div>
                     </div>
-                    <!-- Other Source category --> 
+                    <!-- Other Source category -->
                     @endif
 
 
@@ -680,5 +680,5 @@ $showcount = 0;
             alertMessage('Please select atleast one of them.')
         }
     }
-    
-</script>		
+
+</script>
