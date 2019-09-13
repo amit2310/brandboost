@@ -11,14 +11,9 @@
             <li><a class="sidebar-control sidebar-main-toggle left hidden-xs"><i class="icon-arrow-left22"></i></a> </li>
         </ul>
 
-         
          @if(isset($pagename))
-         
-         {!! $pagename !!} 
-         
+			{!! $pagename !!} 
          @endif        
-
-
         <ul class="nav navbar-nav navbar-right">
 
             <!--===========SEARCH============-->
@@ -62,17 +57,11 @@
                 
             </li>
 
-
-
             @if (!empty($oCurrentPlanData))
                 <li class="hbr">
                     <a id="showupgradePopup" class="btn bl_cust_btn btn-default upgrade_btn" data-toggle="modal" data-target="#upgrade_popup2"><img width="18" src="{{ URL::asset('assets/images/upgrade_account_icon.png') }}"/>&nbsp; Upgrade <span class="hidetab">Account</span></a> 
                 </li>
             @endif
-
-
-
-
 
             <!--===========Documentation BOOK ICON============-->
             <li class="dropdown hidden-xs documentation"> 
@@ -168,8 +157,6 @@
                             }
                             @endphp
                         @endif
-
-
                     </ul>
                     @if (!empty($oSysNotifications))
                         <div class="dropdown-content-footer"> <a href="javascript:void(0);" class="viewAllNotification" data-popup="tooltip" title="All messages"><i class="icon-menu display-block"></i></a> </div>
@@ -184,9 +171,6 @@
                     <span>{{ ($userFirstname != '') ? $userFirstname : '' }}</span>
                     <i class="caret"></i>
                 </a>
-
-
-
 
                 <ul class="dropdown-menu dropdown-menu-right width_170">
                     @if (!empty($aTeamInfo))

@@ -1,6 +1,5 @@
 <div id="addUserCredit" class="modal fade">
     <div class="modal-dialog">
-
         <div class="modal-content">
             <form method="post" name="frmAddUserCredit" class="form-horizontal" id="frmAddUserCredit">
                 @csrf
@@ -37,28 +36,6 @@
                         </div>
                     </div>
                     
-<!--                    <div class="form-group">
-                        <label class="control-label col-lg-3">Email Credits</label>
-                        <div class="col-lg-9">
-                            <input name="email_credits" id="email_credits" class="form-control" type="number">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-lg-3">SMS Credits</label>
-                        <div class="col-lg-9">
-                            <input name="sms_credits" id="sms_credits" class="form-control" value="" type="number">
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label class="control-label col-lg-3">MMS Credits</label>
-                        <div class="col-lg-9">
-                            <input name="mms_credits" id="mms_credits" class="form-control" value="" type="number">
-                        </div>
-                    </div>-->
-
                     <div class="form-group">
                         <label class="control-label col-lg-3">Notes</label>
                         <div class="col-lg-9">
@@ -90,7 +67,7 @@
             $("#btnAddUserCredits").attr('disabled', 'disabled');
             var formdata = $("#frmAddUserCredit").serialize();
             $.ajax({
-                url: '<?php echo base_url('admin/transactions/addManualCredits'); ?>',
+                url: "{{ base_url('admin/transactions/addManualCredits') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -111,27 +88,23 @@
         $(document).on('click', '.addManualCredit', function () {
             var userid = $(this).attr('id');
             $.ajax({
-                url: '<?php echo base_url('admin/users/getUserInfo'); ?>',
+                url: "{{ base_url('admin/users/getUserInfo') }}",
                 type: "POST",
                 data: {uid: userid,_token: '{{csrf_token()}}'},
                 dataType: "json",
                 success: function (data) {
-
                     if (data.status == 'success') {
                         $("#lblFullName").html(data.datarow.firstname + ' ' + data.datarow.lastname);
                         $("#lblEmail").html(data.datarow.email);
                         $("#lblPhone").html(data.datarow.mobile);
                         $("#creditor_user_id").val(userid);
                         $("#addUserCredit").modal();
-
                     } else {
-
                         alertMessage('Error: Some thing wrong!');
                         $('.overlaynew').hide();
                     }
                 }
             });
-
         });
     });
 </script>

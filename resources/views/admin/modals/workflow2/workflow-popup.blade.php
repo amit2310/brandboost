@@ -9,8 +9,6 @@
     .btn.dark_btn{
         color:#fff !important;
     }
-</style>
-<style>
     .email_editor_left, .email_editor_right{ background: #fff; padding: 0; border-radius: 5px!important; min-height: 800px;}
 
     .email_editor_left .form-group{margin-bottom: 8px}

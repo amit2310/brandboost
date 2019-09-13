@@ -6,16 +6,12 @@
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <title>Brand Boost</title>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="<?php echo base_url(); ?>assets/css/feedback.css" rel="stylesheet" type="text/css" />
-        <link href="<?php echo base_url(); ?>assets/css/intlTelInput.css">
-
-
-        <script src="<?php echo base_url(); ?>assets/js/core/libraries/jquery.min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/core/libraries/bootstrap.min.js"></script>
+        <link href="{{ base_url() }}assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{ base_url() }}assets/css/feedback.css" rel="stylesheet" type="text/css" />
+        <link href="{{ base_url() }}assets/css/intlTelInput.css">
+        <script src="{{ base_url() }}assets/js/core/libraries/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ base_url() }}assets/js/core/libraries/bootstrap.min.js"></script>
         
-
-
         <style>
             .step_star ul {
                 list-style-type:none;
@@ -53,8 +49,8 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="logo">
-                            <a href="<?php echo base_url(); ?>">
-                                <img src="<?php echo base_url(); ?>assets/images/logo_icon.png"/>
+                            <a href="{{ base_url() }}">
+                                <img src="{{ base_url() }}assets/images/logo_icon.png"/>
                                 <span>BrandBoost.io</span>
                                 <span class="slogan">By Interesting Aps</span>
                             </a>
@@ -79,7 +75,7 @@
                                                 <li><a href="#">INTEGRATIONS</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="<?php echo base_url('price'); ?>">PRICING</a></li>                                        
+                                        <li><a href="{{ base_url('price') }}">PRICING</a></li>                                        
                                     </ul>
                                 </div>
                             </div>
@@ -87,7 +83,7 @@
                     </div>
 
                     <div class="col-md-2 text-right">
-                        <a style="padding-left: 0;" href="<?php echo base_url(); ?>/" class="btn btn-orange pull-right title_btn" id="newProducts"><span> &nbsp; &nbsp; Get Started Free</span></a>
+                        <a style="padding-left: 0;" href="{{ base_url() }}/" class="btn btn-orange pull-right title_btn" id="newProducts"><span> &nbsp; &nbsp; Get Started Free</span></a>
                     </div>
                 </div>
             </div>
@@ -101,8 +97,8 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="logo">
-                            <a href="<?php echo base_url(); ?>">
-                                <img src="<?php echo base_url(); ?>assets/images/logo_icon.png"/>
+                            <a href="{{ base_url() }}">
+                                <img src="{{ base_url() }}assets/images/logo_icon.png"/>
                                 <span>BrandBoost.io</span>
                                 <span class="slogan">By Interesting Aps</span>
                             </a>
@@ -130,7 +126,6 @@
                                 <a href="#" class="footer-links">Integrations</a>
                                 <a href="#" class="footer-links">Pricing</a>
                                 <a href="#" class="footer-links">Sign In</a>
-                                <!--<a href="#" class="footer-links">Sign Up</a>-->
                             </h6>
                         </div>
                     </div>
@@ -166,8 +161,5 @@
                 </div>
             </div>
         </footer>
-
-              
-        
     </body>
 </html>

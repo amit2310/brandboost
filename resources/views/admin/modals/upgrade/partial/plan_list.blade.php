@@ -1,4 +1,3 @@
-
 <div class="row monthly_pricing_plan" <?php if (!empty($oCurrentPlanData) && !(($oCurrentPlanData->subs_cycle == 'month' || $oCurrentPlanData->subs_cycle == 'monthly') && ($oCurrentPlanData->level_name != 'Pro'))): ?> style="display:none;"<?php endif; ?>>
     <?php if (!empty($oMemberships)): $isMembershipActive = false; ?>
         <?php foreach ($oMemberships as $oMembership): ?>

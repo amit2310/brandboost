@@ -1,23 +1,23 @@
-<?php
+@php
+	if (!empty($oAutomationLists)) {
+		foreach ($oAutomationLists as $oAutomationList) {
+			$aListIDs[] = $oAutomationList->list_id;
+		}
+	}
 
-if (!empty($oAutomationLists)) {
-    foreach ($oAutomationLists as $oAutomationList) {
-        $aListIDs[] = $oAutomationList->list_id;
-    }
-}
+	if (!empty($oEvents)) {
+		foreach ($oEvents as $oEvent) {
+			if (empty($oEvent->previous_event_id)) {
+				$oMainEvent = $oEvent;
+				break;
+			}
+		}
+		if (!empty($oMainEvent)) {
+			$aMainTriggerData = json_decode($oMainEvent->data);
+		}
+	}
+@endphp
 
-if (!empty($oEvents)) {
-    foreach ($oEvents as $oEvent) {
-        if (empty($oEvent->previous_event_id)) {
-            $oMainEvent = $oEvent;
-            break;
-        }
-    }
-    if (!empty($oMainEvent)) {
-        $aMainTriggerData = json_decode($oMainEvent->data);
-    }
-}
-?>
 <!-- addnewaction modal -->
 <div id="addnewaction" class="modal fade">
     <div class="modal-dialog modal-lg">
@@ -30,8 +30,8 @@ if (!empty($oEvents)) {
                 <input type="hidden" name="action_previous_id" id="action_previous_id" />
                 <input type="hidden" name="action_current_id" id="action_current_id" />
                 <input type="hidden" name="action_event_type" id="action_event_type" />
-                <input type="hidden" name="action_automation_id" id="action_automation_id" value="<?php echo $oAutomations[0]->id; ?>" />
-                <input type="hidden" name="automation_id" value="<?php echo $oAutomations[0]->id; ?>" />
+                <input type="hidden" name="action_automation_id" id="action_automation_id" value="{{ $oAutomations[0]->id }}" />
+                <input type="hidden" name="automation_id" value="{{ $oAutomations[0]->id }}" />
                 <div class="tabbable">
                     <ul class="nav nav-tabs nav-tabs-bottom">
                         <li class="active"><a href="#EmailRequest" data-toggle="tab"><i class="icon-rotate-cw position-left"></i> Email Request </a></li>
@@ -42,37 +42,37 @@ if (!empty($oEvents)) {
                         <!--########################TAB 0 ##########################-->
                         <div class="tab-pane active" id="EmailRequest">
                             <div class="row">
-                                <?php foreach ($oDefaultTemplates as $oDefaultTemplate) { ?>
+                                @foreach ($oDefaultTemplates as $oDefaultTemplate)
                                     <div class="col-md-6">
-                                        <div template_id="<?php echo $oDefaultTemplate->id; ?>" template_type='email' class="panel bg-primary actionpanel openTemplate">
+                                        <div template_id="{{ $oDefaultTemplate->id }}" template_type='email' class="panel bg-primary actionpanel openTemplate">
                                             <div class="panel-body">
-                                                <div class="media-left"> <img src="<?php echo site_url('assets/images/email_icon2.png'); ?>" style="width: 40px;"> </div>
+                                                <div class="media-left"> <img src="{{ site_url('assets/images/email_icon2.png') }}" style="width: 40px;"> </div>
                                                 <div class="media-left">
-                                                    <h6><?php echo $oDefaultTemplate->template_name; ?></h6>
-                                                    <p><?php echo $oDefaultTemplate->template_subject; ?></p>
+                                                    <h6>{{ $oDefaultTemplate->template_name }}</h6>
+                                                    <p>{{ $oDefaultTemplate->template_subject }}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                <?php } ?>								
+                                @endforeach						
                             </div>
                         </div>
                         <!--########################TAB 0 ##########################-->
                         <div class="tab-pane" id="SMSRequest">
                             <div class="row">
-                                <?php foreach ($oDefaultSMSTemplates as $oDefaultSMSTemplate) { ?>
+                                @foreach ($oDefaultSMSTemplates as $oDefaultSMSTemplate)
                                     <div class="col-md-6">
-                                        <div template_id="<?php echo $oDefaultSMSTemplate->id; ?>" template_type='sms' class="panel bg-primary actionpanel openTemplate">
+                                        <div template_id="{{ $oDefaultSMSTemplate->id }}" template_type='sms' class="panel bg-primary actionpanel openTemplate">
                                             <div class="panel-body">
-                                                <div class="media-left"> <img src="<?php echo site_url('assets/images/smsicon.png'); ?>" style="width: 40px;"> </div>
+                                                <div class="media-left"> <img src="{{ site_url('assets/images/smsicon.png') }}" style="width: 40px;"> </div>
                                                 <div class="media-left">
-                                                    <h6><?php echo $oDefaultSMSTemplate->template_name; ?></h6>
-                                                    <p><?php echo $oDefaultSMSTemplate->template_subject; ?></p>
+                                                    <h6>{{ $oDefaultSMSTemplate->template_name }}</h6>
+                                                    <p>{{ $oDefaultSMSTemplate->template_subject }}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                <?php } ?>
+                                @endforeach
                             </div>
                         </div> 
                         <!--########################TAB 0 ##########################-->
@@ -82,6 +82,7 @@ if (!empty($oEvents)) {
                             <div class="row">
                                 <div class="col-md-12 txt_inp_grp">
                                     <form  method="post" name="eventFrmUpdate" class="eventFrmUpdate">
+										@csrf
                                         <div style="float:left; width: 100%;">
                                             <h6 style="margin:8px 10px 0 0!important; font-size: 13px; float: left; text-align: right;"> Trigger workflow when the following conditions are met:  </h6>
                                             <input id="delay_value" name="delay_value" value="10" class="delay_value form-control required mbot25 input-circle ui-wizard-content" type="text">
@@ -96,7 +97,8 @@ if (!empty($oEvents)) {
                                                 </select>
                                             </div>
                                             <h6 style="margin:8px 0px 0 0!important; font-size: 13px; float: left;  ">
-                                                after the event is triggered                                            </h6>
+                                                after the event is triggered                                            
+											</h6>
                                             <div class="eventDiv" style="float:left;display:none; ">
                                                 <select id="event_type" name="event_type" class="form-control camp" style="width:120px;">
                                                     <option value="sent" selected="">sent</option>
@@ -113,20 +115,16 @@ if (!empty($oEvents)) {
                                                     <input type="text" name="delay_time" id="anytime-time-hours1" value="9 PM" style="max-width: 138px;min-height:33px;padding-left:10px;">
                                                 </div>
                                             </h6>
-                                            <!--<button class="btn bl_cust_btn updateevent ui-wizard-content ui-formwizard-button"  type="submit" value="Next">Update</button>-->
                                         </div>
-
-                                </div>
-                                <div class="col-md-12 text-right mt-20">
-                                    <input type="hidden" name="automation_id" value="<?php echo $oAutomations[0]->id; ?>" />
-                                    <input name="event_id" id="event_id" value="<?php echo $oMainEvent->automation_event_id; ?>" type="hidden">
-                                    <button type="submit" class="btn pull-right bl_cust_btn btn-success"><i class="fa fa-edit"></i> &nbsp; Save</button>
-                                </div>
+									</div>
+									<div class="col-md-12 text-right mt-20">
+										<input type="hidden" name="automation_id" value="{{ $oAutomations[0]->id }}" />
+										<input name="event_id" id="event_id" value="{{ $oMainEvent->automation_event_id }}" type="hidden">
+										<button type="submit" class="btn pull-right bl_cust_btn btn-success"><i class="fa fa-edit"></i> &nbsp; Save</button>
+									</div>
                                 </form>
                             </div>
                         </div>
-
-
                         <!--########################TAB end ##########################--> 
                     </div>
                 </div>
@@ -146,6 +144,7 @@ if (!empty($oEvents)) {
             </div>
             <div class="modal-body template_edit">
                 <form method="post" class="form-horizontal"  action="javascript:void();">
+					@csrf
                     <div class="row">
                         <div class="col-md-5">
                             <div class="temp_left_option p15">
@@ -192,18 +191,13 @@ if (!empty($oEvents)) {
                                 <button class="btn btn-success deSktop"><i class="fa fa-desktop"></i> &nbsp; Desktop</button>&nbsp; &nbsp;
                                 <button class="btn bl_cust_btn btn-success moBile"><i class="fa fa-mobile-phone"></i> &nbsp; Mobile</button>
                             </div>
-
-                            <div class="temp_left_option right" id="emailTemplateSection">
-
-                            </div>
+                            <div class="temp_left_option right" id="emailTemplateSection"></div>
                         </div>
-
 
                         <div class="col-md-12 text-right mt-20">
                             <input type="hidden" name="campaignIdVal" id="campaignIdVal" value="">
                             <button class="btn pull-right bl_cust_btn btn-success" id="updateEmailCampaign" type="submit"><i class="fa fa-plus"></i> &nbsp; Save</button>
                         </div>
-
                     </div>
                 </form>
             </div>
@@ -220,9 +214,7 @@ if (!empty($oEvents)) {
                 <button type="button" class="close" data-dismiss="modal">×</button>
                 <h5 class="modal-title"><i class="fa fa-eye"></i>&nbsp; Preview Email Template</h5>
             </div>
-            <div class="modal-body template_edit" id="previewtempBodyView">
-
-            </div>
+            <div class="modal-body template_edit" id="previewtempBodyView"></div>
         </div>
     </div>
 </div>
@@ -239,6 +231,7 @@ if (!empty($oEvents)) {
             <div class="modal-body template_edit">
                 <div class="row">
                     <form method="post" class="form-horizontal" id="saveSmsTemplate" action="javascript:void();">
+						@csrf
                         <div class="col-md-6">
                             <div style="margin-top: 0px;" class="temp_left_option p15">
 
@@ -279,8 +272,6 @@ if (!empty($oEvents)) {
             </div>
             <div class="modal-body template_edit">
                 <div class="row">
-
-
                     <div class="col-md-12">
                         <div class="mobile_sms_bkg">
                             <div class="smsbubble" id="smspreivewcontent">
@@ -292,10 +283,7 @@ if (!empty($oEvents)) {
                     <div class="col-md-12 text-right mt-20">
                         <button class="btn pull-right bl_cust_btn btn-success"><i class="fa fa-edit"></i> &nbsp; Edit</button>
                     </div>
-
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -314,6 +302,7 @@ if (!empty($oEvents)) {
                 <div class="row">
                     <div class="col-md-12 txt_inp_grp">
                         <form method="post" name="eventTimeUpdate" class="eventTimeUpdate" action="javascript:void(0);">
+							@csrf
                             <div style="float:left; width: 100%;">
                                 <h6 style="margin:8px 10px 0 0!important; font-size: 13px; float: left; text-align: right;"> Trigger workflow when the following conditions are met:  </h6>
                                 <input id="delay_time_value" name="delay_value" value="10" class="delay_value form-control mbot25 input-circle ui-wizard-content" type="text">
@@ -376,6 +365,7 @@ if (!empty($oEvents)) {
 
                         <div class="tab-pane active" id="AddContact">
                             <form method="post" class="form-horizontal" id="addSubscriberData" action="javascript:void();">
+								@csrf
                                 <div class="form-group">
                                     <label>First Name: </label>
                                     <input class="form-control" name="firstname" id="firstname" placeholder="Enter First Name" type="text" required>
@@ -392,7 +382,7 @@ if (!empty($oEvents)) {
                                     <label>Phone: </label>
                                     <input class="form-control" name="phone" id="phone" placeholder="Enter Phone" type="text">
                                 </div>
-                                <input name="listId" id="listId" value="<?php echo $currentBBUserID; ?>" type="hidden">
+                                <input name="listId" id="listId" value="{{ $currentBBUserID }}" type="hidden">
                                 <button class="btn pull-right bl_cust_btn btn-success" type="submit"><i style="font-size: 12px;" class="icon-plus3"></i>  Save</button>
                                 <div class="clearfix"></div>
                             </form>
@@ -411,29 +401,27 @@ if (!empty($oEvents)) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
+                                    @php
                                     foreach ($subscribersData as $key => $subData) {
                                         $srNo = $key + 1;
-                                        ?>
+                                        @endphp
                                         <tr>
                                             <td><input class=""  type="checkbox"></td>
-                                            <td class="text-center"><?php echo $srNo; ?></td>
-                                            <td><div class="media-left"> <a href="javascript:void()" class="text-default text-semibold"><?php echo $subData->firstname; ?> <?php echo $subData->lastname; ?></a>
-                                                    <div class="text-muted text-size-small"><?php echo $subData->email; ?></div>
-                                                    <div class="text-muted text-size-small"><?php echo $subData->phone; ?></div>
+                                            <td class="text-center">{{ $srNo }}</td>
+                                            <td><div class="media-left"> <a href="javascript:void()" class="text-default text-semibold">{{ $subData->firstname }} {{ $subData->lastname }}</a>
+                                                    <div class="text-muted text-size-small">{{ $subData->email }}</div>
+                                                    <div class="text-muted text-size-small">{{ $subData->phone }}</div>
                                                 </div></td>
-                                            <td><div class="text-semibold"><?php echo date("M d, Y", strtotime($subData->created)); ?></div>
-                                                <div class="text-muted text-size-small"><?php echo date("h:i A", strtotime($subData->created)); ?> (<?php echo timeAgo($subData->created); ?>)</div></td>
+                                            <td><div class="text-semibold">{{ date("M d, Y", strtotime($subData->created)) }}</div>
+                                                <div class="text-muted text-size-small">{{ date("h:i A", strtotime($subData->created)) }} ({{ timeAgo($subData->created) }})</div></td>
                                             <td class="text-center">
                                                 <button class="btn btn-success"><i style="font-size: 12px;" class="icon-plus3"></i>&nbsp; Add To Email</button>
                                             </td>
                                         </tr>
-                                    <?php } ?>
-
+                                    @php } @endphp
                                 </tbody>
                             </table>
                         </div>
-
                         <!--########################TAB end ##########################--> 
                     </div>
                 </div>
@@ -461,6 +449,7 @@ if (!empty($oEvents)) {
                         <!--########################TAB 0 ##########################-->
                         <div class="tab-pane active" id="AddContact">
                             <form method="post" class="form-horizontal" id="addSubscriberData1" action="javascript:void();">
+								@csrf
                                 <div class="form-group">
                                     <label>First Name: </label>
                                     <input class="form-control" name="firstname" id="firstname" placeholder="Enter First Name" type="text" required>
@@ -477,7 +466,7 @@ if (!empty($oEvents)) {
                                     <label>Phone: </label>
                                     <input class="form-control" name="phone" id="phone" placeholder="Enter Phone" type="text">
                                 </div>
-                                <input name="listId" id="listId" value="<?php echo $currentBBUserID; ?>" type="hidden">
+                                <input name="listId" id="listId" value="{{ $currentBBUserID }}" type="hidden">
                                 <button class="btn pull-right bl_cust_btn btn-success" type="submit"><i style="font-size: 12px;" class="icon-plus3"></i>  Save</button>
                                 <div class="clearfix"></div>
                             </form>
@@ -496,25 +485,24 @@ if (!empty($oEvents)) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
+                                    @php
                                     foreach ($subscribersData as $key => $subData) {
                                         $srNo = $key + 1;
-                                        ?>
+                                        @endphp
                                         <tr>
                                             <td><input class=""  type="checkbox"></td>
-                                            <td class="text-center"><?php echo $srNo; ?></td>
-                                            <td><div class="media-left"> <a href="javascript:void()" class="text-default text-semibold"><?php echo $subData->firstname; ?> <?php echo $subData->lastname; ?></a>
-                                                    <div class="text-muted text-size-small"><?php echo $subData->email; ?></div>
-                                                    <div class="text-muted text-size-small"><?php echo $subData->phone; ?></div>
+                                            <td class="text-center">{{ $srNo }}</td>
+                                            <td><div class="media-left"> <a href="javascript:void()" class="text-default text-semibold">{{ $subData->firstname }} {{ $subData->lastname }}</a>
+                                                    <div class="text-muted text-size-small">{{ $subData->email }}</div>
+                                                    <div class="text-muted text-size-small">{{ $subData->phone }}</div>
                                                 </div></td>
-                                            <td><div class="text-semibold"><?php echo date("M d, Y", strtotime($subData->created)); ?></div>
-                                                <div class="text-muted text-size-small"><?php echo date("h:i A", strtotime($subData->created)); ?> (<?php echo timeAgo($subData->created); ?>)</div></td>
+                                            <td><div class="text-semibold">{{ date("M d, Y", strtotime($subData->created)) }}</div>
+                                                <div class="text-muted text-size-small">{{ date("h:i A", strtotime($subData->created)) }} ({{ timeAgo($subData->created) }})</div></td>
                                             <td class="text-center">
                                                 <button class="btn btn-success"><i style="font-size: 12px;" class="icon-plus3"></i>&nbsp; Add To Email</button>
                                             </td>
                                         </tr>
-                                    <?php } ?>
-
+                                    @php } @endphp
                                 </tbody>
                             </table>
                         </div>
@@ -536,11 +524,12 @@ if (!empty($oEvents)) {
             </div>
             <div class="modal-body">
                 <form method="post" class="form-horizontal" id="frmSaveAutomationList" action="javascript:void();">
+					@csrf
                     <div class="row">
                         <div class="col-md-12">
                             <select class="form-control" name="selectedLists[]" multiple="multiple" required="required">
                                 <option>Choose Lists</option>
-                                <?php
+                                @php
                                 if (!empty($oLists)):
                                     $newolists = array();
 
@@ -556,28 +545,24 @@ if (!empty($oEvents)) {
                                         } else {
                                             $totAll = 0;
                                         }
-                                        ?>
-                                        <option value="<?php echo $oList->id; ?>" <?php if (in_array($oList->id, $aListIDs)): ?> selected="selected"<?php endif; ?>><?php echo $oList->list_name . ' (' . $totAll . ' Contacts)'; ?></option>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
+                                        @endphp
+                                        <option value="{{ $oList->id }}" @if (in_array($oList->id, $aListIDs)) selected="selected" @endif>{{ $oList->list_name . ' (' . $totAll . ' Contacts)' }}</option>
+                                    @php 
+									endforeach
+                                endif 
+								@endphp
                             </select>
                         </div>
-
                         <div class="col-md-12 text-right mt-20">
-                            <input type="hidden" name="automation_id" value="<?php echo $oAutomations[0]->id; ?>" />
+                            <input type="hidden" name="automation_id" value="{{ $oAutomations[0]->id }}" />
                             <button type="submit" class="btn pull-right bl_cust_btn btn-success"><i class="fa fa-edit"></i> &nbsp; Save</button>
                         </div>
-
-
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
 </div>
-
-
 
 <div id="chooseEventModal" class="modal fade">
     <div class="modal-dialog modal-lg">
@@ -588,38 +573,40 @@ if (!empty($oEvents)) {
             </div>
             <div class="modal-body">
                 <form method="post" class="form-horizontal" id="frmSaveAutomationTrigger" action="javascript:void();">
+					@csrf
                     <div class="row">
                         <div class="wrapper_outer" style="position:relative; clear:both; padding:30px 10px">
-
                             <div class="col-md-6">
                                 <div class="mt-radio-inline ">
                                     <label class="mt-radio">
-                                        <input type="radio" name="triggerName" id="optionsRadios1" value="specific-datetime" <?php if ($oMainEvent->event_type == 'specific-datetime'): ?> checked="checked" <?php endif; ?>>
-                                        <strong>Immediately or on a specific date </strong> <span></span> </label>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-6">
-                                <div class="mt-radio-inline ">
-                                    <label class="mt-radio">
-                                        <input type="radio" name="triggerName" id="optionsRadios4" value="list-subscription" <?php if ($oMainEvent->event_type == 'list-subscription'): ?> checked="checked" <?php endif; ?>>
-                                        <strong>Event based: list subscription   </strong> <span></span> </label>
+                                        <input type="radio" name="triggerName" id="optionsRadios1" value="specific-datetime" @if ($oMainEvent->event_type == 'specific-datetime') checked="checked" @endif >
+                                        <strong>Immediately or on a specific date </strong> <span></span> 
+									</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mt-radio-inline ">
                                     <label class="mt-radio">
-                                        <input type="radio" name="triggerName" id="optionsRadios5" value="list-unsubscription" <?php if ($oMainEvent->event_type == 'list-unsubscription'): ?> checked="checked" <?php endif; ?>>
-                                        <strong>Event based: list unsubscription    </strong> <span></span> </label>
+                                        <input type="radio" name="triggerName" id="optionsRadios4" value="list-subscription" @if ($oMainEvent->event_type == 'list-subscription') checked="checked" @endif >
+                                        <strong>Event based: list subscription   </strong> <span></span> 
+									</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mt-radio-inline ">
+                                    <label class="mt-radio">
+                                        <input type="radio" name="triggerName" id="optionsRadios5" value="list-unsubscription" @if ($oMainEvent->event_type == 'list-unsubscription') checked="checked" @endif >
+                                        <strong>Event based: list unsubscription    </strong> <span></span> 
+									</label>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mt-radio-inline activeTrigger">
                                     <label class="mt-radio">
-                                        <input type="radio" name="triggerName" id="optionsRadios14" value="tag-detected" <?php if ($oMainEvent->event_type == 'tag-detected'): ?> checked="checked" <?php endif; ?>>
-                                        <strong>Tag Detected</strong> <span></span> </label>
+                                        <input type="radio" name="triggerName" id="optionsRadios14" value="tag-detected" @if ($oMainEvent->event_type == 'tag-detected') checked="checked" @endif >
+                                        <strong>Tag Detected</strong> <span></span> 
+									</label>
                                 </div>
                             </div>
 
@@ -629,89 +616,78 @@ if (!empty($oEvents)) {
 
                             <div class="clearfix"></div>
 
-                            <div class="tab-pane active" id="specific-datetime" <?php if ($oMainEvent->event_type == 'specific-datetime'): ?> style="display:block;" <?php else: ?> style="display:none;" <?php endif; ?> >
+                            <div class="tab-pane active" id="specific-datetime" @if ($oMainEvent->event_type == 'specific-datetime') style="display:block;" @else style="display:none;" @endif >
                                 <div class="row">
                                     <div class="col-md-12 txt_inp_grp">
-
                                         <div class="col-md-12">
                                             <p class="mbot15"><strong> Send on * </strong></p>
                                         </div>                       
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="icon-calendar22"></i></span>
-                                                <input type="text" name="delivery_date" class="form-control daterange-single" value="<?php echo (!empty($aMainTriggerData->delivery_date)) ? $aMainTriggerData->delivery_date : date("m/d/Y"); ?>">
+                                                <input type="text" name="delivery_date" class="form-control daterange-single" value="{{ (!empty($aMainTriggerData->delivery_date)) ? $aMainTriggerData->delivery_date : date('m/d/Y') }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="icon-watch2"></i></span>
-                                                <input type="text" class="form-control" id="anytime-time-hours4" name="delivery_time" value="<?php echo (!empty($aMainTriggerData->delivery_time)) ? $aMainTriggerData->delivery_time : '9 PM'; ?>" style="min-height:33px;padding-left:10px;">
+                                                <input type="text" class="form-control" id="anytime-time-hours4" name="delivery_time" value="{{ (!empty($aMainTriggerData->delivery_time)) ? $aMainTriggerData->delivery_time : '9 PM' }}" style="min-height:33px;padding-left:10px;">
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-
                                 <div class="clearfix"></div>
-
                             </div>
 
 
-                            <div class="tab-pane active ConditionsWorkflow" id="ConditionsWorkflow" <?php if ($oMainEvent->event_type == 'specific-datetime'): ?> style="display:none;" <?php else: ?> style="display:block;" <?php endif; ?>>
+                            <div class="tab-pane active ConditionsWorkflow" id="ConditionsWorkflow" @if ($oMainEvent->event_type == 'specific-datetime') style="display:none;" @else style="display:block;" @endif >
                                 <div class="row">
                                     <div class="col-md-12 txt_inp_grp">
-
                                         <div style="float:left; width: 100%;">
                                             <h6 style="margin:8px 10px 0 0!important; font-size: 13px; float: left; text-align: right;"> Trigger workflow when the following conditions are met:  </h6>
-                                            <input id="delay_value" name="delay_value" value="<?php echo ($aMainTriggerData->delay_value) ? $aMainTriggerData->delay_value : '10'; ?>" class="delay_value form-control required mbot25 input-circle ui-wizard-content" type="text" required="required">
+                                            <input id="delay_value" name="delay_value" value="{{ ($aMainTriggerData->delay_value) ? $aMainTriggerData->delay_value : '10' }}" class="delay_value form-control required mbot25 input-circle ui-wizard-content" type="text" required="required">
                                             <div style="display: inline-block; width: 120px; margin: 0 12px; float: left;" class="form-group waittimeselect">
                                                 <select id="delay_unit" name="delay_unit" control_id="pl1" class="selectbox">
-                                                    <option value="minute" <?php if ($aMainTriggerData->delay_unit == 'minute'): ?> selected="selected" <?php endif; ?>>Minute(s)</option>
-                                                    <option value="hour" <?php if ($aMainTriggerData->delay_unit == 'hour'): ?> selected="selected" <?php endif; ?>>Hour(s)</option>
-                                                    <option value="day" <?php if ($aMainTriggerData->delay_unit == 'day'): ?> selected="selected" <?php endif; ?>>Day(s)</option>
-                                                    <option value="week" <?php if ($aMainTriggerData->delay_unit == 'week'): ?> selected="selected" <?php endif; ?>>Week(s)</option>
-                                                    <option value="month" <?php if ($aMainTriggerData->delay_unit == 'month'): ?> selected="selected" <?php endif; ?>>Month(s)</option>
-                                                    <option value="year" <?php if ($aMainTriggerData->delay_unit == 'year'): ?> selected="selected" <?php endif; ?>>Year(s)</option>
+                                                    <option value="minute" @if ($aMainTriggerData->delay_unit == 'minute') selected="selected" @endif }}>Minute(s)</option>
+                                                    <option value="hour" @if ($aMainTriggerData->delay_unit == 'hour') selected="selected" @endif >Hour(s)</option>
+                                                    <option value="day" @if ($aMainTriggerData->delay_unit == 'day') selected="selected" @endif >Day(s)</option>
+                                                    <option value="week" @if ($aMainTriggerData->delay_unit == 'week') selected="selected" @endif >Week(s)</option>
+                                                    <option value="month" @if ($aMainTriggerData->delay_unit == 'month') selected="selected" @endif >Month(s)</option>
+                                                    <option value="year" @if ($aMainTriggerData->delay_unit == 'year') selected="selected" @endif >Year(s)</option>
                                                 </select>
                                             </div>
                                             <h6 style="margin:8px 0px 0 0!important; font-size: 13px; float: left;  ">
-                                                after the event is triggered                                            </h6>
-
+                                                after the event is triggered                                            
+											</h6>
 
                                             <div class="eventDiv" style="float:left;display:none; ">
                                                 <select id="event_type" name="event_type" class="form-control camp" style="width:120px;">
-                                                    <option value="sent" <?php if ($aMainTriggerData->delay_type == 'sent'): ?> selected="selected" <?php endif; ?>>sent</option>
-                                                    <option value="opened" <?php if ($aMainTriggerData->delay_type == 'opened'): ?> selected="selected" <?php endif; ?>>opened</option>
-                                                    <option value="not opened" <?php if ($aMainTriggerData->delay_type == 'not opened'): ?> selected="selected" <?php endif; ?>>not opened</option>
-                                                    <option value="clicked" <?php if ($aMainTriggerData->delay_type == 'clicked'): ?> selected="selected" <?php endif; ?>>clicked</option>
-                                                    <option value="not clicked" <?php if ($aMainTriggerData->delay_type == 'not clicked'): ?> selected="selected" <?php endif; ?>>not clicked</option>
+                                                    <option value="sent" @if ($aMainTriggerData->delay_type == 'sent') selected="selected" @endif }}>sent</option>
+                                                    <option value="opened" @if ($aMainTriggerData->delay_type == 'opened') selected="selected" @endif >opened</option>
+                                                    <option value="not opened" @if ($aMainTriggerData->delay_type == 'not opened') selected="selected" @endif >not opened</option>
+                                                    <option value="clicked" @if ($aMainTriggerData->delay_type == 'clicked') selected="selected" @endif >clicked</option>
+                                                    <option value="not clicked" @if ($aMainTriggerData->delay_type == 'not clicked') selected="selected" @endif >not clicked</option>
                                                 </select>
                                             </div>
-                                            <h6 id="pl1" style="margin:8px 0px 0 0!important; font-size: 13px; float: left; <?php echo $aMainTriggerData->delay_unit == 'day' || $aMainTriggerData->delay_unit == 'week' ? 'display:block' : 'display:none'; ?>;">
+                                            <h6 id="pl1" style="margin:8px 0px 0 0!important; font-size: 13px; float: left; {{ $aMainTriggerData->delay_unit == 'day' || $aMainTriggerData->delay_unit == 'week' ? 'display:block' : 'display:none' }};">
                                                 <div class="input-group mt-15 timeselector">
                                                     <span class="pull-right" style="margin-right:10px;">Select Time of delivery </span><span class="input-group-addon"><i class="icon-watch2"></i></span>
-                                                    <input type="text" id="anytime-time-hours3" name="delay_time" value="<?php echo (!empty($aMainTriggerData->delay_time)) ? $aMainTriggerData->delay_time : '9 PM'; ?>" style="max-width: 138px;min-height:33px;padding-left:10px;">
+                                                    <input type="text" id="anytime-time-hours3" name="delay_time" value="{{ (!empty($aMainTriggerData->delay_time)) ? $aMainTriggerData->delay_time : '9 PM' }}" style="max-width: 138px;min-height:33px;padding-left:10px;">
                                                 </div>
                                             </h6>
-
-
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-12 text-right mt-20">
-                            <input type="hidden" name="automation_id" value="<?php echo $oAutomations[0]->id; ?>" />
-                            <input name="event_id" id="event_id" value="<?php echo $oMainEvent->automation_event_id; ?>" type="hidden">
+                            <input type="hidden" name="automation_id" value="{{ $oAutomations[0]->id }}" />
+                            <input name="event_id" id="event_id" value="{{ $oMainEvent->automation_event_id }}" type="hidden">
                             <button type="submit" class="btn pull-right bl_cust_btn btn-success"><i class="fa fa-edit"></i> &nbsp; Save</button>
                         </div>
-
-
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

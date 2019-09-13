@@ -6,67 +6,64 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>BrandBoost::Admin</title>
-	<link rel="icon" href="<?php echo base_url(); ?>assets/images/icon.ico" sizes="16x16" type="image/ico">
+	<link rel="icon" href="{{ base_url() }}assets/images/icon.ico" sizes="16x16" type="image/ico">
 
 	<!-- Global stylesheets -->
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-	<link href="<?php echo base_url(); ?>assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>assets/css/core.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>assets/css/components.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>assets/profile_css/profile.css" rel="stylesheet" type="text/css">
+	<link href="{{ base_url() }}assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+	<link href="{{ base_url() }}assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="{{ base_url() }}assets/css/core.css" rel="stylesheet" type="text/css">
+	<link href="{{ base_url() }}assets/css/components.css" rel="stylesheet" type="text/css">
+	<link href="{{ base_url() }}assets/profile_css/profile.css" rel="stylesheet" type="text/css">
 	<!-- /global stylesheets -->
-	
+
 
 	<!-- Core JS files -->
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/core/libraries/jquery.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/core/libraries/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{{ base_url() }}assets/js/core/libraries/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ base_url() }}assets/js/core/libraries/bootstrap.min.js"></script>
 	<!-- /core JS files -->
-  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins/tables/datatables/datatables.min.js"></script>
-  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/pages/datatables_basic.js"></script>
-  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/custom_user_datatable.js"></script>
+	<script type="text/javascript" src="{{ base_url() }}assets/js/plugins/tables/datatables/datatables.min.js"></script>
+	<script type="text/javascript" src="{{ base_url() }}assets/js/pages/datatables_basic.js"></script>
+	<script type="text/javascript" src="{{ base_url() }}assets/js/custom_user_datatable.js"></script>
 
-  <style type="text/css">
-    .dataTables_filter{display: none;}
-    .datatable-footer { border-top:none!important; font-size: 12px!important }
-    .dataTables_paginate .paginate_button {
-      display: inline-block;
-      padding: 0 5px!important;
-      min-width: 28px;
-      margin-left: 2px;
-      text-align: center;
-      text-decoration: none;
-      cursor: pointer;
-      color: #333333;
-      border: 1px solid transparent;
-      border-radius: 100px!important;
-        line-height: 25px;
-    }
-    .dataTables_paginate .paginate_button.current, .dataTables_paginate .paginate_button.current:hover, .dataTables_paginate .paginate_button.current:focus {
-      color: #6d788e!important;
-      background-color: #dbe1eb!important;
-    }
-    .dataTables_info{padding: 0!important}
-  </style>
-
+	<style type="text/css">
+		.dataTables_filter{display: none;}
+		.datatable-footer { border-top:none!important; font-size: 12px!important }
+		.dataTables_paginate .paginate_button {
+		display: inline-block;
+		padding: 0 5px!important;
+		min-width: 28px;
+		margin-left: 2px;
+		text-align: center;
+		text-decoration: none;
+		cursor: pointer;
+		color: #333333;
+		border: 1px solid transparent;
+		border-radius: 100px!important;
+		line-height: 25px;
+		}
+		.dataTables_paginate .paginate_button.current, .dataTables_paginate .paginate_button.current:hover, .dataTables_paginate .paginate_button.current:focus {
+		color: #6d788e!important;
+		background-color: #dbe1eb!important;
+		}
+		.dataTables_info{padding: 0!important}
+	</style>
 </head>
 
 <body>
-
-<?php 
-
+@php
   $aUInfo = getLoggedUser();
 
 	$profileActive = '';
 	$reviewActive = '';
 	$settingActive = '';
-  $mediaActive = '';
-  $npsActive = '';
-  $referralActive = '';
+	$mediaActive = '';
+	$npsActive = '';
+	$referralActive = '';
 	if (\Request::segment(1) == 'user' && \Request::segment(2) == 'profile') {
-      $profileActive = 'active';
-      $headerStyle = "";
-  }
+		  $profileActive = 'active';
+		  $headerStyle = "";
+	  }
   else if (\Request::segment(1) == 'user' && \Request::segment(2) == '') {
       $profileActive = 'active';
       $headerStyle = "";
@@ -95,25 +92,25 @@
       $referralActive = 'active';
       $headerStyle = "style='height:257px'";
   }
-?>
+@endphp
 
 <div class="profile_main"> 
   <!--======================profile_header=======================-->
   
-  <div class="profile_header_bkg" <?php echo $headerStyle; ?>></div>
+  <div class="profile_header_bkg" {{ $headerStyle }}></div>
   <div class="page_header">
     <div class="row">
-      <div class="col-md-6"><a class="logo" href="#"><img src="<?php echo base_url(); ?>assets/profile_images/logo_icon.png" alt="">BrandBoost</a> </div>
+      <div class="col-md-6"><a class="logo" href="#"><img src="{{ base_url() }}assets/profile_images/logo_icon.png" alt="">BrandBoost</a> </div>
       <div class="col-md-6">
         <ul class="navigation_menu">
-          <li><a class="<?php echo $profileActive; ?>" href="<?php echo base_url().'user/profile'; ?>">Profile</a></li>
-          <li><a class="<?php echo $reviewActive; ?>" href="<?php echo base_url().'user/review'; ?>">My Reviews</a></li>
-          <li><a class="<?php echo $mediaActive; ?>" href="<?php echo base_url().'user/media'; ?>">Media</a></li>
-          <li><a class="<?php echo $npsActive; ?>" href="<?php echo base_url().'user/nps'; ?>">NPS</a></li>
-          <li><a class="<?php echo $referralActive; ?>" href="<?php echo base_url().'user/referral'; ?>">Referral</a></li>
-          <li><a class="<?php echo $settingActive; ?>" href="<?php echo base_url().'user/setting'; ?>">Settings</a></li>
+          <li><a class="{{ $profileActive }}" href="{{ base_url().'user/profile' }}">Profile</a></li>
+          <li><a class="{{ $reviewActive }}" href="{{ base_url().'user/review' }}">My Reviews</a></li>
+          <li><a class="{{ $mediaActive }}" href="{{ base_url().'user/media' }}">Media</a></li>
+          <li><a class="{{ $npsActive }}" href="{{ base_url().'user/nps' }}">NPS</a></li>
+          <li><a class="{{ $referralActive }}" href="{{ base_url().'user/referral' }}">Referral</a></li>
+          <li><a class="{{ $settingActive }}" href="{{ base_url().'user/setting' }}">Settings</a></li>
           <li><a style="cursor: pointer;">Help</a></li>
-          <li><a href="<?php echo base_url().'user/login/logout'; ?>">Log Out</a></li>
+          <li><a href="{{ base_url().'user/login/logout' }}">Log Out</a></li>
         </ul>
       </div>
     </div>
@@ -141,12 +138,10 @@
 </div>
 
 <script type="text/javascript">
-  
-  function alertMessage(message) {
-      $("#alertMessagePopup").modal();
-      $('.message').html(message);
-  }
-
+	function alertMessage(message) {
+		$("#alertMessagePopup").modal();
+		$('.message').html(message);
+	}
 </script>
 
 <script type="text/javascript">

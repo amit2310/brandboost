@@ -7,6 +7,7 @@
             </div>
             <div class="modal-body template_edit">
                 <form method="post" class="form-horizontal" action="javascript:void();">
+					@csrf
                     <div class="row">
                         <div class="col-md-12">
                             <div id="smsPreviewContainer"></div>

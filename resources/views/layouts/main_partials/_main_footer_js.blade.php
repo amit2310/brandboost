@@ -69,8 +69,6 @@
         return false;
     }
 
-
-
     $(document).ready(function () {
         $('.txtShowDiv').focus(function () {
             $('.sampleDiv').fadeIn(500);
@@ -739,8 +737,6 @@
 
     $('[data-toggle="tooltip"]').tooltip();
 
-
-
     var timeOverStart;
     var timeOutReminder;
     var stillLoggedIn;
@@ -749,15 +745,11 @@
     var nTime;
     var setTime;
 
-
-
     $(document).ready(function () {
         var idleState = false;
         var idleTimer = null;
 
         $('span.userStillLogged').bind('keypress mousemove', function () {
-
-
             nTime = d.getTime();
             // Check browser support
             if (typeof (Storage) !== "undefined") {
@@ -770,7 +762,6 @@
             clearInterval(stillLoggedIn);
             timeOverStart = timeOver(0, 0, '{{ $inactivity_length }}', '');
         });
-
     });
 
 
@@ -802,8 +793,6 @@
                 }
 
             }
-            //console.log('Sec = '+ sec, 'Min = '+ min, 'event = '+event);
-
         }, 1000);
         return setTime;
     }
@@ -829,11 +818,7 @@
                 $('#logoutpopupReminder').modal();
                 var tOutRe = timeOutReminderF(0, 0, 1, 'logout time reminder');
                 timeOutReminder = tOutRe;
-
-
             }
-
-            //console.log('Sec = '+ sec, 'Min = '+ min, 'event = '+event);
 
         }, 1000);
         return setTime;
@@ -868,12 +853,8 @@
                     clearInterval(timeOverStart);
                     clearInterval(timeOutReminder);
                     clearInterval(stillLoggedIn);
-
                 }
-
             }
-
-            //console.log('Sec = '+ sec, 'Min = '+ min, 'event = '+event);
 
         }, 1000);
         return setTime;
@@ -898,8 +879,6 @@
         timeOverStart = timeOver(0, 0, '{{ $inactivity_length }}', '');
     });
 
-
-
 </script>
 <script type="text/javascript">
     var specialKeys = new Array();
@@ -918,7 +897,6 @@
         //document.getElementById("error").style.display = ret ? "none" : "inline";
         return ret;
     }
-
 
 </script>
 
