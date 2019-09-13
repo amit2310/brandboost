@@ -68,7 +68,7 @@ if (!empty($subscribersData)) {
                                         <div class="media-left brig pr10">
                                             <label class="custmo_checkbox ">
                                                 <input type="checkbox" name="checkRows[]" class="addToCampaign" value="<?php echo $oContact->subscriber_id; ?>" <?php if (in_array($oContact->subscriber_id, $aSelectedContacts)): ?>checked="checked"<?php endif; ?>>
-                                                <span class="custmo_checkmark sblue"></span> 
+                                                <span class="custmo_checkmark sblue"></span>
                                             </label>
                                         </div>
                                         <div class="media-left media-middle"> <?php echo @showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname); ?> </div>
@@ -105,7 +105,7 @@ if (!empty($subscribersData)) {
                                                         <?php
                                                     }
                                                     ?>
-                                                    <li><a href="<?php echo base_url(); ?>admin/contacts/profile/<?php echo $oContact->subscriber_id; ?>"><i class="icon-eye"></i> View Details</a></li>   
+                                                    <li><a href="<?php echo base_url(); ?>admin/contacts/profile/<?php echo $oContact->subscriber_id; ?>"><i class="icon-eye"></i> View Details</a></li>
                                                     <li><a href="javascript:void(0);" class="editModuleSubscriber" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data-redirect="admin/lists/getListContacts?list_id=<?php echo $list_id; ?>"><i class="icon-pencil"></i> Edit</a></li>
 
                                                     <li><a class="deleteModuleSubscriber" data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" csrf_token="<?php echo csrf_token(); ?>" href="javascript:void(0);"><i class="icon-trash"></i> Delete</a></li>
@@ -119,7 +119,7 @@ if (!empty($subscribersData)) {
                             }
                         }
                     }
-                    ?>    
+                    ?>
 
 
                 </tbody>

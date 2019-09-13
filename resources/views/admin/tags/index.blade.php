@@ -295,7 +295,7 @@
                                                 @php
                                                     $i = 0;
                                                     $hiddenTags = '';
-                                                    foreach ($aTag as $oTag): if ($oTag->id == $iGroupID): $i++;
+                                                    foreach ($aTag as $oTag) { if ($oTag->id == $iGroupID) { $i++;
                                                 @endphp
 
                                                 @if(!empty($oTag->tagid))
@@ -306,7 +306,8 @@
                                                 @endif
 
                                                 @php
-                                                    endforeach;
+                                                        }
+                                                    }
                                                 @endphp
 
                                                 <button class="btn btn-xs btn_white_table addnewtag"

@@ -59,7 +59,7 @@ class SubscriberModel extends Model {
     }
 
     /**
-     * Get Old Chat data 
+     * Get Old Chat data
      * @param type $userID
      * @return type
      */
@@ -261,7 +261,7 @@ class SubscriberModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $userID
      * @return type
      */
@@ -314,10 +314,10 @@ class SubscriberModel extends Model {
 			FROM `tbl_chat_supportuser`
 			INNER JOIN `tbl_users_team` ON `tbl_chat_supportuser`.`assign_team_member`=`tbl_users_team`.`id`
 			WHERE tbl_chat_supportuser.room = '" . $room . "'"));
-        
+
         return $oData;
     }
-    
+
     /**
      * Get Assigned chat to user
      * @param type $room
@@ -329,11 +329,11 @@ class SubscriberModel extends Model {
 			FROM `tbl_chat_supportuser`
 			INNER JOIN `tbl_users` ON `tbl_chat_supportuser`.`assign_team_member`=`tbl_users`.`id`
 			WHERE tbl_chat_supportuser.room = '" . $room . "'"));
-					
+
         return $oData;
     }
-	
-	
+
+
 	public function addContactNotes($aData) {
 
         $result = DB::table('tbl_subscriber_notes')->insert($aData);
@@ -357,7 +357,7 @@ class SubscriberModel extends Model {
     public function getUserById($userID) {
         $oData = DB::table('tbl_users')
 			->where("id", $userID)->first();
-       
+
         return $oData;
     }
 
@@ -379,7 +379,7 @@ class SubscriberModel extends Model {
 			->join('tbl_brandboost', 'tbl_brandboost.id','=','tbl_brandboost_users.brandboost_id')
 			->orderBy('tbl_tracking_log_email_sms.created', 'DESC')
 			->get();
-       
+
         return $aData;
     }
 
@@ -393,7 +393,7 @@ class SubscriberModel extends Model {
 			->join('tbl_referral_rewards', 'tbl_referral_rewards.hashcode','=','tbl_referral_users.account_id')
 			->orderBy('tbl_referral_automations_tracking_logs.created_at', 'DESC')
 			->get();
-       
+
         return $aData;
     }
 
@@ -406,7 +406,7 @@ class SubscriberModel extends Model {
 			->join('tbl_nps_main', 'tbl_nps_main.hashcode','=','tbl_nps_users.account_id')
 			->orderBy('tbl_nps_automations_tracking_logs.created_at', 'DESC')
 			->get();
-		   
+
 			return $aData;
     }
 
@@ -495,7 +495,7 @@ class SubscriberModel extends Model {
 			->where("brandboost_id", $brandID)
 			->where("subscriber_id", $subID)
 			->update(array('user_id' => $userId));
-        
+
         if ($result > -1) {
             return true;
         } else {
@@ -512,7 +512,7 @@ class SubscriberModel extends Model {
             'created' => date("Y-m-d H:i:s")
         );
 		$result = DB::table('tbl_brandboost_users')->insert($aData);
-	
+
         if ($result)
             return $inset_id;
     }
@@ -526,9 +526,9 @@ class SubscriberModel extends Model {
         $oData = DB::table('tbl_subscribers')
             ->join('tbl_broadcast_emails_tracking_twillio', 'tbl_subscribers.id', '=', 'tbl_broadcast_emails_tracking_twillio.subscriber_id')
             ->select('tbl_subscribers.id as subsId', 'tbl_broadcast_emails_tracking_twillio.*')
-            ->where('tbl_subscribers.owner_id', $userId)            
+            ->where('tbl_subscribers.owner_id', $userId)
             ->get();
-        return $oData;        
+        return $oData;
     }
 
     /**
@@ -540,9 +540,9 @@ class SubscriberModel extends Model {
         $oData = DB::table('tbl_subscribers')
             ->join('tbl_automations_emails_tracking_twillio', 'tbl_subscribers.id', '=', 'tbl_automations_emails_tracking_twillio.subscriber_id')
             ->select('tbl_subscribers.id as subsId', 'tbl_automations_emails_tracking_twillio.*')
-            ->where('tbl_subscribers.owner_id', $userId)            
+            ->where('tbl_subscribers.owner_id', $userId)
             ->get();
-        return $oData;        
+        return $oData;
     }
 
     /**
@@ -554,10 +554,10 @@ class SubscriberModel extends Model {
         $oData = DB::table('tbl_subscribers')
             ->join('tbl_referral_automations_tracking_twillio', 'tbl_subscribers.id', '=', 'tbl_referral_automations_tracking_twillio.subscriber_id')
             ->select('tbl_subscribers.id as subsId', 'tbl_referral_automations_tracking_twillio.*')
-            ->where('tbl_subscribers.owner_id', $userId)            
+            ->where('tbl_subscribers.owner_id', $userId)
             ->get();
-        return $oData;  
-        
+        return $oData;
+
     }
 
     /**
@@ -569,9 +569,9 @@ class SubscriberModel extends Model {
         $oData = DB::table('tbl_subscribers')
             ->join('tbl_nps_automations_tracking_twillio', 'tbl_subscribers.id', '=', 'tbl_nps_automations_tracking_twillio.subscriber_id')
             ->select('tbl_subscribers.id as subsId', 'tbl_nps_automations_tracking_twillio.*')
-            ->where('tbl_subscribers.owner_id', $userId)            
+            ->where('tbl_subscribers.owner_id', $userId)
             ->get();
-        return $oData;  
+        return $oData;
     }
 
     /**
@@ -583,7 +583,7 @@ class SubscriberModel extends Model {
         $oData = DB::table('tbl_subscribers')
             ->join('tbl_track_twillio', 'tbl_subscribers.id', '=', 'tbl_track_twillio.subscriber_id')
             ->select('tbl_subscribers.id as subsId', 'tbl_track_twillio.*')
-            ->where('tbl_subscribers.owner_id', $userId)            
+            ->where('tbl_subscribers.owner_id', $userId)
             ->get();
         return $oData;
     }
@@ -601,7 +601,7 @@ class SubscriberModel extends Model {
     }
 
     /**
-    * This function will subscriber information 
+    * This function will subscriber information
     * @param type $id
     * @return type
     */
@@ -615,7 +615,7 @@ class SubscriberModel extends Model {
 
 
     /**
-    * This function is used to get the subscirber information 
+    * This function is used to get the subscirber information
     * @param type $id
     * @return type
     */
@@ -625,10 +625,10 @@ class SubscriberModel extends Model {
         ->where("id", $id)->get();
         return $aData;
     }
-	
-	
+
+
 	/**
-    * This function will return chatUser details 
+    * This function will return chatUser details
     * @param type $clientID
     * @return type
     */
@@ -684,7 +684,7 @@ class SubscriberModel extends Model {
                 ->get();
 
         return $oData;
-        
+
     }
 
 
@@ -699,14 +699,14 @@ class SubscriberModel extends Model {
         return $oData;
 
     }
-	
+
 	/**
      * Used to get tag subscribers
      * @param type $tagID
      * @return type
      */
     public static function getTagSubscribers($tagID) {
-        
+
         $oData = DB::table('tbl_subscriber_tags')
         ->leftJoin('tbl_subscribers', 'tbl_subscriber_tags.subscriber_id', '=', 'tbl_subscribers.id')
         ->select('tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.id AS global_user_id')
@@ -714,20 +714,20 @@ class SubscriberModel extends Model {
         ->orderBy('tbl_subscriber_tags.id', 'desc')
         ->get();
         return $oData;
-        
+
     }
-	
-	
+
+
 	public function getTeamMemberById($TeamId) {
-		
+
 		$oData = DB::table('tbl_users_team')
 			->select('firstname', 'lastname', 'parent_user_id')
 			->where('id', $TeamId)
 			->get();
         return $oData;
     }
-	
-	
+
+
 	/**
      * This function will return Client Twilio account details
      * @param type $contactNo
@@ -764,8 +764,8 @@ class SubscriberModel extends Model {
 
 
    }
-	
-	
+
+
 	/**
   * This function will return Team Member name by the Phone number
   * @param type $usrid
@@ -792,8 +792,8 @@ class SubscriberModel extends Model {
 
         return $oData;
     }
-	
-	
+
+
 	/**
     * this function is used to filter the sms list based on the input provided in sms chat
     * @param type $Number
@@ -844,8 +844,8 @@ FROM
 
         return $oData;
     }
-	
-	
+
+
 	/**
      * Get subscriber by user id
      * @param type $userID
@@ -939,8 +939,8 @@ FROM
         }
         return true;
     }
-	
-	
+
+
 	/**
      * This function will return subscriber by the charName
      * @param type $userID
@@ -949,7 +949,7 @@ FROM
      */
 
     public static function getGlobalSubscribersByChar($userID, $char) {
-        
+
         $oData = DB::table('tbl_subscribers')
                 ->where('owner_id', $userID)
                 ->where('firstname', 'like', $char.'%')
@@ -958,8 +958,8 @@ FROM
 
         return $oData;
     }
-	
-	
+
+
 	public function addModuleSubscriber($aData, $moduleName, $tableName) {
         $bAddNewEntry = false;
         $subscriberID = $aData['subscriber_id'];
@@ -1027,10 +1027,10 @@ FROM
 			}
         return false;
     }
-	
-	
+
+
 	public function addBrandboostUserAccount($aData, $iRole = 2, $sendNotification = false) {
-       $mChargebeeModel = new ChargeBeeModel(); 
+       $mChargebeeModel = new ChargeBeeModel();
         $firstName = $aData['firstname'];
         $lastName = $aData['lastname'];
         $email = $aData['email'];
@@ -1131,8 +1131,8 @@ FROM
         }
     }
 
-  
-    
+
+
      /**
      * function is used to register the user details with the subscriber
      * @param type $aData
@@ -1145,29 +1145,29 @@ FROM
         $email = $aData['email'];
         $phone = $aData['phone'];
         if(!empty($aData['country_code']))
-        { 
-            $countryCode = $aData['country_code']; 
-        } 
-        else 
-        { 
-            $countryCode = ''; 
-        } 
+        {
+            $countryCode = $aData['country_code'];
+        }
+        else
+        {
+            $countryCode = '';
+        }
         if(!empty($aData['cityName']))
-        { 
-            $cityName = $aData['cityName']; 
-        } 
-        else 
-        { 
-            $cityName = ''; 
-        } 
+        {
+            $cityName = $aData['cityName'];
+        }
+        else
+        {
+            $cityName = '';
+        }
         if(!empty($aData['clientID']))
-        { 
-            $clientID = $aData['clientID']; 
-        } 
-        else 
-        { 
-            $clientID = ''; 
-        } 
+        {
+            $clientID = $aData['clientID'];
+        }
+        else
+        {
+            $clientID = '';
+        }
         if (empty($email) || empty($clientID)) {
             return false;
             exit;
@@ -1268,7 +1268,7 @@ FROM
 
 
     /**
-    * This function is used to check the user already exists or not 
+    * This function is used to check the user already exists or not
     * @param type $clientID
     * @return type
     */
@@ -1282,40 +1282,40 @@ FROM
             ->where($key[0], $val[0])
             ->limit(1)->first($aParam);
             return $oData->id;
-           
+
         }
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-    
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function checkIfMySubscriber($ownerID, $iSubscriberID) {
         $this->db->where("owner_id", $ownerID);
@@ -1356,8 +1356,8 @@ FROM
         }
         return $response;
     }
-	
-	
+
+
     public function webchatUsersDetails($userID) {
 
         $result = $this->db->query("select * from tbl_chat_message where  user_to = '" . $userID . "' AND status=1 order by id desc ");
@@ -1378,7 +1378,7 @@ FROM
         return $response;
     }
 
-   
+
     /**
      * This function will return Twilio related account details based on the Phone number
      * @param type $contactNo
@@ -1412,7 +1412,7 @@ FROM
     }
 
 
-  
+
 
     public function activeOnlywebDetailsByinput($userID, $searchval) {
 
@@ -1450,7 +1450,7 @@ FROM
         return $response;
     }
 
-    
+
 
     public function getuserImageDetails($userID) {
         $this->db->select("tbl_users.avatar as avatarImage");
@@ -1644,7 +1644,7 @@ FROM
         }
         $this->db->order_by('tbl_nps_users.id', 'DESC');
         $result = $this->db->get("tbl_nps_users");
-       
+
         if ($result->num_rows() > 0) {
             $response = $result->result();
         }
@@ -1672,15 +1672,13 @@ FROM
     }
 
     public function getListContactInfo($id = '') {
-        $this->db->select("tbl_automation_users.id AS subsID, tbl_automation_users.status AS subs_status,tbl_automation_users.created AS subs_created, tbl_subscribers.*");
-        $this->db->join("tbl_subscribers", "tbl_automation_users.subscriber_id=tbl_subscribers.id", "LEFT");
-        $this->db->where("tbl_automation_users.id", $id);
-        $result = $this->db->get("tbl_automation_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData =  DB::table('tbl_automation_users')
+            ->select("tbl_automation_users.id AS subsID, tbl_automation_users.status AS subs_status,tbl_automation_users.created AS subs_created, tbl_subscribers.*")
+            ->where("tbl_automation_users.id", $id)
+            ->leftJoin('tbl_subscribers', 'tbl_automation_users.subscriber_id','=','tbl_subscribers.id')
+            ->get();
+
+        return $oData;
     }
 
     public function getBrandboostContactInfo($id = '') {
@@ -1724,7 +1722,7 @@ FROM
         return $bUpdated;
     }
 
-    
+
     public function deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID) {
         if ($subscriberID > 0 && !empty($moduleName)) {
             if ($moduleName == 'automation' || $moduleName == 'broadcast' || $moduleName == 'list') {
@@ -1739,7 +1737,7 @@ FROM
                 if ($bUpdated) {
                     $this->deleteModuleCampaignSubscriber($subscriberID, $moduleName, $moduleUnitID);
                 }
-				
+
             } else if ($moduleName == 'referral') {
 				DB::table('tbl_referral_users')
 				->where('id', '=', $subscriberID)
@@ -1756,7 +1754,7 @@ FROM
                 DB::table('tbl_subscribers')->where('id', '=', $subscriberID)->delete();
             }
         }
-        
+
         return true;
     }
 
@@ -1791,7 +1789,7 @@ FROM
 			->where("subscriber_id", $subscriberID)
 			->where("list_id", $listID)
 			->delete();
-				
+
         if ($bUpdated) {
             return true;
         } else {

@@ -488,7 +488,7 @@
                                         </td>
 
                                         <td>
-                                            {{ $lastListTime }}
+                                            {!! $lastListTime !!}
                                         </td>
 
                                         <td class="text-center">

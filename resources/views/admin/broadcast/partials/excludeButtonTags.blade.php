@@ -1,6 +1,6 @@
 @if (!empty($oCampaignLists))
     @foreach ($oCampaignLists as $oRec)
-        <button class="btn btn-xs btn_white_table remove"><img src="{{ base_url() }}assets/images/red_list.png"> {{ $oRec->list_name</button>
+        <button class="btn btn-xs btn_white_table remove"><img src="{{ base_url() }}assets/images/red_list.png"> {{ $oRec->list_name }}</button>
     @endforeach
 @endif
 
