@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 	{{ $title }}
@@ -121,8 +121,8 @@
                             </thead>
 
                             <tbody>
-                                @php 
-								foreach ($oData as $oRow){
+                                @php
+								foreach ($oData as $oRow) {
                                     if($oRow->event_type == 'brandboost_offsite'){
                                         $eventType = 'Off Site Brandboost';
                                     }else if($oRow->event_type == 'brandboost_onsite'){
@@ -130,8 +130,8 @@
                                     }else{
                                         $eventType = ucwords(str_replace("_", " ", $oRow->event_type));
                                     }
-                                    
-                                    
+
+
                                     if($oRow->action_name == 'added_brandboost'){
                                         $actionName = 'New Brandboost Added';
                                     }else if($oRow->action_name == 'deleted_brandboost'){
@@ -169,8 +169,8 @@
                                     }else{
                                         $actionName = $oRow->action_name;
                                     }
-                                    
-                                    @endphp
+
+                                @endphp
                                     <tr>
                                         <td>
                                             <div style="vertical-align: top!important;" class="media-left media-middle">
@@ -181,7 +181,7 @@
                                                 {{ $oRow->firstname . ' ' . $oRow->lastname }}
                                                 <div class="text-muted text-size-small">{{ $oRow->email }}</div>
                                                 <div class="text-muted text-size-small">{{ $oRow->mobile }}</div>
-                                                
+
                                             </div>
 
                                         </td>
@@ -204,7 +204,9 @@
                                         <td style="display: none;">{{ date('m/d/Y', strtotime($oRow->activityTime)) }}</td>
 
                                     </tr>
-                                @endforeach
+                                @php
+                                }
+                                @endphp
                             </tbody>
                         </table>
                     </div>
@@ -305,7 +307,7 @@
                 </div>
 
                 <div class="modal-body">
-										
+
                     <p>First Name:</p>
                     <input class="form-control" id="title" name="firstname" placeholder="Enter First Name" type="text" required>
 
@@ -396,7 +398,7 @@
 				}
             });
         });
-		
+
 
         $('#frmEditTeamMember').on('submit', function () {
             $('.overlaynew').show();
@@ -455,4 +457,4 @@
         });
     });
 </script>
-@endsection  
+@endsection

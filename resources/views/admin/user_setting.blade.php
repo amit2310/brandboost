@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -30,11 +30,11 @@
 
 
     <!--&&&&&&&&&&&& TABBED CONTENT START &&&&&&&&&&-->
-    <div class="tab-content"> 
+    <div class="tab-content">
         <!--===========TAB 1===========-->
         <div class="tab-pane active" id="right-icon-tab0">
 
-            <div class="row"> 
+            <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-flat review_ratings">
                         <div class="panel-heading">
@@ -77,7 +77,7 @@
                                                     @php
                                                     $inc = 1;
                                                     @endphp
-                                                    @foreach ($oSelectedPermission as $roleName) 
+                                                    @foreach ($oSelectedPermission as $roleName)
                                                         <button class="btn btn-xs btn_white_table txt_purple">{{ $roleName->title }}</button>
                                                             @if ($inc % 2 == 0)
                                                                 <div class="clearfix"></div>
@@ -86,7 +86,7 @@
                                                                 $inc++;
                                                             @endphp
                                                     @endforeach
-                                                    
+
                                                     <hr>
                                                     <button class="btn btn-xs btn_white_table txt_dark">{{ $subData->role_name }}</button>
                                                 </div>
@@ -100,7 +100,7 @@
                                     }
                                     @endphp
 
-                                </div> 
+                                </div>
 
 
                             </div>
@@ -138,10 +138,10 @@
                                                 </td>
 
                                                 <td class="text-left">
-                                                    
+
                                                     @foreach ($oSelectedPermission as $roleName)
                                                         <button class="btn btn-xs btn_white_table pr10 pl10 txt_purple">{{ $roleName->title }}</button>
-                                                    @endif
+                                                    @endforeach
                                                 </td>
 
                                                 <td class="text-right"><button class="btn btn-xs btn_white_table pr10 pl10">{{ $subData->role_name }}</button> </td>
@@ -168,7 +168,7 @@
         <!--===========TAB 2===========-->
         <div class="tab-pane" id="right-icon-tab1">
 
-            <div class="row"> 
+            <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-flat review_ratings">
                         <div class="panel-heading">
@@ -214,21 +214,21 @@
                                                         {{ count($getTeamUser) }}
                                                     @else
                                                         {{ '0' }}
-                                                    @endif 
+                                                    @endif
                                                     Users
                                                 </td>
                                                 <td>
 
                                                     @if (!empty($getTeamUser))
-                                                        <div class="media-left media-middle userimg"> 
+                                                        <div class="media-left media-middle userimg">
                                                             <a style="width:auto;" class="icons" href="#">
-                                                                @for ($inc = 0; $inc < count($getTeamUser); $inc++) 
+                                                                @for ($inc = 0; $inc < count($getTeamUser); $inc++)
                                                                    <img src="/assets/images/userp.png" class="img-circle img-xs" alt="">
                                                                 @endfor
                                                             @else
                                                             {{ '-' }}
                                                             @endif
-                                                        </a> 
+                                                        </a>
                                                     </div>
                                                 </td>
                                                 <td class="text-right"><button class="btn btn-xs btn_white_table pr10 pl10 addTeamMember" roleId="{{ $role->id }}">Add Users</button></td>
@@ -240,7 +240,7 @@
 
                                     </tbody>
                                 </table>
-                            </div>                    
+                            </div>
 
                             <div class="listteam_grid p30" style="display: none;">
                                 <div class="row">
@@ -313,7 +313,7 @@
         </div>
         <!--===========TAB 3====Preferences=======-->
         <div class="tab-pane" id="right-icon-tab2">
-            <div class="row"> 
+            <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-flat review_ratings">
                         <div class="panel-heading">
@@ -361,15 +361,15 @@
                                             <td>
 
                                                 @if (!empty($getTeamUser))
-                                                   <div class="media-left media-middle userimg"> 
+                                                   <div class="media-left media-middle userimg">
                                                         <a style="width:auto;" class="icons" href="#">
                                                             @for ($inc = 0; $inc < count($getTeamUser); $inc++)
                                                                <img src="/assets/images/userp.png" class="img-circle img-xs" alt="">
-                                                            @endfor   
+                                                            @endfor
                                                         @else
                                                             echo '-';
                                                         @endif
-                                                    </a> 
+                                                    </a>
                                                 </div>
                                             </td>
                                             <td class="text-right"><button class="btn btn-xs btn_white_table pr10 pl10 addTeamMember" roleId="{{ $role->id }}">Add Users</button> <a href="javascript:void(0);" role_id="{{ $role->id }}" class="btn btn-xs btn_white_table pr10 pl10 managerole">Manage Permissions</a></td>
@@ -389,7 +389,7 @@
         </div>
         <!--===========TAB 4====Chat Widget=======-->
         <div class="tab-pane" id="right-icon-tab3">
-            <div class="row"> 
+            <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-flat review_ratings">
                         <div class="panel-heading">
@@ -648,7 +648,7 @@
                                     <select class="form-control" name="memberRole" id="memberRole" required>
                                         <option value="">Select Role</option>
                                         @if (!empty($oRoles))
-                                            @foreach ($oRoles as $oRole)                                               
+                                            @foreach ($oRoles as $oRole)
                                                 <option value="{{ $oRole->id }}">{{ $oRole->role_name }}</option>
                                             @endforeach
                                         @endif
@@ -894,7 +894,7 @@
 
 
 
-</script>   
+</script>
 
 
-@endsection    
+@endsection
