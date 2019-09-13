@@ -1,7 +1,7 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
-{{ echo $title }}
+{{ $title }}
 @endsection
 
 @section('contents')
@@ -10,7 +10,7 @@
 	$setupClass = '';
 	$StatsClass = '';
 	$integrationClass = '';
-	
+
 	if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 		$rs = 'active';
 		} else if ($setTab == 'Configure Widgets' || $selectedTab == 'Configure Widgets') {
@@ -40,12 +40,12 @@
 			</div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">
-				
+
 			</div>
 		</div>
 	</div>
     <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
-	
+
     <div class="tab-content">
         <!--########################TAB 0 ##########################-->
 		@include('admin.brandboost.campaign-tabs.widget.onsite-review-sources', array('rs' => $rs, 'widgetData' => $widgetData))
@@ -55,22 +55,22 @@
 		@include('admin.brandboost.campaign-tabs.widget.onsite-integration', array('campaign_key' => $widgetData->hashcode, 'sWidget' => $widgetData->widget_type, 'integrationClass' => $integrationClass))
         <!--########################TAB 3 ##########################-->
 		@include('admin.brandboost.campaign-tabs.widget.onsite-widget-stats', array('campaign_key' => $widgetData->hashcode, 'sWidget' => $widgetData->widget_type, 'StatsClass' => $StatsClass, 'statsType' => 'aggregate'))
-		
+
 	</div>
-	
+
 </div>
 <script type="text/javascript">
-	
+
     $(document).ready(function () {
-		
+
 		$(document).on('change', '.autoSaveDesign', function() {
 			$('.saveWidgetDesign').trigger('click');
 		});
-		
+
 		$(document).on('change', '.autoSaveConfig', function() {
 			$('.saveWidgetConfig').trigger('click');
 		});
-		
+
         $(document).on("click", "#campaignSetupStep", function () {
             $('.overlaynew').show();
             changeTab("Configure Widgets");
@@ -79,10 +79,10 @@
                 //$('.tabbable a[href="#right-icon-tab4"]').click();
 			}, 1000);
 		});
-		
-		
+
+
         $("#nav-tabs-bottom li").on('click', function () {
-			
+
             var getActiveText = $(this).text();
             $.ajax({
                 url: "{{ base_url('/admin/brandboost/setTab') }}",
@@ -99,16 +99,16 @@
 				}
 			});
 		});
-		
+
         $(document).on('click', '.continueStepOnsite', function () {
             $('.overlaynew').show();
             var targetName = $(this).attr('targetName');
             changeTab(targetName);
 		});
 	});
-	
-	
-	
+
+
+
     function changeTab(getActiveText) {
         $.ajax({
             url: "{{ base_url('/admin/brandboost/setTab') }}",
@@ -123,7 +123,7 @@
 			}
 		});
 	}
-    
+
     $(document).on("click", "#publishWidget", function () {
 		$('.overlaynew').show();
 		$.ajax({

@@ -1,4 +1,6 @@
-@php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign') @endphp
+@php
+    list($canRead, $canWrite) = fetchPermissions('Onsite Campaign');
+@endphp
 <div class="tab-pane {{ $integrationClass }}" id="right-icon-tab3">
     <div class="row">
         <div class="col-md-3">
@@ -37,17 +39,17 @@
                 <div class="panel-body min_h270 p0">
                     <div class="p20 bbot">
                         <pre class="prettyprint" id="prettyprint">
-&lt;script 
-	type="text/javascript" 
-	id="bbscriptloader" 
-	data-key="{{ $campaign_key }}" 
-	data-widgets="{{ $sWidget ?>" 
-	async="" 
+&lt;script
+	type="text/javascript"
+	id="bbscriptloader"
+	data-key="{{ $campaign_key }}"
+	data-widgets="{{ $sWidget }}"
+	async=""
 	src="{{ base_url('assets/js/widgets.js') }}"&gt;
 &lt;/script&gt;
-                            
+
                         </pre>
-                        <div style="display: none;" class="prettyprintDiv">&lt;script type="text/javascript" id="bbscriptloader" data-key="{{ $campaign_key }}" data-widgets="{{ $sWidget ?>" async="" src="{{ base_url('assets/js/widgets.js') }}"&gt; &lt;/script&gt;</div>
+                        <div style="display: none;" class="prettyprintDiv">&lt;script type="text/javascript" id="bbscriptloader" data-key="{{ $campaign_key }}" data-widgets="{{ $sWidget }}" async="" src="{{ base_url('assets/js/widgets.js') }}"&gt; &lt;/script&gt;</div>
                     </div>
                     <div class="p20 text-right">
                         <button class="btn btn-xs btn_white_table pl10 pr10" onclick="copyToClipboard('.prettyprintDiv')">Copy Code</button>

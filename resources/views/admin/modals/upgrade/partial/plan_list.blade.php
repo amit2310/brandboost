@@ -44,13 +44,23 @@
 									$isMembershipActive = true;
 							@endphp
 									<button type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
-                            @php 
-								} 
-								else 
+                            @php
+								}
+								else
 								{
 							@endphp
-                                <button type="button" type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" plan_id="{{ $oMembership->plan_id }}" plan_name="{{ $oMembership->level_name }}"><span>@if (empty($oCurrentPlanData)) Buy @elseif ($isMembershipActive) Upgrade @else Downgrade @endif </span> </button>
-                            @php 
+                                <button type="button" type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" plan_id="{{ $oMembership->plan_id }}" plan_name="{{ $oMembership->level_name }}">
+                                    <span>
+                                        @if(empty($oCurrentPlanData))
+                                            Buy
+                                        @elseif(!empty($isMembershipActive))
+                                            Upgrade
+                                        @else
+                                            Downgrade
+                                        @endif
+                                    </span>
+                                </button>
+                            @php
 								}
                             }
                         @endphp
@@ -113,13 +123,21 @@
 									$isMembershipActive = true;
                                 @endphp
 									<button type="button" class="btn white_btn w100 txt_purple h40"><span>Active</span> </button>
-                            @php 
-								} 
-								else{ 
+                            @php
+								}
+								else{
 							@endphp
-                                <button type="button" type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" plan_id="{{ $oMembership->plan_id }}" plan_name="{{ $oMembership->level_name }}"><span>@if ($isMembershipActive || $bForceDisplay) Upgrade @else Downgrade @endif </span> </button>
-                            @php 
-							} 
+                                <button type="button" type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" plan_id="{{ $oMembership->plan_id }}" plan_name="{{ $oMembership->level_name }}">
+                                    <span>
+                                        @if (!empty($isMembershipActive) || !empty($bForceDisplay))
+                                            Upgrade
+                                        @else
+                                            Downgrade
+                                        @endif
+                                    </span>
+                                </button>
+                            @php
+							}
 							@endphp
                         </div>
                     </div>

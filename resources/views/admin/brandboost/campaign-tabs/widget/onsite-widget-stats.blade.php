@@ -144,7 +144,7 @@ if (!empty($oStats)) {
         }
     }
 
-    
+
 
     $totalRecords = 1;
     $totalViews = 1;
@@ -165,15 +165,15 @@ if (!empty($oStats)) {
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-flat">
-                    <div class="panel-heading"> 
+                    <div class="panel-heading">
                         <span class="pull-left">
                             <h6 class="panel-title" id="totalStatCount">{{ ($totalRecords) ? $totalRecords : '0' }} Records</h6>
                         </span>
                         <div class="heading_links pull-left">
                             <a class="top_links btn btn-xs btn_white_table ml20 mvtabs" href="#right-icon-tab15" data-toggle="tab" total-record="{{ $totalRecords }}">All Time</a>
-                            <a class="top_links mvtabs" href="#right-icon-tab10" data-toggle="tab" total-record="{{ $totalToday }}">Today</a> 
-                            <a class="top_links mvtabs" href="#right-icon-tab11" data-toggle="tab" total-record="{{ $totalYesterday }}">Yesterday</a> 
-                            <a class="top_links mvtabs" href="#right-icon-tab12" data-toggle="tab" total-record="{{ $totalWeek }}">Week</a> 
+                            <a class="top_links mvtabs" href="#right-icon-tab10" data-toggle="tab" total-record="{{ $totalToday }}">Today</a>
+                            <a class="top_links mvtabs" href="#right-icon-tab11" data-toggle="tab" total-record="{{ $totalYesterday }}">Yesterday</a>
+                            <a class="top_links mvtabs" href="#right-icon-tab12" data-toggle="tab" total-record="{{ $totalWeek }}">Week</a>
                             <a class="top_links mvtabs" href="#right-icon-tab13" data-toggle="tab" total-record="{{ $totalMonth }}">Month</a>
                             <a class="top_links mvtabs" href="#right-icon-tab14" data-toggle="tab" total-record="{{ $total3Month }}">3 Month</a>
                         </div>
@@ -183,7 +183,7 @@ if (!empty($oStats)) {
         </div>
 
         @if ($statsType == 'aggregate')
-            <div class="row"> 
+            <div class="row">
                 <!--------------LEFT----------->
                 <div class="col-md-3">
                     <div class="panel panel-flat review_ratings">
@@ -196,7 +196,7 @@ if (!empty($oStats)) {
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <img class="pull-left mr20" src="{{ base_url("assets/images/smiley_red.png") }}"/>
-                                        <h1 class="m0"></h1>                                        
+                                        <h1 class="m0"></h1>
                                     </div>
                                 </div>
                             </div>
@@ -210,7 +210,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Total Campaigns</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -230,21 +230,21 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Widget Type</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <img class="pull-left mr20" src="{{ base_url("assets/images/timer_icon.png") }}"/>
-                                        @if (!empty($aWidgets['widget_type'])) 
-                                            @foreach ($aWidgets['widget_type'] as $key => $aWT) 
+                                        @if (!empty($aWidgets['widget_type']))
+                                            @foreach ($aWidgets['widget_type'] as $key => $aWT)
                                                 <h6 class="m0">
-                                                    @if ($key == 'cpw') 
+                                                    @if ($key == 'cpw')
                                                         {{ 'Center Popup' }}
                                                     @elseif ($key == 'vpw')
                                                         {{ 'Vertical Popup' }}
                                                     @elseif ($key == 'bww')
                                                         {{ 'Button Widget Popup' }}
-                                                    @elseif ($key == 'bfw') 
+                                                    @elseif ($key == 'bfw')
                                                         {{ 'Bottom Fixed Popup' }}
                                                     @else
                                                         {{ ucfirst($key) }}
@@ -271,7 +271,7 @@ if (!empty($oStats)) {
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
 
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-3">
@@ -279,7 +279,7 @@ if (!empty($oStats)) {
                                     </div>
                                     <div class="col-xs-9">
                                         @if (!empty($aWidgets['track_type']))
-                                            @foreach ($aWidgets['track_type'] as $key => $aWT)                                                
+                                            @foreach ($aWidgets['track_type'] as $key => $aWT)
                                                 <h6 class="m0">{{ ucfirst($key) }}: {{ number_format(count($aWT)) }}</h6>
                                             @endforeach
                                         @else
@@ -297,7 +297,7 @@ if (!empty($oStats)) {
 
         <div class="tab-pane active" id="right-icon-tab15">
 
-            <div class="row"> 
+            <div class="row">
                 <!--------------LEFT----------->
                 <div class="col-md-3">
                     <div class="panel panel-flat review_ratings">
@@ -328,7 +328,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Clicks</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -349,7 +349,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Comments</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -371,7 +371,7 @@ if (!empty($oStats)) {
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
 
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -467,13 +467,13 @@ if (!empty($oStats)) {
                                                 </td>
 
                                                 <td>
-                                                    @if ($oData->widget_type == 'cpw') 
+                                                    @if ($oData->widget_type == 'cpw')
                                                         {{ 'Center Popup' }}
                                                     @elseif ($oData->widget_type == 'vpw')
                                                         {{ 'Vertical Popup' }}
-                                                    @elseif ($oData->widget_type == 'bww') 
+                                                    @elseif ($oData->widget_type == 'bww')
                                                         {{ 'Button Widget Popup' }}
-                                                    @elseif ($oData->widget_type == 'bfw') 
+                                                    @elseif ($oData->widget_type == 'bfw')
                                                         {{ 'Bottom Fixed Popup' }}
                                                     @else
                                                         {{ 'No Data' }}
@@ -494,7 +494,7 @@ if (!empty($oStats)) {
                                                             </a>
                                                             <div class="text-muted text-size-small">
                                                                 {!! setStringLimit($oData->bbBrandDesc) !!}
-                                                            </div>    
+                                                            </div>
                                                         </div>
                                                     @endif
                                                 </td>
@@ -528,7 +528,7 @@ if (!empty($oStats)) {
 
         <div class="tab-pane" id="right-icon-tab10">
 
-            <div class="row"> 
+            <div class="row">
                 <!--------------LEFT----------->
                 <div class="col-md-3">
                     <div class="panel panel-flat review_ratings">
@@ -559,7 +559,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Clicks</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -580,7 +580,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Comments</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -602,7 +602,7 @@ if (!empty($oStats)) {
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
 
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -700,11 +700,11 @@ if (!empty($oStats)) {
                                                 <td>
                                                     @if ($oData->widget_type == 'cpw')
                                                         {{ 'Center Popup' }}
-                                                    @elseif ($oData->widget_type == 'vpw') 
+                                                    @elseif ($oData->widget_type == 'vpw')
                                                         {{ 'Vertical Popup' }}
-                                                    @elseif ($oData->widget_type == 'bww') 
+                                                    @elseif ($oData->widget_type == 'bww')
                                                         {{ 'Button Widget Popup' }}
-                                                    @elseif ($oData->widget_type == 'bfw') 
+                                                    @elseif ($oData->widget_type == 'bfw')
                                                         {{ 'Bottom Fixed Popup' }}
                                                     @else
                                                         {{ 'No Data' }}
@@ -725,7 +725,7 @@ if (!empty($oStats)) {
                                                             </a>
                                                             <div class="text-muted text-size-small">
                                                                 {!! setStringLimit($oData->bbBrandDesc) !!}
-                                                            </div>    
+                                                            </div>
                                                         </div>
                                                     @endif
                                                 </td>
@@ -759,7 +759,7 @@ if (!empty($oStats)) {
         </div>
         <!--===========TAB 2===========-->
         <div class="tab-pane" id="right-icon-tab11">
-            <div class="row"> 
+            <div class="row">
                 <!--------------LEFT----------->
                 <div class="col-md-3">
                     <div class="panel panel-flat review_ratings">
@@ -790,7 +790,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Clicks</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -811,7 +811,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Comments</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -833,7 +833,7 @@ if (!empty($oStats)) {
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
 
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -933,11 +933,11 @@ if (!empty($oStats)) {
                                                 <td>
                                                     @if ($oData->widget_type == 'cpw')
                                                         {{ 'Center Popup' }}
-                                                    @elseif ($oData->widget_type == 'vpw') 
+                                                    @elseif ($oData->widget_type == 'vpw')
                                                         {{ 'Vertical Popup' }}
-                                                    @elseif ($oData->widget_type == 'bww') 
+                                                    @elseif ($oData->widget_type == 'bww')
                                                         {{ 'Button Widget Popup' }}
-                                                    @elseif ($oData->widget_type == 'bfw') 
+                                                    @elseif ($oData->widget_type == 'bfw')
                                                         {{ 'Bottom Fixed Popup' }}
                                                     @else
                                                         {{ 'No Data' }}
@@ -958,7 +958,7 @@ if (!empty($oStats)) {
                                                             </a>
                                                             <div class="text-muted text-size-small">
                                                                 {!! setStringLimit($oData->bbBrandDesc) !!}
-                                                            </div>    
+                                                            </div>
                                                         </div>
                                                     @endif
                                                 </td>
@@ -991,9 +991,9 @@ if (!empty($oStats)) {
 
         </div>
         <!--===========TAB 3====Preferences=======-->
-        <div class="tab-pane" id="right-icon-tab12"> 
+        <div class="tab-pane" id="right-icon-tab12">
 
-            <div class="row"> 
+            <div class="row">
                 <!--------------LEFT----------->
                 <div class="col-md-3">
                     <div class="panel panel-flat review_ratings">
@@ -1024,7 +1024,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Clicks</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -1045,7 +1045,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Comments</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -1067,7 +1067,7 @@ if (!empty($oStats)) {
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
 
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -1167,11 +1167,11 @@ if (!empty($oStats)) {
                                                 <td>
                                                     @if ($oData->widget_type == 'cpw')
                                                         {{ 'Center Popup' }}
-                                                    @elseif ($oData->widget_type == 'vpw') 
+                                                    @elseif ($oData->widget_type == 'vpw')
                                                         {{ 'Vertical Popup' }}
-                                                    @elseif ($oData->widget_type == 'bww') 
+                                                    @elseif ($oData->widget_type == 'bww')
                                                         {{ 'Button Widget Popup' }}
-                                                    @elseif ($oData->widget_type == 'bfw') 
+                                                    @elseif ($oData->widget_type == 'bfw')
                                                         {{ 'Bottom Fixed Popup' }}
                                                     @else
                                                         {{ 'No Data' }}
@@ -1192,7 +1192,7 @@ if (!empty($oStats)) {
                                                             </a>
                                                             <div class="text-muted text-size-small">
                                                                 {!! setStringLimit($oData->bbBrandDesc) !!}
-                                                            </div>    
+                                                            </div>
                                                         </div>
                                                     @endif
                                                 </td>
@@ -1226,7 +1226,7 @@ if (!empty($oStats)) {
         </div>
         <!--===========TAB 4====Chat Widget=======-->
         <div class="tab-pane" id="right-icon-tab13">
-            <div class="row"> 
+            <div class="row">
                 <!--------------LEFT----------->
                 <div class="col-md-3">
                     <div class="panel panel-flat review_ratings">
@@ -1257,7 +1257,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Clicks</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -1278,7 +1278,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Comments</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -1300,7 +1300,7 @@ if (!empty($oStats)) {
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
 
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -1376,73 +1376,67 @@ if (!empty($oStats)) {
                                             } else {
                                                 $campaignImgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $campaign_img;
                                             }
-                                            @endphp
-
-                                            <!--================================================-->
-                                            <tr>
-                                                <td>
-                                                    <div class="media-left media-middle">
-                                                        <a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id) }}" widgetID="{{ $oData->widget_id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">
-                                                            <img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt="Img"></a>
+                                    @endphp
+                                    <tr>
+                                        <td>
+                                            <div class="media-left media-middle">
+                                                <a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->widget_id) }}" widgetID="{{ $oData->widget_id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">
+                                                    <img src="{{ $imgSrc }}" class="img-circle img-xs br5" alt="Img"></a>
+                                            </div>
+                                            <div class="media-left">
+                                                <div class=""><a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->id) }}" widgetID="{{ $oData->id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">{{ $oData->widget_title }}</a></div>
+                                                <div class="text-muted text-size-small">
+                                                    {!! setStringLimit($oData->widget_desc) !!}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @if ($oData->widget_type == 'cpw')
+                                                {{ 'Center Popup' }}
+                                            @elseif ($oData->widget_type == 'vpw')
+                                                {{ 'Vertical Popup' }}
+                                            @elseif ($oData->widget_type == 'bww')
+                                                {{ 'Button Widget Popup' }}
+                                            @elseif ($oData->widget_type == 'bfw')
+                                                {{ 'Bottom Fixed Popup' }}
+                                            @else
+                                                {{ 'No Data' }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if (!empty($oData->brandboost_id))
+                                                <div class="media-left media-middle">
+                                                    <a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" class="text-default text-semibold">
+                                                        <img src="{{ $campaignImgSrc }}" class="img-circle img-xs br5" alt="Img">
+                                                    </a>
+                                                </div>
+                                                <div class="media-left">
+                                                    <a href="{{ base_url("admin/brandboost/onsite_setup/" . $oData->brandboost_id) }}" target="_blank">
+                                                        {{ ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A' }}
+                                                    </a>
+                                                    <div class="text-muted text-size-small">
+                                                        {!! setStringLimit($oData->bbBrandDesc) !!}
                                                     </div>
-                                                    <div class="media-left">
-                                                        <div class=""><a href="{{ base_url('admin/brandboost/onsite_widget_setup/' . $oData->id) }}" widgetID="{{ $oData->id }}" b_title="{{ $oData->widget_title }}" class="text-default text-semibold">{{ $oData->widget_title }}</a></div>
-                                                        <div class="text-muted text-size-small">
-                                                            {!! setStringLimit($oData->widget_desc) !!}
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    @if ($oData->widget_type == 'cpw') 
-                                                        {{ 'Center Popup' }}
-                                                    @elseif ($oData->widget_type == 'vpw')
-                                                        {{ 'Vertical Popup' }}
-                                                    @elseif ($oData->widget_type == 'bww') 
-                                                        {{ 'Button Widget Popup' }}
-                                                    @elseif ($oData->widget_type == 'bfw') 
-                                                        {{ 'Bottom Fixed Popup' }}
-                                                    @else
-                                                        {{ 'No Data' }}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if (!empty($oData->brandboost_id))
-                                                        <div class="media-left media-middle">
-                                                            <a href="{{ base_url('admin/brandboost/onsite_setup/' . $oData->brandboost_id) }}" class="text-default text-semibold">
-                                                                <img src="{{ $campaignImgSrc }}" class="img-circle img-xs br5" alt="Img">
-                                                            </a>
-                                                        </div>
-                                                        <div class="media-left">
-                                                            <a href="{{ base_url("admin/brandboost/onsite_setup/" . $oData->brandboost_id) }}" target="_blank">
-                                                    @endphp
-                                                            {{ ($oData->bbBrandTitle) ? $oData->bbBrandTitle : 'N/A' }}
-                                                    @if (!empty($oData->brandboost_id))
-                                                            </a>
-                                                            <div class="text-muted text-size-small">
-                                                                {!! setStringLimit($oData->bbBrandDesc) !!}
-                                                            </div>    
-                                                        </div>
-                                                    @endphp
-                                                </td>
-                                                <td>
-                                                    <div class="media-left">
-                                                        <div class="pt-5"><span class="text-default text-semibold">{{ dataFormat($oData->created_at) }}</span></div>
-                                                        <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oData->created_at)) }}</div>
-                                                    </div>
-                                                </td>
-                                                <td>{{ ($oData->track_type) ? $oData->track_type : 'No Data' }}</td>
-                                                <td>{{ ($oData->section_type) ? $oData->section_type : 'No Data' }}</td>
-                                                <td>{{ ($oData->ip_address) ? $oData->ip_address : 'No Data' }}</td>
-                                                <td>{{ ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data' }}</td>
-                                                <!-- <td>{{ ($oData->platform_device) ? $oData->platform_device : 'No Data' }}</td> -->
-                                                <td>{{ ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data' }}</td>
-                                                <!-- <td>{{ ($oData->region) ? $oData->region : 'No Data' }}</td> -->
-                                                <td>{{ ($oData->city) ? $oData->city : 'No Data' }}</td>
-                                                <td>{{ ($oData->country) ? $oData->country : 'No Data' }}</td>
-
-                                            </tr>
-                                            @php
+                                                </div>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <div class="media-left">
+                                                <div class="pt-5"><span class="text-default text-semibold">{{ dataFormat($oData->created_at) }}</span></div>
+                                                <div class="text-muted text-size-small">{{ date('h:i A', strtotime($oData->created_at)) }}</div>
+                                            </div>
+                                        </td>
+                                        <td>{{ ($oData->track_type) ? $oData->track_type : 'No Data' }}</td>
+                                        <td>{{ ($oData->section_type) ? $oData->section_type : 'No Data' }}</td>
+                                        <td>{{ ($oData->ip_address) ? $oData->ip_address : 'No Data' }}</td>
+                                        <td>{{ ($oData->platform) ? getPlatformImg($oData->platform) : 'No Data' }}</td>
+                                        <!-- <td>{{ ($oData->platform_device) ? $oData->platform_device : 'No Data' }}</td> -->
+                                        <td>{{ ($oData->browser) ? getBrowserImg($oData->browser) : 'No Data' }}</td>
+                                        <!-- <td>{{ ($oData->region) ? $oData->region : 'No Data' }}</td> -->
+                                        <td>{{ ($oData->city) ? $oData->city : 'No Data' }}</td>
+                                        <td>{{ ($oData->country) ? $oData->country : 'No Data' }}</td>
+                                    </tr>
+                                    @php
                                         }
                                     }
                                     @endphp
@@ -1456,8 +1450,8 @@ if (!empty($oStats)) {
 
         </div>
         <!--===========TAB 5===========-->
-        <div class="tab-pane" id="right-icon-tab14"> 
-            <div class="row"> 
+        <div class="tab-pane" id="right-icon-tab14">
+            <div class="row">
                 <!--------------LEFT----------->
                 <div class="col-md-3">
                     <div class="panel panel-flat review_ratings">
@@ -1488,7 +1482,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Clicks</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -1509,7 +1503,7 @@ if (!empty($oStats)) {
                             <h6 class="panel-title">Comments</h6>
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -1531,7 +1525,7 @@ if (!empty($oStats)) {
                             <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
 
-                        <div class="panel-body p0 bkg_white"> 
+                        <div class="panel-body p0 bkg_white">
                             <div class="p20 topchart_value">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -1625,13 +1619,13 @@ if (!empty($oStats)) {
                                                 </td>
 
                                                 <td>
-                                                    @if ($oData->widget_type == 'cpw') 
+                                                    @if ($oData->widget_type == 'cpw')
                                                         {{ 'Center Popup' }}
                                                     @elseif ($oData->widget_type == 'vpw')
                                                         {{ 'Vertical Popup' }}
-                                                    @elseif ($oData->widget_type == 'bww') 
+                                                    @elseif ($oData->widget_type == 'bww')
                                                         {{ 'Button Widget Popup' }}
-                                                    @elseif ($oData->widget_type == 'bfw') 
+                                                    @elseif ($oData->widget_type == 'bfw')
                                                         {{ 'Bottom Fixed Popup' }}
                                                     @else
                                                         {{ 'No Data' }}
@@ -1652,7 +1646,7 @@ if (!empty($oStats)) {
                                                             </a>
                                                             <div class="text-muted text-size-small">
                                                                 {!! setStringLimit($oData->bbBrandDesc) !!}
-                                                            </div>    
+                                                            </div>
                                                         </div>
                                                     @endif
                                                 </td>
@@ -1685,16 +1679,16 @@ if (!empty($oStats)) {
         </div>
         <div class="row">
             <div class="col-md-12 text-right">
-                
-                <button 
+
+                <button
                     @if ($bActiveSubsription == false)
-                    class="btn dark_btn mt20 pDisplayNoActiveSubscription" title="No Active Subscription" type="button" 
+                    class="btn dark_btn mt20 pDisplayNoActiveSubscription" title="No Active Subscription" type="button"
                     @else
-                    type="submit" class="btn dark_btn mt20" 
+                    type="submit" class="btn dark_btn mt20"
                     @endif
                     id="publishWidget"> Publish <i class=" icon-arrow-right13 text-size-base position-right"></i>
                 </button>
-                   
+
             </div>
         </div>
     </div>

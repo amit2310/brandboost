@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 
@@ -33,7 +33,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
     .brand_info_pop .modal-header{background: none !important;}
     .brand_info_pop .modal-dialog{max-width: 724px; width: 100%;}
     .brand_info_pop .review_source .inner {text-align: center;border-radius: 6px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;border-bottom-color: rgb(227, 233, 243);border-bottom-style: solid;border-bottom-width: 1px;position: relative;padding: 23px; min-height: 235px;}
-    .brand_info_pop .review_source label{width: 100%;} 
+    .brand_info_pop .review_source label{width: 100%;}
     .brand_info_pop .review_source .inner:hover {border: 1px solid #da97af !important;}
     .brand_info_pop .review_source .inner figure{margin-bottom: 24px;}
 
@@ -64,11 +64,11 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
     .container.subarea{padding: 0 100px!important;}
 
 
-    .tablet_box{width: 680px;    border-radius: 14.4px;  box-shadow: 0 2.2px 4.4px 0 rgba(1, 21, 64, 0.04);  border: solid 1.1px #ebeff6;  background-color: #fff; padding: 14px; position: relative; margin: 0 auto; /*transform: scale(0.9);*/} 	
+    .tablet_box{width: 680px;    border-radius: 14.4px;  box-shadow: 0 2.2px 4.4px 0 rgba(1, 21, 64, 0.04);  border: solid 1.1px #ebeff6;  background-color: #fff; padding: 14px; position: relative; margin: 0 auto; /*transform: scale(0.9);*/}
     .tablet_box .tablet_box_bkg{  border-radius: 4.4px; height: 856px;   border: solid 1.1px #f4f6fa;   background-image: linear-gradient(150deg, #ffffff, #eff2f7);}
     .tablet_box .tablet_box_bkg .bb_rw01{ transform: scale(0.8); bottom: -25px;right: 0;}
 
-    .mobile_box{width: 425px;    border-radius: 45px;  box-shadow: 0 2.2px 4.4px 0 rgba(1, 21, 64, 0.04);  border: solid 1.1px #ebeff6;  background-color: #fff; padding: 14px; position: relative; margin: 0 auto; transform: scale(0.9);} 	
+    .mobile_box{width: 425px;    border-radius: 45px;  box-shadow: 0 2.2px 4.4px 0 rgba(1, 21, 64, 0.04);  border: solid 1.1px #ebeff6;  background-color: #fff; padding: 14px; position: relative; margin: 0 auto; transform: scale(0.9);}
     .mobile_box .mobile_box_bkg{  border-radius: 34px; height: 870px;   border: solid 1.1px #f4f6fa;   background-image: linear-gradient(150deg, #ffffff, #eff2f7);}
 
 
@@ -135,7 +135,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
     @include ("admin.components.smart-popup.smart-widget-template-type")
 
     <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
-    <div class="tab-content"> 
+    <div class="tab-content">
         <!--===========TAB 0=====Configuration======-->
         <div class="tab-pane {{ $tb0active }}" id="right-icon-tab01">
             <div class="row">
@@ -150,7 +150,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                             </ul>
                         </div>
                         <div class="panel-body p0">
-                            <div class="tab-content"> 
+                            <div class="tab-content">
 
                                 <div class="tab-pane active" id="Configurations">
                                     <div class="profile_headings txt_upper p20 fsize11 fw600">Template<a class="pull-right plus_icon" href="#"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
@@ -165,13 +165,13 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                         @csrf
                                         <div class="p20">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     <div class="form-group mb10">
 
                                                         <p class="pull-left mb0">Avatar</p>
                                                         <label class="custom-form-switch pull-right">
                                                             <input class="field changeAction" action-type="avatar" type="checkbox" name="avatar_switch" id="avatar_switch" {{ ($brandData->avatar == '1' || $brandData->avatar == '') ? 'checked' : '' }} >
-                                                            <span class="toggle dred"></span> 
+                                                            <span class="toggle dred"></span>
                                                         </label>
                                                         <div class="clearfix"></div>
                                                     </div>
@@ -269,7 +269,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                         <div class="profile_headings txt_upper p20 fsize11 fw600">Company info <a class="pull-right plus_icon" href="#"><i class="icon-arrow-down12 txt_grey fsize15"></i></a></div>
                                         <div class="p20">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     <div class="form-group mb10">
 
                                                         <p class="pull-left mb0">Show chat widget</p>
@@ -351,7 +351,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                                             <p class="mb0"><strong></strong></p>
                                                         </div>
                                                         <div class="p20">
-                                                            
+
                                                         </div>
                                                     </div>
                                                     <div id="custom_company_info_box" {!! ($brandData->company_info > 0 || empty($brandData)) ? 'style="display:none;"' : 'style="display:block;"' !!}>
@@ -418,7 +418,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                                 <div class="form-group pull-right mb0">
                                                     <p class="pull-left mb0 fsize11 fw500 text-muted mr-5">Gradient</p>
                                                     <label class="custom-form-switch pull-right">
-                                                        <input class="field" type="checkbox" {{ ($brandData->area_type == '1') ? (($brandData->header_color_fix > 0 || empty($brandData)) ? 'checked' : '') : '') }} name="main_color_switch" id="main_color_switch">
+                                                        <input class="field" type="checkbox" {{ (($brandData->area_type == '1') ? (($brandData->header_color_fix > 0 || empty($brandData)) ? 'checked' : '') : '') }} name="main_color_switch" id="main_color_switch">
                                                         <span class="toggle dred"></span> </label>
                                                     <div class="clearfix"></div>
                                                 </div>
@@ -432,7 +432,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                                 } else {
                                                     $printStr3 = "display:none";
                                                 }
-                                                @endphp 
+                                                @endphp
                                                 <div class="color_box main_color_switch_div" style="{{ $printStr3 }}">
                                                     <input type="hidden" name="main_colors" id="main_colors" value="{{ ($brandData->header_color == '') ? 'green' : $brandData->header_color }}">
                                                     <div class="color_cube white selectMainColor {{ ($brandData->header_color == 'white') ? 'active' : '' }}" color-data='white' color-class="white_preview_1"></div>
@@ -523,7 +523,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                                     }
                                                 } else
                                                     $printStr6 = "display:none";
-                                                @endphp 
+                                                @endphp
                                                 <div class="row orientation_top" style="{{ $printStr6 }}">
                                                     <div class="col-md-12">
                                                         <div style="margin: 25px 0 15px!important;" class="profile_headings txt_upper fsize11 fw600">Choose orientation</div>
@@ -750,7 +750,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                                 } else {
                                                     $printStr10 = "display:none";
                                                 }
-                                                @endphp 
+                                                @endphp
                                                 <div class="row custom_color_switch_full_div" style="{{ $printStr10 }}">
                                                     <div class="position-relative mt-5 col-md-6">
                                                         <input name="custom_colors1_full" class="form-control" id="custom_colors1_full" placeholder="#000000" type="text" value="{{  $brandData->header_custom_color1 == '' ? '#000000' : $brandData->header_custom_color1 }}">
@@ -774,7 +774,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                                 } else {
                                                     $printStr11 = "display:none";
                                                 }
-                                                @endphp 
+                                                @endphp
                                                 <div class="row orientation_full" style="{{ $printStr11 }}">
                                                     <div class="col-md-12">
                                                         <div style="margin: 25px 0 15px!important;" class="profile_headings txt_upper fsize11 fw600">Choose orientation</div>
@@ -834,8 +834,8 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                                     <div class="form-group mb10">
                                                         <p class="pull-left mb0">Select All</p>
                                                         <label class="custom-form-switch pull-right">
-                                                            <input class="field campaignSelectAll" type="checkbox" checked="checked"> 
-                                                            <span class="toggle dred"></span> 
+                                                            <input class="field campaignSelectAll" type="checkbox" checked="checked">
+                                                            <span class="toggle dred"></span>
                                                         </label>
                                                         <div class="clearfix"></div>
                                                     </div>
@@ -856,7 +856,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                                             <p class="pull-left mb0"><a href="{{  base_url('admin/brandboost/onsite_setup/' . $data->id) }} class="txt_dark bbot">{{  $data->brand_title }}</a></p>
                                                             <label class="custom-form-switch pull-right">
                                                                 <input class="field changeAction" type="checkbox" name="campaign[]"  value="{{ $data->id }} {{ $printStr }}" >
-                                                                <span class="toggle dred"></span> 
+                                                                <span class="toggle dred"></span>
                                                             </label>
                                                             <div class="clearfix"></div>
                                                         </div>
@@ -905,7 +905,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                     <li><a href="#Tabletver" data-toggle="tab"><i class="icon-tablet"></i> Tablet</a></li>
                                     <li><a href="#Phonever" data-toggle="tab"><i class="icon-mobile2"></i> Mobile</a></li>
                                     <li class="active"><a href="#Desktopver" data-toggle="tab"><i class="icon-display"></i> Desktop</a></li>
-                                </ul>	
+                                </ul>
                             </div>
                         </div>
                         <div class="panel-body p20">
@@ -927,12 +927,12 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                                 </div>
 
                                 <div class="tab-pane active" id="Desktopver">
-                                    <div class="leftPosition"> @include('admin/brandboost/brand_preview', ['brandData' => $brandData])</div>                                    
+                                    <div class="leftPosition"> @include('admin/brandboost/brand_preview', ['brandData' => $brandData])</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                                        
+
 
                 </div>
             </div>
@@ -978,7 +978,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer p30 text-left">  
+                    <div class="modal-footer p30 text-left">
                         <button data-toggle="modal" id="" type="submit" class="btn dark_btn bkg_red3 h32 m0 mr20">Add new quesiton</button>
                         <button data-toggle="modal" id="" type="button" class="btn white_btn cancel_info p0 txt_dred">Cancel</button>
                     </div>
@@ -992,7 +992,7 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
         .brand_info_pop .modal-dialog{max-width: 724px; width: 100%;}
         .brand_info_pop .review_source .inner {text-align: center;border-radius: 5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;border-bottom-color: rgb(227, 233, 243);border-bottom-style: solid;border-bottom-width: 1px;height: 260px;position: relative;padding: 33px 0;}
         .brand_info_pop .col-md-2.review_source .inner.active {    border-bottom: 3px solid #9986e4 !important;}
-        .brand_info_pop .review_source label{width: 100%;} 
+        .brand_info_pop .review_source label{width: 100%;}
         .brand_info_pop .review_source .inner:hover {border: 1px solid #da97af !important;}
         .brand_info_pop .review_source .custmo_checkbox.checkboxs {
             position: absolute;    right: 0px; top: 0px;}
@@ -1013,12 +1013,12 @@ if (!empty($_GET['tab']) && $_GET['tab'] == '3') {
 
 
     <!--================================= CONTENT AFTER TAB===============================-->
-</div>	
+</div>
 
-<!--=====================================Createnewlist Popup================================-->    
+<!--=====================================Createnewlist Popup================================-->
 <form name="template_type">
     <input type="hidden" name="template_type" value="" id="template_type_value">
-</form>      
+</form>
 
 
 
@@ -1198,7 +1198,7 @@ $(document).ready(function () {
     });
 
 
-    // ******** main color switch for top area ******** // 
+    // ******** main color switch for top area ******** //
     $('#main_color_switch').change(function () {
         $("#area_type").val("1");
         $(".Parent").removeAttr("style");
@@ -1266,12 +1266,12 @@ $(document).ready(function () {
             $('#frmDesignSubmit').trigger('submit');
         }
     });
-    // main color switch for top area // 
+    // main color switch for top area //
 
 
 
 
-    // ******** main color switch for Full area *********** // 
+    // ******** main color switch for Full area *********** //
     $('#main_color_switch_full').change(function () {
         $("#area_type").val("2");
         // all buttons close on full action//
@@ -1344,7 +1344,7 @@ $(document).ready(function () {
 
 
 
-    // ********* custom color switch for top area ************ // 
+    // ********* custom color switch for top area ************ //
     $('#custom_color_switch').change(function () {
         $("#area_type").val("1");
         $(".Parent").removeAttr("style");
@@ -1409,13 +1409,13 @@ $(document).ready(function () {
         if ($('#brand_theme_title').val() == "") {
             $('#frmDesignSubmit').trigger('submit');
         }
-    });   // custom color switch for top area // 
+    });   // custom color switch for top area //
 
 
 
 
 
-    // ********* custom color switch for Full area*********** // 
+    // ********* custom color switch for Full area*********** //
     $('#custom_color_switch_full').change(function () {
         $("#area_type").val("2");
         // all buttons close on full action//
@@ -1478,12 +1478,12 @@ $(document).ready(function () {
         if ($('#brand_theme_title').val() == "") {
             $('#frmDesignSubmit').trigger('submit');
         }
-    }); // custom color switch for Full area // 
+    }); // custom color switch for Full area //
 
 
 
 
-    // *********** solid color switch for top area *********** // 
+    // *********** solid color switch for top area *********** //
     $('#solid_color_switch').change(function () {
         $("#area_type").val("1");
         $(".Parent").removeAttr("style");
@@ -1542,13 +1542,13 @@ $(document).ready(function () {
         if ($('#brand_theme_title').val() == "") {
             $('#frmDesignSubmit').trigger('submit');
         }
-    }); // solid color switch for top area // 
+    }); // solid color switch for top area //
 
 
 
 
 
-    // ********** solid color switch for Full area *********** // 
+    // ********** solid color switch for Full area *********** //
     $('#solid_color_switch_full').change(function () {
         $("#area_type").val("2");
         // all buttons close on full action//
@@ -1601,7 +1601,7 @@ $(document).ready(function () {
         if ($('#brand_theme_title').val() == "") {
             $('#frmDesignSubmit').trigger('submit');
         }
-    }); // solid color switch for Full area // 
+    }); // solid color switch for Full area //
 
 
 
@@ -1699,7 +1699,7 @@ $(document).ready(function () {
     // full area on off //
 
 
-    // *********** select main area for top area *************8 // 
+    // *********** select main area for top area *************8 //
     $('.selectMainColor').click(function () {
         $("#area_type").val("1");
         $(".Parent").removeAttr("style");
@@ -1751,12 +1751,12 @@ $(document).ready(function () {
         if ($('#brand_theme_title').val() == "") {
             $('#frmDesignSubmit').trigger('submit');
         }
-    }); // select main area for top area // 
+    }); // select main area for top area //
 
 
 
 
-    // ************ select main area for Full area ************** // 
+    // ************ select main area for Full area ************** //
     $('.selectFullMainColor').click(function () {
         $("#area_type").val("2");
         // all buttons close on full action//
@@ -1805,11 +1805,11 @@ $(document).ready(function () {
         if ($('#brand_theme_title').val() == "") {
             $('#frmDesignSubmit').trigger('submit');
         }
-    });  // select main area for Full area // 
+    });  // select main area for Full area //
 
 
 
-    // ********** Custom colors for Top area ************ // 
+    // ********** Custom colors for Top area ************ //
     $('#custom_colors1, #custom_colors2').change(function () {
         $("#area_type").val("1");
         $(".Parent").removeAttr("style");
@@ -1851,11 +1851,11 @@ $(document).ready(function () {
         if ($('#brand_theme_title').val() == "") {
             $('#frmDesignSubmit').trigger('submit');
         }
-    });// Custom colors for top area // 
+    });// Custom colors for top area //
 
 
 
-    // ********** orientation for Top area fix ************ // 
+    // ********** orientation for Top area fix ************ //
     $('#TopArea .orientation_top_fix .choose_orientation li a').click(function () {
         $('#TopArea .orientation_top_fix .choose_orientation li a').removeClass('active');
         $(this).addClass('active');
@@ -1925,10 +1925,10 @@ $(document).ready(function () {
         if ($('#brand_theme_title').val() == "") {
             $('#frmDesignSubmit').trigger('submit');
         }
-    }); // ********** orientation for Top area fix ************ // 
+    }); // ********** orientation for Top area fix ************ //
 
 
-    // ********** orientation for Top area custom  ************ // 
+    // ********** orientation for Top area custom  ************ //
     $('#TopArea .orientation_top .choose_orientation li a').click(function () {
         $("#area_type").val("1");
         $('#TopArea .choose_orientation li a').removeClass('active');
@@ -1989,12 +1989,12 @@ $(document).ready(function () {
         if ($('#brand_theme_title').val() == "") {
             $('#frmDesignSubmit').trigger('submit');
         }
-    }); // ********** orientation for Top area custom  ************ // 
+    }); // ********** orientation for Top area custom  ************ //
 
 
 
 
-    // ********** orientation for Full area (custom) ************ // 
+    // ********** orientation for Full area (custom) ************ //
     $('#FullArea .orientation_full .choose_orientation li a').click(function () {
         $('#FullArea .orientation_full .choose_orientation li a').removeClass('active');
         $(this).addClass('active');
@@ -2069,12 +2069,12 @@ $(document).ready(function () {
             $('#frmDesignSubmit').trigger('submit');
         }
 
-    }); // ********** orientation for Full area custom ************ // 
+    }); // ********** orientation for Full area custom ************ //
 
 
 
 
-    // ********** orientation for Full area (fix) ************ // 
+    // ********** orientation for Full area (fix) ************ //
     $(document).on("click", '#FullArea .orientation_fix .choose_orientation li a', function () {
         $('#FullArea .orientation_fix .choose_orientation li a').removeClass('active');
         $(this).addClass('active');
@@ -2143,11 +2143,11 @@ $(document).ready(function () {
             $('#frmDesignSubmit').trigger('submit');
         }
 
-    }); // ********** CHOOSE ORIENTATION for Full area (fix) ************ // 
+    }); // ********** CHOOSE ORIENTATION for Full area (fix) ************ //
 
 
 
-    // *********** Custom colors for Full area ************* // 
+    // *********** Custom colors for Full area ************* //
     $('#custom_colors1_full, #custom_colors2_full').change(function () {
         $("#area_type").val("2");
         // all buttons close on full action//
@@ -2179,7 +2179,7 @@ $(document).ready(function () {
         if ($('#brand_theme_title').val() == "") {
             $('#frmDesignSubmit').trigger('submit');
         }
-    });// Custom colors for Full area // 
+    });// Custom colors for Full area //
 
 
     $('#addQuestionFrm').on('submit', function (e) {
@@ -2787,7 +2787,7 @@ $(document).ready(function () {
     });
 
 
-    // ******** move colors custom color1 for top area *********** // 
+    // ******** move colors custom color1 for top area *********** //
     var greadentColor1 = $('#custom_colors1').val();
     var greadentColor1_bottom = $('#custom_colors1_bottom').val();
     var greadentColor1_full = $('#custom_colors1_full').val();
@@ -2855,7 +2855,7 @@ $(document).ready(function () {
             $('.headerbg').css('background-image', 'linear-gradient(45deg, ' + color.toHexString() + ' 1%, ' + $('#custom_colors2').val() + ')');
             //}
         }
-    }); // move colors custom color1 for top area // 
+    }); // move colors custom color1 for top area //
 
 
 
@@ -2863,7 +2863,7 @@ $(document).ready(function () {
 
 
 
-    // *********** move colors custom color1 for Full area ************** // 
+    // *********** move colors custom color1 for Full area ************** //
 
     $("#FullArea .colorpicker1").spectrum({
         change: function (color) {
@@ -2936,11 +2936,11 @@ $(document).ready(function () {
 
             //}
         }
-    }); // move colors custom color1 for Full area // 
+    }); // move colors custom color1 for Full area //
 
 
 
-    // ************** move colors custom color2 for Top area ************ // 
+    // ************** move colors custom color2 for Top area ************ //
     $("#TopArea .colorpicker2").spectrum({
         change: function (color) {
             $("#area_type").val("1");
@@ -3001,12 +3001,12 @@ $(document).ready(function () {
             $('.headerbg').css('background-image', 'linear-gradient(45deg, ' + greadentColor1 + ' 1%, ' + color.toHexString() + ')');
             //}
         }
-    });  // move colors custom color2 for Top area // 
+    });  // move colors custom color2 for Top area //
 
 
 
 
-    // *********** move colors custom color2 for Full area ************** // 
+    // *********** move colors custom color2 for Full area ************** //
     $("#FullArea .colorpicker2").spectrum({
         change: function (color) {
             $("#area_type").val("2");
@@ -3056,10 +3056,10 @@ $(document).ready(function () {
             $('.Parent').css('background-image', 'linear-gradient(45deg, ' + color.toHexString() + ' 1%, ' + $('#custom_colors1_full').val() + ')');
             //}
         }
-    });   // move colors custom color2 for Full area // 
+    });   // move colors custom color2 for Full area //
 
 
-    // *********** solidcolorpicker for Top area ************** // 
+    // *********** solidcolorpicker for Top area ************** //
     $("#TopArea .solidcolorpicker").spectrum({
         change: function (color) {
             $("#area_type").val("1");
@@ -3123,11 +3123,11 @@ $(document).ready(function () {
             $('.headerbg').css('background', color.toHexString());
             //}
         }
-    });  // solidcolorpicker for Top area // 
+    });  // solidcolorpicker for Top area //
 
 
 
-    // ********* solidcolorpicker for Full area **************8 // 
+    // ********* solidcolorpicker for Full area **************8 //
     $("#FullArea .solidcolorpicker").spectrum({
         change: function (color) {
             $("#area_type").val("2");
@@ -3173,7 +3173,7 @@ $(document).ready(function () {
             $('.Parent').css('background', color.toHexString());
             //}
         }
-    });  // solidcolorpicker for Full area // 
+    });  // solidcolorpicker for Full area //
 
 
 });
@@ -3187,6 +3187,6 @@ $(document).on('change', '.campaignSelectAll', function () {
         $('.changeAction').prop('checked', false);
     }
 });
-</script> 
+</script>
 
 @endsection
