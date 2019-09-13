@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -67,7 +67,7 @@ $newOpen = $newClick = 0;
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -186,7 +186,7 @@ $newOpen = $newClick = 0;
                 </div>
 
                 @if (strtolower($campaignType) == 'email')
-                    <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="Email"><i class="icon-plus3"></i> &nbsp; Email Broadcast</button> 
+                    <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="Email"><i class="icon-plus3"></i> &nbsp; Email Broadcast</button>
                 @endif
                 @if (strtolower($campaignType) == 'sms')
                     <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="SMS"><i class="icon-plus3"></i> &nbsp; SMS Broadcast</button>
@@ -196,7 +196,7 @@ $newOpen = $newClick = 0;
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
     @if (!empty($oBroadcast))
-        <div class="tab-content"> 
+        <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
@@ -293,7 +293,7 @@ $newOpen = $newClick = 0;
                                                         $totalSentGraph = ceil($totalSentGraph);
                                                     }
                                                 } else {
-                                                    
+
                                                     if ($broadCastData->sending_method == 'split') {
                                                         $aStatsSms = $mBroadcast->getBroadcasstTwilioStats('broadcast', $broadCastData->broadcast_id, '', 'split');
                                                     } else {
@@ -368,14 +368,14 @@ $newOpen = $newClick = 0;
                                                             </div>
                                                             <div class="media-left">
                                                                 <div data-toggle="tooltip" title="{{ $delivered }} sent out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
-                                                                    @if ($totalSentGraph > 0)                                                                       
+                                                                    @if ($totalSentGraph > 0)
                                                                         <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms' }}/{{ $broadCastData->broadcast_id }}?type=delivered" class="text-default text-semibold">{{ $delivered }}</a>
                                                                     @else
                                                                         <a href="javascript:void(0);" class="text-default text-semibold">{{ $delivered }}</a>
                                                                     @endif
-                                                                    @if ($newOpen > 0)  
+                                                                    @if ($newOpen > 0)
                                                                         <span style="color:#FF0000;"> ({{ $newOpen }} new)</span>
-                                                                    @endif  
+                                                                    @endif
 
                                                                 </div>
                                                             </div>
@@ -407,7 +407,7 @@ $newOpen = $newClick = 0;
                                                                     @endif
                                                                     @if ($newOpen > 0)
                                                                         <span style="color:#FF0000;"> ({{ $newOpen }} new)</span>
-                                                                    @endif    
+                                                                    @endif
 
                                                                 </div>
                                                             </div>
@@ -432,14 +432,14 @@ $newOpen = $newClick = 0;
                                                             </div>
                                                             <div class="media-left">
                                                                 <div data-toggle="tooltip" title="{{ $totalSent }} sent out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
-                                                                    @f ($totalSentGraph > 0)                                                                        
+                                                                    @if ($totalSentGraph > 0)
                                                                         <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms' }}/{{ $broadCastData->broadcast_id }}?type=sent" class="text-default text-semibold">{{ $totalSent }}</a>
                                                                     @else
                                                                         <a href="javascript:void(0);" class="text-default text-semibold">{{ $delivered }}</a>
                                                                     @endif
-                                                                    @if ($newSent > 0)  
+                                                                    @if ($newSent > 0)
                                                                         <span style="color:#FF0000;"> ({{ $newSent }} new)</span>
-                                                                    @endif   
+                                                                    @endif
 
                                                                 </div>
                                                             </div>
@@ -463,14 +463,14 @@ $newOpen = $newClick = 0;
                                                             </div>
                                                             <div class="media-left">
                                                                 <div data-toggle="tooltip" title="{{ $delivered }} delivered out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
-                                                                    @if ($delivered > 0) 
+                                                                    @if ($delivered > 0)
                                                                         <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms' }}/{{ $broadCastData->broadcast_id }}?type=delivered" class="text-default text-semibold">{{ $delivered }}</a>
                                                                     @else
                                                                         <a href="javascript:void(0);" class="text-default text-semibold">{{ $delivered }}</a>
                                                                     @endif
-                                                                    @if ($newDelivered > 0)   
+                                                                    @if ($newDelivered > 0)
                                                                         <span style="color:#FF0000;"> ({{ $newDelivered }} new)</span>
-                                                                    @endif   
+                                                                    @endif
 
                                                                 </div>
                                                             </div>
@@ -496,14 +496,14 @@ $newOpen = $newClick = 0;
                                                             </div>
                                                             <div class="media-left">
                                                                 <div data-toggle="tooltip" title="{{ $click }} click out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
-                                                                    @if ($click > 0)                                                                        
+                                                                    @if ($click > 0)
                                                                         <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms'}}/{{ $broadCastData->broadcast_id }}?type=click" class="text-default text-semibold">{{ $click }}</a>
                                                                     @else
                                                                         <a href="javascript:void(0);" class="text-default text-semibold">{{ $click }}</a>
                                                                     @endif
-                                                                    @if ($newClick > 0)    
+                                                                    @if ($newClick > 0)
                                                                         <span style="color:#FF0000;"> ({{ $newClick }} new)</span>
-                                                                    @endif   
+                                                                    @endif
 
                                                                 </div>
                                                             </div>
@@ -527,14 +527,14 @@ $newOpen = $newClick = 0;
                                                             </div>
                                                             <div class="media-left">
                                                                 <div data-toggle="tooltip" title="{{ $queued }} click out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
-                                                                    @if ($queued > 0) 
+                                                                    @if ($queued > 0)
                                                                         <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms' }}/{{ $broadCastData->broadcast_id }}?type=queued" class="text-default text-semibold">{{ $queued }}</a>
                                                                     @else
                                                                         <a href="javascript:void(0);" class="text-default text-semibold">{{ $click }}</a>
                                                                     @endif
-                                                                    @if ($newQueue > 0)  
+                                                                    @if ($newQueue > 0)
                                                                         <span style="color:#FF0000;"> ({{ $newQueue }} new)</span>
-                                                                    @endif  
+                                                                    @endif
 
                                                                 </div>
                                                             </div>
@@ -544,28 +544,28 @@ $newOpen = $newClick = 0;
                                                     <td class="text-center">
                                                         <a href="{{ base_url() }}admin/broadcast/report/{{ $broadCastData->broadcast_id }}">
                                                             {{ ($broadCastData->sending_method == 'split') ? 'Split(' . $totalVariations . ' Variations)' : 'Normal' }}
-                                                        </a>    
+                                                        </a>
                                                     </td>
                                                     <td class="text-right"><div class="media-left text-right pull-right">
                                                             <div class=""><a href="#" class="text-default text-semibold">{{ dataFormat($broadCastData->created) }} <span class="txt_grey">{{ dataFormatHours($broadCastData->created) }}</span></a> </div>
                                                         </div>
                                                     </td>
-                                                        
+
 
 
 
                                                     <td class="">
                                                         @if ($broadCastData->bc_status == 'active')
                                                             @if ($bExpired == true)
-                                                                <i class="icon-primitive-dot txt_grey3 fsize16"></i> 
+                                                                <i class="icon-primitive-dot txt_grey3 fsize16"></i>
                                                             @else
-                                                                <i class="icon-primitive-dot txt_green fsize16"></i> 
+                                                                <i class="icon-primitive-dot txt_green fsize16"></i>
                                                             @endif
                                                         @else
                                                             <i class="icon-primitive-dot txt_red fsize16"></i>
                                                         @endif
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                                            @if ($broadCastData->bc_status == 'active') 
+                                                            @if ($broadCastData->bc_status == 'active')
                                                                 @if($bExpired == true)
                                                                     {{ 'Expired' }}
                                                                 @else
@@ -599,9 +599,9 @@ $newOpen = $newClick = 0;
                                                     </td>
 
                                                     <td style="display:none;">
-                                                        @if ($broadCastData->bc_status == 'archive') 
+                                                        @if ($broadCastData->bc_status == 'archive')
                                                             {{ 'archive' }}
-                                                        @elseif ($broadCastData->bc_status == 'draft') 
+                                                        @elseif ($broadCastData->bc_status == 'draft')
                                                             {{ 'draft' }}
                                                         @else
                                                             @if ($bExpired == true)
@@ -630,7 +630,7 @@ $newOpen = $newClick = 0;
 
     @else
 
-        <div class="tab-content"> 
+        <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
@@ -702,7 +702,7 @@ $newOpen = $newClick = 0;
             </div>
         </div>
 
-    @endif 
+    @endif
 
 </div>
 
@@ -791,7 +791,7 @@ $newOpen = $newClick = 0;
 </div>
 
 
-<!-- /Add Broadcast -->		
+<!-- /Add Broadcast -->
 
 <!-- Update Broadcast Modal-->
 <div id="updateBroadcast" class="modal fade">
@@ -823,7 +823,7 @@ $newOpen = $newClick = 0;
         </div>
     </div>
 </div>
-<!-- /Add Broadcast -->	
+<!-- /Add Broadcast -->
 <script>
 
     $(document).ready(function () {
@@ -1179,7 +1179,7 @@ $newOpen = $newClick = 0;
                     success: function (data) {
                         if (data.status == 'success') {
                             $('.overlaynew').hide();
-                            window.location.href = "{{ base_url('admin/broadcast/edit/') }}' + broadcastId;
+                            window.location.href = "{{ base_url('admin/broadcast/edit/') }}" + broadcastId;
                         } else {
                             $('.overlaynew').hide();
                             alertMessage('Error: Some thing wrong!');

@@ -191,7 +191,7 @@
 
 
                                         <h3>{{ $username }}</h3>
-                                        <p class="text-size-small text-muted mb0">{{ $state != '' ? ucfirst($state) . ' ,' : displayNoData().' ,' }} {{ strtoupper($country) }}</p>
+                                        <p class="text-size-small text-muted mb0">{!! $state != '' ? ucfirst($state) . ' ,' : displayNoData().' ,' !!} {{ strtoupper($country) }}</p>
                                     </div>
 
 
@@ -202,7 +202,7 @@
                                     <div class="interactions p25">
                                         <ul>
                                             <li>
-                                                <i class="fa fa-envelope"></i><strong>{{ $email != '' ? $email : displayNoData() }}</strong>
+                                                <i class="fa fa-envelope"></i><strong>{!! $email != '' ? $email : displayNoData() !!}</strong>
                                             </li>
                                             <li>
                                                 <i class="fa fa-phone"></i><strong>{!! $mobile != '' ? mobileNoFormat($mobile) : displayNoData() !!}</strong>
@@ -337,7 +337,9 @@
                                         }
                                     }
                                 } else {
-                                    {!! displayNoData() !}}
+                                @endphp
+                                    {!! displayNoData() !!}
+                                @php
                                 }
                                         @endphp
                                     </div>
@@ -1601,8 +1603,13 @@
 
         });
 
-        document.getElementById("People").classList.add("active");
-        document.getElementById("Peoplelist").classList.add("dblock");
+        if (document.getElementById("People") != null) {
+            document.getElementById("People").classList.add("active");
+        }
+
+        if (document.getElementById("Peoplelist") != null) {
+            document.getElementById("Peoplelist").classList.add("dblock");
+        }
 
 
     </script>

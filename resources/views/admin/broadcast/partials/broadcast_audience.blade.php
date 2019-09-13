@@ -74,7 +74,7 @@
                 </div>
                 <div class="media-left media-middle" class="viewContactSmartPopup"
                      data-modulesubscriberid="{{ $oContact->id }}"
-                     data-modulename="{{ $moduleName }}"> {{ @showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname) }} </div>
+                     data-modulename="{{ $moduleName }}"> {!! @showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname) !!} </div>
                 <div class="media-left" class="viewContactSmartPopup" data-modulesubscriberid="{{ $oContact->id }}"
                      data-modulename="{{ $moduleName }}">
                     <div class="pt-5"><a href="javascript:void(0);"
@@ -97,7 +97,7 @@
                 data-modulename="{{ $moduleName }}">
                 <div class="media-left">
                     <div class="pt-5"><span
-                            class="text-default text-semibold dark">{{ $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oContact->phone) }}</span>
+                            class="text-default text-semibold dark">{!! $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oContact->phone) !!}</span>
                     </div>
 
                 </div>
