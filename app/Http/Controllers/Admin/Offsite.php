@@ -19,7 +19,7 @@ class Offsite extends Controller
     {
 
         //Create instance of OffsiteModel to get its method and properties
-        $mOffsite =  new OffsiteModel();
+        $mOffsite = new OffsiteModel();
 
         $offstepdata = $mOffsite->getAllOffsite();
 
@@ -115,15 +115,15 @@ class Offsite extends Controller
     public function add_website(Request $request)
     {
         //Create instance of OffsiteModel to get its method and properties
-        $mOffsite =  new OffsiteModel();
+        $mOffsite = new OffsiteModel();
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        $config['upload_path'] = "./uploads";
+        /*$config['upload_path'] = "./uploads";
         $config['allowed_types'] = 'gif|jpg|png|jpeg';
         $config['encrypt_name'] = TRUE;
-        $this->load->library('upload', $config);
+        $this->load->library('upload', $config);*/
 
         if (!empty($request)) {
 
@@ -134,14 +134,14 @@ class Offsite extends Controller
             $siteCategories = serialize($request->siteCategories);
             $brandboostID = $request->brandboostID;
 
-            if ($this->upload->do_upload("offsiteimage")) {
+            if (!empty($request->offsiteimage)) {
+                $path = $request->offsiteimage->store('uploads');
 
-                $data = array('upload_data' => $this->upload->data());
-                $file_name = $data['upload_data']['file_name'];
+                $file_name = $request->offsiteimage->hashName();
 
                 $aData = array(
                     'name' => $offsitename,
-                    'description' => $description,
+                    'description' => ($description) ? $description : 'description goes here',
                     'website_url' => $websiteURL,
                     'site_categories' => $siteCategories,
                     'image' => $file_name,
@@ -150,10 +150,9 @@ class Offsite extends Controller
                 );
 
             } else {
-
                 $aData = array(
                     'name' => $offsitename,
-                    'description' => $description,
+                    'description' => ($description) ? $description : 'description goes here',
                     'website_url' => $websiteURL,
                     'site_categories' => $siteCategories,
                     'user_id' => $userID,
@@ -161,29 +160,6 @@ class Offsite extends Controller
                 );
             }
 
-            /*if (!empty($file_name)) {
-
-                $aData = array(
-                    'name' => $offsitename,
-                    'description' => $description,
-                    'website_url' => $websiteURL,
-                    'site_categories' => $siteCategories,
-                    'image' => $file_name,
-                    'user_id' => $userID,
-                    'created' => date("Y-m-d H:i:s")
-                );
-            } else {
-
-                $aData = array(
-                    'name' => $offsitename,
-                    'description' => $description,
-                    'website_url' => $websiteURL,
-                    'site_categories' => $siteCategories,
-                    'user_id' => $userID,
-                    'created' => date("Y-m-d H:i:s")
-                );
-
-            }*/
 
             $result = $mOffsite->addOffsite($aData);
             if ($result) {
@@ -208,7 +184,7 @@ class Offsite extends Controller
     public function delete_customsource(Request $request)
     {
         //Create instance of OffsiteModel to get its method and properties
-        $mOffsite =  new OffsiteModel();
+        $mOffsite = new OffsiteModel();
 
 
         $CustomSourceID = $request->CustomSourceID;
@@ -246,7 +222,7 @@ class Offsite extends Controller
     public function add_offlist(Request $request)
     {
         //Create instance of OffsiteModel to get its method and properties
-        $mOffsite =  new OffsiteModel();
+        $mOffsite = new OffsiteModel();
         $response = array();
 
         if (!empty($request)) {
@@ -312,7 +288,7 @@ class Offsite extends Controller
     public function get_website(Request $request)
     {
         //Create instance of OffsiteModel to get its method and properties
-        $mOffsite =  new OffsiteModel();
+        $mOffsite = new OffsiteModel();
         $response = array();
         $response['status'] = 'error';
         $post = array();
@@ -338,7 +314,7 @@ class Offsite extends Controller
     public function update_website(Request $request)
     {
         //Create instance of OffsiteModel to get its method and properties
-        $mOffsite =  new OffsiteModel();
+        $mOffsite = new OffsiteModel();
         $response = array();
         $config['upload_path'] = "./uploads";
         $config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -422,7 +398,7 @@ class Offsite extends Controller
     public function delete_website(Request $request)
     {
         //Create instance of OffsiteModel to get its method and properties
-        $mOffsite =  new OffsiteModel();
+        $mOffsite = new OffsiteModel();
 
         $response = array();
 
