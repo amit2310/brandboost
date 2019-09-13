@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-	
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +7,7 @@
 		<title>BrandBoost::Admin</title>
 		<meta property="og:title" content=""/>
 		<meta property="og:url" content="" />
-		<meta property="og:image" content="https://s3-us-west-2.amazonaws.com/brandboost.io/<?php //echo $oCampaign->logo_img; ?>" />
+		<meta property="og:image" content="https://s3-us-west-2.amazonaws.com/brandboost.io/" />
 		<meta property="og:description" content="" />
 		<meta property="og:site_name" content="Branboost" />
 		<!-- Global stylesheets -->
@@ -2190,7 +2189,6 @@
 				}
 			});
 			
-			
 			//Display Ratings etc
 			var ratingValue = 0;
 			$('.starRate i').on('mouseover', function () {
@@ -2229,7 +2227,6 @@
 				ratingValue = $(this).attr("data-value");
 				$('#' + valContainer).val(ratingValue);
 			});
-			
 		});
 	</script>
 </body>
