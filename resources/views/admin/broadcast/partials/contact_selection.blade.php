@@ -17,14 +17,14 @@ if (!empty($oBroadcastSubscriber)) {
     }
 }
 @endphp
-<div class="row contactSection" 
-    @if (empty($activeTab) && empty($oBroadcast->audience_type)) 
+<div class="row contactSection"
+    @if (empty($activeTab) && empty($oBroadcast->audience_type))
         {!! 'style="display:none;"' !!}
     @endif
     >
     <div class="col-md-12">
         <div class="panel panel-flat">
-            <div class="panel-heading pt0 pb0"> 
+            <div class="panel-heading pt0 pb0">
                 <div class="row">
                     <div class="col-md-6 brig h56"><h6 class="panel-title mt17"><img class="hicon" src="{{ base_url() }}assets/images/icon_import.png"/> Add Contacts</h6></div>
                     <div class="col-md-6 pl20 h56"><h6 class="panel-title mt17"><img class="hicon" src="{{ base_url() }}assets/images/icon_cross.png"/> Exclude Contacts</h6></div>
@@ -35,17 +35,17 @@ if (!empty($oBroadcastSubscriber)) {
             <div class="panel-body p0 bkg_white">
                 <div class="row">
                     <div class="col-md-6 brig"><div class="p20 taggroup" id="importPropertyButtons">
-                            {{ $sImportButtons
+                            {!! $sImportButtons !!}
                         </div></div>
                     <div class="col-md-6"><div class="p20 pl10 taggroup" id="excludePropertyButtons">
-                            {{ $sExcludButtons }}
+                            {!! $sExcludButtons !!}
                         </div></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row contactSection" id="contactSection" 
+<div class="row contactSection" id="contactSection"
     @if (empty($activeTab) && empty($oBroadcast->audience_type))
         {!! 'style="display:none;"' !!}
     @endif>
@@ -53,7 +53,7 @@ if (!empty($oBroadcastSubscriber)) {
         <div class="panel panel-flat">
             <div class="panel-heading">
                 <span class="pull-left">
-                    <h6 class="panel-title"><span id="totalBroadcastAudience">{{ $iActiveCount</span> Contacts</h6>
+                    <h6 class="panel-title"><span id="totalBroadcastAudience">{{ $iActiveCount }}</span> Contacts</h6>
                 </span>
 
                 <div class="heading-elements">
@@ -70,7 +70,7 @@ if (!empty($oBroadcastSubscriber)) {
                         <a href="javascript:void(0);"><i class=""><img src="{{ base_url() }}assets/images/icon_download.png"></i></a>
                         <a href="javascript:void(0);"><i class=""><img src="{{ base_url() }}assets/images/icon_upload.png"></i></a>
                         <a href="javascript:void(0);" class="editDataListContact"><i class="icon-pencil"></i></a>
-                        <a href="javascript:void(0);" style="display: none;" class="custom_action_box_con deleteBulkBoradcastAudience" broadcast_id="{{ $oBroadcast->broadcast_id }}"><i class="icon-trash position-left"></i></a> 
+                        <a href="javascript:void(0);" style="display: none;" class="custom_action_box_con deleteBulkBoradcastAudience" broadcast_id="{{ $oBroadcast->broadcast_id }}"><i class="icon-trash position-left"></i></a>
                     </div>
                 </div>
             </div>

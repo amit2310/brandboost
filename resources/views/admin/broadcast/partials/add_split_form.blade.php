@@ -14,7 +14,7 @@
             if($k == 1){
                 $bDefault=true;
                 foreach($oTemplates as $oTemplate){
-                    
+
                     if($oVariation->template_source == $oTemplate->id){
                         $aDefaultVariationTemplate = $oTemplate;
                         break;
@@ -43,7 +43,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Choose Template</label>
-                                <select class="form-control h52 updateVariation" name="variation_template" variation_id="{{ $oVariation->id }}" placeholder="" required="required" 
+                                <select class="form-control h52 updateVariation" name="variation_template" variation_id="{{ $oVariation->id }}" placeholder="" required="required"
                                     @if($bDefault)
                                     {{ 'disabled="disabled"' }}
                                     @endif
@@ -55,7 +55,7 @@
                                     @if (!empty($oUserTemplates))
                                         @foreach ($oUserTemplates as $oTemplate)
                                             @if($oTemplate->user_id == $userData->id)
-                                                <option value="{{ $oTemplate->id }}" @if($oVariation->template_source == $oTemplate->id) {{ 'selected="selected"' }} >
+                                                <option value="{{ $oTemplate->id }}" @if($oVariation->template_source == $oTemplate->id) {{ 'selected="selected"' }} @endif >
                                                     {{ $oTemplate->template_name }}
                                                 </option>
                                             @endif
@@ -81,8 +81,8 @@
     }
     @endphp
 
-    
-</div>    
+
+</div>
 
 <div class="row mt20">
     <div class="col-md-12 text-center">

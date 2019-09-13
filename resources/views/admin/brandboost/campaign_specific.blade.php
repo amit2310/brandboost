@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -7,7 +7,7 @@
 @section('contents')
 
 @php
-list($canRead, $canWrite) = fetchPermissions('Onsite Campaign')
+list($canRead, $canWrite) = fetchPermissions('Onsite Campaign');
 $iActiveCount = $iArchiveCount = 0;
 
 if (!empty($aBrandbosts)) {
@@ -63,7 +63,7 @@ if (!empty($aBrandbosts)) {
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -185,12 +185,12 @@ if (!empty($aBrandbosts)) {
 
                 @if ($user_role != 1)
                     @if ($canWrite)
-                        <button 
+                        <button
                             @if ($bActiveSubsription == false)
-                                title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription" 
-                            @else 
-                                id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20" 
-                            @endif 
+                                title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription"
+                            @else
+                                id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20"
+                            @endif
                             type="button" >
                             <i class="icon-plus3"></i> Add On Site Review Campaign
                         </button>
@@ -203,7 +203,7 @@ if (!empty($aBrandbosts)) {
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
 
     @if (!empty($aBrandbosts))
-        <div class="tab-content"> 
+        <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
@@ -226,7 +226,7 @@ if (!empty($aBrandbosts)) {
                                         <a href="javascript:void(0);" class="editDataList"><i class="icon-pencil"></i></a>
                                         <a href="javascript:void(0);" style="display: none;" id="deleteButtonBrandboostOnline" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                         <a href="javascript:void(0);" style="display: none;" id="archiveButtonBrandboostOnline" class="custom_action_box"><i class="icon-gear position-left"></i></a>
-                                    </div>				
+                                    </div>
                                 </div>
 
                             </div>
@@ -295,7 +295,7 @@ if (!empty($aBrandbosts)) {
                                             } else {
                                                 $imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
                                             }
-                                            
+
                                             $reviewRequests = \App\Models\Admin\BrandboostModel::getReviewRequest($data->id, '');
                                             $getSendRequest = count($reviewRequests);
                                             $getSendRequestSms = getSendRequest($data->id, 'sms');
@@ -368,7 +368,7 @@ if (!empty($aBrandbosts)) {
                                                 <td style="display: none;">
                                                     {{ ratingView($revRA) }}
                                                 </td>
-                                                <td style="display: none;">														
+                                                <td style="display: none;">
                                                     <div class="media-left">
                                                         <div class=""><span class="text-default text-semibold">{{ date('F dS Y', strtotime($data->created)) }}</span></div>
                                                         <div class="text-muted text-size-small">{{ date('h:i A', strtotime($data->created)) }}</div>
@@ -377,7 +377,7 @@ if (!empty($aBrandbosts)) {
 
                                                 <td style="display: none;">
                                                     <div data-toggle="tooltip" title="Total contacts {{ sizeof($allSubscribers) }}" data-placement="top">
-                                                        <a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?t=Clients') }}"  class="text-default text-semibold">{{ sizeof($allSubscribers) }} 
+                                                        <a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?t=Clients') }}"  class="text-default text-semibold">{{ sizeof($allSubscribers) }}
                                                             @if ($newContacts > 0)
                                                             {!! '<span style="color:#FF0000;"> (' . $newContacts . ' new)</span>' !!}
                                                             @endif
@@ -407,10 +407,10 @@ if (!empty($aBrandbosts)) {
                                                             @else
                                                                 <a href="javascript:void(0);" class="text-default text-semibold">{{ $positiveRating }}</a>
                                                             @endif
-                                                            
-                                                            @if ($newPositive > 0) 
-                                                                {!! '<span style="color:#FF0000;"> (' . $newPositive . ' new)</span>' !!}    
-                                                            @endif    
+
+                                                            @if ($newPositive > 0)
+                                                                {!! '<span style="color:#FF0000;"> (' . $newPositive . ' new)</span>' !!}
+                                                            @endif
 
                                                         </div>
                                                     </div>
@@ -444,8 +444,8 @@ if (!empty($aBrandbosts)) {
                                                                     {{ $neturalRating }}
                                                                 </a>
                                                             @endif
-                                                            @if ($newNeutral > 0) 
-                                                                {!! '<span style="color:#FF0000;"> (' . $newNeutral . ' new)</span>' !!}    
+                                                            @if ($newNeutral > 0)
+                                                                {!! '<span style="color:#FF0000;"> (' . $newNeutral . ' new)</span>' !!}
                                                             @endif
                                                         </div>
                                                     </div>
@@ -470,17 +470,17 @@ if (!empty($aBrandbosts)) {
                                                     </div>
                                                     <div class="media-left">
                                                         <div data-toggle="tooltip" title="{{ $negativeRating }} out of {{ $getResCount }} Response" data-placement="top">
-                                                            @if ($negativeRating > 0) 
+                                                            @if ($negativeRating > 0)
                                                             <a  href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?cate=negative') }}" class="text-default text-semibold">
                                                                     {{ $negativeRating }}</a>
                                                             @else
                                                             <a href="javascript:void(0);" class="text-default text-semibold">{{ $negativeRating }}</a>
                                                             @endif
-                                                                @if ($newNegative > 0)  
-                                                                    {!! '<span style="color:#FF0000;"> (' . $newNegative . ' new)</span>' !!}    
-                                                                @endif   
-                                                        </div> 
-                                                    </div> 
+                                                                @if ($newNegative > 0)
+                                                                    {!! '<span style="color:#FF0000;"> (' . $newNegative . ' new)</span>' !!}
+                                                                @endif
+                                                        </div>
+                                                    </div>
 
                                                 </td>
                                                 <td style="display: none;">
@@ -499,12 +499,12 @@ if (!empty($aBrandbosts)) {
                                                     <div class="tdropdown">
                                                         @if ($data->status == 0)
                                                             <i class="icon-primitive-dot txt_red fsize16"></i>
-                                                        @elseif ($data->status == 2) 
+                                                        @elseif ($data->status == 2)
                                                             <i class="icon-primitive-dot txt_grey fsize16"></i>
-                                                        @elseif ($data->status == 3) 
-                                                            <i class="icon-primitive-dot txt_red fsize16"></i> 
+                                                        @elseif ($data->status == 3)
+                                                            <i class="icon-primitive-dot txt_red fsize16"></i>
                                                         @else
-                                                            <i class="icon-primitive-dot txt_green fsize16"></i> 
+                                                            <i class="icon-primitive-dot txt_green fsize16"></i>
                                                         @endif
                                                         <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
                                                             @if ($data->status == 0)
@@ -531,14 +531,14 @@ if (!empty($aBrandbosts)) {
                                                 <td style="display: none;">{{ $neturalRating > 0 ? 'neutral' : '' }}</td>
                                                 <td style="display: none;">{{ $negativeRating > 0 ? 'negative' : '' }}</td>
                                                 <td style="display: none;">
-                                                    {{ date('d M y', strtotime($data->created)) === date('d M y') ? 'today' : '' }}                                                    
+                                                    {{ date('d M y', strtotime($data->created)) === date('d M y') ? 'today' : '' }}
                                                 </td>
                                                 <td class="text-center" style="display: none;">
 
                                                     @if ($user_role != '2')
                                                         @if ($currentUserId == $user_id || $user_role == 1)
 
-                                                            @if ($data->status == 1 or $data->status == 0 or $data->status == 2) 
+                                                            @if ($data->status == 1 or $data->status == 0 or $data->status == 2)
                                                                 <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                                                     <ul class="dropdown-menu dropdown-menu-right more_act">
 
@@ -555,7 +555,7 @@ if (!empty($aBrandbosts)) {
                                                                             <li><a href="javascript:void(0);" class="archiveCampaign" brandID="{{ $data->id }}"><i class="icon-file-text2"></i> Move to Archive</a></li>
                                                                         @endif
                                                                         <li><a href="{{ base_url('admin/brandboost/stats/onsite/' . $data->id . '?t=contact') }}" target="_blank"><i class="icon-gear"></i> Contacts</a></li>
-                                                                        <li>@php $companyName = strtolower(str_replace(' ', '-', $company_name)) @endphp<a href="{{ base_url('for/' . $companyName . '/') }}{{ strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id }}" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li> 
+                                                                        <li>@php $companyName = strtolower(str_replace(' ', '-', $company_name)) @endphp<a href="{{ base_url('for/' . $companyName . '/') }}{{ strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id }}" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li>
                                                                         <li><a href="{{ base_url('admin/brandboost/reviews/' . $data->id) }}" target="_blank"><i class="icon-menu"></i>Reviews</a></li> <li><a href="{{ base_url('admin/questions/view/' . $data->id) }}" target="_blank"><i class="icon-menu"></i>Question</a></li>
                                                                     </ul>
                                                                 </div>
@@ -570,7 +570,7 @@ if (!empty($aBrandbosts)) {
                                                         @else
                                                             {{ '-' }}
                                                         @endif
-                                                    @endif														
+                                                    @endif
                                                 </td>
                                                 <td><a class="txt_dark bbot" href="{{ base_url('for/' . $companyName . '/') }}{{ strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id }}">{{ base_url('for/' . $companyName . '/') }}{{ strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id }}</a></td>
                                             </tr>
@@ -606,10 +606,10 @@ if (!empty($aBrandbosts)) {
                                 <div class="heading_links pull-left">
                                     <a class="top_links btn btn-xs btn_white_table ml20 top_links_all">All</a>
                                     <a class="top_links top_links_Status" getValue="1" style="cursor: pointer;">Active</a>
-                                    <a class="top_links top_links_Status" getValue="0" style="cursor: pointer;">Inactive</a> 
-                                    <a class="top_links top_links_positive" getValue="positive" style="cursor: pointer;">Positive</a> 
-                                    <a class="top_links top_links_neutral" getValue="neutral" style="cursor: pointer;">Neutral</a> 
-                                    <a class="top_links top_links_negative" getValue="negative" style="cursor: pointer;">Negative</a> 
+                                    <a class="top_links top_links_Status" getValue="0" style="cursor: pointer;">Inactive</a>
+                                    <a class="top_links top_links_positive" getValue="positive" style="cursor: pointer;">Positive</a>
+                                    <a class="top_links top_links_neutral" getValue="neutral" style="cursor: pointer;">Neutral</a>
+                                    <a class="top_links top_links_negative" getValue="negative" style="cursor: pointer;">Negative</a>
                                     <a class="top_links top_links_added_today"  getValue="today" style="cursor: pointer;">Added Today</a>
                                 </div>
                                 <div class="heading-elements">
@@ -624,7 +624,7 @@ if (!empty($aBrandbosts)) {
                                         <a href="javascript:void(0);" class="editDataList"><i class="icon-pencil"></i></a>
                                         <button id="deleteButtonBrandboostOnline" class="btn btn-xs custom_action_box"><i class="icon-trash position-left"></i> Delete</button>
                                         <button id="archiveButtonBrandboostOnline" class="btn btn-xs custom_action_box"><i class="icon-gear position-left"></i> Archive</button>
-                                    </div>              
+                                    </div>
                                 </div>
 
                             </div>
@@ -662,12 +662,12 @@ if (!empty($aBrandbosts)) {
                                                     </h5>
 
                                                     @if ($canWrite)
-                                                        <button 
+                                                        <button
                                                             @if ($bActiveSubsription == false)
-                                                                title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40" 
-                                                            @else 
-                                                                id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" 
-                                                            @endif 
+                                                                title="No Active Subscription" class="btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40"
+                                                            @else
+                                                                id="addBrandboost" class="btn bl_cust_btn btn-default dark_btn ml20 mb40"
+                                                            @endif
                                                             type="button" >
                                                             <i class="icon-plus3"></i> Add On Site Review Campaign
                                                         </button>
@@ -692,7 +692,7 @@ if (!empty($aBrandbosts)) {
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
 
     @endif
