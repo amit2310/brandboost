@@ -1,29 +1,23 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-if (!empty($oCampaign)) {
-    //permissions
-    $bAllowComments = ($oCampaign->allow_comments == 1) ? true : false;
-    $bAllowVideoComments = ($oCampaign->allow_video_reviews == 1) ? true : false;
-    $bAllowHelpful = ($oCampaign->allow_helpful_feedback == 1) ? true : false;
-    $bAllowLiveReading = ($oCampaign->allow_live_reading_review == 1) ? true : false;
-    $bAllowRatings = ($oCampaign->allow_comment_ratings == 1) ? true : false;
-    $bAllowCreatedTime = ($oCampaign->allow_review_timestamp == 1) ? true : false;
-    
-    //get other settings
-    $bgColor = $oCampaign->bg_color;
-    $txtColor = $oCampaign->text_color;
-}
-?>
+@php
+	if (!empty($oCampaign)) {
+		//permissions
+		$bAllowComments = ($oCampaign->allow_comments == 1) ? true : false;
+		$bAllowVideoComments = ($oCampaign->allow_video_reviews == 1) ? true : false;
+		$bAllowHelpful = ($oCampaign->allow_helpful_feedback == 1) ? true : false;
+		$bAllowLiveReading = ($oCampaign->allow_live_reading_review == 1) ? true : false;
+		$bAllowRatings = ($oCampaign->allow_comment_ratings == 1) ? true : false;
+		$bAllowCreatedTime = ($oCampaign->allow_review_timestamp == 1) ? true : false;
+		
+		//get other settings
+		$bgColor = $oCampaign->bg_color;
+		$txtColor = $oCampaign->text_color;
+	}
+@endphp
 <section class="top_text price">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="alert-success" style="margin-bottom:10px;">
-                    <?php echo $this->session->flashdata('success_msg'); ?>
-                </div>
-                <div class="alert-danger" style="margin-bottom:10px;">
-                    <?php echo $this->session->flashdata('error_msg'); ?>
-                </div>
+               
                 <h2><strong class="text-center">Manage My Reviews</strong></h2>
                 <br>
                 <br>
@@ -37,30 +31,32 @@ if (!empty($oCampaign)) {
                         <th style="text-align: center;">Action</th>
                                                 
                     </tr>
-                    <?php if(!empty($oMyReviews)): ?>
-                    <?php foreach($oMyReviews as $oReview): ?>
-                    <tr>
-                        <td style="text-align: center;"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/<?php echo $oReview->brand_img;?>" style="border:1px solid #ccc; padding:2px;" width="50" /></td>
-                        <td style="text-align: center;"><?php echo ucfirst($oReview->reviewtype);?></td>
-                        <td style="text-align: center;"><?php echo date("M d, Y", strtotime($oReview->review_created));?></td>
-                        <td style="text-align: left;"><?php echo ($oReview->reviewtype == 'text') ? $oReview->comment_text : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'.$oReview->comment_video;?></td>
-                        <td style="text-align: center;"><?php for($i=1; $i <= $oReview->ratings; $i++){ echo '<i class="fa fa-star"></i> '; } ?></td></td>
-                        <td style="text-align: center;">
-							<a class="editReview" reviewid="<?php echo $oReview->reviewid; ?>"><i class="fa fa-edit"></i></a> &nbsp; 
-							<a class="deleteReview" reviewid="<?php echo $oReview->reviewid; ?>"><i class="fa fa-trash"></i></a></td>
-                    </tr>
-                    <?php endforeach; ?>
-                    <?php endif; ?>
+                    @if(!empty($oMyReviews))
+						@foreach($oMyReviews as $oReview)
+							<tr>
+								<td style="text-align: center;"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $oReview->brand_img }}" style="border:1px solid #ccc; padding:2px;" width="50" /></td>
+								<td style="text-align: center;">{{ ucfirst($oReview->reviewtype) }}</td>
+								<td style="text-align: center;">{{ date("M d, Y", strtotime($oReview->review_created)) }}</td>
+								<td style="text-align: left;">{{ ($oReview->reviewtype == 'text') ? $oReview->comment_text : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/'.$oReview->comment_video }}</td>
+								<td style="text-align: center;">
+									@for($i=1; $i <= $oReview->ratings; $i++)
+										<i class="fa fa-star"></i>
+									@endfor
+								</td>
+								<td style="text-align: center;">
+									<a class="editReview" reviewid="{{ $oReview->reviewid }}"><i class="fa fa-edit"></i></a> &nbsp; 
+									<a class="deleteReview" reviewid="{{ $oReview->reviewid }}"><i class="fa fa-trash"></i></a>
+								</td>
+							</tr>
+						@endforeach
+					@endif
                 </table>
-
             </div>
             <div class="clearfix"></div>
-
         </div>
-
-
     </div>
 </section>
+
 <!-- =======================edit users popup========================= -->
 <div id="editReview" class="modal modalpopup fade" role="dialog">
 	<div class="modal-dialog">
@@ -85,39 +81,26 @@ if (!empty($oCampaign)) {
 							<div class="step_star" style="padding: 5px 0;">
 	
                             <ul id='stars'>
-
                                 <li class='star' title='Poor' data-value='1'>
-
                                     <i class='fa fa-star fa-fw' style="margin: 0;"></i>
-
                                 </li>
 
                                 <li class='star' title='Fair' data-value='2'>
-
                                     <i class='fa fa-star fa-fw' style="margin: 0;"></i>
-
                                 </li>
 
                                 <li class='star' title='Good' data-value='3'>
-
                                     <i class='fa fa-star fa-fw' style="margin: 0;"></i>
-
                                 </li>
 
                                 <li class='star' title='Excellent' data-value='4'>
-
                                     <i class='fa fa-star fa-fw' style="margin: 0;"></i>
-
                                 </li>
 
                                 <li class='star' title='WOW!!!' data-value='5'>
-
                                     <i class='fa fa-star fa-fw' style="margin: 0;"></i>
-
                                 </li>
-
                             </ul>
-
                         </div>
 
 						<input type="hidden" value="0" id="ratingValue" name="ratingValue">
@@ -143,21 +126,16 @@ $(document).ready(function(){
 
 			var reviewID = $(this).attr('reviewid');
 			$.ajax({
-				url: '<?php echo base_url('reviews/deleteReview');?>',
+				url: "{{ base_url('reviews/deleteReview') }}",
 				type: "POST",
 				data: { reviewid:reviewID },
 				dataType: "json",
 				success: function (data) {
-
 					if(data.status == 'success'){
-
 						alert('Your review has been delete successfully.');
 						setTimeout(function () {
 							window.location.href = window.location.href;
 						}, 1000);
-					
-					}else{
-					
 					}
 				}
 			});
@@ -170,12 +148,11 @@ $(document).ready(function(){
 	$(document).on('click', '.editReview', function(){
 		var reviewID = $(this).attr('reviewid');
 		$.ajax({
-			url: '<?php echo base_url('reviews/getReviewById');?>',
+			url: "{{ base_url('reviews/getReviewById') }}",
 			type: "POST",
 			data: { reviewid:reviewID },
 			dataType: "json",
 			success: function (data) {
-
 				if(data.status == 'success'){
 					var reviewData = data.result[0];
 
@@ -190,9 +167,6 @@ $(document).ready(function(){
 						}
 					});
 					$("#editReview").modal();
-				
-				}else{
-				
 				}
 			}
 		});
@@ -201,7 +175,7 @@ $(document).ready(function(){
 	$("#updateReview").submit(function () {
 		var formData = new FormData($(this)[0]);
 		$.ajax({
-			url: '<?php echo base_url('reviews/update_review');?>',
+			url: "{{ base_url('reviews/update_review') }}",
 			type: "POST",
 			data: formData,
 			contentType: false,
@@ -209,7 +183,6 @@ $(document).ready(function(){
 			processData: false,
 			dataType: "json",
 			success: function (data) {
-
 				console.log(data);
 				if(data.status == 'success'){
 					alert('Review has been update successfully.');

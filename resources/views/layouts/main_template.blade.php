@@ -1,101 +1,98 @@
 @php
+	$aUInfo = getLoggedUser();
+	userRoleAdmin($aUInfo->user_role);
+	$additionalPriceToPay="";
+	$oUpgradePlanData = array();
+	$aAnnualUpgradeData = array();
+	$oCurrentPlanData = array();
+	$billedCycle ="";
+	if ($aUInfo->id == '') {
+		Session::put('admin_redirect_url', \Request::fullUrl());
+	}
 
-$aUInfo = getLoggedUser();
-userRoleAdmin($aUInfo->user_role);
-$additionalPriceToPay="";
-$oUpgradePlanData = array();
-$aAnnualUpgradeData = array();
-$oCurrentPlanData = array();
-$billedCycle ="";
-if ($aUInfo->id == '') {
-    Session::put('admin_redirect_url', \Request::fullUrl());
-}
+	$isLoggedInTeam = Session::get("team_user_id");
+	if ($isLoggedInTeam) {
+		$aTeamInfo = App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
+		$teamMemberName = $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname;
+		$teamMemberId = $aTeamInfo->id;
+		$loginMember = $teamMemberId;
+	} else {
+		$teamMemberName = '';
+		$teamMemberId = '';
+		$loginMember = $aUInfo->id;
+	}
 
-$isLoggedInTeam = Session::get("team_user_id");
-if ($isLoggedInTeam) {
-    $aTeamInfo = App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
-    $teamMemberName = $aTeamInfo->firstname . ' ' . $aTeamInfo->lastname;
-    $teamMemberId = $aTeamInfo->id;
-    $loginMember = $teamMemberId;
-} else {
-    $teamMemberName = '';
-    $teamMemberId = '';
-    $loginMember = $aUInfo->id;
-}
+	if ($isLoggedInTeam) {
+		$aTeamInfo = \App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
+	}
 
-if ($isLoggedInTeam) {
-    $aTeamInfo = \App\Models\Admin\TeamModel::getTeamMember($isLoggedInTeam, $aUInfo->id);
-}
+	admin_account();
+	page_auth();
+	$objMembership = getAllActiveMembership();
+	if(isset($aUInfo->plan_id))
+	{
+	$loggedPlanID = $aUInfo->plan_id;
+	}
+	else
+	{
+		$loggedPlanID='';
+	}
+	$aLevelUpgrades = getMembershipLevelUpgrades($objMembership, $loggedPlanID);
 
-admin_account();
-page_auth();
-$objMembership = getAllActiveMembership();
-if(isset($aUInfo->plan_id))
-{
-$loggedPlanID = $aUInfo->plan_id;
-}
-else
-{
-    $loggedPlanID='';
-}
-$aLevelUpgrades = getMembershipLevelUpgrades($objMembership, $loggedPlanID);
+	if (!empty($aLevelUpgrades)) {
+		$oCurrentPlanData = $aLevelUpgrades['current'];
+		$oUpgradePlanData = $aLevelUpgrades['main'];
 
-if (!empty($aLevelUpgrades)) {
-    $oCurrentPlanData = $aLevelUpgrades['current'];
-    $oUpgradePlanData = $aLevelUpgrades['main'];
+		$currentSubsCycle = $oCurrentPlanData->subs_cycle;
 
-    $currentSubsCycle = $oCurrentPlanData->subs_cycle;
+		$currentPrice = $oCurrentPlanData->price;
+		$upgradePrice = $oUpgradePlanData->price;
 
-    $currentPrice = $oCurrentPlanData->price;
-    $upgradePrice = $oUpgradePlanData->price;
+		$additionalPriceToPay = ( $upgradePrice - $currentPrice );
+		$billedCycle = ($oUpgradePlanData->subs_cycle == 'yearly') ? 'year' : 'month';
 
-    $additionalPriceToPay = ( $upgradePrice - $currentPrice );
-    $billedCycle = ($oUpgradePlanData->subs_cycle == 'yearly') ? 'year' : 'month';
+		if ($oCurrentPlanData->subs_cycle == 'yearly' && $oUpgradePlanData->subs_cycle == 'yearly') {
+			$additionalPriceToPay = number_format(( $additionalPriceToPay / 12), 2);
+			$billedCycle = 'month';
+		}
 
-    if ($oCurrentPlanData->subs_cycle == 'yearly' && $oUpgradePlanData->subs_cycle == 'yearly') {
-        $additionalPriceToPay = number_format(( $additionalPriceToPay / 12), 2);
-        $billedCycle = 'month';
-    }
+		if ($oCurrentPlanData->subs_cycle == 'bi-yearly' && $oUpgradePlanData->subs_cycle == 'bi-yearly') {
+			$additionalPriceToPay = number_format(( $additionalPriceToPay / 24), 2);
+		}
 
-    if ($oCurrentPlanData->subs_cycle == 'bi-yearly' && $oUpgradePlanData->subs_cycle == 'bi-yearly') {
-        $additionalPriceToPay = number_format(( $additionalPriceToPay / 24), 2);
-    }
-
-    $aAnnualUpgradeData = getMembershipAnnualUpgrades($objMembership, $oCurrentPlanData->plan_id);
-    //pre($aAnnualUpgradeData);
-    //die;
-}
-
-
-$userRole = $aUInfo->user_role;
-$userFirstname = $aUInfo->firstname;
-$avatar = $aUInfo->avatar;
-$getAllGlobalSubscribers = getAllGlobalSubscribers($aUInfo->id);
-$oSettings = userSetting($aUInfo->id);
-if (!empty($oSettings->inactivity_length)) {
-    $inactivity_length = $oSettings->inactivity_length;
-} else {
-    $inactivity_length = 100;
-}
+		$aAnnualUpgradeData = getMembershipAnnualUpgrades($objMembership, $oCurrentPlanData->plan_id);
+		//pre($aAnnualUpgradeData);
+		//die;
+	}
 
 
-if (!empty($avatar)) {
-    $srcUserImg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $avatar;
-} else {
-    $srcUserImg = '/profile_images/avatar_image.png';
-}
+	$userRole = $aUInfo->user_role;
+	$userFirstname = $aUInfo->firstname;
+	$avatar = $aUInfo->avatar;
+	$getAllGlobalSubscribers = getAllGlobalSubscribers($aUInfo->id);
+	$oSettings = userSetting($aUInfo->id);
+	if (!empty($oSettings->inactivity_length)) {
+		$inactivity_length = $oSettings->inactivity_length;
+	} else {
+		$inactivity_length = 100;
+	}
 
-$uriSegment = \Request::segment(3);
 
-$offsite_active = '';
-$onsite_active = '';
-if ($uriSegment == 'offsite') {
-    $offsite_active = 'active';
-} else if ($uriSegment == 'onsite') {
-    $onsite_active = 'active';
-} else {
-    
-}
+	if (!empty($avatar)) {
+		$srcUserImg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $avatar;
+	} else {
+		$srcUserImg = '/profile_images/avatar_image.png';
+	}
+
+	$uriSegment = \Request::segment(3);
+
+	$offsite_active = '';
+	$onsite_active = '';
+	if ($uriSegment == 'offsite') {
+		$offsite_active = 'active';
+	} else if ($uriSegment == 'onsite') {
+		$onsite_active = 'active';
+	}
 
 @endphp
 <!DOCTYPE html>
@@ -300,21 +297,14 @@ if ($uriSegment == 'offsite') {
                 <!-- /page content -->
             </div>
             <!-- /page container -->
-
-
             @include('layouts.main_partials._main_modals')
         </span>
-        
-
-         @include('admin.components.smart-popup.smart-notification-widget') 
+       
+        @include('admin.components.smart-popup.smart-notification-widget') 
 
         @include('admin.modals.upgrade.upgrade_membership', array('oMemberships' => $objMembership, 'oSuggestedPlan' => $oUpgradePlanData, 'additionalPriceToPay' => $additionalPriceToPay, 'oCurrentPlanData' => $oCurrentPlanData, 'oUser' => $aUInfo))
         
         @include('layouts.main_partials._main_footer_js')
-        
     </body>
-
-
-
 </html> 
 

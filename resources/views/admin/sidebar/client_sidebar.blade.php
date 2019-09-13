@@ -1,51 +1,50 @@
 @php
 
-$avatar = $aUInfo->avatar;
-$firstname = $aUInfo->firstname;
-$lastname = $aUInfo->lastname;
-$userRole = $aUInfo->user_role;
-$address = $aUInfo->address;
+	$avatar = $aUInfo->avatar;
+	$firstname = $aUInfo->firstname;
+	$lastname = $aUInfo->lastname;
+	$userRole = $aUInfo->user_role;
+	$address = $aUInfo->address;
 
 
 
-$username = $firstname . ' ' . $lastname;
-if (!empty($avatar)) {
-    $srcUserImg = '/profile_images/' . $avatar;
-} else {
-    $srcUserImg = '/profile_images/avatar_image.png';
-}
-$onBBCount = getBBCount($aUInfo->id, 'onsite');
-$onBrandBoostCount = $onBBCount > 0 ? $onBrandBoostCount  : '';
+	$username = $firstname . ' ' . $lastname;
+	if (!empty($avatar)) {
+		$srcUserImg = '/profile_images/' . $avatar;
+	} else {
+		$srcUserImg = '/profile_images/avatar_image.png';
+	}
+	$onBBCount = getBBCount($aUInfo->id, 'onsite');
+	$onBrandBoostCount = $onBBCount > 0 ? $onBrandBoostCount  : '';
 
 
-$offBBCount = getBBCount($aUInfo->id, 'offsite');
-$offBrandBoostCount = $offBBCount > 0 ? $offBrandBoostCount : '';
+	$offBBCount = getBBCount($aUInfo->id, 'offsite');
+	$offBrandBoostCount = $offBBCount > 0 ? $offBrandBoostCount : '';
 
-$chatCount = getChatCount($aUInfo->id, $userRole);
+	$chatCount = getChatCount($aUInfo->id, $userRole);
 
-$widgetCount = getWidgetCount($aUInfo->id);
+	$widgetCount = getWidgetCount($aUInfo->id);
 
-$npsWidgetCount = getNPSWidgetCount($aUInfo->id); //getNPSWidgetCount
+	$npsWidgetCount = getNPSWidgetCount($aUInfo->id); //getNPSWidgetCount
 
-$referralWidgetCount = referralNPSWidgetCount($aUInfo->id); //getNPSWidgetCount
+	$referralWidgetCount = referralNPSWidgetCount($aUInfo->id); //getNPSWidgetCount
 
-$MediaCount = getMediaCount($aUInfo->id);
+	$MediaCount = getMediaCount($aUInfo->id);
 
-$pageName = \Request::segment(2);
-$pageSeName = \Request::segment(3);
-$pageThName = \Request::segment(4);
+	$pageName = \Request::segment(2);
+	$pageSeName = \Request::segment(3);
+	$pageThName = \Request::segment(4);
 
-//Initialize variables
-$oBroadcast = !(empty($oBroadcast)) ? $oBroadcast : '';
+	//Initialize variables
+	$oBroadcast = !(empty($oBroadcast)) ? $oBroadcast : '';
 
-if(empty($oBroadcast)){
-    $oBroadcast = new stdClass();
-    $oBroadcast->campaign_type = '';
-}
+	if(empty($oBroadcast)){
+		$oBroadcast = new stdClass();
+		$oBroadcast->campaign_type = '';
+	}
 
 @endphp
 <style>
-    /*.listt1, .listt2{display: none;}*/
     .servises-1, .servises, .servises1, .servises2{cursor: pointer;}
 </style>
 <div class="sidebar sidebar-main">
@@ -66,9 +65,7 @@ if(empty($oBroadcast)){
             </div>
         </div>
         <!-- /user menu --> 
-
-
-
+		
         <!-- Main navigation -->
         <div class="sidebar-category sidebar-category-visible">
             <div class="category-content no-padding">
@@ -304,12 +301,7 @@ if(empty($oBroadcast)){
                                 echo 'active';
                             }
                             @endphp"><a href="{{ url('admin/brandboost/review_request/offsite') }}"><i class="fa fa-circle"></i> Review Requests</a></li>
-                            
-                            <!--
-                             <li class=""><a href="javascript:void(0)"><i class="fa fa-circle"></i>Competitors <span class="label bg-blue-400 menubadge">2</span></a></li>
-                             <li class=""><a href="javascript:void(0)"><i class="fa fa-circle"></i>Report</a></li>
-                            -->
-                            
+                                                        
                             <li class="@php
                             if ($pageName == 'feedback' && $pageSeName == 'listall') {
                                 $activeParentClass = 'menu-offsite-boost';
@@ -353,8 +345,7 @@ if(empty($oBroadcast)){
                                 echo 'active';
                             }
                             @endphp"><a href="{{ url('admin/lists/') }}"><i class="fa fa-circle"></i> Lists</a></li>
-                            
-                            
+
                         </ul>
                     </li>
                     <li id="menu-sms" class="listt"><a href="#"><strong class="nav_icon icon_sms"></strong> <span>SMS</span> <span class="label bg-blue-400 menubadge"></span></a>
@@ -513,10 +504,6 @@ if(empty($oBroadcast)){
                         </ul>
                     </li>
 
-
-
-
-
                     <li class="navigation-header servises1"><span class="">Service</span> <i class="icon-menu" title="" data-original-title="Appearance"></i></li>
                     <li id="menu-nps" class="listt1"><a href="javascript:void(0);"><strong class="nav_icon icon_nps"></strong> <span>NPS Survey</span></a>
                         <ul id="menu-nps-submenu" class="hidden-ul">
@@ -623,16 +610,13 @@ if(empty($oBroadcast)){
             </div>
         </div>
         <!-- /main navigation --> 
-
     </div>
 </div>
 
 
 <script>
     $(document).ready(function () {
-        
-      $('li.active ul').css('display','block');
-
+		$('li.active ul').css('display','block');
 
         $(document).ready(function () {
             $("li.servises-1").click(function () {
@@ -655,15 +639,9 @@ if(empty($oBroadcast)){
         
         @if(!empty($activeParentClass) && !empty($activeChildClass))
 
-        document.getElementById("{{ $activeParentClass }}").classList.add("active");
-	     document.getElementById("{{ $activeChildClass }}").classList.add("dblock");
+			document.getElementById("{{ $activeParentClass }}").classList.add("active");
+			document.getElementById("{{ $activeChildClass }}").classList.add("dblock");
         
         @endif
-
-
     });
 </script>
-
-
-
-

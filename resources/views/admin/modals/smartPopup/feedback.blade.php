@@ -14,7 +14,6 @@
                             <textarea class="form-control"  placeholder="Note" name="edit_note_content" id="edit_smart_note_content" required ></textarea>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="edit_noteid" id="edit_smart_noteid" value="">

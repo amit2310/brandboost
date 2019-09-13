@@ -8,7 +8,6 @@
 <script type="text/javascript" src="{{ URL::asset('assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/js/plugins/notifications/sweet_alert.min.js') }}"></script>
 
-
 <script type="text/javascript" src="{{ URL::asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/js/pages/datatables_basic.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/js/core/app.js') }}"></script>
@@ -17,6 +16,7 @@
 <script type="text/javascript" src="{{ URL::asset('assets/js/plugins/ui/moment/moment.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/js/plugins/pickers/daterangepicker.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/js/custom_datatable.js') }}"></script>
+
 <script>
     var redirectURL = '';
 
@@ -62,7 +62,6 @@
 
     $(document).ready(function () {
         smallMenu();
-
         window.onresize = function () {
             smallMenu();
         };
