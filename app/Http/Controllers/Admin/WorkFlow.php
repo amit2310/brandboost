@@ -13,11 +13,11 @@ use DB;
 class WorkFlow extends Controller {
 
     public function index() {
-        
+
     }
 
     /**
-     * This function is used to update Event time related changes 
+     * This function is used to update Event time related changes
      * @param Request $request
      */
     public function updateEventTime(Request $request) {
@@ -77,7 +77,7 @@ class WorkFlow extends Controller {
      */
     public function addWorkflowEventToTree(Request $request) {
         $response = array();
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
@@ -191,7 +191,7 @@ class WorkFlow extends Controller {
         $emailTemplateID = strip_tags($request->emailTemplateId);
         $smsTemplateID = strip_tags($request->smsTemplateId);
         $source = strip_tags($request->source);
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
@@ -288,10 +288,10 @@ class WorkFlow extends Controller {
      */
     public function connectWorkflowNode($currentEventID, $newEventID, $nodeType, $moduleName) {
         $nextEventID = '';
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         if ($nodeType == 'main' && $currentEventID > 0 && $newEventID > 0) {
             //Update Current node
             $aEventDataCurrent = array(
@@ -356,10 +356,10 @@ class WorkFlow extends Controller {
      */
     public function createEventNode($id, $moduleName, $eventType, $previousID, $templateID = '', $triggerParam = '', $isDraft = false) {
         $response = array();
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         $eventID = $mWorkflow->createWorkflowEvent($id, $eventType, $previousID, $triggerParam, $moduleName);
 
         if ($eventID > 0 && $templateID > 0) {
@@ -413,7 +413,7 @@ class WorkFlow extends Controller {
      * Updates workflow campaigns
      * @param Request $request
      */
-    public function updateWorkflowCampaign(Request $request) { 
+    public function updateWorkflowCampaign(Request $request) {
         $bUpdated = true;
         $response = array();
         $aUser = getLoggedUser();
@@ -432,7 +432,7 @@ class WorkFlow extends Controller {
         $greeting = db_in($request->greeting);
         $introduction = db_in($request->introduction);
         $template_source = strip_tags($request->template_source);
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
@@ -487,8 +487,8 @@ class WorkFlow extends Controller {
         if(!empty($aData)){
             $bUpdated = $mWorkflow->updateWorkflowCampaign($aData, $campaignID, $moduleName);
         }
-        
-        
+
+
         if ($moduleName == 'broadcast') {
             //Update in the default variation too
             $oVariations = $mWorkflow->getWorkflowSplitVariations($moduleName, $moduleUnitID);
@@ -497,9 +497,9 @@ class WorkFlow extends Controller {
                 if(!empty($aData)){
                     $bUpdated = $mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
                 }
-                
+
             }
-            
+
         }
 
         if ($bUpdated) {
@@ -513,10 +513,10 @@ class WorkFlow extends Controller {
     }
 
     /**
-     * 
+     *
      * @param Request $request
      * @param Request $requestUsed to save workflow drafts
-     * 
+     *
      */
     public function saveWorkflowDraft(Request $request) {
         $response = array();
@@ -647,7 +647,7 @@ class WorkFlow extends Controller {
         $greeting = db_in($request->greeting);
         $introduction = db_in($request->introduction);
         $myTemplateID = strip_tags($request->myTemplateId);
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
@@ -724,7 +724,7 @@ class WorkFlow extends Controller {
             $aData['created'] = date("Y-m-d H:i:s");
             $myTemplateID = $mWorkflow->addWorkflowMyTemplate($aData, $moduleName);
             if ($myTemplateID > 0) {
-                //Update the same info into the target workflow campaign  
+                //Update the same info into the target workflow campaign
                 $aCampaignData = array('mytemplateId' => $myTemplateID);
 
                 $mWorkflow->updateWorkflowCampaign($aCampaignData, $campaignID, $moduleName);
@@ -877,7 +877,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
         $emailAddress = strip_tags($request->email);
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
@@ -983,7 +983,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
         $number = strip_tags($request->number);
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
@@ -1085,7 +1085,7 @@ class WorkFlow extends Controller {
         $moduleUnitID = strip_tags($request->moduleUnitId);
         $outputType = strip_tags($request->returnMethod);
         $previewType = strip_tags($request->previewType);
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
@@ -1216,17 +1216,17 @@ class WorkFlow extends Controller {
     }
 
     /**
-     * 
+     *
      * @param Request $requestUsed to delete workflow Event node
      */
     public function deleteWorkflowEvent(Request $request) {
-        
+
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $eventID = strip_tags($request->event_id);
         $moduleName = strip_tags($request->moduleName);
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         $previousID = '';
@@ -1320,10 +1320,10 @@ class WorkFlow extends Controller {
         $moduleName = $request->module_name;
         $campaignID = $request->campaign_id;
         $moduleUnitID = $request->module_unit_id;
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
         $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
         $subject = $oResponse->subject;
@@ -1350,10 +1350,10 @@ class WorkFlow extends Controller {
         $moduleName = $request->module_name;
         $campaignID = $request->campaign_id;
         $moduleUnitID = $request->module_unit_id;
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
         $oResponse = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
         $subject = $oResponse->subject;
@@ -1562,7 +1562,7 @@ class WorkFlow extends Controller {
     }
 
     /**
-     * 
+     *
      * @param type $moduleNameUsed to get all the templates
      */
     public function templates($moduleName = '') {
@@ -1586,7 +1586,7 @@ class WorkFlow extends Controller {
         //NPS Templates
         $oNPSTemplates = $mWorkflow->getWorkflowDefaultTemplates('nps');
 
-       
+
         //$oCampaignTags = $this->config->item('email_tags');
         $oCampaignTags = config('bbconfig.email_tags');
 
@@ -1751,7 +1751,7 @@ class WorkFlow extends Controller {
 				return $query->where('tbl_referral_rewards.id', $id);
 			})
 			->first();
-        
+
         return $aData;
     }
 
@@ -1761,7 +1761,7 @@ class WorkFlow extends Controller {
     public function referralEmailTagReplace($referralID, $sHtml, $campaignType = 'email', $subscriberInfo) {
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         $aTags = config('bbconfig.email_tags');
 
         $oReferral = $oRewardSettings = $this->getReferralUnitInfo($referralID);
@@ -1954,10 +1954,10 @@ class WorkFlow extends Controller {
         $request->moduleName = $moduleName;
         $request->moduleUnitId = $moduleUnitID;
         $request->returnMethod = 'return';
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         if ($campaignID > 0 && !empty($moduleName)) {
             $oPreview = $this->previewWorkflowCampaign($request);
             $aStats = $mWorkflow->getEventSendgridStats($campaignID, $moduleName);
@@ -1995,7 +1995,7 @@ class WorkFlow extends Controller {
                 'eventID' => $eventId
             );
 
-            $htmlStats = view('admin.workflow.partials.email_stats', $oData)->render();
+            $htmlStats = view('admin.workflow2.partials.email_stats', $oData)->render();
             $response['status'] = 'success';
             $response['stats'] = $htmlStats;
             $response['oPreview'] = $oPreview;
@@ -2009,10 +2009,10 @@ class WorkFlow extends Controller {
      * @param Request $request
      */
     public function loadWorkflowSMSStats(Request $request) {
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         $response = array();
         $response['status'] = "Error";
         $campaignID = strip_tags($request->campaign_id);
@@ -2052,7 +2052,7 @@ class WorkFlow extends Controller {
                 'eventID' => $eventId
             );
 
-            $htmlStats = view('admin.workflow.partials.sms_stats', $oData)->render();
+            $htmlStats = view('admin.workflow2.partials.sms_stats', $oData)->render();
             $response['status'] = 'success';
             $response['oPreview'] = $oPreview;
             $response['stats'] = $htmlStats;
@@ -2077,7 +2077,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
         $mLists = new ListsModel();
@@ -2128,7 +2128,7 @@ class WorkFlow extends Controller {
         $actionValue = $request->actionValue;
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
@@ -2204,7 +2204,7 @@ class WorkFlow extends Controller {
             }
         }
 
-        //Get selected lists        
+        //Get selected lists
         $oImportLists = $mWorkflow->getWorkflowImportLists($moduleName, $moduleUnitID);
 
         $response = array('status' => 'success', 'msg' => "List Added successfully!", 'total_lists' => count($oImportLists), 'total_contacts' => $totalSubscribers, 'duplicate_contacts' => $duplicateCount);
@@ -2414,10 +2414,10 @@ class WorkFlow extends Controller {
         $actionValue = $request->actionValue;
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         if ($actionValue == 'addRecord') {
             $aData = array(
                 'user_id' => $userID,
@@ -2453,10 +2453,10 @@ class WorkFlow extends Controller {
         $actionValue = $request->actionValue;
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitID = strip_tags($request->moduleUnitID);
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         if ($actionValue == 'addRecord') {
             $aData = array(
                 'user_id' => $userID,
@@ -2717,7 +2717,7 @@ class WorkFlow extends Controller {
                         }
                     }
                 }
-                
+
                 //For Extra cleanup
                 if (!empty($aWorkflowSubscribers)) {
                     foreach ($aWorkflowSubscribers as $subscriberID) {
@@ -2784,7 +2784,7 @@ class WorkFlow extends Controller {
         $mWorkflow = new WorkflowModel();
         $subscriberID = $aData['subscriber_id'];
         //Do some necessary check if any
-        //Check-1 -Duplicate Entry  
+        //Check-1 -Duplicate Entry
         $bDuplicate = $mWorkflow->isDuplicateWorkflowAudience($moduleName, $moduleUnitID, $subscriberID);
         if ($bDuplicate == false) {
             $mWorkflow->addAudienceToWorkflowCampaign($aData, $moduleName, $moduleUnitID);
