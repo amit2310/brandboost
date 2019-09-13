@@ -27,7 +27,7 @@
                         <div class="p25 bbot">
                             <div class="form-group mb0">
                                 <label class="custmo_radiobox pull-left mb20">
-                                    <input name="feedback_type" class="autoSave" value="public" type="radio" 
+                                    <input name="feedback_type" class="autoSave" value="public" type="radio"
                                         @if (!empty($feedbackResponseData))
                                             {{ ($feedbackResponseData->feedback_type == '' || $feedbackResponseData->feedback_type == 'public') ? 'checked' : '' }}
                                         @endif
@@ -36,7 +36,7 @@
                                     Public
                                 </label>
                                 <label class="custmo_radiobox pull-left mb20 ml10">
-                                    <input  name="feedback_type" class="autoSave" value="private" type="radio" 
+                                    <input  name="feedback_type" class="autoSave" value="private" type="radio"
                                         @if (!empty($feedbackResponseData))
                                             {{ $feedbackResponseData->feedback_type == 'private' ? 'checked' : '' }}
                                         @endif
@@ -59,7 +59,7 @@
                                     </span>
 
                                 @endif
-                            </div> 
+                            </div>
                         </div>
 
 
@@ -68,11 +68,7 @@
                             <div class="form-group">
                                 <label class="control-label">Review Request "Form" Name</label>
                                 <div class="">
-                                    <input  value="
-                                        @if (!empty($feedbackResponseData)) 
-                                            {{ ($feedbackResponseData->from_name) ? $feedbackResponseData->from_name : $aUserInfo->firstname . ' ' . $aUserInfo->lastname }}
-                                        @endif
-                                    " name="from_name" id="from_name" class="form-control autoSave" type="text" onkeypress="return IsAlphabet(event);">
+                                    <input  value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->from_name) ? $feedbackResponseData->from_name : $aUserInfo->firstname . ' ' . $aUserInfo->lastname}}@endif" name="from_name" id="from_name" class="form-control autoSave" type="text" onkeypress="return IsAlphabet(event);">
                                     <div class="errorMsg"></div>
                                 </div>
                             </div>
@@ -80,11 +76,7 @@
                             <div class="form-group">
                                 <label class="control-label">Review Request "Form" Email</label>
                                 <div class="">
-                                    <input value="
-                                        @if (!empty($feedbackResponseData))
-                                            {{ ($feedbackResponseData->from_email) ? $feedbackResponseData->from_email : $aUserInfo->email }}
-                                        @endif
-                                    " name="from_email" id="from_email" class="form-control autoSave" required="" type="text">
+                                    <input value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->from_email) ? $feedbackResponseData->from_email : $aUserInfo->email}}@endif" name="from_email" id="from_email" class="form-control autoSave" required="" type="text">
                                     <div class="errorMsg"></div>
                                 </div>
                             </div>
@@ -160,11 +152,11 @@
                             <div class="profile_headings" style="margin:40px 0 20px;">Product Details</div>
 
                             <div id="productMainContainer">
-                                @if (count($bbProductsData) < 1) 
+                                @if (count($bbProductsData) < 1)
                                     <div class="barand_avatar mb20 productPreviewImg">
-                                      
+
                                       <img width="65" height="65" id="showBrandImage1" class="rounded company_avatar" onerror="this.src=\'http://brandboost.io/assets/images/default_table_img2.png\'" src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $bbProductsData[0]->product_image }}">
-                                      
+
                                     </div>
                                     <div class="productSection">
                                         <div class="form-group">
@@ -196,15 +188,15 @@
                                     @php
                                     $productCount = 1;
                                     @endphp
-                                    @foreach ($bbProductsData as $key => $productData) 
-                                        @if ($productData->product_type != 'service') 
+                                    @foreach ($bbProductsData as $key => $productData)
+                                        @if ($productData->product_type != 'service')
                                             <div class="productSectionNew productBoxSection{{ $key }}" style="{{ $key == 0 ? 'border-top:none;' : '' }}">
                                                 <div class="barand_avatar mb20 productPreviewImg">
                                                     <img width="65" height="65" id="showBrandImage{{ $productCount }}" class="rounded company_avatar" onerror="this.src=\'http://brandboost.io/assets/images/default_table_img2.png\'" src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $productData->product_image }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label">Product Name</label>
-                                                    @if ($key != 0) 
+                                                    @if ($key != 0)
                                                         <a class="deleteProductItem" data-order="{{ $key }}"><div class="text-center" style="float: right; height: 25px; width: 25px; border-radius: 25px; background: #D7D7E8; margin-top:-5px;">x</div></a>
                                                     @endif
                                                     <div class="">
@@ -236,7 +228,7 @@
                                             <div class="productSectionNew productBoxSection{{ $key }}" style="{{ $key == 0 ? 'border-top:none;' : '' }}">
                                                 <div class="barand_avatar mb20 productPreviewImg">
                                                     <img width="65" height="65" id="showBrandImage{{ $productCount }}" class="rounded company_avatar" onerror="this.src=\'http://brandboost.io/assets/images/default_table_img2.png\'" src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $productData->product_image }}">
-                                                    										
+
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label">Service Name</label>
@@ -317,25 +309,13 @@
                             <div class="form-group">
                                 <label class="control-label">Positive Title</label>
                                 <div class="">
-                                    <input class="form-control thankMsgTitle autoSave" name="positive_title" id="positive_title" value="
-                                        @if (!empty($feedbackResponseData))
-                                            {{ ($feedbackResponseData->pos_title) ? $feedbackResponseData->pos_title : 'Thanks for leaving positive review' }}
-                                        @else
-                                            {{ 'Thanks for leaving positive review' }}
-                                        @endif
-                                    " required="" type="text">
+                                    <input class="form-control thankMsgTitle autoSave" name="positive_title" id="positive_title" value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->pos_title) ? $feedbackResponseData->pos_title : 'Thanks for leaving positive review'}}@else{{'Thanks for leaving positive review'}}@endif" required="" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Positive Subtitle</label>
                                 <div class="">
-                                    <input  class="form-control thankMsgSubTitle autoSave" name="positive_subtitle" id="positive_subtitle" value="
-                                    @if (!empty($feedbackResponseData)) 
-                                        {{ ($feedbackResponseData->pos_sub_title) ? $feedbackResponseData->pos_sub_title : 'We will revert back to you soon' }}
-                                    @else
-                                        {{ 'We will revert back to you soon' }}
-                                    @endif
-                                    " required="" type="text">
+                                    <input  class="form-control thankMsgSubTitle autoSave" name="positive_subtitle" id="positive_subtitle" value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->pos_sub_title) ? $feedbackResponseData->pos_sub_title : 'We will revert back to you soon'}}@else{{'We will revert back to you soon' }}@endif" required="" type="text">
                                 </div>
                             </div>
                             <div class="alert bkg_green txt_white mt30 mb0 preview">
@@ -344,7 +324,7 @@
                                 </div>
                                 <div class="media-left">
                                     <div class="thanksTitlePreview">
-                                        @if (!empty($feedbackResponseData)) 
+                                        @if (!empty($feedbackResponseData))
                                             {{ $feedbackResponseData->pos_title == '' ? 'Thanks for leaving positive review' : $feedbackResponseData->pos_title }}
                                         @else
                                             {{ 'Thanks for leaving positive review' }}
@@ -352,7 +332,7 @@
                                     </div>
                                     <div>
                                         <small class="thanksSubTitlePreview">
-                                            @if (!empty($feedbackResponseData)) 
+                                            @if (!empty($feedbackResponseData))
                                                 {{ $feedbackResponseData->pos_sub_title == '' ? 'We will revert back to you soon' : $feedbackResponseData->pos_sub_title }}
                                             @else
                                                 {{ 'We will revert back to you soon' }}
@@ -369,25 +349,13 @@
                             <div class="form-group">
                                 <label class="control-label">Neutral Title</label>
                                 <div class="">
-                                    <input class="form-control thankMsgTitle autoSave" name="neutral_title" id="neutral_title" value="
-                                    @if (!empty($feedbackResponseData)) 
-                                        {{ ($feedbackResponseData->neu_title) ? $feedbackResponseData->neu_title : 'Thanks for leaving your review' }}
-                                    @else
-                                        {{ 'We will revert back to you soon' }}
-                                    @endif
-                                    " required="" type="text">
+                                    <input class="form-control thankMsgTitle autoSave" name="neutral_title" id="neutral_title" value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->neu_title) ? $feedbackResponseData->neu_title : 'Thanks for leaving your review'}}@else{{ 'We will revert back to you soon' }}@endif" required="" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Neutral Subtitle</label>
                                 <div class="">
-                                    <input class="form-control thankMsgSubTitle autoSave" name="neutral_subtitle"  id="neutral_subtitle" value="
-                                        @if (!empty($feedbackResponseData)) 
-                                        {{ ($feedbackResponseData->neu_sub_title) ? $feedbackResponseData->neu_sub_title : 'We will revert back to you soon' }}
-                                    @else
-                                        {{ 'We will revert back to you soon' }}
-                                    @endif
-                                    " required="" type="text">
+                                    <input class="form-control thankMsgSubTitle autoSave" name="neutral_subtitle"  id="neutral_subtitle" value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->neu_sub_title) ? $feedbackResponseData->neu_sub_title : 'We will revert back to you soon'}}@else{{'We will revert back to you soon'}}@endif" required="" type="text">
                                 </div>
                             </div>
                             <div class="alert bkg_dark txt_white mt30 mb0 preview">
@@ -417,27 +385,15 @@
                             <div class="form-group">
                                 <label class="control-label">Negative Title</label>
                                 <div class="">
-                                    <input class="form-control thankMsgTitle autoSave" name="negetive_title" id="negetive_title" value="
-                                    @if (!empty($feedbackResponseData)) 
-                                        {{ ($feedbackResponseData->neg_title) ? $feedbackResponseData->neg_title : 'Thanks for leaving your review' }}
-                                    @else
-                                        {{ 'Thanks for leaving your review' }}
-                                    @endif
-                                    " required="" type="text">
+                                    <input class="form-control thankMsgTitle autoSave" name="negetive_title" id="negetive_title" value="@if(!empty($feedbackResponseData)){{($feedbackResponseData->neg_title) ? $feedbackResponseData->neg_title : 'Thanks for leaving your review'}}@else{{'Thanks for leaving your review'}}@endif" required="" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Negative Subtitle</label>
                                 <div class="">
-                                    <input class="form-control thankMsgSubTitle autoSave" name="negetive_subtitle"  id="negetive_subtitle" value="
-                                    @if (!empty($feedbackResponseData))
-                                        {{ ($feedbackResponseData->neg_sub_title) ? $feedbackResponseData->neg_sub_title : 'We will revert back to you soon' }}
-                                    @else
-                                        {{ 'Thanks for leaving positive review' }}
-                                    @endif
-                                    " required="" type="text">
+                                    <input class="form-control thankMsgSubTitle autoSave" name="negetive_subtitle"  id="negetive_subtitle" value="@if (!empty($feedbackResponseData)){{($feedbackResponseData->neg_sub_title) ? $feedbackResponseData->neg_sub_title : 'We will revert back to you soon'}}@else{{'Thanks for leaving positive review'}}@endif" required="" type="text">
                                 </div>
-                            </div>                          
+                            </div>
 
                             <div class="alert bkg_red txt_white mt30 mb0 preview">
                                 <div class="media-left">
@@ -445,7 +401,7 @@
                                 </div>
                                 <div class="media-left">
                                     <div class="thanksTitlePreview">
-                                        @if (!empty($feedbackResponseData)) 
+                                        @if (!empty($feedbackResponseData))
                                             {{ $feedbackResponseData->neg_title == '' ? 'Thanks for leaving positive review' : $feedbackResponseData->neg_title }}
                                         @else
                                             {{ 'Thanks for leaving positive review' }}
@@ -453,7 +409,7 @@
                                     </div>
                                     <div>
                                         <small class="thanksSubTitlePreview">
-                                        @if (!empty($feedbackResponseData)) 
+                                        @if (!empty($feedbackResponseData))
                                             {{ $feedbackResponseData->neg_sub_title == '' ? 'We will revert back to you soon' : $feedbackResponseData->neg_sub_title }}
                                         @else
                                             {{ 'We will revert back to you soon' }}
@@ -623,14 +579,14 @@
                                                                                         <input name="brand_product_name[${newProdCount}]" value="" placeholder="Product Name" class="form-control autoSave" type="text">
                                                                                 </div>
                                                                         </div>
-									
+
                                                                         <div class="form-group">
                                                                                 <label class="control-label">Product Description</label>
                                                                                 <div class="">
                                                                                         <textarea class="form-control autoSave" placeholder="Product Description" name="brand_product_desc[${newProdCount}]"></textarea>
                                                                                 </div>
                                                                         </div>
-									
+
                                                                         <div class="form-group">
                                                                                 <label class="control-label">Product image</label>
                                                                                 <label class="display-block">
@@ -696,14 +652,14 @@
                                                                                         <input name="brand_product_name[${newProdCount}]" value="" placeholder="Service Name" class="form-control autoSave" type="text">
                                                                                 </div>
                                                                         </div>
-									
+
                                                                         <div class="form-group">
                                                                                 <label class="control-label">Service Description</label>
                                                                                 <div class="">
                                                                                         <textarea class="form-control autoSave" placeholder="Service Description" name="brand_product_desc[${newProdCount}]"></textarea>
                                                                                 </div>
                                                                         </div>
-									
+
                                                                         <div class="form-group">
                                                                                 <label class="control-label">Service image</label>
                                                                                 <label class="display-block">
@@ -877,4 +833,4 @@ if (count($bbProductsData) > 0) {
         });
 
 @php } @endphp
-</script>		
+</script>
