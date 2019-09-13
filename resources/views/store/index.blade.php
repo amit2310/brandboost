@@ -4,9 +4,9 @@
 
 @if($brandData->template_style == 1)
 	@include("store.layer1"); 
-@else if($brandData->template_style == 2)
+@elseif($brandData->template_style == 2)
 	@include("store.layer2"); 
-@else if($brandData->template_style == 3)
+@elseif($brandData->template_style == 3)
 	@include("store.layer3"); 
 @else
 	@include("store.layer1"); 

@@ -96,7 +96,7 @@
                 <div class="w100 @if ($aLatestReview['review_type'] == 'video') text-center @endif ">
                     @if ($aLatestReview['review_type'] == 'text')
 						{{ $aLatestReview['comment_text'] }}
-                    @else if ($aLatestReview['review_type'] == 'video')
+                    @elseif ($aLatestReview['review_type'] == 'video')
                         <video width="400" controls style="width:100%">
                             <source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $aLatestReview['comment_video'] }}" type="video/mp4">
                         </video>
@@ -211,7 +211,7 @@
 								<span>
 									@if ($aReview['review_type'] == 'text')
 										{{ $aReview['comment_text'] }}
-									@else if ($aReview['review_type'] == 'video')
+									@elseif ($aReview['review_type'] == 'video')
 										<video width="250" controls style="width:100%">
 											<source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $aReview['comment_video'] }}" type="video/mp4">
 										</video>
