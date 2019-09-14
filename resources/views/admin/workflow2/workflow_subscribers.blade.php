@@ -1,5 +1,7 @@
 @php
     $iActiveCount = $iArchiveCount = 0;
+
+    $showArchived = isset($showArchived) ? $showArchived : '';
     if (!empty($subscribersData)) {
         foreach ($subscribersData as $oCount) {
             if ($oCount->status == 2) {
@@ -135,9 +137,9 @@
                                 data-modulename="{{ $moduleName }}">
                                 <div class="media-left">
                                     <div class="pt-5"><span
-                                            class="text-default text-semibold dark">{{ $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oContact->phone) }}</span>
+                                            class="text-default text-semibold dark">{!! $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oContact->phone) !!}</span>
                                     </div>
-                                    {{ $oContact->phone == '' ? '' : '<div class="text-muted text-size-small">Chat</div>' }}
+                                    {!! ($oContact->phone == '') ? '' : '<div class="text-muted text-size-small">Chat</div>' !!}
                                 </div>
                             </td>
                             <td class="viewContactSmartPopup" data-modulesubscriberid="{{ $oContact->id }}"
@@ -213,7 +215,7 @@
 
                             <td>
                                 <div class="tdropdown">
-                                    {{ ($oContact->status == 1 && $oContact->globalStatus == 1) ? '<i class="icon-primitive-dot txt_green fsize16"></i>' : '<i class="icon-primitive-dot txt_red fsize16"></i>' }}
+                                    {!! ($oContact->status == 1 && $oContact->globalStatus == 1) ? '<i class="icon-primitive-dot txt_green fsize16"></i>' : '<i class="icon-primitive-dot txt_red fsize16"></i>' !!}
                                     <a class="text-default text-semibold bbot dropdown-toggle"
                                        data-toggle="dropdown">{{ ($oContact->status == 1 && $oContact->globalStatus == 1) ? ' Active' : ' Inactive' }}</a>
                                     <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">

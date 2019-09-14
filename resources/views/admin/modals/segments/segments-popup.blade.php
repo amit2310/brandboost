@@ -33,7 +33,7 @@
                     <input type="hidden" value="" name="moduleUnitID" id="hidSegmentCampaignID">
                     <input type="hidden" value="Email" name="segmentType" id="hidSegmentType">
                     <input type="hidden" value="Email" name="campaignType" id="hidCampaignType">
-                    <input type="hidden" value="{{ $moduleName }}" name="moduleName" />
+                    <input type="hidden" value="@{{$moduleName}}" name="moduleName" />
                     <input type="hidden" id="hidEventId" value="" name="eventID" />
                     <button data-toggle="modal" type="submit" class="btn dark_btn bkg_sblue fsize14 h52">Continue</button>
                     <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>

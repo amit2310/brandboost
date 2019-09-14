@@ -191,7 +191,7 @@
 
 
                                         <h3>{{ $username }}</h3>
-                                        <p class="text-size-small text-muted mb0">{{ $state != '' ? ucfirst($state) . ' ,' : displayNoData().' ,' }} {{ strtoupper($country) }}</p>
+                                        <p class="text-size-small text-muted mb0">{!! $state != '' ? ucfirst($state) . ' ,' : displayNoData().' ,' !!} {{ strtoupper($country) }}</p>
                                     </div>
 
 

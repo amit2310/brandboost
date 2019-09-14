@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -140,10 +140,10 @@
     }
 
     @keyframes sk-bounce{
-        0%, 100% { 
+        0%, 100% {
             transform: scale(0.0);
             -webkit-transform: scale(0.0);
-        } 50% { 
+        } 50% {
             transform: scale(1.0);
             -webkit-transform: scale(1.0);
         }
@@ -152,7 +152,7 @@
 </style>
 <style type="text/css">
     .loadMoreRecord {text-align: center; padding: 20px; margin: 0; border-top: 1px solid #eee;}
-</style>	
+</style>
 
 <div class="content">
 
@@ -192,10 +192,10 @@
                                     <button class="btn btn-xs btn_white_table">{{ $oTag->tag_name }}</button>
                                 @endforeach
                             @endif
-                            
+
 							@if (empty($feedbackTags))
 								<span><i>No Tags found</i></span>&nbsp;
-							@endif 
+							@endif
 
                             <button class="btn btn-xs plus_icon applyInsightTags" feedback_id="{{ base64_url_encode($result->id) }}" action_name="feedback-tag"><i class="icon-plus3"></i></button>
                         </div>
@@ -222,8 +222,8 @@
 
                     @php
 						$avatarImage = base_url() . "assets/images/userp.png";
-                    @endif 
-					
+                    @endif
+
                     <div class="media-left media-middle pr10"> <a class="icons" href="javascript:void(0);"><img style="width: 18px;" src="{{ $avatarImage }}" class="img-circle" alt=""></a> </div>
                     <div class="media-left">
                         <div class="text-muted">by {{ $result->firstname . " " . $result->lastname }}   <span class="ml20"><i class="icon-checkmark3 fsize12 txt_green"></i>&nbsp; Verified Purchase</span></div>
@@ -259,16 +259,16 @@
                                         <li class="bbot">
                                             <div class="media-left"><img onerror="this.src='{{ $defaultAvatar }}'" width="36" src="{{ $avtarImage }}"/></div>
                                             <div class="media-left pr0 w100">
-                                                <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ $oAnswer->firstname . ' ' . $oAnswer->lastname }} <span class="dot">.</span> {{ timeAgo($oAnswer->created) }} <span class="dot">.</span> 
+                                                <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ $oAnswer->firstname . ' ' . $oAnswer->lastname }} <span class="dot">.</span> {{ timeAgo($oAnswer->created) }} <span class="dot">.</span>
 
                                                     @if ($oAnswer->status == '1')
                                                         <span class="txt_green"><i class="icon-checkmark3 fsize12 txt_green" answer_id="{{ base64_url_encode($oAnswer->id) }}"></i> Approve</span>
                                                     @endif
-													
+
                                                     @if ($oAnswer->status == 0)
                                                         <span class="txt_red"><i class="icon-checkmark3 fsize12 txt_red" answer_id="{{ base64_url_encode($oAnswer->id) }}"></i> Disapproved</span>
                                                    @endif
-													
+
                                                     @if ($oAnswer->status == '2')
                                                         <span class="media-annotation"> <span class="label bkg_grey txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="1" answer_id="{{ base64_url_encode($oAnswer->id) }}"> Approve</span> </span>
                                                         <span class="media-annotation dotted"> <span class="label bkg_red txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="0" answer_id="{{ base64_url_encode($oAnswer->id) }}"> Disapprove</span> </span>
@@ -303,9 +303,9 @@
             @endif
             <!--=========Add Comment===========-->
             @php
-				$oFeedback = \App\Models\FeedbackModel::getFeedbackInfo($result->id); 
+				$oFeedback = \App\Models\FeedbackModel::getFeedbackInfo($result->id);
             @endphp
-			
+
             <form name="frmSendFeedbackReply" id="frmSendFeedbackReply" method="post" action="javascript:void();">
                 <input type="hidden" name="fbtime" value="{{ date('M d, Y h:i A', strtotime($oFeedback->created)) }} ({{ timeAgo($oFeedback->created) }})" />
                 <input type="hidden" name="fid" value="{{ $oFeedback->id }}" />
@@ -350,7 +350,7 @@
                 <div class="panel-body p0" >
                     <div class="interactions p25">
                         <ul>
-                            <li><small>Ref</small> <strong>{{ displayNoData() }}</strong></li>
+                            <li><small>Ref</small> <strong>{!! displayNoData() !!}</strong></li>
                             <li><small>Name</small> <strong>{{ $result->firstname . ' ' . $result->lastname }}  </strong></li>
                             <li><small>Email</small> <strong>{{ $result->email }}</strong></li>
                             <li><small>Phone</small> <strong>{!! ($result->phone) ? $result->phone : displayNoData() !!}</strong></li>
@@ -372,7 +372,7 @@
 						<div class="p25 bbot"><i>No Notes Available</i></div>
                     @endif
                     <div class="p25 btop">
-                        <button class="btn dark_btn btn-xs mr20" data-toggle="modal" data-target="#feedbackPopup">Add Note</button>	 
+                        <button class="btn dark_btn btn-xs mr20" data-toggle="modal" data-target="#feedbackPopup">Add Note</button>
                     </div>
                 </div>
             </div>

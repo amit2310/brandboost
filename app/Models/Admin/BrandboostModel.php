@@ -31,7 +31,7 @@ class BrandboostModel extends Model {
     }
 
     /**
-     * function is used to fetch the BB campaign information 
+     * function is used to fetch the BB campaign information
      * @param type $campaignID
      * @return type
      */
@@ -93,7 +93,7 @@ class BrandboostModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $campType
      * @param type $userID
      * @return type
@@ -347,13 +347,13 @@ class BrandboostModel extends Model {
      */
     public static function getFeedbackCount($brandboostID) {
         $oData = DB::table('tbl_brandboost_feedback')
-			->select('COUNT(id) AS total_count, category')
+			->select(DB::raw('COUNT(id) AS total_count'), 'category')
 			->where('brandboost_id', $brandboostID)
 			->groupBy('category')
-			->count();
+			->get();
         return $oData;
     }
-	
+
 	/**
 	* Used to get feedback count by brandboost id
 	* @param type $brandboostID
@@ -657,9 +657,9 @@ class BrandboostModel extends Model {
         }
     }
 
-    
+
 	/**
-     * 
+     *
      * @param type $aData
      * @param type $id
      * @return boolean
@@ -668,11 +668,11 @@ class BrandboostModel extends Model {
         $oData = DB::table('tbl_campaigns')
                 ->where('id', $id)
                 ->update($aData);
-        return true;        
+        return true;
     }
-	
+
 	/**
-     * 
+     *
      * @param type $eventID
      * @return type
      */
@@ -683,8 +683,8 @@ class BrandboostModel extends Model {
                 ->get();
         return $oData;
     }
-	
-	
+
+
 	public static function getSendRequest($brandboostId, $type = '') {
 		$oData = DB::table('tbl_brandboost_events')
 			->select('tbl_brandboost_events.id as beventid', 'tbl_tracking_log_email_sms.id as trackinglogid', 'tbl_tracking_log_email_sms.subscriber_id as tracksubscriberid', 'tbl_tracking_log_email_sms.type as tracksubscribertype', 'tbl_campaigns.*')
@@ -700,63 +700,63 @@ class BrandboostModel extends Model {
 			->count();
 		return $oData;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public function creatWidgetTheme($aData) {
         $result = $this->db->insert('tbl_brandboost_widget_theme_settings', $aData);
         $inset_id = $this->db->insert_id();
@@ -782,7 +782,7 @@ class BrandboostModel extends Model {
         return $aData;
     }
 
-    
+
 
     public function getCampaignBycampID($campaignID) {
 
@@ -967,7 +967,7 @@ class BrandboostModel extends Model {
             return false;
     }
 
-    
+
 
     public function unsubscribeUser($brandboostID, $subscriberID) {
         $response = array();
@@ -1289,7 +1289,7 @@ class BrandboostModel extends Model {
         return $output;
     }
 
-    
+
 
     public function user_campaign_review_fetch_details($limit, $start, $sortBy, $sortType, $userID) {
 
@@ -1683,7 +1683,7 @@ class BrandboostModel extends Model {
           return $response; */
     }
 
-    
+
 
     public function unsubscribeUserAC($aData) {
         $result = $this->db->insert('tbl_suppression_list', $aData);

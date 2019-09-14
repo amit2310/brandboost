@@ -270,17 +270,17 @@
                                                 <td class="viewQuestionSmartPopup" questionid="{{ $oQuestion->id }}"><div class="media-left media-middle"> {!! showUserAvtar($oQuestion->avatar, $oQuestion->firstname, $oQuestion->lastname) !!} </div>
                                                     <div class="media-left">
                                                         <div class="pt-5"><a href="#" class="text-default text-semibold bbot"><span>{{ (!empty($oQuestion->firstname)) ? $oQuestion->firstname . ' ' . $oQuestion->lastname : displayNoData() }}</span></a><img class="flags" src="{{ (empty($oQuestion->country_code)) ? base_url('assets/images/flags/us.png') : base_url('assets/images/flags/' . strtolower($oQuestion->country_code) . '.png') }}" /></div>
-                                                        <div class="text-muted text-size-small">{{ (!empty($oQuestion->email)) ? $oQuestion->email : displayNoData() }}</div>
+                                                        <div class="text-muted text-size-small">{!! (!empty($oQuestion->email)) ? $oQuestion->email : displayNoData() !!}</div>
                                                     </div>
                                                 </td>
                                                 <td class="viewQuestionSmartPopup text-left" questionid="{{ $oQuestion->id }}"><div class="media-left text-right" style="width:250px;">
-                                                        <div class="pt-5"><a href="{{ base_url('admin/questions/details/' . $oQuestion->id) }}" class="text-default text-semibold bbot"><span>{{ (!empty($oQuestion->question_title)) ? setStringLimit($oQuestion->question_title, '25') : displayNoData() }}</span> </a></div>
-                                                        <div class="text-muted text-size-small">{{ (!empty($oQuestion->question)) ? setStringLimit($oQuestion->question, '40') : displayNoData() }}</div>
+                                                        <div class="pt-5"><a href="{{ base_url('admin/questions/details/' . $oQuestion->id) }}" class="text-default text-semibold bbot"><span>{!! (!empty($oQuestion->question_title)) ? setStringLimit($oQuestion->question_title, '25') : displayNoData() !!}</span> </a></div>
+                                                        <div class="text-muted text-size-small">{!! (!empty($oQuestion->question)) ? setStringLimit($oQuestion->question, '40') : displayNoData() !!}</div>
                                                     </div>
                                                 </td>
                                                 <td  class="text-left"><div class="media-left text-right" style="width:200px;">
-                                                        <div class="pt-5"><a href="{{ ($oQuestion->review_type == 'offsite') ? base_url('admin/brandboost/offsite_setup/' . $oQuestion->campaign_id) : base_url('admin/brandboost/onsite_setup/' . $oQuestion->campaign_id) }}" class="text-default text-semibold bbot"><span>{{ (!empty($oQuestion->brand_title)) ? setStringLimit($oQuestion->brand_title, '20') : displayNoData() }}</span> </a></div>
-                                                        <div class="text-muted text-size-small">{{ (!empty($oQuestion->brand_desc)) ? setStringLimit($oQuestion->brand_desc, '30') : displayNoData() }}</div>
+                                                        <div class="pt-5"><a href="{{ ($oQuestion->review_type == 'offsite') ? base_url('admin/brandboost/offsite_setup/' . $oQuestion->campaign_id) : base_url('admin/brandboost/onsite_setup/' . $oQuestion->campaign_id) }}" class="text-default text-semibold bbot"><span>{!! (!empty($oQuestion->brand_title)) ? setStringLimit($oQuestion->brand_title, '20') : displayNoData() !!}</span> </a></div>
+                                                        <div class="text-muted text-size-small">{!! (!empty($oQuestion->brand_desc)) ? setStringLimit($oQuestion->brand_desc, '30') : displayNoData() !!}</div>
                                                     </div>
                                                 </td>
                                                 <td  class="text-left" class="viewQuestionSmartPopup" questionid="{{ $oQuestion->id }}"><div class="media-left text-right" style="width:180px;">
