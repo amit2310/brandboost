@@ -18,7 +18,7 @@
 </style>
 
 <div class="tab-pane @if ($seletedTab == 'billing') active @endif" id="right-icon-tab3">
-    <div class="row"> 
+    <div class="row">
         <div class="col-md-6">
             <div class="panel panel-flat review_ratings">
                 <div class="panel-heading">
@@ -121,8 +121,8 @@
                                                 <div class="">
                                                     <select class="form-control" name="billing_country" id="billing_country">
                                                         <option value="">Select Country</option>
-															@if (!empty($oCountries)) 
-																foreach ($oCountries as $oCountry)
+															@if (!empty($oCountries))
+																@foreach ($oCountries as $oCountry)
 																	<option value="{{ $oCountry->country_code }}" {!! ($oCountry->country_code == $oUser->billing_country) ? 'selected' : '' !!}>
 																		{{ $oCountry->name }}
 																	</option>
@@ -195,7 +195,7 @@
                                         </div>
                                     </div>
 
-                                    @f (empty($oUser->chargebee_cc_id))
+                                    @if (empty($oUser->chargebee_cc_id))
                                         <div class="row ccinfoerror">
                                             <div class="col-xs-6 tex-center">
                                                 <p class="pull-left mb0">Currently you haven't stored any credit card details yet.</p>
@@ -225,7 +225,7 @@
                                         <div class="clearfix"></div>
                                     </div>
                                 @endif
-								
+
                                 @if (!empty($oUser->topup_subscription_id))
                                     <br>
                                     <div class="card_sec p0">
@@ -240,7 +240,7 @@
                                         <div class="clearfix"></div>
                                     </div>
                                 @endif
-								
+
                                 @if (empty($oUser->subscription_id) && empty($oUser->topup_subscription_id))
                                     <i>No Subscription found</i>
                                 @endif
@@ -271,7 +271,7 @@
                                                     <tr>
                                                         <td><span class="text-muted">{{ date("F dS Y", $oInvoice->paid_at) }}</span></td>
                                                         <td><span class="pl0 txt_dark inv_details" invoice_id="{{ $oInvoice->id }}" style="cursor:pointer;"><strong class="text-left">
-															@if (!empty($invoiceData[0])) 
+															@if (!empty($invoiceData[0]))
 																{{ $invoiceData[0]->description }}
 															@endif
 															</strong></span></td>
@@ -317,7 +317,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="frmSaveCCDetails" method="post" class="form-horizontal">
-                @csrf	
+                @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="{{ base_url() }}assets/images/edit_email_icon.png"> Add/Change Credit Card Details <span>Store your card card details on file directly at merchant site, highly secure and reliable</span></h5>
@@ -328,15 +328,15 @@
                             <div class="row bbot form_box">
                                 <div class="col-xs-4"><label>Credit Card Number</label></div>
                                 <div class="col-xs-8">
-                                    <input placeholder="Enter Credit Card Number" name="ccNum"  class="form-control" type="text" maxlength="16" autocomplete="off" required>    
-                                </div>	
+                                    <input placeholder="Enter Credit Card Number" name="ccNum"  class="form-control" type="text" maxlength="16" autocomplete="off" required>
+                                </div>
                             </div>
 
                             <div class="row bbot form_box">
                                 <div class="col-xs-4"><label>Security Code</label></div>
                                 <div class="col-xs-8">
                                     <input placeholder="Enter Security Code" name="cvv" maxlength="4" class="form-control" type="text" required>
-                                </div>	
+                                </div>
                             </div>
 
                             <div class="row bbot form_box">
@@ -357,7 +357,7 @@
                                         <option value="11">11</option>
                                         <option value="12">12</option>
                                     </select>
-                                </div>	
+                                </div>
                             </div>
 
 
@@ -368,9 +368,9 @@
                                         <option value="">YYYY</option>
                                         @for ($i = date('Y'); $i <= date('Y', strtotime('+20 years')); $i++)
                                             <option value="{{ $i }}">{{ $i }}</option>
-										@endif
+										@endfor
                                     </select>
-                                </div>	
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -450,8 +450,8 @@
             });
             return false;
         });
-		
-		
+
+
         $(".updatecompanyprofileinfo").blur(function () {
             var fieldname = $(this).attr('name');
             var fieldval = $(this).val();

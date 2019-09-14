@@ -96,7 +96,7 @@
                 <div class="w100 @if ($aLatestReview['review_type'] == 'video') text-center @endif ">
                     @if ($aLatestReview['review_type'] == 'text')
 						{{ $aLatestReview['comment_text'] }}
-                    @else if ($aLatestReview['review_type'] == 'video')
+                    @elseif ($aLatestReview['review_type'] == 'video')
                         <video width="400" controls style="width:100%">
                             <source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $aLatestReview['comment_video'] }}" type="video/mp4">
                         </video>
@@ -211,7 +211,7 @@
 								<span>
 									@if ($aReview['review_type'] == 'text')
 										{{ $aReview['comment_text'] }}
-									@else if ($aReview['review_type'] == 'video')
+									@elseif ($aReview['review_type'] == 'video')
 										<video width="250" controls style="width:100%">
 											<source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $aReview['comment_video'] }}" type="video/mp4">
 										</video>
@@ -250,72 +250,64 @@
 
         <p class="green"><strong>Reviews ({{ $totalReviews }})</strong></p>
 
-        <?php
+        @php
         if (!empty($aReviews)) {
             $z = 0;
             foreach ($aReviews as $aReview) {
                 $z++;
                 $viewAllReviewsLink = ($totalReviews > 10) ? "<a href='http://brandboost.io/reviews/lists/'" . $campaignID . " target='_blank'>View All Reviews</a>" : '';
                 if ($z < 11) {
-                    ?>
+                    @endphp
 
                     <div class="bb_txt_user">
                         <p><strong>{{ $aReview['firstname'] . ' ' . $aReview['lastname'] }}</strong> <span>Verified Buyer</span></p>
                         <p>
-                            <?php for ($i = 0; $i < $aReview['ratings']; $i++) { ?>
-                                <i class="fa green fa-star"></i>
-                            <?php } ?>
-                            <?php
-                            if ($i < 5) {
-                                for ($j = $i; $j < 5; $j++) {
-                                    ?>
-                                    <i class="fa fa-star"></i>
-                                    <?php
-                                }
-                            }
-                            ?>
+                            @for ($i = 0; $i < $aReview['ratings']; $i++)
+								<i class="fa green fa-star"></i>
+							@endfor
+                            
+							@if ($i < 5)
+								@for ($j = $i; $j < 5; $j++)
+									<i class="fa fa-star"></i>
+								@endfor
+							@endif
                         </p>
 
                         <div class="bb_txt_user_rev">
                             <p class=""><strong> {{ $aReview['review_title'] }} </strong><br>
                             <div class="clearfix"></div>
                             <span> 
-                                <?php
-                                if ($aReview['review_type'] == 'text') {
-                                    echo $aReview['comment_text'];
-                                } else if ($aReview['review_type'] == 'video') {
-                                    ?>
+                                @if ($aReview['review_type'] == 'text')
+									{{ $aReview['comment_text'] }}
+								@elseif ($aReview['review_type'] == 'video')
                                     <video width="350" class="bb_inline_vid" controls style="max-width:350px;">
                                         <source src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $aReview['comment_video'] }}" type="video/mp4">
                                     </video>
-
-                                    <?php
-                                }
-                                ?>
+								@endif
                             </span>
                             </p>
                         </div>
 
-                <?php if (!empty($bAllowProsCons)) { ?>
+						@if (!empty($bAllowProsCons))
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-6"><strong>Pros</strong>
-                                        <?php
+                                        @php
                                         $pros = explode(',', $aReview['pro_review']);
                                         foreach ($pros as $value) {
                                             echo "<p>" . $value . "</p>";
                                         }
-                                        ?></div>
+                                        @endphp</div>
                                     <div class="col-md-6" ><strong>Cons</strong>
-                                        <?php
+                                        @php
                                         $cons = explode(',', $aReview['cons_review']);
                                         foreach ($cons as $value) {
                                             echo "<p>" . $value . "</p>";
                                         }
-                                        ?></div>
+                                        @endphp</div>
                                 </div>
                             </div>
-                <?php } ?>
+						@endif
 
                         <div class="bb_date_help bb_inline_helpfull_yesno">
                             <p>{{ date('F d, Y', strtotime($aReview['created'])) }}</p>
@@ -327,7 +319,7 @@
                         </div>
                     </div>
 
-                    <?php
+                    @php
                 }
             }
         }
@@ -335,9 +327,9 @@
         if (!empty($viewAllReviewsLink)) {
             echo '<p class="bb-center"><strong>' . $viewAllReviewsLink . '</strong></p> ';
         }
-        ?>
+        @endphp
 
         <div class="clearfix"></div>
     </div>
 
-<?php endif }}
+@endif

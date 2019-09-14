@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 @endsection
@@ -54,7 +54,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -173,7 +173,7 @@
                 </div>
 
                 @if ($campaignType == 'Email')
-                    <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="Email"><i class="icon-plus3"></i> &nbsp; Email Broadcast</button> 
+                    <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="Email"><i class="icon-plus3"></i> &nbsp; Email Broadcast</button>
                 @endif
                 @if ($campaignType == 'SMS')
                     <button type="button" class="btn bl_cust_btn new btn-default addBroadcast dark_btn ml20" broadcast_type="SMS"><i class="icon-plus3"></i> &nbsp; SMS Broadcast</button>
@@ -183,7 +183,7 @@
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
     @if (!empty($oSegments))
-        <div class="tab-content"> 
+        <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
@@ -312,7 +312,7 @@
 
                                                         <!-- <td>
                                                             <div class="media-left text-right">
-                                                                <div class=""><a href="javascript:void(0);" class="text-default text-semibold">{{ dataFormat($oSegment->created) }} <span class="txt_grey">{{ date('h:i A', strtotime($oSegment->created)) }}</span></a> </div>                                                            
+                                                                <div class=""><a href="javascript:void(0);" class="text-default text-semibold">{{ dataFormat($oSegment->created) }} <span class="txt_grey">{{ date('h:i A', strtotime($oSegment->created)) }}</span></a> </div>
                                                             </div>
                                                         </td> -->
 
@@ -322,25 +322,25 @@
 
                                                 <td>
                                                     <div class="media-left text-right">
-                                                        <div class="">{{ (!empty($campaignCollection)) ? implode(",", $campaignCollection) : $oSegment->campaign_title }}</div>                                                            
+                                                        <div class="">{!! (!empty($campaignCollection)) ? implode(",", $campaignCollection) : $oSegment->campaign_title !!}</div>
                                                     </div>
                                                 </td>
 
                                                 <td>
                                                     <div class="media-left text-right">
-                                                        <div class="">{{ ucfirst($modName) }}</div>                                                            
+                                                        <div class="">{{ ucfirst($modName) }}</div>
                                                     </div>
                                                 </td>
 
                                                         <!-- <td>
                                                             <div class="media-left text-right">
-                                                                <div class="">{{ ucwords($oSegment->source_campaign_type) }}</div>                                                            
+                                                                <div class="">{{ ucwords($oSegment->source_campaign_type) }}</div>
                                                             </div>
                                                         </td> -->
 
                                                 <td>
                                                     <!-- <div class="media-left text-right">
-                                                        <div class="">{{ ucwords($oSegment->source_segment_type) }}</div>                                                            
+                                                        <div class="">{{ ucwords($oSegment->source_segment_type) }}</div>
                                                     </div> -->
 
                                                     <button class="btn btn-xs btn_white_table pr10"> {{ ucwords($oSegment->source_segment_type) }}</button>
@@ -371,7 +371,7 @@
                                                     </div></td>
 
                                                 <td style="display: none;">
-                                                    @if ($oSegment->status != 1) 
+                                                    @if ($oSegment->status != 1)
                                                         {{ 'archive' }}
                                                     @else
                                                         {{ 'active' }}
@@ -397,7 +397,7 @@
 
     @else
 
-        <div class="tab-content"> 
+        <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
@@ -444,10 +444,10 @@
                                                         <div style="margin: 20px 0px 0;" class="text-center">
                                                             <h5 class="mb-20 mt40">
                                                                 Looks Like You Don’t Have Any Segment Yet <img src="{{ site_url('assets/images/smiley.png') }}"> <br>
-                                                               
+
                                                             </h5>
 
-                                                           
+
 
                                                         </div>
                                                     </div>
@@ -469,7 +469,7 @@
             </div>
         </div>
 
-    @endif 
+    @endif
 
 </div>
 
@@ -556,7 +556,7 @@
 </div>
 
 
-<!-- /Add Broadcast -->		
+<!-- /Add Broadcast -->
 
 <!-- Update Broadcast Modal-->
 <!-- <div id="updateBroadcast" class="modal fade">
@@ -588,7 +588,7 @@
         </div>
     </div>
 </div> -->
-<!-- /Add Broadcast -->	
+<!-- /Add Broadcast -->
 
 
 <div id="editSegmentModel" class="modal fade in">
@@ -1204,5 +1204,5 @@
 
 
     });
-</script>		
+</script>
 @endsection

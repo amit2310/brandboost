@@ -9,7 +9,7 @@
             {{ 'bg-success' }}
         @elseif ($oFeedback->category == 'Neutral')
             {{ 'bg-blue' }}
-        @else if ($oFeedback->category == 'Negative')
+        @elseif ($oFeedback->category == 'Negative')
             {{ 'bg-danger' }}
         @endif
         ">{{ $oFeedback->category }}</span></div>

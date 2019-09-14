@@ -1,5 +1,5 @@
-@php 
-    list($canRead, $canWrite) = fetchPermissions('Onsite Campaign') 
+@php
+    list($canRead, $canWrite) = fetchPermissions('Onsite Campaign');
     $widgetType = $widgetData->widget_type;
 @endphp
 <div class="tab-pane {{ $rs }}" id="right-icon-tab1">
@@ -32,7 +32,7 @@
                             <figure><img src="{{ base_url() }}assets/images/review_source1_new.png"/></figure>
                             <div class="text_sec">
                                 <p><strong>Small Popup</strong></p>
-                                <h5>Displays reviews in a fixed vertical popup positioned on the left or right side</h5>	
+                                <h5>Displays reviews in a fixed vertical popup positioned on the left or right side</h5>
                             </div>
                         </div>
                     </label>
@@ -47,7 +47,7 @@
                             <figure><img src="{{ base_url() }}assets/images/review_source2_new.png"/></figure>
                             <div class="text_sec">
                                 <p><strong>Horizontal Popup</strong></p>
-                                <h5>Displays 4 latest review in a bottom fixed scrollable reviews pannel</h5>	
+                                <h5>Displays 4 latest review in a bottom fixed scrollable reviews pannel</h5>
                             </div>
                         </div>
                     </label>
@@ -63,7 +63,7 @@
                             <figure><img src="{{ base_url() }}assets/images/review_source3_new.png"/></figure>
                             <div class="text_sec">
                                 <p><strong>Center Popup</strong></p>
-                                <h5>Displays reviews in a lightbox slider with full focus on the details</h5>	
+                                <h5>Displays reviews in a lightbox slider with full focus on the details</h5>
                             </div>
                         </div>
                     </label>
@@ -79,7 +79,7 @@
                             <figure><img src="{{ base_url() }}assets/images/review_source4_new.png"/></figure>
                             <div class="text_sec">
                                 <p><strong>Vertical Popup</strong></p>
-                                <h5>Displays reviews in a scrollable feed component on page</h5>	
+                                <h5>Displays reviews in a scrollable feed component on page</h5>
                             </div>
                         </div>
                     </label>
@@ -94,7 +94,7 @@
                             <figure><img src="{{ base_url() }}assets/images/review_source5_new.png"/></figure>
                             <div class="text_sec">
                                 <p><strong>Embeded Reviews</strong></p>
-                                <h5>Displays reviews in a lightbox slider with full focus on the details</h5>	
+                                <h5>Displays reviews in a lightbox slider with full focus on the details</h5>
                             </div>
                         </div>
                     </label>

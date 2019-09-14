@@ -1,4 +1,4 @@
-<?php 
+@php 
 if (!empty($oCampaign)) {
 		//permissions
 		$bAllowComments = ($oCampaign->allow_comments == 1) ? true : false;
@@ -60,9 +60,9 @@ if (!empty($oCampaign)) {
 		$twoStarRatingsPer = $twoStarRatingsPer > 0 ? number_format($twoStarRatingsPer) : 0;
 		$oneStarRatingsPer = $oneStarRatingsPer > 0 ? number_format($oneStarRatingsPer) : 0;
 	}
-?>
+@endphp
+
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-<!-- <link href="<?php echo base_url(); ?>new_pages/assets/css/brandboost_widget.css" rel="stylesheet" type="text/css"> -->
 <style>
 	.clearfix {}
 	.clearfix::after {content: "";clear: both;display: table;}
@@ -211,199 +211,199 @@ if (!empty($oCampaign)) {
 	.bb_avatar_image.img32 img{width: 32px; height: 32px;}
 </style>
 	<div class="review_chat48">
-		<div class="head <?php echo $bgClassName; ?>">
+		<div class="head {{ $bgClassName }}">
 			<div class="box_right">
 				<div class="client_review"> <span class="text-left"><i class="fa fa-angle-left"></i> Comments</span> </div>
 			</div>
 		</div>
 		<div class="second_box">
-			<div class="middle <?php echo $bgClassName; ?>">
+			<div class="middle {{ $bgClassName }}">
 				<div class="main_comment">
 					<div class="box_1 bb_custom_bc">
 						<div class="top_div bb_custom_bc">
-							<div class="left bb_avatar_image"><span class="circle"><i class="fa fa-check"></i></span><?php echo showUserAvtar($reviewData['user_data']['avatar'], $reviewData['user_data']['firstname'], $reviewData['user_data']['lastname']); ?></div>
+							<div class="left bb_avatar_image"><span class="circle"><i class="fa fa-check"></i></span>{{ showUserAvtar($reviewData['user_data']['avatar'], $reviewData['user_data']['firstname'], $reviewData['user_data']['lastname']) }}</div>
 							<div class="right">
-								<div class="client_n"><p class="bb_custom_fc"><?php echo $reviewData['allow_show_name'] != 1 ? 'Anonymous' : $reviewData['user_data']['firstname'] . ' ' . $reviewData['user_data']['lastname']; ?> <span class="bb_custom_fc"><em>.</em>Verified Buyer - <?php echo $reviewData['brandboost_name']; ?></span></p></div>
+								<div class="client_n"><p class="bb_custom_fc">{{ $reviewData['allow_show_name'] != 1 ? 'Anonymous' : $reviewData['user_data']['firstname'] . ' ' . $reviewData['user_data']['lastname'] }} <span class="bb_custom_fc"><em>.</em>Verified Buyer - {{ $reviewData['brandboost_name'] }}</span></p></div>
 								
 								<div class="client_review">
 									
-									<?php if ($bAllowRatings): ?>
-									<?php for ($i = 0; $i < $reviewData['ratings']; $i++) { ?>
-										<i class="fa fa-star bb_txt_yellow bb_custom_rc"></i>
-									<?php } ?>
-									<?php
-										if ($i < 5) {
-											for ($j = $i; $j < 5; $j++) {
-											?>
-											<i class="fa fa-star bb_txt_grey"></i>
-											<?php
-											}
-										}
-									?>
+									@if ($bAllowRatings)
+										@for ($i = 0; $i < $reviewData['ratings']; $i++)
+											<i class="fa fa-star bb_txt_yellow bb_custom_rc"></i>
+										@endfor
 									
-									<span class="bb_thingrey bb_custom_fc"><?php echo number_format($reviewData['ratings'], 1); ?>/5</span> 
-									<?php endif; ?>
-									<?php if ($bAllowCreatedTime): ?>
-									<span class="date bb_custom_fc"><em>.</em><?php echo dataFormat($reviewData['created']); ?></span>
-									<?php endif; ?>
+										@if ($i < 5)
+											@for ($j = $i; $j < 5; $j++)
+												<i class="fa fa-star bb_txt_grey"></i>
+											@endfor
+										@endfor
+									
+										<span class="bb_thingrey bb_custom_fc">{{ number_format($reviewData['ratings'], 1) }}/5</span> 
+									@endif
+									
+									@if ($bAllowCreatedTime)
+										<span class="date bb_custom_fc"><em>.</em>{{ dataFormat($reviewData['created']) }}</span>
+									@endif
+									
 									<div class="bb_clear"></div>
-									<?php if($bAllowCampaignName): ?>
-									<div class="bb_custom_fc" style="margin-top:10px; font-weight:bold;"><?php echo $bbData->brand_title; ?></div>
-									<?php endif; ?>
+									@if($bAllowCampaignName)
+										<div class="bb_custom_fc" style="margin-top:10px; font-weight:bold;">{{ $bbData->brand_title }}</div>
+									@endif
 								</div>
 							</div>
 						</div>
 						
 						<div class="bottom_div">
-							<p class="bb_custom_fc"><?php echo $reviewData['comment_text']; ?></p>
+							<p class="bb_custom_fc">{{ $reviewData['comment_text'] }}</p>
 						</div>
 						<div class="footer_div">
 							<div class="comment_div"><p>
-							<?php if ($bAllowComments): ?>
-							<span class="comment_a bb_custom_fc"><i class="fa fa-comment"></i> <?php echo sizeof($reviewData['comment_block']); ?> Comments</span> 
-							<?php endif; ?>
-							<?php if ($bAllowHelpful): ?>
-							<span class="bb_custom_fc"><em>.</em><span id="bb_review_helpful_cp_<?php echo $classPositon; ?>"><?php echo ($reviewData['total_helpful']) ? $reviewData['total_helpful'] : 0; ?> found this helpful</span></span>
-							<?php endif; ?>
+							@if ($bAllowComments)
+								<span class="comment_a bb_custom_fc"><i class="fa fa-comment"></i> {{ sizeof($reviewData['comment_block']) }} Comments</span> 
+							@endif
+							
+							@if ($bAllowHelpful)
+								<span class="bb_custom_fc"><em>.</em><span id="bb_review_helpful_cp_{{ $classPositon }}">{{ ($reviewData['total_helpful']) ? $reviewData['total_helpful'] : 0 }} found this helpful</span></span>
+							@endif
+							
 							</p></div>
 							<div class="liked_icon">
-								<a class="bb_like_dislike bbpw_helpful_action" id="bb_review_like_cp_<?php echo $classPositon; ?>" href="javascript:void(0);" class-position="<?php echo $classPositon; ?>" action-name="Yes" bb-review-id="<?php echo $reviewData['id']; ?>"><i class="fa fa-thumbs-up"></i></a> 
-								<a class="bb_like_dislike bbpw_helpful_action" id="bb_review_dislike_cp_<?php echo $classPositon; ?>" href="javascript:void(0);" class-position="<?php echo $classPositon; ?>" action-name="No" bb-review-id="<?php echo $reviewData['id']; ?>"><i class="fa fa-thumbs-down"></i></a>
+								<a class="bb_like_dislike bbpw_helpful_action" id="bb_review_like_cp_{{ $classPositon }}" href="javascript:void(0);" class-position="{{ $classPositon }}" action-name="Yes" bb-review-id="{{ $reviewData['id'] }}"><i class="fa fa-thumbs-up"></i></a> 
+								<a class="bb_like_dislike bbpw_helpful_action" id="bb_review_dislike_cp_{{ $classPositon }}" href="javascript:void(0);" class-position="{{ $classPositon }}" action-name="No" bb-review-id="{{ $reviewData['id'] }}"><i class="fa fa-thumbs-down"></i></a>
 							</div>
 							<!-- <div class="share_icon"><i class="fa fa-share"></i> Share</div> -->
 						</div>
 					</div><!--box_1  reply_comment_inner2 --->
 					
-					<?php if ($bAllowComments): ?>
-					<?php if (!empty($reviewData['comment_block'])): ?>
-					<?php
-						$key = 0;
-						foreach ($reviewData['comment_block'] as $aComment):
-						$getUserDetail = getUserDetail($aComment['user_id']);
+					@if ($bAllowComments)
+						@php
+						if (!empty($reviewData['comment_block'])):
+							$key = 0;
+							foreach ($reviewData['comment_block'] as $aComment):
+							$getUserDetail = getUserDetail($aComment['user_id']);
 						
-					?>
-					<div class="reply_comment">
-						<div class="reply_comment_inner bb_custom_bc">
-							<div class="top_div">
-								<div class="left bb_avatar_image img32"><?php echo showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname); ?></div>
-								
-								<div class="right">
-									<div class="client_n"><p class="bb_custom_fc"><?php echo $aComment['firstname'] . ' ' . $aComment['lastname']; ?> <span class="bb_custom_fc"><em>.</em><?php echo timeAgo(date('F d, Y', strtotime($aComment['created']))); ?></span></p></div>
-									<div class="client_review"><p class="bb_custom_fc"><?php echo $aComment['content']; ?></p></div>
-								</div>
-							</div>
-							<div class="footer_div">
-								<div class="liked_icon">
-									<span class="bbpw_comment_like_<?php echo $aComment['id']; ?> bb_custom_fc"><?php echo $aComment['like']; ?></span>&nbsp;
-									<a href="javascript:void(0);" class="bbpw_comment_like_action bb_custom_fc" review-position="<?php echo $classPositon; ?>" comment-position="<?php echo $key; ?>" action-value="1" bb-review-id="<?php echo $reviewData['id']; ?>" bb-comment-id="<?php echo $aComment['id']; ?>"><i class="fa fa-thumbs-up bb_custom_fc"></i></a>
-									<span class="bbpw_comment_dislike_<?php echo $aComment['id']; ?> bb_custom_fc"><?php echo $aComment['dislike']; ?></span>&nbsp;
-									<a href="javascript:void(0);" class="bbpw_comment_like_action bb_custom_fc" review-position="<?php echo $classPositon; ?>" comment-position="<?php echo $key; ?>" action-value="0" bb-review-id="<?php echo $reviewData['id']; ?>" bb-comment-id="<?php echo $aComment['id']; ?>"><i class="fa fa-thumbs-down bb_custom_fc"></i></a> &nbsp; 
-									<a href="javascript:void(0);" class="bb_comment_reply bb_custom_fc" review-position="<?php echo $classPositon; ?>" comment-position="<?php echo $key; ?>" style="text-decoration: none;">Reply</a>
-								</div>
-								<div class="bb_comment_reply_box" id="bb_comment_reply_box_<?php echo $classPositon; ?>_<?php echo $key; ?>" style="display:none; width:110%; margin-top:20px; margin-left:0px;">
-									<div class="bbpw_comment_form bb_add_comment_sec_2 bb_custom_bc" style="padding:0px;">
-										<div class="bb_overlay_replay" id="bb_overlay_<?php echo $aComment['id']; ?>"><img src="<?php echo base_url(); ?>/assets/images/widget_load.gif" width="60" height="60"></div>
-										<p style="padding-left: 40px;" class="bb_custom_fc">Replay comment</p>
-										<div class="bbpw_success_message" style="padding-left: 40px; padding-bottom: 10px;">
-											<div class="bb-success-msg1 bb-hidden bb_custom_fc" id="bb_success_msg_<?php echo $aComment['id']; ?>">Thank you for posting your comment. Your comment has been sent successfully and please waiting for publish it.</div>
-											<div class="bb-error-msg1 bb-hidden" id="bb_error_msg_<?php echo $aComment['id']; ?>">OPPS! Error while posting your comment. Try again!</div>
-										</div>										
-										<div class="bb_add_ctext" style="margin-bottom:10px; margin-left:40px;">
-											<div class="bb_add_user_icon"><img src="<?php echo base_url(); ?>assets/images/widget/user_img_blank.png" width="28"></div>
-											<textarea class="bbpw_form_control addnote bbcmtreply" id="bbcmtreply_<?php echo $aComment['id']; ?>" placeholder="Write Your Comments Here"></textarea>
-											<div class="bb_txt_format" style="padding-bottom:15px;">
-												<a href="javascript:void(0);">B</a>
-												<a href="javascript:void(0);">/</a>
-												<a href="javascript:void(0);">U</a>
-												<a href="javascript:void(0);">$</a>
-											</div>
-										</div>
-										<div class="bb_signup_sec" style="padding:15px; border-radius:5px; margin-left:40px;">
-											<div class="bb_social bb-hidden" style="float:none; margin:0 auto;">
-												<a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/widget/bb_widget_google.png"></a>
-												<a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/widget/bb_widget_facebook.png"></a>
-												<a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/widget/bb_widget_twitter.png"></a>
-											</div>
-											<p style="margin:0px 0 20px; float: none;text-align: center; line-height: 10px;"><span class="bb-hidden">OR</span><br>Sign Up With Brand Boost</p>
-											<div class="bb_input_sec">
-												<input id="bbcmtreplyname_<?php echo $aComment['id']; ?>" placeholder="Your Name" class="bb_signup_input bbcmtreplyname user" type="text">
-												<input id="bbcmtreplyemail_<?php echo $aComment['id']; ?>" placeholder="Your Email" class="bb_signup_input bbcmtreplyemail" type="text">
-												<input id="bbcmtreplyphone_<?php echo $aComment['id']; ?>" placeholder="Your Phone" class="bb_signup_input bbcmtreplyphone phone" type="text">
-												<!-- <input id="bbcmtreplypassword_<?php echo $aComment['id']; ?>" placeholder="Your Phone" class="bb_signup_input bbcmtreplypassword pass" type="password"> -->
-												
-												<ul class="bb_terms_check">
-													<li><span class="bb_cust_checkbox">
-														<label class="custmo_checkbox">
-															<input type="checkbox" id="bb_comment_terms_<?php echo $aComment['id']; ?>" value="1" checked>
-															<span class="custmo_checkmark"></span>
-														</label>															
-													</span> I agree to Brand Boost <a href="<?php echo base_url(); ?>" target="_blank">Terms of Service</a></li>
-													<li><span class="bb_cust_checkbox">
-														<label class="custmo_checkbox">
-															<input type="checkbox" id="bb_comment_processing_<?php echo $aComment['id']; ?>" value="1" checked>
-															<span class="custmo_checkmark"></span>
-														</label>
-													</span> I agree to Disqus processing of email and IP address, and the use of cookies, to facilitate my authentication and posting of comments, explained further in the <a href="#">Privacy Policy</a>
-													</li>
-												</ul>
-												<input type="hidden" id="bb_review_id_<?php echo $aComment['id']; ?>" value="<?php echo $reviewData['id']; ?>" >
-												<input type="hidden" id="bb_comment_id_<?php echo $aComment['id']; ?>" value="<?php echo $aComment['id']; ?>" >
-												<button type="submit" class="bb_submit_btn bbcmtreplysubmit <?php echo $bgClassName; ?> bb_custom_fc" comment-id="<?php echo $aComment['id']; ?>" style="cursor:pointer;">Submit</button>
-											</div>
-											<div class="bb_clear"></div>
-										</div>
+						@endphp
+							<div class="reply_comment">
+								<div class="reply_comment_inner bb_custom_bc">
+									<div class="top_div">
+										<div class="left bb_avatar_image img32">{{ showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname) }}</div>
 										
+										<div class="right">
+											<div class="client_n"><p class="bb_custom_fc">{{ $aComment['firstname'] . ' ' . $aComment['lastname'] }} <span class="bb_custom_fc"><em>.</em>{{ timeAgo(date('F d, Y', strtotime($aComment['created']))) }}</span></p></div>
+											<div class="client_review"><p class="bb_custom_fc">{{ $aComment['content'] }}</p></div>
+										</div>
+									</div>
+									<div class="footer_div">
+										<div class="liked_icon">
+											<span class="bbpw_comment_like_{{ $aComment['id'] }} bb_custom_fc">{{ $aComment['like'] }}</span>&nbsp;
+											<a href="javascript:void(0);" class="bbpw_comment_like_action bb_custom_fc" review-position="{{ $classPositon }}" comment-position="{{ $key }}" action-value="1" bb-review-id="{{ $reviewData['id'] }}" bb-comment-id="{{ $aComment['id'] }}"><i class="fa fa-thumbs-up bb_custom_fc"></i></a>
+											<span class="bbpw_comment_dislike_{{ $aComment['id'] }} bb_custom_fc">{{ $aComment['dislike'] }}</span>&nbsp;
+											<a href="javascript:void(0);" class="bbpw_comment_like_action bb_custom_fc" review-position="{{ $classPositon }}" comment-position="{{ $key }}" action-value="0" bb-review-id="{{ $reviewData['id'] }}" bb-comment-id="{{ $aComment['id'] }}"><i class="fa fa-thumbs-down bb_custom_fc"></i></a> &nbsp; 
+											<a href="javascript:void(0);" class="bb_comment_reply bb_custom_fc" review-position="{{ $classPositon }}" comment-position="{{ $key }}" style="text-decoration: none;">Reply</a>
+										</div>
+										<div class="bb_comment_reply_box" id="bb_comment_reply_box_{{ $classPositon }}_{{ $key }}" style="display:none; width:110%; margin-top:20px; margin-left:0px;">
+											<div class="bbpw_comment_form bb_add_comment_sec_2 bb_custom_bc" style="padding:0px;">
+												<div class="bb_overlay_replay" id="bb_overlay_{{ $aComment['id'] }}"><img src="{{ base_url() }}/assets/images/widget_load.gif" width="60" height="60"></div>
+												<p style="padding-left: 40px;" class="bb_custom_fc">Replay comment</p>
+												<div class="bbpw_success_message" style="padding-left: 40px; padding-bottom: 10px;">
+													<div class="bb-success-msg1 bb-hidden bb_custom_fc" id="bb_success_msg_{{ $aComment['id'] }}">Thank you for posting your comment. Your comment has been sent successfully and please waiting for publish it.</div>
+													<div class="bb-error-msg1 bb-hidden" id="bb_error_msg_{{ $aComment['id'] }}">OPPS! Error while posting your comment. Try again!</div>
+												</div>										
+												<div class="bb_add_ctext" style="margin-bottom:10px; margin-left:40px;">
+													<div class="bb_add_user_icon"><img src="{{ base_url() }}assets/images/widget/user_img_blank.png" width="28"></div>
+													<textarea class="bbpw_form_control addnote bbcmtreply" id="bbcmtreply_{{ $aComment['id'] }}" placeholder="Write Your Comments Here"></textarea>
+													<div class="bb_txt_format" style="padding-bottom:15px;">
+														<a href="javascript:void(0);">B</a>
+														<a href="javascript:void(0);">/</a>
+														<a href="javascript:void(0);">U</a>
+														<a href="javascript:void(0);">$</a>
+													</div>
+												</div>
+												<div class="bb_signup_sec" style="padding:15px; border-radius:5px; margin-left:40px;">
+													<div class="bb_social bb-hidden" style="float:none; margin:0 auto;">
+														<a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/widget/bb_widget_google.png"></a>
+														<a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/widget/bb_widget_facebook.png"></a>
+														<a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/widget/bb_widget_twitter.png"></a>
+													</div>
+													<p style="margin:0px 0 20px; float: none;text-align: center; line-height: 10px;"><span class="bb-hidden">OR</span><br>Sign Up With Brand Boost</p>
+													<div class="bb_input_sec">
+														<input id="bbcmtreplyname_{{ $aComment['id'] }}" placeholder="Your Name" class="bb_signup_input bbcmtreplyname user" type="text">
+														<input id="bbcmtreplyemail_{{ $aComment['id'] }}" placeholder="Your Email" class="bb_signup_input bbcmtreplyemail" type="text">
+														<input id="bbcmtreplyphone_{{ $aComment['id'] }}" placeholder="Your Phone" class="bb_signup_input bbcmtreplyphone phone" type="text">
+														
+														<ul class="bb_terms_check">
+															<li><span class="bb_cust_checkbox">
+																<label class="custmo_checkbox">
+																	<input type="checkbox" id="bb_comment_terms_{{ $aComment['id'] }}" value="1" checked>
+																	<span class="custmo_checkmark"></span>
+																</label>															
+															</span> I agree to Brand Boost <a href="{{ base_url() }}" target="_blank">Terms of Service</a></li>
+															<li><span class="bb_cust_checkbox">
+																<label class="custmo_checkbox">
+																	<input type="checkbox" id="bb_comment_processing_{{ $aComment['id'] }}" value="1" checked>
+																	<span class="custmo_checkmark"></span>
+																</label>
+															</span> I agree to Disqus processing of email and IP address, and the use of cookies, to facilitate my authentication and posting of comments, explained further in the <a href="#">Privacy Policy</a>
+															</li>
+														</ul>
+														<input type="hidden" id="bb_review_id_{{ $aComment['id'] }}" value="{{ $reviewData['id'] }}" >
+														<input type="hidden" id="bb_comment_id_{{ $aComment['id'] }}" value="{{ $aComment['id'] }}" >
+														<button type="submit" class="bb_submit_btn bbcmtreplysubmit {{ $bgClassName }} bb_custom_fc" comment-id="{{ $aComment['id'] }}" style="cursor:pointer;">Submit</button>
+													</div>
+													<div class="bb_clear"></div>
+												</div>
+												
+											</div>
+										</div>
+							
 									</div>
 								</div>
-					
-							</div>
-						</div>
-					</div><!--reply_comment--->
-					<?php
+							</div><!--reply_comment--->
+							@php
 								
-						foreach ($childComments as $cComment):
-						$cComment = (array) $cComment;
-						$getUserDetail = getUserDetail($cComment['user_id']);
-						$oCommentLike = $this->mReviews->countCommentLike($cComment['id']);
-					?>
-					<div class="bb_inner_reply" style="margin-left:40px;">
-						<div class="bb_comment_header_small">
-							<div class="bb_avatar_small">
-								<?php echo showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname); ?>
-							</div>
-							<div class="bb_fleft">
-								<p class="bb_para bb_custom_fc"><strong><?php echo $cComment['firstname'] . ' ' . $cComment['lastname']; ?></strong> </p>
-							</div>
-							<div class="bb_fleft">
-								<p class="bb_para bb_custom_fc"><span class="bb_dot"><i class="fa fa-circle"></i></span> <span class="bb_thingrey bb_custom_fc"><?php echo timeAgo(date('F d, Y', strtotime($cComment['created']))); ?></span></p>
-							</div>
-							<div class="bb_clear"></div>
-						</div>
-						<div class="text_section_reply">
-							<p class="bb_para bb_custom_fc"><?php echo $cComment['content']; ?></p>
-						</div>
-						<div class="bb_comment_area_reply">
-							<span class="bbpw_comment_like_<?php echo $cComment['id']; ?> bb_custom_fc"><?php echo $oCommentLike['like']; ?></span>&nbsp;
-							<a href="javascript:void(0);" class="bbpw_comment_like_action bb_custom_fc" review-position="<?php echo $classPositon; ?>" comment-position="<?php echo $key; ?>" action-value="1" bb-review-id="<?php echo $reviewData['id']; ?>" bb-comment-id="<?php echo $cComment['id']; ?>"><i class="fa fa-thumbs-up"></i></a>
-							<span class="bbpw_comment_dislike_<?php echo $cComment['id']; ?> bb_custom_fc"><?php echo $oCommentLike['dislike']; ?></span>&nbsp;
-							<a href="javascript:void(0);" class="bbpw_comment_like_action bb_custom_fc" review-position="<?php echo $classPositon; ?>" comment-position="<?php echo $key; ?>" action-value="0" bb-review-id="<?php echo $reviewData['id']; ?>" bb-comment-id="<?php echo $cComment['id']; ?>"><i class="fa fa-thumbs-down"></i></a>
-							<!-- <a href="#">Share</a> -->
-						</div>
-					</div>
-					<?php endforeach; ?>
-					<?php $key++; endforeach; ?>
-					<?php endif; ?>
-					<?php endif; ?>
+							foreach ($childComments as $cComment):
+								$cComment = (array) $cComment;
+								$getUserDetail = getUserDetail($cComment['user_id']);
+								$oCommentLike = $this->mReviews->countCommentLike($cComment['id']);
+							@endphp
+								<div class="bb_inner_reply" style="margin-left:40px;">
+									<div class="bb_comment_header_small">
+										<div class="bb_avatar_small">
+											{{ showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname) }}
+										</div>
+										<div class="bb_fleft">
+											<p class="bb_para bb_custom_fc"><strong>{{ $cComment['firstname'] . ' ' . $cComment['lastname'] }}</strong> </p>
+										</div>
+										<div class="bb_fleft">
+											<p class="bb_para bb_custom_fc"><span class="bb_dot"><i class="fa fa-circle"></i></span> <span class="bb_thingrey bb_custom_fc">{{ timeAgo(date('F d, Y', strtotime($cComment['created']))) }}</span></p>
+										</div>
+										<div class="bb_clear"></div>
+									</div>
+									<div class="text_section_reply">
+										<p class="bb_para bb_custom_fc">{{ $cComment['content'] }}</p>
+									</div>
+									<div class="bb_comment_area_reply">
+										<span class="bbpw_comment_like_{{ $cComment['id'] }} bb_custom_fc">{{ $oCommentLike['like'] }}</span>&nbsp;
+										<a href="javascript:void(0);" class="bbpw_comment_like_action bb_custom_fc" review-position="{{ $classPositon }}" comment-position="{{ $key }}" action-value="1" bb-review-id="{{ $reviewData['id'] }}" bb-comment-id="{{ $cComment['id'] }}"><i class="fa fa-thumbs-up"></i></a>
+										<span class="bbpw_comment_dislike_{{ $cComment['id'] }} bb_custom_fc">{{ $oCommentLike['dislike'] }}</span>&nbsp;
+										<a href="javascript:void(0);" class="bbpw_comment_like_action bb_custom_fc" review-position="{{ $classPositon }}" comment-position="{{ $key }}" action-value="0" bb-review-id="{{ $reviewData['id'] }}" bb-comment-id="{{ $cComment['id'] }}"><i class="fa fa-thumbs-down"></i></a>
+										<!-- <a href="#">Share</a> -->
+									</div>
+								</div>
+							@endforeach
+					@php $key++; endforeach @endphp
+						@endif
+					@endif
 					<div class="bb_add_comment_sec_2 bb_custom_bc" style="float:left; margin-top:-2px;">
-						<div class="bb_overlay"><img src="<?php echo base_url(); ?>/assets/images/widget_load.gif" width="60" height="60"></div>
+						<div class="bb_overlay"><img src="{{ base_url() }}/assets/images/widget_load.gif" width="60" height="60"></div>
 						<p style="margin-left: 55px; margin-top:-30px;" class="bb_custom_fc"><strong><br /><br />Add comment</strong></p>
 						<div class="bbpw_success_message" style="margin-left: 50px; padding-bottom: 10px;">
 							<div class="bb-success-msg bb-hidden bb_custom_fc">Thank you for posting your comment. Your comment has been sent successfully and please waiting for publish it.</div>
 							<div class="bb-error-msg bb-hidden">OPPS! Error while posting your comment. Try again!</div>
 						</div>
 						<div class="bb_add_ctext" style="margin-bottom:10px; margin-left: 48px;">
-							<div class="bb_add_user_icon"><img src="<?php echo base_url(); ?>assets/images/widget/user_img_blank.png" width="28"></div>
-							<textarea class="bbpw_form_control addnote bbcmt" id="bbcmt_<?php echo $cComment['id']; ?>" placeholder="Write Your Comments Here"></textarea>
+							<div class="bb_add_user_icon"><img src="{{ base_url() }}assets/images/widget/user_img_blank.png" width="28"></div>
+							<textarea class="bbpw_form_control addnote bbcmt" id="bbcmt_{{ $cComment['id'] }}" placeholder="Write Your Comments Here"></textarea>
 							<div class="bb_txt_format" style="padding-bottom:15px;">
 								<a href="javascript:void(0);">B</a>
 								<a href="javascript:void(0);">/</a>
@@ -413,34 +413,33 @@ if (!empty($oCampaign)) {
 						</div>
 						<div class="bb_signup_sec" style="padding:15px; border-radius:5px; margin-left: 48px;">
 							<div class="bb_social bb-hidden" style="float:none; margin:0 auto;">
-								<a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/widget/bb_widget_google.png"></a>
-								<a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/widget/bb_widget_facebook.png"></a>
-								<a href="javascript:void(0);"><img src="<?php echo base_url(); ?>assets/images/widget/bb_widget_twitter.png"></a>
+								<a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/widget/bb_widget_google.png"></a>
+								<a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/widget/bb_widget_facebook.png"></a>
+								<a href="javascript:void(0);"><img src="{{ base_url() }}assets/images/widget/bb_widget_twitter.png"></a>
 							</div>
 							<p style="margin:0px 0 20px; float: none;text-align: center; line-height: 10px;"><span class="bb-hidden">OR</span><br>Sign Up With Brand Boost</p>
 							<div class="bb_input_sec">
-								<input id="bbcmtname_<?php echo $cComment['id']; ?>" placeholder="Your Name" class="bb_signup_input bbcmtname user" type="text">
-								<input id="bbcmtemail_<?php echo $cComment['id']; ?>" placeholder="Your Email" class="bb_signup_input bbcmtemail" type="text">
-								<input id="bbcmtphone_<?php echo $cComment['id']; ?>" placeholder="Your Phone" class="bb_signup_input bbcmtphone phone" type="text">
-								<!-- <input id="bbcmtpassword_<?php echo $cComment['id']; ?>" placeholder="Your Password" class="bb_signup_input bbcmtpassword pass" type="password"> -->
+								<input id="bbcmtname_{{ $cComment['id'] }}" placeholder="Your Name" class="bb_signup_input bbcmtname user" type="text">
+								<input id="bbcmtemail_{{ $cComment['id'] }}" placeholder="Your Email" class="bb_signup_input bbcmtemail" type="text">
+								<input id="bbcmtphone_{{ $cComment['id'] }}" placeholder="Your Phone" class="bb_signup_input bbcmtphone phone" type="text">
 								
 								<ul class="bb_terms_check">
 									<li><span class="bb_cust_checkbox">
 										<label class="custmo_checkbox">
-											<input type="checkbox" id="bb_comment_terms_<?php echo $cComment['id']; ?>" value="1" class="bb_comment_terms" checked>
+											<input type="checkbox" id="bb_comment_terms_{{ $cComment['id'] }}" value="1" class="bb_comment_terms" checked>
 											<span class="custmo_checkmark"></span>
 										</label>															
-									</span> I agree to Brand Boost <a href="<?php echo base_url(); ?>" target="_blank">Terms of Service</a></li>
+									</span> I agree to Brand Boost <a href="{{ base_url() }}" target="_blank">Terms of Service</a></li>
 									<li><span class="bb_cust_checkbox">
 										<label class="custmo_checkbox">
-											<input type="checkbox" id="bb_comment_processing_<?php echo $cComment['id']; ?>" value="1" class="bb_comment_processing" checked>
+											<input type="checkbox" id="bb_comment_processing_{{ $cComment['id'] }}" value="1" class="bb_comment_processing" checked>
 											<span class="custmo_checkmark"></span>
 										</label>
 									</span> I agree to Disqus processing of email and IP address, and the use of cookies, to facilitate my authentication and posting of comments, explained further in the <a href="#">Privacy Policy</a>
 									</li>
 								</ul>
-								<input type="hidden" name="bb-review-id" class="bb-review-id" value="<?php echo $reviewData['id']; ?>" >
-								<button type="submit" class="bb_submit_btn bbcmtsubmit <?php echo $bgClassName; ?> bb_custom_fc" name="bbcmtsubmit" class-position="<?php echo $classPositon; ?>" style="cursor:pointer;">Submit</button>
+								<input type="hidden" name="bb-review-id" class="bb-review-id" value="{{ $reviewData['id'] }}" >
+								<button type="submit" class="bb_submit_btn bbcmtsubmit {{ $bgClassName }} bb_custom_fc" name="bbcmtsubmit" class-position="{{ $classPositon }}" style="cursor:pointer;">Submit</button>
 							</div>
 							<div class="bb_clear"></div>
 						</div>
@@ -448,11 +447,6 @@ if (!empty($oCampaign)) {
 				</div><!------>
 			</div>
 			<div class="clearfix"></div>
-			
-			<!-- <div class="bottom_footer">
-				<div class="sign_div"><div class="msg_att_icon"><img src="<?php echo base_url(); ?>assets/images/widget/duana.png"></div><input type="text" class="bb_chat_msg_input msg_input" id="bb_chat_msg_input" placeholder="Type a message...">
-				</div>
-			</div> -->
 		</div>
-		<div class="star_bottom bbpw_close_bfpw <?php echo $bgClassName; ?> bb_custom_fc" class-position="<?php echo $classPositon; ?>" style="line-height: 39px; font-size: 16px;">x</div>
+		<div class="star_bottom bbpw_close_bfpw {{ $bgClassName }} bb_custom_fc" class-position="{{ $classPositon }}" style="line-height: 39px; font-size: 16px;">x</div>
 	</div>
