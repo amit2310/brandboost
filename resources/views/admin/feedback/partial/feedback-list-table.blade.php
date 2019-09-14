@@ -15,21 +15,12 @@
 				<th><i class="icon-diff-modified"></i>Status</th>
 				<th class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
 				<th style="display: none;"></th>
-				<th class="text-center nosort"><i class="fa fa-dot-circle-o"></i>Action</th>
 			</tr>
 		</thead>
 		<tbody>
 			@php
-			foreach ($result as $data) {
-				$feedbackTags = \App\Models\Admin\TagsModel::getTagsDataByFeedbackID($data->id);
-				/*$brandImgArray = unserialize($data->brand_img);
-				$brand_img = $brandImgArray[0]['media_url'];
-
-				if (empty($brand_img)) {
-					$imgSrc = base_url('assets/images/default_table_img2.png');
-				} else {
-					$imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
-				}*/
+            foreach ($result as $data) {
+			    $feedbackTags = \App\Models\Admin\TagsModel::getTagsDataByFeedbackID($data->id);
 
 				$imgSrc = base_url('assets/images/default_table_img2.png');
 
@@ -38,6 +29,7 @@
 				} else {
 					$avatarImage = base_url('profile_images/avatar_image.png');
 				}
+                $i++;
 				@endphp
 				<tr id="append-feedback-{{ $data->id }}" class="selectedClass">
 					<td style="display: none;">{{ date('m/d/Y', strtotime($data->created)) }}</td>
@@ -55,7 +47,7 @@
 								</div>
 								<div class="text-muted text-size-small">{{ $data->email }}</div>
 							@else
-								{{ displayNoData() }}
+								{!! displayNoData() !!}
 							@endif
 						</div>
 					</td>
@@ -68,11 +60,11 @@
 						<div class="media-left">
 							<div class="">
 								<a href="{{ base_url('admin/brandboost/offsite_setup/' . $data->brandboost_id) }}" brandID="{{ $data->brandboost_id }}" b_title="{{ $data->brand_title }}" class="text-default text-semibold">
-									{{ $data->brand_title }}
+									{!! $data->brand_title !!}
 								</a>
 							</div>
 							<div class="text-muted text-size-small">
-								{{ setStringLimit($data->brand_desc, 28) }}
+								{!! setStringLimit($data->brand_desc, 28) !!}
 							</div>
 						</div>
 					</td>
@@ -88,7 +80,7 @@
 							}
 						@endphp
 
-						{{ $smilyImage = ratingView($ratingValue) }}
+						{!! $smilyImage = ratingView($ratingValue) !!}
 					</td>
 
 					<td>
@@ -171,9 +163,9 @@
 							<a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
 								@if ($data->status == 0)
 									{{ 'Inactive' }}
-								@elseif ($data->status == 2) {
+								@elseif ($data->status == 2)
 									{{ 'Pending' }}
-								@else {
+								@else
 									{{ 'Active' }}
 								@endif
 							</a>
@@ -196,14 +188,14 @@
 						<div class="tdropdown ml10">
 							<a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
 							<ul class="dropdown-menu dropdown-menu-right more_act">
-								<a href="javascript:void();" class="dropdown_close">X</a>
+								<a href="javascript:void(0);" class="dropdown_close">X</a>
 								@if ($canWrite)
 									@if ($data->status == 1)
 										<li><a feedback_id='{{ $data->id }}' change_status = '0' class='chg_status red'><i class='icon-file-locked'></i> Inactive</a></li>
-									@elseif ($data->status == 2) {
+									@elseif ($data->status == 2)
 										<li><a feedback_id='{{ $data->id }}' change_status = '1' class='chg_status green'><i class='icon-file-locked'></i> Active</a></li>
 										<li><a feedback_id='{{ $data->id }}' change_status = '0' class='chg_status red'><i class='icon-file-locked'></i> Inactive</a></li>
-									@else {
+									@else
 										<li><a feedback_id='{{ $data->id }}' change_status = '1' class='chg_status green'><i class='icon-file-locked'></i> Active</a></li>";
 									@endif
 								@endif
@@ -214,14 +206,15 @@
 					</td>
 
 					<td style="display: none;">
-						@if ($data->category == 'Positive')
-							{{ 'positive' }}
+                        @if ($data->category == 'Positive')
+                            {{ 'positive' }}
 						@elseif ($data->category == 'Neutral')
-							{{ 'neutral' }}
+                            {{ 'neutral' }}
 						@elseif ($data->category == 'Negative')
-							{{ 'negative' }}
+                            {{ 'negative' }}
 						@endif
-					</td>
+                    </td>
+
 				</tr>
 				@php
 				}

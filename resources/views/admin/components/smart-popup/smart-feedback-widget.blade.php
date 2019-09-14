@@ -17,7 +17,7 @@
     </div>
 </div>
 <a style="position: fixed; top: 50%; right: 12px; display:none;"
-   class="reviews smart-feedback slide-toggle visible {{ $bgClass }}"><i class="icon-arrow-left5"></i></a>
+   class="reviews smart-feedback slide-toggle visible @{{ $bgClass }}"><i class="icon-arrow-left5"></i></a>
 
 
 <div id="videoReviewModal" class="modal fade">
@@ -71,10 +71,11 @@
 
     function loadSmartPopup(feedbackID, selectedTab) {
         //$("#feedbackSmartPopup").empty();
+        var tkn = $('meta[name="_token"]').attr('content');
         $.ajax({
             url: '/admin/feedback/details/' + feedbackID + '?t=' + selectedTab,
             type: "POST",
-            data: {feedbackid: feedbackID, action: 'smart-popup'},
+            data: {_token: tkn, feedbackid: feedbackID, action: 'smart-popup'},
             dataType: "json",
             success: function (data) {
 

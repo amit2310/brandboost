@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -12,10 +12,10 @@ $oDefaultTemplates = !(empty($oDefaultTemplates)) ? $oDefaultTemplates : array()
 
 $feedbackResponseData = new stdClass();
 
-if (count($feedbackResponse) > 0) {
-    $feedbackResponseData = $feedbackResponse;
-} else {
-    $feedbackResponseData = array();
+if(isset($feedbackResponse)){
+$feedbackResponseData = $feedbackResponse;
+}else{
+$feedbackResponseData = array();
 }
 
 if (count($bbProductsData) > 0) {
@@ -104,7 +104,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
                 <a class="btn light_btn ml10 reviewShow {{ $reviewClass }}" href="{{ base_url() }}admin/brandboost/addreview/{{ $brandboostID }}"><i class="icon-plus3"></i><span> &nbsp;  Add Manual Review</span> </a>
 
-      
+
             </div>
         </div>
     </div>
@@ -112,19 +112,19 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
     <div class="tab-content">
 
-        <!--########################TAB 1 ##########################--> 
+        <!--########################TAB 1 ##########################-->
         @include('admin.brandboost.campaign-tabs.onsite.onsite-reviews', array('reviews' => $reviews, 'aReviews' => $aReviews, 'brandboostData' => $brandboostData))
-        <!--########################TAB 2 ##########################--> 
+        <!--########################TAB 2 ##########################-->
         @include('admin.brandboost.campaign-tabs.onsite.onsite-subscribers', array('campaign' => $campaign))
         <!--########################TAB 3 ##########################-->
         @include('admin.brandboost.campaign-tabs.onsite.onsite-preferences', array('camp' => $camp, 'feedbackResponseData' => $feedbackResponseData, 'brandboostData' => $brandboostData, 'bbProductsData' => $productsData))
         <!--########################TAB 4 ##########################-->
         @include('admin.brandboost.campaign-tabs.onsite.onsite-workflow-campaign-beta', array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents))
-        <!--########################TAB 5 ##########################--> 
+        <!--########################TAB 5 ##########################-->
         @include('admin.brandboost.campaign-tabs.onsite.onsite-image', array('aReviews' => $aReviews, 'imageClass' => $imageClass))
     </div>
 
-</div>	
+</div>
 
 @include('admin.brandboost.campaign-tabs.onsite.onsite-popup')
 

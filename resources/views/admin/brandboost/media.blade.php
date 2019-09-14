@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -54,7 +54,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -180,13 +180,13 @@
 
 
     <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
-    <div class="tab-content"> 
+    <div class="tab-content">
         <!--===========TAB 1===========-->
         <div class="tab-pane active" id="right-icon-tab0">
             <div class="row">
                 <div class="col-md-12">
                     <div style="margin: 0;" class="panel panel-flat">
-                        <div class="panel-heading"> 
+                        <div class="panel-heading">
                             <span class="pull-left">
                                 <h6 class="panel-title">Images & Video</h6>
                             </span>
@@ -231,11 +231,11 @@
                                     if (!empty($aReviews)) {
                                         $incDel = 1;
                                         foreach ($aReviews as $review) {
-                                            $mediaUrl = unserialize($review->media_url);
+                                            $mediaUrl = @(unserialize($review->media_url));
                                             if (!empty($mediaUrl)) {
                                                 foreach ($mediaUrl as $value) {
                                                     if (in_array($value['media_url'], $allMediaImagesShow)) {
-                                                        
+
                                                     } else {
                                                         $allMediaImagesShow[] = $value['media_url'];
 
@@ -324,7 +324,7 @@
                                                                 </div>
                                                             </td>
 
-                                                            <td class="text-center"> 
+                                                            <td class="text-center">
                                                                 <div class="tdropdown">
                                                                     <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                                                     <ul class="dropdown-menu dropdown-menu-right more_act">
@@ -390,7 +390,7 @@
                                         $incMediaImg = 1;
                                         foreach ($aReviews as $review) {
                                             //pre($value->media_url);
-                                            $mediaUrl = unserialize($review->media_url);
+                                            $mediaUrl = @(unserialize($review->media_url));
                                             if (!empty($mediaUrl)) {
                                                 //pre($mediaUrl);
                                                 foreach ($mediaUrl as $value) {
@@ -407,7 +407,7 @@
                                                     }
 
                                                     if (in_array($value['media_url'], $allMediaImagesShow)) {
-                                                        
+
                                                     } else {
                                                         $allMediaImagesShow[] = $value['media_url'];
 
@@ -462,7 +462,7 @@
                                         }
                                     }
                                     if ($incMediaImg > 1) {
-                                        
+
                                     } else {
                                         @endphp
                                         <tr>
@@ -470,8 +470,8 @@
                                             <td style="display: none;"></td>
                                             <td>
                                                 <div class="imagetab">
-                                                    <div class="row"> 
-                                                        <div class="text-center"> Image not found.</div> 
+                                                    <div class="row">
+                                                        <div class="text-center"> Image not found.</div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -524,7 +524,7 @@
                                         $incmediaVideo = 1;
                                         foreach ($aReviews as $review) {
                                             //pre($value->media_url);
-                                            $mediaUrl = unserialize($review->media_url);
+                                            $mediaUrl = @(unserialize($review->media_url));
                                             if (!empty($mediaUrl)) {
                                                 //pre($mediaUrl);
                                                 foreach ($mediaUrl as $value) {
@@ -541,7 +541,7 @@
                                                     }
 
                                                     if (in_array($value['media_url'], $allMediaImagesShow)) {
-                                                        
+
                                                     } else {
                                                         $allMediaImagesShow[] = $value['media_url'];
 
@@ -602,7 +602,7 @@
                                                             </tr>
                                                             @php
                                                             if ($incmediaVideo % 4 == 0) {
-                                                                
+
                                                             }
                                                             $incmediaVideo++;
                                                         }
@@ -614,15 +614,15 @@
                                     }
 
                                     if ($incmediaVideo > 1) {
-                                        
+
                                     } else {
                                         @endphp<tr>
                                             <td style="display: none;"></td>
                                             <td style="display: none;"></td>
                                             <td>
                                                 <div class="imagetab">
-                                                    <div class="row"> 
-                                                        <div class="text-center"> Video not found.</div> 
+                                                    <div class="row">
+                                                        <div class="text-center"> Video not found.</div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -716,7 +716,7 @@
         $('.editAction').toggle();
     });
 
-    // new 
+    // new
     $(document).on('change', '#checkAll', function () {
         if (false == $(this).prop("checked")) {
             $(".checkRows").prop('checked', false);
@@ -729,7 +729,7 @@
         }
     });
 
-    // new 
+    // new
     $(document).on('click', '.checkRows', function () {
         var inc = 0;
         var rowId = $(this).val();
@@ -764,7 +764,7 @@
         }
     });
 
-    // New 
+    // New
     $(document).on('click', '#deleteContactsBtn', function () {
 
         var val = [];

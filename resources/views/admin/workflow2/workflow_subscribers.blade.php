@@ -1,5 +1,7 @@
 @php
     $iActiveCount = $iArchiveCount = 0;
+
+    $showArchived = isset($showArchived) ? $showArchived : '';
     if (!empty($subscribersData)) {
         foreach ($subscribersData as $oCount) {
             if ($oCount->status == 2) {
@@ -137,7 +139,9 @@
                                     <div class="pt-5"><span
                                             class="text-default text-semibold dark">{!! $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oContact->phone) !!}</span>
                                     </div>
-                                    {!! $oContact->phone == '' ? '' : '<div class="text-muted text-size-small">Chat</div>' !!}
+
+                                    {!! ($oContact->phone == '') ? '' : '<div class="text-muted text-size-small">Chat</div>' !!}
+
                                 </div>
                             </td>
                             <td class="viewContactSmartPopup" data-modulesubscriberid="{{ $oContact->id }}"
