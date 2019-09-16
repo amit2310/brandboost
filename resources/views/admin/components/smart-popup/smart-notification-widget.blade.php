@@ -1,10 +1,7 @@
 <style type="text/css">
-
 .box-notification {float: left; display: none;top: 0!important;height: 100%;width: 373px;position:fixed!important;box-sizing: border-box; right: 0!important; border-radius: 0px;   box-shadow: 0 10px 12px 0 rgba(1, 21, 64, 0.06)!important; padding: 0px; background: #fff!important; z-index: 99999; }
 
 .box-notification:before{position: absolute;content: ''; left: -250px; top: 0;  width: 250px;  height: 100%;  opacity: 0.1;box-shadow: 0 10px 12px 0 rgba(1, 21, 64, 0.06);  background-image: linear-gradient(to left, #000000, rgba(0, 0, 0, 0)); z-index: -1 }
-
-
 
 .box-notification h5{height: 56px; padding:17px 20px 18px 20px; border-radius: 0 5px 0 0; color: #313b50;font-size: 14px; font-weight: 500;  border-bottom: 1px solid #f5f4f5 !important;}
 
@@ -35,14 +32,11 @@
 .box-notification .nav-tabs.smarttablist > li > a {  font-size: 14px;    color: #425784; padding: 16px 0 15px !important; font-weight: 300;}
 .box-notification .nav-tabs.smarttablist > li.active > a, .box .nav-tabs.smarttablist > li.active > a:hover, .box .nav-tabs.smarttablist > li.active > a:focus { color: #5d7df3; font-weight: 400; border-bottom: 1px solid #5d7df3 !important;}
 .box-notification .profile_sec .btn.btn-xs.btn_white_table { margin: 0 5px 5px 0!important; color: #09204f!important; font-weight: 400!important;}
-
-
 </style>
 
 <div class="box-notification" style="width: 345px;">
     <div style="width: 345px;overflow: hidden; height: 100%;">
         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
-
             <div class="row" style="height: 100%;">
                 <div class="col-md-12">
                     <a style="left: 35px; top: 15px;" class="reviews notification-smart-popup slide-toggle bkg_grey_light" ><i class=""><img src="{{ base_url() }}assets/images/icon_arrow_left.png"/></i></a>
@@ -54,17 +48,13 @@
            				<a class="txt_blue2 fsize14 " href="{{ URL::asset('admin/notifications') }}">View all notifications <i class="icon-arrow-right13 txt_blue2"></i></a>
            			</div>
            		</div>
-
-
             </div>
-
         </div>
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
-
         $(".notification-smart-popup").click(function(){
             $(".box-notification").animate({
                 width: "toggle"
@@ -73,36 +63,19 @@
             loadNotificationSmartPopup();
             $(".notificationSmartPopup").show();
         });
-
-        /*$(".reviews").click(function(){
-            $(".box-notification").animate({
-                width: "toggle"
-            });
-        });*/
-
-
-
-       /* $('[data-popup="lightbox"]').fancybox({
-            padding: 3
-        });*/
-
-
-
-        //$(".viewFaqSmartPopup").first().trigger('click');
         $(".notificationSmartPopup").hide();
-
-
     });
+	
     function loadNotificationSmartPopup() {
-         $(".notificationSmartPopup").empty();
-           $(".notificationSmartPopup").html('<h1 class="text-center" style="margin-top:450px;">Loading....</h1>');
-        $.ajax({
+        $(".notificationSmartPopup").empty();
+        $(".notificationSmartPopup").html('<h1 class="text-center" style="margin-top:450px;">Loading....</h1>');
+        
+		$.ajax({
             url: '{{ base_url("admin/notifications/getNotificationSmartPopup") }}',
             type: "POST",
             data: {action: 'smart-popup', _token: '{{csrf_token()}}'},
             dataType: "json",
             success: function (data) {
-
                 if (data.status == 'success') {
                     var notificationData = data.content;
                     $(".notificationSmartPopup").html(notificationData);
@@ -110,6 +83,4 @@
             }
         });
     }
-
-
 </script>

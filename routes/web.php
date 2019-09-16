@@ -232,7 +232,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/modules/chat/bulkDeleteChat', 'Admin\Modules\Chat@bulkDeleteChat');
     Route::post('admin/modules/chat/bulkArchiveChat', 'Admin\Modules\Chat@bulkArchiveChat');
     Route::post('admin/modules/chat/updateChat', 'Admin\Modules\Chat@updateChat');
-    Route::post('admin/modules/chat/updateChatDesign', 'Admin\Modules\Chat@updateChatDesign');
+    Route::post('admin/modules/chat/updateChatDesign', 'Admin\Modules\Chat@updateChatDesign') ;
     Route::get('admin/modules/chat', 'Admin\Modules\Chat@index');
 
 
