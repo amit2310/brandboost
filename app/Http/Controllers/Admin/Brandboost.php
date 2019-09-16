@@ -23,7 +23,7 @@ use App\Models\Admin\Crons\InviterModel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
-error_reporting(0);
+
 class Brandboost extends Controller {
 
     var $default_main_email_template_onsite;
@@ -70,8 +70,8 @@ class Brandboost extends Controller {
         $this->default_reminder_email_delay_unit = 'day';
         $this->default_reminder_email_delay_value = 1;
     }*/
-	
-	
+
+
 	/**
 	* Used to get onsite overview brandboost data
 	* @return type
@@ -121,7 +121,7 @@ class Brandboost extends Controller {
         return view('admin.brandboost.onsite_overview', $aData);
     }
 
-	
+
 	/**
 	* Used to get onsite brandboost data
 	* @return type
@@ -131,10 +131,10 @@ class Brandboost extends Controller {
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         $company_name = $aUser->company_name;
-		
+
 		$mBrandboost = new BrandboostModel();
 		$mUsers = new UsersModel();
-        
+
         if ($user_role == 1) {
             $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite');
         } else {
@@ -163,11 +163,11 @@ class Brandboost extends Controller {
             'moduleName' => $moduleName,
 			'viewstats' => true
         );
-		
+
 		return view('admin.brandboost.onsite_list', $aData);
     }
 
-	
+
 	/**
 	* Used to get onsite configuration related values
 	* @param type $request
@@ -179,7 +179,7 @@ class Brandboost extends Controller {
         $selectedCategory = Input::get("cate");
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-		
+
 		$mBrandboost = new BrandboostModel();
 		$mUsers = new UsersModel();
 		$mFeedback = new FeedbackModel();
@@ -199,7 +199,7 @@ class Brandboost extends Controller {
                 Session::put("setTab", 'Campaign Preferences');
             }
         }
-		
+
 		Session::put("setTab", 'Campaign Preferences');
 
         if (empty($brandboostID)) {
@@ -209,21 +209,21 @@ class Brandboost extends Controller {
 
         $bbProductsData = $mBrandboost->getProductData($brandboostID);
         $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
-		
+
         $getBrandboostFR = $mFeedback->getFeedbackResponse($brandboostID);
         $moduleName = 'brandboost';
         $moduleUnitID = '';
         $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $brandboostID);
-		
+
         $bActiveSubsription = $mUsers->isActiveSubscription();
         $eventsdata = $mBrandboost->getBrandboostEvents($brandboostID);
         $aReviews = $mReviews->getCampaignAllReviews($brandboostID);
         $revCount = getCampaignReviewCount($brandboostID);
         $revRA = getCampaignReviewRA($brandboostID);
-		
+
         $emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite');
         $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');
-        
+
         $oEvents = $mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
 
         $oEventsType = array('send-invite', 'followup');
@@ -242,7 +242,7 @@ class Brandboost extends Controller {
                 $fromNumber = $aTwilioAc->contact_no;
             }
         }*/
-		
+
 		$fromNumber = '';
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -284,11 +284,11 @@ class Brandboost extends Controller {
             'fromNumber' => $fromNumber,
             'aUserInfo' => $oUser
         );
-		
-		return view('admin.brandboost.onsite_setup', $aData);
-    }	
 
-	
+		return view('admin.brandboost.onsite_setup', $aData);
+    }
+
+
 	/**
 	* Used to get campaign review request data
 	* @param type $request
@@ -298,7 +298,7 @@ class Brandboost extends Controller {
 		$param = $request->type;
 		$mBrandboost = new BrandboostModel();
 		$mUsers = new UsersModel();
-		
+
         $oRequests = $mBrandboost->getReviewRequest();
 		//pre($oRequests);die;
 
@@ -322,7 +322,7 @@ class Brandboost extends Controller {
 		return view('admin.brandboost.review_request', $aData);
     }
 
-	
+
 	/**
 	* Used to get all reviews of campaign
 	* @param type $request
@@ -355,9 +355,9 @@ class Brandboost extends Controller {
                 'campaignId' => $campaignId,
                 'bActiveSubsription' => $bActiveSubsription
             );
-			
+
 			return view('admin.brandboost.review_list_camp', $aData);
-			
+
         } else {
             $aUser = getLoggedUser();
             $userID = $aUser->id;
@@ -386,16 +386,16 @@ class Brandboost extends Controller {
         }
     }
 
-	
+
 	/**
-	* Used to get show media page 
+	* Used to get show media page
 	* @param type $param
 	* @return type
 	*/
     public function media() {
 		$mUsers = new UsersModel();
 		$mReviews = new ReviewsModel();
-		
+
         $aReviews = $mReviews->getCampaignReviewsDetail();
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -405,14 +405,14 @@ class Brandboost extends Controller {
 			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Media" class="sidebar-control active hidden-xs ">Media</a></li>
 			</ul>';
-		
+
 		$aData = array('title' => 'On Site Brand Boost Media', 'pagename' => $breadcrumb, 'aReviews' => $aReviews);
 		return view('admin.brandboost.media', $aData);
     }
 
-	
+
 	/**
-	* Used to get show media page 
+	* Used to get show media page
 	* @param type $reviewID
 	* @return type
 	*/
@@ -420,7 +420,7 @@ class Brandboost extends Controller {
         $response = array();
         $response['status'] = 'error';
         $selectedTab = Input::get('t');
-        
+
 		$revID = Input::post("reviewid");
 		$actionName = Input::post("action");
         $mUser = new UsersModel();
@@ -450,7 +450,7 @@ class Brandboost extends Controller {
           $bbId = $reviewData->bbId;
 
          }
-        
+
         $productName =  $product_id > 0 ? $product_name : $brand_title;
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -484,13 +484,13 @@ class Brandboost extends Controller {
             exit;
         } else {
 			return view('admin.brandboost.review_details', $aData);
-			
+
         }
     }
-	
-	
+
+
 	/**
-	* Used to get show media page 
+	* Used to get show media page
 	* @param type $param
 	* @return type
 	*/
@@ -505,9 +505,9 @@ class Brandboost extends Controller {
         exit;
     }
 
-	
+
 	/**
-	* Used to get show offsite overview 
+	* Used to get show offsite overview
 	* @param type $param
 	* @return type
 	*/
@@ -555,9 +555,9 @@ class Brandboost extends Controller {
 		return view('admin.brandboost.offsite_list', $aData);
     }
 
-	
+
 	/**
-	* Used to get show offsite listing page 
+	* Used to get show offsite listing page
 	* @param type $param
 	* @return type
 	*/
@@ -584,11 +584,11 @@ class Brandboost extends Controller {
 			</ul>';
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
-		
-		return view('admin.brandboost.offsite_list', array('title' => 'Offsite Brand Boost Campaigns', 'pagename' => $breadcrumb, 'aBrandbosts' => $aBrandboostList, 'bActiveSubsription' => $bActiveSubsription, 'currentUserId' => $userID, 'user_role' => $user_role, 'moduleName' => $moduleName, 'viewstats' => false));
-    }	
 
-	
+		return view('admin.brandboost.offsite_list', array('title' => 'Offsite Brand Boost Campaigns', 'pagename' => $breadcrumb, 'aBrandbosts' => $aBrandboostList, 'bActiveSubsription' => $bActiveSubsription, 'currentUserId' => $userID, 'user_role' => $user_role, 'moduleName' => $moduleName, 'viewstats' => false));
+    }
+
+
 	/**
 	* Used to update onsite brandboost campaing status
 	* @param type $param
@@ -630,7 +630,7 @@ class Brandboost extends Controller {
         exit;
     }
 
-	
+
 	/**
 	* Used to update campaign as a archive
 	* @param type $param
@@ -642,7 +642,7 @@ class Brandboost extends Controller {
         $post = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-       
+
 		$multi_brandboost_id = Input::post("multi_brandboost_id");
 
 		$aData = array(
@@ -677,7 +677,7 @@ class Brandboost extends Controller {
         exit;
     }
 
-	
+
 	/**
 	* Used to update campaign as a archive
 	* @param type $param
@@ -689,7 +689,7 @@ class Brandboost extends Controller {
         $post = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-       
+
 		$brandboostID = Input::post("brandboost_id");
 
 		$aData = array(
@@ -722,7 +722,7 @@ class Brandboost extends Controller {
 		exit;
     }
 
-	
+
 	/**
 	* Used to get branboost embedded code
 	* @param type $param
@@ -751,7 +751,7 @@ class Brandboost extends Controller {
 
 
     /**
-	* Used to get offsite config data by brandboost id 
+	* Used to get offsite config data by brandboost id
 	* @param type $brandboostID
 	* @return type
 	*/
@@ -762,20 +762,20 @@ class Brandboost extends Controller {
             redirect("admin/brandboost/offsite");
             exit;
         }
-		
+
 		$selectedTab = Input::get('t');
         $oBrandboost = BrandboostModel::getBrandboost($brandboostID);
         if (empty($oBrandboost) || $oBrandboost[0]->user_id != $userID) {
             redirect("admin/brandboost/offsite");
             exit;
         }
-        
+
         $moduleName = 'brandboost';
         $moduleUnitID = $brandboostID;
-        
+
 
         $oFeedbackResponse = FeedbackModel::getFeedbackResponse($brandboostID);
-        
+
         $oCampaignSubscribers = WorkflowModel::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
         $bActiveSubsription = UsersModel::isActiveSubscription();
         $eventsdata = BrandboostModel::getBrandboostEvents($brandboostID);
@@ -793,7 +793,7 @@ class Brandboost extends Controller {
         $oTemplates = TemplatesModel::getCommonTemplates();
         $oCategories = TemplatesModel::getCommonTemplateCategories();
 
-        
+
         $oEvents = WorkflowModel::getWorkflowEvents($brandboostID, $moduleName);
         $oEventsType = array('send-invite', 'followup');
         $oCampaignTags = WorkflowModel::getWorkflowCampaignTags($moduleName);
@@ -854,8 +854,8 @@ class Brandboost extends Controller {
 
 		return view('admin.brandboost.offsite_setup', $aData);
     }
-	
-	
+
+
 	/**
 	* Used to get widget overview related data
 	* @return type
@@ -891,8 +891,8 @@ class Brandboost extends Controller {
         //$this->template->load('admin/admin_template_new', 'admin/brandboost/widget_overview', $aData);
 		return view('admin.brandboost.widget_overview', $aData);
     }
-	
-	
+
+
 	/**
 	* Used to get onsite widget data list
 	* @return type
@@ -906,7 +906,7 @@ class Brandboost extends Controller {
         } else {
             $oWidgetsList = BrandboostModel::getBBWidgets('', $userID, 'onsite');
         }
-		
+
         $oStats = BrandboostModel::getBBWidgetStats($userID, 'owner_id');
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -919,7 +919,7 @@ class Brandboost extends Controller {
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
 		Session::put("setTab", '');
-        
+
 		$aData = array(
             'title' => 'Onsite Widgets',
             'pagename' => $breadcrumb,
@@ -928,11 +928,11 @@ class Brandboost extends Controller {
             'oStats' => $oStats,
             'user_role' => $user_role
         );
-        
+
 		return view('admin.brandboost.widget_list', $aData);
     }
-	
-	
+
+
 	/**
 	* Used to get offsite campaign preference
 	* @return type
@@ -940,7 +940,7 @@ class Brandboost extends Controller {
 	public function campaignPreferences() {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 		$brandboostID = Input::post("brandboostID");
@@ -1046,8 +1046,8 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	/**
 	* Used to add and edit offsite campaign preference
 	* @return type
@@ -1076,8 +1076,8 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
-	
+
+
 	/**
 	* Used to add offsite resources
 	* @return type
@@ -1112,8 +1112,8 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
-	
+
+
 	/**
 	* Used to add offsite url link
 	* @return type
@@ -1174,7 +1174,7 @@ class Brandboost extends Controller {
 		);
 
 		$result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
-		
+
 		$feedback_type = Input::post("feedback_type"); //$post['feedback_type'];
 		$ratings_type = Input::post("ratings_type"); //$post['ratings_type'];
 		$from_name = Input::post("from_name"); //$post['from_name'];
@@ -1214,7 +1214,7 @@ class Brandboost extends Controller {
 		if ($result) {
 			//Okay We also need to update "From" info into the campaigns
 			$this->updateWorkflowFromInfo($feedbackData, $brandboostID);
-			
+
 			$response['status'] = 'success';
 		} else {
 			$response['status'] = "Error";
@@ -1223,8 +1223,8 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
-	
+
+
 	/**
 	* Used to continue offsite steps
 	* @return type
@@ -1252,8 +1252,8 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
-	
+
+
 	/**
 	* Used to update subscriber status
 	* @return type
@@ -1287,9 +1287,9 @@ class Brandboost extends Controller {
 				'activity_message' => 'Brandboost user was made ' . ($status == 1) ? 'active' : 'inactive',
 				'activity_created' => date("Y-m-d H:i:s")
 			);
-			
+
 			logUserActivity($aActivityData);
-			
+
 			$response['status'] = 'success';
 		} else {
 			$response['status'] = "Error";
@@ -1297,8 +1297,8 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
-	
+
+
 	/**
 	* Used to delete review request
 	* @return type
@@ -1332,8 +1332,8 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	/**
 	* Used to update offsite workflow from info by brandboost id
 	* $param type $brandboostID
@@ -1368,8 +1368,8 @@ class Brandboost extends Controller {
             }
         }
     }
-	
-	
+
+
 	/**
 	* Used to get onsite widget configuration settings by widget id
 	* $param type $widgetID
@@ -1428,15 +1428,15 @@ class Brandboost extends Controller {
 
 		return view('admin.brandboost.onsite_widget_setup', $aData);
     }
-	
-	
+
+
 	/**
 	* Used to set onsite widget
 	* @return type
 	*/
 	public function setOnsiteWidget() {
         $response = array("status" => "error", "msg" => "Something went wrong");
-        
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $widgetTypeID = Input::post("widgetTypeID");
@@ -1453,7 +1453,7 @@ class Brandboost extends Controller {
             exit;
         }
     }
-	
+
 	/**
 	* Used to add onsite brandboost widget data
 	* @return type
@@ -1486,10 +1486,10 @@ class Brandboost extends Controller {
         $reviewsOrderBy = Input::post('reviews_order_by');
         $reviewsOrder = Input::post('reviews_order');
         $numofrev = Input::post('numofrev');
-        
+
 		/*$barndFileData = Input::post('brand_img');
         $brandFileArray = array();
-		
+
 		pre($barndFileData); die;
 
         foreach ($barndFileData['media_url'] as $key => $fileData) {
@@ -1497,7 +1497,7 @@ class Brandboost extends Controller {
             $brandFileArray[$key]['media_type'] = $barndFileData['media_type'][$key];
         }
         $brandImageFileName = empty(Input::post('brand_img')) ? Input::post('edit_brand_img') : serialize($brandFileArray);*/
-		
+
 		$logoImageFileName = Input::post('logo_img') == '' ? Input::post('edit_logo_img') : Input::post('logo_img');
         $review_expire = Input::post('review_expire');
         $review_expire_link = Input::post('review_expire_link');
@@ -1556,7 +1556,7 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to save preview data
 	* @return type
@@ -1584,7 +1584,7 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
+
 	/**
 	* Used to add brandboost widget design
 	* @return type
@@ -1663,7 +1663,7 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to update brandboost widget campaign
 	* @return type
@@ -1693,47 +1693,47 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to publish onsite brandboost status
 	* @return type
 	*/
 	public function publishOnsiteStatusBB() {
-        
+
         $response = array();
         $brandboostID = Input::post('brandboostID');
         $status = Input::post('status');
-		
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
         if (!empty($brandboostID)) {
-            
+
             $mWorkflow = new WorkflowModel();
             $moduleName = 'brandboost';
             $moduleUnitID = $brandboostID;
-            
+
             /**
              $aData = array(
                 'status' => $status,
             );
 
             $result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID); */
-            
+
             $result = $mWorkflow->launchWorkflowCampaign($moduleName, $moduleUnitID);
-            
+
             if($result){
                 $response['status'] = 'success';
             }else{
                 $response['status'] = 'error';
             }
-            
+
         }
 
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to save onsite preference
 	* @return type
@@ -1743,7 +1743,7 @@ class Brandboost extends Controller {
         $response = array();
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-		
+
 		$brandboostID = $request->brandboostId;
 		$review_expire = $request->review_expire;
 		$review_expire_link = $request->review_expire_link;
@@ -1753,7 +1753,7 @@ class Brandboost extends Controller {
 		$productImg = $request->product_img;
 		$productType = $request->product_type;
 		$productId = $request->product_id;
-		
+
 		$pData = array();
 
 		if (!empty($productName)) {
@@ -1891,7 +1891,7 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
+
 	/**
 	* Used to save onsite widget
 	* @return type
@@ -1961,7 +1961,7 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
+
 	/**
 	* Used to delete onsite widget
 	* @return type
@@ -2029,7 +2029,7 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
+
 	/**
 	* Used to update onsite widget status
 	* @return type
@@ -2053,7 +2053,7 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to update onsite widget as a archive
 	* @return type
@@ -2095,11 +2095,11 @@ class Brandboost extends Controller {
 				$response['status'] = "Error";
 			}
 		}
-        
+
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to delete multiple onsite widget
 	* @return type
@@ -2141,11 +2141,11 @@ class Brandboost extends Controller {
 				$response['status'] = "Error";
 			}
 		}
-        
+
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to add onsite campaign
 	* @return type
@@ -2157,11 +2157,11 @@ class Brandboost extends Controller {
         $userID = Session::get("current_user_id");
 		$campaignName = $request->campaignName;
 		$OnsitecampaignDescription = $request->OnsitecampaignDescription;
-		
-		$str=rand(); 
-		$hashcode = sha1($str); 
+
+		$str=rand();
+		$hashcode = sha1($str);
         $hashcode = $hashcode . date('Ymdhis');
-		
+
 		$aData = array(
 			'review_type' => 'onsite',
 			'user_id' => $userID,
@@ -2180,7 +2180,7 @@ class Brandboost extends Controller {
 			);
 			$bData = BrandModel::getBrandConfigurationData($brandboostID);
 			if ((count($bData) > 0) && $bData != '') {
-				
+
 			} else {
 				$result = BrandModel::addBrandConfiguration($aBrandboostData);
 			}
@@ -2207,7 +2207,7 @@ class Brandboost extends Controller {
 			//logUserActivity($aActivityData);
 
             $eventName = 'sys_onsite_added';
-            
+
 			//Notify about this to admin
 			$notificationData = array(
 				'event_type' => $eventName,
@@ -2218,7 +2218,7 @@ class Brandboost extends Controller {
 				'status' => 1,
 				'created' => date("Y-m-d H:i:s")
 			);
-			
+
 			add_notifications($notificationData, $eventName, $userID);
 		} else {
 			$response['status'] = "Error";
@@ -2227,7 +2227,7 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
+
 	/**
 	* Used to add offsite campaign
 	* @return type
@@ -2240,18 +2240,18 @@ class Brandboost extends Controller {
 
 		$campaignName = $request->campaignName;
 		$brand_desc = $request->campaignDescription;
-		
+
 		/*$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$hashcode = '';
 		for ($i = 0; $i < 20; $i++) {
 			$hashcode .= $characters[rand(0, strlen($characters))];
 		}
 		$hashcode = $hashcode . date('Ymdhis');*/
-		
-		$str=rand(); 
-		$hashcode = sha1($str); 
+
+		$str=rand();
+		$hashcode = sha1($str);
         $hashcode = $hashcode . date('Ymdhis');
-		
+
 		$aData = array(
 			'review_type' => 'offsite',
 			'user_id' => $userID,
@@ -2303,7 +2303,7 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
+
 	/**
 	* Used to add default followup campaign
 	* @return type
@@ -2311,12 +2311,12 @@ class Brandboost extends Controller {
 	public function addDefaultFollowupCampaigns($brandboostID) {
         $eventID = 0;
         if (!empty($brandboostID)) {
-            // Generate main event 
+            // Generate main event
             $eventID = $this->addDefaultFollowupEvent($brandboostID, 'main', 0, true, 'Email');
         }
         return $eventID;
     }
-	
+
 	/**
 	* Used to delete product
 	* @return type
@@ -2338,7 +2338,7 @@ class Brandboost extends Controller {
 		echo json_encode($response);
 		exit;
     }
-		
+
 	/**
 	* Used to add custom review by client product
 	* @return type
@@ -2388,10 +2388,10 @@ class Brandboost extends Controller {
                 'aUser' => $aUser
             );
         }
-		
+
 		return view('admin.brandboost.add_review', $aData);
     }
-	
+
 	/**
 	* Used to delete multiple brandboost data list
 	* @return type
@@ -2401,7 +2401,7 @@ class Brandboost extends Controller {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
 		$multi_brandboost_id = $request->multi_brandboost_id;
 
 		$aData = array(
@@ -2433,12 +2433,12 @@ class Brandboost extends Controller {
 				$response['status'] = "Error";
 			}
 		}
-      
+
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	public function publishOnsiteWidget(Request $request) {
 		$mBrandboost = new BrandboostModel();
         $response = array();
@@ -2462,7 +2462,7 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 
     public function publishOnsiteBB(Request $request) {
 		$mBrandboost = new BrandboostModel();
@@ -2488,11 +2488,11 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	public function deleteReviewRequest(Request $request) {
 		$mBrandboost = new BrandboostModel();
         $response = array();
-       
+
 		$multipalIds = $request->multipal_id;
 		foreach ($multipalIds as $recordId) {
 			$result = $mBrandboost->deleteReviewRequest($recordId);
@@ -2505,73 +2505,73 @@ class Brandboost extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public function index() {
 
         $aUser = getLoggedUser();
@@ -2674,7 +2674,7 @@ class Brandboost extends Controller {
     public function campaignSpecific() {
         $mBrandboostObj = new BrandboostModel();
         $mUserObj = new UsersModel();
-		
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
@@ -2704,7 +2704,7 @@ class Brandboost extends Controller {
             'user_role' => $user_role,
             'company_name' => $company_name
         );
-		
+
 		return view ('admin.brandboost.campaign_specific', $aData);
     }
 
@@ -2879,18 +2879,18 @@ class Brandboost extends Controller {
         $response = array();
         $BrandModelObj = new BrandModel();
         //$brandboostId = $post['brandboost_id'];
-        $avatar = Input::post("avatar_switch") != '' ? '1' : '0';   
-        $company_des = Input::post("company_des_switch") != '' ? '1' : '0';  
-        $services = Input::post("services_switch") != '' ? '1' : '0'; 
-        $contact_btn = Input::post("contact_btn_switch") != '' ? '1' : '0'; 
-        $contact_info = Input::post("contact_info_switch") != '' ? '1' : '0'; 
-        $socials = Input::post("socials_switch") != '' ? '1' : '0'; 
-        $customer_experiance = Input::post("customer_experiance_switch") != '' ? '1' : '0'; 
+        $avatar = Input::post("avatar_switch") != '' ? '1' : '0';
+        $company_des = Input::post("company_des_switch") != '' ? '1' : '0';
+        $services = Input::post("services_switch") != '' ? '1' : '0';
+        $contact_btn = Input::post("contact_btn_switch") != '' ? '1' : '0';
+        $contact_info = Input::post("contact_info_switch") != '' ? '1' : '0';
+        $socials = Input::post("socials_switch") != '' ? '1' : '0';
+        $customer_experiance = Input::post("customer_experiance_switch") != '' ? '1' : '0';
         $about_company = Input::post("about_company_position");
         $reviews_list = Input::post("reviews_list_position");
         $show_rating = Input::post("show_rating");
-        $chat_widget = Input::post("chat_widget_switch") != '' ? '1' : '0'; 
-        $referral_widgets = Input::post("referral_widgets_switch") != '' ? '1' : '0'; 
+        $chat_widget = Input::post("chat_widget_switch") != '' ? '1' : '0';
+        $referral_widgets = Input::post("referral_widgets_switch") != '' ? '1' : '0';
 
         $aBrandboostData = array(
             'user_id' => $userID,
@@ -2980,7 +2980,7 @@ class Brandboost extends Controller {
 
             echo json_encode($response);
             exit;
-        
+
     }
 
     public function delete_faq() {
@@ -3032,7 +3032,7 @@ class Brandboost extends Controller {
 
             echo json_encode($response);
             exit;
-        
+
     }
 
     public function getFaqdetails($faQListid) {
@@ -3112,8 +3112,8 @@ class Brandboost extends Controller {
         $userID = $oUser->id;
 
         $response = array();
-       
-        $area_type = Input::post('area_type');   
+
+        $area_type = Input::post('area_type');
         $theme_title = Input::post('brand_theme_title');
         $BrandModelObj = new BrandModel();
 
@@ -3198,7 +3198,7 @@ class Brandboost extends Controller {
         }
         }
 
-        
+
 
         echo json_encode($response);
         exit;
@@ -3217,7 +3217,7 @@ class Brandboost extends Controller {
         exit;
     }
 
-    
+
 
     public function addBrandBoostData() {
 
@@ -3636,17 +3636,17 @@ class Brandboost extends Controller {
     public function addDefaultFollowupCampaigns_old($brandboostID) {
         $eventID = 0;
         if (!empty($brandboostID)) {
-            // Generate main event 
+            // Generate main event
             $eventID = $this->addDefaultFollowupEvent($brandboostID, 'main', 0, true, 'Email');
 
             $eventSmsID = $this->addDefaultFollowupEvent($brandboostID, 'main', 0, true, 'SMS');
 
-            // Generate reminder event 
+            // Generate reminder event
             if ($eventID > 0) {
                 $eventID = $this->addDefaultFollowupEvent($brandboostID, 'reminder', $eventID, true, 'Email');
             }
 
-            // Generate reminder event 
+            // Generate reminder event
             if ($eventSmsID > 0) {
                 $eventSmsID = $this->addDefaultFollowupEvent($brandboostID, 'reminder', $eventSmsID, true, 'SMS');
             }
@@ -3654,27 +3654,27 @@ class Brandboost extends Controller {
         return $eventID;
     }
 
-    
+
 
     public function addDefaultFollowupCampaigns_old_new($brandboostID) {
         $eventID = 0;
         if (!empty($brandboostID)) {
-            // Generate main event 
+            // Generate main event
             $eventID = $this->addDefaultFollowupEvent($brandboostID, 'main', 0, true, 'Email');
 
 
             //$eventSmsID = $this->addDefaultFollowupEvent($brandboostID, 'main', 0, true, 'SMS');
-            // Generate reminder event 
+            // Generate reminder event
             if ($eventID > 0) {
                 $eventSmsID = $this->addDefaultFollowupEvent($brandboostID, 'reminder', $eventID, true, 'SMS');
             }
 
-            // Generate reminder event 
+            // Generate reminder event
             if ($eventSmsID > 0) {
                 $eventEmailID = $this->addDefaultFollowupEvent($brandboostID, 'reminder', $eventSmsID, true, 'Email');
             }
 
-            // Generate reminder event 
+            // Generate reminder event
             if ($eventEmailID > 0) {
                 $eventEmailID = $this->addDefaultFollowupEvent($brandboostID, 'reminder', $eventEmailID, true, 'SMS');
             }
@@ -4057,7 +4057,7 @@ class Brandboost extends Controller {
     }
 
     public function delete_event() {
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $post = $this->input->post();
         if (empty($post)) {
@@ -4294,8 +4294,8 @@ class Brandboost extends Controller {
             exit;
         }
     }
-	
-	
+
+
 	public function getMediaData() {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
@@ -4522,7 +4522,7 @@ class Brandboost extends Controller {
         }
     }
 
-    
+
 
     public function publish_campaign() {
 
@@ -4725,7 +4725,7 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template', 'admin/brandboost/offsite_step_3', array('getOffsite' => $result, 'bActiveSubsription' => $bActiveSubsription));
     }
 
-    
+
 
     // This method is deprecated now
     public function update_offsite_step1() {
@@ -4834,13 +4834,13 @@ class Brandboost extends Controller {
         }
     }
 
-    
 
-    
 
-    
 
-    
+
+
+
+
 
     public function subscribers($listId) {
         $aUser = getLoggedUser();
@@ -5097,7 +5097,7 @@ class Brandboost extends Controller {
         }
     }
 
-    
+
 
     public function delete_subscriber() {
 
@@ -5153,7 +5153,7 @@ class Brandboost extends Controller {
 
         // If upload failed, display error
         if (!$this->upload->do_upload()) {
-            
+
         } else {
 
             $file_data = $this->upload->data();
@@ -5237,9 +5237,9 @@ class Brandboost extends Controller {
         }
     }
 
-    // Export data in CSV format 
+    // Export data in CSV format
     public function exportCSV() {
-        // file name 
+        // file name
         $filename = 'users_' . time() . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
@@ -5250,7 +5250,7 @@ class Brandboost extends Controller {
         $userID = $this->session->userdata("current_user_id");
         $allSubscribers = $this->rLists->getSubscribers($userID, $brandboostID);
 
-        // file creation 
+        // file creation
         $file = fopen('php://output', 'w');
 
         $header = array("EMAIL", "FIRST_NAME", "LAST_NAME", "PHONE");
@@ -5513,7 +5513,7 @@ class Brandboost extends Controller {
       exit;
       } */
 
-    
+
 
     public function setWidget() {
         $response = array("status" => "error", "msg" => "Something went wrong");
@@ -5608,11 +5608,11 @@ class Brandboost extends Controller {
 
             return view('admin.brandboost.stats.onsite', $aData);
         } else if ($type == 'offsite') {
-            
+
         }
     }
 
-    
+
 
     public function getSendgridStats() {
         $post = $this->input->post();
@@ -5680,7 +5680,7 @@ class Brandboost extends Controller {
     }
 
     /**
-    * This function is used to get the reports 
+    * This function is used to get the reports
     * @param type $clientID
     * @return type
     */
@@ -5852,7 +5852,7 @@ class Brandboost extends Controller {
     }
 
        public function repResTimeTrends() {
-        
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -5907,7 +5907,7 @@ class Brandboost extends Controller {
 
 
         if ($actionName == 'attach') {
-            //Step-1 
+            //Step-1
             if ($previousEventID > 0) {
                 $bIsMainEvent = $this->mBrandboost->isMainEvent($currentEventID);
 
@@ -6054,7 +6054,7 @@ class Brandboost extends Controller {
         header("Content-Type: application/csv; ");
         //echo "Hello";
         //die;
-        // file creation 
+        // file creation
         $file = fopen('php://output', 'w');
 
         $header = array("CAMPAIGN_ID", "CAMPAIGN_NAME", "TYPE", "AUTHOR", "EMAIL", "PHONE", "REVIEW_TITLE", "REVIEW_DESCRIPTION", "REVIEW_DATE");
@@ -6088,7 +6088,7 @@ class Brandboost extends Controller {
         header("Content-Type: application/csv; ");
         //echo "Hello";
         //die;
-        // file creation 
+        // file creation
         $file = fopen('php://output', 'w');
 
         $header = array("MEDIA_URL", "CAMPAIGN_ID", "CAMPAIGN_NAME", "TYPE", "AUTHOR", "EMAIL", "PHONE", "REVIEW_TITLE", "REVIEW_DESCRIPTION", "REVIEW_DATE");

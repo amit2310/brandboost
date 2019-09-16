@@ -55,10 +55,10 @@
                 <h3><img src="/assets/images/offsite_icon_19.png" style="width: 16px;"> &nbsp; Offsite Brand Boost Feedback</h3>
 
                 <ul class="nav nav-tabs nav-tabs-bottom">
-                    <li class="active all"><a style="javascript:void();" class="filterByColumn" fil="">All</a></li>
-                    <li><a style="javascript:void();" class="filterByColumn" fil="positive">Positive</a></li>
-                    <li><a style="javascript:void();" class="filterByColumn" fil="neutral">Neutral</a></li>
-                    <li><a style="javascript:void();" class="filterByColumn" fil="negative">Negative</a></li>
+                    <li class="active all"><a style="javascript:void(0);" class="filterByColumn" fil="">All</a></li>
+                    <li><a style="javascript:void(0);" class="filterByColumn" fil="positive">Positive</a></li>
+                    <li><a style="javascript:void(0);" class="filterByColumn" fil="neutral">Neutral</a></li>
+                    <li><a style="javascript:void(0);" class="filterByColumn" fil="negative">Negative</a></li>
                 </ul>
 
             </div>
@@ -226,11 +226,11 @@
 								</div>
 							</div>
 							<div class="table_action_tool">
-								<a href="javascript:void();"><i class="icon-calendar2"></i></a>
-								<a href="javascript:void();"><i class="icon-download4"></i></a>
-								<a href="javascript:void();"><i class="icon-upload4"></i></a>
-								<a href="javascript:void();" class="editDataList"><i class="icon-pencil4"></i></a>
-								<a href="javascript:void();" style="display: none;" id="deleteButtonBrandboostFeedbacks" class="custom_action_box"><i class="icon-trash position-left"></i></a>
+								<a href="javascript:void(0);"><i class="icon-calendar2"></i></a>
+								<a href="javascript:void(0);"><i class="icon-download4"></i></a>
+								<a href="javascript:void(0);"><i class="icon-upload4"></i></a>
+								<a href="javascript:void(0);" class="editDataList"><i class="icon-pencil4"></i></a>
+								<a href="javascript:void(0);" style="display: none;" id="deleteButtonBrandboostFeedbacks" class="custom_action_box"><i class="icon-trash position-left"></i></a>
 							</div>
 						</div>
 					</div>

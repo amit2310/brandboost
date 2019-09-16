@@ -58,10 +58,9 @@ $(document).ready(function () {
         }
     });
 
-
-    // Basic datatable
     var tableIdF = 'offsiteFeedback';
     var tableBase = custom_data_table(tableIdF);
+    // Basic datatable
     $("#frmFeedbackTagListModal").submit(function () {
         var formdata = $("#frmFeedbackTagListModal").serialize();
         $.ajax({
@@ -80,7 +79,7 @@ $(document).ready(function () {
         return false;
     });
 
-    
+
 
     $(document).on("click", ".editBrandboost", function () {
         var brandboostID = $(this).attr('brandID');
@@ -295,7 +294,7 @@ $(document).ready(function () {
     });
 
 
-    
+
 
     $(document).on('change', '#checkAll', function () {
         if (false == $(this).prop("checked")) {
@@ -389,6 +388,9 @@ $(document).ready(function () {
     $(document).on('click', '.editDataList', function () {
         $('.editAction').toggle();
     });
+
 });
+
+
 
 

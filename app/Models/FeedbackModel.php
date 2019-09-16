@@ -16,12 +16,12 @@ class FeedbackModel extends Model
 	*/
 	public static function getFeedbackResponse($campaignID) {
 		$oData = DB::table('tbl_feedback_response')
-			->where('brandboost_id', $campaignID)    
+			->where('brandboost_id', $campaignID)
 			->orderBy('id', 'asc')
 			->first();
 		return $oData;
     }
-	
+
 	/**
 	* Used to get campaign feedback data by brandboost id
 	* @param type $brandboostID
@@ -29,12 +29,12 @@ class FeedbackModel extends Model
 	*/
 	public static function getCampFeedback($brandboostID) {
 		$oData = DB::table('tbl_brandboost_feedback')
-			->where('brandboost_id', $brandboostID)    
+			->where('brandboost_id', $brandboostID)
 			->orderBy('id', 'desc')
 			->get();
 		return $oData;
     }
-	
+
 	/**
 	* Used to get campaign feedback data by brandboost id
 	* @param type $brandboostID
@@ -42,12 +42,12 @@ class FeedbackModel extends Model
 	*/
 	public static function getCampFeedbackData($brandboostID) {
 		$oData = DB::table('tbl_brandboost_feedback')
-			->where('brandboost_id', $brandboostID)    
+			->where('brandboost_id', $brandboostID)
 			->where('type', 'offsite')
 			->first();
 		return $oData;
     }
-	
+
 	/**
 	* Used to get subscriber info by subscriber id
 	* @param type $id
@@ -61,14 +61,14 @@ class FeedbackModel extends Model
 			->first();
 		return $oData;
     }
-	
+
 	/**
 	* Used to get feedback  by user id
 	* @param type $id
 	* @return type
 	*/
 	public static function getFeedback($userID, $user_role='') {
-       
+
 		$oData = DB::table('tbl_brandboost_feedback')
 			->select('tbl_brandboost_feedback.*', 'tbl_users.avatar', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img', 'tbl_brandboost_users.subscriber_id as subscriber_id')
 			->when(($user_role > 1), function($query) use ($userID) {
@@ -81,7 +81,7 @@ class FeedbackModel extends Model
 			->get();
 		return $oData;
     }
-	
+
 	/**
 	* Used to get feedback by brandboost id
 	* @param type $brandboostID
@@ -98,9 +98,9 @@ class FeedbackModel extends Model
 			->where('tbl_brandboost_feedback.brandboost_id', $brandboostID)
 			->get();
 		return $oData;
-		
+
     }
-	
+
 	/**
 	* Used to get feedback details by feedback id
 	* @param type $id
@@ -115,9 +115,9 @@ class FeedbackModel extends Model
 			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_brandboost_feedback.brandboost_id')
 			->first();
 		return $oData;
-		
+
     }
-	
+
 	/**
 	* Used to get feedback notes data by feedback id
 	* @param type $id
@@ -177,8 +177,8 @@ class FeedbackModel extends Model
         $insert_id = DB::table('tbl_brandboost_feedback')->insertGetId($aData);
         return $insert_id;
     }
-    
-    
+
+
     public function getMyFeedback($userID) {
         $response = array();
         $this->db->select('tbl_brandboost_feedback.*, tbl_users.avatar, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile AS phone, '
@@ -198,7 +198,7 @@ class FeedbackModel extends Model
         }
         return $response;
     }
-   
+
 
     public function saveFeedbackLog($aData) {
         if (!empty($aData)) {
@@ -303,8 +303,8 @@ class FeedbackModel extends Model
             return false;
     }
 
-    
-    
+
+
     /**
     * This function will return feedback notes details
     * @param type $noteId
@@ -316,9 +316,9 @@ class FeedbackModel extends Model
        $oData = DB::table('tbl_brandboost_feedback_notes')
         ->where('id', $noteId)->get();
         return $oData;
-       
+
     }
-    
+
     /**
     * This function is used to update the notes
     * @param type
@@ -343,7 +343,7 @@ class FeedbackModel extends Model
         else
             return false;
     }
-    
+
 
     public function getBrandboostInfo($id) {
         $this->db->where("id", $id);
@@ -353,10 +353,10 @@ class FeedbackModel extends Model
         }
         return $response;
     }
-    
+
 
      /**
-    * This function is used to delete the feedback notes 
+    * This function is used to delete the feedback notes
     * @param $noteid
     * @return type
     */
@@ -366,29 +366,35 @@ class FeedbackModel extends Model
         $result = DB::table('tbl_brandboost_feedback_notes')
          ->where('id', $noteId)->delete();
          return $result;
-        
-    }
-    
-    
-    public function addFeedbackComment($aData) {
 
-        $result = $this->db->insert('tbl_brandboost_feedback_comments', $aData);
-		//echo $this->db->last_query();exit;
+    }
+
+    /**
+     * Used to add feedback comment
+     * @param $aData
+     * @return bool
+     */
+    public function addFeedbackComment($aData) {
+        $result = DB::table('tbl_brandboost_feedback_comments')
+            ->insert($aData);
         if ($result)
             return true;
         else
             return false;
     }
-    
-    
-    
-    
+
+
+    /**
+     * @param $commentID
+     * @return bool
+     */
     public function deleteFeedbackComment($commentID) {
-        $this->db->where('id', $commentID);
-        $result = $this->db->delete('tbl_brandboost_feedback_comments');
+        DB::table('tbl_brandboost_feedback_comments')
+            ->where('id', $commentID)
+            ->delete();
         return true;
     }
-    
+
     public function getBrandboostFeedback($brandboostID){
         $this->db->select("tbl_brandboost_feedback.*, tbl_subscribers.id AS subscriberId");
         $this->db->join("tbl_brandboost_users", "tbl_brandboost_feedback.subscriber_id=tbl_brandboost_users.id", "LEFT");

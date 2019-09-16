@@ -1,4 +1,8 @@
-@php list($canRead, $canWrite) = fetchPermissions('Onsite Campaign') @endphp
+@php
+    list($canRead, $canWrite) = fetchPermissions('Onsite Campaign');
+$bbProductsData = isset($bbProductsData) ? $bbProductsData : '';
+
+@endphp
 
 <link href="{{ base_url() }}assets/dropzone-master/dist/dropzone.css" type="text/css" rel="stylesheet" />
 <script src="{{ base_url() }}assets/dropzone-master/dist/dropzone.js"></script>
@@ -152,7 +156,7 @@
                             <div class="profile_headings" style="margin:40px 0 20px;">Product Details</div>
 
                             <div id="productMainContainer">
-                                @if (count($bbProductsData) < 1)
+                                @if (empty($bbProductsData))
                                     <div class="barand_avatar mb20 productPreviewImg">
 
                                       <img width="65" height="65" id="showBrandImage1" class="rounded company_avatar" onerror="this.src=\'http://brandboost.io/assets/images/default_table_img2.png\'" src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $bbProductsData[0]->product_image }}">
@@ -517,7 +521,8 @@
 </div>
 
 <script>
-    var productCount = {{ count($bbProductsData) < 1 ? 1 : count($bbProductsData) }};
+
+    var productCount = @{{ count($bbProductsData) < 1 ? 1 : count($bbProductsData) }};
     $(document).on("keyup", ".thankMsgTitle", function () {
         $(this).closest('.configurations').find('.thanksTitlePreview').html($(this).val());
     });
@@ -753,7 +758,7 @@
 
 @php
 $count = 1;
-if (count($bbProductsData) > 0) {
+if (@(count($bbProductsData) > 0)) {
     foreach ($bbProductsData as $productData) {
         @endphp
             Dropzone.autoDiscover = false;

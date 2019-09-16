@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -59,7 +59,7 @@ $brandboostID = '';
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -264,19 +264,19 @@ $brandboostID = '';
                                             </div></td>
 
                                         <td><div class="media-left media-middle"> <a class="icons" href="javascript:void();">
-                                                    @if (ucfirst($data->tracksubscribertype) == 'Sms') 
+                                                    @if (ucfirst($data->tracksubscribertype) == 'Sms')
                                                         <i class="icon-mobile2 txt_green"></i>
                                                     @else
                                                         <i class="icon-envelop txt_blue"></i>
                                                     @endif
                                                 </a> </div>
                                             <div class="media-left">
-                                                <div class="pt-5"><a href="javascript:void();" class="text-default text-semibold">{{ ucfirst($data->tracksubscribertype) }}</a></div>
+                                                <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold">{{ ucfirst($data->tracksubscribertype) }}</a></div>
                                             </div></td>
 
                                         <td>
                                             <div class="media-left media-middle">
-                                                @if (!empty($aUser)) 
+                                                @if (!empty($aUser))
                                                     {!! showUserAvtar($aUser->avatar, $aUser->firstname, $aUser->lastname) !!}
                                                 @else
                                                     {!! showUserAvtar('', '', '') !!}
@@ -309,10 +309,10 @@ $brandboostID = '';
 
                                         <td class="text-center">
                                             <div class="tdropdown">
-                                                {! $data->subscriberstatus == 1 ? '<i class="icon-primitive-dot txt_green fsize16"></i>' : '<i class="icon-primitive-dot txt_red fsize16"></i>' !!}
+                                                {!! $data->subscriberstatus == 1 ? '<i class="icon-primitive-dot txt_green fsize16"></i>' : '<i class="icon-primitive-dot txt_red fsize16"></i>' !!}
                                                 <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">{{ $data->subscriberstatus == 1 ? ' Active' : ' Inactive' }}</a>
                                                 <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
-                                                    @if ($data->subscriberstatus == 1) 
+                                                    @if ($data->subscriberstatus == 1)
                                                         <li>
                                                             <a subscriberId="{{ $data->subscriberid }}" change_status = "0" class="chg_status"><i class='icon-primitive-dot txt_red'></i> Inacive</a>
                                                         </li>
@@ -349,7 +349,7 @@ $brandboostID = '';
                                     </tr>
                                     @php
                                 }
-                                @endphp	
+                                @endphp
 
                             </tbody>
                         </table>
@@ -404,7 +404,7 @@ $brandboostID = '';
     <div class="modal-dialog">
 
         <div class="modal-content">
-            <form method="post" class="form-horizontal" id="updateSubscriberData" action="javascript:void();">
+            <form method="post" class="form-horizontal" id="updateSubscriberData" action="javascript:void(0);">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Subscriber</h5>

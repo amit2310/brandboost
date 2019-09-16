@@ -1,6 +1,5 @@
 <?php
 namespace App\Http\Controllers\Admin;
-error_reporting(0);
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\UsersModel;
@@ -13,7 +12,7 @@ use Illuminate\Support\Facades\Input;
 use Session;
 
 class Feedback extends Controller {
-	
+
 	/**
 	* Used to get feedback data list by brandboost id;
 	* @param type $request
@@ -50,7 +49,7 @@ class Feedback extends Controller {
         );
 		return view('admin.feedback.feedback', $aData);
     }
-	
+
 	/**
 	* Used to get feedback details by feedback id
 	* @param type $request
@@ -101,7 +100,7 @@ class Feedback extends Controller {
             }
         }
     }
-	
+
 	/**
 	* Used to update feedback status
 	* @return type
@@ -121,7 +120,7 @@ class Feedback extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
+
 	/**
 	* Used to update feedback ratings
 	* @return type
@@ -141,11 +140,11 @@ class Feedback extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
-	
-	
-	
-	
+
+
+
+
+
     public function index($brandboostID = '') {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -202,7 +201,7 @@ class Feedback extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/feedback/myfeedback', $data);
     }
 
-   
+
 
     public function thread($brandboostID, $subscriberID = '') {
         //because its not necessary to have an account to leave feedback on the website. So users will have subscriber id
@@ -291,8 +290,8 @@ class Feedback extends Controller {
 
 
     /**
-    * This function is used to add the feedback notes 
-    * @param type 
+    * This function is used to add the feedback notes
+    * @param type
     * @return type
     */
 
@@ -437,7 +436,7 @@ class Feedback extends Controller {
 
     /**
     * This function will return feedback notes details
-    * @param type 
+    * @param type
     * @return type
     */
 
@@ -493,7 +492,7 @@ class Feedback extends Controller {
 
 
     /**
-    * This function is used to delete the feedback notes 
+    * This function is used to delete the feedback notes
     * @param $noteid
     * @return type
     */
@@ -514,22 +513,26 @@ class Feedback extends Controller {
         exit;
     }
 
-    public function addFeedbackcomment() {
+    /**
+     * This function used to add feedback comment
+     * @param Request $request
+     */
+    public function addFeedbackcomment(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $feedbackID = strip_tags($post['fid']);
-            $parentCommentId = strip_tags($post['parent_comment_id']);
-            $comment_content = strip_tags($post['comment_content']);
+
+        if (!empty($request)) {
+
+            $feedbackID = $request ->fid;
+            $parentCommentId = $request->parent_comment_id;
+            $comment_content = $request->comment_content;
             //$userID = $this->session->userdata("current_user_id");
             $aUser = getLoggedUser();
             $userID = $aUser->id;
             $parentCommentId = $parentCommentId == '' ? '0' : $parentCommentId;
 
             if (!empty($feedbackID)) {
-                $oFeedback = $this->mFeedback->getFeedbackInfo($feedbackID);
+                $oFeedback = FeedbackModel::getFeedbackInfo($feedbackID);
             }
 
             $aData = array(
@@ -543,8 +546,8 @@ class Feedback extends Controller {
             if ($oFeedback->ownerID == $userID) {
                 $aData['status'] = 1;
             }
-
-            $result = $this->mFeedback->addFeedbackComment($aData);
+            $mFeedback = new FeedbackModel();
+            $result = $mFeedback->addFeedbackComment($aData);
             if ($result) {
                 $subscriberEmail = $oFeedback->email;
                 $subject = 'Hello, you got reply on your feedback';
@@ -562,11 +565,15 @@ class Feedback extends Controller {
         }
     }
 
-    public function deleteFeedbackComment() {
+    /**
+     * Used to delete feedback comment
+     * @param Request $request
+     */
+    public function deleteFeedbackComment(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        $commentId = strip_tags($post['commentId']);
-        $result = $this->mFeedback->deleteFeedbackComment($commentId);
+        $commentId = $request->commentId;
+        $mFeedback = new FeedbackModel();
+        $result = $mFeedback->deleteFeedbackComment($commentId);
         if ($result) {
             $response['status'] = 'success';
         } else {
@@ -599,7 +606,7 @@ class Feedback extends Controller {
 
                         <div class="media-left pr0 w100">
 
-                            <p class="fsize14 txt_grey2 lh14 mb-15 "><?php echo $commentData->firstname . ' ' . $commentData->lastname; ?> <span class="dot">.</span> <?php echo timeAgo($commentData->created); ?> <span class="dot">.</span> 
+                            <p class="fsize14 txt_grey2 lh14 mb-15 "><?php echo $commentData->firstname . ' ' . $commentData->lastname; ?> <span class="dot">.</span> <?php echo timeAgo($commentData->created); ?> <span class="dot">.</span>
 
                                 <?php if ($commentData->status == '1') { ?>
                                     <span class="txt_green"><i class="icon-checkmark3 fsize12 txt_green"></i> Approve</span>
@@ -637,7 +644,7 @@ class Feedback extends Controller {
         $clientID = $aUser->id;
 
         if ($clientID > 0) {
-            $aSendgridData = $this->mInviter->getSendgridAccount($clientID);
+            $aSendgridData = getSendgridAccount($clientID);
             if (!empty($aSendgridData)) {
                 $userName = $aSendgridData->sg_username;
                 $password = $aSendgridData->sg_password;
@@ -666,7 +673,7 @@ class Feedback extends Controller {
                         updateCreditUsage($aUsage);
                     }
                 } else if ($medium == 'sms') {
-                    $aTwilioAc = $this->mInviter->getTwilioAccount($clientID);
+                    $aTwilioAc = getTwilioAccountCustom($clientID);
                     if (!empty($aTwilioAc)) {
                         $sid = $aTwilioAc->account_sid;
                         $token = $aTwilioAc->account_token;

@@ -658,8 +658,6 @@
 						foreach ($reviewData['comment_block'] as $aComment):
 						$getUserDetail = getUserDetail($aComment['user_id']);
 						$childComments = \App\Models\ReviewsModel::getAllChildComments($aComment['id']);
-						//pre($childComments);
-						//exit;
 						if($key < 3){
 					?>
 						<div class="bb_inner_reply">
@@ -714,7 +712,6 @@
 											<input id="bbcmtreplyname_<?php echo $aComment['id']; ?>" placeholder="Your Name" class="bb_signup_input bbcmtreplyname user" type="text">
 											<input id="bbcmtreplyemail_<?php echo $aComment['id']; ?>" placeholder="Your Email" class="bb_signup_input bbcmtreplyemail" type="text">
 											<input id="bbcmtreplyphone_<?php echo $aComment['id']; ?>" placeholder="Your Phone" class="bb_signup_input bbcmtreplyphone phone" type="text">
-											<!-- <input id="bbcmtreplypassword_<?php echo $aComment['id']; ?>" placeholder="Your Phone" class="bb_signup_input bbcmtreplypassword pass" type="password"> -->
 											
 											<ul class="bb_terms_check">
 												<li><span class="bb_cust_checkbox">
@@ -795,7 +792,6 @@
 												<input id="bbcmtreplyname_<?php echo $aComment['id']; ?>" placeholder="Your Name" class="bb_signup_input bbcmtreplyname user" type="text">
 												<input id="bbcmtreplyemail_<?php echo $aComment['id']; ?>" placeholder="Your Email" class="bb_signup_input bbcmtreplyemail" type="text">
 												<input id="bbcmtreplyphone_<?php echo $aComment['id']; ?>" placeholder="Your Phone" class="bb_signup_input bbcmtreplyphone phone" type="text">
-												<!-- <input id="bbcmtreplypassword_<?php echo $aComment['id']; ?>" placeholder="Your Phone" class="bb_signup_input bbcmtreplypassword pass" type="password"> -->
 												
 												<ul class="bb_terms_check">
 													<li><span class="bb_cust_checkbox">
@@ -886,7 +882,6 @@
 									<input id="bbcmtname_<?php echo $cComment['id']; ?>" placeholder="Your Name" class="bb_signup_input bbcmtname user" type="text">
 									<input id="bbcmtemail_<?php echo $cComment['id']; ?>" placeholder="Your Email" class="bb_signup_input bbcmtemail" type="text">
 									<input id="bbcmtphone_<?php echo $cComment['id']; ?>" placeholder="Your Phone" class="bb_signup_input bbcmtphone phone" type="text">
-									<!-- <input id="bbcmtpassword_<?php echo $cComment['id']; ?>" placeholder="Your Password" class="bb_signup_input bbcmtpassword pass" type="password"> -->
 									
 									<ul class="bb_terms_check">
 										<li><span class="bb_cust_checkbox">
@@ -920,27 +915,12 @@
 						</div>
 					</div>
 					<?php endif; ?>
-					
-					<!-- http://pleasereviewmehere.com/campaign/<?php echo strtolower(str_replace(" ", "-", $oCampaign->brand_title)) . '-' . $campaignID; ?> ===========================COMMENTS REPLY SECTION=========================-->	
-					
 				</div>
 				
 				<?php
 					$count++;
 				}
 				?>
-			</div>
-			
-			<div class="bb_pagination">
-				<!-- <ul class="bbpagination_list">
-					<li><a href="#">Prev</a></li>
-					<li><a class="bbactive" href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#">Next</a></li>
-				</ul> -->	
 			</div>
 	</div>
 </div>

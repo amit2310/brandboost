@@ -15,3 +15,5 @@ yarn-error.log
 vendor
 
 /nbproject/private/
+.idea
+.idea/*

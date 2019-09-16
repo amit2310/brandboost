@@ -288,7 +288,7 @@ if (!empty($aBrandbosts)) {
                                             $iActiveContactCount = 0;
                                             $iArchiveCount = 0;
                                             $subs = '';
-                                            if (!empty($allSubscribers)) {
+                                            if (($allSubscribers)->isNotEmpty()) {
                                                 $subs = $allSubscribers[0];
                                                 foreach ($allSubscribers as $oSubs) {
                                                     if(strtotime($oSubs->created)> $recent){
