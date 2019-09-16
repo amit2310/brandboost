@@ -60,7 +60,7 @@
        wait="yes" token="{{ $value->token }}"
         @endif
     >
-        <div class="media-left">{{ showUserAvtar($usersdata->avatar, $first_name, $last_name, 28, 28, 12) }}
+        <div class="media-left">{!! showUserAvtar($usersdata->avatar, $first_name, $last_name, 28, 28, 12) !!}
 
         </div>
 

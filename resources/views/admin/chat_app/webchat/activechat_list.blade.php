@@ -46,7 +46,7 @@
 @endphp
 <div RwebId="{{ $token }}" token="{{ $token }}" class="sidebar-user-box all_user_chat tk_{{ $token }}"
      assign_to="{{ assignto($token) }}" incWid="" id="sidebar-user-box-{{ $userid }}" user_id="{{ $userid }}">
-    <div class="avatarImage">{{ showUserAvtar($avatar, $first_name, $last_name, 28, 28, 11) }}
+    <div class="avatarImage">{!! showUserAvtar($avatar, $first_name, $last_name, 28, 28, 11) !!}
 
 
     </div>

@@ -80,7 +80,7 @@
             <div class="col-md-12">
                 <div class="header_sec"><i class="icon-info22 txt_blue"></i>{{ $first_name . ' ' . $last_name }}</div>
                 <div class="sidebar_info p20 text-center">
-                    {{ showUserAvtar($usersdata->avatar, $first_name, $last_name, 60, 60, 21) }}
+                    {!! showUserAvtar($usersdata->avatar, $first_name, $last_name, 60, 60, 21) !!}
                     <h3 class="mb0">{{ $first_name. ' ' .$last_name }}</h3>
 
                     <h6><strong>{{ $cityName }}, {{ $country_code }}</strong></h6>

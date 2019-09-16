@@ -391,7 +391,7 @@
                                                 </div>
                                             @else
                                                 <div
-                                                    class="media-left media-middle">{{ showUserAvtar('', '', '', 28, 28, 11) }}</div>
+                                                    class="media-left media-middle">{!! showUserAvtar('', '', '', 28, 28, 11) !!}</div>
                                                 <div class="media-left">
                                                     <div class=""><a
                                                             class="text-default text-semibold bbot">Annoymous</a></div>

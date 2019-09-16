@@ -404,7 +404,7 @@ if (!empty($aBrandbosts)) {
 
                                                 <td>
                                                     <div data-toggle="tooltip" title="Total contacts {{ sizeof($allSubscribers) }}" data-placement="top">
-                                                        <a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?t=Clients') }}"  class="text-default text-semibold">{{ sizeof($allSubscribers) }} @if($newContacts>0) {{ '<span style="color:#FF0000;"> ('.$newContacts.' new)</span>' }} @endif </a>
+                                                        <a href="{{ base_url('admin/brandboost/onsite_setup/' . $data->id . '?t=Clients') }}"  class="text-default text-semibold">{{ sizeof($allSubscribers) }} @if($newContacts>0) {!! '<span style="color:#FF0000;"> ('.$newContacts.' new)</span>' !!} @endif </a>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -431,7 +431,7 @@ if (!empty($aBrandbosts)) {
                                                                 <a href="javascript:void(0);" class="text-default text-semibold">{{ $positiveRating }}</a>
                                                             @endif
                                                             @if($newPositive>0)
-                                                            {{ '<span style="color:#FF0000;"> ('.$newPositive.' new)</span>' }}
+                                                            {!! '<span style="color:#FF0000;"> ('.$newPositive.' new)</span>' !!}
                                                             @endif
 
                                                         </div>
@@ -465,7 +465,7 @@ if (!empty($aBrandbosts)) {
                                                             <a href="javascript:void(0);" class="text-default text-semibold">{{ $neturalRating }}</a>
                                                             @endif
                                                             @if($newNeutral>0)
-                                                                {{ '<span style="color:#FF0000;"> ('.$newNeutral.' new)</span>' }}
+                                                                {!! '<span style="color:#FF0000;"> ('.$newNeutral.' new)</span>' !!}
                                                             @endif
                                                         </div>
                                                     </div>
@@ -497,7 +497,7 @@ if (!empty($aBrandbosts)) {
                                                             <a href="javascript:void(0);" class="text-default text-semibold">{{ $negativeRating }}</a>
                                                             @endif
                                                             @if($newNegative>0)
-                                                            {{ '<span style="color:#FF0000;"> ('.$newNegative.' new)</span>' }}
+                                                            {!! '<span style="color:#FF0000;"> ('.$newNegative.' new)</span>' !!}
                                                             @endif
                                                         </div>
                                                     </div>

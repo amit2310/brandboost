@@ -11,17 +11,17 @@ use App\Models\Admin\BrandboostModel;
 use App\Models\Admin\QuestionModel;
 use App\Models\Admin\ReviewlistsModel;
 use Session;
-error_reporting(0);
+
 
 class Reviews extends Controller {
-	
+
 	public function displayReview($widgetHash) {
 		$mBrandboost = new BrandboostModel();
 		$mReviews = new ReviewsModel();
 		$mUser = new UsersModel();
         if (!empty($widgetHash)) {
             $oCampaign = $mBrandboost->getWidgetInfo($widgetHash, $hash = true);
-			
+
             $userID = $oCampaign->user_id;
             $widgetID = $oCampaign->id;
             if ($userID > 0) {
@@ -56,21 +56,21 @@ class Reviews extends Controller {
 
             if (!empty($campaignId)) {
                 $this->addWidgetTrackData($widgetID, $userID, '', $widgetType, $campaignId, 'view', 'review');
-		
+
                 $aReviews = $this->getCampaignReviews($campaignId, $aSettings);
-				
+
                 $aPorductReviews = $this->getProductsCampaignReviews($campaignId, 'product', $aSettings);
-				
+
                 $aServiceReviews = $this->getProductsCampaignReviews($campaignId, 'service', $aSettings);
                 $aSiteReviews = $this->getProductsCampaignReviews($campaignId, 'site', $aSettings);
-               
+
                 $allPorductsReviews = $mReviews->getActiveCampaignReviewsByType($campaignId, 'product');
                 $allServicesReviews = $mReviews->getActiveCampaignReviewsByType($campaignId, 'service');
                 $allSiteReviews = $mReviews->getActiveCampaignReviewsByType($campaignId, 'site');
-				
+
                 $allReviews = $mReviews->getReviews($campaignId, $aSettings);
                 $bbData = $mReviews->getBrandBoostCampaign($campaignId, $hash = false);
-				
+
                 $widgetData = $mReviews->getWidgetData($campaignId);
                 if ((sizeof($widgetData) + 1) % $oftenBBWD == 0) {
                     $aWidgetData = array(
@@ -91,9 +91,9 @@ class Reviews extends Controller {
 
                 $mReviews->addWidgetData($aWidgetData);
                 addPageAndVisitorInfo($userID, 'Widget', $campaignId, 'Visit');
-				
+
                 $crWidgetData = $mReviews->getWidgetCRU($campaignId);
-				
+
                 if ((sizeof($widgetData) + 1) % $oftenBBWD == 0) {
 					$center_popup_widget = view('reviews.center_review_widget', array('campaignID' => $campaignId, 'oCampaign' => $oCampaign, 'allReviews' => $allReviews, 'allPorductsReviews' => $allPorductsReviews, 'allServicesReviews' => $allServicesReviews, 'allSiteReviews' => $allSiteReviews, 'aReviews' => $aReviews, 'iReviewsPerPage' => $iReviewsPerPage, 'aPorductReviews' => $aPorductReviews, 'aServiceReviews' => $aServiceReviews, 'aSiteReviews' => $aSiteReviews, 'displayType' => 'center_popup_widget', 'bbData' => $bbData, 'widgetCRU' => sizeof($crWidgetData)))->render();
 
@@ -119,8 +119,8 @@ class Reviews extends Controller {
         echo json_encode($aData);
         exit;
     }
-	
-	
+
+
 	public function addWidgetTrackData($widgetID, $ownerID, $reviewID, $widgetType, $brandboostID, $trackType, $sectionType) {
 		$mReviews = new ReviewsModel();
         //Get Tracking Data
@@ -158,7 +158,7 @@ class Reviews extends Controller {
 		$mBrandboost = new BrandboostModel();
 		$mReviews = new ReviewsModel();
 		$mUser = new UsersModel();
-		
+
         $oReviews = $mReviews->getAllActiveReviews($campaignID, $aSettings);
 
         if (!empty($oReviews)) {
@@ -199,13 +199,13 @@ class Reviews extends Controller {
             return $aReviewData;
         }
     }
-	
-	
+
+
 	public function getProductsCampaignReviews($campaignID, $productType, $aSettings = array()) {
 		$mBrandboost = new BrandboostModel();
 		$mReviews = new ReviewsModel();
 		$mUser = new UsersModel();
-		
+
         $aSettings['start'] = $offset;
         $aSettings['review_limit'] = $limit;
 
@@ -242,8 +242,8 @@ class Reviews extends Controller {
             return $aReviewData;
         }
     }
-	
-	
+
+
 	public function addComment(Request $request) {
         $mBrandboost = new BrandboostModel();
 		$mReviews = new ReviewsModel();
@@ -257,7 +257,7 @@ class Reviews extends Controller {
 		$password = $request->bbcmtpassword;
 		$phone = $request->bbcmtphone;
 		$commentText = $request->bbcmt;
-		
+
 		$parentCID = $pCommentID == '' ? 0 : $pCommentID;
 
 		$getReview = $mReviews->getReviewByReviewID($reviewID);
@@ -269,7 +269,7 @@ class Reviews extends Controller {
 		$reviewType = $getReview[0]->review_type;
 		$getBrandboostDetail = $mBrandboost->getBBInfo($reviewCampaignId);
 		$brandBoostUserId = $getBrandboostDetail->user_id;
-		
+
 		$reviewUD = $mReviews->getBBWidgetUserData($reviewID);
 		$this->addWidgetTrackData($reviewUD[0]->widget_id, $reviewUD[0]->user_id, $reviewID, $reviewUD[0]->widget_type, $reviewUD[0]->campaign_id, 'click', 'review');
 		$this->addWidgetTrackData($reviewUD[0]->widget_id, $reviewUD[0]->user_id, $reviewID, $reviewUD[0]->widget_type, $reviewUD[0]->campaign_id, 'comment', 'review');
@@ -293,8 +293,8 @@ class Reviews extends Controller {
 			$aRegistrationData['clientID'] = $brandBoostUserId;
 			$userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 		}
-		
-		
+
+
 		if (empty($userID)) {
 			$response = array('status' => 'error', 'msg' => 'User registration has failed');
 			return json_encode($response);
@@ -332,12 +332,12 @@ class Reviews extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
-	
+
+
 	public function saveHelpful(Request $request) {
 		$mBrandboost = new BrandboostModel();
 		$mReviews = new ReviewsModel();
-		
+
         $response = array();
 		$reviewID = $request->bbrid;
 		$action = $request->ha;
@@ -360,7 +360,7 @@ class Reviews extends Controller {
 		}
 
 		$alreadyVoted = $mReviews->checkIfVoted($reviewID, $ip);
-		
+
 		if ($alreadyVoted == false || $alreadyVoted['action'] == 'h_null') {
 			$bSaved = $mReviews->saveHelpful($aVoteData);
 		} else {
@@ -393,7 +393,7 @@ class Reviews extends Controller {
 
 		$aHelpful = $mReviews->countHelpful($reviewID);
 		$response = array('status' => 'ok', 'yes' => $aHelpful['yes'], 'no' => $aHelpful['no']);
-      
+
         echo json_encode($response);
         exit;
     }
@@ -402,7 +402,7 @@ class Reviews extends Controller {
     public function getCommentsBlock($reviewID) {
 		$mBrandboost = new BrandboostModel();
 		$mReviews = new ReviewsModel();
-		
+
         $oComments = $mReviews->getComments($reviewID);
         if (!empty($oComments)) {
             foreach ($oComments as $oComment) {
@@ -426,45 +426,45 @@ class Reviews extends Controller {
 
         return $aCommentData;
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function lists($campaignId) {
         if (empty($campaignId)) {
@@ -482,7 +482,7 @@ class Reviews extends Controller {
 
     /**
     * This function is used to get the review notes by the notes id
-    * @param type 
+    * @param type
     * @return type
     */
 
@@ -513,7 +513,7 @@ class Reviews extends Controller {
      */
     public function deleteReviewNote() {
         $response = array();
-        
+
         $noteid = Input::post("noteid");
         $result = ReviewsModel::deleteReviewNoteByID($noteid);
         if ($result) {
@@ -533,7 +533,7 @@ class Reviews extends Controller {
         $this->template->load('template', 'admin/reviews/quesList', array('oCampaign' => $oCampaign, 'aReviews' => $aReviews));
     }
 
-    
+
 
     public function getCommonCommentPopup($widgetHash) {
         $response = array();
@@ -590,7 +590,7 @@ class Reviews extends Controller {
         exit;
     }
 
-    
+
 
     public function displaypreviewreivew($widgetHash) {
         if (!empty($widgetHash)) {
@@ -915,7 +915,7 @@ class Reviews extends Controller {
                             'ratings' => $ratingVal[$productData],
                             'created' => date("Y-m-d H:i:s")
                         );
-                        //Save Brandboost Reviews 
+                        //Save Brandboost Reviews
                         $reviewID = $mReviews->saveReview($aReviewData);
                     }
                 }
@@ -924,7 +924,7 @@ class Reviews extends Controller {
                     $aNameChunks = explode(" ", $fullName);
                     $firstName = $aNameChunks[0];
                     $lastName = $aNameChunks[1];
-                    
+
                     if ($post['newReviewPage'] == 'brandPage') {
                         $reviewType = $post['reviewType'];
                     }
@@ -937,7 +937,7 @@ class Reviews extends Controller {
                     );
 
                     $aRegistrationData['clientID'] = $clientID;
-                    
+
                     $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 
                     $productReviewFile = $post['uploaded_name'];
@@ -960,9 +960,9 @@ class Reviews extends Controller {
                         'created' => date("Y-m-d H:i:s")
                     );
 
-                    //Save Brandboost Reviews 
+                    //Save Brandboost Reviews
                     $reviewID = $mReviews->saveReview($aReviewData);
-                    
+
                 }
                 if ($reviewID > 0) {
                     $bSaved = true;
@@ -1511,9 +1511,9 @@ class Reviews extends Controller {
         exit;
     }
 
-    
 
-    
+
+
 
     public function saveCommentLike() {
         $response = array();
@@ -1552,7 +1552,7 @@ class Reviews extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to delete review by reviewID
      * @param type $reviewID
@@ -1572,7 +1572,7 @@ class Reviews extends Controller {
     }
 
 
-    
+
     public function deleteReviewMultipal() {
         $response = array();
         $post = Input::post();
@@ -1662,7 +1662,7 @@ class Reviews extends Controller {
         }
     }
 
-    
+
 
     public function sendFeedbackThankyouEmail($aData) {
         if (!empty($aData)) {
@@ -1767,7 +1767,7 @@ class Reviews extends Controller {
 
             $productReviewFile = $post['uploaded_name'];
             $siteReviewFile = $post['site_uploaded_name'];
-            
+
             $productReviewFileArray = array();
 
             foreach ($productReviewFile['media_url'] as $key => $fileData) {
@@ -1776,7 +1776,7 @@ class Reviews extends Controller {
                 $productReviewFileArray[$key]['media_name'] = $productReviewFile['media_name'][$key];
             }
 
-            
+
             $siteReviewFileArray = array();
 
             foreach ($siteReviewFile['media_url'] as $key => $fileData) {

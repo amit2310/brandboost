@@ -8,14 +8,14 @@
 <div class="row">
     <div class="col-md-12">
         <div style="margin: 0;" class="panel panel-flat">
-            <div class="panel-heading"> 
+            <div class="panel-heading">
                 <span class="pull-left">
                     <h6 class="panel-title">Images & Video</h6>
                 </span>
                 <div class="heading_links pull-left">
                     <a class="top_links btn btn-xs btn_white_table" href="#right-icon-tab101" data-toggle="tab">All</a>
-                    <a class="top_links" href="#right-icon-tab111" data-toggle="tab">Images</a> 
-                    <a class="top_links" href="#right-icon-tab121" data-toggle="tab">Videos</a> 
+                    <a class="top_links" href="#right-icon-tab111" data-toggle="tab">Images</a>
+                    <a class="top_links" href="#right-icon-tab121" data-toggle="tab">Videos</a>
                     <a class="top_links" href="#right-icon-tab131" data-toggle="tab">Media New</a>
                 </div>
 
@@ -33,7 +33,7 @@
 
                 </div>
             </div>
-            <div class="tab-content"> 
+            <div class="tab-content">
 
                 <div class="tab-pane active" id="right-icon-tab101">
                     <div class="panel-body p0">
@@ -62,7 +62,7 @@
                                         if (!empty($mediaUrl)) {
                                             foreach ($mediaUrl as $value) {
                                                 if (in_array($value['media_url'], $allMediaImagesShow)) {
-                                                    
+
                                                 } else {
                                                     $allMediaImagesShow[] = $value['media_url'];
 
@@ -127,7 +127,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div class="media-left media-middle"> <a style="cursor: text;">{{ showUserAvtar($review->avatar, $review->firstname, $review->lastname) }}</a> </div>
+                                                            <div class="media-left media-middle"> <a style="cursor: text;">{!! @showUserAvtar($review->avatar, $review->firstname, $review->lastname) !!}</a> </div>
                                                             <div class="media-left">
                                                                 <div class="pt-5"><a style="cursor: text;" class="text-default text-semibold bbot">{{ $review->firstname }} {{ $review->lastname }}</a>
                                                                     <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($review->country) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
@@ -155,7 +155,7 @@
                                                             </div>
                                                         </td>
 
-                                                        <td class="text-center"> 
+                                                        <td class="text-center">
                                                             <div class="tdropdown">
                                                                 <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                                                 <ul class="dropdown-menu dropdown-menu-right more_act">
@@ -217,7 +217,7 @@
                                                                 }
 
                                                                 if (in_array($value['media_url'], $allMediaImagesShow)) {
-                                                                    
+
                                                                 } else {
                                                                     $allMediaImagesShow[] = $value['media_url'];
 
@@ -266,7 +266,7 @@
                                                     }
                                                 }
                                                 if ($incMediaImg > 1) {
-                                                    
+
                                                 } else {
                                                     @endphp<div class="text-center"> Image not found.</div>@php
                                                 }
@@ -320,7 +320,7 @@
                                                                 }
 
                                                                 if (in_array($value['media_url'], $allMediaImagesShow)) {
-                                                                    
+
                                                                 } else {
                                                                     $allMediaImagesShow[] = $value['media_url'];
 
@@ -379,7 +379,7 @@
                                                 }
 
                                                 if ($incmediaVideo > 1) {
-                                                    
+
                                                 } else {
                                                     @endphp<div class="text-center">Video not found.</div>@php }
                                                 @endphp
@@ -420,7 +420,7 @@
                                             foreach ($mediaUrl as $value) {
 
                                                 if (in_array($value['media_url'], $allMediaImagesShow)) {
-                                                    
+
                                                 } else {
                                                     $allMediaImagesShow[] = $value['media_url'];
 
@@ -478,7 +478,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div class="media-left media-middle"> <a style="cursor: text;">{{ showUserAvtar($review->avatar, $review->firstname, $review->lastname) }}</a> </div>
+                                                            <div class="media-left media-middle"> <a style="cursor: text;">{!! @showUserAvtar($review->avatar, $review->firstname, $review->lastname) !!}</a> </div>
                                                             <div class="media-left">
                                                                 <div class="pt-5"><a style="cursor: text;" class="text-default text-semibold bbot">{{ $review->firstname }} {{ $review->lastname }}</a>
                                                                     <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($review->country) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
@@ -506,7 +506,7 @@
                                                             </div>
                                                         </td>
 
-                                                        <td class="text-center"> 
+                                                        <td class="text-center">
                                                             <div class="tdropdown">
                                                                 <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                                                 <ul class="dropdown-menu dropdown-menu-right more_act">

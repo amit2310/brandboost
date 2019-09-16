@@ -553,7 +553,7 @@
                                                      title="Total contacts {{ sizeof($allSubscribers) }}"
                                                      data-placement="top">
                                                     <a href="{{ base_url('admin/brandboost/offsite_setup/' . $data->id . '?t=contacts') }}"
-                                                       class="text-default text-semibold">{{ sizeof($allSubscribers) }} @if ($newContacts > 0) {{ '<span style="color:#FF0000;"> (' . $newContacts . ' new)</span>' }} @endif </a>
+                                                       class="text-default text-semibold">{{ sizeof($allSubscribers) }} @if ($newContacts > 0) {!! '<span style="color:#FF0000;"> (' . $newContacts . ' new)</span>' !!} @endif </a>
                                                 </div>
                                             </td>
 
@@ -594,7 +594,7 @@
                                                                class="text-default text-semibold">{{ $positiveRating }}</a>
                                                         @endif
                                                         @if ($newPositive > 0)
-                                                            {{ '<span style="color:#FF0000;"> (' . $newPositive . ' new)</span>' }}
+                                                            {!! '<span style="color:#FF0000;"> (' . $newPositive . ' new)</span>' !!}
                                                         @endif
 
                                                     </div>
@@ -640,7 +640,7 @@
                                                                class="text-default text-semibold">{{ $neturalRating }}</a>
                                                         @endif
                                                         @if ($newNeutral > 0)
-                                                            {{ '<span style="color:#FF0000;"> (' . $newNeutral . ' new)</span>' }}
+                                                            {!! '<span style="color:#FF0000;"> (' . $newNeutral . ' new)</span>' !!}
                                                         @endif
                                                     </div>
                                                 </div>
@@ -685,7 +685,7 @@
                                                                class="text-default text-semibold">{{ $negativeRating }}</a>
                                                         @endif
                                                         @if ($newNegative > 0)
-                                                            {{ '<span style="color:#FF0000;"> (' . $newNegative . ' new)</span>' }}
+                                                            {!! '<span style="color:#FF0000;"> (' . $newNegative . ' new)</span>' !!}
                                                         @endif
                                                     </div>
                                                 </div>

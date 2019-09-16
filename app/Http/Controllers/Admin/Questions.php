@@ -12,9 +12,9 @@ use App\Models\Admin\QuestionModel;
 use App\Models\Admin\TagsModel;
 use Illuminate\Support\Facades\Input;
 use Session;
-error_reporting(0);
+
 class Questions extends Controller {
-	
+
 	/**
 	* Used to get question data
 	* @param type $campaignId
@@ -24,11 +24,11 @@ class Questions extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-		
+
 		$mQuestion = new QuestionModel();
 		$mBrandboost = new BrandboostModel();
 		$mUsers = new UsersModel();
-		
+
         $oQuestions = $mQuestion->getAllBrandboostQuestions($userID);
         $bActiveSubsription = $mUsers->isActiveSubscription();
 
@@ -50,7 +50,7 @@ class Questions extends Controller {
 
 		return view('admin.question.question_list', $aData);
     }
-	
+
 	/**
 	* Used to get questions list by campaign id
 	* @param type $campaignId
@@ -77,11 +77,11 @@ class Questions extends Controller {
                 'campaignId' => $campaignId,
                 'bActiveSubsription' => $bActiveSubsription
             );
-			
+
 			return view('admin.question.question_list', $aData);
         }
     }
-	
+
 	/**
 	* Used to get questions details data by question id
 	* @param type $questionID
@@ -90,7 +90,7 @@ class Questions extends Controller {
 	public function questionDetails($questionID) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $selectedTab = Input::get('t');             
+        $selectedTab = Input::get('t');
 		$quesID = Input::post("questionID");
 		$actionName = Input::post("action");
         $questionID = ($quesID > 0) ? $quesID : $questionID;
@@ -125,7 +125,7 @@ class Questions extends Controller {
             'brandboostID' => '',
             'userID' => $userID
         );
-        
+
         if ($actionName == 'smart-popup') {
 			$popupContent =  view('admin.components.smart-popup.questions', $aData)->with(['mUser'=> $mUser, 'mSubscriber'=>$mSubscriber, 'mQuestion'=>$mQuestion])->render();
             $response['status'] = 'success';
@@ -136,11 +136,11 @@ class Questions extends Controller {
 			return view('admin.question.question_details', $aData);
         }
     }
-	
-	
+
+
 	public function deleteMultipalQuestion(Request $request) {
 		$mQuestion = new QuestionModel();
-		
+
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -175,7 +175,7 @@ class Questions extends Controller {
 
     public function deleteQuestion(Request $request) {
 		$mQuestion = new QuestionModel();
-		
+
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -203,7 +203,7 @@ class Questions extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to add questions
 	* @return type
@@ -237,10 +237,10 @@ class Questions extends Controller {
 
 		return view('admin.question.add_question', $aData);
     }
-	
+
 
     public function saveManualQuestion() {
-		
+
 		$mUser = new UsersModel();
 		$mSubscriber = new SubscriberModel();
 		$mQuestion  = new QuestionModel();
@@ -255,9 +255,9 @@ class Questions extends Controller {
             $question = strip_tags($post['description']);
             $campaignID = strip_tags($post['campaign_id']);
             $quesStatus = $post['questionStatus'];
-			
+
             $oBrandboost = $mBrandboost->getBrandboost($campaignID);
-			
+
             if (!empty($oBrandboost)) {
                 $campaignOwnerID = $oBrandboost[0]->user_id;
                 $campaignName = $oBrandboost[0]->brand_title;
@@ -303,32 +303,32 @@ class Questions extends Controller {
                 $response = array('status' => 'error', 'msg' => 'form fields are not validated!');
                 return json_encode($response);
             }
-			
+
             if (empty($userID)) {
-				
+
                 $moduleName = 'brandboost';
                 $moduleAccountID = $campaignID;
                 $bAlreadyExists = 0;
                 $bUserAlreadyExists = 0;
 
                 $oUserAccount = $mUser->checkEmailExistData($email);
-				
+
                 if (!empty($oUserAccount)) {
                     $emailUserId = $oUserAccount[0]->id;
                     $bUserAlreadyExists = 1;
                 }
 
-                
+
                 $oGlobalUser = $mSubscriber->checkIfGlobalSubscriberExists($currentUserID, 'email', $email);
-                
+
                 if (!empty($oGlobalUser)) {
                     $iSubscriberID = $oGlobalUser->id;
                     $bAlreadyExists = 1;
 
                     // check brandboost user
-                    
+
                     $getBrandSubs = $mSubscriber->getSubsByBrandboostId($campaignID, $iSubscriberID);
-					
+
                     if(!empty($getBrandSubs) && $getBrandSubs > 0) {
                         $updateBrandSubs = $mSubscriber->updateSubsByBrandboostId($campaignID, $iSubscriberID, $iUserID);
                     }
@@ -354,7 +354,7 @@ class Questions extends Controller {
                     $iSubscriberID = $mSubscriber->addGlobalSubscriber($aSubscriberData);
                 }
 
-				
+
                 if ($bUserAlreadyExists == 0) { //This means no user_id attached to subscriber
                     //My Code
                     $aRegistrationData = array(
@@ -368,7 +368,7 @@ class Questions extends Controller {
                     );
                     //pre($aRegistrationData);
                     $emailUserId = $mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
-					
+
                     if ($emailUserId > 0) {
 
                         $bData = array(
@@ -380,10 +380,10 @@ class Questions extends Controller {
                         //pre($bData);
 
                         $getBrandSubs = $mSubscriber->getSubsByBrandboostId($campaignID, $iSubscriberID);
-                        
+
                         if(!empty($getBrandSubs) && $getBrandSubs > 0) {
                             $updateBrandSubs = $mSubscriber->updateSubsByBrandboostId($campaignID, $iSubscriberID, $emailUserId);
-                            
+
                         }
                         $bRequireGlobalSubs = true;
                     }
@@ -399,9 +399,9 @@ class Questions extends Controller {
                     $globalSubscriberID = $iSubscriberID;
 
                     $bUpdated = $mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
-                   
+
                 }
-				
+
                 if (empty($emailUserId)) {
                     $response = array('status' => 'error', 'msg' => 'User registration has failed');
                     return json_encode($response);
@@ -466,7 +466,7 @@ class Questions extends Controller {
                 $subscriberID = $iSubscriberID;
             }
 
-            
+
             // Add Question
 
             $aData = array(
@@ -537,7 +537,7 @@ class Questions extends Controller {
                     $campaignNameURL = '<a href="' . base_url('admin/brandboost/onsite_setup/' . $campaignID) . '">' . $campaignName . '</a>';
                     $replyLink = '<a href="'.base_url('admin/questions/details/' . $questionID) .'">Click here to answer this question</a>';
                     $aTagsVal = array($clientFirstName, $clientLastName, $campaignNameURL, $question, $authorName, $replyLink);
-					
+
 					$questionNotifyHtml =  view('admin.email_templates.question.question_notification', $aData)->render();
                     $compiledHtml = str_replace($aTagsKey, $aTagsVal, $questionNotifyHtml);
                     $subject = 'You got a question on your bandboost campaign called '.$campaignName;
@@ -572,7 +572,7 @@ class Questions extends Controller {
 
     /**
     * This function is used to save the question
-    * @param type 
+    * @param type
     * @return type
     */
 
@@ -598,7 +598,7 @@ class Questions extends Controller {
                 $showName = 1;
             }
 
-          
+
             //Uploaded Question file
             $questionFile = $post['question_uploaded_name'];
             $aQuestionFiles = array();
@@ -622,9 +622,9 @@ class Questions extends Controller {
                 //Check if exists in subscriber list
 
                 $subscriberID = $mUser->checkIfSubscriber(array('email' => $email));
-               
+
                 if ($subscriberID > 0) {
-                     
+
                     $aSubscriber = $mUser->getSubscriberInfo($subscriberID);
                     $firstName = $aSubscriber->firstname;
                     $lastName = $aSubscriber->lastname;
@@ -640,7 +640,7 @@ class Questions extends Controller {
                     }
                 }
 
-                 
+
                 if (empty($fullName) || empty($email)) {
                     //Display errors, fields should not be blank
                     $response = array('status' => 'error', 'msg' => 'form fields are not validated!');
@@ -739,7 +739,7 @@ class Questions extends Controller {
 
     /**
     * This function is used to update answer status
-    * @param type 
+    * @param type
     * @return type
     */
     public function update_answer_status(Request $request) {
@@ -747,7 +747,7 @@ class Questions extends Controller {
         $response = array();
         $post = array();
         if ($request->answer_id) {
-           
+
             $answerID = base64_url_decode(strip_tags($request->answer_id));
             $status = strip_tags($request->status);
 
@@ -771,7 +771,7 @@ class Questions extends Controller {
 
     /**
     * This function is used to update answer status
-    * @param type 
+    * @param type
     * @return type
     */
     public function getAnswer(Request $request) {
@@ -797,7 +797,7 @@ class Questions extends Controller {
 
     /**
     * This function is used to update answer
-    * @param type 
+    * @param type
     * @return type
     */
     public function updateAnswer(Request $request) {
@@ -830,7 +830,7 @@ class Questions extends Controller {
 
     /**
     * This function is used to save question notes
-    * @param type 
+    * @param type
     * @return type
     */
     public function saveQuestionNotes() {
@@ -863,7 +863,7 @@ class Questions extends Controller {
 
     /**
     * This function is used to get question notes
-    * @param type 
+    * @param type
     * @return type
     */
     public function getQuestionNotes(Request $request) {
@@ -889,7 +889,7 @@ class Questions extends Controller {
 
     /**
     * This function is used to update question note
-    * @param type 
+    * @param type
     * @return type
     */
     public function updateQuestionNote(Request $request) {
@@ -904,7 +904,7 @@ class Questions extends Controller {
                 'user_id' => $userID,
                 'updated' => date("Y-m-d H:i:s")
             );
-            
+
             $mQuestion = new QuestionModel();
             $bSaved = $mQuestion->updateQuestionNote($aNotesData, $noteId);
             if ($bSaved) {
@@ -918,7 +918,7 @@ class Questions extends Controller {
 
     /**
     * This function is used to delete question note
-    * @param type 
+    * @param type
     * @return type
     */
     public function deleteQuestionNote() {
@@ -940,7 +940,7 @@ class Questions extends Controller {
 
     /**
     * This function is used to update question status
-    * @param type 
+    * @param type
     * @return type
     */
     public function update_question_status() {
@@ -1041,7 +1041,7 @@ class Questions extends Controller {
 
     /**
     * This function is used to delete single question
-    * @param type 
+    * @param type
     * @return type
     */
     public function delete_question() {
@@ -1084,7 +1084,7 @@ class Questions extends Controller {
 
     /**
     * This function is used to delete multipal question
-    * @param type 
+    * @param type
     * @return type
     */
     public function deleteQuestions() {
@@ -1113,7 +1113,7 @@ class Questions extends Controller {
                     'activity_message' => 'Question deleted',
                     'activity_created' => date("Y-m-d H:i:s")
                 );
-                
+
                 //logUserActivity($aActivityData);
                 $response['status'] = 'success';
                 $response['result'] = "Question has been delete successfully.";
@@ -1143,7 +1143,7 @@ class Questions extends Controller {
 
     /**
     * This function is use for add answer
-    * @param type 
+    * @param type
     * @return type
     */
     public function add_answer(Request $request) {
@@ -1168,8 +1168,8 @@ class Questions extends Controller {
                     $subsFirstName = $oSubscriber->firstname;
                     $subsLastName = $oSubscriber->lastname;
                     $subsEmail = $oSubscriber->email;
-                    $authorName = $subsFirstName . ' ' . $subsLastName; 
-                    
+                    $authorName = $subsFirstName . ' ' . $subsLastName;
+
                 }
             }
 
@@ -1198,7 +1198,7 @@ class Questions extends Controller {
                     );
                     $eventName = 'added_onsite_answers_subscriber';
                     add_notifications($aNotificationDataCust, $eventName, $subscriberID);
-                    
+
                     //Send out email to subscriber
                     $aTagsKey = array('{FIRST_NAME}', '{LAST_NAME}', '{QUESTION}', '{ANSWER}', '{AUTHOR_NAME}', '{CLIENT_NAME}');
                     $replyLink = '<a href="'.base_url('admin/questions/details/' . $questionID) .'">Click here to answer this question</a>';
@@ -1223,7 +1223,7 @@ class Questions extends Controller {
 
     /**
     * This function is use for delete answer
-    * @param type 
+    * @param type
     * @return type
     */
     public function delete_answer(Request $request) {
@@ -1243,7 +1243,7 @@ class Questions extends Controller {
                 $response['message'] = "Error: Something went wrong, try again";
             }
 
-            
+
         }
         echo json_encode($response);
             exit;

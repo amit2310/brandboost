@@ -81,11 +81,11 @@ class ReviewsModel extends Model {
                 ->get();
         return $oData;
     }
-	
+
 	/**
      * Returns filtered reviews of a campaign
      * @param type $campaignID
-     * @return campaign all reviews 
+     * @return campaign all reviews
      */
 	public static function getCampaignReviews($campaignID) {
 		$oData = DB::table('tbl_reviews')
@@ -98,14 +98,14 @@ class ReviewsModel extends Model {
                     return $query->where('tbl_reviews.campaign_id', $campaignID);
                 })
                 ->orderBy('tbl_reviews.id', 'desc')
-                ->get();				
+                ->get();
         return $oData;
     }
-	
+
 	/**
      * Returns get campaign reviews data
      * @param type $campaignID
-     * @return campaign all reviews 
+     * @return campaign all reviews
      */
 	public static function getCampReviews($campaignID) {
         $aData = array();
@@ -115,11 +115,11 @@ class ReviewsModel extends Model {
                 ->get();
         return $oData;
     }
-	
+
 	/**
      * Used to get campaign reviews list
      * @param type $campaignID
-     * @return campaign all reviews 
+     * @return campaign all reviews
      */
 	public function getCampaignAllReviews($campaignID) {
 		$oData = DB::table('tbl_reviews')
@@ -132,14 +132,14 @@ class ReviewsModel extends Model {
 				return $query->where('tbl_reviews.campaign_id', $campaignID);
 			})
 			->orderBy('tbl_reviews.id', 'desc')
-			->get();				
+			->get();
         return $oData;
     }
-	
+
 	/**
      * Used to get user campaign reviews list
      * @param type $campaignID
-     * @return campaign all reviews 
+     * @return campaign all reviews
      */
 	public function getMyBranboostReviewsFilter($userID) {
 		$oData = DB::table('tbl_reviews')
@@ -149,14 +149,14 @@ class ReviewsModel extends Model {
 			->where('tbl_brandboost.user_id', $userID)
 			->where('tbl_brandboost.delete_status', 0)
 			->orderBy('tbl_reviews.id', 'desc')
-			->get();				
+			->get();
         return $oData;
     }
-	
+
 	/**
      * Used to get user campaign reviews list by user id
      * @param type $campaignID
-     * @return campaign all reviews 
+     * @return campaign all reviews
      */
 	public function getMyBranboostReviews($userID) {
         $oData = DB::table('tbl_reviews')
@@ -166,14 +166,14 @@ class ReviewsModel extends Model {
 			->where('tbl_brandboost.user_id', $userID)
 			->where('tbl_brandboost.delete_status', 0)
 			->orderBy('tbl_reviews.id', 'desc')
-			->get();				
+			->get();
         return $oData;
     }
-	
+
 	/**
      * Used to get user campaign reviews list by user id
      * @param type $campaignID
-     * @return campaign all reviews 
+     * @return campaign all reviews
      */
 	public static function getReviewAllComments($reviewId, $start = 0, $limit = 5) {
         $oData = DB::table('tbl_reviews_comments')
@@ -184,14 +184,14 @@ class ReviewsModel extends Model {
 			->orderBy('tbl_reviews_comments.id', 'desc')
 			->offset($start)
             ->limit($limit)
-			->get();				
+			->get();
         return $oData;
     }
-	
+
 	/**
      * Used to get brandboost campaign reviews list by campaign id
      * @param type $campaignID
-     * @return campaign all reviews 
+     * @return campaign all reviews
      */
 	public static function getBrandBoostCampaign($campaignID, $hash = false) {
 		$oData = DB::table('tbl_brandboost')
@@ -202,10 +202,10 @@ class ReviewsModel extends Model {
 			}, function($query) use($campaignID) {
 				$query->where('tbl_brandboost.id', $campaignID);
 			})
-			->first();				
+			->first();
         return $oData;
     }
-	
+
 	/**
      * Used to update review by reviewID
      * @param type $reviewID
@@ -214,10 +214,10 @@ class ReviewsModel extends Model {
 		$result = DB::table('tbl_reviews')
            ->where('id', $reviewID)
            ->update($aData);
-		   
+
         return true;
     }
-	
+
 	/**
      * Used to delete review by reviewID
      * @param type $reviewID
@@ -228,11 +228,11 @@ class ReviewsModel extends Model {
            ->delete();
         return true;
     }
-	
+
 	/**
      * Used to get reviews note by id
      * @param type $id
-     * @return type 
+     * @return type
      */
 	public static function listReviewNotes($id) {
         if (!empty($id)) {
@@ -241,7 +241,7 @@ class ReviewsModel extends Model {
 				->select('tbl_reviews_notes.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email')
 				->where('tbl_reviews_notes.review_id', $id)
 				->orderBy('tbl_reviews_notes.id', 'desc')
-				->get();				
+				->get();
 			return $oData;
         }
     }
@@ -251,7 +251,7 @@ class ReviewsModel extends Model {
      * @param type $reviewId
      * @param type $start
      * @param type $limit
-     * @return type 
+     * @return type
      */
 	public static function getReviewAllParentsComments($reviewId, $start = 0, $limit = 5) {
 		$oData = DB::table('tbl_reviews_comments')
@@ -263,14 +263,14 @@ class ReviewsModel extends Model {
 			->orderBy('tbl_reviews_comments.id', 'desc')
 			->offset($start)
             ->limit($limit)
-			->get();				
+			->get();
         return $oData;
     }
-	
+
 	/**
      * Used to get review info by review id
      * @param type $id
-     * @return type 
+     * @return type
      */
 	public static function getReviewInfo($id) {
 		$oData = DB::table('tbl_reviews')
@@ -278,14 +278,14 @@ class ReviewsModel extends Model {
 			->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_reviews.user_id')
 			->select('tbl_brandboost.brand_title', 'tbl_brandboost.id AS bbId', 'tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.created as user_joining_date', 'tbl_users.avatar')
 			->where('tbl_reviews.id', $id)
-			->first();				
-        return $oData;	
+			->first();
+        return $oData;
     }
-	
+
 	/**
      * Used to count parent comments by review id
      * @param type $id
-     * @return type 
+     * @return type
      */
 	public static function parentsCommentsCount($reviewId) {
 		$oData = DB::table('tbl_reviews_comments')
@@ -295,7 +295,7 @@ class ReviewsModel extends Model {
 			->where('tbl_reviews_comments.review_id', $reviewId)
 			->where('tbl_reviews_comments.parent_comment_id', 0)
 			->orderBy('tbl_reviews_comments.id', 'desc')
-			->count();				
+			->count();
         return $oData;
     }
 
@@ -303,7 +303,7 @@ class ReviewsModel extends Model {
     /**
      * Used to save review notes
      * @param type $id
-     * @return type 
+     * @return type
      */
 	public static function saveReviewNotes($aData) {
 		$insert_id = DB::table('tbl_reviews_notes')->insertGetId($aData);
@@ -313,11 +313,11 @@ class ReviewsModel extends Model {
             return $insert_id;
         return false;
     }
-	
+
 	/**
      * Used to delete review note by note id
      * @param type $id
-     * @return type 
+     * @return type
      */
 	public static function deleteReviewNoteByID($noteId) {
 		$result = DB::table('tbl_reviews_notes')
@@ -325,7 +325,7 @@ class ReviewsModel extends Model {
            ->delete();
         return true;
     }
-	
+
     /**
      * Get campaign's review five star ratings
      * @param type $brandboostID
@@ -335,13 +335,13 @@ class ReviewsModel extends Model {
             $oData = DB::table('tbl_brandboost')
                 ->leftJoin('tbl_reviews', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
                 ->leftJoin('tbl_users as ut', 'tbl_reviews.user_id', '=', 'ut.id')
-                ->leftJoin('tbl_users as tu', 'tbl_brandboost.user_id', '=', 'tu.id')    
+                ->leftJoin('tbl_users as tu', 'tbl_brandboost.user_id', '=', 'tu.id')
                 ->select('tbl_brandboost.*', 'ut.firstname', 'ut.lastname', 'ut.email', 'tu.firstname as bb_u_firstname', 'tu.lastname as bb_u_lastname', 'tu.email as bb_u_email', 'tbl_reviews.comment_text', 'tbl_reviews.ratings', 'tbl_reviews.id as reviewId')
                 ->where('tbl_brandboost.id', $brandboostID)
-                ->where('tbl_reviews.ratings', 5)                
+                ->where('tbl_reviews.ratings', 5)
                 ->where('tbl_reviews.status', 1)
                 ->where('tbl_reviews.review_type', 'text')
-                ->orderBy('tbl_reviews.id', 'desc')    
+                ->orderBy('tbl_reviews.id', 'desc')
                 ->get();
             return $oData;
     }
@@ -355,13 +355,13 @@ class ReviewsModel extends Model {
         $oData = DB::table('tbl_brandboost')
                 ->leftJoin('tbl_reviews', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
                 ->leftJoin('tbl_users as ut', 'tbl_reviews.user_id', '=', 'ut.id')
-                ->leftJoin('tbl_users as tu', 'tbl_brandboost.user_id', '=', 'tu.id')    
+                ->leftJoin('tbl_users as tu', 'tbl_brandboost.user_id', '=', 'tu.id')
                 ->select('tbl_brandboost.*', 'ut.firstname', 'ut.lastname', 'ut.email', 'tu.firstname as bb_u_firstname', 'tu.lastname as bb_u_lastname', 'tu.email as bb_u_email', 'tbl_reviews.comment_text', 'tbl_reviews.ratings', 'tbl_reviews.id as reviewId')
                 ->where('tbl_brandboost.id', $brandboostID)
-                ->where('tbl_reviews.ratings', 4)                
+                ->where('tbl_reviews.ratings', 4)
                 ->where('tbl_reviews.status', 1)
                 ->where('tbl_reviews.review_type', 'text')
-                ->orderBy('tbl_reviews.id', 'desc')    
+                ->orderBy('tbl_reviews.id', 'desc')
                 ->get();
             return $oData;
     }
@@ -375,7 +375,7 @@ class ReviewsModel extends Model {
         $oData = DB::table('tbl_brandboost')
                 ->leftJoin('tbl_reviews', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
                 ->leftJoin('tbl_users as ut', 'tbl_reviews.user_id', '=', 'ut.id')
-                ->leftJoin('tbl_users as tu', 'tbl_brandboost.user_id', '=', 'tu.id')    
+                ->leftJoin('tbl_users as tu', 'tbl_brandboost.user_id', '=', 'tu.id')
                 ->select('tbl_brandboost.*', 'ut.firstname', 'ut.lastname', 'ut.email', 'tu.firstname as bb_u_firstname', 'tu.lastname as bb_u_lastname', 'tu.email as bb_u_email', 'tbl_reviews.comment_text', 'tbl_reviews.ratings', 'tbl_reviews.id as reviewId')
                 ->where('tbl_brandboost.id', $brandboostID)
                 ->where('tbl_reviews.status', 1)
@@ -384,7 +384,7 @@ class ReviewsModel extends Model {
                 ->limit(5)
                 ->get();
             return $oData;
-        
+
     }
 
     /**
@@ -393,13 +393,13 @@ class ReviewsModel extends Model {
      * @return type object
      */
     public function getUserReviews($userID) {
-   
+
         $oData = DB::table('tbl_reviews')
                 ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
                 ->join('tbl_users', 'tbl_brandboost.user_id', '=', 'tbl_users.id')
                 ->select('tbl_reviews.*', 'tbl_brandboost.brand_title', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
                 ->where('tbl_reviews.user_id', $userID)
-               
+
                 ->orderBy('tbl_reviews.id', 'desc')
                 ->get();
             return $oData;
@@ -408,7 +408,7 @@ class ReviewsModel extends Model {
 	/**
      * Used to get brandboost reviews contacts by user id
      * @param type $userID
-     * @return type 
+     * @return type
      */
 	public function getContactBranboostReviews($userID) {
 		$aData =  DB::table('tbl_reviews')
@@ -422,11 +422,11 @@ class ReviewsModel extends Model {
 			->get();
         return $aData;
     }
-	
+
 	/**
      * Used to get reviews by review id
      * @param type $reviewid
-     * @return type 
+     * @return type
      */
 	public static function getReviewByReviewID($reviewid) {
         $aData =  DB::table('tbl_reviews')
@@ -437,7 +437,7 @@ class ReviewsModel extends Model {
 	/**
      * Used to get reviews details by review id
      * @param type $reviewid
-     * @return type 
+     * @return type
      */
     public static function getReviewDetailsByReviewID($reviewid) {
 		$aData =  DB::table('tbl_reviews')
@@ -447,10 +447,10 @@ class ReviewsModel extends Model {
 			->where('tbl_reviews.id', $reviewid)
 			->get();
         return $aData;
-		
+
     }
-	
-	
+
+
 	/**
      * Used to get comment by comment id
      * @param type $commentID, $status
@@ -475,13 +475,13 @@ class ReviewsModel extends Model {
 
         $oData = DB::table('tbl_reviews_comments')
             ->leftJoin('tbl_reviews', 'tbl_reviews_comments.review_id', '=' , 'tbl_reviews.id')
-            ->Join('tbl_users', 'tbl_reviews_comments.user_id', '=' , 'tbl_users.id')    
+            ->Join('tbl_users', 'tbl_reviews_comments.user_id', '=' , 'tbl_users.id')
             ->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.id as userId')
             ->where("tbl_reviews_comments.review_id", $reviewId)
             ->where("tbl_reviews_comments.parent_comment_id", $parentId)
             ->orderBy("tbl_reviews_comments.id", "DESC")
             ->get();
-        return $oData; 
+        return $oData;
     }
 
 
@@ -510,8 +510,8 @@ class ReviewsModel extends Model {
         $insert_id = DB::table('tbl_comment_likes')->insertGetId($aData);
         return $insert_id;
     }
-	
-	
+
+
 	public function getWidgetTrackData($widgetID, $ipAddress, $trackType, $reviewID) {
 		$oData = DB::table('tbl_brandboost_widget_tracking_log')
 			->when(($reviewID > 0), function($query) use($reviewID) {
@@ -520,19 +520,19 @@ class ReviewsModel extends Model {
 			->where('widget_id', $widgetID)
 			->where('ip_address', $ipAddress)
 			->where('track_type', $trackType)
-			->get();				
+			->get();
         return $oData;
     }
-	
-	
+
+
 	public function addWidgetTrackData($aData) {
 		$bSaved = DB::table('tbl_brandboost_widget_tracking_log')->insertGetId($aData);
         if ($bSaved)
             return true;
         return false;
     }
-	
-	
+
+
 	public function getAllActiveReviews($campaignID, $aSettings = array()) {
 		$oData = DB::table('tbl_reviews')
 			->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_brandboost.brand_title')
@@ -544,11 +544,11 @@ class ReviewsModel extends Model {
             ->orderBy("tbl_reviews.id", "DESC")
 			->where('tbl_reviews.campaign_id', $campaignID)
 			->where('tbl_reviews.status', 1)
-			->get();				
+			->get();
         return $oData;
     }
-	
-	
+
+
     public function getReviews($campaignID, $aSettings = array()) {
 		$start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
 		$aData =  DB::table('tbl_reviews')
@@ -568,16 +568,18 @@ class ReviewsModel extends Model {
 			})
 			->orderBy("tbl_reviews.id", "DESC")
 			->get();
-			
+
         return $aData;
     }
 
- 
 
-   /**
-    * This function is used to get the Reviews by the product type
-    * @return type
-    */
+    /**
+     * This function is used to get the Reviews by the product type
+     * @param $campaignID
+     * @param array $aSettings
+     * @param string $productType
+     * @return type
+     */
     public function getReviewsByProductType($campaignID, $aSettings = array(), $productType='product') {
         $start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
 
@@ -594,12 +596,12 @@ class ReviewsModel extends Model {
 			 ->when(!empty($aSettings) && !empty($aSettings['min_ratings']),function($query) use ($aSettings) {
 			   return $query->orWhere('tbl_reviews.ratings','>=',$aSettings['min_ratings']);
 			})
-			  ->when(!empty($aSettings) && !empty($aSettings['review_limit']),function($query) use ($start) {
+			  ->when(!empty($aSettings) && isset($aSettings['review_limit']),function($query) use ($aSettings, $start) {
 			   return $query->limit($aSettings['review_limit'], $start);
 			})
 
 			->orderBy("tbl_reviews.id", "DESC")->get();
-      
+
         return $aData;
     }
 
@@ -626,9 +628,9 @@ class ReviewsModel extends Model {
          ->when((!empty($aSettings) && !empty($aSettings['review_limit'])), function($query) use ($aSettings,$start){
          return $query->limit($aSettings['review_limit'], $start);
         })
- 
+
         ->orderBy("tbl_reviews.id", "DESC")->get();
-        
+
         return $aData;
     }
 
@@ -641,8 +643,8 @@ class ReviewsModel extends Model {
     public function checkIfVoted($reviewID, $ip) {
 
         $oResult = DB::table('tbl_reviews_helpful')
-            ->where('review_id', $reviewID)  
-            ->where('ip', $ip)     
+            ->where('review_id', $reviewID)
+            ->where('ip', $ip)
             ->first();
         if(!empty($oResult)) {
             if ($oResult->helpful_yes == 1) {
@@ -657,7 +659,7 @@ class ReviewsModel extends Model {
         return false;
     }
 
-    
+
 	/**
 	* Used to get the multireviews for campaign id
 	* @param type $companyName
@@ -673,16 +675,16 @@ class ReviewsModel extends Model {
 			->where('tbl_brandboost.user_id', $userId)
 			->orderBy("tbl_reviews.id", "DESC")
 			->get();
-        
+
         return $aData;
     }
-	
-	
+
+
 	public function countCommentLike($commentID) {
 		$rResponse =  DB::table('tbl_comment_likes')
 			->where('comment_id', $commentID)
 			->get();
-        
+
         $like = 0;
         $dislike = 0;
         if ($rResponse->count() > 0) {
@@ -697,8 +699,8 @@ class ReviewsModel extends Model {
         $result = array('like' => $like, 'dislike' => $dislike);
         return $result;
     }
-	
-	
+
+
 	public function getSiteReviews($campaignID, $aSettings = array()) {
 		$start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
         $aData =  DB::table('tbl_reviews_site')
@@ -717,11 +719,11 @@ class ReviewsModel extends Model {
         })
         ->orderBy("tbl_reviews_site.id", "DESC")
 		->get();
-        
+
         return $aData;
     }
 
-    
+
 
     public function getActiveCampaignReviewsByType($campaignID, $type = 'product') {
 		$aData =  DB::table('tbl_reviews')
@@ -736,10 +738,10 @@ class ReviewsModel extends Model {
 			})
 			->orderBy("tbl_reviews.id", "DESC")
 			->get();
-        
+
         return $aData;
     }
-	
+
 
     public function getCampaignReviewsByUserId($userId) {
 		$aData =  DB::table('tbl_reviews')
@@ -754,25 +756,25 @@ class ReviewsModel extends Model {
 
         return $aData;
     }
-	
-	
+
+
 	public function getWidgetData($campaignID) {
 		$aData =  DB::table('tbl_widget_data')
 			->where('campaign_id', $campaignID)
 			->get();
-        
+
         return $aData;
     }
-	
-	
+
+
 	public function addWidgetData($aData) {
 		$bSaved = DB::table('tbl_widget_data')->insertGetId($aData);
         if ($bSaved)
             return true;
         return false;
     }
-	
-	
+
+
 	/**
      * Get Number of people currently reading the widget
      * @param type $campaignID
@@ -789,12 +791,12 @@ class ReviewsModel extends Model {
 
         return $aData;
     }
-	
+
 
     public function saveComment($aData) {
         $aData =  DB::table('tbl_reviews_comments')->insertGetId($aData);
         return $aData;
-        
+
     }
 
 
@@ -829,21 +831,21 @@ class ReviewsModel extends Model {
         }
         return false;
     }
-	
-	
+
+
 	public function getAllChildComments($parentId) {
 		$oData = DB::table('tbl_reviews_comments')
             ->leftJoin('tbl_reviews', 'tbl_reviews_comments.review_id', '=', 'tbl_reviews.id')
             ->leftJoin('tbl_users', 'tbl_reviews_comments.user_id', '=', 'tbl_users.id')
             ->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.id as userId')
             ->where('tbl_reviews_comments.status', 1)
-            ->where('tbl_reviews_comments.parent_comment_id', $parentId)        
+            ->where('tbl_reviews_comments.parent_comment_id', $parentId)
             ->orderBy('tbl_reviews_comments.id', 'desc')
             ->get();
         return $oData;
     }
-	
-	
+
+
 	public static function countHelpful($reviewID) {
         $result = array();
         $rResponse = DB::table('tbl_reviews_helpful')
@@ -864,8 +866,8 @@ class ReviewsModel extends Model {
         $result = array('yes' => $yes, 'no' => $no);
         return $result;
     }
-	
-	
+
+
 	public function getComments($reviewID, $aSettings = array()) {
        $aData =  DB::table('tbl_reviews_comments')
 			->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
@@ -877,11 +879,11 @@ class ReviewsModel extends Model {
 			})
 
 			->orderBy("tbl_reviews_comments.id", "DESC")->get();
-       
+
         return $aData;
     }
-	
-	
+
+
 	/**
     * This function is used to save the reviews
     * @param type $clientID
@@ -896,7 +898,7 @@ class ReviewsModel extends Model {
     }
 
     /**
-    * This function is used to save the save helpful 
+    * This function is used to save the save helpful
     * @param type $clientID
     * @return type
     */
@@ -909,7 +911,7 @@ class ReviewsModel extends Model {
     }
 
     /**
-    * This function is used to update 
+    * This function is used to update
     * @param type $clientID
     * @return type
     */
@@ -934,21 +936,21 @@ class ReviewsModel extends Model {
                 ->get();
         return $res;
     }
-	
-	
+
+
 	/**
-     * 
+     *
      * @param type $campaignID
      * @return type
      */
     public static function getCampReviewsRA($campaignID) {
         $oData = DB::table('tbl_reviews')
             ->where('campaign_id', $campaignID)
-            ->orderBy('id', 'desc')    
+            ->orderBy('id', 'desc')
             ->get();
-        return $oData;        
+        return $oData;
     }
-	
+
 	/**
     * This function is used to get the review notes by the notes id
     * @param type $noteId
@@ -958,16 +960,16 @@ class ReviewsModel extends Model {
        $oData = DB::table('tbl_reviews_notes')
         ->where('id', $noteId)->get();
         return $oData;
-       
+
     }
-	
+
 
     public function updateReviewNote($aData, $noteId) {
         $oData = DB::table('tbl_reviews_notes')
         ->where('id', $noteId)->update($aData);
         return true;
     }
-	
+
 
     /**
      * Get Reviews count
@@ -978,10 +980,10 @@ class ReviewsModel extends Model {
         $oData = DB::table('tbl_reviews')
         ->where('campaign_id', $campaignID)
         ->count();
-        return $oData;        
+        return $oData;
     }
 
-    
+
     /**
      * Get campaign review response
      * @param type $campaignID
@@ -993,13 +995,13 @@ class ReviewsModel extends Model {
             ->leftJoin('tbl_campaigns', 'tbl_campaigns.event_id', '=', 'tbl_reviews.inviter_id')
             ->select('tbl_reviews.*', 'tbl_campaigns.campaign_type')
             ->where('tbl_reviews.campaign_id', $campaignID)
-            ->where('tbl_campaigns.campaign_type', $type)        
+            ->where('tbl_campaigns.campaign_type', $type)
             ->orderBy('tbl_reviews.id', 'desc')
-            ->groupBy('tbl_reviews.id')        
+            ->groupBy('tbl_reviews.id')
             ->count();
-        return $oData;        
+        return $oData;
     }
-	
+
 
     public function getAllMainComments($reviewId) {
 		$oData = DB::table('tbl_reviews_comments')
@@ -1008,13 +1010,13 @@ class ReviewsModel extends Model {
             ->select('tbl_reviews_comments.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.id as userId')
             ->where('tbl_reviews_comments.review_id', $reviewId)
             ->where('tbl_reviews_comments.status', 1)
-            ->where('tbl_reviews_comments.parent_comment_id', 0)        
+            ->where('tbl_reviews_comments.parent_comment_id', 0)
             ->orderBy('tbl_reviews_comments.id', 'desc')
             ->get();
         return $oData;
     }
-	
-	
+
+
 	public function getBBWidgetUserData($reviewID) {
 		$oData = DB::table('tbl_reviews')
             ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
@@ -1023,59 +1025,59 @@ class ReviewsModel extends Model {
             ->where('tbl_reviews.id', $reviewID)
             ->get();
         return $oData;
-		
+
     }
 
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function getReviewsUserList($userID = 1, $userRole) {
 
@@ -1150,7 +1152,7 @@ class ReviewsModel extends Model {
     }
 
 
-    
+
     public function countSiteReviewHelpful($reviewID) {
         $result = array();
         $this->db->where("review_id", $reviewID);
@@ -1211,7 +1213,7 @@ class ReviewsModel extends Model {
         return false;
     }
 
-    
+
     public function getSiteReviewComments($reviewID, $aSettings = array()) {
         $this->db->select("tbl_site_reviews_comments.*, tbl_users.firstname, tbl_users.lastname, tbl_users.email, tbl_users.mobile");
         $this->db->join("tbl_users", "tbl_site_reviews_comments.user_id=tbl_users.id", "LEFT");
@@ -1229,7 +1231,7 @@ class ReviewsModel extends Model {
         return $aData;
     }
 
-    
+
 	function displayComments($aComments, $level = 0) {
         foreach ($aComments as $info) {
             echo str_repeat('-', $level + 1) . ' comment ' . $info['id'] . "\n";
@@ -1256,7 +1258,7 @@ class ReviewsModel extends Model {
     public function getOnsiteReviewDetailsByUID($uniqueId) {
         $oData = DB::table('tbl_reviews')
             ->Join('tbl_users', 'tbl_reviews.user_id', '=' , 'tbl_users.id')
-            ->Join('tbl_brandboost_products', 'tbl_reviews.product_id', '=' , 'tbl_brandboost_products.id')    
+            ->Join('tbl_brandboost_products', 'tbl_reviews.product_id', '=' , 'tbl_brandboost_products.id')
             ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_brandboost_products.product_name', 'tbl_brandboost_products.product_image', 'tbl_brandboost_products.created as product_created')
             ->where('tbl_reviews.unique_review_key', $uniqueId)
             ->orderBy("tbl_reviews.id", "ASC")
@@ -1282,7 +1284,7 @@ class ReviewsModel extends Model {
         return $oData;
     }
 
-    
+
     public function getSiteReviewByReviewID($reviewid) {
 
         $this->db->where('id', $reviewid);
@@ -1294,7 +1296,7 @@ class ReviewsModel extends Model {
         return $response;
     }
 
-    
+
     public function latestReviews($userID = '') {
         $aData = array();
         $this->db->order_by("tbl_reviews.id", "desc");

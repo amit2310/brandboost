@@ -8,7 +8,7 @@ use App\Models\Admin\MediaModel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
-error_reporting(0);
+
 class Mediagallery extends Controller {
 
     public function index($keyCode) {
@@ -19,17 +19,17 @@ class Mediagallery extends Controller {
 		$imageSize = $galleryData->image_size;
 		$borderThickness = $galleryData->border_thickness;
 		$sliderLeftValue = '184';
-		
+
 		if($imageSize == 'small'){
 			$sliderLeftValue = '160';
 		}
-		
+
 		if($imageSize == 'large'){
 			$sliderLeftValue = '200';
 		}
-		
+
 		$sliderLeftValue = $sliderLeftValue + ($borderThickness*2);
-		
+
 		$aData = array((object) array(
 			'method' => 'list',
 			'slideNo' => $galleryData->gallery_type,
@@ -40,20 +40,20 @@ class Mediagallery extends Controller {
         echo json_encode($aData);
         exit;
     }
-	
+
 	// get review data for media gallery widget
-	
+
 	public function getReviewData(){
 		$response = array('status' => 'error', 'msg' => 'Something went wrong');
-		
+
         $post = Input::post();
-		
+
         if (empty($post)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
-		
+
         //$aUser = getLoggedUser();
         //$userID = $aUser->id;
 		$mReviews  = new ReviewsModel();
@@ -67,13 +67,13 @@ class Mediagallery extends Controller {
 				$ratingsVal .= '<img src="'.base_url().'assets/images/widget/grey_icon.png"> ';
 			}
 		}
-		
+
 		$reviewImageArray = unserialize($reviewData[0]->media_url);
 		$reviewRatings = $reviewData[0]->ratings + $reviewRatings;
 		$imageUrl = $reviewImageArray[0]['media_url'];
 		//<p class="heading_pop2">'.$reviewData[0]->brand_desc.'</p>
 		$oComments = $mReviews->getComments($reviewId);
-		
+
 		$reviewPopupData = '<div class="box_inner">
 		<div class="bbw_modal_header">
 			<h5 class="bbw_modal_title">'.$reviewData[0]->brand_title.'</h5>
