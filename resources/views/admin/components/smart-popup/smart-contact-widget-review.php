@@ -3,7 +3,6 @@
 <div class="box smart-contact-onsite-box" style="width: 680px;z-index:9999999999;">
     <div style="width: 680px;overflow: hidden; height: 100%;">
         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
-
             <div class="row" style="height: 100%;">
                 <div class="col-md-12">
                     <a style="left: 35px; top: 15px;" class="reviews smart-contact slide-toggle bkg_grey_light" ><i class=""><img src="{{ base_url() }}assets/images/icon_arrow_left.png"/></i></a>
@@ -14,7 +13,10 @@
         </div>
     </div>
 </div>
-<a style="position: fixed; top: 50%; right: 12px; display:none;" class="reviews smart-contact slide-toggle visible" ><i class="icon-arrow-left5"></i></a>
+
+<a style="position: fixed; top: 50%; right: 12px; display:none;" class="reviews smart-contact slide-toggle visible" >
+	<i class="icon-arrow-left5"></i>
+</a>
 
 <script>
     $(document).ready(function () {
@@ -51,16 +53,10 @@
                     dataType: "json",
                     success: function (response) {
                         if (response.status == "success") {
-                            //alertMessage('Your notes has been added successfully.');
                             $('.overlaynew').hide();
                             $("#notes2").val('');
                             $("#contact-notes-container").html(response.notes);
-//                                $('.notes-table').DataTable({
-//                                    "order": []
-//                                });
-
                             $(".contactNewNote").tab('show');
-                            //window.location.href = '';
                         }
                     },
                     error: function (response) {
@@ -84,8 +80,8 @@
                 $('.loadMoreRecordActivity').remove();
             }
         });
-
     });
+	
     function loadContactSmartPopupReview(subscriberID, moduleName) {
         $.ajax({
             url: '/admin/contacts/profile/' + subscriberID,
