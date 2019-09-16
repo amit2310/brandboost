@@ -47,66 +47,66 @@
 
 
 </style>
-<?php
-$aSelectedLists = array();
-if ($getMyLists->count()>0) {
-    foreach ($getMyLists as $key => $value) {
-        $aSelectedLists[] = $value->id;
-    }
-}
-$aUInfo = $userData;
-//pre($aUInfo);
-//$cb_contact_id = $aUInfo->cb_contact_id;
-$userId = $aUInfo->id;
 
-$avatar = "";
-$firstname = $aUInfo->firstname;
-$lastname = $aUInfo->lastname;
-//$userRole = $aUInfo->user_role;
-$userRole = "";
+@php
+	$aSelectedLists = array();
+	if ($getMyLists->count()>0) {
+		foreach ($getMyLists as $key => $value) {
+			$aSelectedLists[] = $value->id;
+		}
+	}
+	$aUInfo = $userData;
+	//$cb_contact_id = $aUInfo->cb_contact_id;
+	$userId = $aUInfo->id;
 
-if ($userRole == '1') {
+	$avatar = "";
+	$firstname = $aUInfo->firstname;
+	$lastname = $aUInfo->lastname;
+	//$userRole = $aUInfo->user_role;
+	$userRole = "";
 
-    $roleName = 'Administrator';
-} else if ($userRole == '2') {
+	if ($userRole == '1') {
 
-    $roleName = 'User';
-} else if ($userRole == '3') {
+		$roleName = 'Administrator';
+	} else if ($userRole == '2') {
 
-    $roleName = 'Customer';
-} else {
+		$roleName = 'User';
+	} else if ($userRole == '3') {
 
-    $roleName = '';
-}
-$username = $firstname . ' ' . $lastname;
-if (!empty($avatar) && $avatar != 'avatar_image.png') {
-    $srcUserImg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $avatar;
-} else {
-    $srcUserImg = '/profile_images/avatar_image.png';
-}
+		$roleName = 'Customer';
+	} else {
 
-//$address = $aUInfo->address;
-$address ="";
-$city = $aUInfo->cityName;
-$state = $aUInfo->stateName;
-$country = $aUInfo->country_code;
-if (empty($country)) {
-    $country = 'us';
-}
-$email = $aUInfo->email;
-$mobile = $aUInfo->phone;
-$gender = $aUInfo->gender;
+		$roleName = '';
+	}
+	$username = $firstname . ' ' . $lastname;
+	if (!empty($avatar) && $avatar != 'avatar_image.png') {
+		$srcUserImg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $avatar;
+	} else {
+		$srcUserImg = '/profile_images/avatar_image.png';
+	}
 
-if (!empty($aUInfo->user_id)) { 
-    $getNotification = \App\Models\Admin\SettingsModel::getNotificationSettings($aUInfo->user_id);
-    $getUser = \App\Models\Admin\UsersModel::getAllUsers($aUInfo->user_id);
-    $getUser = $getUser[0];
-} else {
-    $getNotification = '';
-    $getUser = '';
-}
-$oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
-?>
+	//$address = $aUInfo->address;
+	$address ="";
+	$city = $aUInfo->cityName;
+	$state = $aUInfo->stateName;
+	$country = $aUInfo->country_code;
+	if (empty($country)) {
+		$country = 'us';
+	}
+	$email = $aUInfo->email;
+	$mobile = $aUInfo->phone;
+	$gender = $aUInfo->gender;
+
+	if (!empty($aUInfo->user_id)) { 
+		$getNotification = \App\Models\Admin\SettingsModel::getNotificationSettings($aUInfo->user_id);
+		$getUser = \App\Models\Admin\UsersModel::getAllUsers($aUInfo->user_id);
+		$getUser = $getUser[0];
+	} else {
+		$getNotification = '';
+		$getUser = '';
+	}
+	$oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
+@endphp
 
 <div class="smartpopup-container">
     <div class="col-md-5 pr0 brig" style="height: 100%;">
@@ -114,11 +114,11 @@ $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
             <div class="profile_sec">
                 <div class="p0 pt20 pb20 text-center">
                     <div class="profile_pic">
-                        <?php echo showUserAvtar($avatar, $firstname, $lastname, 84, 84, 24); ?>
-                        <div class="profile_flags"><img src="<?php echo base_url(); ?>assets/images/flags/<?php echo strtolower($country); ?>.png" onerror="this.src='<?php echo base_url('assets/images/flags/us.png'); ?>'"></div>
+                        {{ showUserAvtar($avatar, $firstname, $lastname, 84, 84, 24) }}
+                        <div class="profile_flags"><img src="{{ base_url() }}assets/images/flags/{{ strtolower($country) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"></div>
                     </div>
-                    <h3><?php echo $username; ?></h3>
-                    <p class="text-size-small text-muted mb0"><?php echo $state != '' ? ucfirst($state) . ' ,' : displayNoData() . ' ,'; ?> <?php echo strtoupper($country); ?></p>
+                    <h3>{{ $username }}</h3>
+                    <p class="text-size-small text-muted mb0">{{ $state != '' ? ucfirst($state) . ' ,' : displayNoData() . ' ,' }} {{ strtoupper($country) }}</p>
                 </div>
 
 
@@ -128,18 +128,20 @@ $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
 
                 <div class="interactions p20">
                     <ul>
-                        <li><i class="fa fa-envelope"></i><strong><?php echo $email != '' ? $email : displayNoData(); ?></strong></li>
-                        <li><i class="fa fa-phone"></i><strong><?php echo $mobile != '' ? mobileNoFormat($mobile) : displayNoData(); ?></strong></li>
-                        <li><i class="fa fa-user"></i><strong><?php
-                                if ($gender == 'male') {
-                                    echo 'Male';
-                                } else if ($gender == 'female') {
-                                    echo 'Female';
-                                } else {
-                                    echo displayNoData();
-                                }
-                                ?></strong></li>
-                        <li><i class="fa fa-clock-o"></i><strong><?php echo date("hA"); ?>, <?php echo date_default_timezone_get(); ?></strong></li>
+                        <li><i class="fa fa-envelope"></i><strong>{{ $email != '' ? $email : displayNoData() }}</strong></li>
+                        <li><i class="fa fa-phone"></i><strong>{{ $mobile != '' ? mobileNoFormat($mobile) : displayNoData() }}</strong></li>
+                        <li><i class="fa fa-user"></i>
+							<strong>
+								@if ($gender == 'male')
+									Male
+								@elseif ($gender == 'female')
+									Female
+								@else
+									{{ displayNoData() }}
+								@endif
+							</strong>
+						</li>
+                        <li><i class="fa fa-clock-o"></i><strong>{{ date("hA") }}, {{ date_default_timezone_get() }}</strong></li>
                         <li><i class="fa fa-align-left"></i><strong>Opt-Out of All</strong></li>
 
                     </ul>
@@ -149,46 +151,37 @@ $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
                 <div class="profile_headings">Lists <a href="javascript:void(0);" class="pull-right"><i class="fa fsize15 txt_grey fa-angle-down"></i></a></div>
 
                 <div class="p20">
-                    <?php
-                    if (!empty($getMyLists)) {
-                        foreach ($getMyLists as $key => $value) {
-                            ?><button class="btn btn-xs btn_white_table"><?php echo $value->list_name; ?></button><?php
-                        }
-                        ?>
+                    @if (!empty($getMyLists))
+                        @foreach ($getMyLists as $key => $value)
+							<button class="btn btn-xs btn_white_table">{{ $value->list_name }}</button>
+						@endforeach
                         <button style="margin: 0 10px 15px 0!important;" class="btn btn-xs plus_icon mt0" data-toggle="modal" data-target="#chooselistModal"><i class="icon-plus3"></i></button>
-                        <?php
-                    } else {
-                        echo displayNoData();
-                    }
-                    ?>
+                        
+					@else
+						{{ displayNoData() }}
+					@endif
                 </div>
 
                 <div class="profile_headings">Tags <a href="javascript:void(0);" class="pull-right"><i class="fa fsize15 txt_grey fa-angle-down"></i></a></div>
 
                 <div class="p20">
-                    <?php
-//pre($oTags);
-                    if (!empty($oTags)) {
-                        foreach ($oTags as $value) {
-
-                            if (!empty($value->tag_name)) {
-                                ?><button class="btn btn-xs btn_white_table"><?php echo $value->tag_name; ?></button><?php
-                            }
-                        }
-                        ?>
-                        <button style="margin: 0 10px 15px 0!important;" class="btn btn-xs plus_icon mt0 applyInsightTags" data-subscriber-id="<?php echo $contactId; ?>"><i class="icon-plus3"></i></button>
-                        <?php
-                    } else {
-                        echo displayNoData();
-                    }
-                    ?>
+                    @if (!empty($oTags))
+						@foreach ($oTags as $value)
+							@if (!empty($value->tag_name))
+								<button class="btn btn-xs btn_white_table">{{ $value->tag_name }}</button>
+							@endif
+                        @endforeach
+                        <button style="margin: 0 10px 15px 0!important;" class="btn btn-xs plus_icon mt0 applyInsightTags" data-subscriber-id="{{ $contactId }}"><i class="icon-plus3"></i></button>
+                        
+					@else
+						{{ displayNoData() }}
+					@endif
                 </div>
 
                 <div class="profile_headings">Involved Campaigns <a class="pull-right plus_icon" href="javascript:void(0);"><i class="icon-plus3"></i></a></div>
 
                 <div class="brig">
-                    <?php
-//pre($oTags);
+                    @php
                     if (!empty($oInvolvedBrandboost)) {
                         foreach ($oInvolvedBrandboost as $oBoost) {
                             if ($oBoost->review_type == 'onsite') {
@@ -200,90 +193,68 @@ $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
                             }
                         }
 
-                        if (!empty($oOnsite)) {
-                            ?>
+                        if (!empty($oOnsite)):
+                            @endphp
                             <div class="profile_headings">On Site Review Campaigns <a href="javascript:void(0);" class="pull-right"><i class="fa fsize15 txt_grey fa-angle-down"></i></a></div>
 
                             <div class="p20">
-                                <?php
-                                foreach ($oOnsite as $oRec) {
-
-                                    if (!empty($oRec->brand_title)) {
-                                        ?><button class="btn btn-xs btn_white_table"><?php echo $oRec->brand_title; ?></button><?php
-                                    }
-                                }
-                                ?>
+                                @foreach ($oOnsite as $oRec)
+									@if (!empty($oRec->brand_title))
+										<button class="btn btn-xs btn_white_table">{{ $oRec->brand_title }}</button>
+									@endif
+                                @endforeach
                             </div>
-                            <?php
-                        }
+                        @endif
 
-                        if (!empty($oOffsite)) {
-                            ?>
+                        @if (!empty($oOffsite))
                             <div class="profile_headings">Off Site Review Campaigns <a href="javascript:void(0);" class="pull-right"><i class="fa fsize15 txt_grey fa-angle-down"></i></a></div>
 
                             <div class="p20">
-                                <?php
-                                foreach ($oOffsite as $oRec) {
-
-                                    if (!empty($oRec->brand_title)) {
-                                        ?><button class="btn btn-xs btn_white_table"><?php echo $oRec->brand_title; ?></button><?php
-                                    }
-                                }
-                                ?>
+                                @foreach ($oOffsite as $oRec)
+									@if (!empty($oRec->brand_title))
+										<button class="btn btn-xs btn_white_table">{{ $oRec->brand_title }}</button>
+									@endif
+                                @endforeach
                             </div>
-                            <?php
-                        }
+                        @endif
 
-                        if (!empty($oInvolvedNPS)) {
-                            ?>
+                        @if (!empty($oInvolvedNPS))
                             <div class="profile_headings">NPS Campaigns <a href="javascript:void(0);" class="pull-right"><i class="fa fsize15 txt_grey fa-angle-down"></i></a></div>
 
                             <div class="p20">
-                                <?php
-                                foreach ($oInvolvedNPS as $oRec) {
-
-                                    if (!empty($oRec->title)) {
-                                        ?><button class="btn btn-xs btn_white_table"><?php echo $oRec->title; ?></button><?php
-                                    }
-                                }
-                                ?>
+                                @foreach ($oInvolvedNPS as $oRec)
+									@if (!empty($oRec->title))
+										<button class="btn btn-xs btn_white_table">{{ $oRec->title }}</button>
+									@endif
+                                @endforeach
                             </div>
-                            <?php
-                        }
-
-                        if (!empty($oInvolvedReferral)) {
-                            ?>
+                        @endif    
+						
+                        @if (!empty($oInvolvedReferral))
                             <div class="profile_headings">Referral Campaigns <a href="javascript:void(0);" class="pull-right"><i class="fa fsize15 txt_grey fa-angle-down"></i></a></div>
-
                             <div class="p20">
-                                <?php
-                                foreach ($oInvolvedReferral as $oRec) {
-
-                                    if (!empty($oRec->title)) {
-                                        ?><button class="btn btn-xs btn_white_table"><?php echo $oRec->title; ?></button><?php
-                                    }
-                                }
-                                ?>
+                                @foreach ($oInvolvedReferral as $oRec)
+									@if (!empty($oRec->title))
+										<button class="btn btn-xs btn_white_table">{{ $oRec->title }}</button>
+									@endif
+                                @endforeach
                             </div>
-                            <?php
-                        }
-                    } else { ?>
-                        <div class="text-center mt20"><?php echo displayNoData(); ?></div> 
-                    <?php }
-                    ?>
+                        @endif
+                    @else
+                        <div class="text-center mt20">{{ displayNoData() }}</div> 
+                    @endif
                 </div>
-
             </div>
         </div>
     </div>
 
     <div class="col-md-7 pl0" style="height: 100%;">
         <div class="bbot">
-            <input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $contactId; ?>">
+            <input type="hidden" name="subscriberid" id="subscriberid" value="{{ $contactId }}">
             <textarea style="height: 100px;" class="form-control addnote p20" id="notes2" placeholder="Start typing to leave a note..."></textarea>
             <div class="p20 btop pl30">
                 <button class="btn dark_btn bkg_blue mr20 addNoteButton2" style="color:#5d7df3!important;">Add Note</button>
-                <a href="javascript:void(0);"><i class=""><img width="10" src="<?php echo base_url(); ?>assets/images/icon_hash.png"/></i></a> &nbsp; &nbsp; <a href="javascript:void(0);"><i class=""><img width="10" src="<?php echo base_url(); ?>assets/images/icon_atrate.png"/></i></a>
+                <a href="javascript:void(0);"><i class=""><img width="10" src="{{ base_url() }}assets/images/icon_hash.png"/></i></a> &nbsp; &nbsp; <a href="javascript:void(0);"><i class=""><img width="10" src="{{ base_url() }}assets/images/icon_atrate.png"/></i></a>
             </div>
         </div>
 
@@ -299,14 +270,12 @@ $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
         <div class="tab-content bbot">
             <div class="tab-pane active" id="ActivityLog">
                 <div class="pt0 p10"  style="min-height:500px;">
-                    <?php if (!empty($userActivities)) { ?>
+                    @if (!empty($userActivities))
                         <table class="table new activity">
                             <tbody>
-                                <?php
+                                @php
                                 $activityInc = 1;
                                 foreach ($userActivities as $key => $value) {
-                                    //pre($value->event_type);
-
                                     if ($activityInc > 10) {
                                         $display = 'display:none;';
                                     } else {
@@ -330,40 +299,41 @@ $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
                                     } else if ($value->event_type == 'manage_automation_lists' || $value->event_type == 'manage_lists') {
                                         $icon = '<i class="icon-indent-increase2"></i>';
                                     } else if ($value->event_type == 'upgraded_membership' || $value->event_type == 'upgraded_topup_membership' || $value->event_type == 'buy-addons-credit-pack' || $value->event_type == 'profile_update') {
-                                        $icon = '<img src="' . base_url("assets/images/icon_round_forward.png") . '" class="img-circle img-xs" />';
+                                        $icon = '<img src="' . base_url('assets/images/icon_round_forward.png') . '" class="img-circle img-xs" />';
                                     } else if ($value->event_type == 'brandboost_onsite_widget') {
-                                        $icon = '<img src="' . base_url("assets/css/menu_icons/Website_Color.svg") . '" class="img-circle img-xs" />';
+                                        $icon = '<img src="' . base_url('assets/css/menu_icons/Website_Color.svg') . '" class="img-circle img-xs" />';
                                     } else {
                                         $icon = '<i class="icon-star-full2 txt_purple"></i>';
                                     }
-                                    ?>
-                                    <tr class="activityShow" style="<?php echo $display; ?>">
+									
+                                    @endphp
+									
+                                    <tr class="activityShow" style="{{ $display }}">
                                         <td>
-                                            <div class="media-left media-middle"> <a class="icons s28" style="cursor: pointer;"><?php echo $icon; ?></a> </div>
+                                            <div class="media-left media-middle"> <a class="icons s28" style="cursor: pointer;">{{ $icon }}</a> </div>
                                             <div class="media-left">
-                                                <div class="pt-5"><a href="#" class="text-default text-semibold"><!-- Email <span class="text-muted">sent in </span> New Product Campaign --><?php echo $value->activity_message; ?></a></div>
-                                                <span class="text-muted text-size-small"><?php echo date('d M Y ', strtotime($value->activity_created)); ?> &nbsp; <?php echo date('h:i A ', strtotime($value->activity_created)); ?></span>
+                                                <div class="pt-5"><a href="#" class="text-default text-semibold">{{ $value->activity_message }}</a></div>
+                                                <span class="text-muted text-size-small">{{ date('d M Y ', strtotime($value->activity_created)) }} &nbsp; {{ date('h:i A ', strtotime($value->activity_created)) }}</span>
 
                                             </div>
                                         </td>
         
                                     </tr>
-                                    <?php
+                                    @php
                                     $activityInc++;
                                 }
-                                ?>
+                                @endphp
                             </tbody>
                         </table>
-                    <?php } else { ?>
-                        <div class="text-center mt20"><?php echo displayNoData(); ?></div>
-                    <?php } ?>
+                    @else
+                        <div class="text-center mt20">{{ displayNoData() }}</div>
+                    @endif
 
-                    <?php 
-                    if(!empty($userActivities)) {
-                        if (count($userActivities) > 10) { ?>
-                            <div class="loadMoreRecord loadMoreRecordActivity text-center"><a style="cursor: pointer;" class="loadMoreActivity" >Load more</a><img class="loaderImage hidden" src="<?php echo base_url(); ?>assets/images/widget_load.gif" width="20px" height="20px"></div>
-                        <?php }
-                    } ?>
+                    @if(!empty($userActivities))
+						@if (count($userActivities) > 10)
+							<div class="loadMoreRecord loadMoreRecordActivity text-center"><a style="cursor: pointer;" class="loadMoreActivity" >Load more</a><img class="loaderImage hidden" src="{{ base_url() }}assets/images/widget_load.gif" width="20px" height="20px"></div>
+                        @endif
+					@endif
                 </div>					
             </div>
 
@@ -374,73 +344,69 @@ $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
             </div>
             <div class="tab-pane" id="Email">
                 <div class="pt0 p10" style="min-height:500px;">
-                    <?php
-//pre($result);
+                    @php
                     $emailCount = 0;
                     if (!empty($result)) {
-                        ?>    
+                        @endphp    
                         <table class="table new">
                             <tbody>
-                                <?php
-//pre($result);
+                                @php
                                 $emailCount = 0;
                                 if (!empty($result)) {
                                     $emailInc = 1;
                                     foreach ($result as $key => $value) {
-                                        //pre($value);
                                         if ($value['type'] == 'Email') {
-                                            $icon = '<img src="' . base_url("assets/images/icon_round_email.png") . '" class="img-circle img-xs" />';
+                                            $icon = '<img src="' . base_url('assets/images/icon_round_email.png') . '" class="img-circle img-xs" />';
 
                                             if ($emailInc > 10) {
                                                 $display = 'display:none;';
                                             } else {
                                                 $display = '';
                                             }
-                                            ?>
-                                            <tr class="emailsShow" style="<?php echo $display; ?>">
+                                            @endphp
+                                            <tr class="emailsShow" style="{{ $display }}">
                                                 <td>
-                                                    <div class="media-left media-middle"> <span class="icons"><?php echo $icon; ?></span> </div>
+                                                    <div class="media-left media-middle"> <span class="icons">{{ $icon }}</span> </div>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><span class="text-default text-semibold"><?php echo $value['title'] . ' - ' . $value['name'] . ''; ?></span></div>
-                                                        <span class="text-muted text-size-small"><?php echo date('d M Y ', strtotime($value['created'])); ?> &nbsp; <?php echo date('h:i A ', strtotime($value['created'])); ?></span>
+                                                        <div class="pt-5"><span class="text-default text-semibold">{{ $value['title'] . ' - ' . $value['name'] . '' }}</span></div>
+                                                        <span class="text-muted text-size-small">{{ date('d M Y ', strtotime($value['created'])) }} &nbsp; {{ date('h:i A ', strtotime($value['created'])) }}</span>
 
                                                     </div>
                                                 </td>
                                                     
                                             </tr>
-                                            <?php
+                                            @php
                                             $emailInc++;
                                             $emailCount++;
                                         }
                                     }
                                 }
-                                ?>
+                                @endphp
                             </tbody>
                         </table>
 
-                        <?php if ($emailInc > 10) { ?>
-                            <div class="loadMoreRecord loadMoreRecordEmail"><a style="cursor: pointer;" class="loadMoreEmail" >Load more</a><img class="loaderImage hidden" src="<?php echo base_url(); ?>assets/images/widget_load.gif" width="20px" height="20px"></div>
-                        <?php } ?>
-                        <?php
-                        if (empty($emailCount)) {
-                            ?>
-                            <div class="text-center mt20"><?php echo displayNoData(); ?></div>
-                        <?php }
-                        ?>
-                    <?php } else { ?>
-                        <div class="text-center mt20"><?php echo displayNoData(); ?></div>
-                    <?php } ?>    
+                        @if ($emailInc > 10)
+							<div class="loadMoreRecord loadMoreRecordEmail"><a style="cursor: pointer;" class="loadMoreEmail" >Load more</a><img class="loaderImage hidden" src="{{ base_url() }}assets/images/widget_load.gif" width="20px" height="20px"></div>
+                        @endif
+						
+                        @if (empty($emailCount))
+							<div class="text-center mt20">{{ displayNoData() }}</div>
+                        @endif
+						
+                    @else
+						<div class="text-center mt20">{{ displayNoData() }}</div>
+                    @endif
                 </div>
             </div>
             <div class="tab-pane" id="SMS">
                 <div class="pt0 p10"  style="min-height:500px;">
-                    <?php
+                    @php
                     $smsCount = 0;
                     if (!empty($result)) {
-                        ?>
+                        @endphp
                         <table class="table new">
                             <tbody>
-                                <?php
+                                @php
                                 $smsCount = 0;
                                 if (!empty($result)) {
                                     $smsInc = 1;
@@ -454,53 +420,47 @@ $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
                                                 $display = '';
                                             }
 
-                                            $icon = '<img src="' . base_url("assets/css/menu_icons/Sms_Color.svg") . '" class="img-circle img-xs" />';
-                                            ?>
-                                            <tr class="smsShow" style="<?php echo $display; ?>">
+                                            $icon = '<img src="' . base_url('assets/css/menu_icons/Sms_Color.svg') . '" class="img-circle img-xs" />';
+                                            @endphp
+                                            <tr class="smsShow" style="{{ $display }}">
                                                 <td>
-                                                    <div class="media-left media-middle"> <span class="icons"><?php echo $icon; ?></span> </div>
+                                                    <div class="media-left media-middle"> <span class="icons">{{ $icon }}</span> </div>
                                                     <div class="media-left">
-                                                        <div class="pt-5"><span class="text-default text-semibold"><?php echo $value['title'] . ' - ' . $value['name'] . ''; ?></span></div>
+                                                        <div class="pt-5"><span class="text-default text-semibold">{{ $value['title'] . ' - ' . $value['name'] . '' }}</span></div>
 
                                                     </div>
                                                 </td>
-                                                <td class="text-right"><span class="text-muted text-size-small"><?php echo date('d M Y ', strtotime($value['created'])); ?> &nbsp; <?php echo date('h:i A ', strtotime($value['created'])); ?></span></td>
+                                                <td class="text-right"><span class="text-muted text-size-small">{{ date('d M Y ', strtotime($value['created'])) }} &nbsp; {{ date('h:i A ', strtotime($value['created'])) }}</span></td>
                                             </tr>
-                                            <?php
+                                            @php
                                             $smsInc++;
                                             $smsCount++;
                                         }
                                     }
-                                } else {
-                                    
                                 }
-                                ?>
+                                @endphp
                             </tbody>
                         </table>
 
-                        <?php if ($smsInc > 10) { ?>
-                            <div class="loadMoreRecord loadMoreRecordSms"><a style="cursor: pointer;" class="loadMoreSms" >Load more</a><img class="loaderImage hidden" src="<?php echo base_url(); ?>assets/images/widget_load.gif" width="20px" height="20px"></div>
-                        <?php } ?>
-                        <?php
-                        if (empty($smsCount)) {
-                            ?>
-                            <div class="text-center mt20"><?php echo displayNoData(); ?></div>
-                        <?php }
-                        ?>
-                    <?php } else { ?>
-                        <div class="text-center mt20"><?php echo displayNoData(); ?></div>
-                    <?php } ?>
+                        @if ($smsInc > 10)
+							<div class="loadMoreRecord loadMoreRecordSms"><a style="cursor: pointer;" class="loadMoreSms" >Load more</a><img class="loaderImage hidden" src="{{ base_url() }}assets/images/widget_load.gif" width="20px" height="20px"></div>
+                        @endif
+						
+                        @if (empty($smsCount))
+							<div class="text-center mt20">{{ displayNoData() }}</div>
+                        @endif
+						
+                    @else
+						<div class="text-center mt20">{{ displayNoData() }}</div>
+                    @endif
                 </div>
             </div>
             <div class="tab-pane" id="ChatPanel">
                 <div class="pt0 p10"  style="min-height:500px;">
-                    <div class="text-center mt20"><?php echo displayNoData(); ?></div>
-
+                    <div class="text-center mt20">{{ displayNoData() }}</div>
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>    
 <div id="chooselistModal" class="modal fade">
@@ -512,7 +472,7 @@ $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
             <form method="post" name="frmAddCotactToLists" id="frmAddCotactToLists" action="javascript:void();">
                 <div class="modal-body p0" style="height:500px;overflow:auto;padding-bottom:17px !important; ">
                     <ul class="contactaddlist contact">
-                        <?php
+                        @php
                         if (!empty($oLists)):
                             $newolists = array();
 
@@ -528,41 +488,34 @@ $oTags = \App\Models\Admin\TagsModel::getSubscriberTags($aUInfo->id);
                                 } else {
                                     $totAll = 0;
                                 }
-                                ?>
+                                @endphp
                                 <li>
                                     <label>
                                         <div class="media-left">
                                             <div class="checkbox">
                                                 <label class="custmo_checkbox pull-left mt-5 ">
-                                                    <input type="hidden" name="allList[]" value="<?php echo $oList->id; ?>" />
-                                                    <input type="checkbox" name="listid[]" <?php if (in_array($oList->id, $aSelectedLists)): ?> checked="checked"<?php endif; ?> value="<?php echo $oList->id; ?>">
+                                                    <input type="hidden" name="allList[]" value="{{ $oList->id }}" />
+                                                    <input type="checkbox" name="listid[]" 
+														@if (in_array($oList->id, $aSelectedLists)) checked="checked" @endif 
+														value="{{ $oList->id }}">
                                                     <span class="custmo_checkmark"></span>
-
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="media-left media-middle"> <a class="icons" href="#"><img src="<?php echo base_url("assets/css/menu_icons/OffSiteBoost_Color.svg"); ?>" class="img-circle img-xs" alt=""></a> </div>
-                                        <div class="media-left"> <a href="#" class="text-default"><span><?php echo $oList->list_name; ?></span> </a> </div>
+                                        <div class="media-left media-middle"> <a class="icons" href="#"><img src="{{ base_url("assets/css/menu_icons/OffSiteBoost_Color.svg") }}" class="img-circle img-xs" alt=""></a> </div>
+                                        <div class="media-left"> <a href="#" class="text-default"><span>{{ $oList->list_name }}</span> </a> </div>
                                     </label>
-                                </li>    
-
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-
-
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
                 <div class="modal-footer botfooter">
-                    <input type="hidden" name="subscriber_id" value="<?php echo $contactId; ?>" />
+                    <input type="hidden" name="subscriber_id" value="{{ $contactId }}" />
                     <button class="btn btn-link text-muted" data-dismiss="modal">Skip </button>
                     <button type="submit" class="btn dark_btn bkg_blue">Send</button>
                 </div>
             </form>
         </div>
-
-
-
     </div>
 </div>
-
-
