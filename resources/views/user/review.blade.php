@@ -368,7 +368,7 @@
                                                                                 class="media-left"><!-- <img src="{{ base_url() }}assets/images/cust2.png" width="36"> -->
                                                                                 <div
                                                                                     class="media-left media-middle pr10 commentPar">
-                                                                                    {{ showUserAvtar($childComment->avatar, $childComment->firstname, $childComment->lastname) }}</div>
+                                                                                    {!! showUserAvtar($childComment->avatar, $childComment->firstname, $childComment->lastname) !!}</div>
                                                                             </div>
                                                                             <div class="media-left pr0">
                                                                                 <p class="fsize14 txt_grey2 lh14 mb10 ">{{ $childComment->firstname . ' ' . $childComment->lastname }}

@@ -11,13 +11,13 @@ use App\Models\Admin\SubscriberModel;
 use App\Models\Admin\ReviewlistsModel;
 use App\Models\Admin\BrandboostModel;
 use App\Models\Admin\UsersModel;
-error_reporting(0);
+
 
 class Feedback extends Controller {
 
 
     /**
-    * index call 
+    * index call
     * @param type $page
     * @return type
     */
@@ -25,7 +25,7 @@ class Feedback extends Controller {
     public function index($page = '') {
         $get = array();
         $get = Input::get();
-       
+
         if (!empty($get)) {
             $subscriberID = $get['subid'];
             $clientID = $get['clid'];
@@ -71,7 +71,7 @@ class Feedback extends Controller {
             'getParam' => $qs
         );
 
-      
+
         if ($page == 'resolution') {
 			return view('feedback_collect_resolution', $aData);
         } else if ($page == 'sources' || $page == 'thankyou') {
@@ -83,7 +83,7 @@ class Feedback extends Controller {
 
 
     /**
-    * function to get resolution values 
+    * function to get resolution values
     * @param type $page
     * @return type
     */
@@ -372,7 +372,7 @@ class Feedback extends Controller {
 
 
     /**
-    * function is used for save resolution 
+    * function is used for save resolution
     * @param type
     * @return type
     */
@@ -558,7 +558,7 @@ class Feedback extends Controller {
 
 
     /**
-    * This function is used to send feedback thank you email 
+    * This function is used to send feedback thank you email
     * @param type $clientID
     * @return type
     */
@@ -633,7 +633,7 @@ class Feedback extends Controller {
     }
 
 
-     
+
      /**
     * This function is used for threadreply
     * @param type

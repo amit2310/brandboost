@@ -1859,7 +1859,7 @@ class Brandboost extends Controller {
 			'created' => date("Y-m-d H:i:s")
 		);
 		$aResponse = FeedbackModel::getFeedbackResponse($brandboostID);
-		if (count($aResponse) > 0) {
+		if (isset($aResponse->id)) {
 			$result = BrandboostModel::updateBrandboostFeedbackResponse($feedbackData, $brandboostID);
 			$aActivityData = array(
 				'user_id' => $userID,

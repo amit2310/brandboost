@@ -15,14 +15,12 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Cookie;
 use Session;
 
-//error_reporting(0);
-
 
 class Team extends Controller {
 
 
     /**
-    * This function will return all the list of define roles 
+    * This function will return all the list of define roles
     * @param type $clientID
     * @return type
     */
@@ -43,7 +41,7 @@ class Team extends Controller {
             $oRoles = $mTeam->getRoleList($userID);
         }
 
-        
+
         $bActiveSubsription = $mUser->isActiveSubscription();
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -56,10 +54,10 @@ class Team extends Controller {
 
         return view ('admin.team.rolelist', array('title' => 'Team Roles', 'pagename' => $breadcrumb,'oRoles' => $oRoles, 'bActiveSubsription' => $bActiveSubsription));
     }
-    
+
 
     /**
-    * This function is used to all the members list 
+    * This function is used to all the members list
     * @param type
     * @return type
     */
@@ -89,17 +87,17 @@ class Team extends Controller {
                     </ul>';
 
         return view ('admin.team.memberlist', array('title' => 'Team Members', 'pagename' => $breadcrumb,'oMembers' => $oMembers, 'oRoles' => $oRoles));
-        
-        
+
+
     }
 
 
     /**
     * This function is used to get the twilio numbers
-    * @param type 
+    * @param type
     * @return type
     */
-      
+
      public function twilioNumberlisting()
      {
 
@@ -110,25 +108,25 @@ class Team extends Controller {
 
 
      }
-    
+
     public function viewLog($teamMemberID){
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mTeam = new TeamModel();
         $oData = $mTeam->getUserActivities('team', $teamMemberID);
-        
+
         /*$breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
                     <li><a class="sidebar-control hidden-xs">View Activity Log</a></li>
-                </ul>';*/ 
+                </ul>';*/
 
 
         return view ('admin.team.activitylist', array('title' => 'Team Member Activity', 'pagename' => $breadcrumb, 'oData'=>$oData));
-        
+
     }
-    
-    
+
+
 
     /**
     * This function will return team member activity lists
@@ -141,7 +139,7 @@ class Team extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mTeam = new TeamModel();
-        $oData = $mTeam->getUserActivities('team'); 
+        $oData = $mTeam->getUserActivities('team');
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -153,13 +151,13 @@ class Team extends Controller {
 
 
         return view ('admin.team.activitylist', array('title' => 'Team Member Activity', 'pagename' => $breadcrumb, 'oData'=>$oData));
-        
+
     }
-    
+
 
     /**
     * This function will add the team member
-    * @param type 
+    * @param type
     * @return type
     */
 
@@ -227,7 +225,7 @@ class Team extends Controller {
             'password' => $pwd,
             'created' => date("Y-m-d H:i:s")
         );
-        
+
         if($post['smschat_config']=='on' && $post['twilioMobileNo']!="" )
         {
             $response = createTwilioCNTeam($post['twilioMobileNo']);
@@ -244,7 +242,7 @@ class Team extends Controller {
             $emailContent .= '<strong>Email: '. $email . '</strong><br>';
             $emailContent .= '<strong>Password: '. $password . '</strong><br>';
             $emailContent .= '<br><br>Regards,<br>Brandboost';
-            sendEmail($email, $emailContent, "Brandboost Team Member Registration");            
+            sendEmail($email, $emailContent, "Brandboost Team Member Registration");
             $response = array('status' => 'success', 'msg' => "Role added successfully!");
             }
             else if($teamUserID == 'email') {
@@ -271,19 +269,19 @@ class Team extends Controller {
             $emailContent .= '<strong>Email: '. $email . '</strong><br>';
             $emailContent .= '<strong>Password: '. $password . '</strong><br>';
             $emailContent .= '<br><br>Regards,<br>Brandboost';
-            sendEmail($email, $emailContent, "Brandboost Team Member Registration");            
+            sendEmail($email, $emailContent, "Brandboost Team Member Registration");
             $response = array('status' => 'success', 'msg' => "Role added successfully!");
             }
             else if($teamUserID == 'email') {
             $response = array('status' => 'error', 'msg' => "Email is already exist.");
             }
-            
+
 
         }
 
          //Create a team folder in the amazon s3 server
            $s3 = \Storage::disk('s3');
-          
+
            $res = $s3->put($userID."/".$teamUserID."/",'','public');
 
             $folderName = ['onsite', 'offsite', 'automation', 'broadcast', 'referral', 'nps','webchat', 'smschat', 'reviews'];
@@ -298,19 +296,19 @@ class Team extends Controller {
                 }
             }
 
-        //End 
+        //End
 
 
 
 
-        
+
         echo json_encode($response);
         exit;
     }
-    
-    
+
+
     /**
-    * This function is used to add the new role 
+    * This function is used to add the new role
     * @param type $clientID
     * @return type
     */
@@ -345,12 +343,12 @@ class Team extends Controller {
         if ($insertID > 0) {
             $response = array('status' => 'success', 'msg' => "Role added successfully!");
         }
-        
+
         echo json_encode($response);
         exit;
     }
-    
-    
+
+
     /**
     * This function will return existing role assing to team member
     * @param type $clientID
@@ -376,12 +374,12 @@ class Team extends Controller {
         }else{
             $response = array('status' => 'error', 'msg' => 'Not found');
         }
-        
+
         echo json_encode($response);
         exit;
     }
-    
-    
+
+
     /**
     * This function is used to update the role name
     * @param type $clientID
@@ -417,11 +415,11 @@ class Team extends Controller {
         if ($bUpdated) {
             $response = array('status' => 'success', 'msg' => "Role updated successfully!");
         }
-        
+
         echo json_encode($response);
         exit;
     }
-    
+
 
     /**
     * This function is use to delete the role for team member
@@ -448,7 +446,7 @@ class Team extends Controller {
         echo json_encode($response);
         exit;
     }
-    
+
     public function deleteTeamRoles(){
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $post = $this->input->post();
@@ -460,22 +458,22 @@ class Team extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $roleIDs = $post['multipal_id'];
-        
+
         foreach($roleIDs as $roleID){
             $bDeleted = $this->mTeam->deleteRole($roleID, $userID);
         }
-        
+
         if($bDeleted == true){
             $response = array('status' => 'success', 'msg' => "Role deleted successfully!");
         }
         echo json_encode($response);
         exit;
     }
-    
+
 
     /**
-    * This function is used to get the team member details 
-    * @param type 
+    * This function is used to get the team member details
+    * @param type
     * @return type
     */
 
@@ -497,22 +495,22 @@ class Team extends Controller {
         }else{
             $response = array('status' => 'error', 'msg' => 'Not found');
         }
-        
+
         echo json_encode($response);
         exit;
     }
-    
-    
+
+
      /**
-    * This function is used to update the team member details 
-    * @param type 
+    * This function is used to update the team member details
+    * @param type
     * @return type
     */
 
     public function updateTeamMember() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $post = Input::post();
-       
+
         if(empty($post)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -542,11 +540,11 @@ class Team extends Controller {
         }
 
 
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mTeam = new TeamModel();
-        
+
         $aData = array(
             'team_role_id' => $teamRoleID,
             'firstname' => $firstName,
@@ -563,7 +561,7 @@ class Team extends Controller {
             'socialProfile' => $edit_socialProfile,
             'tagID' => $edit_tags
         );
-   
+
        if(isset($post['edit_smschat_config']) && $post['edit_smschat_config']=='on' && $twilioMobileNo!="" )
        {
            $response = createTwilioCNTeam($twilioMobileNo);
@@ -590,11 +588,11 @@ class Team extends Controller {
                 $response = array('status' => 'success', 'msg' => "Team member has been updated successfully!");
             }
       }
-        
+
         echo json_encode($response);
         exit;
     }
-    
+
     public function deleteTeamMember(){
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $post = Input::post();
@@ -614,7 +612,7 @@ class Team extends Controller {
         echo json_encode($response);
         exit;
     }
-    
+
     public function deleteTeamMembers(){
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $post = $this->input->post();
@@ -635,11 +633,11 @@ class Team extends Controller {
         echo json_encode($response);
         exit;
     }
-    
+
 
     /**
     * This function is used to manage the role permissions of the team members
-    * @param type 
+    * @param type
     * @return type
     */
 
@@ -656,17 +654,17 @@ class Team extends Controller {
         $userID = $aUser->id;
         $roleID = strip_tags($post['role_id']);
         $oSelectedPermission = $mTeam->getTeamRolePermission($roleID);
-        
+
         $oAvailablePermission = $mTeam->getAvailablePermissions();
-        
+
         $permissionForm = view("admin.team.permission_form", array('selected_permission' => $oSelectedPermission, 'oAvailable_permission' => $oAvailablePermission))->render();
             $response = array('status' => 'success', 'permission_form' => $permissionForm, 'msg' => "Role updated successfully!");
-        
-        
+
+
         echo json_encode($response);
         exit;
     }
-    
+
     public function addRolePermission() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $post = $this->input->post();
@@ -690,13 +688,13 @@ class Team extends Controller {
         if ($bAdded == true) {
             $response = array('status' => 'success', 'msg' => "Permission added successfully!");
         }
-        
+
         echo json_encode($response);
         exit;
     }
-    
-    
-    
+
+
+
     public function updateRolePermission() {
         $mTeam = new TeamModel();
         $aPermissionData = array();
@@ -719,7 +717,7 @@ class Team extends Controller {
                $aPermissionData[] = array(
                    'id' => $iPerID,
                    'permission_value' => strip_tags($post['permission_val_'.$iPerID])
-               ); 
+               );
             }
         }
         //pre($aPermissionData);
@@ -741,15 +739,15 @@ class Team extends Controller {
         if ($bUpdated == true) {
             $response = array('status' => 'success', 'msg' => "Permission updated successfully!");
         }
-        
+
         echo json_encode($response);
         exit;
     }
-    
+
 
         /**
         * This function is used for team dashboard
-        * @param type 
+        * @param type
         * @return type
         */
 
@@ -771,7 +769,7 @@ class Team extends Controller {
             $oRoles = $mTeam->getRoleList($userID);
             $oMembers = $mTeam->getTeamMembers($userID);
         }
-        
+
         $bActiveSubsription = $mUser->isActiveSubscription();
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -785,16 +783,16 @@ class Team extends Controller {
         $data = array(
             'title' => 'Contacts',
             'pagename' => $breadcrumb,
-            'oRoles' => $oRoles, 
+            'oRoles' => $oRoles,
             'oMembers' => $oMembers,
             'bActiveSubsription' => $bActiveSubsription
         );
 
         return view ('admin.user_setting',$data);
     }
-    
-    
-    
 
-    
+
+
+
+
 }

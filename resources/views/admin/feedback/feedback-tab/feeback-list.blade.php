@@ -68,7 +68,7 @@
                                         <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows"  value="{{ $data->id }}" ><span class="custmo_checkmark"></span></label></td>
 
                                         <td>
-                                            <div class="media-left media-middle"> {{ showUserAvtar($data->avatar, $data->firstname, $data->lastname) }} </div>
+                                            <div class="media-left media-middle"> {!! @showUserAvtar($data->avatar, $data->firstname, $data->lastname) !!} </div>
 
                                             <div class="media-left">
                                                 @if ($data->firstname != '')
