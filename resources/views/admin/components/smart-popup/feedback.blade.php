@@ -67,8 +67,6 @@
         border-radius: 4px;
         opacity: 0.7;
     }
-
-
 </style>
 
 @php
@@ -141,12 +139,6 @@
                     </ul>
                 @else
 
-                <!--<ul class="image_pagination">
-                            <li><a class="bb_active" href="#"><img src="{{base_url("assets/images/media_img4.jpg")}}" width="37" height="29"></a></li>
-                            <li><a href="#"><img src="{{base_url("assets/images/media_img5.jpg")}}" width="37" height="29"></a></li>
-                            <li><a href="#"><img src="{{base_url("assets/images/media_img6.jpg")}}" width="37" height="29"></a></li>
-                        </ul> -->
-                @endif
                 <div class="interactions p0 pull-left">
                     <ul>
                         <li><i class="icon-user"></i><strong>{{$result->firstname . " " . $result->lastname}}</strong>
@@ -258,8 +250,6 @@
                                                    class="btn comment_btn txt_purple deleteSmartComment"
                                                    commentid="{{$commentData->id}}">Delete</a>
                                             </div>
-
-
                                         </div>
                                     </li>
                                     @php
@@ -366,10 +356,7 @@
                     </div>
                 </div>
             </form>
-
-
         </div>
-
     </div>
 </div>
 
@@ -425,9 +412,6 @@
             var mediaExtension = $(this).attr('data-ext');
             $('.big_img').empty();
             $('.big_img').html('<video class="media br5 " height="100%" width="100%"><source id="bb_video_enlarge" src="' + mediasource + '" type="video/mp4"></video><div class="caption-overflow smallovfl"><a class="preview_video_src" style="cursor: pointer;" filepath="' + mediasource + '" fileext="' + mediaExtension + '"><i class="icon-eye"></i></a></div>');
-
         });
     });
-
-
 </script>
