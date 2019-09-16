@@ -108,7 +108,7 @@
                     <td class="text-right">
                         <div class="media-left text-right pull-right">
                             <div class=""><a href="#"
-                                             class="txt_grey">{{ $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oContact->phone) }}</a>
+                                             class="txt_grey">{!! $oContact->phone == '' ? '<span style="color:#999999">Phone Unavailable</span>' : mobileNoFormat($oContact->phone) !!}</a>
                             </div>
                         </div>
                     </td>
@@ -141,11 +141,11 @@
                                                     class='icon-file-locked'></i> Inactive</a></li>
                                     @else
                                         <li><a class='
-                                                        @if ($oContact->globalStatus == 1)
+                                            @if ($oContact->globalStatus == 1)
                                                 changeModuleContactStatus
-@else
+											@else
                                                 changeModuleContactStatusDisabled
-@endif
+											@endif
                                                 ' data-modulesubscriberid="{{ $oContact->id }}"
                                                data-modulename="{{ $moduleName }}"
                                                data-moduleaccountid="{{ $moduleUnitID }}" data_status='1'><i
@@ -169,14 +169,11 @@
                         </div>
                     </td>
                 </tr>
-
                 @php
                     }
                 }
             }
                 @endphp
-
-
                 </tbody>
             </table>
         </div>
