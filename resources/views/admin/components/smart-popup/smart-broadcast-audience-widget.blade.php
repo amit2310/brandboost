@@ -7,11 +7,10 @@
         </div>					
     </div>
 </div>   
-<a style="position: fixed; top: 50%; right: 12px;" class="reviews smart-broadcast slide-toggle visible <?php echo (strtolower($oBroadcast->campaign_type) == 'email') ? 'bkg_sblue2' : 'bkg_green';?>"><i class="icon-arrow-left5"></i></a>
+<a style="position: fixed; top: 50%; right: 12px;" class="reviews smart-broadcast slide-toggle visible {{ (strtolower($oBroadcast->campaign_type) == 'email') ? 'bkg_sblue2' : 'bkg_green' }}"><i class="icon-arrow-left5"></i></a>
 
+@include('admin.components.smart-popup.contacts') 
 
-
-<?php //$this->load->view('admin/components/smart-popup/contacts'); ?>
 <script>
     $(document).ready(function () {
 
@@ -27,11 +26,8 @@
         $(document).on("click", ".smart-broadcast", function () {
             $(".smart-broadcast-box").animate({
                 width: "toggle"
-            }
-            );
+            });
         });
-
-
 
         $(document).on("click", ".viewBroadcastImportOptionSmartPopup", function (event, param1) {
             if (param1 == 'promptToChooseContacts') {
@@ -85,7 +81,6 @@
                         var smartContent = data.content;
                         $("#broadcastSmartPopupContainer").html(smartContent);
                         $(".smart-broadcast-box, .smart-broadcast-box-inner").css("width", "680px");
-                        // Basic datatable
                         var tableId = 'listSmartContacts';
                         var tableBase = custom_data_table(tableId);
                         $('.dataTables_filter input').addClass('search_item');
@@ -93,13 +88,8 @@
                 }
             });
         });
-
-
-
-
-
-
     });
+	
 
     function loadImportOptionSmartPopup(broadcastId) {
         $.ajax({
