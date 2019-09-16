@@ -16,9 +16,9 @@
             <div class="panel-body p0">
                 <div class="widget_sec email_preview">
                     <div class="rating_widget emil_priview_sec">
-					{{ $emailPreview }}
+					{!! $emailPreview !!}
                     </div>
-                    <img class="w100" src="{{ base_url() }}assets/images/config_bkg.png"/>    
+                    <img class="w100" src="{{ base_url() }}assets/images/config_bkg.png"/>
                 </div>
             </div>
         </div>
@@ -41,5 +41,5 @@
                 </div>
             </div>
         </div>
-    @endif    
+    @endif
 </div>
