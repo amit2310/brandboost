@@ -23,7 +23,7 @@
         background: #fff;
         border-top: 1px solid #eee;
         padding: 0px;
-    } 
+    }
     .smartStickyFooter textarea {
         height: 50px!important;
     }
@@ -97,7 +97,7 @@
 	$mobile = $aUInfo->phone;
 	$gender = $aUInfo->gender;
 
-	if (!empty($aUInfo->user_id)) { 
+	if (!empty($aUInfo->user_id)) {
 		$getNotification = \App\Models\Admin\SettingsModel::getNotificationSettings($aUInfo->user_id);
 		$getUser = \App\Models\Admin\UsersModel::getAllUsers($aUInfo->user_id);
 		$getUser = $getUser[0];
@@ -156,7 +156,7 @@
 							<button class="btn btn-xs btn_white_table">{{ $value->list_name }}</button>
 						@endforeach
                         <button style="margin: 0 10px 15px 0!important;" class="btn btn-xs plus_icon mt0" data-toggle="modal" data-target="#chooselistModal"><i class="icon-plus3"></i></button>
-                        
+
 					@else
 						{{ displayNoData() }}
 					@endif
@@ -172,7 +172,7 @@
 							@endif
                         @endforeach
                         <button style="margin: 0 10px 15px 0!important;" class="btn btn-xs plus_icon mt0 applyInsightTags" data-subscriber-id="{{ $contactId }}"><i class="icon-plus3"></i></button>
-                        
+
 					@else
 						{{ displayNoData() }}
 					@endif
@@ -193,8 +193,8 @@
                             }
                         }
 
-                        if (!empty($oOnsite)):
-                            @endphp
+                        if (!empty($oOnsite)) {
+                    @endphp
                             <div class="profile_headings">On Site Review Campaigns <a href="javascript:void(0);" class="pull-right"><i class="fa fsize15 txt_grey fa-angle-down"></i></a></div>
 
                             <div class="p20">
@@ -204,7 +204,9 @@
 									@endif
                                 @endforeach
                             </div>
-                        @endif
+                        @php
+                        }
+                        @endphp
 
                         @if (!empty($oOffsite))
                             <div class="profile_headings">Off Site Review Campaigns <a href="javascript:void(0);" class="pull-right"><i class="fa fsize15 txt_grey fa-angle-down"></i></a></div>
@@ -228,8 +230,8 @@
 									@endif
                                 @endforeach
                             </div>
-                        @endif    
-						
+                        @endif
+
                         @if (!empty($oInvolvedReferral))
                             <div class="profile_headings">Referral Campaigns <a href="javascript:void(0);" class="pull-right"><i class="fa fsize15 txt_grey fa-angle-down"></i></a></div>
                             <div class="p20">
@@ -240,9 +242,15 @@
                                 @endforeach
                             </div>
                         @endif
-                    @else
-                        <div class="text-center mt20">{{ displayNoData() }}</div> 
-                    @endif
+                    @php
+                    }
+                    else
+                    {
+                    @endphp
+                        <div class="text-center mt20">{{ displayNoData() }}</div>
+                    @php
+                    }
+                    @endphp
                 </div>
             </div>
         </div>
@@ -305,9 +313,9 @@
                                     } else {
                                         $icon = '<i class="icon-star-full2 txt_purple"></i>';
                                     }
-									
+
                                     @endphp
-									
+
                                     <tr class="activityShow" style="{{ $display }}">
                                         <td>
                                             <div class="media-left media-middle"> <a class="icons s28" style="cursor: pointer;">{{ $icon }}</a> </div>
@@ -317,7 +325,7 @@
 
                                             </div>
                                         </td>
-        
+
                                     </tr>
                                     @php
                                     $activityInc++;
@@ -334,7 +342,7 @@
 							<div class="loadMoreRecord loadMoreRecordActivity text-center"><a style="cursor: pointer;" class="loadMoreActivity" >Load more</a><img class="loaderImage hidden" src="{{ base_url() }}assets/images/widget_load.gif" width="20px" height="20px"></div>
                         @endif
 					@endif
-                </div>					
+                </div>
             </div>
 
             <div class="tab-pane" id="NewNote">
@@ -347,7 +355,7 @@
                     @php
                     $emailCount = 0;
                     if (!empty($result)) {
-                        @endphp    
+                        @endphp
                         <table class="table new">
                             <tbody>
                                 @php
@@ -373,7 +381,7 @@
 
                                                     </div>
                                                 </td>
-                                                    
+
                                             </tr>
                                             @php
                                             $emailInc++;
@@ -388,14 +396,20 @@
                         @if ($emailInc > 10)
 							<div class="loadMoreRecord loadMoreRecordEmail"><a style="cursor: pointer;" class="loadMoreEmail" >Load more</a><img class="loaderImage hidden" src="{{ base_url() }}assets/images/widget_load.gif" width="20px" height="20px"></div>
                         @endif
-						
+
                         @if (empty($emailCount))
 							<div class="text-center mt20">{{ displayNoData() }}</div>
                         @endif
-						
-                    @else
+
+                    @php
+                    }
+                    else
+                    {
+                    @endphp
 						<div class="text-center mt20">{{ displayNoData() }}</div>
-                    @endif
+                    @php
+                    }
+                    @endphp
                 </div>
             </div>
             <div class="tab-pane" id="SMS">
@@ -403,7 +417,7 @@
                     @php
                     $smsCount = 0;
                     if (!empty($result)) {
-                        @endphp
+                    @endphp
                         <table class="table new">
                             <tbody>
                                 @php
@@ -421,7 +435,7 @@
                                             }
 
                                             $icon = '<img src="' . base_url('assets/css/menu_icons/Sms_Color.svg') . '" class="img-circle img-xs" />';
-                                            @endphp
+                                @endphp
                                             <tr class="smsShow" style="{{ $display }}">
                                                 <td>
                                                     <div class="media-left media-middle"> <span class="icons">{{ $icon }}</span> </div>
@@ -432,7 +446,7 @@
                                                 </td>
                                                 <td class="text-right"><span class="text-muted text-size-small">{{ date('d M Y ', strtotime($value['created'])) }} &nbsp; {{ date('h:i A ', strtotime($value['created'])) }}</span></td>
                                             </tr>
-                                            @php
+                                 @php
                                             $smsInc++;
                                             $smsCount++;
                                         }
@@ -445,14 +459,20 @@
                         @if ($smsInc > 10)
 							<div class="loadMoreRecord loadMoreRecordSms"><a style="cursor: pointer;" class="loadMoreSms" >Load more</a><img class="loaderImage hidden" src="{{ base_url() }}assets/images/widget_load.gif" width="20px" height="20px"></div>
                         @endif
-						
+
                         @if (empty($smsCount))
 							<div class="text-center mt20">{{ displayNoData() }}</div>
                         @endif
-						
-                    @else
+
+                    @php
+                        }
+                        else
+                        {
+                    @endphp
 						<div class="text-center mt20">{{ displayNoData() }}</div>
-                    @endif
+                    @php
+                    }
+                    @endphp
                 </div>
             </div>
             <div class="tab-pane" id="ChatPanel">
@@ -462,7 +482,7 @@
             </div>
         </div>
     </div>
-</div>    
+</div>
 <div id="chooselistModal" class="modal fade">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -495,8 +515,8 @@
                                             <div class="checkbox">
                                                 <label class="custmo_checkbox pull-left mt-5 ">
                                                     <input type="hidden" name="allList[]" value="{{ $oList->id }}" />
-                                                    <input type="checkbox" name="listid[]" 
-														@if (in_array($oList->id, $aSelectedLists)) checked="checked" @endif 
+                                                    <input type="checkbox" name="listid[]"
+														@if (in_array($oList->id, $aSelectedLists)) checked="checked" @endif
 														value="{{ $oList->id }}">
                                                     <span class="custmo_checkmark"></span>
                                                 </label>
