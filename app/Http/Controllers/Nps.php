@@ -49,7 +49,7 @@ class Nps extends Controller {
 
     /**
      * This function is use for record servey
-     * @param type 
+     * @param type
      * @return type json data
      */
     public function recordSurvey(Request $request) {
@@ -76,7 +76,7 @@ class Nps extends Controller {
                 $oNPS = $mNPS->getNPSProgramInfo($accountID);
             }
 
-            
+
             if (!empty($oNPS)) {
                 $clientID = $oNPS->user_id;
                 $aRegistrationData = array(
@@ -97,7 +97,7 @@ class Nps extends Controller {
                     'lastName' => $lastName,
                     'accountID' => $accountID
                 );
-				
+
 				if($email != ''){
 					$userID = $this->registerNow($aUserData);
 				}
@@ -147,7 +147,7 @@ class Nps extends Controller {
         $bRequireGlobalSubs = false;
         $bAllDone = false;
         if (!empty($refKey)) {
-            $get = Input::get();
+            $get = Request::input();
             $score = strip_tags($get['s']);
             $subid = strip_tags($get['subid']);
             $subid = base64_decode($subid);
@@ -181,7 +181,7 @@ class Nps extends Controller {
                         if ($bAllDone) {
                             //$oSubscriber = $this->mNPS->getNpsUserById($subid);
                             $oSubscriber = $mSubscriber->getSubscribersById($subid);
-                            
+
                             if (!empty($oSubscriber)) {
                                 $firstName = $oSubscriber->firstname;
                                 $lastName = $oSubscriber->lastname;
@@ -194,7 +194,7 @@ class Nps extends Controller {
                             }
                             //Register as brandboost user if not registered
                             if ($bRequireGlobalSubs == false) { //This means no user_id attached to subscriber
-                        
+
                                 //My Code
                                 $aRegistrationData = array(
                                     'firstname' => $firstName,
@@ -206,7 +206,7 @@ class Nps extends Controller {
                                 $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
                                 //$userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
                             }
-                        
+
                         }
                         //Send out notification
                         $notificationData = array(
@@ -218,7 +218,7 @@ class Nps extends Controller {
                             'status' => 1,
                             'created' => date("Y-m-d H:i:s")
                         );
-            
+
                         $eventName = 'sys_nps_score_add';
                         add_notifications($notificationData, $eventName, $oNPS->user_id);
                         return view('admin.modules.nps.collect-feedback', array('oNPS' => $oNPS, 'score' => $score, 'responseID' => $bResponseID));
@@ -278,7 +278,7 @@ class Nps extends Controller {
             else {
                 $phone = '';
             }
-            
+
             $accountID = $aData['accountID'];
             if (!empty($accountID)) {
                 $oNPS = $mNPS->getNPSProgramInfo($accountID);

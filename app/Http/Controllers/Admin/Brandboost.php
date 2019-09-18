@@ -175,8 +175,8 @@ class Brandboost extends Controller {
 	*/
 	public function onsiteSetup(Request $request) {
 		$brandboostID = $request->id;
-        $selectedTab = Input::get("t");
-        $selectedCategory = Input::get("cate");
+        $selectedTab = $request->input("t");
+        $selectedCategory = $request->input("cate");
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
@@ -419,7 +419,7 @@ class Brandboost extends Controller {
 	public function reviewDetails($reviewID = 0) {
         $response = array();
         $response['status'] = 'error';
-        $selectedTab = Input::get('t');
+        $selectedTab = Request::input('t');
 
 		$revID = Input::post("reviewid");
 		$actionName = Input::post("action");
@@ -494,10 +494,10 @@ class Brandboost extends Controller {
 	* @param type $param
 	* @return type
 	*/
-	public function setTab() {
+	public function setTab(Request $request) {
 
         $response = array();
-		$getActiveText = Input::post("getActiveText");
+		$getActiveText = $request->getActiveText;
 		Session::put("setTab", trim($getActiveText));
 		$response['status'] = 'success';
 
@@ -763,7 +763,7 @@ class Brandboost extends Controller {
             exit;
         }
 
-		$selectedTab = Input::get('t');
+		$selectedTab = Request::input('t');
         $oBrandboost = BrandboostModel::getBrandboost($brandboostID);
         if (empty($oBrandboost) || $oBrandboost[0]->user_id != $userID) {
             redirect("admin/brandboost/offsite");
@@ -1376,7 +1376,7 @@ class Brandboost extends Controller {
 	* @return type
 	*/
 	public function onsiteWidgetSetup($widgetID) {
-        $selectedTab = Input::get("t");
+        $selectedTab = Request::input("t");
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
@@ -3040,7 +3040,7 @@ class Brandboost extends Controller {
         $mBrand = new BrandModel();
         $post = Input::post();
         $userID = $oUser->id;
-        $get = Input::get();
+        $get = Request::input();
         $selectedTab = $get['t'];
         if (!empty($post)) {
             $faQListid = strip_tags($post['faQListid']);
@@ -5580,7 +5580,7 @@ class Brandboost extends Controller {
         $oAllSubscribers = ListsModel::getAllSubscribersList($id);
 
         if ($type == 'onsite') {
-            $selectedTab = Input::get('t');
+            $selectedTab = Request::input('t');
             $oRequests = BrandboostModel::getReviewRequest($id);
             $oResponse = BrandboostModel::getReviewRequestResponse($id);
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">

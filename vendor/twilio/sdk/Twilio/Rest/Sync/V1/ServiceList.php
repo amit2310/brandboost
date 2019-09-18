@@ -52,6 +52,7 @@ class ServiceList extends ListResource {
             'AclEnabled' => Serialize::booleanToString($options['aclEnabled']),
             'ReachabilityDebouncingEnabled' => Serialize::booleanToString($options['reachabilityDebouncingEnabled']),
             'ReachabilityDebouncingWindow' => $options['reachabilityDebouncingWindow'],
+            'WebhooksFromRestEnabled' => Serialize::booleanToString($options['webhooksFromRestEnabled']),
         ));
 
         $payload = $this->version->create(
@@ -153,7 +154,7 @@ class ServiceList extends ListResource {
     /**
      * Constructs a ServiceContext
      *
-     * @param string $sid A unique identifier for this service instance.
+     * @param string $sid The SID of the Service resource to fetch
      * @return \Twilio\Rest\Sync\V1\ServiceContext
      */
     public function getContext($sid) {

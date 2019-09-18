@@ -255,7 +255,7 @@
                         </p>
 					@endforeach
 				@else
-					<p class="mb20 txt_grey2 fsize13 lh24">{{ displayNoData() }}</p>
+					<p class="mb20 txt_grey2 fsize13 lh24">{!! displayNoData() !!}</p>
                 @endif
             </div>
 

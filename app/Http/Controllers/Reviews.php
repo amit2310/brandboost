@@ -486,15 +486,13 @@ class Reviews extends Controller {
     * @return type
     */
 
-     public function getReviewNoteById() {
+     public function getReviewNoteById(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if (Input::post()) {
-            $post = Input::post();
+        if (!empty($request)) {
             $mReviews = new ReviewsModel();
-            $noteData = $mReviews->getReviewNoteByID($post['noteid']);
+            $noteData = $mReviews->getReviewNoteByID($request->noteid);
             if ($noteData) {
                 $response['status'] = 'success';
                 $response['result'] = $noteData;
@@ -654,7 +652,7 @@ class Reviews extends Controller {
     */
 
     public function addnew() {
-        $aData = Input::get();
+        $aData = Request::input();
         if (!empty($aData)) {
             $action = $aData['action'];
             $rRating = $aData['r']; // Review Rating

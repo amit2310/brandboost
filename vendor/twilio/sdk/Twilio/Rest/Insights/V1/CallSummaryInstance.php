@@ -24,8 +24,6 @@ use Twilio\Version;
  * @property string $callType
  * @property string $callState
  * @property string $processingState
- * @property string $direction
- * @property string $disconnectedBy
  * @property \DateTime $startTime
  * @property \DateTime $endTime
  * @property int $duration
@@ -39,6 +37,7 @@ use Twilio\Version;
  * @property string $tags
  * @property string $url
  * @property array $attributes
+ * @property array $properties
  */
 class CallSummaryInstance extends InstanceResource {
     /**
@@ -59,8 +58,6 @@ class CallSummaryInstance extends InstanceResource {
             'callType' => Values::array_get($payload, 'call_type'),
             'callState' => Values::array_get($payload, 'call_state'),
             'processingState' => Values::array_get($payload, 'processing_state'),
-            'direction' => Values::array_get($payload, 'direction'),
-            'disconnectedBy' => Values::array_get($payload, 'disconnected_by'),
             'startTime' => Deserialize::dateTime(Values::array_get($payload, 'start_time')),
             'endTime' => Deserialize::dateTime(Values::array_get($payload, 'end_time')),
             'duration' => Values::array_get($payload, 'duration'),
@@ -74,6 +71,7 @@ class CallSummaryInstance extends InstanceResource {
             'tags' => Values::array_get($payload, 'tags'),
             'url' => Values::array_get($payload, 'url'),
             'attributes' => Values::array_get($payload, 'attributes'),
+            'properties' => Values::array_get($payload, 'properties'),
         );
 
         $this->solution = array('callSid' => $callSid ?: $this->properties['callSid'], );

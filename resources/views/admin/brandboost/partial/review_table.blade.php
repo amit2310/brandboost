@@ -74,7 +74,7 @@
                     <td style="width: 40px!important; display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" id="chk{{ $oReview->id }}" value="{{ $oReview->id }}" ><span class="custmo_checkmark"></span></label></td>
 
                     <td class="viewContactSmartPopupReview" data-modulesubscriberid="{{ $oReview->subscriberId }}" data-modulename="review">
-                        <div class="media-left media-middle"> {{ $profileImage }} </div>
+                        <div class="media-left media-middle"> {!! $profileImage !!} </div>
                         <div class="media-left">
                             <div class="pt-5">
                                 <a href="javascript:void(0);" class="text-default text-semibold bbot"><span>{{ $oReview->firstname }} {{ $oReview->lastname }}</span></a>

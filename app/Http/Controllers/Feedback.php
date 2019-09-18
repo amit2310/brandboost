@@ -24,7 +24,7 @@ class Feedback extends Controller {
 
     public function index($page = '') {
         $get = array();
-        $get = Input::get();
+        $get = Request::input();
 
         if (!empty($get)) {
             $subscriberID = $get['subid'];
@@ -89,7 +89,7 @@ class Feedback extends Controller {
     */
     public function resolution() {
         $get = array();
-        $get = Input::get();
+        $get = Request::input();
         if (!empty($get)) {
             $subscriberID = $get['subid'];
             $clientID = $get['clid'];

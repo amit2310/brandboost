@@ -23,7 +23,7 @@
         background: #fff;
         border-top: 1px solid #eee;
         padding: 0px;
-    } 
+    }
     .smartStickyFooter textarea {
         height: 50px!important;
     }
@@ -80,7 +80,7 @@
 
 
 	$totalDelivered = $totalOpened = $totalProcessed = $totalClicked = $totalSmsSent = 0;
-	
+
 	if (!empty($oSendgridStats)) {
 		foreach ($oSendgridStats as $oSendgrid) {
 			if ($oSendgrid->event_name == 'delivered') {
@@ -133,7 +133,7 @@
 								@elseif ($gender == 'female')
 									Female
 								@else
-									{{ displayNoData() }}
+									{!! displayNoData() !!}
 								@endif
 							</strong>
 						</li>
@@ -153,16 +153,16 @@
                             @if (!empty($oRefLink->refkey))
                                 <a href="{{ base_url() }}ref/t/{{ $oRefLink->refkey }}">{{ base_url() }}ref/t/{{ $oRefLink->refkey }}</a>
                             @else
-                                {{ displayNoData() }}
-                            @endif  
+                                {!! displayNoData() !!}
+                            @endif
                         </li>
                         <li><b>Campaign Name:</b></li>
                         <li>
                             @if (!empty($oReferral))
                                 <a href="{{ base_url() }}admin/modules/referral/setup/"{{ $oReferral->id }}>{{ $oReferral->title }}</a>
                             @else
-                                {{ displayNoData() }}
-                            @endif 
+                                {!! displayNoData() !!}
+                            @endif
                         </li>
 
                         <li><b>Advocate Reward:</b></li>
@@ -170,7 +170,7 @@
                             @if (!empty($oSettings))
                                 {{ $oSettings->advocate_display_msg }}
                             @else
-                                {{ displayNoData() }}
+                                {!! displayNoData() !!}
                             @endif
                         </li>
                     </ul>
@@ -229,7 +229,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="row">
                 <div class="col-md-6">
@@ -254,7 +254,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="row">
                 <div class="col-md-6">

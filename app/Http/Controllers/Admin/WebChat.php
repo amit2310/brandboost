@@ -80,7 +80,7 @@ class WebChat extends Controller {
         }
     }
     /**
-     * This function is used to get the webchat notes 
+     * This function is used to get the webchat notes
      * @return type
      */
     public function listingNotes() {
@@ -89,7 +89,7 @@ class WebChat extends Controller {
         $WebChatObj = new WebChatModel();
         $oNotes = $WebChatObj->getWebNotes($chatUserid);
         foreach ($oNotes as $NotesData) {
-            
+
             $fileext = explode('.', $NotesData->message);
             $fileext = end($fileext);
             $mmsFile = explode('/Media/', $NotesData->message);
@@ -102,7 +102,7 @@ class WebChat extends Controller {
             }
 ?>
                     <li class="media reversed">
-                       <div class="media-body">  
+                       <div class="media-body">
                            <span style="display: none;" class="media-annotation user_icon"><span class="circle_green_status status-mark"></span>
                             <?php echo showUserAvtar($oUser->avatar, $oUser->firstname, $oUser->lastname, 28, 28, 11); ?>                               </span>
                            <div class="media-content" style="background-color:#fff9ec!important;"><?php echo $NotesData->message; ?>
@@ -146,7 +146,7 @@ class WebChat extends Controller {
                         $avatarHtml = showUserAvtar("", "A", "", 28, 28, 11);
                     }
 
-                    $get_value->user_form = (string)$uFrom; 
+                    $get_value->user_form = (string)$uFrom;
                 } else {
                     $oUserDetails = getAllUser($get_value->user_form);
                     $avatar = $oUserDetails[0]->avatar;
@@ -159,7 +159,7 @@ class WebChat extends Controller {
                 }
                 $get_value->created = timeAgo($get_value->created);
                 $get_value->avatarImage = $avatarHtml;
-                
+
             }
         }
         //pre($result); die;
@@ -172,14 +172,14 @@ class WebChat extends Controller {
         return Response::json(array(
                     'status' => 'ok',
                     'res'   => $result
-                )); 
+                ));
 
         exit;
     }
 
 
      /**
-    * This function is used to add the web notes 
+    * This function is used to add the web notes
     * @return type
     */
 
@@ -201,14 +201,14 @@ class WebChat extends Controller {
         }
 
         $SmsChatObj = new SmsChatModel();
-       
+
         $msg = Input::post("msg");
         $chatuserid = Input::post("chatTo");
         $room = Input::post("room");
         $team_id = $teamMemberId;
         $client_id = $aUInfo->id;
 
-       
+
 
         $aData = array(
             'room' => $room,
@@ -218,8 +218,8 @@ class WebChat extends Controller {
             'team_id'=>$team_id,
             'created' => date("Y-m-d H:i:s")
         );
-        
-        
+
+
         if(!empty($WebChatObj->addWebNotes($aData)))
         {
             $response = array('status'=>'success');
@@ -228,9 +228,9 @@ class WebChat extends Controller {
         {
             $response = array('status'=>'error');
         }
-        
 
-        echo json_encode($response); 
+
+        echo json_encode($response);
 
 }
 
@@ -256,18 +256,18 @@ class WebChat extends Controller {
 
         echo json_encode($response);
         exit();
-       
+
     }
 
     /**
      * this function is used login or not
      * @return type boolean
      */
-    public function changeLoginStatus() {
+    public function changeLoginStatus(Request $request) {
 
         $webChatModel = new WebChatModel();
-        $userId = Input::post("userId");
-        $status = Input::post("status");
+        $userId = $request->userId;
+        $status = $request->status;
 
         $aData = array('login_status' => $status, 'last_login' => date("Y-m-d H:i:s"));
         $result = $webChatModel->lastLoginDetail($userId, $aData);
@@ -329,7 +329,7 @@ class WebChat extends Controller {
             if(!empty($getSupportUser)) {
                 if($getSupportUser->assign_team_member == 0) {
                     $webChatModel->assignChat($room, $isLoggedInTeam);
-                    $hasAssign = 1;   
+                    $hasAssign = 1;
                 }
             }
 
@@ -347,7 +347,7 @@ class WebChat extends Controller {
         }
 
         echo json_encode($response);
-        
+
         exit();
 
     }
@@ -381,12 +381,12 @@ class WebChat extends Controller {
                 else {
                     $response = array('status' => 'error');
                 }
-                          
+
         }
         else{
             $response = array('status' => 'error');
         }
-        
+
         echo json_encode($response);
         exit;
     }
@@ -409,16 +409,16 @@ class WebChat extends Controller {
         }
         $TagsObj = new TagsModel();
         $reviewID = base64_url_decode(strip_tags(Input::post("review_id")));
-        $feedbackID = base64_url_decode(strip_tags(Input::post("feedback_id"))); 
-        $questionID = base64_url_decode(strip_tags(Input::post("question_id")));  
-        
+        $feedbackID = base64_url_decode(strip_tags(Input::post("feedback_id")));
+        $questionID = base64_url_decode(strip_tags(Input::post("question_id")));
+
         if ($reviewID > 0) {
             $aAppliedTags = $TagsObj->getTagsDataByReviewID($reviewID);
         }
         if ($feedbackID > 0) {
             $aAppliedTags = $TagsObj->getTagsDataByFeedbackID($feedbackID);
         }
-        
+
         if($questionID>0){
             $aAppliedTags = $TagsObj->getTagsDataByQuestionID($questionID);
         }
@@ -431,7 +431,7 @@ class WebChat extends Controller {
 
     }
 
-  
+
 
    /**
      * this function is used to add the tags for the webchat
@@ -440,7 +440,7 @@ class WebChat extends Controller {
 
 
     public function applyWebTag() {
-        
+
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -449,9 +449,9 @@ class WebChat extends Controller {
             echo json_encode($response);
             exit;
         }
-       
+
         $TagsObj = new TagsModel();
-        $reviewID = base64_url_decode(strip_tags(Input::post("review_id"))); 
+        $reviewID = base64_url_decode(strip_tags(Input::post("review_id")));
         $aTagID = Input::post("applytag");
         $aInput = array(
             'aTagIDs' => $aTagID,
@@ -461,11 +461,11 @@ class WebChat extends Controller {
         $bAdded = $TagsObj->addReviewTag($aInput);
 
         if ($bAdded) {
-            
+
         $oTags = $TagsObj->getTagsDataByReviewID($reviewID);
-        
+
         $sTagDropdown = view("admin.tags.tag_dropdown", array('oTags' => $oTags, 'fieldName'=> 'reviewid', 'fieldValue'=> base64_url_encode($reviewID), 'actionName'=> 'review-tag', 'actionClass'=> 'applyInsightTagsReviews'));
-            
+
             $response = array('status' => 'success', 'msg' => 'Tag added successfully!', 'refreshTags' => $sTagDropdown, 'id'=>$reviewID);
             echo json_encode($response);
             exit;
@@ -511,7 +511,7 @@ class WebChat extends Controller {
             echo json_encode($response);
             exit;
         }
-       
+
         if (!empty($review_id) && !empty($tag_id)) {
             $bDeleted = $TagsObj->deleteTagGroupEntityWebchat($review_id,$tag_id);
             if ($bDeleted) {
@@ -541,9 +541,9 @@ class WebChat extends Controller {
         echo json_encode($chatDetails);
     }
 
-   
+
       /**
-     * this function is used to show unassing chat list for Big web chat 
+     * this function is used to show unassing chat list for Big web chat
      * @return type boolean
      */
 
@@ -586,7 +586,7 @@ class WebChat extends Controller {
                  } if ($count == 2) {
                      echo 'border-radius:5px 5px 5px 5px';
                  }
-                 ?>"> 
+                 ?>">
                 <a href="javascript:void(0);" class="media-link <?php
                 if ($count != 1) {
                     echo 'bbot';
@@ -597,10 +597,10 @@ class WebChat extends Controller {
                         <i class="fa star_icon <?php echo $value->favourite == 1 ? 'fa-star yellow' : 'fa-star-o'; ?> favouriteUser" userId="<?php echo $value->id; ?>"></i>
                     </div>
 
-                    <div class="media-body"> 
-                        <span class="fsize12 txt_dark"><?php echo $chatName[0]; ?> <?php echo $chatName[1]; ?></span> 
-                        <span class="slider-phone contacts txt_dark" style="margin:0px; color: #6a7995!important;font-weight:bold; font-size:12px!important"><?php echo $userMessage; ?></span> 
-                       
+                    <div class="media-body">
+                        <span class="fsize12 txt_dark"><?php echo $chatName[0]; ?> <?php echo $chatName[1]; ?></span>
+                        <span class="slider-phone contacts txt_dark" style="margin:0px; color: #6a7995!important;font-weight:bold; font-size:12px!important"><?php echo $userMessage; ?></span>
+
                     </div>
                     <div class="media-right" style="width: 90px"><span class="date_time txt_grey fsize11"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>"  datetime="<?php echo usaDate($chatMessageRes->created); ?>" title="<?php echo usaDate($chatMessageRes->created); ?>"><?php //echo chatTimeAgo($chatMessageRes->created);     ?></time>
 
@@ -617,7 +617,7 @@ class WebChat extends Controller {
 
                         </span></div>
 
-                </a> 
+                </a>
             </div>
 
             <?php
@@ -634,7 +634,7 @@ class WebChat extends Controller {
 
 
         /**
-        * this function is used to show unassing chat list for Small web chat 
+        * this function is used to show unassing chat list for Small web chat
         * @return type boolean
         */
 
@@ -691,7 +691,7 @@ class WebChat extends Controller {
                         ?></span></span>
 
 
-                <span id="Small_assign_message_<?php echo $userid; ?>" class="slider-phone contacts txt_dark" style="margin:0px;color: #09204f !important; font-weight:300;padding-left:40px; font-size:12px!important"><?php echo $userMessage; ?></span> 
+                <span id="Small_assign_message_<?php echo $userid; ?>" class="slider-phone contacts txt_dark" style="margin:0px;color: #09204f !important; font-weight:300;padding-left:40px; font-size:12px!important"><?php echo $userMessage; ?></span>
 
 
                 <span style="display: none;" class="slider-email contacts"></span>
@@ -706,14 +706,14 @@ class WebChat extends Controller {
                     }
                     ?></span>
 
-                <span class="user_status"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>"  
+                <span class="user_status"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>"
                                                 datetime="<?php echo usaDate($chatMessageRes->created); ?>" title="<?php echo usaDate($chatMessageRes->created); ?>"><?php //echo chatTimeAgo($value->created);    ?></time></span>
                     <?php if ($is_pending == 8) { ?>
                     <i style="float:right" class="pr_<?php echo $value->token; ?> fa fa-circle txt_red fsize9"></i>
                 <?php }
                 ?>
 
-                <!--box hover chat details -->   
+                <!--box hover chat details -->
                 <div class="user_details p0">
                     <div class="row">
                         <div class="col-md-12">
@@ -817,7 +817,7 @@ class WebChat extends Controller {
                  } if ($count == 2) {
                      echo 'border-radius:5px 5px 5px 5px';
                  }
-                 ?>"> 
+                 ?>">
                 <a href="javascript:void(0);" class="media-link <?php
                 if ($count != 1) {
                     echo 'bbot';
@@ -828,8 +828,8 @@ class WebChat extends Controller {
                         <i class="fa star_icon <?php echo $value->favourite == 1 ? 'fa-star yellow' : 'fa-star-o'; ?> favouriteUser" userId="<?php echo $value->id; ?>"></i>
                     </div>
 
-                    <div class="media-body"> 
-                        <span class="slider-teamname fsize12 txt_dark"><?php echo $chatName[0]; ?> <?php echo $chatName[1]; ?></span> 
+                    <div class="media-body">
+                        <span class="slider-teamname fsize12 txt_dark"><?php echo $chatName[0]; ?> <?php echo $chatName[1]; ?></span>
 
                         <span style="color: #6a7995!important; font-size: 12px!important; font-weight: 300!important " id="Big_assign_<?php echo $userid; ?>" class="fsize12 assign_to"><span style="float: left; color: #6a7995!important; font-size: 12px!important; font-weight: 300!important  ">
                                 <?php if (assignto($token) != "") { ?>Assigned to:&nbsp </span><?php
@@ -840,7 +840,7 @@ class WebChat extends Controller {
                         <span id="b_assign_<?php echo $userid; ?>" class="slider-phone contacts txt_dark" style="margin:0px;font-weight:bold; font-size:12px!important"><?php echo $userMessage; ?></span>
 
                     </div>
-                        <div class="media-right" style="width: 100px"><span class="date_time txt_grey fsize11"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>" 
+                        <div class="media-right" style="width: 100px"><span class="date_time txt_grey fsize11"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>"
                         datetime="<?php echo usaDate($chatMessageRes->created); ?>" title="<?php echo usaDate($chatMessageRes->created); ?>"><?php //echo chatTimeAgo($chatMessageRes->created);   ?></time>
 
 
@@ -857,7 +857,7 @@ class WebChat extends Controller {
 
                         </span></div>
 
-                </a> 
+                </a>
             </div>
             <?php
             $count++;
@@ -872,7 +872,7 @@ class WebChat extends Controller {
     }
 
 
- 
+
       /**
         * this function is used to show chat which are assing to the current user in the Small web chat
         * @return type boolean
@@ -950,7 +950,7 @@ class WebChat extends Controller {
                         ?></span></span>
 
 
-                <span id="Small_You_assign_message_<?php echo $userid; ?>" class="slider-phone contacts txt_dark" style="margin:0px;color: #09204f !important; font-weight:300;padding-left:40px; font-size:12px!important"><?php echo $userMessage; ?></span> 
+                <span id="Small_You_assign_message_<?php echo $userid; ?>" class="slider-phone contacts txt_dark" style="margin:0px;color: #09204f !important; font-weight:300;padding-left:40px; font-size:12px!important"><?php echo $userMessage; ?></span>
 
 
 
@@ -966,11 +966,11 @@ class WebChat extends Controller {
                     }
                     ?></span>
 
-                <span class="user_status"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>"  
+                <span class="user_status"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>"
                                                 datetime="<?php echo usaDate($chatMessageRes->created); ?>" title="<?php echo usaDate($chatMessageRes->created); ?>"><?php //echo chatTimeAgo($value->created);     ?></time></span>
-                    
 
-                <!--box hover chat details -->   
+
+                <!--box hover chat details -->
                 <div class="user_details p0">
                     <div class="row">
                         <div class="col-md-12">
@@ -1037,10 +1037,10 @@ class WebChat extends Controller {
             'subscriber_id' => $subscriber_id,
             'status' => '1',
             'type' => $type
-             
+
         );
         $result = $webChatModel->updateChatboxstatus($aData);
-        
+
         if ($result) {
             $response = array('status' => 'ok');
         } else {
@@ -1049,7 +1049,7 @@ class WebChat extends Controller {
 
         echo json_encode($response);
         exit;
-       
+
 
     }
 
@@ -1067,16 +1067,16 @@ class WebChat extends Controller {
             'subscriber_id' => $subscriber_id
         );
         $result = $webChatModel->removeActiveBoxStatus($aData);
-       
+
         if ($result) {
             $response = array('status' => 'ok', 'res' => $result);
         } else {
             $response = array('status' => 'error');
         }
-     
+
         echo json_encode($response);
         exit;
-        
+
     }
 
     /**
@@ -1103,7 +1103,7 @@ class WebChat extends Controller {
 
                 $importViewHtml =  View("admin.chat_widget.embed_chat", $widgetData);
                 $content = $importViewHtml->render();
-               
+
             }
 
             $aData = array('content' => $content);
@@ -1183,7 +1183,7 @@ class WebChat extends Controller {
 
         echo json_encode($response);
         exit;
-        
+
     }
 
 
@@ -1202,7 +1202,7 @@ class WebChat extends Controller {
 
         $result = $webChatModel->readChatMsg($to_user, $from_user, $aData);
     }
-     
+
      /**
      * this function is used to add favourite webchatuser
      * @return type object
@@ -1288,7 +1288,7 @@ class WebChat extends Controller {
             <div RwebId="<?php echo $token ?>" token="<?php echo $token; ?>" class="sidebar-user-box all_user_chat tk_<?php echo $token; ?>" incWid="" id="sidebar-user-box-<?php echo $userid; ?>" user_id="<?php echo $userid; ?>" >
                 <div class="avatarImage"><?php echo showUserAvtar('', $first_name, $last_name, 28, 28, 11); ?></div>
 
-                <span class="slider-username contacts"><?php echo $first_name . ' ' . $last_name; ?> </span> 
+                <span class="slider-username contacts"><?php echo $first_name . ' ' . $last_name; ?> </span>
                 <span class="slider-phone contacts txt_dark" style="margin:0px;color: #6a7995!important; font-weight:bold;padding-left:40px; font-size:12px!important"><?php echo $userMessage; ?></span>
 
                  <span id="" class="slider-phone contacts"><span style="float: left; width: 100%; font-weight:300!important; color: #6a7995 !important; font-size: 12px; margin-bottom: 3px; ">
@@ -1307,10 +1307,10 @@ class WebChat extends Controller {
                     }
                     ?></span>
 
-                <span class="user_status"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>" 
+                <span class="user_status"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>"
                                                 datetime="<?php echo usaDate($created); ?>" title="<?php echo usaDate($created); ?>"><?php //echo chatTimeAgo($chatMessageRes->created);    ?></time></span>
 
-                <!--box hover chat details -->   
+                <!--box hover chat details -->
                 <div class="user_details p0">
                     <div class="row">
                         <div class="col-md-12">
@@ -1319,7 +1319,7 @@ class WebChat extends Controller {
                                 <?php echo showUserAvtar('', $first_name, $last_name, 60, 60, 21); ?>
                                 <h3 class="mb0"><?php echo $first_name . ' ' . $last_name; ?></h3>
 
-                               
+
                             </div>
                             <div class="p20 pt0 pb10">
                                 <div class="interactions p0 pt10 pb10 btop">
@@ -1423,22 +1423,22 @@ class WebChat extends Controller {
                  if ($count == 2) {
                      echo 'border-radius:5px 5px 5px 5px';
                  }
-                 ?>"> 
+                 ?>">
                 <a href="javascript:void(0);" class="media-link <?php
                 if ($count != 1) {
                     echo 'bbot';
                 }
-                ?> tk_<?php echo $token; ?> getChatDetails WebBoxList <?php echo $count == 0 ? 'activechat' : ''; ?>" userId="<?php echo $userid; ?>" 
+                ?> tk_<?php echo $token; ?> getChatDetails WebBoxList <?php echo $count == 0 ? 'activechat' : ''; ?>" userId="<?php echo $userid; ?>"
                    assign_to="<?php echo assignto($token); ?>" RwebId="<?php echo $token; ?>" token="<?php echo $token; ?>"<?php }
                 ?> >
                     <div class="media-left"><?php echo showUserAvtar('', $first_name, $last_name, 28, 28, 12); ?>
 
                     </div>
 
-                    <div class="media-body"> 
-                        <span class="fsize12 txt_dark"><?php echo $first_name; ?> <?php echo $last_name; ?></span> 
+                    <div class="media-body">
+                        <span class="fsize12 txt_dark"><?php echo $first_name; ?> <?php echo $last_name; ?></span>
 
-                        <span id="Big_assign_message_<?php echo $userid; ?>" class="slider-phone contacts txt_dark" style="margin:0px;color: #6a7995!important; font-weight:bold; font-size:12px!important"><?php echo $userMessage; ?></span> 
+                        <span id="Big_assign_message_<?php echo $userid; ?>" class="slider-phone contacts txt_dark" style="margin:0px;color: #6a7995!important; font-weight:bold; font-size:12px!important"><?php echo $userMessage; ?></span>
 
                         <span id="Big_assign_<?php echo $userid; ?>" class="fsize12 txt_dark assign_to"><span style="float: left; font-weight:bold; ">
                                 <?php if (assignto($token) != "") { ?>Assigned to:&nbsp </span><?php
@@ -1449,10 +1449,10 @@ class WebChat extends Controller {
 
                     </div>
                     <div class="media-right" style="width: 100px"><span class="date_time txt_grey fsize11"><time class="autoTimeUpdate autoTime_<?php echo $userid; ?>" datetime="<?php echo usaDate($created); ?>" ></time>
-                           
+
                         </span></div>
 
-                </a> 
+                </a>
             </div>
 
             <?php
@@ -1471,7 +1471,7 @@ class WebChat extends Controller {
 
 
     /**
-    * This function is used for chat stats/overview 
+    * This function is used for chat stats/overview
     * @param type
     * @return type
     */
