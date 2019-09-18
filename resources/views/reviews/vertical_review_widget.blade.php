@@ -220,7 +220,7 @@
 						<div class="bb_comment_header bb_custom_bc">
 							<div class="bb_avatar01">
 								<i class="fa bb_check_green fa-check-circle"></i>
-								{!! @showUserAvtar($reviewData['avatar'], $reviewData['firstname'], $reviewData['lastname']) !!}
+								{!! showUserAvtar($reviewData['avatar'], $reviewData['firstname'], $reviewData['lastname']) !!}
 							</div>
 							<div class="bb_fleft">
 								<p class="bb_para bb_custom_fc"><strong>{{ $reviewData['allow_show_name'] != 1 ? 'Anonymous' : $reviewData['firstname'] . ' ' . $reviewData['lastname'] }}</strong> </p>
@@ -293,7 +293,7 @@
 								<div class="bb_inner_reply">
 									<div class="bb_comment_header_small">
 										<div class="bb_avatar_small">
-											{!! @showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname) !!}
+											{!! showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname) !!}
 										</div>
 										<div class="bb_fleft">
 											<p class="bb_para bb_custom_fc"><strong>{{ $aComment['firstname'] . ' ' . $aComment['lastname'] }}</strong> </p>
@@ -377,7 +377,7 @@
 								<div class="bb_inner_reply">
 									<div class="bb_comment_header_small">
 										<div class="bb_avatar_small">
-											{!! @showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname) !!}
+											{!! showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname) !!}
 										</div>
 										<div class="bb_fleft">
 											<p class="bb_para bb_custom_fc"><strong>{{ $aComment['firstname'] . ' ' . $aComment['lastname'] }}</strong> </p>
@@ -465,7 +465,7 @@
 							<div class="bb_inner_reply" style="margin-left:40px;">
 								<div class="bb_comment_header_small">
 									<div class="bb_avatar_small">
-										{!! @showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname) !!}
+										{!! showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname) !!}
 									</div>
 									<div class="bb_fleft">
 										<p class="bb_para bb_custom_fc"><strong>{{ $cComment['firstname'] . ' ' . $cComment['lastname'] }}</strong> </p>

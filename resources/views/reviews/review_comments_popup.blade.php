@@ -369,7 +369,7 @@ if (!empty($oCampaign)) {
 								<div class="bb_inner_reply" style="margin-left:40px;">
 									<div class="bb_comment_header_small">
 										<div class="bb_avatar_small">
-											{!! @showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname) !!}
+											{!! showUserAvtar($getUserDetail->avatar, $getUserDetail->firstname, $getUserDetail->lastname) !!}
 										</div>
 										<div class="bb_fleft">
 											<p class="bb_para bb_custom_fc"><strong>{{ $cComment['firstname'] . ' ' . $cComment['lastname'] }}</strong> </p>

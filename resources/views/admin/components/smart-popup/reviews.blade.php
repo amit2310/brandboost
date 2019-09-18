@@ -93,7 +93,7 @@
                     @endphp
 
                     <div class="big_img @if ($totalMedia <= 1) mr20 @endif small_media_icon col-md-3" style="padding-top:15px;">
-                       {{ showUserAvtar($reviewData->avatar, $reviewData->firstname, $reviewData->lastname, 95, 95, 22) }}
+                       {!! showUserAvtar($reviewData->avatar, $reviewData->firstname, $reviewData->lastname, 95, 95, 22) !!}
                     </div>
 
                     <div class="interactions p0 pull-left">
@@ -137,7 +137,7 @@
 								$mediaSrc = "https://s3-us-west-2.amazonaws.com/brandboost.io/" . $media_url;
 								$ext = pathinfo($mediaSrc, PATHINFO_EXTENSION);
 								@endphp
-								
+
 								@if ($media['media_type'] == 'image')
 									<li><a class="bb_active" href="javascript:void(0);"><img class="loadMainImageMedia" src="{{ $mediaSrc }}" width="37" height="29"></a></li>
 								@elseif ($media['media_type'] == 'video')
@@ -151,10 +151,10 @@
 				@else
 					{{ $primaryMedia }}
 				@endif
-				
+
 					<div class="clearfix"></div>
 				</div>
-				
+
                 <p class="mb0 fsize13 mt20">
                     @if ($reviewData->ratings >= 4)
 						<img class="mr10" src="{{ base_url() }}assets/images/smiley_green.png" width="26">
@@ -167,9 +167,9 @@
                     <span>
                         @for ($i = 1; $i <= 5; $i++)
 							@if ($i <= $reviewData->ratings)
-								<i class="icon-star-full2 fsize12 txt_yellow"></i> 
+								<i class="icon-star-full2 fsize12 txt_yellow"></i>
 							@else
-								<i class="icon-star-full2 fsize12 txt_grey"></i> 
+								<i class="icon-star-full2 fsize12 txt_grey"></i>
 							@endphp
                         @endfor
                     </span>
@@ -199,23 +199,23 @@
                                         @endphp
                                         <li class="bbot">
                                             <div class="media-left">
-												{{ showUserAvtar($commentData->avatar, $commentData->firstname, $commentData->lastname) }}
+												{!! showUserAvtar($commentData->avatar, $commentData->firstname, $commentData->lastname) !!}
 											</div>
 
                                             <div class="media-left pr0 w100">
                                                 <p class="fsize14 txt_grey2 lh14 mb-15 ">
-													{{ $commentData->firstname . ' ' . $commentData->lastname }} 
-													<span class="dot">.</span> {{ timeAgo($commentData->created) }} 
+													{{ $commentData->firstname . ' ' . $commentData->lastname }}
+													<span class="dot">.</span> {{ timeAgo($commentData->created) }}
 													<span class="dot">.</span>
-													
+
                                                     @if ($commentData->status == '1')
 														<span class="txt_green"><i class="icon-checkmark3 fsize12 txt_green"></i> Approve</span>
                                                     @endif
-													
+
                                                     @if ($commentData->status == 0)
 														<span class="txt_red"><i class="icon-checkmark3 fsize12 txt_red"></i> Disapproved</span>
                                                     @endif
-													
+
                                                     @if ($commentData->status == '2')
                                                         <span class="media-annotation"> <span class="label bkg_grey txt_white br5 chg_smart_status addtag" style="cursor: pointer;" change_status="1" comment_id="{{ $commentData->id }}"> Approve</span> </span>
                                                         <span class="media-annotation dotted"> <span class="label bkg_red txt_white br5 chg_smart_status addtag" change_status="0" comment_id="{{ $commentData->id }}"> Disapprove</span> </span>
@@ -258,7 +258,7 @@
                                                         @endphp
                                                         <div class="reply_sec mt30">
                                                             <div class="media-left">
-                                                                {{ showUserAvtar($childComment->avatar, $childComment->firstname, $childComment->lastname) }}
+                                                                {!! showUserAvtar($childComment->avatar, $childComment->firstname, $childComment->lastname) !!}
                                                             </div>
                                                             <div class="media-left pr0">
                                                                 <p class="fsize14 txt_grey2 lh14 mb10 ">{{ $childComment->firstname . ' ' . $childComment->lastname }} <span class="dot">.</span> {{ timeAgo($childComment->created) }} </p>
@@ -312,16 +312,16 @@
                 <input type="hidden" name="reviweId" id="reviweId" value="{{ $reviewData->id }}">
                 <button type="submit" class="btn dark_btn mr20 bkg_purple">Add Comment</button>
                 <a href="mailto:{{ $reviewData->email }}" class="btn dark_btn mr20 bkg_purple">Send Email</a>
-                
+
 				@if(!empty($oSubscriber->phone))
 					<button type="button" class="btn dark_btn mr20 bkg_purple open-smart-sms-chat" @if ($subscriberID > 0) smart-subs-id="{{ $subscriberID }}" @endif >Send SMS</button>
                 @endif
-				
+
                 </div>
             </div>
         </form>
     </div>
-	
+
     <div class="tab-pane @if ($selectedTab == 'notes') active @endif" id="smartNotesTab">
         <div class="p30">
 			@if (!empty($reviewNotesData))

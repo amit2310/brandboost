@@ -24,7 +24,7 @@
         border-top: 1px solid #eee;
         padding: 0px;
         left:10px;
-    } 
+    }
     .smartStickyFooter textarea {
         height: 50px!important;
     }
@@ -83,7 +83,7 @@
                     @if ($primaryMedia)
                         {{ $primaryMedia }}
                     @else
-                        {{ showUserAvtar($oQuestion->avatar, $oQuestion->firstname, $oQuestion->lastname, 95, 95, 22) }}
+                        {!! showUserAvtar($oQuestion->avatar, $oQuestion->firstname, $oQuestion->lastname, 95, 95, 22) !!}
                     @endif
                 </div>
 
@@ -98,13 +98,13 @@
                                 $mediaSrc = "https://s3-us-west-2.amazonaws.com/brandboost.io/" . $media_url;
                                 $ext = pathinfo($mediaSrc, PATHINFO_EXTENSION);
 								@endphp
-								
+
                                 if ($media['media_type'] == 'image')
                                     <li><a class="bb_active" href="javascript:void(0);"><img class="loadMainImageMedia" src="{{ $mediaSrc }}" width="37" height="29"></a></li>
                                 @elseif ($media['media_type'] == 'video')
 									<li><a class="bb_active loadMainVideoMedia" data-ext="{{ $ext }}" data-src="{{ $mediaSrc }}" href="javascript:void(0);"><video class="media br5" height="29" width="37"><source src="{{ $mediaSrc }}" type="video/{{ $ext }}"></video></a></li>
                                 @endif
-							@php		
+							@php
                             }
                         }
                         @endphp
@@ -126,8 +126,8 @@
                     </div>
                 @endif
             </div>
-        </div>     
-    </div>    
+        </div>
+    </div>
 
     <ul class="nav nav-tabs nav-tabs-bottom">
         <li class="@if (empty($selectedTab) || $selectedTab == 'undefined' || $selectedTab == 'question') active @endif">
@@ -138,7 +138,7 @@
 		</li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane 
+        <div class="tab-pane
 			@if (empty($selectedTab) || $selectedTab == 'undefined' || $selectedTab == 'question') active endif" id="smartQuestionTab">
             <div>
                 <div class="bbot p30">
@@ -171,17 +171,17 @@
                                             $aHelpful = $mQuestion->countAnsHelpful($oAnswer->id);
 											@endphp
                                             <li class="bbot">
-                                                <div class="media-left">{{ showUserAvtar($oAnswer->avatar, $oAnswer->firstname, $oAnswer->lastname) }}</div>
+                                                <div class="media-left">{!! showUserAvtar($oAnswer->avatar, $oAnswer->firstname, $oAnswer->lastname) !!}</div>
                                                 <div class="media-left pr0 w100">
-                                                    <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ $oAnswer->firstname . ' ' . $oAnswer->lastname }} <span class="dot">.</span> {{ timeAgo($oAnswer->created) }} <span class="dot">.</span> 
+                                                    <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ $oAnswer->firstname . ' ' . $oAnswer->lastname }} <span class="dot">.</span> {{ timeAgo($oAnswer->created) }} <span class="dot">.</span>
                                                         @if ($oAnswer->status == '1')
                                                             <span class="txt_green"><i class="icon-checkmark3 fsize12 txt_green" answer_id="{{ base64_url_encode($oAnswer->id) }}"></i> Approve</span>
                                                         @endif
-														
+
                                                         @if ($oAnswer->status == 0)
                                                             <span class="txt_red"><i class="icon-checkmark3 fsize12 txt_red" answer_id="{{ base64_url_encode($oAnswer->id) }}"></i> Disapproved</span>
                                                         @endif
-														
+
                                                         @if ($oAnswer->status == '2')
                                                             <span class="media-annotation"> <span class="label bkg_grey txt_white br5 chg_smart_status addtag" style="cursor: pointer;" change_status="1" answer_id="{{ base64_url_encode($oAnswer->id) }}"> Approve</span> </span>
                                                             <span class="media-annotation dotted"> <span class="label bkg_red txt_white br5 chg_smart_status addtag" style="cursor: pointer;" change_status="0" answer_id="{{ base64_url_encode($oAnswer->id) }}"> Disapprove</span> </span>
@@ -230,16 +230,16 @@
                     <button type="submit" class="btn dark_btn mr20 bkg_purple">Add Answer</button>
                     <a href="mailto:{{ $oQuestion->email }}" class="btn dark_btn mr20 bkg_purple">Send Email</a>
                     @if (!empty($oSubscriber->phone))
-                        <button type="button" class="btn dark_btn mr20 bkg_purple open-smart-sms-chat" 
+                        <button type="button" class="btn dark_btn mr20 bkg_purple open-smart-sms-chat"
 							@if ($subscriberID > 0) smart-subs-id="{{ $subscriberID }}" @endif>
 							Send SMS
 						</button>
                     @endif
-                    </div>    
+                    </div>
                 </div>
             </form>
         </div>
-		
+
         <div class="tab-pane @if ($selectedTab == 'notes') active @endif" id="smartNotesTab">
             <div class="p30">
                 @if (!empty($oNotes))
@@ -252,7 +252,7 @@
                             </span>
                             <br>
                             <small class="text-muted">On {{ date('F d, Y h:i A', strtotime($noteData->created)) }} by {{ $noteData->firstname . ' ' . $noteData->lastname }}</small>
-                        </p>    
+                        </p>
 					@endforeach
 				@else
 					<p class="mb20 txt_grey2 fsize13 lh24">{{ displayNoData() }}</p>
@@ -278,19 +278,19 @@
                     <input type="hidden" name="bid" id="bid" value="{{ $brandboostID }}">
                     <button type="submit" class="btn dark_btn mr20 bkg_purple">Save Note </button>
                     <a href="mailto:{{ $oQuestion->email }}" class="btn dark_btn mr20 bkg_purple">Send Email</a>
-                    
+
 					@if (!empty($oSubscriber->phone))
-                        <button type="button" class="btn dark_btn mr20 bkg_purple open-smart-sms-chat" 
+                        <button type="button" class="btn dark_btn mr20 bkg_purple open-smart-sms-chat"
 							@if ($subscriberID > 0) smart-subs-id="{{ $subscriberID }}" @endif>
 							Send SMS
 						</button>
                     @endif
-                    </div>    
+                    </div>
                 </div>
             </form>
         </div>
-    </div> 
-</div>    
+    </div>
+</div>
 
 
 <script>

@@ -127,7 +127,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div class="media-left media-middle"> <a style="cursor: text;">{!! @showUserAvtar($review->avatar, $review->firstname, $review->lastname) !!}</a> </div>
+                                                            <div class="media-left media-middle"> <a style="cursor: text;">{!! showUserAvtar($review->avatar, $review->firstname, $review->lastname) !!}</a> </div>
                                                             <div class="media-left">
                                                                 <div class="pt-5"><a style="cursor: text;" class="text-default text-semibold bbot">{{ $review->firstname }} {{ $review->lastname }}</a>
                                                                     <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($review->country) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
@@ -478,7 +478,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div class="media-left media-middle"> <a style="cursor: text;">{!! @showUserAvtar($review->avatar, $review->firstname, $review->lastname) !!}</a> </div>
+                                                            <div class="media-left media-middle"> <a style="cursor: text;">{!! showUserAvtar($review->avatar, $review->firstname, $review->lastname) !!}</a> </div>
                                                             <div class="media-left">
                                                                 <div class="pt-5"><a style="cursor: text;" class="text-default text-semibold bbot">{{ $review->firstname }} {{ $review->lastname }}</a>
                                                                     <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($review->country) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
