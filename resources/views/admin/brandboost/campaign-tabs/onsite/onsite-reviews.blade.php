@@ -17,12 +17,10 @@ $bActiveSubsription = "";
                     @include('admin.components.smart-popup.smart-review-widget')
                     @include('admin.components.smart-popup.smart-contact-widget-review')
                 @endif
-
-
                 <!-- ****** end ********-->
-                <div class="panel-heading"> 
+                <div class="panel-heading">
                     <span class="pull-left">
-                        <h6 class="panel-title"> count($aReviews) }} Reviews</h6>
+                        <h6 class="panel-title"> {{ count($aReviews) }} Reviews</h6>
                     </span>
                     <div class="heading_links pull-left">
                         @php

@@ -100,7 +100,7 @@ class SmsChat extends Controller {
 ?>
 
                         <li class="media reversed" style="margin-top: 10px;">
-                           <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><!--<img src="images/face2.jpg" class="img-circle img-xxs" alt="">--> 
+                           <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><!--<img src="images/face2.jpg" class="img-circle img-xxs" alt="">-->
                         <?php echo showUserAvtar($oUseravatar, $oUserfirstname, $oUserlastname, 28, 28, 11); ?></span>
                         <?php echo $fileView; ?>
                         <?php if (!empty($teamMeberName)) { ?>
@@ -140,8 +140,8 @@ class SmsChat extends Controller {
      * @return type
      */
     public function getSubsinfo() {
-        $userId = Input::get("userId");
-        $SubscriberPhone = Input::get("SubscriberPhone");
+        $userId = Request::input("userId");
+        $SubscriberPhone = Request::input("SubscriberPhone");
         if (empty($userId)) {
             $usersdata = getUserbyPhone($SubscriberPhone);
             $usersdata = $usersdata[0];
@@ -161,7 +161,7 @@ class SmsChat extends Controller {
         $arr[2]['phone'] = $userData->phone;
         $arr[3]['avatar'] = $avatar;
         $arr[4]['avatar_url'] = $avatar;
-        $arr[5]['em_sub_id'] = Input::get("userId");
+        $arr[5]['em_sub_id'] = Request::input("userId");
         $arr[6]['city'] = $userData->cityName;
         $arr[7]['code'] = $userData->country_code;
         $arr[8]['gender'] = $userData->gender;
@@ -179,7 +179,7 @@ class SmsChat extends Controller {
         $SmsChatObj = new SmsChatModel();
         $oNotes = $SmsChatObj->getSmsNotes($SubscriberPhone);
         foreach ($oNotes as $NotesData) {
-           
+
             $fileext = explode('.', $NotesData->notes);
             $fileext = end($fileext);
             $mmsFile = explode('/Media/', $NotesData->notes);
@@ -192,7 +192,7 @@ class SmsChat extends Controller {
             }
 ?>
                     <li class="media reversed">
-                       <div class="media-body">  
+                       <div class="media-body">
                            <span style="display: none;" class="media-annotation user_icon"><span class="circle_green_status status-mark"></span>
                             <?php echo showUserAvtar($oUser->avatar, $oUser->firstname, $oUser->lastname, 28, 28, 11); ?>                               </span>
                            <div class="media-content" style="background-color:#fff9ec!important;"><?php echo $NotesData->notes; ?>
@@ -215,8 +215,8 @@ class SmsChat extends Controller {
         $phoneNo = Input::post("phoneNo");
         $messageContent = Input::post("messageContent");
         $moduleName = Input::post("moduleName");
-        $media_type = Input::get("media_type");
-        $videoUrl = Input::get("videoUrl");
+        $media_type = Request::input("media_type");
+        $videoUrl = Request::input("videoUrl");
         $oUser = getLoggedUser();
         $aTwilioAc = getTwilioAccountCustom($oUser->id);
         $sid = $aTwilioAc->account_sid;
@@ -257,12 +257,12 @@ class SmsChat extends Controller {
                 for ($i = 0;$i < $totatMessageCount;$i++) {
                     $aUsage['segment'] = $i + 1;
                     //updateCreditUsage($aUsage);
-                    
+
                 }
             } else {
                 $aUsage['segment'] = 1;
                 //updateCreditUsage($aUsage);
-                
+
             }
             $phoneNo = numberForamt($phoneNo);
             $from = numberForamt($from);
@@ -343,7 +343,7 @@ class SmsChat extends Controller {
             exit();
         }
         $smsChat = new SmsChatModel();
-        $liveThreadsData = $smsChat->getlivesearchData($oUser->id, Input::get("q"));
+        $liveThreadsData = $smsChat->getlivesearchData($oUser->id, Request::input("q"));
         if (count((array)$liveThreadsData) > 0) {
             echo '<ul>';
             foreach ($liveThreadsData as $key => $value) {
@@ -426,7 +426,7 @@ class SmsChat extends Controller {
                 if ($count == 2) {
                     echo 'border-radius:5px 5px 5px 5px';
                 }
-?>"> 
+?>">
                     <a href="javascript:void(0);" class="media-link bbot <?php
                 if ($count != 1) {
                     echo 'bbot';
@@ -451,9 +451,9 @@ class SmsChat extends Controller {
                             <span class="favouriteSMSUser" subscriberId="<?php echo $usersdata->id; ?>"><i class="fa star_icon <?php echo $favUser > 0 ? 'fa-star yellow' : 'fa-star-o'; ?>"></i></span>
                         </div>
 
-                        <div class="media-body"> 
-                            <span class="fsize12 txt_dark"><?php echo mobileNoFormat($phoneNumber); ?></span> 
-                            <span class="slider-phone contacts txt_dark" style="margin:0px;color: #6a7995!important; font-weight:bold; font-size:12px!important"><?php echo $userMessage; ?></span> 
+                        <div class="media-body">
+                            <span class="fsize12 txt_dark"><?php echo mobileNoFormat($phoneNumber); ?></span>
+                            <span class="slider-phone contacts txt_dark" style="margin:0px;color: #6a7995!important; font-weight:bold; font-size:12px!important"><?php echo $userMessage; ?></span>
                             <span class="slider-phone contacts text-size-small txt_blue" style="margin:0px ; display:none"><?php echo $usersdata->phone; ?></span>
 
                         </div>
@@ -466,7 +466,7 @@ class SmsChat extends Controller {
 
                         </div>
 
-                    </a> 
+                    </a>
                 </div>
                 <?php
                 $count++;
@@ -651,15 +651,15 @@ class SmsChat extends Controller {
                         $usersdata->lastname = "";
                     }
                     //$favUser = $this->smsChat->getSMSFavouriteUser($loginUserData->id, $usersdata->id);
-                    
+
 ?>
                 <div  phone_no_format="<?php echo phoneNoFormat($phoneNumber); ?>" id="sidebar_Sms_box_<?php echo $usersdata->phone; ?>" class="sms_user sms_twr_<?php echo $usersdata->phone; ?>" incSmsWid="" rewId="" phone_no="<?php echo $usersdata->phone; ?>" token="<?php echo $value->token; ?>" user_id="<?php echo $usersdata->id; ?>" >
                     <div class="avatarImage"><?php echo showUserAvtar($avatar, $usersdata->firstname, $usersdata->lastname, 28, 28, 11); ?></div>
-                   
+
                    <span class="" style="line-height: 18px; display: block; margin-left: 38px; float: none; font-size: 12px; font-weight: 400!important; color: #09204f!important;"><span style="float: left; width: 100%; font-weight:300!important; color: #6a7995 !important; font-size: 12px; margin-bottom: 3px; ">
                       Assigned to:&nbsp;<!--+1(359) 569-6585--><?php echo phoneNoFormat($phoneNumber); ?></span></span>
 
-                    <span class="slider-username contacts"><?php echo phoneNoFormat($phoneNumber); ?> </span> 
+                    <span class="slider-username contacts"><?php echo phoneNoFormat($phoneNumber); ?> </span>
                     <span class="slider-phone contacts txt_dark" style="margin:0px;color:#6a7995!important; font-weight:bold;padding-left:40px; font-size:12px!important"><?php echo $userMessage; ?></span>
 
                     <span style="display: none;" class="slider-email contacts"><?php echo $usersdata->email; ?> </span>
@@ -675,7 +675,7 @@ class SmsChat extends Controller {
 
                     <span class="user_status"><time class="autoTimeUpdate" id="autoTime_<?php echo $phoneNumber; ?>" datetime="<?php echo usaDate($value->created); ?>" title="<?php echo usaDate($value->created); ?>"><?php //echo chatTimeAgo($chatMessageRes->created);
                      ?></time></span>
-                    <!--box hover chat details -->   
+                    <!--box hover chat details -->
                     <div class="user_details p0">
                         <div class="row">
                             <div class="col-md-12">
@@ -691,7 +691,7 @@ class SmsChat extends Controller {
                                     <div class="interactions p0 pt10 pb10 btop">
                                         <ul>
                                             <li><i class="fa fa-envelope"></i><strong><?php echo $email; ?></strong></li>
-                                            
+
 
                                             <li><i class="fa fa-user"></i><strong>Male</strong></li>
                                             <li><i class="fa fa-clock-o"></i><strong>6AM, US/Estern</strong></li>

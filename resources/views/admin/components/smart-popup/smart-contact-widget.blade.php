@@ -6,18 +6,18 @@
 
             <div class="row" style="height: 100%;">
                 <div class="col-md-12">
-                    <a style="left: 35px; top: 15px;" class="reviews smart-contact slide-toggle bkg_grey_light" ><i class=""><img src="{{ base_url() }}assets/images/icon_arrow_left.png"/></i></a> 
+                    <a style="left: 35px; top: 15px;" class="reviews smart-contact slide-toggle bkg_grey_light" ><i class=""><img src="{{ base_url() }}assets/images/icon_arrow_left.png"/></i></a>
                     <h5 style="padding-left: 75px;" class="panel-title">Profile</h5>
                 </div>
                 <div id="contactSmartPopup"></div>
             </div>
-        </div>					
+        </div>
     </div>
-</div> 
-  
+</div>
+
 <a style="position: fixed; top: 50%; right: 12px; display:none;" class="reviews smart-contact slide-toggle visible" ><i class="icon-arrow-left5"></i></a>
 
-<?php //$this->load->view('admin/components/smart-popup/contacts') ?>
+@php //$this->load->view('admin/components/smart-popup/contacts') @endphp
 
 <script>
     $(document).ready(function () {
@@ -35,7 +35,7 @@
             loadContactSmartPopup(subscriberId, moduleName);
             $(".smart-contact-box").show();
         });
-		
+
         $(".viewContactSmartPopup").first().trigger('click');
         $(".smart-contact-box").hide();//For auto close
 
@@ -82,14 +82,14 @@
             }
         });
     });
-	
+
     function loadContactSmartPopup(subscriberID, moduleName) {
         $.ajax({
             url: '/admin/contacts/profile/' + subscriberID,
             type: "POST",
             data: {
-                    subscriberId: subscriberID, 
-                    moduleName: moduleName, 
+                    subscriberId: subscriberID,
+                    moduleName: moduleName,
                     action: 'smart-popup',
                     _token: '{{ csrf_token() }}'
                 },

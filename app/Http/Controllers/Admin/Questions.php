@@ -90,7 +90,7 @@ class Questions extends Controller {
 	public function questionDetails($questionID) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $selectedTab = Input::get('t');
+        $selectedTab = Request::input('t');
 		$quesID = Input::post("questionID");
 		$actionName = Input::post("action");
         $questionID = ($quesID > 0) ? $quesID : $questionID;

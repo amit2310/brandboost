@@ -324,8 +324,12 @@ if (!empty($aBrandbosts)) {
                                             $getSendRequest = count($reviewRequests);
                                             $getSendRequestSms = getSendRequest($data->id, 'sms');
                                             $getSendRequestEmail = getSendRequest($data->id, 'email');
+
+                                            if($getSendRequest>0){
                                             $getSendRequestEmailPersentage = $getSendRequestEmail * 100 / $getSendRequest;
                                             $getSendRequestSmsPersentage = $getSendRequestSms * 100 / $getSendRequest;
+                                            }
+
 
                                             $reviewResponse = \App\Models\Admin\BrandboostModel::getReviewRequestResponse($data->id);
                                             $getResCount = count($reviewResponse);

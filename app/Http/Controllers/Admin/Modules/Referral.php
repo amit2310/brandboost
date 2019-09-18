@@ -208,7 +208,7 @@ class Referral extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $bActiveSubsription = UsersModel::isActiveSubscription();
-        $selectedTab = Input::get('t');
+        $selectedTab = Request::input('t');
         $setReferralTab = Session::get("setReferralTab");
 
         if (empty($setReferralTab)) {

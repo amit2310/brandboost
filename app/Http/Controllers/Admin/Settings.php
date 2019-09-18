@@ -11,14 +11,14 @@ use Illuminate\Support\Facades\Input;
 use Session;
 
 class Settings extends Controller {
-	
+
 	/**
      * This is a setting index function
      * @param type
      */
 	public function index() {
 
-		$seletedTab = Input::get('t');
+		$seletedTab = Request::input('t');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $pID =$oUser->plan_id;
@@ -37,26 +37,26 @@ class Settings extends Controller {
             SettingsModel::addNotificationSettings($userID);
             $oSettings = SettingsModel::getNotificationSettings($userID);
         }
-        
+
         $oImportHistory = SettingsModel::getImportHistory($userID);
-        
+
         $oExportHistory = SettingsModel::getExportHistory($userID);
-        
+
         $oMemberships = MembershipModel::getActiveMembership();
         if (!empty($oMemberships)) {
-            
+
             foreach ($oMemberships as $oPlan) {
                 $planID = $oPlan->plan_id;
                 if ($planID == $pID) {
                     $oCurrentPlanData = $oPlan;
                 }
-                
+
                 if($planID == $topupPlanID){
                     $oCurrentTopupPlanData = $oPlan;
                 }
             }
         }
-        
+
         $data = array(
             'title' => 'Brand Settings',
             'pagename' => $breadcrumb,
@@ -106,7 +106,7 @@ class Settings extends Controller {
 
         echo json_encode($response);
         exit;
-        
+
     }
 
     /**
@@ -125,7 +125,7 @@ class Settings extends Controller {
             $aData = array(
                 $fieldName => $fieldValue
             );
-            
+
             $aData['updated'] = date("Y-m-d H:i:s");
 
             $bUpdated = SettingsModel::updateCompanyProfile($aData, $userID);
@@ -156,7 +156,7 @@ class Settings extends Controller {
             exit('Not Authorise to access this page');
             return;
         }
-      
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
@@ -193,7 +193,7 @@ class Settings extends Controller {
             $aData = array(
                'notification_slug' => $fieldName
             );
-            
+
             $aData['updated'] = date("Y-m-d H:i:s");
 
             $bUpdated = SettingsModel::updateNotificationPermissonData($aData, $userID);
@@ -222,7 +222,7 @@ class Settings extends Controller {
             echo json_encode($response);
             exit;
         }
-    
+
         $mSetting = new SettingsModel();
         if ($request->templateId) {
             $templateID = $request->templateId;
@@ -231,7 +231,7 @@ class Settings extends Controller {
             $oTemplate[0]->email_content_admin = base64_decode($oTemplate[0]->email_content_admin);
             $oTemplate[0]->email_content_client = base64_decode($oTemplate[0]->email_content_client);
             $oTemplate[0]->email_content_user = base64_decode($oTemplate[0]->email_content_user);
-           
+
             if ($oTemplate) {
                 $response['status'] = 'success';
                 $response['datarow'] = $oTemplate[0];
@@ -259,9 +259,9 @@ class Settings extends Controller {
             $aData = array(
                 $fieldName => $fieldValue
             );
-            
+
             $aData['updated'] = date("Y-m-d H:i:s");
-          
+
             $bUpdated = SettingsModel::updateNotificationSettings($aData, $userID);
             if ($bUpdated) {
                 $response['status'] = 'success';
@@ -276,7 +276,7 @@ class Settings extends Controller {
 
     /**
     * This function is used for amazon storage service
-    * @param type 
+    * @param type
     * @return type
     */
     public function amazon_s3_storage() {
@@ -297,11 +297,11 @@ class Settings extends Controller {
 
 
 
- 
+
 
     /**
     * This function is used to get user setting by user id
-    * @param type 
+    * @param type
     * @return type
     */
      public function getuserbyid(){
@@ -321,11 +321,11 @@ class Settings extends Controller {
 
 
     }
-  
+
 
    /**
-    * This function is used to update the amazon s3 settings 
-    * @param type 
+    * This function is used to update the amazon s3 settings
+    * @param type
     * @return type
     */
     public function updateS3setting() {
@@ -340,16 +340,16 @@ class Settings extends Controller {
             exit;
         }
         $post = Input::post();
-      
+
         if ($post) {
             $user_id_input = strip_tags($post['user_id_input']);
             $s3_allow_size = $post['s3_allow_size'];
             $aData = array(
                 's3_allow_size' => $s3_allow_size
-                
+
             );
             $mSetting  = new SettingsModel();
-            
+
             $bUpdated = $mSetting->updateS3StorageDetails($aData, $user_id_input);
             if ($bUpdated) {
                 $response['status'] = 'success';
@@ -364,12 +364,12 @@ class Settings extends Controller {
 
 
     /**
-    * This function is used for creditvalues 
-    * @param type 
+    * This function is used for creditvalues
+    * @param type
     * @return type
     */
     public function creditValues(){
-        $seletedTab = Input::get('t');
+        $seletedTab = Request::input('t');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $userRole = $oUser->user_role;
@@ -377,19 +377,19 @@ class Settings extends Controller {
             exit('Not Authorise to access this page');
             return;
         }
-        
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
                     <li><a data-toggle="tooltip" data-placement="bottom" title="Manage Credit Values" class="sidebar-control active hidden-xs ">Manage Credit Values</a></li>
                 </ul>';
                 $mSetting  = new SettingsModel();
-        
+
         $oCrValues = $mSetting->getCreditValues();
-        
+
         $oCrValuesHistory = $mSetting->getCreditValuesHistory();
-        
-        
+
+
         $aData = array(
             'title' => 'Credit Values Management',
             'pagename' => $breadcrumb,
@@ -399,17 +399,17 @@ class Settings extends Controller {
             'oUser' => $oUser
         );
       return view('admin.settings.credit_management', $aData);
-        
+
     }
 
 
     /**
-    * This function is used for credit propertey 
-    * @param type 
+    * This function is used for credit propertey
+    * @param type
     * @return type
     */
       public function getCreditPropery(){
-    
+
         $post = Input::post();
         $mSetting  = new SettingsModel();
         if ($post) {
@@ -430,7 +430,7 @@ class Settings extends Controller {
 
     /**
     * This function is used for update email notification content
-    * @param type 
+    * @param type
     * @return type
     */
     public function updateEmailNotificationContent(Request $request) {
@@ -444,19 +444,19 @@ class Settings extends Controller {
             echo json_encode($response);
             exit;
         }
-       
+
         if ($request->template_id) {
             $templateID = strip_tags($request->template_id);
             $email_subject_admin = strip_tags($request->admin_subject);
             $email_subject_client = strip_tags($request->subject);
             $email_subject_user = strip_tags($request->user_subject);
-             
+
             $email_content_admin = base64_encode($request->admin_text);
             $email_content_user = base64_encode($request->user_text);
             $email_content_client = base64_encode($request->plain_text);
-            
-            
-            
+
+
+
             $aData = array(
                 'email_subject_admin' => $email_subject_admin,
                 'email_content_admin' => $email_content_admin,
@@ -465,7 +465,7 @@ class Settings extends Controller {
                 'email_subject_user' => $email_subject_user,
                 'email_content_user' => $email_content_user
             );
-            
+
             $mSetting  = new SettingsModel();
             $bUpdated = $mSetting->updateNotificationContent($aData, $templateID);
             if ($bUpdated) {
@@ -482,7 +482,7 @@ class Settings extends Controller {
 
     /**
     * This function is used for update sms notification content
-    * @param type 
+    * @param type
     * @return type
     */
     public function updateSMSNotificationContent(Request $request) {
@@ -506,7 +506,7 @@ class Settings extends Controller {
                 'client_sms_content' => $client_sms_content,
                 'user_sms_content' => $user_sms_content
             );
-            
+
             $mSetting  = new SettingsModel();
             $bUpdated = $mSetting->updateNotificationContent($aData, $templateID);
             if ($bUpdated) {
@@ -522,7 +522,7 @@ class Settings extends Controller {
 
     /**
     * This function is used for update system notification content
-    * @param type 
+    * @param type
     * @return type
     */
     public function updateSystemNotificationContent(Request $request) {
@@ -536,7 +536,7 @@ class Settings extends Controller {
             echo json_encode($response);
             exit;
         }
-      
+
         if ($request->template_id) {
             $templateID = strip_tags($request->template_id);
             $admin_system_content = $request->admin_system_content;
@@ -547,7 +547,7 @@ class Settings extends Controller {
                 'client_system_content' => $client_system_content,
                 'user_system_content' => $user_system_content
             );
-            
+
             $mSetting  = new SettingsModel();
             $bUpdated = $mSetting->updateNotificationContent($aData, $templateID);
             if ($bUpdated) {
@@ -563,8 +563,8 @@ class Settings extends Controller {
 
 
     /**
-     * This function is used to get the client twilio number details 
-    * @param id 
+     * This function is used to get the client twilio number details
+    * @param id
     * @return type
     */
     public function list_client_details($id)
@@ -582,7 +582,7 @@ class Settings extends Controller {
 
     /**
     * This function is used to get the client twilio logs
-    * @param 
+    * @param
     * @return type
     */
     public function twillo_log() {
@@ -597,7 +597,7 @@ class Settings extends Controller {
 
     /**
     * This function is used for update notification
-    * @param type 
+    * @param type
     * @return type
     */
     public function updateNotification(Request $request)
@@ -611,15 +611,15 @@ class Settings extends Controller {
         $user_type=$request->user_type;
         $permission_type=$request->permission;
         $permission_value=$request->permission_value;
-     
+
             $aData = array(
                 'id' => $id,
                 'userId' => $userId,
                 'user_type' => $user_type,
                 'permission' => $permission_type,
-                'permission_value'=>$permission_value 
+                'permission_value'=>$permission_value
             );
-            
+
             $mSetting  = new SettingsModel();
             $bAdded = $mSetting->updateNotificationPermissions($aData);
             if ($bAdded) {
@@ -637,7 +637,7 @@ class Settings extends Controller {
 
     /**
     * This function is used for update credit property
-    * @param type 
+    * @param type
     * @return type
     */
     public function updateCreditPropery(){
@@ -710,7 +710,7 @@ class Settings extends Controller {
 
 
      /**
-    * This function is used list all team member number usage details 
+    * This function is used list all team member number usage details
     * @param $userid
     * @return type
     */
@@ -725,6 +725,6 @@ class Settings extends Controller {
         return view('admin.settings.list_details', $aData);
 
       }
-     
+
 
 }

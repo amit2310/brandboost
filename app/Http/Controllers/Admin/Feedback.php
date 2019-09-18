@@ -27,7 +27,7 @@ class Feedback extends Controller {
         if ($brandboostID > 0) {
             $getBrandboost = BrandboostModel::getBrandboost($brandboostID);
             $result = FeedbackModel::getFeedbackByBrandboostID($brandboostID);
-            $selectedTab = Input::get('t');
+            $selectedTab = Request::input('t');
         } else {
             $result = FeedbackModel::getFeedback($userID, $user_role);
         }
@@ -58,7 +58,7 @@ class Feedback extends Controller {
 	public function feedbackDetails($feedbackID) {
         $response = array();
         $response['status'] = 'error';
-        $selectedTab = Input::get('t');
+        $selectedTab = Request::input('t');
         $feedID = Input::post('feedbackid');
         $actionName = Input::post('action');
 
@@ -156,7 +156,7 @@ class Feedback extends Controller {
         if ($brandboostID > 0) {
             $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
             $result = $mFeedback->getFeedbackByBrandboostID($brandboostID);
-            $selectedTab = Input::get('t');
+            $selectedTab = Request::input('t');
         } else {
             $result = $mFeedback->getFeedback($userID, $user_role);
         }

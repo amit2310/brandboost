@@ -43,12 +43,10 @@ class Mediagallery extends Controller {
 
 	// get review data for media gallery widget
 
-	public function getReviewData(){
+	public function getReviewData(Request $request){
 		$response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        $post = Input::post();
-
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -57,7 +55,7 @@ class Mediagallery extends Controller {
         //$aUser = getLoggedUser();
         //$userID = $aUser->id;
 		$mReviews  = new ReviewsModel();
-        $reviewId = $post['review_id'];
+        $reviewId = $request->review_id;
 		$reviewData = $mReviews->getReviewDetailsByReviewID($reviewId);
 		$ratingsVal = '';
 		for ($i = 1; $i <= 5; $i++) {

@@ -46,13 +46,13 @@ class Contacts extends Controller
         }
        $post = $this->input->post();
        $SubscriberPhone = $post['NotesTo'];
-        
+
         $notes_from = db_in($post['notes_from']);
-          
-       $oNotes = $this->mSubscriber->getContactNotes($post['NotesTo']); 
+
+       $oNotes = $this->mSubscriber->getContactNotes($post['NotesTo']);
         //pre($oNotes);
           foreach ($oNotes as $NotesData) {
-              
+
                $fileext = end(explode('.', $NotesData->notes));
                 $mmsFile = explode('/Media/', $NotesData->notes);
 
@@ -63,10 +63,10 @@ class Contacts extends Controller
                 } else if (count($mmsFile) > 1) {
                    $NotesData->notes = "<div class='mrdia-file'><a href='" . $NotesData->notes . "' target='_blank' class='previewImage'><img src='" . $NotesData->notes . "' /></a></div>";
                 }
-              
+
                     ?>
                     <li class="media reversed">
-                       <div class="media-body">  
+                       <div class="media-body">
                            <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span>
                             <?php echo showUserAvtar($loginUserData->avatar, $loginUserData->firstname, $loginUserData->lastname, 28, 28, 11); ?>                               </span>
                            <div class="media-content" style="background-color:#fff9ec!important;"><?php echo $NotesData->notes; ?>
@@ -75,22 +75,22 @@ class Contacts extends Controller
                             </div>
                     </li>
 <div style="height:10px" class="clearfix"></div>
-                <?php } 
+                <?php }
     }
 */
 
     public function listingNotes()
     {
-      
+
        $post = $this->input->post();
        $SubscriberPhone = $post['NotesTo'];
-        
+
         $notes_from = db_in($post['notes_from']);
-          
-       $oNotes = $this->mSubscriber->visitornotes($post['NotesTo']); 
+
+       $oNotes = $this->mSubscriber->visitornotes($post['NotesTo']);
         //pre($oNotes);
           foreach ($oNotes as $NotesData) {
-              
+
                $fileext = end(explode('.', $NotesData->message));
                 $mmsFile = explode('/Media/', $NotesData->message);
 
@@ -101,10 +101,10 @@ class Contacts extends Controller
                 } else if (count($mmsFile) > 1) {
                    $NotesData->message = "<div class='mrdia-file'><a href='" . $NotesData->message . "' target='_blank' class='previewImage'><img src='" . $NotesData->message . "' /></a></div>";
                 }
-              
+
                     ?>
                     <li class="media reversed">
-                       <div class="media-body">  
+                       <div class="media-body">
                            <span style="display: none;" class="media-annotation user_icon"><span class="circle_green_status status-mark"></span>
                             <?php echo showUserAvtar($loginUserData->avatar, $loginUserData->firstname, $loginUserData->lastname, 28, 28, 11); ?>                               </span>
                            <div class="media-content" style="background-color:#fff9ec!important;"><?php echo $NotesData->message; ?>
@@ -114,8 +114,8 @@ class Contacts extends Controller
                             </div>
                     </li>
 <div style="height:10px" class="clearfix"></div>
-                <?php } 
-    
+                <?php }
+
 
     /**
     * This function is used to fetch profile details by the profile id
@@ -123,19 +123,19 @@ class Contacts extends Controller
     * @return type
     */
 
-    public function profile($contactId) {
-
+    public function profile(Request $request) {
+        $contactId = $request->contactId;
         $oUser = getLoggedUser();
         $clientID = $oUser->id;
         $response = array();
         $response['status'] = 'error';
         $mLists  = new ListsModel();
         $mSubscriber = new SubscriberModel();
-        
-    
-        $subscriberID =  Input::post("subscriberId");
-        $moduleName =  Input::post("moduleName");
-        $actionName = Input::post("action");
+
+
+        $subscriberID =  $request->subscriberId;
+        $moduleName =  $request->moduleName;
+        $actionName = $request->action;
         $mFeedback = new FeedbackModel();
         $mReviews = new ReviewsModel();
         $mNPS = new NpsModel();
@@ -148,7 +148,7 @@ class Contacts extends Controller
         $aReviews = '';
         $oProgramsRef = '';
         $oPrograms = '';
-         
+
 
         if (!empty($contactId)) {
             $moduleName = (!empty($moduleName)) ? $moduleName : 'people';
@@ -159,7 +159,7 @@ class Contacts extends Controller
             }else{
                 $subscribersData = $subsData[0];
             }
-            
+
             if(!empty($subscribersData)){
                 if($moduleName != 'people'){
                     $contactId = $subscribersData->id;
@@ -371,7 +371,7 @@ class Contacts extends Controller
                 'oPrograms' => $oPrograms
             );
         }
-       
+
         //pre($aData);die;
         if ($actionName == 'smart-popup') {
             $popupContent = view('admin.components.smart-popup.contacts', $aData)->render();
@@ -496,12 +496,12 @@ class Contacts extends Controller
             exit;
         }
 
-        $notes = db_in(Input::post("notes")); 
-        $notes_from = db_in(Input::post("notes_from")); 
-       
-        $source = strip_tags(Input::post("source")); 
-        $type = strip_tags(Input::post("type")); 
-        
+        $notes = db_in(Input::post("notes"));
+        $notes_from = db_in(Input::post("notes_from"));
+
+        $source = strip_tags(Input::post("source"));
+        $type = strip_tags(Input::post("type"));
+
         if($type == 'smartpopup' || $type == ''){
             $subId = Input::post("subscriberid");
         }else{
@@ -521,9 +521,9 @@ class Contacts extends Controller
             if($type == 'smartpopup'){
                 $sNotesContent = view("admin.contacts.partial.smart-notes-block", array("oNotes" => $oNotes))->render();
             }else{
-               $sNotesContent = view("admin.contacts.partial.notes-block", array("oNotes" => $oNotes))->render(); 
+               $sNotesContent = view("admin.contacts.partial.notes-block", array("oNotes" => $oNotes))->render();
             }
-            
+
             $response['status'] = "success";
             $response['notes'] = $sNotesContent;
         }
@@ -681,7 +681,7 @@ class Contacts extends Controller
 
         // If upload failed, display error
         if (!$this->upload->do_upload()) {
-            
+
         } else {
 
             $file_data = $this->upload->data();
@@ -744,7 +744,7 @@ class Contacts extends Controller
         $userID = $this->session->userdata("current_user_id");
         $allSubscribers = $this->mSubscriber->getGlobalSubscribers($userID);
 
-        // file creation 
+        // file creation
         $file = fopen('php://output', 'w');
 
         $header = array("EMAIL", "FIRST_NAME", "LAST_NAME", "PHONE");

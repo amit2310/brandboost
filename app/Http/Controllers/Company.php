@@ -701,20 +701,18 @@ class Company extends Controller {
 
 
 
-		public function saveComment() {
+		public function saveComment(Request $request) {
 			$response = array();
-			$post = Input::post();
-
-			$userID = $post['userID'];
+			$userID = $request->userID;
 			$mReviews = new ReviewsModel();
 			$mInviter = new BrandboostModel();
 
 			if (!empty($post)) {
-				$reviewID = strip_tags($post['rid']);
+				$reviewID = strip_tags($request->rid);
 
-				$fullName = strip_tags($post['cmtname']);
-				$email = strip_tags($post['cmtemail']);
-				$commentText = strip_tags($post['cmt']);
+				$fullName = strip_tags($request->cmtname);
+				$email = strip_tags($request->cmtemail);
+				$commentText = strip_tags($request->cmt);
 
 				$getReview = $mReviews->getReviewByReviewID($reviewID);
 
