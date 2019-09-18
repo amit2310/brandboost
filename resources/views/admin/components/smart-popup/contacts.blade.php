@@ -114,7 +114,7 @@
             <div class="profile_sec">
                 <div class="p0 pt20 pb20 text-center">
                     <div class="profile_pic">
-                        {{ showUserAvtar($avatar, $firstname, $lastname, 84, 84, 24) }}
+                        {!! showUserAvtar($avatar, $firstname, $lastname, 84, 84, 24) !!}
                         <div class="profile_flags"><img src="{{ base_url() }}assets/images/flags/{{ strtolower($country) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"></div>
                     </div>
                     <h3>{{ $username }}</h3>

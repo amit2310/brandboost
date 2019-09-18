@@ -498,7 +498,7 @@
 															$imageIcon = '';
 														}
                                                     @endphp
-                                                    <div class="media-left media-middle">{!! @showUserAvtar($totalFeedback->avatar, $totalFeedback->firstname, $totalFeedback->lastname) !!}</div>
+                                                    <div class="media-left media-middle">{!! showUserAvtar($totalFeedback->avatar, $totalFeedback->firstname, $totalFeedback->lastname) !!}</div>
                                                     <div class="media-left">
                                                         <div class=""><a href="#" class="text-default text-semibold">
 															{!! $ratingValue !!}

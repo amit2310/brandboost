@@ -104,7 +104,7 @@
                     @if ($primaryMedia)
                         {!! $primaryMedia !!}
                     @else
-                        {!! @showUserAvtar($result->avatar, $result->firstname, $result->lastname, 95, 95, 22)!!}
+                        {!! showUserAvtar($result->avatar, $result->firstname, $result->lastname, 95, 95, 22)!!}
                     @endif
                 </div>
 

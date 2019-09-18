@@ -216,13 +216,13 @@
                                             <td style="display: none;"></td>
                                             <td>
                                                 @if ($oFeedback->subscriber_id > 0)
-                                                    <div class="media-left media-middle"> {!! @showUserAvtar($oFeedback->avatar, $oFeedback->firstname, $oFeedback->lastname) !!} </div>
+                                                    <div class="media-left media-middle"> {!! showUserAvtar($oFeedback->avatar, $oFeedback->firstname, $oFeedback->lastname) !!} </div>
                                                     <div class="media-left">
                                                         <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot">{{ $oFeedback->firstname }} {{ $oFeedback->lastname }}</a> <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($oFeedback->country_code) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
                                                         <div class="text-muted text-size-small">{{ $oFeedback->email }}</div>
                                                     </div>
                                                 @else
-                                                    <div class="media-left media-middle"> {!! $oFeedback->feedback_fullname == '' ? showUserAvtar('', '', '') : @showUserAvtar($oFeedback->avatar, $firstName, $lastName) !!} </div>
+                                                    <div class="media-left media-middle"> {!! $oFeedback->feedback_fullname == '' ? showUserAvtar('', '', '') : showUserAvtar($oFeedback->avatar, $firstName, $lastName) !!} </div>
                                                     <div class="media-left">
                                                         <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot">{{ $oFeedback->feedback_fullname == '' ? 'User_' . $oFeedback->id : $firstName . ' ' . $lastName }}</a> <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($oFeedback->country_code) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
                                                         <div class="text-muted text-size-small">{{ $oFeedback->feedback_email == '' ? $oFeedback->email : $oFeedback->feedback_email }}</div>
