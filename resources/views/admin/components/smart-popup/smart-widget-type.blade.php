@@ -21,17 +21,19 @@
         margin-top: 3px;
     }
 </style>
+
 @php
     $widgetType = $widgetData->widget_type;
 @endphp
+
 <div class="box smart-widget-type-box" style="width: 680px; z-index:11;">
     <div style="width: 680px;overflow: hidden; height: 100%;">
         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
-
             <div class="row" style="height: 100%;">
                 <div class="col-md-12">
-                    <a style="left: 35px; top: 15px;" class="reviews smart-widget-type slide-toggle bkg_grey_light"><i
-                            class=""><img src="{{ base_url() }}assets/images/icon_arrow_left.png"/></i></a>
+                    <a style="left: 35px; top: 15px;" class="reviews smart-widget-type slide-toggle bkg_grey_light">
+						<i class=""><img src="{{ base_url() }}assets/images/icon_arrow_left.png"/></i>
+					</a>
                     <h5 style="padding-left: 75px;" class="panel-title">Choose widget</h5>
                 </div>
                 <div class="col-md-12">
@@ -48,17 +50,17 @@
                             <label for="radiocheck_sp_1">
                                 <div class="inner {{ $widgetType == 'bww' ? 'active' : '' }}">
 									<span class="custmo_checkbox checkboxs">
-										<input id="radiocheck_sp_1" type="radio" name="widgetList1"
-                                               class="selectwidget1" widget-id="bww" {{ $widgetType == 'bww' ? 'checked="checked"' : '' }}>
+										<input id="radiocheck_sp_1" type="radio" name="widgetList1" class="selectwidget1" widget-id="bww" {{ $widgetType == 'bww' ? 'checked="checked"' : '' }}>
 										<span class="custmo_checkmark purple"></span>
 									</span>
                                     <figure><img src="{{ base_url() }}assets/images/review_source1_new.png"/></figure>
                                     <div class="text_sec">
                                         <p><strong>Small Popup</strong></p>
-                                        <p class="txt_grey"><i class="mr-5"><img
-                                                    src="{{ base_url() }}assets/images/icon_download_small2.png"/></i>1,395
+                                        <p class="txt_grey">
+											<i class="mr-5">
+												<img src="{{ base_url() }}assets/images/icon_download_small2.png"/>
+											</i>1,395
                                         </p>
-
                                     </div>
                                 </div>
                             </label>
@@ -130,8 +132,10 @@
                                     <figure><img src="{{ base_url() }}assets/images/review_source5_new.png"/></figure>
                                     <div class="text_sec">
                                         <p><strong>Embeded Reviews</strong></p>
-                                        <p class="txt_grey"><i class="mr-5"><img
-                                                    src="{{ base_url() }}assets/images/icon_download_small2.png"/></i>1,395
+                                        <p class="txt_grey">
+											<i class="mr-5">
+												<img src="{{ base_url() }}assets/images/icon_download_small2.png"/>
+											</i>1,395
                                         </p>
                                     </div>
                                 </div>
@@ -168,5 +172,4 @@
             $('.smart-widget-type-box .' + bbwpReviewType + 'CWBox .inner input.selectwidget1').prop('checked', 'checked');
         });
     });
-
 </script>

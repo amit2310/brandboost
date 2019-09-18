@@ -5,7 +5,6 @@
 	.box .col-md-2.review_source_new .inner .text_sec img{width: 10px; height: 10px; vertical-align: top;margin-top: 3px;}
 </style>
 @php
-	//pre($galleryData);
 	$widgetType = $galleryData->gallery_design_type;
 @endphp
 <div class="box smart-widget-type-box" style="width: 680px; z-index:11;">
@@ -87,7 +86,6 @@
 								</div>
 							</label>
 						</div>
-
 					</div>
 				</div>
 
@@ -112,5 +110,4 @@
 			});
 		});
 	});
-
 </script>

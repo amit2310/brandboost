@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -36,7 +36,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -162,9 +162,9 @@
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
 
-    
+
     <!-- Dashboard content -->
-    
+
         <div class="row">
             <div class="col-lg-12">
                 <!-- Marketing campaigns -->
@@ -227,7 +227,7 @@
 
 											 <td>
 												<div class="media-left">
-													<div class="pt-5"><a href="#" class="text-default text-semibold">{{ $oMember->bb_number == '' ? '<span style="color:#999999">BB Phone Unavailable</span>' : $oMember->bb_number }}</a></div>
+													<div class="pt-5"><a href="#" class="text-default text-semibold">{!! $oMember->bb_number == '' ? '<span style="color:#999999">BB Phone Unavailable</span>' : $oMember->bb_number !!}</a></div>
 													<div class="text-muted text-size-small">Chat</div>
 												</div>
 											</td>
@@ -664,7 +664,7 @@
                                 </span>
                             </div>
                         </div>
-						
+
                         <div class="col-md-12" style="margin-top: 10px">
 							<div class="form-group mb0">
 								<span class="display-inline-block pull-left fsize13">Show team member Sms chat?</span>
@@ -676,7 +676,7 @@
                                 </span>
                             </div>
                         </div>
-                            
+
                         <div class="col-md-12" style="margin-top: 10px;display: none;" id="bb_number_section">
 							<div class="form-group mb0">
 								<span class="display-inline-block pull-left fsize13">Add team member brand boost phone number?</span>
@@ -729,7 +729,7 @@
 				data: {area_code : $('#area_code').val(),_token: '{{csrf_token()}}'},
 				dataType: "html",
 				success: function (data) {
-					setTimeout(function(){ 
+					setTimeout(function(){
 						$('#bb_area_code_listing').html(data);
 					}, 4000);
 				}
@@ -745,7 +745,7 @@
           else
           {
              $('#bb_number_section').show();
-          } 
+          }
             });
              $('#bb_number').change(function () {
 
@@ -757,7 +757,7 @@
           {
              $('#bb_area_code').show();
                $('#bb_area_code_listing').show();
-          } 
+          }
             });
              // add ########################################
 
@@ -772,7 +772,7 @@
 				data: {area_code : $('#edit_area_code').val(),_token: '{{csrf_token()}}'},
 				dataType: "html",
 				success: function (data) {
-					setTimeout(function(){ 
+					setTimeout(function(){
 						$('#edit_bb_area_code_listing').html(data);
 					}, 4000);
 				}
@@ -792,7 +792,7 @@
               $('#edit_bb_number_section').show();
              }
 
-          } 
+          }
             });
 
 
@@ -806,7 +806,7 @@
           {
              $('#edit_bb_area_code').show();
                $('#edit_bb_area_code_listing').show();
-          } 
+          }
             });
 
 // edit ########################################
@@ -814,50 +814,50 @@
         $('.addTeamMember').click(function () {
             $('#addTeamMemberModal').modal();
         });
-		
+
 		$('#checkAll').change(function () {
 			if (false == $(this).prop("checked")) {
 				$(".checkRows").prop('checked', false);
 				$(".selectedClass").removeClass('success');
 				$('.custom_action_box').hide();
 				} else {
-				
+
 				$(".checkRows").prop('checked', true);
 				$(".selectedClass").addClass('success');
 				$('.custom_action_box').show();
 			}
 		});
-		
-		
+
+
 		$(document).on('click', '.checkRows', function () {
 			var inc = 0;
 			var rowId = $(this).val();
-			
+
 			if (false == $(this).prop("checked")) {
 				$('#append-' + rowId).removeClass('success');
 			} else {
 				$('#append-' + rowId).addClass('success');
 			}
-			
+
 			$('.checkRows:checkbox:checked').each(function (i) {
 				inc++;
 			});
-			
+
 			if (inc == 0) {
 				$('.custom_action_box').hide();
 				} else {
 				$('.custom_action_box').show();
 			}
-			
+
 			var numberOfChecked = $('.checkRows:checkbox:checked').length;
 			var totalCheckboxes = $('.checkRows:checkbox').length;
 			if (totalCheckboxes > numberOfChecked) {
 				$('#checkAll').prop('checked', false);
 			}
 		});
-		
+
 		$(document).on('click', '#deleteTeamMembers', function () {
-			
+
 			var val = [];
 			$('.checkRows:checkbox:checked').each(function (i) {
 				val[i] = $(this).val();
@@ -921,7 +921,7 @@
             });
             return false;
         });
-		
+
 
         $(document).on("click", ".editTeamMember", function () {
             $('.overlaynew').show();
@@ -952,7 +952,7 @@
                         $('#oMember_bb_number').val(resultData.bb_number);
                         $('#bb_phone').val(resultData.bb_number);
                         if(resultData.web_chat == '1')
-                        { 
+                        {
                             $("#edit_webchat_config").prop('checked', true);
                         }
                         else
@@ -960,7 +960,7 @@
                             $("#edit_webchat_config").prop('checked', false);
                         }
                         if(resultData.sms_chat == '1')
-                        { 
+                        {
                             $("#edit_smschat_config").prop('checked', true);
                             if($('#oMember_bb_number').val() == "")
                             {
@@ -1006,7 +1006,7 @@
 		$(document).on('click', '.deleteTeamMember', function () {
 			var elem = $(this);
 			deleteConfirmationPopup(
-			"This record will deleted immediately.<br>You can't undo this action.", 
+			"This record will deleted immediately.<br>You can't undo this action.",
 			function() {
 				$('.overlaynew').show();
 				var memberID = $(elem).attr('member_id');
@@ -1032,4 +1032,4 @@
 		});
 	});
 </script>
-@endsection  
+@endsection
