@@ -108,17 +108,17 @@ class Broadcast extends Controller {
         if ($user_role == 1) {
             $userID = '';
         }
-        
+
         //Instantiate Email model to get its methods and properties
         $mEmails = new EmailsModel();
-        
+
         //Instantiate User model to get its methods and properties
         $mUsers = new UsersModel();
-        
+
         //Instantiate subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
-        
-        
+
+
         $oAutomations = $mEmails->getEmailAutomations($userID);
         $bActiveSubsription = $mUsers->isActiveSubscription();
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -324,13 +324,13 @@ class Broadcast extends Controller {
         $aAudienceCount = $this->importExcludeAudienceCount($id);
         $importedCount = count($aAudienceCount['imported']);
         $exportedCount = count($aAudienceCount['excluded']);
-        
+
         if(!empty($campaignType)){
             $breadModuleName = (strtolower($campaignType) =='email' ) ? 'email' : 'sms';
         }else{
             $breadModuleName = '';
         }
-        
+
 
 
 
@@ -401,7 +401,7 @@ class Broadcast extends Controller {
 
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         //Instantiate Subscriber model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
@@ -446,7 +446,7 @@ class Broadcast extends Controller {
                     'oUserTemplates' => $oUserTemplates,
                     'variationID' => $iVariationID,
                     'campaignType' => $campaignType
-                );  
+                );
                 $content = view('admin.broadcast.partials.add_split_form_single', $aData)->render();
             }
         }
@@ -571,7 +571,7 @@ class Broadcast extends Controller {
 				}
 			}
 		}
-		
+
         if (!empty($bUpdated)) {
             $response = array('status' => 'success');
         } else {
@@ -874,7 +874,7 @@ class Broadcast extends Controller {
     }
 
     /**
-     * Used to make a broadcast campaign archive 
+     * Used to make a broadcast campaign archive
      */
     public function moveArchive(Request $request) {
 
@@ -2012,7 +2012,7 @@ class Broadcast extends Controller {
 
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
-        
+
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
@@ -2021,12 +2021,14 @@ class Broadcast extends Controller {
 
         $broadcastId = $request->automation_id;
 
+
         $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $broadcastId);
         $oBroadcast = $oBroadcast[0];
         $oldEventID = $oBroadcast->evtid;
 
         $broadcastSettings = $mBroadcast->getBroadcastSettings($oBroadcast->id);
-        $broadcastSettings = $broadcastSettings[0];
+
+        $broadcastSettings =($broadcastSettings->isNotEmpty()) ?  $broadcastSettings[0] : 0;
 
 
         $oLists = $mBroadcast->getMyLists($userID);
@@ -2120,13 +2122,13 @@ class Broadcast extends Controller {
         $fromName = $oBroadcast->from_name;
         $fromEmail = $oBroadcast->from_email;
         $replyToEmail = $oBroadcast->reply_to;
-        $textVersionEmail = $broadcastSettings->text_version_email;
-        $enableMobileResponsiveness = $broadcastSettings->enable_mobile_responsiveness;
-        $readTracking = $broadcastSettings->read_tracking;
-        $linkTracking = $broadcastSettings->link_tracking;
-        $replyTracking = $broadcastSettings->reply_tracking;
-        $googleAnalytics = $broadcastSettings->google_analytics;
-        $campaignArchives = $broadcastSettings->campaign_archives;
+        $textVersionEmail = (!empty($broadcastSettings)) ? $broadcastSettings->text_version_email : '';
+        $enableMobileResponsiveness = (!empty($broadcastSettings)) ?  $broadcastSettings->enable_mobile_responsiveness : '';
+        $readTracking = (!empty($broadcastSettings)) ? $broadcastSettings->read_tracking : '';
+        $linkTracking = (!empty($broadcastSettings)) ? $broadcastSettings->link_tracking : '';
+        $replyTracking = (!empty($broadcastSettings)) ? $broadcastSettings->reply_tracking : '';
+        $googleAnalytics = (!empty($broadcastSettings)) ? $broadcastSettings->google_analytics : '';
+        $campaignArchives = (!empty($broadcastSettings)) ?  $broadcastSettings->campaign_archives : '';
 
         $cData = array(
             'subject' => $emailSubject,
@@ -2915,8 +2917,8 @@ class Broadcast extends Controller {
      * @param type $email_sms
      * @param type $broadcast_id
      */
-    public function records($email_sms, $broadcast_id) {       
-        
+    public function records($email_sms, $broadcast_id) {
+
 
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();

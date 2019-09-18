@@ -40,7 +40,7 @@
                 <th style="display:none;">status</th>
                 </thead>
                 <tbody>
-                    @php                  
+                    @php
                     foreach ($oAutomations as $oAutomation):
                         $openValue = 0;
                         $clickValue = 0;
@@ -121,8 +121,8 @@
                                     }
                                     @endphp
                                     <div class="media-left">
-                                        <div class="progress-circle {{ $addPC }} green cp{{ $totalOpenGraph }} 
-                                            @if ($totalOpenGraph > 0) 
+                                        <div class="progress-circle {{ $addPC }} green cp{{ $totalOpenGraph }}
+                                            @if ($totalOpenGraph > 0)
                                             {{ 'createSegment' }}
                                             @endif
                                             " segment-type="total-open" campaign-id="{{ $oAutomation->id }}" campaign-type="email" title="click to create segment">
@@ -134,14 +134,14 @@
                                     </div>
                                     <div class="media-left">
                                         <div data-toggle="tooltip" title="{{ $openValue }} open out of {{ $totalValue }} emails" data-placement="top">
-                                            @if ($openValue > 0) 
+                                            @if ($openValue > 0)
                                                 <a href="{{ base_url('admin/modules/emails/automationStats/' . $oAutomation->id) }}" class="text-default text-semibold">{{ $openValue }}</a>
                                             @else
                                                 <a href="javascript:void(0);" class="text-default text-semibold">{{ $openValue }}</a>
                                             @endif
-                                            @if ($newOpen > 0) 
+                                            @if ($newOpen > 0)
                                                 {!! '<span style="color:#FF0000;"> (' . $newOpen . ' new)</span>' !!}
-                                            @endif    
+                                            @endif
 
                                         </div>
                                     </div>
@@ -155,7 +155,7 @@
                                     }
                                     @endphp
                                     <div class="media-left">
-                                        <div class="progress-circle {{ $addPC }} grey cp{{ $totalClickGraph }} 
+                                        <div class="progress-circle {{ $addPC }} grey cp{{ $totalClickGraph }}
                                             @if ($totalOpenGraph > 0)
                                             {{ 'createSegment'}}
                                             @endif
@@ -168,15 +168,15 @@
                                     </div>
                                     <div class="media-left">
                                         <div data-toggle="tooltip" title="{{ $clickValue }} open out of {{ $totalValue }} emails" data-placement="top">
-                                            @if ($clickValue > 0) 
-                                                
+                                            @if ($clickValue > 0)
+
                                                 <a href="{{ base_url('admin/modules/emails/automationStats/' . $oAutomation->id) }}" class="text-default text-semibold">{{ $clickValue }}</a>
                                             @else
                                                 <a href="javascript:void(0);" class="text-default text-semibold">{{ $clickValue }}</a>
                                             @endif
-                                            @if ($newClick > 0)   
-                                                {!! '<span style="color:#FF0000;"> (' . $newClick . ' new)</span>' !!}    
-                                            @endif   
+                                            @if ($newClick > 0)
+                                                {!! '<span style="color:#FF0000;"> (' . $newClick . ' new)</span>' !!}
+                                            @endif
 
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@
                                     }
                                     @endphp
                                     <div class="media-left">
-                                        <div class="progress-circle {{ $addPC }} red cp{{ $totalBounceGraph }} 
+                                        <div class="progress-circle {{ $addPC }} red cp{{ $totalBounceGraph }}
                                             @if ($totalBounceGraph > 0)
                                             {{'createSegment'}}
                                             @endif
@@ -208,9 +208,9 @@
                                             @else
                                                 <a href="javascript:void(0);" class="text-default text-semibold">{{ $bounceValue }}</a>
                                             @endif
-                                            @if ($newBounce > 0)    
-                                                {!! '<span style="color:#FF0000;"> (' . $newBounce . ' new)</span>' !!}    
-                                            @endif    
+                                            @if ($newBounce > 0)
+                                                {!! '<span style="color:#FF0000;"> (' . $newBounce . ' new)</span>' !!}
+                                            @endif
 
                                         </div>
                                     </div>
@@ -221,9 +221,9 @@
 
 
                                     @if ($oAutomation->status == 'active')
-                                        <i class="icon-primitive-dot txt_green fsize16"></i> 
+                                        <i class="icon-primitive-dot txt_green fsize16"></i>
                                     @else
-                                        <i class="icon-primitive-dot txt_red fsize16"></i> 
+                                        <i class="icon-primitive-dot txt_red fsize16"></i>
                                     @endif
                                     <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">{{ ucfirst($oAutomation->status) }}</a>
                                     <ul class="dropdown-menu dropdown-menu-right status">
@@ -236,7 +236,7 @@
                                         <div class="tdropdown ml10"> <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><img src="{{ base_url() }}assets/images/more.svg"></a>
                                             <ul class="dropdown-menu dropdown-menu-right more_act">
                                                 <li><a href="javascript:void(0);" automation_id="{{ $oAutomation->id }}" class="editAutomation"><i class="icon-pencil"></i> Edit</a></li>
-                                                @if ($oAutomation->status == 'active'): 
+                                                @if ($oAutomation->status == 'active')
                                                     <li>
                                                         <a href="javascript:void(0);" automation_id="{{ $oAutomation->id }}" status="inactive" class="change_staus"><i class='icon-file-locked'></i> Inactive</a>
                                                     </li>
@@ -250,7 +250,7 @@
                                                     <li>
                                                         <a href="javascript:void(0);" automation_id="{{ $oAutomation->id }}" status="archive" class="change_staus"><i class='icon-file-locked'></i> Move To Archive</a>
                                                     </li>
-                                                @endif  
+                                                @endif
                                                 <li><a href="javascript:void(0);" automation_id="{{ $oAutomation->id }}" class="deleteAutomation"><i class="icon-trash"></i> Delete</a></li>
                                             </ul>
                                         </div>

@@ -211,7 +211,7 @@ list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
                                         //pre($getData);
                                         if (!empty($getData)) {
                                             $inc = rand(0, 5);
-                                            $getLinksSocial = $offsites_links[$getData->id]['link'];
+                                            $getLinksSocial = isset($offsites_links[$getData->id]['link']) ? $offsites_links[$getData->id]['link'] : '';
 
                                             $sourceName = strtolower($getData->name);
 

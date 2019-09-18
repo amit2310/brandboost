@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -40,7 +40,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -164,13 +164,13 @@
 
 
     <!--&&&&&&&&&&&& TABBED CONTENT START &&&&&&&&&&-->
-    <div class="tab-content"> 
+    <div class="tab-content">
         <!--===========TAB 1=======Active Advocates====-->
         <div class="tab-pane active" id="right-icon-tab0">
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-flat">
-                        <?php //$this->load->view("admin/components/smart-popup/smart-advocate-widget");?>
+                        @php //$this->load->view("admin/components/smart-popup/smart-advocate-widget"); @endphp
                         <div class="panel-heading">
                             <h6 class="panel-title">Advocates</h6>
                             <div class="heading-elements">
@@ -181,8 +181,8 @@
                                     </div>
                                 </div>
                                 <div class="table_action_tool">
-                                    <a href="javascript:void(0);"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_calender.png"/></i></a>
-                                    <a href="javascript:void(0);" class="editDataList"><i class=""><img src="<?php echo base_url(); ?>assets/images/icon_edit.png"/></i></a>
+                                    <a href="javascript:void(0);"><i class=""><img src="{{base_url()}}assets/images/icon_calender.png"/></i></a>
+                                    <a href="javascript:void(0);" class="editDataList"><i class=""><img src="{{base_url()}}assets/images/icon_edit.png"/></i></a>
                                     <a href="javascript:void(0);" id="deleteBulkModuleContacts" class="custom_action_box" style="display:none;" data-modulename="referral" data-moduleaccountid="{{ $moduleUnitID }}"><i class="icon-trash position-left"></i></a>
                                     <button id="archiveBulkModuleContacts" class="btn btn-xs custom_action_box" data-modulename="referral" data-moduleaccountid="{{ $moduleUnitID }}"><i class="icon-gear position-left"></i> Archive</button>
                                 </div>
@@ -222,10 +222,10 @@
                                             <td style="display: none;">{{ date('m/d/Y', strtotime($oContact->created)) }}</td>
                                             <td style="display: none;">{{ $oContact->id }}</td>
                                             <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="{{ $oContact->id }}" ><span class="custmo_checkmark"></span></label></td>
-                                            <td class="viewAdvocateSmartPopup" data-modulesubscriberid="{{ $oContact->subscriber_id }}" data-accountid="{{ $moduleUnitID }}">											
-                                                <div class="media-left media-middle"> {!! showUserAvtar($oContact->avatar, $oContact->firstname, $oContact->lastname) !!} </div>
+                                            <td class="viewAdvocateSmartPopup" data-modulesubscriberid="{{ $oContact->subscriber_id }}" data-accountid="{{ $moduleUnitID }}">
+                                                <div class="media-left media-middle"> {!! @showUserAvtar($oContact->avatar, $oContact->firstname, $oContact->lastname) !!} </div>
                                                 <div class="media-left">
-                                                    <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold">{{ $oContact->firstname. ' '. $oContact->lastname }}</a> <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($oContact->country_code) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png')}}'"/></div>
+                                                    <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold">{{ $oContact->firstname. ' '. $oContact->lastname }}</a> <img class="flags" src="{{ base_url() }}assets/images/flags/{{ @strtolower($oContact->country_code) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png')}}'"/></div>
                                                 </div>
                                             </td>
                                             <td><div class="media-left media-middle"> <a class="icons br5" href="#"><i class="icon-tree5 txt_sblue"></i></a> </div>
@@ -262,7 +262,7 @@
                                                         <li><a class="moveToArchiveModuleContact" href="javascript:void(0);" data-modulesubscriberid="{{ $oContact->id }}" data-modulename="{{ $moduleName }}" data-moduleaccountid="{{ $moduleUnitID }}"><i class="icon-trash"></i> Move To Archive</a></li>
 
                                                         @if ($oContact->status == 1 && $oContact->globalStatus == 1)
-                                                            ?><li><a class='changeModuleContactStatus' data-modulesubscriberid="<?php echo $oContact->id; ?>" data-modulename="<?php echo $moduleName; ?>" data-moduleaccountid="<?php echo $moduleUnitID; ?>" data_status = '0'><i class='icon-file-locked'></i> Inactive</a></li>
+                                                            <li><a class='changeModuleContactStatus' data-modulesubscriberid="{{$oContact->id}}" data-modulename="{{$moduleName}}" data-moduleaccountid="{{$moduleUnitID}}" data_status = '0'><i class='icon-file-locked'></i> Inactive</a></li>
                                                         @else
                                                             <li><a class='@if ($oContact->globalStatus == 1) changeModuleContactStatus @else changeModuleContactStatusDisabled @endif'  data-modulesubscriberid="{{ $oContact->id }}" data-modulename="{{ $moduleName }}" data-moduleaccountid="{{ $moduleUnitID }}" data_status = '1'><i class='icon-file-locked'></i> Active</a></li>
                                                         @endif
@@ -274,7 +274,7 @@
 
                                             <td style="display:none;">{{ $oContact->status == 1 ? 'active' : 'archive' }}</td>
                                         </tr>
-                                    <?php } ?>
+                                    @php } @endphp
                                 </tbody>
                             </table>
                         @else
@@ -307,7 +307,7 @@
                                                             Lets Create Your First Advocate.
                                                         </h5>
 
-                                                    
+
                                                     </div>
                                                 </div>
                                             </div>

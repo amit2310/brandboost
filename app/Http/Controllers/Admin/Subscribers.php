@@ -14,13 +14,15 @@ use Cookie;
 use Session;
 use App\Libraries\Custom\Csvimport;
 
-class Subscribers extends Controller {
-	/**
+class Subscribers extends Controller
+{
+    /**
      * Used to export subscribers through csv file
      */
-    public function exportSubscriberCSV() {
+    public function exportSubscriberCSV(Request $request)
+    {
 
-        // file name 
+        // file name
         $mSubscriber = new SubscriberModel();
         $mSettings = new SettingsModel();
         $oUser = getLoggedUser();
@@ -31,64 +33,68 @@ class Subscribers extends Controller {
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
 
-        $post = Input::get();
-
-        $moduleName = strip_tags($post['module_name']);
-        $moduleAccountID = strip_tags($post['module_account_id']);
+        $moduleName = $request->input('module_name');
+        $moduleAccountID = $request->input('module_account_id');
 
 
         if ($userRole != '1') {
             $oSubscribers = $mSubscriber->getModuleSubscribers($userID, $moduleName, $moduleAccountID);
         } else {
-            //$userID = '';
             $oSubscribers = $mSubscriber->getModuleSubscribers('', $moduleName, $moduleAccountID);
         }
 
-        // file creation 
-        $file = fopen('php://output', 'w');
+        //pre($oSubscribers);
 
-        $header = array("EMAIL", "FIRST_NAME", "LAST_NAME", "PHONE", "GENDER", "COUNTRY", "CITY", "STATE", "ZIP", "TWITTER_PROFILE", "FACEBOOK_PROFILE", "INSTAGRAM_PROFILE", "OTHER_SOCIAL_PROFILE", "OTHER_SOCIAL_PROFILE");
-        fputcsv($file, $header);
-        foreach ($oSubscribers as $key => $line) {
-            fputcsv($file, array($line->email, $line->firstname, $line->lastname, $line->phone, $line->gender, $line->country_code, $line->cityName, $line->stateName, $line->zipCode, $line->twitter_profile, $line->facebook_profile, $line->linkedin_profile, $line->instagram_profile, $line->socialProfile));
-        }
-        fclose($file);
+        if ($oSubscribers->isNotEmpty()) {
+            // file creation
+            $file = fopen('php://output', 'w');
 
-        //Log Export History
-        if (!empty($oSubscribers)) {
-            $aHistoryData = array(
+            $header = array("EMAIL", "FIRST_NAME", "LAST_NAME", "PHONE", "GENDER", "COUNTRY", "CITY", "STATE", "ZIP", "TWITTER_PROFILE", "FACEBOOK_PROFILE", "INSTAGRAM_PROFILE", "OTHER_SOCIAL_PROFILE", "OTHER_SOCIAL_PROFILE");
+            fputcsv($file, $header);
+            foreach ($oSubscribers as $key => $line) {
+                fputcsv($file, array($line->email, $line->firstname, $line->lastname, $line->phone, $line->gender, $line->country_code, $line->cityName, $line->stateName, $line->zipCode, $line->twitter_profile, $line->facebook_profile, $line->linkedin_profile, $line->instagram_profile, $line->socialProfile));
+            }
+            fclose($file);
+
+            //Log Export History
+            if (!empty($oSubscribers)) {
+                $aHistoryData = array(
+                    'user_id' => $userID,
+                    'export_name' => 'Contacts',
+                    'item_count' => count($oSubscribers),
+                    'created' => date("Y-m-d H:i:s")
+                );
+                $mSettings->logExportHistory($aHistoryData);
+            }
+            //Add Useractivity log
+
+            $aActivityData = array(
                 'user_id' => $userID,
-                'export_name' => 'Contacts',
-                'item_count' => count($oSubscribers),
-                'created' => date("Y-m-d H:i:s")
+                'module_name' => $moduleName,
+                'module_account_id' => $moduleAccountID,
+                'event_type' => 'export_subscribers',
+                'action_name' => 'exported_contact',
+                'brandboost_id' => '',
+                'campaign_id' => '',
+                'inviter_id' => '',
+                'subscriber_id' => '',
+                'feedback_id' => '',
+                'activity_message' => 'Exported Subscribers',
+                'activity_created' => date("Y-m-d H:i:s")
             );
-            $mSettings->logExportHistory($aHistoryData);
-        }
-        //Add Useractivity log
+            logUserActivity($aActivityData);
+            exit;
 
-        $aActivityData = array(
-            'user_id' => $userID,
-            'module_name' => $moduleName,
-            'module_account_id' => $moduleAccountID,
-            'event_type' => 'export_subscribers',
-            'action_name' => 'exported_contact',
-            'brandboost_id' => '',
-            'campaign_id' => '',
-            'inviter_id' => '',
-            'subscriber_id' => '',
-            'feedback_id' => '',
-            'activity_message' => 'Exported Subscribers',
-            'activity_created' => date("Y-m-d H:i:s")
-        );
-        logUserActivity($aActivityData);
-        exit;
+        }
+
     }
 
-    
+
     /**
      * Used to move module subscribers into archive list
      */
-    public function moveToArchiveModuleContact() {
+    public function moveToArchiveModuleContact()
+    {
 
         $post = Input::post();
         $mSubscriber = new SubscriberModel();
@@ -117,11 +123,12 @@ class Subscribers extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to move module subscribers into the active list
      */
-    public function moveToActiveModuleContact() {
+    public function moveToActiveModuleContact()
+    {
 
         $post = Input::post();
         $mSubscriber = new SubscriberModel();
@@ -150,11 +157,12 @@ class Subscribers extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update module subscribers status
      */
-    public function changeModuleContactStatus() {
+    public function changeModuleContactStatus()
+    {
 
         $post = Input::post();
         $mSubscriber = new SubscriberModel();
@@ -184,11 +192,12 @@ class Subscribers extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to delete module subscirbers
      */
-    public function deleteModuleSubscriber() {
+    public function deleteModuleSubscriber()
+    {
         $post = Input::post();
         $mSubscriber = new SubscriberModel();
 
@@ -203,7 +212,7 @@ class Subscribers extends Controller {
         $subscriberID = strip_tags($post['subscriberId']);
 
         $bDeleted = $mSubscriber->deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID);
-		
+
         if ($bDeleted == true) {
             $response = array('status' => 'success', 'msg' => "Contact deleted successfully!");
         }
@@ -212,12 +221,13 @@ class Subscribers extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to delete module subscribers in bulk
      */
-    public function deleteBulkModuleContacts(Request $request) {
-		$mSubscriber = new SubscriberModel();
+    public function deleteBulkModuleContacts(Request $request)
+    {
+        $mSubscriber = new SubscriberModel();
 
         $multipalSubscriberId = $request->multipalSubscriberId;
         $moduleName = $request->moduleName;
@@ -235,11 +245,12 @@ class Subscribers extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to archive module subscribers in bulk
      */
-    public function archiveBulkModuleContacts() {
+    public function archiveBulkModuleContacts()
+    {
 
         $post = Input::post();
         $mSubscriber = new SubscriberModel();
@@ -270,11 +281,12 @@ class Subscribers extends Controller {
         exit;
     }
 
-    
+
     /**
      * used to make active module subscribers into the contacts
      */
-    public function activeBulkModuleContacts() {
+    public function activeBulkModuleContacts()
+    {
 
         $post = Input::post();
         $mSubscriber = new SubscriberModel();
@@ -303,26 +315,17 @@ class Subscribers extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    
+
+
     /**
      * Default Controller
      */
-    public function index() {
+    public function index()
+    {
         $aUser = getLoggedUser();
         $user_role = $aUser->user_role;
         if (!empty($user_role) && $user_role == 1) {
-            
+
         } else {
             redirect('/admin');
         }
@@ -342,12 +345,13 @@ class Subscribers extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/users/index', $data);
     }
 
-    
+
     /**
      * Used to get subscriber's activities
      * @param type $subscriberID
      */
-    public function activities($subscriberID) {
+    public function activities($subscriberID)
+    {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if (empty($subscriberID)) {
@@ -393,11 +397,12 @@ class Subscribers extends Controller {
         $this->template->load('admin/admin_campaign_template', 'admin/subscriber/activities', $aData);
     }
 
-    
+
     /**
      * Used to get Subscriber Details
      */
-    public function getSubscriberDetail() {
+    public function getSubscriberDetail()
+    {
         $response = array();
         $mSubscriber = new SubscriberModel();
         $post = Input::post();
@@ -419,11 +424,12 @@ class Subscribers extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update subscirber details by id
      */
-    public function updateSubscriberDetailsByid() {
+    public function updateSubscriberDetailsByid()
+    {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -477,11 +483,12 @@ class Subscribers extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update subscribers details
      */
-    public function updateSubscriberDetails() {
+    public function updateSubscriberDetails()
+    {
         $mSubscriber = new SubscriberModel();
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $aUser = getLoggedUser();
@@ -579,12 +586,13 @@ class Subscribers extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to add a new subscriber
      */
-    public function add_contact() {
-
+    public function add_contact()
+    {
+        $mSubscriber = new SubscriberModel();
         $response = array();
         $result = array();
         $post = Input::post();
@@ -679,7 +687,7 @@ class Subscribers extends Controller {
             }
 
             if (!empty($tableName)) {
-                $result = $this->mSubscriber->addModuleSubscriber($aData, $moduleName, $tableName);
+                $result = $mSubscriber->addModuleSubscriber($aData, $moduleName, $tableName);
             }
 
             //Add Entry into the campaign contact list
@@ -736,11 +744,12 @@ class Subscribers extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to import subscribers through csv file
      */
-    public function importSubscriberCSV(Request $request) {
+    public function importSubscriberCSV(Request $request)
+    {
 
         $csvimport = new Csvimport();
         $mSubscriber = new SubscriberModel();
@@ -750,8 +759,8 @@ class Subscribers extends Controller {
         $userID = $oUser->id;
         $someoneadded = false;
         $post = Input::post();
-      
-        if(!empty($post['list_id'])) {
+
+        if (!empty($post['list_id'])) {
             $list_id = $post['list_id'];
         }
         $moduleName = strip_tags($post['module_name']);
@@ -759,17 +768,16 @@ class Subscribers extends Controller {
         $redirectURL = $post['redirect_url'];
 
         $file_path = $request->file('userfile')->getRealPath();
-        
+
         if ($csvimport->get_array($file_path)) {
             $csv_array = $csvimport->get_array($file_path);
 
             $aSuppressionList = $mSubscriber->getSuppressionList();
             $imported = 0;
 
-            
 
             foreach ($csv_array as $row) {
-                
+
                 $firstName = $row['FIRST_NAME'];
                 $lastName = $row['LAST_NAME'];
                 $email = $row['EMAIL'];
@@ -779,21 +787,21 @@ class Subscribers extends Controller {
                 $cityName = $row['CITY'];
                 $stateName = $row['STATE'];
                 $zipCode = $row['ZIP'];
-                $twitterProfile = $row['TWITTER_PROFILE'] != ''?$row['TWITTER_PROFILE']:'';
-                $facebookProfile = $row['FACEBOOK_PROFILE'] != ''?$row['FACEBOOK_PROFILE']:'';
+                $twitterProfile = $row['TWITTER_PROFILE'] != '' ? $row['TWITTER_PROFILE'] : '';
+                $facebookProfile = $row['FACEBOOK_PROFILE'] != '' ? $row['FACEBOOK_PROFILE'] : '';
                 //$linkedinProfile = $row['LINKEDIN_PROFILE'];
-                $instagramProfile = $row['INSTAGRAM_PROFILE'] != ''?$row['INSTAGRAM_PROFILE']:'';
-                $socialProfile = $row['OTHER_SOCIAL_PROFILE'] != ''?$row['OTHER_SOCIAL_PROFILE']:'';
+                $instagramProfile = $row['INSTAGRAM_PROFILE'] != '' ? $row['INSTAGRAM_PROFILE'] : '';
+                $socialProfile = $row['OTHER_SOCIAL_PROFILE'] != '' ? $row['OTHER_SOCIAL_PROFILE'] : '';
                 $emailUserId = 0;
 
                 if (!in_array(strtolower($email), $aSuppressionList)) {
                     $imported++;
                     $emailUser = UsersModel::checkEmailExist($email);
                     if (!empty($emailUser)) {
-                        if(!empty($emailUser[0])) {
+                        if (!empty($emailUser[0])) {
                             $emailUserId = $emailUser[0]->id;
                         }
-                        
+
                     }
 
                     $oGlobalUser = SubscriberModel::checkIfGlobalSubscriberExists($userID, 'email', $email);
@@ -848,7 +856,7 @@ class Subscribers extends Controller {
                         }
 
                         if (!empty($tableName)) {
-                            $result = $this->mSubscriber->addModuleSubscriber($aData, $moduleName, $tableName);
+                            $result = $mSubscriber->addModuleSubscriber($aData, $moduleName, $tableName);
                             $someoneadded = true;
                         }
                     }
@@ -866,7 +874,6 @@ class Subscribers extends Controller {
                 );
                 $mSettings->logImportHistory($aHistoryData);
             }
-
 
 
             if ($someoneadded == true) {

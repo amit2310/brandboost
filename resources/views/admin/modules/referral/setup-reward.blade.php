@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -43,7 +43,7 @@ if (!empty($oRefCouponCodes)) {
 @endphp
 
 <style type="text/css">
-    .panel-referred-heading, .panel-advocate-heading { 
+    .panel-referred-heading, .panel-advocate-heading {
         border: 1px solid #ddd !important;
         box-shadow: none;
         border-radius: 5px;
@@ -61,7 +61,7 @@ if (!empty($oRefCouponCodes)) {
             </div>
             <!--=============Button Area Right Side==============-->
             <div class="col-md-5 text-right btn_area">
-                
+
                 <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishReferralStatus" status="draft"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
 
                 <button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishReferralStatus" status="active"><i class="icon-plus3"></i><span> &nbsp;  Publish</span> </button>
@@ -262,7 +262,7 @@ if (!empty($oRefCouponCodes)) {
                                             <span>
                                                 <input type="radio" name="advCouponCode" option-type="adv_single_use_coupons" @if ($oSettings->advocate_coupon_type == 'single') checked="checked" @endif class="control-primary advocate_options">
                                             </span>
-                                            <strong>Single Use Coupons</strong> Unique coupon codes for every advocate 
+                                            <strong>Single Use Coupons</strong> Unique coupon codes for every advocate
 
                                         </label>
 
@@ -274,13 +274,11 @@ if (!empty($oRefCouponCodes)) {
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon codes here</label>
                                                     <div class="">
-                                                        <textarea name="singleCouponCodes"  class="form-control"  placeholder="list of coupon codes" required="required" >
-														@php
+                                                        <textarea name="singleCouponCodes"  class="form-control"  placeholder="list of coupon codes" required="required" >@php
 															if (!empty($aAdvCoupons)) {
 																echo trim(implode(",", $aAdvCoupons));
 															}
-														@endphp
-														</textarea>
+														@endphp</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -303,7 +301,7 @@ if (!empty($oRefCouponCodes)) {
                                             <span>
                                                 <input type="radio" name="advCouponCode" option-type="adv_multiple_use_coupons" @if ($oSettings->advocate_coupon_type == 'multiple') checked="checked" @endif class="control-primary advocate_options">
                                             </span>
-                                            <strong>Multiple Use Coupons</strong> Reusable coupon code for all advocates 
+                                            <strong>Multiple Use Coupons</strong> Reusable coupon code for all advocates
 
                                         </label>
 
@@ -617,7 +615,7 @@ if (!empty($oRefCouponCodes)) {
                                             <span>
                                                 <input type="radio" name="refCouponCode" option-type="ref_single_use_coupons" @if ($oSettings->referred_coupon_type == 'single') checked="checked" @endif class="control-primary referred_options">
                                             </span>
-                                            <strong>Single Use Coupons</strong> Unique coupon codes for every friend 
+                                            <strong>Single Use Coupons</strong> Unique coupon codes for every friend
 
                                         </label>
 
@@ -629,13 +627,11 @@ if (!empty($oRefCouponCodes)) {
                                                 <div class="form-group">
                                                     <label class="control-label">Paste your coupon codes here</label>
                                                     <div class="">
-                                                        <textarea name="singleCouponCodes"  class="form-control"  placeholder="list of coupon codes" required="required" >
-														@php
+                                                        <textarea name="singleCouponCodes"  class="form-control"  placeholder="list of coupon codes" required="required" >@php
 															if (!empty($aRefCoupons)) {
 																echo trim(implode(",", $aRefCoupons));
 															}
-														@endphp
-														</textarea>
+														@endphp</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -662,7 +658,7 @@ if (!empty($oRefCouponCodes)) {
                                             <span>
                                                 <input type="radio" name="refCouponCode" option-type="ref_multiple_use_coupons" @if ($oSettings->referred_coupon_type == 'multiple') checked="checked" @endif class="control-primary referred_options">
                                             </span>
-                                            <strong>Multiple Use Coupons</strong> Reusable coupon code for all friends 
+                                            <strong>Multiple Use Coupons</strong> Reusable coupon code for all friends
 
                                         </label>
 
@@ -917,13 +913,13 @@ $(document).ready(function(){
 		var refId = $("#refId").val();
 		window.location.href = "{{ base_url('/admin/modules/referral/workflow/') }}"+refId;
 	});
-	
+
 	$(document).on("click", ".backPage", function () {
 		$('.overlaynew').show();
 		var refId = $("#refId").val();
 		window.location.href = "{{ base_url('/admin/modules/referral/setup/') }}"+refId;
 	});
-	
+
 	$(document).on('click', '.advocateGift', function() {
 		var optionType = $(this).attr('option-type');
 		$('.advocateGiftHeading').show();
@@ -954,18 +950,18 @@ $(document).ready(function(){
             }
         });
     });
-	
+
 	$(document).on('click', '.friendGift', function() {
 		$('.friendGift').removeClass('active_green');
 		$(this).addClass('active_green');
 		var optionType = $(this).attr('option-type');
-		
+
 		$('.referred_desc').hide();
 		$('.friendGiftHeading').show();
 		$('.friendGiftD').show();
 		$(optionType).show();
 	});
-		
+
 	$(document).on('click', '.adCouponType', function() {
 		$('.adCouponType').show();
 		$(this).hide();
@@ -1008,13 +1004,13 @@ $(document).ready(function(){
 			setTimeout(function(){ $('.multipalReferredCodesSubmit').trigger('click'); }, 1000);
 		}
 	});
-	
+
 	$(document).on("click", ".continueWorkflow", function () {
 		$('.overlaynew').show();
 		var refId = $("#refId").val();
 		window.location.href = "{{ base_url('/admin/modules/referral/workflow/') }}"+refId;
 	});
-	
+
 	$("#frmInviteCustomer").submit(function () {
 		$('.overlaynew').show();
 		var formData = new FormData($(this)[0]);
@@ -1039,7 +1035,7 @@ $(document).ready(function(){
 		});
 		return false;
 	});
-			
+
 	$('.checkAdvocateGift').change(function(){
 		$('.advocateGift .broadcast_select_contact').find(".img_inactive").show();
 		$('.advocateGift .broadcast_select_contact').find(".img_active").hide();
@@ -1051,7 +1047,7 @@ $(document).ready(function(){
 			$(this).parent().parent().find(".img_active").hide();
 		}
 	});
-	
+
 	$('.checkFriendGift').change(function(){
 		$('.friendGift .broadcast_select_contact').find(".img_inactive").show();
 		$('.friendGift .broadcast_select_contact').find(".img_active").hide();
@@ -1063,7 +1059,7 @@ $(document).ready(function(){
 			$(this).parent().parent().find(".img_active").hide();
 		}
 	});
-	
+
 	$(".advocate_options, .referred_options").change(function () {
 		var selectedOption = $(this).attr('option-type');
 		if($(this).hasClass('advocate_options')){
@@ -1122,7 +1118,7 @@ $(document).ready(function(){
 		else {
 			var strSplitS = '';
 		}
-		
+
 		var elem = $(this);
 		$('.overlaynew').show();
 		$.ajax({
@@ -1163,7 +1159,7 @@ $(document).ready(function(){
 				if (data.status == 'success') {
 					var elemID = $(elem).attr('data-container-id');
 					$("#"+elemID).trigger("click");
-					
+
 					if($("#"+elemID).parent().parent().parent().next(':visible').length>0){
 						if($("#"+elemID).parent().parent().parent().next().find("a").hasClass("collapsed")){
 							$("#"+elemID).parent().parent().parent().next().find("a").trigger("click");
