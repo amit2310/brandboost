@@ -223,7 +223,7 @@
                                             <td style="display: none;">{{ $oContact->id }}</td>
                                             <td style="display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" value="{{ $oContact->id }}" ><span class="custmo_checkmark"></span></label></td>
                                             <td class="viewAdvocateSmartPopup" data-modulesubscriberid="{{ $oContact->subscriber_id }}" data-accountid="{{ $moduleUnitID }}">
-                                                <div class="media-left media-middle"> {!! @showUserAvtar($oContact->avatar, $oContact->firstname, $oContact->lastname) !!} </div>
+                                                <div class="media-left media-middle"> {!! showUserAvtar($oContact->avatar, $oContact->firstname, $oContact->lastname) !!} </div>
                                                 <div class="media-left">
                                                     <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold">{{ $oContact->firstname. ' '. $oContact->lastname }}</a> <img class="flags" src="{{ base_url() }}assets/images/flags/{{ @strtolower($oContact->country_code) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png')}}'"/></div>
                                                 </div>

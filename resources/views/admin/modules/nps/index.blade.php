@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -58,7 +58,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -179,7 +179,7 @@
     <!-- Dashboard content -->
 
        @if ($oPrograms)
-        <div class="tab-content"> 
+        <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
@@ -246,7 +246,7 @@
                                             }
 
                                             $totalFeedback = $oProgram->NPS;
-                                            
+
                                             foreach ($totalFeedback as $value) {
                                                 $scoreVal = $value->score;
                                                 if ($scoreVal > 8) {
@@ -262,7 +262,7 @@
 
                                             $aScoreSummery = $mNPS->getNPSScoreSummery($oProgram->hashcode);
                                             $score = number_format($aScoreSummery['NPSScore'], 1);
-                                           
+
                                             @endphp
                                             <tr id="append-{{ $oProgram->id }}" class="selectedClass">
                                                 <td style="display: none;">{{ date('m/d/Y', strtotime($oProgram->created)) }}</td>
@@ -287,12 +287,12 @@
                                                                     echo '<img src="' . base_url() . 'assets/images/smiley_green.png" class="img-circle img-xs" alt="">';
                                                                     $scoreType = 'Positive';
                                                                 }
-                                                                
+
                                                                 if ($score > 60 && $score <= 80) {
                                                                     echo '<img src="' . base_url() . 'assets/images/smiley_grey2.png" class="img-circle img-xs" alt="">';
                                                                     $scoreType = 'Netural';
                                                                 }
-                                                               
+
                                                                 if ($score <= 60) {
                                                                     echo '<img src="' . base_url() . 'assets/images/smiley_red.png" class="img-circle img-xs" alt="">';
                                                                     $scoreType = 'Negtive';
@@ -305,11 +305,11 @@
                                                             </div>
                                                             <div class="text-muted text-size-small"><a href="{{ base_url('admin/modules/nps/score/' . $oProgram->hashcode) }}" class="text-default text-semibold">{{ $scoreType }}</a></div>
                                                         </div>
-														@php 
+														@php
 															} else {
                                                         @endphp
                                                         <div class="media-left media-middle">
-														{!! @showUserAvtar($totalFeedback[0]->avatar, $totalFeedback[0]->firstname, $totalFeedback[0]->lastname) !!}
+														{!! showUserAvtar($totalFeedback[0]->avatar, $totalFeedback[0]->firstname, $totalFeedback[0]->lastname) !!}
                                                         </div>
                                                         <div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
                                                         @php }
@@ -330,7 +330,7 @@
 														}
 														echo $totPerson;
                                                     @endphp
-                                                        
+
                                                 </td>
                                                 <td>
                                                     @php
@@ -341,7 +341,7 @@
 															$totFeedCount = 0;
 															$totWidth = 0;
 														}
-														
+
 														$neturalRating = $totFeedCount;
 														if ($totFeedCount > 0) {
 															$neturalGraph = 100;
@@ -357,13 +357,13 @@
                                                     <a href="javascript:void(0);" title="total feedback">{{ $totFeedCount }}</a>
                                                 </td>
                                                 <td>
-                                                    @php 
+                                                    @php
 														if ($totFeedCount > 0) {
 															$divPosFeed = ($positive / $totFeedCount) * 100;
 														} else {
 															$divPosFeed = 0;
 														}
-													   
+
 														$neturalRating = $positive;
 														if ($positive > 0) {
 															$neturalGraph = ceil(($positive / $totFeedCount) * 100);
@@ -396,13 +396,13 @@
                                                 </td>
                                                 <td>
                                                     @php
-														//echo $nutral; 
+														//echo $nutral;
 														if ($totFeedCount > 0) {
 															$divNutFeed = ($nutral / $totFeedCount) * 100;
 														} else {
 															$divNutFeed = 0;
 														}
-														
+
 														$neturalRating = $nutral;
 														if ($nutral > 0) {
 															$neturalGraph = ceil(($nutral / $totFeedCount) * 100);
@@ -435,13 +435,13 @@
                                                 </td>
                                                 <td>
                                                     @php
-														//echo $negetive; 
+														//echo $negetive;
 														if ($totFeedCount > 0) {
 															$divNegFeed = ($negetive / $totFeedCount) * 100;
 														} else {
 															$divNegFeed = 0;
 														}
-														
+
 														$neturalRating = $negetive;
 														if ($negetive > 0) {
 															$neturalGraph = ceil(($negetive / $totFeedCount) * 100);
@@ -476,7 +476,7 @@
 
                                                 <td>
                                                     @php
-														
+
 														$totalFeedback = isset($totalFeedback[0]) ? $totalFeedback[0] : '';
 														if (!empty($totalFeedback->score)) {
 															if ($totalFeedback->score >= 8) {
@@ -578,7 +578,7 @@
         </div>
 
     @else
-        <div class="tab-content"> 
+        <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
@@ -847,7 +847,7 @@
 				});
             }
         });
-		
+
 
         $(document).on('click', '#archiveBulkNPS', function () {
             var val = [];
@@ -882,7 +882,7 @@
 				});
             }
         });
-		
+
 
         $('#addNpsSurvery').click(function () {
             $('#addNPSModal').modal();
@@ -912,7 +912,7 @@
             });
             return false;
         });
-		
+
 
         $(document).on("click", ".editSurvey", function () {
             $('.overlaynew').show();
@@ -934,7 +934,7 @@
                 }
             });
         });
-		
+
 
         $(document).on("click", ".moveToArchiveNPS", function () {
             var nps_id = $(this).attr('nps_id');
@@ -958,7 +958,7 @@
 				});
 			});
         });
-		
+
 
         $('#frmeditSurveyModel').on('submit', function () {
             $('.overlaynew').show();
@@ -983,7 +983,7 @@
             });
             return false;
         });
-		
+
 
         $(document).on('click', '.deleteNPS', function () {
             var nps_id = $(this).attr('nps_id');
@@ -1005,7 +1005,7 @@
 				});
 			});
         });
-		
+
 
         $(document).on('click', '.chg_status', function () {
             var npsID = $(this).attr('nps_id');
@@ -1022,7 +1022,7 @@
                 }
             });
         });
-		
+
 
         $(document).on('click', '.editArchiveDataList', function () {
             $('.editArchiveAction').toggle();

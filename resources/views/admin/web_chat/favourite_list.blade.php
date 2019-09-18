@@ -57,7 +57,7 @@
        assign_to="{{ assignto($token) }}" RwebId="{{ $token }}">
 
 
-        <div class="media-left">{!! @showUserAvtar($usersdata->avatar, $first_name, $last_name, 28, 28, 12) !!}
+        <div class="media-left">{!! showUserAvtar($usersdata->avatar, $first_name, $last_name, 28, 28, 12) !!}
             <i class="fa  star_icon {{ $value->favourite == 1?'fa-star yellow':'fa-star-o' }} favouriteUser"
                userId="{{ $value->id }}"></i>
         </div>

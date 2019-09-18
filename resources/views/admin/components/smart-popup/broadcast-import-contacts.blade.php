@@ -71,7 +71,7 @@
                                                 <span class="custmo_checkmark sblue"></span>
                                             </label>
                                         </div>
-                                        <div class="media-left media-middle"> {{ @showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname) }} </div>
+                                        <div class="media-left media-middle"> {!! showUserAvtar($userData->avatar, $oContact->firstname, $oContact->lastname) !!} </div>
                                         <div class="media-left">
                                             <div class="pt-5"><a href="javascript:void(0);" class="text-default text-semibold bbot">{{ $oContact->firstname }} {{ $oContact->lastname }}</a> <img class="flags" src="{{ base_url() }}assets/images/flags/{{ strtolower($oContact->country_code) }}.png" onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/></div>
                                             <div class="text-muted text-size-small">{{ $oContact->email }}</div>
