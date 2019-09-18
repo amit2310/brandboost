@@ -34,7 +34,7 @@
                 <div class="sms_preview">
                     <div class="phone_sms">
                         <div class="inner">
-                            <p>{{ $smsPreview }}</p>
+                            <p>{!! $smsPreview !!}</p>
                         </div>
                         <p><small>{{ date("h:i, d/m/Y") }}</small></p>
                     </div>

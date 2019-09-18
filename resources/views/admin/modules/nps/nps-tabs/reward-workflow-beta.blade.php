@@ -17,7 +17,7 @@
             dataType: "json",
             success: function (data) {
                 if (data.status == 'success') {
-                    window.location.href = "{{ base_url('/admin/modules/nps/setup/{$programID}?t=people') }}";
+                    window.location.href = "{{ base_url('/admin/modules/nps/setup/')}}{{$programID}}?t=people";
                 } else {
                     alertMessage('Error: Some thing wrong!');
                 }

@@ -102,6 +102,8 @@ Route::post('admin/brandboost/DeleteObjectFromS3', 'Admin\Brandboost@DeleteObjec
 Route::post('reviews/saveNewReview', 'Reviews@saveNewReview');
 Route::get('reviews/addnew', 'Reviews@addnew');
 Route::post('reviews/getReviewNoteById', 'Reviews@getReviewNoteById');
+Route::get('r/{brandboostid?}/{websiteid?}', 'R@index');
+
 
 
 
@@ -267,6 +269,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/modules/referral/addReferralWidget', 'Admin\Modules\Referral@addReferralWidget');
     Route::post('admin/modules/referral/deleteBulkReferralWidgets', 'Admin\Modules\Referral@deleteBulkReferralWidgets');
     Route::post('admin/modules/referral/archiveBulkReferralWidgets', 'Admin\Modules\Referral@archiveBulkReferralWidgets');
+    Route::get('admin/modules/referral/advocates/{referralId}', 'Admin\Modules\Referral@advocates');
+
 
 
     Route::post('admin/reviews/updateReviewStatus', 'Admin\Reviews@updateReviewStatus');

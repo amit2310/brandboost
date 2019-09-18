@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -38,7 +38,7 @@
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -172,7 +172,7 @@
     }
     @endphp
 
-    <div class="tab-content"> 
+    <div class="tab-content">
         <!--===========TAB 1===========-->
         <div class="tab-pane {{ $emailActive }}" id="email_tab">
             <div class="row">
@@ -245,8 +245,8 @@
                                                 <td style="display: none;">{{ date('m/d/Y', strtotime($oEvent->created)) }}</td>
                                                 <td style="display: none;">{{ $oEvent->id }}</td>
                                                 <td>
-                                                    <div class="media-left media-middle"> 
-                                                        <a class="icons square" href="#"><i class="icon-indent-decrease2 txt_blue"></i></a> 
+                                                    <div class="media-left media-middle">
+                                                        <a class="icons square" href="#"><i class="icon-indent-decrease2 txt_blue"></i></a>
                                                     </div>
                                                     <div class="media-left">
                                                         <div><a href="#" class="text-default text-semibold">{!! $oEvent->event_type == '' ? '<span style="color:#999999">No Data</span>' : setStringLimit($oEvent->event_type) !!}</a></div>
@@ -335,7 +335,7 @@
                                     </div>
                                 </div>&nbsp; &nbsp;
                             </div>
-                        </div>         
+                        </div>
                         <table class="table datatable-basic datatable-sorting">
                             <thead>
                                 <tr>
@@ -370,13 +370,13 @@
                                             $failedSmsGraph = $failedSms * 100 / $sentSms;
                                             $queuedSmsGraph = $queuedSms * 100 / $sentSms;
                                         }
-                                        @phpend
+                                        @endphp
                                         <tr>
                                             <td style="display: none;">{{ date('m/d/Y', strtotime($oEvent->created)) }}</td>
                                             <td style="display: none;">{{ $oEvent->id }}</td>
                                             <td>
-                                                <div class="media-left media-middle"> 
-                                                    <a class="icons square" href="#"><i class="icon-indent-decrease2 txt_blue"></i></a> 
+                                                <div class="media-left media-middle">
+                                                    <a class="icons square" href="#"><i class="icon-indent-decrease2 txt_blue"></i></a>
                                                 </div>
                                                 <div class="media-left">
                                                     <div><a href="#" class="text-default text-semibold">{!! $oEvent->event_type == '' ? '<span style="color:#999999">No Data</span>' : setStringLimit($oEvent->event_type) !!}</a></div>
@@ -426,7 +426,7 @@
                         </table>
                     </div>
                 </div>
-                <!--########################TAB end ##########################--> 
+                <!--########################TAB end ##########################-->
             </div>
         </div>
     </div>

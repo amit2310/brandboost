@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -57,35 +57,18 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 <h3><img style="width: 19px;" src="/assets/images/nps_icon.png">{{ $title }} {{ (!empty($oNPS)) ? ': ' . $oNPS->title : '' }}</h3>
 
                 <ul class="nav nav-tabs nav-tabs-bottom" id="nav-tabs-bottom">
-                    @if (empty($oNPS->platform)) 
-                        <li class="@php
-                        if ($defalutTab == 'platform') {
-                            echo 'active';
-                            $disableRemaining = true;
-                        }
-                        @endphp"><a href="#right-icon-tab1" data-toggle="tab">Source</a></li>
+                    @if (empty($oNPS->platform))
+                        <li class="@if ($defalutTab == 'platform') {{'active'}} @php $disableRemaining = true; @endphp @endif">
+                            <a href="#right-icon-tab1" data-toggle="tab">Source</a>
+                        </li>
                     @endif
-                    <li class="@php
-                    if ($defalutTab == 'customize') {
-                        echo 'active';
-                        $disableRemaining = true;
-                    }
-                    @endphp"><a href="@php
-                            if ($disableRemaining == false || $defalutTab == 'customize') {
-                                $bCustomizeTab = true;
-                                @endphp#right-icon-tab2 @php } else { @endphp javascript:void(0); @php } @endphp" data-toggle="tab">Configuration</a></li>
+                    <li class="@if ($defalutTab == 'customize') {{'active'}} @php $disableRemaining = true @endphp @endif">
+                        <a href="@if ($disableRemaining == false || $defalutTab == 'customize') @php $bCustomizeTab = true @endphp#right-icon-tab2 @else javascript:void(0); @endif" data-toggle="tab">Configuration</a></li>
 
 
                     @if ($oNPS->platform != 'web' && $oNPS->platform != 'link')
-                        <li class="@php
-                        if ($defalutTab == 'workflow') {
-                            echo 'active';
-                            $disableRemaining = true;
-                        }
-                        @endphp"><a href="@php
-                                if ($disableRemaining == false || $defalutTab == 'workflow') {
-                                    $bWorkflowTab = true;
-                                    @endphp #right-icon-tab3 @php } else { @endphp javascript:void(0); @php } @endphp " data-toggle="tab">Workflow</a>
+                        <li class="@if ($defalutTab == 'workflow'){{'active'}} @php $disableRemaining = true;@endphp @endif">
+                            <a href="@if ($disableRemaining == false || $defalutTab == 'workflow') @php $bWorkflowTab = true; @endphp#right-icon-tab3 @else javascript:void(0); @endif" data-toggle="tab">Workflow</a>
                         </li>
 
 
@@ -103,48 +86,26 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                     @endif
 
                     @if ($oNPS->platform == 'link')
-
-                        <li class="@php
-                        if ($defalutTab == 'widgets') {
-                            echo 'active';
-                            $disableRemaining = true;
-                        }
-                        @endphp"><a href="@php
-                                if ($disableRemaining == false || $defalutTab == 'widgets') {
-                                    $bWidgetTab = true;
-                                    @endphp #right-icon-tab6 @php } else { @endphp javascript:void(0); @php } @endphp" data-toggle="tab">Setup Link</a>
-                        </li>
-                    @endif    
-
-                    @if ($oNPS->platform == 'web')
-                        <li class="@php
-                        if ($defalutTab == 'widgets') {
-                            echo 'active';
-                            $disableRemaining = true;
-                        }
-                        @endphp"><a href="@php
-                                if ($disableRemaining == false || $defalutTab == 'widgets') {
-                                    $bWidgetTab = true;
-                                    @endphp #right-icon-tab6 @php } else { @endphp javascript:void(0) @php } @endphp" data-toggle="tab">Widget</a>
+                        <li class="@if ($defalutTab == 'widgets') {{'active'}} @php $disableRemaining = true; @endphp @endif">
+                            <a href="@if ($disableRemaining == false || $defalutTab == 'widgets') @php $bWidgetTab = true @endphp#right-icon-tab6 @else javascript:void(0); @endif" data-toggle="tab">Setup Link</a>
                         </li>
                     @endif
-                        
-                    <li class="@php
-                    if ($defalutTab == 'score') {
-                        echo 'active';
-                        $disableRemaining = true;
-                    }
-                    @endphp"><a href="@php
-                            if ($disableRemaining == false || $defalutTab == 'widgets') {
-                                $bScoreTab = true;
-                                @endphp #right-icon-tab5 @php } else { @endphp javascript:void(0) @php } @endphp" data-toggle="tab">Scores</a>
-                    </li> 
+
+                    @if ($oNPS->platform == 'web')
+                        <li class="@if ($defalutTab == 'widgets') {{'active'}} @php $disableRemaining = true; @endphp @endif">
+                            <a href="@if ($disableRemaining == false || $defalutTab == 'widgets') @php $bWidgetTab = true; @endphp#right-icon-tab6 @else javascript:void(0) @endif" data-toggle="tab">Widget</a>
+                        </li>
+                    @endif
+
+                    <li class="@if ($defalutTab == 'score') {{'active'}} @php $disableRemaining = true; @endphp @endif">
+                        <a href="@if ($disableRemaining == false || $defalutTab == 'widgets') @php $bScoreTab = true; @endphp #right-icon-tab5 @else javascript:void(0) @endif" data-toggle="tab">Scores</a>
+                    </li>
                 </ul>
 
 
             </div>
             <!--=============Button Area Right Side==============-->
-            
+
 			<div class="col-md-5 text-right btn_area">
 
 				<button type="button" style="padding: 7px 15px!important;" class="btn dark_btn publishNPSCampaignStatus" status="draft"><i class="icon-plus3"></i><span> &nbsp;  Save as Draft</span> </button>
@@ -158,31 +119,31 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
     <div class="tab-content">
         <!--########################TAB 1 ##########################-->
-        @if (empty($oNPS->platform))  
+        @if (empty($oNPS->platform))
             @include('admin.modules.nps.nps-tabs.choose-platform', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID))
         @endif
-        
+
 		<!--########################TAB 2 ##########################-->
         @if ($bCustomizeTab == true)
             @include('admin.modules.nps.nps-tabs.customization', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS))
         @endif
-		
+
         <!--########################TAB 3 ##########################-->
         @if ($bWidgetTab == true)
             @include('admin.modules.nps.nps-tabs.widget_code', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS))
         @endif
-		
+
         <!--########################TAB 4 ##########################-->
         @if ($bWorkflowTab == true)
             @include('admin.modules.nps.nps-tabs.reward-workflow-beta', array('emailWorkflow' => $emailWorkflow, 'oEvents' => $oEvents))
         @endif
-		
-        <!--########################TAB 5 ##########################--> 
+
+        <!--########################TAB 5 ##########################-->
         @if ($bPeopleTab == true)
             @include('admin.modules.nps.nps-tabs.contacts', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS, 'oContacts' => $oContacts))
         @endif
-		
-        <!--########################TAB 6 ##########################--> 
+
+        <!--########################TAB 6 ##########################-->
         @include('admin.modules.nps.nps-tabs.score', array('userID' => $userID, 'defalutTab' => $defalutTab, 'programID' => $programID, 'oNPS' => $oNPS, 'oFeedbacks' => $oFeedbacks))
     </div>
 </div>
@@ -201,8 +162,8 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
 
                     <form name="frmInviteCustomer" id="frmInviteCustomer" method="post" action="" >
                         @csrf
-                        <input type="hidden" name="userid" value="{{ $userID }}" />
-                        <input type="hidden" name="bbaid" value="{{ $oNPS->hashcode }}" />
+                        <input type="hidden" name="userid" value="{{$userID}}" />
+                        <input type="hidden" name="bbaid" value="{{$oNPS->hashcode}}" />
                         <div class="col-md-12">
 
                             <div class="form-group">
@@ -258,15 +219,15 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 <div class="panel-body">
                     <form name="frmInviteBulkCustomer" id="frmInviteBulkCustomer"  method="post" action="" enctype="multipart/form-data" >
                         @csrf
-                        <input type="hidden" name="userid" value="{{ $userID }}" />
-                        <input type="hidden" name="bbaid" value="{{ $oNPS->hashcode }}" />
+                        <input type="hidden" name="userid" value="{{$userID}}" />
+                        <input type="hidden" name="bbaid" value="{{$oNPS->hashcode}}" />
 
                         <div class="col-md-8">
                             <strong> Upload a CSV file with customer contact details </strong> <br>
                             -Column 1 should be EMAIL<br>
                             -Column 2 should be FIRST_NAME<br>
                             Column 3 should be LAST_NAME<br>
-                            Column 4 should be PHONE<br>                            
+                            Column 4 should be PHONE<br>
                         </div>
 
                         <div class="col-md-4">
@@ -327,7 +288,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             });
             return false;
         });
-		
+
 
         $("#frmInviteBulkCustomer").submit(function () {
             $('.overlaynew').show();
@@ -351,7 +312,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             });
             return false;
         });
-		
+
 
         $("#publishNPSCampaign").click(function () {
             $.ajax({
@@ -366,7 +327,7 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
                 }
             });
         });
-		
+
 
         $(document).on('click', '.publishNPSCampaignStatus', function () {
             var status = $(this).attr('status');
@@ -389,5 +350,5 @@ if ($setTab == 'Review Sources' || $selectedTab == 'Review Sources') {
             });
         });
     });
-</script>	
+</script>
 @endsection

@@ -878,7 +878,9 @@ FROM
 
     /**
      * Get module subscribers
-     * @param type $userID, $moduleName, $moduleAccountID
+     * @param type $userID
+     * @param $moduleName
+     * @param $moduleAccountID
      * @return type object
      */
     public function getModuleSubscribers($userID, $moduleName, $moduleAccountID) {
@@ -1583,24 +1585,25 @@ FROM
         return $response;
     }
 
-
+    /**
+     * This function is used to get the list of all contacts belonging to a List
+     * @param string $userID
+     * @param string $listID
+     * @return mixed
+     */
     public function getlistModuleContacts($userID = '', $listID = '') {
-        $this->db->select("tbl_subscribers.*, tbl_subscribers.id AS global_user_id");
-        $this->db->join("tbl_common_lists", "tbl_common_lists.id=tbl_automation_users.list_id", "INNER");
-        $this->db->join("tbl_subscribers", "tbl_automation_users.subscriber_id=tbl_subscribers.id", "LEFT");
-
-        if ($listID > 0) {
-            $this->db->where("tbl_automation_users.list_id", $listID);
-        }
-        if ($userID > 0) {
-            $this->db->where("tbl_common_lists.user_id", $userID);
-        }
-        $result = $this->db->get("tbl_automation_users");
-        //echo $this->db->last_query();
-        if ($result->num_rows() > 0) {
-            $response = $result->result();
-        }
-        return $response;
+        $oData = DB::table('tbl_automation_users')
+            ->join('tbl_common_lists', 'tbl_common_lists.id', '=', 'tbl_automation_users.list_id')
+            ->leftJoin('tbl_subscribers', 'tbl_automation_users.subscriber_id', '=', 'tbl_subscribers.id')
+            ->select('tbl_subscribers.*', 'tbl_subscribers.id AS global_user_id')
+            ->when(($listID > 0), function ($query) use ($listID) {
+                return $query->where('tbl_automation_users.list_id', $listID);
+            })
+            ->when(($userID > 0), function ($query) use ($userID) {
+                return $query->where('tbl_common_lists.user_id', $userID);
+            })
+            ->get();
+        return $oData;
     }
 
     public function getBrandboostModuleContacts($userID = '', $brandboostID) {

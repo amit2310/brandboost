@@ -58,7 +58,7 @@ class Nps extends Controller {
 
     /**
      * Overview of NPS campaigns
-     * 
+     *
      */
     public function overview() {
         // Instantiate NPS model to get its properties and methods
@@ -98,7 +98,7 @@ class Nps extends Controller {
     }
 
     /**
-     * 
+     *
      * @param type $npsIDUsed to setup nps campaign
      */
     public function setup(Request $request) {
@@ -128,6 +128,7 @@ class Nps extends Controller {
 
         //NPS related account details
         $oNPS = $mNPS->getNps($userID, $npsID);
+
         $moduleUnitID = $npsID;
         if ($oNPS->user_id != $userID) {
             redirect('admin/modules/nps');
@@ -146,7 +147,7 @@ class Nps extends Controller {
         }
 
         //$defaultTab = $selectedTab;
-        //List of Advocates related data 
+        //List of Advocates related data
         $hashCode = $oNPS->hashcode;
         if (!empty($hashCode)) {
             //$oContacts = $mNPS->getMyAdvocates($hashCode);
@@ -610,7 +611,7 @@ class Nps extends Controller {
     }
 
     /**
-     * 
+     *
      * @param type $widgetIDSetup NPS widget
      */
     public function nps_widget_setup(Request $request) {
@@ -1921,7 +1922,7 @@ class Nps extends Controller {
     }
 
     /**
-     * 
+     *
      * @param type $aData
      * @return type
      */
@@ -1953,7 +1954,7 @@ class Nps extends Controller {
         // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
-        // file name 
+        // file name
         $filename = 'users_' . time() . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
@@ -1964,7 +1965,7 @@ class Nps extends Controller {
         $userID = Session::get("current_user_id");
         $allSubscribers = $mNPS->getNPSSubscribers($npsHashId);
 
-        // file creation 
+        // file creation
         $file = fopen('php://output', 'w');
 
         $header = array("EMAIL", "FIRST_NAME", "LAST_NAME", "PHONE");
@@ -2061,7 +2062,7 @@ class Nps extends Controller {
     }
 
     /**
-     * 
+     *
      * @param type $npsID
      */
     public function stats(Request $request) {
@@ -2072,7 +2073,7 @@ class Nps extends Controller {
 
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
@@ -2080,7 +2081,7 @@ class Nps extends Controller {
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
                     <li><a data-toggle="tooltip" data-placement="bottom" title="Feedback Details" class="sidebar-control active hidden-xs ">NPS Stats</a></li>
                 </ul>';
-        
+
         $oNPSEvents = $mNPS->getNPSEvents($npsID);
 
         $data = array(

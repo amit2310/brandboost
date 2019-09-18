@@ -266,7 +266,8 @@
 													2
                                                 @else
 													3
-                                                @endif
+                                                 @endif
+
 											</td>
                                         </tr>
                                         @php
