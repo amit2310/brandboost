@@ -266,6 +266,7 @@
 													2
                                                 @else
 													3
+                                                 @endif
 
 											</td>
                                         </tr>
@@ -597,7 +598,7 @@
             $('.overlaynew').show();
             var formdata = $("#frmaddNPSModal").serialize();
             $.ajax({
-                url: "{{ base_url('admin/modules/nps/addNPS') }]",
+                url: "{{ base_url('admin/modules/nps/addNPS') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",

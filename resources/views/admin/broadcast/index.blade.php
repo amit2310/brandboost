@@ -400,7 +400,6 @@ $newOpen = $newClick = 0;
                                                             <div class="media-left">
                                                                 <div data-toggle="tooltip" title="{{ $open }} open out of {{ $totalSent }} {{ strtolower($broadCastData->campaign_type) == 'email' ? 'emails' : 'sms' }}" data-placement="top">
                                                                     @if ($open > 0)
-                                                                        @endphp
                                                                         <a href="{{ base_url() }}admin/broadcast/records/{{ strtolower($broadCastData->campaign_type) == 'email' ? 'email' : 'sms' }}/{{ $broadCastData->broadcast_id }}?type=open" class="text-default text-semibold">{{ $open }}</a>
                                                                     @else
                                                                         <a href="javascript:void(0);" class="text-default text-semibold">{{ $open }}</a>

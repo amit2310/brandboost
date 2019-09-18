@@ -36,11 +36,11 @@ class Referral extends Controller {
             'bActiveSubsription' => $bActiveSubsription,
             'moduleName' => $moduleName
         );
-		
+
 		return view('admin.modules.referral.list', $aPageData);
     }
 
-    
+
 	public function overview() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -67,11 +67,11 @@ class Referral extends Controller {
         );
 		return view('admin.modules.referral.overview', $aPageData);
     }
-	
-	
+
+
 	public function changeStatus(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $referralID = $request->refID;
@@ -89,11 +89,11 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	public function moveToArchiveReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $referralID = $request->ref_id;
@@ -116,7 +116,7 @@ class Referral extends Controller {
 
     public function deleteReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $referralID = $request->ref_id;
@@ -130,26 +130,26 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	public function addReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $title = $request->title;
-		
+
         /*$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $hashcode = '';
         for ($i = 0; $i < 20; $i++) {
             $hashcode .= $characters[rand(0, strlen($characters))];
         }
         $hashcode = $hashcode . date('Ymdhis');*/
-		
-		$str=rand(); 
-		$hashcode = sha1($str); 
+
+		$str=rand();
+		$hashcode = sha1($str);
         $hashcode = $hashcode . date('Ymdhis');
-		
+
         $aData = array(
             'hashcode' => $hashcode,
             'user_id' => $userID,
@@ -198,8 +198,8 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	public function setup($referralID) {
         if (empty($referralID)) {
             redirect("admin/modules/referral");
@@ -225,7 +225,7 @@ class Referral extends Controller {
                     </ul>';
 
         $oReferral = ReferralModel::getReferral($userID, $referralID);
-		
+
         if ($oReferral->user_id != $userID) {
             redirect('admin/modules/referral');
             exit;
@@ -261,7 +261,7 @@ class Referral extends Controller {
             }
         }
 
-        //List of Advocates related data 
+        //List of Advocates related data
         $oContacts = ReferralModel::getMyAdvocates($accountID);
 
         $moduleName = 'referral';
@@ -296,14 +296,14 @@ class Referral extends Controller {
         );
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
-		
+
 		return view('admin.modules.referral.setup-source', $aData);
     }
-	
-	
+
+
 	public function getReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $referralID = $request->ref_id;
@@ -317,11 +317,11 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	public function updateReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $referralID = $request->ref_id;
@@ -341,10 +341,10 @@ class Referral extends Controller {
         exit;
     }
 
-    
+
 	public function updateSource(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $referralID = $request->ref_id;
@@ -364,10 +364,10 @@ class Referral extends Controller {
         exit;
     }
 
-    
+
 	public function publishReferralStatus(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $referralID = $request->ref_id;
@@ -397,7 +397,7 @@ class Referral extends Controller {
             if (!empty($oSettings)) {
                 $accountID = $oSettings->hashcode;
                 $oRefPurchased = ReferralModel::referredSales($accountID);
-                
+
                 $oUntrackedPurchased = ReferralModel::untrackedSales($accountID);
 
                 if (!empty($oRefPurchased)) {
@@ -443,7 +443,7 @@ class Referral extends Controller {
         }
     }
 
-	
+
 	public function stats($referralID,  Request $request) {
 
         $oUser = getLoggedUser();
@@ -468,7 +468,7 @@ class Referral extends Controller {
             'oRefEvents' => $oRefEvents,
             'type' => $request->type
         );
-		
+
 		return view('admin.modules.referral.referral-stats', $aData);
     }
 
@@ -514,7 +514,7 @@ class Referral extends Controller {
 
         //Reward related Data
         $oSettings = ReferralModel::getReferralSettings($accountID, true);
-		
+
         $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
 		$oAdvCouponCodes = $oRefCouponCodes = array();
         if (!empty($oSettings)) {
@@ -529,7 +529,7 @@ class Referral extends Controller {
             }
         }
 
-        //List of Advocates related data 
+        //List of Advocates related data
         $oContacts = ReferralModel::getMyAdvocates($accountID);
 
         $moduleName = 'referral';
@@ -567,7 +567,7 @@ class Referral extends Controller {
 		return view('admin.modules.referral.setup-reward', $aData);
     }
 
-	
+
     public function workflow($referralID, Request $request) {
         if (empty($referralID)) {
             redirect("admin/modules/referral");
@@ -610,7 +610,7 @@ class Referral extends Controller {
         //Reward related Data
         $oSettings = ReferralModel::getReferralSettings($accountID, true);
 		$oAdvCouponCodes = $oRefCouponCodes = array();
-		
+
         $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
         if (!empty($oSettings)) {
             $programID = $oSettings->rewardID;
@@ -624,7 +624,7 @@ class Referral extends Controller {
             }
         }
 
-        //List of Advocates related data 
+        //List of Advocates related data
         $oContacts = ReferralModel::getMyAdvocates($accountID);
 
         $moduleName = 'referral';
@@ -666,7 +666,7 @@ class Referral extends Controller {
         $bActiveSubsription = UsersModel::isActiveSubscription();
 		return view('admin.modules.referral.setup-workflow', $aData);
     }
-	
+
 
     public function configurations($referralID, Request $request) {
         if (empty($referralID)) {
@@ -709,7 +709,7 @@ class Referral extends Controller {
         //Reward related Data
         $oSettings = ReferralModel::getReferralSettings($accountID, true);
 		$oAdvCouponCodes = $oRefCouponCodes = array();
-		
+
         $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
         if (!empty($oSettings)) {
             $programID = $oSettings->rewardID;
@@ -723,7 +723,7 @@ class Referral extends Controller {
             }
         }
 
-        //List of Advocates related data 
+        //List of Advocates related data
         $oContacts = ReferralModel::getMyAdvocates($accountID);
 
         $moduleName = 'referral';
@@ -760,7 +760,7 @@ class Referral extends Controller {
         $bActiveSubsription = UsersModel::isActiveSubscription();
 		return view('admin.modules.referral.setup-configurations', $aData);
     }
-	
+
 
     public function integrations($referralID, Request $request) {
         if (empty($referralID)) {
@@ -804,7 +804,7 @@ class Referral extends Controller {
         //Reward related Data
         $oSettings = ReferralModel::getReferralSettings($accountID, true);
 		$oAdvCouponCodes = $oRefCouponCodes = array();
-		
+
         $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
         if (!empty($oSettings)) {
             $programID = $oSettings->rewardID;
@@ -818,7 +818,7 @@ class Referral extends Controller {
             }
         }
 
-        //List of Advocates related data 
+        //List of Advocates related data
         $oContacts = ReferralModel::getMyAdvocates($accountID);
 
         $moduleName = 'referral';
@@ -855,11 +855,13 @@ class Referral extends Controller {
         $bActiveSubsription = UsersModel::isActiveSubscription();
 		return view('admin.modules.referral.setup-widget', $aData);
     }
-	
-	
-	public function advocates($referralId = '') {
+
+
+	public function advocates(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
+        $referralId = $request->referralId;
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -874,20 +876,22 @@ class Referral extends Controller {
         } else {
             $oContacts = ReferralModel::getAllAdvocates();
         }
-        
+
         $aData = array(
             'title' => 'Referral Module',
             'pagename' => $breadcrumb,
-            'oContacts' => $oContacts
+            'oContacts' => $oContacts,
+            'moduleName' => 'Referral',
+            'moduleUnitID' => $referralId
         );
 		return view('admin.modules.referral.advocate', $aData);
     }
-	
-	
+
+
 	public function saveSettings(Request $request) {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
@@ -901,7 +905,7 @@ class Referral extends Controller {
         $twitterTitle = $request->twitter_title;
         $twitterDesc = $request->twitter_desc;
         $siteLink = $request->site_link;
-		
+
 		$source = 'email';
 
         if (!empty($referralStatus)) {
@@ -954,11 +958,11 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	public function saveRewards(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $rewardType = $request->rewardType;
@@ -1065,7 +1069,7 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 
     public function contacts() {
         $aUser = getLoggedUser();
@@ -1089,14 +1093,14 @@ class Referral extends Controller {
             'pagename' => $breadcrumb,
             'oContacts' => $oContacts
         );
-		
+
 		return view('admin.modules.referral.contacts', $aData);
     }
-	
-	
+
+
 	public function saveCoupons(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $couponType = $request->couponType;
@@ -1107,13 +1111,13 @@ class Referral extends Controller {
         $specificExpiryTime = $request->specific_expiry_picker;
 
         $oAdvocateCoupon = ReferralModel::getAdvocateCouponInfo($referralID);
-		
+
         $oFriendCoupon = ReferralModel::getFriendCouponInfo($referralID);
 
         if ($couponType == 'advocate_single_coupons') {
             $couponID = $oAdvocateCoupon->id;
             if ($singleCouponCodes != '') {
-				
+
                 $aData['coupon_id'] = $couponID;
                 $aData['coupon_code'] = str_replace(" ", "", $singleCouponCodes);
                 $aData['usage_type'] = 'single';
@@ -1121,7 +1125,7 @@ class Referral extends Controller {
                 $aData['created'] = date("Y-m-d H:i:s");
                 $aData['coupon_status'] = 1;
                 $bSaved = ReferralModel::addAdvocateCoupon($aData);
-				
+
                 if ($bSaved) {
                     $aUpdateData = array(
                         'advocate_coupon_type' => 'single',
@@ -1193,11 +1197,11 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	public function bulkDeleteReferrals(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $referralIDs = $request->bulk_referral_id;
@@ -1212,11 +1216,11 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 
     public function bulkArchiveReferrals() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $referralIDs = $request->bulk_referral_id;
@@ -1238,8 +1242,8 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	public function widgets() {
 		$mReferral = new ReferralModel();
 		$mUser = new UsersModel();
@@ -1267,21 +1271,21 @@ class Referral extends Controller {
                 'bActiveSubsription' => $bActiveSubsription,
                 'user_role' => $userRole
             );
-			
+
 			return view('admin.modules.referral.widget_list', $aData);
         }
     }
-	
-	
+
+
 	public function updatReferralWidgetStatus(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 		$mReferral = new ReferralModel();
 		$mUser = new UsersModel();
-		
+
         $widgetID = $request->widgetID;
         $status = $request->status;
-		
+
         $aData = array(
             'status' => $status
         );
@@ -1296,14 +1300,14 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 
     public function publishReferralWidget(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 		$mReferral = new ReferralModel();
 		$mUser = new UsersModel();
-		
+
         $widgetID = $request->widget_id;
         $status = 1;
         $aData = array(
@@ -1320,18 +1324,18 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 
     public function addReferralWidgetApp(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 		$mReferral = new ReferralModel();
 		$mUser = new UsersModel();
-		
+
         $hashcode = $request->hashcode;
         $referralId = $request->referral_id;
         $widgetID = $request->widget_id;
-		
+
         $aData = array(
             'hashcode' => $hashcode,
             'referral_id' => $referralId
@@ -1340,9 +1344,9 @@ class Referral extends Controller {
         $result = $mReferral->updateReferralWidget($aData, $widgetID);
 
         $referralData = $this->getReferralTagLines($hashcode);
-		
+
         $sEmailPreview = view('admin.modules.referral.widgets.widget_preview', array('oReferral' => $referralData))->render();
-		
+
         $referralScriptCode = '';
         if ($result) {
             $response = array('status' => 'success', 'preview' => $sEmailPreview, 'referralScriptCode' => $referralScriptCode);
@@ -1353,8 +1357,8 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	public function deleteReferralWidget(Request $request) {
 
         $response = array();
@@ -1392,8 +1396,8 @@ class Referral extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
-	
+
+
 	public function getReferralWidgetEmbedCode(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -1418,19 +1422,19 @@ class Referral extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
+
 
 	public function referralWidgetSetup($widgetID, Request $request) {
         $selectedTab = $request->t;
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 		$mReferral = new ReferralModel();
-		
+
         $oReferralList = $mReferral->getReferralLists($userID);
         $widgetData = $mReferral->getReferralWidgets($userID, $widgetID);
-       
+
         $referralData = $this->getReferralTagLines($widgetData[0]->hashcode);
-		
+
         $sEmailPreview = view('admin.modules.referral.widgets.widget_preview', array('oReferral' => $referralData))->render();
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -1490,13 +1494,13 @@ class Referral extends Controller {
 
         return $widgetData;
     }
-	
-	
+
+
 	public function addReferralWidget(Request $request) {
 		$mReferral = new ReferralModel();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         $referralTitle = $request->referralTitle;
         $aData = array(
             'widget_title' => $referralTitle,
@@ -1514,12 +1518,12 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
 	public function deleteBulkReferralWidgets(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $mReferral = new ReferralModel();
-		
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $referralIDs = $request->multi_widget_id;
@@ -1541,7 +1545,7 @@ class Referral extends Controller {
     public function archiveBulkReferralWidgets(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $mReferral = new ReferralModel();
-		
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $referralIDs = $request->multi_widget_id;
@@ -1559,9 +1563,6 @@ class Referral extends Controller {
         echo json_encode($response);
         exit;
     }
-    
-
-    
 
 
 
@@ -1583,14 +1584,17 @@ class Referral extends Controller {
 
 
 
-    
 
-    
-    
 
-    
 
-    
+
+
+
+
+
+
+
+
 
     public function updateAllCampaign() {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -1728,7 +1732,7 @@ class Referral extends Controller {
         }
     }
 
-    
+
 
     public function saveEmailWorkflow() {
 
@@ -1776,7 +1780,7 @@ class Referral extends Controller {
         exit;
     }
 
-    
+
 
     public function templates() {
         $oUser = getLoggedUser();
@@ -2015,9 +2019,9 @@ class Referral extends Controller {
         exit;
     }
 
-    // Export data in CSV format 
+    // Export data in CSV format
     public function exportCSV() {
-        // file name 
+        // file name
         $filename = 'users_' . time() . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
@@ -2028,7 +2032,7 @@ class Referral extends Controller {
         $userID = $this->session->userdata("current_user_id");
         $allSubscribers = $this->mReferral->getReferralUsers($accountId);
         //pre($allSubscribers);
-        // file creation 
+        // file creation
         $file = fopen('php://output', 'w');
 
         $header = array("EMAIL", "FIRST_NAME", "LAST_NAME", "PHONE");
@@ -2378,7 +2382,7 @@ class Referral extends Controller {
         }
     }
 
-    
+
 
     public function advocateReports($advocateID, $accountID) {
         $oUser = getLoggedUser();
@@ -2438,7 +2442,7 @@ class Referral extends Controller {
         exit;
     }
 
-    
+
 
     public function saledetails($id = 0) {
 
@@ -2672,7 +2676,7 @@ class Referral extends Controller {
             $oTrackVisit = $this->mReferral->getReferralLinkVisitsByAdvocateId($subscriberID, $referralID);
             $oTrackSale = $this->mReferral->referredSalesByAdvocateId($subscriberID, $accountID);
             $oReferredFriends = $this->mReferral->getReferredFriends($subscriberID, $referralID);
-            
+
 
             $aData = array(
                 'subscribersData' => $subscribersData,

@@ -16,9 +16,9 @@
             <div class="panel-body p0">
                 <div class="widget_sec email_preview">
                     <div class="rating_widget emil_priview_sec">
-					{{ $emailPreview }}
+					{!! $emailPreview !!}
                     </div>
-                    <img class="w100" src="{{ base_url() }}assets/images/config_bkg.png"/>    
+                    <img class="w100" src="{{ base_url() }}assets/images/config_bkg.png"/>
                 </div>
             </div>
         </div>
@@ -34,12 +34,12 @@
                 <div class="sms_preview">
                     <div class="phone_sms">
                         <div class="inner">
-                            <p>{{ $smsPreview }}</p>
+                            <p>{!! $smsPreview !!}</p>
                         </div>
                         <p><small>{{ date("h:i, d/m/Y") }}</small></p>
                     </div>
                 </div>
             </div>
         </div>
-    @endif    
+    @endif
 </div>

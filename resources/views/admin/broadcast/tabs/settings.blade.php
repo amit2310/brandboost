@@ -278,20 +278,13 @@
                             <label class="custmo_radiobox pull-left mb20">
                                 <input name="sending_method" class="updatesettings" value="normal"
                                        type="radio" {{ ($oBroadcast->sending_method == 'normal') ? 'checked="checked"' : '' }}>
-                                <span class="custmo_radiomark
-                                @if (strtolower($oBroadcast->campaign_type) == 'sms')
-                                {{ 'green' }}
-                                @endif
-                                    ></span>
+                                <span class="custmo_radiomark @if (strtolower($oBroadcast->campaign_type) == 'sms') {{ 'green' }} @endif"></span>
                                 Normal Sending
                             </label>
                             <label class=" custmo_radiobox pull-left mb20 ml10">
                                 <input name="sending_method" class="updatesettings" value="split"
                                        {{ ($oBroadcast->sending_method == 'split') ? 'checked="checked"' : '' }} type="radio">
-                                <span class="custmo_radiomark
-                                @if (strtolower($oBroadcast->campaign_type) == 'sms')
-                                {{ 'green' }}
-                                @endif"></span>
+                                <span class="custmo_radiomark @if (strtolower($oBroadcast->campaign_type) == 'sms') {{ 'green' }} @endif"></span>
                                 Split Testing
                             </label>
                         </div>

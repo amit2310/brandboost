@@ -1,7 +1,7 @@
 <style>
     @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
     .nps_bb_cboth{clear: both;}
-    .nps_bb_bot_widget{position:absolute; bottom: 0; left: 0;  background: #fff; text-align: center; padding:0; box-sizing: border-box; box-shadow: 0px 10px 30px 17px rgba(12, 12, 44, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.03);  font-family: 'Open Sans', sans-serif; width: 100%; }	
+    .nps_bb_bot_widget{position:absolute; bottom: 0; left: 0;  background: #fff; text-align: center; padding:0; box-sizing: border-box; box-shadow: 0px 10px 30px 17px rgba(12, 12, 44, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.03);  font-family: 'Open Sans', sans-serif; width: 100%; }
     .nps_bb_bot_widget h3{ font-size: 15px; font-weight: 600; margin:20px 0;}
     .nps_bb_footer_box{width: 100%;padding: 15px;border-radius:0px;background-color: #ffffff;position: relative; margin-top: 1px;box-sizing: border-box; margin: 0; border-top: 1px solid #eee;}
     .nps_bb_rating{margin: 0; padding: 0;}
@@ -29,9 +29,9 @@
     <div class="nps_bb_bot_widget" id="nps_bb_bot_widget">
         <a class="bb_nps_widget_close" href="javascript:void(0);"><i class="fa fa-times-circle"></i></a>
         <div class="product_icon"  style="top:-45px!important;"><img style="width:50px;" src="{{ (!empty($oNPS->brand_logo)) ? 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $oNPS->brand_logo : base_url() . 'assets/images/apple_icon.png' }}" class="logo_img"/></div>
-        <h3 class="introductionText" style="color:{{ !(empty($oNPS->web_int_text_color)) ? $oNPS->web_int_text_color : '#000' }};">{{ (!empty($oNPS->description)) != '' ? $oNPS->description : '{INTRODUCTION}' }}</h3>
-        <h3 class="questionText" style="color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000' }};">{{ (!empty($oNPS->question)) != '' ? $oNPS->question : '{QUESTION}' }}</h3>
- 
+        <h3 class="introductionText" style="color:{{ !(empty($oNPS->web_int_text_color)) ? $oNPS->web_int_text_color : '#000' }};">{!! (!empty($oNPS->description)) != '' ? $oNPS->description : '{INTRODUCTION}' !!}</h3>
+        <h3 class="questionText" style="color:{{ !(empty($oNPS->web_text_color)) ? $oNPS->web_text_color : '#000' }};">{!! (!empty($oNPS->question)) != '' ? $oNPS->question : '{QUESTION}' !!}</h3>
+
         <div class="nps_bb_footer_box">
             <ul class="nps_bb_rating">
                 <li class="nps_rating_lists">Not Likely</li>
@@ -102,7 +102,7 @@
         $(".nps_rating_numbers").click(function(){
             $(".nps_bb_form_box").show();
         });
-        
+
         $(".bb_nps_widget_close").click(function(){
             $("#nps_bb_bot_widget").show();
             $("#nps_widget_form").hide();
@@ -118,7 +118,7 @@
             x.style.display = "none";
         }
     }
-    
+
     function nps_reset_preview(){
         document.getElementById('nps_bb_bot_widget').style.display = 'block';
         document.getElementById('nps_widget_form').style.display = 'none';

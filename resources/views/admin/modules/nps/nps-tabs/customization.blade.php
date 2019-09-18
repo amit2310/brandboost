@@ -27,7 +27,7 @@
                             <div class="interactions configurations p25">
                                 <ul class="chatwidgetsettings">
                                     @if ($oNPS->platform != 'sms')
-                                        <li><small class="wauto">Logo</small> 
+                                        <li><small class="wauto">Logo</small>
                                             <span class="pull-right">
                                                 <label class="custom-form-switch mr0 pull-right">
                                                     <input class="field" name="display_logo" type="checkbox" @if ($oNPS->display_logo) checked @endif >
@@ -36,7 +36,7 @@
                                             </span>
                                         </li>
                                     @endif
-                                    <li><small class="wauto">Question</small> 
+                                    <li><small class="wauto">Question</small>
                                         <span class="pull-right">
                                             <label class="custom-form-switch mr0 pull-right">
                                                 <input class="field" name="display_additional" type="checkbox" @if ($oNPS->display_additional) checked @endif >
@@ -44,7 +44,7 @@
                                             </label>
                                         </span>
                                     </li>
-                                    <li><small class="wauto">Introduction</small> 
+                                    <li><small class="wauto">Introduction</small>
                                         <span class="pull-right">
                                             <label class="custom-form-switch mr0 pull-right">
                                                 <input class="field" name="display_intro" type="checkbox" @if ($oNPS->display_intro) checked @endif >
@@ -60,7 +60,7 @@
                                 <div class="profile_headings">Feedback Form Settings <a class="pull-right plus_icon txt_green" href="#"><i class="icon-arrow-down12 txt_green"></i></a></div>
                                 <div class="interactions configurations p25">
                                     <ul class="chatwidgetsettings">
-                                        <li><small class="wauto">Allow Name Field</small> 
+                                        <li><small class="wauto">Allow Name Field</small>
                                             <span class="pull-right">
                                                 <label class="custom-form-switch mr0 pull-right">
                                                     <input class="field" name="display_name" type="checkbox" @if ($oNPS->display_name) checked @endif >
@@ -69,7 +69,7 @@
                                             </span>
                                         </li>
 
-                                        <li><small class="wauto">Allow Email Field</small> 
+                                        <li><small class="wauto">Allow Email Field</small>
                                             <span class="pull-right">
                                                 <label class="custom-form-switch mr0 pull-right">
                                                     <input class="field" name="display_email" type="checkbox" @if ($oNPS->display_email) checked @endif >
@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Introduction:</label>
                                     <div class="">
-                                        <textarea name="description" class="form-control" id="description" placeholder="Placeholder Text"  required>{{ (!empty($oNPS->description)) != '' ? $oNPS->description : '' }}</textarea>
+                                        <textarea name="description" class="form-control" id="description" placeholder="Placeholder Text"  required>{!! (!empty($oNPS->description)) != '' ? $oNPS->description : '' !!}</textarea>
                                     </div>
                                 </div>
 
@@ -219,8 +219,8 @@
                 $(".logo_img").parent().hide();
             }
         });
-		
-		
+
+
         $("input[name='display_additional']").change(function () {
             if ($(this).prop("checked")) {
                 $(".questionText").show();
@@ -230,8 +230,8 @@
                 $(".questionEamilText").hide();
             }
         });
-		
-		
+
+
         $("input[name='display_intro']").change(function () {
             if ($(this).prop("checked")) {
                 $(".introductionText").show();
@@ -239,8 +239,8 @@
                 $(".introductionText").hide();
             }
         });
-		
-        
+
+
         $("input[name='display_name']").change(function () {
             if ($(this).prop("checked")) {
                 $(".bb_display_name").show();
@@ -248,8 +248,8 @@
                 $(".bb_display_name").hide();
             }
         });
-		
-        
+
+
         $("input[name='display_email']").change(function () {
             if ($(this).prop("checked")) {
                 $(".bb_display_email").show();
@@ -257,26 +257,26 @@
                 $(".bb_display_email").hide();
             }
         });
-		
-		
+
+
         $('#question').keyup(function () {
             $('.questionEamilText').html($(this).val());
             $('.questionText').html($(this).val());
             $('.questionSMSText').html($(this).val() + '<br><br>Please Reply with a number from "0" (not likely) to "10" (very likely).');
         });
-		
+
 
         $('#description').keyup(function () {
             $('.introductionText').html($(this).val());
         });
-		
+
 
 		@if ($oNPS->platform != 'sms')
             Dropzone.autoDiscover = false;
             var myDropzoneLogoImg = new Dropzone(
             '#myDropzone_logo_img', //id of drop zone element 1
             {
-                url: "{{ base_url('dropzone/upload_s3_attachment') }}/{{ $userID }}/nps',
+                url: "{{ base_url('dropzone/upload_s3_attachment') }}/{{ $userID }}/nps",
                 params: {
                     _token: '{{csrf_token()}}'
                 },
@@ -326,7 +326,7 @@
                 $('.questionEamilText, .questionText').css('color', color.toHexString());
             }
         });
-		
+
 
         $(".colorpickerITC").spectrum({
             color: int_text_color,
@@ -339,7 +339,7 @@
                 $('.introductionText').css('color', color.toHexString());
             }
         });
-		
+
 
         $(".colorpickerBTC").spectrum({
             color: button_text_color,
@@ -352,7 +352,7 @@
                 $('.buttonStyle').css('color', color.toHexString());
             }
         });
-		
+
 
         $(".colorpickerBOTC").spectrum({
             color: button_over_text_color,
@@ -360,7 +360,7 @@
                 $('#button_over_text_color').val(color.toHexString());
             }
         });
-		
+
 
         $(".colorpickerbutton").spectrum({
             color: button_color,
@@ -373,7 +373,7 @@
                 $('.buttonStyle').css('background', color.toHexString());
             }
         });
-		
+
 
         $(".colorpickerBOC").spectrum({
             color: button_over_color,
@@ -381,7 +381,7 @@
                 $('#button_over_color').val(color.toHexString());
             }
         });
-		
+
 
 		@if ($oNPS->platform == 'web')
             $(".buttonStyle").mouseover(function () {
@@ -409,7 +409,7 @@
             var shapeValue = $(this).attr('shape_value');
             $('.buttonStyle').css('border-radius', shapeValue);
         });
-		
+
 
         $("#frmSubmit").submit(function () {
             $('#emailPreviewData').val($('.emil_priview_sec').html());
@@ -428,9 +428,9 @@
                     $('.overlaynew').hide();
                     if (data.status == 'success') {
 						@if ($oNPS->platform == 'web' || $oNPS->platform == 'link')
-                            window.location.href = "{{ base_url('admin/modules/nps/setup/{$programID}?t=widgets') }}";
+                            window.location.href = "{{ base_url('admin/modules/nps/setup/')}}{{$programID}}?t=widgets";
 						@else
-                            window.location.href = "{{ base_url('admin/modules/nps/setup/{$programID}?t=workflow') }}";
+                            window.location.href = "{{ base_url('admin/modules/nps/setup/')}}{{$programID}}?t=workflow";
 						@endif
                     } else {
                         alertMessage('Error: Some thing wrong!');
