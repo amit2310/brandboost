@@ -309,7 +309,7 @@
 															} else {
                                                         @endphp
                                                         <div class="media-left media-middle">
-														{!! showUserAvtar($totalFeedback[0]->avatar, $totalFeedback[0]->firstname, $totalFeedback[0]->lastname) !!}
+														{!! @showUserAvtar($totalFeedback[0]->avatar, $totalFeedback[0]->firstname, $totalFeedback[0]->lastname) !!}
                                                         </div>
                                                         <div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>
                                                         @php }
@@ -498,7 +498,7 @@
 															$imageIcon = '';
 														}
                                                     @endphp
-                                                    <div class="media-left media-middle">{!! showUserAvtar($totalFeedback->avatar, $totalFeedback->firstname, $totalFeedback->lastname) !!}</div>
+                                                    <div class="media-left media-middle">{!! @showUserAvtar($totalFeedback->avatar, $totalFeedback->firstname, $totalFeedback->lastname) !!}</div>
                                                     <div class="media-left">
                                                         <div class=""><a href="#" class="text-default text-semibold">
 															{!! $ratingValue !!}
