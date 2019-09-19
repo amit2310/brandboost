@@ -16,9 +16,9 @@ class Settings extends Controller {
      * This is a setting index function
      * @param type
      */
-	public function index() {
+	public function index(Request $request) {
 
-		$seletedTab = Request::input('t');
+		$seletedTab = $request->input('t');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $pID =$oUser->plan_id;

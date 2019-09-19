@@ -371,47 +371,11 @@
                                 </thead>
                                 <tbody>
                                 @php
-                                    foreach ($allGallery as $galleryData){
+                                    foreach ($allGallery as $galleryData) {
                                         $galleryData = \App\Models\Admin\MediaModel::getGalleryData($galleryData->id);
                                         $reviewsIdArray = unserialize($galleryData->reviews_id);
                                         $reviewsData = \App\Models\ReviewsModel::getAllReviewsByUserId($userId);
                                         $reviewList = '';
-                                        /*foreach ($reviewsData as $review) {
-                                            if (in_array($review->id, $reviewsIdArray))
-                                            {
-                                                if($review->review_title != ''){
-                                                    $reviewList .= '<button class="btn btn-xs btn_white_table pr10">'.$review->review_title.'</button>';
-                                                }
-                                            }
-                                        }
-
-                                        if(count($reviewsIdArray) > 0){
-                                            $reviewCount = '<div class="media-left pl30 blef">
-                                                                &nbsp;
-                                                            </div>
-                                                            <div class="media-left pr30 brig">
-                                                                <div class="tdropdown">
-                                                                    <a href="javascript:void(0);" class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'.count($reviewsIdArray).' Media</a>
-                                                                    <ul style="right: 0px!important;" class="dropdown-menu dropdown-menu-right tagss">
-                                                                        '.$reviewList.'
-                                                                        <button class="btn btn-xs plus_icon addMedia" data-id="'.$galleryData->id.'"><i class="icon-plus3"></i></button>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>';
-                                        }else{
-                                            $reviewCount = '<div class="media-left pl30 blef">
-                                                                &nbsp;
-                                                            </div>
-                                                            <div class="media-left pr30 brig">
-                                                                <div class="tdropdown">
-                                                                    <a href="javascript:void(0);" class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown" aria-expanded="false">0 Media</a>
-
-                                                                    <ul style="right: 0px!important;" class="dropdown-menu dropdown-menu-right tagss">
-                                                                        <button class="btn btn-xs plus_icon addMedia" data-id="'.$galleryData->id.'"><i class="icon-plus3"></i></button>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>';
-                                        }*/
 
                                         $reviewCount = '';
 
@@ -421,7 +385,7 @@
                                             $createdByData = getUserDetailsByUserID($galleryData->user_id);
                                         }
                                 @endphp
-                                <tr id="append-{{ $galleryData->id }}" class="selectedClass">
+                                    <tr id="append-{{ $galleryData->id }}" class="selectedClass">
                                     <td style="display: none;">{{ date('m/d/Y', strtotime($galleryData->created)) }}</td>
                                     <td style="display: none;">{{ $galleryData->id }}</td>
                                     <td style="display: none;" class="editAction"><label
@@ -570,7 +534,9 @@
                                     </td>
                                     <td style="display: none;">{{ $galleryData->status == 2 ? 'archive' : 'publish' }}</td>
                                 </tr>
-                                @endforeach
+                                @php
+                                    }
+                                @endphp
                                 </tbody>
                             </table>
                         </div>
