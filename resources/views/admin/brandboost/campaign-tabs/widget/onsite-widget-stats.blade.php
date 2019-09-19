@@ -158,6 +158,7 @@ if (!empty($oStats)) {
     $totalMonth = 1;
     $total3Month = 1;
 }
+$StatsClass = '';
 @endphp
 <div class="tab-pane {{ $StatsClass }}" id="right-icon-tab4">
     <!--===========TAB 1===========-->
