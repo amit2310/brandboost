@@ -200,7 +200,7 @@ class Referral extends Controller {
     }
 
 
-	public function setup($referralID) {
+	public function setup(Request $request,$referralID) {
         if (empty($referralID)) {
             redirect("admin/modules/referral");
             exit;
@@ -208,7 +208,7 @@ class Referral extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $bActiveSubsription = UsersModel::isActiveSubscription();
-        $selectedTab = Request::input('t');
+        $selectedTab = $request->input('t');
         $setReferralTab = Session::get("setReferralTab");
 
         if (empty($setReferralTab)) {
