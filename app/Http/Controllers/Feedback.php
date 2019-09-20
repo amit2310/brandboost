@@ -142,20 +142,20 @@ class Feedback extends Controller {
     * @param type
     * @return type
     */
-    public function saveFeedback() {
+    public function saveFeedback(Request $request) {
 
         $response = array();
-        $post = array();
+
         $allDone = false;
-        if (Input::post()) {
-            $post = Input::post();
-            $category = strip_tags($post['category']);
-            $feedback = strip_tags($post['feedback']);
-            $clientId = strip_tags($post['clientId']);
-            $subscriberId = $post['subscriberId'];
-            $ratingValue = $post['ratingValue'];
-            $bbID = strip_tags($post['bbID']);
-            $happy = strip_tags($post['happy']);
+        if (!empty($request)) {
+
+            $category = $request->category;
+            $feedback = $request->feedback;
+            $clientId = $request->clientId;
+            $subscriberId = $request->subscriberId;
+            $ratingValue = $request->ratingValue;
+            $bbID = $request->bbID;
+            $happy = $request->happy;
             $bRequireGlobalSubs = false;
             $mFeedback  = new FeedbackModel();
             $mInviter = new BrandboostModel();
@@ -259,117 +259,6 @@ class Feedback extends Controller {
         }
     }
 
-    public function saveFeedback_old() {
-
-        $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $category = strip_tags($post['category']);
-            $feedback = strip_tags($post['feedback']);
-            $clientId = strip_tags($post['clientId']);
-            $subscriberId = $post['subscriberId'];
-            $bbID = strip_tags($post['bbID']);
-            $happy = strip_tags($post['happy']);
-            $bRequireGlobalSubs = false;
-
-            if (!empty($bbID)) {
-                $oBrandboost = $this->mInviter->getBBInfo($bbID);
-                $ownerID = $oBrandboost->user_id;
-                $eventName = 'sys_offsite_review_add';
-            }
-
-
-
-
-            if (!empty($subscriberId)) {
-                $aSubscriberInfo = $this->mFeedback->getSubscriberInfo($subscriberId);
-                $firstName = $aSubscriberInfo->firstname;
-                $lastName = $aSubscriberInfo->lastname;
-                $sName = $firstName . ' ' . $lastName;
-                $email = $aSubscriberInfo->email;
-                $mobile = $aSubscriberInfo->phone;
-                $userID = $aSubscriber->user_id;
-                $globalSubscriberID = $aSubscriber->id;
-                if ($userID > 0) {
-                    $bRequireGlobalSubs = true;
-                }
-                $aFeedbackRes = array(
-                    'feedback_type' => $category,
-                    'client_id' => $clientId,
-                    'subscriber_id' => $subscriberId,
-                    'brandboost_id' => $bbID,
-                    'email' => $email
-                );
-            }
-
-            if ($happy == 'yes') {
-                $feedback = 'yes, I am happy';
-                $category = "Positive";
-            }
-
-            if (!empty($happy)) {
-                $aData = array(
-                    'category' => $category,
-                    'feedback' => $feedback,
-                    'client_id' => $clientId,
-                    'subscriber_id' => $subscriberId,
-                    'brandboost_id' => $bbID,
-                    'created' => date("Y-m-d H:i:s")
-                );
-
-                $result = $this->mFeedback->add($aData);
-                $this->sendFeedbackThankyouEmail($aFeedbackRes);
-
-                //Add System Notification
-                $aNotification = array(
-                    'user_id' => $clientId,
-                    'event_type' => 'offsite_happy_feedback',
-                    'message' => 'User leaved a offsite feedback',
-                    'link' => base_url() . 'admin/feedback',
-                    'created' => date("Y-m-d H:i:s")
-                );
-                add_notifications($aNotification, $eventName, $ownerID);
-            }
-
-            if ($bRequireGlobalSubs == false) { //This means no user_id attached to subscriber
-                //My Code
-                $aRegistrationData = array(
-                    'firstname' => $firstName,
-                    'lastname' => $lastName,
-                    'email' => $email,
-                    'mobile' => $mobile
-                );
-                $userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
-                if ($userID > 0) {
-                    $bRequireGlobalSubs = true;
-                }
-            }
-
-            if ($userID > 0 && $bRequireGlobalSubs == true) {
-                $aUpdateGlobalSubsData = array(
-                    'user_id' => $userID,
-                    'updated' => date("Y-m-d H:i:s")
-                );
-
-                $bUpdated = $this->mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
-            }
-
-
-
-            if ($result) {
-                $response['status'] = 'success';
-                $response['message'] = "Template has been add successfully.";
-            } else {
-                $response['message'] = "Error: Something went wrong, try again";
-            }
-
-            echo json_encode($response);
-
-            exit;
-        }
-    }
-
 
     /**
     * function is used for save resolution
@@ -377,19 +266,19 @@ class Feedback extends Controller {
     * @return type
     */
 
-    public function saveResolution() {
+    public function saveResolution(Request $request) {
         $response = array();
-        $post = array();
+
         $bAllDone = false;
-        if (Input::post()) {
-            $post = Input::post();
-            $clientId = strip_tags($post['clientId']);
-            $subscriberId = $post['subscriberId'];
-            $bbID = strip_tags($post['bbID']);
-            $category = strip_tags($post['category']);
-            $title = strip_tags($post['title']);
-            $resolutionText = strip_tags($post['resolutionText']);
-            $type = strip_tags($post['type']);
+        if (!empty($request)) {
+
+            $clientId = $request->clientId;
+            $subscriberId = $request->subscriberId;
+            $bbID = $request->bbID;
+            $category = $request->category;
+            $title = $request->title;
+            $resolutionText = $request->resolutionText;
+            $type = $request->type;
             $mFeedback  = new FeedbackModel();
             $mInviter = new BrandboostModel();
             $mReview  = new ReviewlistsModel();
@@ -454,94 +343,6 @@ class Feedback extends Controller {
                     }
                 }
             }
-
-            if ($result) {
-                $response['status'] = 'success';
-                $response['message'] = "Resolution feedback accepted";
-            } else {
-                $response['message'] = "We will revert back to you on this ASAP";
-            }
-
-            echo json_encode($response);
-
-            exit;
-        }
-    }
-
-    public function saveResolution_old() {
-        $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $clientId = strip_tags($post['clientId']);
-            $subscriberId = $post['subscriberId'];
-            $bbID = strip_tags($post['bbID']);
-            $category = strip_tags($post['category']);
-            $title = strip_tags($post['title']);
-            $resolutionText = strip_tags($post['resolutionText']);
-            $type = strip_tags($post['type']);
-            $bRequireGlobalSubs = false;
-            if (!empty($subscriberId)) {
-                $aSubscriberInfo = $this->mFeedback->getSubscriberInfo($subscriberId);
-                if (!empty($aSubscriberInfo)) {
-                    if (!empty($bbID)) {
-                        $oBrandboost = $this->mInviter->getBBInfo($bbID);
-                        $ownerID = $oBrandboost->user_id;
-                        $eventName = 'sys_offsite_review_add';
-                    }
-                    $firstName = $aSubscriberInfo->firstname;
-                    $lastName = $aSubscriberInfo->lastname;
-                    $email = $aSubscriberInfo->email;
-                    $mobile = $aSubscriberInfo->phone;
-                    $globalSubscriberID = $aSubscriberInfo->id;
-
-                    if ($bRequireGlobalSubs == false) { //This means no user_id attached to subscriber
-                        //My Code
-                        $aRegistrationData = array(
-                            'firstname' => $firstName,
-                            'lastname' => $lastName,
-                            'email' => $email,
-                            'mobile' => $mobile
-                        );
-                        $userID = $this->mSubscriber->addBrandboostUserAccount($aRegistrationData, 2, true);
-                        if ($userID > 0) {
-                            $bRequireGlobalSubs = true;
-                        }
-                    }
-
-                    if ($userID > 0 && $bRequireGlobalSubs == true) {
-                        $aUpdateGlobalSubsData = array(
-                            'user_id' => $userID,
-                            'updated' => date("Y-m-d H:i:s")
-                        );
-
-                        $bUpdated = $this->mSubscriber->updateGlobalSubscriber($aUpdateGlobalSubsData, $globalSubscriberID);
-                    }
-                }
-            }
-
-
-
-            $aData = array(
-                'category' => $category,
-                'title' => $title,
-                'feedback' => $resolutionText,
-                'client_id' => $clientId,
-                'subscriber_id' => $subscriberId,
-                'brandboost_id' => $bbID,
-                'created' => date("Y-m-d H:i:s")
-            );
-
-            $result = $this->mFeedback->add($aData);
-            //Notify Admin about to resolve the issue
-            $aNotification = array(
-                'user_id' => $clientId,
-                'event_type' => 'offsite_resolution_feedback',
-                'message' => 'Resolution feedback request',
-                'link' => base_url() . 'admin/feedback',
-                'created' => date("Y-m-d H:i:s")
-            );
-            add_notifications($aNotification, $eventName, $ownerID);
 
             if ($result) {
                 $response['status'] = 'success';
@@ -640,7 +441,7 @@ class Feedback extends Controller {
     * @return type
     */
 
-    public function threadreply() {
+    public function threadreply(Request $request) {
 
     $mFeedback  = FeedbackModel();
     $mInviter = new BrandboostModel();
@@ -648,13 +449,13 @@ class Feedback extends Controller {
     $mSubscriber  = new SubscriberModel();
 
         $response = array();
-        $post = Input::post();
-        if (!empty($post)) {
-            $brandboostID = strip_tags($post['bbid']);
-            $clientID = strip_tags($post['clid']);
-            $subscriberID = strip_tags($post['subsid']);
-            $replydata = $post['data'];
-            $direction = strip_tags($post['direction']);
+
+        if (!empty($request)) {
+            $brandboostID = $request->bbid;
+            $clientID = $request->clid;
+            $subscriberID = $request->subsid;
+            $replydata = $request->data;
+            $direction = $request->direction;
             $aUserInfo = $mFeedback->getUserInfoBySubscriberID($subscriberID);
             if (!empty($aUserInfo)) {
                 $userID = $aUserInfo->id;

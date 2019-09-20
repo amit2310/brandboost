@@ -87,12 +87,13 @@ class Questions extends Controller {
 	* @param type $questionID
 	* @return type
 	*/
-	public function questionDetails($questionID) {
+	public function questionDetails(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
+        $questionID = $request->id;
         $selectedTab = Request::input('t');
-		$quesID = Input::post("questionID");
-		$actionName = Input::post("action");
+		$quesID = $request->questionID;
+		$actionName = $request->action;
         $questionID = ($quesID > 0) ? $quesID : $questionID;
         $oQuestion = QuestionModel::getQuestionDetails($questionID);
         $oAnswers = QuestionModel::getAllAnswer($questionID);
@@ -239,22 +240,22 @@ class Questions extends Controller {
     }
 
 
-    public function saveManualQuestion() {
+    public function saveManualQuestion(Request $request) {
 
 		$mUser = new UsersModel();
 		$mSubscriber = new SubscriberModel();
 		$mQuestion  = new QuestionModel();
 		$mBrandboost = new BrandboostModel();
         $response = array();
-        $post = Input::post();
+
         $oUser = getLoggedUser();
         $currentUserID = $oUser->id;
-        if (!empty($post)) {
-            $userID = $post['user_id'];
-            $headLine = strip_tags($post['title']);
-            $question = strip_tags($post['description']);
-            $campaignID = strip_tags($post['campaign_id']);
-            $quesStatus = $post['questionStatus'];
+        if (!empty($request)) {
+            $userID = $request->user_id;
+            $headLine = $request->title;
+            $question = $request->description;
+            $campaignID = $request->campaign_id;
+            $quesStatus = $request->questionStatus;
 
             $oBrandboost = $mBrandboost->getBrandboost($campaignID);
 
@@ -269,10 +270,10 @@ class Questions extends Controller {
                 }
             }
 
-            $fullName = strip_tags($post['fullname']);
-            $email = strip_tags($post['emailid']);
-            $phone = strip_tags($post['phone']);
-            $display_name = $post['display_name'];
+            $fullName = $request->fullname;
+            $email = $request->emailid;
+            $phone = $request->phone;
+            $display_name = $request->display_name;
             if (!empty($display_name)) {
                 $showName = 0;
             } else {
@@ -291,7 +292,7 @@ class Questions extends Controller {
 
 
             //Uploaded Question file
-            $questionFile = $post['question_uploaded_name'];
+            $questionFile = $request->question_uploaded_name;
             $aQuestionFiles = array();
 
             foreach ($questionFile['media_url'] as $key => $fileData) {
@@ -576,22 +577,22 @@ class Questions extends Controller {
     * @return type
     */
 
-    public function saveNewQuestion() {
+    public function saveNewQuestion(Request $request) {
 
         $response = array();
-        $post = Input::post();
+
          $mUser = new UsersModel();
          $mSubscriber = new SubscriberModel();
          $mQuestion  = new QuestionModel();
-        if (!empty($post)) {
-            $headLine = strip_tags($post['title']);
-            $question = strip_tags($post['description']);
-            $campaignID = strip_tags($post['campaign_id']);
+        if (!empty($request)) {
+            $headLine = $request->title;
+            $question = $request->description;
+            $campaignID = $request->campaign_id;
 
-            $fullName = strip_tags($post['fullname']);
-            $email = strip_tags($post['emailid']);
-            $mobile = strip_tags($post['phone']);
-            $display_name = $post['display_name'];
+            $fullName = $request->fullname;
+            $email = $request->emailid;
+            $mobile = $request->phone;
+            $display_name = $request->display_name;
             if (!empty($display_name)) {
                 $showName = 0;
             } else {
@@ -600,7 +601,7 @@ class Questions extends Controller {
 
 
             //Uploaded Question file
-            $questionFile = $post['question_uploaded_name'];
+            $questionFile = $request->question_uploaded_name;
             $aQuestionFiles = array();
 
             foreach ($questionFile['media_url'] as $key => $fileData) {
@@ -745,7 +746,7 @@ class Questions extends Controller {
     public function update_answer_status(Request $request) {
 
         $response = array();
-        $post = array();
+
         if ($request->answer_id) {
 
             $answerID = base64_url_decode(strip_tags($request->answer_id));
@@ -777,7 +778,7 @@ class Questions extends Controller {
     public function getAnswer(Request $request) {
 
         $response = array();
-        $post = array();
+
         if ($request->answerID) {
             $mQuestion = new QuestionModel();
             $answerID = base64_url_decode(strip_tags($request->answerID));
@@ -803,7 +804,7 @@ class Questions extends Controller {
     public function updateAnswer(Request $request) {
 
         $response = array();
-        $post = array();
+
         if ($request->txtAnswer) {
 
             $answer = strip_tags($request->txtAnswer);
@@ -833,16 +834,16 @@ class Questions extends Controller {
     * @param type
     * @return type
     */
-    public function saveQuestionNotes() {
+    public function saveQuestionNotes(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = Input::post();
-        if (!empty($post)) {
-            $questionID = base64_url_decode(strip_tags($post['question_id']));
-            $brandboostID = strip_tags($post['bid']);
-            $clientID = strip_tags($post['cid']);
-            $sNotes = $post['notes'];
+
+        if (!empty($request)) {
+            $questionID = base64_url_decode($request->question_id);
+            $brandboostID = $request->bid;
+            $clientID = $request->cid;
+            $sNotes = $request->notes;
             $aNotesData = array(
                 'question_id' => $questionID,
                 'user_id' => $userID, //$clientID,
@@ -870,7 +871,7 @@ class Questions extends Controller {
 
         $response = array();
         $response['status'] = 'error';
-        $post = array();
+
         if ($request->noteid) {
             $mQuestion = new QuestionModel();
             $noteData = $mQuestion->getQuestionNoteInfo($request->noteid);
@@ -921,10 +922,10 @@ class Questions extends Controller {
     * @param type
     * @return type
     */
-    public function deleteQuestionNote() {
+    public function deleteQuestionNote(Request $request) {
         $response = array();
-        $post = Input::post();
-        $noteid = strip_tags($post['noteid']);
+
+        $noteid = $request->noteid;
         $mQuestion = new QuestionModel();
         $result = $mQuestion->deleteQuestionNote($noteid);
         if ($result) {
@@ -943,16 +944,16 @@ class Questions extends Controller {
     * @param type
     * @return type
     */
-    public function update_question_status() {
+    public function update_question_status(Request $request) {
 
         $response = array();
-        $post = array();
-        $post = Input::post();
-        if ($post) {
+
+
+        if ($request) {
             $aUser = getLoggedUser();
             $userID = $aUser->id;
-            $questionID = strip_tags($post['question_id']);
-            $status = strip_tags($post['status']);
+            $questionID = $request->question_id;
+            $status = $request->status;
 
             $aData = array(
                 'status' => $status
@@ -987,13 +988,13 @@ class Questions extends Controller {
     }
 
 
-    public function get_question_by_Id() {
+    public function get_question_by_Id(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $quesID = strip_tags($post['quesID']);
+
+        if (!empty($request)) {
+
+            $quesID = $request->quesID;
             $result = $this->mQuestion->getAllQuestion($quesID);
 
             if ($result) {
@@ -1009,16 +1010,16 @@ class Questions extends Controller {
         }
     }
 
-    public function update_question() {
+    public function update_question(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $answer = strip_tags($post['answer']);
-            $question = strip_tags($post['question']);
-            $quesId = strip_tags($post['quesId']);
+        if (!empty($request)) {
+
+
+            $answer = $request->answer;
+            $question = $request->question;
+            $quesId = $request->quesId;
 
             $aData = array(
                 'question' => $question,
@@ -1044,15 +1045,15 @@ class Questions extends Controller {
     * @param type
     * @return type
     */
-    public function delete_question() {
+    public function delete_question(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = Input::post();
-        if ($post) {
-            $quesID = strip_tags($post['questionID']);
+
+        if ($request) {
+            $quesID = $request->questionID;
             $mQuestion = new QuestionModel();
             $result = $mQuestion->deleteQuestion($quesID);
             if ($result) {
@@ -1087,16 +1088,16 @@ class Questions extends Controller {
     * @param type
     * @return type
     */
-    public function deleteQuestions() {
+    public function deleteQuestions(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = Input::post();
+
         $mQuestion = new QuestionModel();
-        if ($post) {
-            $quesIDs = $post['multipal_record_id'];
+        if ($request) {
+            $quesIDs = $request->multipal_record_id;
             foreach ($quesIDs as $quesID) {
                 $result = $mQuestion->deleteQuestion($quesID);
             }
@@ -1152,7 +1153,7 @@ class Questions extends Controller {
         $user_role = $oUser->user_role;
         $clientName = $oUser->firstname. ' '. $oUser->lastname;
         $response = array();
-        $post = array();
+
         $mQuestion = new QuestionModel();
         $mUser = new UsersModel();
         if ($request->question_id) {
@@ -1229,7 +1230,7 @@ class Questions extends Controller {
     public function delete_answer(Request $request) {
 
         $response = array();
-        $post = array();
+
         $mQuestion = new QuestionModel();
         if ($request->answerId) {
 
@@ -1249,13 +1250,13 @@ class Questions extends Controller {
             exit;
     }
 
-    public function deleteAnswers() {
+    public function deleteAnswers(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $ansIDs = $post['multipal_record_id'];
+
+        if (!empty($request)) {
+
+            $ansIDs = $request->multipal_record_id;
 
             foreach ($ansIDs as $ansID) {
                 $result = $this->mQuestion->deleteAnswer($ansID);
@@ -1273,15 +1274,15 @@ class Questions extends Controller {
         }
     }
 
-    public function addquestion() {
+    public function addquestion(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $reviewID = strip_tags($post['qqrid']);
-            $fullName = strip_tags($post['qqname']);
-            $email = strip_tags($post['qqemail']);
-            $question = strip_tags($post['campaignQues']);
-            $campId = strip_tags($post['campaignID']);
+
+        if (!empty($request)) {
+            $reviewID = $request->qqrid;
+            $fullName = $request->qqname;
+            $email = $request->qqemail;
+            $question = $request->campaignQues;
+            $campId = $request->campaignID;
 
             if (empty($fullName) || empty($email)) {
                 //Display errors, fields should not be blank

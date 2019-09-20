@@ -10,25 +10,25 @@ use Illuminate\Support\Facades\Input;
 use Cookie;
 use Session;
 use DB;
-error_reporting(0);
+
 class Transactions extends Controller {
 
 
     /**
     * index call
-    * @param type 
+    * @param type
     * @return type
     */
 
     public function index() {
-        
+
     }
 
-    public function addManualCredits() {
+    public function addManualCredits(Request $request) {
         $oUser = getLoggedUser();
         $mUser  = new UsersModel();
         $mPayment = new PaymentModel();
-       
+
 
         $response = array();
         $userRole = $oUser->user_role;
@@ -38,16 +38,16 @@ class Transactions extends Controller {
             echo json_encode($response);
             exit;
         }
-        $post = Input::post();
-        if ($post) {
-            $creditorUID = base64_url_decode(strip_tags($post['creditor_user_id']));
-            $credits = strip_tags($post['credits']);
-            $contactLimit = strip_tags($post['contact_limit']);
-            $emailCredits = strip_tags($post['email_credits']);
-            $smsCredits = strip_tags($post['sms_credits']);
-            $mmsCredits = strip_tags($post['mms_credits']);
-            $creditNotes = strip_tags($post['credit_notes']);
-            $secretKey = strip_tags($post['secret_key']);
+
+        if (!empty($request)) {
+            $creditorUID = base64_url_decode($request->creditor_user_id);
+            $credits = $request->credits;
+            $contactLimit = $request->contact_limit;
+            $emailCredits = $request->email_credits;
+            $smsCredits = $request->sms_credits;
+            $mmsCredits = $request->mms_credits;
+            $creditNotes = $request->credit_notes;
+            $secretKey = $request->secret_key;
             $transactionSecretKey = '12345';
             if ($secretKey == $transactionSecretKey) {
                 $oCreditor = $mUser->getCurrentAccountUsage($creditorUID);

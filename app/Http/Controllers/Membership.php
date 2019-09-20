@@ -34,33 +34,33 @@ class Membership extends Controller {
         }
     }
 
-    public function add() {
+    public function add(Request $request) {
         $response = array();
         $response['status'] = 'error';
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
 
-            if ($this->input->post()) {
-                $post = $this->input->post();
+            if (!empty($request)) {
+
                 //Apply Validation
 
-                $productType = strip_tags($post['type']);
-                $subsCycle = strip_tags($post['periodUnit']);
-                $name = strip_tags($post['level_name']);
-                $invoiceName = strip_tags($post['invoice_name']);
-                $price = strip_tags($post['price']);
-                $credits = strip_tags($post['credits']);
-                $contactLimit = strip_tags($post['contact_limit']);
-                $emailLimit = strip_tags($post['email_limit']);
-                $smsLimit = strip_tags($post['sms_limit']);
-                $textLimit = strip_tags($post['text_review_limit']);
-                $videoLimit = strip_tags($post['video_review_limit']);
-                $socialInvites = strip_tags($post['social_invites']);
-                $addYourOwn = strip_tags($post['add_your_own']);
-                
+                $productType = $request->type;
+                $subsCycle = $request->periodUnit;
+                $name = $request->level_name;
+                $invoiceName = $request->invoice_name;
+                $price = $request->price;
+                $credits = $request->credits;
+                $contactLimit = $request->contact_limit;
+                $emailLimit = $request->email_limit;
+                $smsLimit = $request->sms_limit;
+                $textLimit = $request->text_review_limit;
+                $videoLimit = $request->video_review_limit;
+                $socialInvites = $request->social_invites;
+                $addYourOwn = $request->add_your_own;
+
 
                 $aChargebeeData = array(
                     'id' => str_replace(' ', '-', strtolower($name)),
@@ -92,15 +92,15 @@ class Membership extends Controller {
                     $aChargebeeData['period'] = 1;
                     $aChargebeeData['periodUnit'] = $subsCycle; //week, month or year;
                     $planID = $this->Membership->createChargebeePlan($aChargebeeData);
-                   
+
                 }else if($productType == 'topup'){
                     $aChargebeeData['chargeType'] = 'non_recurring';
                     $aChargebeeData['pricingModel'] = 'per_unit';
                     $aChargebeeData['unit'] = 'credit';
                     $planID = $this->Membership->createChargebeeAddonPlan($aChargebeeData);
                 }
-                
-                
+
+
 
                 if (!empty($planID)) {
                     $aData['plan_id'] = $planID;
@@ -123,14 +123,14 @@ class Membership extends Controller {
         exit;
     }
 
-    public function getMemberById() {
+    public function getMemberById(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $aMembership = $this->Membership->getMembership($post['memID']);
+
+        if (!empty($request)) {
+
+            $aMembership = $this->Membership->getMembership($request->memID);
             if ($aMembership) {
                 $response['status'] = 'success';
                 $response['result'] = $aMembership;
@@ -143,14 +143,14 @@ class Membership extends Controller {
         }
     }
 
-    public function mem_delete() {
+    public function mem_delete(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $memID = strip_tags($post['memID']);
+        if (!empty($request)) {
+
+
+            $memID = $request->memID;
 
             $aData = array(
                 'delete_status' => 1,
@@ -169,14 +169,14 @@ class Membership extends Controller {
         }
     }
 
-    public function deleteMemberships() {
+    public function deleteMemberships(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $memIDs = $post['multipal_record_id'];
+        if (!empty($request)) {
+
+
+            $memIDs = $request->multipal_record_id;
 
             $aData = array(
                 'delete_status' => 1,
@@ -198,31 +198,31 @@ class Membership extends Controller {
         }
     }
 
-    public function mem_update() {
+    public function mem_update(Request $request) {
 
         $response = array();
-        $post = array();
+
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
-            if ($this->input->post()) {
-                $post = $this->input->post();
+            if (!empty($request)) {
 
-                $name = strip_tags($post['level_name']);
-                $invoiceName = strip_tags($post['invoice_name']);
-                $price = strip_tags($post['price']);
-                $credits = strip_tags($post['credits']);
-                $contactLimit = strip_tags($post['contact_limit']);
-                $emailLimit = strip_tags($post['email_limit']);
-                $smsLimit = strip_tags($post['sms_limit']);
-                $textLimit = strip_tags($post['text_review_limit']);
-                $videoLimit = strip_tags($post['video_review_limit']);
-                $socialInvites = strip_tags($post['social_invites']);
-                $addYourOwn = strip_tags($post['add_your_own']);
-                $mem_ID = strip_tags($post['mem_ID']);
-                $planID = strip_tags($post['plan_id']);
+
+                $name = $request->level_name;
+                $invoiceName = $request->invoice_name;
+                $price = $request->price;
+                $credits = $request->credits;
+                $contactLimit = $request->contact_limit;
+                $emailLimit = $request->email_limit;
+                $smsLimit = $request->sms_limit;
+                $textLimit = $request->text_review_limit;
+                $videoLimit = $request->video_review_limit;
+                $socialInvites = $request->social_invites;
+                $addYourOwn = $request->add_your_own;
+                $mem_ID = $request->mem_ID;
+                $planID = $request->plan_id;
 
                 $aData = array(
                     'level_name' => $name,
@@ -237,19 +237,19 @@ class Membership extends Controller {
                     'social_invite_sources' => $socialInvites,
                     'custom_addons' => $addYourOwn
                 );
-                
+
                 $aChargebeeData = array(
                     'name' => $name,
                     'invoiceName' => $invoiceName,
                     'price' => $price*100
                 );
-                
+
                 $newPlanID = $this->Membership->updateChargebeePlan($planID, $aChargebeeData);
                     if (!empty($newPlanID)) {
                         $result = $this->Membership->updateMembership($aData, $mem_ID);
                     }
 
-                
+
                 if ($result) {
                     $response['status'] = 'success';
                     $response['message'] = "Membership has been updated successfully.";
@@ -265,18 +265,18 @@ class Membership extends Controller {
         exit;
     }
 
-    public function topup_update() {
+    public function topup_update(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $name = strip_tags($post['level_name']);
-            $price = strip_tags($post['topup_price']);
-            $topupEmailLimit = strip_tags($post['topup_email_limit']);
-            $topupSMSLimit = strip_tags($post['topup_sms_limit']);
-            $mem_ID = strip_tags($post['mem_ID']);
+        if (!empty($request)) {
+
+
+            $name = $request->level_name;
+            $price = $request->topup_price;
+            $topupEmailLimit = $request->topup_email_limit;
+            $topupSMSLimit = $request->topup_sms_limit;
+            $mem_ID = $request->mem_ID;
 
             $aData = array(
                 'level_name' => $name,
@@ -298,13 +298,13 @@ class Membership extends Controller {
         }
     }
 
-    public function update_status() {
+    public function update_status(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
-            $status = strip_tags($post['status']);
-            $membershipId = strip_tags($post['membership_id']);
+
+        if (!empty($request)) {
+            $status = $request->status;
+            $membershipId = $request->membership_id;
 
             $aData = array(
                 'status' => $status

@@ -1074,6 +1074,7 @@ class Referral extends Controller {
     public function contacts() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $oContacts = '';
         if (!empty($userID)) {
             $oSettings = ReferralModel::getReferralSettings($userID);
             $hashCode = $oSettings->hashcode;
@@ -1088,7 +1089,7 @@ class Referral extends Controller {
                     <li class="active">Contacts</li>
                 </ul>';
 
-        $data = array(
+        $aData = array(
             'title' => 'My Advocates',
             'pagename' => $breadcrumb,
             'oContacts' => $oContacts
@@ -1218,7 +1219,7 @@ class Referral extends Controller {
     }
 
 
-    public function bulkArchiveReferrals() {
+    public function bulkArchiveReferrals(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
         $aUser = getLoggedUser();
@@ -1362,7 +1363,7 @@ class Referral extends Controller {
 	public function deleteReferralWidget(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 		$mReferral = new ReferralModel();
@@ -1596,14 +1597,14 @@ class Referral extends Controller {
 
 
 
-    public function updateAllCampaign() {
+    public function updateAllCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $post = $this->input->post();
 
-        if (!empty($post)) {
-            $referralId = strip_tags($post['referral_id']);
+
+        if (!empty($request)) {
+            $referralId = $request->referral_id;
 
             if (!empty($referralId)) {
                 $aData = array(
@@ -1623,10 +1624,10 @@ class Referral extends Controller {
     }
 
 
-    public function getReferralUserById() {
+    public function getReferralUserById(Request $request) {
 
-        $post = $this->input->post();
-        $subscriberID = $post['subscriberID'];
+
+        $subscriberID = $request->subscriberID;
         $bResponse = $this->mReferral->getReferralUserById($subscriberID);
 
         if ($bResponse) {
@@ -1636,15 +1637,15 @@ class Referral extends Controller {
         exit;
     }
 
-    public function updateReferralSubscriber() {
+    public function updateReferralSubscriber(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        $email = $post['edit_email'];
-        $firstname = $post['edit_firstname'];
-        $lastname = $post['edit_lastname'];
-        $phone = $post['edit_phone'];
-        $subscriberID = $post['edit_subscriberID'];
+
+        $email = $request->edit_email;
+        $firstname = $request->edit_firstname;
+        $lastname = $request->edit_lastname;
+        $phone = $request->edit_phone;
+        $subscriberID = $request->edit_subscriberID;
         $bInsertedNewGlobalSubscriber = false;
 
         if (!empty($email)) {
@@ -1686,10 +1687,10 @@ class Referral extends Controller {
         exit;
     }
 
-    public function deleteReferralUser() {
+    public function deleteReferralUser(Request $request) {
 
-        $post = $this->input->post();
-        $subscriberID = $post['subscriberId'];
+
+        $subscriberID = $request->subscriberId;
         $bResponse = $this->mReferral->deleteReferralUser($subscriberID);
 
         $response = array('status' => 'success', 'result' => $bResponse);
@@ -1697,10 +1698,10 @@ class Referral extends Controller {
         exit;
     }
 
-    public function bulkDeleteReferralsUser() {
+    public function bulkDeleteReferralsUser(Request $request) {
 
-        $post = $this->input->post();
-        $bulk_referral_id = $post['bulk_referral_id'];
+
+        $bulk_referral_id = $request->bulk_referral_id;
         foreach ($bulk_referral_id as $subscriberID) {
             $bResponse = $this->mReferral->deleteReferralUser($subscriberID);
         }
@@ -1734,29 +1735,29 @@ class Referral extends Controller {
 
 
 
-    public function saveEmailWorkflow() {
+    public function saveEmailWorkflow(Request $request) {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
 
-        if (empty($post)) {
+
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $source = strip_tags($post['notification_source']);
-        $inviteDelay = strip_tags($post['invite_delay']);
-        $salesDelay = strip_tags($post['sale_delay']);
-        $reminderDelay = strip_tags($post['reminder_delay']);
-        $userID = strip_tags($post['uid']);
+        $source = $request->notification_source;
+        $inviteDelay = $request->invite_delay;
+        $salesDelay = $request->sale_delay;
+        $reminderDelay = $request->reminder_delay;
+        $userID = $request->uid;
         if ($userID > 0) {
             $aData = array(
                 'notification_source' => $source,
                 'invite_delay' => $inviteDelay,
                 'sale_delay' => $salesDelay,
                 'reminder_delay' => $reminderDelay,
-                'reminder_delay_invite' => $reminderDelayInvite
+                'reminder_delay_invite' => isset($reminderDelayInvite) ? $reminderDelayInvite : ''
             );
 
             $bUpdated = $this->mReferral->updateStoreSettings($aData, $userID);
@@ -1810,19 +1811,19 @@ class Referral extends Controller {
         }
     }
 
-    public function updateUserCampaign() {
+    public function updateUserCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $post = $this->input->post();
 
-        if (!empty($post)) {
-            $campaignID = strip_tags($post['campaignId']);
-            $campaingType = strip_tags($post['campaignType']);
+
+        if (!empty($request)) {
+            $campaignID = $request->campaignId;
+            $campaingType = $request->campaignType;
             if ($campaingType == 'Email') {
-                $content = $post['emailtemplate'];
+                $content = $request->emailtemplate;
             } else {
-                $content = $post['smstemplate'];
+                $content = $request->smstemplate;
             }
 
             if (!empty($campaignID)) {
@@ -1839,15 +1840,15 @@ class Referral extends Controller {
         exit;
     }
 
-    public function updateReferralEvent() {
+    public function updateReferralEvent(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        $post = $this->input->post();
 
-        if (!empty($post)) {
-            $eventID = strip_tags($post['event_id']);
-            $timeValue = strip_tags($post['delay_value']);
-            $timeUnit = strip_tags($post['delay_unit']);
+
+        if (!empty($request)) {
+            $eventID = $request->event_id;
+            $timeValue = $request->delay_value;
+            $timeUnit = $request->delay_unit;
 
             if (!empty($eventID)) {
                 $timeData = json_encode(array('delay_type' => 'after', 'delay_value' => $timeValue, 'delay_unit' => $timeUnit));
@@ -1865,13 +1866,13 @@ class Referral extends Controller {
         exit;
     }
 
-    public function deleteReferralCampaign() {
+    public function deleteReferralCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        $post = $this->input->post();
 
-        if (!empty($post)) {
-            $campaignID = strip_tags($post['campaign_id']);
+
+        if (!empty($request)) {
+            $campaignID = $request->campaign_id;
 
             if (!empty($campaignID)) {
                 $aData = array(
@@ -1896,14 +1897,14 @@ class Referral extends Controller {
         exit;
     }
 
-    public function updateReferralReminderCampaign() {
+    public function updateReferralReminderCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        $post = $this->input->post();
 
-        if (!empty($post)) {
-            $eventID = strip_tags($post['event_id']);
-            $reminderLoopStatus = strip_tags($post['reminder_loop_status']);
+
+        if (!empty($request)) {
+            $eventID = $request->event_id;
+            $reminderLoopStatus = $request->reminder_loop_status;
 
             if (!empty($eventID)) {
                 $aData = array(
@@ -1920,14 +1921,14 @@ class Referral extends Controller {
         exit;
     }
 
-    public function updateReferralReminderLoop() {
+    public function updateReferralReminderLoop(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
-        $post = $this->input->post();
 
-        if (!empty($post)) {
-            $eventID = strip_tags($post['event_id']);
-            $loopValue = strip_tags($post['loop_value']);
+
+        if (!empty($request)) {
+            $eventID = $request->event_id;
+            $loopValue = $request->loop_value;
 
             if (!empty($eventID)) {
                 $aData = array(
@@ -1945,17 +1946,17 @@ class Referral extends Controller {
         exit;
     }
 
-    public function updateReferralCampaign() {
+    public function updateReferralCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $post = $this->input->post();
 
-        if (!empty($post)) {
-            $campaignID = strip_tags($post['campaign_id']);
-            $subject = strip_tags($post['subject']);
-            $content = $post['template_content'];
-            $campaignType = $post['campaign_type'];
+
+        if (!empty($request)) {
+            $campaignID = $request->campaign_id;
+            $subject = $request->subject;
+            $content = $request->template_content;
+            $campaignType = $request->campaign_type;
 
             if (!empty($campaignID)) {
                 if ($campaignType == 'Email') {
@@ -1994,17 +1995,17 @@ class Referral extends Controller {
         exit;
     }
 
-    public function publishReferralCampaign() {
+    public function publishReferralCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $referralId = strip_tags($post['referralId']);
+        $referralId = $request->referralId;
         $aData = array(
             'status' => 'active',
         );
@@ -2020,15 +2021,15 @@ class Referral extends Controller {
     }
 
     // Export data in CSV format
-    public function exportCSV() {
+    public function exportCSV(Request $request) {
         // file name
         $filename = 'users_' . time() . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
 
-        $post = $this->input->post();
-        $accountId = $post['account_id'];
+
+        $accountId = $request->account_id;
         $userID = $this->session->userdata("current_user_id");
         $allSubscribers = $this->mReferral->getReferralUsers($accountId);
         //pre($allSubscribers);
@@ -2082,45 +2083,18 @@ class Referral extends Controller {
         }
     }
 
-    public function registerInvite_old() {
-        $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $accountID = strip_tags($post['bbaid']);
-            $firstName = strip_tags($post['firstname']);
-            $lastName = strip_tags($post['lastname']);
-            $email = strip_tags($post['email']);
-            $phone = strip_tags($post['phone']);
-            $affiliateID = strip_tags($post['userid']);
-            $aData = array(
-                'email' => $email,
-                'firstName' => $firstName,
-                'lastName' => $lastName,
-                'phone' => $phone,
-                'accountID' => $accountID,
-                'affiliateID' => $affiliateID
-            );
-            $refLink = $this->registerNow($aData);
-            if (!empty($refLink)) {
-                $response = array('status' => 'success', 'reflink' => $refLink, 'msg' => "Success");
-            }
-        }
-        echo json_encode($response);
-        exit;
-    }
-
-    public function registerInvite() {
+    public function registerInvite(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $accountID = strip_tags($post['bbaid']);
-            $firstName = strip_tags($post['firstname']);
-            $lastName = strip_tags($post['lastname']);
-            $email = strip_tags($post['email']);
-            $phone = strip_tags($post['phone']);
-            $affiliateID = strip_tags($post['userid']);
+
+        if (!empty($request)) {
+            $accountID = $request->bbaid;
+            $firstName = $request->firstname;
+            $lastName = $request->lastname;
+            $email = $request->email;
+            $phone = $request->phone;
+            $affiliateID = $request->userid;
             $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
             //pre($oGlobalUser);
             //die;
@@ -2152,75 +2126,6 @@ class Referral extends Controller {
         }
         echo json_encode($response);
         exit;
-    }
-
-    public function registerNow_old($aData) {
-        if (!empty($aData)) {
-            $email = $aData['email'];
-            $firstName = $aData['firstName'];
-            $lastName = $aData['lastName'];
-            $phone = $aData['phone'];
-            $accountID = $aData['accountID'];
-            $affiliateID = $aData['affiliateID'];
-            if (!empty($email)) {
-                $oExistingUser = $this->mReferral->checkIfExistingAdvocate($email, $accountID);
-                if (!empty($oExistingUser)) {
-                    $existingUserID = $oExistingUser->id;
-                    $refLink = site_url() . 'ref/t/' . $oExistingUser->refkey;
-                    $response = array('status' => 'success', 'reflink' => $refLink, 'msg' => "Success");
-                } else {
-                    //Ok we are good now, go ahead and register a new user
-                    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                    $randstring = '';
-                    for ($i = 0; $i < 8; $i++) {
-                        $randstring .= $characters[rand(0, strlen($characters))];
-                    }
-                    $password_hash = 'Umair';
-                    $siteSalt = 'Rahul';
-                    $pwd = base64_encode($password . $password_hash . $siteSalt);
-                    $data = array(
-                        'account_id' => $accountID,
-                        'firstname' => $firstName,
-                        'lastname' => $lastName,
-                        'email' => $email,
-                        'status' => 1,
-                        'password' => $pwd,
-                        'mobile' => $phone,
-                        'affiliateid' => $affiliateID,
-                        'created' => date("Y-m-d H:i:s")
-                    );
-
-                    $referredUserID = $this->mReferral->addReferredUser($data);
-
-                    if (!empty($referredUserID)) {
-                        //Generate Referral Link
-                        $oSettings = $this->mReferral->getReferralSettings($accountID, $hash = true);
-                        //$settingData = $this->mReferral->getAccountSettings($oSettings->user_id);
-                        $storeID = $oSettings->rewardID;
-                        if ($storeID > 0) {
-                            $timeNow = time();
-                            $refKey = $referredUserID . '-' . $timeNow;
-                            $aRefData = array(
-                                'referral_id' => $storeID,
-                                'advocate_id' => $referredUserID,
-                                'refkey' => $refKey,
-                                'created' => date("Y-m-d H:i:s")
-                            );
-                            $bAdded = $this->mReferral->createReferralLink($aRefData);
-                            if ($bAdded) {
-                                $refLink = site_url() . 'ref/t/' . $refKey;
-                                $response = array('status' => 'success', 'reflink' => $refLink, 'msg' => "Success");
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!empty($refLink)) {
-                return $refLink;
-            }
-        }
-        return false;
     }
 
     public function registerNow($aData) {
@@ -2269,16 +2174,16 @@ class Referral extends Controller {
         return false;
     }
 
-    public function importInviteCSV() {
+    public function importInviteCSV(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $post = $this->input->post();
+
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'csv';
         $config['max_size'] = '1000';
-        $accountID = strip_tags($post['bbaid']);
-        $affiliateID = strip_tags($post['userid']);
+        $accountID = $request->bbaid;
+        $affiliateID = $request->userid;
 
 
         $this->load->library('upload', $config);
@@ -2394,8 +2299,8 @@ class Referral extends Controller {
             //$referralTrackData = $this->mReferral->getReferralLinkVisitsByAdvocateId($advocateID, $accountID);
             $referralSaleTrackData = $this->mReferral->referredSalesByAdvocateId($advocateID, $accountID);
 
-            $oTotalReferralSent = $this->mReferral->getStatsTotalSent($referralID);
-            $oTotalReferralTwillio = $this->mReferral->getSendgridStats($referralID);
+            //$oTotalReferralSent = $this->mReferral->getStatsTotalSent($referralID);
+            //$oTotalReferralTwillio = $this->mReferral->getSendgridStats($referralID);
 
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -2418,16 +2323,16 @@ class Referral extends Controller {
         }
     }
 
-    public function getReferralCampaign() {
+    public function getReferralCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $campaignID = strip_tags($post['campaign_id']);
+        $campaignID = $request->campaign_id;
         if ($campaignID > 0) {
             $oCampaign = $this->mReferral->getReferralCampaign($campaignID);
             if (!empty($oCampaign)) {
@@ -2464,20 +2369,20 @@ class Referral extends Controller {
             'oSale' => $oSale,
             'oNotes' => $oNotes,
             'oTags' => $oTags,
-            'scoreID' => $scoreID
+            'scoreID' => isset($scoreID) ? $scoreID : ''
         ));
     }
 
-    public function listAllTags() {
+    public function listAllTags(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
-        $saleID = $post['sale_id'];
+        $saleID = $request->sale_id;
         if ($saleID > 0) {
             $aAppliedTags = $this->mReferral->getTagsBySaleID($saleID);
         }
@@ -2489,18 +2394,18 @@ class Referral extends Controller {
         exit;
     }
 
-    public function applySaleTag() {
+    public function applySaleTag(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $saleID = strip_tags($post['sale_id']);
-        $aTagID = $post['applytag'];
+        $saleID = $request->sale_id;
+        $aTagID = $request->applytag;
         $aInput = array(
             'aTagIDs' => $aTagID,
             'referral_response_id' => $saleID
@@ -2519,17 +2424,17 @@ class Referral extends Controller {
         }
     }
 
-    public function removeReferralTag() {
+    public function removeReferralTag(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
-        $saleID = strip_tags($post['saleID']);
-        $tagID = strip_tags($post['tag_id']);
+        $saleID = $request->saleID;
+        $tagID = $request->tag_id;
 
         if (!empty($saleID) && $saleID > 0) {
             $bDeleted = $this->mReferral->removeReferralTag($tagID, $saleID);
@@ -2547,14 +2452,14 @@ class Referral extends Controller {
         }
     }
 
-    public function getReferralNoteById() {
+    public function getReferralNoteById(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $noteID = strip_tags($post['noteid']);
+
+        if (!empty($request)) {
+
+            $noteID = $request->noteid;
             $noteData = $this->mReferral->getReferralNoteByID($noteID);
             if ($noteData) {
                 $response['status'] = 'success';
@@ -2568,12 +2473,12 @@ class Referral extends Controller {
         }
     }
 
-    public function updatNotes() {
+    public function updatNotes(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $noteId = strip_tags($post['edit_noteid']);
-            $sNotes = $post['edit_note_content'];
+
+        if (!empty($request)) {
+            $noteId = $request->edit_noteid;
+            $sNotes = $request->edit_note_content;
             $aNotesData = array(
                 'notes' => $sNotes
             );
@@ -2587,14 +2492,14 @@ class Referral extends Controller {
         }
     }
 
-    public function saveReferralNotes() {
+    public function saveReferralNotes(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $saleID = strip_tags($post['saleid']);
-            $referralID = strip_tags($post['referralid']);
-            $userID = strip_tags($post['uid']);
-            $sNotes = $post['notes'];
+
+        if (!empty($request)) {
+            $saleID = $request->saleid;
+            $referralID = $request->referralid;
+            $userID = $request->uid;
+            $sNotes = $request->notes;
             $aNotesData = array(
                 'referral_response_id' => $saleID,
                 'user_id' => $userID,
@@ -2612,10 +2517,10 @@ class Referral extends Controller {
         }
     }
 
-    public function deleteReferralNote() {
+    public function deleteReferralNote(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        $noteid = strip_tags($post['noteid']);
+
+        $noteid = $request->noteid;
         $result = $this->mReferral->deleteReferralNoteByID($noteid);
         if ($result) {
             $response['status'] = 'success';
@@ -2627,13 +2532,13 @@ class Referral extends Controller {
         exit;
     }
 
-    public function setTab() {
+    public function setTab(Request $request) {
 
         $response = array();
-        $post = array();
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $getActiveText = $post['getActiveText'];
+
+
+        if (!empty($request)) {
+            $getActiveText = $request->getActiveText;
             $this->session->set_userdata("setReferralTab", trim($getActiveText));
             $response['status'] = 'success';
         }
@@ -2642,16 +2547,17 @@ class Referral extends Controller {
         exit;
     }
 
-    public function advocateProfile($contactId) {
+    public function advocateProfile(Request $request) {
         $oUser = getLoggedUser();
         $clientID = $oUser->id;
+        $contactId = $request->contactId;
         $response = array();
         $response['status'] = 'error';
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $subscriberID = strip_tags($post['subscriberId']);
-            $actionName = strip_tags($post['action']);
-            $accountID = strip_tags($post['accountId']);
+
+        if (!empty($request)) {
+            $subscriberID = $request->subscriberId;
+            $actionName = $request->action;
+            $accountID = $request->accountId;
         }
 
         if (!empty($contactId)) {

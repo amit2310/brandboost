@@ -46,9 +46,9 @@ class WebChat extends Controller {
      * @return type
      */
 
-    public function getUserinfo() {
-        $chatUserid = Input::post("chatUserid");
-        $token = Input::post("token");
+    public function getUserinfo(Request $request) {
+        $chatUserid = $request->chatUserid;
+        $token = $request->token;
         if (strlen($chatUserid) > 10 && $chatUserid != '' && $token != '') {
             $userDetail = getSubscriberDetails($chatUserid);
             $assignto = assignto($token);
@@ -83,9 +83,9 @@ class WebChat extends Controller {
      * This function is used to get the webchat notes
      * @return type
      */
-    public function listingNotes() {
+    public function listingNotes(Request $request) {
         $oUser = getLoggedUser();
-        $chatUserid = Input::post("NotesTo");
+        $chatUserid = $request->NotesTo;
         $WebChatObj = new WebChatModel();
         $oNotes = $WebChatObj->getWebNotes($chatUserid);
         foreach ($oNotes as $NotesData) {
@@ -120,10 +120,10 @@ class WebChat extends Controller {
      * This function used to get all the webchat messages
      * @return type
      */
-    public function getMessages() {
+    public function getMessages(Request $request) {
         $oUser = getLoggedUser();
-        $token = Input::post("room");
-        $offset = Input::post("offset");
+        $token = $request->room;
+        $offset = $request->offset;
         $limit = 10000;
         $WebChatObj = new WebChatModel();
         $result = $WebChatObj->getwebchatMessages($token);
@@ -183,7 +183,7 @@ class WebChat extends Controller {
     * @return type
     */
 
-    public function addWebNotes()
+    public function addWebNotes(Request $request)
     {
 
         $aUInfo = getLoggedUser();
@@ -202,9 +202,9 @@ class WebChat extends Controller {
 
         $SmsChatObj = new SmsChatModel();
 
-        $msg = Input::post("msg");
-        $chatuserid = Input::post("chatTo");
-        $room = Input::post("room");
+        $msg = $request->msg;
+        $chatuserid = $request->chatTo;
+        $room = $request->room;
         $team_id = $teamMemberId;
         $client_id = $aUInfo->id;
 
@@ -238,11 +238,11 @@ class WebChat extends Controller {
      * This function used to update the status from unread to read
      * @return type
      */
-    public function readMessages() {
+    public function readMessages(Request $request) {
 
         $webChatModel = new WebChatModel();
-        $from_user = Input::post("currentUser");
-        $to_user = Input::post("userID");
+        $from_user = $request->currentUser;
+        $to_user = $request->userID;
         $aData = array(
             'read_status' => '1'
         );
@@ -287,7 +287,7 @@ class WebChat extends Controller {
      * @return type boolean
      */
 
-    public function addChatMsg() {
+    public function addChatMsg(Request $request) {
 
         $webChatModel = new WebChatModel();
         if(Session::get("team_user_id")) {
@@ -300,11 +300,11 @@ class WebChat extends Controller {
             $isLoggedInTeam = '0';
         }
 
-        $room = Input::post('room');
-        $msg = Input::post('msg');
-        $to_user = Input::post('chatTo');
-        $from_user = Input::post('currentUser');
-        $notes = Input::post('notes');
+        $room = $request->room;
+        $msg = $request->msg;
+        $to_user = $request->chatTo;
+        $from_user = $request->currentUser;
+        $notes = $request->notes;
         if($notes == "")
         {
             $notes=0;
@@ -358,13 +358,13 @@ class WebChat extends Controller {
      * @return type boolean
      */
 
-    public function updateSupportuser() {
+    public function updateSupportuser(Request $request) {
 
-        $chatUserid  = Input::post("em_id");
+        $chatUserid  = $request->em_id;
         $webChatModel = new WebChatModel();
         if(!empty($chatUserid)) {
-                $getValue = Input::post("getValue");
-                $getName = Input::post("getName");
+                $getValue = $request->getValue;
+                $getName = $request->getName;
                 if($getName == 'support_name') {
                     $aData = array('user_name' => $getValue);
                 }
@@ -399,7 +399,7 @@ class WebChat extends Controller {
      */
 
 
-    public function listAllTagsWebchat() {
+    public function listAllTagsWebchat(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if (empty($userID)) {
@@ -408,9 +408,9 @@ class WebChat extends Controller {
             exit;
         }
         $TagsObj = new TagsModel();
-        $reviewID = base64_url_decode(strip_tags(Input::post("review_id")));
-        $feedbackID = base64_url_decode(strip_tags(Input::post("feedback_id")));
-        $questionID = base64_url_decode(strip_tags(Input::post("question_id")));
+        $reviewID = base64_url_decode($request->review_id);
+        $feedbackID = base64_url_decode($request->feedback_id);
+        $questionID = base64_url_decode($request->question_id);
 
         if ($reviewID > 0) {
             $aAppliedTags = $TagsObj->getTagsDataByReviewID($reviewID);
@@ -439,7 +439,7 @@ class WebChat extends Controller {
      */
 
 
-    public function applyWebTag() {
+    public function applyWebTag(Request $request) {
 
 
         $aUser = getLoggedUser();
@@ -451,8 +451,8 @@ class WebChat extends Controller {
         }
 
         $TagsObj = new TagsModel();
-        $reviewID = base64_url_decode(strip_tags(Input::post("review_id")));
-        $aTagID = Input::post("applytag");
+        $reviewID = base64_url_decode($request->review_id);
+        $aTagID = $request->applytag;
         $aInput = array(
             'aTagIDs' => $aTagID,
             'review_id' => $reviewID
@@ -483,8 +483,8 @@ class WebChat extends Controller {
      * @return type boolean
      */
 
-    public function getWebTaglist() {
-        $userId = Input::post("userId");
+    public function getWebTaglist(Request $request) {
+        $userId = $request->userId;
         $taglist = getTagsByReviewID($userId);
         $arr = array();
         $arr[0]['taglist'] = $taglist;
@@ -498,13 +498,13 @@ class WebChat extends Controller {
      */
 
 
-     public function deleteTagFromWeb() {
+     public function deleteTagFromWeb(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $TagsObj = new TagsModel();
-        $grpid =  Input::post("grpid");
-        $tag_id = Input::post("tag_id");
-        $review_id = Input::post("review_id");
+        $grpid =  $request->grpid;
+        $tag_id = $request->tag_id;
+        $review_id = $request->review_id;
 
         if (empty($review_id) || empty($tag_id)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -532,11 +532,11 @@ class WebChat extends Controller {
      */
 
 
-      public function reassignChat() {
+      public function reassignChat(Request $request) {
 
         $webChatModel = new WebChatModel();
-        $room = Input::post("room");
-        $assign_to = Input::post("assign_to");
+        $room = $request->room;
+        $assign_to = $request->assign_to;
         $chatDetails = $webChatModel->getChatRoomDetails($room, $assign_to);
         echo json_encode($chatDetails);
     }
@@ -1026,12 +1026,12 @@ class WebChat extends Controller {
      * @return type object
      */
 
-    public function setChatboxstatus()
+    public function setChatboxstatus(Request $request)
     {
         $webChatModel = new WebChatModel();
-        $user_id =  Input::post("currentUser");
-        $subscriber_id =  Input::post("userID");
-        $type =  Input::post("type");
+        $user_id =  $request->currentUser;
+        $subscriber_id =  $request->userID;
+        $type =  $request->type;
         $aData = array(
             'user_id' => $user_id,
             'subscriber_id' => $subscriber_id,
@@ -1057,11 +1057,11 @@ class WebChat extends Controller {
      * this function is used for remove chat box
      * @return type object
      */
-    public function removeBoxStatus()
+    public function removeBoxStatus(Request $request)
     {
         $webChatModel = new WebChatModel();
-        $user_id =  Input::post("currentUser");
-        $subscriber_id =  Input::post("userID");
+        $user_id =  $request->currentUser;
+        $subscriber_id =  $request->userID;
         $aData = array(
             'user_id' => $user_id,
             'subscriber_id' => $subscriber_id
@@ -1118,12 +1118,12 @@ class WebChat extends Controller {
      * this function is used for get user message
      * @return type object
      */
-    public function getUserMessages() {
+    public function getUserMessages(Request $request) {
 
         $response = '';
         $webChatModel = new WebChatModel();
-        $token = Input::post("room");
-        $offset = Input::post("offset");
+        $token = $request->room;
+        $offset = $request->offset;
         $result = $webChatModel->getAllMessages($token);
         $currentUserData = $webChatModel->getUserMessages($token);
         foreach ($result as $get_value) {
@@ -1144,14 +1144,14 @@ class WebChat extends Controller {
      * @return type object
      */
 
-    public function supportUser() {
+    public function supportUser(Request $request) {
 
         $webChatModel = new WebChatModel();
-        $room = Input::post("room");
-        $userID = Input::post("userID");
-        $currentUser = Input::post("currentUser");
-        $support_name = Input::post("support_name");
-        $email = Input::post("email");
+        $room = $request->room;
+        $userID = $request->userID;
+        $currentUser = $request->currentUser;
+        $support_name = $request->support_name;
+        $email = $request->email;
         $aLocationData = getLocationData();
 
         $aData = array(
@@ -1191,11 +1191,11 @@ class WebChat extends Controller {
      * this function is used for read chat message
      * @return type object
      */
-    public function readChatMsg() {
+    public function readChatMsg(Request $request) {
 
         $webChatModel = new WebChatModel();
-        $to_user = Input::post("chatTo");
-        $from_user = Input::post("chatFrom");
+        $to_user = $request->chatTo;
+        $from_user = $request->chatFrom;
         $aData = array(
             'read_status' => '1'
         );
@@ -1208,9 +1208,9 @@ class WebChat extends Controller {
      * @return type object
      */
 
-    public function favouriteUser() {
-        $userId = Input::post("userId");
-        $status = Input::post("status");
+    public function favouriteUser(Request $request) {
+        $userId = $request->userId;
+        $status = $request->status;
         $webChatModel = new WebChatModel();
         $aData = array(
             'favourite' => $status
@@ -1235,8 +1235,8 @@ class WebChat extends Controller {
      */
 
 
-    public function smallwfilter() {
-        $searchvalue = Input::post("searchVal");
+    public function smallwfilter(Request $request) {
+        $searchvalue = $request->searchVal;
         $loginUserData = getLoggedUser();
         $activechatlist = smallwfilterInput($loginUserData->id, $searchvalue);
 
@@ -1365,12 +1365,12 @@ class WebChat extends Controller {
      */
 
 
-     public function bigwfilter() {
+     public function bigwfilter(Request $request) {
 
         $count = 0;
         $flag = 0;
         $userMessage = "";
-        $searchvalue = Input::post("searchVal");
+        $searchvalue = $request->searchVal;
         $loginUserData = getLoggedUser();
         $activechatlist = smallwfilterInput($loginUserData->id, $searchvalue);
 

@@ -807,6 +807,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
 Route::post('payment/changeSubscription', 'Payment@changeSubscription');
 Route::post('reviews/deleteReviewMultipal', 'Reviews@deleteReviewMultipal');
+Route::post('reviews/getCommonCommentPopup/{widgetHash?}', 'Reviews@getCommonCommentPopup');
 
 //offsite
 Route::get('feedback', 'Feedback@index');

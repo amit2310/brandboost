@@ -13,12 +13,12 @@ class Referral extends Controller {
      *
      */
     public function Index() {
-		
+
 		$response = array();
         $aUInfo = getLoggedUser();
         $userID = $aUInfo->id;
         $mReferral = new ReferralModel();
-        
+
     	$referralData = $mReferral->getReferralDataBySId($userID);
 
 		$aPageData = array(
@@ -27,13 +27,13 @@ class Referral extends Controller {
 
     	return view('user.referral', $aPageData);
     }
-	
-	public function updateReferralUser() {
+
+	public function updateReferralUser(Request $request) {
 		$aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        $status = $post['status'];
-        $referralId = $post['referral_id'];
+
+        $status = $request->status;
+        $referralId = $request->referral_id;
 
         if ($referralId != '') {
             $aData = array(
@@ -45,11 +45,11 @@ class Referral extends Controller {
         }else{
 			$response = array('status' => 'error');
 		}
-		
+
         echo json_encode($response);
         exit;
     }
-	
+
 	public function reports($referralID) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
@@ -79,7 +79,7 @@ class Referral extends Controller {
                 $oTotalReferralTwillio = $this->mReferral->getStatsTotalTwillio($referralID);
             }
 
-           
+
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>

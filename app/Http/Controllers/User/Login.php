@@ -50,15 +50,15 @@ class Login extends Controller {
         $password = (isset($request->password) && !empty($request->password)) ? $request->password : '';
         $remember = (isset($request->remember) && !empty($request->remember)) ? $request->remember : '';
         $checkAdminUser = $mLogin->verifyAdminUser($loginid, $password, $remember);
-        
-      
+
+
         if(!empty($checkAdminUser)) {
             if(!empty($checkAdminUser->id) && $checkAdminUser->id > 0) {
-           
+
                 $mLogin->saveUserHistory($checkAdminUser->id, $platform_device);
             }
             if ($checkAdminUser) {
-                
+
                 if ($checkAdminUser->user_role == '3') {
                     $loginCounterLU = $checkAdminUser->login_counter_lu + 1;
                     $loginCounterAU = $checkAdminUser->login_counter_au + 1;
@@ -106,7 +106,7 @@ class Login extends Controller {
         else {
             return view('user.login_form');
         }
-        
+
 
         /*if (!empty($loginType)) {
 
@@ -124,7 +124,7 @@ class Login extends Controller {
                 }
             } else {
 
-               
+
             }
         } else {
 
@@ -160,14 +160,14 @@ class Login extends Controller {
         $webChatModel->lastLoginDetail($aUser->id, $aData);
         Session::flush();
         Session::regenerate(true);
-        return redirect('/user/login'); 
+        return redirect('/user/login');
     }
 
-    public function forgot_password() {
-        $post = $this->input->post();
-        if (!empty($post)) {
+    public function forgot_password(Request $request) {
+
+        if (!empty($request)) {
             $response = array();
-            $email = (isset($post['email']) && !empty($post['email'])) ? $post['email'] : '';
+            $email = (isset($request->email) && !empty($request->email)) ? $request->email : '';
             $checkAdminUser = $this->Adminlogin->ForgotPassword($email);
             if ($checkAdminUser) {
                 $aData = array('userDetail'=>$checkAdminUser);
@@ -188,24 +188,24 @@ class Login extends Controller {
     }
 
     public function reset_password($userId) {
-        
+
         $this->load->view('/admin/reset_password', array('userId'=>$userId));
     }
 
-    public function reset_new_password() {
+    public function reset_new_password(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        $newPassword = $post['newPassword'];
-        $confirmPassword = $post['confirmPassword'];
-        $userId = $post['userId'];
+
+        $newPassword = $request->newPassword;
+        $confirmPassword = $request->confirmPassword;
+        $userId = $request->userId;
         $base_64 = $userId . str_repeat('=', strlen($userId) % 4);
         $userId = base64_url_decode($base_64);
-        
+
         if($userId > 0) {
             $result = $this->Adminlogin->ChangePasswordReset($newPassword, $userId);
         }
-     
+
         if ($result) {
             $response['status'] = 'success';
             $aData = array();
@@ -218,12 +218,12 @@ class Login extends Controller {
         }
 
         echo json_encode($response);
-        exit;        
+        exit;
     }
 
-    public function change_password() {
-	
-        $post = $this->input->post();
+    public function change_password(Request $request) {
+
+
 
         $breadcrumb = '<ul class="breadcrumb">
                     <li><a href="' . base_url('admin/') . '"><i class="icon-home2 position-left"></i> Home</a></li>
@@ -231,11 +231,11 @@ class Login extends Controller {
                 </ul>';
         $aData = array('title' => 'Brand Boost Change Password', 'pagename' => $breadcrumb);
 
-        if (!empty($post)) {
+        if (!empty($request)) {
             $response = array();
-            $oldPassword = (isset($post['oldPassword']) && !empty($post['oldPassword'])) ? $post['oldPassword'] : '';
-            $newPassword = (isset($post['newPassword']) && !empty($post['newPassword'])) ? $post['newPassword'] : '';
-            $rePassword = (isset($post['rePassword']) && !empty($post['rePassword'])) ? $post['rePassword'] : '';
+            $oldPassword = (isset($request->oldPassword) && !empty($request->oldPassword)) ? $request->oldPassword : '';
+            $newPassword = (isset($request->newPassword) && !empty($request->newPassword)) ? $request->newPassword : '';
+            $rePassword = (isset($request->rePassword) && !empty($request->rePassword)) ? $request->rePassword : '';
             if ($newPassword == $rePassword) {
                 $checkPassword = $this->Adminlogin->ChangePassword($oldPassword, $newPassword, $rePassword);
                 if ($checkPassword) {

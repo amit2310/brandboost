@@ -10,21 +10,19 @@ use Illuminate\Support\Facades\Input;
 
 class Segments extends Controller
 {
-     public function createSegment() {
+     public function createSegment(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        $post = $this->input->post();
-        $segmentName = strip_tags($post['segmentName']);
-        $description = strip_tags($post['segmentDescription']);
-        $moduleUnitID = strip_tags($post['moduleUnitID']);
-        $segmentType = strip_tags($post['segmentType']);
-        $campaignType = strip_tags($post['campaignType']);
-        $moduleName = strip_tags($post['moduleName']);
-        $eventID = strip_tags($post['eventID']);
-        $mNPS  = NpsModel();
-
-
+        $segmentName = $request->segmentName;
+        $description = $request->segmentDescription;
+        $moduleUnitID = $request->moduleUnitID;
+        $segmentType = $request->segmentType;
+        $campaignType = $request->campaignType;
+        $moduleName = $request->moduleName;
+        $eventID = $request->eventID;
+        $mNPS  = new NpsModel();
+        $mSegments = new SegmentsModel();
 
         //check for already
         $bDuplicate = $mSegments->isDuplicateSegment($segmentName, $userID);
@@ -62,10 +60,10 @@ class Segments extends Controller
                     $oNPS = $mNPS->getNps($userID, $moduleUnitID);
                     if (!empty($oNPS)) {
                         $hashCode = $oNPS->hashcode;
-                        
+
                     }
-                    
-                    
+
+
                     $bInserted = $mSegments->addSegmentSubscribersFromNPSFeedback($segmentID, $hashCode, $segmentType, $campaignType, $moduleName);
                 } else {
                     $bInserted = $mSegments->addSegmentSubscribers($segmentID, $moduleUnitID, $segmentType, $campaignType, $moduleName, $eventID);
@@ -83,20 +81,20 @@ class Segments extends Controller
         echo json_encode($response);
         exit;
     }
-    
+
 	/**
 	* This function is used to sync the segments with the broadcast
 Im ty::
 	* @return type
 	*/
 
-    public function syncSegment() {
+    public function syncSegment(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        $post = Input::post();
+
         $mSegments = new SegmentsModel();
-        $segmentID = strip_tags($post['segmentID']);
+        $segmentID = $request->segmentID;
         $mNPS = new NpsModel();
         //Get Segment Info
         $oSegment = $mSegments->getSegments($userID, $segmentID);
