@@ -1,5 +1,5 @@
 <div class="row monthly_pricing_plan" @if (!empty($oCurrentPlanData) && !(($oCurrentPlanData->subs_cycle == 'month' || $oCurrentPlanData->subs_cycle == 'monthly') && ($oCurrentPlanData->level_name != 'Pro'))) style="display:none;" @endif>
-    @if (!empty($oMemberships)): $isMembershipActive = false
+    @if (!empty($oMemberships)): @php $isMembershipActive = false; @endphp
         @foreach ($oMemberships as $oMembership)
             @if (($oMembership->type == 'membership') && ($oMembership->subs_cycle == 'monthly' || $oMembership->subs_cycle == 'month'))
                 <!-- Pricing -->
@@ -74,7 +74,7 @@
 </div>
 
 <div class="row yearly_pricing_plan" @if (!(($oCurrentPlanData->subs_cycle == 'yearly' || $oCurrentPlanData->subs_cycle == 'year') || ($oCurrentPlanData->level_name == 'Pro'))) style="display:none;" @endif>
-    @if (!empty($oMemberships)): $isMembershipActive = false
+    @if (!empty($oMemberships)) @php $isMembershipActive = false; @endphp
         @foreach ($oMemberships as $oMembership)
             @if (($oMembership->type == 'membership') && ($oMembership->subs_cycle == 'yearly' || $oMembership->subs_cycle == 'year'))
                 <!-- Pricing -->
