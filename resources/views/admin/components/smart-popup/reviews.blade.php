@@ -113,12 +113,13 @@
                     @endif
                 </div>
             </div>
-    </div>
+        </div>
 
 <ul class="nav nav-tabs nav-tabs-bottom">
     <li class="@if (empty($selectedTab) || $selectedTab == 'undefined' || $selectedTab == 'review') active @endif"><a href="#smartReviewTab" data-toggle="tab">Review</a></li>
     <li class="@if ($selectedTab == 'notes') active @endif"><a href="#smartNotesTab" data-toggle="tab">Notes</a></li>
 </ul>
+
 <div class="tab-content">
     <div class="tab-pane @if (empty($selectedTab) || $selectedTab == 'undefined' || $selectedTab == 'review') active @endif" id="smartReviewTab">
         <div class="smart_container" style="min-height:497px;">

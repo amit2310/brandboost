@@ -110,6 +110,7 @@
                         @endphp
                     </ul>
                 @endif
+
                 <div class="interactions p0 pull-left">
                     <ul>
                         <li><i class="icon-user"></i><strong>{{ $oQuestion->firstname . " " . $oQuestion->lastname }}</strong></li>
