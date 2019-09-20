@@ -91,7 +91,7 @@ class Questions extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $questionID = $request->id;
-        $selectedTab = Request::input('t');
+        $selectedTab = $request->input('t');
 		$quesID = $request->questionID;
 		$actionName = $request->action;
         $questionID = ($quesID > 0) ? $quesID : $questionID;

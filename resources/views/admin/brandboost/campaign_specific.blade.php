@@ -261,89 +261,92 @@ if (!empty($aBrandbosts)) {
 
                                     <tbody>
                                         @php
-                                        //$inc = 1;
-                                        $recent = strtotime('-24 hours');
-                                        $aUser = getLoggedUser();
-                                        $currentUserId = $aUser->id;
-                                        foreach ($aBrandbosts as $data) {
-                                            //if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
-                                            $list_id = $data->id;
-                                            $user_id = $data->user_id;
-                                            $revCount = getCampaignReviewCount($data->id);
-                                            $revRA = getCampaignReviewRA($data->id);
-                                            $allSubscribers = \App\Models\Admin\ListsModel::getAllSubscribersList($data->id);
-                                            if (!empty($allSubscribers)) {
-                                                $newContacts = 0;
-                                                foreach ($allSubscribers as $oSubs) {
-                                                    if (strtotime($oSubs->created) > $recent) {
-                                                        $newContacts++;
-                                                    }
-                                                    if ($oSubs->status == 2) {
-                                                        $iArchiveCount++;
-                                                    } else {
-                                                        $iActiveContactCount++;
-                                                    }
-                                                }
-                                            }
-                                            $siteRevCount = getCampaignSiteReviewCount($data->id);
-                                            $siteRevRA = getCampaignSiteReviewRA($data->id);
-                                            $brandImgArray = unserialize($data->brand_img);
-                                            $brand_img = $brandImgArray[0]['media_url'];
-
-                                            if (empty($brand_img)) {
-                                                $imgSrc = base_url('assets/images/default_table_img2.png');
-                                            } else {
-                                                $imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
-                                            }
-
-                                            $reviewRequests = \App\Models\Admin\BrandboostModel::getReviewRequest($data->id, '');
-                                            $getSendRequest = count($reviewRequests);
-                                            $getSendRequestSms = getSendRequest($data->id, 'sms');
-                                            $getSendRequestEmail = getSendRequest($data->id, 'email');
-                                            $getSendRequestEmailPersentage = $getSendRequestEmail * 100 / $getSendRequest;
-                                            $getSendRequestSmsPersentage = $getSendRequestSms * 100 / $getSendRequest;
-
-                                            $reviewResponse = \App\Models\Admin\BrandboostModel::getReviewRequestResponse($data->id);
-                                            $getResCount = count($reviewResponse);
-
-                                            $positiveRating = 0;
-                                            $neturalRating = 0;
-                                            $negativeRating = 0;
-                                            $positiveGraph = 0;
-                                            $neturalGraph = 0;
-                                            $negativeGraph = 0;
-                                            //pre($reviewResponse);
-                                            //echo 'ratings:- '.$reviewResponse->ratings;
-                                            $newPositive = $newNegative = $newNeutral = 0;
-                                            foreach ($reviewResponse as $reviewData) {
-
-                                                if ($reviewData->ratings != '') {
-                                                    if ($reviewData->ratings >= 4) {
-                                                        if (strtotime($reviewData->reviewdate) > $recent) {
-                                                            $newPositive++;
+                                            //$inc = 1;
+                                            $recent = strtotime('-24 hours');
+                                            $aUser = getLoggedUser();
+                                            $currentUserId = $aUser->id;
+                                            foreach ($aBrandbosts as $data) {
+                                                //if ($data->status == 1 or $data->status == 0 or $data->status == 2) {
+                                                $list_id = $data->id;
+                                                $user_id = $data->user_id;
+                                                $revCount = getCampaignReviewCount($data->id);
+                                                $revRA = getCampaignReviewRA($data->id);
+                                                $allSubscribers = \App\Models\Admin\ListsModel::getAllSubscribersList($data->id);
+                                                if (!empty($allSubscribers)) {
+                                                    $newContacts = 0;
+                                                    foreach ($allSubscribers as $oSubs) {
+                                                        if (strtotime($oSubs->created) > $recent) {
+                                                            $newContacts++;
                                                         }
-                                                        $positiveRating++;
-                                                    } else if ($reviewData->ratings == 3) {
-                                                        if (strtotime($reviewData->reviewdate) > $recent) {
-                                                            $newNeutral++;
+                                                        if ($oSubs->status == 2) {
+                                                            $iArchiveCount++;
+                                                        } else {
+                                                            $iActiveContactCount++;
                                                         }
-                                                        $neturalRating++;
-                                                    } else {
-                                                        if (strtotime($reviewData->reviewdate) > $recent) {
-                                                            $newNegative++;
-                                                        }
-                                                        $negativeRating++;
                                                     }
                                                 }
-                                            }
+                                                $siteRevCount = getCampaignSiteReviewCount($data->id);
+                                                $siteRevRA = getCampaignSiteReviewRA($data->id);
+                                                $brandImgArray = unserialize($data->brand_img);
+                                                $brand_img = $brandImgArray[0]['media_url'];
 
-                                            $positiveGraph = $positiveRating * 100 / $getResCount;
-                                            $neturalGraph = $neturalRating * 100 / $getResCount;
-                                            $negativeGraph = $negativeRating * 100 / $getResCount;
-                                            $totalGraph = $getResCount * 100 / $getSendRequest;
-                                            $totalGraph = $totalGraph > 100 ? 100 : $totalGraph;
+                                                if (empty($brand_img)) {
+                                                    $imgSrc = base_url('assets/images/default_table_img2.png');
+                                                } else {
+                                                    $imgSrc = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $brand_img;
+                                                }
 
-                                            $reviewUserData = \App\Models\Admin\UsersModel::getUserInfo($reviewResponse[0]->user_id);
+                                                $reviewRequests = \App\Models\Admin\BrandboostModel::getReviewRequest($data->id, '');
+                                                $getSendRequest = count($reviewRequests);
+                                                $getSendRequestSms = getSendRequest($data->id, 'sms');
+                                                $getSendRequestEmail = getSendRequest($data->id, 'email');
+                                                if($getSendRequest > 0) {
+                                                    $getSendRequestEmailPersentage = $getSendRequestEmail * 100 / $getSendRequest;
+                                                    $getSendRequestSmsPersentage = $getSendRequestSms * 100 / $getSendRequest;
+
+                                                }
+
+                                                $reviewResponse = \App\Models\Admin\BrandboostModel::getReviewRequestResponse($data->id);
+                                                $getResCount = count($reviewResponse);
+
+                                                $positiveRating = 0;
+                                                $neturalRating = 0;
+                                                $negativeRating = 0;
+                                                $positiveGraph = 0;
+                                                $neturalGraph = 0;
+                                                $negativeGraph = 0;
+                                                //pre($reviewResponse);
+                                                //echo 'ratings:- '.$reviewResponse->ratings;
+                                                $newPositive = $newNegative = $newNeutral = 0;
+                                                foreach ($reviewResponse as $reviewData) {
+
+                                                    if ($reviewData->ratings != '') {
+                                                        if ($reviewData->ratings >= 4) {
+                                                            if (strtotime($reviewData->reviewdate) > $recent) {
+                                                                $newPositive++;
+                                                            }
+                                                            $positiveRating++;
+                                                        } else if ($reviewData->ratings == 3) {
+                                                            if (strtotime($reviewData->reviewdate) > $recent) {
+                                                                $newNeutral++;
+                                                            }
+                                                            $neturalRating++;
+                                                        } else {
+                                                            if (strtotime($reviewData->reviewdate) > $recent) {
+                                                                $newNegative++;
+                                                            }
+                                                            $negativeRating++;
+                                                        }
+                                                    }
+                                                }
+
+                                                $positiveGraph = $positiveRating * 100 / $getResCount;
+                                                $neturalGraph = $neturalRating * 100 / $getResCount;
+                                                $negativeGraph = $negativeRating * 100 / $getResCount;
+                                                $totalGraph = $getResCount * 100 / $getSendRequest;
+                                                $totalGraph = $totalGraph > 100 ? 100 : $totalGraph;
+
+                                                $reviewUserData = \App\Models\Admin\UsersModel::getUserInfo($reviewResponse[0]->user_id);
                                             @endphp
 
                                             <tr id="append-{{ $data->id }}" class="selectedClass">

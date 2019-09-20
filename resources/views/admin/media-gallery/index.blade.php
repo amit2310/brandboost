@@ -385,7 +385,7 @@
                                             $createdByData = getUserDetailsByUserID($galleryData->user_id);
                                         }
                                 @endphp
-                                    <tr id="append-{{ $galleryData->id }}" class="selectedClass">
+                                <tr id="append-{{ $galleryData->id }}" class="selectedClass">
                                     <td style="display: none;">{{ date('m/d/Y', strtotime($galleryData->created)) }}</td>
                                     <td style="display: none;">{{ $galleryData->id }}</td>
                                     <td style="display: none;" class="editAction"><label
@@ -432,7 +432,7 @@
                                             <div class="pt-5"><a href="javascript:void();"
                                                                  class="text-default text-semibold bbot">{{ $createdByData->firstname . ' ' . $createdByData->lastname }}</a><img
                                                     class="flags"
-                                                    src="{{ base_url() }}assets/images/flags/{{ strtolower($createdByData->userCountry) }}.png"
+                                                    src="{{ base_url() }}assets/images/flags/{{ strtolower($createdByData->country) }}.png"
                                                     onerror="this.src='{{ base_url('assets/images/flags/us.png') }}'"/>
                                             </div>
                                             <div class="text-muted text-size-small">{{ $createdByData->email }}</div>
