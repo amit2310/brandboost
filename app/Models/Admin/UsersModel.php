@@ -10,7 +10,7 @@ use Session;
 class UsersModel extends Model {
 
     /**
-     * 
+     *
      * get complete user information
      * @param type $id
      * @return type
@@ -167,7 +167,7 @@ class UsersModel extends Model {
 
         return $oData;
     }
-	
+
 	/**
      * This function used to check email exist
      * @param type $emailID
@@ -259,7 +259,7 @@ class UsersModel extends Model {
      * Update user record
      * @param type $aData
      * @param type $userId
-     * @return type 
+     * @return type
      */
     public function updateUsers($aData, $userId) {
 
@@ -295,8 +295,8 @@ class UsersModel extends Model {
     }
 
     /**
-     * This function is used to delete the user from the system 
-     * @return type 
+     * This function is used to delete the user from the system
+     * @return type
      */
     public function deleteUsers($userId) {
         $aData = array('deleted_status' => 1);
@@ -684,7 +684,7 @@ class UsersModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $userID
      * @return type
      */

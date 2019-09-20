@@ -720,7 +720,7 @@ class Brandboost extends Controller {
 	* @param type $brandboostID
 	* @return type
 	*/
-	public function offsiteSetup($brandboostID) {
+	public function offsiteSetup(Request $request, $brandboostID) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if (empty($brandboostID)) {
@@ -728,7 +728,7 @@ class Brandboost extends Controller {
             exit;
         }
 
-		$selectedTab = Request::input('t');
+		$selectedTab = $request->input('t');
         $oBrandboost = BrandboostModel::getBrandboost($brandboostID);
         if (empty($oBrandboost) || $oBrandboost[0]->user_id != $userID) {
             redirect("admin/brandboost/offsite");
