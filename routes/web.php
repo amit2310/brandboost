@@ -85,10 +85,10 @@ Route::post('payment/upgradeMembership', 'Payment@upgradeMembership');
 
 //Dropzone Section
 Route::post('dropzone/upload_editor_image', 'Dropzone@upload_editor_image');
-Route::post('dropzone/upload_s3_attachment/{clientId}/{folderName}', 'Dropzone@upload_s3_attachment');
+Route::post('dropzone/upload_s3_attachment/{clientId?}/{folderName?}', 'Dropzone@upload_s3_attachment');
 Route::post('webchat/dropzone/upload_profile_image', 'Dropzone@upload_profile_image');
 Route::post('webchat/dropzone/upload_s3_attachment/{clientId}/{folderName}', 'Dropzone@upload_s3_attachment');
-Route::post('webchat/dropzone/upload_s3_attachment_product_review/{clientId}/{folderName}', 'Dropzone@upload_s3_attachment_product_review');
+Route::post('webchat/dropzone/upload_s3_attachment_product_review/{clientId}/{folderName}/{orderVal?}', 'Dropzone@upload_s3_attachment_product_review');
 Route::post('webchat/dropzone/edit_review_image', 'Dropzone@edit_review_image');
 Route::post('webchat/dropzone/upload_s3_attachment_question_review/{clientId}/{folderName}', 'Dropzone@upload_s3_attachment_question_review');
 Route::post('webchat/dropzone/upload_s3_attachment_review/{clientId}/{folderName}', 'Dropzone@upload_s3_attachment_review');

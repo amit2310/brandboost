@@ -12,23 +12,24 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
 
-class Dropzone extends Controller 
+class Dropzone extends Controller
 {
-  
+
     /**
-     * This function used to upload   image from grapes editor into S3 server
+     * This function used to upload image from grapes editor into S3 server
      * @param Request $request
      */
-    public function upload_editor_image(Request $request) {
-        
-        $file = $request->file('files')->storeAs('campaign', 'umair.jpg', 's3');
+    public function upload_editor_image(Request $request)
+    {
+
+        /*$file = $request->file('files')->storeAs('campaign', 'umair.jpg', 's3');
         echo "Path is $file";
         pre($file);
-        //echo "File Name is ". $file->store;
+        echo "File Name is ". $file->store;
         die;
         if(!empty($file)){
-            
-        }
+
+        }*/
         if (!empty($_FILES)) {
             //Collect Text Review(Save Video into S3)
             $oResource = isset($_FILES['files']) ? $_FILES['files'] : false;
@@ -44,15 +45,19 @@ class Dropzone extends Controller
                     // Put file to AWS S3
                     $oResourceFile = "template_img_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
                     $filekey = "campaigns/" . $oResourceFile;
+                    //$input = file_get_contents($oResource['tmp_name']);
+                    //$this->s3->putObject($input, AWS_BUCKET, $filekey);
                     $input = file_get_contents($oResource['tmp_name']);
-                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('files')->store($filekey, 's3');
                 } else {
                     echo "Error: " . $error;
                 }
                 //$aReviewData['comment_video'] = $oResourceFile;
                 $s3Src = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{$oResourceFile}";
                 $img = file_get_contents($s3Src);
-                $encodedImg = 'data:image/'.$ext.';base64,'.base64_encode($img);
+                $encodedImg = 'data:image/' . $ext . ';base64,' . base64_encode($img);
 
                 $aData = array(
                     'type' => 'image',
@@ -66,9 +71,13 @@ class Dropzone extends Controller
             }
         }
     }
-    
-    
-    public function upload_image() {
+
+
+    /**
+     *
+     */
+    public function upload_image(Request $request)
+    {
 
         if (!empty($_FILES)) {
 
@@ -92,6 +101,7 @@ class Dropzone extends Controller
                     $input = file_get_contents($videoReview['tmp_name']);
                     $s3 = \Storage::disk('s3');
                     $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('file')->store($filekey, 's3');
                 }
                 //$aReviewData['comment_video'] = $videoReviewFile;
                 echo $videoReviewFile;
@@ -99,46 +109,11 @@ class Dropzone extends Controller
         }
     }
 
-    public function upload_editor_image_old() {
-        if (!empty($_FILES)) {
-            //Collect Text Review(Save Video into S3)
-            $oResource = isset($_FILES['files']) ? $_FILES['files'] : false;
-            $ext = pathinfo($oResource['name'], PATHINFO_EXTENSION);
-            $allowed_types = array("png", "gif", "jpeg", "jpg", "JPG", "JPEG", "PNG", "GIF");
-            $error = "";
-            if ($oResource !== false) {
-                if (empty($error) && !in_array($ext, $allowed_types))
-                    $error = "Invalid video file format";
-                if (empty($error) && (!isset($oResource['size']) || $oResource['size'] > (6291456 * 100)))
-                    $error = "Maximum filesize limit is 600MB only.";
-                if (empty($error)) {
-                    // Put file to AWS S3
-                    $oResourceFile = "template_img_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
-                    $filekey = "campaigns/" . $oResourceFile;
-                    $input = file_get_contents($oResource['tmp_name']);
-                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
-                } else {
-                    echo "Error: " . $error;
-                }
-                //$aReviewData['comment_video'] = $oResourceFile;
-                $s3Src = "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{$oResourceFile}";
-                $img = file_get_contents($s3Src);
-                $encodedImg = 'data:image/'.$ext.';base64,'.base64_encode($img);
-
-                $aData = array(
-                    'type' => 'image',
-                    'src' => $encodedImg,
-                    'width' => 250,
-                    'height' => 350
-                );
-                $response = array('data' => $aData);
-                echo json_encode($response);
-                exit;
-            }
-        }
-    }
-
-    public function upload_chat_image() {
+    /**
+     * Used to upload chat related images/videos upload
+     */
+    public function upload_chat_image(Request $request)
+    {
 
         if (!empty($_FILES)) {
 
@@ -158,9 +133,12 @@ class Dropzone extends Controller
                     // Put file to AWS S3
                     $videoReviewFile = "chat_logo_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
                     $filekey = "campaigns/" . $videoReviewFile;
+                    //$this->s3->putObject($input, AWS_BUCKET, $filekey);
                     $filename = $videoReview['name'];
                     $input = file_get_contents($videoReview['tmp_name']);
-                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('files')->store($filekey, 's3');
                 }
                 //$aReviewData['comment_video'] = $videoReviewFile;
                 echo $videoReviewFile;
@@ -168,8 +146,11 @@ class Dropzone extends Controller
         }
     }
 
-
-    public function upload_campaign_files() {
+    /**
+     * @param Request $request
+     */
+    public function upload_campaign_files(Request $request)
+    {
 
         if (!empty($_FILES)) {
 
@@ -189,18 +170,26 @@ class Dropzone extends Controller
                     // Put file to AWS S3
                     $videoReviewFile = "text_review_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
                     $filekey = "campaigns/" . $videoReviewFile;
+                    //$this->s3->putObject($input, AWS_BUCKET, $filekey);
                     $filename = $videoReview['name'];
                     $input = file_get_contents($videoReview['tmp_name']);
-                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('file')->store($filekey, 's3');
                 }
-         
+
                 echo $videoReviewFile;
                 exit;
             }
         }
     }
 
-    public function upload_campaign_product_image() {
+
+    /**
+     * Upload product related imgaes
+     */
+    public function upload_campaign_product_image(Request $request)
+    {
 
         if (!empty($_FILES)) {
 
@@ -220,9 +209,12 @@ class Dropzone extends Controller
                     // Put file to AWS S3
                     $videoReviewFile = "bb_product_img_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
                     $filekey = "campaigns/" . $videoReviewFile;
+                    //$this->s3->putObject($input, AWS_BUCKET, $filekey);
                     $filename = $videoReview['name'];
                     $input = file_get_contents($videoReview['tmp_name']);
-                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('file')->store($filekey, 's3');
                 }
                 //$aReviewData['comment_video'] = $videoReviewFile;
                 echo $videoReviewFile;
@@ -230,8 +222,13 @@ class Dropzone extends Controller
         }
     }
 
-    
-    public function upload_video() {
+
+    /**
+     * Used to upload videos
+     * @param Request $request
+     */
+    public function upload_video(Request $request)
+    {
 
         if (!empty($_FILES)) {
 
@@ -254,9 +251,12 @@ class Dropzone extends Controller
                     $videoReviewFile = "video_review_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
                     $filekey = "campaigns/" . $videoReviewFile;
                     $filename = $videoReview['name'];
+                    /*$res = $this->s3->putObject($input, clickdrop, $filekey);
+                    var_dump($res);*/
                     $input = file_get_contents($videoReview['tmp_name']);
-                    $res = $this->s3->putObject($input, clickdrop, $filekey);
-                    //var_dump($res);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('file')->store($filekey, 's3');
                 }
                 //$aReviewData['comment_video'] = $videoReviewFile;
                 echo $videoReviewFile;
@@ -264,7 +264,12 @@ class Dropzone extends Controller
         }
     }
 
-    public function upload() {
+    /**
+     * Used to upload file
+     * @param Request $request
+     */
+    public function upload(Request $request)
+    {
 
         if (!empty($_FILES)) {
 
@@ -286,10 +291,14 @@ class Dropzone extends Controller
                     // Put file to AWS S3
                     $videoReviewFile = "review_" . sha1(time()) . "." . $ext;
                     $filekey = "campaigns/" . $videoReviewFile;
+                    /*
+                    $res = $this->s3->putObject($input, clickdrop, $filekey);
+                    var_dump($res);*/
                     $filename = $upload['name'];
                     $input = file_get_contents($upload['tmp_name']);
-                    $res = $this->s3->putObject($input, clickdrop, $filekey);
-                    //var_dump($res);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('file')->store($filekey, 's3');
                 }
                 //$aReviewData['comment_video'] = $videoReviewFile;
                 echo $videoReviewFile;
@@ -297,7 +306,12 @@ class Dropzone extends Controller
         }
     }
 
-    public function uploadSiteReviewFile() {
+    /**
+     * Upload site Review files
+     * @param Request $request
+     */
+    public function uploadSiteReviewFile(Request $request)
+    {
 
         if (!empty($_FILES)) {
 
@@ -317,10 +331,13 @@ class Dropzone extends Controller
                 if (empty($error)) {
                     // Put file to AWS S3
                     $videoReviewFile = "review_" . sha1(time()) . "." . $ext;
+                    /*$filename = $videoReview['name'];
+                    $this->s3->putObject($input, AWS_BUCKET, $filekey);*/
                     $filekey = "campaigns/" . $videoReviewFile;
-                    $filename = $videoReview['name'];
                     $input = file_get_contents($videoReview['tmp_name']);
-                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('file')->store($filekey, 's3');
                 }
                 $mediaUrl = $videoReviewFile;
                 //$mediaType = 'image';
@@ -338,10 +355,15 @@ class Dropzone extends Controller
                 exit;
             }
         }
-      
+
     }
 
-    public function uploadCompanyLogo() {
+    /**
+     * Upload Company Logo
+     * @param Request $request
+     */
+    public function uploadCompanyLogo(Request $request)
+    {
 
         if (!empty($_FILES)) {
 
@@ -361,10 +383,13 @@ class Dropzone extends Controller
                 if (empty($error)) {
                     // Put file to AWS S3
                     $fileName = "company_" . sha1(time()) . "." . $ext;
+                    /* $filename = $file['name'];
+                    $this->s3->putObject($input, AWS_BUCKET, $filekey);*/
                     $filekey = "campaigns/" . $fileName;
-                    $filename = $file['name'];
                     $input = file_get_contents($file['tmp_name']);
-                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('file')->store($filekey, 's3');
                 }
                 $mediaUrl = $fileName;
 
@@ -374,17 +399,20 @@ class Dropzone extends Controller
                     $mediaType = 'image';
                 }
 
-
-
                 echo '<input type="hidden" name="company_logo" value="' . $mediaUrl . '">';
                 exit;
             }
         }
     }
 
-    public function uploadProductReviewFile($orderVal) {
+    /**
+     * Upload Product Review File
+     * @param Request $request
+     */
+    public function uploadProductReviewFile(Request $request)
+    {
 
-
+        $orderVal = $request->orderVal;
         if (!empty($_FILES)) {
 
             //Collect Text Review(Save Video into S3)
@@ -405,12 +433,15 @@ class Dropzone extends Controller
                     // Put file to AWS S3
                     $videoReviewFile = "review_" . sha1(time()) . "." . $ext;
                     $filekey = "campaigns/" . $videoReviewFile;
+                    //$this->s3->putObject($input, AWS_BUCKET, $filekey);
                     $filename = $videoReview['name'];
                     $input = file_get_contents($videoReview['tmp_name']);
-                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('file')->store($filekey, 's3');
                 }
                 $mediaUrl = $videoReviewFile;
-               
+
 
                 $videoExt = array('mp4', 'mov', 'flv', 'm4v', 'm4a', 'wmv');
                 $imageExt = array('png', 'gif', 'jpeg', 'jpg');
@@ -430,10 +461,15 @@ class Dropzone extends Controller
                 exit;
             }
         }
-        
+
     }
 
-    public function upload_chat_attachment() {
+    /**
+     * Upload chat attachments
+     * @param Request $request
+     */
+    public function upload_chat_attachment(Request $request)
+    {
 
         $videoReviewFile = '';
         $error = "";
@@ -444,7 +480,7 @@ class Dropzone extends Controller
 
 
             $ext = pathinfo($videoReview['name'][0], PATHINFO_EXTENSION);
-           
+
             $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "PDF", "JPG", "JPEG", "PNG", "GIF", "DOC", "DOCX", "ODT", "CSV", "mp4", "3gp", "webm", "ogv", "mpeg", "mov");
             $error = "";
 
@@ -462,9 +498,13 @@ class Dropzone extends Controller
                     $videoReviewFile = "chat_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
                     $filekey = "campaigns/" . $videoReviewFile;
                     //$filekey = "chat_attachments/". $videoReviewFile;
-                    $filename = $videoReview['name'][0];
+                    /*$filename = $videoReview['name'][0];
+                    $this->s3->putObject($input, AWS_BUCKET, $filekey);*/
                     $input = file_get_contents($videoReview['tmp_name'][0]);
-                    $this->s3->putObject($input, AWS_BUCKET, $filekey);
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('files')->store($filekey, 's3');
+
                 }
             }
         } else {
@@ -477,10 +517,11 @@ class Dropzone extends Controller
     }
 
     /**
-    * This function used to upload user images to the amazon s3 server 
-    * @return type object
-    */
-    public function upload_profile_image() {
+     * This function used to upload user images to the amazon s3 server
+     * @return type object
+     */
+    public function upload_profile_image(Request $request)
+    {
 
         if (!empty($_FILES)) {
 
@@ -499,11 +540,15 @@ class Dropzone extends Controller
                 if (empty($error)) {
                     // Put file to AWS S3
                     $videoReviewFile = "profile_image_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
-                    $filekey = "campaigns/" . $videoReviewFile;
+                    $filekey = "campaigns/".$videoReviewFile;
+                    $filePath = "campaigns";
                     $filename = $videoReview['name'];
                     $input = file_get_contents($videoReview['tmp_name']);
                     $s3 = \Storage::disk('s3');
                     $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('file')->storeAs($filePath, $videoReviewFile, 's3');
+
+
                 }
                 echo $videoReviewFile;
             }
@@ -511,10 +556,11 @@ class Dropzone extends Controller
     }
 
     /**
-    * This function used to edit review image to the amazon s3 server 
-    * @return type object
-    */
-    public function edit_review_image() {
+     * This function used to edit review image to the amazon s3 server
+     * @return type object
+     */
+    public function edit_review_image(Request $request)
+    {
 
         if (!empty($_FILES)) {
 
@@ -527,16 +573,13 @@ class Dropzone extends Controller
             $mediaName = $videoReview['name'];
             $ext = pathinfo($videoReview['name'], PATHINFO_EXTENSION);
 
-            if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') 
-            {
+            if ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') {
                 $mediaType = 'images';
                 $mediaTypeNew = 'image';
-            }
-            else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
+            } else if ($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt') {
                 $mediaType = 'files';
                 $mediaTypeNew = 'file';
-            }
-            else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
+            } else if ($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm') {
                 $mediaType = 'videos';
                 $mediaTypeNew = 'video';
             }
@@ -551,58 +594,61 @@ class Dropzone extends Controller
                 if (empty($error)) {
                     // Put file to AWS S3
                     $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
-                    $filekey = "campaigns/".$videoReviewFile;
+                    $filekey = "campaigns/" . $videoReviewFile;
                     //$filekey = "chat_attachments/". $videoReviewFile;
                     $filename = $videoReview['name'];
                     $input = file_get_contents($videoReview['tmp_name']);
                     $s3 = \Storage::disk('s3');
                     $s3->put($filekey,$input, 'public');
+                    //$path = $request->file('file')->store($filekey, 's3');
                 }
             }
 
-            echo $filekey.'||<input type="hidden" class="imageUrlS3" name="question_uploaded_name[media_url][]" value="' . $filekey . '"><input type="hidden" name="question_uploaded_name[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="question_uploaded_name[media_name][]" value="' . $mediaName . '">';
-                    exit;
+            echo $filekey . '||<input type="hidden" class="imageUrlS3" name="question_uploaded_name[media_url][]" value="' . $filekey . '"><input type="hidden" name="question_uploaded_name[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="question_uploaded_name[media_name][]" value="' . $mediaName . '">';
+            exit;
         }
     }
 
-    
-	/**
-	* This function used to upload images to the amazon s3 server 
-	* @param type $clientId
-	* @param type $clientId
-	* @return type
-	*/
 
-    public function upload_s3_attachment($clientId, $folderName) {
+    /**
+     * This function used to upload images to the amazon s3 server
+     * @param type $clientId
+     * @param type $clientId
+     * @return type
+     */
 
+    public function upload_s3_attachment(Request $request)
+    {
+        $clientId = $request->clientId;
+        $folderName = $request->folderName;
         $userDetail = getUserDetailsByUserID($clientId);
-        if($userDetail->s3_allow_size > $userDetail->s3_used_size) {
-            
+        if ($userDetail->s3_allow_size > $userDetail->s3_used_size) {
+
             $videoReviewFile = '';
             $error = "";
+            //This function get the maximum allowed filesize from the settings(in Megabytes)
             $filesize = getFileSize('filesize');
+            //Upload multiple files
             if (!empty($_FILES)) {
 
                 $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
+                //Convert maximum allowed filesize in bytes
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
-                   $isLoggedInTeam = Session::get('team_user_id');
-
+                //Check if Team member is logged in
+                $isLoggedInTeam = Session::get('team_user_id');
 
                 //Collect Text Review(Save Video into S3)
-                if(!empty($_FILES['files'])) {
+                if (!empty($_FILES['files'])) {
                     $videoReview = isset($_FILES['files']) ? $_FILES['files'] : false;
                     $ext = pathinfo($videoReview['name'][0], PATHINFO_EXTENSION);
 
-                    if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') 
-                    {
+                    if ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') {
                         $mediaType = 'images';
-                    }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
+                    } else if ($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt') {
                         $mediaType = 'files';
-                    }
-                    else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
+                    } else if ($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm') {
                         $mediaType = 'videos';
                     }
 
@@ -617,35 +663,32 @@ class Dropzone extends Controller
                             // Put file to AWS S3
                             $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
 
-                            if(!empty($isLoggedInTeam)) {
-                                $filekey = $clientId."/".$isLoggedInTeam."/".$folderName."/".$mediaType."/".$videoReviewFile;
+                            if (!empty($isLoggedInTeam)) {
+                                $filekey = $clientId . "/" . $isLoggedInTeam . "/" . $folderName . "/" . $mediaType . "/" . $videoReviewFile;
+                            } else {
+                                $filekey = $clientId . "/" . $folderName . "/" . $mediaType . "/" . $videoReviewFile;
                             }
-                            else {
-                                $filekey = $clientId."/".$folderName."/".$mediaType."/".$videoReviewFile;
-                            }
-                           
+
                             $filename = $videoReview['name'][0];
                             $input = file_get_contents($videoReview['tmp_name'][0]);
                             $s3 = \Storage::disk('s3');
                             $s3->put($filekey,$input, 'public');
+                            //$path = $request->file('files')->store($filekey, 's3');
                         }
                     }
 
                     $response = array('result' => $filekey, 'error' => $error);
                     echo json_encode($response);
-                }
-                else if(!empty($_FILES['file'])) {
+                } //upload single file
+                else if (!empty($_FILES['file'])) {
                     $videoReview = isset($_FILES['file']) ? $_FILES['file'] : false;
                     $ext = pathinfo($videoReview['name'], PATHINFO_EXTENSION);
 
-                    if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') 
-                    {
+                    if ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') {
                         $mediaType = 'images';
-                    }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
+                    } else if ($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt') {
                         $mediaType = 'files';
-                    }
-                    else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
+                    } else if ($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm') {
                         $mediaType = 'videos';
                     }
 
@@ -659,17 +702,17 @@ class Dropzone extends Controller
                         if (empty($error)) {
                             // Put file to AWS S3
                             $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
-                            if(!empty($isLoggedInTeam)) {
-                                $filekey = $clientId."/".$isLoggedInTeam."/".$folderName."/".$mediaType."/".$videoReviewFile;
-                            }
-                            else {
-                                $filekey = $clientId."/".$folderName."/".$mediaType."/".$videoReviewFile;
+                            if (!empty($isLoggedInTeam)) {
+                                $filekey = $clientId . "/" . $isLoggedInTeam . "/" . $folderName . "/" . $mediaType . "/" . $videoReviewFile;
+                            } else {
+                                $filekey = $clientId . "/" . $folderName . "/" . $mediaType . "/" . $videoReviewFile;
                             }
                             $filename = $videoReview['name'];
                             $input = file_get_contents($videoReview['tmp_name']);
                             //$this->s3->putObject($input, AWS_BUCKET, $filekey);
                             $s3 = \Storage::disk('s3');
-                            $s3->put($filekey,$input, 'public');
+                            $s3->put($filekey, $input, 'public');
+                            //$path = $request->file('file')->store($filekey, 's3');
                         }
                     }
                     echo $filekey;
@@ -681,152 +724,41 @@ class Dropzone extends Controller
 
 
     /**
-    * This function used to upload images to the amazon s3 server for review
-    * @param type $clientId
-    * @param type $folderName
-    * @return type
-    */
-     public function upload_s3_attachment_review($clientId, $folderName) 
-     {
-
-
-        $userDetail = getUserDetailsByUserID($clientId);
-        if($userDetail->s3_allow_size > $userDetail->s3_used_size) {
-            
-            $videoReviewFile = '';
-            $error = "";
-            $filesize = getFileSize('filesize');
-
-            if (!empty($_FILES)) {
-
-                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
-                $error = "";
-                $filesizeInBytes = FileSizeConvertToBytes($filesize);
-
-                //Collect Text Review(Save Video into S3)
-                if(!empty($_FILES['files'])) {
-                    $videoReview = isset($_FILES['files']) ? $_FILES['files'] : false;
-                    $mediaName = $videoReview['name'];
-                    $ext = pathinfo($videoReview['name'][0], PATHINFO_EXTENSION);
-
-                    if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') 
-                    {
-                        $mediaType = 'images';
-                        $mediaTypeNew = 'image';
-                    }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
-                        $mediaType = 'files';
-                        $mediaTypeNew = 'file';
-                    }
-                    else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
-                        $mediaType = 'videos';
-                        $mediaTypeNew = 'video';
-                    }
-
-                    if ($videoReview !== false) {
-                        if (empty($error) && !in_array($ext, $allowed_types))
-                            $error = "Invalid file format";
-
-                        if (empty($error) && (!isset($videoReview['size'][0]) || $videoReview['size'][0] > ($filesizeInBytes)))
-                            $error = "Maximum filesize limit is " . $filesize . "MB only.";
-
-                        if (empty($error)) {
-                            // Put file to AWS S3
-                            $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
-                            $filekey = $clientId."/".$folderName."/".$mediaType."/".$videoReviewFile;
-                            //$filekey = "chat_attachments/". $videoReviewFile;
-                            $filename = $videoReview['name'][0];
-                            $input = file_get_contents($videoReview['tmp_name'][0]);
-                            $s3 = \Storage::disk('s3');
-                            $s3->put($filekey,$input, 'public');
-                        }
-                    }
-
-                    $response = array('result' => $filekey, 'error' => $error);
-                    echo json_encode($response);
-                }
-                else if(!empty($_FILES['file'])) {
-                    $videoReview = isset($_FILES['file']) ? $_FILES['file'] : false;
-                    $mediaName = $videoReview['name'];
-                    $ext = pathinfo($videoReview['name'], PATHINFO_EXTENSION);
-
-                    if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') 
-                    {
-                        $mediaType = 'images';
-                        $mediaTypeNew = 'image';
-                    }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
-                        $mediaType = 'files';
-                        $mediaTypeNew = 'file';
-                    }
-                    else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
-                        $mediaType = 'videos';
-                        $mediaTypeNew = 'video';
-                    }
-
-                    if ($videoReview !== false) {
-                        if (empty($error) && !in_array($ext, $allowed_types))
-                            $error = "Invalid file format";
-
-                        if (empty($error) && (!isset($videoReview['size']) || $videoReview['size'] > ($filesizeInBytes)))
-                            $error = "Maximum filesize limit is " . $filesize . "MB only.";
-
-                        if (empty($error)) {
-                            // Put file to AWS S3
-                            $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
-                            $filekey = $clientId."/".$folderName."/".$mediaType."/".$videoReviewFile;
-                            //$filekey = "chat_attachments/". $videoReviewFile;
-                            $filename = $videoReview['name'];
-                            $input = file_get_contents($videoReview['tmp_name']);
-                            $s3 = \Storage::disk('s3');
-                            $s3->put($filekey,$input, 'public');
-                        }
-                    }
-
-                     
-                }
-
-                echo $filekey.'||<input type="hidden" class="imageUrlS3" name="site_uploaded_name[media_url][]" value="' . $filekey . '"><input type="hidden" name="site_uploaded_name[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="site_uploaded_name[media_name][]" value="' . $mediaName . '">';
-                    exit;
-                
-            }
-        }
-        exit;
-    }
-
-
-    public function upload_s3_attachment_product_review($clientId, $folderName,$orderVal="") 
+     * This function used to upload images to the amazon s3 server for review
+     * @param Request $request
+     * @return void
+     */
+    public function upload_s3_attachment_review(Request $request)
     {
+        $clientId = $request->clientId;
+        $folderName = $request->folderName;
 
         $userDetail = getUserDetailsByUserID($clientId);
-        if($userDetail->s3_allow_size > $userDetail->s3_used_size) {
+        if ($userDetail->s3_allow_size > $userDetail->s3_used_size) {
 
             $videoReviewFile = '';
             $error = "";
             $filesize = getFileSize('filesize');
+
             if (!empty($_FILES)) {
 
                 $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
                 $error = "";
                 $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
-
                 //Collect Text Review(Save Video into S3)
-                if(!empty($_FILES['files'])) {
+                if (!empty($_FILES['files'])) {
                     $videoReview = isset($_FILES['files']) ? $_FILES['files'] : false;
                     $mediaName = $videoReview['name'];
                     $ext = pathinfo($videoReview['name'][0], PATHINFO_EXTENSION);
 
-                    if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') 
-                    {
+                    if ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') {
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
-                    }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
+                    } else if ($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt') {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
-                    }
-                    else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
+                    } else if ($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm') {
                         $mediaType = 'videos';
                         $mediaTypeNew = 'video';
                     }
@@ -841,33 +773,30 @@ class Dropzone extends Controller
                         if (empty($error)) {
                             // Put file to AWS S3
                             $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
-                            $filekey = $clientId."/".$folderName."/".$mediaType."/".$videoReviewFile;
+                            $filekey = $clientId . "/" . $folderName . "/" . $mediaType . "/" . $videoReviewFile;
+                            //$filekey = "chat_attachments/". $videoReviewFile;
                             $filename = $videoReview['name'][0];
                             $input = file_get_contents($videoReview['tmp_name'][0]);
                             $s3 = \Storage::disk('s3');
                             $s3->put($filekey,$input, 'public');
-                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            //$path = $request->file('files')->store($filekey, 's3');
                         }
                     }
 
                     $response = array('result' => $filekey, 'error' => $error);
                     echo json_encode($response);
-                }
-                else if(!empty($_FILES['file'])) {
+                } else if (!empty($_FILES['file'])) {
                     $videoReview = isset($_FILES['file']) ? $_FILES['file'] : false;
                     $mediaName = $videoReview['name'];
                     $ext = pathinfo($videoReview['name'], PATHINFO_EXTENSION);
 
-                    if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') 
-                    {
+                    if ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') {
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
-                    }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
+                    } else if ($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt') {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
-                    }
-                    else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
+                    } else if ($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm') {
                         $mediaType = 'videos';
                         $mediaTypeNew = 'video';
                     }
@@ -882,40 +811,41 @@ class Dropzone extends Controller
                         if (empty($error)) {
                             // Put file to AWS S3
                             $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
-                            $filekey = $clientId."/".$folderName."/".$mediaType."/".$videoReviewFile;
+                            $filekey = $clientId . "/" . $folderName . "/" . $mediaType . "/" . $videoReviewFile;
                             //$filekey = "chat_attachments/". $videoReviewFile;
                             $filename = $videoReview['name'];
                             $input = file_get_contents($videoReview['tmp_name']);
-                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
                             $s3 = \Storage::disk('s3');
                             $s3->put($filekey,$input, 'public');
+                            //$path = $request->file('file')->store($filekey, 's3');
                         }
                     }
 
-                     
+
                 }
 
-                if(!empty($orderVal)) {
-                    echo $filekey.'||<input type="hidden" name="uploaded_name_' . $orderVal . '[media_url][]" value="' . $filekey . '"><input type="hidden" name="uploaded_name_' . $orderVal . '[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="uploaded_name_' . $orderVal . '[media_name][]" value="' . $mediaName . '">';
-                }
-                else {
-                    echo $filekey.'||<input type="hidden" name="uploaded_name[media_url][]" value="' . $filekey . '"><input type="hidden" name="uploaded_name[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="uploaded_name[media_name][]" value="' . $mediaName . '">';
-                }
-                 
+                echo $filekey . '||<input type="hidden" class="imageUrlS3" name="site_uploaded_name[media_url][]" value="' . $filekey . '"><input type="hidden" name="site_uploaded_name[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="site_uploaded_name[media_name][]" value="' . $mediaName . '">';
                 exit;
-                
-            }
 
+            }
         }
         exit;
     }
 
 
-    public function upload_s3_attachment_question_review($clientId, $folderName,$orderVal="") 
+    /**
+     * Used to upload product review attachments
+     * @param Request $request
+     */
+    public function upload_s3_attachment_product_review(Request $request)
     {
+        //$clientId, $folderName,$orderVal=""
+        $clientId = $request->clientId;
+        $folderName = $request->folderName;
+        $orderVal = $request->orderVal;
 
         $userDetail = getUserDetailsByUserID($clientId);
-        if($userDetail->s3_allow_size > $userDetail->s3_used_size) {
+        if ($userDetail->s3_allow_size > $userDetail->s3_used_size) {
 
             $videoReviewFile = '';
             $error = "";
@@ -928,21 +858,18 @@ class Dropzone extends Controller
 
 
                 //Collect Text Review(Save Video into S3)
-                if(!empty($_FILES['files'])) {
+                if (!empty($_FILES['files'])) {
                     $videoReview = isset($_FILES['files']) ? $_FILES['files'] : false;
                     $mediaName = $videoReview['name'];
                     $ext = pathinfo($videoReview['name'][0], PATHINFO_EXTENSION);
 
-                    if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') 
-                    {
+                    if ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') {
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
-                    }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
+                    } else if ($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt') {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
-                    }
-                    else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
+                    } else if ($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm') {
                         $mediaType = 'videos';
                         $mediaTypeNew = 'video';
                     }
@@ -957,34 +884,30 @@ class Dropzone extends Controller
                         if (empty($error)) {
                             // Put file to AWS S3
                             $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
-                            $filekey = $clientId."/".$folderName."/".$mediaType."/".$videoReviewFile;
-                            //$filekey = "chat_attachments/". $videoReviewFile;
+                            $filekey = $clientId . "/" . $folderName . "/" . $mediaType . "/" . $videoReviewFile;
+                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
                             $filename = $videoReview['name'][0];
                             $input = file_get_contents($videoReview['tmp_name'][0]);
-                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
                             $s3 = \Storage::disk('s3');
                             $s3->put($filekey,$input, 'public');
+                            //$path = $request->file('files')->store($filekey, 's3');
                         }
                     }
 
                     $response = array('result' => $filekey, 'error' => $error);
                     echo json_encode($response);
-                }
-                else if(!empty($_FILES['file'])) {
+                } else if (!empty($_FILES['file'])) {
                     $videoReview = isset($_FILES['file']) ? $_FILES['file'] : false;
                     $mediaName = $videoReview['name'];
                     $ext = pathinfo($videoReview['name'], PATHINFO_EXTENSION);
 
-                    if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') 
-                    {
+                    if ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') {
                         $mediaType = 'images';
                         $mediaTypeNew = 'image';
-                    }
-                    else if($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt' ) {
+                    } else if ($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt') {
                         $mediaType = 'files';
                         $mediaTypeNew = 'file';
-                    }
-                    else if($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm' ) {
+                    } else if ($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm') {
                         $mediaType = 'videos';
                         $mediaTypeNew = 'video';
                     }
@@ -999,38 +922,153 @@ class Dropzone extends Controller
                         if (empty($error)) {
                             // Put file to AWS S3
                             $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
-                            $filekey = $clientId."/".$folderName."/".$mediaType."/".$videoReviewFile;
+                            $filekey = $clientId . "/" . $folderName . "/" . $mediaType . "/" . $videoReviewFile;
                             //$filekey = "chat_attachments/". $videoReviewFile;
+                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
+
                             $filename = $videoReview['name'];
                             $input = file_get_contents($videoReview['tmp_name']);
-                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
-                                $s3 = \Storage::disk('s3');
-                                $s3->put($filekey,$input, 'public');
+                            $s3 = \Storage::disk('s3');
+                            $s3->put($filekey,$input, 'public');
+
+                            //$path = $request->file('file')->store($filekey, 's3');
                         }
                     }
 
-                     
+
                 }
 
-                if(!empty($orderVal)) {
-                    echo $filekey.'||<input type="hidden" name="question_uploaded_name' . $orderVal . '[media_url][]" value="' . $filekey . '"><input type="hidden" name="question_uploaded_name' . $orderVal . '[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="question_uploaded_name' . $orderVal . '[media_name][]" value="' . $mediaName . '">';
+                if (!empty($orderVal)) {
+                    echo $filekey . '||<input type="hidden" name="uploaded_name_' . $orderVal . '[media_url][]" value="' . $filekey . '"><input type="hidden" name="uploaded_name_' . $orderVal . '[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="uploaded_name_' . $orderVal . '[media_name][]" value="' . $mediaName . '">';
+                } else {
+                    echo $filekey . '||<input type="hidden" name="uploaded_name[media_url][]" value="' . $filekey . '"><input type="hidden" name="uploaded_name[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="uploaded_name[media_name][]" value="' . $mediaName . '">';
                 }
-                else {
-                    echo $filekey.'||<input type="hidden" name="question_uploaded_name[media_url][]" value="' . $filekey . '"><input type="hidden" name="question_uploaded_name[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="question_uploaded_name[media_name][]" value="' . $mediaName . '">';
-                }
-                 
+
                 exit;
-                
+
             }
 
         }
         exit;
     }
 
+    /**
+     * Upload S3 attachments for questions in reviews
+     * @param Request $request
+     */
+    public function upload_s3_attachment_question_review(Request $request)
+    {
+        //$clientId, $folderName,$orderVal=""
+        $clientId = $request->clientId;
+        $folderName = $request->folderName;
+        $orderVal = $request->orderVal;
 
-    
+        $userDetail = getUserDetailsByUserID($clientId);
+        if ($userDetail->s3_allow_size > $userDetail->s3_used_size) {
+
+            $videoReviewFile = '';
+            $error = "";
+            $filesize = getFileSize('filesize');
+            if (!empty($_FILES)) {
+
+                $allowed_types = array("doc", "docx", "odt", "png", "gif", "jpeg", "jpg", 'csv', "pdf", "mp4", "webm", "ogg", "txt");
+                $error = "";
+                $filesizeInBytes = FileSizeConvertToBytes($filesize);
 
 
+                //Collect Text Review(Save Video into S3)
+                if (!empty($_FILES['files'])) {
+                    $videoReview = isset($_FILES['files']) ? $_FILES['files'] : false;
+                    $mediaName = $videoReview['name'];
+                    $ext = pathinfo($videoReview['name'][0], PATHINFO_EXTENSION);
+
+                    if ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') {
+                        $mediaType = 'images';
+                        $mediaTypeNew = 'image';
+                    } else if ($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt') {
+                        $mediaType = 'files';
+                        $mediaTypeNew = 'file';
+                    } else if ($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm') {
+                        $mediaType = 'videos';
+                        $mediaTypeNew = 'video';
+                    }
+
+                    if ($videoReview !== false) {
+                        if (empty($error) && !in_array($ext, $allowed_types))
+                            $error = "Invalid file format";
+
+                        if (empty($error) && (!isset($videoReview['size'][0]) || $videoReview['size'][0] > ($filesizeInBytes)))
+                            $error = "Maximum filesize limit is " . $filesize . "MB only.";
+
+                        if (empty($error)) {
+                            // Put file to AWS S3
+                            $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
+                            $filekey = $clientId . "/" . $folderName . "/" . $mediaType . "/" . $videoReviewFile;
+                            //$filekey = "chat_attachments/". $videoReviewFile;
+                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            $filename = $videoReview['name'][0];
+                            $input = file_get_contents($videoReview['tmp_name'][0]);
+                            $s3 = \Storage::disk('s3');
+                            $s3->put($filekey,$input, 'public');
+                            //$path = $request->file('files')->store($filekey, 's3');
+                        }
+                    }
+
+                    $response = array('result' => $filekey, 'error' => $error);
+                    echo json_encode($response);
+                } else if (!empty($_FILES['file'])) {
+                    $videoReview = isset($_FILES['file']) ? $_FILES['file'] : false;
+                    $mediaName = $videoReview['name'];
+                    $ext = pathinfo($videoReview['name'], PATHINFO_EXTENSION);
+
+                    if ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif') {
+                        $mediaType = 'images';
+                        $mediaTypeNew = 'image';
+                    } else if ($ext == 'doc' || $ext == 'docx' || $ext == 'odt' || $ext == 'csv' || $ext == 'pdf' || $ext == 'txt') {
+                        $mediaType = 'files';
+                        $mediaTypeNew = 'file';
+                    } else if ($ext == 'mp4' || $ext == 'ogg' || $ext == 'webm') {
+                        $mediaType = 'videos';
+                        $mediaTypeNew = 'video';
+                    }
+
+                    if ($videoReview !== false) {
+                        if (empty($error) && !in_array($ext, $allowed_types))
+                            $error = "Invalid file format";
+
+                        if (empty($error) && (!isset($videoReview['size']) || $videoReview['size'] > ($filesizeInBytes)))
+                            $error = "Maximum filesize limit is " . $filesize . "MB only.";
+
+                        if (empty($error)) {
+                            // Put file to AWS S3
+                            $videoReviewFile = "s3_" . rand(1, 10000) . "_" . sha1(time()) . "." . $ext;
+                            $filekey = $clientId . "/" . $folderName . "/" . $mediaType . "/" . $videoReviewFile;
+                            //$filekey = "chat_attachments/". $videoReviewFile;
+                            //$this->s3->putObject($input, AWS_BUCKET, $filekey);
+                            $filename = $videoReview['name'];
+                            $input = file_get_contents($videoReview['tmp_name']);
+                            $s3 = \Storage::disk('s3');
+                            $s3->put($filekey,$input, 'public');
+                            //$path = $request->file('file')->store($filekey, 's3');
+                        }
+                    }
+
+
+                }
+
+                if (!empty($orderVal)) {
+                    echo $filekey . '||<input type="hidden" name="question_uploaded_name' . $orderVal . '[media_url][]" value="' . $filekey . '"><input type="hidden" name="question_uploaded_name' . $orderVal . '[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="question_uploaded_name' . $orderVal . '[media_name][]" value="' . $mediaName . '">';
+                } else {
+                    echo $filekey . '||<input type="hidden" name="question_uploaded_name[media_url][]" value="' . $filekey . '"><input type="hidden" name="question_uploaded_name[media_type][]" value="' . $mediaTypeNew . '"><input type="hidden" name="question_uploaded_name[media_name][]" value="' . $mediaName . '">';
+                }
+
+                exit;
+
+            }
+
+        }
+        exit;
+    }
 }
 
 ?>

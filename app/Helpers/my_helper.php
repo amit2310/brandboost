@@ -68,7 +68,7 @@ if (!function_exists('get_notifications')) {
 
             $userId = $isLoggedInUser;
         } else {
-            
+
         }
 
         $allNotifications = \App\Models\Admin\NotificationModel::getNotifications($userId);
@@ -356,7 +356,7 @@ if (!function_exists('getsms_subscriber')) {
 }
 
 /**
- * get Old chat data 
+ * get Old chat data
  */
 if (!function_exists('activeOnlywebOldchatlist')) {
 
@@ -556,7 +556,7 @@ if (!function_exists('getSupportUser')) {
 }
 
 /**
- * 
+ *
  */
 if (!function_exists('assignto')) {
 
@@ -1057,7 +1057,7 @@ if (!function_exists('getowners')) {
 
 
 /**
- * This function will return chatUser details 
+ * This function will return chatUser details
  * @param type $userId
  * @return type
  */
@@ -1104,11 +1104,11 @@ if (!function_exists('random_strings')) {
 
     function random_strings($length_of_string) {
 
-// String of all alphanumeric character 
+// String of all alphanumeric character
         $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-// Shufle the $str_result and returns substring 
-// of specified length 
+// Shufle the $str_result and returns substring
+// of specified length
         return substr(str_shuffle($str_result), 0, $length_of_string);
     }
 
@@ -1203,8 +1203,8 @@ if (!function_exists('getFavSmsUser')) {
 
 
 /**
- * This function is used to get/check twilio data 
- * @param type 
+ * This function is used to get/check twilio data
+ * @param type
  * @return type
  */
 if (!function_exists('currentUserTwilioData')) {
@@ -1659,7 +1659,7 @@ function convertHtmlToPlain($html) {
     $plainText = preg_replace("/<img[^>]+\>/i", "\r\n", $html);
 //Step-2 Remove All anchor tags
     $plainText = preg_replace("~<a[^>]*>(.*?)</a>~", "\r\n", $plainText);
-//Step-3 Remove all style 
+//Step-3 Remove all style
     $plainText = preg_replace("/<style\\b[^>]*>(.*?)<\\/style>/s", "\r\n", $plainText);
 //Step-4 Now remove all html tags
     $plainText = htmlspecialchars(trim(strip_tags($plainText)));
@@ -1911,7 +1911,7 @@ if (!function_exists('createTwilioSA')) {
 
 /**
  * This function is used to get the twilio numbers
- * @param type 
+ * @param type
  * @return type
  */
 if (!function_exists('getTwilioPNByAreaCodeTeam')) {
@@ -1969,8 +1969,8 @@ if (!function_exists('getTwilioPNByAreaCode')) {
     function getTwilioPNByAreaCode($contryName = '', $areacode = '') {
         $contryName = $contryName == '' ? 'US' : strtoupper($contryName);
         $areacode = $areacode == '' ? 510 : $areacode;
-        $sid = $this->config->item('sid');
-        $token = $this->config->item('token');
+        $sid = config('bbconfig.sid');
+        $token = config('bbconfig.token');
         $client = new Client($sid, $token);
 
         $numbers = $client->availablePhoneNumbers($contryName)->local->read(
@@ -2062,8 +2062,8 @@ if (!function_exists('updateTwilioStatus')) {
 
     function updateTwilioStatus($accountSid, $status) {
 
-        $sid = $this->config->item('sid');
-        $token = $this->config->item('token');
+        $sid = config('bbconfig.sid');
+        $token = config('bbconfig.token');
         $client = new Client($sid, $token);
 
         $account = $client->api->accounts($accountSid)->update(
@@ -2349,7 +2349,7 @@ if (!function_exists('getUserAllDataValue')) {
 }
 
 /**
- * Used to set the limit for string 
+ * Used to set the limit for string
  * @param type $string
  * @param type $cLimit
  * @return type
@@ -2633,7 +2633,7 @@ if (!function_exists('getteam_member')) {
  */
 if (!function_exists('smsteam_member_name')) {
 
-    function smsteam_member_name($usrid) {
+    function smsteam_member_name($userID) {
         $oData = \App\Models\Admin\SubscriberModel::get_sms_team_member_name($userID);
         if (!empty($oData)) {
             return $oData[0]->teamName;
@@ -3146,7 +3146,7 @@ function mobileNoFormat($mobileNo) {
     if (!isset($mobileNo{3})) {
         return '';
     }
-// note: strip out everything but numbers 
+// note: strip out everything but numbers
     $mobileNo = preg_replace("/[^0-9]/", "", $mobileNo);
     $length = strlen($mobileNo);
     switch ($length) {
@@ -3665,7 +3665,7 @@ if (!function_exists('getNotificationLang')) {
 
 
     /**
-     * Get's app pages permission 
+     * Get's app pages permission
      */
     if (!function_exists('fetchPermissions')) {
 
@@ -3899,7 +3899,7 @@ function addPageAndVisitorInfo($clientId, $sourcePage, $sourceId, $sourceType = 
 }
 
 /**
- * 
+ *
  * @param type $redirect
  * @return int
  */
