@@ -81,7 +81,7 @@
 
                 <div class="big_img @if ($totalMedia <= 1) mr20 @endif small_media_icon">
                     @if ($primaryMedia)
-                        {{ $primaryMedia }}
+                        {!! $primaryMedia !!}
                     @else
                         {!! showUserAvtar($oQuestion->avatar, $oQuestion->firstname, $oQuestion->lastname, 95, 95, 22) !!}
                     @endif
@@ -99,7 +99,7 @@
                                 $ext = pathinfo($mediaSrc, PATHINFO_EXTENSION);
 								@endphp
 
-                                if ($media['media_type'] == 'image')
+                                @if ($media['media_type'] == 'image')
                                     <li><a class="bb_active" href="javascript:void(0);"><img class="loadMainImageMedia" src="{{ $mediaSrc }}" width="37" height="29"></a></li>
                                 @elseif ($media['media_type'] == 'video')
 									<li><a class="bb_active loadMainVideoMedia" data-ext="{{ $ext }}" data-src="{{ $mediaSrc }}" href="javascript:void(0);"><video class="media br5" height="29" width="37"><source src="{{ $mediaSrc }}" type="video/{{ $ext }}"></video></a></li>
@@ -110,11 +110,12 @@
                         @endphp
                     </ul>
                 @endif
+
                 <div class="interactions p0 pull-left">
                     <ul>
                         <li><i class="icon-user"></i><strong>{{ $oQuestion->firstname . " " . $oQuestion->lastname }}</strong></li>
                         <li><i class="icon-envelop2"></i><strong>{{ $oQuestion->email }}</strong></li>
-                        <li><i class="icon-iphone"></i><strong>{{ $oQuestion->phone == '' ? displayNoData() : mobileNoFormat($oSubscriber->phone) }}</strong></li>
+                        <li><i class="icon-iphone"></i><strong>{!! $oQuestion->phone == '' ? displayNoData() : mobileNoFormat($oSubscriber->phone) !!}</strong></li>
                         <li><i class="icon-calendar"></i><strong>{{ dataFormat($oQuestion->created) }}</strong></li>
                     </ul>
                 </div>
@@ -139,7 +140,7 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane
-			@if (empty($selectedTab) || $selectedTab == 'undefined' || $selectedTab == 'question') active endif" id="smartQuestionTab">
+			@if (empty($selectedTab) || $selectedTab == 'undefined' || $selectedTab == 'question') active @endif" id="smartQuestionTab">
             <div>
                 <div class="bbot p30">
                     <p class="mb20 txt_grey2 fsize13 lh24">{{ $questionTitle != '' ? $questionTitle : displayNoData() }}</p>

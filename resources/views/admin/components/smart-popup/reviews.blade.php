@@ -100,7 +100,7 @@
                         <ul>
                             <li><i class="icon-user"></i><strong>{{ $reviewData->firstname . " " . $reviewData->lastname }}</strong></li>
                             <li><i class="icon-envelop2"></i><strong>{{ $reviewData->email }}</strong></li>
-                            <li><i class="icon-iphone"></i><strong>{{ $reviewData->phone == '' ? displayNoData() : mobileNoFormat($oSubscriber->phone) }}</strong></li>
+                            <li><i class="icon-iphone"></i><strong>{!! $reviewData->phone == '' ? displayNoData() : mobileNoFormat($oSubscriber->phone) !!}</strong></li>
                             <li><i class="icon-calendar"></i><strong>{{ dataFormat($reviewData->created) }}</strong></li>
                         </ul>
                     </div>
@@ -113,12 +113,13 @@
                     @endif
                 </div>
             </div>
-    </div>
+        </div>
 
 <ul class="nav nav-tabs nav-tabs-bottom">
     <li class="@if (empty($selectedTab) || $selectedTab == 'undefined' || $selectedTab == 'review') active @endif"><a href="#smartReviewTab" data-toggle="tab">Review</a></li>
     <li class="@if ($selectedTab == 'notes') active @endif"><a href="#smartNotesTab" data-toggle="tab">Notes</a></li>
 </ul>
+
 <div class="tab-content">
     <div class="tab-pane @if (empty($selectedTab) || $selectedTab == 'undefined' || $selectedTab == 'review') active @endif" id="smartReviewTab">
         <div class="smart_container" style="min-height:497px;">
@@ -149,7 +150,7 @@
 						@endphp
 					</ul>
 				@else
-					{{ $primaryMedia }}
+					{!! $primaryMedia !!}
 				@endif
 
 					<div class="clearfix"></div>
@@ -170,7 +171,7 @@
 								<i class="icon-star-full2 fsize12 txt_yellow"></i>
 							@else
 								<i class="icon-star-full2 fsize12 txt_grey"></i>
-							@endphp
+							@endif
                         @endfor
                     </span>
                     <span class="ml20">{{ $reviewData->ratings > 0 ? number_format($reviewData->ratings, 1) : 'Unknown' }} Out of 5 Stars</span>
