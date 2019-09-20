@@ -93,21 +93,21 @@ class Subscribers extends Controller
     /**
      * Used to move module subscribers into archive list
      */
-    public function moveToArchiveModuleContact()
+    public function moveToArchiveModuleContact(Request $request)
     {
 
-        $post = Input::post();
+
         $mSubscriber = new SubscriberModel();
 
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
-        $subscriberID = strip_tags($post['subscriberId']);
+        $moduleName = $request->moduleName;
+        $moduleUnitID = $request->moduleUnitId;
+        $subscriberID = $request->subscriberId;
 
         $aData = array(
             'status' => 2
@@ -127,21 +127,21 @@ class Subscribers extends Controller
     /**
      * Used to move module subscribers into the active list
      */
-    public function moveToActiveModuleContact()
+    public function moveToActiveModuleContact(Request $request)
     {
 
-        $post = Input::post();
+
         $mSubscriber = new SubscriberModel();
 
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
-        $subscriberID = strip_tags($post['subscriberId']);
+        $moduleName = $request->moduleName;
+        $moduleUnitID = $request->moduleUnitId;
+        $subscriberID = $request->subscriberId;
 
         $aData = array(
             'status' => 1
@@ -161,22 +161,22 @@ class Subscribers extends Controller
     /**
      * Used to update module subscribers status
      */
-    public function changeModuleContactStatus()
+    public function changeModuleContactStatus(Request $request)
     {
 
-        $post = Input::post();
+
         $mSubscriber = new SubscriberModel();
 
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
-        $subscriberID = strip_tags($post['subscriberId']);
-        $status = strip_tags($post['contactStatus']);
+        $moduleName = $request->moduleName;
+        $moduleUnitID = $request->moduleUnitId;
+        $subscriberID = $request->subscriberId;
+        $status = $request->contactStatus;
 
         $aData = array(
             'status' => $status
@@ -196,20 +196,20 @@ class Subscribers extends Controller
     /**
      * Used to delete module subscirbers
      */
-    public function deleteModuleSubscriber()
+    public function deleteModuleSubscriber(Request $request)
     {
-        $post = Input::post();
+
         $mSubscriber = new SubscriberModel();
 
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
-        $subscriberID = strip_tags($post['subscriberId']);
+        $moduleName = $request->moduleName;
+        $moduleUnitID = $request->moduleUnitId;
+        $subscriberID = $request->subscriberId;
 
         $bDeleted = $mSubscriber->deleteModuleSubscriber($subscriberID, $moduleName, $moduleUnitID);
 
@@ -249,21 +249,21 @@ class Subscribers extends Controller
     /**
      * Used to archive module subscribers in bulk
      */
-    public function archiveBulkModuleContacts()
+    public function archiveBulkModuleContacts(Request $request)
     {
 
-        $post = Input::post();
+
         $mSubscriber = new SubscriberModel();
 
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $multipalSubscriberId = $post['multipalSubscriberId'];
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
+        $multipalSubscriberId = $request->multipalSubscriberId;
+        $moduleName = $request->moduleName;
+        $moduleUnitID = $request->moduleUnitId;
 
         foreach ($multipalSubscriberId as $subscriberID) {
             $aData = array(
@@ -285,21 +285,21 @@ class Subscribers extends Controller
     /**
      * used to make active module subscribers into the contacts
      */
-    public function activeBulkModuleContacts()
+    public function activeBulkModuleContacts(Request $request)
     {
 
-        $post = Input::post();
+
         $mSubscriber = new SubscriberModel();
 
-        if (empty($post)) {
+        if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $multipalSubscriberId = $post['multipalSubscriberId'];
-        $moduleName = strip_tags($post['moduleName']);
-        $moduleUnitID = strip_tags($post['moduleUnitId']);
+        $multipalSubscriberId = $request->multipalSubscriberId;
+        $moduleName = $request->moduleName;
+        $moduleUnitID = $request->moduleUnitId;
 
         foreach ($multipalSubscriberId as $subscriberID) {
             $aData = array(
@@ -401,15 +401,15 @@ class Subscribers extends Controller
     /**
      * Used to get Subscriber Details
      */
-    public function getSubscriberDetail()
+    public function getSubscriberDetail(Request $request)
     {
         $response = array();
         $mSubscriber = new SubscriberModel();
-        $post = Input::post();
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $moduleName = strip_tags($post['module_name']);
-        $moduleSubscriberID = strip_tags($post['module_subscriber_id']);
+        $moduleName = $request->module_name;
+        $moduleSubscriberID = $request->module_subscriber_id;
 
         $oContactsDetail = $mSubscriber->getModuleSubscriberInfo($moduleName, $moduleSubscriberID);
 
@@ -428,30 +428,30 @@ class Subscribers extends Controller
     /**
      * Used to update subscirber details by id
      */
-    public function updateSubscriberDetailsByid()
+    public function updateSubscriberDetailsByid(Request $request)
     {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
 
-        $firstName = strip_tags($post['edit_firstname']);
-        $lastName = strip_tags($post['edit_lastname']);
-        $email = strip_tags($post['edit_email']);
-        $phone = strip_tags($post['edit_phone']);
-        $gender = strip_tags($post['edit_gender']);
-        $countryCode = strip_tags($post['edit_countryCode']);
-        $cityName = strip_tags($post['edit_cityName']);
-        $stateName = strip_tags($post['edit_stateName']);
-        $zipCode = strip_tags($post['edit_zipCode']);
-        $facebookProfile = strip_tags($post['edit_facebook_profile']);
-        $twitterProfile = strip_tags($post['edit_twitter_profile']);
-        $linkedInProfile = strip_tags($post['edit_linkedin_profile']);
-        $instagramProfile = strip_tags($post['edit_instagram_profile']);
-        $socialProfile = strip_tags($post['edit_socialProfile']);
-        //$tagID = strip_tags($post['edit_tags']);
-        $moduleName = strip_tags($post['edit_module_name']);
-        $subscriberId = strip_tags($post['edit_module_subscriber_id']);
+
+        $firstName = $request->edit_firstname;
+        $lastName = $request->edit_lastname;
+        $email = $request->edit_email;
+        $phone = $request->edit_phone;
+        $gender = $request->edit_gender;
+        $countryCode = $request->edit_countryCode;
+        $cityName = $request->edit_cityName;
+        $stateName = $request->edit_stateName;
+        $zipCode = $request->edit_zipCode;
+        $facebookProfile = $request->edit_facebook_profile;
+        $twitterProfile = $request->edit_twitter_profile;
+        $linkedInProfile = $request->edit_linkedin_profile;
+        $instagramProfile = $request->edit_instagram_profile;
+        $socialProfile = $request->edit_socialProfile;
+        //$tagID = $request->edit_tags;
+        $moduleName = $request->edit_module_name;
+        $subscriberId = $request->edit_module_subscriber_id;
         $bInsertedNewGlobalSubscriber = false;
 
         $aData = array(
@@ -487,31 +487,31 @@ class Subscribers extends Controller
     /**
      * Used to update subscribers details
      */
-    public function updateSubscriberDetails()
+    public function updateSubscriberDetails(Request $request)
     {
         $mSubscriber = new SubscriberModel();
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = Input::post();
 
-        $firstName = strip_tags($post['edit_firstname']);
-        $lastName = strip_tags($post['edit_lastname']);
-        $email = strip_tags($post['edit_email']);
-        $phone = strip_tags($post['edit_phone']);
-        $gender = strip_tags($post['edit_gender']);
-        $countryCode = strip_tags($post['edit_countryCode']);
-        $cityName = strip_tags($post['edit_cityName']);
-        $stateName = strip_tags($post['edit_stateName']);
-        $zipCode = strip_tags($post['edit_zipCode']);
-        $facebookProfile = strip_tags($post['edit_facebook_profile']);
-        $twitterProfile = strip_tags($post['edit_twitter_profile']);
-        $linkedInProfile = strip_tags($post['edit_linkedin_profile']);
-        $instagramProfile = strip_tags($post['edit_instagram_profile']);
-        $socialProfile = strip_tags($post['edit_socialProfile']);
-        //$tagID = strip_tags($post['edit_tags']);
-        $moduleName = strip_tags($post['edit_module_name']);
-        $subscriberId = strip_tags($post['edit_module_subscriber_id']);
+
+        $firstName = $request->edit_firstname;
+        $lastName = $request->edit_lastname;
+        $email = $request->edit_email;
+        $phone = $request->edit_phone;
+        $gender = $request->edit_gender;
+        $countryCode = $request->edit_countryCode;
+        $cityName = $request->edit_cityName;
+        $stateName = $request->edit_stateName;
+        $zipCode = $request->edit_zipCode;
+        $facebookProfile = $request->edit_facebook_profile;
+        $twitterProfile = $request->edit_twitter_profile;
+        $linkedInProfile = $request->edit_linkedin_profile;
+        $instagramProfile = $request->edit_instagram_profile;
+        $socialProfile = $request->edit_socialProfile;
+        //$tagID = $request->edit_tags;
+        $moduleName = $request->edit_module_name;
+        $subscriberId = $request->edit_module_subscriber_id;
         $bInsertedNewGlobalSubscriber = false;
 
         if (!empty($email)) {
@@ -590,38 +590,38 @@ class Subscribers extends Controller
     /**
      * Used to add a new subscriber
      */
-    public function add_contact()
+    public function add_contact(Request $request)
     {
         $mSubscriber = new SubscriberModel();
         $response = array();
         $result = array();
-        $post = Input::post();
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        if (empty($post)) {
+        if (empty($request)) {
             $response['status'] = "Error";
             echo json_encode($response);
             exit;
         }
 
         $emailUserId = '';
-        $firstName = strip_tags($post['firstname']);
-        $lastName = strip_tags($post['lastname']);
-        $email = strip_tags($post['email']);
-        $phone = strip_tags($post['phone']);
-        $gender = strip_tags($post['gender']);
-        $countryCode = strip_tags($post['country_code']);
-        $cityName = strip_tags($post['cityName']);
-        $stateName = strip_tags($post['stateName']);
-        $zipCode = strip_tags($post['zipCode']);
-        $socialProfile = strip_tags($post['socialProfile']);
-        $facebookProfile = strip_tags($post['facebook_profile']);
-        $twitterProfile = strip_tags($post['twitter_profile']);
-        $linkedInProfile = strip_tags($post['linkedin_profile']);
-        $instagramProfile = strip_tags($post['instagram_profile']);
-        //$tagID = strip_tags($post['tagID']);
-        $moduleName = strip_tags($post['module_name']);
-        $moduleAccountID = strip_tags($post['module_account_id']);
+        $firstName = $request->firstname;
+        $lastName = $request->lastname;
+        $email = $request->email;
+        $phone = $request->phone;
+        $gender = $request->gender;
+        $countryCode = $request->country_code;
+        $cityName = $request->cityName;
+        $stateName = $request->stateName;
+        $zipCode = $request->zipCode;
+        $socialProfile = $request->socialProfile;
+        $facebookProfile = $request->facebook_profile;
+        $twitterProfile = $request->twitter_profile;
+        $linkedInProfile = $request->linkedin_profile;
+        $instagramProfile = $request->instagram_profile;
+        //$tagID = $request->tagID;
+        $moduleName = $request->module_name;
+        $moduleAccountID = $request->module_account_id;
         //$emailUser = getUserDetailByEmailId($email);
         $oUserAccount = UsersModel::checkEmailExist($email);
 
@@ -758,14 +758,14 @@ class Subscribers extends Controller
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $someoneadded = false;
-        $post = Input::post();
 
-        if (!empty($post['list_id'])) {
-            $list_id = $post['list_id'];
+
+        if (!empty($request->list_id)) {
+            $list_id = $request->list_id;
         }
-        $moduleName = strip_tags($post['module_name']);
-        $moduleAccountID = strip_tags($post['module_account_id']);
-        $redirectURL = $post['redirect_url'];
+        $moduleName = $request->module_name;
+        $moduleAccountID = $request->module_account_id;
+        $redirectURL = $request->redirect_url;
 
         $file_path = $request->file('userfile')->getRealPath();
 

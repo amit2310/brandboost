@@ -11,13 +11,13 @@ class Chatshortcut extends Controller {
 
 
 /**
-* index call 
+* index call
 * @param type $clientID
 * @return type
 */
 
     public function index() {
-       
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
          $mShortchat = new ShortchatModel();
@@ -29,8 +29,8 @@ class Chatshortcut extends Controller {
                         <li><a class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Chat Shortcut" class="sidebar-control active hidden-xs ">Chat Shortcut</a></li>
                       </ul>';
-       
-        $bActiveSubsription = $mUser->isActiveSubscription();              
+
+        $bActiveSubsription = $mUser->isActiveSubscription();
         $data = array(
             'title' => 'Chat Shortcut',
             'pagename' => $breadcrumb,
@@ -43,23 +43,23 @@ class Chatshortcut extends Controller {
 
 
     /**
-    * This function is used to add chat shortcut 
-    * @param type 
+    * This function is used to add chat shortcut
+    * @param type
     * @return type
     */
 
-    public function addShortCut() {
+    public function addShortCut(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = Input::post();
+
         if (empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $shortname = $post['shortname'];
-        $conversatation = $post['conversatation'];
+        $shortname = $request->shortname;
+        $conversatation = $request->conversatation;
 
         $aInput = array(
             'name' => $shortname,
@@ -83,24 +83,24 @@ class Chatshortcut extends Controller {
 
     /**
     * This function is used to update the chatshortcut
-    * @param type 
+    * @param type
     * @return type
     */
 
-    public function updateShortCut() {
+    public function updateShortCut(Request $request) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = Input::post();
+
         if (empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $shortname = $post['edit_shortname'];
-        $conversatation = $post['edit_conversatation'];
-        $chatshortcutId = $post['chatshortcut_id'];
+        $shortname = $request->edit_shortname;
+        $conversatation = $request->edit_conversatation;
+        $chatshortcutId = $request->chatshortcut_id;
 
         $aInput = array(
             'name' => $shortname,
@@ -122,23 +122,23 @@ class Chatshortcut extends Controller {
 
 
    /**
-    * This function is used to get the chatshortcut for edit function 
-    * @param type 
+    * This function is used to get the chatshortcut for edit function
+    * @param type
     * @return type
     */
 
 
-    public function getChatShortcutById() {
+    public function getChatShortcutById(Request $request) {
 
         $aUser = getLoggedUser();
-        $userID = $aUser->id;   
+        $userID = $aUser->id;
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if (Input::post()) {
-            $post = Input::post();
+
+        if (!empty($request)) {
+
             $mShortchat  = new ShortchatModel();
-            $cShortcut = $mShortchat->getChatShortcutID($post['shortcutID'], $userID);
+            $cShortcut = $mShortchat->getChatShortcutID($request->shortcutID, $userID);
             if ($cShortcut) {
                 $response['status'] = 'success';
                 $response['result'] = $cShortcut;
@@ -153,25 +153,25 @@ class Chatshortcut extends Controller {
 
     /**
     * This function is used to delete the chatshortcut
-    * @param type 
+    * @param type
     * @return type
     */
 
 
-    public function deleteChatShortcut() {
+    public function deleteChatShortcut(Request $request) {
 
         $aUser = getLoggedUser();
-        $userID = $aUser->id;   
+        $userID = $aUser->id;
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if (Input::post()) {
-            $post = Input::post();
+
+        if (!empty($request)) {
+
             $mShortchat  = new ShortchatModel();
-            $cShortcut = $mShortchat->deleteChatShortcut($post['shortcutId'], $userID);
+            $cShortcut = $mShortchat->deleteChatShortcut($request->shortcutId, $userID);
             $response['status'] = 'success';
             $response['result'] = $cShortcut;
-           
+
             echo json_encode($response);
             exit;
         }
@@ -180,16 +180,16 @@ class Chatshortcut extends Controller {
 
     /**
     * This function is used to multile delete function
-    * @param type 
+    * @param type
     * @return type
     */
 
-    public function deleteMultipalChatShortcut() {
+    public function deleteMultipalChatShortcut(Request $request) {
         $response = array();
         $aUser = getLoggedUser();
-        $userID = $aUser->id;   
-        $post = Input::post();
-        $multiChatShortcutid = $post['multiChatShortcutid'];
+        $userID = $aUser->id;
+
+        $multiChatShortcutid = $request->multiChatShortcutid;
         $mShortchat  = new ShortchatModel();
         foreach ($multiChatShortcutid as $shortcutId) {
 
@@ -208,6 +208,5 @@ class Chatshortcut extends Controller {
 
 
 
-   
+
 }
-            

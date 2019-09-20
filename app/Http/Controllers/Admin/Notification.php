@@ -10,10 +10,10 @@ use Session;
 
 class Notification extends Controller {
 
-  
+
     /**
     * This is a index function
-    * @param type 
+    * @param type
     * @return type
     */
     public function Index() {
@@ -29,8 +29,8 @@ class Notification extends Controller {
             $allNotificationsToday = $Notifications->getNotificationsToday($userID);
             $allNotificationsYesterday = $Notifications->getNotificationsYesterday($userID);
             $allNotificationsLastweek = $Notifications->getNotificationsLastweek($userID);
-            
-            
+
+
             $aSysNotifyTags = get_notification_tags();
             if (!empty($allNotifications)) {
                 //$this->Notifications->markReadNotification($userID);
@@ -59,7 +59,7 @@ class Notification extends Controller {
 
     /**
     * This function is use to get notification smart popup
-    * @param type 
+    * @param type
     * @return type
     */
     public function getNotificationSmartPopup() {
@@ -72,7 +72,7 @@ class Notification extends Controller {
             $allNotificationsToday = $Notifications->getNotificationsToday($userID);
             $allNotificationsYesterday = $Notifications->getNotificationsYesterday($userID);
             $allNotificationsLastweek = $Notifications->getNotificationsLastweek($userID);
-            
+
             $aSysNotifyTags = get_notification_tags();
 
             if (!empty($allNotifications)) {
@@ -137,7 +137,7 @@ class Notification extends Controller {
 
     /**
     * This function is use to mark read
-    * @param type 
+    * @param type
     * @return type
     */
     public function markRead(Request $request) {
@@ -169,13 +169,13 @@ class Notification extends Controller {
 
     /**
     * This function is use to delete multipal notification
-    * @param type 
+    * @param type
     * @return type
     */
     public function delete_multipal_notification(Request $request) {
 
         $response = array();
-        $post = array();
+
         $mNotification = new NotificationModel();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -195,7 +195,7 @@ class Notification extends Controller {
     public function getNotificationFilterDate(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $Notifications = new NotificationModel();
         $userID = $aUser->id;
@@ -218,7 +218,7 @@ class Notification extends Controller {
             $popupContent = view('admin.notification_filter', $aData)->render();
             $response['result'] = $popupContent;
         }
-        
+
         $response['status'] = 'success';
         echo json_encode($response);
         exit;
@@ -227,13 +227,13 @@ class Notification extends Controller {
 
     /**
     * This function is use to get notification
-    * @param type 
+    * @param type
     * @return type
     */
     public function getNotificationData(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $Notifications = new NotificationModel();
@@ -245,7 +245,7 @@ class Notification extends Controller {
             $allNotificationsToday = $Notifications->getNotificationsToday($userID);
             $allNotificationsYesterday = $Notifications->getNotificationsYesterday($userID);
             $allNotificationsLastweek = $Notifications->getNotificationsLastweek($userID);
-            
+
             $aSysNotifyTags = get_notification_tags();
             if (!empty($allNotifications)) {
                 //$this->Notifications->markReadNotification($userID);
@@ -262,7 +262,7 @@ class Notification extends Controller {
             $popupContent = view('admin.notification_filter', $aData)->render();
             $response['result'] = $popupContent;
         }
-        
+
         $response['status'] = 'success';
         echo json_encode($response);
         exit;

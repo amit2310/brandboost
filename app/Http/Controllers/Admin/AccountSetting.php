@@ -43,7 +43,7 @@ class AccountSetting extends Controller
             if ($isLoggedInTeam) {
                 $aTeamInfo = TeamModel::getTeamMember($isLoggedInTeam, $aUser->id);
             }
-           
+
         }
         $currentUserId = $userID;
         $bbStatsData = $mBrandboost->getBBStatsByIdAndUserId($currentUserId, $bbId='');
@@ -74,10 +74,10 @@ class AccountSetting extends Controller
         if(!empty($emailFooterData[0]->footer_content)) {
             $emailFooterData = base64_decode($emailFooterData[0]->footer_content);
         }
-      
+
 
         if(!empty($aTeamInfo)) {
-           
+
             $getTeamMember = TeamModel::getTeamMember($aTeamInfo->id, $aTeamInfo->parent_user_id);
             $aData = array(
                 'title' => 'Brand Boost Profile',
@@ -106,7 +106,7 @@ class AccountSetting extends Controller
 
             return view('admin.account_setting', $aData);
         }
-        
+
     }
 
 
@@ -115,22 +115,21 @@ class AccountSetting extends Controller
      * @param type $userID
      * @return type object
      */
-    public function saveProfileDetail() {
+    public function saveProfileDetail(Request $request) {
 
         $response = array();
-        $post = array();
         $aUser = getLoggedUser();
 
         $curruserID = $aUser->id;
         $user_role = $aUser->user_role;
 
-        $firstname = Input::post("firstname");
-        $lastname = Input::post("lastname");
-        $mobile = Input::post("mobile");
-        $avatar = Input::post("avatar");
-        $website = Input::post("website");
-        $country = Input::post("country");
-        $userId = Input::post("userId");
+        $firstname = $request->firstname;
+        $lastname = $request->lastname;
+        $mobile = $request->mobile;
+        $avatar = $request->avatar;
+        $website = $request->website;
+        $country = $request->country;
+        $userId = $request->userId;
 
         if(!empty($user_role) && $user_role == 1) {
 
@@ -175,11 +174,11 @@ class AccountSetting extends Controller
      * This function is use for change the password
      * @return type object
      */
-    public function changePassword() {
+    public function changePassword(Request $request) {
 
         $mLogin = new LoginModel();
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
@@ -187,19 +186,19 @@ class AccountSetting extends Controller
         $newPassword = '';
         $rePassword = '';
 
-        $oldPassword = Input::post("oldPassword");
-        $newPassword = Input::post("newPassword");
-        $rePassword = Input::post("rePassword");
+        $oldPassword = $request->oldPassword;
+        $newPassword = $request->newPassword;
+        $rePassword = $request->rePassword;
 
         if ($newPassword == $rePassword) {
             $checkPassword = $mLogin->ChangePassword($oldPassword, $newPassword, $rePassword);
             if ($checkPassword) {
-               
+
                 // Send notification
                 $response['status'] = 'success';
                 $response['msg'] = 'Your password has been changed successfully.';
             } else {
-               
+
                 $response['status'] = 'error';
                 $response['msg'] = 'Please enter correct old password.';
             }
@@ -279,7 +278,7 @@ class AccountSetting extends Controller
 
         $mAccounts = new AccountsModel();
         $mWorkflow = new WorkflowModel();
-        
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $usageID = strip_tags($request->id);
         if (empty($usageID)) {
@@ -310,8 +309,8 @@ class AccountSetting extends Controller
             $mediaType = $contentExplode[0];
             $mediaExt = $contentExplode[1];
         }
-        
-        
+
+
         $usagetype = ucfirst($oUsage->usage_type);
         $spentto = (strtolower($usagetype) == 'sms' || strtolower($usagetype) == 'mms') ? phoneNoFormat($oUsage->spend_to) : $oUsage->spend_to;
         $chargedcredits = $oUsage->balance_deducted;
@@ -325,7 +324,7 @@ class AccountSetting extends Controller
             if($moduleName == 'onsite' || $moduleName == 'offsite' || $moduleName == 'brandboost'){
                 $campaignTitle = $oCampaign->brand_title;
                 $campaignLink = base_url()."admin/brandboost/details/".$moduleUnitID;
-                
+
             }else if($moduleName == 'autoamtion' || $moduleName == 'broadcast' || $moduleName == 'nps' || $moduleName == 'referral'){
                 $campaignTitle = $oCampaign->title;
                 if($moduleName == 'automation'){
@@ -337,13 +336,13 @@ class AccountSetting extends Controller
                 }else if($moduleName == 'referral'){
                     $campaignLink = base_url()."admin/modules/referral/setup/".$moduleUnitID;
                 }
-                
-                
+
+
             }
         }
-        
+
         $preparedCampaignLink = (!empty($campaignLink)) ? '<a href="'.$campaignLink.'" target="_blank">'.$campaignTitle.'</a>' : $campaignTitle;
-        
+
         $response = array('status' => 'success', 'content'=> $encodedContent,  'usagetype'=> $usagetype, 'spentto'=>$spentto,  'chargedate' => $chargedate, 'chargedcredits'=>$chargedcredits, 'usagemodulename'=> $moduleName, 'usagecampaignLink' => $preparedCampaignLink, 'msg' => "Record deleted successfully!","mediaType" => $mediaType, 'mediaExt'=>$mediaExt);
 
         echo json_encode($response);

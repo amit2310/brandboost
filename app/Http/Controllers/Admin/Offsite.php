@@ -291,7 +291,6 @@ class Offsite extends Controller
         $mOffsite = new OffsiteModel();
         $response = array();
         $response['status'] = 'error';
-        $post = array();
         if (!empty($request)) {
             $aOffsite = $mOffsite->getOffsite($request->offsiteID);
             if ($aOffsite) {

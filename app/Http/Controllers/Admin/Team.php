@@ -98,11 +98,11 @@ class Team extends Controller {
     * @return type
     */
 
-     public function twilioNumberlisting()
+     public function twilioNumberlisting(Request $request)
      {
 
-      $post = Input::post();
-      $area_code = strip_tags($post['area_code']);
+
+      $area_code = $request->area_code;
       $res  = getTwilioPNByAreaCodeTeam($contryName = '', $area_code);
       return $res;
 
@@ -161,37 +161,37 @@ class Team extends Controller {
     * @return type
     */
 
-    public function addTeamMember() {
+    public function addTeamMember(Request $request) {
         $mTeam = new TeamModel();
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
 
-        if(empty($post)){
+
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post['smschat_config']="";
-        $post['webchat_config']="";
+        $request->smschat_config="";
+        $request->webchat_config="";
 
-        $teamRoleID = strip_tags($post['memberRole']);
-        $firstName = strip_tags($post['firstname']);
-        $lastName = strip_tags($post['lastname']);
-        $email = strip_tags($post['email']);
+        $teamRoleID = $request->memberRole;
+        $firstName = $request->firstname;
+        $lastName = $request->lastname;
+        $email = $request->email;
         //$country = $aData['country'];
-        $phone = strip_tags($post['phone']);
-        if($post['webchat_config']=='on') { $web_chat=1; } else { $web_chat=0;}
-        if($post['smschat_config']=='on') { $sms_chat=1; } else { $sms_chat=0;}
+        $phone = $request->phone;
+        if($request->webchat_config=='on') { $web_chat=1; } else { $web_chat=0;}
+        if($request->smschat_config=='on') { $sms_chat=1; } else { $sms_chat=0;}
 
-        $gender = $post['gender'];
-        $countryCode = $post['countryCode'];
-        $cityName = $post['cityName'];
-        $stateName = $post['stateName'];
-        $zipCode = $post['zipCode'];
-        $socialProfile = $post['socialProfile'];
-        $tags = $post['tags'];
+        $gender = $request->gender;
+        $countryCode = $request->countryCode;
+        $cityName = $request->cityName;
+        $stateName = $request->stateName;
+        $zipCode = $request->zipCode;
+        $socialProfile = $request->socialProfile;
+        $tags = $request->tags;
 
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randstring = '';
@@ -226,12 +226,12 @@ class Team extends Controller {
             'created' => date("Y-m-d H:i:s")
         );
 
-        if($post['smschat_config']=='on' && $post['twilioMobileNo']!="" )
+        if($request->smschat_config=='on' && $request->twilioMobileNo!="" )
         {
-            $response = createTwilioCNTeam($post['twilioMobileNo']);
+            $response = createTwilioCNTeam($request->twilioMobileNo);
             if($response['status']=='success')
             {
-              $aData['bb_number']= $post['twilioMobileNo'];
+              $aData['bb_number']= $request->twilioMobileNo;
               $aData['contact_sid']= $response['contact_sid'];
             $teamUserID = $mTeam->addTeamMember($aData);
             if ($teamUserID > 0) {
@@ -313,10 +313,10 @@ class Team extends Controller {
     * @return type
     */
 
-    public function addRole() {
+    public function addRole(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
-        if(empty($post)){
+
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -324,7 +324,7 @@ class Team extends Controller {
         $mTeam = new TeamModel();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $title = strip_tags($post['title']);
+        $title = $request->title;
         $dateTime = date("Y-m-d H:i:s");
         $aData = array(
             'role_name' => $title,
@@ -356,18 +356,18 @@ class Team extends Controller {
     */
 
 
-    public function getRole() {
+    public function getRole(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
+
         $mTeam = new TeamModel();
-        if(empty($post)){
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $roleID = strip_tags($post['role_id']);
+        $roleID = $request->role_id;
         $oRole = $mTeam->getRole($roleID, $userID);
         if(!empty($oRole)){
             $response = array('status' => 'success', 'title' => $oRole->role_name);
@@ -386,10 +386,10 @@ class Team extends Controller {
     * @return type
     */
 
-    public function updateRole() {
+    public function updateRole(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
-        if(empty($post)){
+
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -397,8 +397,8 @@ class Team extends Controller {
         $mTeam = new TeamModel();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $roleID = strip_tags($post['role_id']);
-        $title = strip_tags($post['title']);
+        $roleID = $request->role_id;
+        $title = $request->title;
         $dateTime = date("Y-m-d H:i:s");
         $aData = array(
             'role_name' => $title
@@ -427,18 +427,18 @@ class Team extends Controller {
     * @return type
     */
 
-    public function deleteRole(){
+    public function deleteRole(Request $request){
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
+
         $mTeam  = new TeamModel();
-        if(empty($post)){
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $roleID = strip_tags($post['role_id']);
+        $roleID = $request->role_id;
         $bDeleted = $mTeam->deleteRole($roleID, $userID);
         if($bDeleted == true){
             $response = array('status' => 'success', 'msg' => "Role deleted successfully!");
@@ -447,17 +447,17 @@ class Team extends Controller {
         exit;
     }
 
-    public function deleteTeamRoles(){
+    public function deleteTeamRoles(Request $request){
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if(empty($post)){
+
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $roleIDs = $post['multipal_id'];
+        $roleIDs = $request->multipal_id;
 
         foreach($roleIDs as $roleID){
             $bDeleted = $this->mTeam->deleteRole($roleID, $userID);
@@ -477,18 +477,18 @@ class Team extends Controller {
     * @return type
     */
 
-    public function getTeamMember() {
+    public function getTeamMember(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
+
         $mTeam = new TeamModel();
-        if(empty($post)){
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $memberID = strip_tags($post['member_id']);
+        $memberID = $request->member_id;
         $memberData = $mTeam->getTeamMember($memberID, $userID);
         if(!empty($memberData)){
             $response = array('status' => 'success', 'result' => $memberData);
@@ -507,36 +507,36 @@ class Team extends Controller {
     * @return type
     */
 
-    public function updateTeamMember() {
+    public function updateTeamMember(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
 
-        if(empty($post)){
+
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-        $memberID = strip_tags($post['edit_member_id']);
-        $teamRoleID = strip_tags($post['edit_memberRole']);
-        $firstName = strip_tags($post['edit_firstname']);
-        $lastName = strip_tags($post['edit_lastname']);
-        $email = strip_tags($post['edit_email']);
-        $phone = strip_tags($post['edit_phone']);
-        if(isset($post['edit_webchat_config']) && $post['edit_webchat_config']=='on') { $web_chat=1; } else { $web_chat=0;}
-        if(isset($post['edit_smschat_config']) && $post['edit_smschat_config']=='on') { $sms_chat=1; } else { $sms_chat=0;}
+        $memberID = $request->edit_member_id;
+        $teamRoleID = $request->edit_memberRole;
+        $firstName = $request->edit_firstname;
+        $lastName = $request->edit_lastname;
+        $email = $request->edit_email;
+        $phone = $request->edit_phone;
+        if(isset($request->edit_webchat_config) && $request->edit_webchat_config=='on') { $web_chat=1; } else { $web_chat=0;}
+        if(isset($request->edit_smschat_config) && $request->edit_smschat_config=='on') { $sms_chat=1; } else { $sms_chat=0;}
 
-        $edit_gender = $post['edit_gender'];
-        $edit_countryCode = $post['edit_countryCode'];
-        $edit_cityName = $post['edit_cityName'];
-        $edit_stateName = $post['edit_stateName'];
-        $edit_zipCode = $post['edit_zipCode'];
-        $edit_socialProfile = $post['edit_socialProfile'];
-        $edit_tags = $post['edit_tags'];
+        $edit_gender = $request->edit_gender;
+        $edit_countryCode = $request->edit_countryCode;
+        $edit_cityName = $request->edit_cityName;
+        $edit_stateName = $request->edit_stateName;
+        $edit_zipCode = $request->edit_zipCode;
+        $edit_socialProfile = $request->edit_socialProfile;
+        $edit_tags = $request->edit_tags;
         $twilioMobileNo="";
-        if(!empty($post['twilioMobileNo']))
+        if(!empty($request->twilioMobileNo))
         {
-             $twilioMobileNo = $post['twilioMobileNo'];
+             $twilioMobileNo = $request->twilioMobileNo;
         }
 
 
@@ -562,7 +562,7 @@ class Team extends Controller {
             'tagID' => $edit_tags
         );
 
-       if(isset($post['edit_smschat_config']) && $post['edit_smschat_config']=='on' && $twilioMobileNo!="" )
+       if(isset($request->edit_smschat_config) && $request->edit_smschat_config=='on' && $twilioMobileNo!="" )
        {
            $response = createTwilioCNTeam($twilioMobileNo);
            if($response['status']=='success')
@@ -593,10 +593,10 @@ class Team extends Controller {
         exit;
     }
 
-    public function deleteTeamMember(){
+    public function deleteTeamMember(Request $request){
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
-        if(empty($post)){
+
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -604,7 +604,7 @@ class Team extends Controller {
         $mTeam = new TeamModel();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $memberID = strip_tags($post['member_id']);
+        $memberID = $request->member_id;
         $bDeleted = $mTeam->deleteTeamMember($memberID, $userID);
         if($bDeleted == true){
             $response = array('status' => 'success', 'msg' => "Team member has been deleted successfully!");
@@ -613,17 +613,17 @@ class Team extends Controller {
         exit;
     }
 
-    public function deleteTeamMembers(){
+    public function deleteTeamMembers(Request $request){
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if(empty($post)){
+
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $memberIDs = $post['multipal_id'];
+        $memberIDs = $request->multipal_id;
         foreach($memberIDs as $memberID){
             $bDeleted = $this->mTeam->deleteTeamMember($memberID, $userID);
         }
@@ -641,10 +641,10 @@ class Team extends Controller {
     * @return type
     */
 
-    public function manageRolePermission() {
+    public function manageRolePermission(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
-        if(empty($post)){
+
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -652,7 +652,7 @@ class Team extends Controller {
         $aUser = getLoggedUser();
         $mTeam = new TeamModel();
         $userID = $aUser->id;
-        $roleID = strip_tags($post['role_id']);
+        $roleID = $request->role_id;
         $oSelectedPermission = $mTeam->getTeamRolePermission($roleID);
 
         $oAvailablePermission = $mTeam->getAvailablePermissions();
@@ -665,18 +665,18 @@ class Team extends Controller {
         exit;
     }
 
-    public function addRolePermission() {
+    public function addRolePermission(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if(empty($post)){
+
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $roleID = strip_tags($post['role_id']);
-        $aPermissionID = $post['permission_id'];
+        $roleID = $request->role_id;
+        $aPermissionID = $request->permission_id;
         $dateTime = date("Y-m-d H:i:s");
         $aData = array(
             'role_id' => $roleID,
@@ -695,28 +695,28 @@ class Team extends Controller {
 
 
 
-    public function updateRolePermission() {
+    public function updateRolePermission(Request $request) {
         $mTeam = new TeamModel();
         $aPermissionData = array();
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
-        if(empty($post)){
+
+        if(empty($request)){
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $roleID = strip_tags($post['role_id']);
-        if(!empty($post['permission_id']))
+        $roleID = $request->role_id;
+        if(!empty($request->permission_id))
         {
-          $aPermission = $post['permission_id'];
+          $aPermission = $request->permission_id;
          }
         if(!empty($aPermission)){
             foreach($aPermission as $iPerID){
                $aPermissionData[] = array(
                    'id' => $iPerID,
-                   'permission_value' => strip_tags($post['permission_val_'.$iPerID])
+                   'permission_value' => $request->permission_val_.$iPerID
                );
             }
         }

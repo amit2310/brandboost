@@ -11,8 +11,8 @@ use App\Models\Admin\Twillio_model;
 class Users extends Controller {
 
     /**
-     * controller index call 
-     * @return type 
+     * controller index call
+     * @return type
      */
     public function index() {
         $isAdmin = false;
@@ -44,12 +44,12 @@ class Users extends Controller {
 
     /**
      * Update user record
-     * @return type 
+     * @return type
      */
-    public function updateUserData() {
+    public function updateUserData(Request $request) {
 
-        $fieldName = Input::post("fieldName");
-        $userId = Input::post("userId");
+        $fieldName = $request->fieldName;
+        $userId = $request->userId;
         $aData = array(
             $fieldName => 0
         );
@@ -67,19 +67,19 @@ class Users extends Controller {
 
     /**
      * This function is used to Update the status of the user active/deactive
-     * @return type 
+     * @return type
      */
-    public function update_status() {
+    public function update_status(Request $request) {
 
         $response = array();
-        $post = Input::post();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
-        if ($post) {
+        if (!empty($request)) {
 
-            $status = strip_tags($post['status']);
-            $userId = strip_tags($post['user_id']);
+            $status = $request->status;
+            $userId = $request->user_id;
             $Users = new UsersModel();
 
             $aData = array(
@@ -101,22 +101,22 @@ class Users extends Controller {
     }
 
     /**
-     * This function is used to delete the user from the system 
-     * @return type 
+     * This function is used to delete the user from the system
+     * @return type
      */
-    public function user_delete() {
+    public function user_delete(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
-        if (Input::post()) {
-            $post = Input::post();
+        if (!empty($request)) {
+
             $Users = new UsersModel();
 
-            $userID = strip_tags($post['userID']);
-            /* $contactID = strip_tags($post['contactID']);
+            $userID = $request->userID;
+            /* $contactID = $request->contactID;
               if($contactID != ''){
               $this->mInfusion->deleteContact($contactID);
               } */
@@ -138,17 +138,17 @@ class Users extends Controller {
 
     /**
      * This function is used to fetch the userdetails on the behalf of user id
-     * @return type 
+     * @return type
      */
-    public function getUserById() {
+    public function getUserById(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
-        $post = array();
+
         $Users = new UsersModel();
-        if (Input::post()) {
-            $post = Input::post();
-            $aUsers = $Users->getAllUsers($post['userID']);
+        if (!empty($request)) {
+
+            $aUsers = $Users->getAllUsers($request->userID);
             if ($aUsers) {
                 $response['status'] = 'success';
                 $response['result'] = $aUsers;
@@ -161,7 +161,7 @@ class Users extends Controller {
         }
     }
 
-    
+
     /**
      * Check if email already exists
      */
@@ -169,9 +169,9 @@ class Users extends Controller {
         $mUsers = new UsersModel();
 
         $response = array();
-        
+
         if (!empty($request)) {
-            
+
             $result = $mUsers->checkEmailExist($request->emailID);
             if ($result) {
                 $response['status'] = 'success';
@@ -185,7 +185,7 @@ class Users extends Controller {
             exit;
         }
     }
-    
+
     public function twiliomessage($userID) {
 
         $mTwillio = new Twillio_model();
@@ -235,23 +235,22 @@ class Users extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/users/userduplicate', $data);
     }
 
-    public function user_update() {
+    public function user_update(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        if (!empty($request)) {
 
-            $firstname = strip_tags($post['firstname']);
-            $lastname = strip_tags($post['lastname']);
-            $phone = strip_tags($post['phone']);
-            $zip = strip_tags($post['zip']);
-            $userID = strip_tags($post['userID']);
-            $twilioStatus = strip_tags($post['e_twilio_status']);
-            $contactId = strip_tags($post['e_infusion_user_id']);
+            $firstname = $request->firstname;
+            $lastname = $request->lastname;
+            $phone = $request->phone;
+            $zip = $request->zip;
+            $userID = $request->userID;
+            $twilioStatus = $request->e_twilio_status;
+            $contactId = $request->e_infusion_user_id;
 
             $userData = $this->Users->getAllUsers($userID);
             $accountSid = $userData[0]->twilio_subaccount_sid;
@@ -284,17 +283,17 @@ class Users extends Controller {
         }
     }
 
-    public function deleteUsers() {
+    public function deleteUsers(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        if (!empty($request)) {
 
-            $userIDs = $post['multipal_record_id'];
+
+            $userIDs = $request->multipal_record_id;
             if (!empty($user_role) && $user_role == 1) {
                 foreach ($userIDs as $userID) {
                     $result = $this->Users->deleteUsers($userID);
@@ -311,14 +310,14 @@ class Users extends Controller {
         }
     }
 
-    public function deleteUsersContact() {
+    public function deleteUsersContact(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $userIDs = $post['multipal_record_id'];
+        if (!empty($request)) {
+
+
+            $userIDs = $request->multipal_record_id;
 
             foreach ($userIDs as $userID) {
                 $result = $this->Users->deleteUsers($userID);
@@ -335,21 +334,21 @@ class Users extends Controller {
         }
     }
 
-    public function user_add() {
+    public function user_add(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        if (!empty($request)) {
 
-            $firstname = strip_tags($post['firstname']);
-            $lastname = strip_tags($post['lastname']);
-            $email = strip_tags($post['email']);
-            $phone = strip_tags($post['phone']);
-            $zip = strip_tags($post['zip']);
+
+            $firstname = $request->firstname;
+            $lastname = $request->lastname;
+            $email = $request->email;
+            $phone = $request->phone;
+            $zip = $request->zip;
 
             $aInfusionData = array(
                 'firstname' => $firstname,
@@ -396,18 +395,18 @@ class Users extends Controller {
         $this->template->load('admin/admin_template', 'admin/users/sendgrid/index', array('sendGridULD' => $sendGridULD, 'sendGridData' => $sendGridData));
     }
 
-    
 
-    public function createSendGridSA() {
+
+    public function createSendGridSA(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
+
+        if (!empty($request)) {
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $randstring = '';
             for ($i = 0; $i < 8; $i++) {
                 $randstring .= $characters[rand(0, strlen($characters))];
             }
-            $userID = strip_tags($post['user_id']);
+            $userID = $request->user_id;
             $username = 1000000 + $userID . '@brandboost.io';
             $ip = "168.245.71.20";
             $password = $randstring;
@@ -419,11 +418,11 @@ class Users extends Controller {
         exit;
     }
 
-    public function createTwilioAccount() {
+    public function createTwilioAccount(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
-            $userID = strip_tags($post['user_id']);
+
+        if (!empty($request)) {
+            $userID = $request->user_id;
             $username = 1000000 + $userID . '@brandboost.io';
             $userData = $this->Users->getUserTwilioData($userID);
             if ($userData->user_id == '') {
@@ -443,24 +442,24 @@ class Users extends Controller {
     }
 
 
-     
+
         /**
         * This function is used to fetch the userdetails on the behalf of user id
-        * @return type 
+        * @return type
         */
 
-        public function getUserInfo() {
-        
+        public function getUserInfo(Request $request) {
+
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if (Input::post()) {
-            $post = Input::post();
-            $userID = strip_tags($post['uid']);
+
+        if (!empty($request)) {
+
+            $userID = $request->uid;
             $Users = new UsersModel();
             $oUsers = $Users->getUserInfo(base64_url_decode($userID));
-           
-            
+
+
             if ($oUsers) {
                 $response['status'] = 'success';
                 $response['datarow'] = $oUsers;

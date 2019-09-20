@@ -36,58 +36,17 @@ class Contacts extends Controller
 
         $this->template->load('admin/admin_template_new', 'admin/users/contacts', $data);
     }
-    /*
-    public function listingNotes()
-    {
-        $loginUserData = getLoggedUser($redirect=false);
-        if(empty($loginUserData)){
-            return;
-            exit();
-        }
-       $post = $this->input->post();
-       $SubscriberPhone = $post['NotesTo'];
 
-        $notes_from = db_in($post['notes_from']);
 
-       $oNotes = $this->mSubscriber->getContactNotes($post['NotesTo']);
-        //pre($oNotes);
-          foreach ($oNotes as $NotesData) {
-
-               $fileext = end(explode('.', $NotesData->notes));
-                $mmsFile = explode('/Media/', $NotesData->notes);
-
-                if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
-                    $NotesData->notes = "<div class='mrdia-file'><a href='" . $NotesData->notes . "' target='_blank' class='previewImage'><img src='" . $NotesData->notes . "' /></a></div>";
-                } else if ($fileext == 'doc' || $fileext == 'docx' || $fileext == 'odt' || $fileext == 'csv' || $fileext == 'pdf') {
-                   $NotesData->notes = "<div class='media-content'><a href='" . $NotesData->notes . "' target='_blank'>Download '" . $fileext . "' File</a></div>";
-                } else if (count($mmsFile) > 1) {
-                   $NotesData->notes = "<div class='mrdia-file'><a href='" . $NotesData->notes . "' target='_blank' class='previewImage'><img src='" . $NotesData->notes . "' /></a></div>";
-                }
-
-                    ?>
-                    <li class="media reversed">
-                       <div class="media-body">
-                           <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span>
-                            <?php echo showUserAvtar($loginUserData->avatar, $loginUserData->firstname, $loginUserData->lastname, 28, 28, 11); ?>                               </span>
-                           <div class="media-content" style="background-color:#fff9ec!important;"><?php echo $NotesData->notes; ?>
-                           </div>
-                               <span style="padding: 0;display: block;font-size: 10px;position: absolute; right: 0;bottom: -16px;" class="text-muted text-size-small">Added By <?php echo $NotesData->firstname . ' ' . $NotesData->lastname; ?>  <?php echo date('F d Y', strtotime($NotesData->created)); ?>  </span>
-                            </div>
-                    </li>
-<div style="height:10px" class="clearfix"></div>
-                <?php }
-    }
-*/
-
-    public function listingNotes()
+    public function listingNotes(Request $request)
     {
 
-       $post = $this->input->post();
-       $SubscriberPhone = $post['NotesTo'];
 
-        $notes_from = db_in($post['notes_from']);
+       $SubscriberPhone = $request->NotesTo;
 
-       $oNotes = $this->mSubscriber->visitornotes($post['NotesTo']);
+        $notes_from = db_in($request->notes_from);
+
+       $oNotes = $this->mSubscriber->visitornotes($request->NotesTo);
         //pre($oNotes);
           foreach ($oNotes as $NotesData) {
 
@@ -419,35 +378,35 @@ class Contacts extends Controller
     }
 
 
-    public function add_contact() {
+    public function add_contact(Request $request) {
         $response = array();
-        $post = $this->input->post();
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        if (empty($post)) {
+        if (empty($request)) {
             $response['status'] = "Error";
             echo json_encode($response);
             exit;
         }
 
         $emailUserId = '';
-        $firstName = strip_tags($post['firstname']);
-        $lastName = strip_tags($post['lastname']);
-        $email = strip_tags($post['email']);
-        $gender = strip_tags($post['gender']);
-        $countryCode = strip_tags($post['countryCode']);
-        $cityName = strip_tags($post['cityName']);
-        $stateName = strip_tags($post['stateName']);
-        $zipCode = strip_tags($post['zipCode']);
-        $socialProfile = strip_tags($post['socialProfile']);
-        $tagID = strip_tags($post['tagID']);
+        $firstName = $request->firstname;
+        $lastName = $request->lastname;
+        $email = $request->email;
+        $gender = $request->gender;
+        $countryCode = $request->countryCode;
+        $cityName = $request->cityName;
+        $stateName = $request->stateName;
+        $zipCode = $request->zipCode;
+        $socialProfile = $request->socialProfile;
+        $tagID = $request->tagID;
         //$emailUser = getUserDetailByEmailId($email);
         $oUserAccount = $this->mUser->checkEmailExist($email);
         if (!empty($oUserAccount)) {
             $emailUserId = $oUserAccount[0]->id;
         }
 
-        $phone = strip_tags($post['phone']);
+        $phone = $request->phone;
         $bAlreadyExists = 0;
         $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
         if (!empty($oGlobalUser)) {
@@ -486,26 +445,26 @@ class Contacts extends Controller
         exit;
     }
 
-    public function add_contact_notes() {
+    public function add_contact_notes(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $mSubscriber =  new SubscriberModel();
-        if (empty(Input::post("subscriberid"))) {
+        if (empty($request->subscriberid)) {
             $response['status'] = "Error";
             echo json_encode($response);
             exit;
         }
 
-        $notes = db_in(Input::post("notes"));
-        $notes_from = db_in(Input::post("notes_from"));
+        $notes = db_in($request->notes);
+        $notes_from = db_in($request->notes_from);
 
-        $source = strip_tags(Input::post("source"));
-        $type = strip_tags(Input::post("type"));
+        $source = strip_tags($request->source);
+        $type = strip_tags($request->type);
 
         if($type == 'smartpopup' || $type == ''){
-            $subId = Input::post("subscriberid");
+            $subId = $request->subscriberid;
         }else{
-            $subId = Input::post("NotesTo");
+            $subId = $request->NotesTo;
         }
 
         $aData = array(
@@ -532,14 +491,14 @@ class Contacts extends Controller
         exit;
     }
 
-    public function get_contact_info() {
+    public function get_contact_info(Request $request) {
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        $post = $this->input->post();
-        $contactID = strip_tags($post['contactID']);
-        if ($this->input->post()) {
-            $post = $this->input->post();
+
+
+        $contactID = $request->contactID;
+        if (!empty($request)) {
+
             $oSubscriber = $this->mSubscriber->getGlobalSubscriberInfo($contactID);
             if ($oSubscriber) {
                 $response['status'] = 'success';
@@ -553,25 +512,25 @@ class Contacts extends Controller
         }
     }
 
-    public function update_contact_info() {
+    public function update_contact_info(Request $request) {
         $response = array();
         $response['status'] = 'Error';
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        if ($post) {
-            $firstname = strip_tags($post['edit_firstname']);
-            $lastname = strip_tags($post['edit_lastname']);
-            $email = strip_tags($post['edit_email']);
-            $phone = strip_tags($post['edit_phone']);
-            $subscriberID = strip_tags($post['edit_subscriberID']);
-            $gender = strip_tags($post['edit_gender']);
-            $countryCode = strip_tags($post['edit_countryCode']);
-            $cityName = strip_tags($post['edit_cityName']);
-            $stateName = strip_tags($post['edit_stateName']);
-            $zipCode = strip_tags($post['edit_zipCode']);
-            $socialProfile = strip_tags($post['edit_socialProfile']);
-            $tagID = strip_tags($post['edit_tags']);
+
+        if (!empty($request)) {
+            $firstname = $request->edit_firstname;
+            $lastname = $request->edit_lastname;
+            $email = $request->edit_email;
+            $phone = $request->edit_phone;
+            $subscriberID = $request->edit_subscriberID;
+            $gender = $request->edit_gender;
+            $countryCode = $request->edit_countryCode;
+            $cityName = $request->edit_cityName;
+            $stateName = $request->edit_stateName;
+            $zipCode = $request->edit_zipCode;
+            $socialProfile = $request->edit_socialProfile;
+            $tagID = $request->edit_tags;
             $aGlobalUserData = array(
                 'email' => $email,
                 'firstname' => $firstname,
@@ -594,14 +553,14 @@ class Contacts extends Controller
         exit;
     }
 
-    public function delete_contact() {
+    public function delete_contact(Request $request) {
         $response = array();
-        $post = $this->input->post();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        if ($post) {
+        if (!empty($request)) {
 
-            $subscriberID = strip_tags($post['subscriberId']);
+            $subscriberID = $request->subscriberId;
 
             $result = $this->mSubscriber->deleteGlobalSubscriber($userID, $subscriberID);
             if ($result) {
@@ -615,15 +574,15 @@ class Contacts extends Controller
         }
     }
 
-    public function archiveBulkContacts() {
+    public function archiveBulkContacts(Request $request) {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $sContacts = $post['multipal_record_id'];
+        if (!empty($request)) {
+
+
+            $sContacts = $request->multipal_record_id;
 
             $aData = array(
                 'status' => 2
@@ -644,15 +603,15 @@ class Contacts extends Controller
         }
     }
 
-    public function deleteBulkContacts() {
+    public function deleteBulkContacts(Request $request) {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $sContacts = $post['multipal_record_id'];
+        if (!empty($request)) {
+
+
+            $sContacts = $request->multipal_record_id;
 
             foreach ($sContacts as $iContactID) {
                 $result = $this->mSubscriber->deleteGlobalSubscriber($userID, $iContactID);
@@ -669,11 +628,11 @@ class Contacts extends Controller
         }
     }
 
-    public function importcsv() {
+    public function importcsv(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $someoneadded = false;
-        $post = $this->input->post();
+
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'csv';
         $config['max_size'] = '1000';
@@ -734,13 +693,13 @@ class Contacts extends Controller
         }
     }
 
-    public function exportCSV() {
+    public function exportCSV(Request $request) {
         $filename = 'users_' . time() . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
 
-        $post = $this->input->post();
+
         $userID = $this->session->userdata("current_user_id");
         $allSubscribers = $this->mSubscriber->getGlobalSubscribers($userID);
 
@@ -756,17 +715,17 @@ class Contacts extends Controller
         exit;
     }
 
-    public function update_status() {
+    public function update_status(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
-        if ($post) {
+        if (!empty($request)) {
 
-            $status = strip_tags($post['status']);
-            $userId = strip_tags($post['contactId']);
+            $status = $request->status;
+            $userId = $request->contactId;
 
             $aData = array(
                 'status' => $status

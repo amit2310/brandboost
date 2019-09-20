@@ -18,7 +18,7 @@ class Payment extends Controller {
     //var $merchant_id = '14';
 
     /**
-     * 
+     *
      * @param type $aData
      * @return string
      */
@@ -92,7 +92,7 @@ class Payment extends Controller {
     }
 
     /**
-     * 
+     *
      * @param type $aData
      * @return boolean
      */
@@ -221,7 +221,7 @@ class Payment extends Controller {
     }
 
     /**
-     * 
+     *
      * @param type $aData
      * @return int
      */
@@ -292,7 +292,7 @@ class Payment extends Controller {
     }
 
     /**
-     * 
+     *
      * @param Request $request
      * @return type
      */
@@ -341,7 +341,7 @@ class Payment extends Controller {
     }
 
     /**
-     * 
+     *
      * @param Request $request
      * @return type
      */
@@ -409,7 +409,7 @@ class Payment extends Controller {
     }
 
     /**
-     * 
+     *
      * @param Request $request
      */
     public function cbCharge(Request $request) {
@@ -474,7 +474,7 @@ class Payment extends Controller {
                     'password' => $randstring
                 );
 
-                //Create registration at chargebee 
+                //Create registration at chargebee
                 $chargebeeUserID = $this->cbUserRegistration($aUserData);
 
                 if (empty($chargebeeUserID)) {
@@ -756,7 +756,7 @@ class Payment extends Controller {
     }
 
     /**
-     * 
+     *
      * @param type $planID
      * @return type
      */
@@ -981,7 +981,7 @@ class Payment extends Controller {
                 $ppu = $aInvoiceDetails->PPU;
 
                 $productType = ($planID > 0) ? 'membership' : 'topup';
-                //This will deal with both Recurring and one time orders 
+                //This will deal with both Recurring and one time orders
                 $tranResponse = Infusionsoft_InvoiceService::chargeInvoice($invoiceID, $itemName, $ccID, $this->merchant_id, false);
                 if ($tranResponse['Successful'] == 1 && $tranResponse['Code'] == 'Approved') {
                     //Okay Payment Successful, Save invoice related details locally.
@@ -1069,7 +1069,6 @@ class Payment extends Controller {
 
 
         $subscriptionID = $oUser->subscription_id;
-        $post = Input::post();
         if (!empty($request)) {
             $planID = $request->plan_id;
             $userID = Session::get('customer_user_id');
@@ -1398,7 +1397,7 @@ class Payment extends Controller {
         exit;
     }
 
-      
+
     public function changeSubscription(Request $request) {
         try {
 

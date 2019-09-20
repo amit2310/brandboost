@@ -205,7 +205,7 @@ class Reviews extends Controller {
 		$mBrandboost = new BrandboostModel();
 		$mReviews = new ReviewsModel();
 		$mUser = new UsersModel();
-
+        $offset =  $limit = '';
         $aSettings['start'] = $offset;
         $aSettings['review_limit'] = $limit;
 
@@ -509,10 +509,10 @@ class Reviews extends Controller {
      * Used to delete review note
      * @param type
      */
-    public function deleteReviewNote() {
+    public function deleteReviewNote(Request $request) {
         $response = array();
 
-        $noteid = Input::post("noteid");
+        $noteid = $request->noteid;
         $result = ReviewsModel::deleteReviewNoteByID($noteid);
         if ($result) {
             $response['status'] = 'success';
@@ -533,12 +533,13 @@ class Reviews extends Controller {
 
 
 
-    public function getCommonCommentPopup($widgetHash) {
+    public function getCommonCommentPopup(Request $request) {
+        $widgetHash = $request->widgetHash;
         $response = array();
-        $post = $this->input->post();
 
-        if (!empty($post)) {
-            $bbrID = $post['bbrid'];
+
+        if (!empty($request)) {
+            $bbrID = $request->bbrid;
             $aData = '';
             if (!empty($widgetHash)) {
                 $reviewData = $this->mReviews->getReviewByReviewID($bbrID);
@@ -800,29 +801,29 @@ class Reviews extends Controller {
         return true;
     }
 
-    public function saveNewReview() {
+    public function saveNewReview(Request $request) {
         $response = array();
-        $post = Input::post();
+
          $mInviter = new BrandboostModel();
          $mSubscriber = new SubscriberModel();
          $mReviews = new ReviewsModel();
         $bAllDone = false;
 
-        if (!empty($post)) {
-            //pre($post);
-            $reviewTitle = $post['title'];
-            $description = $post['description'];
-            $campaignID = $post['campaign_id'];
-            $reviewType = $type = $post['reviewType'];
-            $ratingVal = $post['ratingValue'];
-            $productId = $post['productId'];
-            $reviewUniqueID = $post['reviewUniqueID'];
-            $recommendedValue = $post['recomendationValue'];
+        if (!empty($request)) {
+
+            $reviewTitle = $request->title;
+            $description = $request->description;
+            $campaignID = $request->campaign_id;
+            $reviewType = $type = $request->reviewType;
+            $ratingVal = $request->ratingValue;
+            $productId = $request->productId;
+            $reviewUniqueID = $request->reviewUniqueID;
+            $recommendedValue = $request->recomendationValue;
 
 
-            $email = $post['emailid'];
-            $mobile = $post['phone'];
-            $display_name = $post['display_name'];
+            $email = $request->emailid;
+            $mobile = $request->phone;
+            $display_name = $request->display_name;
             if (!empty($display_name)) {
                 $showName = 0;
             } else {
@@ -835,7 +836,7 @@ class Reviews extends Controller {
             //Collect Review
 
             if ($type == 'site') {
-                $fullName = $post['fullname'];
+                $fullName = $request->fullname;
                 $aNameChunks = explode(" ", $fullName);
                 $firstName = $aNameChunks[0];
                 $lastName = str_replace($firstName, "", $fullName);
@@ -849,7 +850,7 @@ class Reviews extends Controller {
                 $aRegistrationData['clientID'] = $clientID;
                 $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 
-                $siteReviewFile = $post['site_uploaded_name'];
+                $siteReviewFile = $request->site_uploaded_name;
                 $siteReviewFileArray = array();
 
                 foreach ($siteReviewFile['media_url'] as $key => $fileData) {
@@ -875,13 +876,13 @@ class Reviews extends Controller {
                 if(!empty($productId)) {
 
                     foreach ($productId as $key => $productData) {
-                        $fullName = $post['fullname'][$productData];
+                        $fullName = $request->fullname[$productData];
                         $aNameChunks = explode(" ", $fullName);
                         $firstName = $aNameChunks[0];
                         $lastName = str_replace($firstName, "", $fullName);
 
-                        if ($post['newReviewPage'] == 'brandPage') {
-                            $reviewType = $post['reviewTypeNew'][$productData];
+                        if ($request->newReviewPage == 'brandPage') {
+                            $reviewType = $request->reviewTypeNew[$productData];
                         }
 
                         $aRegistrationData = array(
@@ -894,7 +895,7 @@ class Reviews extends Controller {
 
                         $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 
-                        $productReviewFile = $post['uploaded_name_' . $productData];
+                        $productReviewFile = $request->uploaded_name_ . $productData;
                         $productReviewFileArray = array();
 
                         foreach ($productReviewFile['media_url'] as $key => $fileData) {
@@ -918,13 +919,13 @@ class Reviews extends Controller {
                     }
                 }
                 else {
-                    $fullName = $post['fullname'];
+                    $fullName = $request->fullname;
                     $aNameChunks = explode(" ", $fullName);
                     $firstName = $aNameChunks[0];
                     $lastName = $aNameChunks[1];
 
-                    if ($post['newReviewPage'] == 'brandPage') {
-                        $reviewType = $post['reviewType'];
+                    if ($request->newReviewPage == 'brandPage') {
+                        $reviewType = $request->reviewType;
                     }
 
                     $aRegistrationData = array(
@@ -938,7 +939,7 @@ class Reviews extends Controller {
 
                     $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 
-                    $productReviewFile = $post['uploaded_name'];
+                    $productReviewFile = $request->uploaded_name;
                     $productReviewFileArray = array();
 
                     foreach ($productReviewFile['media_url'] as $key => $fileData) {
@@ -1035,27 +1036,26 @@ class Reviews extends Controller {
     }
 
 
-    public function saveReviewByEmailTemplate() {
+    public function saveReviewByEmailTemplate(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
 
-        if (!empty($post)) {
-            $fullName = strip_tags($post['fullname']);
+        if (!empty($request)) {
+            $fullName = $request->fullname;
             $aName = explode(' ', $fullName, 2);
             $firstName = $aName[0];
             $lastName = $aName[1];
-            $email = strip_tags($post['email']);
-            $mobile = strip_tags($post['mobile']);
-            $reviewType = strip_tags($post['type']);
-            $campaignID = strip_tags($post['campaign_id']);
-            $ratingVal = strip_tags($post['ratingValue']);
-            $image_name = strip_tags($post['image_name']);
-            $reviewTitle = strip_tags($post['review_title']);
+            $email = $request->email;
+            $mobile = $request->mobile;
+            $reviewType = $request->type;
+            $campaignID = $request->campaign_id;
+            $ratingVal = $request->ratingValue;
+            $image_name = $request->image_name;
+            $reviewTitle = $request->review_title;
 
 
-            $telExt = strip_tags($post['telExt']);
-            $countryExt = strip_tags($post['countryExt']);
+            $telExt = $request->telExt;
+            $countryExt = $request->countryExt;
 
             if (!empty($campaignID)) {
                 $aBrandboost = $this->mInviter->getBBInfo($campaignID);
@@ -1096,7 +1096,7 @@ class Reviews extends Controller {
 
             if ($reviewType == 'text') {
                 //Collect Text Review
-                $reviewContent = strip_tags($post['content']);
+                $reviewContent = $request->content;
                 $aReviewData['comment_text'] = $reviewContent;
                 $aReviewData['comment_video'] = $image_name;
             }
@@ -1123,24 +1123,22 @@ class Reviews extends Controller {
     }
 
 
-    public function saveReviewByEmailTemplate_old() {
+    public function saveReviewByEmailTemplate_old(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-
-        if (!empty($post)) {
-            $fullName = strip_tags($post['fullname']);
-            $email = strip_tags($post['email']);
-            $mobile = strip_tags($post['mobile']);
-            $reviewType = strip_tags($post['type']);
-            $campaignID = strip_tags($post['campaign_id']);
-            $ratingVal = strip_tags($post['ratingValue']);
-            $image_name = strip_tags($post['image_name']);
-            $reviewTitle = strip_tags($post['review_title']);
+        if (!empty($request)) {
+            $fullName = $request->fullname;
+            $email = $request->email;
+            $mobile = $request->mobile;
+            $reviewType = $request->type;
+            $campaignID = $request->campaign_id;
+            $ratingVal = $request->ratingValue;
+            $image_name = $request->image_name;
+            $reviewTitle = $request->review_title;
 
 
-            $telExt = strip_tags($post['telExt']);
-            $countryExt = strip_tags($post['countryExt']);
+            $telExt = $request->telExt;
+            $countryExt = $request->countryExt;
 
             if (empty($fullName) || empty($email)) {
                 //Display errors, fields should not be blank
@@ -1182,7 +1180,7 @@ class Reviews extends Controller {
 
             if ($reviewType == 'text') {
                 //Collect Text Review
-                $reviewContent = strip_tags($post['content']);
+                $reviewContent = $request->content;
                 $aReviewData['comment_text'] = $reviewContent;
                 $aReviewData['comment_video'] = $image_name;
             }
@@ -1239,30 +1237,30 @@ class Reviews extends Controller {
         $this->template->load('template', 'reviews/thankyou');
     }
 
-    public function saveReviewText() {
+    public function saveReviewText(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
 
-        if (!empty($post)) {
-            $subscriberID = strip_tags($post['subID']);
-            $inviterID = strip_tags($post['inviterID']);
-            $fullName = strip_tags($post['fullname']);
+
+        if (!empty($request)) {
+            $subscriberID = $request->subID;
+            $inviterID = $request->inviterID;
+            $fullName = $request->fullname;
             $aName = explode(' ', $fullName, 2);
             $firstName = $aName[0];
             $lastName = $aName[1];
-            $email = strip_tags($post['email']);
-            $mobile = strip_tags($post['mobile']);
-            $reviewType = strip_tags($post['type']);
-            $campaignID = strip_tags($post['campaign_id']);
-            $ratingVal = strip_tags($post['ratingValue']);
-            $reviewTitle = strip_tags($post['review_title']);
-            $image_name = strip_tags($post['image_name']);
-            $proReview = strip_tags($post['pro']);
-            $consReview = strip_tags($post['cons']);
+            $email = $request->email;
+            $mobile = $request->mobile;
+            $reviewType = $request->type;
+            $campaignID = $request->campaign_id;
+            $ratingVal = $request->ratingValue;
+            $reviewTitle = $request->review_title;
+            $image_name = $request->image_name;
+            $proReview = $request->pro;
+            $consReview = $request->cons;
 
-            $telExt = strip_tags($post['telExt']);
-            $countryExt = strip_tags($post['countryExt']);
+            $telExt = $request->telExt;
+            $countryExt = $request->countryExt;
 
             $getBrandboostDetail = getBrandboostDetail($campaignID);
             $brandboostUserId = $getBrandboostDetail->user_id;
@@ -1305,7 +1303,7 @@ class Reviews extends Controller {
 
             if ($reviewType == 'text') {
                 //Collect Text Review
-                $reviewContent = strip_tags($post['content']);
+                $reviewContent = $request->content;
                 $aReviewData['comment_text'] = $reviewContent;
                 $aReviewData['comment_video'] = $image_name;
             }
@@ -1370,26 +1368,26 @@ class Reviews extends Controller {
         exit;
     }
 
-    public function saveReview() {
+    public function saveReview(Request $request) {
         $this->load->library('S3');
         $response = array();
-        $post = $this->input->post();
 
-        if (!empty($post)) {
+
+        if (!empty($request)) {
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $fullName = strip_tags($post['fullname']);
+            $fullName = $request->fullname;
             $aName = explode(' ', $fullName, 2);
             $firstName = $aName[0];
             $lastName = $aName[1];
-            $email = strip_tags($post['email']);
-            $mobile = strip_tags($post['mobile']);
-            $reviewType = strip_tags($post['type']);
-            $campaignID = strip_tags($post['campaign_id']);
-            $ratingVal = strip_tags($post['ratingValue']);
-            $reviewTitle = strip_tags($post['review_title']);
+            $email = $request->email;
+            $mobile = $request->mobile;
+            $reviewType = $request->type;
+            $campaignID = $request->campaign_id;
+            $ratingVal = $request->ratingValue;
+            $reviewTitle = $request->review_title;
 
-            $telExt = strip_tags($post['telExt']);
-            $countryExt = strip_tags($post['countryExt']);
+            $telExt = $request->telExt;
+            $countryExt = $request->countryExt;
 
             if (empty($fullName) || empty($email)) {
                 //Display errors, fields should not be blank
@@ -1429,7 +1427,7 @@ class Reviews extends Controller {
 
             if ($reviewType == 'text') {
                 //Collect Text Review
-                $reviewContent = strip_tags($post['content']);
+                $reviewContent = $request->content;
                 $aReviewData['comment_text'] = $reviewContent;
 
 
@@ -1513,13 +1511,12 @@ class Reviews extends Controller {
 
 
 
-    public function saveCommentLike() {
+    public function saveCommentLike(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $reviewID = strip_tags($post['bbrid']);
-            $commentID = strip_tags($post['bbcid']);
-            $action = strip_tags($post['av']);
+        if (!empty($request)) {
+            $reviewID = $request->bbrid;
+            $commentID = $request->bbcid;
+            $action = $request->av;
             $ip = $this->input->ip_address();
 
             $aVoteData = array(
@@ -1557,7 +1554,7 @@ class Reviews extends Controller {
      */
     public function deleteReview(Request $request) {
         $response = array();
-        $reviewid = strip_tags($request->reviewid);
+        $reviewid = $request->reviewid;
         $result = ReviewsModel::deleteReviewByID($reviewid);
         if ($result) {
             $response['status'] = 'success';
@@ -1571,12 +1568,10 @@ class Reviews extends Controller {
 
 
 
-    public function deleteReviewMultipal() {
+    public function deleteReviewMultipal(Request $request) {
         $response = array();
-        $post = Input::post();
-        //pre($post);
-        $reviewids = $post['reviewid'];
-        $mediaName = $post['mediaName'];
+        $reviewids = $request->reviewid;
+        $mediaName = $request->mediaName;
         $mReviews = new ReviewsModel();
         $inc = 0;
         foreach ($reviewids as $reviewid) {
@@ -1609,14 +1604,13 @@ class Reviews extends Controller {
         exit;
     }
 
-    public function getReviewById() {
+    public function getReviewById(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $aUsers = $this->mReviews->getReviewByReviewID($post['reviewid']);
+        if (!empty($request)) {
+
+            $aUsers = $this->mReviews->getReviewByReviewID($request->reviewid);
             if ($aUsers) {
                 $response['status'] = 'success';
                 $response['result'] = $aUsers;
@@ -1629,17 +1623,16 @@ class Reviews extends Controller {
         }
     }
 
-    public function update_review() {
+    public function update_review(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
+        if (!empty($request)) {
 
-            $reviewID = strip_tags($post['edit_reviewid']);
-            $ratingValue = strip_tags($post['ratingValue']);
-            $edit_content = strip_tags($post['edit_content']);
-            $reviewTitle = strip_tags($post['edit_review_title']);
+
+            $reviewID = $request->edit_reviewid;
+            $ratingValue = $request->ratingValue;
+            $edit_content = $request->edit_content;
+            $reviewTitle = $request->edit_review_title;
 
             $aData = array(
                 'comment_text' => $edit_content,
@@ -1725,25 +1718,24 @@ class Reviews extends Controller {
         return true;
     }
 
-    public function saveManualReview() {
+    public function saveManualReview(Request $request) {
         $response = array();
-        $post = $this->input->post();
         $oUser = getLoggedUser();
         $currentUserID = $oUser->id;
 
-        if (!empty($post)) {
-            $userID = $post['user_id'];
+        if (!empty($request)) {
+            $userID = $request->user_id;
             $reviewType = 'any';
-            $type = $post['reviewType'];
-            $campaignID = strip_tags($post['campaign_id']);
-            $subscriberID = strip_tags($post['subID']);
-            $inviterID = strip_tags($post['inviterID']);
-            $ratingVal = strip_tags($post['ratingValue']);
-            $reviewTitle = strip_tags($post['title']);
-            $description = strip_tags($post['description']);
-            $display_name = $post['display_name'];
-            $email = $post['display_email'];
-            $phone = $post['change_phone'];
+            $type = $request->reviewType;
+            $campaignID = $request->campaign_id;
+            $subscriberID = $request->subID;
+            $inviterID = $request->inviterID;
+            $ratingVal = $request->ratingValue;
+            $reviewTitle = $request->title;
+            $description = $request->description;
+            $display_name = $request->display_name;
+            $email = $request->display_email;
+            $phone = $request->change_phone;
             $mobile = '';
 
             //getLocationInfoByIp
@@ -1753,8 +1745,8 @@ class Reviews extends Controller {
             $country = $getLocationInfoByIp['country'];
 
             $reviewStatus = 2;
-            if (!empty($post['reviewStatus'])) {
-                $reviewStatus = $post['reviewStatus'];
+            if (!empty($request->reviewStatus)) {
+                $reviewStatus = $request->reviewStatus;
             }
 
             if (!empty($display_name)) {
@@ -1763,8 +1755,8 @@ class Reviews extends Controller {
                 $showName = 1;
             }
 
-            $productReviewFile = $post['uploaded_name'];
-            $siteReviewFile = $post['site_uploaded_name'];
+            $productReviewFile = $request->uploaded_name;
+            $siteReviewFile = $request->site_uploaded_name;
 
             $productReviewFileArray = array();
 
@@ -1783,13 +1775,13 @@ class Reviews extends Controller {
                 $siteReviewFileArray[$key]['media_name'] = $siteReviewFile['media_name'][$key];
             }
 
-            $proReview = strip_tags($post['pro']);
-            $consReview = strip_tags($post['cons']);
-            $recommendedValue = strip_tags($post['recomendationValue']);
-            $reviewID = (strip_tags($post['review_id'])) ? strip_tags($post['review_id']) : $this->session->userdata('review_id');
+            $proReview = $request->pro;
+            $consReview = $request->cons;
+            $recommendedValue = $request->recomendationValue;
+            $reviewID = ($request->review_id) ? $request->review_id : $this->session->userdata('review_id');
 
-            //$telExt = strip_tags($post['telExt']);
-            //$countryExt = strip_tags($post['countryExt']);
+            //$telExt = $request->telExt;
+            //$countryExt = $request->countryExt;
 
             $aBrandboost = $this->mInviter->getBBInfo($campaignID);
             $brandboostUserId = $aBrandboost->user_id;
