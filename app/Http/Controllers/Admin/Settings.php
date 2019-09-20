@@ -85,11 +85,11 @@ class Settings extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
-        $post = Input::post();
 
-        if (!empty($post)) {
+        $request = Request::input();
+        if (!empty($request)) {
 
-            foreach ($post as $field => $value) {
+            foreach ($request as $field => $value) {
                 $aData[$field] = $value;
             }
 
@@ -113,14 +113,14 @@ class Settings extends Controller {
      * Update company profile
      * @param type
      */
-    public function updateCompanyProfile() {
+    public function updateCompanyProfile(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
-        $post = Input::post();
-        if ($post) {
-            $fieldName = strip_tags($post['fieldname']);
-            $fieldValue = strip_tags($post['fieldval']);
+
+        if (!empty($request)) {
+            $fieldName = $request->fieldname;
+            $fieldValue = $request->fieldval;
 
             $aData = array(
                 $fieldName => $fieldValue
@@ -181,14 +181,14 @@ class Settings extends Controller {
      * Update notification permission
      * @param type
      */
-    public function updateNotificationPermisson() {
+    public function updateNotificationPermisson(Request $request) {
 
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
-        $post = Input::post();
-        if ($post) {
-            $fieldName = strip_tags($post['notification_slug']);
+
+        if (!empty($request)) {
+            $fieldName = $request->notification_slug;
 
             $aData = array(
                'notification_slug' => $fieldName
@@ -247,14 +247,14 @@ class Settings extends Controller {
      * Update notification setting
      * @param type
      */
-    public function updateNotificationSettings() {
+    public function updateNotificationSettings(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
-        $post = Input::post();
-        if ($post) {
-            $fieldName = strip_tags($post['fieldname']);
-            $fieldValue = strip_tags($post['fieldval']);
+
+        if (!empty($request)) {
+            $fieldName = $request->fieldname;
+            $fieldValue = $request->fieldval;
 
             $aData = array(
                 $fieldName => $fieldValue
@@ -304,10 +304,10 @@ class Settings extends Controller {
     * @param type
     * @return type
     */
-     public function getuserbyid(){
+     public function getuserbyid(Request $request){
 
-       $post = Input::post();
-       $userid = strip_tags($post['userid']);
+
+       $userid = $request->userid;
        $userDetails = getAllUser($userid);
        if ($userDetails[0]->id!="") {
                 $response['status'] = 'success';
@@ -328,7 +328,7 @@ class Settings extends Controller {
     * @param type
     * @return type
     */
-    public function updateS3setting() {
+    public function updateS3setting(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
@@ -339,11 +339,11 @@ class Settings extends Controller {
             echo json_encode($response);
             exit;
         }
-        $post = Input::post();
 
-        if ($post) {
-            $user_id_input = strip_tags($post['user_id_input']);
-            $s3_allow_size = $post['s3_allow_size'];
+
+        if (!empty($request)) {
+            $user_id_input = $request->user_id_input;
+            $s3_allow_size = $request->s3_allow_size;
             $aData = array(
                 's3_allow_size' => $s3_allow_size
 
@@ -408,12 +408,12 @@ class Settings extends Controller {
     * @param type
     * @return type
     */
-      public function getCreditPropery(){
+      public function getCreditPropery(Request $request){
 
-        $post = Input::post();
+
         $mSetting  = new SettingsModel();
-        if ($post) {
-            $creditID = base64_url_decode(strip_tags($post['creditID']));
+        if (!empty($request)) {
+            $creditID = base64_url_decode($request->creditID);
              $oCrValue = $mSetting->getCreditValues($creditID);
              if ($oCrValue) {
                 $response['status'] = 'success';
@@ -640,7 +640,7 @@ class Settings extends Controller {
     * @param type
     * @return type
     */
-    public function updateCreditPropery(){
+    public function updateCreditPropery(Request $request){
        $oUser = getLoggedUser();
        $userID = $oUser->id;
        $response = array();
@@ -653,11 +653,11 @@ class Settings extends Controller {
            exit;
        }
 
-       $post = Input::post();
-       if ($post) {
-           $creditID = base64_url_decode(strip_tags($post['creditID']));
-           $propertyName = strip_tags($post['title']);
-           $creditValue = strip_tags($post['feature_credits']);
+
+       if (!empty($request)) {
+           $creditID = base64_url_decode($request->creditID);
+           $propertyName = $request->title;
+           $creditValue = $request->feature_credits;
            //Get data for history
            $oCrValue = SettingsModel::getCreditValues($creditID);
            $aData = array(

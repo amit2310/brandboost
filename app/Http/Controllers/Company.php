@@ -102,8 +102,8 @@ class Company extends Controller {
 
 			$response = array();
 
-			$reviewID = strip_tags($request->review_id);
-			$action = strip_tags($request->action);
+			$reviewID = $request->review_id;
+			$action = $request->action;
 
 			$ip = $request->ip();
 
@@ -189,13 +189,13 @@ class Company extends Controller {
 			}
 		}
 
-		public function loadCampaignReview() {
+		public function loadCampaignReview(Request $request) {
 
-			$post = $this->input->post();
-			if(!empty($post)) {
-				$offsite = $post['offsite'];
-				$limit = $post['limit'];
-				$campaignId = $post['campaignId'];
+
+			if(!empty($request)) {
+				$offsite = $request->offsite;
+				$limit = $request->limit;
+				$campaignId = $request->campaignId;
 				$brandData = $this->mBrand->getBrandConfigurationData($campaignId);
 				$oCampaign = $this->mReviews->getBrandBoostCampaign($campaignId, $hash = false);
 
@@ -360,12 +360,12 @@ class Company extends Controller {
 			exit;
 		}
 
-		public function loadSiteReview() {
-			$post = $this->input->post();
-			if(!empty($post)) {
-				$offsite = $post['offsite'];
-				$limit = $post['limit'];
-				$campaignId = $post['campaignId'];
+		public function loadSiteReview(Request $request) {
+
+			if(!empty($request)) {
+				$offsite = $request->offsite;
+				$limit = $request->limit;
+				$campaignId = $request->campaignId;
 				$brandData = $this->mBrand->getBrandConfigurationData($campaignId);
 				$oCampaign = $this->mReviews->getBrandBoostCampaign($campaignId, $hash = false);
 				$siteReview = $this->mBrandboost->campaignSiteReview($campaignId, $limit, $offsite);
@@ -707,12 +707,12 @@ class Company extends Controller {
 			$mReviews = new ReviewsModel();
 			$mInviter = new BrandboostModel();
 
-			if (!empty($post)) {
-				$reviewID = strip_tags($request->rid);
+			if (!empty($request)) {
+				$reviewID = $request->rid;
 
-				$fullName = strip_tags($request->cmtname);
-				$email = strip_tags($request->cmtemail);
-				$commentText = strip_tags($request->cmt);
+				$fullName = $request->cmtname;
+				$email = $request->cmtemail;
+				$commentText = $request->cmt;
 
 				$getReview = $mReviews->getReviewByReviewID($reviewID);
 
@@ -791,12 +791,12 @@ class Company extends Controller {
 
 
 
-		public function saveSiteHelpful() {
+		public function saveSiteHelpful(Request $request) {
 			$response = array();
-			$post = $this->input->post();
-			if (!empty($post)) {
-				$reviewID = strip_tags($post['review_id']);
-				$action = strip_tags($post['action']);
+
+			if (!empty($request)) {
+				$reviewID = $request->review_id;
+				$action = $request->action;
 				$ip = $this->input->ip_address();
 
 				$aVoteData = array(

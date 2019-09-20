@@ -9,7 +9,7 @@ use App\Models\Admin\InvoicesModel;
 class Invoice extends Controller {
 
 	public function index($clientID) {
-        
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -24,7 +24,7 @@ class Invoice extends Controller {
 
         $this->template->load('admin/admin_template_new', 'admin/invoices/index', $data);
     }
-    
+
     /**
      * Get the list of Invoice
      * @return type
@@ -36,7 +36,7 @@ class Invoice extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Invoices" class="sidebar-control active hidden-xs ">Invoices</a></li>
                     </ul>';
-            
+
         $data = array(
             'title' => 'Brand Boost Invoices',
             'pagename' => $breadcrumb,
@@ -45,7 +45,7 @@ class Invoice extends Controller {
 
         return view('admin.invoice.index', $data);
     }
-    
+
     /**
      * Get the detail of Invoice
      * @return type object
@@ -54,21 +54,21 @@ class Invoice extends Controller {
 
         $invoiceID = $request->invoice_id;
         $invoiceDetails = InvoicesModel::getInvoiceDetails($invoiceID);
-        
+
         if($invoiceDetails->count() > 0){
             $content = view('admin.invoice.get', array('userdata' => $invoiceDetails, 'invoiceID' => $invoiceID))->render();
             echo json_encode(array('status' => 'success', 'content'=> $content));
         }
     }
 
-    public function getUserById() {
+    public function getUserById(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $aUsers = $this->Users->getAllUsers($post['userID']);
+
+        if (!empty($request)) {
+
+            $aUsers = $this->Users->getAllUsers($request->userID);
             if ($aUsers) {
                 $response['status'] = 'success';
                 $response['result'] = $aUsers;
@@ -81,20 +81,20 @@ class Invoice extends Controller {
         }
     }
 
-    public function user_update() {
+    public function user_update(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $firstname = strip_tags($post['firstname']);
-            $lastname = strip_tags($post['lastname']);
-            $phone = strip_tags($post['phone']);
-            $zip = strip_tags($post['zip']);
-            $userID = strip_tags($post['userID']);
-            $twilioStatus = strip_tags($post['e_twilio_status']);
-            $contactId = strip_tags($post['e_infusion_user_id']);
+        if (!empty($request)) {
+
+
+            $firstname = $request->firstname;
+            $lastname = $request->lastname;
+            $phone = $request->phone;
+            $zip = $request->zip;
+            $userID = $request->userID;
+            $twilioStatus = $request->e_twilio_status;
+            $contactId = $request->e_infusion_user_id;
 
             $userData = $this->Users->getAllUsers($userID);
             $accountSid = $userData[0]->twilio_subaccount_sid;
@@ -124,14 +124,14 @@ class Invoice extends Controller {
         }
     }
 
-    public function update_status() {
+    public function update_status(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
 
-            $status = strip_tags($post['status']);
-            $userId = strip_tags($post['user_id']);
+        if (!empty($request)) {
+
+            $status = $request->status;
+            $userId = $request->user_id;
 
             $aData = array(
                 'status' => $status
@@ -149,15 +149,15 @@ class Invoice extends Controller {
         }
     }
 
-    public function user_delete() {
+    public function user_delete(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $userID = strip_tags($post['userID']);
-            $contactID = strip_tags($post['contactID']);
+        if (!empty($request)) {
+
+
+            $userID = $request->userID;
+            $contactID = $request->contactID;
 
             $this->mInfusion->deleteContact($contactID);
 
@@ -174,18 +174,18 @@ class Invoice extends Controller {
         }
     }
 
-    public function user_add() {
+    public function user_add(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $firstname = strip_tags($post['firstname']);
-            $lastname = strip_tags($post['lastname']);
-            $email = strip_tags($post['email']);
-            $phone = strip_tags($post['phone']);
-            $zip = strip_tags($post['zip']);
+        if (!empty($request)) {
+
+
+            $firstname = $request->firstname;
+            $lastname = $request->lastname;
+            $email = $request->email;
+            $phone = $request->phone;
+            $zip = $request->zip;
 
             $aInfusionData = array(
                 'firstname' => $firstname,
@@ -244,14 +244,14 @@ class Invoice extends Controller {
         $this->template->load('admin/admin_template', 'admin/users/twilio/index', array('result' => $result, 'client' => $client));
     }
 
-    public function checkEmailExist() {
+    public function checkEmailExist(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $result = $this->Users->checkEmailExist($post['emailID']);
+        if (!empty($request)) {
+
+
+            $result = $this->Users->checkEmailExist($request->emailID);
             if ($result) {
                 $response['status'] = 'success';
                 $response['message'] = $result;
@@ -265,16 +265,16 @@ class Invoice extends Controller {
         }
     }
 
-    public function createSendGridSA() {
+    public function createSendGridSA(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
+
+        if (!empty($request)) {
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $randstring = '';
             for ($i = 0; $i < 8; $i++) {
                 $randstring .= $characters[rand(0, strlen($characters))];
             }
-            $userID = strip_tags($post['user_id']);
+            $userID = $request->user_id;
             $username = 1000000 + $userID . '@brandboost.io';
             $ip = "168.245.71.20";
             $password = $randstring;
@@ -286,11 +286,11 @@ class Invoice extends Controller {
         exit;
     }
 
-    public function createTwilioAccount() {
+    public function createTwilioAccount(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
-            $userID = strip_tags($post['user_id']);
+
+        if (!empty($request)) {
+            $userID = $request->user_id;
             $username = 1000000 + $userID . '@brandboost.io';
             $userData = $this->mUser->getUserTwilioData($userID);
             if ($userData->user_id == '') {
@@ -315,7 +315,7 @@ class Invoice extends Controller {
         //load mPDF library
         $invoiceDetails = InvoicesModel::getInvoiceDetails($invoiceID);
 
-        
+
         if($invoiceDetails->count() > 0){
         	$html = view('admin.invoice.download_invoice', array('userdata' => $invoiceDetails, 'invoiceID' => $invoiceID))->render();
         	echo $html;
@@ -330,44 +330,44 @@ class Invoice extends Controller {
         $pdfFilePath ="invoice-".time()."-download.pdf";
         $pdf = $this->m_pdf->load();
         $pdf->SetDisplayMode('fullpage');
-        $stylesheet = file_get_contents(base_url().'assets/css/bootstrap_new.css'); 
+        $stylesheet = file_get_contents(base_url().'assets/css/bootstrap_new.css');
        // $stylesheet_core = file_get_contents(base_url().'assets/css/core.css');
         //$style_components = file_get_contents(base_url().'assets/css/components.css');
-        //$stylesheetCustom = file_get_contents(base_url().'new_pages/assets/css/bootstrap.css'); 
+        //$stylesheetCustom = file_get_contents(base_url().'new_pages/assets/css/bootstrap.css');
         //$pdf->WriteHTML($stylesheetCustom,1);
         $pdf->WriteHTML($stylesheet,1);
         //$pdf->WriteHTML($stylesheet_core,1);
         //$pdf->WriteHTML($style_components,1);
-        
+
         $pdf->WriteHTML($html,2);
         $pdf->Output($pdfFilePath, "D");
-            
+
     }
-    
+
     public function test() {
 
         //load mPDF library
         $invoiceID = 383;
         //$this->load->library('m_pdf');
-        
+
         $invoiceDetails = $this->mInvoices->getInvoiceDetails($invoiceID);
-       
+
         if(!empty($invoiceDetails)){
             //$html = $this->load->view('admin/invoices/download_invoice', array('userdata' => $invoiceDetails, 'invoiceID' => $invoiceID), true);
             $html = $this->load->view("admin/invoices/partials/invoice_content_email", array('userdata' => $invoiceDetails, 'invoiceID' => $invoiceID), true);
         }
         echo $html;
 
-        
-        
-            
+
+
+
     }
 
-    public function email_invoice() {
+    public function email_invoice(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
-            $invoiceID = strip_tags($post['invoice_id']);
+
+        if (!empty($request)) {
+            $invoiceID = $request->invoice_id;
             $invoiceDetails = $this->mInvoices->getInvoiceDetails($invoiceID);
             $email = $invoiceDetails[0]->email;
             //pre($invoiceDetails);

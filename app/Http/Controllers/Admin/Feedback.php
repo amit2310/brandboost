@@ -55,12 +55,13 @@ class Feedback extends Controller {
 	* @param type $request
 	* @return type
 	*/
-	public function feedbackDetails($feedbackID) {
+	public function feedbackDetails(Request $request) {
         $response = array();
         $response['status'] = 'error';
-        $selectedTab = Request::input('t');
-        $feedID = Input::post('feedbackid');
-        $actionName = Input::post('action');
+        $feedbackID = $request->id;
+        $selectedTab = $request->t;
+        $feedID = $request->feedbackid;
+        $actionName = $request->action;
 
         $feedbackID = ($feedID > 0) ? $feedID : $feedbackID;
 
@@ -105,10 +106,10 @@ class Feedback extends Controller {
 	* Used to update feedback status
 	* @return type
 	*/
-	public function updateFeedbackStatus() {
+	public function updateFeedbackStatus(Request $request) {
         $response = array('status' => 'error', 'message' => 'Something went wrong');
-		$feedbackID = Input::post('fid');
-		$status = Input::post('status');
+		$feedbackID = $request->fid;
+		$status = $request->status;
 		$aData = array(
 			'status' => $status
 		);
@@ -125,10 +126,10 @@ class Feedback extends Controller {
 	* Used to update feedback ratings
 	* @return type
 	*/
-	public function updateFeedbackRatings() {
+	public function updateFeedbackRatings(Request $request) {
         $response = array('status' => 'error', 'message' => 'Something went wrong');
-		$feedbackID = Input::post('fid');
-		$status = Input::post('status');
+		$feedbackID = $request->fid;
+		$status = $request->status;
 		$aData = array(
 			'category' => $status
 		);
@@ -233,12 +234,12 @@ class Feedback extends Controller {
         }
     }
 
-    public function displayfeedback() {
+    public function displayfeedback(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $feedbackID = strip_tags($post['fid']);
-            $campaginTitle = strip_tags($post['cTitle']);
+
+        if (!empty($request)) {
+            $feedbackID = $request->fid;
+            $campaginTitle = $request->cTitle;
             if ($feedbackID > 0) {
                 $oFeedbackData = $this->mFeedback->getFeedbackInfo($feedbackID);
                 $oFeedbackNotes = $this->mFeedback->listFeedbackNotes($feedbackID);
@@ -250,12 +251,12 @@ class Feedback extends Controller {
         exit;
     }
 
-    public function deleteMultipalFeedbackData() {
+    public function deleteMultipalFeedbackData(Request $request) {
 
-        $post = Input::post();
+
         $mFeedback  = new FeedbackModel();
-        if ($post) {
-            $multiFeedbackId = $post['multi_feedback_id'];
+        if (!empty($request)) {
+            $multiFeedbackId = $request->multi_feedback_id;
             //$dataArray = array('status' => '2');
             foreach ($multiFeedbackId as $feedbackId) {
                 $mFeedback->deleteFeedbackRecord($feedbackId);
@@ -267,10 +268,10 @@ class Feedback extends Controller {
         exit;
     }
 
-    public function deleteFeedback() {
-        $post = $this->input->post();
-        if ($post) {
-            $emailFeedbackID = $post['email_feedback_id'];
+    public function deleteFeedback(Request $request) {
+
+        if (!empty($request)) {
+            $emailFeedbackID = $request->email_feedback_id;
             $dataArray = array('status' => '2');
             if ($emailFeedbackID) {
                 if (count($emailFeedbackID) > 1) {
@@ -295,15 +296,15 @@ class Feedback extends Controller {
     * @return type
     */
 
-    public function saveFeedbackNotes() {
+    public function saveFeedbackNotes(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
-        if (!empty($post)) {
-            $feedbackID = strip_tags($post['fid']);
-            $brandboostID = strip_tags($post['bid']);
-            $clientID = strip_tags($post['cid']);
-            $subscriberID = strip_tags($post['sid']);
-            $sNotes = $post['notes'];
+
+        if (!empty($request)) {
+            $feedbackID = $request->fid;
+            $brandboostID = $request->bid;
+            $clientID = $request->cid;
+            $subscriberID = $request->sid;
+            $sNotes = $request->notes;
             $aNotesData = array(
                 'feedback_id' => $feedbackID,
                 'client_id' => $clientID,
@@ -323,13 +324,13 @@ class Feedback extends Controller {
         }
     }
 
-    public function previewLiveContent() {
+    public function previewLiveContent(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
+
         $aUser = getLoggedUser();
-        if (!empty($post)) {
-            $brandboostID = strip_tags($post['bbid']);
-            $content = $post['pcontent'];
+        if (!empty($request)) {
+            $brandboostID = $request->bbid;
+            $content = $request->pcontent;
             $parsedContent = $this->mInviter->emailTagReplace($brandboostID, $content, 'email', $aUser);
             $response = array('status' => 'success', 'msg' => $parsedContent);
             echo json_encode($response);
@@ -337,17 +338,17 @@ class Feedback extends Controller {
         }
     }
 
-    public function replyFeedback() {
+    public function replyFeedback(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $clientID = strip_tags($post['cid']);
-            $subscriberID = strip_tags($post['sid']);
-            $brandboostID = strip_tags($post['bid']);
-            $subject = strip_tags($post['subject']);
-            $replydata = $post['feedbackReply'];
-            $medium = $post['career'];
-            //pre($post);
+
+        if (!empty($request)) {
+            $clientID = $request->cid;
+            $subscriberID = $request->sid;
+            $brandboostID = $request->bid;
+            $subject = $request->subject;
+            $replydata = $request->feedbackReply;
+            $medium = $request->career;
+            //pre(!empty($request));
             $aBrandboost = $this->mFeedback->getBrandboostInfo($brandboostID);
             if (!empty($aBrandboost)) {
                 $type = $aBrandboost->review_type;
@@ -440,14 +441,13 @@ class Feedback extends Controller {
     * @return type
     */
 
-    public function getFeedbackNotes() {
+    public function getFeedbackNotes(Request $request) {
         $response = array();
         $response['status'] = 'error';
-        $post = array();
         $mFeedback  = new FeedbackModel();
-        if (Input::post()) {
-            $post = Input::post();
-            $noteData = $mFeedback->getFeedbackNoteInfo($post['noteid']);
+        if (!empty($request)) {
+            
+            $noteData = $mFeedback->getFeedbackNoteInfo($request->noteid);
             if ($noteData) {
                 $response['status'] = 'success';
                 $response['result'] = $noteData;
@@ -467,14 +467,14 @@ class Feedback extends Controller {
     * @return type
     */
 
-    public function updateFeedbackNote() {
+    public function updateFeedbackNote(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
-        if (!empty($post)) {
-            $noteId = strip_tags($post['edit_noteid']);
-            $sNotes = $post['edit_note_content'];
+
+        if (!empty($request)) {
+            $noteId = $request->edit_noteid;
+            $sNotes = $request->edit_note_content;
             $aNotesData = array(
                 'notes' => $sNotes,
                 'client_id' => $userID,
@@ -497,10 +497,10 @@ class Feedback extends Controller {
     * @return type
     */
 
-    public function deleteFeedbackNote() {
+    public function deleteFeedbackNote(Request $request) {
         $response = array();
-        $post = Input::post();
-        $noteid = strip_tags($post['noteid']);
+
+        $noteid = $request->noteid;
         $mFeedback  = new FeedbackModel();
         $result = $mFeedback->deleteFeedbackNote($noteid);
         if ($result) {
@@ -584,12 +584,12 @@ class Feedback extends Controller {
         exit;
     }
 
-    function loadFeedbackComment() {
+    function loadFeedbackComment(Request $request) {
 
-        $post = $this->input->post();
-        $feedbackID = $post['fid'];
-        $offset = $post['offset'];
-        $source = strip_tags($post['source']);
+
+        $feedbackID = $request->fid;
+        $offset = $request->offset;
+        $source = $request->source;
         if (!empty($feedbackID) && !empty($offset)) {
 
             $oCommentsData = $this->mFeedback->getFeedbackParentsComments($feedbackID, true, $offset);

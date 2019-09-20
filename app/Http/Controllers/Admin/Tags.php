@@ -13,7 +13,7 @@ class Tags extends Controller {
 
     /**
     * tags index function to load initial view of the module
-    * @param type 
+    * @param type
     * @return type
     */
 
@@ -129,7 +129,7 @@ class Tags extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mTag = new TagsModel();
-        
+
         if (empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -156,11 +156,12 @@ class Tags extends Controller {
         exit;
     }
 
-    public function listAllTagsWebchat() {
+    public function listAllTagsWebchat(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+        $mTag = new TagsModel();
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -186,11 +187,11 @@ class Tags extends Controller {
         exit;
     }
 
-    public function listAllGroupTags() {
+    public function listAllGroupTags(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -213,7 +214,7 @@ class Tags extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mTag  = new TagsModel();
-        
+
         if (empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -250,7 +251,7 @@ class Tags extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mTag = new TagsModel();
-        
+
         if (empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -285,15 +286,16 @@ class Tags extends Controller {
         }
     }
 
-    public function editgroup() {
+    public function editgroup(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        $mTag = new TagsModel();
         $groupID = strip_tags($request->groupid);
         $aGroup = $mTag->getTagGroupInfo($groupID);
         if (!empty($aGroup)) {
@@ -307,15 +309,16 @@ class Tags extends Controller {
         }
     }
 
-    public function editgroupentity() {
+    public function editgroupentity(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        $mTag = new TagsModel();
         $tagID = strip_tags($request->tagID);
         $aTag = $mTag->getTagGroupEntityInfo($tagID);
         if (!empty($aTag)) {
@@ -329,17 +332,17 @@ class Tags extends Controller {
         }
     }
 
-    public function updategroup() {
+    public function updategroup(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-
+        $mTag = new TagsModel();
         $groupName = strip_tags($request->txtEditGroupName);
         $bGroupExists = $mTag->checkifGroupExist($groupName, $userID);
         if ($bGroupExists == false) {
@@ -364,17 +367,17 @@ class Tags extends Controller {
         }
     }
 
-    public function updategroupentity() {
+    public function updategroupentity(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
 
-
+        $mTag = new TagsModel();
         $tagName = strip_tags($request->txtEditTagName);
 
         $bGroupExists = $mTag->checkifGroupEntityExist($tagName, $userID);
@@ -400,15 +403,16 @@ class Tags extends Controller {
         }
     }
 
-    public function deleteTagGroup() {
+    public function deleteTagGroup(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        $mTag = new TagsModel();
         $id = strip_tags($request->id);
         if (!empty($id)) {
             $bDeleted = $mTag->deleteTagGroup($id);
@@ -424,15 +428,16 @@ class Tags extends Controller {
         }
     }
 
-    public function archiveMultipleTagGroups() {
+    public function archiveMultipleTagGroups(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        $mTag = new TagsModel();
         $id = $request->multipal_record_id;
         if (!empty($id)) {
 
@@ -455,15 +460,16 @@ class Tags extends Controller {
         }
     }
 
-    public function deleteMultipleTagGroups() {
+    public function deleteMultipleTagGroups(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        $mTag = new TagsModel();
         $id = $request->multipal_record_id;
         if (!empty($id)) {
 
@@ -486,12 +492,13 @@ class Tags extends Controller {
     public function deleteMultipalTagGroupEntity() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
+        $mTag = new TagsModel();
         $multiTagId = $request->multiTagId;
 
         if (!empty($multiTagId)) {
@@ -538,10 +545,10 @@ class Tags extends Controller {
         }
     }
 
-    public function deleteTagGroupEntityFromWeb() {
+    public function deleteTagGroupEntityFromWeb(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+        $mTag = new TagsModel();
         $grpid = $request->grpid;
         $tag_id = $request->tag_id;
         $review_id = $request->review_id;
@@ -578,7 +585,7 @@ class Tags extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mTag = new TagsModel();
-       
+
         $reviewID = base64_url_decode(strip_tags($request->review_id));
         $aTagID = $request->applytag;
         $aInput = array(
@@ -641,7 +648,7 @@ class Tags extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mTag = new TagsModel();
-        
+
         $questionID = base64_url_decode(strip_tags($request->question_id));
         $aTagID = $request->applytag;
         $aInput = array(
@@ -668,11 +675,11 @@ class Tags extends Controller {
         }
     }
 
-    public function getTagList() {
+    public function getTagList(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+        $mTag = new TagsModel();
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -685,11 +692,11 @@ class Tags extends Controller {
         exit;
     }
 
-    public function selectReviewTags() {
+    public function selectReviewTags(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -701,11 +708,11 @@ class Tags extends Controller {
         exit;
     }
 
-    public function removeTag() {
+    public function removeTag(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-        if (empty($post) || empty($userID)) {
+        $mTag = new TagsModel();
+        if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
@@ -744,11 +751,11 @@ class Tags extends Controller {
     public function getSubscriberTags(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Broadcast model to get its methods and properties
         $mTag = new TagsModel();
-        
-        
+
+
         $subscriberID = strip_tags($request->subscriberId);
 
         $aTag = TagsModel::getClientTags($userID);
@@ -759,17 +766,17 @@ class Tags extends Controller {
         echo json_encode($response);
         exit;
     }
-    
+
     /**
      * Used to apply user tags to subscriber
      */
     public function applySubscriberTag(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Broadcast model to get its methods and properties
         $mTag = new TagsModel();
-        
+
         $subscriberID = strip_tags($request->tag_subscriber_id);
         $aTagID = $request->applytag;
         $aInput = array(
@@ -778,7 +785,7 @@ class Tags extends Controller {
         );
 
         $bAdded = $mTag->addSubscriberTag($aInput);
-       
+
         //Get refreshed tag list
         $oTags = $mTag->getSubscriberTags($subscriberID);
 
@@ -809,7 +816,7 @@ class Tags extends Controller {
         header("Content-Type: application/csv; ");
         //echo "Hello";
         //die;
-        // file creation 
+        // file creation
         $file = fopen('php://output', 'w');
 
         $header = array("TAG_GROUP", "TAG_NAME", "TAG_DATE");

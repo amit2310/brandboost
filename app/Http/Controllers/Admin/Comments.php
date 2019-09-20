@@ -30,7 +30,7 @@ class Comments extends Controller {
 
         $response = array();
         $response['status'] = 'error';
-        $post = array();
+
         if ($request->commentID) {
             $mComment = new CommentModel();
             $aComment = $mComment->getComment($request->commentID);
@@ -55,14 +55,14 @@ class Comments extends Controller {
         $response = array();
 
         $mComment = new CommentModel();
-          
+
             $reviewID = strip_tags($request->reviweId);
             $parentCommentId = strip_tags($request->parent_comment_id);
             $comment_content = strip_tags($request->comment_content);
             $aUser = getLoggedUser();
             $userID = $aUser->id;
             $parentCommentId = $parentCommentId == '' ? '0' : $parentCommentId;
-            
+
             if(!empty($reviewID)){
                 $oReviews = $mComment->getCommentReviewInfo($reviewID);
             }
@@ -74,7 +74,7 @@ class Comments extends Controller {
                 'parent_comment_id' => $parentCommentId,
                 'created' => date("Y-m-d H:i:s")
             );
-            
+
             if($oReviews->ownerID == $userID){
                 $aData['status'] = 1;
             }
@@ -89,13 +89,13 @@ class Comments extends Controller {
 
             echo json_encode($response);
             exit;
-        
+
     }
 
     public function update_comment(Request $request) {
 
         $response = array();
-        $post = array();
+
         if (!empty($request->edit_commentid)) {
 
             $commentID = strip_tags($request->edit_commentid);
@@ -120,25 +120,25 @@ class Comments extends Controller {
 
 
     /**
-    * This function is used to update the comment 
-    * @param type 
+    * This function is used to update the comment
+    * @param type
     * @return type
     */
 
-    public function updateComment() {
+    public function updateComment(Request $request) {
 
         $response = array();
-        $post = array();
-        if (Input::post()) {
-            $post = Input::post();
 
-            $commentID = strip_tags($post['comment_id']);
-            $commentMsg = strip_tags($post['commentMsg']);
+        if (!empty($request)) {
+
+
+            $commentID = $request->comment_id;
+            $commentMsg = $request->commentMsg;
 
             $aData = array(
                 'content' => $commentMsg
             );
-
+            $mComment = new CommentModel();
             $result = $mComment->updateComment($aData, $commentID);
             if ($result) {
                 $response['status'] = 'success';
@@ -153,16 +153,15 @@ class Comments extends Controller {
 
 
      /**
-    * This function is used to delete the comment 
-    * @param type 
+    * This function is used to delete the comment
+    * @param type
     * @return type
     */
 
-    public function deleteComment() {
+    public function deleteComment(Request $request) {
         $response = array();
         $mComment = new CommentModel();
-        $post =Input::post();
-        $commentId = strip_tags($post['commentId']);
+        $commentId = $request->commentId;
         $result = $mComment->deleteComment($commentId);
         if ($result) {
             $response['status'] = 'success';
@@ -177,20 +176,20 @@ class Comments extends Controller {
 
     /**
     * This function is used to update the comment status
-    * @param type 
+    * @param type
     * @return type
     */
 
-    public function update_comment_status() {
+    public function update_comment_status(Request $request) {
 
         $response = array();
         $mComment = new CommentModel();
-        $post = array();
-        if (Input::post()) {
-            $post = Input::post();
 
-            $commentID = strip_tags($post['comment_id']);
-            $status = strip_tags($post['status']);
+        if (!empty($request)) {
+
+
+            $commentID = $request->comment_id;
+            $status = $request->status;
 
             $aData = array(
                 'status' => $status

@@ -27,15 +27,15 @@ class SmsChat extends Controller {
      * this function is used to return the sms threads
      * @return type
      */
-    public function showSmsThreads() {
+    public function showSmsThreads(Request $request) {
         $oUser = getLoggedUser($redirect = false);
         if (empty($oUser)) {
             return;
             exit();
         }
         $response = array();
-        $userId = Input::post("userId");
-        $SubscriberPhone = trim(numberForamt(Input::post("SubscriberPhone")));
+        $userId = $request->userId;
+        $SubscriberPhone = trim(numberForamt($request->SubscriberPhone));
         $usersdata = getUserbyPhone($SubscriberPhone);
         if($usersdata->count()>0)
         {
@@ -47,7 +47,7 @@ class SmsChat extends Controller {
             $usersdata->avatar = $userDataDetail->avatar;
         }
     }
-        $offsetValue = Input::post("offsetValue") > 0 ? 0 : Input::post("offsetValue");
+        $offsetValue = $request->offsetValue > 0 ? 0 : $request->offsetValue;
         $isLoggedInTeam = Session::get("team_user_id");
         if ($isLoggedInTeam) {
             $hasweb_access = getMemberchatpermission($isLoggedInTeam);
@@ -172,10 +172,10 @@ class SmsChat extends Controller {
      * this function is used to return sms notes
      * @return type
      */
-    public function listingSmsNotes() {
+    public function listingSmsNotes(Request $request) {
         $oUser = getLoggedUser();
-        $SubscriberPhone = numberForamt(Input::post("NotesTo"));
-        $notes_from = numberForamt(Input::post("notes_from"));
+        $SubscriberPhone = numberForamt($request->NotesTo);
+        $notes_from = numberForamt($request->notes_from);
         $SmsChatObj = new SmsChatModel();
         $oNotes = $SmsChatObj->getSmsNotes($SubscriberPhone);
         foreach ($oNotes as $NotesData) {
@@ -209,14 +209,14 @@ class SmsChat extends Controller {
      * this function is used send message through twilio
      * @return type
      */
-    public function sendMsg() {
+    public function sendMsg(Request $request) {
         $isLoggedInTeam = Session::get("team_user_id");
-        $msgSendUserId = Input::post("userId");
-        $phoneNo = Input::post("phoneNo");
-        $messageContent = Input::post("messageContent");
-        $moduleName = Input::post("moduleName");
-        $media_type = Request::input("media_type");
-        $videoUrl = Request::input("videoUrl");
+        $msgSendUserId = $request->userId;
+        $phoneNo = $request->phoneNo;
+        $messageContent = $request->messageContent;
+        $moduleName = $request->moduleName;
+        $media_type = $request->media_type;
+        $videoUrl = $request->videoUrl;
         $oUser = getLoggedUser();
         $aTwilioAc = getTwilioAccountCustom($oUser->id);
         $sid = $aTwilioAc->account_sid;
@@ -284,14 +284,14 @@ class SmsChat extends Controller {
      * this function is used send MMS messages
      * @return type
      */
-    public function sendMMS() {
+    public function sendMMS(Request $request) {
         $isLoggedInTeam = Session::get("team_user_id");
-        $msgSendUserId = Input::post("userId");
-        $phoneNo = numberForamt(Input::post("phoneNo"));
-        $messageContent = Input::post("messageContent");
-        $moduleName = Input::post("moduleName");
-        $smstoken = Input::post("smstoken");
-        $media_type = Input::post("media_type");
+        $msgSendUserId = $request->userId;
+        $phoneNo = numberForamt($request->phoneNo);
+        $messageContent = $request->messageContent;
+        $moduleName = $request->moduleName;
+        $smstoken = $request->smstoken;
+        $media_type = $request->media_type;
         $oUser = getLoggedUser();
         $aTwilioAc = getTwilioAccountCustom($oUser->id);
         $sid = $aTwilioAc->account_sid;
@@ -360,10 +360,10 @@ class SmsChat extends Controller {
      * this function is used to filter the sms list based on the input provided in sms chat
      * @return type
      */
-    public function getSearchSmsListByinput() {
+    public function getSearchSmsListByinput(Request $request) {
         $count = 0;
         $isLoggedInTeam = Session::get("team_user_id");
-        $searchvalue = Input::post("searchVal");
+        $searchvalue = $request->searchVal;
         $oUser = getLoggedUser();
         $activechatlist = searchSmsByinput($oUser->mobile, $searchvalue);
         if ($isLoggedInTeam) {
@@ -484,12 +484,12 @@ class SmsChat extends Controller {
      * This function is used to add the sms notes
      * @return type
      */
-    public function addSmsNotes() {
+    public function addSmsNotes(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $SmsChatObj = new SmsChatModel();
-        $notes = Input::post("notes");
-        $subId = Input::post("NotesTo");
+        $notes = $request->notes;
+        $subId = $request->NotesTo;
         $source = 'sms';
         $type = "";
         $aData = array('user_id' => $userID, 'subscriber_id' => $subId, 'notes' => $notes, 'source' => $source, 'created' => date("Y-m-d H:i:s"));
@@ -520,8 +520,8 @@ class SmsChat extends Controller {
      * This function is used to short cut listing message for small web chat
      * @return type
      */
-    public function small_shortcutListing() {
-        $boxid = Input::post("boxid");
+    public function small_shortcutListing(Request $request) {
+        $boxid = $request->boxid;
         $loginUserData = getLoggedUser();
         $shortcuts = SubscriberModel::getchatshortcutlisting($loginUserData->id);
         foreach ($shortcuts as $key => $value) {
@@ -537,8 +537,8 @@ class SmsChat extends Controller {
      * This function is used to short cut listing message for sms chat
      * @return type
      */
-    public function small_shortcutListing_sms() {
-        $boxid = Input::post("boxid");
+    public function small_shortcutListing_sms(Request $request) {
+        $boxid = $request->boxid;
         $loginUserData = getLoggedUser();
         $shortcuts = SubscriberModel::getchatshortcutlisting($loginUserData->id);
         foreach ($shortcuts as $key => $value) {
@@ -554,10 +554,10 @@ class SmsChat extends Controller {
      * This function is used to add favourite sms chat user
      * @return type
      */
-    public function addSMSFavourite() {
-        $fav_user_id = Input::post("user_id");
-        $curr_user_id = Input::post("currentUser");
-        $subscriber = Input::post("subscriber");
+    public function addSMSFavourite(Request $request) {
+        $fav_user_id = $request->user_id;
+        $curr_user_id = $request->currentUser;
+        $subscriber = $request->subscriber;
         $SmsChatObj = new SmsChatModel();
         $aData = array('fav_user_id' => $fav_user_id, 'curr_user_id' => $curr_user_id, 'created' => date("Y-m-d H:i:s"));
         $favUserCheck = $SmsChatObj->getFavSmsUser($curr_user_id, $fav_user_id);
@@ -578,10 +578,10 @@ class SmsChat extends Controller {
      * this function is used to filter the sms list based on the input provided in sms chat
      * @return type
      */
-    public function SearchSBox() {
+    public function SearchSBox(Request $request) {
         $count = 0;
         $isLoggedInTeam = Session::get("team_user_id");
-        $searchvalue = Input::post("searchVal");
+        $searchvalue = $request->searchVal;
         $oUser = getLoggedUser();
         $activechatlist = searchSmsByinput($oUser->mobile, $searchvalue);
         if ($isLoggedInTeam) {

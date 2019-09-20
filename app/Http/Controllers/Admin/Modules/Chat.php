@@ -13,7 +13,7 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
 
 class Chat extends Controller {
-	
+
 	/**
 	* Used to get chat data list
 	* @return type
@@ -40,17 +40,17 @@ class Chat extends Controller {
             'oPrograms' => $oPrograms,
             'bActiveSubsription' => $bActiveSubsription
         );
-		
+
 		return view('admin.modules.chat.index', $aData);
     }
-	
+
 	/**
 	* Used to get chat data list
 	* @return type
 	*/
     public function addChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $title = $request->title;
@@ -59,8 +59,8 @@ class Chat extends Controller {
 		/*for ($i = 0; $i < 20; $i++) {
             $hashcode .= $characters[rand(0, 61)];
         }*/
-		$str=rand(); 
-		$hashcode = sha1($str); 
+		$str=rand();
+		$hashcode = sha1($str);
         $hashcode = $hashcode . date('Ymdhis');
         $aData = array(
             'hashcode' => $hashcode,
@@ -84,9 +84,9 @@ class Chat extends Controller {
                 'status' => 1,
                 'created' => date("Y-m-d H:i:s")
             );
-			
+
             $eventName = 'sys_chat_configured';
-			
+
             add_notifications($notificationData, $eventName, $userID);
         }
         echo json_encode($response);
@@ -115,14 +115,14 @@ class Chat extends Controller {
 
         //NPS related account details
         $oChat = ChatsModel::getChat($userID, $chatID);
-        
+
        if (!empty($oChat)) {
             // Do nothing for now
             $programID = $oChat->id;
             $defaultTab = !empty($selectedTab) ? $selectedTab : 'customize';
         }
         $defaultTab = !empty($selectedTab) ? $selectedTab : 'customize';
-        //List of Advocates related data 
+        //List of Advocates related data
         $hashCode = $oChat->hashcode;
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
@@ -141,7 +141,7 @@ class Chat extends Controller {
 
 		return view('admin.modules.chat.set-up', $aData);
     }
-	
+
 	/**
 	* Used to get setup configuration data
 	* @param type $chatID
@@ -149,7 +149,7 @@ class Chat extends Controller {
 	*/
 	public function publishChatCampaign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $chatId = $request->chatId;
@@ -166,14 +166,14 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to update customize chat settings
 	* @return type
 	*/
 	public function updateChatCustomize(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $chatID = $request->chat_id;
@@ -248,7 +248,7 @@ class Chat extends Controller {
         else {
             $aData['mobile_visiable'] = 0;
         }
-		
+
 		if(!empty($allow_gift_message)) {
             $aData['allow_gift_message'] = 1;
         }
@@ -260,7 +260,7 @@ class Chat extends Controller {
         $aData['trigger_time'] = $trigger_time;
         $aData['trigger_message'] = $trigger_message;
 
-        
+
         if ($chatID > 0) {
             $bUpdateID = ChatsModel::updateChat($aData, $userID, $chatID);
             if ($bUpdateID) {
@@ -271,14 +271,14 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to update chat status
 	* @return type
 	*/
     public function changeStatus(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $chatID = $request->chatID;
@@ -296,14 +296,14 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to update chat design page data
 	* @return type
 	*/
     public function updateChatDesign(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $chatID = $request->chat_id;
@@ -334,7 +334,7 @@ class Chat extends Controller {
         if(!empty($chat_logo)) {
             $aData['chat_logo'] = $chat_logo;
         }
-       
+
         if(!empty($company_title)) {
             $aData['company_title'] = $company_title;
         }
@@ -364,7 +364,7 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
-		
+
 	/**
 	* Used to update chat preferences page data
 	* @return type
@@ -380,7 +380,6 @@ class Chat extends Controller {
         $messages = serialize($request->messages);
         $time = serialize($request->time);
         $automated_message = $request->automated_message != '' ? '1' : '0';
-        //pre($post);
         $aData['automated_message'] = $automated_message;
         $aData['messages'] = $messages;
         $aData['time'] = $time;
@@ -403,7 +402,7 @@ class Chat extends Controller {
 	*/
     public function getChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $chatID = $request->chat_id;
@@ -417,14 +416,14 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to update chat page data
 	* @return type
 	*/
     public function updateChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $chatID = $request->chat_id;
@@ -443,14 +442,14 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
 	* Used to update chat archive status
 	* @return type
 	*/
     public function moveToArchiveChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $chatID = $request->chat_id;
@@ -476,7 +475,7 @@ class Chat extends Controller {
 	*/
     public function deleteChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $chatID = $request->chat_id;
@@ -497,7 +496,7 @@ class Chat extends Controller {
 	*/
     public function bulkDeleteChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $chatIDs = $request->bulk_chat_id;
@@ -519,7 +518,7 @@ class Chat extends Controller {
 	*/
     public function bulkArchiveChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $chatIDs = $request->bulk_chat_id;

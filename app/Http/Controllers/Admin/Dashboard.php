@@ -38,13 +38,13 @@ class Dashboard extends Controller {
 
         if(isset($oUser->plan_id))
         {
-            $subscriptionID = $oUser->plan_id; 
+            $subscriptionID = $oUser->plan_id;
         }
         else
         {
             $subscriptionID='';
         }
-        
+
         if(isset($oUser->topup_plan_id))
         {
             $topupSubscriptionID = $oUser->topup_plan_id;
@@ -53,8 +53,8 @@ class Dashboard extends Controller {
         {
             $topupSubscriptionID ='';
         }
-        
-        
+
+
 
 
         if (isset($subscriptionID)) {
@@ -98,24 +98,24 @@ class Dashboard extends Controller {
         );
         return view('admin.dashboard', $aData);
     }
-    
-    
+
+
     /**
      * Gets filtered Reviews of a member
-     * @param Request $post
+     * @param Request $request
      */
-    public function getReviewData(Request $post) {
+    public function getReviewData(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
-        if (!empty($post)) {
-            $draw = $post->draw;
-            $start = $post->start;
-            $rowperpage = $post->length;
-            $columnIndex = $post->order[0]['column'];
-            $columnName = $post->columns[$columnIndex]['data'];
-            $columnSortOrder = $post->order[0]['dir'];
-            $searchValue = $post->search['value'];
+        if (!empty($request)) {
+            $draw = $request->draw;
+            $start = $request->start;
+            $rowperpage = $request->length;
+            $columnIndex = $request->order[0]['column'];
+            $columnName = $request->columns[$columnIndex]['data'];
+            $columnSortOrder = $request->order[0]['dir'];
+            $searchValue = $request->search['value'];
             $mReviews = new ReviewsModel();
             $totalData = $mReviews->getMyReviews($userID);
             $totalRecords = count($totalData);
@@ -136,7 +136,7 @@ class Dashboard extends Controller {
                     "action" => ''
                 );
             }
-            
+
             $response = array(
                 "draw" => intval($draw),
                 "iTotalRecords" => count($reviewsData),

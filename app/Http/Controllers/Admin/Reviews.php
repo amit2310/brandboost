@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Input;
 use Session;
 
 class Reviews extends Controller {
-	
+
 	/**
      * Used to update review status
      * @param type
      */
-	public function updateReviewStatus() {
+	public function updateReviewStatus(Request $request) {
         $response = array();
-		
-		$reviewID = Input::post("review_id");
-		$status = Input::post("status");
+
+		$reviewID = $request->review_id;
+		$status = $request->status;
 
 		$aData = array(
 			'status' => $status
@@ -57,16 +57,16 @@ class Reviews extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
+
 	/**
      * Used to update review category
      * @param type
      */
-	public function updateReviewCategory() {
+	public function updateReviewCategory(Request $request) {
         $response = array();
-		
-		$reviewID = Input::post("review_id");
-		$dataCategory = Input::post("dataCategory");
+
+		$reviewID = $request->review_id;
+		$dataCategory = $request->dataCategory;
 
 		$aData = array(
 			'ratings' => $dataCategory
@@ -101,14 +101,14 @@ class Reviews extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
+
 	/**
      * Used to update review delete status
      * @param type
      */
-	public function deleteReview() {
+	public function deleteReview(Request $request) {
         $response = array();
-		$reviewID = Input::post("reviewid");
+		$reviewID = $request->reviewid;
         $result = ReviewsModel::deleteReviewByID($reviewID);
         if ($result) {
             $aUser = getLoggedUser();
@@ -135,21 +135,21 @@ class Reviews extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 	/**
      * Used to add review note
      * @param type
      */
-	public function saveReviewNotes() {
+	public function saveReviewNotes(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-		
-		$reviewID = Input::post("reviewid");
-		$brandboostID = Input::post("bid");
-		$clientID = Input::post("cid");
-		$sNotes = Input::post("notes");
-		
+
+		$reviewID = $request->reviewid;
+		$brandboostID = $request->bid;
+		$clientID = $request->cid;
+		$sNotes = $request->notes;
+
 		$aNotesData = array(
 			'review_id' => $reviewID,
 			'user_id' => $userID,//$clientID,
@@ -164,15 +164,15 @@ class Reviews extends Controller {
 		echo json_encode($response);
 		exit;
     }
-	
+
 	/**
      * Used to delete review note
      * @param type
      */
-	public function deleteReviewNote() {
+	public function deleteReviewNote(Request $request) {
         $response = array();
-		
-		$noteid = Input::post("noteid");
+
+		$noteid = $request->noteid;
         $result = ReviewsModel::deleteReviewNoteByID($noteid);
         if ($result) {
             $response['status'] = 'success';
@@ -183,19 +183,19 @@ class Reviews extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
+
+
     /**
      * Used to get review media images and videos
      * @param type
      */
-	public function getReviewMedia() {
-		$brandboostID = Input::post("brandboostID");
+	public function getReviewMedia(Request $request) {
+		$brandboostID = $request->brandboostID;
         $aReviews = ReviewsModel::getCampaignReviews($brandboostID);
 		return view('admin.brandboost.listReviewMedia', array('aReviews'=>$aReviews))->render();
     }
-	
-	
+
+
 	public function index($campaignId) {
         if (empty($campaignId)) {
             $aUser = getLoggedUser();
@@ -208,7 +208,7 @@ class Reviews extends Controller {
             $this->template->load('admin/admin_template_new', 'admin/reviews/list', array('oCampaign' => $oCampaign, 'aReviews' => $aReviews));
         }
     }
-	
+
 
     /**
      * Used to delete multipal review
@@ -216,7 +216,7 @@ class Reviews extends Controller {
      */
     public function deleteMultipalReview(Request $request) {
         $response = array();
-    
+
         $multiReviewid = $request->multiReviewid;
         foreach ($multiReviewid as $reviewid) {
 
@@ -255,14 +255,14 @@ class Reviews extends Controller {
     * @return type
     */
 
-    public function getReviewById() {
+    public function getReviewById(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if (Input::post()) {
-            $post = Input::post();
-            $aUsers = ReviewsModel::getReviewByReviewID($post['reviewid']);
+
+        if (!empty($request)) {
+
+            $aUsers = ReviewsModel::getReviewByReviewID($request->reviewid);
             if ($aUsers) {
                 $response['status'] = 'success';
                 $response['result'] = $aUsers;
@@ -285,11 +285,11 @@ class Reviews extends Controller {
 
         $response = array();
         if ($request->edit_reviewid) {
-           
-            $reviewID = strip_tags($request->edit_reviewid);
-            $ratingValue = strip_tags($request->ratingValue);
-            $edit_content = strip_tags($request->edit_content);
-            $reviewTitle = strip_tags($request->edit_review_title);
+
+            $reviewID = $request->edit_reviewid;
+            $ratingValue = $request->ratingValue;
+            $edit_content = $request->edit_content;
+            $reviewTitle = $request->edit_review_title;
 
             $siteReviewFile = $request->question_uploaded_name;
             $siteReviewFileArray = array();
@@ -315,7 +315,7 @@ class Reviews extends Controller {
                     'review_title' => $reviewTitle
                 );
             }
-            
+
 
             $result = ReviewsModel::updateReview($aData, $reviewID);
             if ($result) {
@@ -330,15 +330,15 @@ class Reviews extends Controller {
         }
     }
 
-    public function update_video_review() {
+    public function update_video_review(Request $request) {
 
-        $post = Input::post();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-            $reviewID = strip_tags($post['edit_video_reviewid']);
-            $ratingValue = strip_tags($post['ratingValueVideo']);
-            $reviewTitle = strip_tags($post['edit_review_title']);
+            $reviewID = $request->edit_video_reviewid;
+            $ratingValue = $request->ratingValueVideo;
+            $reviewTitle = $request->edit_review_title;
             $mReviews  = new ReviewsModel();
             $aData = array(
                     'ratings' => $ratingValue,
@@ -369,9 +369,9 @@ class Reviews extends Controller {
 
             echo json_encode($response);
             exit;
-        
+
     }
-    
+
 
     /**
     * This function is used to display the reivew popup
@@ -379,11 +379,11 @@ class Reviews extends Controller {
     * @return type
     */
 
-    public function displayreview() {
+    public function displayreview(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
-        if (!empty($post)) {
-            $reviewID = strip_tags($post['rid']);
+
+        if (!empty($request)) {
+            $reviewID = $request->rid;
             $campaginTitle = "";
             if ($reviewID > 0) {
                 $oReviewData = ReviewsModel::getReviewInfo($reviewID);
@@ -397,7 +397,7 @@ class Reviews extends Controller {
         echo json_encode($response);
         exit;
     }
-	
+
 
      /**
     * This function is used to get review data
@@ -405,17 +405,17 @@ class Reviews extends Controller {
     * @return type
     */
 
-	public function getReviewPopupData() {
+	public function getReviewPopupData(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
-        if (!empty($post)) {
-            $reviewID = strip_tags($post['rid']);
+
+        if (!empty($request)) {
+            $reviewID = $request->rid;
             if ($reviewID > 0) {
                 $oReviewData = ReviewsModel::getReviewInfo($reviewID);
                 $oReviewNotes = ReviewsModel::listReviewNotes($reviewID);
 				$reviewCommentCount = getCampaignCommentCount($reviewID);
 				$reviewTags = getTagsByReviewID($reviewID);
-				
+
                 $popupContent = view("admin.brandboost.review_details_popup", array('reviewData' => $oReviewData, 'reviewCommentCount' => $reviewCommentCount, 'reviewNotesData' => $oReviewNotes, 'reviewTags' => $reviewTags))->render();
                 $response = array('status' => 'success', 'popupData' => $popupContent);
             }
@@ -423,17 +423,17 @@ class Reviews extends Controller {
         echo json_encode($response);
         exit;
     }
-	
-	
 
-    public function getReviewNoteById() {
+
+
+    public function getReviewNoteById(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $noteData = $this->mReviews->getReviewNoteByID($post['noteid']);
+
+        if (!empty($request)) {
+
+            $noteData = $this->mReviews->getReviewNoteByID($request->noteid);
             if ($noteData) {
                 $response['status'] = 'success';
                 $response['result'] = $noteData;
@@ -445,7 +445,7 @@ class Reviews extends Controller {
             exit;
         }
     }
-	
+
 
     /**
     * save comment like status
@@ -456,9 +456,9 @@ class Reviews extends Controller {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 		$aUser = getLoggedUser();
         $userID = $aUser->id;
-        
-            $commentId = strip_tags($request->commentId);
-            $status = strip_tags($request->status);
+
+            $commentId = $request->commentId;
+            $status = $request->status;
             $aData = array(
                 'comment_id' => $commentId,
                 'user_id' => $userID,
@@ -473,22 +473,22 @@ class Reviews extends Controller {
 			}else{
 				$bSaved = $mReviews->saveCommentLikeStatus($aData);
 			}
-			
+
             if ($bSaved) {
                 $response = array('status' => 'success');
             }
             echo json_encode($response);
             exit;
-        
+
     }
 
-	
-	public function saveReviewTitle() {
+
+	public function saveReviewTitle(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (!empty($post)) {
-            $reviewID = strip_tags($post['review_id']);
-            $reviewTitle = $post['review_title'];
+
+        if (!empty($request)) {
+            $reviewID = $request->review_id;
+            $reviewTitle = $request->review_title;
             $aData = array(
                 'review_title' => $reviewTitle
             );
@@ -501,23 +501,23 @@ class Reviews extends Controller {
             exit;
         }
     }
-	
+
 
 
     /**
     * This function is used to update the notes
-    * @param type 
+    * @param type
     * @return type
     */
-	public function update_note() {
+	public function update_note(Request $request) {
         $aUser = getLoggedUser();
-        $userID = $aUser->id;  
-        $mReviews = new ReviewsModel();  
+        $userID = $aUser->id;
+        $mReviews = new ReviewsModel();
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = Input::post();
-        if (!empty($post)) {
-            $noteId = strip_tags($post['edit_noteid']);
-            $sNotes = $post['edit_note_content'];
+
+        if (!empty($request)) {
+            $noteId = $request->edit_noteid;
+            $sNotes = $request->edit_note_content;
             $aNotesData = array(
                 'notes' => $sNotes,
                 'user_id' => $userID,
@@ -532,28 +532,28 @@ class Reviews extends Controller {
             exit;
         }
     }
-    
-    
-    public function previewLiveContentReview() {
+
+
+    public function previewLiveContentReview(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
+
         $aUser = getLoggedUser();
-        if (!empty($post)) {
-            $brandboostID = strip_tags($post['bbid']);
-            $content = $post['pcontent'];
+        if (!empty($request)) {
+            $brandboostID = $request->bbid;
+            $content = $request->pcontent;
             $parsedContent = $this->mInviter->emailTagReplace($brandboostID, $content, 'email', $aUser);
             $response = array('status' => 'success', 'msg' => $parsedContent);
             echo json_encode($response);
             exit;
         }
     }
-	
-    public function getCommentsPopup() {
+
+    public function getCommentsPopup(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
+
         $aUser = getLoggedUser();
-        if (!empty($post)) {
-            $reviewId = strip_tags($post['review_id']);
+        if (!empty($request)) {
+            $reviewId = $request->review_id;
             $reviewCommentsData = $this->mReviews->getReviewAllComments($reviewId, 0, 5);
 			$popupContent = $this->load->view("admin/comments/comments_popup", array('reviewCommentsData' => $reviewCommentsData, 'reviewId' => $reviewId, 'nunOfComment'=>count($reviewCommentsData)), true);
             $response = array('status' => 'success', 'popupData' => $popupContent);
@@ -561,13 +561,13 @@ class Reviews extends Controller {
             exit;
         }
     }
-	
-	public function getCommentLikeStatus(){
+
+	public function getCommentLikeStatus(Request $request){
 		$response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
+
         $aUser = getLoggedUser();
-		if (!empty($post)) {
-            $commentId = strip_tags($post['commentId']);
+		if (!empty($request)) {
+            $commentId = $request->commentId;
             $likeData = $this->mReviews->getCommentLSByCommentID($commentId, 1);
 			$disLikeData = $this->mReviews->getCommentLSByCommentID($commentId, 0);
 		}
@@ -577,8 +577,8 @@ class Reviews extends Controller {
 	}
 
 
-     public function addnew() {
-        $aData = $this->input->get();
+     public function addnew(Request $request) {
+        $aData = $request;
         if (!empty($aData)) {
             $action = $aData['action'];
             $rRating = $aData['r']; // Review Rating
@@ -611,6 +611,6 @@ class Reviews extends Controller {
         $this->load->view('reviews/collect_review', $aViewData);
     }
 
-    
+
 
 }

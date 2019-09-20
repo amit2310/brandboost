@@ -36,7 +36,7 @@ class Setting extends Controller {
         $aUInfo = getLoggedUser();
         $userID = $aUInfo->id;
         $avatar = $request->avatar;
-      
+
         if(!empty($avatar)) {
             $aData = array(
                 'avatar' => $avatar
@@ -62,7 +62,7 @@ class Setting extends Controller {
     public function changeUsername(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
@@ -70,7 +70,7 @@ class Setting extends Controller {
 
 
             $userName = explode(" ",$request->username);
-           
+
             if(!empty($userName[0])) {
                 $firstname = $userName[0];
             }
@@ -95,7 +95,7 @@ class Setting extends Controller {
                 $response['status'] = 'error';
                 $response['msg'] = 'Error: Something went wrong, try again';
             }
-            
+
 
             echo json_encode($response);
             exit;
@@ -111,7 +111,7 @@ class Setting extends Controller {
     public function changeUserphone(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 

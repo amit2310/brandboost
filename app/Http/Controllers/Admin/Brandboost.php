@@ -35,43 +35,6 @@ class Brandboost extends Controller {
     var $default_reminder_email_delay_unit;
     var $default_reminder_email_delay_value;
 
-    /*public function __construct() {
-        parent::__construct();
-
-        $this->load->model("admin/Users_model", "mUser");
-        $this->load->model("admin/Subscriber_model", "mSubscriber");
-        $this->load->model("admin/Brandboost_model", "mBrandboost");
-        $this->load->model("admin/Brand_model", "mBrand");
-        $this->load->model("admin/Workflow_model", "mWorkflow");
-        $this->load->model("Reviews_model", "mReviews");
-        $this->load->model("Comment_model", "mComment");
-        $this->load->model("admin/Offsite_model", "rOffsites");
-        $this->load->model("admin/Rewards_model", "mRewards");
-        $this->load->model("admin/Reviewlists_model", "rLists");
-        $this->load->model("Feedback_model", "mFeedback");
-        $this->load->model("admin/Settings_model", "mSettings");
-        $this->load->model("admin/crons/Inviter_model", "mInviter");
-        $this->load->model("admin/Live_model", "mLive");
-        $this->load->model("admin/Templates_model", "mTemplates");
-        $this->load->library('csvimport');
-        $this->load->library('S3');
-
-        $this->default_main_email_template_onsite = 6;
-        $this->default_main_email_template_offsite = 7;
-        $this->default_main_sms_template_onsite = 22;
-        $this->default_main_sms_template_offsite = 22;
-        $this->default_main_email_delay_unit = 'minute';
-        $this->default_main_email_delay_value = 5;
-
-        $this->default_reminder_email_template_onsite = 6;
-        $this->default_reminder_email_template_offsite = 7;
-        $this->default_reminder_sms_template_onsite = 22;
-        $this->default_reminder_sms_template_onffsite = 22;
-        $this->default_reminder_email_delay_unit = 'day';
-        $this->default_reminder_email_delay_value = 1;
-    }*/
-
-
 	/**
 	* Used to get onsite overview brandboost data
 	* @return type
@@ -416,13 +379,15 @@ class Brandboost extends Controller {
 	* @param type $reviewID
 	* @return type
 	*/
-	public function reviewDetails($reviewID = 0) {
+	public function reviewDetails(Request $request) {
         $response = array();
         $response['status'] = 'error';
-        $selectedTab = Request::input('t');
 
-		$revID = Input::post("reviewid");
-		$actionName = Input::post("action");
+        $reviewID = $request->id;
+        $selectedTab =$request->input('t');
+
+		$revID = $request->reviewid;
+		$actionName = $request->action;
         $mUser = new UsersModel();
         $product_id = "";
         $product_name = "";
@@ -594,13 +559,13 @@ class Brandboost extends Controller {
 	* @param type $param
 	* @return type
 	*/
-	public function updateOnsiteStatus() {
+	public function updateOnsiteStatus(Request $request) {
 
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $brandboostID = Input::post("brandboostID");
-        $status = Input::post("status");
+        $brandboostID = $request->brandboostID;
+        $status = $request->status;
         $aBrandboostData = array(
             'status' => $status,
         );
@@ -636,14 +601,14 @@ class Brandboost extends Controller {
 	* @param type $param
 	* @return type
 	*/
-	public static function archiveMultipalBrandboost() {
+	public static function archiveMultipalBrandboost(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-		$multi_brandboost_id = Input::post("multi_brandboost_id");
+		$multi_brandboost_id = $request->multi_brandboost_id;
 
 		$aData = array(
 			'status' => '3'
@@ -683,14 +648,14 @@ class Brandboost extends Controller {
 	* @param type $param
 	* @return type
 	*/
-	public function deleteBrandboost() {
+	public function deleteBrandboost(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-		$brandboostID = Input::post("brandboost_id");
+		$brandboostID = $request->brandboost_id;
 
 		$aData = array(
 			'delete_status' => '1'
@@ -728,11 +693,11 @@ class Brandboost extends Controller {
 	* @param type $param
 	* @return type
 	*/
-	public function getBBECode() {
+	public function getBBECode(Request $request) {
 
         $response = array();
 
-		$brandboostID = Input::post("brandboost_id");
+		$brandboostID = $request->brandboost_id;
 
 		$result = BrandboostModel::getBrandboost($brandboostID);
 
@@ -937,13 +902,13 @@ class Brandboost extends Controller {
 	* Used to get offsite campaign preference
 	* @return type
 	*/
-	public function campaignPreferences() {
+	public function campaignPreferences(Request $request) {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-		$brandboostID = Input::post("brandboostID");
+		$brandboostID = $request->brandboostID;
         $oBrandboost = BrandboostModel::getBrandboost($brandboostID);
         $brandboostData = $oBrandboost[0];
 
@@ -1052,14 +1017,14 @@ class Brandboost extends Controller {
 	* Used to add and edit offsite campaign preference
 	* @return type
 	*/
-	public function addOffsiteEdit() {
+	public function addOffsiteEdit(Request $request) {
 
         $response = array();
 		$userID = Session::get("current_user_id");
-		$offset_id = Input::post("offstepIds");
+		$offset_id = $request->offstepIds;
 
 		$offstepIds = serialize($offset_id);
-		$brandboostID = Input::post("brandboostID");
+		$brandboostID = $request->brandboostID;
 		$aData = array(
 			'offsite_ids' => $offstepIds
 		);
@@ -1082,15 +1047,15 @@ class Brandboost extends Controller {
 	* Used to add offsite resources
 	* @return type
 	*/
-	public function addOffsiteResources() {
+	public function addOffsiteResources(Request $request) {
 
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-		$brandboostID = Input::post("brandboostID"); //$post['brandboostID'];
-		$selected_list = Input::post("selected_list"); //$post['selected_list'];
-		$socialId = Input::post("offsiteId"); //$post['offsiteId'];
+		$brandboostID = $request->brandboostID;
+		$selected_list = $request->selected_list;
+		$socialId = $request->offsiteId;
 
 		$getBrandboost = BrandboostModel::getBrandboost($brandboostID);
 		$getBrand = unserialize($getBrandboost[0]->offsites_links);
@@ -1118,19 +1083,19 @@ class Brandboost extends Controller {
 	* Used to add offsite url link
 	* @return type
 	*/
-	public function addOffsiteUrl() {
+	public function addOffsiteUrl(Request $request) {
 
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $brandboostID = Input::post("brandboostID");
+        $brandboostID = $request->brandboostID;
 
-		$review_expire = Input::post("review_expire"); //$post['review_expire'];
-		$review_expire_link = Input::post("review_expire_link"); //$post['review_expire_link'];
+		$review_expire = $request->review_expire;
+		$review_expire_link = $request->review_expire_link;
 		$revExpireLink = array();
 		if ($review_expire_link == 'custom') {
-			$txtInteger = Input::post("txtInteger"); //$post['txtInteger'];
-			$exp_duration = Input::post("exp_duration"); //$post['exp_duration'];
+			$txtInteger = $request->txtInteger;
+			$exp_duration = $request->exp_duration;
 			$revExpireLink['delay_value'] = $txtInteger;
 			$revExpireLink['delay_unit'] = $exp_duration;
 		} else {
@@ -1139,10 +1104,10 @@ class Brandboost extends Controller {
 		}
 
 
-		$offsite_id = Input::post("offsite_id"); //$post['offsite_id'];
-		$offsite_url = Input::post("offsite_url"); //$post['offsite_url'];
-		$edit_campaignName = Input::post("edit_campaignName"); //$post['edit_campaignName'];
-		$selected_list = Input::post("selected_list"); //$post['selected_list'];
+		$offsite_id = $request->offsite_id;
+		$offsite_url = $request->offsite_url;
+		$edit_campaignName = $request->edit_campaignName;
+		$selected_list = $request->selected_list;
 		$selected_list = explode(",", $selected_list);
 
 		$newOffsiteUrl = array();
@@ -1163,7 +1128,7 @@ class Brandboost extends Controller {
 			$inc++;
 		}
 		$offsiteUrl = serialize($newOffsiteUrl);
-		$storeURL = Input::post("store_url"); //strip_tags($post['store_url']);
+		$storeURL = $request->store_url;
 		$aData = array(
 			'offsites_links' => $offsiteUrl,
 			'brand_title' => $edit_campaignName,
@@ -1175,18 +1140,18 @@ class Brandboost extends Controller {
 
 		$result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
 
-		$feedback_type = Input::post("feedback_type"); //$post['feedback_type'];
-		$ratings_type = Input::post("ratings_type"); //$post['ratings_type'];
-		$from_name = Input::post("from_name"); //$post['from_name'];
-		$from_email = Input::post("from_email"); //$post['from_email'];
-		$sender_name = Input::post("sender_name"); //$post['sender_name'];
-		$offsite_url = Input::post("offsite_url"); //$post['offsite_url'];
-		$positive_title = Input::post("positive_title"); //$post['positive_title'];
-		$positive_subtitle = Input::post("positive_subtitle"); //$post['positive_subtitle'];
-		$negetive_title = Input::post("negetive_title"); //$post['negetive_title'];
-		$negetive_subtitle = Input::post("negetive_subtitle"); //$post['negetive_subtitle'];
-		$neutral_title = Input::post("neutral_title"); //$post['neutral_title'];
-		$neutral_subtitle = Input::post("neutral_subtitle"); //$post['neutral_subtitle'];
+		$feedback_type = $request->feedback_type;
+		$ratings_type = $request->ratings_type;
+		$from_name = $request->from_name;
+		$from_email = $request->from_email;
+		$sender_name = $request->sender_name;
+		$offsite_url = $request->offsite_url;
+		$positive_title = $request->positive_title;
+		$positive_subtitle = $request->positive_subtitle;
+		$negetive_title = $request->negetive_title;
+		$negetive_subtitle = $request->negetive_subtitle;
+		$neutral_title = $request->neutral_title;
+		$neutral_subtitle = $request->neutral_subtitle;
 
 
 		$feedbackData = array(
@@ -1229,12 +1194,12 @@ class Brandboost extends Controller {
 	* Used to continue offsite steps
 	* @return type
 	*/
-	public function continueStepOffsite() {
+	public function continueStepOffsite(Request $request) {
 
         $response = array();
 
-		$targetName = Input::post("targetName");
-		$brandboostID = Input::post("brandboostID");
+		$targetName = $request->targetName;
+		$brandboostID = $request->brandboostID;
 		$aUser = getLoggedUser();
 		$userID = $aUser->id;
 		if ($targetName == '' && $brandboostID > 0) {
@@ -1258,11 +1223,11 @@ class Brandboost extends Controller {
 	* Used to update subscriber status
 	* @return type
 	*/
-	public function updateSubscriberStatus() {
+	public function updateSubscriberStatus(Request $request) {
 
         $response = array();
-		$status = Input::post("status");
-		$subscriberId = Input::post("subscriber_id");
+		$status = $request->status;
+		$subscriberId = $request->subscriber_id;
 
 		$aData = array(
 			'status' => $status
@@ -1303,9 +1268,9 @@ class Brandboost extends Controller {
 	* Used to delete review request
 	* @return type
 	*/
-	public function deleteRRrecord() {
+	public function deleteRRrecord(Request $request) {
         $response = array();
-		$recordId = Input::post("recordId");
+		$recordId = $request->recordId;
 		$result = BrandboostModel::deleteReviewRequest($recordId);
 		if ($result) {
 			//Add  log
@@ -1434,13 +1399,13 @@ class Brandboost extends Controller {
 	* Used to set onsite widget
 	* @return type
 	*/
-	public function setOnsiteWidget() {
+	public function setOnsiteWidget(Request $request) {
         $response = array("status" => "error", "msg" => "Something went wrong");
 
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $widgetTypeID = Input::post("widgetTypeID");
-        $widgetID = Input::post("widgetID");
+        $widgetTypeID = $request->widgetTypeID;
+        $widgetID = $request->widgetID;
         $aData = array(
             'widget_type' => $widgetTypeID
         );
@@ -1458,54 +1423,42 @@ class Brandboost extends Controller {
 	* Used to add onsite brandboost widget data
 	* @return type
 	*/
-	public function addBrandBoostWidgetData() {
+	public function addBrandBoostWidgetData(Request $request) {
 
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
 
-        $brandboostID = Input::post('campaign_id');
-        $title = Input::post('title');
-        $desc = Input::post('desc');
-        $bAllowComment = Input::post('allow_comment');
-        $bAllowVideoReview = Input::post('allow_video_reviews');
-        $bAllowHelpful = Input::post('allow_helpful');
-        $bAllowLiveReading = Input::post('allow_live_reading');
-        $bAllowRatings = Input::post('allow_ratings');
-        $bAllowTimestamp = Input::post('allow_timestamp');
-        $bAllowProsCons = Input::post('allow_pros_cons');
-        $bgColor = Input::post('bg_color');
-        $textColor = Input::post('text_color');
-        $pro_cons = Input::post('pro_cons');
-        $domainName = Input::post('domain_name');
-        $ratingValue = Input::post('ratingValue');
-        $bbDisplay = Input::post('bbDisplay');
-        $widgetID = Input::post('edit_widgetId');
-        $alternativeDesign = Input::post('alternative_design');
-        $allowCampaignName = Input::post('allow_campaign_name');
-        $reviewsOrderBy = Input::post('reviews_order_by');
-        $reviewsOrder = Input::post('reviews_order');
-        $numofrev = Input::post('numofrev');
-
-		/*$barndFileData = Input::post('brand_img');
-        $brandFileArray = array();
-
-		pre($barndFileData); die;
-
-        foreach ($barndFileData['media_url'] as $key => $fileData) {
-            $brandFileArray[$key]['media_url'] = $fileData;
-            $brandFileArray[$key]['media_type'] = $barndFileData['media_type'][$key];
-        }
-        $brandImageFileName = empty(Input::post('brand_img')) ? Input::post('edit_brand_img') : serialize($brandFileArray);*/
-
-		$logoImageFileName = Input::post('logo_img') == '' ? Input::post('edit_logo_img') : Input::post('logo_img');
-        $review_expire = Input::post('review_expire');
-        $review_expire_link = Input::post('review_expire_link');
+        $brandboostID = $request->campaign_id;
+        $title = $request->title;
+        $desc = $request->desc;
+        $bAllowComment = $request->allow_comment;
+        $bAllowVideoReview = $request->allow_video_reviews;
+        $bAllowHelpful = $request->allow_helpful;
+        $bAllowLiveReading = $request->allow_live_reading;
+        $bAllowRatings = $request->allow_ratings;
+        $bAllowTimestamp = $request->allow_timestamp;
+        $bAllowProsCons = $request->allow_pros_cons;
+        $bgColor = $request->bg_color;
+        $textColor = $request->text_color;
+        $pro_cons = $request->pro_cons;
+        $domainName = $request->domain_name;
+        $ratingValue = $request->ratingValue;
+        $bbDisplay = $request->bbDisplay;
+        $widgetID = $request->edit_widgetId;
+        $alternativeDesign = $request->alternative_design;
+        $allowCampaignName = $request->allow_campaign_name;
+        $reviewsOrderBy = $request->reviews_order_by;
+        $reviewsOrder = $request->reviews_order;
+        $numofrev = $request->numofrev;
+		$logoImageFileName = $request->logo_img == '' ? $request->edit_logo_img : $request->logo_img;
+        $review_expire = $request->review_expire;
+        $review_expire_link = $request->review_expire_link;
         $revExpireLink = array();
         if ($review_expire_link == 'custom') {
 
-            $txtInteger = $post['txtInteger'];
-            $exp_duration = $post['exp_duration'];
+            $txtInteger = $request->txtInteger;
+            $exp_duration = $request->exp_duration;
             $revExpireLink['delay_value'] = $txtInteger;
             $revExpireLink['delay_unit'] = $exp_duration;
         } else {
@@ -1561,14 +1514,14 @@ class Brandboost extends Controller {
 	* Used to save preview data
 	* @return type
 	*/
-	public function savePreviewData() {
+	public function savePreviewData(Request $request) {
 
         $response = array();
         $brandboostID = Session::get('brandboostID');
         $userID = Session::get("current_user_id");
 
-		$fieldName = Input::post('field_name');
-		$fieldValue = Input::post('field_value');
+		$fieldName = $request->field_name;
+		$fieldValue = $request->field_value;
 
 		$aData = array(
 			$fieldName => $fieldValue
@@ -1589,39 +1542,39 @@ class Brandboost extends Controller {
 	* Used to add brandboost widget design
 	* @return type
 	*/
-	public function addBrandBoostWidgetDesign() {
+	public function addBrandBoostWidgetDesign(Request $request) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
 
-        $company_logo = Input::post('company_logo');
-        $allow_branding = Input::post('allow_branding') != '' ? '1' : '0';
-        $notification = Input::post('notification') != '' ? '1' : '0';
-        $company_info_switch = Input::post('company_info_switch') != '' ? '1' : '0';
-        $widgetID = Input::post('edit_widgetId');
-        $solid_color = Input::post('solid_color');
-        $main_colors = Input::post('main_colors');
-        $custom_colors1 = Input::post('custom_colors1');
-        $custom_colors2 = Input::post('custom_colors2');
-        $main_color_switch = Input::post('widget_bgcolor_switch') == 1 ? '1' : '0';
-        $custom_color_switch = Input::post('widget_bgcolor_switch') == 2 ? '1' : '0';
-        $solid_color_switch = Input::post('widget_bgcolor_switch') == 3 ? '1' : '0';
-        $custom_company_name = Input::post('custom_company_name');
-        $custom_company_description = Input::post('custom_company_description');
+        $company_logo = $request->company_logo;
+        $allow_branding = $request->allow_branding != '' ? '1' : '0';
+        $notification = $request->notification != '' ? '1' : '0';
+        $company_info_switch = $request->company_info_switch != '' ? '1' : '0';
+        $widgetID = $request->edit_widgetId;
+        $solid_color = $request->solid_color;
+        $main_colors = $request->main_colors;
+        $custom_colors1 = $request->custom_colors1;
+        $custom_colors2 = $request->custom_colors2;
+        $main_color_switch = $request->widget_bgcolor_switch == 1 ? '1' : '0';
+        $custom_color_switch = $request->widget_bgcolor_switch == 2 ? '1' : '0';
+        $solid_color_switch = $request->widget_bgcolor_switch == 3 ? '1' : '0';
+        $custom_company_name = $request->custom_company_name;
+        $custom_company_description = $request->custom_company_description;
 
-        $widget_font_color = Input::post('widget_font_color');
-        $widget_border_color = Input::post('widget_border_color');
-        $widget_position = Input::post('widget_position');
-        $widget_themes = Input::post('widget_themes');
-        $icon_type = Input::post('icon_type');
-        $color_orientation = Input::post('color_orientation');
+        $widget_font_color = $request->widget_font_color;
+        $widget_border_color = $request->widget_border_color;
+        $widget_position = $request->widget_position;
+        $widget_themes = $request->widget_themes;
+        $icon_type = $request->icon_type;
+        $color_orientation = $request->color_orientation;
 
-        $solid_color_rating = Input::post('solid_color_rating');
-        $main_colors_rating = Input::post('main_colors_rating');
-        $custom_colors_rating1 = Input::post('custom_colors_rating1');
-        $custom_colors_rating2 = Input::post('custom_colors_rating2');
-        $main_color_switch_rating = Input::post('main_color_switch_rating') != '' ? '1' : '0';
+        $solid_color_rating = $request->solid_color_rating;
+        $main_colors_rating = $request->main_colors_rating;
+        $custom_colors_rating1 = $request->custom_colors_rating1;
+        $custom_colors_rating2 = $request->custom_colors_rating2;
+        $main_color_switch_rating = $request->main_color_switch_rating != '' ? '1' : '0';
 
         $aData = array(
             'user_id' => $userID,
@@ -1668,14 +1621,14 @@ class Brandboost extends Controller {
 	* Used to update brandboost widget campaign
 	* @return type
 	*/
-	public function addBrandBoostWidgetCampaign() {
+	public function addBrandBoostWidgetCampaign(Request $request) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
 
-        $widgetID = Input::post('campaign_widget_id');
-        $campaignId = Input::post('campaign_id');
+        $widgetID = $request->campaign_widget_id;
+        $campaignId = $request->campaign_id;
 
         $aData = array(
             'brandboost_id' => $campaignId
@@ -1698,11 +1651,11 @@ class Brandboost extends Controller {
 	* Used to publish onsite brandboost status
 	* @return type
 	*/
-	public function publishOnsiteStatusBB() {
+	public function publishOnsiteStatusBB(Request $request) {
 
         $response = array();
-        $brandboostID = Input::post('brandboostID');
-        $status = Input::post('status');
+        $brandboostID = $request->brandboostID;
+        $status = $request->status;
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -1899,7 +1852,7 @@ class Brandboost extends Controller {
 	public function addOnsiteWidget(Request $request) {
 
         $response = array();
-        $post = array();
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $user_role = $oUser->user_role;
@@ -1969,7 +1922,7 @@ class Brandboost extends Controller {
 	public function deleteBrandboostWidget(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 		$widgetID = $request->widget_id;
@@ -2012,7 +1965,7 @@ class Brandboost extends Controller {
     public function getOnsiteWidgetEmbedCode(Request $request) {
 
         $response = array();
-        $post = array();
+
 		$widgetID = $request->widget_id;
 
 		$result = BrandboostModel::getBBWidgets($widgetID);
@@ -2061,7 +2014,7 @@ class Brandboost extends Controller {
 	public function archiveMultipalBrandboostWidget(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 		$multi_widget_id = $request->multi_brandboost_widget_id;
@@ -2107,7 +2060,7 @@ class Brandboost extends Controller {
 	public function deleteMultipalBrandboostWidget(Request $request) {
 
         $response = array();
-        $post = array();
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 		$multi_widget_id = $request->multi_widget_id;
@@ -2153,7 +2106,7 @@ class Brandboost extends Controller {
 	public function addOnsite(Request $request) {
 
         $response = array();
-        $post = array();
+
         $userID = Session::get("current_user_id");
 		$campaignName = $request->campaignName;
 		$OnsitecampaignDescription = $request->OnsitecampaignDescription;
@@ -2235,7 +2188,7 @@ class Brandboost extends Controller {
     public function addOffsite(Request $request) {
 
         $response = array();
-        $post = array();
+
         $userID = Session::get("current_user_id");
 
 		$campaignName = $request->campaignName;
@@ -2324,7 +2277,7 @@ class Brandboost extends Controller {
 	public function deleteProduct(Request $request) {
 
         $response = array();
-        $post = array();
+
 
 		$dataOrder = $request->dataOrder;
 		$bbId = $request->bb_id;
@@ -2604,12 +2557,12 @@ class Brandboost extends Controller {
     /*
         Delete the file from the s3 server
     */
-    public function deleteObjectFromS3() {
+    public function deleteObjectFromS3(Request $request) {
 
-        $post = Input::post();
-        if(!empty($post['dropImage']))
+
+        if(!empty($request->dropImage))
         {
-            $dropImage = $post['dropImage'];
+            $dropImage = $request->dropImage;
             $s3 = \Storage::disk('s3');
             $resPonse = $s3->delete($dropImage);
             echo $resPonse;
@@ -2740,9 +2693,10 @@ class Brandboost extends Controller {
 			<li class="active">On Site Brand Boost Email Tracking</li>
 			</ul>';
 
-        $this->template->load('admin/admin_campaign_template', 'admin/brandboost/onsite_tracking', array('title' => 'On Site Review Campaign Tracking',
+        $this->template->load('admin/admin_campaign_template', 'admin/brandboost/onsite_tracking',
+            array('title' => 'On Site Review Campaign Tracking',
             'pagename' => $breadcrumb,
-            'aStatsBrandboostId' => $aStatsBrandboostId,
+            'aStatsBrandboostId' => isset($aStatsBrandboostId) ? $aStatsBrandboostId : '',
             'aStatsAll' => $aStatsAll,
             'aStatsOpen' => $aStatsOpen,
             'aStatsClick' => $aStatsClick,
@@ -2807,13 +2761,13 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_campaign_template', 'admin/brandboost/onsite_sms_tracking', $aData);
     }
 
-    public function addBrandCampaign() {
+    public function addBrandCampaign(Request $request) {
 
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
-        $post = Input::post();
-        $campaign = $post['campaign'];
+
+        $campaign = $request->campaign;
 
         $aBrandboostData = array(
             'user_id' => $userID,
@@ -2838,9 +2792,9 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function getBrandThemeData() {
-        $post = Input::post();
-        $BrandthemeId = $post['BrandthemeId'];
+    public function getBrandThemeData(Request $request) {
+
+        $BrandthemeId = $request->BrandthemeId;
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $mBrand = new BrandModel();
@@ -2871,26 +2825,26 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function addBrandConfigurationData() {
+    public function addBrandConfigurationData(Request $request) {
 
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
         $response = array();
         $BrandModelObj = new BrandModel();
-        //$brandboostId = $post['brandboost_id'];
-        $avatar = Input::post("avatar_switch") != '' ? '1' : '0';
-        $company_des = Input::post("company_des_switch") != '' ? '1' : '0';
-        $services = Input::post("services_switch") != '' ? '1' : '0';
-        $contact_btn = Input::post("contact_btn_switch") != '' ? '1' : '0';
-        $contact_info = Input::post("contact_info_switch") != '' ? '1' : '0';
-        $socials = Input::post("socials_switch") != '' ? '1' : '0';
-        $customer_experiance = Input::post("customer_experiance_switch") != '' ? '1' : '0';
-        $about_company = Input::post("about_company_position");
-        $reviews_list = Input::post("reviews_list_position");
-        $show_rating = Input::post("show_rating");
-        $chat_widget = Input::post("chat_widget_switch") != '' ? '1' : '0';
-        $referral_widgets = Input::post("referral_widgets_switch") != '' ? '1' : '0';
+        //$brandboostId = $request->brandboost_id;
+        $avatar = $request->avatar_switch != '' ? '1' : '0';
+        $company_des = $request->company_des_switch != '' ? '1' : '0';
+        $services = $request->services_switch != '' ? '1' : '0';
+        $contact_btn = $request->contact_btn_switch != '' ? '1' : '0';
+        $contact_info = $request->contact_info_switch != '' ? '1' : '0';
+        $socials = $request->socials_switch != '' ? '1' : '0';
+        $customer_experiance = $request->customer_experiance_switch != '' ? '1' : '0';
+        $about_company = $request->about_company_position;
+        $reviews_list = $request->reviews_list_position;
+        $show_rating = $request->show_rating;
+        $chat_widget = $request->chat_widget_switch != '' ? '1' : '0';
+        $referral_widgets = $request->referral_widgets_switch != '' ? '1' : '0';
 
         $aBrandboostData = array(
             'user_id' => $userID,
@@ -2925,17 +2879,17 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function addFaqData() {
+    public function addFaqData(Request $request) {
 
         $response = array();
-        $post = Input::post();
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $faq_question = $post['question'];
-        $faq_answer = $post['answer'];
+        $faq_question = $request->question;
+        $faq_answer = $request->answer;
         $mBrand = new BrandModel();
 
-        // $referral_widgets = $post['referral_widgets_switch'] != '' ? '1' : '0';
+        // $referral_widgets = $request->referral_widgets_switch'] != '' ? '1' : '0';
 
         $addFaqData = array(
             'user_id' => $userID,
@@ -2956,15 +2910,15 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function update_faq_status() {
+    public function update_faq_status(Request $request) {
 
         $response = array();
-        $post = array();
-      $mBrand = new  BrandModel();
-            $post = Input::post();
 
-            $faqId = strip_tags($post['faq_id']);
-            $status = strip_tags($post['status']);
+      $mBrand = new  BrandModel();
+
+
+            $faqId = $request->faq_id;
+            $status = $request->status;
 
             $aData = array(
                 'status' => $status
@@ -2983,14 +2937,14 @@ class Brandboost extends Controller {
 
     }
 
-    public function delete_faq() {
+    public function delete_faq(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $faqId = strip_tags($post['faq_id']);
+        if (!empty($request)) {
+
+
+            $faqId = $request->faq_id;
             $result = $this->mBrand->DeleteFaQ($faqId);
             if ($result) {
                 $response['status'] = 'success';
@@ -3004,16 +2958,16 @@ class Brandboost extends Controller {
         }
     }
 
-    public function UpdateFaqData() {
+    public function UpdateFaqData(Request $request) {
 
         $response = array();
-        $post = array();
-       $mBrand = new BrandModel();
-            $post = Input::post();
 
-            $faqId = strip_tags($post['faq_id']);
-            $faq_question = $post['question'];
-            $faq_answer = $post['answer'];
+       $mBrand = new BrandModel();
+
+
+            $faqId = $request->faq_id;
+            $faq_question = $request->question;
+            $faq_answer = $request->answer;
 
 
             $aData = array(
@@ -3035,16 +2989,17 @@ class Brandboost extends Controller {
 
     }
 
-    public function getFaqdetails($faQListid) {
+    public function getFaqdetails(Request $request) {
+        $faQListid = $request->faqId;
         $oUser = getLoggedUser();
         $mBrand = new BrandModel();
-        $post = Input::post();
+
         $userID = $oUser->id;
-        $get = Request::input();
-        $selectedTab = $get['t'];
-        if (!empty($post)) {
-            $faQListid = strip_tags($post['faQListid']);
-            $actionName = strip_tags($post['action']);
+
+        $selectedTab = $request->t;
+        if (!empty(!empty($request))) {
+            $faQListid = $request->faQListid;
+            $actionName = $request->action;
         }
 
 
@@ -3076,13 +3031,13 @@ class Brandboost extends Controller {
         }
     }
 
-    public function switchTemplate() {
+    public function switchTemplate(Request $request) {
 
         $oUser = getLoggedUser();
         $mBrand = new BrandModel();
         $userID = $oUser->id;
-        $post = Input::post();
-        $template_style = $post['template_style'];
+
+        $template_style = $request->template_style;
         $aThemeData="";
         $theme_title="";
         $aBrandboostData = array(
@@ -3106,42 +3061,42 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function updateBrandConfigurationData() {
+    public function updateBrandConfigurationData(Request $request) {
 
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
         $response = array();
 
-        $area_type = Input::post('area_type');
-        $theme_title = Input::post('brand_theme_title');
+        $area_type = $request->area_type;
+        $theme_title = $request->brand_theme_title;
         $BrandModelObj = new BrandModel();
 
-        $company_logo = Input::post('company_logo');
-        $company_header_logo = Input::post('company_header_logo');
-        $solid_color = Input::post('area_type') == '1' ? Input::post('solid_color') : Input::post('solid_color_full');
-        $main_colors = Input::post('area_type') == '1' ? Input::post('main_colors') : Input::post('main_colors_full');
-        $custom_colors1 = Input::post('area_type') == '1' ? Input::post('custom_colors1') : Input::post('custom_colors1_full');
-        $custom_colors2 = Input::post('area_type') == '1' ? Input::post('custom_colors2') : Input::post('custom_colors2_full');
-        $color_orientation_top = Input::post('color_orientation_top_value');
-        $color_orientation_full = Input::post('color_orientation_full_value');
-        $custom_company_name = Input::post('custom_company_name');
-        $custom_company_description = Input::post('custom_company_description');
-        $company_info_switch = Input::post('company_info_switch') != '' ? '1' : '0';
-        if (Input::post('area_type') == '1') {
-            $main_color_switch = Input::post('main_color_switch') != '' ? '1' : '0';
+        $company_logo = $request->company_logo;
+        $company_header_logo = $request->company_header_logo;
+        $solid_color = $request->area_type == '1' ? $request->solid_color : $request->solid_color_full;
+        $main_colors = $request->area_type == '1' ? $request->main_colors : $request->main_colors_full;
+        $custom_colors1 = $request->area_type == '1' ? $request->custom_colors1 : $request->custom_colors1_full;
+        $custom_colors2 = $request->area_type == '1' ? $request->custom_colors2 : $request->custom_colors2_full;
+        $color_orientation_top = $request->color_orientation_top_value;
+        $color_orientation_full = $request->color_orientation_full_value;
+        $custom_company_name = $request->custom_company_name;
+        $custom_company_description = $request->custom_company_description;
+        $company_info_switch = $request->company_info_switch != '' ? '1' : '0';
+        if ($request->area_type == '1') {
+            $main_color_switch = $request->main_color_switch != '' ? '1' : '0';
         } else {
-            $main_color_switch = Input::post('main_color_switch_full') != '' ? '1' : '0';
+            $main_color_switch = $request->main_color_switch_full != '' ? '1' : '0';
         }
-        if (Input::post('area_type') == '1') {
-            $custom_color_switch = Input::post('custom_color_switch') != '' ? '1' : '0';
+        if ($request->area_type == '1') {
+            $custom_color_switch = $request->custom_color_switch != '' ? '1' : '0';
         } else {
-            $custom_color_switch = Input::post('custom_color_switch_full') != '' ? '1' : '0';
+            $custom_color_switch = $request->custom_color_switch_full != '' ? '1' : '0';
         }
-        if (Input::post('area_type') == '1') {
-            $solid_color_switch = Input::post('solid_color_switch') != '' ? '1' : '0';
+        if ($request->area_type == '1') {
+            $solid_color_switch = $request->solid_color_switch != '' ? '1' : '0';
         } else {
-            $solid_color_switch = Input::post('solid_color_switch_full') != '' ? '1' : '0';
+            $solid_color_switch = $request->solid_color_switch_full != '' ? '1' : '0';
         }
 
 
@@ -3219,34 +3174,34 @@ class Brandboost extends Controller {
 
 
 
-    public function addBrandBoostData() {
+    public function addBrandBoostData(Request $request) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        $post = $this->input->post();
+
         //$brandboostID = $this->session->userdata('brandboostID');
-        $title = strip_tags($post['title']);
-        $desc = strip_tags($post['desc']);
-        $bAllowComment = strip_tags($post['allow_comment']);
-        $bAllowVideoReview = strip_tags($post['allow_video_reviews']);
-        $bAllowHelpful = strip_tags($post['allow_helpful']);
-        $bAllowLiveReading = strip_tags($post['allow_live_reading']);
-        $bAllowRatings = strip_tags($post['allow_ratings']);
-        $bAllowTimestamp = strip_tags($post['allow_timestamp']);
-        $bAllowProsCons = strip_tags($post['allow_pros_cons']);
-        $bgColor = strip_tags($post['bg_color']);
-        $textColor = strip_tags($post['text_color']);
-        $pro_cons = strip_tags($post['pro_cons']);
-        $domainName = strip_tags($post['domain_name']);
-        $ratingValue = strip_tags($post['ratingValue']);
-        $bbDisplay = strip_tags($post['bbDisplay']);
-        $brandboostID = strip_tags($post['edit_brandboostId']);
+        $title = $request->title;
+        $desc = $request->desc;
+        $bAllowComment = $request->allow_comment;
+        $bAllowVideoReview = $request->allow_video_reviews;
+        $bAllowHelpful = $request->allow_helpful;
+        $bAllowLiveReading = $request->allow_live_reading;
+        $bAllowRatings = $request->allow_ratings;
+        $bAllowTimestamp = $request->allow_timestamp;
+        $bAllowProsCons = $request->allow_pros_cons;
+        $bgColor = $request->bg_color;
+        $textColor = $request->text_color;
+        $pro_cons = $request->pro_cons;
+        $domainName = $request->domain_name;
+        $ratingValue = $request->ratingValue;
+        $bbDisplay = $request->bbDisplay;
+        $brandboostID = $request->edit_brandboostId;
 
         //$widgettype = $this->session->userdata('selectedOnsiteWidget');
-        $numofrev = strip_tags($post['numofrev']);
+        $numofrev = $request->numofrev;
 
-        $barndFileData = $post['brand_img'];
+        $barndFileData = $request->brand_img;
         $brandFileArray = array();
 
         foreach ($barndFileData['media_url'] as $key => $fileData) {
@@ -3254,16 +3209,16 @@ class Brandboost extends Controller {
             $brandFileArray[$key]['media_type'] = $barndFileData['media_type'][$key];
         }
 
-        $logoImageFileName = $post['logo_img'] == '' ? $post['edit_logo_img'] : $post['logo_img'];
-        $brandImageFileName = empty($post['brand_img']) ? $post['edit_brand_img'] : serialize($brandFileArray);
+        $logoImageFileName = $request->logo_img == '' ? $request->edit_logo_img : $request->logo_img;
+        $brandImageFileName = empty($request->brand_img) ? $request->edit_brand_img : serialize($brandFileArray);
 
-        $review_expire = $post['review_expire'];
-        $review_expire_link = $post['review_expire_link'];
+        $review_expire = $request->review_expire;
+        $review_expire_link = $request->review_expire_link;
         $revExpireLink = array();
         if ($review_expire_link == 'custom') {
 
-            $txtInteger = $post['txtInteger'];
-            $exp_duration = $post['exp_duration'];
+            $txtInteger = $request->txtInteger;
+            $exp_duration = $request->exp_duration;
             $revExpireLink['delay_value'] = $txtInteger;
             $revExpireLink['delay_unit'] = $exp_duration;
         } else {
@@ -3311,31 +3266,31 @@ class Brandboost extends Controller {
     }
 
 
-    public function createBrandBoostWidgetTheme() {
+    public function createBrandBoostWidgetTheme(Request $request) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        $post = $this->input->post();
 
-        $widgetID = $post['theme_widget_id'];
-        $theme_widget_title = $post['widget_theme_title'];
-        $theme_fix_color_switch = $post['theme_bg_color_switch'] == 1 ? 1 : 0;
-        $theme_custom_color_switch = $post['theme_bg_color_switch'] == 2 ? 1 : 0;
-        $theme_solid_color_switch = $post['theme_bg_color_switch'] == 3 ? 1 : 0;
-        $theme_main_colors = $post['theme_main_colors'];
-        $theme_custom_colors1 = $post['theme_custom_colors1'];
-        $theme_custom_colors2 = $post['theme_custom_colors2'];
-        $theme_solid_color = $post['theme_solid_color'];
-        $theme_main_colors_rating = $post['theme_main_colors_rating'];
-        $theme_rating_custom_color1 = $post['theme_rating_custom_color1'];
-        $theme_rating_custom_colors2 = $post['theme_rating_custom_colors2'];
-        $theme_rating_solid_color = $post['theme_rating_solid_color'];
-        $theme_fix_rating_color = $post['theme_fix_rating_color'];
-        $theme_widget_font_color = $post['theme_widget_font_color'];
-        $theme_widget_border_color = $post['theme_widget_border_color'];
-        $theme_widget_position = $post['theme_widget_position'];
-        $theme_color_orientation = $post['theme_color_orientation'];
+
+        $widgetID = $request->theme_widget_id;
+        $theme_widget_title = $request->widget_theme_title;
+        $theme_fix_color_switch = $request->theme_bg_color_switch == 1 ? 1 : 0;
+        $theme_custom_color_switch = $request->theme_bg_color_switch == 2 ? 1 : 0;
+        $theme_solid_color_switch = $request->theme_bg_color_switch == 3 ? 1 : 0;
+        $theme_main_colors = $request->theme_main_colors;
+        $theme_custom_colors1 = $request->theme_custom_colors1;
+        $theme_custom_colors2 = $request->theme_custom_colors2;
+        $theme_solid_color = $request->theme_solid_color;
+        $theme_main_colors_rating = $request->theme_main_colors_rating;
+        $theme_rating_custom_color1 = $request->theme_rating_custom_color1;
+        $theme_rating_custom_colors2 = $request->theme_rating_custom_colors2;
+        $theme_rating_solid_color = $request->theme_rating_solid_color;
+        $theme_fix_rating_color = $request->theme_fix_rating_color;
+        $theme_widget_font_color = $request->theme_widget_font_color;
+        $theme_widget_border_color = $request->theme_widget_border_color;
+        $theme_widget_position = $request->theme_widget_position;
+        $theme_color_orientation = $request->theme_color_orientation;
 
 
         $aData = array(
@@ -3374,27 +3329,27 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function addBrandBoostDesign() {
+    public function addBrandBoostDesign(Request $request) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        $post = $this->input->post();
 
-        $company_logo = $post['company_logo'];
-        $allow_branding = $post['allow_branding'] != '' ? '1' : '0';
-        $notification = $post['notification'] != '' ? '1' : '0';
-        $company_info_switch = $post['company_info_switch'] != '' ? '1' : '0';
-        $brandboostID = $post['edit_brandboostId'];
-        $solid_color = $post['solid_color'];
-        $main_colors = $post['main_colors'];
-        $custom_colors1 = $post['custom_colors1'];
-        $custom_colors2 = $post['custom_colors2'];
-        $main_color_switch = $post['main_color_switch'] != '' ? '1' : '0';
-        $custom_color_switch = $post['custom_color_switch'] != '' ? '1' : '0';
-        $solid_color_switch = $post['solid_color_switch'] != '' ? '1' : '0';
-        $custom_company_name = $post['custom_company_name'];
-        $custom_company_description = $post['custom_company_description'];
+
+        $company_logo = $request->company_logo;
+        $allow_branding = $request->allow_branding != '' ? '1' : '0';
+        $notification = $request->notification != '' ? '1' : '0';
+        $company_info_switch = $request->company_info_switch != '' ? '1' : '0';
+        $brandboostID = $request->edit_brandboostId;
+        $solid_color = $request->solid_color;
+        $main_colors = $request->main_colors;
+        $custom_colors1 = $request->custom_colors1;
+        $custom_colors2 = $request->custom_colors2;
+        $main_color_switch = $request->main_color_switch != '' ? '1' : '0';
+        $custom_color_switch = $request->custom_color_switch != '' ? '1' : '0';
+        $solid_color_switch = $request->solid_color_switch != '' ? '1' : '0';
+        $custom_company_name = $request->custom_company_name;
+        $custom_company_description = $request->custom_company_description;
 
         $aBrandboostData = array(
             'user_id' => $userID,
@@ -3426,10 +3381,10 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function delete() {
+    public function delete(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        $id = strip_tags($post['brandboost_id']);
+
+        $id = $request->brandboost_id;
         if ($id > 0) {
             $result = $this->mBrandboost->delete($id);
             if ($result) {
@@ -3442,10 +3397,10 @@ class Brandboost extends Controller {
         }
     }
 
-    public function deleteCampaignResponse() {
+    public function deleteCampaignResponse(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        $ids = $post['multipal_id'];
+
+        $ids = $request->multipal_id;
 
         foreach ($ids as $id) {
             $result = $this->mBrandboost->deleteCampaignResponse($id);
@@ -3460,10 +3415,10 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function campaignResponseDel() {
+    public function campaignResponseDel(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        $id = $post['campaign_response_id'];
+
+        $id = $request->campaign_response_id;
 
         $result = $this->mBrandboost->deleteCampaignResponse($id);
 
@@ -3700,17 +3655,17 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function create_event() {
+    public function create_event(Request $request) {
         $response = array();
-        $post = $this->input->post();
+
         $userID = $this->session->userdata("current_user_id");
         $brandId = $this->session->userdata('brandboostID');
         $getPrevEventId = $this->mBrandboost->getPrevEventId($brandId);
-        $emailTempalteID = $post['templateId'];
-        $campaignType = $post['campaign_type'];
-        $previousEventId = $post['previous_event_id'];
-        $currentEventID = $post['current_event_id'];
-        $eventType = $post['event_type'];
+        $emailTempalteID = $request->templateId;
+        $campaignType = $request->campaign_type;
+        $previousEventId = $request->previous_event_id;
+        $currentEventID = $request->current_event_id;
+        $eventType = $request->event_type;
         $aResponse = $this->mFeedback->getFeedbackResponse($brandId);
         if (!empty($aResponse)) {
             $fromName = $aResponse->from_name;
@@ -3882,15 +3837,15 @@ class Brandboost extends Controller {
     }
 
 
-    public function create_campaign() {
+    public function create_campaign(Request $request) {
         $response = array();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        $campaignType = strip_tags($post['campaign_type']);
-        $eventID = strip_tags($post['event_id']);
-        $type = strip_tags($post['event_type']);
-        $brandboostType = strip_tags($post['brandboost_type']);
+
+        $campaignType = $request->campaign_type;
+        $eventID = $request->event_id;
+        $type = $request->event_type;
+        $brandboostType = $request->brandboost_type;
         $brandboostID = $this->session->userdata('brandboostID');
         $aResponse = $this->mFeedback->getFeedbackResponse($brandboostID);
         if (!empty($aResponse)) {
@@ -3912,7 +3867,7 @@ class Brandboost extends Controller {
         } else {
             return 0;
         }
-        if ($post) {
+        if (!empty($request)) {
             if ($eventID) {
                 $resultData = $this->mBrandboost->getAllCampaignTemplates($emailTempalteID);
                 $resultData = $resultData[0];
@@ -3973,15 +3928,15 @@ class Brandboost extends Controller {
         }
     }
 
-    public function update_event() {
+    public function update_event(Request $request) {
         $response = array();
-        $post = $this->input->post();
 
-        $eventID = strip_tags($post['event_id']);
-        $delayValue = strip_tags($post['delay_value']);
-        $delayUnit = strip_tags($post['delay_unit']);
-        $eventType = strip_tags($post['event_type']);
-        $nodeType = strip_tags($post['node_type']);
+
+        $eventID = $request->event_id;
+        $delayValue = $request->delay_value;
+        $delayUnit = $request->delay_unit;
+        $eventType = $request->event_type;
+        $nodeType = $request->node_type;
 
         if ($eventID) {
             $eventData = array("delay_type" => "after", "delay_value" => $delayValue, "delay_unit" => $delayUnit, "event_type" => $eventType, "node_type" => $nodeType);
@@ -4022,10 +3977,10 @@ class Brandboost extends Controller {
         }
     }
 
-    public function delete_campaign() {
+    public function delete_campaign(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        $campaignID = strip_tags($post['campaign_id']);
+
+        $campaignID = $request->campaign_id;
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if ($campaignID > 0) {
@@ -4056,18 +4011,18 @@ class Brandboost extends Controller {
         }
     }
 
-    public function delete_event() {
+    public function delete_event(Request $request) {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+
+        if (empty(!empty($request))) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $eventID = strip_tags($post['event_id']);
+        $eventID = $request->event_id;
         if ($eventID > 0) {
             //Get Current Node
             $currentNode = $this->mBrandboost->getEmailAutomationEvent($eventID);
@@ -4106,9 +4061,9 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function updateStatus() {
+    public function updateStatus(Request $request) {
         $response = array();
-        $post = $this->input->post();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $brandboostID = $this->session->userdata('brandboostID');
@@ -4125,42 +4080,42 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function updateBrandBoost() {
+    public function updateBrandBoost(Request $request) {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $response = array();
-        $post = $this->input->post();
 
 
-        $actionName = $post['action_name']; //add or edit
-        $title = strip_tags($post['title']);
-        $desc = strip_tags($post['desc']);
-        $bAllowComment = strip_tags($post['allow_comment']);
-        $bAllowVideoReview = strip_tags($post['allow_video_reviews']);
-        $bAllowHelpful = strip_tags($post['allow_helpful']);
-        $bAllowLiveReading = strip_tags($post['allow_live_reading']);
-        $bAllowRatings = strip_tags($post['allow_ratings']);
-        $bAllowTimestamp = strip_tags($post['allow_timestamp']);
-        $bAllowProsCons = strip_tags($post['allow_pros_cons']);
-        $bgColor = strip_tags($post['bg_color']);
-        $textColor = strip_tags($post['text_color']);
-        $bStatus = strip_tags($post['status']);
-        $brandboostID = strip_tags($post['brandId']);
+
+        $actionName = $request->action_name; //add or edit
+        $title = $request->title;
+        $desc = $request->desc;
+        $bAllowComment = $request->allow_comment;
+        $bAllowVideoReview = $request->allow_video_reviews;
+        $bAllowHelpful = $request->allow_helpful;
+        $bAllowLiveReading = $request->allow_live_reading;
+        $bAllowRatings = $request->allow_ratings;
+        $bAllowTimestamp = $request->allow_timestamp;
+        $bAllowProsCons = $request->allow_pros_cons;
+        $bgColor = $request->bg_color;
+        $textColor = $request->text_color;
+        $bStatus = $request->status;
+        $brandboostID = $request->brandId;
         $widgettype = $this->session->userdata('selectedOnsiteWidget');
-        $numofrev = strip_tags($post['numofrev']);
-        $domainName = strip_tags($post['domain_name']);
-        $pro_cons = strip_tags($post['pro_cons']);
-        $logoImageFileName = strip_tags($post['logo_img']);
-        $brandImageFileName = strip_tags($post['brand_img']);
+        $numofrev = $request->numofrev;
+        $domainName = $request->domain_name;
+        $pro_cons = $request->pro_cons;
+        $logoImageFileName = $request->logo_img;
+        $brandImageFileName = $request->brand_img;
 
-        $review_expire = $post['review_expire'];
-        $review_expire_link = $post['review_expire_link'];
+        $review_expire = $request->review_expire;
+        $review_expire_link = $request->review_expire_link;
         $revExpireLink = array();
         if ($review_expire_link == 'custom') {
 
-            $txtInteger = $post['txtInteger'];
-            $exp_duration = $post['exp_duration'];
+            $txtInteger = $request->txtInteger;
+            $exp_duration = $request->exp_duration;
             $revExpireLink['delay_value'] = $txtInteger;
             $revExpireLink['delay_unit'] = $exp_duration;
         } else {
@@ -4235,23 +4190,23 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/brandboost/review_list_adt_beta', $aData);
     }
 
-    public function getReviewData() {
+    public function getReviewData(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
         $response = array();
-        $post = $this->input->post();
 
-        if ($post) {
-            $draw = $post['draw'];
-            $start = $post['start'];
-            $rowperpage = $post['length'];
-            $columnIndex = $post['order'][0]['column'];
-            $columnName = $post['columns'][$columnIndex]['data'];
-            $columnSortOrder = $post['order'][0]['dir'];
-            $searchValue = $post['search']['value'];
-            $reviewstatus = $post['columns'][7]['search']['value'];
-            $reviewcategory = $post['columns'][6]['search']['value'];
+
+        if (!empty($request)) {
+            $draw = $request->draw;
+            $start = $request->start;
+            $rowperpage = $request->length;
+            $columnIndex = $request->order[0]['column'];
+            $columnName = $request->columns[$columnIndex]['data'];
+            $columnSortOrder = $request->order[0]['dir'];
+            $searchValue = $request->search['value'];
+            $reviewstatus = $request->columns[7]['search']['value'];
+            $reviewcategory = $request->columns[6]['search']['value'];
 
 
             $totalData = $this->mReviews->getMyBranboostReviews($userID, $searchValue, $reviewstatus, $reviewcategory);
@@ -4296,23 +4251,23 @@ class Brandboost extends Controller {
     }
 
 
-	public function getMediaData() {
+	public function getMediaData(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
         $response = array();
-        $post = $this->input->post();
 
-        if ($post) {
-            $draw = $post['draw'];
-            $start = $post['start'];
-            $rowperpage = $post['length'];
-            $columnIndex = $post['order'][0]['column'];
-            $columnName = $post['columns'][$columnIndex]['data'];
-            $columnSortOrder = $post['order'][0]['dir'];
-            $searchValue = $post['search']['value'];
-            $reviewstatus = $post['columns'][7]['search']['value'];
-            $reviewcategory = $post['columns'][6]['search']['value'];
+
+        if (!empty($request)) {
+            $draw = $request->draw;
+            $start = $request->start;
+            $rowperpage = $request->length;
+            $columnIndex = $request->order[0]['column'];
+            $columnName = $request->columns[$columnIndex]['data'];
+            $columnSortOrder = $request->order[0]['dir'];
+            $searchValue = $request->search['value'];
+            $reviewstatus = $request->columns[7]['search']['value'];
+            $reviewcategory = $request->columns[6]['search']['value'];
 
 			$totalData = $this->mReviews->getCampaignReviewsList($userID, $searchValue, $reviewstatus);
             $totalRecords = count($totalData);
@@ -4466,22 +4421,22 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/brandboost/campaign_sms_template', $data);
     }
 
-    public function update_campaign() {
+    public function update_campaign(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
+
+        if (!empty($request)) {
             $aUser = getLoggedUser();
             $userID = $aUser->id;
-            //$templateName = strip_tags($post['template_name']);
-            $templateSubject = strip_tags($post['template_subject']);
-            $heading = strip_tags($post['template_heading']);
-            $introduction = strip_tags($post['template_introduction']);
-            $greeting = strip_tags($post['template_greeting']);
-            $templateContent = $post['template_content'];
-            $templateId = strip_tags($post['template_id']);
-            $campaignId = strip_tags($post['campaign_id']);
-            $campaignHtmlTemp = $post['campaignHtmlTemp'];
+            //$templateName = $request->template_name;
+            $templateSubject = $request->template_subject;
+            $heading = $request->template_heading;
+            $introduction = $request->template_introduction;
+            $greeting = $request->template_greeting;
+            $templateContent = $request->template_content;
+            $templateId = $request->template_id;
+            $campaignId = $request->campaign_id;
+            $campaignHtmlTemp = $request->campaignHtmlTemp;
 
             $aData = array(
                 'name' => $templateName,
@@ -4524,20 +4479,20 @@ class Brandboost extends Controller {
 
 
 
-    public function publish_campaign() {
+    public function publish_campaign(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
+
+        if (!empty($request)) {
             $country_code = '';
             $country_ext = '';
-            $brandboostID = strip_tags($post['brandboost_id']);
-            $rewardValue = strip_tags($post['reward_value']);
-            $rewardTypeId = strip_tags($post['reward_type_id']);
-            $receiveRewardType = strip_tags($post['receive_reward_type']);
+            $brandboostID = $request->brandboost_id;
+            $rewardValue = $request->reward_value;
+            $rewardTypeId = $request->reward_type_id;
+            $receiveRewardType = $request->receive_reward_type;
             $userID = $this->session->userdata("current_user_id");
-            $country_code = strip_tags($post['country_code']);
-            $country_ext = strip_tags($post['country_ext']);
+            $country_code = $request->country_code;
+            $country_ext = $request->country_ext;
 
             $aData = array(
                 'reward_value' => $rewardValue,
@@ -4560,16 +4515,16 @@ class Brandboost extends Controller {
         }
     }
 
-    public function template_add() {
+    public function template_add(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
+
+        if (!empty($request)) {
             $userID = $this->session->userdata("current_user_id");
-            $title = strip_tags($post['title']);
-            $subject = strip_tags($post['subject']);
-            $emailtemplate = $post['emailtemplate'];
-            $templatetype = $post['template_type'];
+            $title = $request->title;
+            $subject = $request->subject;
+            $emailtemplate = $request->emailtemplate;
+            $templatetype = $request->template_type;
 
             $aData = array(
                 'user_id' => $userID,
@@ -4593,13 +4548,13 @@ class Brandboost extends Controller {
         }
     }
 
-    public function get_template_by_Id() {
+    public function get_template_by_Id(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $tempID = strip_tags($post['tempID']);
+
+        if (!empty($request)) {
+
+            $tempID = $request->tempID;
             $result = $this->mBrandboost->getAllCampaignTemplates($tempID);
 
             if ($result) {
@@ -4615,9 +4570,9 @@ class Brandboost extends Controller {
         }
     }
 
-    public function getCampaign() {
-        $post = $this->input->post();
-        $campaignId = $post['campaignId'];
+    public function getCampaign(Request $request) {
+
+        $campaignId = $request->campaignId;
         $result = $this->mBrandboost->getCampaignBycampID($campaignId);
         if ($result) {
             //pre($result);
@@ -4634,17 +4589,15 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function update_template() {
+    public function update_template(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
 
-            $title = strip_tags($post['title']);
-            $subject = strip_tags($post['subject']);
-            $emailtemplate = $post['emailtemplate'];
-            $tempId = strip_tags($post['tempId']);
+        if (!empty($request)) {
+            $title = $request->title;
+            $subject = $request->subject;
+            $emailtemplate = $request->emailtemplate;
+            $tempId = $request->tempId;
 
             $aData = array(
                 'template_name' => $title,
@@ -4665,13 +4618,13 @@ class Brandboost extends Controller {
         }
     }
 
-    public function delete_template() {
+    public function delete_template(Request $request) {
 
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $tempID = strip_tags($post['tempID']);
+
+        if (!empty($request)) {
+
+            $tempID = $request->tempID;
             $result = $this->mBrandboost->deleteCampaingTemplate($tempID);
 
             if ($result) {
@@ -4702,12 +4655,12 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template_new', 'admin/brandboost/testing');
     }
 
-    public function delete_multipal_offsite_brandboost_review() {
+    public function delete_multipal_offsite_brandboost_review(Request $request) {
         $response = array();
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $multiReviewsId = $post['multi_reviews_id'];
+
+        if (!empty($request)) {
+
+            $multiReviewsId = $request->multi_reviews_id;
             foreach ($multiReviewsId as $revId) {
                 $result = $this->mBrandboost->delOffsiteReview($revId);
             }
@@ -4728,13 +4681,13 @@ class Brandboost extends Controller {
 
 
     // This method is deprecated now
-    public function update_offsite_step1() {
+    public function update_offsite_step1(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
 
-            $brandboostID = $post['brandboostID'];
+        if (!empty($request)) {
+
+            $brandboostID = $request->brandboostID;
             $this->session->set_userdata('brandboostID', $brandboostID);
 
             $response['status'] = 'success';
@@ -4744,12 +4697,12 @@ class Brandboost extends Controller {
     }
 
     //This method is deprecated now
-    public function editOnsite() {
+    public function editOnsite(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
-            $brandboostID = $post['brandboostID'];
+
+        if (!empty($request)) {
+            $brandboostID = $request->brandboostID;
             $this->session->set_userdata('brandboostID', $brandboostID);
             $this->session->set_userdata("setTab", 'Reviews');
             $response['status'] = 'success';
@@ -4758,15 +4711,15 @@ class Brandboost extends Controller {
         }
     }
 
-    public function add_offsite() {
+    public function add_offsite(Request $request) {
 
         $response = array();
-        $post = array();
+
         $userID = $this->session->userdata("current_user_id");
         $brandboostID = $this->session->userdata('brandboostID');
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $offset_id = $post['offstepIds'];
+        if (!empty($request)) {
+
+            $offset_id = $request->offstepIds;
             $offstepIds = serialize($offset_id);
             $newOffsiteUrl = array();
             foreach ($offset_id as $val) {
@@ -4804,17 +4757,17 @@ class Brandboost extends Controller {
         $this->template->load('admin/admin_template', 'admin/brandboost/edit_offsite', array('aBrandbosts' => $getBrandboost[0], 'brandId' => $brandId, 'offstep' => $offstepdata));
     }
 
-    public function edit_offsite_step1() {
+    public function edit_offsite_step1(Request $request) {
 
         $response = array();
-        $post = array();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         //$userID = $this->session->userdata("current_user_id");
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $campaignName = $post['campaignName'];
-            $brandboostID = $post['brandboostId'];
+        if (!empty($request)) {
+
+            $campaignName = $request->campaignName;
+            $brandboostID = $request->brandboostId;
 
             $aData = array(
                 'brand_title' => $campaignName
@@ -4865,20 +4818,20 @@ class Brandboost extends Controller {
         return view('admin.brandboost.list_subscribers_page', $aData);
     }
 
-    public function add_subscriber() {
+    public function add_subscriber(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        //pre($post);
+
+        //pre(!empty($request));
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        if (empty($post)) {
+        if (empty(!empty($request))) {
             $response['status'] = "Error";
             echo json_encode($response);
             exit;
         }
 
 
-        $brandboostID = strip_tags($post['listId']);
+        $brandboostID = $request->listId;
 
         if (empty($brandboostID)) {
             $response['status'] = "Error";
@@ -4886,16 +4839,16 @@ class Brandboost extends Controller {
             exit;
         }
         $emailUserId = '';
-        $firstName = strip_tags($post['firstname']);
-        $lastName = strip_tags($post['lastname']);
-        $email = strip_tags($post['email']);
+        $firstName = $request->firstname;
+        $lastName = $request->lastname;
+        $email = $request->email;
         //$emailUser = getUserDetailByEmailId($email);
         $oUserAccount = $this->mUser->checkEmailExist($email);
         if (!empty($oUserAccount)) {
             $emailUserId = $oUserAccount[0]->id;
         }
 
-        $phone = strip_tags($post['phone']);
+        $phone = $request->phone;
 
         $oGlobalUser = $this->mSubscriber->checkIfGlobalSubscriberExists($userID, 'email', $email);
         if (!empty($oGlobalUser)) {
@@ -4954,14 +4907,14 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function getSubscriberById() {
+    public function getSubscriberById(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
-        $post = array();
-        if ($this->input->post()) {
-            $post = $this->input->post();
-            $aSubscriber = $this->rLists->getSubscriber($post['subscriberID']);
+
+        if (!empty($request)) {
+
+            $aSubscriber = $this->rLists->getSubscriber($request->subscriberID);
             if ($aSubscriber) {
                 $response['status'] = 'success';
                 $response['result'] = $aSubscriber;
@@ -4974,19 +4927,19 @@ class Brandboost extends Controller {
         }
     }
 
-    public function update_subscriber() {
+    public function update_subscriber(Request $request) {
 
         $response = array();
         $response['status'] = 'error';
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $post = $this->input->post();
-        if ($post) {
-            $firstname = strip_tags($post['edit_firstname']);
-            $lastname = strip_tags($post['edit_lastname']);
-            $email = strip_tags($post['edit_email']);
-            $phone = strip_tags($post['edit_phone']);
-            $subscriberID = strip_tags($post['edit_subscriberID']);
+
+        if (!empty($request)) {
+            $firstname = $request->edit_firstname;
+            $lastname = $request->edit_lastname;
+            $email = $request->edit_email;
+            $phone = $request->edit_phone;
+            $subscriberID = $request->edit_subscriberID;
             $bInsertedNewGlobalSubscriber = false;
 
             if (!empty($email)) {
@@ -5057,13 +5010,13 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function delete_multipal_subscriber() {
+    public function delete_multipal_subscriber(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
 
-            $multiSubscriberId = $post['multiSubscriberId'];
+        if (!empty($request)) {
+
+            $multiSubscriberId = $request->multiSubscriberId;
 
             foreach ($multiSubscriberId as $subscriberID) {
                 $result = $this->rLists->deleteSubscriber($subscriberID);
@@ -5099,13 +5052,13 @@ class Brandboost extends Controller {
 
 
 
-    public function delete_subscriber() {
+    public function delete_subscriber(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
 
-            $subscriberID = strip_tags($post['subscriberId']);
+        if (!empty($request)) {
+
+            $subscriberID = $request->subscriberId;
 
             $result = $this->rLists->deleteSubscriber($subscriberID);
             if ($result) {
@@ -5137,17 +5090,17 @@ class Brandboost extends Controller {
         }
     }
 
-    public function importcsv() {
+    public function importcsv(Request $request) {
         $someoneadded = false;
-        $post = $this->input->post();
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $list_site = $post['list_site'];
+        $list_site = $request->list_site;
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'csv';
         $config['max_size'] = '1000';
         //$userID = $this->session->userdata("current_user_id");
-        $brandboostID = $post['list_id'];
+        $brandboostID = $request->list_id;
 
         $this->load->library('upload', $config);
 
@@ -5238,15 +5191,15 @@ class Brandboost extends Controller {
     }
 
     // Export data in CSV format
-    public function exportCSV() {
+    public function exportCSV(Request $request) {
         // file name
         $filename = 'users_' . time() . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
 
-        $post = $this->input->post();
-        $brandboostID = $post['list_id'];
+
+        $brandboostID = $request->list_id;
         $userID = $this->session->userdata("current_user_id");
         $allSubscribers = $this->rLists->getSubscribers($userID, $brandboostID);
 
@@ -5277,13 +5230,13 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function email_template_popup() {
+    public function email_template_popup(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
-            $camp_id = $post['camp_id'];
-            $camp_temp_src = $post['camp_temp_src'];
+
+        if (!empty($request)) {
+            $camp_id = $request->camp_id;
+            $camp_temp_src = $request->camp_temp_src;
 
             $data = array(
                 'templateData' => $this->mBrandboost->getAllCampaignTemplates($camp_temp_src),
@@ -5295,13 +5248,13 @@ class Brandboost extends Controller {
         }
     }
 
-    public function sms_template_popup() {
+    public function sms_template_popup(Request $request) {
 
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
-            $camp_id = $post['camp_id'];
-            $camp_temp_src = $post['camp_temp_src'];
+
+        if (!empty($request)) {
+            $camp_id = $request->camp_id;
+            $camp_temp_src = $request->camp_temp_src;
 
             $data = array(
                 'templateData' => $this->mBrandboost->getAllCampaignTemplates($camp_temp_src),
@@ -5328,12 +5281,12 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function unsubscriber_user() {
+    public function unsubscriber_user(Request $request) {
         $response = array();
-        $post = $this->input->post();
-        if ($post) {
-            $email = $post['subscriber_email'];
-            $subscriberID = $post['subscriberid'];
+
+        if (!empty($request)) {
+            $email = $request->subscriber_email;
+            $subscriberID = $request->subscriberid;
             $aData = array(
                 'email' => $email,
                 'created' => date("Y-m-d H:i:s")
@@ -5355,24 +5308,24 @@ class Brandboost extends Controller {
         }
     }
 
-    public function showPWPreview() {
+    public function showPWPreview(Request $request) {
 
-        $post = $this->input->post();
 
-        if ($post) {
-            $hashcode = $post['hashcode'];
-            $widgetType = $post['widget_type'];
+
+        if (!empty($request)) {
+            $hashcode = $request->hashcode;
+            $widgetType = $request->widget_type;
             $showPreview = '<script type="text/javascript" id="bbscriptloader" data-key="' . $hashcode . '" data-widgets="' . $widgetType . '" async="" src="' . base_url('/assets/js/preview_widgets.js') . '"></script>';
             echo $showPreview;
         }
     }
 
-    public function addOffsiteReviews() {
+    public function addOffsiteReviews(Request $request) {
 
-        $post = $this->input->post();
-        if ($post) {
-            $siteId = $post['site_id'];
-            $siteApiId = $post['site_api_id'];
+
+        if (!empty($request)) {
+            $siteId = $request->site_id;
+            $siteApiId = $request->site_api_id;
             $api_key = "AIzaSyDcZmZhZlXUYzXmziPN1mM8YtrXx4W4OSs";
             $placeid = $siteApiId;
             $parameters = "key=$api_key&placeid=$placeid";
@@ -5421,112 +5374,19 @@ class Brandboost extends Controller {
         }
     }
 
-    /* public function addBrandBoostWidgetData() {
 
-      $oUser = getLoggedUser();
-      $userID = $oUser->id;
-      $response = array();
-      $post = $this->input->post();
-      $brandboostID = strip_tags($post['campaign_id']);
-      $title = strip_tags($post['title']);
-      $desc = strip_tags($post['desc']);
-      $bAllowComment = strip_tags($post['allow_comment']);
-      $bAllowVideoReview = strip_tags($post['allow_video_reviews']);
-      $bAllowHelpful = strip_tags($post['allow_helpful']);
-      $bAllowLiveReading = strip_tags($post['allow_live_reading']);
-      $bAllowRatings = strip_tags($post['allow_ratings']);
-      $bAllowTimestamp = strip_tags($post['allow_timestamp']);
-      $bAllowProsCons = strip_tags($post['allow_pros_cons']);
-      $bgColor = strip_tags($post['bg_color']);
-      $textColor = strip_tags($post['text_color']);
-      $pro_cons = strip_tags($post['pro_cons']);
-      $domainName = strip_tags($post['domain_name']);
-      $ratingValue = strip_tags($post['ratingValue']);
-      $bbDisplay = strip_tags($post['bbDisplay']);
-      $widgetID = strip_tags($post['edit_widgetId']);
-
-      //$widgettype = $this->session->userdata('selectedOnsiteWidget');
-      $numofrev = strip_tags($post['numofrev']);
-
-      $barndFileData = $post['brand_img'];
-      $brandFileArray = array();
-
-      foreach ($barndFileData['media_url'] as $key => $fileData) {
-      $brandFileArray[$key]['media_url'] = $fileData;
-      $brandFileArray[$key]['media_type'] = $barndFileData['media_type'][$key];
-      }
-
-      $logoImageFileName = $post['logo_img'] == '' ? $post['edit_logo_img'] : $post['logo_img'];
-      $brandImageFileName = empty($post['brand_img']) ? $post['edit_brand_img'] : serialize($brandFileArray);
-
-      $review_expire = $post['review_expire'];
-      $review_expire_link = $post['review_expire_link'];
-      $revExpireLink = array();
-      if ($review_expire_link == 'custom') {
-
-      $txtInteger = $post['txtInteger'];
-      $exp_duration = $post['exp_duration'];
-      $revExpireLink['delay_value'] = $txtInteger;
-      $revExpireLink['delay_unit'] = $exp_duration;
-      } else {
-
-      $revExpireLink['delay_value'] = 'never';
-      $revExpireLink['delay_unit'] = 'never';
-      }
-
-
-      $aData = array(
-      'user_id' => $userID,
-      'brandboost_id' => $brandboostID,
-      'brand_title' => $title,
-      'brand_desc' => $desc,
-      'widget_img' => $brandImageFileName,
-      'logo_img' => $logoImageFileName,
-      'allow_comments' => $bAllowComment,
-      'allow_video_reviews' => $bAllowVideoReview,
-      'allow_helpful_feedback' => $bAllowHelpful,
-      'allow_live_reading_review' => $bAllowLiveReading,
-      'allow_comment_ratings' => $bAllowRatings,
-      'allow_review_timestamp' => $bAllowTimestamp,
-      'allow_pros_cons' => $bAllowProsCons,
-      'bg_color' => $bgColor,
-      'text_color' => $textColor,
-      'num_of_review' => $numofrev,
-      'domain_name' => $domainName,
-      'pro_cons' => $pro_cons,
-      'often_bb_display' => $bbDisplay,
-      'min_ratings_display' => $ratingValue,
-      'link_expire_review' => $review_expire,
-      'link_expire_custom' => json_encode($revExpireLink)
-      );
-
-
-      $result = $this->mBrandboost->updateWidget($userID, $aData, $widgetID);
-
-      if ($result) {
-      $response = array('status' => 'ok');
-      } else {
-      $response = array('status' => 'error');
-      }
-
-      echo json_encode($response);
-      exit;
-      } */
-
-
-
-    public function setWidget() {
+    public function setWidget(Request $request) {
         $response = array("status" => "error", "msg" => "Something went wrong");
-        $post = $this->input->post();
-        if (empty($post)) {
+
+        if (empty(!empty($request))) {
             $response = array("status" => "error", "msg" => "Empty request header");
             echo json_encode($response);
             exit;
         }
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $widgetID = $post['widgetID'];
-        $brandboostId = $post['brandboostId'];
+        $widgetID = $request->widgetID;
+        $brandboostId = $request->brandboostId;
         $aData = array(
             'widget_type' => $widgetID
         );
@@ -5540,14 +5400,14 @@ class Brandboost extends Controller {
         }
     }
 
-    public function getreviwecomments() {
-        $post = $this->input->post();
+    public function getreviwecomments(Request $request) {
+
         $response = array("status" => "error", "commentList" => '');
-        if ($post) {
-            $reviewID = $post['reviewId'];
-            $startLimit = $post['startinglimitVal'];
-            $actionType = $post['actionType'];
-            $source = strip_tags($post['source']);
+        if (!empty($request)) {
+            $reviewID = $request->reviewId;
+            $startLimit = $request->startinglimitVal;
+            $actionType = $request->actionType;
+            $source = $request->source;
             $limitVal = 5;
             if ($actionType == 'reply') {
                 $limitVal = $startLimit + 1;
@@ -5614,18 +5474,18 @@ class Brandboost extends Controller {
 
 
 
-    public function getSendgridStats() {
-        $post = $this->input->post();
+    public function getSendgridStats(Request $request) {
+
         $response = array("status" => "error", "msg" => 'Something went wrong');
 
-        if (empty($post)) {
+        if (empty(!empty($request))) {
             $response = array("status" => "error", "msg" => 'Request object is empty');
             echo json_encode($response);
             exit;
         }
 
-        $type = $post['type'];
-        $id = $post['id'];
+        $type = $request->type;
+        $id = $request->id;
         $aStats = $this->mBrandboost->getSendgridStats($type, $id);
         if (!empty($aStats)) {
             $aCategorizedStats = $this->mBrandboost->getSendgridCategorizedStatsData($aStats);
@@ -5637,18 +5497,18 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function getTwilioStats() {
-        $post = $this->input->post();
+    public function getTwilioStats(Request $request) {
+
         $response = array("status" => "error", "msg" => 'Something went wrong');
 
-        if (empty($post)) {
+        if (empty(!empty($request))) {
             $response = array("status" => "error", "msg" => 'Request object is empty');
             echo json_encode($response);
             exit;
         }
 
-        $type = $post['type'];
-        $id = $post['id'];
+        $type = $request->type;
+        $id = $request->id;
         $aStats = $this->mBrandboost->getTwilioStats($type, $id);
         if (!empty($aStats)) {
             $aCategorizedStats = $this->mBrandboost->getTwilioCategorizedStatsData($aStats);
@@ -5743,22 +5603,6 @@ class Brandboost extends Controller {
         return view('admin.brandboost.campaign_feedback_reports', $aData);
     }
 
-    /* public function reportsResponsePerformance() {
-
-      $breadcrumb = '<ul class="breadcrumb">
-      <li><a href="' . base_url('admin/') . '"><i class="icon-home2 position-left"></i> Home</a></li>
-      <li class="active">Brand Boost Report Response Performance</li>
-      </ul>';
-      $aData = array(
-      'aData' => array(
-      'oBrandboost' => $oBrandboost
-      ),
-      'title' => 'Brand Boost Report Response Performance',
-      'pagename' => $breadcrumb
-      );
-
-      $this->template->load('admin/admin_campaign_template', 'admin/brandboost/reportresponse', $aData);
-      } */
 
     public function servicereports($bbId = '') {
         $currentUserId = Session::get('current_user_id');
@@ -5873,9 +5717,9 @@ class Brandboost extends Controller {
     }
 
 
-    public function getEmailTempByID() {
-        $post = $this->input->post();
-        $emailTempId = $post['emailTempId'];
+    public function getEmailTempByID(Request $request) {
+
+        $emailTempId = $request->emailTempId;
         $resultData = $this->mBrandboost->getAllCampaignTemplates($emailTempId);
         $resultData = $resultData[0];
         if (!empty($resultData)) {
@@ -5890,20 +5734,20 @@ class Brandboost extends Controller {
         exit;
     }
 
-    public function updateCampaignOrder() {
+    public function updateCampaignOrder(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        $post = $this->input->post();
-        if (empty($post)) {
+
+        if (empty(!empty($request))) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $previousEventID = $post['previous_id'];
-        $currentEventID = $post['current_id'];
-        $nextEventID = $post['next_id'];
-        $actionName = $post['action_name'];
+        $previousEventID = $request->previous_id;
+        $currentEventID = $request->current_id;
+        $nextEventID = $request->next_id;
+        $actionName = $request->action_name;
 
 
         if ($actionName == 'attach') {
