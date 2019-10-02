@@ -7,11 +7,12 @@ return [
       |--------------------------------------------------------------------------
       |
       | Here you may specify the default Brandboost Config Variables that should be used
-      | by the framework. 
+      | by the framework.
       |
      */
     'siteURL' => 'http://brandboostx.com/',
     'siteURLDev'=> 'http://dev.brandboostx.com/',
+    'siteVueURLDev'=> 'http://vue.brandboostx.com/',
     'website_name' => 'Brand Boost',
     'mailFrom' => 'sandgrid',
     'siteemail' => 'alen@brandboost.io',

@@ -9,6 +9,9 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
+    <link rel="stylesheet" href="/public/css/app.css">
+
+
     <!-- Styles -->
     <style>
         html, body {
@@ -80,6 +83,20 @@
     @endif
 
     <div class="content">
+        <div id="masterContainer2">
+
+            <nav>
+                <router-link to='/admin/dashboard'>About</router-link>
+                <router-link to='/admin/live'>Contact</router-link>
+                <router-link to='/admin/contacts/mycontacts'>Service</router-link>
+
+                {{--<a href='/about'>About</a>
+                <a href='/contact'>Contact</a>
+                <a href='/service'>Service</a>--}}
+            </nav>
+            <router-view></router-view>
+        </div>
+
         <div class="title m-b-md">
             Laravel
         </div>
@@ -95,6 +112,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="resources/js/app.js"></script>
+<script type="text/javascript" src="/public/js/app.js"></script>
 </body>
 </html>
