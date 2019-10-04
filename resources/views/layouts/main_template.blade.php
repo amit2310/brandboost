@@ -110,6 +110,15 @@
 
     @include('layouts.main_partials._main_js')
 
+    <link href="{{ base_url() }}assets/css/percircle.css" rel="stylesheet" type="text/css">
+    <script src="{{ base_url() }}assets/js/percircle.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="{{ base_url() }}assets/js/jquery.mapael.js" charset="utf-8"></script>
+    <script src="{{ base_url() }}assets/js/world_countries.js" charset="utf-8"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
 </head>
 
 @php

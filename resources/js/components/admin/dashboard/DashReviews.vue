@@ -1,6 +1,6 @@
 <template>
 
-    <table class="table display dataTable">
+    <table class="table display dataTable" id="reviewsTable">
         <thead>
         <tr>
             <th>Review Comment</th>
@@ -41,6 +41,8 @@
                     /*console.log(response);
                     console.log(response.data.iTotalRecords);*/
                     this.reviews = response.data.aaData;
+                    var tableId = 'reviewsTable';
+                    this.paginate(tableId);
 
                 });
         }

@@ -12,9 +12,13 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 import routes from './routes';
 import axios from 'axios';
+import helpers from './helpers';
+
 
 window.axios = axios;
 Vue.use(VueRouter);
+
+Vue.mixin(helpers)
 
 /*Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('dashboard-reivews', require('./components/admin/dashboard/DashReviews.vue').default);*/

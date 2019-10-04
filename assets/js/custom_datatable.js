@@ -1,6 +1,6 @@
 function custom_data_table(tableId, sortingIndex = null, orderbytype = null) {
 
-        
+
         if ($.trim(sortingIndex).length > 0) {
             sortingIndex = sortingIndex;
         }
@@ -43,7 +43,7 @@ function custom_data_table(tableId, sortingIndex = null, orderbytype = null) {
                     "orderCellsTop": true,
                     "fixedHeader": true
 
-                });   
+                });
 
 
         /* Custom filtering function which will search data in column four between two values */
