@@ -8,11 +8,18 @@ use Cookie;
 use Session;
 
 class LiveModel extends Model {
-	
-	public static function getLiveData($clientId){
+
+    /**
+     * This method used to get live data recording
+     * @param $clientId
+     * @return mixed
+     */
+    public static function getLiveData($clientId){
 		$oData = DB::table('tbl_visitor_logs')
-			->where('source_client_id', $clientId)
-			->orderBy('id', 'desc')
+            ->leftJoin('tbl_users', 'tbl_visitor_logs.source_client_id', '=', 'tbl_users.id')
+            ->select('tbl_visitor_logs.*', 'tbl_users.id AS uid', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
+			->where('tbl_visitor_logs.source_client_id', $clientId)
+			->orderBy('tbl_visitor_logs.id', 'desc')
 			->get();
 		return $oData;
 	}
@@ -25,13 +32,13 @@ class LiveModel extends Model {
 			->count();
 		return $oData;
 	}
-	
+
 	public function addVisitorInfo($aData){
 
         $insert_id = DB::table('tbl_visitor_logs')->insertGetId($aData);
         return $insert_id;
 	}
-	
+
 	/**
      * Get live data by Id
      * @param id
@@ -43,7 +50,7 @@ class LiveModel extends Model {
 			->first();
 		return $oData;
 	}
-	
+
 
 	/**
      * Get live data details

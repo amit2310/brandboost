@@ -1441,149 +1441,6 @@
     </div>
 
 </template>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-<script src = "https://code.highcharts.com/highcharts.js"></script>
-<script>
-
-    Morris.Area({
-        element: 'myfirstchart',
-        parseTime: false,
-
-        data: [
-            {y: '01', a: 1},
-            {y: '02', a: 8},
-            {y: '03', a: 5},
-            {y: '04', a: 12},
-            {y: '05', a: 10},
-            {y: '06', a: 18},
-            {y: '07', a: 17},
-            {y: '08', a: 12},
-            {y: '09', a: 21},
-            {y: '10', a: 23},
-            {y: '11', a: 20},
-            {y: '12', a: 25},
-            {y: '13', a: 22},
-            {y: '14', a: 23},
-            {y: '15', a: 24},
-            {y: '16', a: 25},
-            {y: '17', a: 27},
-            {y: '18', a: 23},
-            {y: '19', a: 27},
-            {y: '20', a: 29},
-            {y: '21', a: 31},
-            {y: '22', a: 35},
-            {y: '23', a: 30},
-            {y: '24', a: 35},
-            {y: '25', a: 36},
-            {y: '26', a: 38},
-            {y: '27', a: 39},
-            {y: '28', a: 42},
-            {y: '29', a: 48},
-            {y: '30', a: 55},
-            {y: '31', a: 60}
-        ],
-
-        xkey: 'y',
-        ykeys: ['a'],
-        labels: ['Total'],
-        pointSize: 0,
-        lineWidth: 2,
-        padding: 0,
-        fillOpacity: 0.3,
-        hideHover: 'auto',
-        behaveLikeLine: true,
-        resize: true,
-        pointFillColors: ['#ffffff'],
-        pointStrokeColors: ['black'],
-        lineColors: ['#9b83ff', '#0c265a'],
-
-    });
-
-    Highcharts.chart('column_graph', {
-        chart: {
-            type: 'column',
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-        },
-        title: {
-            text: null
-        },
-        subtitle: {
-            text: null
-        },
-        xAxis: {
-            type: 'category',
-            labels: {
-
-                style: {
-                    fontSize: '10px',
-                    fontFamily: 'Verdana, sans-serif',
-
-                }
-            }
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: null
-            }
-        },
-        legend: {
-            enabled: false
-        },
-
-        plotOptions: {
-            column: {
-                pointPadding: 0.20,
-                borderWidth: 0,
-                borderRadius: 3
-            }
-        },
-
-        colors: ['#6190fa', '#cae4d1'],
-        tooltip: {
-            pointFormat: '<b>{point.y:.1f}</b>'
-        },
-        series: [{
-            showInLegend: false,
-            name: 'Time',
-            data: [
-                ['1', 14.2],
-                ['2', 3.8],
-                ['3', 2.9],
-                ['4', 16.7],
-                ['5', 9.1],
-                ['6', 18.7],
-                ['7', 15.4],
-                ['9', 14.2],
-                ['10', 3.8],
-                ['11', 2.9],
-                ['12', 16.7],
-                ['13', 9.1],
-                ['14', 14.2],
-                ['15', 3.8],
-                ['16', 2.9],
-                ['17', 16.7],
-                ['18', 9.1],
-                ['19', 18.7],
-                ['20', 15.4],
-                ['21', 14.2],
-                ['22', 3.8],
-                ['23', 2.9],
-                ['24', 16.7],
-                ['25', 9.1],
-                ['26', 15.4],
-                ['27', 14.2],
-                ['28', 3.8],
-                ['29', 2.9],
-                ['30', 16.7],
-                ['31', 9.1]
-            ],
-
-        }]
-    });
-
-</script>
 
 <script>
     import DashReviews from './DashReviews.vue';
@@ -1598,9 +1455,188 @@
         components: {'dashboard-reivews' : DashReviews},
         mounted() {
             console.log('Component mounted.');
+            loadDashboardGraphs();
         }
 
+    };
+    function loadDashboardGraphs(){
+        Morris.Area({
+            element: 'myfirstchart',
+            parseTime: false,
+
+            data: [
+                {y: '01', a: 1},
+                {y: '02', a: 8},
+                {y: '03', a: 5},
+                {y: '04', a: 12},
+                {y: '05', a: 10},
+                {y: '06', a: 18},
+                {y: '07', a: 17},
+                {y: '08', a: 12},
+                {y: '09', a: 21},
+                {y: '10', a: 23},
+                {y: '11', a: 20},
+                {y: '12', a: 25},
+                {y: '13', a: 22},
+                {y: '14', a: 23},
+                {y: '15', a: 24},
+                {y: '16', a: 25},
+                {y: '17', a: 27},
+                {y: '18', a: 23},
+                {y: '19', a: 27},
+                {y: '20', a: 29},
+                {y: '21', a: 31},
+                {y: '22', a: 35},
+                {y: '23', a: 30},
+                {y: '24', a: 35},
+                {y: '25', a: 36},
+                {y: '26', a: 38},
+                {y: '27', a: 39},
+                {y: '28', a: 42},
+                {y: '29', a: 48},
+                {y: '30', a: 55},
+                {y: '31', a: 60}
+            ],
+
+            xkey: 'y',
+            ykeys: ['a'],
+            labels: ['Total'],
+            pointSize: 0,
+            lineWidth: 2,
+            padding: 0,
+            fillOpacity: 0.3,
+            hideHover: 'auto',
+            behaveLikeLine: true,
+            resize: true,
+            pointFillColors: ['#ffffff'],
+            pointStrokeColors: ['black'],
+            lineColors: ['#9b83ff', '#0c265a'],
+
+        });
+
+        Highcharts.chart('column_graph', {
+            chart: {
+                type: 'column',
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+            },
+            title: {
+                text: null
+            },
+            subtitle: {
+                text: null
+            },
+            xAxis: {
+                type: 'category',
+                labels: {
+
+                    style: {
+                        fontSize: '10px',
+                        fontFamily: 'Verdana, sans-serif',
+
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: null
+                }
+            },
+            legend: {
+                enabled: false
+            },
+
+            plotOptions: {
+                column: {
+                    pointPadding: 0.20,
+                    borderWidth: 0,
+                    borderRadius: 3
+                }
+            },
+
+            colors: ['#6190fa', '#cae4d1'],
+            tooltip: {
+                pointFormat: '<b>{point.y:.1f}</b>'
+            },
+            series: [{
+                showInLegend: false,
+                name: 'Time',
+                data: [
+                    ['1', 14.2],
+                    ['2', 3.8],
+                    ['3', 2.9],
+                    ['4', 16.7],
+                    ['5', 9.1],
+                    ['6', 18.7],
+                    ['7', 15.4],
+                    ['9', 14.2],
+                    ['10', 3.8],
+                    ['11', 2.9],
+                    ['12', 16.7],
+                    ['13', 9.1],
+                    ['14', 14.2],
+                    ['15', 3.8],
+                    ['16', 2.9],
+                    ['17', 16.7],
+                    ['18', 9.1],
+                    ['19', 18.7],
+                    ['20', 15.4],
+                    ['21', 14.2],
+                    ['22', 3.8],
+                    ['23', 2.9],
+                    ['24', 16.7],
+                    ['25', 9.1],
+                    ['26', 15.4],
+                    ['27', 14.2],
+                    ['28', 3.8],
+                    ['29', 2.9],
+                    ['30', 16.7],
+                    ['31', 9.1]
+                ],
+
+            }]
+        });
     }
 </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+<style>
+
+
+    .label.bkg_green.ml0 {    display: none;}
+    .table strong{font-weight: 600!important}
+
+    #myfirstchart{background: url(/assets/images/graphbkg.png) left top repeat!important;}
+    .highcharts-tick{stroke:none!important}
+    .highcharts-credits{display: none!important;}
+    .highcharts-container, .highcharts-container svg {width: 100% !important;}
+    .highcharts-yaxis-labels{display: none!important;}
+    .highcharts-grid {display: none;}
+    .highcharts-grid, .highcharts-axis-line {   display: none;}
+    .table .img-xs{box-shadow: none!important}
+
+    #circle {
+        width: 175px;
+        height: 175px;
+        margin: 0 auto;
+    }
+
+    .loader {
+        width: calc(100% - 0px);
+        height: calc(100% - 0px);
+        border: 9px solid #ebeff6;
+        border-top: 9px solid #5ad491;
+        border-radius: 50%;
+        animation: rotate 20s linear infinite;
+        padding: 14px;
+        cursor: pointer;
+        position: relative;
+    }
+    .loader.yellow{border-top: 9px solid #ffcb65}
+    .loader.red{border-top: 9px solid #f36484}
+
+    @keyframes rotate {
+        100% {transform: rotate(360deg);}
+    }
+
+</style>
+
 
