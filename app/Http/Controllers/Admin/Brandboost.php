@@ -127,7 +127,9 @@ class Brandboost extends Controller {
 			'viewstats' => true
         );
 
-		return view('admin.brandboost.onsite_list', $aData);
+//		return view('admin.brandboost.onsite_list', $aData);
+        echo json_encode($aData);
+        exit;
     }
 
 

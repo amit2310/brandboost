@@ -31,7 +31,19 @@ class Tags extends Controller {
                     </ul>';
 
         $aTag = TagsModel::getClientTags($userID);
-        return view ('admin.tags.index', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
+
+        if (!empty($aTag)) {
+            foreach ($aTag as $aUnit) {
+                $aGroupID[$aUnit->id]['group_name'] = $aUnit->group_name;
+                $aGroupID[$aUnit->id]['status'] = $aUnit->status;
+                $aGroupID[$aUnit->id]['id'] = $aUnit->id;
+            }
+        }
+
+        //$aTag->aGroupID = $aGroupID;
+//        return view ('admin.tags.index', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
+        echo json_encode(['aTag' => $aTag, 'aGroupID' => $aGroupID]);
+        exit;
     }
 
     public function review($tagID) {
