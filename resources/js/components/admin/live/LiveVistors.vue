@@ -33,7 +33,7 @@
             <td style="display: none;"></td>
             <td style="display: none;">{{ visitor.id }}</td>
             <td>
-                <div v-if="visitor.id > 0">
+                <div v-if="visitor.user_id > 0">
                     <div class="media-left media-middle">
                         <a class="icons">
                             <user-avatar
@@ -49,7 +49,7 @@
                     <div class="media-left">
                         <div class="">
                             <a class="text-default text-semibold bbot">
-                                {{ (visitor.uid) ? visitor.firstname +' ' +visitor.lastname : 'Annoymous' }}
+                                {{ (visitor.user_id) ? visitor.firstname +' ' +visitor.lastname : 'Annoymous' }}
                             </a>
                         </div>
                     </div>
