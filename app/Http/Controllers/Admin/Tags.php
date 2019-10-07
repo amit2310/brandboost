@@ -39,6 +39,7 @@ class Tags extends Controller {
                 $aGroupID[$aUnit->id]['id'] = $aUnit->id;
             }
         }
+        krsort($aGroupID);
 
         //$aTag->aGroupID = $aGroupID;
 //        return view ('admin.tags.index', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
