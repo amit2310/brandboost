@@ -18,7 +18,7 @@
             v-if="firstname || lastname"
             :style="`width: ${width}px!important; height: ${height}px; line-height: ${width}px; font-size: ${fontsize}px;`"
         >
-            {{firstname}} {{lastname}}
+            {{(firstname) ? firstname.charAt(0).toUpperCase() : ''}}{{(lastname) ? lastname.charAt(0).toUpperCase() : ''}}
         </span>
 
         <span
