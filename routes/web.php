@@ -821,6 +821,10 @@ Route::post('feedback/saveResolution', 'Feedback@saveResolution');
 //Servey
 Route::get('survey/{hashcode}', 'Survey@index');
 
+//VueJS Helper Utilities Controller
+Route::post('admin/helperutility/getSubscriberTags', 'Admin\HelperUtility@getSubscriberTags');
+
+
 
 
 
