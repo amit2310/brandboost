@@ -7,7 +7,15 @@ export default {
             setTimeout(function(){
                 custom_data_table(tableId);
             }, 1000);
+        },
+        mobileNoFormat(phoneNumber){
+            return phoneNumber;
+        },
+        csrf_token(){
+            let tkn = $('meta[name="_token"]').attr('content');
+            return tkn;
         }
+
     }
 
 }

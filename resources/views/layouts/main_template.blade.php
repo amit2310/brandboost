@@ -316,6 +316,7 @@
         @include('admin.modals.upgrade.upgrade_membership', array('oMemberships' => $objMembership, 'oSuggestedPlan' => $oUpgradePlanData, 'additionalPriceToPay' => $additionalPriceToPay, 'oCurrentPlanData' => $oCurrentPlanData, 'oUser' => $aUInfo))
 
         @include('layouts.main_partials._main_footer_js')
+        <script src="{{ base_url() }}assets/js/modules/people/subscribers.js" type="text/javascript"></script>
         <script type="text/javascript" src="/public/js/app.js"></script>
 </body>
 </html>

@@ -354,6 +354,16 @@ class Contacts extends Controller
             $archiveContacts = SubscriberModel::getArchiveGlobalSubscribers($userID);
             $getClientTags = TagsModel::getClientTags($userID);
         }
+        $iActiveCount = $iArchiveCount = 0;
+        if(!empty($subscribersData)){
+            foreach($subscribersData as $oSubscriber){
+                if ($oSubscriber->status == 2) {
+                    $iArchiveCount++;
+                } else {
+                    $iActiveCount++;
+                }
+            }
+        }
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -367,6 +377,8 @@ class Contacts extends Controller
             'pagename' => $breadcrumb,
             'archiveContacts' => $archiveContacts,
             'subscribersData' => $subscribersData,
+            'activeCount' => $iActiveCount,
+            'archiveCount' => $iArchiveCount,
             'moduleName' => $moduleName,
             'moduleUnitID' => $moduleUnitID,
             'getClientTags' => $getClientTags,
@@ -374,7 +386,9 @@ class Contacts extends Controller
             'list_id' => ''
         );
 
-        return view('admin.subscriber.list-subscribers', $aData);
+        //return view('admin.subscriber.list-subscribers', $aData);
+        echo json_encode($aData);
+        exit;
     }
 
 

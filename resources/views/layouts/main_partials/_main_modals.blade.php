@@ -42,7 +42,7 @@
             <div class="modal-header mb-20 text-center">
                 <button style="top: 20px;" type="button" class="close" data-dismiss="modal">&times;</button>
                 <h1 style="font-size: 35px;  font-style: italic; margin:30px 0 0;">
-                    <strong>Upgrade to 
+                    <strong>Upgrade to
                         @if (isset($oUpgradePlanData->level_name))
                             {{ $oUpgradePlanData->level_name }}
                         @endif
@@ -130,7 +130,7 @@
                         </p>
                     </div>
                     <div class="col-md-3 pt-20 text-center">
-                        <button type="button" class="btn btn-primary mb-10" id="btnLevelUpgrade" 
+                        <button type="button" class="btn btn-primary mb-10" id="btnLevelUpgrade"
                                 plan_name="
                                 @if (isset($oUpgradePlanData->level_name))
                                     {{ $oUpgradePlanData->level_name }}
@@ -212,7 +212,7 @@
                                             <li>Other Social Invites-@if (strpos($data->social_invite_sources, 'others') !== false) Yes @else No @endif></li>
                                         </ul>
                                         <div class="pricing-footer">
-                                            <a href="javascript:;" class="btn yellow-crusta"> Sign Up </a> 
+                                            <a href="javascript:;" class="btn yellow-crusta"> Sign Up </a>
                                         </div>
                                     </div>
                                 </label>
@@ -241,7 +241,7 @@
             </div>
         </div>
     </div>
-</div>  
+</div>
 
 <!-- Upgrade plan Modal Confirm -->
 <div id="confirm_level_upgrade" class="modal fade" style="z-index:99999;">
@@ -270,7 +270,7 @@
                             <tr>
                                 <td>Email :</td>
                                 <td>
-                                    @if (isset($aUInfo->email)) 
+                                    @if (isset($aUInfo->email))
                                        {{ $aUInfo->email }}
                                     @endif
                                 </td>
@@ -286,7 +286,7 @@
                             <tr>
                                 <td>Current Plan :</td>
                                 <td>
-                                    @if (isset($oCurrentPlanData->level_name)) 
+                                    @if (isset($oCurrentPlanData->level_name))
                                         {{ $oCurrentPlanData->level_name }}
                                     @endif
                                 </td>
@@ -295,7 +295,7 @@
                                 <td>Upgrade to :</td>
                                 <td>
                                     <span id="upgradedPlanTitle">
-                                        @if (isset($oUpgradePlanData->level_name)) 
+                                        @if (isset($oUpgradePlanData->level_name))
                                             {{ $oUpgradePlanData->level_name }}
                                         @endif
                                     </span>
@@ -304,7 +304,7 @@
                         </table>
 
                     </div>
-                </div>    
+                </div>
 
 
                 <div class="checkbox">
@@ -1166,7 +1166,7 @@
 </div>
 <!-- End Add/Edit Contacts, Import, Export Popup -->
 
-<!--=====================================Delete Popup================================-->    
+<!--=====================================Delete Popup================================-->
 <div id="Deletepopup" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1188,7 +1188,7 @@
                 <!--<div class="modal-footer text-center">
                     <button data-toggle="modal" id="nextpopup" type="button" class="btn dark_btn bkg_sblue fsize14 h52"> Delete</button>
                     <button data-toggle="modal" id="nextpopup" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
-                    
+
                 </div>-->
             </form>
         </div>
@@ -1197,7 +1197,7 @@
 <!--=====================================Delete Popup================================-->
 
 
-<!--=====================================Archive================================-->  
+<!--=====================================Archive================================-->
 
 <div id="archiveModalPopup" class="modal fade">
     <div class="modal-dialog modal-sm">
@@ -1261,7 +1261,7 @@
         <div class="">
             <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
             <div class="logout_notifications p25" id="logout1">
-                <a style="cursor: pointer" class="close_no close" data-dismiss="modal"><img src="{{ URL::asset('assets/images/cross_icon_10.png') }}"/></a> 
+                <a style="cursor: pointer" class="close_no close" data-dismiss="modal"><img src="{{ URL::asset('assets/images/cross_icon_10.png') }}"/></a>
                 <div class="media-left pr-15"><img src="{{ URL::asset('assets/images/logout_icon1.png') }}"/></div>
                 <div class="media-left pr0">
                     <p class="txt_dark fw400">No Activity For {{ $inactivity_length }} Minutes</p>
@@ -1280,7 +1280,7 @@
         <div class="">
             <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
             <div class="logout_notifications p25" id="logout2">
-                <a style="cursor: pointer" id="close2" class="close_no close" data-dismiss="modal"><img src="{{ URL::asset('assets/images/cross_icon_10.png') }}"/></a> 
+                <a style="cursor: pointer" id="close2" class="close_no close" data-dismiss="modal"><img src="{{ URL::asset('assets/images/cross_icon_10.png') }}"/></a>
                 <div class="media-left pr-15"><img src="{{ URL::asset('assets/images/logout_icon2.png') }}"/></div>
                 <div class="media-left pr0">
                     <p class="txt_dark fw400">Are you still there?</p>
@@ -1294,7 +1294,7 @@
 </div>
 <!--=====================================Log out================================-->
 
-<!--=====================================Add Chat Shortcut Modal Popup================================-->    
+<!--=====================================Add Chat Shortcut Modal Popup================================-->
 <div id="addChatShortcutList" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1303,7 +1303,7 @@
                 <div class="modal-header">
                     <button type="button" class="close BoxClose" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="{{ URL::asset('assets/images/menu_icons/Chat_Color.svg') }}"> Add new shortcut &nbsp; <!--<i class="icon-info22 fsize12 txt_grey"></i>--></h5>
-                    <p class="fsize12 txt_grey mt10 mb10" style="max-width: 370px;">Create a new shortcut. Give it a ! symbol, and write a message for this shortcut. Then, use conversations to quickly answer 
+                    <p class="fsize12 txt_grey mt10 mb10" style="max-width: 370px;">Create a new shortcut. Give it a ! symbol, and write a message for this shortcut. Then, use conversations to quickly answer
                         to visitors using the shortcut ! symbol. </p>
                 </div>
                 <div class="modal-body">
@@ -1331,6 +1331,26 @@
                 <div class="modal-footer">
                     <button type="submit" class="btn dark_btn bkg_sblue fsize14 h52"><i class="icon-plus3"></i> &nbsp;  Add Shortcut</button>
                     <button data-dismiss="modal" class="close btn btn-link fsize14 txt_blue h52">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="subscriberTagListsModal" class="modal fade" style="z-index:9999999999;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" name="frmSubscriberApplyTag" id="frmSubscriberApplyTag" action="javascript:void();">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Apply Tags</h5>
+                </div>
+                <div class="modal-body" id="tagEntireList"></div>
+                <div class="modal-footer modalFooterBtn">
+                    <input type="hidden" name="tag_subscriber_id" id="tag_subscriber_id"/>
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Apply Tag</button>
                 </div>
             </form>
         </div>

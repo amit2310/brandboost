@@ -1,4 +1,5 @@
 /hot
+/hot
 /storage
 /storage/*.key
 .phpunit.result.cache
