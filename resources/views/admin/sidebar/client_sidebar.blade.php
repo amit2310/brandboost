@@ -597,7 +597,7 @@
                                 $activeChildClass = 'menu-tags-submenu';
                                 echo 'active';
                             }
-                            @endphp"><a href="{{ url('admin/tags/tagsfeedback') }}"><i class="fa fa-circle"></i> Tag Feedbacks</a>
+                            @endphp"><a href="{{ url('#/tags/tagsfeedback') }}"><i class="fa fa-circle"></i> Tag Feedbacks</a>
                             </li>
                         </ul>
                     </li>
