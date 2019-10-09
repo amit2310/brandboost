@@ -12,8 +12,8 @@ const routes = [
     { path: '/dashboard', component: Dashboard },
     { path: '/live', component: Live },
     { path: '/contacts/mycontacts', component: Contact },
-    { path: '/templates/email', component: EmailTemplates },
-    { path: '/templates/sms', component: SmsTemplates },
+    /*{ path: '/templates/email', component: EmailTemplates },
+    { path: '/templates/sms', component: SmsTemplates },*/
     { path: '/brandboost/onsite', component: OnsiteList },
     { path: '/tags', component: Tags, meta: { title: 'Insight Tags - Brand Boost'} }
 ];
