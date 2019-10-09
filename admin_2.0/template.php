@@ -4,86 +4,271 @@
 <meta charset="utf-8">
 <title>Brand Boost 2.0</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="assets/images/icon.ico" sizes="16x16" type="image/ico">
 
-<!-- App favicon -->
-<link rel="icon" href="http://brandboost.io/assets/images/icon.ico" sizes="16x16" type="image/ico">
-<!-- App css -->
+
+ <!--******************
+ CSS
+ **********************-->
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
+<!--<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">-->
 
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
+<style>
+	h3, h2{margin-bottom: 10px!important;}
+	</style>
 
 </head>
-<body>
-<!-- Top Bar Start -->
+<body id="">
 
-<!-- Top Bar End -->
 <div class="page-wrapper">
- <!-- Left Sidenav -->
+ <!--******************
+ SIDEBAR
+ **********************-->
   <?php include("sidebar.php"); ?>
  
-  
-  <!-- Page Content-->
+
   <div class="page-content">
-  <!-- Top Bar -->
+ <!--******************
+  TOPBAR
+ **********************-->
   <?php include("topbar.php"); ?>
-   
+  
+  
+ <!--******************
+  Top Heading area
+ **********************-->
+  <div class="top-bar-top-section bbot">
+  <div class="container-fluid">
+   <div class="row">
+   	<div class="col-md-6">
+   	<span class="button-menu-mobile-not-working float-left mr20"><img src="assets/images/BACK.svg"/></span>
+   	<h3 class="htxt_medium_24 dark_700">Dashboard</h3>
+   	</div>
+   	<div class="col-md-6 text-right">
+   		<button class="circle-icon-40 mr15"><img src="assets/images/filter.svg"/></button>
+   		<button class="btn btn-md bkg_blue_200 light_000">Main Action <span><img src="assets/images/blue-plus.svg"/></span></button>
+   	</div>
+   </div>
+   </div>
+    <div class="clearfix"></div>
+</div>
+	 
+	  
+	  
+	  
+ <!--******************
+  Content Area Start
+ **********************-->
    <div class="content-area">
     <div class="container-fluid">
      <div class="row">
-     	<div class="col-md-8">
-     		<div class="card min-h-280">
-     		<div class="row">
-     		<div class="col-md-6">
-     			<h3 class="htxt_medium_32 dark_700">79,3%</h3>
-     			<p class="grey-sub-headings">YOUR EMAIL MARKETING IS GOOD</p>
-     			<hr>
-     			<p class="fsize14 mb30" style="color: #5a6f80;">Your recent emails have low avg. 9% bounce rate. We suggest you to send new email 
-in next 3 days.</p>
-    		<a class="fsize15 blue_300" href="#"><img src="assets/images/editpen.svg"/>&nbsp; Create new email</a>
-     		</div>
-     		<div class="col-md-6 text-center">
-     			<img class="mt40" style="max-width: 225px; " src="assets/images/dashboard_image_01.png"/>
-     		</div>
+     	<div class="col-md-6 mb-3">
+     		<div style="box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04); border-radius: 4px; height: auto; background: #fff; padding: 40px;" >
+     			<h2 class="brand_400">Bold </h2>
+     			<h3 class="htxt_bold_10">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_12">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_14">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_16">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_18">You used 408/450 montly credits</h3>
+<br>
+<br>
+<br>
+
+     			<h2 class="brand_400">Medium </h2>
+     			<h3 class="htxt_medium_10">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_12">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_14">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_16">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_18">You used 408/450 montly credits</h3>
+     			
+<br>
+<br>
+<br>			<h2 class="brand_400">Regular </h2>
+    			<h3 class="htxt_regular_10">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_12">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_14">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_16">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_18">You used 408/450 montly credits</h3>
+     			
+     				
+     						
      			
      		</div>
+     	</div>
+     	<div class="col-md-6 mb-3">
+     		<div style="box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04); border-radius: 4px; height: auto; background: #fff; padding: 40px;" >
+     			<h2 class="brand_400">Bold </h2>
+     			<h3 class="htxt_bold_20">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_24">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_28">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_32">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_36">You used 408/450 montly credits</h3>
+<br>
+<br>
+<br>
+
+     			<h2 class="brand_400">Medium </h2>
+     			<h3 class="htxt_medium_20">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_24">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_28">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_32">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_36">You used 408/450 montly credits</h3>
      			
+<br>
+<br>
+<br>			<h2 class="brand_400">Regular </h2>
+    			<h3 class="htxt_regular_20">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_24">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_28">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_32">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_36">You used 408/450 montly credits</h3>
+     			
+     				
+     				
      		</div>
      	</div>
-     	<div class="col-md-4">
-     		<div class="card min-h-280 text-center">
-     			<img class="mb20" style="max-width: 130px; margin: 0 auto" src="assets/images/dashboard_graph0.png"/>
-     			<p class="grey-sub-headings mb10">CREDITS BALANCE</p>
-     			<p class="fsize14 mb30" style="color: #5a6f80;">You used 408/450 montly credits</p>
-     			<a class="fsize15 dark_600 fw500" href="#">Purchase more credits</a>
-     		</div>
-     	</div>
+     	
+     	
+     	
+     	<div class="col-md-6 mb-3">
+     	<div style="box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04); border-radius: 4px; height: auto; background: #fff; padding: 40px;" >
+     	<h2 class="brand_400">Blue </h2>
+     	<div class="square bkg_blue_100"></div>
+     	<div class="square bkg_blue_200"></div>
+     	<div class="square bkg_blue_300"></div>
+     	<div class="square bkg_blue_400"></div>
+     	<div class="square bkg_blue_500"></div>
+     	<div class="clearfix"></div>
+     	<h2 class="brand_400">Green </h2>
+     	<div class="square bkg_green_100"></div>
+     	<div class="square bkg_green_200"></div>
+     	<div class="square bkg_green_300"></div>
+     	<div class="square bkg_green_400"></div>
+     	<div class="square bkg_green_500"></div>
+     	
+     	<div class="clearfix"></div>
+     	<h2 class="brand_400">Yellow </h2>
+     	<div class="square bkg_yellow_100"></div>
+     	<div class="square bkg_yellow_200"></div>
+     	<div class="square bkg_yellow_300"></div>
+     	<div class="square bkg_yellow_400"></div>
+     	<div class="square bkg_yellow_500"></div>
+     	
+     	<div class="clearfix"></div>
+     	<h2 class="brand_400">Red </h2>
+     	<div class="square bkg_red_100"></div>
+     	<div class="square bkg_red_200"></div>
+     	<div class="square bkg_red_300"></div>
+     	<div class="square bkg_red_400"></div>
+     	<div class="square bkg_red_500"></div>
+     	
+     	
+     	<div class="clearfix"></div>
+     	<h2 class="brand_400">Light </h2>
+     	<div class="square bkg_light_000"></div>
+     	<div class="square bkg_light_050"></div>
+     	<div class="square bkg_light_100"></div>
+     	<div class="square bkg_light_200"></div>
+     	<div class="square bkg_light_300"></div>
+     	<div class="square bkg_light_400"></div>
+     	<div class="square bkg_light_500"></div>
+     	<div class="square bkg_light_600"></div>
+     	<div class="square bkg_light_700"></div>
+     	<div class="square bkg_light_800"></div>
+     	<div class="square bkg_light_900"></div>
+     	
+     	<div class="clearfix"></div>
+     	
+     	<h2 class="brand_400">Dark </h2>
+     	<div class="square bkg_dark_100"></div>
+     	<div class="square bkg_dark_200"></div>
+     	<div class="square bkg_dark_300"></div>
+     	<div class="square bkg_dark_400"></div>
+     	<div class="square bkg_dark_500"></div>
+     	<div class="square bkg_dark_600"></div>
+     	<div class="square bkg_dark_700"></div>
+     	<div class="square bkg_dark_800"></div>
+     	<div class="square bkg_dark_900"></div>
+     	
+     	<div class="clearfix"></div>
+     	<h2 class="brand_400">Email </h2>
+     	<div class="square bkg_email_100"></div>
+     	<div class="square bkg_email_200"></div>
+     	<div class="square bkg_email_300"></div>
+     	<div class="square bkg_email_400"></div>
+     	<div class="square bkg_email_500"></div>
+     	
+     	
+     	<div class="clearfix"></div>
+     	<h2 class="brand_400">SMS </h2>
+     	<div class="square bkg_sms_100"></div>
+     	<div class="square bkg_sms_200"></div>
+     	<div class="square bkg_sms_300"></div>
+     	<div class="square bkg_sms_400"></div>
+     	<div class="square bkg_sms_500"></div>
+     	
+     	
+     	<div class="clearfix"></div>
+     	<h2 class="brand_400">Chat </h2>
+     	<div class="square bkg_chat_100"></div>
+     	<div class="square bkg_chat_200"></div>
+     	<div class="square bkg_chat_300"></div>
+     	<div class="square bkg_chat_400"></div>
+     	<div class="square bkg_chat_500"></div>
+     	
+     	<div class="clearfix"></div>
+     	<h2 class="brand_400">Reviews </h2>
+     	<div class="square bkg_reviews_100"></div>
+     	<div class="square bkg_reviews_200"></div>
+     	<div class="square bkg_reviews_300"></div>
+     	<div class="square bkg_reviews_400"></div>
+     	<div class="square bkg_reviews_500"></div>
+     	
+     	<div class="clearfix"></div>
+     	<h2 class="brand_400">Brand </h2>
+     	<div class="square bkg_brand_100"></div>
+     	<div class="square bkg_brand_200"></div>
+     	<div class="square bkg_brand_300"></div>
+     	<div class="square bkg_brand_400"></div>
+     	<div class="square bkg_brand_500"></div>
+     	
+     	
+     	<div class="clearfix"></div>
+     	<h2 class="brand_400">Referrals </h2>
+     	<div class="square bkg_referrals_100"></div>
+     	<div class="square bkg_referrals_200"></div>
+     	<div class="square bkg_referrals_300"></div>
+     	<div class="square bkg_referrals_400"></div>
+     	<div class="square bkg_referrals_500"></div>
+     	
+     	<div class="clearfix"></div>
+     	<h2 class="brand_400">Helpdesk </h2>
+     	<div class="square bkg_helpdesk_100"></div>
+     	<div class="square bkg_helpdesk_200"></div>
+     	<div class="square bkg_helpdesk_300"></div>
+     	<div class="square bkg_helpdesk_400"></div>
+     	<div class="square bkg_helpdesk_500"></div>
+     	
+     	
+     	
+     	
+     	
+			</div>
+		 </div>
+     	
      </div>
-     
-     <div class="row">
-     	<div class="col-md-6">
-     		<div class="card min-h-280">
-     			<h3 class="htxt_medium_32 dark_700">51,913</h3>
-     			<p class="grey-sub-headings">Emails</p>
-     			<img style="max-height: 130px;" src="assets/images/dashboard_graph2.png"/>
-     		</div>
-     	</div>
-     	<div class="col-md-6">
-     		<div class="card min-h-280">
-     			<h3 class="htxt_medium_32 dark_700">139</h3>
-     			<p class="grey-sub-headings">Subscriptions</p>
-     			<img style="max-height: 130px;" src="assets/images/dashboard_graph1.png"/>
-     		</div>
-     	</div>
-     </div>
-     
-     
       </div>
       
       </div>
+      
+<!--******************
+  Content Area End
+ **********************-->
+ 
+ 
   </div>
   </div>
   
@@ -94,8 +279,9 @@ in next 3 days.</p>
  
  
  
- 
-<!-- jQuery  -->
+ <!--******************
+  jQuery
+ **********************-->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/metisMenu.min.js"></script>
