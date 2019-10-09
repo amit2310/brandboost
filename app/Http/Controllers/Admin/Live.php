@@ -19,11 +19,12 @@ class Live extends Controller {
 			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Live" class="sidebar-control active hidden-xs ">Live</a></li>
 			</ul>';
-			
+
         $aUser = getLoggedUser();
         $clientID = $aUser->id;
         $oLiveData = LiveModel::getLiveData($clientID);
-        return view('admin.live.index', array('title' => 'Live', 'pagename' => $breadcrumb, 'oLiveData' => $oLiveData));
+        echo json_encode($oLiveData);
+        //return view('admin.live.index', array('title' => 'Live', 'pagename' => $breadcrumb, 'oLiveData' => $oLiveData));
     }
 
     public function overview() {
@@ -40,7 +41,7 @@ class Live extends Controller {
 
 		$this->template->load('admin/admin_template_new', 'admin/live/overview', array('title' => 'Live Details', 'pagename' => $breadcrumb, 'oLiveData' => $oLiveData, 'oCurrentLiveData' => $oCurrentLiveData));
     }
-	
+
 	/**
      * Live detail page
      * @return type
@@ -53,7 +54,7 @@ class Live extends Controller {
 			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Live" class="sidebar-control active hidden-xs ">Live Details</a></li>
 			</ul>';
-			
+
         $aUser = getLoggedUser();
         $clientID = $aUser->id;
 		$oData = $mLive->getLiveDataById($id);

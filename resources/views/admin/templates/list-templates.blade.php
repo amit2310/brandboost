@@ -5,7 +5,7 @@ $moduleUnitID = !(empty($moduleUnitID)) ? $moduleUnitID : '';
 
 @extends('layouts.main_template')
 
-@section('title')3
+@section('title')
 {{ $title }}
 @endsection
 

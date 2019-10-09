@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -6,7 +6,7 @@
 
 @section('contents')
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+{{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
@@ -30,7 +30,7 @@
 
     #circle {
         width: 175px;
-        height: 175px;	
+        height: 175px;
         margin: 0 auto;
     }
 
@@ -50,11 +50,11 @@
 
     @keyframes rotate {
         100% {transform: rotate(360deg);}
-    } 
+    }
 
-</style>
+</style>--}}
 
-<div class="content">
+<div class="content" id="masterContainer">
 
     <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
     <div class="page_header">
@@ -80,7 +80,7 @@
     <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
 
     <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
-    <div class="tab-content"> 
+    <div class="tab-content">
         <!--===========TAB 1===========-->
         <div class="tab-pane active" id="tab1">
 
@@ -190,7 +190,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
 
 
 
@@ -244,17 +244,7 @@
                             </div>
                         </div>
                         <div class="panel-body p0">
-                            <table class="table display dataTable" id='reviewsTable'>
-                                <thead>
-                                    <tr>
-                                        <th>Review Comment</th>
-                                        <th>Ratings</th>
-                                        <th>Campaign Name</th>
-                                        <th>Created Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            {{--<dashboard-reivews></dashboard-reivews>--}}
                         </div>
                     </div>
                 </div>
@@ -278,7 +268,7 @@
                                         <td class="text-right"><strong class="text-default text-semibold">Who is your favorite...</strong></td>
                                         <td class="text-right"><strong class="text-default text-semibold">24 Sep 2018</strong></td>
                                         <td class="text-right">
-                                            <div class="tdropdown ml10"> 
+                                            <div class="tdropdown ml10">
                                                 <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="{{ URL::asset('assets/images/more.svg') }}"></a>
                                                 <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
                                                     <li><a href="#"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
@@ -297,7 +287,7 @@
                                         <td class="text-right"><strong class="text-default text-semibold">Do you have nice handwriting?</strong></td>
                                         <td class="text-right"><strong class="text-default text-semibold">5 Nov 2018</strong></td>
                                         <td class="text-right">
-                                            <div class="tdropdown ml10"> 
+                                            <div class="tdropdown ml10">
                                                 <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="{{ URL::asset('assets/images/more.svg') }}"></a>
                                                 <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
                                                     <li><a href="#"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
@@ -316,7 +306,7 @@
                                         <td class="text-right"><strong class="text-default text-semibold">What is your favorite ?</strong></td>
                                         <td class="text-right"><strong class="text-default text-semibold">15 Dec 2018</strong></td>
                                         <td class="text-right">
-                                            <div class="tdropdown ml10"> 
+                                            <div class="tdropdown ml10">
                                                 <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="{{ URL::asset('assets/images/more.svg') }}"></a>
                                                 <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
                                                     <li><a href="#"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
@@ -335,7 +325,7 @@
                                         <td class="text-right"><strong class="text-default text-semibold">Do you like roller coasters?</strong></td>
                                         <td class="text-right"><strong class="text-default text-semibold">24 Sep 2018</strong></td>
                                         <td class="text-right">
-                                            <div class="tdropdown ml10"> 
+                                            <div class="tdropdown ml10">
                                                 <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="{{ URL::asset('assets/images/more.svg') }}"></a>
                                                 <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
                                                     <li><a href="#"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
@@ -354,7 +344,7 @@
                                         <td class="text-right"><strong class="text-default text-semibold">Where did you get your name?</strong></td>
                                         <td class="text-right"><strong class="text-default text-semibold">5 Nov 2018</strong></td>
                                         <td class="text-right">
-                                            <div class="tdropdown ml10"> 
+                                            <div class="tdropdown ml10">
                                                 <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="{{ URL::asset('assets/images/more.svg') }}"></a>
                                                 <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
                                                     <li><a href="#"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
@@ -373,7 +363,7 @@
                                         <td class="text-right"><strong class="text-default text-semibold">Where have you traveled?</strong></td>
                                         <td class="text-right"><strong class="text-default text-semibold">15 Dec 2018</strong></td>
                                         <td class="text-right">
-                                            <div class="tdropdown ml10"> 
+                                            <div class="tdropdown ml10">
                                                 <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="{{ URL::asset('assets/images/more.svg') }}"></a>
                                                 <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
                                                     <li><a href="#"><i class="icon-primitive-dot txt_green"></i> Active</a> </li>
@@ -410,7 +400,7 @@
                             <div class="p40 ratings">
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>24% <span>5</span></p></div>
                                     <div class="col-xs-12">
@@ -421,7 +411,7 @@
                                 </div>
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>61% <span>17</span></p></div>
                                     <div class="col-xs-12">
@@ -432,7 +422,7 @@
                                 </div>
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>3% <span>1</span></p></div>
                                     <div class="col-xs-12">
@@ -443,7 +433,7 @@
                                 </div>
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>  
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>0% <span>0</span></p></div>
                                     <div class="col-xs-12">
@@ -454,7 +444,7 @@
                                 </div>
                                 <div class="row inner mb0">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i>   
+                                        <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>0% <span>0</span></p></div>
                                     <div class="col-xs-12">
@@ -572,7 +562,7 @@
                             <div class="p40 ratings">
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>24% <span>5</span></p></div>
                                     <div class="col-xs-12">
@@ -583,7 +573,7 @@
                                 </div>
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>61% <span>17</span></p></div>
                                     <div class="col-xs-12">
@@ -594,7 +584,7 @@
                                 </div>
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> 
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>3% <span>1</span></p></div>
                                     <div class="col-xs-12">
@@ -605,7 +595,7 @@
                                 </div>
                                 <div class="row inner">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>  
+                                        <i class="icon-star-full2"></i> <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>0% <span>0</span></p></div>
                                     <div class="col-xs-12">
@@ -616,7 +606,7 @@
                                 </div>
                                 <div class="row inner mb0">
                                     <div class="col-xs-6">
-                                        <i class="icon-star-full2"></i>   
+                                        <i class="icon-star-full2"></i>
                                     </div>
                                     <div class="col-xs-6 text-right"><p>0% <span>0</span></p></div>
                                     <div class="col-xs-12">
@@ -1504,30 +1494,7 @@
     <!--================================= CONTENT AFTER TAB===============================-->
 
 </div>
-
-<script>
-$(document).ready(function () {
-    $('#reviewsTable').DataTable({
-        'processing': true,
-        'serverSide': true,
-        'serverMethod': 'post',
-        'ajax': {
-            'url': '{{ base_url() }}admin/dashboard/getReviewData', 'data': {"_token": "{{ csrf_token() }}"},
-        },
-        'columns': [
-            {data: 'review_title'},
-            {data: 'ratings'},
-            {data: 'brand_title'},
-            {data: 'created'},
-            {data: 'action'},
-        ]
-    });
-});
-
-</script>
-
-
-<script>
+{{--<script>
 
     Morris.Area({
         element: 'myfirstchart',
@@ -1672,7 +1639,7 @@ $(document).ready(function () {
 
 
 
-</script>
+</script>--}}
 
 
 

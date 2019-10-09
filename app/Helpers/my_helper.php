@@ -15,7 +15,8 @@ use Twilio\Jwt\ClientToken;
  * @param type $redirect
  * @return type
  */
-function getLoggedUser($redirect = true) {
+function getLoggedUser($redirect = true)
+{
 
     $oUser = array();
 
@@ -49,7 +50,8 @@ function getLoggedUser($redirect = true) {
  */
 if (!function_exists('get_notifications')) {
 
-    function get_notifications() {
+    function get_notifications()
+    {
         $allNotifications = array();
 
         $isLoggedInAdmin = Session::get('admin_user_id');
@@ -83,7 +85,8 @@ if (!function_exists('get_notifications')) {
  */
 if (!function_exists('get_notification_tags')) {
 
-    function get_notification_tags() {
+    function get_notification_tags()
+    {
         $aTags = array();
         $oTemplates = \App\Models\Admin\SettingsModel::getSystemNotificationTemplates();
         if (!empty($oTemplates)) {
@@ -101,7 +104,8 @@ if (!function_exists('get_notification_tags')) {
  */
 if (!function_exists('userRoleAdmin')) {
 
-    function userRoleAdmin($userRole) {
+    function userRoleAdmin($userRole)
+    {
         if ($userRole == 2) {
             redirect('user/profile');
         }
@@ -114,7 +118,8 @@ if (!function_exists('userRoleAdmin')) {
  */
 if (!function_exists('numberForamt')) {
 
-    function numberForamt($num) {
+    function numberForamt($num)
+    {
         $num = preg_replace('/[^0-9]/', '', $num);
         $len = strlen($num);
         if ($len == 11 && substr($num, 0, 1) == '1') {
@@ -131,7 +136,8 @@ if (!function_exists('numberForamt')) {
  */
 if (!function_exists('admin_account')) {
 
-    function admin_account() {
+    function admin_account()
+    {
         $isLoggedInAdmin = Session::get('admin_user_id');
         $isLoggedInCustomer = Session::get('customer_user_id');
         $isLoggedInUser = Session::get('user_user_id');
@@ -155,13 +161,19 @@ if (!function_exists('admin_account')) {
  */
 if (!function_exists('base_url')) {
 
-    function base_url($path = '') {
+    function base_url($path = '')
+    {
         $siteURL = config('bbconfig.siteURL');
 
         if (isset($_SERVER["HTTP_HOST"])) {
             if ($_SERVER['HTTP_HOST'] == 'dev.brandboostx.com') {
                 $siteURL = config('bbconfig.siteURLDev');
             }
+
+            if ($_SERVER['HTTP_HOST'] == 'vue.brandboostx.com') {
+                $siteURL = config('bbconfig.siteVueURLDev');
+            }
+
         }
 
         return $siteURL . $path;
@@ -174,7 +186,8 @@ if (!function_exists('base_url')) {
  */
 if (!function_exists('pre')) {
 
-    function pre($data) {
+    function pre($data)
+    {
 
         echo '<pre>';
         print_r($data);
@@ -188,7 +201,8 @@ if (!function_exists('pre')) {
  */
 if (!function_exists('page_auth')) {
 
-    function page_auth() {
+    function page_auth()
+    {
 
         $uriSegment = \Request::segment(2);
 
@@ -237,7 +251,8 @@ if (!function_exists('page_auth')) {
  */
 if (!function_exists('getAllActiveMembership')) {
 
-    function getAllActiveMembership() {
+    function getAllActiveMembership()
+    {
         $oMembership = \App\Models\Admin\MembershipModel::getActiveMembership();
         return $oMembership;
     }
@@ -250,7 +265,8 @@ if (!function_exists('getAllActiveMembership')) {
  */
 if (!function_exists('getMembershipLevelUpgrades')) {
 
-    function getMembershipLevelUpgrades($oData, $planID) {
+    function getMembershipLevelUpgrades($oData, $planID)
+    {
         $oUpsells = \App\Models\Admin\MembershipModel::getLevelUpgrade($oData, $planID);
         return $oUpsells;
     }
@@ -262,7 +278,8 @@ if (!function_exists('getMembershipLevelUpgrades')) {
  */
 if (!function_exists('getMembershipAnnualUpgrades')) {
 
-    function getMembershipAnnualUpgrades($oData, $planID) {
+    function getMembershipAnnualUpgrades($oData, $planID)
+    {
         $oUpsells = \App\Models\Admin\MembershipModel::getAnnualUpgrade($oData, $planID);
         return $oUpsells;
     }
@@ -274,7 +291,8 @@ if (!function_exists('getMembershipAnnualUpgrades')) {
  */
 if (!function_exists('getAllGlobalSubscribers')) {
 
-    function getAllGlobalSubscribers($userID) {
+    function getAllGlobalSubscribers($userID)
+    {
         $subscribersData = \App\Models\Admin\SubscriberModel::getGlobalSubscribers($userID);
         return $subscribersData;
     }
@@ -287,7 +305,8 @@ if (!function_exists('getAllGlobalSubscribers')) {
  */
 if (!function_exists('userSetting')) {
 
-    function userSetting($userId) {
+    function userSetting($userId)
+    {
         $oSettings = \App\Models\Admin\SettingsModel::getNotificationSettings($userId);
         return $oSettings;
     }
@@ -300,7 +319,8 @@ if (!function_exists('userSetting')) {
  */
 if (!function_exists('getMemberchatpermission')) {
 
-    function getMemberchatpermission($MemberID) {
+    function getMemberchatpermission($MemberID)
+    {
         $teamData = \App\Models\Admin\TeamModel::Chatpermission($MemberID);
         return $teamData;
     }
@@ -312,7 +332,8 @@ if (!function_exists('getMemberchatpermission')) {
  */
 if (!function_exists('getCountriesList')) {
 
-    function getCountriesList() {
+    function getCountriesList()
+    {
         $oCountryData = \App\Models\Admin\CountryModel::getCountriesList();
         return $oCountryData;
     }
@@ -324,7 +345,8 @@ if (!function_exists('getCountriesList')) {
  */
 if (!function_exists('getTwilioAccountCustom')) {
 
-    function getTwilioAccountCustom($userID) {
+    function getTwilioAccountCustom($userID)
+    {
         $oTwilio = \App\Models\Admin\SubscriberModel::getTwilioAccountById($userID);
         return $oTwilio;
     }
@@ -336,7 +358,8 @@ if (!function_exists('getTwilioAccountCustom')) {
  */
 if (!function_exists('getMyContact')) {
 
-    function getMyContact($userId = '', $userRole = '') {
+    function getMyContact($userId = '', $userRole = '')
+    {
         $oChat = \App\Models\Admin\SubscriberModel::getGlobalSubscribersChat($userId, $userRole);
         return $oChat;
     }
@@ -348,7 +371,8 @@ if (!function_exists('getMyContact')) {
  */
 if (!function_exists('getsms_subscriber')) {
 
-    function getsms_subscriber($userid) {
+    function getsms_subscriber($userid)
+    {
         $msgDetails = \App\Models\Admin\SmsChatModel::getSMSFavouriteByUserId($userid);
         return $msgDetails;
     }
@@ -360,7 +384,8 @@ if (!function_exists('getsms_subscriber')) {
  */
 if (!function_exists('activeOnlywebOldchatlist')) {
 
-    function activeOnlywebOldchatlist($userID) {
+    function activeOnlywebOldchatlist($userID)
+    {
         $oData = \App\Models\Admin\SubscriberModel::activeOnlywebOldchatlistDetails($userID);
         return $oData;
     }
@@ -372,7 +397,8 @@ if (!function_exists('activeOnlywebOldchatlist')) {
  */
 if (!function_exists('WaitingChatlist')) {
 
-    function WaitingChatlist($userID) {
+    function WaitingChatlist($userID)
+    {
         $oData = \App\Models\Admin\SubscriberModel::WaitingChatlistDetails($userID);
         return $oData;
     }
@@ -384,7 +410,8 @@ if (!function_exists('WaitingChatlist')) {
  */
 if (!function_exists('activeOnlyweb')) {
 
-    function activeOnlyweb($userID) {
+    function activeOnlyweb($userID)
+    {
         $oData = \App\Models\Admin\SubscriberModel::activeOnlywebDetails($userID);
         return $oData;
     }
@@ -397,7 +424,8 @@ if (!function_exists('activeOnlyweb')) {
  */
 if (!function_exists('getTeamAssignDataHelper')) {
 
-    function getTeamAssignDataHelper($teamId) {
+    function getTeamAssignDataHelper($teamId)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getTeamAssignData($teamId);
         return $oData;
     }
@@ -409,7 +437,8 @@ if (!function_exists('getTeamAssignDataHelper')) {
  */
 if (!function_exists('getTeamUnAssignDataHelper')) {
 
-    function getTeamUnAssignDataHelper() {
+    function getTeamUnAssignDataHelper()
+    {
         $oData = \App\Models\Admin\SubscriberModel::getTeamAssignData(0);
         return $oData;
     }
@@ -422,7 +451,8 @@ if (!function_exists('getTeamUnAssignDataHelper')) {
  */
 if (!function_exists('getFavlist')) {
 
-    function getFavlist($userID) {
+    function getFavlist($userID)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getFavlistDetails($userID);
         return $oData;
     }
@@ -434,7 +464,8 @@ if (!function_exists('getFavlist')) {
  */
 if (!function_exists('activeOnlysms')) {
 
-    function activeOnlysms($userID) {
+    function activeOnlysms($userID)
+    {
         $oData = \App\Models\Admin\SubscriberModel::activeOnlysmsDetails($userID);
         return $oData;
     }
@@ -446,7 +477,8 @@ if (!function_exists('activeOnlysms')) {
  */
 if (!function_exists('SmsOldest')) {
 
-    function SmsOldest($number) {
+    function SmsOldest($number)
+    {
         $oData = \App\Models\Admin\SubscriberModel::SmsOldest_list($number);
         return $oData;
     }
@@ -458,7 +490,8 @@ if (!function_exists('SmsOldest')) {
  */
 if (!function_exists('SmsWaitlinglonest')) {
 
-    function SmsWaitlinglonest($number) {
+    function SmsWaitlinglonest($number)
+    {
         $oData = \App\Models\Admin\SubscriberModel::SmsWaitlinglonest_list($number);
         return $oData;
     }
@@ -470,7 +503,8 @@ if (!function_exists('SmsWaitlinglonest')) {
  */
 if (!function_exists('getactiveChatbox')) {
 
-    function getactiveChatbox($userId) {
+    function getactiveChatbox($userId)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getactiveChatboxSeries($userId);
         return $oData;
     }
@@ -482,7 +516,8 @@ if (!function_exists('getactiveChatbox')) {
  */
 if (!function_exists('getAllUser')) {
 
-    function getAllUser($userId = "") {
+    function getAllUser($userId = "")
+    {
         $oData = \App\Models\Admin\UsersModel::getAllUsers($userId);
         return $oData;
     }
@@ -499,7 +534,8 @@ if (!function_exists('getAllUser')) {
  * @param type $fontSize
  * @return string
  */
-function showUserAvtar($userImg = '', $firstName = '', $lastName = '', $width = '', $height = '', $fontSize = '') {
+function showUserAvtar($userImg = '', $firstName = '', $lastName = '', $width = '', $height = '', $fontSize = '')
+{
 
     $params = '';
     if (!empty($width)) {
@@ -536,7 +572,8 @@ function showUserAvtar($userImg = '', $firstName = '', $lastName = '', $width = 
  */
 if (!function_exists('getLastMessage')) {
 
-    function getLastMessage($room) {
+    function getLastMessage($room)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getLastMessageDetails($room);
         return $oData[0];
     }
@@ -548,7 +585,8 @@ if (!function_exists('getLastMessage')) {
  */
 if (!function_exists('getSupportUser')) {
 
-    function getSupportUser($userID) {
+    function getSupportUser($userID)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getSupportUserDetail($userID);
         return $oData;
     }
@@ -560,7 +598,8 @@ if (!function_exists('getSupportUser')) {
  */
 if (!function_exists('assignto')) {
 
-    function assignto($room) {
+    function assignto($room)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getassignto($room);
         if (empty($oData)) {
             $oData = \App\Models\Admin\SubscriberModel::getassigntoUser($room);
@@ -578,7 +617,8 @@ if (!function_exists('assignto')) {
  */
 if (!function_exists(('getSendgridAccount'))) {
 
-    function getSendgridAccount($userID) {
+    function getSendgridAccount($userID)
+    {
         $oData = \App\Models\Admin\UsersModel::getSendgridAccount($userID);
         return $oData;
     }
@@ -587,9 +627,10 @@ if (!function_exists(('getSendgridAccount'))) {
 
 if (!function_exists('getLastSms')) {
 
-    function getLastSms($room) {
+    function getLastSms($room)
+    {
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $subsDetails = $CI->mSubscriber->getLastSmsDetails($room);
         return $subsDetails;
@@ -599,9 +640,10 @@ if (!function_exists('getLastSms')) {
 
 if (!function_exists('getGSubscriberInfo')) {
 
-    function getGSubscriberInfo($id) {
+    function getGSubscriberInfo($id)
+    {
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $msgDetails = $CI->mSubscriber->getGlobalSubscriberInfo($id);
         return $msgDetails;
@@ -610,14 +652,14 @@ if (!function_exists('getGSubscriberInfo')) {
 }
 
 
-
 if (!function_exists('make_links_clickable')) {
 
     /* function make_links_clickable($text){
       return preg_replace('!(((f|ht)tp(s)?://)[-a-zA-Zа-яА-Я()0-9@:%_+.~#?&;//=]+)!i', '<a href="$1">$1</a>', $text);
       } */
 
-    function make_links_clickable($text) {
+    function make_links_clickable($text)
+    {
         $text = html_entity_decode($text);
         $text = " " . $text;
         $text = preg_replace("/(^|[\n ])([\w]*?)([\w]*?:\/\/[\w]+[^ \,\"\n\r\t<]*)/is", "$1$2<a href=\"$3\" >$3</a>", $text);
@@ -633,7 +675,8 @@ if (!function_exists('make_links_clickable')) {
 
 if (!function_exists('refillPlanBenefits')) {
 
-    function refillPlanBenefits($userID, $planID, $qty = 0, $actiontype = '') {
+    function refillPlanBenefits($userID, $planID, $qty = 0, $actiontype = '')
+    {
         $bResponse = \App\Models\Admin\TransactionsModel::autoRefillAccount($userID, $planID, $qty);
         return $bResponse;
     }
@@ -643,7 +686,8 @@ if (!function_exists('refillPlanBenefits')) {
 
 if (!function_exists('chatTimeAgo')) {
 
-    function chatTimeAgo($datetime, $full = false) {
+    function chatTimeAgo($datetime, $full = false)
+    {
         $now = new DateTime;
         $ago = new DateTime($datetime);
         $diff = $now->diff($ago);
@@ -665,7 +709,6 @@ if (!function_exists('chatTimeAgo')) {
 }
 
 
-
 /**
  * This function is used to update the credit usage for client account (sms/email)
  * @param type $clientID
@@ -673,7 +716,8 @@ if (!function_exists('chatTimeAgo')) {
  */
 if (!function_exists('updateCreditUsage')) {
 
-    function updateCreditUsage($aData = array()) {
+    function updateCreditUsage($aData = array())
+    {
 
 
         if (!empty($aData['client_id'])) {
@@ -809,9 +853,10 @@ if (!function_exists('updateCreditUsage')) {
 
 if (!function_exists('updateCreditUsageOLD')) {
 
-    function updateCreditUsageOLD($aData = array()) {
+    function updateCreditUsageOLD($aData = array())
+    {
 
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Settings_model", "mmSetting");
         if (!empty($aData['client_id'])) {
             $direction = $aData['direction'];
@@ -901,15 +946,13 @@ if (!function_exists('updateCreditUsageOLD')) {
 }
 
 
-
-
-
 /**
  * Get uploaded file size
  */
 if (!function_exists('getFileSize')) {
 
-    function getFileSize($oName) {
+    function getFileSize($oName)
+    {
         $oData = \App\Models\Admin\SettingsModel::getFilesizeSettings($oName);
         return $oData;
     }
@@ -921,17 +964,18 @@ if (!function_exists('getFileSize')) {
  */
 if (!function_exists('FileSizeConvertToBytes')) {
 
-    function FileSizeConvertToBytes($Megabytes) {
+    function FileSizeConvertToBytes($Megabytes)
+    {
         return $Megabytes * 1048576;
     }
 
 }
 
 
-
 if (!function_exists('FileSizeConvert')) {
 
-    function FileSizeConvert($bytes) {
+    function FileSizeConvert($bytes)
+    {
         $bytes = floatval($bytes);
         $arBytes = array(
             0 => array(
@@ -977,7 +1021,8 @@ if (!function_exists('FileSizeConvert')) {
  */
 if (!function_exists('bycharuser')) {
 
-    function bycharuser($loginid, $value) {
+    function bycharuser($loginid, $value)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getGlobalSubscribersByChar($loginid, $value);
         return $oData;
     }
@@ -986,8 +1031,9 @@ if (!function_exists('bycharuser')) {
 
 if (!function_exists('getMySubscribers')) {
 
-    function getMySubscribers($userId) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getMySubscribers($userId)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $result = $CI->mSubscriber->getGlobalSubscribers($userId);
         return $result;
@@ -1002,7 +1048,8 @@ if (!function_exists('getMySubscribers')) {
  */
 if (!function_exists('getchatshortcut')) {
 
-    function getchatshortcut($userId) {
+    function getchatshortcut($userId)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getchatshortcutlisting($userId);
         return $oData;
     }
@@ -1010,12 +1057,11 @@ if (!function_exists('getchatshortcut')) {
 }
 
 
-
-
 if (!function_exists('getLatestChat')) {
 
-    function getLatestChat($userId) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getLatestChat($userId)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $result = $CI->mSubscriber->getLatestChatView($userId);
         return $result;
@@ -1024,8 +1070,9 @@ if (!function_exists('getLatestChat')) {
 }
 if (!function_exists('getOldestChat')) {
 
-    function getOldestChat($userId) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getOldestChat($userId)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $result = $CI->mSubscriber->getOldestChatView($userId);
         return $result;
@@ -1035,8 +1082,9 @@ if (!function_exists('getOldestChat')) {
 
 if (!function_exists('getWaitingChat')) {
 
-    function getWaitingChat($userId) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getWaitingChat($userId)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $result = $CI->mSubscriber->getWaitingChatView($userId);
         return $result;
@@ -1046,8 +1094,9 @@ if (!function_exists('getWaitingChat')) {
 
 if (!function_exists('getowners')) {
 
-    function getowners($userId) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getowners($userId)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $result = $CI->mSubscriber->getownersDetails($userId);
         return $result;
@@ -1063,7 +1112,8 @@ if (!function_exists('getowners')) {
  */
 if (!function_exists('getSubscriberDetails')) {
 
-    function getSubscriberDetails($userId) {
+    function getSubscriberDetails($userId)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getchatUser($userId);
         return $oData;
     }
@@ -1071,12 +1121,11 @@ if (!function_exists('getSubscriberDetails')) {
 }
 
 
-
-
 if (!function_exists('getuserImage')) {
 
-    function getuserImage($userId) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getuserImage($userId)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $result = $CI->mSubscriber->getuserImageDetails($userId);
         return $result;
@@ -1087,9 +1136,10 @@ if (!function_exists('getuserImage')) {
 
 if (!function_exists('getMyChatSubscribers')) {
 
-    function getMyChatSubscribers($currentUserID, $userMobileNo) {
+    function getMyChatSubscribers($currentUserID, $userMobileNo)
+    {
         if (!empty($userMobileNo)) {
-            $CI = & get_instance();  //get instance, access the CI superobject
+            $CI = &get_instance();  //get instance, access the CI superobject
             $CI->load->model("admin/SmsChat_model", "mSmsChat");
             $CI->load->model("admin/crons/Referral_inviter_model", "mInviterModel");
             $aTwilioAc = $CI->mInviterModel->getTwilioAccount($currentUserID);
@@ -1102,7 +1152,8 @@ if (!function_exists('getMyChatSubscribers')) {
 
 if (!function_exists('random_strings')) {
 
-    function random_strings($length_of_string) {
+    function random_strings($length_of_string)
+    {
 
 // String of all alphanumeric character
         $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -1116,8 +1167,9 @@ if (!function_exists('random_strings')) {
 
 if (!function_exists('getAdminContact')) {
 
-    function getAdminContact($userRole) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getAdminContact($userRole)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $result = $CI->mSubscriber->getGlobalSubscribersAdminChat($userRole);
         return $result;
@@ -1126,12 +1178,11 @@ if (!function_exists('getAdminContact')) {
 }
 
 
-
-
 if (!function_exists('getChatRoom')) {
 
-    function getChatRoom($room, $assign_to) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getChatRoom($room, $assign_to)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Chat_model", "mChat");
         $result = $CI->mChat->getChatRoomDetails($room, $assign_to);
         return $result;
@@ -1142,15 +1193,15 @@ if (!function_exists('getChatRoom')) {
 
 if (!function_exists('freeChatRoom')) {
 
-    function freeChatRoom($room, $user_id) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function freeChatRoom($room, $user_id)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Chat_model", "mChat");
         $result = $CI->mChat->freeChatRoomInit($room, $user_id);
         return $result;
     }
 
 }
-
 
 
 /**
@@ -1160,7 +1211,8 @@ if (!function_exists('freeChatRoom')) {
  */
 if (!function_exists('getAllteam')) {
 
-    function getAllteam($userID) {
+    function getAllteam($userID)
+    {
         /* $CI = & get_instance();  //get instance, access the CI superobject
           $CI->load->model("admin/Team_model", "mTeam");
           $result = $CI->mTeam->getAllteamMembers($userID);
@@ -1172,13 +1224,11 @@ if (!function_exists('getAllteam')) {
 }
 
 
-
-
-
 if (!function_exists('getFavouriteUser')) {
 
-    function getFavouriteUser($loginUserid, $incid) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getFavouriteUser($loginUserid, $incid)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/SmsChat_model", "smsChat");
         $result = $CI->smsChat->getSMSFavouriteUser($loginUserid, $incid);
         return $result;
@@ -1194,7 +1244,8 @@ if (!function_exists('getFavouriteUser')) {
  */
 if (!function_exists('getFavSmsUser')) {
 
-    function getFavSmsUser($loginUserid, $number) {
+    function getFavSmsUser($loginUserid, $number)
+    {
         $oData = \App\Models\Admin\SmsChatModel::getFavSmsUser($loginUserid, $number);
         return $oData;
     }
@@ -1209,7 +1260,8 @@ if (!function_exists('getFavSmsUser')) {
  */
 if (!function_exists('currentUserTwilioData')) {
 
-    function currentUserTwilioData($currentUser) {
+    function currentUserTwilioData($currentUser)
+    {
         $result = \App\Models\Admin\TeamModel::getTwilioAccountInfo($currentUser);
         return $result;
     }
@@ -1218,8 +1270,9 @@ if (!function_exists('currentUserTwilioData')) {
 
 if (!function_exists('getUnreadMsg')) {
 
-    function getUnreadMsg($msgTo, $msgFrom, $status) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getUnreadMsg($msgTo, $msgFrom, $status)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Chat_model", "hChat");
         $result = $CI->hChat->getUnreadMsg($msgTo, $msgFrom, $status);
         foreach ($result as $key => $value) {
@@ -1239,8 +1292,9 @@ if (!function_exists('getUnreadMsg')) {
 
 if (!function_exists('getAllActiveMembership')) {
 
-    function getAllActiveMembership() {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getAllActiveMembership()
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Membership_model", "hMembership");
         $aMembership = $CI->hMembership->getActiveMembership();
         return $aMembership;
@@ -1250,8 +1304,9 @@ if (!function_exists('getAllActiveMembership')) {
 
 if (!function_exists('getMembershipUpsell')) {
 
-    function getMembershipUpsell($oData, $planID) {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function getMembershipUpsell($oData, $planID)
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $CI->load->model("admin/Membership_model", "hMembership");
         $oUpsells = $CI->hMembership->getUpgradeUpsellSets($oData, $planID);
         return $oUpsells;
@@ -1264,7 +1319,8 @@ if (!function_exists('getMembershipUpsell')) {
  * @param type $userId
  * @return type object
  */
-function getUserDetailsByUserID($userId) {
+function getUserDetailsByUserID($userId)
+{
     $aUser = '';
     if ($userId > 0) {
         $aUser = $oData = \App\Models\Admin\UsersModel::getUserInfo($userId);
@@ -1274,8 +1330,9 @@ function getUserDetailsByUserID($userId) {
 
 if (!function_exists('user_account')) {
 
-    function user_account() {
-        $CI = & get_instance();  //get instance, access the CI superobject
+    function user_account()
+    {
+        $CI = &get_instance();  //get instance, access the CI superobject
         $isLoggedIn = $CI->session->userdata('user_user_id');
         if ($isLoggedIn) {
             return TRUE;
@@ -1290,10 +1347,11 @@ if (!function_exists('user_account')) {
 
 if (!function_exists('emailTemplate')) {
 
-    function emailTemplate($subject, $body, $userDetail) {
+    function emailTemplate($subject, $body, $userDetail)
+    {
 
         /** send email start * */
-        $CI = & get_instance();
+        $CI = &get_instance();
         $mailFrom = config('bbconfig.mailFrom');
         $siteemail = config('bbconfig.siteemail');
         $sandgriduser = config('bbconfig.sandgriduser');
@@ -1336,7 +1394,8 @@ if (!function_exists('emailTemplate')) {
 
 if (!function_exists('sendEmailTemplate')) {
 
-    function sendEmailTemplate($slug, $userId, $subscriber = 0) {
+    function sendEmailTemplate($slug, $userId, $subscriber = 0)
+    {
 
         $aTemp = \App\Models\Admin\TemplatesModel::getTemplateBySlug($slug);
         if ($subscriber == 1) {
@@ -1407,13 +1466,13 @@ if (!function_exists('sendEmailTemplate')) {
 }
 
 
-
 /**
  * Used to get notification tags
  */
 if (!function_exists('get_email_notification_tags')) {
 
-    function get_email_notification_tags() {
+    function get_email_notification_tags()
+    {
         $aTags = array();
         $oTemplates = \App\Models\Admin\SettingsModel::getEmailNotificationTemplates();
         if ($oTemplates->isNotEmpty()) {
@@ -1432,7 +1491,8 @@ if (!function_exists('get_email_notification_tags')) {
  */
 if (!function_exists('checkPermissionentry')) {
 
-    function checkPermissionentry($slug) {
+    function checkPermissionentry($slug)
+    {
 
         $id = getLoggedUserID();
         $checkEntry = \App\Models\Admin\SettingsModel::checkPermissionentryDetails($id, $slug);
@@ -1451,7 +1511,8 @@ if (!function_exists('checkPermissionentry')) {
  */
 if (!function_exists('getNotificationTemplate')) {
 
-    function getNotificationTemplate($slug, $notyType) {
+    function getNotificationTemplate($slug, $notyType)
+    {
 
         $gNoti = \App\Models\Admin\NotificationModel::getNotificationTemplate($slug, $notyType);
         return $gNoti;
@@ -1464,13 +1525,13 @@ if (!function_exists('getNotificationTemplate')) {
  */
 if (!function_exists('add_notifications')) {
 
-    function add_notifications($aData, $eventName = '', $ownerID = '', $notifyAdminAlso = false) {
+    function add_notifications($aData, $eventName = '', $ownerID = '', $notifyAdminAlso = false)
+    {
 
         $bSysPermission = true;
         $bEmailPermission = true;
         $bSaved = false;
         $isLoggedInTeam = '';
-
 
 
         if (!empty($ownerID) && !empty($eventName)) {
@@ -1492,8 +1553,6 @@ if (!function_exists('add_notifications')) {
                 $aSysPermissionData = \App\Models\Admin\SettingsModel::getNotificationSettings($ownerID);
                 $Phone = (!empty($aSysPermissionData->notify_phone)) ? $aSysPermissionData->notify_phone : $oUser->mobile;
             }
-
-
 
 
 //+++++++++++++ CLIENT AREA +++++++++++++++
@@ -1535,8 +1594,8 @@ if (!function_exists('add_notifications')) {
 //+++++++++++++ ADMIN AREA +++++++++++++++
 
             if ($slugDetails->admin == 1 && $slugDetails->system == 1) {
-               // $bSaved = \App\Models\Admin\NotificationModel::addAdminEmailNotification($aData);
-                 $gNoti = getNotificationTemplate($eventName, 'admin');
+                // $bSaved = \App\Models\Admin\NotificationModel::addAdminEmailNotification($aData);
+                $gNoti = getNotificationTemplate($eventName, 'admin');
                 $aData['message'] = $gNoti->sysMessage;
                 //$bSaved = $CI->mNotifications->addNotification($aData);
             }
@@ -1566,7 +1625,8 @@ if (!function_exists('add_notifications')) {
  */
 if (!function_exists('sendEmailPreview')) {
 
-    function sendEmailPreview($emailAddress, $messageBody, $messageSubject, $aParam = array()) {
+    function sendEmailPreview($emailAddress, $messageBody, $messageSubject, $aParam = array())
+    {
 
         $userID = Session::get('current_user_id');
         $aUser = \App\Models\Admin\UsersModel::getUserInfo($userID);
@@ -1654,7 +1714,8 @@ if (!function_exists('sendEmailPreview')) {
  * @param type $html
  * @return type
  */
-function convertHtmlToPlain($html) {
+function convertHtmlToPlain($html)
+{
 //Step-1 Remove All Images
     $plainText = preg_replace("/<img[^>]+\>/i", "\r\n", $html);
 //Step-2 Remove All anchor tags
@@ -1672,7 +1733,8 @@ function convertHtmlToPlain($html) {
  */
 if (!function_exists('sendEmail')) {
 
-    function sendEmail($emailAddress, $messageBody, $messageSubject) {
+    function sendEmail($emailAddress, $messageBody, $messageSubject)
+    {
 
         $website_name = config('bbconfig.website_name');
         $mailFrom = config('bbconfig.mailFrom');
@@ -1723,18 +1785,19 @@ if (!function_exists('sendEmail')) {
  */
 if (!function_exists('sendSMS')) {
 
-    function sendSMS($to, $message) {
+    function sendSMS($to, $message)
+    {
 
-        $CI = & get_instance();
+        $CI = &get_instance();
         $sid = config('bbconfig.sid');
         $token = config('bbconfig.token');
         $client = new Client($sid, $token);
 
         $res = $client->messages->create(
-                $to, array(
-            'from' => '4695027654',
-            'body' => $message,
-                )
+            $to, array(
+                'from' => '4695027654',
+                'body' => $message,
+            )
         );
 //pre($res);
     }
@@ -1748,7 +1811,8 @@ if (!function_exists('sendSMS')) {
  */
 if (!function_exists('sendClientSMS')) {
 
-    function sendClientSMS($to, $message, $oUser) {
+    function sendClientSMS($to, $message, $oUser)
+    {
         $s3_allow_size = "";
         $s3_used_size = "";
         $s3_allow_size = $oUser->s3_allow_size;
@@ -1763,16 +1827,16 @@ if (!function_exists('sendClientSMS')) {
         $aUserTags = array('{limit}', '{credit}');
         $aUserTagsVal = array($remanning_limit, $remanning_credit);
         $message = str_replace($aUserTags, $aUserTagsVal, $message);
-        $CI = & get_instance();
+        $CI = &get_instance();
         $sid = config('bbconfig.sid');
         $token = config('bbconfig.token');
         $client = new Client($sid, $token);
 
         $res = $client->messages->create(
-                $to, array(
-            'from' => '4695027654',
-            'body' => $message,
-                )
+            $to, array(
+                'from' => '4695027654',
+                'body' => $message,
+            )
         );
 //pre($res);
     }
@@ -1781,18 +1845,19 @@ if (!function_exists('sendClientSMS')) {
 
 if (!function_exists('sendAdminSMS')) {
 
-    function sendAdminSMS($to, $message) {
+    function sendAdminSMS($to, $message)
+    {
 
-        $CI = & get_instance();
+        $CI = &get_instance();
         $sid = config('bbconfig.sid');
         $token = config('bbconfig.token');
         $client = new Client($sid, $token);
 
         $res = $client->messages->create(
-                $to, array(
-            'from' => '4695027654',
-            'body' => $message,
-                )
+            $to, array(
+                'from' => '4695027654',
+                'body' => $message,
+            )
         );
 //pre($res);
     }
@@ -1801,7 +1866,8 @@ if (!function_exists('sendAdminSMS')) {
 
 if (!function_exists('sendClinetMMS')) {
 
-    function sendClinetMMS($aData = array()) {
+    function sendClinetMMS($aData = array())
+    {
         try {
             if (!empty($aData)) {
                 $sid = $aData['sid'];
@@ -1832,15 +1898,14 @@ if (!function_exists('sendClinetMMS')) {
 }
 
 
-
-
 /**
  * This function will send sms through twilio API
  * @return type
  */
 if (!function_exists('sendClinetSMS')) {
 
-    function sendClinetSMS($aData = array()) {
+    function sendClinetSMS($aData = array())
+    {
         try {
             if (!empty($aData)) {
                 $sid = $aData['sid'];
@@ -1860,10 +1925,10 @@ if (!function_exists('sendClinetSMS')) {
 
                         foreach ($chunks as $page => $chunk) {
                             $res = $client->messages->create(
-                                    $toNum, array(
-                                'from' => $fromNum,
-                                'body' => $chunk
-                                    )
+                                $toNum, array(
+                                    'from' => $fromNum,
+                                    'body' => $chunk
+                                )
                             );
                         }
                     } else {
@@ -1891,7 +1956,8 @@ if (!function_exists('sendClinetSMS')) {
 
 if (!function_exists('createTwilioSA')) {
 
-    function createTwilioSA($userID, $name) {
+    function createTwilioSA($userID, $name)
+    {
         $sid = config('bbconfig.sid');
         $token = config('bbconfig.token');
         $client = new Client($sid, $token);
@@ -1917,7 +1983,8 @@ if (!function_exists('createTwilioSA')) {
 if (!function_exists('getTwilioPNByAreaCodeTeam')) {
 
 
-    function getTwilioPNByAreaCodeTeam($contryName = '', $areacode) {
+    function getTwilioPNByAreaCodeTeam($contryName = '', $areacode)
+    {
         $id = getLoggedUserID();
         $TwilioData = currentUserTwilioData($id);
 
@@ -1931,7 +1998,7 @@ if (!function_exists('getTwilioPNByAreaCodeTeam')) {
             $client = new Client($sid, $token);
 
             $numbers = $client->availablePhoneNumbers($contryName)->local->read(
-                    array("areaCode" => $areacode)
+                array("areaCode" => $areacode)
             );
 
             $returnData = array();
@@ -1966,7 +2033,8 @@ if (!function_exists('getTwilioPNByAreaCodeTeam')) {
 
 if (!function_exists('getTwilioPNByAreaCode')) {
 
-    function getTwilioPNByAreaCode($contryName = '', $areacode = '') {
+    function getTwilioPNByAreaCode($contryName = '', $areacode = '')
+    {
         $contryName = $contryName == '' ? 'US' : strtoupper($contryName);
         $areacode = $areacode == '' ? 510 : $areacode;
         $sid = config('bbconfig.sid');
@@ -1974,7 +2042,7 @@ if (!function_exists('getTwilioPNByAreaCode')) {
         $client = new Client($sid, $token);
 
         $numbers = $client->availablePhoneNumbers($contryName)->local->read(
-                array("areaCode" => $areacode)
+            array("areaCode" => $areacode)
         );
 
         $returnData = array();
@@ -1997,7 +2065,6 @@ if (!function_exists('getTwilioPNByAreaCode')) {
 }
 
 
-
 /**
  * This function is used to create the twilio account for the team members
  * @param type
@@ -2005,7 +2072,8 @@ if (!function_exists('getTwilioPNByAreaCode')) {
  */
 if (!function_exists('createTwilioCNTeam')) {
 
-    function createTwilioCNTeam($phoneNumber) {
+    function createTwilioCNTeam($phoneNumber)
+    {
         $id = getLoggedUserID();
         $TwilioData = currentUserTwilioData($id);
 
@@ -2016,10 +2084,10 @@ if (!function_exists('createTwilioCNTeam')) {
 
 // Purchase the first number on the list.
         $number = $client->incomingPhoneNumbers->create(
-                array(
-                    "phoneNumber" => $phoneNumber,
-                    "smsUrl" => "http://brandboostx.com/trck/trkTwillio.php"
-                )
+            array(
+                "phoneNumber" => $phoneNumber,
+                "smsUrl" => "http://brandboostx.com/trck/trkTwillio.php"
+            )
         );
 
         $response = array();
@@ -2033,19 +2101,19 @@ if (!function_exists('createTwilioCNTeam')) {
 }
 
 
-
 if (!function_exists('createTwilioCN')) {
 
-    function createTwilioCN($phoneNumber, $accountSid, $accountToken) {
+    function createTwilioCN($phoneNumber, $accountSid, $accountToken)
+    {
 
 
         $client = new Client($accountSid, $accountToken);
 
 // Purchase the first number on the list.
         $number = $client->incomingPhoneNumbers->create(
-                array(
-                    "phoneNumber" => $phoneNumber
-                )
+            array(
+                "phoneNumber" => $phoneNumber
+            )
         );
 
         $response = array();
@@ -2060,14 +2128,15 @@ if (!function_exists('createTwilioCN')) {
 
 if (!function_exists('updateTwilioStatus')) {
 
-    function updateTwilioStatus($accountSid, $status) {
+    function updateTwilioStatus($accountSid, $status)
+    {
 
         $sid = config('bbconfig.sid');
         $token = config('bbconfig.token');
         $client = new Client($sid, $token);
 
         $account = $client->api->accounts($accountSid)->update(
-                array('status' => $status)
+            array('status' => $status)
         );
 
         $response = array();
@@ -2084,14 +2153,15 @@ if (!function_exists('updateTwilioStatus')) {
 
 if (!function_exists('updateSMSUrl')) {
 
-    function updateSMSUrl($sid, $token, $contactSid) {
+    function updateSMSUrl($sid, $token, $contactSid)
+    {
 
         $client = new Client($sid, $token);
 
         $responseTwilio = $client->incomingPhoneNumbers($contactSid)->update(
-                array(
-                    "smsUrl" => "http://brandboost.io/sms"
-                )
+            array(
+                "smsUrl" => "http://brandboost.io/sms"
+            )
         );
 
         $response = array('status' => 'success');
@@ -2104,7 +2174,8 @@ if (!function_exists('updateSMSUrl')) {
 
 if (!function_exists('createSendGridSubAccount')) {
 
-    function createSendGridSubAccount($username, $email, $password, $ip) {
+    function createSendGridSubAccount($username, $email, $password, $ip)
+    {
 
         $params = array(
             'username' => $username,
@@ -2140,7 +2211,8 @@ if (!function_exists('createSendGridSubAccount')) {
 
 if (!function_exists('updateSendgridNotificationSettings')) {
 
-    function updateSendgridNotificationSettings($username) {
+    function updateSendgridNotificationSettings($username)
+    {
         $params = array(
             'enabled' => true,
             'url' => base_url() . 'trck/trkSendgrid.php',
@@ -2183,10 +2255,10 @@ if (!function_exists('updateSendgridNotificationSettings')) {
 }
 
 
-
 if (!function_exists('createWhitelabelLink')) {
 
-    function createWhitelabelLink() {
+    function createWhitelabelLink()
+    {
 
         $params = array(
             'domain' => 'brandboost.io',
@@ -2222,8 +2294,9 @@ if (!function_exists('createWhitelabelLink')) {
 
 if (!function_exists('getSendGridUserData')) {
 
-    function getSendGridUserData() {
-        $CI = & get_instance();
+    function getSendGridUserData()
+    {
+        $CI = &get_instance();
 
         $sandgriduser = config('bbconfig.sandgriduser');
         $sandgridpass = config('bbconfig.sandgridpass');
@@ -2258,7 +2331,8 @@ if (!function_exists('getSendGridUserData')) {
  */
 if (!function_exists('sendClientEmail')) {
 
-    function sendClientEmail($aData = array()) {
+    function sendClientEmail($aData = array())
+    {
         if (!empty($aData)) {
             $username = $aData['username'];
             $password = $aData['password'];
@@ -2309,9 +2383,10 @@ if (!function_exists('sendClientEmail')) {
 
 if (!function_exists('getCampaignReviews')) {
 
-    function getCampaignReviews($userID = '') {
+    function getCampaignReviews($userID = '')
+    {
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Brandboost_model", "hMBrandboost");
         $aData = $CI->hMBrandboost->getBrandboostByUserId($userID, 'onsite');
         return $aData;
@@ -2320,13 +2395,13 @@ if (!function_exists('getCampaignReviews')) {
 }
 
 
-
 if (!function_exists('latestReview')) {
 
-    function latestReview($userID = '') {
+    function latestReview($userID = '')
+    {
 
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("Reviews_model", "rReviews");
         $aData = $CI->rReviews->latestReviews($userID);
         return $aData;
@@ -2337,10 +2412,11 @@ if (!function_exists('latestReview')) {
 
 if (!function_exists('getUserAllDataValue')) {
 
-    function getUserAllDataValue($currentUserID) {
+    function getUserAllDataValue($currentUserID)
+    {
 
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Users_model", "rUser");
         $userDataArray = $CI->rUser->getUserAllData($currentUserID);
         return $userDataArray;
@@ -2356,7 +2432,8 @@ if (!function_exists('getUserAllDataValue')) {
  */
 if (!function_exists('setStringLimit')) {
 
-    function setStringLimit($string, $cLimit = '') {
+    function setStringLimit($string, $cLimit = '')
+    {
         $cLimit = $cLimit == '' ? 35 : $cLimit;
 
         $post = substr($string, 0, $cLimit);
@@ -2371,7 +2448,8 @@ if (!function_exists('setStringLimit')) {
 
 if (!function_exists('notifictionCaregory')) {
 
-    function notifictionCaregory($categry) {
+    function notifictionCaregory($categry)
+    {
         $returnCategory = '';
         switch ($categry) {
 
@@ -2413,7 +2491,8 @@ if (!function_exists('notifictionCaregory')) {
 
 }
 
-function timeAgo($datetime, $full = false) {
+function timeAgo($datetime, $full = false)
+{
     $now = new DateTime;
     $ago = new DateTime($datetime);
     $diff = $now->diff($ago);
@@ -2443,7 +2522,8 @@ function timeAgo($datetime, $full = false) {
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
-function timeAgoNotification($datetime, $full = false) {
+function timeAgoNotification($datetime, $full = false)
+{
     $now = new DateTime;
     $ago = new DateTime($datetime);
     $diff = $now->diff($ago);
@@ -2478,7 +2558,8 @@ function timeAgoNotification($datetime, $full = false) {
  * @param type $mobileNo
  * @return type
  */
-function phoneNoFormat($mobileNo) {
+function phoneNoFormat($mobileNo)
+{
     if ($mobileNo != '') {
         if (strlen($mobileNo) == 13) {
             $mobileNo = sprintf("(%s)-%s-%s", substr($mobileNo, 3, 3), substr($mobileNo, 6, 3), substr($mobileNo, 9));
@@ -2491,7 +2572,8 @@ function phoneNoFormat($mobileNo) {
     return $mobileNo;
 }
 
-function checkSiteCategory($dataArray, $categoryName) {
+function checkSiteCategory($dataArray, $categoryName)
+{
     foreach ($dataArray as $data) {
         $categoriesData = unserialize($data->site_categories);
         if (in_array($categoryName, $categoriesData)) {
@@ -2504,10 +2586,11 @@ function checkSiteCategory($dataArray, $categoryName) {
 
 if (!function_exists('getCharUserList')) {
 
-    function getCharUserList($char, $value) {
+    function getCharUserList($char, $value)
+    {
 
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Users_model", "rUser");
         $userDataArray = $CI->rUser->getCharUserList($char, $value);
         return $userDataArray;
@@ -2516,25 +2599,19 @@ if (!function_exists('getCharUserList')) {
 }
 
 
-
-
-
-
-
-
 if (!function_exists('webchatUsers')) {
 
-    function webchatUsers($userID) {
+    function webchatUsers($userID)
+    {
 
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $subscribersData = $CI->mSubscriber->webchatUsersDetails($userID);
         return $subscribersData;
     }
 
 }
-
 
 
 /**
@@ -2544,7 +2621,8 @@ if (!function_exists('webchatUsers')) {
  */
 if (!function_exists('getTwilioAccount')) {
 
-    function getTwilioAccount($contactNo) {
+    function getTwilioAccount($contactNo)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getTwilioAccount($contactNo);
         return $oData;
     }
@@ -2559,7 +2637,8 @@ if (!function_exists('getTwilioAccount')) {
  */
 if (!function_exists('getClientTwilioAccount')) {
 
-    function getClientTwilioAccount($currentUserid) {
+    function getClientTwilioAccount($currentUserid)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getClientTwilioAccountDetails($currentUserid);
         return $oData->contact_no;
     }
@@ -2574,13 +2653,13 @@ if (!function_exists('getClientTwilioAccount')) {
  */
 if (!function_exists('getTeamTwilioAccount')) {
 
-    function getTeamTwilioAccount($currentUserid) {
+    function getTeamTwilioAccount($currentUserid)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getTeamTwilioAccountDetails($currentUserid);
         return $oData;
     }
 
 }
-
 
 
 /**
@@ -2589,7 +2668,8 @@ if (!function_exists('getTeamTwilioAccount')) {
  */
 if (!function_exists('getTeamByroom')) {
 
-    function getTeamByroom($room) {
+    function getTeamByroom($room)
+    {
 
         $oData = \App\Models\Admin\WebChatModel::getTeamByroomDetails($room);
         if (!empty($oData)) {
@@ -2604,7 +2684,8 @@ if (!function_exists('getTeamByroom')) {
 
 if (!function_exists('getTeamMemberById')) {
 
-    function getTeamMemberById($TeamId) {
+    function getTeamMemberById($TeamId)
+    {
         $aData = array();
         $subscribersData = \App\Models\Admin\SubscriberModel::getTeamMemberById($TeamId);
         return $subscribersData[0];
@@ -2615,9 +2696,10 @@ if (!function_exists('getTeamMemberById')) {
 
 if (!function_exists('getteam_member')) {
 
-    function getteam_member($usrid) {
+    function getteam_member($usrid)
+    {
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $subscribersData = $CI->mSubscriber->getteam_member_name($usrid);
         return $subscribersData[0]->teamName;
@@ -2633,7 +2715,8 @@ if (!function_exists('getteam_member')) {
  */
 if (!function_exists('smsteam_member_name')) {
 
-    function smsteam_member_name($userID) {
+    function smsteam_member_name($userID)
+    {
         $oData = \App\Models\Admin\SubscriberModel::get_sms_team_member_name($userID);
         if (!empty($oData)) {
             return $oData[0]->teamName;
@@ -2651,14 +2734,14 @@ if (!function_exists('smsteam_member_name')) {
  */
 if (!function_exists('getlastChatMessage')) {
 
-    function getlastChatMessage($token) {
+    function getlastChatMessage($token)
+    {
 
         $oData = \App\Models\Admin\SubscriberModel::getlastChatMessageDetail($token);
         return $oData;
     }
 
 }
-
 
 
 /**
@@ -2669,14 +2752,14 @@ if (!function_exists('getlastChatMessage')) {
  */
 if (!function_exists('smallwfilterInput')) {
 
-    function smallwfilterInput($userID, $inputval) {
+    function smallwfilterInput($userID, $inputval)
+    {
 
         $oData = \App\Models\Admin\WebChatModel::smallwfilterModel($userID, $inputval);
         return $oData;
     }
 
 }
-
 
 
 /**
@@ -2687,15 +2770,14 @@ if (!function_exists('smallwfilterInput')) {
  */
 if (!function_exists('searchSmsByinput')) {
 
-    function searchSmsByinput($Number, $inputval) {
+    function searchSmsByinput($Number, $inputval)
+    {
 
         $oData = \App\Models\Admin\SubscriberModel::searchSmsByinputDetails($Number, $inputval);
         return $oData;
     }
 
 }
-
-
 
 
 /**
@@ -2705,7 +2787,8 @@ if (!function_exists('searchSmsByinput')) {
  */
 if (!function_exists('getincIdByuserId')) {
 
-    function getincIdByuserId($userID) {
+    function getincIdByuserId($userID)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getincIdByuserIdval($userID);
         return $oData;
     }
@@ -2719,14 +2802,16 @@ if (!function_exists('getincIdByuserId')) {
  */
 if (!function_exists('getincIdByPhone')) {
 
-    function getincIdByPhone($number) {
+    function getincIdByPhone($number)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getincIdByPhoneval($number);
         return $oData;
     }
 
 }
 
-function phone_display_custom_helper($num) {
+function phone_display_custom_helper($num)
+{
     $num = preg_replace('/[^0-9]/', '', $num);
 
     $len = strlen($num);
@@ -2743,7 +2828,8 @@ function phone_display_custom_helper($num) {
  */
 if (!function_exists('getUserbyPhone')) {
 
-    function getUserbyPhone($Number) {
+    function getUserbyPhone($Number)
+    {
         $oData = \App\Models\Admin\SubscriberModel::getUserbyPhoneDetails($Number);
         return $oData;
     }
@@ -2752,10 +2838,11 @@ if (!function_exists('getUserbyPhone')) {
 
 if (!function_exists('smschatUsers')) {
 
-    function smschatUsers($number) {
+    function smschatUsers($number)
+    {
 
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $subscribersData = $CI->mSubscriber->smschatUsersDetails($number);
         return $subscribersData;
@@ -2771,7 +2858,8 @@ if (!function_exists('smschatUsers')) {
  */
 if (!function_exists('getSubscribersInfo')) {
 
-    function getSubscribersInfo($userID) {
+    function getSubscribersInfo($userID)
+    {
 
         $oData = \App\Models\Admin\SubscriberModel::getSubscribersInfoDetails($userID);
         return $oData;
@@ -2782,10 +2870,11 @@ if (!function_exists('getSubscribersInfo')) {
 
 if (!function_exists('getSubscribersInfoByPhone')) {
 
-    function getSubscribersInfoByPhone($phoneNumber) {
+    function getSubscribersInfoByPhone($phoneNumber)
+    {
 
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Subscriber_model", "mSubscriber");
         $subscribersData = $CI->mSubscriber->SubscribersInfoByPhone($phoneNumber);
         return $subscribersData;
@@ -2795,10 +2884,11 @@ if (!function_exists('getSubscribersInfoByPhone')) {
 
 if (!function_exists('getVisitorUser')) {
 
-    function getVisitorUser($userId) {
+    function getVisitorUser($userId)
+    {
 
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Chat_model", "rChat");
         $visDataArray = $CI->rChat->getVisitorUser($userId);
         return $visDataArray;
@@ -2806,17 +2896,20 @@ if (!function_exists('getVisitorUser')) {
 
 }
 
-function db_in($string) {
+function db_in($string)
+{
     return addslashes(html_entity_decode(trim($string), ENT_QUOTES));
 }
 
-function db_out($string) {
+function db_out($string)
+{
     return stripslashes(htmlentities(trim($string), ENT_QUOTES));
 }
 
 if (!function_exists('getIP')) {
 
-    function getIP() {
+    function getIP()
+    {
 
         $ipaddress = '';
         if (getenv('HTTP_CLIENT_IP'))
@@ -2842,7 +2935,8 @@ if (!function_exists('getIP')) {
 
 if (!function_exists('getBrowserN')) {
 
-    function getBrowserN() {
+    function getBrowserN()
+    {
         $u_agent = $_SERVER['HTTP_USER_AGENT'];
         $bname = 'Unknown';
         $platform = 'Unknown';
@@ -2881,7 +2975,7 @@ if (!function_exists('getBrowserN')) {
 // finally get the correct version number
         $known = array('Version', $ub, 'other');
         $pattern = '#(?<browser>' . join('|', $known) .
-                ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+            ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
         if (!preg_match_all($pattern, $u_agent, $matches)) {
 // we have no matching number just continue
         }
@@ -2921,166 +3015,192 @@ if (!function_exists('getBrowserN')) {
  * @param type $clientID
  * @return type
  */
-function emailSend($date) {
+function emailSend($date)
+{
     $aEmail = \App\Models\Admin\ReportModel::getEmailSend($date);
     return $aEmail;
 }
 
-function emailFailed($date) {
+function emailFailed($date)
+{
 
     $aEmail = \App\Models\Admin\ReportModel::getEmailFailed($date);
     return $aEmail;
 }
 
-function emailOpen($date) {
+function emailOpen($date)
+{
 
 
     $aEmail = \App\Models\Admin\ReportModel::getEmailOpen($date);
     return $aEmail;
 }
 
-function formOpen($date) {
+function formOpen($date)
+{
 
 
     $aEmail = \App\Models\Admin\ReportModel::getFormOpen($date);
     return $aEmail;
 }
 
-function feedbackReview($date) {
+function feedbackReview($date)
+{
 
 
     $aEmail = \App\Models\Admin\ReportModel::getFeedbackReview($date);
     return $aEmail;
 }
 
-function getAllFeedbackReview() {
+function getAllFeedbackReview()
+{
 
 
     $aEmail = \App\Models\Admin\ReportModel::getAllFeedbackReview();
     return $aEmail;
 }
 
-function fiveRating($date = '') {
+function fiveRating($date = '')
+{
 
 
     $aEmail = \App\Models\Admin\ReportModel::getFiveRating($date);
     return $aEmail;
 }
 
-function fiveRatingAll($date = '') {
+function fiveRatingAll($date = '')
+{
 
 
     $aEmail = \App\Models\Admin\ReportModel::getAllFiveRating($date);
     return $aEmail;
 }
 
-function threeRating($date = '') {
+function threeRating($date = '')
+{
 
 
     $aEmail = \App\Models\Admin\ReportModel::getThreeRating($date);
     return $aEmail;
 }
 
-function threeRatingAll($date = '') {
+function threeRatingAll($date = '')
+{
 
 
     $aEmail = \App\Models\Admin\ReportModel::getAllThreeRating($date);
     return $aEmail;
 }
 
-function oneRating($date = '') {
+function oneRating($date = '')
+{
 
     $aEmail = \App\Models\Admin\ReportModel::getOneRating($date);
     return $aEmail;
 }
 
-function oneRatingAll($date = '') {
+function oneRatingAll($date = '')
+{
 
 
     $aEmail = \App\Models\Admin\ReportModel::getAllOneRating($date);
     return $aEmail;
 }
 
-function getAllEmailCount() {
+function getAllEmailCount()
+{
 
     $aEmail = \App\Models\Admin\ReportModel::getAllEmailSend();
     return $aEmail;
 }
 
-function smsRecordSend($date = '') {
+function smsRecordSend($date = '')
+{
 
     $aSms = \App\Models\Admin\ReportModel::getSmsRecordSend($date);
     return $aSms;
 }
 
-function smsRecordFailed($date = '') {
+function smsRecordFailed($date = '')
+{
 
     $aSms = \App\Models\Admin\ReportModel::getSmsRecordFailed($date);
     return $aSms;
 }
 
-function smsRecordOpen($date = '') {
+function smsRecordOpen($date = '')
+{
 
     $aSms = \App\Models\Admin\ReportModel::getSmsRecordOpen($date);
     return $aSms;
 }
 
-function smsRecordClick($date = '') {
+function smsRecordClick($date = '')
+{
 
     $aSms = \App\Models\Admin\ReportModel::getSmsRecordClick($date);
     return $aSms;
 }
 
-function getAllSmsRecordSend() {
+function getAllSmsRecordSend()
+{
 
     $aSms = \App\Models\Admin\ReportModel::getAllSmsRecordSend();
     return $aSms;
 }
 
-function getUserTag() {
+function getUserTag()
+{
 
     $aTags = \App\Models\Admin\ReportModel::getClientTags();
     return $aTags;
 }
 
-function getTags() {
+function getTags()
+{
 
 
     $aTags = \App\Models\Admin\ReportModel::getTags();
     return $aTags;
 }
 
-function getTagFeedback($tagID) {
+function getTagFeedback($tagID)
+{
 
     $aTags = \App\Models\Admin\ReportModel::getTagFeedback($tagID);
     return $aTags;
 }
 
-function topThreeTagGroup() {
+function topThreeTagGroup()
+{
 
     $aTags = \App\Models\Admin\ReportModel::getTopThreeTagGroup();
     return $aTags;
 }
 
-function numberOfTagInGroup($groupId) {
+function numberOfTagInGroup($groupId)
+{
 
     $aTags = \App\Models\Admin\ReportModel::numberOfTagInGroup($groupId);
     return $aTags;
 }
 
-function getListSubscriber($status) {
+function getListSubscriber($status)
+{
 
     $aListSubs = \App\Models\Admin\ReportModel::getListSubscriber($status);
     return $aListSubs;
 }
 
-function getNegativeTime() {
+function getNegativeTime()
+{
 
     $aListSubs = \App\Models\Admin\ReportModel::getNegativeTime();
     return $aListSubs;
 }
 
-function getBusyTime() {
+function getBusyTime()
+{
 
     $aListSubs = \App\Models\Admin\ReportModel::getBusyTime();
     return $aListSubs;
@@ -3088,7 +3208,8 @@ function getBusyTime() {
 
 if (!function_exists('ratingView')) {
 
-    function ratingView($rating) {
+    function ratingView($rating)
+    {
 
         if ($rating >= 4) {
             $smilyImage = '<div class="media-left media-middle"> <img src="' . base_url('assets/images/smiley_green.png') . '" class="img-circle" width="26" alt=""> </div><div class="media-left"><div class=""><span class="text-default text-semibold">' . number_format($rating, 1) . '</span> </div><div class="text-muted text-size-small">Positive</div></div>';
@@ -3108,7 +3229,8 @@ if (!function_exists('ratingView')) {
 
 if (!function_exists('smilyRating')) {
 
-    function smilyRating($rating) {
+    function smilyRating($rating)
+    {
 
         if ($rating >= 4) {
             $smilyImage = base_url('assets/images/smiley_green.png');
@@ -3123,26 +3245,30 @@ if (!function_exists('smilyRating')) {
 
 }
 
-function base64_url_encode($input) {
+function base64_url_encode($input)
+{
     $salt = 'flyingmonkeys@';
     $string = $input . $salt;
     return strtr(base64_encode($string), '+/=', '-_ ');
 }
 
-function base64_url_decode($input) {
+function base64_url_decode($input)
+{
     $salt = 'flyingmonkeys@';
     $string = base64_decode(strtr($input, '-_ ', '+/='));
     $outputString = str_replace($salt, "", $string);
     return $outputString;
 }
 
-function getDefaultEmailFooter() {
+function getDefaultEmailFooter()
+{
 //$src = '<hr><br<br><div style="width:100%;">This email is sent from <a href="'.base_url().'">Brandboost Community</a>. You can also change email settings or <a href="'.base_url().'/preferences/unsubscribe?m={{MODULENAME}}&mid={{MODULEUNITID}}&sid={{SUBSCRIBERID}}&gid={{GLOBALSUBSCRIBERID}}">Click here</a> to unsubscribe</div>';
     $src = '<hr><br<br><div style="width:100%;">This email is sent from <a href="' . base_url() . '">Brandboost Community</a>. You can also change email settings or <a href="' . base_url() . 'preferences/unsubscribe?gid={{GLOBALSUBSCRIBERID}}">Click here</a> to unsubscribe</div>';
     return $src;
 }
 
-function mobileNoFormat($mobileNo) {
+function mobileNoFormat($mobileNo)
+{
     if (!isset($mobileNo{3})) {
         return '';
     }
@@ -3168,14 +3294,16 @@ function mobileNoFormat($mobileNo) {
     }
 }
 
-function dataFormat($dataValue = '') {
+function dataFormat($dataValue = '')
+{
     $timeStamp = (!empty($dataValue)) ? strtotime($dataValue) : time();
 //$gmt_date = strtotime(gmdate('Y-m-d H:i:s', $timeStamp));
     $estTime = date("F dS Y", ($timeStamp - 14400));
     return $estTime;
 }
 
-function usaDate($dataValue = '') {
+function usaDate($dataValue = '')
+{
     $timeStamp = (!empty($dataValue)) ? strtotime($dataValue) : time();
 //$gmt_date = strtotime(gmdate('Y-m-d H:i:s', $timeStamp));
 
@@ -3192,14 +3320,16 @@ function usaDate($dataValue = '') {
     return $timeString;
 }
 
-function dataFormatHours($dataValue = '') {
+function dataFormatHours($dataValue = '')
+{
     $timeStamp = (!empty($dataValue)) ? strtotime($dataValue) : time();
 //$gmt_date = strtotime(gmdate('Y-m-d H:i:s', $timeStamp));
     $estTime = date("h:i A", ($timeStamp - 14400));
     return $estTime;
 }
 
-function dataFormat_old($dataValue = '') {
+function dataFormat_old($dataValue = '')
+{
     if ($dataValue == '') {
         return date('F dS Y');
     } else {
@@ -3207,7 +3337,8 @@ function dataFormat_old($dataValue = '') {
     }
 }
 
-function getPlatformImg($platformName) {
+function getPlatformImg($platformName)
+{
     $platformImg = '';
     if ($platformName == 'linux') {
 //$platformImg = '<img src="'.base_url().'assets/images/linux.png" alt="Linux" title="Linux" width="40">';
@@ -3224,7 +3355,8 @@ function getPlatformImg($platformName) {
     return $platformImg;
 }
 
-function getBrowserImg($browserName) {
+function getBrowserImg($browserName)
+{
     $browserImg = '';
     if ($browserName == 'Mozilla Firefox') {
 //$browserImg = '<img src="'.base_url().'assets/images/ff.png" alt="Mozilla Firefox" title="Mozilla Firefox" width="30">';
@@ -3246,7 +3378,8 @@ function getBrowserImg($browserName) {
     return $browserImg;
 }
 
-function getRemoteFileSize($file_url) {
+function getRemoteFileSize($file_url)
+{
     $head = array_change_key_case(get_headers($file_url, 1));
 // content-length of download (in bytes), read from Content-Length: field
 
@@ -3277,7 +3410,8 @@ function getRemoteFileSize($file_url) {
 // return formatted size
 }
 
-function displayNoData($avatar = false) {
+function displayNoData($avatar = false)
+{
     if ($avatar == true) {
         $html = '<div class="media-left media-middle"> ' . showUserAvtar() . ' </div><div class="media-left"><span class="text-muted text-size-small">[No Data]</span></div>';
     } else {
@@ -3286,7 +3420,8 @@ function displayNoData($avatar = false) {
     return $html;
 }
 
-function code_to_country($code) {
+function code_to_country($code)
+{
 
     $code = strtoupper($code);
 
@@ -3545,7 +3680,8 @@ function code_to_country($code) {
         return $countryList[$code];
 }
 
-function showUserIcon($eventType) {
+function showUserIcon($eventType)
+{
 
     if ($eventType == 'added_any_comment') {
         $icon = 'img_36.png';
@@ -3614,7 +3750,8 @@ function showUserIcon($eventType) {
     return $icon;
 }
 
-function notificationBackgroundColor($notificatioStatus) {
+function notificationBackgroundColor($notificatioStatus)
+{
 
     if ($notificatioStatus == 0) {
         $background_color = '#e8dce0';
@@ -3626,10 +3763,11 @@ function notificationBackgroundColor($notificatioStatus) {
 
 if (!function_exists('getNotificationLang')) {
 
-    function getNotificationLang($eventType, $userRole) {
+    function getNotificationLang($eventType, $userRole)
+    {
 
         $aData = array();
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model("admin/Notifications_model", "mNotifications");
         $oNotificationLang = $CI->mNotifications->getNotificationLang($eventType);
         if ($userRole == 1) {
@@ -3651,7 +3789,8 @@ if (!function_exists('getNotificationLang')) {
      */
     if (!function_exists('logUserActivity')) {
 
-        function logUserActivity($aData) {
+        function logUserActivity($aData)
+        {
             $tableName = 'tbl_user_activities';
             $userID = Session::get("team_user_id");
             if ($userID > 0) {
@@ -3669,7 +3808,8 @@ if (!function_exists('getNotificationLang')) {
      */
     if (!function_exists('fetchPermissions')) {
 
-        function fetchPermissions($moduleName) {
+        function fetchPermissions($moduleName)
+        {
 
             $canRead = $canWrite = true;
             $aPermissions = Session::get('permission');
@@ -3689,7 +3829,8 @@ if (!function_exists('getNotificationLang')) {
     /**
      * Get's location data
      */
-    function getLocationData() {
+    function getLocationData()
+    {
         global $platform_device;
         $ipaddress = '';
         if (getenv('HTTP_CLIENT_IP'))
@@ -3718,7 +3859,8 @@ if (!function_exists('getNotificationLang')) {
     /**
      * Get's location data by ipaddress
      */
-    function getLocationInfoByIp() {
+    function getLocationInfoByIp()
+    {
 
         $client = @$_SERVER['HTTP_CLIENT_IP'];
         $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -3752,7 +3894,8 @@ if (!function_exists('getNotificationLang')) {
  * @param type $num
  * @return type
  */
-function phoneDisplay($num) {
+function phoneDisplay($num)
+{
     $num = preg_replace('/[^0-9]/', '', $num);
     $len = strlen($num);
     if ($len == 11 && substr($num, 0, 1) == '1') {
@@ -3766,7 +3909,8 @@ function phoneDisplay($num) {
  * @param type $mobileNo
  * @return string
  */
-function mobileNoFormatChat($mobileNo) {
+function mobileNoFormatChat($mobileNo)
+{
     if (!isset($mobileNo{3})) {
         return '';
     }
@@ -3797,7 +3941,8 @@ function mobileNoFormatChat($mobileNo) {
  * @param type $mobileNo
  * @return string
  */
-function getBrowser() {
+function getBrowser()
+{
     $u_agent = $_SERVER['HTTP_USER_AGENT'];
     $bname = 'Apple Safari';
     $platform = 'mac';
@@ -3833,7 +3978,7 @@ function getBrowser() {
     // finally get the correct version number
     $known = array('Version', $ub, 'other');
     $pattern = '#(?<browser>' . join('|', $known) .
-            ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+        ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
     if (!preg_match_all($pattern, $u_agent, $matches)) {
         // we have no matching number just continue
     }
@@ -3865,9 +4010,10 @@ function getBrowser() {
 
 /**
  * Used to add page and visitor info
- * @param type $clientId, $sourcePage, $sourceId, $sourceType
+ * @param type $clientId , $sourcePage, $sourceId, $sourceType
  */
-function addPageAndVisitorInfo($clientId, $sourcePage, $sourceId, $sourceType = 'Visit') {
+function addPageAndVisitorInfo($clientId, $sourcePage, $sourceId, $sourceType = 'Visit')
+{
 
     $locationData = getLocationData();
     $id = getLoggedUserID();
@@ -3905,7 +4051,8 @@ function addPageAndVisitorInfo($clientId, $sourcePage, $sourceId, $sourceType = 
  */
 if (!function_exists('getLoggedUserID')) {
 
-    function getLoggedUserID() {
+    function getLoggedUserID()
+    {
 
         $oUser = array();
 

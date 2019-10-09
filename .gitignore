@@ -1,4 +1,5 @@
 /hot
+/hot
 /storage
 /storage/*.key
 .phpunit.result.cache
@@ -17,3 +18,6 @@ vendor
 /nbproject/private/
 .idea
 .idea/*
+public/js/app.js
+/public/js/app.js
+

@@ -15,9 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('admin/', 'Admin\Dashboard@index');
+
 Route::get('admin/login', 'Admin\Login@index');
 Route::post('admin/login', 'Admin\Login@index');
 Route::get('admin/login/logout', 'Admin\Login@logout');
+
 
 // User Section
 Route::get('user/login', 'User\Login@index');
@@ -817,6 +820,10 @@ Route::post('feedback/saveResolution', 'Feedback@saveResolution');
 
 //Servey
 Route::get('survey/{hashcode}', 'Survey@index');
+
+//VueJS Helper Utilities Controller
+Route::post('admin/helperutility/getSubscriberTags', 'Admin\HelperUtility@getSubscriberTags');
+
 
 
 

@@ -31,7 +31,20 @@ class Tags extends Controller {
                     </ul>';
 
         $aTag = TagsModel::getClientTags($userID);
-        return view ('admin.tags.index', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
+
+        if (!empty($aTag)) {
+            foreach ($aTag as $aUnit) {
+                $aGroupID[$aUnit->id]['group_name'] = $aUnit->group_name;
+                $aGroupID[$aUnit->id]['status'] = $aUnit->status;
+                $aGroupID[$aUnit->id]['id'] = $aUnit->id;
+            }
+        }
+        krsort($aGroupID);
+
+        //$aTag->aGroupID = $aGroupID;
+//        return view ('admin.tags.index', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
+        echo json_encode(['aTag' => $aTag, 'aGroupID' => $aGroupID]);
+        exit;
     }
 
     public function review($tagID) {
@@ -122,7 +135,17 @@ class Tags extends Controller {
                     </ul>';
 
         $tagData = $mTag->getAllClientTags($userID);
-        return view ('admin.tags.tagsfeedback', array('title' => 'Tags Feedback', 'pagename' => $breadcrumb, 'tagData' => $tagData));
+        //return view ('admin.tags.tagsfeedback', array('title' => 'Tags Feedback', 'pagename' => $breadcrumb, 'tagData' => $tagData));4
+
+        if (!empty($tagData)) {
+            foreach ($tagData as $tagDataVal) {
+                $tagDataByIdCnt = $mTag->getFeedbackByTagID($tagDataVal->id);
+                $tagDataVal->TagDataById = !empty($tagDataByIdCnt) ? count($tagDataByIdCnt) : 0;
+            }
+        }
+
+        echo json_encode($tagData);
+        exit;
     }
 
     public function listAllTags(Request $request) {

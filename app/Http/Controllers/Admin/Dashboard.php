@@ -13,7 +13,27 @@ use Session;
 
 class Dashboard extends Controller {
 
-    //
+
+    /**
+     * Default function
+     * @param string $userID
+     * @return mixed
+     */
+    public function index_new($userID = '') {
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="" class="sidebar-control active hidden-xs " data-original-title="Dashboard">Dashboard</a></li>
+                    </ul>';
+
+        $aData = array(
+            'title' => 'Dashboard',
+            'pagename' => $breadcrumb
+        );
+        return view('admin.dashboard', $aData);
+    }
+
+
     /**
      * Used to display client's dashboard data
      */
@@ -105,6 +125,48 @@ class Dashboard extends Controller {
      * @param Request $request
      */
     public function getReviewData(Request $request) {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+        if (!empty($request)) {
+            $draw = $request->draw;
+            $start = $request->start;
+            $rowperpage = $request->length;
+            $columnIndex = $request->order[0]['column'];
+            $columnName = $request->columns[$columnIndex]['data'];
+            $columnSortOrder = $request->order[0]['dir'];
+            $searchValue = $request->search['value'];
+            $mReviews = new ReviewsModel();
+            $totalData = $mReviews->getMyReviews($userID);
+            $totalRecords = count($totalData);
+
+            //$reviewsData = $mReviews->getMyReviewsByFilter($userID, $searchValue, $columnName, $columnSortOrder, $start, $rowperpage);
+
+            $data = array();
+
+            foreach ($totalData as $row) {
+                $data[] = array(
+                    "review_title" => $row->review_title,
+                    "ratings" => $row->ratings,
+                    "brand_title" => $row->brand_title,
+                    "created" => $row->created,
+                    "action" => ''
+                );
+            }
+
+            $response = array(
+                "draw" => intval($draw),
+                "iTotalRecords" => count($totalData),
+                "iTotalDisplayRecords" => $totalRecords,
+                "aaData" => $data
+            );
+
+            echo json_encode($response);
+        }
+    }
+
+
+    public function getReviewDataOld(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
