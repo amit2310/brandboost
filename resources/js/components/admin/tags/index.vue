@@ -2,7 +2,6 @@
 
     <div class="content" id="masterContainer">
 
-        <div class="content">
             <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
             <div class="page_header">
                 <div class="row">
@@ -342,8 +341,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
     </div>
 
 </template>
