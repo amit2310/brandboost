@@ -123,8 +123,9 @@
 
 @php
     $automation_type  = isset($automation_type) ? $automation_type : '';
-
-    if (\Request::segment(2) == 'modules' && \Request::segment(3) == 'nps') {
+    if (\Request::segment(2) == '') {
+        $pageColor = 'onsite_sec';
+    }else if (\Request::segment(2) == 'modules' && \Request::segment(3) == 'nps') {
         $pageColor = 'nps_sec';
     } else if (\Request::segment(2) == 'brandboost' && \Request::segment(3) == 'widget_overview' && \Request::segment(4) == '') {
         $pageColor = 'widget_sec';
