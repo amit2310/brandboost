@@ -1,9 +1,35 @@
 /******************************
 CARD CLASSES
 ******************************/
-.card{background: #FFFFFF;box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);border-radius: 4px;padding: 30px 40px;	border: none!important;	margin-bottom: 24px;}
+.card{background: #FFFFFF;box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);border-radius: 4px;padding: 30px 40px;	border: none!important;	margin-bottom: 24px; position: relative}
 .card hr{border-color: #f0f1f4!important}
+.card.card_shadow{position: relative; z-index: 1;}
+.card.card_shadow:before{position: absolute; height: 11px; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);border-radius:0 0 4px 4px; width: 90%; left: 5%; bottom: -11px; content: ''; background:url(../images/shadow_bkg.png) left top repeat-x #fff; z-index: 0;}
 
+
+
+
+/******************************
+SHADOWS STYLES
+******************************/
+.shadow1{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
+.shadow_none{box-shadow: none!important;}
+
+
+
+
+
+/******************************
+SMART POPUP SLIDING BOX
+******************************/
+.box {float: left; display: none;top: 0!important;height: 100%;width: 424px;position:fixed!important;box-sizing: border-box; right: 0!important; border-radius: 0px;   box-shadow: 0 10px 12px 0 rgba(1, 21, 64, 0.06)!important; padding: 0px; background: #fff!important; z-index: 99999; }
+.box > div {position: relative!important;	background: #fff!important;	z-index: 999!important;}
+.box:after {position: fixed;	content: '';	left: 0;	top: 0;	right:0;	bottom:0;	width: 100%;	height: 100%;	z-index: -1;	background:rgba(38, 87, 179, 0.05)}
+.box .cross_icon{right: 30px; top: 30px; position: absolute; width: 28px; height: 28px; cursor: pointer; z-index: 99}
+.box hr{border-color: #edf1f6!important}
+@media only screen and (min-height:900px){
+	.bottom-position{position: absolute; bottom: 40px; width: 100%; max-width: 368px;}
+}
 
 
 
@@ -13,6 +39,55 @@ Misc
 .grey-sub-headings{font-size: 11px; text-transform: uppercase; color: #a0adbb; font-weight: 500; letter-spacing: 0.02em; line-height: 13px; margin: 14px 0 20px; }
 .min-h-280{min-height: 280px;}
 .shadow-none{box-shadow: none!important}
+.min_w_160{min-width: 160px;}
+.h100{height: 100vh}
+.h235{height: 235px;}
+
+
+
+
+/******************************
+FORMS GROUP
+******************************/
+.form-group label{font-size: 14px; color: #242B3D; font-weight: 500; margin-bottom: 7px;}
+.form-group .form-control{font-size: 16px; color: #7B89A6; font-weight: 400; border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; padding: 5px 17px;}
+.form-group .form-control.h56{height: 56px;}
+.form-control::placeholder {color: #7B89A6; opacity: 1;}
+
+
+.phonenumber{border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; height: 56px; padding: 5px 17px;}
+.phonenumber .inputbox{border: none; font-size: 16px; color: #7B89A6; font-weight: 400; background: none; border-left: 1px solid #C4CFE1; padding-left: 17px; margin: 11px 0 0 10px; height: 20px; max-width: 230px; }
+.phonenumber .inputbox::placeholder {color: #7B89A6; opacity: 1;}
+
+/******************************
+TABLES STYLES
+******************************/
+.table_head_action{margin-bottom: 30px}
+.table.table-borderless tbody tr{border-bottom: 2px solid #edf1fb; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
+.table.table-borderless tbody tr:last-child{border: none!important; }
+.table.table-borderless tbody tr td{background: #fff;  color: #687693; font-size: 14px; font-weight: 400; vertical-align: middle;border: none; padding: 16px 12px; }
+.table.table-borderless tbody tr td:first-child{padding-left: 40px ; border-radius: 2px 0 0 2px; }
+.table.table-borderless tbody tr td:last-child{padding-right: 40px ; border-radius: 0 2px 2px 0;}
+.table.table-borderless tbody tr:hover td{background: #fcfdff;}
+
+
+.table.table-borderless span.icons{margin: 0 5px;}
+.table.table-borderless .badge.badge-dark{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
+
+.table_action_dropdown{background: none; border: none; color: #7B89A6; font-size: 14px; font-weight: 400;}
+.table_search{border: none; padding-left: 25px; background: url(../images/search_icon_16.svg) left 4px no-repeat; color: #7B89A6; font-size: 14px; font-weight: 400; max-width: 90px; height: 20px}
+.table_search::placeholder {color: #7B89A6; opacity: 1;}
+
+
+
+
+
+/******************************
+DOTS STYLES
+******************************/
+.dot_6{width: 6px; height: 6px; border-radius: 50px; display: block;}
+
+
 
 /******************************
 List Styles Classes
@@ -26,17 +101,19 @@ List Styles Classes
 
 
 
-
-
 /******************************
 Button CLASSES
 ******************************/
 .btn{font-size: 14px; font-weight: 600; line-height: 120%; box-shadow: 0px 2px 2px rgba(0, 121, 170, 0.05); border-radius: 50px; padding-left: 20px; padding-right: 10px }
 .btn span{margin-left: 10px}
 .btn:hover{color: #ffffff; background: #5d96f8 }
+.btn-lg{height: 52px; line-height: 26px;}
 .btn-md{height: 40px; line-height: 26px;}
 .btn-sm{height: 36px; line-height: 26px;}
+
+
 .circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}
+.circle-icon-32{width: 32px;height: 32px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center;  }
 
 
 /******************************
@@ -60,6 +137,16 @@ BORDER CLASSES
 
 
 
+/******************************
+BORDER RADIUS CLASSES
+******************************/
+.br4{border-radius: 4px;}
+.br5{border-radius: 5px;}
+.br6{border-radius: 6px;}
+.br7{border-radius: 7px;}
+.br8{border-radius: 8px;}
+.br9{border-radius: 9px;}
+.br10{border-radius: 10px;}
 
 
 
@@ -165,6 +252,7 @@ COLOR CLASSES
 /******************************
 Background COLOR CLASSES
 ******************************/
+.bkg_blue_000{background: #e3eeff}
 .bkg_blue_100{background: #A5CEFF}
 .bkg_blue_200{background: #73ABFF}
 .bkg_blue_300{background: #4F8AF4}
@@ -383,6 +471,7 @@ MARGIN CLASSES
 .mb30{margin-bottom: 30px!important;}
 .mb40{margin-bottom: 40px!important;}
 .mb50{margin-bottom: 50px!important;}
+.mb65{margin-bottom: 65px!important;}
 
 .ml0{margin-left: 0px!important;}
 .ml10{margin-left: 10px!important;}
@@ -446,6 +535,8 @@ Headings  20px to 36px
 .htxt_regular_32{font-size: 32px; font-weight: 400; line-height: 120%;}
 .htxt_regular_36{font-size: 36px; font-weight: 400; line-height: 120%;}
 
+
+
 /******************************
 Line Height CLASSES
 ******************************/
@@ -455,6 +546,7 @@ Line Height CLASSES
 .lh_160{line-height: 160%;}
 .lh_180{line-height: 180%;}
 .lh_200{line-height: 200%;}
+.lh_32{line-height: 32px;}
 
 
 
