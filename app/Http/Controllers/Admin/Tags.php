@@ -111,7 +111,17 @@ class Tags extends Controller {
                     </ul>';
 
         $tagData = $mTag->getAllClientTags($userID);
-        return view ('admin.tags.tagsreview', array('title' => 'Tags Review', 'pagename' => $breadcrumb, 'tagData' => $tagData));
+        //return view ('admin.tags.tagsreview', array('title' => 'Tags Review', 'pagename' => $breadcrumb, 'tagData' => $tagData));
+
+        if (!empty($tagData)) {
+            foreach ($tagData as $tagDataVal) {
+                $tagDataByIdCnt = $mTag->getReviewsByTagID($tagDataVal->id);
+                $tagDataVal->TagDataById = !empty($tagDataByIdCnt) ? count($tagDataByIdCnt) : 0;
+            }
+        }
+
+        echo json_encode($tagData);
+        exit;
     }
 
 
