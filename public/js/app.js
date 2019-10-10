@@ -36927,4 +36927,4 @@ module.exports = __webpack_require__(/*! /home1/lamppp/htdocs/vue.brandboostx.co
 
 /***/ })
 
-/******/ });
+/******/ }); 
