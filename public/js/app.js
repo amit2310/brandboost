@@ -5731,9 +5731,8 @@ var tkn = $('meta[name="_token"]').attr('content');
     axios.get('/admin/tags/').then(function (response) {
       //console.log(response.data);
       _this.oTags = response.data.aTag;
-      _this.oGroupIDs = response.data.aGroupID;
-      console.log(_this.oTags);
-      console.log(_this.oGroupIDs);
+      _this.oGroupIDs = response.data.aGroupID; //console.log(this.oTags);
+      //console.log(this.oGroupIDs);
     });
     console.log('Component mounted.');
   }
