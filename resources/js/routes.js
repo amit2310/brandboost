@@ -11,6 +11,7 @@ import TagsFeedback from './components/admin/tags/tagsfeedback';
 
 
 const routes = [
+    { path: '/', component: Dashboard },
     { path: '/dashboard', component: Dashboard },
     { path: '/live', component: Live },
     { path: '/contacts/mycontacts', component: Contact },

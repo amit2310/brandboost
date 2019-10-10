@@ -19,7 +19,7 @@ class Login extends Controller {
 
     /**
      * Used to login brandboost user
-     * 
+     *
      * @param Request $request
      * @return display login page and redirect to dashboard page after authorization
      */
@@ -52,7 +52,7 @@ class Login extends Controller {
             //Apply validation
             $mLogin = new LoginModel();
             $checkAdminUser = $mLogin->verifyAdminUser($loginid, $password, $remember);
-            
+
             if (!empty($checkAdminUser->id) && $checkAdminUser->id > 0) {
                 //Save login history
                 $mLogin->saveUserHistory($checkAdminUser->id, $platform_device);
@@ -123,7 +123,7 @@ class Login extends Controller {
                         echo json_encode($response);
                         exit;
                     } else {
-                        return redirect('/admin/dashboard');
+                        return redirect('/admin/');
                     }
                 } else {
                     if ($loginType == 'ajax') {
@@ -152,7 +152,7 @@ class Login extends Controller {
 
     /**
      * Used to logout brandboost user
-     * 
+     *
      * @param Request $request
      * @return redirect to login page
      */
@@ -164,7 +164,7 @@ class Login extends Controller {
         $webChatModel->lastLoginDetail($aUser->id, $aData);
         Session::flush();
         Session::regenerate(true);
-        return redirect('/admin/login'); 
+        return redirect('/admin/login');
     }
 
 }
