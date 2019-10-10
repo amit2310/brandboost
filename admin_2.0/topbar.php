@@ -1,6 +1,6 @@
 <div class="topbar">
   <nav class="navbar-custom">
-   <div class="top-bar-top-section mb20">
+   <div class="">
     <ul class="list-unstyled topbar-nav float-right mb-0" >
       <li class="hide-phone app-search">
         <form role="search" class="">
@@ -40,7 +40,7 @@
       
     </ul>
     <!--end topbar-nav-->
-    <ul class="list-unstyled topbar-nav top-breadcrumb mb-0">
+    <ul class="list-unstyled topbar-nav top-breadcrumb float-left mt8 mb-0">
       <li>
         <a href="#"><img src="assets/images/mail-open-line.svg"/> &nbsp;Home</a>
       </li>
@@ -61,15 +61,7 @@
     </div>
     
     
-    <div class="top-bar-top-section">
-    <ul class="list-unstyled topbar-nav mb-0">
-      <li>
-        <button class="button-menu-mobile nav-link waves-effect waves-light"><img src="assets/images/BACK.svg"/></button>
-      </li>
-      <li class="ml20"><h3 class="htxt_medium_24 dark_700">Dashboard</h3></li>
-    </ul>
-    <div class="clearfix"></div>
-	  </div>
+    
     
     
     

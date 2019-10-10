@@ -38232,6 +38232,9 @@ import SmsTemplates from './components/admin/templates/Sms.vue';*/
 
 
 var routes = [{
+  path: '/',
+  component: _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__["default"]
+}, {
   path: '/dashboard',
   component: _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__["default"]
 }, {
@@ -38276,7 +38279,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home1/lamppp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })
