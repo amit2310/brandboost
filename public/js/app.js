@@ -42070,7 +42070,6 @@ __webpack_require__.r(__webpack_exports__);
     number_format: function number_format(num, placeVal) {
       var placeVal = placeVal != '' ? placeVal : 2;
       return parseFloat(Math.round(num * 100) / 100).toFixed(placeVal);
-      ;
     }
   }
 });
