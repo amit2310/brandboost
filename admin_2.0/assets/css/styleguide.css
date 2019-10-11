@@ -42,6 +42,7 @@ Misc
 .min_w_160{min-width: 160px;}
 .h100{height: 100vh}
 .h235{height: 235px;}
+.min_h_185{min-height: 185px;}
 
 
 
@@ -58,6 +59,9 @@ FORMS GROUP
 .phonenumber{border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; height: 56px; padding: 5px 17px;}
 .phonenumber .inputbox{border: none; font-size: 16px; color: #7B89A6; font-weight: 400; background: none; border-left: 1px solid #C4CFE1; padding-left: 17px; margin: 11px 0 0 10px; height: 20px; max-width: 230px; }
 .phonenumber .inputbox::placeholder {color: #7B89A6; opacity: 1;}
+
+
+
 
 /******************************
 TABLES STYLES

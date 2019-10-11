@@ -41,7 +41,7 @@
    <div class="row">
    	<div class="col-md-6">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">People Contact Create</h3>
+   	<h3 class="htxt_medium_24 dark_700">People List Create</h3>
    	</div>
    	<div class="col-md-6 text-right">
    		<button class="circle-icon-40 mr15"><img src="assets/images/filter.svg"/></button>
@@ -67,9 +67,9 @@
      		
      		<div class="col-md-12 text-center">
      			<img class="mt40" style="max-width: 225px; " src="assets/images/illustration2.png">
-     			<h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any contacts</h3>
+     			<h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any List contacts</h3>
      			<h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import!</h3>
-     			<button class="btn btn-sm bkg_blue_000 pr20 blue_300 slidebox">Add contact</button>
+     			<button class="btn btn-sm bkg_blue_000 pr20 blue_300 slidebox">Add List Contact</button>
      		</div>
      			
      		</div>
@@ -116,7 +116,7 @@
  <!--******************
   Create Contact Sliding Smart Popup
  **********************-->
- <?php include("people_contact_create_smart_popup.php"); ?>
+ <?php include("people_list_create_smart_popup.php"); ?>
  
     
  
@@ -132,10 +132,11 @@
 <script src="assets/js/metisMenu.min.js"></script>
 <script src="assets/js/waves.min.js"></script>
 <script src="assets/js/jquery.slimscroll.min.js"></script>
-<script src="assets/js/jQuery.tagify.js"></script>
+
+
+<script src="assets/js/bootstrap-colorpicker.min.js"></script>
+<script src="assets/js/bootstrap-colorpicker-plus.js"></script> 
 <script src="assets/js/app.js"></script>
-
-
 <script>
 $(document).ready(function(){
 	$(".slidebox").click(function(){
@@ -145,10 +146,22 @@ $(document).ready(function(){
 	});
 });
 </script>
-
 <script>
-$('[name=tags]').tagify();
+var color_picker = $('.colorpickerplus-dropdown .colorpickerplus-container');
+        color_picker.colorpickerembed();
+        color_picker.on('changeColor', function(e,color){
+			var el = $('.color-fill-icon', $('#color_picker'));
+			if(color==null) {
+			  //when select transparent color
+			  el.addClass('colorpicker-color');
+			} else {
+			  el.removeClass('colorpicker-color');
+        	  el.css('background-color', color);
+			}
+        });
 </script>
+
+
 
 </body>
 </html>
