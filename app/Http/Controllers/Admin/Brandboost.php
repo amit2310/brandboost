@@ -275,16 +275,47 @@ class Brandboost extends Controller {
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Review Requests" class="sidebar-control active hidden-xs ">Review Requests</a></li>
 			</ul>';
         $bActiveSubsription = $mUsers->isActiveSubscription();
+        $count = 0;
+        if(!empty($oRequests)){
+            $oReqOnsite = array();
+            $oReqOffsite = array();
+            foreach ($oRequests as $data2) {
+                if ($data2->review_type == 'onsite') {
+                    $oReqOnsite[] = $data2;
+                } else if ($data2->review_type == 'offsite') {
+                    $oReqOffsite[] = $data2;
+                } else {
+                    $oReqOther[] = $data2;
+                }
+            }
+
+            if ($param == 'onsite') {
+                $oData = $oReqOnsite;
+            } else if ($param == 'offsite') {
+                $oData = $oReqOffsite;
+            } else {
+                $oData = $oRequests;
+            }
+
+            $count = count($oData);
+        }
+
+
 
         $aData = array(
             'oRequest' => $oRequests,
             'title' => 'Review Requests',
-            'pagename' => $breadcrumb,
+           'pagename' => $breadcrumb,
             'bActiveSubsription' => $bActiveSubsription,
-            'param' => $param
+            'param' => $param,
+           'totalCount' => $count,
+            'oFilteredRequests' => $oData
         );
 
-		return view('admin.brandboost.review_request', $aData);
+
+		//return view('admin.brandboost.review_request', $aData);
+        echo json_encode($aData);
+        exit;
     }
 
 
