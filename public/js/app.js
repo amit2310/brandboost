@@ -5359,6 +5359,82 @@ function loadLiveGraphs() {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'email-template-popups'
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'sms-template-popups'
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/tags/index.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/tags/index.vue?vue&type=script&lang=js& ***!
@@ -6741,6 +6817,997 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modals_templates_EmailTemplatesPopup_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modals/templates/EmailTemplatesPopup.vue */ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  /*name: 'email-templates',*/
+  components: {
+    'email-template-popups': _modals_templates_EmailTemplatesPopup_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      templates: {},
+      categories: {},
+      method: '',
+      selected_template: '',
+      userid: '',
+      source: ''
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/admin/templates/email').then(function (response) {
+      _this.templates = response.data.oTemplates;
+      _this.categories = response.data.oCategories;
+      _this.method = response.data.method;
+      _this.userid = response.data.userID;
+      var tableId = 'tblEmailTemplate';
+
+      _this.paginate(tableId);
+    });
+  },
+  methods: {}
+});
+var tkn = $('meta[name="_token"]').attr('content');
+var elem = undefined;
+$(document).ready(function () {
+  $(document).on("click", ".previewEmailTemplate", function (e) {
+    var templateID = $(this).attr('template_id');
+    var source = $(this).attr('source');
+    var moduleName = '{{ $moduleName }}';
+    var moduleUnitId = '{{ $moduleUnitID }}';
+
+    if (templateID != '') {
+      $('.overlaynew').show();
+      $.ajax({
+        url: "/admin/templates/loadTemplatePreview",
+        type: "POST",
+        data: {
+          _token: tkn,
+          template_id: templateID,
+          source: source,
+          moduleName: moduleName,
+          moduleUnitId: moduleUnitId
+        },
+        dataType: "json",
+        success: function success(data) {
+          if (data.status == 'success') {
+            $('.overlaynew').hide();
+            $("#emailPreviewContainer").html(data.content);
+            $("#email_template_preview_modal").modal();
+          } else if (data.status == 'error') {
+            $('.overlaynew').hide();
+          }
+        }
+      });
+    }
+  });
+  $(document).on('click', '.displayEmailTemplates', function () {
+    var categoryid = $(this).attr('category_id');
+    var action = $(this).attr('action');
+    var campaign_type = 'email';
+    $(".select_template li a").removeClass('active');
+    $(this).addClass('active');
+    var selected_template = this.selected_template;
+    $('.overlaynew').show();
+    $.ajax({
+      url: "/admin/templates/getCategorizedTemplates",
+      type: "POST",
+      data: {
+        _token: tkn,
+        categoryid: categoryid,
+        action: action,
+        campaign_type: campaign_type,
+        method: 'manage',
+        selected_template: selected_template
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          $('.overlaynew').hide();
+          $("#categorized_email_template_list").html(data.content);
+          var tableId2 = 'tblEmailTemplate';
+          custom_data_table(tableId2);
+        } else if (data.status == 'error') {
+          $('.overlaynew').hide();
+        }
+      }
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmailTemplates_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmailTemplates.vue */ "./resources/js/components/admin/templates/EmailTemplates.vue");
+/* harmony import */ var _SmsTemplates_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SmsTemplates.vue */ "./resources/js/components/admin/templates/SmsTemplates.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['title', 'type'],
+  components: {
+    'email-templates': _EmailTemplates_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    'sms-templates': _SmsTemplates_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }
+});
+var tkn = $('meta[name="_token"]').attr('content');
+$(document).ready(function () {
+  $(document).on("click", ".cloneTemplate", function (e) {
+    var templateId = $(this).attr('template_id');
+    var templateType = $(this).attr('template_type');
+
+    if (confirm("Are you sure you want to clone this template?")) {
+      if (templateId != '') {
+        $('.overlaynew').show();
+        $.ajax({
+          url: "/admin/templates/cloneTemplate",
+          type: "POST",
+          data: {
+            _token: tkn,
+            templateId: templateId,
+            templateType: templateType
+          },
+          dataType: "json",
+          success: function success(data) {
+            if (data.status == 'success') {
+              $('.overlaynew').hide();
+              displayMessagePopup("success", "Success", "Template cloned and saved into your templates!");
+
+              if ($(".displaySMSTemplates[action='my']").hasClass("active")) {
+                $(".displaySMSTemplates[action='my']").trigger("click");
+              }
+
+              if ($(".displayEmailTemplates[action='my']").hasClass("active")) {
+                $(".displayEmailTemplates[action='my']").trigger("click");
+              }
+            } else if (data.status == 'error') {
+              $('.overlaynew').hide();
+            }
+          }
+        });
+      }
+    }
+  });
+  $(document).on("click", ".deleteTemplate", function () {
+    var elem = $(this);
+    deleteConfirmationPopup("This record will deleted immediately.<br>You can't undo this action.", function () {
+      $('.overlaynew').show();
+      var templateId = $(elem).attr('template_id');
+      $.ajax({
+        url: "/admin/templates/deleteTemplate",
+        type: "POST",
+        data: {
+          _token: tkn,
+          templateId: templateId
+        },
+        dataType: "json",
+        success: function success(data) {
+          if (data.status == 'success') {
+            $('.overlaynew').hide();
+            displayMessagePopup("success", "Success", "Template was deleted successfully!");
+            $(".displaySMSTemplates[action='my']").trigger("click");
+            $(".displayEmailTemplates[action='my']").trigger("click");
+          }
+        }
+      });
+    });
+  });
+  $(".addUserTemplate").click(function () {
+    $("#addUserTemplate").modal("show");
+  });
+  $('#frmAddUserTemplateModal').on('submit', function () {
+    $('.overlaynew').show();
+    var formdata = $("#frmAddUserTemplateModal").serialize();
+    $.ajax({
+      url: "/admin/templates/addUserTemplate",
+      type: "POST",
+      data: formdata,
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          $('.overlaynew').hide();
+          displayMessagePopup("success", "Success", "Template created successfully!");
+          window.location.href = "/admin/templates/edit/" + data.id;
+        } else if (data.status == 'error' && data.type == 'duplicate') {
+          $('.overlaynew').hide();
+          displayMessagePopup("error", "Duplicate Template", data.msg);
+        }
+      }
+    });
+    return false;
+  });
+  $(document).on("click", ".editName", function () {
+    $(".editName").show();
+    $(".editNameTxt").hide();
+    var templateID = $(this).attr('template_id');
+    $(this).hide();
+    $("#editNameTxt_" + templateID).show();
+    $("#editNameTxt_" + templateID).focus();
+  });
+  $(document).on("blur", ".editNameTxt", function () {
+    $(".editName").show();
+    $(".editNameTxt").hide();
+  });
+  $(document).on("change", ".editNameTxt", function () {
+    var templateId = $(this).attr('template_id');
+    var elem = $(this);
+    var templateName = $(this).val();
+    $.ajax({
+      url: "/admin/templates/updateUserTemplateName",
+      type: "POST",
+      data: {
+        _token: tkn,
+        templateId: templateId,
+        templateName: templateName
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          $('.overlaynew').hide();
+          displayMessagePopup("success", "Success", "Name updated successfully!");
+          $(elem).hide();
+          $("#editName_" + templateId).show();
+          $("#editName_" + templateId).html(templateName);
+        } else if (data.status == 'error' && data.type == 'duplicate') {
+          $('.overlaynew').hide();
+          displayMessagePopup("error", "Duplicate Template", data.msg);
+        }
+      }
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modals_templates_SmsTemplatesPopup_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modals/templates/SmsTemplatesPopup.vue */ "./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  /*name: 'email-templates',*/
+  components: {
+    'sms-template-popups': _modals_templates_SmsTemplatesPopup_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      templates: {},
+      categories: {},
+      method: '',
+      selected_template: '',
+      userid: '',
+      source: '',
+      yes_selected: '',
+      broadcast_id: ''
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/admin/templates/sms').then(function (response) {
+      _this.templates = response.data.oTemplates;
+      _this.categories = response.data.oCategories;
+      _this.method = response.data.method;
+      _this.userid = response.data.userID;
+      var tableId = 'tblSMSTemplate';
+
+      _this.paginate(tableId);
+    });
+  },
+  methods: {}
+});
+var tkn = $('meta[name="_token"]').attr('content');
+$(document).ready(function () {
+  $(document).on("click", ".previewSMSTemplate", function (e) {
+    var templateID = $(this).attr('template_id');
+    var source = $(this).attr('source');
+    var moduleName = '{{ $moduleName }}';
+    var moduleUnitId = '{{ $moduleUnitID }}';
+
+    if (templateID != '') {
+      $('.overlaynew').show();
+      $.ajax({
+        url: "/admin/templates/loadTemplatePreview",
+        type: "POST",
+        data: {
+          _token: tkn,
+          template_id: templateID,
+          source: source,
+          moduleName: moduleName,
+          moduleUnitId: moduleUnitId
+        },
+        dataType: "json",
+        success: function success(data) {
+          if (data.status == 'success') {
+            $('.overlaynew').hide();
+            $("#smsPreviewContainer").html(data.content.replace(/\r\n|\r|\n/g, "<br />"));
+            $("#sms_template_preview_modal").modal();
+          } else if (data.status == 'error') {
+            $('.overlaynew').hide();
+          }
+        }
+      });
+    }
+  });
+  $(document).on('click', '.displaySMSTemplates', function () {
+    var categoryid = $(this).attr('category_id');
+    var action = $(this).attr('action');
+    var campaign_type = 'sms';
+    $(".select_template li a").removeClass('active');
+    $(this).addClass('active');
+    var selected_template = this.selected_template;
+    $('.overlaynew').show();
+    $.ajax({
+      url: "/admin/templates/getCategorizedTemplates",
+      type: "POST",
+      data: {
+        _token: tkn,
+        categoryid: categoryid,
+        action: action,
+        campaign_type: campaign_type,
+        method: 'manage',
+        selected_template: selected_template
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          $('.overlaynew').hide();
+          $("#categorized_sms_template_list").html(data.content);
+          var tableId = 'tblSMSTemplate';
+          custom_data_table(tableId);
+        } else if (data.status == 'error') {
+          $('.overlaynew').hide();
+        }
+      }
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/workflow/WorkflowSubscribers.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/workflow/WorkflowSubscribers.vue?vue&type=script&lang=js& ***!
@@ -7618,6 +8685,63 @@ exports.push([module.i, "\n.outer_circle {\n    padding: 14px;\n    background: 
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.emailtempsec {\n    width: calc(100% - 190px);\n}\n.template_row {\n    width: 187px;\n    display: inline-block;\n}\n.template_row td {\n    padding: 0 !important;\n}\n.heading-elements .form-control.input-sm {\n    background: none !important;\n    padding: 0 60px 0 11px !important;\n}\n.heading-elements .has-feedback-left .form-control-feedback {\n    right: 30px;\n}\n.content-wrapper::before {\n    height: 210px !important;\n}\n.temp_more_opt {\n    position: absolute;\n    width: 24px;\n    height: 24px;\n    right: 0px;\n    top: 0;\n    border-radius: 0 5px 0;\n    background: #fff;\n    box-shadow: 0 1px 1px 0 rgba(1, 21, 64, 0.20);\n    z-index: 99;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.template_preview.sms .custmo_checkbox {\n    display: none !important;\n}\n.template_preview .custmo_checkbox {\n    display: none !important;\n}\n.template_preview .custmo_checkbox\n.email_preview_button.clone {\n    position: absolute;\n    width: 64px;\n    height: 64px;\n    box-shadow: 0 6px 8px 0 rgba(1, 21, 64, 0.16);\n    background: #fff;\n    border-radius: 100%;\n    text-align: center;\n    line-height: 64px;\n    top: 54%;\n    margin-top: 0px;\n    left: 50%;\n    margin-left: -32px;\n    color: #2b9adc;\n    display: block;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.emailtempsec {\n    width: calc(100% - 190px);\n}\n.template_row {\n    width: 187px;\n    display: inline-block;\n}\n.template_row td {\n    padding: 0 !important;\n}\n\n/*    .datatable-footer{background: none!important; border:none!important; box-shadow: none; padding:10px 0 0 0 !important}\n    .dataTables_paginate{margin-bottom: 5px!important}*/\n.heading-elements .form-control.input-sm {\n    background: none !important;\n    padding: 0 60px 0 11px !important;\n}\n.heading-elements .has-feedback-left .form-control-feedback {\n    right: 30px;\n}\n.content-wrapper::before {\n    height: 210px !important;\n}\n.temp_more_opt {\n    position: absolute;\n    width: 24px;\n    height: 24px;\n    right: 0px;\n    top: 0;\n    border-radius: 0 5px 0;\n    background: #fff;\n    box-shadow: 0 1px 1px 0 rgba(1, 21, 64, 0.20);\n    z-index: 99;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/lib/css-base.js":
 /*!*************************************************!*\
   !*** ./node_modules/css-loader/lib/css-base.js ***!
@@ -8189,6 +9313,96 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/live/index.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailTemplates.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=style&index=0&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=style&index=0&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListTemplates.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SmsTemplates.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -16896,6 +18110,158 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca&":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca& ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        staticStyle: { "z-index": "9999999" },
+        attrs: { id: "email_template_preview_modal" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("h5", { staticClass: "modal-title" }, [
+                _c("i", { staticClass: "fa fa-tags" }),
+                _vm._v("  Preview Template")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body template_edit" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "form-horizontal",
+                  attrs: { method: "post", action: "javascript:void();" }
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { attrs: { id: "emailPreviewContainer" } })
+                    ])
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=template&id=afe9c8d0&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=template&id=afe9c8d0& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        staticStyle: { "z-index": "9999999" },
+        attrs: { id: "sms_template_preview_modal" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("h5", { staticClass: "modal-title" }, [
+                _c("i", { staticClass: "fa fa-tags" }),
+                _vm._v("  Preview Template")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body template_edit" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "form-horizontal",
+                  attrs: { method: "post", action: "javascript:void();" }
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { attrs: { id: "smsPreviewContainer" } })
+                    ])
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/tags/index.vue?vue&type=template&id=3eb85b32&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/tags/index.vue?vue&type=template&id=3eb85b32& ***!
@@ -19772,6 +21138,2259 @@ var staticRenderFns = [
       _c("td", { staticStyle: { display: "none" } }),
       _vm._v(" "),
       _c("td", { staticStyle: { display: "none" } })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=template&id=0e0b16fe&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=template&id=0e0b16fe& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { attrs: { id: "chooseEmailTemplate" } }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            {
+              staticClass: "col-md-2",
+              staticStyle: { "max-width": "187px!important" }
+            },
+            [
+              _c("div", { staticClass: "white_box p25 mb20 pt-15 pb-15" }, [
+                _c(
+                  "ul",
+                  { staticClass: "select_template" },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _vm._l(_vm.categories, function(category) {
+                      return category.status == "1"
+                        ? _c("li", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "displayEmailTemplates",
+                                attrs: {
+                                  selected_template: "",
+                                  action: "category",
+                                  category_id: category.id,
+                                  href: "javascript:void(0);"
+                                }
+                              },
+                              [_vm._v(_vm._s(category.category_name))]
+                            )
+                          ])
+                        : _vm._e()
+                    }),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _vm._m(5)
+                  ],
+                  2
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "col-md-10 mb20 emailtempsec",
+              attrs: { id: "categorized_email_template_list" }
+            },
+            [
+              _c("div", { staticClass: "top" }),
+              _vm._v(" "),
+              _c(
+                "table",
+                {
+                  staticClass: "table",
+                  staticStyle: {
+                    background: "none!important",
+                    width: "100%!important"
+                  },
+                  attrs: { id: "tblEmailTemplate" }
+                },
+                [
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    [
+                      _vm._l(_vm.templates, function(template) {
+                        return _vm.selected_template > 0 &&
+                          template.id == _vm.selected_template &&
+                          template.status == "1" &&
+                          template.template_type.toLowerCase() == "email"
+                          ? _c("tr", { staticClass: "template_row" }, [
+                              _c("td", { staticStyle: { display: "none" } }),
+                              _vm._v(" "),
+                              _c("td", { staticStyle: { display: "none" } }, [
+                                _vm._v(_vm._s(template.id) + "99999999")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "white_box template_preview "
+                                  },
+                                  [
+                                    _c(
+                                      "label",
+                                      { staticClass: "custmo_checkbox" },
+                                      [
+                                        _c("input", {
+                                          staticClass:
+                                            "continueChooseTemplateButton",
+                                          attrs: {
+                                            type: "radio",
+                                            template_id: template.id,
+                                            name: "selectedTemplate",
+                                            id: "templateID_" + template.id
+                                          },
+                                          domProps: {
+                                            value: template.id,
+                                            checked:
+                                              template.id ==
+                                              _vm.selected_template
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", {
+                                          staticClass: "custmo_checkmark sblue"
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "m0",
+                                        attrs: {
+                                          for: "templateID_" + template.id
+                                        }
+                                      },
+                                      [
+                                        _vm.method == "manage"
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "temp_more_opt" },
+                                              [
+                                                _vm._m(7, true),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "ul",
+                                                  {
+                                                    staticClass:
+                                                      "dropdown-menu dropdown-menu-right more_act",
+                                                    staticStyle: {
+                                                      width: "146px",
+                                                      "min-width": "146px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("li", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          staticClass:
+                                                            "cloneTemplate",
+                                                          attrs: {
+                                                            href:
+                                                              "javascript:void(0);",
+                                                            template_id:
+                                                              template.id,
+                                                            template_type:
+                                                              "email"
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "icon-pencil"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                    Clone\n                                                "
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("li", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          staticClass:
+                                                            "previewEmailTemplate",
+                                                          attrs: {
+                                                            href:
+                                                              "javascript:void(0);",
+                                                            template_id:
+                                                              template.id
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "icon-file-locked"
+                                                          }),
+                                                          _vm._v(
+                                                            " Preview\n                                                "
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    template.user_id ==
+                                                    _vm.userid
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              attrs: {
+                                                                href:
+                                                                  "/admin/templates/edit/" +
+                                                                  template.id
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-pencil"
+                                                              }),
+                                                              _vm._v(" Edit")
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : _vm._e(),
+                                                    _vm._v(" "),
+                                                    template.user_id ==
+                                                    _vm.userid
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              staticClass:
+                                                                "deleteTemplate",
+                                                              attrs: {
+                                                                href:
+                                                                  "javascript:void(0);",
+                                                                template_id:
+                                                                  template.id,
+                                                                source:
+                                                                  _vm.source
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-trash"
+                                                              }),
+                                                              _vm._v(
+                                                                "\n                                                Delete"
+                                                              )
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticStyle: {
+                                              width: "165px",
+                                              height: "155px",
+                                              overflow: "hidden",
+                                              background: "#f9f9f9"
+                                            }
+                                          },
+                                          [
+                                            template.thumbnail
+                                              ? _c("img", {
+                                                  staticStyle: {
+                                                    height: "auto!important"
+                                                  },
+                                                  attrs: {
+                                                    src: template.thumbnail
+                                                  }
+                                                })
+                                              : _c("img", {
+                                                  attrs: {
+                                                    src:
+                                                      "/assets/images/temp_prev9.png"
+                                                  }
+                                                })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "email_preview_button previewEmailTemplate small",
+                                            attrs: {
+                                              href: "javascript:void(0);",
+                                              template_id: template.id
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "icon-eye8"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        template.user_id == _vm.userid
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "content_bx" },
+                                              [
+                                                _c("p", [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass: "editName",
+                                                      attrs: {
+                                                        href:
+                                                          "javascript:void(0);",
+                                                        id:
+                                                          "editName_" +
+                                                          template.id,
+                                                        template_id:
+                                                          template.id,
+                                                        title:
+                                                          "click to edit template name"
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          template.template_name
+                                                        )
+                                                      )
+                                                    ]
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  staticClass:
+                                                    "form-control editNameTxt",
+                                                  staticStyle: {
+                                                    "margin-top": "-9px",
+                                                    display: "none"
+                                                  },
+                                                  attrs: {
+                                                    type: "text",
+                                                    id:
+                                                      "`editNameTxt_${template.id}`",
+                                                    template_id: template.id
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      template.template_name
+                                                  }
+                                                })
+                                              ]
+                                            )
+                                          : _c(
+                                              "div",
+                                              { staticClass: "content_bx" },
+                                              [
+                                                _c("p", [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      template.template_name
+                                                    )
+                                                  )
+                                                ])
+                                              ]
+                                            )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticStyle: { display: "none" } }, [
+                                _vm._v(" \n\n                        ")
+                              ])
+                            ])
+                          : _vm._e()
+                      }),
+                      _vm._v(" "),
+                      _vm._l(_vm.templates, function(template) {
+                        return template.id != _vm.selected_template &&
+                          template.status == "1" &&
+                          template.category_status != "2" &&
+                          template.template_type.toLowerCase() == "email"
+                          ? _c("tr", { staticClass: "template_row" }, [
+                              _c("td", { staticStyle: { display: "none" } }),
+                              _vm._v(" "),
+                              _c("td", { staticStyle: { display: "none" } }, [
+                                _vm._v(_vm._s(template.id))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "white_box template_preview "
+                                  },
+                                  [
+                                    _c(
+                                      "label",
+                                      { staticClass: "custmo_checkbox" },
+                                      [
+                                        _c("input", {
+                                          staticClass:
+                                            "continueChooseTemplateButton",
+                                          attrs: {
+                                            type: "radio",
+                                            template_id: template.id,
+                                            name: "selectedTemplate",
+                                            id: "`templateID_${template.id}`"
+                                          },
+                                          domProps: {
+                                            value: template.id,
+                                            checked:
+                                              template.id ==
+                                              _vm.selected_template
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", {
+                                          staticClass: "custmo_checkmark sblue"
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "m0",
+                                        attrs: {
+                                          for: "templateID_" + template.id
+                                        }
+                                      },
+                                      [
+                                        _vm.method == "manage"
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "temp_more_opt" },
+                                              [
+                                                _vm._m(8, true),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "ul",
+                                                  {
+                                                    staticClass:
+                                                      "dropdown-menu dropdown-menu-right more_act",
+                                                    staticStyle: {
+                                                      width: "146px",
+                                                      "min-width": "146px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("li", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          staticClass:
+                                                            "cloneTemplate",
+                                                          attrs: {
+                                                            href:
+                                                              "javascript:void(0);",
+                                                            template_id:
+                                                              template.id,
+                                                            template_type:
+                                                              "email"
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "icon-pencil"
+                                                          }),
+                                                          _vm._v(" Clone")
+                                                        ]
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("li", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          staticClass:
+                                                            "previewEmailTemplate",
+                                                          attrs: {
+                                                            href:
+                                                              "javascript:void(0);",
+                                                            template_id:
+                                                              template.id
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "icon-file-locked"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                Preview"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    template.user_id ==
+                                                    _vm.userid
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              attrs: {
+                                                                href:
+                                                                  "/admin/templates/edit/" +
+                                                                  template.id
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-pencil"
+                                                              }),
+                                                              _vm._v(" Edit")
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : _vm._e(),
+                                                    _vm._v(" "),
+                                                    template.user_id ==
+                                                    _vm.userid
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              staticClass:
+                                                                "deleteTemplate",
+                                                              attrs: {
+                                                                href:
+                                                                  "javascript:void(0);",
+                                                                template_id:
+                                                                  template.id,
+                                                                source:
+                                                                  _vm.source
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-trash"
+                                                              }),
+                                                              _vm._v(" Delete")
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticStyle: {
+                                              width: "165px",
+                                              height: "155px",
+                                              overflow: "hidden",
+                                              background: "#f9f9f9"
+                                            }
+                                          },
+                                          [
+                                            template.thumbnail
+                                              ? _c("img", {
+                                                  staticStyle: {
+                                                    height: "auto!important"
+                                                  },
+                                                  attrs: {
+                                                    src: template.thumbnail
+                                                  }
+                                                })
+                                              : _c("img", {
+                                                  attrs: {
+                                                    src:
+                                                      "/assets/images/temp_prev9.png"
+                                                  }
+                                                })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "email_preview_button previewEmailTemplate small",
+                                            attrs: {
+                                              href: "javascript:void(0);",
+                                              template_id: template.id
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "icon-eye8"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        template.user_id == _vm.userid
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "content_bx" },
+                                              [
+                                                _c("p", [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass: "editName",
+                                                      attrs: {
+                                                        href:
+                                                          "javascript:void(0);",
+                                                        id:
+                                                          "editName_" +
+                                                          template.id,
+                                                        template_id:
+                                                          template.id,
+                                                        title:
+                                                          "click to edit template name"
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          template.template_name
+                                                        )
+                                                      )
+                                                    ]
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  staticClass:
+                                                    "form-control editNameTxt",
+                                                  staticStyle: {
+                                                    "margin-top": "-9px",
+                                                    display: "none"
+                                                  },
+                                                  attrs: {
+                                                    type: "text",
+                                                    id:
+                                                      "editNameTxt_" +
+                                                      template.id,
+                                                    template_id: template.id
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      template.template_name
+                                                  }
+                                                })
+                                              ]
+                                            )
+                                          : _c(
+                                              "div",
+                                              { staticClass: "content_bx" },
+                                              [
+                                                _c("p", [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      template.template_name
+                                                    )
+                                                  )
+                                                ])
+                                              ]
+                                            )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticStyle: { display: "none" } }, [
+                                _vm._v(" \n\n                        ")
+                              ])
+                            ])
+                          : _vm._e()
+                      })
+                    ],
+                    2
+                  )
+                ]
+              )
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("email-template-popups"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "modal fade", attrs: { id: "addUserTemplate" } },
+        [
+          _c("div", { staticClass: "modal-dialog" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _c(
+                "form",
+                {
+                  attrs: {
+                    method: "post",
+                    name: "frmAddUserTemplateModal",
+                    id: "frmAddUserTemplateModal",
+                    action: "javascript:void(0);"
+                  }
+                },
+                [
+                  _c("input", {
+                    attrs: { type: "hidden", name: "_token" },
+                    domProps: { value: _vm.csrf_token() }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(9),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _vm._m(10),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group mb0" }, [
+                          _c("label", [_vm._v("Choose Template Category:")]),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              staticClass: "form-control h52",
+                              attrs: { name: "templateCategory", required: "" }
+                            },
+                            [
+                              _c("option", [_vm._v("--Select--")]),
+                              _vm._v(" "),
+                              _vm._l(_vm.categories, function(category) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: category.id } },
+                                  [_vm._v(_vm._s(category.category_name))]
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(11)
+                ]
+              )
+            ])
+          ])
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "panel panel-flat" }, [
+          _c("div", { staticClass: "panel-heading br5" }, [
+            _c("span", { staticClass: "pull-left" }, [
+              _c("h6", { staticClass: "panel-title" }, [
+                _vm._v("Select Email Template")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "heading-elements" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "form-group has-feedback has-feedback-left",
+                  staticStyle: { display: "inline-block", margin: "0" }
+                },
+                [
+                  _c("input", {
+                    staticClass: "form-control input-sm",
+                    attrs: { placeholder: "Search by name", type: "text" }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-control-feedback" }, [
+                    _c("i", {}, [
+                      _c("img", {
+                        attrs: {
+                          src: "/assets/images/icon_search.png",
+                          width: "14"
+                        }
+                      })
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "table_action_tool" }, [
+                _c("a", { staticClass: "brig pr-15", attrs: { href: "#" } }, [
+                  _vm._v("Filter   "),
+                  _c("i", {}, [
+                    _c("img", {
+                      staticStyle: {
+                        width: "11px!important",
+                        height: "10px!important"
+                      },
+                      attrs: { src: "/assets/images/icon_filter.png" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("i", {}, [
+                    _c("img", {
+                      attrs: { src: "/assets/images/icon_calender.png" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("i", {}, [
+                    _c("img", {
+                      attrs: { src: "/assets/images/icon_download.png" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("i", {}, [
+                    _c("img", {
+                      attrs: { src: "/assets/images/icon_upload.png" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("i", {}, [
+                    _c("img", {
+                      attrs: { src: "/assets/images/icon_edit.png" }
+                    })
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "javascript:void(0);" } }, [
+        _vm._v("Recent Email")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "javascript:void(0);" } }, [_vm._v("My Email")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c(
+        "a",
+        {
+          staticClass: "displayEmailTemplates",
+          attrs: {
+            selected_template: "",
+            action: "my",
+            href: "javascript:void(0);"
+          }
+        },
+        [_vm._v("My\n                            Templates")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c(
+        "a",
+        {
+          staticClass: "active displayEmailTemplates",
+          attrs: {
+            selected_template: "",
+            action: "all",
+            href: "javascript:void(0);"
+          }
+        },
+        [_vm._v("All Templates")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c(
+        "a",
+        {
+          staticClass: "displayEmailTemplates",
+          attrs: {
+            selected_template: "",
+            action: "category",
+            category_id: "5",
+            href: "javascript:void(0);"
+          }
+        },
+        [_vm._v("Plain Text")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "hidden" }, [
+      _c("tr", { staticStyle: { display: "none" } }, [
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-image2" }),
+          _vm._v("Template Name")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "table_more dropdown-toggle",
+        attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
+      },
+      [
+        _c("img", {
+          staticStyle: { width: "12px", height: "12px" },
+          attrs: { src: "/assets/images/more.svg" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "table_more dropdown-toggle",
+        attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
+      },
+      [
+        _c("img", {
+          staticStyle: { width: "12px", height: "12px" },
+          attrs: { src: "/assets/images/more.svg" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("×")]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "modal-title" }, [
+        _c("img", { attrs: { src: "/assets/css/menu_icons/Email_Color.svg" } }),
+        _vm._v("\n                            Add Email Template   "),
+        _c("i", { staticClass: "icon-info22 fsize12 txt_grey" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Enter Template Name below:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          id: "title",
+          name: "templateName",
+          placeholder: "Enter Title",
+          type: "text",
+          required: ""
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c("input", {
+        attrs: { type: "hidden", name: "templateType", value: "email" }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn dark_btn bkg_sblue fsize14 h52",
+          attrs: { "data-toggle": "modal", type: "submit" }
+        },
+        [
+          _vm._v(
+            "\n                            Continue\n                        "
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-link fsize14 txt_blue h52",
+          attrs: {
+            "data-toggle": "modal",
+            "data-dismiss": "modal",
+            type: "button"
+          }
+        },
+        [_vm._v("Cancel\n                        ")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=template&id=08993c4a&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=template&id=08993c4a& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "content" }, [
+    _c("div", { staticClass: "page_header" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-3 mt20" }, [
+          _c("h3", [
+            _c("img", { attrs: { src: "/assets/images/people_sec_icon.png" } }),
+            _vm._v(" " + _vm._s(_vm.title))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-9 text-right btn_area" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn dark_btn dropdown-toggle ml10 addUserTemplate",
+              attrs: { type: "button", "template-type": _vm.type }
+            },
+            [
+              _c("i", { staticClass: "icon-plus3" }),
+              _c("span", [_vm._v("    Add Template")])
+            ]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "tab-content" },
+      [
+        _vm.type == "email" ? _c("email-templates") : _vm._e(),
+        _vm._v(" "),
+        _vm.type == "sms" ? _c("sms-templates") : _vm._e()
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=template&id=2369f2be&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=template&id=2369f2be& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { attrs: { id: "chooseSMSTemplate" } }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            {
+              staticClass: "col-md-2",
+              staticStyle: { "max-width": "187px!important" }
+            },
+            [
+              _c("div", { staticClass: "white_box p25 mb20 pt-15 pb-15" }, [
+                _c(
+                  "ul",
+                  { staticClass: "select_template" },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _vm._l(_vm.categories, function(category) {
+                      return category.status == "1"
+                        ? _c("li", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "displaySMSTemplates",
+                                attrs: {
+                                  selected_template: "",
+                                  action: "category",
+                                  category_id: category.id,
+                                  href: "javascript:void(0);"
+                                }
+                              },
+                              [_vm._v(_vm._s(category.category_name))]
+                            )
+                          ])
+                        : _vm._e()
+                    }),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _vm._m(5)
+                  ],
+                  2
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            attrs: {
+              type: "hidden",
+              id: "hidBroadcastID",
+              name: "broadcast_id"
+            },
+            domProps: { value: _vm.broadcast_id }
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "col-md-10 mb20 emailtempsec",
+              attrs: { id: "categorized_sms_template_list" }
+            },
+            [
+              _c("div", { staticClass: "top" }),
+              _vm._v(" "),
+              _c(
+                "table",
+                {
+                  staticClass: "table",
+                  staticStyle: {
+                    background: "none!important",
+                    width: "100%!important"
+                  },
+                  attrs: { id: "tblSMSTemplate" }
+                },
+                [
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    [
+                      _vm._l(_vm.templates, function(template) {
+                        return _vm.selected_template > 0 &&
+                          template.id == _vm.selected_template &&
+                          template.status == "1" &&
+                          template.template_type.toLowerCase() == "sms"
+                          ? _c("tr", { staticClass: "template_row" }, [
+                              _c("td", { staticStyle: { display: "none" } }),
+                              _vm._v(" "),
+                              _c("td", { staticStyle: { display: "none" } }, [
+                                _vm._v(_vm._s(template.id) + "99999999")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "white_box template_preview sms"
+                                  },
+                                  [
+                                    _vm._m(7, true),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "m0",
+                                        attrs: {
+                                          for: "templateID_" + template.id
+                                        }
+                                      },
+                                      [
+                                        _vm.method == "manage"
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "temp_more_opt" },
+                                              [
+                                                _vm._m(8, true),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "ul",
+                                                  {
+                                                    staticClass:
+                                                      "dropdown-menu dropdown-menu-right more_act",
+                                                    staticStyle: {
+                                                      width: "146px",
+                                                      "min-width": "146px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("li", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          staticClass:
+                                                            "cloneTemplate",
+                                                          attrs: {
+                                                            href:
+                                                              "javascript:void(0);",
+                                                            template_id:
+                                                              template.id,
+                                                            template_type: "sms"
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "icon-pencil"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                Clone"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("li", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          staticClass:
+                                                            "previewSMSTemplate",
+                                                          attrs: {
+                                                            href:
+                                                              "javascript:void(0);",
+                                                            template_id:
+                                                              template.id,
+                                                            source: _vm.source
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "icon-file-locked"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                Preview"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    template.user_id ==
+                                                    _vm.userid
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              attrs: {
+                                                                href:
+                                                                  "/admin/templates/edit/" +
+                                                                  template.id
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-pencil"
+                                                              }),
+                                                              _vm._v(" Edit")
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : _vm._e(),
+                                                    _vm._v(" "),
+                                                    template.user_id ==
+                                                    _vm.userid
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              staticClass:
+                                                                "deleteTemplate",
+                                                              attrs: {
+                                                                href:
+                                                                  "javascript:void(0);",
+                                                                template_id:
+                                                                  template.id,
+                                                                source:
+                                                                  _vm.source
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-trash"
+                                                              }),
+                                                              _vm._v(" Delete")
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticStyle: {
+                                              width: "165px",
+                                              height: "155px",
+                                              overflow: "hidden",
+                                              background: "#f9f9f9"
+                                            }
+                                          },
+                                          [
+                                            template.thumbnail
+                                              ? _c("img", {
+                                                  staticStyle: {
+                                                    height: "auto!important",
+                                                    "min-height":
+                                                      "155px!important"
+                                                  },
+                                                  attrs: {
+                                                    src: template.thumbnail
+                                                  }
+                                                })
+                                              : _c("img", {
+                                                  attrs: {
+                                                    src:
+                                                      "/assets/images/temp_prev9.png"
+                                                  }
+                                                })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "sms_preview_button previewSMSTemplate small",
+                                            attrs: {
+                                              href: "javascript:void(0);",
+                                              template_id: template.id,
+                                              source: _vm.source
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "icon-eye8"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        template.user_id == _vm.userid
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "content_bx" },
+                                              [
+                                                _c("p", [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass: "editName",
+                                                      attrs: {
+                                                        href:
+                                                          "javascript:void(0);",
+                                                        id:
+                                                          "editName_" +
+                                                          template.id,
+                                                        template_id:
+                                                          template.id,
+                                                        title:
+                                                          "click to edit template name"
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          template.template_name
+                                                        )
+                                                      )
+                                                    ]
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  staticClass:
+                                                    "form-control editNameTxt",
+                                                  staticStyle: {
+                                                    "margin-top": "-9px",
+                                                    display: "none"
+                                                  },
+                                                  attrs: {
+                                                    type: "text",
+                                                    id:
+                                                      "editNameTxt_" +
+                                                      template.id,
+                                                    template_id: template.id
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      template.template_name
+                                                  }
+                                                })
+                                              ]
+                                            )
+                                          : _c(
+                                              "div",
+                                              { staticClass: "content_bx" },
+                                              [
+                                                _c("p", [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      template.template_name
+                                                    )
+                                                  )
+                                                ])
+                                              ]
+                                            )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticStyle: { display: "none" } }, [
+                                _vm._v(" \n\n                        ")
+                              ])
+                            ])
+                          : _vm._e()
+                      }),
+                      _vm._v(" "),
+                      _vm._l(_vm.templates, function(template) {
+                        return template.id != _vm.selected_template &&
+                          template.status == "1" &&
+                          template.category_status != "2" &&
+                          template.template_type.toLowerCase() == "sms"
+                          ? _c("tr", { staticClass: "template_row" }, [
+                              _c("td", { staticStyle: { display: "none" } }),
+                              _vm._v(" "),
+                              _c("td", { staticStyle: { display: "none" } }, [
+                                _vm._v(_vm._s(template.id))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "white_box template_preview sms"
+                                  },
+                                  [
+                                    _c(
+                                      "label",
+                                      { staticClass: "custmo_checkbox" },
+                                      [
+                                        _c("input", {
+                                          staticClass:
+                                            "continueChooseSMSTemplateButton",
+                                          attrs: {
+                                            type: "radio",
+                                            template_id: template.id,
+                                            source: _vm.source,
+                                            name: "selectedTemplate",
+                                            id: "templateID_" + template.id
+                                          },
+                                          domProps: {
+                                            value: template.id,
+                                            checked:
+                                              template.id ==
+                                                _vm.selected_template ||
+                                              _vm.yes_selected == true
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", {
+                                          staticClass: "custmo_checkmark sblue"
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "m0",
+                                        attrs: {
+                                          for: "templateID_" + template.id
+                                        }
+                                      },
+                                      [
+                                        _vm.method == "manage"
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "temp_more_opt" },
+                                              [
+                                                _vm._m(9, true),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "ul",
+                                                  {
+                                                    staticClass:
+                                                      "dropdown-menu dropdown-menu-right more_act",
+                                                    staticStyle: {
+                                                      width: "146px",
+                                                      "min-width": "146px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("li", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          staticClass:
+                                                            "cloneTemplate",
+                                                          attrs: {
+                                                            href:
+                                                              "javascript:void(0);",
+                                                            template_id:
+                                                              template.id,
+                                                            template_type: "sms"
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "icon-pencil"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                Clone"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("li", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          staticClass:
+                                                            "previewSMSTemplate",
+                                                          attrs: {
+                                                            href:
+                                                              "javascript:void(0);",
+                                                            template_id:
+                                                              template.id,
+                                                            source: _vm.source
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "icon-file-locked"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                Preview"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    template.user_id ==
+                                                    _vm.userid
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              attrs: {
+                                                                href:
+                                                                  "/admin/templates/edit/" +
+                                                                  template.id
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-pencil"
+                                                              }),
+                                                              _vm._v(" Edit")
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : _vm._e(),
+                                                    _vm._v(" "),
+                                                    template.user_id ==
+                                                    _vm.userid
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              staticClass:
+                                                                "deleteTemplate",
+                                                              attrs: {
+                                                                href:
+                                                                  "javascript:void(0);",
+                                                                template_id:
+                                                                  template.id,
+                                                                source:
+                                                                  _vm.source
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-trash"
+                                                              }),
+                                                              _vm._v(" Delete")
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticStyle: {
+                                              width: "165px",
+                                              height: "155px",
+                                              overflow: "hidden",
+                                              background: "#f9f9f9"
+                                            }
+                                          },
+                                          [
+                                            template.thumbnail
+                                              ? _c("img", {
+                                                  staticStyle: {
+                                                    height: "auto!important",
+                                                    "min-height":
+                                                      "155px!important"
+                                                  },
+                                                  attrs: {
+                                                    src: template.thumbnail
+                                                  }
+                                                })
+                                              : _c("img", {
+                                                  attrs: {
+                                                    src:
+                                                      "/assets/images/temp_prev9.png"
+                                                  }
+                                                })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "sms_preview_button previewSMSTemplate small",
+                                            attrs: {
+                                              href: "javascript:void(0);",
+                                              template_id: template.id,
+                                              source: _vm.source
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "icon-eye8"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        template.user_id == _vm.userid
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "content_bx" },
+                                              [
+                                                _c("p", [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass: "editName",
+                                                      attrs: {
+                                                        href:
+                                                          "javascript:void(0);",
+                                                        id:
+                                                          "editName_" +
+                                                          template.id,
+                                                        template_id:
+                                                          template.id,
+                                                        title:
+                                                          "click to edit template name"
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          template.template_name
+                                                        )
+                                                      )
+                                                    ]
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  staticClass:
+                                                    "form-control editNameTxt",
+                                                  staticStyle: {
+                                                    "margin-top": "-9px",
+                                                    display: "none"
+                                                  },
+                                                  attrs: {
+                                                    type: "text",
+                                                    id:
+                                                      "editNameTxt_" +
+                                                      template.id,
+                                                    template_id: template.id
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      template.template_name
+                                                  }
+                                                })
+                                              ]
+                                            )
+                                          : _c(
+                                              "div",
+                                              { staticClass: "content_bx" },
+                                              [
+                                                _c("p", [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      template.template_name
+                                                    )
+                                                  )
+                                                ])
+                                              ]
+                                            )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticStyle: { display: "none" } }, [
+                                _vm._v(" \n\n                        ")
+                              ])
+                            ])
+                          : _vm._e()
+                      })
+                    ],
+                    2
+                  )
+                ]
+              )
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("sms-template-popups"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "modal fade", attrs: { id: "addUserTemplate" } },
+        [
+          _c("div", { staticClass: "modal-dialog" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _c(
+                "form",
+                {
+                  attrs: {
+                    method: "post",
+                    name: "frmAddUserTemplateModal",
+                    id: "frmAddUserTemplateModal",
+                    action: "javascript:void(0);"
+                  }
+                },
+                [
+                  _c("input", {
+                    attrs: { type: "hidden", name: "_token" },
+                    domProps: { value: _vm.csrf_token() }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(10),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _vm._m(11),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group mb0" }, [
+                          _c("label", [_vm._v("Choose Template Category:")]),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              staticClass: "form-control h52",
+                              attrs: { name: "templateCategory", required: "" }
+                            },
+                            [
+                              _c("option", [_vm._v("--Select--")]),
+                              _vm._v(" "),
+                              _vm._l(_vm.categories, function(category) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: category.id } },
+                                  [_vm._v(_vm._s(category.category_name))]
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(12)
+                ]
+              )
+            ])
+          ])
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "panel panel-flat" }, [
+          _c("div", { staticClass: "panel-heading br5" }, [
+            _c("span", { staticClass: "pull-left" }, [
+              _c("h6", { staticClass: "panel-title" }, [
+                _vm._v("Select SMS Template")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "heading-elements" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "form-group has-feedback has-feedback-left",
+                  staticStyle: { display: "inline-block", margin: "0" }
+                },
+                [
+                  _c("input", {
+                    staticClass: "form-control input-sm",
+                    attrs: { placeholder: "Search by name", type: "text" }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-control-feedback" }, [
+                    _c("i", {}, [
+                      _c("img", {
+                        attrs: {
+                          src: "/assets/images/icon_search.png",
+                          width: "14"
+                        }
+                      })
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "table_action_tool" }, [
+                _c("a", { staticClass: "brig pr-15", attrs: { href: "#" } }, [
+                  _vm._v("Filter   "),
+                  _c("i", {}, [
+                    _c("img", {
+                      staticStyle: {
+                        width: "11px!important",
+                        height: "10px!important"
+                      },
+                      attrs: { src: "assets/images/icon_filter.png" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("i", {}, [
+                    _c("img", {
+                      attrs: { src: "/assets/images/icon_calender.png" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("i", {}, [
+                    _c("img", {
+                      attrs: { src: "/assets/images/icon_download.png" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("i", {}, [
+                    _c("img", {
+                      attrs: { src: "/assets/images/icon_upload.png" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("i", {}, [
+                    _c("img", {
+                      attrs: { src: "/assets/images/icon_edit.png" }
+                    })
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "javascript:void(0);" } }, [
+        _vm._v("Recent Email")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "javascript:void(0);" } }, [_vm._v("My Email")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c(
+        "a",
+        {
+          staticClass: "displaySMSTemplates",
+          attrs: {
+            selected_template: "",
+            action: "my",
+            href: "javascript:void(0);"
+          }
+        },
+        [_vm._v("My\n                            Templates")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c(
+        "a",
+        {
+          staticClass: "active displaySMSTemplates",
+          attrs: {
+            selected_template: "",
+            action: "all",
+            href: "javascript:void(0);"
+          }
+        },
+        [_vm._v("All Templates")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c(
+        "a",
+        {
+          staticClass: "displaySMSTemplates",
+          attrs: {
+            selected_template: "",
+            action: "category",
+            category_id: "5",
+            href: "javascript:void(0);"
+          }
+        },
+        [_vm._v("Plain Text")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "hidden" }, [
+      _c("tr", { staticStyle: { display: "none" } }, [
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-image2" }),
+          _vm._v("Template Name")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "custmo_checkbox" }, [
+      _c("span", { staticClass: "custmo_checkmark sblue" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "table_more dropdown-toggle",
+        attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
+      },
+      [
+        _c("img", {
+          staticStyle: { width: "12px", height: "12px" },
+          attrs: { src: "http://brandboost.io/assets/images/more.svg" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "table_more dropdown-toggle",
+        attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
+      },
+      [
+        _c("img", {
+          staticStyle: { width: "12px", height: "12px" },
+          attrs: { src: "http://brandboost.io/assets/images/more.svg" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("×")]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "modal-title" }, [
+        _c("img", { attrs: { src: "/assets/css/menu_icons/Sms_Color.svg" } }),
+        _vm._v("\n                            Add Sms Template   "),
+        _c("i", { staticClass: "icon-info22 fsize12 txt_grey" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Enter Template Name below:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          id: "title",
+          name: "templateName",
+          placeholder: "Enter Title",
+          type: "text",
+          required: ""
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c("input", {
+        attrs: { type: "hidden", name: "templateType", value: "sms" }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn dark_btn bkg_sblue fsize14 h52",
+          attrs: { "data-toggle": "modal", type: "submit" }
+        },
+        [
+          _vm._v(
+            "\n                            Continue\n                        "
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-link fsize14 txt_blue h52",
+          attrs: {
+            "data-toggle": "modal",
+            "data-dismiss": "modal",
+            type: "button"
+          }
+        },
+        [_vm._v("Cancel\n                        ")]
+      )
     ])
   }
 ]
@@ -37690,6 +41309,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca& */ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca&");
+/* harmony import */ var _EmailTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmailTemplatesPopup.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EmailTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailTemplatesPopup.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca& ***!
+  \***************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SmsTemplatesPopup_vue_vue_type_template_id_afe9c8d0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SmsTemplatesPopup.vue?vue&type=template&id=afe9c8d0& */ "./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=template&id=afe9c8d0&");
+/* harmony import */ var _SmsTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SmsTemplatesPopup.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SmsTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SmsTemplatesPopup_vue_vue_type_template_id_afe9c8d0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SmsTemplatesPopup_vue_vue_type_template_id_afe9c8d0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SmsTemplatesPopup.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=template&id=afe9c8d0&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=template&id=afe9c8d0& ***!
+  \*************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplatesPopup_vue_vue_type_template_id_afe9c8d0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SmsTemplatesPopup.vue?vue&type=template&id=afe9c8d0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/SmsTemplatesPopup.vue?vue&type=template&id=afe9c8d0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplatesPopup_vue_vue_type_template_id_afe9c8d0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplatesPopup_vue_vue_type_template_id_afe9c8d0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/tags/index.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/admin/tags/index.vue ***!
@@ -37892,6 +41649,267 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tagsreview_vue_vue_type_template_id_d204a628___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tagsreview_vue_vue_type_template_id_d204a628___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/EmailTemplates.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/admin/templates/EmailTemplates.vue ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmailTemplates_vue_vue_type_template_id_0e0b16fe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmailTemplates.vue?vue&type=template&id=0e0b16fe& */ "./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=template&id=0e0b16fe&");
+/* harmony import */ var _EmailTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmailTemplates.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _EmailTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EmailTemplates.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _EmailTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EmailTemplates_vue_vue_type_template_id_0e0b16fe___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EmailTemplates_vue_vue_type_template_id_0e0b16fe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/templates/EmailTemplates.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailTemplates.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailTemplates.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=template&id=0e0b16fe&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=template&id=0e0b16fe& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplates_vue_vue_type_template_id_0e0b16fe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailTemplates.vue?vue&type=template&id=0e0b16fe& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/EmailTemplates.vue?vue&type=template&id=0e0b16fe&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplates_vue_vue_type_template_id_0e0b16fe___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplates_vue_vue_type_template_id_0e0b16fe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/ListTemplates.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/admin/templates/ListTemplates.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ListTemplates_vue_vue_type_template_id_08993c4a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListTemplates.vue?vue&type=template&id=08993c4a& */ "./resources/js/components/admin/templates/ListTemplates.vue?vue&type=template&id=08993c4a&");
+/* harmony import */ var _ListTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListTemplates.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/templates/ListTemplates.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _ListTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ListTemplates.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/admin/templates/ListTemplates.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ListTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ListTemplates_vue_vue_type_template_id_08993c4a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ListTemplates_vue_vue_type_template_id_08993c4a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/templates/ListTemplates.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/ListTemplates.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/admin/templates/ListTemplates.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListTemplates.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/ListTemplates.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/admin/templates/ListTemplates.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListTemplates.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/ListTemplates.vue?vue&type=template&id=08993c4a&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/admin/templates/ListTemplates.vue?vue&type=template&id=08993c4a& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListTemplates_vue_vue_type_template_id_08993c4a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListTemplates.vue?vue&type=template&id=08993c4a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/ListTemplates.vue?vue&type=template&id=08993c4a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListTemplates_vue_vue_type_template_id_08993c4a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListTemplates_vue_vue_type_template_id_08993c4a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/SmsTemplates.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/admin/templates/SmsTemplates.vue ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SmsTemplates_vue_vue_type_template_id_2369f2be___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SmsTemplates.vue?vue&type=template&id=2369f2be& */ "./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=template&id=2369f2be&");
+/* harmony import */ var _SmsTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SmsTemplates.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _SmsTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SmsTemplates.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _SmsTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SmsTemplates_vue_vue_type_template_id_2369f2be___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SmsTemplates_vue_vue_type_template_id_2369f2be___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/templates/SmsTemplates.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SmsTemplates.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=style&index=0&lang=css&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=style&index=0&lang=css& ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SmsTemplates.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=template&id=2369f2be&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=template&id=2369f2be& ***!
+  \*************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplates_vue_vue_type_template_id_2369f2be___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SmsTemplates.vue?vue&type=template&id=2369f2be& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/templates/SmsTemplates.vue?vue&type=template&id=2369f2be&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplates_vue_vue_type_template_id_2369f2be___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SmsTemplates_vue_vue_type_template_id_2369f2be___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -38216,16 +42234,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/admin/dashboard/ */ "./resources/js/components/admin/dashboard/index.vue");
 /* harmony import */ var _components_admin_live___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/admin/live/ */ "./resources/js/components/admin/live/index.vue");
 /* harmony import */ var _components_admin_contact_Contacts_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/admin/contact/Contacts.vue */ "./resources/js/components/admin/contact/Contacts.vue");
-/* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue");
-/* harmony import */ var _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ */ "./resources/js/components/admin/brandboost/onsite/index.vue");
-/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
-/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
-/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
+/* harmony import */ var _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/admin/templates/ListTemplates.vue */ "./resources/js/components/admin/templates/ListTemplates.vue");
+/* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue");
+/* harmony import */ var _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ */ "./resources/js/components/admin/brandboost/onsite/index.vue");
+/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
+/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
+/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
 
 
 
-/*import EmailTemplates from './components/admin/templates/Email.vue';
-import SmsTemplates from './components/admin/templates/Sms.vue';*/
 
 
 
@@ -38244,27 +42261,38 @@ var routes = [{
 }, {
   path: '/contacts/mycontacts',
   component: _components_admin_contact_Contacts_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
-},
-/*{ path: '/templates/email', component: EmailTemplates },
-{ path: '/templates/sms', component: SmsTemplates },*/
-{
+}, {
+  path: '/templates/email',
+  component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+  props: {
+    title: 'Email Templates',
+    type: 'email'
+  }
+}, {
+  path: '/templates/sms',
+  component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+  props: {
+    title: 'Sms Templates',
+    type: 'sms'
+  }
+}, {
   path: '/brandboost/onsite',
-  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_4__["default"]
+  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
   path: '/tags',
-  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_5__["default"],
+  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_6__["default"],
   meta: {
     title: 'Insight Tags - Brand Boost'
   }
 }, {
   path: '/tags/tagsreview',
-  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_6__["default"],
+  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_7__["default"],
   meta: {
     title: 'Tags Review - Brand Boost'
   }
 }, {
   path: '/tags/tagsfeedback',
-  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_7__["default"],
+  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_8__["default"],
   meta: {
     title: 'Tags Feedback - Brand Boost'
   }
