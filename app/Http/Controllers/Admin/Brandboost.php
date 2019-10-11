@@ -74,14 +74,88 @@ class Brandboost extends Controller {
             'aBrandbosts' => $aBrandboostList,
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role,
-            'company_name' => $company_name,
+            'company_name' => strtolower(str_replace(' ', '-', $company_name)),
             'bbEmailSend' => $bbEmailSend,
             'bbSmsSend' => $bbSmsSend,
             'bbEmailSendMonth' => $bbEmailSendMonth,
             'viewstats' => true
         );
 
-        return view('admin.brandboost.onsite_overview', $aData);
+        $mReviews = new ReviewsModel();
+
+        if (!empty($aBrandboostList)) {
+            foreach ($aBrandboostList as $aBrandboostVal) {
+                $CampaignAllReviewsArr = $mReviews->getCampaignAllReviews($aBrandboostVal->id);
+                $aBrandboostVal->CampaignAllReviews = !empty($CampaignAllReviewsArr) ? count($CampaignAllReviewsArr) : 0;
+
+                $CampReviewsArr = $mReviews->getCampReviews($aBrandboostVal->id);
+                $aBrandboostVal->CampReviews = !empty($CampReviewsArr) ? count($CampReviewsArr) : 0;
+
+                $aBrandboostVal->AllSubscribers = ListsModel::getAllSubscribersList($aBrandboostVal->id);
+
+                $aBrandboostVal->revRA = getCampaignReviewRA($aBrandboostVal->id);
+
+                $aBrandboostVal->reviewRequests = $mBrandboost->getReviewRequest($aBrandboostVal->id, '');
+                $aBrandboostVal->reviewRequestsSms = $mBrandboost->getSendRequest($aBrandboostVal->id, 'sms');
+                $aBrandboostVal->reviewRequestsEmail = $mBrandboost->getSendRequest($aBrandboostVal->id, 'email');
+
+                $aBrandboostVal->reviewResponse = $mBrandboost->getReviewRequestResponse($aBrandboostVal->id);
+
+                if(!empty($aBrandboostVal->reviewResponse)) {
+                    $aBrandboostVal->statsVal = $this->statsRatingwise($aBrandboostVal->reviewResponse);
+                }
+            }
+        }
+
+        //return view('admin.brandboost.onsite_overview', $aData);
+        echo json_encode($aData);
+        exit;
+    }
+
+
+    /**
+     * Used to get onsite computational data
+     * @return type
+     */
+    public function statsRatingwise($reviewResponse) {
+
+        $positiveRating = 0;
+        $neturalRating = 0;
+        $negativeRating = 0;
+
+        if(!empty($reviewResponse)) {
+            foreach ($reviewResponse as $reviewData) {
+                if ($reviewData->ratings != '') {
+                    if ($reviewData->ratings == 5) {
+                        $positiveRating++;
+                    } else if ($reviewData->ratings >= 3 && $reviewData->ratings < 5) {
+                        $neturalRating++;
+                    } else {
+                        $negativeRating++;
+                    }
+                }
+            }
+        }
+
+        $getResCount = count($reviewResponse);
+
+        $positiveGraph = 0;
+        $neturalGraph = 0;
+        $negativeGraph = 0;
+
+        if($getResCount > 0) {
+            $positiveGraph = $positiveRating * 100 / $getResCount;
+            $neturalGraph = $neturalRating * 100 / $getResCount;
+            $negativeGraph = $negativeRating * 100 / $getResCount;
+        }
+
+        return ['positiveRating'=>$positiveRating,
+                'positiveGraph'=>$positiveGraph,
+                'neturalRating'=>$neturalRating,
+                'neturalGraph'=>$neturalGraph,
+                'negativeRating'=>$negativeRating,
+                'negativeGraph'=>$negativeGraph];
+
     }
 
 
