@@ -2756,6 +2756,1246 @@ var tkn = $('meta[name="_token"]').attr('content');
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  title: 'Onsite overview - Brand Boost',
+  components: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"],
+  data: function data() {
+    return {
+      oOverviews: {},
+      oBrandboosts: {}
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    //getData
+    axios.get('/admin/brandboost/onsite_overview').then(function (response) {
+      //console.log(response.data);
+      _this.oOverviews = response.data;
+      _this.oBrandboosts = response.data.aBrandbosts;
+      console.log(_this.oBrandboosts);
+    });
+    console.log('Component mounted.');
+  }
+});
+/* Script sticked to the page */
+
+$(document).ready(function () {
+  $(".reviews").click(function () {
+    $(".box").animate({
+      width: "toggle"
+    });
+  });
+  $("#newcampaign").click(function () {
+    $(".box").animate({
+      width: "toggle"
+    });
+  });
+  $(document).on("change", ".changeStatus", function () {
+    var brandboostID = $(this).attr('brandID');
+    var status = $(this).attr('status');
+    $.ajax({
+      url: "/admin/brandboost/updateOnsiteStatus",
+      type: "POST",
+      data: {
+        'brandboostID': brandboostID,
+        'status': status,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {//window.location.href = '/admin/brandboost/onsite';
+        } else {
+          alertMessage('Error: Some thing wrong!');
+        }
+      }
+    });
+  });
+}); // top navigation fixed on scroll and side bar collasped
+
+$(window).scroll(function () {
+  var sc = $(window).scrollTop();
+
+  if (sc > 100) {
+    $("#header-sroll").addClass("small-header");
+  } else {
+    $("#header-sroll").removeClass("small-header");
+  }
+});
+
+function smallMenu() {
+  if ($(window).width() < 1600) {
+    $('body').addClass('sidebar-xs');
+  } else {
+    $('body').removeClass('sidebar-xs');
+  }
+}
+
+$(document).ready(function () {
+  smallMenu();
+
+  window.onresize = function () {
+    smallMenu();
+  };
+}); //Semi Circle chart js -- Highcharts js plugins
+
+$(document).ready(function () {
+  var chart = {
+    plotBackgroundColor: false,
+    plotBorderWidth: 0,
+    plotShadow: false
+  };
+  var title = {
+    text: '83 <br> <span style="border: none;" class="label bkg_green ml0 ">15.9%</span>',
+    align: 'center',
+    verticalAlign: 'middle',
+    y: 50
+  };
+  var title2 = {
+    text: '52 <br> <span style="border: none;" class="label bkg_green ml0 ">22.9%</span>',
+    align: 'center',
+    verticalAlign: 'middle',
+    y: 50
+  };
+  var tooltip = {
+    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+  };
+  var plotOptions = {
+    pie: {
+      dataLabels: {
+        enabled: false,
+        distance: -5550,
+        style: {
+          fontWeight: 'bold',
+          color: 'white',
+          textShadow: '0px 1px 2px black'
+        }
+      },
+      startAngle: -90,
+      endAngle: 90,
+      center: ['50%', '75%']
+    }
+  };
+  var series = [{
+    type: 'pie',
+    name: 'NPS',
+    colors: ['#fd6c81', '#facfd7', '#8bbc21', '#910000'],
+    innerSize: '85%',
+    data: [['A', 83], ['B', 17], {
+      name: 'Others',
+      y: 0,
+      dataLabels: {
+        enabled: false
+      }
+    }]
+  }];
+  var series2 = [{
+    type: 'pie',
+    name: 'NPS',
+    colors: ['#5ad491', '#c8eedb', '#8bbc21', '#910000'],
+    innerSize: '90%',
+    data: [['A', 80], ['B', 20], {
+      name: 'Others',
+      y: 0,
+      dataLabels: {
+        enabled: false
+      }
+    }]
+  }];
+  var json = {};
+  json.chart = chart;
+  json.title = title;
+  json.tooltip = tooltip;
+  json.series = series;
+  json.plotOptions = plotOptions;
+  $('#semi_circle_chart').highcharts(json);
+  var json2 = {};
+  json2.chart = chart;
+  json2.title = title2;
+  json2.tooltip = tooltip;
+  json2.series = series2;
+  json2.plotOptions = plotOptions;
+  $('#semi_circle_chart2').highcharts(json2);
+});
+/*
+    Highcharts.chart('linechart_a', {
+        chart: {
+            type: 'column',
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+        },
+        title: {
+            text: null
+        },
+        subtitle: {
+            text: null
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+
+                style: {
+                    fontSize: '11px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: null
+            }
+        },
+        legend: {
+            enabled: false
+        },
+
+        plotOptions: {
+            column: {
+                pointPadding: 0.20,
+                borderWidth: 0,
+                borderRadius: 5
+            }
+        },
+
+        colors: ['#9b83ff', '#cae4d1'],
+        tooltip: {
+            pointFormat: 'Time in 2017: <b>{point.y:.1f} millions</b>'
+        },
+        series: [{
+            name: 'Time',
+            data: [
+                ['1', 14.2],
+                ['2', 3.8],
+                ['3', 2.9],
+                ['4', 16.7],
+                ['5', 9.1],
+                ['6', 18.7],
+                ['7', 15.4],
+                ['8', 14.2],
+                ['12', 3.8],
+                ['13', 2.9],
+                ['14', 16.7],
+                ['15', 9.1],
+                ['11', 18.7],
+                ['17', 15.4]
+            ],
+
+        }]
+    });
+*/
+
+$(document).ready(function () {
+  $('#checkAll').change(function () {
+    if (false == $(this).prop("checked")) {
+      $(".checkRows").prop('checked', false);
+      $(".selectedClass").removeClass('success');
+      $('.custom_action_box').hide();
+    } else {
+      $(".checkRows").prop('checked', true);
+      $(".selectedClass").addClass('success');
+      $('.custom_action_box').show();
+    }
+  });
+  $(document).on('click', '.checkRows', function () {
+    var inc = 0;
+    var rowId = $(this).val();
+
+    if (false == $(this).prop("checked")) {
+      $('#append-' + rowId).removeClass('success');
+    } else {
+      $('#append-' + rowId).addClass('success');
+    }
+
+    $('.checkRows:checkbox:checked').each(function (i) {
+      inc++;
+    });
+
+    if (inc == 0) {
+      $('.custom_action_box').hide();
+    } else {
+      $('.custom_action_box').show();
+    }
+
+    var numberOfChecked = $('.checkRows:checkbox:checked').length;
+    var totalCheckboxes = $('.checkRows:checkbox').length;
+
+    if (totalCheckboxes > numberOfChecked) {
+      $('#checkAll').prop('checked', false);
+    }
+  });
+  $(document).on('click', '#deleteButtonBrandboostOnline', function () {
+    var val = [];
+    $('.checkRows:checkbox:checked').each(function (i) {
+      val[i] = $(this).val();
+    });
+
+    if (val.length === 0) {
+      alert('Please select a row.');
+    } else {
+      var elem = $(this);
+      swal({
+        title: "Are you sure? You want to delete this record!",
+        text: "You will not be able to recover this record!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#EF5350",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel pls!",
+        closeOnConfirm: true,
+        closeOnCancel: true
+      }, function (isConfirm) {
+        if (isConfirm) {
+          $('.overlaynew').show();
+          $.ajax({
+            url: "/admin/brandboost/delete_multipal_brandboost",
+            type: "POST",
+            data: {
+              multi_brandboost_id: val,
+              _token: '{{csrf_token()}}'
+            },
+            dataType: "json",
+            success: function success(data) {
+              if (data.status == 'success') {
+                $('.overlaynew').hide();
+                window.location.href = '';
+              }
+            }
+          });
+        }
+      });
+    }
+  });
+  $('#checkAllA').change(function () {
+    if (false == $(this).prop("checked")) {
+      $(".checkRowsA").prop('checked', false);
+      $(".selectedClassA").removeClass('success');
+      $('.custom_action_boxA').hide();
+    } else {
+      $(".checkRowsA").prop('checked', true);
+      $(".selectedClassA").addClass('success');
+      $('.custom_action_boxA').show();
+    }
+  });
+  $(document).on('click', '.checkRowsA', function () {
+    var inc = 0;
+    var rowId = $(this).val();
+
+    if (false == $(this).prop("checked")) {
+      $('#append-' + rowId).removeClass('success');
+    } else {
+      $('#append-' + rowId).addClass('success');
+    }
+
+    $('.checkRowsA:checkbox:checked').each(function (i) {
+      inc++;
+    });
+
+    if (inc == 0) {
+      $('.custom_action_boxA').hide();
+    } else {
+      $('.custom_action_boxA').show();
+    }
+
+    var numberOfChecked = $('.checkRowsA:checkbox:checked').length;
+    var totalCheckboxes = $('.checkRowsA:checkbox').length;
+
+    if (totalCheckboxes > numberOfChecked) {
+      $('#checkAllA').prop('checked', false);
+    }
+  });
+  $(document).on('click', '#deleteButtonBrandboostOnlineA', function () {
+    var val = [];
+    $('.checkRowsA:checkbox:checked').each(function (i) {
+      val[i] = $(this).val();
+    });
+
+    if (val.length === 0) {
+      alert('Please select a row.');
+    } else {
+      var elem = $(this);
+      swal({
+        title: "Are you sure? You want to delete this record!",
+        text: "You will not be able to recover this record!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#EF5350",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel pls!",
+        closeOnConfirm: true,
+        closeOnCancel: true
+      }, function (isConfirm) {
+        if (isConfirm) {
+          $('.overlaynew').show();
+          $.ajax({
+            url: "/admin/brandboost/delete_multipal_brandboost",
+            type: "POST",
+            data: {
+              multi_brandboost_id: val,
+              _token: '{{csrf_token()}}'
+            },
+            dataType: "json",
+            success: function success(data) {
+              if (data.status == 'success') {
+                $('.overlaynew').hide();
+                window.location.href = '';
+              }
+            }
+          });
+        }
+      });
+    }
+  });
+  $(document).on('click', '#archiveButtonBrandboostOnline', function () {
+    var val = [];
+    $('.checkRows:checkbox:checked').each(function (i) {
+      val[i] = $(this).val();
+    });
+
+    if (val.length === 0) {
+      alert('Please select a row.');
+    } else {
+      var elem = $(this);
+      swal({
+        title: "Are you sure? You want to move to archive this record!",
+        text: "",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#EF5350",
+        confirmButtonText: "Yes, move to archive it!",
+        cancelButtonText: "No, cancel pls!",
+        closeOnConfirm: true,
+        closeOnCancel: true
+      }, function (isConfirm) {
+        if (isConfirm) {
+          $('.overlaynew').show();
+          $.ajax({
+            url: "/admin/brandboost/archive_multipal_brandboost",
+            type: "POST",
+            data: {
+              multi_brandboost_id: val,
+              _token: '{{csrf_token()}}'
+            },
+            dataType: "json",
+            success: function success(data) {
+              if (data.status == 'success') {
+                $('.overlaynew').hide();
+                window.location.href = '';
+              }
+            }
+          });
+        }
+      });
+    }
+  });
+  $(document).on('click', '.archiveCampaign', function () {
+    var brandID = $(this).attr('brandID');
+    var val = [brandID];
+
+    if (val.length === 0) {
+      alert('Please select a row.');
+    } else {
+      var elem = $(this);
+      swal({
+        title: "Are you sure? You want to move to archive this record!",
+        text: "",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#EF5350",
+        confirmButtonText: "Yes, move to archive it!",
+        cancelButtonText: "No, cancel pls!",
+        closeOnConfirm: true,
+        closeOnCancel: true
+      }, function (isConfirm) {
+        if (isConfirm) {
+          $('.overlaynew').show();
+          $.ajax({
+            url: "/admin/brandboost/archive_multipal_brandboost",
+            type: "POST",
+            data: {
+              multi_brandboost_id: val,
+              _token: '{{csrf_token()}}'
+            },
+            dataType: "json",
+            success: function success(data) {
+              if (data.status == 'success') {
+                $('.overlaynew').hide();
+                window.location.href = '';
+              }
+            }
+          });
+        }
+      });
+    }
+  });
+  $('#addBrandboost').click(function () {
+    $('#addBrandboostModal').modal();
+  });
+  $('#frmAddOnsiteBrandboost').on('submit', function (e) {
+    var campaignName = $('#campaignName').val();
+    $.ajax({
+      url: "/admin/brandboost/addOnsite",
+      type: "POST",
+      data: {
+        'campaignName': campaignName,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          window.location.href = 'admin/brandboost/onsite_setup/' + data.brandboostID;
+        } else {
+          alertMessage('Error: Some thing wrong!');
+        }
+      }
+    });
+  });
+  $(document).on("click", ".changeStatusCampaign", function () {
+    var brandboostID = $(this).attr('brandID');
+    var status = $(this).attr('status');
+    $.ajax({
+      url: "/admin/brandboost/updateOnsiteStatus",
+      type: "POST",
+      data: {
+        'brandboostID': brandboostID,
+        'status': status,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          window.location.href = '';
+        } else {
+          alertMessage('Error: Some thing wrong!');
+        }
+      }
+    });
+  });
+  $(document).on('click', '.deleteCampaign', function () {
+    var elem = $(this);
+    swal({
+      title: "Are you sure? You want to delete this record!",
+      text: "You will not be able to recover this record!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#EF5350",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel pls!",
+      closeOnConfirm: true,
+      closeOnCancel: true
+    }, function (isConfirm) {
+      if (isConfirm) {
+        $('.overlaynew').show();
+        var brandID = $(elem).attr('brandID');
+        $.ajax({
+          url: "/admin/brandboost/delete_brandboost",
+          type: "POST",
+          data: {
+            brandboost_id: brandID,
+            _token: '{{csrf_token()}}'
+          },
+          dataType: "json",
+          success: function success(data) {
+            if (data.status == 'success') {
+              $('.overlaynew').hide();
+              window.location.href = '';
+            }
+          }
+        });
+      }
+    });
+  });
+  $(document).on('click', '.viewECode', function () {
+    var brandID = $(this).attr('brandID');
+    $.ajax({
+      url: "/admin/brandboost/getBBECode",
+      type: "POST",
+      data: {
+        brandboost_id: brandID,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          var embeddedCode = data.result;
+          $('#embeddedCode').html(embeddedCode);
+          $("#viewEModel").modal();
+        }
+      }
+    });
+  });
+  $(document).on('click', '.editArchiveDataList', function () {
+    $('.editArchiveAction').toggle();
+  });
+  $(document).on('click', '.editDataList', function () {
+    $('.editAction').toggle();
+  });
+  $('[data-toggle="tooltip"]').tooltip();
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/ContactTags.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/contact/ContactTags.vue?vue&type=script&lang=js& ***!
@@ -7560,6 +8800,25 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.highcharts-tick{stroke:none!important}\n.highcharts-legend, .highcharts-credits{display: none!important;}\n.highcharts-container, .highcharts-container svg {width: 100% !important;}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/dashboard/index.vue?vue&type=style&index=0&lang=css&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/dashboard/index.vue?vue&type=style&index=0&lang=css& ***!
@@ -8116,6 +9375,36 @@ process.umask = function() { return 0; };
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=style&index=0&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--5-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./onsite_overview.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
 
 /***/ }),
 
@@ -10496,6 +11785,2488 @@ var staticRenderFns = [
         attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
       },
       [_c("img", { attrs: { src: "/assets/images/more.svg" } })]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=template&id=09c56d41&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=template&id=09c56d41& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "content", attrs: { id: "masterContainer" } },
+    [
+      _vm.oBrandboosts.length
+        ? _c("div", [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "tab-content" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane active",
+                  attrs: { id: "right-icon-tab0" }
+                },
+                [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "panel panel-flat",
+                          staticStyle: { margin: "0" }
+                        },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "panel-body p0" }, [
+                            _c(
+                              "table",
+                              { staticClass: "table datatable-basic" },
+                              [
+                                _vm._m(3),
+                                _vm._v(" "),
+                                _c(
+                                  "tbody",
+                                  _vm._l(_vm.oBrandboosts, function(
+                                    oBrandboost
+                                  ) {
+                                    return _c(
+                                      "tr",
+                                      {
+                                        staticClass: "selectedClass",
+                                        attrs: {
+                                          id: "append-" + oBrandboost.id
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "td",
+                                          { staticStyle: { display: "none" } },
+                                          [_vm._v(_vm._s(oBrandboost.created))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticStyle: { display: "none" } },
+                                          [_vm._v(_vm._s(oBrandboost.id))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass: "editAction",
+                                            staticStyle: { display: "none" }
+                                          },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                staticClass:
+                                                  "custmo_checkbox pull-left"
+                                              },
+                                              [
+                                                _c("input", {
+                                                  staticClass: "checkRows",
+                                                  attrs: {
+                                                    type: "checkbox",
+                                                    name: "checkRows[]",
+                                                    id: "chk" + oBrandboost.id
+                                                  },
+                                                  domProps: {
+                                                    value: "" + oBrandboost.id
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("span", {
+                                                  staticClass:
+                                                    "custmo_checkmark"
+                                                })
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "media-left media-middle"
+                                            },
+                                            [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "text-default text-semibold",
+                                                  attrs: {
+                                                    href:
+                                                      "/admin/brandboost/onsite_setup/" +
+                                                      oBrandboost.id,
+                                                    brandID:
+                                                      "" + oBrandboost.id,
+                                                    b_title:
+                                                      "" +
+                                                      oBrandboost.brand_title
+                                                  }
+                                                },
+                                                [
+                                                  _c("img", {
+                                                    staticClass:
+                                                      "img-circle img-xs br5",
+                                                    attrs: {
+                                                      src:
+                                                        "assets/images/default_table_img2.png",
+                                                      alt: ""
+                                                    }
+                                                  })
+                                                ]
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            { staticClass: "media-left" },
+                                            [
+                                              _c("div", {}, [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    staticClass:
+                                                      "text-default text-semibold",
+                                                    attrs: {
+                                                      href:
+                                                        "/admin/brandboost/onsite_setup/" +
+                                                        oBrandboost.id,
+                                                      brandID:
+                                                        "" + oBrandboost.id,
+                                                      b_title:
+                                                        "" +
+                                                        oBrandboost.brand_title
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        oBrandboost.brand_title
+                                                      ) +
+                                                        "\n                                                "
+                                                    )
+                                                  ]
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "text-muted text-size-small"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      oBrandboost.brand_desc.substring(
+                                                        0,
+                                                        35
+                                                      ) + "..."
+                                                    )
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          oBrandboost.revRA >= 4
+                                            ? _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "media-left media-middle"
+                                                },
+                                                [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      attrs: {
+                                                        href:
+                                                          "/admin/brandboost/reviews/" +
+                                                          oBrandboost.id,
+                                                        target: "_blank"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("img", {
+                                                        staticClass:
+                                                          "img-circle img-xs",
+                                                        attrs: {
+                                                          src:
+                                                            "/assets/images/smiley_green.png",
+                                                          alt: ""
+                                                        }
+                                                      })
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass: "media-left"
+                                                    },
+                                                    [
+                                                      _c("div", {}, [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "text-default text-semibold",
+                                                            attrs: {
+                                                              href:
+                                                                "/admin/brandboost/reviews/" +
+                                                                oBrandboost.id,
+                                                              target: "_blank"
+                                                            }
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                oBrandboost.revRA
+                                                              )
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "text-muted text-size-small"
+                                                        },
+                                                        [_vm._v("Positive")]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            : oBrandboost.revRA > 2 &&
+                                              oBrandboost.revRA < 4
+                                            ? _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "media-left media-middle"
+                                                },
+                                                [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      attrs: {
+                                                        href:
+                                                          "/admin/brandboost/reviews/" +
+                                                          oBrandboost.id,
+                                                        target: "_blank"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("img", {
+                                                        staticClass:
+                                                          "img-circle img-xs",
+                                                        attrs: {
+                                                          src:
+                                                            "/assets/images/smiley_grey2.png",
+                                                          alt: ""
+                                                        }
+                                                      })
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass: "media-left"
+                                                    },
+                                                    [
+                                                      _c("div", {}, [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "text-default text-semibold",
+                                                            attrs: {
+                                                              href:
+                                                                "/admin/brandboost/reviews/" +
+                                                                oBrandboost.id,
+                                                              target: "_blank"
+                                                            }
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                oBrandboost.revRA
+                                                              )
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "text-muted text-size-small"
+                                                        },
+                                                        [_vm._v("Neutral")]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            : oBrandboost.revRA >= 1
+                                            ? _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "media-left media-middle"
+                                                },
+                                                [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      attrs: {
+                                                        href:
+                                                          "/admin/brandboost/reviews/" +
+                                                          oBrandboost.id,
+                                                        target: "_blank"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("img", {
+                                                        staticClass:
+                                                          "img-circle img-xs",
+                                                        attrs: {
+                                                          src:
+                                                            "/assets/images/smiley_red.png",
+                                                          alt: ""
+                                                        }
+                                                      })
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass: "media-left"
+                                                    },
+                                                    [
+                                                      _c("div", {}, [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "text-default text-semibold",
+                                                            attrs: {
+                                                              href:
+                                                                "/admin/brandboost/reviews/" +
+                                                                oBrandboost.id,
+                                                              target: "_blank"
+                                                            }
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                oBrandboost.revRA
+                                                              )
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "text-muted text-size-small"
+                                                        },
+                                                        [_vm._v("Negative")]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                            N/A\n                                        "
+                                                )
+                                              ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "div",
+                                            { staticClass: "media-left" },
+                                            [
+                                              _c("div", {}, [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    staticClass:
+                                                      "text-default text-semibold",
+                                                    attrs: { href: "#" }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        oBrandboost.created
+                                                      )
+                                                    )
+                                                  ]
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "text-muted text-size-small"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(oBrandboost.created)
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          oBrandboost.AllSubscribers
+                                            ? _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "text-default text-semibold",
+                                                  attrs: {
+                                                    href:
+                                                      "/admin/brandboost/stats/onsite/" +
+                                                      oBrandboost.id +
+                                                      "?t=contact",
+                                                    target: "_blank"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      oBrandboost.AllSubscribers
+                                                        .length
+                                                    )
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          oBrandboost.AllSubscribers
+                                            ? _c(
+                                                "div",
+                                                {
+                                                  staticClass: "progress",
+                                                  attrs: {
+                                                    "data-toggle": "tooltip",
+                                                    title:
+                                                      "Total contacts " +
+                                                      oBrandboost.AllSubscribers
+                                                        .length,
+                                                    "data-placement": "top"
+                                                  }
+                                                },
+                                                [
+                                                  _c("div", {
+                                                    staticClass:
+                                                      "progress-bar progress-bar-grey",
+                                                    staticStyle: {
+                                                      width: "100%"
+                                                    },
+                                                    attrs: {
+                                                      role: "progressbar",
+                                                      "aria-valuenow": "100",
+                                                      "aria-valuemin": "0",
+                                                      "aria-valuemax": "100"
+                                                    }
+                                                  })
+                                                ]
+                                              )
+                                            : _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "text-default text-semibold",
+                                                  attrs: {
+                                                    href:
+                                                      "/admin/brandboost/stats/onsite/" +
+                                                      oBrandboost.id +
+                                                      "?t=contact",
+                                                    target: "_blank"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      oBrandboost.AllSubscribers
+                                                        .length
+                                                    )
+                                                  )
+                                                ]
+                                              )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "text-default text-semibold",
+                                              staticStyle: {
+                                                cursor: "pointer"
+                                              },
+                                              attrs: { target: "_blank" }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(
+                                                  oBrandboost.reviewResponse
+                                                    .length
+                                                )
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass: "progress",
+                                              attrs: {
+                                                "data-toggle": "tooltip",
+                                                title:
+                                                  "Total Requests " +
+                                                  oBrandboost.reviewResponse
+                                                    .length,
+                                                "data-placement": "top"
+                                              }
+                                            },
+                                            [
+                                              _c("div", {
+                                                staticClass:
+                                                  "progress-bar progress-bar-violet",
+                                                style:
+                                                  "width:((" +
+                                                  oBrandboost.reviewResponse
+                                                    .length +
+                                                  " * 100 / " +
+                                                  oBrandboost.reviewRequests
+                                                    .length +
+                                                  ") > 100 ? 100 : (" +
+                                                  oBrandboost.reviewResponse
+                                                    .length +
+                                                  " * 100 / " +
+                                                  oBrandboost.reviewRequests
+                                                    .length +
+                                                  "))%",
+                                                attrs: {
+                                                  role: "progressbar",
+                                                  "aria-valuenow": "100",
+                                                  "aria-valuemin": "100",
+                                                  "aria-valuemax": "100"
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "text-default text-semibold",
+                                              staticStyle: { cursor: "pointer" }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(
+                                                  oBrandboost.statsVal
+                                                    .positiveRating
+                                                )
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass: "progress",
+                                              attrs: {
+                                                "data-toggle": "tooltip",
+                                                title:
+                                                  oBrandboost.statsVal
+                                                    .positiveRating +
+                                                  " out of " +
+                                                  oBrandboost.reviewResponse
+                                                    .length +
+                                                  " Responses",
+                                                "data-placement": "top"
+                                              }
+                                            },
+                                            [
+                                              _c("div", {
+                                                staticClass:
+                                                  "progress-bar progress-bar-green2",
+                                                style:
+                                                  "width:" +
+                                                  oBrandboost.statsVal
+                                                    .positiveGraph +
+                                                  "%",
+                                                attrs: {
+                                                  role: "progressbar",
+                                                  "aria-valuenow": "50",
+                                                  "aria-valuemin": "0",
+                                                  "aria-valuemax": "100"
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "text-default text-semibold",
+                                              staticStyle: { cursor: "pointer" }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(
+                                                  oBrandboost.statsVal
+                                                    .neturalRating
+                                                )
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass: "progress",
+                                              attrs: {
+                                                "data-toggle": "tooltip",
+                                                title:
+                                                  oBrandboost.statsVal
+                                                    .neturalRating +
+                                                  " out of " +
+                                                  oBrandboost.reviewResponse
+                                                    .length +
+                                                  " Response",
+                                                "data-placement": "top"
+                                              }
+                                            },
+                                            [
+                                              _c("div", {
+                                                staticClass:
+                                                  "progress-bar progress-bar-black",
+                                                style:
+                                                  "width:" +
+                                                  oBrandboost.statsVal
+                                                    .neturalGraph +
+                                                  "%",
+                                                attrs: {
+                                                  role: "progressbar",
+                                                  "aria-valuenow": "50",
+                                                  "aria-valuemin": "0",
+                                                  "aria-valuemax": "100"
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "text-default text-semibold",
+                                              staticStyle: { cursor: "pointer" }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(
+                                                  oBrandboost.statsVal
+                                                    .negativeRating
+                                                )
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass: "progress",
+                                              attrs: {
+                                                "data-toggle": "tooltip",
+                                                title:
+                                                  oBrandboost.statsVal
+                                                    .negativeRating +
+                                                  " out of " +
+                                                  oBrandboost.reviewResponse
+                                                    .length +
+                                                  " Response",
+                                                "data-placement": "top"
+                                              }
+                                            },
+                                            [
+                                              _c("div", {
+                                                staticClass:
+                                                  "progress-bar progress-bar-red",
+                                                style:
+                                                  "width:" +
+                                                  oBrandboost.statsVal
+                                                    .negativeGraph +
+                                                  "%",
+                                                attrs: {
+                                                  role: "progressbar",
+                                                  "aria-valuenow": "50",
+                                                  "aria-valuemin": "0",
+                                                  "aria-valuemax": "100"
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "media-left media-middle"
+                                            },
+                                            [
+                                              _c("user-avatar", {
+                                                attrs: {
+                                                  avatar: oBrandboost.avatar
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _vm._m(4, true)
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "text-center" },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                staticClass:
+                                                  "custom-form-switch"
+                                              },
+                                              [
+                                                oBrandboost.status == 1
+                                                  ? _c("input", {
+                                                      staticClass:
+                                                        "field changeStatus",
+                                                      attrs: {
+                                                        brandID:
+                                                          "" + oBrandboost.id,
+                                                        status: "2",
+                                                        type: "checkbox",
+                                                        checked: "checked"
+                                                      }
+                                                    })
+                                                  : _c("input", {
+                                                      staticClass:
+                                                        "field changeStatus",
+                                                      attrs: {
+                                                        brandID:
+                                                          "" + oBrandboost.id,
+                                                        status: "1",
+                                                        type: "checkbox"
+                                                      }
+                                                    }),
+                                                _vm._v(" "),
+                                                _c("span", {
+                                                  staticClass: "toggle"
+                                                })
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            oBrandboost.user_role != 2
+                                              ? _c("div", [
+                                                  oBrandboost.user_role == 1
+                                                    ? _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "tdropdown"
+                                                        },
+                                                        [
+                                                          _vm._m(5, true),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "ul",
+                                                            {
+                                                              staticClass:
+                                                                "dropdown-menu dropdown-menu-right width-200"
+                                                            },
+                                                            [
+                                                              oBrandboost.status ==
+                                                              1
+                                                                ? _c("li", [
+                                                                    _c(
+                                                                      "a",
+                                                                      {
+                                                                        staticClass:
+                                                                          "changeStatusCampaign",
+                                                                        attrs: {
+                                                                          href:
+                                                                            "javascript:void(0);",
+                                                                          brandID:
+                                                                            "" +
+                                                                            oBrandboost.id,
+                                                                          status:
+                                                                            "2"
+                                                                        }
+                                                                      },
+                                                                      [
+                                                                        _c(
+                                                                          "i",
+                                                                          {
+                                                                            staticClass:
+                                                                              "icon-file-stats"
+                                                                          }
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " Pause"
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  ])
+                                                                : _vm._e(),
+                                                              _vm._v(" "),
+                                                              oBrandboost.status ==
+                                                              2
+                                                                ? _c("li", [
+                                                                    _c(
+                                                                      "a",
+                                                                      {
+                                                                        staticClass:
+                                                                          "changeStatusCampaign",
+                                                                        attrs: {
+                                                                          href:
+                                                                            "javascript:void(0);",
+                                                                          brandID:
+                                                                            "" +
+                                                                            oBrandboost.id,
+                                                                          status:
+                                                                            "1"
+                                                                        }
+                                                                      },
+                                                                      [
+                                                                        _c(
+                                                                          "i",
+                                                                          {
+                                                                            staticClass:
+                                                                              "icon-file-stats"
+                                                                          }
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " Start"
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  ])
+                                                                : _vm._e(),
+                                                              _vm._v(" "),
+                                                              _c("li", [
+                                                                _c(
+                                                                  "a",
+                                                                  {
+                                                                    staticClass:
+                                                                      "text-default text-semibold",
+                                                                    attrs: {
+                                                                      href:
+                                                                        "/admin/brandboost/onsite_setup/" +
+                                                                        oBrandboost.id,
+                                                                      brandID:
+                                                                        "" +
+                                                                        oBrandboost.id,
+                                                                      b_title:
+                                                                        "" +
+                                                                        oBrandboost.brand_title
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _c("i", {
+                                                                      staticClass:
+                                                                        "icon-pencil"
+                                                                    }),
+                                                                    _vm._v(
+                                                                      "  Edit"
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]),
+                                                              _vm._v(" "),
+                                                              _c("li", [
+                                                                _c(
+                                                                  "a",
+                                                                  {
+                                                                    staticClass:
+                                                                      "deleteCampaign",
+                                                                    attrs: {
+                                                                      href:
+                                                                        "javascript:void(0);",
+                                                                      brandID:
+                                                                        "" +
+                                                                        oBrandboost.id
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _c("i", {
+                                                                      staticClass:
+                                                                        "icon-trash"
+                                                                    }),
+                                                                    _vm._v(
+                                                                      " Delete"
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]),
+                                                              _vm._v(" "),
+                                                              _c("li", [
+                                                                _c(
+                                                                  "a",
+                                                                  {
+                                                                    staticClass:
+                                                                      "archiveCampaign",
+                                                                    attrs: {
+                                                                      href:
+                                                                        "javascript:void(0);",
+                                                                      brandID:
+                                                                        "" +
+                                                                        oBrandboost.id
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _c("i", {
+                                                                      staticClass:
+                                                                        "icon-file-text2"
+                                                                    }),
+                                                                    _vm._v(
+                                                                      " Move to Archive"
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]),
+                                                              _vm._v(" "),
+                                                              _c("li", [
+                                                                _c(
+                                                                  "a",
+                                                                  {
+                                                                    staticClass:
+                                                                      "viewECode",
+                                                                    attrs: {
+                                                                      href:
+                                                                        "javascript:void(0);",
+                                                                      brandID:
+                                                                        "" +
+                                                                        oBrandboost.id
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _c("i", {
+                                                                      staticClass:
+                                                                        "icon-file-locked"
+                                                                    }),
+                                                                    _vm._v(
+                                                                      " Get Embedded Code"
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]),
+                                                              _vm._v(" "),
+                                                              _c("li", [
+                                                                _c(
+                                                                  "a",
+                                                                  {
+                                                                    attrs: {
+                                                                      href:
+                                                                        "/admin/brandboost/stats/onsite/" +
+                                                                        oBrandboost.id +
+                                                                        "?t=contact",
+                                                                      target:
+                                                                        "_blank"
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _c("i", {
+                                                                      staticClass:
+                                                                        "icon-gear"
+                                                                    }),
+                                                                    _vm._v(
+                                                                      " Contacts"
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]),
+                                                              _vm._v(" "),
+                                                              _c("li", [
+                                                                _c(
+                                                                  "a",
+                                                                  {
+                                                                    attrs: {
+                                                                      href:
+                                                                        "/for/" +
+                                                                        oBrandboost.company_name +
+                                                                        "/" +
+                                                                        oBrandboost.brand_title.replace(
+                                                                          " ",
+                                                                          "-"
+                                                                        ) +
+                                                                        "-" +
+                                                                        oBrandboost.id,
+                                                                      target:
+                                                                        "_blank"
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _c("i", {
+                                                                      staticClass:
+                                                                        "icon-menu"
+                                                                    }),
+                                                                    _vm._v(
+                                                                      "Campaign Page"
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ])
+                                                            ]
+                                                          )
+                                                        ]
+                                                      )
+                                                    : _c("div", [_vm._v("-")])
+                                                ])
+                                              : _vm._e()
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  }),
+                                  0
+                                )
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane", attrs: { id: "right-icon-tab1" } },
+                [_vm._v("\n            TAB 2\n        ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane", attrs: { id: "right-icon-tab2" } },
+                [_vm._v("\n            TAB 3\n        ")]
+              )
+            ])
+          ])
+        : _c("div", { staticClass: "row" }, [_vm._m(6)]),
+      _vm._v(" "),
+      _vm._m(7),
+      _vm._v(" "),
+      _vm._m(8),
+      _vm._v(" "),
+      _vm._m(9)
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "page_header" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-5" }, [
+          _c("h3", [
+            _c("i", { staticClass: "icon-star-half" }),
+            _vm._v("   On Site Overviews")
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "nav nav-tabs nav-tabs-bottom" }, [
+            _c("li", { staticClass: "active" }, [
+              _c(
+                "a",
+                { attrs: { href: "#right-icon-tab0", "data-toggle": "tab" } },
+                [_vm._v("Live Now")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                { attrs: { href: "#right-icon-tab1", "data-toggle": "tab" } },
+                [_vm._v("Today")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                { attrs: { href: "#right-icon-tab2", "data-toggle": "tab" } },
+                [_vm._v("Last Week")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                { attrs: { href: "#right-icon-tab3", "data-toggle": "tab" } },
+                [_vm._v("Last Month")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                { attrs: { href: "#right-icon-tab4", "data-toggle": "tab" } },
+                [_vm._v("Last Year")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-7 text-right btn_area" }, [
+          _c("div", { staticClass: "btn-group" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn light_btn btn-icon dropdown-toggle",
+                attrs: { type: "button", "data-toggle": "dropdown" }
+              },
+              [
+                _c("i", { staticClass: "icon-calendar2" }),
+                _vm._v("    Filter campaign    "),
+                _c("span", { staticClass: "caret" })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "dropdown-menu dropdown-content width-320 dropdown-menu-right"
+              },
+              [
+                _c("div", { staticClass: "dropdown-content-heading" }, [
+                  _vm._v(" Filter\n                            "),
+                  _c("ul", { staticClass: "icons-list" }, [
+                    _c("li", [
+                      _c("a", { attrs: { href: "#" } }, [
+                        _c("i", { staticClass: "icon-more" })
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", {}, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "panel-group panel-group-control panel-group-control-right content-group-lg filter_campaign",
+                      attrs: { id: "accordion-control-right" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-heading sidebarheadings active"
+                          },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group1"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-star-empty3" }),
+                                  _vm._v(" Campaign Type")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group1" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(
+                                    "\n                                                    Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.\n                                                "
+                                  )
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group2"
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "icon-arrow-up-left2"
+                                  }),
+                                  _vm._v("  Source")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group2" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(" Conetent Goes here... ")
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group73"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-star-full2" }),
+                                  _vm._v("  Rating")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group73" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(" Conetent Goes here... ")
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group74"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-calendar" }),
+                                  _vm._v("  Date Created")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group74" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(" Conetent Goes here... ")
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group83"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-thumbs-up2" }),
+                                  _vm._v("  Reviews")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse in",
+                            attrs: { id: "accordion-control-right-group83" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row mb20" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: {
+                                          type: "checkbox",
+                                          checked: "checked"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Total Reviews\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "20"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "100"
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row mb20" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: {
+                                          type: "checkbox",
+                                          checked: "checked"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Positive\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "20"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "100"
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row mb20" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: { type: "checkbox" }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Neutral\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "20",
+                                      disabled: ""
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "100",
+                                      disabled: ""
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: {
+                                          type: "checkbox",
+                                          checked: "checked"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Negative\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "0"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "10"
+                                    }
+                                  })
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "dropdown-content-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn dark_btn dropdown-toggle",
+                      staticStyle: { display: "inline-block" },
+                      attrs: { type: "button" }
+                    },
+                    [
+                      _c("i", { staticClass: "icon-filter4" }),
+                      _c("span", [_vm._v("    Filter")])
+                    ]
+                  ),
+                  _vm._v(
+                    "\n                               \n                            "
+                  ),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: { display: "inline-block" },
+                      attrs: { href: "#" }
+                    },
+                    [_vm._v("Clear All")]
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("div", { staticClass: "panel panel-flat review_ratings" }, [
+          _c("div", { staticClass: "panel-heading" }, [
+            _c("h6", { staticClass: "panel-title" }, [
+              _vm._v("Review Ratings")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "heading-elements" }, [
+              _c("a", { attrs: { href: "#" } }, [
+                _c("i", { staticClass: "icon-more2" })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-body p0" }, [
+            _c("div", { staticClass: "pt20 pb20 pl40 pr40 bbot" }, [
+              _c("h1", [
+                _c("i", { staticClass: "icon-star-full2" }),
+                _vm._v(" 4.2 "),
+                _c("sup", [
+                  _c("i", { staticClass: "icon-arrow-up5" }),
+                  _vm._v("   +15%")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p40 ratings" }, [
+              _c("div", { staticClass: "row inner" }, [
+                _c("div", { staticClass: "col-xs-6" }, [
+                  _c("i", { staticClass: "icon-star-full2" }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "icon-star-full2" }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "icon-star-full2" }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "icon-star-full2" }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "icon-star-full2" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-xs-6 text-right" }, [
+                  _c("p", [_vm._v("24% "), _c("span", [_vm._v("5")])])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-xs-12" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "progress",
+                      attrs: {
+                        "data-toggle": "tooltip",
+                        title: "",
+                        "data-placement": "top",
+                        "data-original-title": "Total Requests 17"
+                      }
+                    },
+                    [
+                      _c("div", {
+                        staticClass: "progress-bar progress-bar-info",
+                        staticStyle: { width: "40%" },
+                        attrs: {
+                          role: "progressbar",
+                          "aria-valuenow": "40",
+                          "aria-valuemin": "0",
+                          "aria-valuemax": "40"
+                        }
+                      })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row inner" }, [
+                _c("div", { staticClass: "col-xs-6" }, [
+                  _c("i", { staticClass: "icon-star-full2" }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "icon-star-full2" }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "icon-star-full2" }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "icon-star-full2" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-xs-6 text-right" }, [
+                  _c("p", [_vm._v("61% "), _c("span", [_vm._v("17")])])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-xs-12" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "progress",
+                      attrs: {
+                        "data-toggle": "tooltip",
+                        title: "",
+                        "data-placement": "top",
+                        "data-original-title": "Total Requests 17"
+                      }
+                    },
+                    [
+                      _c("div", {
+                        staticClass: "progress-bar progress-bar-info",
+                        staticStyle: { width: "70%" },
+                        attrs: {
+                          role: "progressbar",
+                          "aria-valuenow": "70",
+                          "aria-valuemin": "0",
+                          "aria-valuemax": "70"
+                        }
+                      })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row inner" }, [
+                _c("div", { staticClass: "col-xs-6" }, [
+                  _c("i", { staticClass: "icon-star-full2" }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "icon-star-full2" }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "icon-star-full2" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-xs-6 text-right" }, [
+                  _c("p", [_vm._v("3% "), _c("span", [_vm._v("1")])])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-xs-12" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "progress",
+                      attrs: {
+                        "data-toggle": "tooltip",
+                        title: "",
+                        "data-placement": "top",
+                        "data-original-title": "Total Requests 17"
+                      }
+                    },
+                    [
+                      _c("div", {
+                        staticClass: "progress-bar progress-bar-info",
+                        staticStyle: { width: "20%" },
+                        attrs: {
+                          role: "progressbar",
+                          "aria-valuenow": "10",
+                          "aria-valuemin": "0",
+                          "aria-valuemax": "10"
+                        }
+                      })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row inner" }, [
+                _c("div", { staticClass: "col-xs-6" }, [
+                  _c("i", { staticClass: "icon-star-full2" }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "icon-star-full2" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-xs-6 text-right" }, [
+                  _c("p", [_vm._v("0% "), _c("span", [_vm._v("0")])])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-xs-12" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "progress",
+                      attrs: {
+                        "data-toggle": "tooltip",
+                        title: "",
+                        "data-placement": "top",
+                        "data-original-title": "Total Requests 17"
+                      }
+                    },
+                    [
+                      _c("div", {
+                        staticClass: "progress-bar progress-bar-info",
+                        staticStyle: { width: "10%" },
+                        attrs: {
+                          role: "progressbar",
+                          "aria-valuenow": "10",
+                          "aria-valuemin": "0",
+                          "aria-valuemax": "10"
+                        }
+                      })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row inner mb0" }, [
+                _c("div", { staticClass: "col-xs-6" }, [
+                  _c("i", { staticClass: "icon-star-full2" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-xs-6 text-right" }, [
+                  _c("p", [_vm._v("0% "), _c("span", [_vm._v("0")])])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-xs-12" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "progress",
+                      attrs: {
+                        "data-toggle": "tooltip",
+                        title: "",
+                        "data-placement": "top",
+                        "data-original-title": "Total Requests 17"
+                      }
+                    },
+                    [
+                      _c("div", {
+                        staticClass: "progress-bar progress-bar-info",
+                        staticStyle: { width: "10%" },
+                        attrs: {
+                          role: "progressbar",
+                          "aria-valuenow": "10",
+                          "aria-valuemin": "0",
+                          "aria-valuemax": "10"
+                        }
+                      })
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "panel panel-flat" }, [
+          _c("div", { staticClass: "panel-heading" }, [
+            _c("h6", { staticClass: "panel-title" }, [_vm._v("Daily Visits")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "heading-elements" }, [
+              _c("a", { attrs: { href: "#" } }, [
+                _c("i", { staticClass: "icon-more2" })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-body min_h230 p0" }, [
+            _c(
+              "div",
+              { staticClass: "p20 pb0 topchart_value mb30", attrs: { a: "" } },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-xs-2" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "/assets/images/purple_star.png",
+                        width: "43"
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-xs-4" }, [
+                    _c("h1", { staticClass: "m0 lh25" }, [_vm._v("21.5% ")]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "label bkg_purple ml0 ",
+                          staticStyle: { border: "none" }
+                        },
+                        [_vm._v("5.9%")]
+                      )
+                    ])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", {
+              staticStyle: { "min-width": "300px", height: "295px" },
+              attrs: { id: "linechart_a" }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("div", { staticClass: "panel panel-flat" }, [
+          _c("div", { staticClass: "panel-heading" }, [
+            _c("h6", { staticClass: "panel-title" }, [_vm._v("NPS Score")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "heading-elements" }, [
+              _c("a", { attrs: { href: "#" } }, [
+                _c("i", { staticClass: "icon-more2" })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-body p0 pb10" }, [
+            _c("div", { staticClass: "semi_circle_smiley" }, [
+              _c("img", {
+                attrs: { src: "/assets/images/smiley_green.png", width: "43" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", {
+              staticClass: "br5 bkg_gradient",
+              staticStyle: { width: "100%", height: "190px" },
+              attrs: { id: "semi_circle_chart2" }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel panel-flat" }, [
+          _c("div", { staticClass: "panel-heading" }, [
+            _c("h6", { staticClass: "panel-title" }, [
+              _vm._v("Negative Reviews"),
+              _c("a", { staticClass: "heading-elements-toggle" }, [
+                _c("i", { staticClass: "icon-more" })
+              ]),
+              _c("a", { staticClass: "heading-elements-toggle" }, [
+                _c("i", { staticClass: "icon-more" })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "heading-elements" }, [
+              _c("a", { attrs: { href: "#" } }, [
+                _c("i", { staticClass: "icon-more2" })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-body p30" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-xs-6" }, [
+                _c("div", { staticClass: "topchart_value" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-xs-5" }, [
+                      _c("img", {
+                        attrs: {
+                          src: "/assets/images/smiley_red.png",
+                          width: "43"
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-xs-7" }, [
+                      _c("h1", { staticClass: "m0 lh25" }, [_vm._v("31")]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c(
+                          "span",
+                          {
+                            staticClass: "label bkg_red ml0 ",
+                            staticStyle: { border: "none" }
+                          },
+                          [_vm._v("15.9%")]
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-xs-6" }, [
+                _c("img", { attrs: { src: "/assets/images/graph5_1.png" } })
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-heading" }, [
+      _c("h6", { staticClass: "panel-title" }, [_vm._v("On Site Campaigns")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "heading-elements" }, [
+        _c(
+          "div",
+          {
+            staticClass: "form-group has-feedback has-feedback-left",
+            staticStyle: { display: "inline-block", margin: "0" }
+          },
+          [
+            _c("input", {
+              staticClass: "form-control input-sm cus_search",
+              attrs: { placeholder: "Search by name", type: "text" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-control-feedback" }, [
+              _c("i", { staticClass: "icon-search4" })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "table_action_tool" }, [
+          _c("a", { attrs: { href: "#" } }, [
+            _c("i", { staticClass: "icon-calendar52" })
+          ]),
+          _vm._v(" "),
+          _c("a", { attrs: { href: "#" } }, [
+            _c("i", { staticClass: "icon-arrow-down16" })
+          ]),
+          _vm._v(" "),
+          _c("a", { attrs: { href: "#" } }, [
+            _c("i", { staticClass: "icon-arrow-up16" })
+          ]),
+          _vm._v(" "),
+          _c(
+            "a",
+            { staticClass: "editDataList", staticStyle: { cursor: "pointer" } },
+            [_c("i", { staticClass: "icon-pencil" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "custom_action_box",
+              staticStyle: { cursor: "pointer", display: "none" },
+              attrs: { id: "deleteButtonBrandboostOnline" }
+            },
+            [_c("i", { staticClass: "icon-trash" })]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "nosort editAction",
+            staticStyle: { display: "none" }
+          },
+          [
+            _c("label", { staticClass: "custmo_checkbox pull-left" }, [
+              _c("input", {
+                attrs: { type: "checkbox", name: "checkAll[]", id: "checkAll" }
+              }),
+              _c("span", { staticClass: "custmo_checkmark" })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-stack-star" }), _vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-star-full2" }),
+          _vm._v("Rating")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-calendar" }),
+          _vm._v("Created")
+        ]),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-user" }), _vm._v(" ")]),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-graph" }), _vm._v("Total")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
+          _vm._v(" ")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
+          _vm._v(" ")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
+          _vm._v(" ")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-alarm-check" }),
+          _vm._v("Last review")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [
+          _c("i", { staticClass: "fa fa-dot-circle-o fsize12" }),
+          _vm._v("Status")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "media-left" }, [
+      _c("div", {}, [
+        _c(
+          "a",
+          { staticClass: "text-default text-semibold", attrs: { href: "#" } },
+          [_c("i", { staticClass: "fa fa-smile-o" })]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-muted text-size-small" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "ml30 dropdown-toggle",
+        staticStyle: { cursor: "pointer" },
+        attrs: { "data-toggle": "dropdown" }
+      },
+      [_c("img", { attrs: { src: "/assets/images/more.svg" } })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c(
+        "div",
+        { staticClass: "text-center", staticStyle: { margin: "200px 0px 0" } },
+        [
+          _c("h5", { staticClass: "mb-20" }, [
+            _vm._v(
+              "\n                    Looks Like You Don’t Have Any Brand Boosts Yet "
+            ),
+            _c("img", { attrs: { src: "/assets/images/smiley.png" } }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(
+              "\n                    Lets Create Your First Onsite Brand Boost.\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn bl_cust_btn mb-10 btn-default addBrandboost",
+              attrs: { id: "addBrandboost", type: "button" }
+            },
+            [
+              _c("i", { staticClass: "icon-make-group position-left" }),
+              _vm._v(" ADD ONSITE BRAND BOOST")
+            ]
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade in", attrs: { id: "viewEModel" } },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("h5", { staticClass: "modal-title" }, [
+                _c("i", { staticClass: "icon-menu7" }),
+                _vm._v("  Embedded Widget Code")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", {
+                staticClass: "col-md-12",
+                staticStyle: {
+                  border: "1px #ccc solid",
+                  padding: "10px",
+                  margin: "0 5px 10px"
+                },
+                attrs: { id: "embeddedCode" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-link",
+                  attrs: { "data-dismiss": "modal" }
+                },
+                [_c("i", { staticClass: "icon-cross" }), _vm._v(" Close")]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "addBrandboostModal" } },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c(
+              "form",
+              {
+                attrs: {
+                  method: "post",
+                  name: "frmAddOnsiteBrandboost",
+                  id: "frmAddOnsiteBrandboost",
+                  action: "javascript:void();"
+                }
+              },
+              [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "modal-title" }, [
+                    _vm._v("Add Onsite Brand Boost")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("h6", { staticClass: "text-semibold" }, [
+                    _vm._v("Step 1: Where Would You Like To Boost Your Brand? ")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Please Enter Title below:")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "campaignName",
+                      name: "campaignName",
+                      placeholder: "Enter Title",
+                      type: "text",
+                      required: ""
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer p40" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-link",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn dark_btn", attrs: { type: "submit" } },
+                    [_vm._v("Continue")]
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "addPeopleList" } },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog",
+            staticStyle: { "max-width": "440px" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c(
+                "form",
+                { staticClass: "form-horizontal", attrs: { method: "post" } },
+                [
+                  _c("div", { staticClass: "modal-header" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("×")]
+                    ),
+                    _vm._v(" "),
+                    _c("h5", { staticClass: "modal-title" }, [
+                      _vm._v("Create new campaign")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v("Campaign name")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", {}, [
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                placeholder: "Enter campaign name",
+                                name: "firstname",
+                                id: "firstname",
+                                type: "text",
+                                required: ""
+                              }
+                            })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("div", { staticClass: "form-group mb0" }, [
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v("Campaign description")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", {}, [
+                            _c("textarea", {
+                              staticClass: "form-control",
+                              attrs: {
+                                placeholder: "Enter campaign description",
+                                value: "",
+                                type: "text",
+                                required: ""
+                              }
+                            })
+                          ])
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer p40" }, [
+                    _c("input", {
+                      attrs: {
+                        type: "hidden",
+                        name: "listId",
+                        id: "list_id",
+                        value: ""
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-link text-muted",
+                        attrs: { "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Cancel ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn dark_btn bkg_purple",
+                        attrs: {
+                          "data-toggle": "modal",
+                          id: "nextpopup",
+                          type: "button"
+                        }
+                      },
+                      [_vm._v("Create")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
     )
   }
 ]
@@ -37221,6 +40992,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/onsite/onsite_overview.vue ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _onsite_overview_vue_vue_type_template_id_09c56d41___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./onsite_overview.vue?vue&type=template&id=09c56d41& */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=template&id=09c56d41&");
+/* harmony import */ var _onsite_overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./onsite_overview.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _onsite_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./onsite_overview.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _onsite_overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _onsite_overview_vue_vue_type_template_id_09c56d41___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _onsite_overview_vue_vue_type_template_id_09c56d41___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/brandboost/onsite/onsite_overview.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_onsite_overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./onsite_overview.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_onsite_overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_onsite_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--5-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./onsite_overview.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_onsite_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_onsite_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_onsite_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_onsite_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_onsite_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=template&id=09c56d41&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=template&id=09c56d41& ***!
+  \************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_onsite_overview_vue_vue_type_template_id_09c56d41___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./onsite_overview.vue?vue&type=template&id=09c56d41& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=template&id=09c56d41&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_onsite_overview_vue_vue_type_template_id_09c56d41___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_onsite_overview_vue_vue_type_template_id_09c56d41___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/contact/ContactTags.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/admin/contact/ContactTags.vue ***!
@@ -38197,6 +42055,22 @@ __webpack_require__.r(__webpack_exports__);
     csrf_token: function csrf_token() {
       var tkn = $('meta[name="_token"]').attr('content');
       return tkn;
+    },
+    setStringLimit: function setStringLimit(str, limit) {
+      var cLimit = limit == '' ? 35 : limit;
+      var post = str.substr(0, cLimit);
+      var dotVal = '';
+
+      if (str.length >= cLimit) {
+        dotVal = '...';
+      }
+
+      return post + dotVal;
+    },
+    number_format: function number_format(num, placeVal) {
+      var placeVal = placeVal != '' ? placeVal : 2;
+      return parseFloat(Math.round(num * 100) / 100).toFixed(placeVal);
+      ;
     }
   }
 });
@@ -38216,15 +42090,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_live___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/admin/live/ */ "./resources/js/components/admin/live/index.vue");
 /* harmony import */ var _components_admin_contact_Contacts_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/admin/contact/Contacts.vue */ "./resources/js/components/admin/contact/Contacts.vue");
 /* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue");
-/* harmony import */ var _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ */ "./resources/js/components/admin/brandboost/onsite/index.vue");
-/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
-/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
-/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
+/* harmony import */ var _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/onsite_overview */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue");
+/* harmony import */ var _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ */ "./resources/js/components/admin/brandboost/onsite/index.vue");
+/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
+/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
+/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
 
 
 
 /*import EmailTemplates from './components/admin/templates/Email.vue';
 import SmsTemplates from './components/admin/templates/Sms.vue';*/
+
 
 
 
@@ -38247,23 +42123,29 @@ var routes = [{
 /*{ path: '/templates/email', component: EmailTemplates },
 { path: '/templates/sms', component: SmsTemplates },*/
 {
+  path: '/brandboost/onsite_overview',
+  component: _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_4__["default"],
+  meta: {
+    title: 'Onsite overview - Brand Boost'
+  }
+}, {
   path: '/brandboost/onsite',
-  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_4__["default"]
+  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
   path: '/tags',
-  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_5__["default"],
+  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_6__["default"],
   meta: {
     title: 'Insight Tags - Brand Boost'
   }
 }, {
   path: '/tags/tagsreview',
-  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_6__["default"],
+  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_7__["default"],
   meta: {
     title: 'Tags Review - Brand Boost'
   }
 }, {
   path: '/tags/tagsfeedback',
-  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_7__["default"],
+  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_8__["default"],
   meta: {
     title: 'Tags Feedback - Brand Boost'
   }
@@ -38279,7 +42161,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home1/lamppp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })
