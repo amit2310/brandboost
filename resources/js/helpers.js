@@ -1,22 +1,22 @@
 export default {
-    methods:{
+    methods: {
         capitalizeFirstLetter(str) {
             if (typeof str !== 'string') return '';
             return str.charAt(0).toUpperCase() + str.slice(1);
         },
-        paginate(tableId, time=1000){
-            setTimeout(function(){
+        paginate(tableId, time = 1000) {
+            setTimeout(function () {
                 custom_data_table(tableId);
             }, time);
         },
-        mobileNoFormat(phoneNumber){
+        mobileNoFormat(phoneNumber) {
             return phoneNumber;
         },
-        csrf_token(){
+        csrf_token() {
             let tkn = $('meta[name="_token"]').attr('content');
             return tkn;
         },
-        setStringLimit(str, limit){
+        setStringLimit(str, limit) {
             if (typeof str !== 'string') return '';
             var cLimit = limit == '' ? 35 : limit;
             var post = str.substr(0, cLimit);
@@ -26,10 +26,14 @@ export default {
             }
             return post + dotVal;
         },
-        displayNoData(){
+
+        displayNoData() {
             return "<span class=\"text-muted text-size-small\">[No Data]</span>";
+        },
+        number_format(num, placeVal) {
+            var placeVal = placeVal != '' ? placeVal : 2;
+            return parseFloat(Math.round(num * 100) / 100).toFixed(placeVal);
         }
 
     }
-
 }

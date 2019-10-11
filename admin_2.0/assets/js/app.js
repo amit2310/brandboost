@@ -31,15 +31,16 @@
         t.preventDefault(), e(this).addClass("active"), e(this).siblings().removeClass("active"), e(".main-menu-inner").addClass("active");
         var a = e(this).attr("href");
         e(a).addClass("active"), e(a).siblings().removeClass("active")
+        }),
+		
+		
+		e(".main-icon-menu .nav-link").on("onmouseleave", function(t) {
+        t.preventDefault(), e(".main-menu-inner").removeClass("active");
         }), 
 		
 		
 		
-//$(document).ready(function(){
-//  $(".button-menu-mobile-inner").click(function(){
-//    $("body").toggleClass("enlarge-menu");
-//  });
-//});
+
 	
 		
 		Waves.init()

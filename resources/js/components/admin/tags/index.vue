@@ -366,8 +366,8 @@
 
                     this.oTags = response.data.aTag;
                     this.oGroupIDs = response.data.aGroupID;
-                    console.log(this.oTags);
-                    console.log(this.oGroupIDs);
+                    //console.log(this.oTags);
+                    //console.log(this.oGroupIDs);
                 });
 
             console.log('Component mounted.');
