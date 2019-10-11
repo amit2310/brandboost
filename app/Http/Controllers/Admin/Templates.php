@@ -12,10 +12,10 @@ use Session;
 class Templates extends Controller {
 
     public function index() {
-        
+
     }
-    
-    
+
+
     /**
      * Used to get the list of all email templates
      */
@@ -33,7 +33,7 @@ class Templates extends Controller {
         $userID = $aUser->id;
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
+
         $oTemplates = $mTemplates->getCommonTemplates('', '', '', 'email');
         $oCategories = $mTemplates->getCommonTemplateCategories();
         $aData = array(
@@ -42,12 +42,15 @@ class Templates extends Controller {
             'oTemplates' => $oTemplates,
             'oCategories' => $oCategories,
             'templateType' => 'email',
-            'method' => 'manage'
+            'method' => 'manage',
+            'userID' => $userID
         );
-        return view('admin.templates.list-templates', $aData);
+        //return view('admin.templates.list-templates', $aData);
+        echo json_encode($aData);
+        exit;
     }
 
-    
+
     /**
      * Used to get the list of all sms templates
      */
@@ -63,10 +66,10 @@ class Templates extends Controller {
                     </ul>';
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
+
         $oTemplates = $mTemplates->getCommonTemplates('', '', '', 'sms');
         $oCategories = $mTemplates->getCommonTemplateCategories();
 
@@ -76,18 +79,21 @@ class Templates extends Controller {
             'oTemplates' => $oTemplates,
             'oCategories' => $oCategories,
             'templateType' => 'sms',
-            'method' => 'manage'
+            'method' => 'manage',
+            'userID' => $userID
         );
-        return view('admin.templates.list-templates', $aData);
+        //return view('admin.templates.list-templates', $aData);
+        echo json_encode($aData);
+        exit;
     }
 
-    
+
     /**
      * Used to create user templates
      */
     public function addUserTemplate(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -95,11 +101,11 @@ class Templates extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
-        
+
+
         //$userID = ($userID == '1') ? 0 : 1;
         $templateName = strip_tags($request->templateName);
         $category = strip_tags($request->templateCategory);
@@ -157,20 +163,20 @@ class Templates extends Controller {
         exit;
     }
 
-    
+
     /**
-     * 
+     *
      * @param type $idUsed to edit email/sms template
      */
     public function edit(Request $request) {
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         $id=$request->id;
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
+
         $oTemplate = $mTemplates->getCommonTemplates($userID, '', $id, '');
         $templateType = $oTemplate[0]->template_type;
         if ($templateType == 'email') {
@@ -179,7 +185,7 @@ class Templates extends Controller {
         } else {
             $activeTitle = 'SMS';
             $templateLink = base_url('admin/templates/sms');
-            
+
         }
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -200,16 +206,16 @@ class Templates extends Controller {
         return view('admin.templates.edit', $aData);
     }
 
-    
+
     /**
      * Used to update User's Email/Sms templates
      */
     public function updateUserTemplate(Request $request) {
         $response = array();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
@@ -236,16 +242,16 @@ class Templates extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update user template name
      */
     public function updateUserTemplateName(Request $request) {
         $response = array();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
@@ -280,17 +286,17 @@ class Templates extends Controller {
         exit;
     }
 
-    
+
     /**
      * This function used to load the content of selected email template
      */
     public function loadEmailTemplate(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
+
         $id = $request->id;
         $oTemplate = $mTemplates->getCommonTemplates($userID, '', $id, '');
         $compiledSource = $oTemplate[0]->stripo_compiled_html;
@@ -301,7 +307,7 @@ class Templates extends Controller {
         return view('admin.templates.email-editor', $aData);
     }
 
-    
+
     /**
      * This function used to load the content of selected sms template
      * @param type $id
@@ -312,7 +318,7 @@ class Templates extends Controller {
         $id = $request->id;
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
+
         $oTemplate = $mTemplates->getCommonTemplates($userID, '', $id, '');
         $compiledSource = $oTemplate[0]->stripo_compiled_html;
         $aData = array(
@@ -322,19 +328,19 @@ class Templates extends Controller {
         return view('admin.templates.sms-editor', $aData);
     }
 
-    
+
     /**
      * Used to get the list of categorized templates
      */
     public function getCategorizedTemplates(Request $request) {
         $response = array();
         $aUser = getLoggedUser();
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
+
         $userID = $aUser->id;
-        
+
         $actionName = strip_tags($request->action);
         $categoryID = strip_tags($request->categoryid);
         $selected_template = strip_tags($request->selected_template);
@@ -382,21 +388,21 @@ class Templates extends Controller {
         exit;
     }
 
-    
+
     /**
-     * 
+     *
      * @param type $tempID
      * @param type $draft
      * @param type $uidUsed to load preview content of the selected template
      */
     public function loadTemplatePreview(Request $request, $tempID = '', $draft = '', $uid = '') {
         $bURLPreview = false;
-        
+
         $aUser = getLoggedUser();
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
+
         $userID = $aUser->id;
         $templateID = ($request->template_id);
         $moduleName = strip_tags($request->moduleName);
@@ -447,19 +453,19 @@ class Templates extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to load Strip Resources(This will be deprecated soon)
      */
     public function loadStripoResources($type, $templateID, $returnType = false, $isDraft = false, $source = '', $modName = '', $moduleUnitID = '') {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
+
         $mWorkflow = new WorkflowModel();
-        
+
         if ($isDraft == true) {
             $oResponse = $mTemplates->getCommonDraftTemplates($userID, $templateID);
         } else if ($source == 'my') {
@@ -524,7 +530,7 @@ class Templates extends Controller {
 
                     if (!empty($compiled)) {
                         $compiled = $this->brandboostEmailTagReplace($moduleUnitID, $compiled, strtolower($oResponse[0]->template_type), $aUser);
-                        
+
                     }
                 }
             }
@@ -562,7 +568,7 @@ class Templates extends Controller {
         }
     }
 
-    
+
     /**
      * Used to parse the template tags for selected module
      */
@@ -663,7 +669,7 @@ class Templates extends Controller {
         return $compiledCode;
     }
 
-    
+
     /**
      * This function retrun the blank template html content
      */
@@ -677,19 +683,19 @@ class Templates extends Controller {
         return array('html' => $html, 'css' => $css, 'compiled' => $compliled);
     }
 
-    
+
     /**
      * Used to send test email
      */
     public function sendTestEmail(Request $request) {
         $response = array();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
+
         $templateID = strip_tags($request->templateId);
         $emailAddress = strip_tags($request->email);
 
@@ -739,16 +745,16 @@ class Templates extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to send test sms
      */
     public function sendTestSMS(Request $request) {
         $response = array();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
@@ -821,16 +827,16 @@ class Templates extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to clone selected template
      */
     public function cloneTemplate(Request $request) {
         $response = array();
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
@@ -858,10 +864,10 @@ class Templates extends Controller {
     public function deleteTemplate(Request $request) {
         $response = array();
         $response['status'] = 'error';
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
@@ -879,7 +885,7 @@ class Templates extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to create and store thumbnail for selected template
      * @param type $templateID
@@ -890,7 +896,7 @@ class Templates extends Controller {
         $templateID = $request->id;
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
-        
+
         $oTemplate = $mTemplates->getCommonTemplates($userID, '', $templateID, '');
         if (!empty($oTemplate)) {
             $templateType = $oTemplate[0]->template_type;
@@ -910,17 +916,17 @@ class Templates extends Controller {
         }
     }
 
-    
+
     /**
      * Used to update thumbnail of selected template
      */
     public function updateThumbnail(Request $request) {
         $response = array();
         $response['status'] = 'error';
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
@@ -943,7 +949,7 @@ class Templates extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update all the template tags in brandboost module
      * @param type $brandboostID
@@ -955,7 +961,7 @@ class Templates extends Controller {
     public function brandboostEmailTagReplace($brandboostID, $sHtml, $campaignType = 'email', $subscriberInfo) {
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         $oBrandboost = $mWorkflow->getModuleUnitInfo('brandboost', $brandboostID);
         $productsDetails = $mWorkflow->getProductDataByBBID($brandboostID);
         $greeting = 'Hi, ' . $subscriberInfo->firstname . ' ' . $subscriberInfo->lastname . '! We’d love your feedback!';

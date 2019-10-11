@@ -65,66 +65,66 @@
    <div class="content-area">
     <div class="container-fluid">
      <div class="row">
-     	<div class="col-md-6 mb-3">
+     	<div class="col-md-4 mb-3">
      		<div style="box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04); border-radius: 4px; height: auto; background: #fff; padding: 40px;" >
      			<h2 class="brand_400">Bold </h2>
-     			<h3 class="htxt_bold_10">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_bold_12">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_bold_14">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_bold_16">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_bold_18">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_10">10px, 600 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_12">12px, 600 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_14">14px, 600 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_16">16px, 600 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_18">18px, 600 , You used 408/450 montly credits</h3>
 <br>
 <br>
 <br>
 
      			<h2 class="brand_400">Medium </h2>
-     			<h3 class="htxt_medium_10">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_medium_12">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_medium_14">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_medium_16">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_medium_18">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_10">10px, 500 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_12">12px, 500 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_14">14px, 500 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_16">16px, 500 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_18">18px, 500 , You used 408/450 montly credits</h3>
      			
 <br>
 <br>
 <br>			<h2 class="brand_400">Regular </h2>
-    			<h3 class="htxt_regular_10">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_regular_12">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_regular_14">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_regular_16">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_regular_18">You used 408/450 montly credits</h3>
+    			<h3 class="htxt_regular_10">10px, 400 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_12">12px, 400 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_14">14px, 400 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_16">16px, 400 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_18">18px, 400 , You used 408/450 montly credits</h3>
      			
      				
      						
      			
      		</div>
      	</div>
-     	<div class="col-md-6 mb-3">
+     	<div class="col-md-8 mb-3">
      		<div style="box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04); border-radius: 4px; height: auto; background: #fff; padding: 40px;" >
      			<h2 class="brand_400">Bold </h2>
-     			<h3 class="htxt_bold_20">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_bold_24">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_bold_28">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_bold_32">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_bold_36">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_20">20px, 600 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_24">24px, 600 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_28">28px, 600 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_32">32px, 600 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_bold_36">36px, 600 , You used 408/450 montly credits</h3>
 <br>
 <br>
 <br>
 
      			<h2 class="brand_400">Medium </h2>
-     			<h3 class="htxt_medium_20">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_medium_24">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_medium_28">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_medium_32">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_medium_36">You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_20">20px, 500 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_24">24px, 500 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_28">28px, 500 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_32">34px, 500 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_medium_36">36px, 500 , You used 408/450 montly credits</h3>
      			
 <br>
 <br>
 <br>			<h2 class="brand_400">Regular </h2>
-    			<h3 class="htxt_regular_20">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_regular_24">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_regular_28">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_regular_32">You used 408/450 montly credits</h3>
-     			<h3 class="htxt_regular_36">You used 408/450 montly credits</h3>
+    			<h3 class="htxt_regular_20">20px, 400 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_24">24px, 400 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_28">28px, 400 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_32">32px, 400 , You used 408/450 montly credits</h3>
+     			<h3 class="htxt_regular_36">36px, 400 , You used 408/450 montly credits</h3>
      			
      				
      				
@@ -133,7 +133,7 @@
      	
      	
      	
-     	<div class="col-md-6 mb-3">
+     	<div class="col-md-12 mb-3">
      	<div style="box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04); border-radius: 4px; height: auto; background: #fff; padding: 40px;" >
      	<h2 class="brand_400">Blue </h2>
      	<div class="square bkg_blue_100"></div>
