@@ -1707,6 +1707,824 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/Media.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/Media.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var tkn = $('meta[name="_token"]').attr('content');
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['title'],
+  components: {
+    UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      /*count : 0,*/
+      reviews: {}
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/admin/brandboost/media').then(function (response) {
+      _this.reviews = response.data.aReviews;
+      console.log(_this.reviews);
+      /*this.count = response.data.totalCount;*/
+
+      var tableId = 'brandboostOnsiteMedia';
+
+      _this.paginate(tableId);
+    });
+  }
+});
+$(document).ready(function () {
+  $(document).on('click', '.videoReview', function () {
+    var filepath = $(this).attr('filepath');
+    var fileext = $(this).attr('fileext');
+    $('#vReviewShow video source').attr('src', filepath);
+    $('#vReviewShow video source').attr('type', 'video/' + fileext);
+    $("#vReviewShow video")[0].load();
+    $('#videoReviewShowModal').modal();
+  });
+  $(document).on('click', '#deleteContactsBtn', function () {
+    var val = [];
+    var mediaName = [];
+    $('.checkRows:checkbox:checked').each(function (i) {
+      val[i] = $(this).val();
+      mediaName[i] = $(this).attr('mediaName');
+    }); //console.log(mediaName, val);
+
+    if (val.length === 0) {
+      alert('Please select a row.');
+    } else {
+      deleteConfirmationPopup("This media will deleted immediately.<br>You can't undo this action.", function () {
+        $('.overlaynew').show();
+        $.ajax({
+          url: "/reviews/deleteReviewMultipal",
+          type: "POST",
+          data: {
+            reviewid: val,
+            mediaName: mediaName,
+            _token: tkn
+          },
+          dataType: "json",
+          success: function success(data) {
+            if (data.status == 'success') {
+              location.reload();
+            } else {
+              alert("Having some error.");
+            }
+          },
+          error: function error(_error) {
+            console.log(_error);
+          }
+        });
+      });
+    }
+  });
+  $(document).on('click', '.deleteSingleVideo', function () {
+    var val = [];
+    var mediaName = [];
+    val[0] = $(this).attr('reviewId');
+    mediaName[0] = $(this).attr('mediaName'); //console.log(mediaName, val);
+
+    if (val.length === 0) {
+      alert('Please select a row.');
+    } else {
+      deleteConfirmationPopup("This media will deleted immediately.<br>You can't undo this action.", function () {
+        $('.overlaynew').show();
+        $.ajax({
+          url: "/reviews/deleteReviewMultipal",
+          type: "POST",
+          data: {
+            reviewid: val,
+            mediaName: mediaName,
+            _token: tkn
+          },
+          dataType: "json",
+          success: function success(data) {
+            if (data.status == 'success') {
+              location.reload();
+            } else {
+              alert("Having some error.");
+            }
+          },
+          error: function error(_error2) {
+            console.log(_error2);
+          }
+        });
+      });
+    }
+  });
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/ReviewRequest.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/ReviewRequest.vue?vue&type=script&lang=js& ***!
@@ -10265,6 +11083,25 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/Media.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/Media.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.thumbnail .thumb img {\n    border-radius: 5px 5px 0 0;\n    height: 220px;\n}\n.caption-overflow.smallovfl {\n    color: #333;\n    width: 60px;\n    line-height: 44px;\n}\n.caption-overflow.smallovfl a {\n    display: block;\n    height: 44px;\n    text-align: center;\n    color: #fff;\n}\n.caption-overflow.smallovfl a i {\n    font-size: 18px;\n}\n.small_media_icon:hover .caption-overflow.smallovfl {\n    visibility: visible !important;\n    opacity: 1 !important;\n    background: rgba(0, 0, 0, 0.4);\n    border-radius: 5px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/ReviewRequest.vue?vue&type=style&index=0&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/ReviewRequest.vue?vue&type=style&index=0&lang=css& ***!
@@ -10916,6 +11753,36 @@ process.umask = function() { return 0; };
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/Media.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/Media.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Media.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/Media.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
 
 /***/ }),
 
@@ -11766,6 +12633,1250 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [_c("h1", [_vm._v("Service Page")])])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/Media.vue?vue&type=template&id=bac34288&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/Media.vue?vue&type=template&id=bac34288& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "content" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "tab-content" }, [
+      _c(
+        "div",
+        { staticClass: "tab-pane active", attrs: { id: "right-icon-tab0" } },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "panel panel-flat",
+                  staticStyle: { margin: "0" }
+                },
+                [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "panel-body p0" }, [
+                    _c(
+                      "table",
+                      {
+                        staticClass: "table",
+                        attrs: { id: "brandboostOnsiteMedia" }
+                      },
+                      [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          [
+                            _vm._l(_vm.reviews, function(review, index) {
+                              return _vm._l(review.fileCollection, function(
+                                oFile
+                              ) {
+                                return _c(
+                                  "tr",
+                                  {
+                                    staticClass: "selectedClass",
+                                    attrs: {
+                                      id: "append-" + (review.id + index)
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "td",
+                                      { staticStyle: { display: "none" } },
+                                      [_vm._v(_vm._s(review.created))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticStyle: { display: "none" } },
+                                      [_vm._v(_vm._s(review.id))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "editAction",
+                                        staticStyle: { display: "none" }
+                                      },
+                                      [
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "custmo_checkbox pull-left"
+                                          },
+                                          [
+                                            _c("input", {
+                                              staticClass: "checkRows",
+                                              attrs: {
+                                                type: "checkbox",
+                                                name: "checkRows[]",
+                                                id: "chk" + review.id,
+                                                mediaName: oFile.media_url,
+                                                delattr: index
+                                              },
+                                              domProps: { value: review.id }
+                                            }),
+                                            _c("span", {
+                                              staticClass: "custmo_checkmark"
+                                            })
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      oFile.media_type == "image"
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass: "small_media_icon",
+                                              staticStyle: {
+                                                position: "relative",
+                                                width: "60px"
+                                              }
+                                            },
+                                            [
+                                              _c("img", {
+                                                staticClass: "media br5",
+                                                attrs: {
+                                                  src:
+                                                    "https://s3-us-west-2.amazonaws.com/brandboost.io/" +
+                                                    oFile.media_url,
+                                                  alt: ""
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "caption-overflow smallovfl"
+                                                },
+                                                [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      attrs: {
+                                                        href:
+                                                          "https://s3-us-west-2.amazonaws.com/brandboost.io/" +
+                                                          oFile.media_url,
+                                                        "data-popup": "lightbox"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass: "icon-eye"
+                                                      })
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        : _c(
+                                            "div",
+                                            {
+                                              staticClass: "small_media_icon",
+                                              staticStyle: {
+                                                position: "relative",
+                                                width: "60px"
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "video",
+                                                {
+                                                  staticClass: "media br5",
+                                                  attrs: { width: "100%" }
+                                                },
+                                                [
+                                                  _c("source", {
+                                                    attrs: {
+                                                      src: oFile.filePath,
+                                                      type:
+                                                        "video/" + oFile.fileExt
+                                                    }
+                                                  })
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "caption-overflow smallovfl"
+                                                },
+                                                [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "videoReview",
+                                                      staticStyle: {
+                                                        cursor: "pointer"
+                                                      },
+                                                      attrs: {
+                                                        filepath:
+                                                          "https://s3-us-west-2.amazonaws.com/brandboost.io/" +
+                                                          oFile.media_url,
+                                                        fileext: oFile.fileExt
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass: "icon-eye"
+                                                      })
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "media-left media-middle"
+                                        },
+                                        [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass: "icons",
+                                              attrs: {
+                                                href:
+                                                  "/admin/brandboost/onsite_setup/" +
+                                                  review.campaign_id +
+                                                  "?type=media"
+                                              }
+                                            },
+                                            [
+                                              _c("img", {
+                                                staticClass:
+                                                  "img-circle img-xs",
+                                                attrs: {
+                                                  src: oFile.smily,
+                                                  alt: ""
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "media-left" }, [
+                                        _c("div", { staticClass: "pt-5" }, [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "text-default text-semibold editBrandboost",
+                                              attrs: {
+                                                href:
+                                                  "/admin/brandboost/onsite_setup/" +
+                                                  review.campaign_id +
+                                                  "?type=media"
+                                              }
+                                            },
+                                            [
+                                              _c("span", [
+                                                _vm._v(
+                                                  _vm._s(review.brand_title)
+                                                )
+                                              ])
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "text-muted text-size-small"
+                                          },
+                                          [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticStyle: {
+                                                  color: "#7a8dae!important"
+                                                },
+                                                attrs: {
+                                                  href:
+                                                    "/admin/brandboost/onsite_setup/" +
+                                                    review.campaign_id +
+                                                    "?type=media"
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm.setStringLimit(
+                                                      review.brand_desc
+                                                    )
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "media-left media-middle"
+                                        },
+                                        [
+                                          _c(
+                                            "a",
+                                            { staticStyle: { cursor: "text" } },
+                                            [
+                                              _c("user-avatar", {
+                                                attrs: {
+                                                  avatar: review.avatar,
+                                                  firstname: review.firstname,
+                                                  lastname: review.lastname
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "media-left" }, [
+                                        _c("div", { staticClass: "pt-5" }, [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "text-default text-semibold bbot",
+                                              staticStyle: { cursor: "text" }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(review.firstname) +
+                                                  " " +
+                                                  _vm._s(review.lastname)
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("img", {
+                                            staticClass: "flags",
+                                            attrs: {
+                                              src:
+                                                "/assets/images/flags/" +
+                                                review.country +
+                                                ".png",
+                                              onerror:
+                                                "this.src='/assets/images/flags/us.png'"
+                                            }
+                                          })
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "text-muted text-size-small"
+                                          },
+                                          [_vm._v(_vm._s(review.email))]
+                                        )
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _c("div", { staticClass: "media-left" }, [
+                                        _c("div", { staticClass: "pt-5" }, [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "text-default text-semibold",
+                                              attrs: { href: "#" }
+                                            },
+                                            [_vm._v(_vm._s(review.created))]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "text-muted text-size-small"
+                                          },
+                                          [_vm._v(_vm._s(review.created))]
+                                        )
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "media-left media-middle"
+                                        },
+                                        [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass: "icons",
+                                              attrs: {
+                                                href: "javascript:void(0);"
+                                              }
+                                            },
+                                            [
+                                              _c("img", {
+                                                staticClass: "img-xs file",
+                                                attrs: {
+                                                  src: oFile.fileExt,
+                                                  alt: ""
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "media-left" }, [
+                                        _c("div", { staticClass: "pt-5" }, [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "text-default text-semibold",
+                                              attrs: {
+                                                href: "javascript:void(0);"
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(oFile.allowfilesize)
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "text-muted text-size-small"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                oFile.fileExt.toUpperCase()
+                                              ) + " "
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _c("div", { staticClass: "tdropdown" }, [
+                                        _vm._m(3, true),
+                                        _vm._v(" "),
+                                        _c(
+                                          "ul",
+                                          {
+                                            staticClass:
+                                              "dropdown-menu dropdown-menu-right more_act"
+                                          },
+                                          [
+                                            _c("li", [
+                                              _c(
+                                                "a",
+                                                {
+                                                  attrs: {
+                                                    href: oFile.filePath,
+                                                    "data-popup": "lightbox"
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "icon-eye txt_purple"
+                                                  }),
+                                                  _vm._v(" View")
+                                                ]
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("li", [
+                                              _c(
+                                                "a",
+                                                {
+                                                  attrs: {
+                                                    href: oFile.filePath
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "icon-download4 txt_red"
+                                                  }),
+                                                  _vm._v(" Download")
+                                                ]
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("li", [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "deleteSingleVideo",
+                                                  attrs: {
+                                                    href: "javascript:void(0);",
+                                                    reviewId: review.id,
+                                                    mediaName: oFile.media_url
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "icon-bin txt_grey"
+                                                  }),
+                                                  _vm._v(" Delete")
+                                                ]
+                                              )
+                                            ])
+                                          ]
+                                        )
+                                      ])
+                                    ])
+                                  ]
+                                )
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _vm._m(4)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "page_header" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-7" }, [
+          _c("h3", [
+            _c("img", { attrs: { src: "/assets/images/media.png" } }),
+            _vm._v("On site Media")
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "nav nav-tabs nav-tabs-bottom" }, [
+            _c("li", { staticClass: "active" }, [
+              _c(
+                "a",
+                { attrs: { href: "#right-icon-tab0", "data-toggle": "tab" } },
+                [_vm._v("All")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                { attrs: { href: "#right-icon-tab1", "data-toggle": "tab" } },
+                [_vm._v("Images")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                { attrs: { href: "#right-icon-tab2", "data-toggle": "tab" } },
+                [_vm._v("Videos")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-5 text-right btn_area" }, [
+          _c("div", { staticClass: "btn-group" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn light_btn btn-icon dropdown-toggle",
+                attrs: { type: "button", "data-toggle": "dropdown" }
+              },
+              [
+                _c("i", { staticClass: "icon-calendar2" }),
+                _vm._v("    Filter Media     "),
+                _c("span", { staticClass: "caret" })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "dropdown-menu dropdown-content width-320 dropdown-menu-right"
+              },
+              [
+                _c("div", { staticClass: "dropdown-content-heading" }, [
+                  _vm._v(" Filter\n                            "),
+                  _c("ul", { staticClass: "icons-list" }, [
+                    _c("li", [
+                      _c("a", { attrs: { href: "#" } }, [
+                        _c("i", { staticClass: "icon-more" })
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", {}, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "panel-group panel-group-control panel-group-control-right content-group-lg filter_campaign",
+                      attrs: { id: "accordion-control-right" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-heading sidebarheadings active"
+                          },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group1"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-star-empty3" }),
+                                  _vm._v(" Campaign Type")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group1" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(
+                                    "\n                                                    Most startups fail. But many of those failures are preventable.\n                                                    The Lean Startup is a new approach being adopted across the\n                                                    globe, changing the way companies are built and new products are\n                                                    launched.\n                                                "
+                                  )
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group2"
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "icon-arrow-up-left2"
+                                  }),
+                                  _vm._v("  Source")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group2" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(" Conetent Goes here...")
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group73"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-star-full2" }),
+                                  _vm._v("  Rating")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group73" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(" Conetent Goes here...")
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group74"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-calendar" }),
+                                  _vm._v("  Date Created")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group74" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(" Conetent Goes here...")
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group83"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-thumbs-up2" }),
+                                  _vm._v("  Reviews")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse in",
+                            attrs: { id: "accordion-control-right-group83" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row mb20" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: {
+                                          type: "checkbox",
+                                          checked: "checked"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Total Reviews\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "20"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "100"
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row mb20" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: {
+                                          type: "checkbox",
+                                          checked: "checked"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Positive\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "20"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "100"
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row mb20" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: { type: "checkbox" }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Neutral\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "20",
+                                      disabled: ""
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "100",
+                                      disabled: ""
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: {
+                                          type: "checkbox",
+                                          checked: "checked"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Negative\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "0"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "10"
+                                    }
+                                  })
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "dropdown-content-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn dark_btn dropdown-toggle",
+                      staticStyle: { display: "inline-block" },
+                      attrs: { type: "button" }
+                    },
+                    [
+                      _c("i", { staticClass: "icon-filter4" }),
+                      _c("span", [_vm._v("    Filter")])
+                    ]
+                  ),
+                  _vm._v(
+                    "\n                               \n                            "
+                  ),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: { display: "inline-block" },
+                      attrs: { href: "#" }
+                    },
+                    [_vm._v("Clear All")]
+                  )
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn dark_btn dropdown-toggle ml10",
+              attrs: {
+                type: "button",
+                "data-toggle": "modal",
+                "data-target": "#addContact"
+              }
+            },
+            [
+              _c("i", { staticClass: "icon-plus3" }),
+              _c("span", [_vm._v("    Add Media")])
+            ]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-heading" }, [
+      _c("span", { staticClass: "pull-left" }, [
+        _c("h6", { staticClass: "panel-title" }, [_vm._v("Images & Video")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "heading-elements" }, [
+        _c(
+          "div",
+          {
+            staticClass: "form-group has-feedback has-feedback-left",
+            staticStyle: { display: "inline-block", margin: "0" }
+          },
+          [
+            _c("input", {
+              staticClass: "form-control input-sm cus_search",
+              attrs: {
+                tableid: "brandboostOnsiteMedia",
+                placeholder: "Search by name",
+                type: "text"
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-control-feedback" }, [
+              _c("i", { staticClass: "icon-search4" })
+            ])
+          ]
+        ),
+        _vm._v(
+          "\n                                   \n\n                                "
+        ),
+        _c("div", { staticClass: "table_action_tool" }, [
+          _c("a", { attrs: { href: "javascript:void(0);" } }, [
+            _c("i", { staticClass: "icon-calendar52" })
+          ]),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "editDataList",
+              attrs: { href: "javascript:void(0);" }
+            },
+            [_c("i", { staticClass: "icon-pencil" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "custom_action_box",
+              staticStyle: { display: "none" },
+              attrs: { href: "javascript:void(0);", id: "deleteContactsBtn" }
+            },
+            [_c("i", { staticClass: "icon-trash position-left" })]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "nosort editAction",
+            staticStyle: { display: "none" }
+          },
+          [
+            _c("label", { staticClass: "custmo_checkbox pull-left" }, [
+              _c("input", {
+                staticClass: "control-primary",
+                attrs: { type: "checkbox", name: "checkAll[]", id: "checkAll" }
+              }),
+              _c("span", { staticClass: "custmo_checkmark" })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-image2" }), _vm._v("Media")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-star-full2" }),
+          _vm._v("Campaign")
+        ]),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-user" }), _vm._v("Contact")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-calendar" }),
+          _vm._v("Created")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-file-empty2" }),
+          _vm._v("File")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center nosort sorting_disabled" }, [
+          _c("i", { staticClass: "fa fa-dot-circle-o" }),
+          _vm._v("Action\n                                    ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "table_more dropdown-toggle",
+        attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
+      },
+      [_c("img", { attrs: { src: "/assets/images/more.svg" } })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "videoReviewShowModal" } },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("h5", { staticClass: "modal-title" }, [_vm._v("Video review")])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal-body", attrs: { id: "vReviewShow" } },
+              [
+                _c("video", { attrs: { width: "100%", controls: "" } }, [
+                  _c("source", { attrs: { src: "", type: "" } })
+                ])
+              ]
+            )
+          ])
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -46226,6 +48337,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/brandboost/Media.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/Media.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Media_vue_vue_type_template_id_bac34288___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Media.vue?vue&type=template&id=bac34288& */ "./resources/js/components/admin/brandboost/Media.vue?vue&type=template&id=bac34288&");
+/* harmony import */ var _Media_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Media.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/brandboost/Media.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Media_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Media.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/admin/brandboost/Media.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Media_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Media_vue_vue_type_template_id_bac34288___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Media_vue_vue_type_template_id_bac34288___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/brandboost/Media.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/Media.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/Media.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Media_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Media.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/Media.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Media_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/Media.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/Media.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Media_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Media.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/Media.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Media_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Media_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Media_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Media_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Media_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/Media.vue?vue&type=template&id=bac34288&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/Media.vue?vue&type=template&id=bac34288& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Media_vue_vue_type_template_id_bac34288___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Media.vue?vue&type=template&id=bac34288& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/Media.vue?vue&type=template&id=bac34288&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Media_vue_vue_type_template_id_bac34288___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Media_vue_vue_type_template_id_bac34288___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/brandboost/ReviewRequest.vue":
 /*!********************************************************************!*\
   !*** ./resources/js/components/admin/brandboost/ReviewRequest.vue ***!
@@ -47888,9 +50086,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/onsite_overview */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue");
 /* harmony import */ var _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ */ "./resources/js/components/admin/brandboost/onsite/index.vue");
 /* harmony import */ var _components_admin_brandboost_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/brandboost/ReviewRequest.vue */ "./resources/js/components/admin/brandboost/ReviewRequest.vue");
-/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
-/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
-/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
+/* harmony import */ var _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/brandboost/Media.vue */ "./resources/js/components/admin/brandboost/Media.vue");
+/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
+/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
+/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
+
 
 
 
@@ -47948,20 +50148,26 @@ var routes = [{
     review_type: 'onsite'
   }
 }, {
+  path: '/brandboost/media',
+  component: _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+  props: {
+    title: 'On Site Brand Boost Media'
+  }
+}, {
   path: '/tags',
-  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_8__["default"],
+  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_9__["default"],
   meta: {
     title: 'Insight Tags - Brand Boost'
   }
 }, {
   path: '/tags/tagsreview',
-  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_9__["default"],
+  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_10__["default"],
   meta: {
     title: 'Tags Review - Brand Boost'
   }
 }, {
   path: '/tags/tagsfeedback',
-  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_10__["default"],
+  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_11__["default"],
   meta: {
     title: 'Tags Feedback - Brand Boost'
   }

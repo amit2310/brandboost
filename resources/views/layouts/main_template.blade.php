@@ -118,6 +118,8 @@
     <script src="{{ base_url() }}assets/js/jquery.mapael.js" charset="utf-8"></script>
     <script src="{{ base_url() }}assets/js/world_countries.js" charset="utf-8"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="{{ base_url() }}assets/js/plugins/media/fancybox.min.js"></script>
+    <script type="text/javascript" src="{{ base_url() }}assets/js/pages/gallery.js"></script>
 
 </head>
 
