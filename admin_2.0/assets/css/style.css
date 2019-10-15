@@ -1363,6 +1363,57 @@ tags .input:focus {
   outline: none;
 }
 
-
-
-
+/**************
+COLOR PICKER  CSS
+*****************/
+.colorpickerplus {
+	position: absolute;
+	display: none;
+	top: 0;
+	left: 0;
+	max-width: 185px;
+	max-height: 300px;
+	z-index: 2499;
+}
+.colorpickerplus-dropdown .dropdown-menu {
+    width: 185px;
+}
+.colorpickerplus-container div {
+	position: relative;
+}
+.colorpickerplus-container {
+	overflow: hidden;
+	background-color: #fff;
+	
+	margin:auto;
+	padding:10px;
+}
+.colorpickerplus-container .colorpickerplus-colors-row,.colorpickerplus .colorpickerplus-custom-colors,.colorpickerplus .colorpickerplus-primary-colors {
+	overflow: hidden;
+	width:100%;
+}
+.colorpickerplus-container .colorpickerplus-custom-colors {
+	margin-bottom: 10px;
+}
+.colorpickerplus-container .colorpickerplus-primary-colors {
+}
+.colorpickerplus-container .colorcell, .colorpickerplus-container .nonecell {
+	width: 16px;
+	height: 16px;
+	margin:0;
+	padding:0;
+	float:left;
+	border:1px solid #eee;
+}
+.colorpickerplus-container .colorpickerplus-custom-colors .colorcell {
+	border:1px solid #ddd;
+}
+.colorpickerplus-container .colorpickerplus-custom-colors .selected {
+	border:1px solid #000;
+}
+.colorpickerplus-container .colorcell:hover, .colorpickerplus-container .selected {
+	border:1px solid #000;
+}
+.color-fill-icon{display:inline-block;width:16px;height:16px;border:none;background-color:#f2c94c;border-radius: 50px; margin-top: 4px; margin-right: 5px}
+.dropdown-color-fill-icon{position:relative;float:left;}
+.pickerbutton {	width: 100%;border: none;background: none;text-align: left;margin-top: 10px;color: #242B3D;font-size: 16px;font-weight: 500; padding: 0}

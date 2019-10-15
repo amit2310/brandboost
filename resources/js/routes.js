@@ -7,6 +7,8 @@ import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview
 import OnsiteReviews from './components/admin/brandboost/onsite/reviews';
 import OnsiteQuestions from './components/admin/brandboost/onsite/questions';
 import OnsiteList from './components/admin/brandboost/onsite/';
+import OnsiteReviewRequest from './components/admin/brandboost/ReviewRequest.vue';
+import Media from './components/admin/brandboost/Media.vue';
 import Tags from './components/admin/tags/';
 import TagsReview from './components/admin/tags/tagsreview';
 import TagsFeedback from './components/admin/tags/tagsfeedback';
@@ -25,6 +27,8 @@ const routes = [
     { path: '/templates/email', component: ListTemplates, props : {title : 'Email Templates', type : 'email' } },
     { path: '/templates/sms', component: ListTemplates, props : {title : 'Sms Templates', type : 'sms' } },
     { path: '/brandboost/onsite', component: OnsiteList },
+    { path: '/brandboost/review_request/onsite', component: OnsiteReviewRequest, props: {title : 'Review Requests', review_type: 'onsite'} },
+    { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
     { path: '/tags', component: Tags, meta: { title: 'Insight Tags - Brand Boost'} },
     { path: '/tags/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
     { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} }

@@ -11,7 +11,6 @@
  CSS
  **********************-->
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
@@ -99,28 +98,28 @@
     
     <div class="row">
     	<div class="col-md-3 text-center">
-    		<div class="card p30 h235">
+    		<div class="card p30 h235 animate_top">
      		<img class="mt20" src="assets/images/subs-icon_big.svg">
      		<h3 class="htxt_bold_16 dark_700 mt25 mb15">Subscribers List</h3>
      		<p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
      		</div>
     	</div>
     	<div class="col-md-3 text-center">
-    		<div class="card p30 h235">
+    		<div class="card p30 h235 animate_top">
      		<img class="mt20" src="assets/images/subs-icon_big.svg">
      		<h3 class="htxt_bold_16 dark_700 mt25 mb15">Subscribers List</h3>
      		<p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
      		</div>
     	</div>
     	<div class="col-md-3 text-center">
-    		<div class="card p30 h235">
+    		<div class="card p30 h235 animate_top">
      		<img class="mt20" src="assets/images/subs-icon_big.svg">
      		<h3 class="htxt_bold_16 dark_700 mt25 mb15">Subscribers List</h3>
      		<p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
      		</div>
     	</div>
     	<div class="col-md-3 text-center">
-    		<div class="card p30 bkg_light_200 shadow_none h235">
+    		<div class="card p30 bkg_light_200 shadow_none h235 animate_top">
      		<img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
      		<p class="htxt_regular_16 dark_100 mb15">Create<br>contacts list</p>
      		</div>
