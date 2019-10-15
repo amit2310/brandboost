@@ -5212,6 +5212,1879 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  title: 'Onsite questions - Brand Boost',
+  component: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"],
+  data: function data() {
+    return {
+      oQuestions: {},
+      bActiveSubsription: {}
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    //getData
+    axios.get('/admin/questions/').then(function (response) {
+      //console.log(response.data)
+      _this.oQuestions = response.data.oQuestions;
+      _this.bActiveSubsription = response.data.bActiveSubsription;
+      console.log(_this.oQuestions);
+    });
+    console.log('Component mounted');
+  }
+});
+/* Customized scripts */
+
+$(document).ready(function () {
+  $('#checkAll').change(function () {
+    if (false == $(this).prop("checked")) {
+      $(".checkRows").prop('checked', false);
+      $(".selectedClass").removeClass('success');
+      $('.custom_action_box').hide();
+    } else {
+      $(".checkRows").prop('checked', true);
+      $(".selectedClass").addClass('success');
+      $('.custom_action_box').show();
+    }
+  });
+  $(document).on('click', '.checkRows', function () {
+    var inc = 0;
+    var rowId = $(this).val();
+
+    if (false == $(this).prop("checked")) {
+      $('#append-' + rowId).removeClass('success');
+    } else {
+      $('#append-' + rowId).addClass('success');
+    }
+
+    $('.checkRows:checkbox:checked').each(function (i) {
+      inc++;
+    });
+
+    if (inc == 0) {
+      $('.custom_action_box').hide();
+    } else {
+      $('.custom_action_box').show();
+    }
+
+    var numberOfChecked = $('.checkRows:checkbox:checked').length;
+    var totalCheckboxes = $('.checkRows:checkbox').length;
+
+    if (totalCheckboxes > numberOfChecked) {
+      $('#checkAll').prop('checked', false);
+    }
+  });
+  $(document).on('click', '#deleteButtonQuestionList', function () {
+    var val = [];
+    $('.checkRows:checkbox:checked').each(function (i) {
+      val[i] = $(this).val();
+    });
+
+    if (val.length === 0) {
+      alert('Please select a row.');
+    } else {
+      deleteConfirmationPopup("This question will deleted immediately.<br>You can't undo this action.", function () {
+        $('.overlaynew').show();
+        $.ajax({
+          url: "/admin/questions/deleteMultipalQuestion",
+          type: "POST",
+          data: {
+            multiQuestionid: val,
+            _token: '{{csrf_token()}}'
+          },
+          dataType: "json",
+          success: function success(data) {
+            if (data.status == 'success') {
+              location.reload();
+            } else {
+              alert("Having some error.");
+            }
+          },
+          error: function error(_error) {
+            console.log(_error);
+          }
+        });
+      });
+    }
+  });
+  $(document).on('click', '.deleteQuestion', function () {
+    var questionID = $(this).attr('queationid');
+    deleteConfirmationPopup("This question will deleted immediately.<br>You can't undo this action.", function () {
+      $('.overlaynew').show();
+      $.ajax({
+        url: "/admin/questions/deleteQuestion",
+        type: "POST",
+        data: {
+          questionID: questionID,
+          _token: '{{csrf_token()}}'
+        },
+        dataType: "json",
+        success: function success(data) {
+          if (data.status == 'success') {
+            location.reload();
+          } else {
+            alert("Having some error.");
+          }
+        },
+        error: function error(_error2) {
+          console.log(_error2);
+        }
+      });
+    });
+  });
+  $(document).on('click', '.chg_status', function () {
+    $('.overlaynew').show();
+    var status = $(this).attr('change_status');
+    var question_id = $(this).attr('question_id');
+    $.ajax({
+      url: "/admin/questions/update_question_status",
+      type: "POST",
+      data: {
+        status: status,
+        question_id: question_id,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          $('.overlaynew').hide();
+          window.location.href = '';
+        } else {
+          alertMessage('Error: Some thing wrong!');
+          $('.overlaynew').hide();
+        }
+      }
+    });
+  });
+  $('#onsiteQuestion thead tr').clone(true).appendTo('#onsiteQuestion thead');
+  var tableId = 'onsiteQuestion';
+  var tableBase = custom_data_table(tableId);
+  $('table thead tr:eq(1)').hide();
+  $('#onsiteQuestion thead tr:eq(1) th').each(function (i) {
+    if (i === 9) {
+      var title = $(this).text();
+      $(this).html('<input type="text" id="filterBy" placeholder="Search ' + title + '" />');
+      $('input', this).on('keyup change', function () {
+        if (tableBase.column(i).search() != this.value) {
+          tableBase.column(i).search(this.value).draw();
+        }
+      });
+    }
+  });
+  $(document).on('click', '.filterByColumn', function () {
+    $('.nav-tabs').each(function (i) {
+      $(this).children().removeClass('active');
+    });
+    $(this).parent().addClass('active');
+    var fil = $(this).attr('fil');
+    $('#filterBy').val(fil);
+    $('#filterBy').keyup();
+
+    if (fil.length == 0) {
+      $('.heading_links').each(function (i) {
+        $(this).children('a').removeClass('btn btn-xs ml20 btn-default');
+      });
+      $('#startRate').val('');
+      $('#startRate').keyup();
+      $('.heading_links a:eq(0)').addClass('btn btn-xs ml20 btn-default');
+      tableBase.draw();
+    }
+  });
+  $(document).on('click', '.top_links_clk', function () {
+    $('.heading_links').each(function (i) {
+      $(this).children('a').removeClass('btn btn-xs ml20 btn-default');
+    });
+    $(this).addClass('btn btn-xs ml20 btn-default');
+    var typ = $(this).attr('startRate');
+
+    if (typ != 'commentLink') {
+      $('#startRate').val(typ);
+      $('#startRate').keyup();
+
+      if (typ.length == 0) {
+        $('.nav-tabs').each(function (i) {
+          $(this).children().removeClass('active');
+        });
+        $('#filterBy').val('');
+        $('#filterBy').keyup();
+        $('ul.nav-tabs li.all').addClass('active');
+        tableBase.draw();
+      }
+    } else {
+      $('#startRate').val('');
+      $('#startRate').keyup();
+      tableBase.draw();
+    }
+  });
+  $(document).on("click", ".applyInsightTags", function () {
+    var question_id = $(this).attr("question_id");
+    var action_name = $(this).attr("action_name");
+    $.ajax({
+      url: "/admin/tags/listAllTags",
+      type: "POST",
+      data: {
+        question_id: question_id,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          $('.overlaynew').hide();
+          var dataString = data.list_tags;
+
+          if (dataString.search('have any tags yet :-') > 0) {
+            $('.modalFooterBtn').hide();
+          } else {
+            $('.modalFooterBtn').show();
+          }
+
+          $("#tagEntireList").html(dataString);
+          $("#tag_question_id").val(question_id);
+
+          if (action_name == 'review-tag') {
+            $("#ReviewTagListModal").modal("show");
+          } else if (action_name == 'feedback-tag') {
+            $("#FeedbackTagListModal").modal("show");
+          } else if (action_name == 'question-tag') {
+            $("#QuestionTagListModal").modal("show");
+          }
+        }
+      }
+    });
+  });
+  $("#frmQuestionTagListModal").submit(function () {
+    var formdata = $("#frmQuestionTagListModal").serialize();
+    formdata += '&_token={{csrf_token()}}';
+    $.ajax({
+      url: "/admin/tags/applyQuestionTag",
+      type: "POST",
+      data: formdata,
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          $("#question_tag_" + data.id).html(data.refreshTags);
+          $("#QuestionTagListModal").modal("hide");
+        }
+      }
+    });
+    return false;
+  });
+  $(document).on('click', '.editDataQuestion', function () {
+    $('.editAction').toggle();
+  });
+  $(document).on('click', '#addQuestion', function () {
+    window.location.href = "/admin/questions/add";
+  });
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  title: 'Onsite reviews - Brand Boost',
+  components: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"],
+  data: function data() {
+    return {
+      oReviews: {},
+      reviewsCnt: {}
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    //getData
+    axios.get('/admin/brandboost/reviews').then(function (response) {
+      //console.log(response.data);
+      _this.oReviews = response.data.aReviews;
+      _this.reviewsCnt = _this.oReviews.length;
+      console.log(_this.oReviews);
+    });
+    console.log('Component mounted.');
+  }
+}); // top navigation fixed on scroll and side bar collasped
+
+$(window).scroll(function () {
+  var sc = $(window).scrollTop();
+
+  if (sc > 100) {
+    $("#header-sroll").addClass("small-header");
+  } else {
+    $("#header-sroll").removeClass("small-header");
+  }
+});
+
+function smallMenu() {
+  if ($(window).width() < 1600) {
+    $('body').addClass('sidebar-xs');
+  } else {
+    $('body').removeClass('sidebar-xs');
+  }
+}
+
+$(document).ready(function () {
+  smallMenu();
+
+  window.onresize = function () {
+    smallMenu();
+  };
+});
+
+function showCommentsPopup(reviewID) {
+  $.ajax({
+    url: "/admin/reviews/getCommentsPopup",
+    type: "POST",
+    data: {
+      review_id: reviewID,
+      _token: '{{csrf_token()}}'
+    },
+    dataType: "json",
+    success: function success(data) {
+      if (data.status == 'success') {
+        $('.overlaynew').hide();
+        var dataString = data.popupData;
+        $("#commentpopup").html(dataString);
+        $("#commentpopup").modal("show");
+      }
+    }
+  });
+}
+
+$(document).ready(function () {
+  $('#checkAll').change(function () {
+    if (false == $(this).prop("checked")) {
+      $(".checkRows").prop('checked', false);
+      $(".selectedClass").removeClass('success');
+      $('.custom_action_box').hide();
+    } else {
+      $(".checkRows").prop('checked', true);
+      $(".selectedClass").addClass('success');
+      $('.custom_action_box').show();
+    }
+  });
+  $(document).on('click', '.checkRows', function () {
+    var inc = 0;
+    var rowId = $(this).val();
+
+    if (false == $(this).prop("checked")) {
+      $('#append-' + rowId).removeClass('success');
+    } else {
+      $('#append-' + rowId).addClass('success');
+    }
+
+    $('.checkRows:checkbox:checked').each(function (i) {
+      inc++;
+    });
+
+    if (inc == 0) {
+      $('.custom_action_box').hide();
+    } else {
+      $('.custom_action_box').show();
+    }
+
+    var numberOfChecked = $('.checkRows:checkbox:checked').length;
+    var totalCheckboxes = $('.checkRows:checkbox').length;
+
+    if (totalCheckboxes > numberOfChecked) {
+      $('#checkAll').prop('checked', false);
+    }
+  });
+  $(document).on('click', '#deleteButtonReviewList', function () {
+    var val = [];
+    $('.checkRows:checkbox:checked').each(function (i) {
+      val[i] = $(this).val();
+    });
+
+    if (val.length === 0) {
+      alert('Please select a row.');
+    } else {
+      deleteConfirmationPopup("This review will deleted immediately.<br>You can't undo this action.", function () {
+        $('.overlaynew').show();
+        $.ajax({
+          url: "/admin/reviews/deleteMultipalReview",
+          type: "POST",
+          data: {
+            multiReviewid: val,
+            _token: '{{csrf_token()}}'
+          },
+          dataType: "json",
+          success: function success(data) {
+            if (data.status == 'success') {
+              location.reload();
+            } else {
+              alert("Having some error.");
+            }
+          },
+          error: function error(_error) {
+            console.log(_error);
+          }
+        });
+      });
+    }
+  });
+  $("#frmReviewTagListModal").submit(function () {
+    var formdata = $("#frmReviewTagListModal").serialize();
+    $.ajax({
+      url: "/admin/tags/applyReviewTag",
+      type: "POST",
+      data: formdata,
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          $("#review_tag_" + data.id).html(data.refreshTags);
+          $("#ReviewTagListModal").modal("hide"); //window.location.href = '';
+        }
+      }
+    });
+    return false;
+  });
+  $(document).on("click", ".displayReview", function () {
+    var elem = $(this);
+    var reviewid = $(this).attr("reviewid");
+    var tabtype = $(this).attr('tab_type');
+    var reviewTime = $(this).attr('review_time');
+    displayReviewPopup(reviewid, tabtype, reviewTime);
+  });
+  $(document).on("click", ".showReviewPopup", function () {
+    var reviewid = $(this).attr("reviewid");
+    getReviewPopupData(reviewid, '');
+  });
+
+  function getReviewPopupData(reviewId, tabtype) {
+    $('.overlaynew').show();
+    $.ajax({
+      url: "/admin/reviews/getReviewPopupData",
+      type: "POST",
+      data: {
+        rid: reviewId,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(response) {
+        if (response.status == "success") {
+          $('.overlaynew').hide();
+          $("#newreviewpopup").modal("show");
+          $("#reviewPopupBox").html(response.popupData);
+
+          if (tabtype == 'note') {
+            $('.tabbable a[href="#note-tab"]').trigger('click');
+          } else {
+            $('.tabbable a[href="#review-tab"]').trigger('click');
+          }
+        }
+      },
+      error: function error(response) {
+        alertMessage(response.message);
+      }
+    });
+  }
+
+  function displayReviewPopup(reviewid, tabtype, reviewTime) {
+    $('.overlaynew').show();
+    $.ajax({
+      url: "/admin/reviews/displayreview",
+      type: "POST",
+      data: {
+        rid: reviewid,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(response) {
+        if (response.status == "success") {
+          $('.overlaynew').hide();
+          $("#reviewContent").html(response.popup_data);
+          $(".reviewTime").html(reviewTime);
+          $("#reviewPopup").modal("show");
+
+          if (tabtype == 'note') {
+            $('.tabbable a[href="#note-tab"]').trigger('click');
+          } else {
+            $('.tabbable a[href="#review-tab"]').trigger('click');
+          }
+        }
+      },
+      error: function error(response) {
+        alertMessage(response.message);
+      }
+    });
+  }
+
+  $(document).on("click", "#saveReviewNotes", function () {
+    var formdata = $("#frmSaveNote").serialize();
+    $('.overlaynew').show();
+    $.ajax({
+      url: "/admin/reviews/saveReviewNotes",
+      type: "POST",
+      data: formdata,
+      dataType: "json",
+      success: function success(response) {
+        if (response.status == "success") {
+          var reviewid = $("input[name='reviewid']").val();
+          var tabtype = 'note';
+          var reviewtime = $("input[name='reviewtime']").val();
+          displayReviewPopup(reviewid, tabtype, reviewtime);
+        }
+      },
+      error: function error(response) {
+        alertMessage(response.message);
+      }
+    });
+  });
+  $(document).on("click", "#saveReviewNotesPopup", function () {
+    var formdata = $("#frmSaveNote").serialize();
+    $('.overlaynew').show();
+    $.ajax({
+      url: "/admin/reviews/saveReviewNotes",
+      type: "POST",
+      data: formdata,
+      dataType: "json",
+      success: function success(response) {
+        if (response.status == "success") {
+          var reviewid = $("input[name='reviewid']").val();
+          var tabtype = 'note';
+          getReviewPopupData(reviewid, tabtype);
+        }
+      },
+      error: function error(response) {
+        alertMessage(response.message);
+      }
+    });
+  });
+});
+$(document).ready(function () {
+  $(document).on('click', '.showVideo', function () {
+    var videoUrl = $(this).attr('videoUrl');
+    $("#showVideoPopup").modal();
+    $('#divVideo video source').attr('src', videoUrl);
+    $("#divVideo video")[0].load();
+    $('#downloadVideo').attr('href', videoUrl);
+  });
+  $(document).on('click', '.deleteReview', function () {
+    var reviewID = $(this).attr('reviewid');
+    deleteConfirmationPopup("This review will deleted immediately.<br>You can't undo this action.", function () {
+      $('.overlaynew').show();
+      $.ajax({
+        url: "/admin/reviews/deleteReview",
+        type: "POST",
+        data: {
+          reviewid: reviewID,
+          _token: '{{csrf_token()}}'
+        },
+        dataType: "json",
+        success: function success(data) {
+          if (data.status == 'success') {
+            location.reload();
+          } else {
+            alert("Having some error.");
+          }
+        },
+        error: function error(_error2) {
+          console.log(_error2);
+        }
+      });
+    });
+  });
+  $(document).on('click', '.editReview', function () {
+    var reviewID = $(this).attr('reviewid');
+    $.ajax({
+      url: "/admin/reviews/getReviewById",
+      type: "POST",
+      data: {
+        reviewid: reviewID,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          var reviewData = data.result[0];
+          $('#edit_content').val(reviewData.comment_text);
+          $('#edit_review_title').val(reviewData.review_title);
+          $('#edit_reviewid').val(reviewData.id);
+          $('#stars li').each(function (index, value) {
+            $('#ratingValue').val(reviewData.ratings);
+
+            if (reviewData.ratings > index) {
+              $(this).addClass('selected');
+            } else {
+              $(this).removeClass('selected');
+            }
+          });
+          $("#editReview").modal();
+        } else {}
+      }
+    });
+  });
+  $(document).on('click', '.editVideoReview', function () {
+    var reviewID = $(this).attr('reviewid');
+    $.ajax({
+      url: "/admin/reviews/getReviewById",
+      type: "POST",
+      data: {
+        reviewid: reviewID,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          var reviewData = data.result[0];
+          $('#edit_video_content').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' + reviewData.comment_video);
+          $('#edit_video_reviewid').val(reviewData.id);
+          $('#edit_video_review_title').val(reviewData.review_title);
+          var start = '';
+          var startName = ['', 'Poor', 'Fair', 'Good', 'Excellent', 'WOW!!!'];
+
+          for (var inc = 1; inc <= 5; inc++) {
+            if (inc < reviewData.ratings || inc == reviewData.ratings) {
+              start += "<li class='star txt_yellow' style='display:inline;' title='" + startName[inc] + "' data-value='" + inc + "'><i class='fa fa-star fa-fw' style='margin: 0;'></i></li>";
+            } else {
+              start += "<li class='star txt_grey' style='display:inline;' title='" + startName[inc] + "' data-value='" + inc + "'><i class='fa fa-star-o fa-fw' style='margin: 0;'></i></li>";
+            }
+          }
+
+          $('#stars_video').html(start);
+          $('#ratingValueVideo').val(reviewData.ratings);
+          $('#stars_video li').each(function (index, value) {
+            if (reviewData.ratings > index) {
+              $(this).addClass('selected');
+            } else {
+              $(this).removeClass('selected');
+            }
+          });
+          $("#editVideoReview").modal();
+        } else {}
+      }
+    });
+  });
+  $("#updateReview").submit(function () {
+    $('.overlaynew').show();
+    var formData = new FormData($(this)[0]);
+    $.ajax({
+      url: "/admin/reviews/update_review",
+      type: "POST",
+      data: formData,
+      contentType: false,
+      cache: false,
+      processData: false,
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          window.location.href = '';
+        } else {
+          alertMessage('Error: Some thing wrong!');
+          $('.overlaynew').hide();
+        }
+      }
+    });
+  });
+  $("#updateVideoReview").submit(function () {
+    $('.overlaynew').show();
+    var formData = new FormData($(this)[0]);
+    $.ajax({
+      url: "/admin/reviews/update_video_review",
+      type: "POST",
+      data: formData,
+      contentType: false,
+      cache: false,
+      processData: false,
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          window.location.href = '';
+        } else {
+          alertMessage('Error: Some thing wrong!');
+          $('.overlaynew').hide();
+        }
+      }
+    });
+  });
+  $(document).on('click', '.chg_status', function () {
+    $('.overlaynew').show();
+    var status = $(this).attr('change_status');
+    var review_id = $(this).attr('review_id');
+    $.ajax({
+      url: "/admin/reviews/updateReviewStatus",
+      type: "POST",
+      data: {
+        status: status,
+        review_id: review_id,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          window.location.href = '';
+        } else {
+          alertMessage('Error: Some thing wrong!');
+          $('.overlaynew').hide();
+        }
+      }
+    });
+  });
+  $(document).on('click', '.update_category', function () {
+    $('.overlaynew').show();
+    var dataCategory = $(this).attr('change_category');
+    var review_id = $(this).attr('review_id');
+    $.ajax({
+      url: "/admin/reviews/updateReviewCategory",
+      type: "POST",
+      data: {
+        dataCategory: dataCategory,
+        review_id: review_id,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          window.location.href = '';
+        } else {
+          alertMessage('Error: Some thing wrong!');
+          $('.overlaynew').hide();
+        }
+      }
+    });
+  });
+  var ratingValueVideo = 0;
+  $(document).on('click', '#stars_video li', function () {
+    var onStar = parseInt($(this).data('value'), 10);
+    var stars = $(this).parent().children('li.star');
+
+    for (i = 0; i < stars.length; i++) {
+      $(stars[i]).removeClass('selected');
+      $(stars[i]).children('i').removeClass('fa-star');
+      $(stars[i]).children('i').addClass('fa-star-o');
+    }
+
+    for (i = 0; i < onStar; i++) {
+      $(stars[i]).addClass('selected');
+      $(stars[i]).children('i').removeClass('fa-star-o');
+      $(stars[i]).children('i').addClass('fa-star');
+    }
+
+    ratingValueVideo = parseInt($('#stars_video li.selected').last().data('value'), 10);
+    $('#ratingValueVideo').val(ratingValueVideo);
+  });
+  $(document).on("click", ".applyInsightTagsReviews", function () {
+    var review_id = $(this).attr("reviewid");
+    var feedback_id = $(this).attr("feedback_id");
+    var action_name = $(this).attr("action_name");
+    $.ajax({
+      url: "/admin/tags/listAllTags",
+      type: "POST",
+      data: {
+        review_id: review_id,
+        _token: '{{csrf_token()}}'
+      },
+      dataType: "json",
+      success: function success(data) {
+        if (data.status == 'success') {
+          $('.overlaynew').hide();
+          var dataString = data.list_tags;
+
+          if (dataString.search('have any tags yet :-') > 0) {
+            $('.modalFooterBtn').hide();
+          } else {
+            $('.modalFooterBtn').show();
+          }
+
+          $("#tagEntireList").html(dataString);
+          $("#tag_review_id").val(review_id);
+          $("#tag_feedback_id").val(feedback_id);
+
+          if (action_name == 'review-tag') {
+            $("#ReviewTagListModal").modal("show");
+          } else if (action_name == 'feedback-tag') {
+            $("#FeedbackTagListModal").modal("show");
+          }
+        }
+      }
+    });
+  });
+  $(document).on('click', '.editDataReview', function () {
+    $('.editAction').toggle();
+  });
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/ContactTags.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/contact/ContactTags.vue?vue&type=script&lang=js& ***!
@@ -19275,6 +21148,3978 @@ var staticRenderFns = [
             ])
           ]
         )
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=template&id=9a35ab48&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=template&id=9a35ab48& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "content", attrs: { id: "masterContainer" } },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "tab-content" }, [
+        _c(
+          "div",
+          { staticClass: "tab-pane active", attrs: { id: "right-icon-tab0" } },
+          [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "panel panel-flat",
+                    staticStyle: { margin: "0" }
+                  },
+                  [
+                    _c("div", { staticClass: "panel-heading" }, [
+                      _c("span", { staticClass: "pull-left" }, [
+                        _c("h6", { staticClass: "panel-title" }, [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.oQuestions.length) +
+                              "\n                                    Questions\n                                "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(1)
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "panel-body p0" }, [
+                      _vm.oQuestions.length > 0
+                        ? _c(
+                            "table",
+                            {
+                              staticClass: "table datatable-basic-new",
+                              attrs: { id: "onsiteQuestion" }
+                            },
+                            [
+                              _vm._m(2),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.oQuestions, function(oQuestion) {
+                                  return _c("tr", [
+                                    _c(
+                                      "td",
+                                      { staticStyle: { display: "none" } },
+                                      [_vm._v(_vm._s(oQuestion.created))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticStyle: { display: "none" } },
+                                      [_vm._v(_vm._s(oQuestion.id))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "editAction",
+                                        staticStyle: {
+                                          width: "40px!important",
+                                          display: "none"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "custmo_checkbox pull-left"
+                                          },
+                                          [
+                                            _c("input", {
+                                              staticClass: "checkRows",
+                                              attrs: {
+                                                type: "checkbox",
+                                                name: "checkRows[]",
+                                                id: "chk" + oQuestion.id
+                                              },
+                                              domProps: {
+                                                value: "" + oQuestion.id
+                                              }
+                                            }),
+                                            _c("span", {
+                                              staticClass: "custmo_checkmark"
+                                            })
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "viewQuestionSmartPopup",
+                                        attrs: { questionid: "" + oQuestion.id }
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "media-left media-middle"
+                                          },
+                                          [
+                                            _c("user-avatar", {
+                                              attrs: {
+                                                avatar: oQuestion.avatar,
+                                                firstname: oQuestion.firstname,
+                                                lastname: oQuestion.lastname
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "media-left" },
+                                          [
+                                            _c("div", { staticClass: "pt-5" }, [
+                                              oQuestion.firstname
+                                                ? _c("span", [
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        staticClass:
+                                                          "text-default text-semibold bbot",
+                                                        attrs: { href: "#" }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                                        " +
+                                                            _vm._s(
+                                                              oQuestion.firstname
+                                                            ) +
+                                                            " " +
+                                                            _vm._s(
+                                                              oQuestion.lastname
+                                                            ) +
+                                                            "\n                                                    "
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    oQuestion.country_code
+                                                      ? _c("img", {
+                                                          staticClass: "flags",
+                                                          attrs: {
+                                                            src:
+                                                              "/assets/images/flags/" +
+                                                              oQuestion.country_code.toLowerCase() +
+                                                              ".png"
+                                                          }
+                                                        })
+                                                      : _c("img", {
+                                                          staticClass: "flags",
+                                                          attrs: {
+                                                            src:
+                                                              "/assets/images/flags/us.png"
+                                                          }
+                                                        })
+                                                  ])
+                                                : _c("span", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm.displayNoData()
+                                                      )
+                                                    )
+                                                  ])
+                                            ]),
+                                            _vm._v(" "),
+                                            oQuestion.email
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "text-muted text-size-small"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(oQuestion.email)
+                                                    )
+                                                  ]
+                                                )
+                                              : _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "text-muted text-size-small"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm.displayNoData()
+                                                      )
+                                                    )
+                                                  ]
+                                                )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass:
+                                          "viewQuestionSmartPopup text-left",
+                                        attrs: { questionid: "" + oQuestion.id }
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "media-left text-right",
+                                            staticStyle: { width: "250px" }
+                                          },
+                                          [
+                                            _c("div", { staticClass: "pt-5" }, [
+                                              oQuestion.question_title
+                                                ? _c("span", [
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        staticClass:
+                                                          "text-default text-semibold bbot",
+                                                        attrs: {
+                                                          href:
+                                                            "/admin/questions/details/" +
+                                                            oQuestion.id
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            oQuestion.question_title.substring(
+                                                              0,
+                                                              25
+                                                            )
+                                                          )
+                                                        )
+                                                      ]
+                                                    )
+                                                  ])
+                                                : _c("span", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm.displayNoData()
+                                                      )
+                                                    )
+                                                  ])
+                                            ]),
+                                            _vm._v(" "),
+                                            oQuestion.question
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "text-muted text-size-small"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        oQuestion.question.substring(
+                                                          0,
+                                                          25
+                                                        )
+                                                      )
+                                                    )
+                                                  ]
+                                                )
+                                              : _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "text-muted text-size-small"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm.displayNoData()
+                                                      )
+                                                    )
+                                                  ]
+                                                )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "media-left text-right",
+                                          staticStyle: { width: "200px" }
+                                        },
+                                        [
+                                          _c("div", { staticClass: "pt-5" }, [
+                                            oQuestion.review_type == "offsite"
+                                              ? _c(
+                                                  "a",
+                                                  {
+                                                    staticClass:
+                                                      "text-default text-semibold bbot",
+                                                    attrs: {
+                                                      href:
+                                                        "/admin/brandboost/offsite_setup/" +
+                                                        oQuestion.campaign_id
+                                                    }
+                                                  },
+                                                  [
+                                                    oQuestion.brand_title
+                                                      ? _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              oQuestion.brand_title.substring(
+                                                                0,
+                                                                20
+                                                              )
+                                                            )
+                                                          )
+                                                        ])
+                                                      : _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              _vm.displayNoData()
+                                                            )
+                                                          )
+                                                        ])
+                                                  ]
+                                                )
+                                              : _c(
+                                                  "a",
+                                                  {
+                                                    staticClass:
+                                                      "text-default text-semibold bbot",
+                                                    attrs: {
+                                                      href:
+                                                        "/admin/brandboost/onsite_setup/" +
+                                                        oQuestion.campaign_id
+                                                    }
+                                                  },
+                                                  [
+                                                    oQuestion.brand_title
+                                                      ? _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              oQuestion.brand_title.substring(
+                                                                0,
+                                                                20
+                                                              )
+                                                            )
+                                                          )
+                                                        ])
+                                                      : _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              _vm.displayNoData()
+                                                            )
+                                                          )
+                                                        ])
+                                                  ]
+                                                )
+                                          ]),
+                                          _vm._v(" "),
+                                          oQuestion.brand_desc
+                                            ? _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "text-muted text-size-small"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      oQuestion.brand_desc.substring(
+                                                        0,
+                                                        30
+                                                      )
+                                                    )
+                                                  )
+                                                ]
+                                              )
+                                            : _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "text-muted text-size-small"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(_vm.displayNoData())
+                                                  )
+                                                ]
+                                              )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass:
+                                          "text-left viewQuestionSmartPopup",
+                                        attrs: { questionid: "" + oQuestion.id }
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "media-left text-right",
+                                            staticStyle: { width: "180px" }
+                                          },
+                                          [
+                                            _c("div", { staticClass: "pt-5" }, [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "text-default text-semibold dark",
+                                                  attrs: { href: "#" }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(oQuestion.created)
+                                                  )
+                                                ]
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "text-muted text-size-small"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(oQuestion.created)
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-right" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "tdropdown ml10" },
+                                        [
+                                          oQuestion.status == 0
+                                            ? _c("i", {
+                                                staticClass:
+                                                  "icon-primitive-dot txt_red fsize16"
+                                              })
+                                            : oQuestion.status == 2
+                                            ? _c("i", {
+                                                staticClass:
+                                                  "icon-primitive-dot txt_grey fsize16"
+                                              })
+                                            : _c("i", {
+                                                staticClass:
+                                                  "icon-primitive-dot txt_green fsize16"
+                                              }),
+                                          _vm._v(" "),
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "text-default text-semibold bbot dropdown-toggle",
+                                              attrs: {
+                                                "data-toggle": "dropdown"
+                                              }
+                                            },
+                                            [
+                                              oQuestion.status == 0
+                                                ? _c("span", [
+                                                    _vm._v("Inactive")
+                                                  ])
+                                                : oQuestion.status == 2
+                                                ? _c("span", [
+                                                    _vm._v("Pending")
+                                                  ])
+                                                : _c("span", [_vm._v("Active")])
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "ul",
+                                            {
+                                              staticClass:
+                                                "dropdown-menu dropdown-menu-right status"
+                                            },
+                                            [
+                                              oQuestion.status == 1
+                                                ? _c("li", [
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        staticClass:
+                                                          "chg_status red",
+                                                        attrs: {
+                                                          question_id:
+                                                            "" + oQuestion.id,
+                                                          change_status: "0"
+                                                        }
+                                                      },
+                                                      [
+                                                        _c("i", {
+                                                          staticClass:
+                                                            "icon-primitive-dot txt_red"
+                                                        }),
+                                                        _vm._v(" Inactive")
+                                                      ]
+                                                    )
+                                                  ])
+                                                : oQuestion.status == 2
+                                                ? _c("li", [
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        staticClass:
+                                                          "chg_status green",
+                                                        attrs: {
+                                                          question_id:
+                                                            "" + oQuestion.id,
+                                                          change_status: "1"
+                                                        }
+                                                      },
+                                                      [
+                                                        _c("i", {
+                                                          staticClass:
+                                                            "icon-primitive-dot txt_green"
+                                                        }),
+                                                        _vm._v(" Active")
+                                                      ]
+                                                    )
+                                                  ])
+                                                : oQuestion.status == 2
+                                                ? _c("li", [
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        staticClass:
+                                                          "chg_status red",
+                                                        attrs: {
+                                                          question_id:
+                                                            "" + oQuestion.id,
+                                                          change_status: "0"
+                                                        }
+                                                      },
+                                                      [
+                                                        _c("i", {
+                                                          staticClass:
+                                                            "icon-primitive-dot txt_red"
+                                                        }),
+                                                        _vm._v(" Inactive")
+                                                      ]
+                                                    )
+                                                  ])
+                                                : _c("li", [
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        staticClass:
+                                                          "chg_status green",
+                                                        attrs: {
+                                                          question_id:
+                                                            "" + oQuestion.id,
+                                                          change_status: "1"
+                                                        }
+                                                      },
+                                                      [
+                                                        _c("i", {
+                                                          staticClass:
+                                                            "icon-primitive-dot txt_green"
+                                                        }),
+                                                        _vm._v(" Active")
+                                                      ]
+                                                    )
+                                                  ])
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _c("div", { staticClass: "tdropdown" }, [
+                                        _vm._m(3, true),
+                                        _vm._v(" "),
+                                        _c(
+                                          "ul",
+                                          {
+                                            staticClass:
+                                              "dropdown-menu dropdown-menu-right more_act"
+                                          },
+                                          [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass: "dropdown_close",
+                                                attrs: {
+                                                  href: "javascript:void();"
+                                                }
+                                              },
+                                              [_vm._v("X")]
+                                            ),
+                                            _vm._v(
+                                              "\n                                                @php\n                                                "
+                                            ),
+                                            _vm._v(" "),
+                                            oQuestion.status == 1
+                                              ? _c("li", [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "chg_status red",
+                                                      attrs: {
+                                                        question_id:
+                                                          "" + oQuestion.id,
+                                                        change_status: "0"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "icon-file-locked"
+                                                      }),
+                                                      _vm._v(" Inactive")
+                                                    ]
+                                                  )
+                                                ])
+                                              : oQuestion.status == 2
+                                              ? _c("li", [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "chg_status green",
+                                                      attrs: {
+                                                        question_id:
+                                                          "" + oQuestion.id,
+                                                        change_status: "1"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "icon-file-locked"
+                                                      }),
+                                                      _vm._v(" Active")
+                                                    ]
+                                                  )
+                                                ])
+                                              : oQuestion.status == 2
+                                              ? _c("li", [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "chg_status red",
+                                                      attrs: {
+                                                        question_id:
+                                                          "" + oQuestion.id,
+                                                        change_status: "0"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "icon-file-locked"
+                                                      }),
+                                                      _vm._v(" Inactive")
+                                                    ]
+                                                  )
+                                                ])
+                                              : _c("li", [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "chg_status green",
+                                                      attrs: {
+                                                        question_id:
+                                                          "" + oQuestion.id,
+                                                        change_status: "1"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "icon-file-locked"
+                                                      }),
+                                                      _vm._v(" Active")
+                                                    ]
+                                                  )
+                                                ]),
+                                            _vm._v(" "),
+                                            _c("li", [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass: "displayReview",
+                                                  attrs: {
+                                                    href: "javascript:void(0);",
+                                                    action_name: "review-tag",
+                                                    tab_type: "note",
+                                                    reviewid: "" + oQuestion.id,
+                                                    review_time:
+                                                      "" + oQuestion.created
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "icon-file-locked"
+                                                  }),
+                                                  _vm._v(" Add Notes")
+                                                ]
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("li", [
+                                              _c(
+                                                "a",
+                                                {
+                                                  attrs: {
+                                                    target: "_blank",
+                                                    href:
+                                                      "/admin/questions/details/" +
+                                                      oQuestion.id
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "icon-file-locked"
+                                                  }),
+                                                  _vm._v(" View Answer")
+                                                ]
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("li", [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass: "deleteQuestion",
+                                                  attrs: {
+                                                    href: "javascript:void(0);",
+                                                    queationid:
+                                                      "" + oQuestion.id
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass: "icon-trash"
+                                                  }),
+                                                  _vm._v(" Delete")
+                                                ]
+                                              )
+                                            ])
+                                          ]
+                                        )
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticStyle: { display: "none" } },
+                                      [_vm._v(_vm._s(oQuestion.status))]
+                                    )
+                                  ])
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        : _c(
+                            "table",
+                            { staticClass: "table datatable-basic" },
+                            [
+                              _vm._m(4),
+                              _vm._v(" "),
+                              _c("tbody", [
+                                _c("td", { staticStyle: { display: "none" } }),
+                                _vm._v(" "),
+                                _c("td", { staticStyle: { display: "none" } }),
+                                _vm._v(" "),
+                                _c("td", { attrs: { colspan: "10" } }, [
+                                  _c("div", { staticClass: "row" }, [
+                                    _c("div", { staticClass: "col-md-12" }, [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "text-center",
+                                          staticStyle: { margin: "20px 0px 0" }
+                                        },
+                                        [
+                                          _vm._m(5),
+                                          _vm._v(" "),
+                                          _vm.bActiveSubsription == false
+                                            ? _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "btn bl_cust_btn btn-default dark_btn ml20 pDisplayNoActiveSubscription mb40",
+                                                  attrs: {
+                                                    title:
+                                                      "No Active Subscription",
+                                                    type: "button"
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass: "icon-plus3"
+                                                  }),
+                                                  _vm._v(" Add Question")
+                                                ]
+                                              )
+                                            : _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "btn bl_cust_btn btn-default dark_btn ml20 mb40",
+                                                  attrs: {
+                                                    id: "addQuestion",
+                                                    type: "button"
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass: "icon-plus3"
+                                                  }),
+                                                  _vm._v(" Add Question")
+                                                ]
+                                              )
+                                        ]
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("td", { staticStyle: { display: "none" } }),
+                                _vm._v(" "),
+                                _c("td", { staticStyle: { display: "none" } }),
+                                _vm._v(" "),
+                                _c("td", { staticStyle: { display: "none" } })
+                              ])
+                            ]
+                          )
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(6)
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "page_header" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-7" }, [
+          _c("h3", [
+            _c("img", { attrs: { src: "/assets/images/onsite_icons.png" } }),
+            _vm._v("   On Site Questions")
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "nav nav-tabs nav-tabs-bottom" }, [
+            _c("li", { staticClass: "active all" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "filterByColumn",
+                  staticStyle: { javascript: "void()" },
+                  attrs: { fil: "" }
+                },
+                [_vm._v("All")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                {
+                  staticClass: "filterByColumn",
+                  staticStyle: { javascript: "void()" },
+                  attrs: { fil: "1" }
+                },
+                [_vm._v("Approved")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                {
+                  staticClass: "filterByColumn",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: { fil: "0" }
+                },
+                [_vm._v("Dispproved")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                {
+                  staticClass: "filterByColumn",
+                  staticStyle: { javascript: "void()" },
+                  attrs: { fil: "2" }
+                },
+                [_vm._v("Pending")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-5 text-right btn_area" }, [
+          _c("div", { staticClass: "btn-group" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn light_btn btn-icon dropdown-toggle",
+                attrs: { type: "button", "data-toggle": "dropdown" }
+              },
+              [
+                _c("i", { staticClass: "icon-calendar2" }),
+                _vm._v("    Filter reviews    "),
+                _c("span", { staticClass: "caret" })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "dropdown-menu dropdown-content width-320 dropdown-menu-right"
+              },
+              [
+                _c("div", { staticClass: "dropdown-content-heading" }, [
+                  _vm._v(" Filter\n                            "),
+                  _c("ul", { staticClass: "icons-list" }, [
+                    _c("li", [
+                      _c("a", { attrs: { href: "#" } }, [
+                        _c("i", { staticClass: "icon-more" })
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", {}, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "panel-group panel-group-control panel-group-control-right content-group-lg filter_campaign",
+                      attrs: { id: "accordion-control-right" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-heading sidebarheadings active"
+                          },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group1"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-star-empty3" }),
+                                  _vm._v(" Campaign Type")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group1" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(
+                                    "\n                                                    Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.\n                                                "
+                                  )
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group2"
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "icon-arrow-up-left2"
+                                  }),
+                                  _vm._v("  Source")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group2" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(" Conetent Goes here... ")
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group73"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-star-full2" }),
+                                  _vm._v("  Rating")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group73" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(" Conetent Goes here... ")
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group74"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-calendar" }),
+                                  _vm._v("  Date Created")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse",
+                            attrs: { id: "accordion-control-right-group74" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _vm._v(" Conetent Goes here... ")
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel panel-white" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading sidebarheadings" },
+                          [
+                            _c("h6", { staticClass: "panel-title" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "collapsed",
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    "data-parent": "#accordion-control-right",
+                                    href: "#accordion-control-right-group83"
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-thumbs-up2" }),
+                                  _vm._v("  Reviews")
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "panel-collapse collapse in",
+                            attrs: { id: "accordion-control-right-group83" }
+                          },
+                          [
+                            _c("div", { staticClass: "panel-body" }, [
+                              _c("div", { staticClass: "row mb20" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: {
+                                          type: "checkbox",
+                                          checked: "checked"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Total Reviews\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "20"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "100"
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row mb20" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: {
+                                          type: "checkbox",
+                                          checked: "checked"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Positive\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "20"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "100"
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row mb20" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: { type: "checkbox" }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Neutral\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "20",
+                                      disabled: ""
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "100",
+                                      disabled: ""
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("div", { staticClass: "checkbox" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        staticClass: "control-primary",
+                                        attrs: {
+                                          type: "checkbox",
+                                          checked: "checked"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                            Negative\n                                                        "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "0"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "dash" }, [
+                                    _vm._v("-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      name: "",
+                                      value: "10"
+                                    }
+                                  })
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "dropdown-content-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn dark_btn dropdown-toggle",
+                      staticStyle: { display: "inline-block" },
+                      attrs: { type: "button" }
+                    },
+                    [
+                      _c("i", { staticClass: "icon-filter4" }),
+                      _c("span", [_vm._v("    Filter")])
+                    ]
+                  ),
+                  _vm._v(
+                    "\n                               \n                            "
+                  ),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: { display: "inline-block" },
+                      attrs: { href: "#" }
+                    },
+                    [_vm._v("Clear All")]
+                  )
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn dark_btn dropdown-toggle ml20",
+              attrs: { href: "/admin/questions/add" }
+            },
+            [
+              _c("i", { staticClass: "icon-plus3" }),
+              _c("span", [_vm._v("    New question")])
+            ]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "heading-elements" }, [
+      _c(
+        "div",
+        {
+          staticClass: "form-group has-feedback has-feedback-left",
+          staticStyle: { display: "inline-block", margin: "0" }
+        },
+        [
+          _c("input", {
+            staticClass: "form-control input-sm cus_search",
+            attrs: {
+              tableID: "onsiteQuestion",
+              placeholder: "Search by name",
+              type: "text"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-control-feedback" }, [
+            _c("i", { staticClass: "icon-search4" })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "table_action_tool" }, [
+        _c("a", { attrs: { href: "javascript:void();" } }, [
+          _c("i", { staticClass: "icon-calendar2" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "editDataQuestion",
+            attrs: { href: "javascript:void();" }
+          },
+          [_c("i", { staticClass: "icon-pencil4" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "custom_action_box",
+            staticStyle: { display: "none" },
+            attrs: {
+              href: "javascript:void();",
+              id: "deleteButtonQuestionList"
+            }
+          },
+          [_c("i", { staticClass: "icon-trash position-left" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "nosort editAction",
+            staticStyle: { display: "none" }
+          },
+          [
+            _c("label", { staticClass: "custmo_checkbox pull-left" }, [
+              _c("input", {
+                staticClass: "control-primary",
+                attrs: { type: "checkbox", name: "checkAll[]", id: "checkAll" }
+              }),
+              _c("span", { staticClass: "custmo_checkmark" })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", {}, [
+            _c("img", { attrs: { src: "assets/images/icon_name.png" } })
+          ]),
+          _vm._v("Contact")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", {}, [
+            _c("img", { attrs: { src: "assets/images/icon_source.png" } })
+          ]),
+          _vm._v("Question")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", {}, [
+            _c("img", { attrs: { src: "assets/images/icon_campaign.png" } })
+          ]),
+          _vm._v("Campaign")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", {}, [
+            _c("img", { attrs: { src: "assets/images/icon_clock.png" } })
+          ]),
+          _vm._v("Created")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right pull-right" }, [
+          _c("i", {}, [
+            _c("img", { attrs: { src: "assets/images/icon_status.png" } })
+          ]),
+          _vm._v("Status")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center nosort sorting_disabled" }, [
+          _c("i", { staticClass: "fa fa-dot-circle-o" }),
+          _vm._v("Action")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } }, [_vm._v("Status")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "table_more dropdown-toggle",
+        attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
+      },
+      [_c("img", { attrs: { src: "/assets/images/more.svg" } })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [
+          _c("i", {}, [
+            _c("img", { attrs: { src: "assets/images/icon_name.png" } })
+          ]),
+          _vm._v("Contact")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", {}, [
+            _c("img", { attrs: { src: "assets/images/icon_source.png" } })
+          ]),
+          _vm._v("Question")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", {}, [
+            _c("img", { attrs: { src: "assets/images/icon_campaign.png" } })
+          ]),
+          _vm._v("Campaign")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", {}, [
+            _c("img", { attrs: { src: "assets/images/icon_clock.png" } })
+          ]),
+          _vm._v("Created")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right pull-right" }, [
+          _c("i", {}, [
+            _c("img", { attrs: { src: "assets/images/icon_status.png" } })
+          ]),
+          _vm._v("Status")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center nosort sorting_disabled" }, [
+          _c("i", { staticClass: "fa fa-dot-circle-o" }),
+          _vm._v("Action")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", { staticClass: "mb-20 mt40" }, [
+      _vm._v(
+        "\n                                                    Looks Like You Don’t Have Any Question Yet "
+      ),
+      _c("img", { attrs: { src: "/assets/images/smiley.png" } }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(
+        "\n                                                    Lets Create Your First Question.\n                                                "
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "QuestionTagListModal" } },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c(
+              "form",
+              {
+                attrs: {
+                  method: "post",
+                  name: "frmQuestionTagListModal",
+                  id: "frmQuestionTagListModal",
+                  action: "javascript:void();"
+                }
+              },
+              [
+                _vm._v("\n                    @csrf\n                    "),
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "modal-title" }, [
+                    _vm._v("Apply Tags")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "modal-body",
+                  attrs: { id: "tagEntireList" }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer modalFooterBtn" }, [
+                  _c("input", {
+                    attrs: {
+                      type: "hidden",
+                      name: "question_id",
+                      id: "tag_question_id"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-link",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn dark_btn", attrs: { type: "submit" } },
+                    [_vm._v("Apply Tag")]
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=template&id=8d3ed02c&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=template&id=8d3ed02c& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "content", attrs: { id: "masterContainer" } },
+    [
+      _c("div", {}, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "tab-content" }, [
+          _c(
+            "div",
+            {
+              staticClass: "tab-pane active",
+              attrs: { id: "right-icon-tab0" }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel panel-flat",
+                      staticStyle: { margin: "0!important" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-heading" }, [
+                        _c("span", { staticClass: "pull-left" }, [
+                          _c("h6", { staticClass: "panel-title" }, [
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(
+                                  _vm.oReviews.length > 0
+                                    ? _vm.oReviews.length
+                                    : "0"
+                                ) +
+                                "\n                                        Reviews\n                                    "
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _vm._m(2)
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel-body p0" }, [
+                        _vm.oReviews.length > 0
+                          ? _c(
+                              "table",
+                              {
+                                staticClass: "table datatable-basic-new",
+                                attrs: { id: "onsitereviewQuestion" }
+                              },
+                              [
+                                _vm._m(3),
+                                _vm._v(" "),
+                                _c(
+                                  "tbody",
+                                  _vm._l(_vm.oReviews, function(oReview) {
+                                    return _c(
+                                      "tr",
+                                      {
+                                        staticClass: "selectedClass",
+                                        attrs: {
+                                          id: "append-" + oReview.reviewid
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "td",
+                                          { staticStyle: { display: "none" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(oReview.review_created)
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticStyle: { display: "none" } },
+                                          [_vm._v(_vm._s(oReview.reviewid))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass: "editAction",
+                                            staticStyle: {
+                                              width: "40px!important",
+                                              display: "none"
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                staticClass:
+                                                  "custmo_checkbox pull-left"
+                                              },
+                                              [
+                                                _c("input", {
+                                                  staticClass: "checkRows",
+                                                  attrs: {
+                                                    type: "checkbox",
+                                                    name: "checkRows[]",
+                                                    id: "chk" + oReview.reviewid
+                                                  },
+                                                  domProps: {
+                                                    value: "" + oReview.reviewid
+                                                  }
+                                                }),
+                                                _c("span", {
+                                                  staticClass:
+                                                    "custmo_checkmark"
+                                                })
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass: "viewSmartPopup",
+                                            attrs: {
+                                              review_id: oReview.reviewid
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "media-left media-middle"
+                                              },
+                                              [
+                                                _c("user-avatar", {
+                                                  attrs: {
+                                                    avatar: oReview.avatar,
+                                                    firstname:
+                                                      oReview.firstname,
+                                                    lastname: oReview.lastname
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              { staticClass: "media-left" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "pt-5" },
+                                                  [
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        staticClass:
+                                                          "text-default text-semibold bbot",
+                                                        attrs: {
+                                                          href:
+                                                            "javascript:void();"
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            oReview.firstname
+                                                          ) +
+                                                            " " +
+                                                            _vm._s(
+                                                              oReview.lastname
+                                                            )
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _c("img", {
+                                                      staticClass: "flags",
+                                                      attrs: {
+                                                        src:
+                                                          "/assets/images/flags/" +
+                                                          oReview.userCountry +
+                                                          ".png",
+                                                        onerror:
+                                                          "this.src='/assets/images/flags/us.png'"
+                                                      }
+                                                    })
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "text-muted text-size-small"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(oReview.email)
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass: "viewSmartPopup",
+                                            attrs: {
+                                              review_id: oReview.reviewid
+                                            }
+                                          },
+                                          [_vm._v("{!! oReview.smilyImage !!}")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass: "txt_dblack",
+                                              attrs: {
+                                                href:
+                                                  "/admin/brandboost/reviewdetails/" +
+                                                  oReview.reviewid
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass: "text-semibold"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      oReview.review_title.substring(
+                                                        0,
+                                                        23
+                                                      )
+                                                    )
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "text-size-small text-muted"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      oReview.comment_text.substring(
+                                                        0,
+                                                        31
+                                                      )
+                                                    )
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass: "viewSmartPopup",
+                                            attrs: {
+                                              review_id: oReview.reviewid
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "media-left" },
+                                              [
+                                                _c("div", {}, [
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "text-default text-semibold"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          oReview.review_created
+                                                        )
+                                                      )
+                                                    ]
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "text-muted text-size-small"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        oReview.review_created
+                                                      )
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            attrs: {
+                                              id:
+                                                "review_tag_" + oReview.reviewid
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "media-left pl30 blef"
+                                              },
+                                              [
+                                                _c("div", {}, [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "text-default text-semibold bbot",
+                                                      attrs: {
+                                                        href:
+                                                          "javascript:void(0);"
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          oReview.reviewTags
+                                                            .length
+                                                        ) + " Tags"
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "media-left pr30 brig"
+                                              },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "tdropdown" },
+                                                  [
+                                                    _vm._m(4, true),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "ul",
+                                                      {
+                                                        staticClass:
+                                                          "dropdown-menu dropdown-menu-right tagss",
+                                                        staticStyle: {
+                                                          right: "0px!important"
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._l(
+                                                          oReview.reviewTags,
+                                                          function(oTag) {
+                                                            return oReview
+                                                              .reviewTags.length
+                                                              ? _c(
+                                                                  "button",
+                                                                  {
+                                                                    staticClass:
+                                                                      "btn btn-xs btn_white_table pr10"
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      " " +
+                                                                        _vm._s(
+                                                                          oTag.tag_name
+                                                                        ) +
+                                                                        " "
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              : _vm._e()
+                                                          }
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "button",
+                                                          {
+                                                            staticClass:
+                                                              "btn btn-xs plus_icon ml10 applyInsightTagsReviews",
+                                                            attrs: {
+                                                              reviewid:
+                                                                "Base64EncodeUrl(oReview.reviewid)",
+                                                              action_name:
+                                                                "review-tag"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "icon-plus3"
+                                                            })
+                                                          ]
+                                                        )
+                                                      ],
+                                                      2
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "div",
+                                            { staticClass: "tdropdown" },
+                                            [
+                                              oReview.rating >= 4
+                                                ? _c("i", {
+                                                    staticClass:
+                                                      "icon-primitive-dot txt_green fsize16"
+                                                  })
+                                                : oReview.rating >= 3
+                                                ? _c("i", {
+                                                    staticClass:
+                                                      "icon-primitive-dot txt_grey fsize16"
+                                                  })
+                                                : _c("i", {
+                                                    staticClass:
+                                                      "icon-primitive-dot txt_red fsize16"
+                                                  }),
+                                              _vm._v(" "),
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "text-default text-semibold bbot dropdown-toggle",
+                                                  attrs: {
+                                                    "data-toggle": "dropdown"
+                                                  }
+                                                },
+                                                [
+                                                  oReview.rating >= 4
+                                                    ? _c("span", [
+                                                        _vm._v("Positive")
+                                                      ])
+                                                    : oReview.rating >= 3
+                                                    ? _c("span", [
+                                                        _vm._v("Neutral")
+                                                      ])
+                                                    : _c("span", [
+                                                        _vm._v("Negative")
+                                                      ])
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "ul",
+                                                {
+                                                  staticClass:
+                                                    "dropdown-menu dropdown-menu-right status"
+                                                },
+                                                [
+                                                  oReview.rating >= 4
+                                                    ? _c("li", [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "update_category",
+                                                            attrs: {
+                                                              href:
+                                                                "javascript:void(0);",
+                                                              review_id:
+                                                                oReview.reviewid,
+                                                              change_category:
+                                                                "3"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "icon-primitive-dot txt_grey"
+                                                            }),
+                                                            _vm._v(" Neutral")
+                                                          ]
+                                                        )
+                                                      ])
+                                                    : _vm._e(),
+                                                  _vm._v(" "),
+                                                  oReview.rating >= 4
+                                                    ? _c("li", [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "update_category",
+                                                            attrs: {
+                                                              href:
+                                                                "javascript:void(0);",
+                                                              review_id:
+                                                                oReview.reviewid,
+                                                              change_category:
+                                                                "1"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "icon-primitive-dot txt_red"
+                                                            }),
+                                                            _vm._v(" Negative")
+                                                          ]
+                                                        )
+                                                      ])
+                                                    : oReview.rating >= 3
+                                                    ? _c("li", [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "update_category",
+                                                            attrs: {
+                                                              href:
+                                                                "javascript:void(0);",
+                                                              review_id:
+                                                                oReview.reviewid,
+                                                              change_category:
+                                                                "5"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "icon-primitive-dot txt_green"
+                                                            }),
+                                                            _vm._v(" Positive")
+                                                          ]
+                                                        )
+                                                      ])
+                                                    : oReview.rating >= 3
+                                                    ? _c("li", [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "update_category",
+                                                            attrs: {
+                                                              href:
+                                                                "javascript:void(0);",
+                                                              review_id:
+                                                                oReview.reviewid,
+                                                              change_category:
+                                                                "1"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "icon-primitive-dot txt_red"
+                                                            }),
+                                                            _vm._v(" Negative")
+                                                          ]
+                                                        )
+                                                      ])
+                                                    : _c("li", [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "update_category",
+                                                            attrs: {
+                                                              href:
+                                                                "javascript:void(0);",
+                                                              review_id:
+                                                                oReview.reviewid,
+                                                              change_category:
+                                                                "5"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "icon-primitive-dot txt_green"
+                                                            }),
+                                                            _vm._v(" Positive")
+                                                          ]
+                                                        )
+                                                      ])
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "div",
+                                            { staticClass: "tdropdown" },
+                                            [
+                                              oReview.rstatus == 0
+                                                ? _c("i", {
+                                                    staticClass:
+                                                      "icon-primitive-dot txt_red fsize16"
+                                                  })
+                                                : oReview.rstatus == 2
+                                                ? _c("i", {
+                                                    staticClass:
+                                                      "icon-primitive-dot txt_grey fsize16"
+                                                  })
+                                                : _c("i", {
+                                                    staticClass:
+                                                      "icon-primitive-dot txt_green fsize16"
+                                                  }),
+                                              _vm._v(" "),
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "text-default text-semibold bbot dropdown-toggle",
+                                                  attrs: {
+                                                    "data-toggle": "dropdown"
+                                                  }
+                                                },
+                                                [
+                                                  oReview.rstatus == 0
+                                                    ? _c("span", [
+                                                        _vm._v("Inactive")
+                                                      ])
+                                                    : oReview.rstatus == 2
+                                                    ? _c("span", [
+                                                        _vm._v("Pending")
+                                                      ])
+                                                    : _c("span", [
+                                                        _vm._v("Active")
+                                                      ])
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "ul",
+                                                {
+                                                  staticClass:
+                                                    "dropdown-menu dropdown-menu-right status"
+                                                },
+                                                [
+                                                  oReview.rstatus == 1
+                                                    ? _c("li", [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "chg_status",
+                                                            attrs: {
+                                                              review_id:
+                                                                oReview.reviewid,
+                                                              change_status: "0"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "icon-primitive-dot txt_red"
+                                                            }),
+                                                            _vm._v(" Inactive")
+                                                          ]
+                                                        )
+                                                      ])
+                                                    : oReview.rstatus == 2
+                                                    ? _c("li", [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "chg_status",
+                                                            attrs: {
+                                                              review_id:
+                                                                oReview.reviewid,
+                                                              change_status: "1"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "icon-primitive-dot txt_green"
+                                                            }),
+                                                            _vm._v(" Active")
+                                                          ]
+                                                        )
+                                                      ])
+                                                    : oReview.rstatus == 2
+                                                    ? _c("li", [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "chg_status",
+                                                            attrs: {
+                                                              review_id:
+                                                                oReview.reviewid,
+                                                              change_status: "0"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "icon-primitive-dot txt_red"
+                                                            }),
+                                                            _vm._v(" Inactive")
+                                                          ]
+                                                        )
+                                                      ])
+                                                    : _c("li", [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "chg_status",
+                                                            attrs: {
+                                                              review_id:
+                                                                oReview.reviewid,
+                                                              change_status: "1"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "icon-primitive-dot txt_green"
+                                                            }),
+                                                            _vm._v(" Active")
+                                                          ]
+                                                        )
+                                                      ])
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "text-center" },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "tdropdown ml10" },
+                                              [
+                                                _vm._m(5, true),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "ul",
+                                                  {
+                                                    staticClass:
+                                                      "dropdown-menu dropdown-menu-right more_act"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        staticClass:
+                                                          "dropdown_close",
+                                                        attrs: {
+                                                          href:
+                                                            "javascript:void();"
+                                                        }
+                                                      },
+                                                      [_vm._v("X")]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    oReview.rstatus == 1
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              staticClass:
+                                                                "chg_status red",
+                                                              attrs: {
+                                                                review_id:
+                                                                  oReview.reviewid,
+                                                                change_status:
+                                                                  "0"
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-file-locked"
+                                                              }),
+                                                              _vm._v(
+                                                                " Inactive"
+                                                              )
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : oReview.rstatus == 2
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              staticClass:
+                                                                "chg_status green",
+                                                              attrs: {
+                                                                review_id:
+                                                                  oReview.reviewid,
+                                                                change_status:
+                                                                  "1"
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-file-locked"
+                                                              }),
+                                                              _vm._v(" Active")
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : oReview.rstatus == 2
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              staticClass:
+                                                                "chg_status red",
+                                                              attrs: {
+                                                                review_id:
+                                                                  oReview.reviewid,
+                                                                change_status:
+                                                                  "0"
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-file-locked"
+                                                              }),
+                                                              _vm._v(
+                                                                " Inactive"
+                                                              )
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              staticClass:
+                                                                "chg_status green",
+                                                              attrs: {
+                                                                review_id:
+                                                                  oReview.reviewid,
+                                                                change_status:
+                                                                  "1"
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-file-locked"
+                                                              }),
+                                                              _vm._v(" Active")
+                                                            ]
+                                                          )
+                                                        ]),
+                                                    _vm._v(" "),
+                                                    _c("li", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          attrs: {
+                                                            target: "_blank",
+                                                            href:
+                                                              "/admin/brandboost/reviewdetails/" +
+                                                              oReview.reviewid
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "icon-file-locked"
+                                                          }),
+                                                          _vm._v(" View Review")
+                                                        ]
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    oReview.review_type ==
+                                                    "text"
+                                                      ? _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              staticClass:
+                                                                "editReview",
+                                                              attrs: {
+                                                                href:
+                                                                  "javascript:void(0);",
+                                                                review_id:
+                                                                  oReview.reviewid
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-gear"
+                                                              }),
+                                                              _vm._v(" Edit")
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : _c("li", [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              staticClass:
+                                                                "editVideoReview",
+                                                              attrs: {
+                                                                href:
+                                                                  "javascript:void(0);",
+                                                                review_id:
+                                                                  oReview.reviewid
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "icon-pencil"
+                                                              }),
+                                                              _vm._v(" Edit")
+                                                            ]
+                                                          )
+                                                        ]),
+                                                    _vm._v(" "),
+                                                    _c("li", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          staticClass:
+                                                            "deleteReview",
+                                                          attrs: {
+                                                            href:
+                                                              "javascript:void(0);",
+                                                            review_id:
+                                                              oReview.reviewid
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "icon-trash"
+                                                          }),
+                                                          _vm._v(" Delete")
+                                                        ]
+                                                      )
+                                                    ])
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticStyle: { display: "none" } },
+                                          [
+                                            oReview.rstatus == 0
+                                              ? _c("span", [_vm._v("Declined")])
+                                              : oReview.rstatus == 2
+                                              ? _c("span", [_vm._v("Pending")])
+                                              : _c("span", [_vm._v("Approved")])
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  }),
+                                  0
+                                )
+                              ]
+                            )
+                          : _c(
+                              "table",
+                              { staticClass: "table datatable-basic" },
+                              [_vm._m(6), _vm._v(" "), _vm._m(7)]
+                            )
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(8),
+      _vm._v(" "),
+      _vm._m(9),
+      _vm._v(" "),
+      _vm._m(10),
+      _vm._v(" "),
+      _vm._m(11),
+      _vm._v(" "),
+      _vm._m(12),
+      _vm._v(" "),
+      _vm._m(13),
+      _vm._v(" "),
+      _vm._m(14),
+      _vm._v(" "),
+      _vm._m(15),
+      _vm._v(" "),
+      _vm._m(16),
+      _vm._v(" "),
+      _c("div", { staticClass: "modal fade", attrs: { id: "commentpopup" } })
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "page_header" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-7" }, [
+          _c("h3", [
+            _c("img", {
+              staticStyle: { width: "18px" },
+              attrs: { src: "/assets/images/review_icon2.png" }
+            }),
+            _vm._v(" Reviews")
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "nav nav-tabs nav-tabs-bottom" }, [
+            _c("li", { staticClass: "active all" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "filterByColumn",
+                  staticStyle: { javascript: "void()" },
+                  attrs: { fil: "" }
+                },
+                [_vm._v("All")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                {
+                  staticClass: "filterByColumn",
+                  staticStyle: { javascript: "void()" },
+                  attrs: { fil: "approved" }
+                },
+                [_vm._v("Approved")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                {
+                  staticClass: "filterByColumn",
+                  staticStyle: { javascript: "void()" },
+                  attrs: { fil: "pending" }
+                },
+                [_vm._v("Pending")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-5 text-right btn_area" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "heading_links pull-left" }, [
+      _c(
+        "a",
+        {
+          staticClass:
+            "top_links top_links_clk btn btn-xs ml20 btn_white_table",
+          staticStyle: { cursor: "pointer" },
+          attrs: { startRate: "" }
+        },
+        [_vm._v("All")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_clk",
+          staticStyle: { cursor: "pointer" },
+          attrs: { startRate: "positive" }
+        },
+        [_vm._v("Positive")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_clk",
+          staticStyle: { cursor: "pointer" },
+          attrs: { startRate: "neutral" }
+        },
+        [_vm._v("Neutral")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_clk",
+          staticStyle: { cursor: "pointer" },
+          attrs: { startRate: "negative" }
+        },
+        [_vm._v("Negative")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_clk link",
+          staticStyle: { cursor: "pointer" },
+          attrs: { startRate: "commentLink" }
+        },
+        [_vm._v("With comments only")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-xs ml20 plus_icon", attrs: { type: "button" } },
+        [_c("i", { staticClass: "icon-plus3" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "heading-elements" }, [
+      _c(
+        "div",
+        {
+          staticClass: "form-group has-feedback has-feedback-left",
+          staticStyle: { display: "inline-block", margin: "0" }
+        },
+        [
+          _c("input", {
+            staticClass: "form-control input-sm cus_search",
+            attrs: {
+              tableid: "onsitereviewQuestion",
+              placeholder: "Search by name",
+              type: "text"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-control-feedback" }, [
+            _c("i", { staticClass: "icon-search4" })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "table_action_tool" }, [
+        _c("a", { attrs: { href: "javascript:void();" } }, [
+          _c("i", { staticClass: "icon-calendar2" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "editDataReview",
+            attrs: { href: "javascript:void();" }
+          },
+          [_c("i", { staticClass: "icon-pencil4" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "custom_action_box",
+            staticStyle: { display: "none" },
+            attrs: { href: "javascript:void();", id: "deleteButtonReviewList" }
+          },
+          [_c("i", { staticClass: "icon-trash position-left" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "nosort editAction",
+            staticStyle: { display: "none" }
+          },
+          [
+            _c("label", { staticClass: "custmo_checkbox pull-left" }, [
+              _c("input", {
+                staticClass: "control-primary",
+                attrs: { type: "checkbox", name: "checkAll[]", id: "checkAll" }
+              }),
+              _c("span", { staticClass: "custmo_checkmark" })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-user" }), _vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-star-full2" }),
+          _vm._v("Rating")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-paragraph-left3" }),
+          _vm._v("Review")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-calendar" }),
+          _vm._v("Created")
+        ]),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-hash" }), _vm._v("Tags")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-folder2" }),
+          _vm._v("Category")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-diff-modified" }),
+          _vm._v("Status")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center nosort sorting_disabled" }, [
+          _c("i", { staticClass: "fa fa-dot-circle-o" }),
+          _vm._v("Action")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-xs plus_icon dropdown-toggle ml10",
+        attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
+      },
+      [_c("i", { staticClass: "icon-plus3" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "table_more dropdown-toggle",
+        attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
+      },
+      [_c("img", { attrs: { src: "/assets/images/more.svg" } })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_c("i", { staticClass: "icon-user" }), _vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-star-full2" }),
+          _vm._v("Rating")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-paragraph-left3" }),
+          _vm._v("Review")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-calendar" }),
+          _vm._v("Created")
+        ]),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-hash" }), _vm._v("Tags")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-folder2" }),
+          _vm._v("Category")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-diff-modified" }),
+          _vm._v("Status")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center nosort sorting_disabled" }, [
+          _c("i", { staticClass: "fa fa-dot-circle-o" }),
+          _vm._v("Action")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tbody", [
+      _c("td", { staticStyle: { display: "none" } }),
+      _vm._v(" "),
+      _c("td", { staticStyle: { display: "none" } }),
+      _vm._v(" "),
+      _c("td", { attrs: { colspan: "10" } }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c(
+              "div",
+              {
+                staticClass: "text-center",
+                staticStyle: { margin: "20px 0px 0" }
+              },
+              [
+                _c("h5", { staticClass: "mb-20 mt40" }, [
+                  _vm._v(
+                    "\n                                                        Looks Like You Don’t Have Any On Site Review Yet "
+                  ),
+                  _c("img", { attrs: { src: "/assets/images/smiley.png" } }),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(
+                    "\n                                                        Lets Create Your First On Site Review.\n                                                    "
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("td", { staticStyle: { display: "none" } }),
+      _vm._v(" "),
+      _c("td", { staticStyle: { display: "none" } }),
+      _vm._v(" "),
+      _c("td", { staticStyle: { display: "none" } }),
+      _vm._v(" "),
+      _c("td", { staticStyle: { display: "none" } }),
+      _vm._v(" "),
+      _c("td", { staticStyle: { display: "none" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "addPeopleList" } },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog",
+            staticStyle: { "max-width": "440px" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c(
+                "form",
+                { staticClass: "form-horizontal", attrs: { method: "post" } },
+                [
+                  _c("div", { staticClass: "modal-header" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("×")]
+                    ),
+                    _vm._v(" "),
+                    _c("h5", { staticClass: "modal-title" }, [
+                      _vm._v("Create new campaign")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v("Campaign name")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", {}, [
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                placeholder: "Enter campaign name",
+                                name: "firstname",
+                                id: "firstname",
+                                type: "text",
+                                required: ""
+                              }
+                            })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("div", { staticClass: "form-group mb0" }, [
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v("Campaign description")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", {}, [
+                            _c("textarea", {
+                              staticClass: "form-control",
+                              attrs: {
+                                placeholder: "Enter campaign description",
+                                value: "",
+                                type: "text",
+                                required: ""
+                              }
+                            })
+                          ])
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer p40" }, [
+                    _c("input", {
+                      attrs: {
+                        type: "hidden",
+                        name: "listId",
+                        id: "list_id",
+                        value: ""
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-link text-muted",
+                        attrs: { "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Cancel ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn dark_btn bkg_purple",
+                        attrs: {
+                          "data-toggle": "modal",
+                          id: "nextpopup",
+                          type: "button"
+                        }
+                      },
+                      [_vm._v("Create")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "addPeopleList" } },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog",
+            staticStyle: { "max-width": "440px" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c(
+                "form",
+                { staticClass: "form-horizontal", attrs: { method: "post" } },
+                [
+                  _c("div", { staticClass: "modal-header" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("×")]
+                    ),
+                    _vm._v(" "),
+                    _c("h5", { staticClass: "modal-title" }, [
+                      _vm._v("Create new campaign")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v("Campaign name")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", {}, [
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                placeholder: "Enter campaign name",
+                                name: "firstname",
+                                id: "firstname",
+                                type: "text",
+                                required: ""
+                              }
+                            })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("div", { staticClass: "form-group mb0" }, [
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v("Campaign description")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", {}, [
+                            _c("textarea", {
+                              staticClass: "form-control",
+                              attrs: {
+                                placeholder: "Enter campaign description",
+                                value: "",
+                                type: "text",
+                                required: ""
+                              }
+                            })
+                          ])
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer p40" }, [
+                    _c("input", {
+                      attrs: {
+                        type: "hidden",
+                        name: "listId",
+                        id: "list_id",
+                        value: ""
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-link text-muted",
+                        attrs: { "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Cancel ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn dark_btn bkg_purple",
+                        attrs: {
+                          "data-toggle": "modal",
+                          id: "nextpopup",
+                          type: "button"
+                        }
+                      },
+                      [_vm._v("Create")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "editReview" } },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c(
+              "form",
+              {
+                staticClass: "form-horizontal",
+                attrs: {
+                  method: "post",
+                  id: "updateReview",
+                  action: "javascript:void();"
+                }
+              },
+              [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "modal-title" }, [
+                    _c("i", { staticClass: "icon-menu7" }),
+                    _vm._v("  Update Review")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "control-label col-lg-3" }, [
+                      _vm._v("Title")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "edit_review_title",
+                          id: "edit_review_title",
+                          placeholder: "Title",
+                          required: ""
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "control-label col-lg-3" }, [
+                      _vm._v("Comment")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c("textarea", {
+                        staticClass: "form-control",
+                        attrs: {
+                          placeholder: "Leave Review",
+                          name: "edit_content",
+                          id: "edit_content",
+                          required: ""
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "control-label col-lg-3" }, [
+                      _vm._v("Rating")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "step_star_new",
+                          staticStyle: { padding: "5px 0" }
+                        },
+                        [
+                          _c("ul", { attrs: { id: "stars" } }, [
+                            _c(
+                              "li",
+                              {
+                                staticClass: "star",
+                                attrs: { title: "Poor", "data-value": "1" }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-star fa-fw",
+                                  staticStyle: { margin: "0" }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "li",
+                              {
+                                staticClass: "star",
+                                attrs: { title: "Fair", "data-value": "2" }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-star fa-fw",
+                                  staticStyle: { margin: "0" }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "li",
+                              {
+                                staticClass: "star",
+                                attrs: { title: "Good", "data-value": "3" }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-star fa-fw",
+                                  staticStyle: { margin: "0" }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "li",
+                              {
+                                staticClass: "star",
+                                attrs: { title: "Excellent", "data-value": "4" }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-star fa-fw",
+                                  staticStyle: { margin: "0" }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "li",
+                              {
+                                staticClass: "star",
+                                attrs: { title: "WOW!!!", "data-value": "5" }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-star fa-fw",
+                                  staticStyle: { margin: "0" }
+                                })
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c("input", {
+                    attrs: {
+                      type: "hidden",
+                      value: "0",
+                      id: "ratingValue",
+                      name: "ratingValue"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    attrs: {
+                      type: "hidden",
+                      name: "edit_reviewid",
+                      id: "edit_reviewid",
+                      value: ""
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-link",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_c("i", { staticClass: "icon-cross" }), _vm._v(" Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "submit" }
+                    },
+                    [_c("i", { staticClass: "icon-check" }), _vm._v(" Update")]
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "editVideoReview" } },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c(
+              "form",
+              {
+                staticClass: "form-horizontal",
+                attrs: {
+                  method: "post",
+                  id: "updateVideoReview",
+                  action: "javascript:void();"
+                }
+              },
+              [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "modal-title" }, [
+                    _c("i", { staticClass: "icon-menu7" }),
+                    _vm._v("  Update Review")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "control-label col-lg-3" }, [
+                      _vm._v("Title")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "edit_review_title",
+                          id: "edit_video_review_title",
+                          placeholder: "Title",
+                          required: ""
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "control-label col-lg-3" }, [
+                      _vm._v("Rating")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "step_star_new",
+                          staticStyle: { padding: "5px 0" }
+                        },
+                        [_c("ul", { attrs: { id: "stars_video" } })]
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c("input", {
+                    attrs: {
+                      type: "hidden",
+                      value: "0",
+                      id: "ratingValueVideo",
+                      name: "ratingValueVideo"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    attrs: {
+                      type: "hidden",
+                      name: "edit_video_reviewid",
+                      id: "edit_video_reviewid",
+                      value: ""
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-link",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_c("i", { staticClass: "icon-cross" }), _vm._v(" Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "submit" }
+                    },
+                    [_c("i", { staticClass: "icon-check" }), _vm._v(" Update")]
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "showVideoPopup" } },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("h5", { staticClass: "modal-title" }, [
+                _c("i", { staticClass: "icon-menu7" }),
+                _vm._v("  Video")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c(
+                "div",
+                { staticClass: "form-group", attrs: { id: "divVideo" } },
+                [
+                  _c(
+                    "video",
+                    { attrs: { width: "100%", height: "auto", controls: "" } },
+                    [_c("source", { attrs: { src: "", type: "video/mp4" } })]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-link",
+                  attrs: { "data-dismiss": "modal" }
+                },
+                [_c("i", { staticClass: "icon-cross" }), _vm._v(" Close")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { id: "downloadVideo", href: "", download: "" }
+                },
+                [
+                  _c("i", { staticClass: "icon-download" }),
+                  _vm._v("   Download Video")
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "reviewPopup" } },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", {}, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "panel" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "panel-footer panel-footer-condensed",
+                    staticStyle: {
+                      "border-top": "none",
+                      "border-bottom": "1px solid #eee!important"
+                    }
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "heading-elements not-collapsible" },
+                      [
+                        _c(
+                          "span",
+                          { staticClass: "heading-text text-semibold" },
+                          [
+                            _c("i", {
+                              staticClass: "icon-history position-left"
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "reviewTime" })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-link pull-right",
+                            attrs: { "data-dismiss": "modal" }
+                          },
+                          [
+                            _c("i", { staticClass: "icon-cross" }),
+                            _vm._v(" Close")
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "panel-body",
+                  attrs: { id: "reviewContent" }
+                })
+              ])
+            ])
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "previewReviewReply" } },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "panel" }, [
+                _c("div", {
+                  staticClass: "panel-body",
+                  attrs: { id: "previewReviewReplyContent" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "panel-footer panel-footer-condensed" },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "heading-elements not-collapsible" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-link pull-right",
+                            attrs: { "data-dismiss": "modal" }
+                          },
+                          [
+                            _c("i", { staticClass: "icon-cross" }),
+                            _vm._v(" Close")
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "ReviewTagListModal" } },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c(
+              "form",
+              {
+                attrs: {
+                  method: "post",
+                  name: "frmReviewTagListModal",
+                  id: "frmReviewTagListModal",
+                  action: "javascript:void();"
+                }
+              },
+              [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "modal-title" }, [
+                    _vm._v("Apply Tags")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "modal-body",
+                  attrs: { id: "tagEntireList" }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer modalFooterBtn" }, [
+                  _c("input", {
+                    attrs: {
+                      type: "hidden",
+                      name: "review_id",
+                      id: "tag_review_id"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-link",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn dark_btn", attrs: { type: "submit" } },
+                    [_vm._v("Apply Tag")]
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade newreviewpopup2",
+        attrs: { id: "newreviewpopup" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", {
+            staticClass: "modal-content",
+            attrs: { id: "reviewPopupBox" }
+          })
+        ])
       ]
     )
   }
@@ -48667,6 +54512,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/brandboost/onsite/questions.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/onsite/questions.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _questions_vue_vue_type_template_id_9a35ab48___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./questions.vue?vue&type=template&id=9a35ab48& */ "./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=template&id=9a35ab48&");
+/* harmony import */ var _questions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./questions.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _questions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _questions_vue_vue_type_template_id_9a35ab48___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _questions_vue_vue_type_template_id_9a35ab48___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/brandboost/onsite/questions.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./questions.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=template&id=9a35ab48&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=template&id=9a35ab48& ***!
+  \******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_template_id_9a35ab48___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./questions.vue?vue&type=template&id=9a35ab48& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=template&id=9a35ab48&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_template_id_9a35ab48___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_template_id_9a35ab48___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/onsite/reviews.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/onsite/reviews.vue ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _reviews_vue_vue_type_template_id_8d3ed02c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./reviews.vue?vue&type=template&id=8d3ed02c& */ "./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=template&id=8d3ed02c&");
+/* harmony import */ var _reviews_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reviews.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _reviews_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _reviews_vue_vue_type_template_id_8d3ed02c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _reviews_vue_vue_type_template_id_8d3ed02c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/brandboost/onsite/reviews.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_reviews_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./reviews.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_reviews_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=template&id=8d3ed02c&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=template&id=8d3ed02c& ***!
+  \****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_reviews_vue_vue_type_template_id_8d3ed02c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./reviews.vue?vue&type=template&id=8d3ed02c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/reviews.vue?vue&type=template&id=8d3ed02c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_reviews_vue_vue_type_template_id_8d3ed02c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_reviews_vue_vue_type_template_id_8d3ed02c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/contact/ContactTags.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/admin/contact/ContactTags.vue ***!
@@ -50026,8 +56009,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  methods: {
+  methods: _defineProperty({
     capitalizeFirstLetter: function capitalizeFirstLetter(str) {
       if (typeof str !== 'string') return '';
       return str.charAt(0).toUpperCase() + str.slice(1);
@@ -50063,8 +56048,18 @@ __webpack_require__.r(__webpack_exports__);
     number_format: function number_format(num, placeVal) {
       var placeVal = placeVal != '' ? placeVal : 2;
       return parseFloat(Math.round(num * 100) / 100).toFixed(placeVal);
+    },
+    Base64EncodeUrl: function Base64EncodeUrl(str) {
+      return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
+    },
+    Base64DecodeUrl: function Base64DecodeUrl(str) {
+      str = (str + '===').slice(0, str.length + str.length % 4);
+      return str.replace(/-/g, '+').replace(/_/g, '/');
     }
-  }
+  }, "displayNoData", function displayNoData() {
+    var noData = '[No Data]';
+    return noData;
+  })
 });
 
 /***/ }),
@@ -50084,12 +56079,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/admin/templates/ListTemplates.vue */ "./resources/js/components/admin/templates/ListTemplates.vue");
 /* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue");
 /* harmony import */ var _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/onsite_overview */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue");
-/* harmony import */ var _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ */ "./resources/js/components/admin/brandboost/onsite/index.vue");
-/* harmony import */ var _components_admin_brandboost_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/brandboost/ReviewRequest.vue */ "./resources/js/components/admin/brandboost/ReviewRequest.vue");
-/* harmony import */ var _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/brandboost/Media.vue */ "./resources/js/components/admin/brandboost/Media.vue");
-/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
-/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
-/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
+/* harmony import */ var _components_admin_brandboost_onsite_reviews__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/reviews */ "./resources/js/components/admin/brandboost/onsite/reviews.vue");
+/* harmony import */ var _components_admin_brandboost_onsite_questions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/questions */ "./resources/js/components/admin/brandboost/onsite/questions.vue");
+/* harmony import */ var _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ */ "./resources/js/components/admin/brandboost/onsite/index.vue");
+/* harmony import */ var _components_admin_brandboost_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/brandboost/ReviewRequest.vue */ "./resources/js/components/admin/brandboost/ReviewRequest.vue");
+/* harmony import */ var _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/admin/brandboost/Media.vue */ "./resources/js/components/admin/brandboost/Media.vue");
+/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
+/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
+/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
+
+
 
 
 
@@ -50124,6 +56123,18 @@ var routes = [{
     title: 'Onsite overview - Brand Boost'
   }
 }, {
+  path: '/brandboost/reviews',
+  component: _components_admin_brandboost_onsite_reviews__WEBPACK_IMPORTED_MODULE_6__["default"],
+  meta: {
+    title: 'Onsite reviews - Brand Boost'
+  }
+}, {
+  path: '/questions',
+  component: _components_admin_brandboost_onsite_questions__WEBPACK_IMPORTED_MODULE_7__["default"],
+  meta: {
+    title: 'Onsite questions - Brand Boost'
+  }
+}, {
   path: '/templates/email',
   component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   props: {
@@ -50139,35 +56150,35 @@ var routes = [{
   }
 }, {
   path: '/brandboost/onsite',
-  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_6__["default"]
+  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_8__["default"]
 }, {
   path: '/brandboost/review_request/onsite',
-  component: _components_admin_brandboost_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+  component: _components_admin_brandboost_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
   props: {
     title: 'Review Requests',
     review_type: 'onsite'
   }
 }, {
   path: '/brandboost/media',
-  component: _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+  component: _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
   props: {
     title: 'On Site Brand Boost Media'
   }
 }, {
   path: '/tags',
-  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_9__["default"],
+  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_11__["default"],
   meta: {
     title: 'Insight Tags - Brand Boost'
   }
 }, {
   path: '/tags/tagsreview',
-  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_10__["default"],
+  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_12__["default"],
   meta: {
     title: 'Tags Review - Brand Boost'
   }
 }, {
   path: '/tags/tagsfeedback',
-  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_11__["default"],
+  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_13__["default"],
   meta: {
     title: 'Tags Feedback - Brand Boost'
   }
@@ -50183,7 +56194,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home1/lamppp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })

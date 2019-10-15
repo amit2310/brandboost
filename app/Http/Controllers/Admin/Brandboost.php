@@ -458,8 +458,58 @@ class Brandboost extends Controller
                 'bActiveSubsription' => $bActiveSubsription
             );
 
-            return view('admin.brandboost.review_list', $aData);
+
+            $mReviews = new ReviewsModel();
+
+            if (!empty($aReviews)) {
+                foreach ($aReviews as $aReview) {
+                    $aReview->getComm = getCampaignCommentCount($aReview->reviewid);
+                    $aReview->reviewTags = getTagsByReviewID($aReview->reviewid);
+                    $aReview->smilyImage = ratingView($aReview->ratings);
+
+                    $aReview->reviewCommentsData = $mReviews->getReviewAllComments($aReview->reviewid, 0, 100);
+
+                    if(!empty($aBrandboostVal->reviewResponse)) {
+                        $aReview->status = $this->getCommStatus($aReview->reviewCommentsData);
+                    }
+                }
+            }
+
+			//return view('admin.brandboost.review_list', $aData);
+
+            echo json_encode($aData);
+            exit;
         }
+    }
+
+    /**
+     * Used to get onsite computational data
+     * @return type
+     */
+    public function getCommStatus($reviewCommentsData) {
+
+        $approved = 0;
+        $pending = 0;
+        $disApproved = 0;
+
+        if(!empty($reviewCommentsData)) {
+            foreach ($reviewCommentsData as $comm) {
+                if ($comm->status == 1) {
+                    $approved = $approved + 1;
+                } else if ($comm->status == 2) {
+                    $pending = $pending + 1;
+                } else {
+                    $disApproved = $disApproved + 1;
+                }
+            }
+        }
+
+        $getResCount = count($reviewCommentsData);
+
+        return ['approved'=>$approved,
+            'pending'=>$pending,
+            'disApproved'=>$disApproved];
+
     }
 
 
