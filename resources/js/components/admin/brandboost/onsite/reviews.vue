@@ -111,7 +111,9 @@
                                                     <div class="text-muted text-size-small">{{ oReview.email }}</div>
                                                 </div>
                                             </td>
-                                            <td class="viewSmartPopup" :review_id="oReview.reviewid">{!! oReview.smilyImage !!}</td>
+                                            <td class="viewSmartPopup" :review_id="oReview.reviewid">
+                                                <div v-html="oReview.smilyImage"></div>
+                                            </td>
                                             <td><a :href="`/admin/brandboost/reviewdetails/${oReview.reviewid}`" class="txt_dblack"><div class="text-semibold">{{ oReview.review_title.substring(0,23) }}</div>
                                                 <div class="text-size-small text-muted">{{ oReview.comment_text.substring(0,31) }}</div></a></td>
                                             <td class="viewSmartPopup" :review_id="oReview.reviewid"><div class="media-left">
@@ -647,7 +649,7 @@
 
     export default {
         title: 'Onsite reviews - Brand Boost',
-        components: UserAvatar,
+        components: {UserAvatar},
         data() {
             return {
                 oReviews: {},
@@ -701,10 +703,103 @@
 
 
 
+    $(document).ready(function () {
+        // Setup - add a text input to each footer cell
+        $('#onsitereviewQuestion thead tr').clone(true).appendTo('#onsitereviewQuestion thead');
+
+        $('#onsitereviewQuestion thead tr:eq(1) th').each(function (i) {
+
+            if (i === 11) {
+                var title = $(this).text();
+                $(this).html('<input type="text" id="filterBy" placeholder="Search ' + title + '" />');
+
+                $('input', this).on('keyup change', function () {
+                    if (tableBase.column(i).search() !== this.value) {
+                        tableBase
+                            .column(i)
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            }
+            if (i === 4) {
+                var title = $(this).text();
+                $(this).html('<input type="text" id="startRate" placeholder="Search ' + title + '" />');
+
+                $('input', this).on('keyup change', function () {
+                    if (tableBase.column(i).search() !== this.value) {
+                        tableBase
+                            .column(i)
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            }
+
+
+        });
+
+        $(document).on('click', '.filterByColumn', function () {
+
+            $('.nav-tabs').each(function (i) {
+                $(this).children().removeClass('active');
+            });
+            $(this).parent().addClass('active');
+            var fil = $(this).attr('fil');
+            $('#filterBy').val(fil);
+            $('#filterBy').keyup();
+
+            if (fil.length == 0) {
+                $('.heading_links').each(function (i) {
+                    $(this).children('a').removeClass('btn btn-xs ml20 btn_white_table');
+                });
+                $('#startRate').val('');
+                $('#startRate').keyup();
+                $('.heading_links a:eq(0)').addClass('btn btn-xs ml20 btn_white_table');
+                tableBase.draw();
+            }
+        });
+
+        $(document).on('click', '.top_links_clk', function () {
+
+            $('.heading_links').each(function (i) {
+                $(this).children('a').removeClass('btn btn-xs btn_white_table');
+            });
+            $(this).addClass('btn btn-xs btn_white_table');
+            var typ = $(this).attr('startRate');
+
+            if (typ != 'commentLink') {
+                $('#startRate').val(typ);
+                $('#startRate').keyup();
+
+                if (typ.length == 0) {
+                    $('.nav-tabs').each(function (i) {
+                        $(this).children().removeClass('active');
+                    });
+                    $('#filterBy').val('');
+                    $('#filterBy').keyup();
+                    $('ul.nav-tabs li.all').addClass('active');
+                    tableBase.draw();
+                }
+            } else {
+                $('#startRate').val('');
+                $('#startRate').keyup();
+                tableBase.draw();
+            }
+
+        });
+
+
+        var tableId = 'onsitereviewQuestion';
+        var tableBase = custom_data_table(tableId);
+
+    });
+
+
 
     function showCommentsPopup(reviewID) {
         $.ajax({
-            url: "/admin/reviews/getCommentsPopup",
+            url: "{{ base_url('admin/reviews/getCommentsPopup') }}",
             type: "POST",
             data: {review_id: reviewID, _token: '{{csrf_token()}}'},
             dataType: "json",
@@ -786,7 +881,7 @@
 
                         $('.overlaynew').show();
                         $.ajax({
-                            url: "/admin/reviews/deleteMultipalReview",
+                            url: "{{ base_url('admin/reviews/deleteMultipalReview') }}",
                             type: "POST",
                             data: {multiReviewid: val, _token: '{{csrf_token()}}'},
                             dataType: "json",
@@ -811,7 +906,7 @@
         $("#frmReviewTagListModal").submit(function () {
             var formdata = $("#frmReviewTagListModal").serialize();
             $.ajax({
-                url: "/admin/tags/applyReviewTag",
+                url: "{{ base_url('admin/tags/applyReviewTag') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -843,7 +938,7 @@
         function getReviewPopupData(reviewId, tabtype) {
             $('.overlaynew').show();
             $.ajax({
-                url: "/admin/reviews/getReviewPopupData",
+                url: "{{ base_url('/admin/reviews/getReviewPopupData') }}",
                 type: "POST",
                 data: {rid: reviewId, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -868,7 +963,7 @@
         function displayReviewPopup(reviewid, tabtype, reviewTime) {
             $('.overlaynew').show();
             $.ajax({
-                url: "/admin/reviews/displayreview",
+                url: "{{ base_url('/admin/reviews/displayreview') }}",
                 type: "POST",
                 data: {rid: reviewid, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -895,7 +990,7 @@
             var formdata = $("#frmSaveNote").serialize();
             $('.overlaynew').show();
             $.ajax({
-                url: "/admin/reviews/saveReviewNotes",
+                url: "{{ base_url('/admin/reviews/saveReviewNotes') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -917,7 +1012,7 @@
             var formdata = $("#frmSaveNote").serialize();
             $('.overlaynew').show();
             $.ajax({
-                url: "/admin/reviews/saveReviewNotes",
+                url: "{{ base_url('/admin/reviews/saveReviewNotes') }}",
                 type: "POST",
                 data: formdata,
                 dataType: "json",
@@ -957,7 +1052,7 @@
 
                     $('.overlaynew').show();
                     $.ajax({
-                        url: "/admin/reviews/deleteReview",
+                        url: "{{ base_url('admin/reviews/deleteReview') }}",
                         type: "POST",
                         data: {reviewid: reviewID, _token: '{{csrf_token()}}'},
                         dataType: "json",
@@ -979,7 +1074,7 @@
         $(document).on('click', '.editReview', function () {
             var reviewID = $(this).attr('reviewid');
             $.ajax({
-                url: "/admin/reviews/getReviewById",
+                url: "{{ base_url('admin/reviews/getReviewById') }}",
                 type: "POST",
                 data: {reviewid: reviewID, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -1011,7 +1106,7 @@
         $(document).on('click', '.editVideoReview', function () {
             var reviewID = $(this).attr('reviewid');
             $.ajax({
-                url: "/admin/reviews/getReviewById",
+                url: "{{ base_url('admin/reviews/getReviewById') }}",
                 type: "POST",
                 data: {reviewid: reviewID, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -1056,7 +1151,7 @@
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: "/admin/reviews/update_review",
+                url: "{{ base_url('admin/reviews/update_review') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -1081,7 +1176,7 @@
             $('.overlaynew').show();
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: "/admin/reviews/update_video_review",
+                url: "{{ base_url('admin/reviews/update_video_review') }}",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -1108,7 +1203,7 @@
             var status = $(this).attr('change_status');
             var review_id = $(this).attr('review_id');
             $.ajax({
-                url: "/admin/reviews/updateReviewStatus",
+                url: "{{ base_url('admin/reviews/updateReviewStatus') }}",
                 type: "POST",
                 data: {status: status, review_id: review_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -1132,7 +1227,7 @@
             var dataCategory = $(this).attr('change_category');
             var review_id = $(this).attr('review_id');
             $.ajax({
-                url: "/admin/reviews/updateReviewCategory",
+                url: "{{ base_url('admin/reviews/updateReviewCategory') }}",
                 type: "POST",
                 data: {dataCategory: dataCategory, review_id: review_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
@@ -1179,7 +1274,7 @@
             var feedback_id = $(this).attr("feedback_id");
             var action_name = $(this).attr("action_name");
             $.ajax({
-                url: "/admin/tags/listAllTags",
+                url: "{{ base_url('admin/tags/listAllTags') }}",
                 type: "POST",
                 data: {review_id: review_id, _token: '{{csrf_token()}}'},
                 dataType: "json",
