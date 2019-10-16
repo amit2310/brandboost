@@ -199,7 +199,7 @@
                             <div class="panel-body p0">
 
                                 <!-- Table data -->
-                                <table v-if="oQuestions.length > 0" class="table datatable-basic-new" id="onsiteQuestion">
+                                <table v-if="oQuestions" class="table datatable-basic-new" id="onsiteQuestion">
                                     <thead>
                                     <tr>
                                         <th style="display: none;"></th>
@@ -217,7 +217,7 @@
                                     <tbody>
 
                                     <!--================================================-->
-                                    <tr v-for="oQuestion in oQuestions">
+                                    <tr v-for="oQuestion in oQuestions" :key="oQuestion.id">
                                         <td style="display: none;">{{ oQuestion.created }}</td>
                                         <td style="display: none;">{{ oQuestion.id }}</td>
                                         <td style="width: 40px!important; display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" :id="`chk${oQuestion.id}`" :value="`${oQuestion.id}`" ><span class="custmo_checkmark"></span></label></td>
@@ -315,7 +315,7 @@
                                                 <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="/assets/images/more.svg"></a>
                                                 <ul class="dropdown-menu dropdown-menu-right more_act">
                                                     <a href="javascript:void();" class="dropdown_close">X</a>
-                                                    @php
+
                                                     <!-- if ($canWrite) { -->
 
                                                     <li v-if="oQuestion.status == 1"><a :question_id='`${oQuestion.id}`' change_status = '0' class='chg_status red'><i class='icon-file-locked'></i> Inactive</a></li>
@@ -417,7 +417,7 @@
 
     export default {
         title: 'Onsite questions - Brand Boost',
-        component: UserAvatar,
+        components: {UserAvatar},
         data() {
             return {
                 oQuestions: {},
@@ -427,14 +427,13 @@
         mounted() {
             //getData
             axios.get('/admin/questions/')
-                .then(
-                    response => {
-                        //console.log(response.data)
+                .then(response => {
+                    //console.log(response.data);
 
-                        this.oQuestions = response.data.oQuestions
-                        this.bActiveSubsription = response.data.bActiveSubsription
-                        console.log(this.oQuestions)
-                    });
+                    this.oQuestions = response.data.oQuestions;
+                    this.bActiveSubsription = response.data.bActiveSubsription;
+                    console.log(this.oQuestions);
+                });
             console.log('Component mounted')
         }
     }
@@ -693,3 +692,6 @@
         });
     });
 </script>
+<style>
+    .odd { display: none!important; }
+</style>

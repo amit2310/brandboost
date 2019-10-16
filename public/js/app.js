@@ -5639,7 +5639,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   title: 'Onsite questions - Brand Boost',
-  component: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"],
+  components: {
+    UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       oQuestions: {},
@@ -5651,7 +5653,7 @@ __webpack_require__.r(__webpack_exports__);
 
     //getData
     axios.get('/admin/questions/').then(function (response) {
-      //console.log(response.data)
+      //console.log(response.data);
       _this.oQuestions = response.data.oQuestions;
       _this.bActiveSubsription = response.data.bActiveSubsription;
       console.log(_this.oQuestions);
@@ -6559,10 +6561,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   title: 'Onsite reviews - Brand Boost',
-  components: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"],
+  components: {
+    UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       oReviews: {},
@@ -6608,10 +6614,82 @@ $(document).ready(function () {
     smallMenu();
   };
 });
+$(document).ready(function () {
+  // Setup - add a text input to each footer cell
+  $('#onsitereviewQuestion thead tr').clone(true).appendTo('#onsitereviewQuestion thead');
+  $('#onsitereviewQuestion thead tr:eq(1) th').each(function (i) {
+    if (i === 11) {
+      var title = $(this).text();
+      $(this).html('<input type="text" id="filterBy" placeholder="Search ' + title + '" />');
+      $('input', this).on('keyup change', function () {
+        if (tableBase.column(i).search() !== this.value) {
+          tableBase.column(i).search(this.value).draw();
+        }
+      });
+    }
+
+    if (i === 4) {
+      var title = $(this).text();
+      $(this).html('<input type="text" id="startRate" placeholder="Search ' + title + '" />');
+      $('input', this).on('keyup change', function () {
+        if (tableBase.column(i).search() !== this.value) {
+          tableBase.column(i).search(this.value).draw();
+        }
+      });
+    }
+  });
+  $(document).on('click', '.filterByColumn', function () {
+    $('.nav-tabs').each(function (i) {
+      $(this).children().removeClass('active');
+    });
+    $(this).parent().addClass('active');
+    var fil = $(this).attr('fil');
+    $('#filterBy').val(fil);
+    $('#filterBy').keyup();
+
+    if (fil.length == 0) {
+      $('.heading_links').each(function (i) {
+        $(this).children('a').removeClass('btn btn-xs ml20 btn_white_table');
+      });
+      $('#startRate').val('');
+      $('#startRate').keyup();
+      $('.heading_links a:eq(0)').addClass('btn btn-xs ml20 btn_white_table');
+      tableBase.draw();
+    }
+  });
+  $(document).on('click', '.top_links_clk', function () {
+    $('.heading_links').each(function (i) {
+      $(this).children('a').removeClass('btn btn-xs btn_white_table');
+    });
+    $(this).addClass('btn btn-xs btn_white_table');
+    var typ = $(this).attr('startRate');
+
+    if (typ != 'commentLink') {
+      $('#startRate').val(typ);
+      $('#startRate').keyup();
+
+      if (typ.length == 0) {
+        $('.nav-tabs').each(function (i) {
+          $(this).children().removeClass('active');
+        });
+        $('#filterBy').val('');
+        $('#filterBy').keyup();
+        $('ul.nav-tabs li.all').addClass('active');
+        tableBase.draw();
+      }
+    } else {
+      $('#startRate').val('');
+      $('#startRate').keyup();
+      tableBase.draw();
+    }
+  });
+  var tableId = 'onsitereviewQuestion';
+  var tableBase = custom_data_table(tableId);
+});
 
 function showCommentsPopup(reviewID) {
   $.ajax({
-    url: "/admin/reviews/getCommentsPopup",
+    url: "{{ base_url('admin/reviews/getCommentsPopup') }}",
     type: "POST",
     data: {
       review_id: reviewID,
@@ -6680,7 +6758,7 @@ $(document).ready(function () {
       deleteConfirmationPopup("This review will deleted immediately.<br>You can't undo this action.", function () {
         $('.overlaynew').show();
         $.ajax({
-          url: "/admin/reviews/deleteMultipalReview",
+          url: "{{ base_url('admin/reviews/deleteMultipalReview') }}",
           type: "POST",
           data: {
             multiReviewid: val,
@@ -6704,7 +6782,7 @@ $(document).ready(function () {
   $("#frmReviewTagListModal").submit(function () {
     var formdata = $("#frmReviewTagListModal").serialize();
     $.ajax({
-      url: "/admin/tags/applyReviewTag",
+      url: "{{ base_url('admin/tags/applyReviewTag') }}",
       type: "POST",
       data: formdata,
       dataType: "json",
@@ -6732,7 +6810,7 @@ $(document).ready(function () {
   function getReviewPopupData(reviewId, tabtype) {
     $('.overlaynew').show();
     $.ajax({
-      url: "/admin/reviews/getReviewPopupData",
+      url: "{{ base_url('/admin/reviews/getReviewPopupData') }}",
       type: "POST",
       data: {
         rid: reviewId,
@@ -6761,7 +6839,7 @@ $(document).ready(function () {
   function displayReviewPopup(reviewid, tabtype, reviewTime) {
     $('.overlaynew').show();
     $.ajax({
-      url: "/admin/reviews/displayreview",
+      url: "{{ base_url('/admin/reviews/displayreview') }}",
       type: "POST",
       data: {
         rid: reviewid,
@@ -6792,7 +6870,7 @@ $(document).ready(function () {
     var formdata = $("#frmSaveNote").serialize();
     $('.overlaynew').show();
     $.ajax({
-      url: "/admin/reviews/saveReviewNotes",
+      url: "{{ base_url('/admin/reviews/saveReviewNotes') }}",
       type: "POST",
       data: formdata,
       dataType: "json",
@@ -6813,7 +6891,7 @@ $(document).ready(function () {
     var formdata = $("#frmSaveNote").serialize();
     $('.overlaynew').show();
     $.ajax({
-      url: "/admin/reviews/saveReviewNotes",
+      url: "{{ base_url('/admin/reviews/saveReviewNotes') }}",
       type: "POST",
       data: formdata,
       dataType: "json",
@@ -6843,7 +6921,7 @@ $(document).ready(function () {
     deleteConfirmationPopup("This review will deleted immediately.<br>You can't undo this action.", function () {
       $('.overlaynew').show();
       $.ajax({
-        url: "/admin/reviews/deleteReview",
+        url: "{{ base_url('admin/reviews/deleteReview') }}",
         type: "POST",
         data: {
           reviewid: reviewID,
@@ -6866,7 +6944,7 @@ $(document).ready(function () {
   $(document).on('click', '.editReview', function () {
     var reviewID = $(this).attr('reviewid');
     $.ajax({
-      url: "/admin/reviews/getReviewById",
+      url: "{{ base_url('admin/reviews/getReviewById') }}",
       type: "POST",
       data: {
         reviewid: reviewID,
@@ -6896,7 +6974,7 @@ $(document).ready(function () {
   $(document).on('click', '.editVideoReview', function () {
     var reviewID = $(this).attr('reviewid');
     $.ajax({
-      url: "/admin/reviews/getReviewById",
+      url: "{{ base_url('admin/reviews/getReviewById') }}",
       type: "POST",
       data: {
         reviewid: reviewID,
@@ -6938,7 +7016,7 @@ $(document).ready(function () {
     $('.overlaynew').show();
     var formData = new FormData($(this)[0]);
     $.ajax({
-      url: "/admin/reviews/update_review",
+      url: "{{ base_url('admin/reviews/update_review') }}",
       type: "POST",
       data: formData,
       contentType: false,
@@ -6959,7 +7037,7 @@ $(document).ready(function () {
     $('.overlaynew').show();
     var formData = new FormData($(this)[0]);
     $.ajax({
-      url: "/admin/reviews/update_video_review",
+      url: "{{ base_url('admin/reviews/update_video_review') }}",
       type: "POST",
       data: formData,
       contentType: false,
@@ -6981,7 +7059,7 @@ $(document).ready(function () {
     var status = $(this).attr('change_status');
     var review_id = $(this).attr('review_id');
     $.ajax({
-      url: "/admin/reviews/updateReviewStatus",
+      url: "{{ base_url('admin/reviews/updateReviewStatus') }}",
       type: "POST",
       data: {
         status: status,
@@ -7004,7 +7082,7 @@ $(document).ready(function () {
     var dataCategory = $(this).attr('change_category');
     var review_id = $(this).attr('review_id');
     $.ajax({
-      url: "/admin/reviews/updateReviewCategory",
+      url: "{{ base_url('admin/reviews/updateReviewCategory') }}",
       type: "POST",
       data: {
         dataCategory: dataCategory,
@@ -7047,7 +7125,7 @@ $(document).ready(function () {
     var feedback_id = $(this).attr("feedback_id");
     var action_name = $(this).attr("action_name");
     $.ajax({
-      url: "/admin/tags/listAllTags",
+      url: "{{ base_url('admin/tags/listAllTags') }}",
       type: "POST",
       data: {
         review_id: review_id,
@@ -13013,6 +13091,25 @@ exports.push([module.i, "\n.highcharts-tick{stroke:none!important}\n.highcharts-
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=style&index=0&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=style&index=0&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.odd { display: none!important;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/dashboard/index.vue?vue&type=style&index=0&lang=css&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/dashboard/index.vue?vue&type=style&index=0&lang=css& ***!
@@ -13698,6 +13795,36 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--5-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./onsite_overview.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/onsite_overview.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--5-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./questions.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -21208,7 +21335,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "panel-body p0" }, [
-                      _vm.oQuestions.length > 0
+                      _vm.oQuestions
                         ? _c(
                             "table",
                             {
@@ -21221,7 +21348,7 @@ var render = function() {
                               _c(
                                 "tbody",
                                 _vm._l(_vm.oQuestions, function(oQuestion) {
-                                  return _c("tr", [
+                                  return _c("tr", { key: oQuestion.id }, [
                                     _c(
                                       "td",
                                       { staticStyle: { display: "none" } },
@@ -21792,9 +21919,6 @@ var render = function() {
                                                 }
                                               },
                                               [_vm._v("X")]
-                                            ),
-                                            _vm._v(
-                                              "\n                                                @php\n                                                "
                                             ),
                                             _vm._v(" "),
                                             oQuestion.status == 1
@@ -23105,7 +23229,15 @@ var render = function() {
                                               review_id: oReview.reviewid
                                             }
                                           },
-                                          [_vm._v("{!! oReview.smilyImage !!}")]
+                                          [
+                                            _c("div", {
+                                              domProps: {
+                                                innerHTML: _vm._s(
+                                                  oReview.smilyImage
+                                                )
+                                              }
+                                            })
+                                          ]
                                         ),
                                         _vm._v(" "),
                                         _c("td", [
@@ -54523,7 +54655,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _questions_vue_vue_type_template_id_9a35ab48___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./questions.vue?vue&type=template&id=9a35ab48& */ "./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=template&id=9a35ab48&");
 /* harmony import */ var _questions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./questions.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _questions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./questions.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -54531,7 +54665,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _questions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _questions_vue_vue_type_template_id_9a35ab48___WEBPACK_IMPORTED_MODULE_0__["render"],
   _questions_vue_vue_type_template_id_9a35ab48___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -54560,6 +54694,22 @@ component.options.__file = "resources/js/components/admin/brandboost/onsite/ques
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./questions.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--5-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./questions.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/onsite/questions.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_questions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
