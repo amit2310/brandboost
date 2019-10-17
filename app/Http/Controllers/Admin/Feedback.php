@@ -32,6 +32,21 @@ class Feedback extends Controller {
             $result = FeedbackModel::getFeedback($userID, $user_role);
         }
 
+        if(!empty($result)){
+            foreach ($result as $key => $data){
+                if ($data->category == 'Positive') {
+                    $ratingValue = 5;
+                } else if ($data->category == 'Neutral') {
+                    $ratingValue = 3;
+                } else {
+                    $ratingValue = 1;
+                }
+                $smily = ratingView($ratingValue);
+                $data->smily = $smily;
+                $result[$key] = $data;
+            }
+        }
+        list($canRead, $canWrite) = fetchPermissions('Feedbacks');
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -45,9 +60,14 @@ class Feedback extends Controller {
             'pagename' => $breadcrumb,
             'selected_tab' => $selectedTab,
             'brandboostDetail' => $getBrandboost,
-            'result' => $result
+            'result' => $result,
+            'totalResults' => count($result),
+            'canRead' => $canRead,
+            'canWrite' => $canWrite
         );
-		return view('admin.feedback.feedback', $aData);
+		//return view('admin.feedback.feedback', $aData);
+        echo json_encode($aData);
+        exit;
     }
 
 	/**
@@ -446,7 +466,7 @@ class Feedback extends Controller {
         $response['status'] = 'error';
         $mFeedback  = new FeedbackModel();
         if (!empty($request)) {
-            
+
             $noteData = $mFeedback->getFeedbackNoteInfo($request->noteid);
             if ($noteData) {
                 $response['status'] = 'success';
