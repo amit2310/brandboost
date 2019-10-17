@@ -22,6 +22,7 @@ use App\Models\Admin\LiveModel;
 use App\Models\Admin\Crons\InviterModel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use PhpParser\Node\Expr\Cast\Object_;
 use Session;
 
 class Brandboost extends Controller
@@ -525,6 +526,8 @@ class Brandboost extends Controller
 
         $aReviews = $mReviews->getCampaignReviewsDetail();
         $allMediaImagesShow = array();
+        $hasImages = $hasVideos = false;
+
         if (!empty($aReviews)) {
             foreach ($aReviews as $review) {
                 $mediaUrl = @(unserialize($review->media_url));
@@ -533,7 +536,11 @@ class Brandboost extends Controller
                     foreach ($mediaUrl as $key => $value) {
 
                         if (!in_array($value['media_url'], $allMediaImagesShow)) {
-
+                            if($value['media_type'] == 'image'){
+                                $hasImages = true;
+                            }else{
+                                $hasVideos = true;
+                            }
                             $allMediaImagesShow[] = $value['media_url'];
 
                             $smilyImage = smilyRating($review->ratings);
@@ -577,7 +584,7 @@ class Brandboost extends Controller
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Media" class="sidebar-control active hidden-xs ">Media</a></li>
 			</ul>';
 
-        $aData = array('title' => 'On Site Brand Boost Media', 'pagename' => $breadcrumb, 'aReviews' => $aReviews);
+        $aData = array('title' => 'On Site Brand Boost Media', 'pagename' => $breadcrumb, 'aReviews' => $aReviews, 'hasImages' => $hasImages, 'hasVideos'=> $hasVideos);
         //return view('admin.brandboost.media', $aData);
         echo json_encode($aData);
     }
@@ -688,8 +695,7 @@ class Brandboost extends Controller
      * @param type $param
      * @return type
      */
-    public
-    function offsiteOverview()
+    public function offsiteOverview()
     {
 
         $aUser = getLoggedUser();
@@ -707,6 +713,21 @@ class Brandboost extends Controller
             $bbSMSSendMonth = BrandboostModel::getBrandboostSmsSendMonth($userID, 'offsite');
         }
 
+        //Do some calculations
+        list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
+        $iArchiveCount = $iActiveCount = 0;
+        if (!empty($aBrandboostList)) {
+            foreach ($aBrandboostList as $oRec) {
+                if ($oRec->status == 3) {
+                    $iArchiveCount++;
+                } else {
+                    $iActiveCount++;
+                }
+            }
+        }
+
+        $aBradboosts = $this->processOffsiteOverview($aBrandboostList);
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
             <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
             <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -720,7 +741,7 @@ class Brandboost extends Controller
         $aData = array(
             'title' => 'Offsite overview',
             'pagename' => $breadcrumb,
-            'aBrandbosts' => $aBrandboostList,
+            'aBrandbosts' => $aBradboosts,
             'bActiveSubsription' => $bActiveSubsription,
             'currentUserId' => $userID,
             'user_role' => $user_role,
@@ -728,16 +749,219 @@ class Brandboost extends Controller
             'bbEmailSend' => $bbEmailSend,
             'bbEmailSendMonth' => $bbEmailSendMonth,
             'bbSMSSendMonth' => $bbSMSSendMonth,
-            'bbSmsSend' => $bbSmsSend
+            'bbSmsSend' => $bbSmsSend,
+            'iActiveCount' => $iActiveCount,
+            'iArchiveCount' => $iArchiveCount,
+            'canRead' => $canRead,
+            'canWrite' => $canWrite
         );
 
-        return view('admin.brandboost.offsite_list', $aData);
+        //return view('admin.brandboost.offsite_list', $aData);
+        echo json_encode($aData);
+        exit;
+    }
+
+    public function processOffsiteOverview($aBrandboosts)
+    {
+        $recent = strtotime('-24 hours');
+        $positiveRating = $neturalRating = $negativeRating = 0;
+        foreach ($aBrandboosts as $key => $data) {
+            $offsite_ids = $data->offsite_ids;
+            $offsite_ids = @unserialize($offsite_ids);
+            $user_id = $data->user_id;
+            $allSubscribers = ListsModel::getAllSubscribersList($data->id);
+            $subs = '';
+            $newContacts = 0;
+            if ($allSubscribers->isNotEmpty()) {
+
+
+                $subs = $allSubscribers[0];
+                foreach ($allSubscribers as $oSubs) {
+                    if (strtotime($oSubs->created) > $recent) {
+                        $newContacts++;
+                    }
+                    /*if ($oSubs->status == 2) {
+                        $iArchiveCount++;
+                    } else {
+                        $iActiveCount++;
+                    }*/
+                }
+            }
+
+            if (!empty($subs->s_created)) {
+                $lastListTime = timeAgo($subs->s_created);
+            } else {
+                $lastListTime = '<div class="media-left">
+                                   <div class="">
+                                      <span class="text-muted text-size-small">[No Data]</span>
+                                   </div>
+                                 </div>';
+            }
+            $positive = $neutral = $negative = 0;
+            $revCount = getCampaignFeedbackCount($data->id);
+            $revCount = 1;
+            $revCount = !empty($revCount) ? $revCount : 0;
+            $feedbackCount = BrandboostModel::getFeedbackCount($data->id);
+            $positive = $negative = $neutral = $positivePercentage = $neutralPercentage = $negativePercentage = 0;
+            if (isset($feedbackCount) && !empty($feedbackCount)) {
+                foreach ($feedbackCount as $countUnit) {
+                    if ($countUnit->category == 'Positive') {
+                        $positive = $countUnit->total_count;
+                    } else if ($countUnit->category == 'Neutral') {
+                        $neutral = $countUnit->total_count;
+                    } else if ($countUnit->category == 'Negative') {
+                        $negative = $countUnit->total_count;
+                    }
+                }
+
+                $positiveRating = $positive;
+                $neturalRating = $neutral;
+                $negativeRating = $negative;
+
+                $totalFeedback = $positive + $neutral + $negative;
+                if($totalFeedback>0){
+                    $positivePercentage = number_format(($positive * 100) / $totalFeedback, 2);
+                    $neutralPercentage = number_format(($neutral * 100) / $totalFeedback, 2);
+                    $negativePercentage = number_format(($negative * 100) / $totalFeedback, 2);
+                }
+
+            }
+
+            if($revCount>0){
+                $positiveGraph = $positive * 100 / $revCount;
+                $neturalGraph = $neutral * 100 / $revCount;
+                $negativeGraph = $negative * 100 / $revCount;
+            }
+
+
+
+            $offsiteTitle = $data->brand_title;
+            $offsiteTitle = (!empty($offsiteTitle)) ? $offsiteTitle : 'NA';
+
+            if (strlen($offsiteTitle) > 30) {
+                $offsiteTitle = substr($offsiteTitle, 0, 29) . '...';
+            }
+            $newPositive = $newNegative = $newNeutral = 0;
+
+            $aPositiveSubscribers = $aNeutralSubscribers = $aNegativeSubscribers = array();
+            $feedbackData = FeedbackModel::getCampFeedbackData($data->id);
+            $subscriberData = '';
+            if(isset($feedbackData)){
+                $subscriberData = FeedbackModel::getSubscriberInfo($feedbackData->subscriber_id);
+
+                if (isset($feedbackData)) {
+                    foreach ($feedbackData as $oFeedback) {
+
+                        if (isset($oFeedback->category)){
+                            if ($oFeedback->category == 'Positive' && !in_array($oFeedback->subscriber_id, $aPositiveSubscribers)) {
+                                if (strtotime($oFeedback->created) > $recent) {
+                                    $newPositive++;
+                                }
+                                $positiveRating++;
+                                $aPositiveSubscribers[] = $oFeedback->subscriber_id;
+                            } else if ($oFeedback->category == 'Neutral' && !in_array($oFeedback->subscriber_id, $aNeutralSubscribers)) {
+                                if (strtotime($oFeedback->created) > $recent) {
+                                    $newNeutral++;
+                                }
+                                $neturalRating++;
+                                $aNeutralSubscribers[] = $oFeedback->subscriber_id;
+                            } else {
+                                if (!in_array($oFeedback->subscriber_id, $aNegativeSubscribers))
+                                    if (strtotime($oFeedback->created) > $recent) {
+                                        $newNegative++;
+                                    }
+                                $negativeRating++;
+                                $aNegativeSubscribers[] = $oFeedback->subscriber_id;
+                            }
+                        }
+                    }
+                }
+            }
+
+            $getData = '';
+            if (isset($offsite_ids) && !empty($offsite_ids)) {
+
+                foreach ($offsite_ids as $value) {
+                    if ($value > 0) {
+                        $getData = getOffsite($value);
+
+                    }
+                }
+            }
+
+            $sourceName = isset($getData->name) ? strtolower($getData->name) : '';
+            //$sourceName = 'yelp';
+
+            if ($sourceName == 'yelp') {
+                $sourceClass = 'txt_red';
+            } else if ($sourceName == 'yahoo') {
+                $sourceClass = 'txt_purple';
+            } else if ($sourceName == 'facebook') {
+                $sourceClass = 'txt_dblue';
+            } else {
+                $sourceClass = 'txt_blue';
+            }
+
+            $sourceName = !empty($sourceName) ? $sourceName : 'NA';
+
+            $ratingValue = 'N/A';
+            if(isset($feedbackData)){
+                if ($feedbackData->category == 'Positive') {
+                    $ratingValue = '5.0';
+                } else if ($feedbackData->category == 'Neutral') {
+                    $ratingValue = '3.0';
+                } else if ($feedbackData->category == 'Negative') {
+                    $ratingValue = '1.0';
+                } else {
+                    $ratingValue = 'N/A';
+                }
+            }
+            $ratingSrc = smilyRating($ratingValue);
+
+            $data->metaObj = array(
+                'positive' => $positive,
+                'negative' => $negative,
+                'neutral' => $neutral,
+                'revCount' => $revCount,
+                'positiveGraph' => $positiveGraph,
+                'negativeGraph' => $negativeGraph,
+                'neutralGraph' => $neturalGraph,
+                'positivePercentage' => $positivePercentage,
+                'negativePercentage' => $negativePercentage,
+                'neutralPercentage' => $neutralPercentage,
+                'positiveRating' => $positiveRating,
+                'negativeRating' => $negativeRating,
+                'neutralRating' => $neturalRating,
+                'newContacts' => $newContacts,
+                'newPositive' => $newPositive,
+                'newNegative' => $newNegative,
+                'newNeutral' => $newNeutral,
+                'offsite_ids' => $offsite_ids,
+                'lastListTime' => $lastListTime,
+                'aPositiveSubscribers' => $aPositiveSubscribers,
+                'aNegativeSubscribers' => $aNegativeSubscribers,
+                'aNeutralSubscribers' => $aNeutralSubscribers,
+                'allSubscribers' => $allSubscribers,
+                'offsiteTitle' => $offsiteTitle,
+                'sourceName' => $sourceName,
+                'sourceClass' => $sourceClass,
+                'ratingValue' => @number_format($ratingValue, 1),
+                'ratingSrc' => $ratingSrc,
+                'subscriberData' => $subscriberData
+            );
+
+            $aBrandboosts[$key] = $data;
+
+        }
+
+        return $aBrandboosts;
+
     }
 
 
     /**
      * Used to get show offsite listing page
-     * @param type $param
+.     * @param type $param
      * @return type
      */
     public

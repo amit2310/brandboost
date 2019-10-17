@@ -376,7 +376,7 @@
                 </div>
             </div>
             <!--===========TAB 2===========-->
-            <!--<div class="tab-pane" id="right-icon-tab1">
+            <div class="tab-pane" id="right-icon-tab1">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-flat">
@@ -389,8 +389,8 @@
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
                                         <div class="form-control-feedback"> <i class="icon-search4"></i> </div>
                                     </div>
-                                    &lt;!&ndash; &nbsp; &nbsp;
-                                    <button type="button" class="btn btn-xs btn-default"><i class="icon-pencil position-left"></i> Edit</button> &ndash;&gt;
+                                    <!-- &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-xs btn-default"><i class="icon-pencil position-left"></i> Edit</button> -->
                                 </div>
                             </div>
 
@@ -404,38 +404,8 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
-                                    @php
-                                    $allMediaImagesShow = array();
-                                    if (!empty($aReviews)) {
-                                    $incDel = 1;
-                                    $incMediaImg = 1;
-                                    foreach ($aReviews as $review) {
-                                    //pre($value->media_url);
-                                    $mediaUrl = @(unserialize(review.media_url));
-                                    if (!empty($mediaUrl)) {
-                                    //pre($mediaUrl);
-                                    foreach ($mediaUrl as $value) {
-
-
-                                    //pre($review);
-                                    $filePath = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . fileArray['media_url'];
-
-                                    if (fileArray['media_type'] == 'image') {
-
-                                    $mediaImageUrl = "https://s3-us-west-2.amazonaws.com/brandboost.io/" . fileArray['media_url'];
-                                    } else {
-                                    $mediaImageUrl = base_url('assets/images/media1.jpg');
-                                    }
-
-                                    if (in_array(fileArray['media_url'], $allMediaImagesShow)) {
-
-                                    } else {
-                                    $allMediaImagesShow[] = fileArray['media_url'];
-
-                                    if (fileArray['media_type'] == 'image') {
-                                    @endphp
-                                    <tr style="width: 24.5%; display: inline-block;">
+                                    <template v-for="(review, index) in reviews">
+                                        <tr v-for="oFile in review.fileCollection" v-if="oFile.media_type == 'image'" style="width: 24.5%; display: inline-block;" >
                                         <td style="display: none;"></td>
                                         <td style="display: none;"></td>
                                         <td>
@@ -445,26 +415,29 @@
                                                     <div class="col-lg-12 col-sm-12">
                                                         <div class="thumbnail">
                                                             <div class="thumb">
-                                                                <img src="{{ $mediaImageUrl }}" alt="Images">
+                                                                <img :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${oFile.media_url}`" alt="Images">
 
                                                                 <div class="caption-overflow">
                                                                                             <span>
-                                                                                                <a href="{{ $mediaImageUrl }}" data-popup="lightbox" class="btn white_btn"><i class="icon-eye txt_purple"></i></a>
-                                                                                                <a href="{{ $filePath }}" class="btn white_btn ml-5"><i class="icon-download4 txt_red"></i></a>
-                                                                                                <a href="javascript:void()" class="btn white_btn ml-5"><i class="icon-redo2 txt_blue"></i></a>
-                                                                                                <a style='cursor: pointer;' class="btn white_btn ml-5 deleteSingleVideo"  reviewId="{{ review.id }}"  mediaName="{{ fileArray['media_url'] }}"><i class="icon-bin txt_grey"></i></a>
+                                                                                                <a :href="oFile.filePath" data-popup="lightbox" class="btn white_btn"><i class="icon-eye txt_purple"></i></a>
+                                                                                                <a :href="oFile.filePath" class="btn white_btn ml-5"><i class="icon-download4 txt_red"></i></a>
+                                                                                                <a href="javascript:void(0);" class="btn white_btn ml-5"><i class="icon-redo2 txt_blue"></i></a>
+                                                                                                <a style='cursor: pointer;' class="btn white_btn ml-5 deleteSingleVideo"
+                                                                                                   :reviewId="review.id"
+                                                                                                   :mediaName="oFile.media_url">
+                                                                                                    <i class="icon-bin txt_grey"></i></a>
                                                                                             </span>
                                                                 </div>
                                                             </div>
                                                             <div class="caption">
                                                                 <p>{{ review.brand_title }}</p>
                                                                 <p style="word-break: break-all;"></p>
-                                                                <p class="text-size-small text-muted">{{ date('g:iA d M Y', strtotime(review.created)) }}</p>
+                                                                <p class="text-size-small text-muted">{{ review.created }}</p>
                                                             </div>
                                                             <div class="caption bot">
                                                                 <div class="media_details">
                                                                     <p><strong class="text-size-small">Review </strong> <span><i class="icon-primitive-dot txt_green"></i> {{ review.ratings }}</span></p>
-                                                                    <p><strong class="text-size-small">Contact </strong> <span>{{ review.firstname . ' ' . review.lastname }}</span></p>
+                                                                    <p><strong class="text-size-small">Contact </strong> <span>{{ review.firstname + ' ' + review.lastname }}</span></p>
                                                                     <p><strong class="text-size-small">Email </strong> <span>{{ review.email }}</span></p>
                                                                 </div>
                                                             </div>
@@ -474,20 +447,10 @@
                                             </div>
                                         </td>
 
-                                    </tr>@php
-                                    $incMediaImg++;
-                                    }
-                                    }
-                                    $incDel++;
-                                    }
-                                    }
-                                    }
-                                    }
-                                    if ($incMediaImg > 1) {
+                                    </tr>
+                                    </template>
 
-                                    } else {
-                                    @endphp
-                                    <tr>
+                                    <tr v-if="hasImages == false">
                                         <td style="display: none;"></td>
                                         <td style="display: none;"></td>
                                         <td>
@@ -497,10 +460,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                    </tr>@php
-                                    }
-                                    @endphp
-
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -508,9 +468,9 @@
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
             <!--===========TAB 3===========-->
-            <!--<div class="tab-pane" id="right-icon-tab2">
+            <div class="tab-pane" id="right-icon-tab2">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-flat">
@@ -523,8 +483,8 @@
                                         <input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
                                         <div class="form-control-feedback"> <i class="icon-search4"></i> </div>
                                     </div>
-                                    &lt;!&ndash; &nbsp; &nbsp;
-                                    <button type="button" class="btn btn-xs btn-default"><i class="icon-pencil position-left"></i> Edit</button> &ndash;&gt;
+                                    <!-- &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-xs btn-default"><i class="icon-pencil position-left"></i> Edit</button> -->
                                 </div>
                             </div>
 
@@ -538,41 +498,8 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
-                                    @php
-                                    $allMediaImagesShow = array();
-                                    if (!empty($aReviews)) {
-                                    $incDel = 1;
-                                    $incmediaVideo = 1;
-                                    foreach ($aReviews as $review) {
-                                    //pre($value->media_url);
-                                    $mediaUrl = @(unserialize(review.media_url));
-                                    if (!empty($mediaUrl)) {
-                                    //pre($mediaUrl);
-                                    foreach ($mediaUrl as $value) {
-                                    //pre($review);
-                                    $filePath = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . fileArray['media_url'];
-
-                                    if (fileArray['media_type'] == 'image') {
-
-                                    //$mediaUrl = "https://s3-us-west-2.amazonaws.com/brandboost.io/".fileArray['media_url'];
-                                    } else {
-                                    $videoImgArr = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
-                                    $rand = rand(0, 19);
-                                    $mediaUrl = base_url('assets/images/flat/' . $videoImgArr[$rand] . '.png');
-                                    }
-
-                                    if (in_array(fileArray['media_url'], $allMediaImagesShow)) {
-
-                                    } else {
-                                    $allMediaImagesShow[] = fileArray['media_url'];
-
-
-                                    if (fileArray['media_type'] != 'image') {
-                                    $fileExt = pathinfo(fileArray['media_url'], PATHINFO_EXTENSION);
-                                    @endphp
-
-                                    <tr style="width: 24.5%; display: inline-block;">
+                                    <template v-for="(review, index) in reviews">
+                                        <tr v-for="oFile in review.fileCollection" v-if="oFile.media_type != 'image'" style="width: 24.5%; display: inline-block;" >
                                         <td style="display: none;"></td>
                                         <td style="display: none;"></td>
                                         <td>
@@ -583,21 +510,21 @@
                                                         <div class="thumbnail">
                                                             <div class="thumb">
                                                                 <video height="220px" width="100%">
-                                                                    <source src="{{ $filePath }}" type="video/{{ $fileExt }}">
+                                                                    <source :src="oFile.filePath" :type="`video/${oFile.fileExt}`">
                                                                 </video>
 
                                                                 <span class="video_icon">
-                                                                                            <a href="{{ $filePath }}" data-popup="lightbox" class="btn white_btn fancybox fancybox.iframe"><i class="icon-menu txt_purple"></i></a>
+                                                                                            <a :href="oFile.filePath" data-popup="lightbox" class="btn white_btn fancybox fancybox.iframe"><i class="icon-menu txt_purple"></i></a>
                                                                                         </span>
                                                                 <span class="video_icon_bot">
-                                                                                            <a href="{{ $filePath }}" data-popup="lightbox" class="btn player_btn fancybox fancybox.iframe"><i class="icon-play4 txt_white"></i></a>
+                                                                                            <a :href="oFile.filePath" data-popup="lightbox" class="btn player_btn fancybox fancybox.iframe"><i class="icon-play4 txt_white"></i></a>
                                                                                         </span>
                                                                 <div class="caption-overflow">
                                                                                             <span>
-                                                                                                <a class="videoReview btn white_btn" style="cursor: pointer;" filepath="{{ $filePath }}" fileext="{{ $fileExt }}"><i class="icon-eye txt_purple"></i></a>
-                                                                                                <a href="{{ $filePath }}" class="btn white_btn ml-5"><i class="icon-download4 txt_red"></i></a>
+                                                                                                <a class="videoReview btn white_btn" style="cursor: pointer;" :filepath="oFile.filePath" :fileext="oFile.fileExt"><i class="icon-eye txt_purple"></i></a>
+                                                                                                <a :href="oFile.filePath" class="btn white_btn ml-5"><i class="icon-download4 txt_red"></i></a>
                                                                                                 <a href="#" class="btn white_btn ml-5"><i class="icon-redo2 txt_blue"></i></a>
-                                                                                                <a style='cursor: pointer;' class="btn white_btn ml-5 deleteSingleVideo"  reviewId="{{ review.id }}"  mediaName="{{ fileArray['media_url'] }}"><i class="icon-bin txt_grey"></i></a>
+                                                                                                <a style='cursor: pointer;' class="btn white_btn ml-5 deleteSingleVideo"  :reviewId="review.id"  :mediaName="oFile.media_url"><i class="icon-bin txt_grey"></i></a>
                                                                                             </span>
                                                                 </div>
 
@@ -605,12 +532,12 @@
                                                             <div class="caption">
                                                                 <p>{{ review.brand_title }}</p>
                                                                 <p style="word-break: break-all;"></p>
-                                                                <p class="text-size-small text-muted">{{ date('g:iA d M Y', strtotime(review.created)) }}</p>
+                                                                <p class="text-size-small text-muted">{{ review.created }}</p>
                                                             </div>
                                                             <div class="caption bot">
                                                                 <div class="media_details">
                                                                     <p><strong class="text-size-small">Review </strong> <span><i class="icon-primitive-dot txt_green"></i> {{ review.ratings }}</span></p>
-                                                                    <p><strong class="text-size-small">Contact </strong> <span>{{ review.firstname . ' ' . review.lastname }}</span></p>
+                                                                    <p><strong class="text-size-small">Contact </strong> <span>{{ review.firstname + ' ' + review.lastname }}</span></p>
                                                                     <p><strong class="text-size-small">Email </strong> <span>{{ review.email }}</span></p>
                                                                 </div>
                                                             </div>
@@ -622,23 +549,8 @@
                                         </td>
 
                                     </tr>
-                                    @php
-                                    if ($incmediaVideo % 4 == 0) {
-
-                                    }
-                                    $incmediaVideo++;
-                                    }
-                                    }
-                                    $incDel++;
-                                    }
-                                    }
-                                    }
-                                    }
-
-                                    if ($incmediaVideo > 1) {
-
-                                    } else {
-                                    @endphp<tr>
+                                    </template>
+                                    <tr v-if="hasVideos == false">
                                         <td style="display: none;"></td>
                                         <td style="display: none;"></td>
                                         <td>
@@ -648,8 +560,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                    </tr>@php }
-                                    @endphp
+                                    </tr>
 
 
                                     </tbody>
@@ -662,7 +573,7 @@
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
             <!--===========TAB 4===========-->
             <!-- <div class="tab-pane" id="right-icon-tab3">
                   Media New Goes here...
@@ -708,6 +619,9 @@
             return {
                 /*count : 0,*/
                 reviews: {},
+                hasImages: false,
+                hasVideos: false,
+                videoIndex:0,
 
             }
         },
@@ -715,11 +629,20 @@
             axios.get('/admin/brandboost/media')
                 .then(response => {
                     this.reviews = response.data.aReviews;
-                    console.log(this.reviews);
-
+                    this.hasImages = response.data.hasImages;
+                    this.hasVideos = response.data.hasVideos;
                     /*this.count = response.data.totalCount;*/
                     let tableId = 'brandboostOnsiteMedia';
                     this.paginate(tableId);
+
+                    let tableId2 = 'onsiteMediaGallery';
+                    this.paginate(tableId2);
+
+                    let tableId3 = 'onsiteMediaVideoGallery';
+                    this.paginate(tableId3);
+
+
+
 
 
                 });
