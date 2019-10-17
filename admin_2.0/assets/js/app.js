@@ -16,13 +16,14 @@
 		
 		
 		e("#main_menu_side_nav").metisMenu(), 
-		e(".button-menu-mobile").on("click", function(t) {
-        t.preventDefault(), e("body").toggleClass("enlarge-menu"), a()
+		e(".button-menu-mobile").on("click", function(t) {                                 
+        t.preventDefault(), e("body").toggleClass("enlarge-menu");
+		t.preventDefault(), e(".main-menu-inner").removeClass("active");
     	}), 
 		
 		
 		
-		e(window).width() < 1025 ? e("body").addClass("enlarge-menu") : 1 != e("body").data("keep-enlarged") && e("body").removeClass("enlarge-menu"), 
+		//e(window).width() < 1025 ? e("body").addClass("enlarge-menu") : 1 != e("body").data("keep-enlarged") && e("body").removeClass("enlarge-menu"), 
 		
 		
 		
@@ -37,6 +38,12 @@
 		e(".main-icon-menu .nav-link").on("onmouseleave", function(t) {
         t.preventDefault(), e(".main-menu-inner").removeClass("active");
         }), 
+		
+		
+		
+		$(".mobile-menu-control").click(function(){
+		  $(".left-sidenav").slideToggle();
+		});
 		
 		
 		

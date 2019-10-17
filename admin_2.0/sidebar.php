@@ -3,16 +3,16 @@
     <nav class="nav"> 
     <a href="#" class="mb-4" > <img src="assets/images/logo_small.svg"/> </a> 
     <a href="#people" class="nav-link active"> <img src="assets/images/01.svg"/> </a> 
-    <a href="#MetricaCrypto" class="nav-link"> <img src="assets/images/02.svg"/> </a> 
-    <a href="#MetricaProject" class="nav-link" > <img src="assets/images/03.svg"/> </a> 
-    <a href="#MetricaEcommerce" class="nav-link" > <img src="assets/images/04.svg"/> </a> 
-    <a href="#MetricaCRM" class="nav-link" > <img src="assets/images/05.svg"/> </a> 
-    <a href="#MetricaOthers" class="nav-link" > <img src="assets/images/06.svg"/> </a> 
-    <a href="#MetricaPages" class="nav-link" > <img src="assets/images/08.svg"/> </a> 
-    <a href="#MetricaAuthentication" class="nav-link" > <img src="assets/images/10.svg"/> </a> 
-    <a href="#MetricaAuthentication1" class="nav-link" > <img src="assets/images/11.svg"/> </a> 
-    <a href="#MetricaAuthentication2" class="nav-link" > <img src="assets/images/12.svg"/> </a> 
-    <a href="#MetricaAuthentication3" class="nav-link" > <img src="assets/images/13.svg"/> </a> 
+    <a href="#BrandBoostCrypto" class="nav-link"> <img src="assets/images/02.svg"/> </a> 
+    <a href="#BrandBoostProject" class="nav-link" > <img src="assets/images/03.svg"/> </a> 
+    <a href="#BrandBoostEcommerce" class="nav-link" > <img src="assets/images/04.svg"/> </a> 
+    <a href="#BrandBoostCRM" class="nav-link" > <img src="assets/images/05.svg"/> </a> 
+    <a href="#BrandBoostOthers" class="nav-link" > <img src="assets/images/06.svg"/> </a> 
+    <a href="#BrandBoostPages" class="nav-link" > <img src="assets/images/08.svg"/> </a> 
+    <a href="#BrandBoostAuthentication" class="nav-link" > <img src="assets/images/10.svg"/> </a> 
+    <a href="#BrandBoostAuthentication1" class="nav-link" > <img src="assets/images/11.svg"/> </a> 
+    <a href="#BrandBoostAuthentication2" class="nav-link" > <img src="assets/images/12.svg"/> </a> 
+    <a href="#BrandBoostAuthentication3" class="nav-link" > <img src="assets/images/13.svg"/> </a> 
     </nav>
     <!--end nav--> 
     
@@ -22,6 +22,8 @@
     <div class="menu-body slimscroll"> 
      
      <span style="position: absolute; top: 20px; right: 20px; width: 48px; height: 36px;" class="button-menu-mobile"><img src="assets/images/menuslidebtn.svg"/></span>
+     
+     <span style="position: absolute; top: 17px; right: 20px; transform:rotate(180deg);" class="mobile-menu-control float-left"><img src="assets/images/close_menu_circle.svg"></span>
      
      
       <div id="people" class="main-icon-menu-pane active">
@@ -43,11 +45,6 @@
           <h6 class="menu-title">CAMPAIGNS</h6>
         </div>
         <ul class="nav">
-          <!--<li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue.svg"/></i><span>McDonald's</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_orange.svg"/></i><span>Mitsubishi</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_green.svg"/></i><span>Louis Vuitton</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue2.svg"/></i><span>The Walt  Company </span></a></li>-->
-          
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_blue.svg"/></i><span>McDonald's</span></a></li>
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_orange.svg"/></i><span>Mitsubishi</span></a></li>
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_yellow.svg"/></i><span>Louis Vuitton</span></a></li>
@@ -66,10 +63,15 @@
         
       </div>
       <!-- end Analytic -->
-      <div id="MetricaCrypto" class="main-icon-menu-pane">
+      <div id="BrandBoostCrypto" class="main-icon-menu-pane">
         <div class="title-box">
-          <h6 class="menu-title">Crypto</h6>
+          <h6 class="menu-title">Open Menu</h6>
         </div>
+        
+        
+       
+        
+        
         <ul class="nav">
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i>Forms</a></li>
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i>Workflows</a></li>
@@ -78,7 +80,7 @@
         </ul>
       </div>
       <!-- end Crypto -->
-      <div id="MetricaProject" class="main-icon-menu-pane">
+      <div id="BrandBoostProject" class="main-icon-menu-pane">
         <div class="title-box">
           <h6 class="menu-title">Projects</h6>
         </div>
@@ -92,7 +94,7 @@
         </ul>
       </div>
       <!-- end  Project-->
-      <div id="MetricaEcommerce" class="main-icon-menu-pane">
+      <div id="BrandBoostEcommerce" class="main-icon-menu-pane">
         <div class="title-box">
           <h6 class="menu-title">Ecommerce</h6>
         </div>
@@ -108,7 +110,7 @@
         </ul>
       </div>
       <!-- end Ecommerce -->
-      <div id="MetricaCRM" class="main-icon-menu-pane">
+      <div id="BrandBoostCRM" class="main-icon-menu-pane">
         <div class="title-box">
           <h6 class="menu-title">CRM</h6>
         </div>
@@ -118,7 +120,7 @@
         </ul>
       </div>
       <!-- end CRM -->
-      <div id="MetricaOthers" class="main-icon-menu-pane">
+      <div id="BrandBoostOthers" class="main-icon-menu-pane">
         <div class="title-box">
           <h6 class="menu-title">Others</h6>
         </div>
@@ -134,7 +136,7 @@
         </ul>
       </div>
       <!-- end Others -->
-      <div id="MetricaPages" class="main-icon-menu-pane">
+      <div id="BrandBoostPages" class="main-icon-menu-pane">
         <div class="title-box">
           <h6 class="menu-title">Pages</h6>
         </div>
@@ -153,7 +155,7 @@
         </ul>
       </div>
       <!-- end Pages -->
-      <div id="MetricaAuthentication" class="main-icon-menu-pane">
+      <div id="BrandBoostAuthentication" class="main-icon-menu-pane">
         <div class="title-box">
           <h6 class="menu-title">Authentication</h6>
         </div>
@@ -163,7 +165,7 @@
         </ul>
       </div>
       <!-- end Pages -->
-      <div id="MetricaAuthentication1" class="main-icon-menu-pane">
+      <div id="BrandBoostAuthentication1" class="main-icon-menu-pane">
         <div class="title-box">
           <h6 class="menu-title">Authentication 1</h6>
         </div>
@@ -179,7 +181,7 @@
         </ul>
       </div>
       <!-- end Pages -->
-      <div id="MetricaAuthentication2" class="main-icon-menu-pane">
+      <div id="BrandBoostAuthentication2" class="main-icon-menu-pane">
         <div class="title-box">
           <h6 class="menu-title">Authentication 2</h6>
         </div>
@@ -191,7 +193,7 @@
         </ul>
       </div>
       <!-- end Pages -->
-      <div id="MetricaAuthentication3" class="main-icon-menu-pane">
+      <div id="BrandBoostAuthentication3" class="main-icon-menu-pane">
         <div class="title-box">
           <h6 class="menu-title">Authentication 3</h6>
         </div>

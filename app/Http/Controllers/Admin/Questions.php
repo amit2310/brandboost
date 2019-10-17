@@ -48,7 +48,10 @@ class Questions extends Controller {
             'bActiveSubsription' => $bActiveSubsription
         );
 
-		return view('admin.question.question_list', $aData);
+		//return view('admin.question.question_list', $aData);
+
+        echo json_encode($aData);
+        exit();
     }
 
 	/**

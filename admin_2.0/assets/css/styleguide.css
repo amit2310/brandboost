@@ -42,6 +42,7 @@ Misc
 .min_w_160{min-width: 160px;}
 .h100{height: 100vh}
 .h235{height: 235px;}
+.min_h_185{min-height: 185px;}
 
 
 
@@ -59,10 +60,14 @@ FORMS GROUP
 .phonenumber .inputbox{border: none; font-size: 16px; color: #7B89A6; font-weight: 400; background: none; border-left: 1px solid #C4CFE1; padding-left: 17px; margin: 11px 0 0 10px; height: 20px; max-width: 230px; }
 .phonenumber .inputbox::placeholder {color: #7B89A6; opacity: 1;}
 
+
+
+
 /******************************
 TABLES STYLES
 ******************************/
 .table_head_action{margin-bottom: 30px}
+.table_head_action.calendar{margin-bottom: 30px; padding: 0 0px;}
 .table.table-borderless tbody tr{border-bottom: 2px solid #edf1fb; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
 .table.table-borderless tbody tr:last-child{border: none!important; }
 .table.table-borderless tbody tr td{background: #fff;  color: #687693; font-size: 14px; font-weight: 400; vertical-align: middle;border: none; padding: 16px 12px; }
@@ -550,3 +555,66 @@ Line Height CLASSES
 
 
 
+
+
+
+
+
+
+
+
+/*====responsive CSS===*/
+
+@media only screen and (min-width:1025px) and (max-width:1200px){
+
+}
+@media only screen and (min-width:993px) and (max-width:1024px){
+
+}
+@media only screen and (min-width:768px) and (max-width:992px){
+
+}
+
+
+@media only screen and (max-width:1024px){
+	.page_sidebar{position: relative; height: auto;float: none;width: auto; max-width: 400px; border: 1px solid #e9eff8; margin: 30px; }	
+	.main_page_area{float: none; width: 100%}
+	.content-area{padding: 32px 15px 32px 79px!important}
+	.table_head_action.calendar{padding: 0px;}
+	.fc-toolbar.fc-header-toolbar{padding: 0px!important;}
+	.fc-view-container { border-left:1px solid #e9eff8!important;  border-right:1px solid #e9eff8!important; }
+	.navbar-custom{padding: 14px 15px 14px 80px!important}
+	.top-bar-top-section{padding: 4px 3px 20px 64px!important}
+}
+
+
+
+@media only screen and (max-width:993px){
+	.enlarge-menu .main-menu-inner{display: block}
+	.button-menu-mobile{display: none;}
+	.left-sidenav{display: none;}
+	
+	
+	.topbar .navbar-custom{margin: 0;}
+	.navbar-custom{padding: 15px!important;}
+	.topbar-nav.top-breadcrumb{display: none;}
+	.top-bar-top-section {padding: 4px 3px 20px;}
+	.top-bar-top-section .circle-icon-40{display: none}
+	.content-area{padding: 15px 3px}
+	.top-bar-top-section {padding: 4px 3px 20px 3px !important;}
+	.content-area {	padding: 32px 15px !important;}
+	.table_action{display: none;}
+	.mobile-menu-control{display: block;}
+
+
+}
+
+@media only screen and (max-width:767px){
+
+}
+
+
+@media only screen and (max-width:480px){
+	
+}
+/***************/

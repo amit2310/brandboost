@@ -4,6 +4,8 @@ import Contact from './components/admin/contact/Contacts.vue';
 import ListTemplates from './components/admin/templates/ListTemplates.vue';
 import Service from './components/Services.vue';
 import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview';
+import OnsiteReviews from './components/admin/brandboost/onsite/reviews';
+import OnsiteQuestions from './components/admin/brandboost/onsite/questions';
 import OnsiteList from './components/admin/brandboost/onsite/';
 import OnsiteReviewRequest from './components/admin/brandboost/onsite/ReviewRequest.vue';
 import OffsiteReviewRequest from './components/admin/brandboost/offsite/ReviewRequest.vue';
@@ -23,6 +25,8 @@ const routes = [
     /*{ path: '/templates/email', component: EmailTemplates },
     { path: '/templates/sms', component: SmsTemplates },*/
     { path: '/brandboost/onsite_overview', component: OnsiteOverview, meta: { title: 'Onsite overview - Brand Boost'} },
+    { path: '/brandboost/reviews', component: OnsiteReviews, meta: { title: 'Onsite reviews - Brand Boost'} },
+    { path: '/questions', component: OnsiteQuestions, meta: { title: 'Onsite questions - Brand Boost'} },
     { path: '/templates/email', component: ListTemplates, props : {title : 'Email Templates', type : 'email' } },
     { path: '/templates/sms', component: ListTemplates, props : {title : 'Sms Templates', type : 'sms' } },
     { path: '/brandboost/onsite', component: OnsiteList },
