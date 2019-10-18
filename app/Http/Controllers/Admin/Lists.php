@@ -12,24 +12,25 @@ use App\Models\Admin\SubscribersModel;
 use App\Libraries\Custom\csvimport;
 
 use Cookie;
-use Session;        
+use Session;
 
 class Lists extends Controller {
-    
+
     /**
      * Default controller
      */
-    public function index() {
+    public function index()
+    {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-        
-        
+
+
         $userDetail = $mUser->getAllUsers($userID);
         $userRole = $userDetail[0]->user_role;
         if ($userRole != '1') {
@@ -49,15 +50,113 @@ class Lists extends Controller {
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Lists" class="sidebar-control active hidden-xs ">Lists</a></li>
                     </ul>';
 
-        $aData = array(
-            'title' => 'Lists',
-            'pagename' => $breadcrumb,
-            'oLists' => $oLists,
-            'bActiveSubsription' => $bActiveSubsription,
-            'uRole' => $userRole,
-            'listtype' => 'email'
-        );
-        return view('admin.lists.index', $aData);
+        /* Computed Data In A List */
+        if (count($oLists) > 0) {
+
+            $newolists = array();
+
+            $archiveList = $activeList = 0;
+            foreach ($oLists as $value) {
+                $newolists[$value->id][] = $value;
+            }
+
+            $totEmailCount = 0;
+            $totSMSCount = 0;
+            $totUnsubscribeCount = 0;
+            $newEmails = $newSMS = $newUnsubs = 0;
+
+            foreach ($newolists as $countObject) {
+
+                if ($countObject[0]->status == 'archive') {
+                    $archiveList++;
+                } else {
+                    $activeList++;
+                }
+
+                $lastList = end($countObject);
+                //pre($lastList->l_created);
+                if (!empty($lastList->l_created)) {
+                    $lastListTime = timeAgo($lastList->l_created);
+                } else {
+                    $lastListTime = '<div class="media-left">
+                                                          <div class="">
+                                                            <span class="text-muted text-size-small">[No Data]</span>                                                          </div>
+                                                        </div>';
+                }
+                //pre($lastListTime);
+                if (!empty($countObject[0]->l_list_id)) {
+                    $totAll = count($countObject);
+                } else {
+                    $totAll = 0;
+                }
+
+                foreach ($countObject as $value) {
+
+                    if (!empty($value->l_email)) {
+                        $totEmailCount++;
+                    }
+                    if (!empty($value->l_phone)) {
+                        $totSMSCount++;
+                    }
+                    if (!empty($value->l_status) && $value->l_status == '0') {
+                        $totUnsubscribeCount++;
+                    }
+                }
+
+                $countObject = $countObject[0];
+
+                $totalContacts = $totAll;
+                $totalEmailGraph = 0;
+                $totalSMSGraph = 0;
+                $totalUnsubGraph = 0;
+
+                if ($totalContacts > 0) {
+                    $totalEmailGraph = $totEmailCount * 100 / $totalContacts;
+                    $totalEmailGraph = ceil($totalEmailGraph);
+
+                    $totalSMSGraph = $totSMSCount * 100 / $totalContacts;
+                    $totalSMSGraph = ceil($totalSMSGraph);
+
+                    $totalUnsubGraph = $totUnsubscribeCount * 100 / $totalContacts;
+                    $totalUnsubGraph = ceil($totalUnsubGraph);
+                }
+            }
+
+            $addPC = '';
+            if ($totalEmailGraph > 50)
+                $addPC = 'over50';
+
+            $aData = array(
+                'title' => 'Lists',
+                'pagename' => $breadcrumb,
+                'oLists' => $oLists,
+                'newolists' => $newolists,
+                'bActiveSubsription' => $bActiveSubsription,
+                'uRole' => $userRole,
+                'listtype' => 'email',
+                'archiveList' => $archiveList,
+                'activeList' => $activeList,
+                'totAll' => $totAll,
+                'totalContacts' => $totalContacts,
+                'totEmailCount' => $totEmailCount,
+                'totSMSCount' => $totSMSCount,
+                'totUnsubscribeCount' => $totUnsubscribeCount,
+                'newEmails' => $newEmails,
+                'newSMS' => $newSMS,
+                'newUnsubs' => $newUnsubs,
+                'totalEmailGraph' => $totalEmailGraph,
+                'totalSMSGraph' => $totalSMSGraph,
+                'totalUnsubGraph' => $totalUnsubGraph,
+                'addPC' => $addPC,
+                'lastListTime' => $lastListTime
+            );
+        }
+        /* Computed Data In A List */
+
+        //return view('admin.lists.index', $aData);
+
+        echo json_encode($aData);
+        exit();
     }
 
     /**
@@ -66,14 +165,14 @@ class Lists extends Controller {
     public function smslists() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-        
-        
+
+
         $userDetail = $mUser->getAllUsers($userID);
         $userRole = $userDetail[0]->user_role;
         if ($userRole != '1') {
@@ -103,31 +202,31 @@ class Lists extends Controller {
         return view('admin.lists.index', $aData);
     }
 
-    
+
     /**
      * Used to get contact lists
      */
     public function getListContacts(Request $request) {
-        
+
         $listID = strip_tags($request->list_id);
-        
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-        
+
         //Instantiate Workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
+
         $moduleName = 'list';
         $moduleUnitID = $listID;
         $subscribersData = $mWorkflow->getWorkflowSubscribers($moduleUnitID, $moduleName);
         $oList = $mLists->getLists('', $listID);
-        
+
         $listName = $oList[0]->list_name;
 
         if ($oList[0]->user_id != $userID) {
@@ -160,25 +259,25 @@ class Lists extends Controller {
         return view('admin.lists.list-contacts-beta', $aData);
     }
 
-    
+
     /**
      * Used to get SMS list contacts
      */
     public function getSMSListContacts(Request $request) {
-        
+
         $listID = strip_tags($request->list_id);
         $aUser = getLoggedUser();
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-        
+
         //Instantiate Workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
-        
-        
+
+
         $userID = $aUser->id;
         $moduleName = 'list';
         $moduleUnitID = $listID;
@@ -215,17 +314,17 @@ class Lists extends Controller {
         return view('admin.lists.list-contacts-beta', $aData);
     }
 
-    
+
     /**
      * Used to get contact details
      */
     public function getContactDetail(Request $request) {
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
-        
-        
+
+
+
         $subscriberId = $request->subscriberId;
         $oContactsDetail = $mLists->getContactDetail($subscriberId);
         $oContactsDetail = $oContactsDetail[0];
@@ -245,7 +344,7 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update subscriber details
      */
@@ -253,18 +352,18 @@ class Lists extends Controller {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-        
+
         //Instantiate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
-        
-        
-        
+
+
+
 
         $firstName = strip_tags($request->firstname);
         $lastName = strip_tags($request->lastname);
@@ -324,13 +423,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to create a new list
      */
     public function addList(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -338,10 +437,10 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         $title = strip_tags($request->title);
         $listDescription = strip_tags($request->listDescription);
         $dateTime = date("Y-m-d H:i:s");
@@ -395,13 +494,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to fetch lists
      */
     public function getList(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -409,14 +508,14 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-        
-        
+
+
         $listID = strip_tags($request->list_id);
 
         $userDetail = $mUser->getAllUsers($userID);
@@ -439,14 +538,14 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update contact lists
      */
-    
+
     public function updateList(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -454,14 +553,14 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-        
-        
+
+
         $listID = strip_tags($request->list_id);
         $title = strip_tags($request->title);
         $description = strip_tags($request->edit_description);
@@ -510,14 +609,14 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to make archive lists in bulk
      */
     public function archiveMultipalLists(Request $request) {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -526,11 +625,11 @@ class Lists extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
-        
+
+
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
             $userID = '';
@@ -565,14 +664,14 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to delete lists in bulk
      */
     public function deleteMultipalLists(Request $request) {
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -580,11 +679,11 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
-        
+
+
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
             $userID = '';
@@ -619,13 +718,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to delete a lists
      */
     public function deleteLists(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -633,11 +732,11 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
-        
+
+
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
             $userID = '';
@@ -668,26 +767,26 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to add subscriber in a list
      */
     public function addListSusbscriber(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-        
+
         //Instantiate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
-        
-        
+
+
         $response = array();
-        
+
         if (empty($request)) {
             $response['status'] = "Error";
             echo json_encode($response);
@@ -774,26 +873,26 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to import list through csv
      */
     public function importListCSV(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-        
+
         //Instantiate Subscriber model to get its methods and properties
         $mSubscriber = new SubscriberModel();
-        
-        
+
+
         $someoneadded = false;
-        
+
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'csv';
         $config['max_size'] = '1000';
@@ -803,7 +902,7 @@ class Lists extends Controller {
 
         // If upload failed, display error
         if (!$this->upload->do_upload()) {
-            
+
         } else {
 
             $file_data = $this->upload->data();
@@ -881,29 +980,29 @@ class Lists extends Controller {
         }
     }
 
-    
+
     /**
      * Used to export lists in csv format
      */
     public function exportListCSV(Request $request) {
-        // file name 
+        // file name
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-        
-        
+
+
         $userRole = $oUser->user_role;
         $filename = 'users_' . time() . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
 
-        
+
         $listId = $request->list_id;
         //$userDetail = $mUser->getAllUsers($userID);
 
@@ -914,7 +1013,7 @@ class Lists extends Controller {
             $allSubscribers = $mLists->getListContacts('', $listId);
         }
 
-        // file creation 
+        // file creation
         $file = fopen('php://output', 'w');
 
         $header = array("EMAIL", "FIRST_NAME", "LAST_NAME", "PHONE");
@@ -941,24 +1040,24 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to get role lists
      */
     public function rolelist() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $oRoles = $mTeam->getRoleList($userID);
         $bActiveSubsription = $mUser->isActiveSubscription();
 
@@ -970,21 +1069,21 @@ class Lists extends Controller {
         return view('admin.team.rolelist', ['title' => 'Team Roles', 'pagename' => $breadcrumb, 'oRoles' => $oRoles, 'bActiveSubsription' => $bActiveSubsription]);
     }
 
-    
+
     /**
      * Used to get member lists
      */
     public function memberlist() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $oMembers = $mTeam->getTeamMembers($userID);
         $oRoles = $mTeam->getRoleList($userID);
         $breadcrumb = '<ul class="breadcrumb">
@@ -995,7 +1094,7 @@ class Lists extends Controller {
         return view('admin.team.memberlist', ['title' => 'Team Members', 'pagename' => $breadcrumb, 'oMembers' => $oMembers, 'oRoles' => $oRoles]);
     }
 
-    
+
     /**
      * Used to get view log
      * @param type $teamMemberID
@@ -1003,14 +1102,14 @@ class Lists extends Controller {
     public function viewLog($teamMemberID) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $oData = $mTeam->getUserActivities('team', $teamMemberID);
 
         $breadcrumb = '<ul class="breadcrumb">
@@ -1022,21 +1121,21 @@ class Lists extends Controller {
         return view('admin.team.activitylist', ['title' => 'Team Member Activity', 'pagename' => $breadcrumb, 'oData' => $oData]);
     }
 
-    
+
     /**
      * Used to get subscriber activity list
      */
     public function activitylist() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $oData = $mTeam->getUserActivities('team');
 
         $breadcrumb = '<ul class="breadcrumb">
@@ -1048,13 +1147,13 @@ class Lists extends Controller {
         return view('admin.team.activitylist', ['title' => 'Team Member Activity', 'pagename' => $breadcrumb, 'oData' => $oData]);
     }
 
-    
+
     /**
      * Used to add team member
      */
     public function addTeamMember(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1062,14 +1161,14 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $teamRoleID = strip_tags($request->memberRole);
         $firstName = strip_tags($request->firstname);
         $lastName = strip_tags($request->lastname);
@@ -1114,13 +1213,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to add role for the team members
      */
     public function addRole(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1128,14 +1227,14 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $title = strip_tags($request->title);
         $dateTime = date("Y-m-d H:i:s");
         $aData = array(
@@ -1160,13 +1259,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to get team member roles
      */
     public function getRole(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1174,14 +1273,14 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $roleID = strip_tags($request->role_id);
         $oRole = $mTeam->getRole($roleID, $userID);
         if (!empty($oRole)) {
@@ -1194,13 +1293,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update Team member role
      */
     public function updateRole(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1208,14 +1307,14 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $roleID = strip_tags($request->role_id);
         $title = strip_tags($request->title);
         $dateTime = date("Y-m-d H:i:s");
@@ -1239,13 +1338,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to delete team member role
      */
     public function deleteRole(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1253,14 +1352,14 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $roleID = strip_tags($request->role_id);
         $bDeleted = $mTeam->deleteRole($roleID, $userID);
         if ($bDeleted == true) {
@@ -1270,13 +1369,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to get the list of team members
      */
     public function getTeamMember(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1284,14 +1383,14 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $memberID = strip_tags($request->member_id);
         $memberData = $mTeam->getTeamMember($memberID, $userID);
         if (!empty($memberData)) {
@@ -1304,13 +1403,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update team members
      */
     public function updateTeamMember(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1326,14 +1425,14 @@ class Lists extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
 
         $aData = array(
             'team_role_id' => $teamRoleID,
@@ -1352,13 +1451,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to delete team member
      */
     public function deleteTeamMember(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1366,13 +1465,13 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
+
         $memberID = strip_tags($request->member_id);
         $bDeleted = $mTeam->deleteTeamMember($memberID, $userID);
         if ($bDeleted == true) {
@@ -1382,13 +1481,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to manage team member role permission
      */
     public function manageRolePermission(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1396,14 +1495,14 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $roleID = strip_tags($request->role_id);
         $oSelectedPermission = $mTeam->getTeamRolePermission($roleID);
 
@@ -1418,13 +1517,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to add team role permission
      */
     public function addRolePermission(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1432,14 +1531,14 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
-        
+
+
         $roleID = strip_tags($request->role_id);
         $aPermissionID = $request->permission_id;
         $dateTime = date("Y-m-d H:i:s");
@@ -1458,13 +1557,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update role permission
      */
     public function updateRolePermission(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-        
+
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
@@ -1472,13 +1571,13 @@ class Lists extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
+
         //Instantiate Team model to get its methods and properties
         $mTeam = new TeamModel();
-        
+
         $roleID = strip_tags($request->role_id);
         $aPermission = $request->permission_id;
         if (!empty($aPermission)) {
@@ -1513,17 +1612,17 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update the status of a contact
      */
     public function updateContactStatus(Request $request) {
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
 
-        
+
+
 
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -1542,17 +1641,17 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to delete list contacts in bulk
      */
     public function deleteMultipalListContact(Request $request) {
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
 
-        
+
+
 
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -1572,16 +1671,16 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to make archive of lists in bulk
      */
     public function archiveMultipalListContact(Request $request) {
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
-        
+
 
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -1603,16 +1702,16 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to make archive of a list contact
      */
     public function moveToArchiveListContact(Request $request) {
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
-        
+
+
 
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -1632,17 +1731,17 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to move a contact into archive list
      */
     public function moveToArchiveList(Request $request) {
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
 
-        
+
+
 
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -1670,13 +1769,13 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to update the status of the list
      */
     public function changeListStatus(Request $request) {
 
-        
+
 
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -1690,11 +1789,11 @@ class Lists extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
-        
-        
+
+
         $user_role = $aUser->user_role;
 
         if ($user_role == 1) {
@@ -1711,16 +1810,16 @@ class Lists extends Controller {
         exit;
     }
 
-    
+
     /**
      * Used to delete contact list
      */
     public function deleteListContact(Request $request) {
-        
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
-        
+
 
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
