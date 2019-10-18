@@ -7,6 +7,8 @@ CARD CLASSES
 .card.card_shadow:before{position: absolute; height: 11px; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);border-radius:0 0 4px 4px; width: 90%; left: 5%; bottom: -11px; content: ''; background:url(../images/shadow_bkg.png) left top repeat-x #fff; z-index: 0;}
 
 
+.card .dot_dropdown{position: absolute; right: 15px; top: 20px; z-index: 8}
+.card .dot_dropdown .dropdown-toggle:after{display: none;}
 
 
 /******************************
@@ -43,6 +45,8 @@ Misc
 .h100{height: 100vh}
 .h235{height: 235px;}
 .min_h_185{min-height: 185px;}
+.min_h_240{min-height: 240px;}
+.min_w_96{ min-width:96px;}
 
 
 
@@ -60,7 +64,7 @@ FORMS GROUP
 .phonenumber .inputbox{border: none; font-size: 16px; color: #7B89A6; font-weight: 400; background: none; border-left: 1px solid #C4CFE1; padding-left: 17px; margin: 11px 0 0 10px; height: 20px; max-width: 230px; }
 .phonenumber .inputbox::placeholder {color: #7B89A6; opacity: 1;}
 
-
+.img_vid_upload{width: 100%; min-height: 320px; border-radius: 4px; background:url(../../assets/images/upload_bkg.png) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
 
 
 /******************************
@@ -105,6 +109,17 @@ List Styles Classes
 .list1 li a:hover{background: url(../images/checkbox-blank-circle-line-active.svg) 17px 11px no-repeat #f1f7ff; color: #3970D9; font-weight: 600; border-radius: 45px;}
 
 
+.import_list{margin: 0 ;padding: 0;}
+.import_list li{margin: 0px 0 ;padding: 0; list-style: none; line-height: 24px; display: inline-block; width: 24.5%}
+.import_list li a{margin: 0 ;padding: 0 0px 0 35px; font-weight: 500;font-size: 14px; color: #687693; background: url(../images/checkbox-blank-circle-line-24.svg) 0px 1px no-repeat; display: inline-block; position: relative;}
+.import_list li a:after{position: absolute; content: ''; bottom: -30px; left: 0; width: 100%; height: 2px; background: #73abff; display: none}
+.import_list li a.active{color: #333D54; font-weight: 600 }
+.import_list li a.active:after{position: absolute; content: ''; bottom: -30px; left: 0; width: 100%; height: 2px; background: #73abff; display: block; }
+.import_list li a.done{background: url(../images/checkbox-circle-fill-24.svg) 0px 0px no-repeat ;  font-weight: 500; }
+.import_list li:hover a:after{ display: block;}
+.import_list li a:hover{color: #333D54; font-weight: 600}
+
+
 
 /******************************
 Button CLASSES
@@ -124,8 +139,8 @@ Button CLASSES
 /******************************
 Animate Btn CLASSES
 ******************************/
-.animate_top{-webkit-transition: transform 0.5s;transition: transform 0.5s; }
-.animate_top:hover {-webkit-transform: translateY(-10px);-ms-transform: translateY(-10px);transform: translateY(-10px);-webkit-transition: transform 0.5s;transition: transform 0.5s;}
+.animate_top{-webkit-transition: transform 0.5s;transition: transform 0.5s;  }
+.animate_top:hover {-webkit-transform: translateY(-10px);-ms-transform: translateY(-10px);transform: translateY(-10px);-webkit-transition: transform 0.5s;transition: transform 0.5s; z-index: 9}
 .animate_left{-webkit-transition: transform 0.5s;transition: transform 0.5s;}
 .animate_left:hover{-webkit-transform: translateX(10px);-ms-transform: translateX(10px);transform: translateX(10px);-webkit-transition: transform 0.5s;transition: transform 0.5s;}
 
@@ -139,6 +154,7 @@ BORDER CLASSES
 .btop{border-top: 1px solid #e9eff8;}
 .brig{border-right: 1px solid #e9eff8;}
 .blef{border-left: 1px solid #e9eff8;}
+.border_dashed{border: 1px dashed #D5DFEF!important}
 
 
 
@@ -257,6 +273,7 @@ COLOR CLASSES
 /******************************
 Background COLOR CLASSES
 ******************************/
+.bkg_none{background: rgba(0,0,0,0.0)}
 .bkg_blue_000{background: #e3eeff}
 .bkg_blue_100{background: #A5CEFF}
 .bkg_blue_200{background: #73ABFF}
@@ -463,6 +480,7 @@ MARGIN CLASSES
 .mt0{margin-top: 0px!important;}
 .mt8{margin-top: 8px!important;}
 .mt10{margin-top: 10px!important;}
+.mt15{margin-top: 15px!important;}
 .mt20{margin-top: 20px!important;}
 .mt25{margin-top: 25px!important;}
 .mt30{margin-top: 30px!important;}
@@ -559,10 +577,13 @@ Line Height CLASSES
 
 
 
+/******************************
+VISIBLE CLASSES
+******************************/
+.hide_993{display: block;}
+.visible_993{display: none;}
 
-
-
-
+.dropdown.icons{margin-top: 10px;}
 /*====responsive CSS===*/
 
 @media only screen and (min-width:1025px) and (max-width:1200px){
@@ -595,16 +616,18 @@ Line Height CLASSES
 	.left-sidenav{display: none;}
 	
 	
-	.topbar .navbar-custom{margin: 0;}
-	.navbar-custom{padding: 15px!important;}
+	.topbar .navbar-custom{margin: 0; background: #4f8af4}
+	.navbar-custom{padding:10px 15px!important; min-height: 58px;}
 	.topbar-nav.top-breadcrumb{display: none;}
-	.top-bar-top-section {padding: 4px 3px 20px;}
 	.top-bar-top-section .circle-icon-40{display: none}
 	.content-area{padding: 15px 3px}
-	.top-bar-top-section {padding: 4px 3px 20px 3px !important;}
+	.top-bar-top-section {padding: 10px 3px !important; min-height: 58px;}
 	.content-area {	padding: 32px 15px !important;}
 	.table_action{display: none;}
 	.mobile-menu-control{display: block;}
+	.table{min-width: 1200px;}
+	.hide_993{display: none;}
+	.visible_993{display: block;}
 
 
 }
@@ -615,6 +638,7 @@ Line Height CLASSES
 
 
 @media only screen and (max-width:480px){
-	
+	.top-bar-top-section .htxt_medium_24{font-size: 16px; line-height: 30px; margin-top: 5px;}	
+	.top-bar-top-section img.back_img_icon{margin: 5px 0 0 0}
 }
 /***************/
