@@ -13,6 +13,8 @@ import Media from './components/admin/brandboost/Media.vue';
 import Tags from './components/admin/tags/';
 import TagsReview from './components/admin/tags/tagsreview';
 import TagsFeedback from './components/admin/tags/tagsfeedback';
+import EmailLists from './components/admin/Lists';
+import EmailBroadcasts from './components/admin/broadcast/Email';
 import OffsiteOverview from './components/admin/brandboost/offsite/Overview';
 import OffsiteNegativeFeedback from './components/admin/feedback/FeedbackList';
 import OffsiteCampaigns from './components/admin/brandboost/offsite/ListOffsiteCampaign';
@@ -37,9 +39,11 @@ const routes = [
     { path: '/tags', component: Tags, meta: { title: 'Insight Tags - Brand Boost'} },
     { path: '/tags/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
     { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
+    { path: '/lists', component: EmailLists, meta: { title: 'Email Lists - Brand Boost'} },
+    { path: '/broadcast/email', component: EmailBroadcasts, meta: { title: 'Email Broadcast - Brand Boost'} },
     { path: '/brandboost/offsite_overview', component: OffsiteOverview, props: { title: 'Offsite overview'} },
     { path: '/brandboost/offsite', component: OffsiteCampaigns, props: { title: 'Offsite Brand Boost Campaigns'} },
-    { path: '/feedback/listall/', component: OffsiteNegativeFeedback, props: { title: 'Requires Attention'} },
+    { path: '/feedback/listall/', component: OffsiteNegativeFeedback, props: { title: 'Requires Attention'} }
 ];
 
 export default routes;
