@@ -248,6 +248,7 @@
 <script>
     import LiveVisitors from './LiveVistors.vue';
     export default {
+        props : ['pageColor'],
         data() {
             return {
                 reviews: {}
@@ -255,7 +256,7 @@
         },
         components: {'live-visitors' : LiveVisitors},
         mounted() {
-            console.log('Component mounted.');
+            this.$parent.pageColor = this.pageColor;
             //calling graphs
             setTimeout(function () {
                 loadLiveGraphs();

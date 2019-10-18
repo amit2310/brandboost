@@ -654,7 +654,8 @@
 
     export default {
         title: 'Onsite overview - Brand Boost',
-        components: UserAvatar,
+        props : ['pageColor'],
+        components: {UserAvatar},
         data() {
             return {
                 oOverviews: {},
@@ -663,6 +664,7 @@
         },
 
         mounted() {
+            this.$parent.pageColor = this.pageColor;
             //getData
             axios.get('/admin/brandboost/onsite_overview')
                 .then(response => {

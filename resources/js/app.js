@@ -34,5 +34,10 @@ const router = new VueRouter({
 });*/
 
 const app = new Vue({
-    router
+    router,
+    data: {
+        // declare message with an empty value
+        pageColor: '',
+    },
 }).$mount('#masterContainer2')
+0

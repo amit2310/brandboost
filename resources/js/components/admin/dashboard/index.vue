@@ -1447,6 +1447,7 @@
     let tkn = $('meta[name="_token"]').attr('content');
 
     export default {
+        props : ['pageColor'],
         data() {
             return {
                 reviews: {}
@@ -1454,7 +1455,7 @@
         },
         components: {'dashboard-reivews' : DashReviews},
         mounted() {
-            console.log('Component mounted.');
+            this.$parent.pageColor = this.pageColor;
             loadDashboardGraphs();
         }
 
