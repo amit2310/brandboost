@@ -23,4 +23,20 @@ class HelperUtility extends Controller
         echo json_encode(['oTags'=> $oTags, 'tagCount'=> $iTagCount]);
         exit;
     }
+
+    /**
+     * Used to get Feedback Tags
+     * @param Request $request
+     */
+    public function getFeedbackTags(Request $request){
+        $feedbackID = $request->feedbackId;
+        $oTags = TagsModel::getTagsDataByFeedbackID($feedbackID);
+        $iTagCount = 0;
+        if(!empty($oTags)){
+            $iTagCount = count($oTags);
+        }
+        echo json_encode(['oTags'=> $oTags, 'tagCount'=> $iTagCount]);
+        exit;
+    }
+
 }

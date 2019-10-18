@@ -823,6 +823,7 @@ Route::get('survey/{hashcode}', 'Survey@index');
 
 //VueJS Helper Utilities Controller
 Route::post('admin/helperutility/getSubscriberTags', 'Admin\HelperUtility@getSubscriberTags');
+Route::post('admin/helperutility/getFeedbackTags', 'Admin\HelperUtility@getFeedbackTags');
 
 
 

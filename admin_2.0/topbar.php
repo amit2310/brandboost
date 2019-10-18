@@ -1,6 +1,9 @@
 <div class="topbar">
   <nav class="navbar-custom">
    <div class="">
+   
+   <span class="mobile-menu-control float-left"><img src="assets/images/close_menu_circle.svg"></span>
+   
     <ul class="list-unstyled topbar-nav float-right mb-0" >
       <li class="hide-phone app-search">
         <form role="search" class="">
