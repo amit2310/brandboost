@@ -302,6 +302,7 @@
 
     export default {
         /*name: 'email-templates',*/
+        props: ['pageColor'],
         components: {'email-template-popups': EmailPopup},
         data() {
             return {
@@ -314,6 +315,7 @@
             }
         },
         mounted() {
+            this.$parent.$parent.pageColor = this.pageColor;
             axios.get('/admin/templates/email')
                 .then(response => {
                     this.templates = response.data.oTemplates;

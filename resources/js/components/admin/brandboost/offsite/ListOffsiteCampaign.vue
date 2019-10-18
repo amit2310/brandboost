@@ -395,7 +395,7 @@
     import CampaignList from './CampaignList';
 
     export default {
-        props : ['title'],
+        props : ['pageColor','title'],
         components: { UserAvatar, CampaignList },
         /*components: { UserAvatar, OverviewStats },*/
         data() {
@@ -413,6 +413,8 @@
         },
 
         mounted() {
+
+            this.$parent.pageColor = this.pageColor;
              axios.get('/admin/brandboost/offsite')
                 .then(response => {
                     this.oBrandboosts = response.data.aBrandbosts;

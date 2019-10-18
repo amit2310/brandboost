@@ -292,6 +292,7 @@
 
     export default {
         /*name: 'email-templates',*/
+        props : ['pageColor'],
         components: {'sms-template-popups': SmsPopup},
         data() {
             return {
@@ -306,6 +307,7 @@
             }
         },
         mounted() {
+            this.$parent.$parent.pageColor = this.pageColor;
             axios.get('/admin/templates/sms')
                 .then(response => {
                     this.templates = response.data.oTemplates;

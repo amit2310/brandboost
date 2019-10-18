@@ -363,7 +363,7 @@
     let tkn = $('meta[name="_token"]').attr('content');
 
     export default {
-        props : ['title', 'review_type'],
+        props : ['pageColor', 'title', 'review_type'],
         components: {UserAvatar},
         data(){
             return {
@@ -373,6 +373,7 @@
             }
         },
         mounted() {
+            this.$parent.pageColor = this.pageColor;
             axios.get('/admin/brandboost/review_request/offsite')
                 .then(response => {
                     this.requests = response.data.oFilteredRequests;

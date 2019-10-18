@@ -4342,7 +4342,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title'],
+  props: ['pageColor', 'title'],
   components: {
     UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"],
     CampaignList: _CampaignList__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -4365,6 +4365,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    this.$parent.pageColor = this.pageColor;
     axios.get('/admin/brandboost/offsite').then(function (response) {
       _this.oBrandboosts = response.data.aBrandbosts;
       _this.viewstats = response.data.viewstats;
@@ -5458,7 +5459,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var tkn = $('meta[name="_token"]').attr('content');
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title', 'review_type'],
+  props: ['pageColor', 'title', 'review_type'],
   components: {
     UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -5471,6 +5472,7 @@ var tkn = $('meta[name="_token"]').attr('content');
   mounted: function mounted() {
     var _this = this;
 
+    this.$parent.pageColor = this.pageColor;
     axios.get('/admin/brandboost/review_request/offsite').then(function (response) {
       _this.requests = response.data.oFilteredRequests;
       _this.count = response.data.totalCount;
@@ -6909,6 +6911,7 @@ __webpack_require__.r(__webpack_exports__);
 //import SegmentPopup from './SegmentPopup.vue';
 var tkn = $('meta[name="_token"]').attr('content');
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['pageColor'],
   data: function data() {
     return {
       oBrandbosts: {}
@@ -6918,7 +6921,7 @@ var tkn = $('meta[name="_token"]').attr('content');
   mounted: function mounted() {
     var _this = this;
 
-    //getData
+    this.$parent.pageColor = this.pageColor;
     axios.get('/admin/brandboost/onsite').then(function (response) {
       //console.log(response);
       //console.log(response.data.iTotalRecords);
@@ -7594,7 +7597,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   title: 'Onsite overview - Brand Boost',
-  components: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"],
+  props: ['pageColor'],
+  components: {
+    UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       oOverviews: {},
@@ -7604,7 +7610,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    //getData
+    this.$parent.pageColor = this.pageColor; //getData
+
     axios.get('/admin/brandboost/onsite_overview').then(function (response) {
       //console.log(response.data);
       _this.oOverviews = response.data;
@@ -8597,6 +8604,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   title: 'Onsite questions - Brand Boost',
+  props: ['pageColor'],
   components: {
     UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -8609,7 +8617,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    //getData
+    this.$parent.pageColor = this.pageColor;
     axios.get('/admin/questions/').then(function (response) {
       //console.log(response.data);
       _this.oQuestions = response.data.oQuestions;
@@ -9524,6 +9532,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   title: 'Onsite reviews - Brand Boost',
+  props: ['pageColor'],
   components: {
     UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -9536,7 +9545,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    //getData
+    this.$parent.pageColor = this.pageColor;
     axios.get('/admin/brandboost/reviews').then(function (response) {
       //console.log(response.data);
       _this.oReviews = response.data.aReviews;
@@ -11358,6 +11367,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['pageColor'],
   data: function data() {
     return {
       moduleName: '',
@@ -11373,7 +11383,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    console.log('Component mounted.');
+    this.$parent.pageColor = this.pageColor;
     axios.get('/admin/contacts/mycontacts').then(function (response) {
       _this.moduleName = response.data.moduleName;
       _this.moduleUnitID = response.data.moduleUnitID;
@@ -12912,6 +12922,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var tkn = $('meta[name="_token"]').attr('content');
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['pageColor'],
   data: function data() {
     return {
       reviews: {}
@@ -12921,7 +12932,7 @@ var tkn = $('meta[name="_token"]').attr('content');
     'dashboard-reivews': _DashReviews_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    this.$parent.pageColor = this.pageColor;
     loadDashboardGraphs();
   }
 });
@@ -13300,6 +13311,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['pageColor'],
   components: {
     FeedbackListTable: _partial_FeedbackListTable__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -13314,6 +13326,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    this.$parent.pageColor = this.pageColor;
     axios.get('/admin/feedback/listall').then(function (response) {
       _this.results = response.data.result;
       _this.totalResults = response.data.totalResults;
@@ -14126,6 +14139,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['pageColor'],
   data: function data() {
     return {
       reviews: {}
@@ -14135,7 +14149,7 @@ __webpack_require__.r(__webpack_exports__);
     'live-visitors': _LiveVistors_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
-    console.log('Component mounted.'); //calling graphs
+    this.$parent.pageColor = this.pageColor; //calling graphs
 
     setTimeout(function () {
       loadLiveGraphs();
@@ -16215,6 +16229,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   /*name: 'email-templates',*/
+  props: ['pageColor'],
   components: {
     'email-template-popups': _modals_templates_EmailTemplatesPopup_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -16231,6 +16246,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    this.$parent.$parent.pageColor = this.pageColor;
     axios.get('/admin/templates/email').then(function (response) {
       _this.templates = response.data.oTemplates;
       _this.categories = response.data.oCategories;
@@ -16358,11 +16374,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title', 'type'],
+  props: ['pageColor', 'title', 'type'],
   components: {
     'email-templates': _EmailTemplates_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     'sms-templates': _SmsTemplates_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
-  }
+  },
+  mounted: function mounted() {}
 });
 var tkn = $('meta[name="_token"]').attr('content');
 $(document).ready(function () {
@@ -16795,6 +16812,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   /*name: 'email-templates',*/
+  props: ['pageColor'],
   components: {
     'sms-template-popups': _modals_templates_SmsTemplatesPopup_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -16813,6 +16831,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    this.$parent.$parent.pageColor = this.pageColor;
     axios.get('/admin/templates/sms').then(function (response) {
       _this.templates = response.data.oTemplates;
       _this.categories = response.data.oCategories;
@@ -52363,9 +52382,13 @@ var render = function() {
       "div",
       { staticClass: "tab-content" },
       [
-        _vm.type == "email" ? _c("email-templates") : _vm._e(),
+        _vm.type == "email"
+          ? _c("email-templates", { attrs: { pageColor: _vm.pageColor } })
+          : _vm._e(),
         _vm._v(" "),
-        _vm.type == "sms" ? _c("sms-templates") : _vm._e()
+        _vm.type == "sms"
+          ? _c("sms-templates", { attrs: { pageColor: _vm.pageColor } })
+          : _vm._e()
       ],
       1
     )
@@ -70774,8 +70797,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 });*/
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  router: router
+  router: router,
+  data: {
+    // declare message with an empty value
+    pageColor: ''
+  }
 }).$mount('#masterContainer2');
+0;
 
 /***/ }),
 
@@ -73579,41 +73607,109 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: '/',
-  component: _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__["default"]
+  component: _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__["default"],
+  props: {
+    pageColor: 'onsite_sec'
+  }
 }, {
   path: '/dashboard',
-  component: _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__["default"]
+  component: _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__["default"],
+  props: {
+    pageColor: 'onsite_sec'
+  }
 }, {
   path: '/live',
-  component: _components_admin_live___WEBPACK_IMPORTED_MODULE_1__["default"]
+  component: _components_admin_live___WEBPACK_IMPORTED_MODULE_1__["default"],
+  props: {
+    pageColor: 'live_sec'
+  }
 }, {
   path: '/contacts/mycontacts',
-  component: _components_admin_contact_Contacts_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  component: _components_admin_contact_Contacts_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+  props: {
+    pageColor: 'people_sec'
+  }
 },
-/*{ path: '/templates/email', component: EmailTemplates },
-{ path: '/templates/sms', component: SmsTemplates },*/
+/*Onsite Module*/
 {
   path: '/brandboost/onsite_overview',
   component: _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_5__["default"],
+  props: {
+    pageColor: 'onsite_sec'
+  },
   meta: {
     title: 'Onsite overview - Brand Boost'
   }
 }, {
+  path: '/brandboost/onsite',
+  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_8__["default"],
+  props: {
+    pageColor: 'onsite_sec'
+  }
+}, {
   path: '/brandboost/reviews',
   component: _components_admin_brandboost_onsite_reviews__WEBPACK_IMPORTED_MODULE_6__["default"],
+  props: {
+    pageColor: 'onsite_sec'
+  },
   meta: {
     title: 'Onsite reviews - Brand Boost'
   }
 }, {
   path: '/questions',
   component: _components_admin_brandboost_onsite_questions__WEBPACK_IMPORTED_MODULE_7__["default"],
+  props: {
+    pageColor: 'onsite_sec'
+  },
   meta: {
     title: 'Onsite questions - Brand Boost'
   }
 }, {
+  path: '/brandboost/review_request/onsite',
+  component: _components_admin_brandboost_onsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+  props: {
+    pageColor: 'onsite_sec',
+    title: 'Review Requests',
+    review_type: 'onsite'
+  }
+},
+/*Offsite Module*/
+{
+  path: '/brandboost/offsite_overview',
+  component: _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_17__["default"],
+  props: {
+    pageColor: 'offsite_sec',
+    title: 'Offsite overview'
+  }
+}, {
+  path: '/brandboost/offsite',
+  component: _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_19__["default"],
+  props: {
+    pageColor: 'offsite_sec',
+    title: 'Offsite Brand Boost Campaigns'
+  }
+}, {
+  path: '/brandboost/review_request/offsite',
+  component: _components_admin_brandboost_offsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+  props: {
+    pageColor: 'offsite_sec',
+    title: 'Review Requests',
+    review_type: 'offsite'
+  }
+}, {
+  path: '/feedback/listall/',
+  component: _components_admin_feedback_FeedbackList__WEBPACK_IMPORTED_MODULE_18__["default"],
+  props: {
+    pageColor: 'offsite_sec',
+    title: 'Requires Attention'
+  }
+},
+/* Templates Module */
+{
   path: '/templates/email',
   component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   props: {
+    pageColor: 'email_sec',
     title: 'Email Templates',
     type: 'email'
   }
@@ -73621,25 +73717,9 @@ var routes = [{
   path: '/templates/sms',
   component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   props: {
+    pageColor: 'sms_sec',
     title: 'Sms Templates',
     type: 'sms'
-  }
-}, {
-  path: '/brandboost/onsite',
-  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_8__["default"]
-}, {
-  path: '/brandboost/review_request/onsite',
-  component: _components_admin_brandboost_onsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-  props: {
-    title: 'Review Requests',
-    review_type: 'onsite'
-  }
-}, {
-  path: '/brandboost/review_request/offsite',
-  component: _components_admin_brandboost_offsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-  props: {
-    title: 'Review Requests',
-    review_type: 'offsite'
   }
 }, {
   path: '/brandboost/media',
@@ -73677,24 +73757,6 @@ var routes = [{
   meta: {
     title: 'Email Broadcast - Brand Boost'
   }
-}, {
-  path: '/brandboost/offsite_overview',
-  component: _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_17__["default"],
-  props: {
-    title: 'Offsite overview'
-  }
-}, {
-  path: '/brandboost/offsite',
-  component: _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_19__["default"],
-  props: {
-    title: 'Offsite Brand Boost Campaigns'
-  }
-}, {
-  path: '/feedback/listall/',
-  component: _components_admin_feedback_FeedbackList__WEBPACK_IMPORTED_MODULE_18__["default"],
-  props: {
-    title: 'Requires Attention'
-  }
 }];
 /* harmony default export */ __webpack_exports__["default"] = (routes);
 
@@ -73707,7 +73769,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home1/lamppp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })
